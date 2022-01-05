@@ -2,10 +2,13 @@ import { PhotosApi } from './PhotosApi';
 import { PeopleApi } from './PeopleApi';
 import { AirlinesApi } from './AirlinesApi';
 import { AirportsApi } from './AirportsApi';
-import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-import { DeSerializers, DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
+import {
+  DeSerializers,
+  DefaultDeSerializers,
+  Time
+} from '@sap-cloud-sdk/odata-v4';
 export declare function microsoftODataServiceSampleTrippinInMemoryModelsService<
   BinaryT = string,
   BooleanT = boolean,

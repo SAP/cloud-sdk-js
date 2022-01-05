@@ -5,14 +5,14 @@
  */
 import { City, CityField } from './City';
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  Entity,
   CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
   DeserializedType,
   EdmTypeField,
+  Entity,
   EnumField,
   FieldBuilder,
   FieldOptions,

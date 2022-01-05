@@ -7,17 +7,6 @@ import { potentialExternalImportDeclarations } from '../../imports';
 /**
  * @internal
  */
-export function odataCommonImport(namedImports: string[]): Import {
-  return {
-    names: unique(namedImports),
-    moduleIdentifier: '@sap-cloud-sdk/odata-common/internal',
-    typeOnly: false
-  };
-}
-
-/**
- * @internal
- */
 export function odataImport(
   namedImports: string[],
   odataVersion: ODataVersion

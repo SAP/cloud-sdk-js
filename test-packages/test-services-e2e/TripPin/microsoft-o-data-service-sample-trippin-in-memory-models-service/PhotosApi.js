@@ -9,7 +9,6 @@ exports.PhotosApi = void 0;
 const Photos_1 = require('./Photos');
 const PhotosRequestBuilder_1 = require('./PhotosRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 class PhotosApi {
   constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
     this.entityConstructor = Photos_1.Photos;
@@ -23,7 +22,7 @@ class PhotosApi {
     return new PhotosRequestBuilder_1.PhotosRequestBuilder(this);
   }
   entityBuilder() {
-    return (0, internal_1.entityBuilder)(this);
+    return (0, odata_v4_1.entityBuilder)(this);
   }
   customField(fieldName, isNullable = false) {
     return new odata_v4_1.CustomField(
@@ -34,7 +33,7 @@ class PhotosApi {
     );
   }
   get schema() {
-    const fieldBuilder = new internal_1.FieldBuilder(
+    const fieldBuilder = new odata_v4_1.FieldBuilder(
       Photos_1.Photos,
       this.deSerializers
     );
@@ -54,7 +53,7 @@ class PhotosApi {
        *
        * All fields selector.
        */
-      ALL_FIELDS: new internal_1.AllFields('*', Photos_1.Photos)
+      ALL_FIELDS: new odata_v4_1.AllFields('*', Photos_1.Photos)
     };
   }
 }

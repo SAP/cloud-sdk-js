@@ -3,8 +3,7 @@ import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   odataImportDeclaration,
-  enumTypeImportDeclarations,
-  odataCommonImportDeclaration
+  enumTypeImportDeclarations
 } from '../imports';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 /* eslint-disable valid-jsdoc */
@@ -18,13 +17,12 @@ export function entityImportDeclarations(
 ): ImportDeclarationStructure[] {
   return [
     odataImportDeclaration(
-      ['Entity', 'DefaultDeSerializers', 'DeSerializers'],
+      ['Entity', 'DefaultDeSerializers', 'DeSerializers', 'DeserializedType'],
       oDataVersion
     ),
-    odataCommonImportDeclaration(['DeserializedType']),
     ...complexTypeImportDeclarations(entity.properties),
     ...enumTypeImportDeclarations(entity.properties)
-  ];
+  ].sort();
 }
 /**
  * @internal

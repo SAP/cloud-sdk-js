@@ -4,17 +4,17 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  EnumField,
-  FieldOptions,
-  DefaultDeSerializers,
-  DeSerializers,
-  Entity,
   CollectionField,
   ComplexTypeField,
-  EdmTypeField,
-  FieldBuilder,
-  DeserializedType,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
+  DeserializedType,
+  EdmTypeField,
+  Entity,
+  EnumField,
+  FieldBuilder,
+  FieldOptions,
   OrderableEdmTypeField,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-v4';

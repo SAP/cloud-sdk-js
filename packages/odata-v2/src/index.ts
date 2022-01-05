@@ -37,3 +37,24 @@ export {
 } from './de-serializers';
 
 export type { DefaultDeSerializers, DeSerializers } from './de-serializers';
+
+export {
+  Time,
+  ComplexTypeField,
+  EdmTypeField,
+  FieldBuilder,
+  OrderableEdmTypeField,
+  PropertyMetadata,
+  ConstructorOrField,
+  FieldOptions,
+  AllFields,
+  entityBuilder,
+  EntityBuilderType,
+  EntityApi,
+  DeserializedType,
+  RequestBuilder,
+  BatchChangeSet,
+  FunctionImportParameter,
+  OneToManyLink,
+  OneToOneLink
+} from '@sap-cloud-sdk/odata-common/internal';

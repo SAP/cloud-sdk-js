@@ -15,20 +15,19 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   mergeDefaultDeSerializersWith,
-  EdmTypeField,
-  CollectionField,
-  EnumField,
-  OrderableEdmTypeField,
-  OneToManyLink,
-  OneToOneLink,
   AllFields,
   entityBuilder,
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  Time
+  Time,
+  EdmTypeField,
+  CollectionField,
+  EnumField,
+  OrderableEdmTypeField,
+  OneToManyLink,
+  OneToOneLink
 } from '@sap-cloud-sdk/odata-v4';
-
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 export class PeopleApi<

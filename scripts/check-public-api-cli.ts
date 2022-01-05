@@ -14,6 +14,9 @@ async function checkApiPackages() {
   await checkApiOfPackage(resolve(__dirname, '../packages/generator-common'));
   await checkApiOfPackage(resolve(__dirname, '../packages/generator'));
   await checkApiOfPackage(resolve(__dirname, '../packages/openapi-generator'));
+  await checkApiOfPackage(
+    resolve(__dirname, '../packages/temporal-middleware')
+  );
 }
 
 checkApiPackages();

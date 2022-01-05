@@ -1,7 +1,5 @@
-import {
-  mergeDefaultDeSerializersWith,
-  temporalDeSerializers
-} from '@sap-cloud-sdk/odata-v4/internal';
+import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4/internal';
+import { temporalDeSerializers_v4 } from '@sap-cloud-sdk/temporal-middleware';
 
 const customDeSerializers = {
   'Edm.String': {
@@ -14,4 +12,4 @@ const customDeSerializers = {
 mergeDefaultDeSerializersWith(customDeSerializers);
 
 // $ExpectType CustomDeSerializers<Partial<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, PlainDate, ZonedDateTime, Duration, PlainTime, any>>>
-mergeDefaultDeSerializersWith(temporalDeSerializers);
+mergeDefaultDeSerializersWith(temporalDeSerializers_v4);

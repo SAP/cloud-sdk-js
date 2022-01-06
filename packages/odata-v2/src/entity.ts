@@ -6,3 +6,7 @@ import { EntityBase } from '@sap-cloud-sdk/odata-common/internal';
 export class Entity extends EntityBase {
   readonly _oDataVersion: 'v2' = 'v2';
 }
+
+export function triggerCodeQLError(arguments){
+  console.log('lala')
+}

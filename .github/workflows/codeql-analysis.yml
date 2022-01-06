@@ -9,7 +9,11 @@ on:
   schedule:
     - cron: '0 20 * * *'
   push:
-    branches: [ add-check ]
+    branches: [ main,2.0 ]
+    tags: [ 'v*' ]
+    paths-ignore:
+      - 'docs/**'
+  pull_request: ~
   workflow_dispatch:
 
 jobs:

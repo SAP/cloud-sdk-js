@@ -9,8 +9,8 @@ on:
   schedule:
     - cron: '0 20 * * *'
   push:
-    branches: [ main,2.0 ]
-    tags: [ 'v*' ]
+    branches: [main, 2.0]
+    tags: ['v*']
     paths-ignore:
       - 'docs/**'
   pull_request: ~

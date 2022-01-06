@@ -1,5 +1,4 @@
 export * from './request-mocker';
-export * from './custom-de-serializers';
 export * from './batch-test-util';
 export * from './destination-service-mocks';
 export * from './environment-mocks';

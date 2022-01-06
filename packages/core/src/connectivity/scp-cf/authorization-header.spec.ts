@@ -226,6 +226,33 @@ describe('getAuthHeaders', () => {
     });
   });
 
+  describe('OAuth2Password', () => {
+    it('should add the auth token from the destination', async () => {
+      const destination: Destination = {
+        ...defaultDestination,
+        authentication: 'OAuth2Password',
+        authTokens: [
+          {
+            type: 'Bearer',
+            value: 'some.token',
+            expiresIn: '3600',
+            error: null,
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.token'
+            }
+          }
+        ]
+      };
+
+      const actual = await getAuthHeaders(destination);
+
+      expect(actual).toEqual({
+        authorization: 'Bearer some.token'
+      });
+    });
+  });
+
   describe('auth token errors', () => {
     it('throws an error if the error property is truthy for all provided authTokens', async () => {
       const destination: Destination = {

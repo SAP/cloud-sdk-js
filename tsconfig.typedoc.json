@@ -11,7 +11,7 @@
     "./packages/generator/**/*",
     "./packages/openapi-generator/**/*",
     "./packages/test-util/**/*",
-    "../../packages/temporal-middleware/**/*"
+    "./packages/temporal-middleware/**/*"
   ],
   "exclude": ["**/*.spec.ts"],
   "references": [

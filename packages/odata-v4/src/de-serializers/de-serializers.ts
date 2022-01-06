@@ -1,7 +1,6 @@
 import {
   DeSerializer,
-  DeSerializers as DeSerializersCommon,
-  DeserializedType as DeserializedTypeCommon
+  DeSerializers as DeSerializersCommon
 } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
@@ -49,8 +48,3 @@ export interface DeSerializers<
   'Edm.TimeOfDay': DeSerializer<TimeOfDayT>;
   'Edm.Enum': DeSerializer<EnumT>;
 }
-
-export type DeserializedType<
-  DeSerializersT extends DeSerializers,
-  EdmT
-> = DeserializedTypeCommon<DeSerializersT, EdmT>;

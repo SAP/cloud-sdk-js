@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 interface CacheInterface<T> {
   hasKey(key: string): boolean;
   get(key: string): T | undefined;
@@ -10,7 +8,7 @@ interface CacheInterface<T> {
  * @internal
  */
 export interface CacheEntry<T> {
-  expires?: moment.Moment;
+  expires?: number;
   entry: T;
 }
 
@@ -52,9 +50,9 @@ export class Cache<T> implements CacheInterface<T> {
    * Default validity period for each entry in cache.
    * If `undefined`, all cached entries will be valid indefinitely.
    */
-  private defaultValidityTime: moment.MomentInputObject | undefined;
+  private defaultValidityTime: DateInputObject | undefined;
 
-  constructor(validityTime?: moment.MomentInputObject) {
+  constructor(validityTime?: DateInputObject) {
     this.cache = {};
     this.defaultValidityTime = validityTime;
   }
@@ -95,7 +93,7 @@ export class Cache<T> implements CacheInterface<T> {
   set(key: string | undefined, entry: T, expirationTime?: number): void {
     if (key) {
       const expires = expirationTime
-        ? moment(expirationTime)
+        ? expirationTime
         : inferExpirationTime(this.defaultValidityTime);
       this.cache[key] = { entry, expires };
     }
@@ -106,11 +104,70 @@ function isExpired<T>(item: CacheEntry<T>): boolean {
   if (item.expires === undefined) {
     return false;
   }
-  return !item.expires.isAfter(moment());
+  // return !item.expires.isAfter(moment());
+  return item.expires < Date.now();
 }
 
 function inferExpirationTime(
-  expirationTime: moment.MomentInputObject | undefined
-): moment.Moment | undefined {
-  return expirationTime ? moment().add(expirationTime) : undefined;
+  expirationTime: DateInputObject | undefined
+): number | undefined {
+  return expirationTime ? addDate(expirationTime) : undefined;
+}
+
+interface DateInputObject {
+  years?: number;
+  year?: number;
+  y?: number;
+
+  months?: number;
+  month?: number;
+  M?: number;
+
+  dates?: number;
+  date?: number;
+  D?: number;
+
+  hours?: number;
+  hour?: number;
+  h?: number;
+
+  minutes?: number;
+  minute?: number;
+  m?: number;
+
+  seconds?: number;
+  second?: number;
+  s?: number;
+
+  milliseconds?: number;
+  millisecond?: number;
+  ms?: number;
+}
+
+function addDate(expirationTime: DateInputObject): number {
+  const currentDate = new Date();
+  // const years = currentDate.setFullYear(
+  //   expirationTime.years ?? expirationTime.year ?? expirationTime.y ??
+  // const months =
+  //   expirationTime?.months ?? expirationTime.month ?? expirationTime.m ?? 0;
+  // const dates =
+  //   expirationTime?.dates ?? expirationTime.dates ?? expirationTime.D;
+  const hours =
+    expirationTime?.hours ?? expirationTime.hour ?? expirationTime.h ?? 0;
+  const minutes =
+    expirationTime?.minutes ?? expirationTime.minute ?? expirationTime.m ?? 0;
+  const seconds =
+    expirationTime?.seconds ?? expirationTime.second ?? expirationTime.s ?? 0;
+  const milliseconds =
+    expirationTime?.milliseconds ??
+    expirationTime.millisecond ??
+    expirationTime.ms ??
+    0;
+
+  currentDate.setHours(currentDate.getHours() + hours);
+  currentDate.setMinutes(currentDate.getMinutes() + minutes);
+  currentDate.setSeconds(currentDate.getSeconds() + seconds);
+  currentDate.setMilliseconds(currentDate.getMilliseconds() + milliseconds);
+
+  return currentDate.valueOf();
 }

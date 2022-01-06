@@ -6,12 +6,11 @@ import {
   testFilterLambdaExpressionOnLink,
   testFilterLambdaExpressionWithOr,
   testFilterString,
-  testFilterStringV4,
-  testNestedFilterLambdaExpressionOnLink
-} from '../../../../test-resources/test/test-util/filter-factory';
+  testNestedFilterLambdaExpressionOnLink,
+  testEntityApi
+} from '../../test/test-util';
 import { filterFunctions } from '../filter-functions';
 import { filterFunction } from '../filter-function';
-import { testEntityApi } from '../../test/test-util';
 import { defaultDeSerializers } from '../de-serializers';
 import { createODataUri } from './odata-uri';
 
@@ -20,7 +19,7 @@ const { getFilter } = oDataUri;
 
 describe('getFilter', () => {
   it('for simple filters', () => {
-    expect(getFilter(testFilterStringV4.filter, testEntityApi).filter).toBe(
+    expect(getFilter(testFilterString.filter, testEntityApi).filter).toBe(
       encodeURIComponent(`${testFilterString.odataStr}`)
     );
   });

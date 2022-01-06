@@ -111,7 +111,7 @@ function isExpired<T>(item: CacheEntry<T>): boolean {
 function inferExpirationTime(
   expirationTime: DateInputObject | undefined
 ): number | undefined {
-  return expirationTime ? addDate(expirationTime) : undefined;
+  return expirationTime ? inferExpirationTimeFromDate(expirationTime) : undefined;
 }
 
 interface DateInputObject {
@@ -144,7 +144,7 @@ interface DateInputObject {
   ms?: number;
 }
 
-function addDate(expirationTime: DateInputObject): number {
+function inferExpirationTimeFromDate(expirationTime: DateInputObject): number {
   const currentDate = new Date();
   // const years = currentDate.setFullYear(
   //   expirationTime.years ?? expirationTime.year ?? expirationTime.y ??

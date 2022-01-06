@@ -29,6 +29,8 @@ import {
   PropertyMetadata,
   EntityBase as Entity
 } from '../src/internal';
+import { customTestDeSerializers } from '../../../test-resources/test/test-util';
+import { CustomDeSerializers } from '@sap-cloud-sdk/odata-v2';
 
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
@@ -515,3 +517,6 @@ export class CommonService<
 }
 
 export const { commonEntityApi } = commonService();
+export const { commonEntityApi: commonEntityApiCustom } = commonService(
+  customTestDeSerializers
+);

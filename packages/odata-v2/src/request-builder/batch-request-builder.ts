@@ -9,8 +9,11 @@ import {
   parseBatchResponse,
   BatchRequestBuilder
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers/de-serializers';
-import { entityDeserializer } from '../de-serializers';
+import {
+  DeSerializers,
+  DefaultDeSerializers,
+  entityDeserializer
+} from '../de-serializers';
 import { responseDataAccessor } from './response-data-accessor';
 
 /**
@@ -18,7 +21,7 @@ import { responseDataAccessor } from './response-data-accessor';
  * The retrieve and change sets will be executed in order, while the order within a change set can vary.
  */
 export class ODataBatchRequestBuilder<
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
 > extends BatchRequestBuilder<DeSerializersT> {
   private deSerializers: DeSerializersT;
 

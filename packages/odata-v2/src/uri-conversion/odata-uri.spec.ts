@@ -13,10 +13,17 @@ import {
   testFilterSingleLink,
   testFilterString,
   testFilterStringEncoding,
-  testEntityApi
+  testEntityApi,
+  testEntityApiCustom,
+  testFilterStringCustom,
+  testFilterSingleLinkCustom
 } from '../../test/test-util';
 import { filterFunctions } from '../filter-functions';
-import { defaultDeSerializers } from '../de-serializers';
+import {
+  defaultDeSerializers,
+  mergeDefaultDeSerializersWith
+} from '../de-serializers';
+import { customTestDeSerializers } from '../../../../test-resources/test/test-util/custom-de-serializers';
 import { createODataUri } from './odata-uri';
 
 const oDataUri = createODataUri(defaultDeSerializers);
@@ -64,7 +71,7 @@ describe('getFilter', () => {
     );
   });
 
-  it('for nested filters with and operator only', () => {
+  it("for nested filters with 'and' operator only", () => {
     expect(
       oDataUri.getFilter(
         and(
@@ -300,6 +307,30 @@ describe('getFilter for filter functions', () => {
         testEntityApi
       ).filter
     ).toBe(encodeURIComponent("not (startswith('string','str'))"));
+  });
+});
+
+describe('getFilter for custom (de-)serializers', () => {
+  const oDataUriCustom = createODataUri(
+    mergeDefaultDeSerializersWith(customTestDeSerializers)
+  );
+
+  it('for simple filter', () => {
+    expect(
+      oDataUriCustom.getFilter(
+        testFilterStringCustom.filter,
+        testEntityApiCustom
+      ).filter
+    ).toBe(encodeURIComponent(testFilterStringCustom.odataStr));
+  });
+
+  it('for linked filter', () => {
+    expect(
+      oDataUriCustom.getFilter(
+        testFilterSingleLinkCustom.filter,
+        testEntityApiCustom
+      ).filter
+    ).toBe(`(${encodeURIComponent(testFilterSingleLinkCustom.odataStr)})`);
   });
 });
 

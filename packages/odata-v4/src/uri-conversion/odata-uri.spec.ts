@@ -7,17 +7,22 @@ import {
   testFilterLambdaExpressionWithOr,
   testFilterString,
   testNestedFilterLambdaExpressionOnLink,
-  testEntityApi
+  testEntityApi,
+  testEntityApiCustom,
+  testFilterLambdaExpressionCustom
 } from '../../test/test-util';
+import { customTestDeSerializers } from '../../../../test-resources/test/test-util/custom-de-serializers';
 import { filterFunctions } from '../filter-functions';
 import { filterFunction } from '../filter-function';
-import { defaultDeSerializers } from '../de-serializers';
+import {
+  defaultDeSerializers,
+  mergeDefaultDeSerializersWith
+} from '../de-serializers';
 import { createODataUri } from './odata-uri';
 
-const oDataUri = createODataUri(defaultDeSerializers);
-const { getFilter } = oDataUri;
-
 describe('getFilter', () => {
+  const oDataUri = createODataUri(defaultDeSerializers);
+  const { getFilter } = oDataUri;
   it('for simple filters', () => {
     expect(getFilter(testFilterString.filter, testEntityApi).filter).toBe(
       encodeURIComponent(`${testFilterString.odataStr}`)
@@ -104,5 +109,18 @@ describe('getFilter', () => {
         testEntityApi
       ).filter
     ).toBe(encodeURIComponent('fn() eq [1,2,3]'));
+  });
+});
+
+describe('getFilter for custom (de-)serializers', () => {
+  const { getFilter } = createODataUri(
+    mergeDefaultDeSerializersWith(customTestDeSerializers)
+  );
+
+  it('for lambda expression', () => {
+    expect(
+      getFilter(testFilterLambdaExpressionCustom.filter, testEntityApiCustom)
+        .filter
+    ).toBe(encodeURIComponent(testFilterLambdaExpressionCustom.odataStr));
   });
 });

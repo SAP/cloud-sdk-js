@@ -37,7 +37,7 @@ export interface EntityApi<
   requestBuilder(): RequestBuilder<EntityT, DeSerializersT>;
   entityBuilder(): EntityBuilderType<EntityT, DeSerializersT>;
   entityConstructor: Constructable<EntityT>;
-  schema: Record<string, any>;
+  schema;
   customField<NullableT extends boolean>(
     fieldName: string
   ): CustomField<EntityT, DeSerializersT, NullableT>;
@@ -373,7 +373,7 @@ export function entityBuilder<
   entityApi: EntityApi<EntityT, DeSerializersT>
 ): EntityBuilderType<EntityT, DeSerializersT> {
   const builder = new EntityBuilder<EntityT, DeSerializersT>(entityApi);
-  Object.values(entityApi.schema).forEach(field => {
+  Object.values(entityApi.schema).forEach((field: any) => {
     const fieldName = `${camelCase(field._fieldName)}`;
     builder[fieldName] = function (value) {
       this.entity[fieldName] = value;

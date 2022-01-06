@@ -3,11 +3,7 @@ import {
   TestEntity,
   testService
 } from '@sap-cloud-sdk/test-services/v2/test-service';
-import {
-  customTestDeSerializers,
-  customStringPropertyValue
-} from '../../../../test-resources/test/test-util';
-import { defaultDeSerializers, CustomDeSerializers } from '../../src';
+import { defaultDeSerializers } from '../../src';
 
 export const {
   testEntityApi,
@@ -16,34 +12,6 @@ export const {
   testEntityLvl2MultiLinkApi,
   testEntityLvl2SingleLinkApi
 } = testService();
-
-export const { testEntityApi: testEntityApiCustom } = testService(
-  customTestDeSerializers
-);
-
-export function createTestEntityWithCustomDeSerializers(
-  originalData: Record<string, any>
-): TestEntity<CustomDeSerializers<typeof customTestDeSerializers>> {
-  const entity = createTestEntity(originalData) as unknown as TestEntity<
-    CustomDeSerializers<typeof customTestDeSerializers>
-  >;
-  if (entity.stringProperty) {
-    entity.stringProperty = customStringPropertyValue;
-  }
-  if (entity.keyPropertyString) {
-    entity.keyPropertyString = customStringPropertyValue;
-  }
-  if (entity.toSingleLink) {
-    entity.toSingleLink.keyProperty = customStringPropertyValue;
-  }
-
-  if (entity.toMultiLink) {
-    entity.toMultiLink.forEach(linkedEntity => {
-      linkedEntity.keyProperty = customStringPropertyValue;
-    });
-  }
-  return entity;
-}
 
 export function createTestEntity(
   originalData: Record<string, any>

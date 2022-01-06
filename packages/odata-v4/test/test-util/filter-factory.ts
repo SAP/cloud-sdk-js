@@ -1,9 +1,9 @@
-import { all, any, filterFunctions } from '@sap-cloud-sdk/odata-v4';
 import { or } from '@sap-cloud-sdk/odata-common/internal';
 import {
   TestEnumType,
   testService as testServiceV4
 } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { all, any, filterFunctions } from '../../src';
 
 const { testEntityApi, testEntityMultiLinkApi } = testServiceV4();
 

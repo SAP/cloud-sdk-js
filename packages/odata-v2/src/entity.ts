@@ -7,6 +7,6 @@ export class Entity extends EntityBase {
   readonly _oDataVersion: 'v2' = 'v2';
 }
 
-export function triggerCodeQLError(str){
-  return str.replace(str)
+export function triggerCodeQLError(raw:string){
+  var escaped = raw.replace(/"/g, '\"')
 }

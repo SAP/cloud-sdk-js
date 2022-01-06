@@ -149,7 +149,6 @@ describe('generator', () => {
         .map(stringLiteral => stringLiteral.getLiteralValue());
       expect(imports).toEqual([
         '@sap-cloud-sdk/odata-v4',
-        '@sap-cloud-sdk/odata-common/internal',
         './TestComplexType',
         './TestEnumType',
         './TestEnumTypeInt64',

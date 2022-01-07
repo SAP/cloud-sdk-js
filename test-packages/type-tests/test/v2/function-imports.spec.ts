@@ -5,7 +5,8 @@ import {
   testFunctionImportEdmReturnTypeCollection,
   testFunctionImportEntityReturnType,
   testFunctionImportEntityReturnTypeCollection,
-  testFunctionImportSharedEntityReturnType
+  testFunctionImportSharedEntityReturnType,
+  testService
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 
 // $ExpectType FunctionImportRequestBuilder<DefaultDeSerializers, TestFunctionImportEdmReturnTypeParameters<DefaultDeSerializers>, boolean>
@@ -68,3 +69,6 @@ testFunctionImportSharedEntityReturnType({}).executeRaw({
 testFunctionImportSharedEntityReturnType({}).execute({
   url: 'somePath'
 });
+
+// $ExpectType FunctionImportRequestBuilder<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, TestFunctionImportNoReturnTypeParameters<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, undefined>
+testService().functionImports.testFunctionImportNoReturnType({});

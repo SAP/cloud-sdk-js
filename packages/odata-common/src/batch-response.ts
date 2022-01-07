@@ -36,7 +36,7 @@ export interface ErrorResponse extends BatchResponseTypeGuards<any> {
  * @internal
  */
 export interface ReadResponse<DeSerializersT extends DeSerializers>
-  extends TypeGuards<DeSerializersT> {
+  extends BatchResponseTypeGuards<DeSerializersT> {
   responseType: 'ReadResponse'; // to make ReadResponse structurally different and make typeguards work as expected
   httpCode: number;
   body: Record<string, any>;

@@ -1,20 +1,19 @@
-import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   mockGetRequest
 } from '../../../../test-resources/test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
-  createOriginalTestEntityWithEnumKeyData,
-  createTestEntity,
-  createTestEntityWithEnumKey,
-  testEntityResourcePath
+  createOriginalTestEntityWithEnumKeyData
 } from '../../../../test-resources/test/test-util/test-data';
-import { defaultDeSerializers } from '../de-serializers';
-import { testEntityApi, testEntityWithEnumKeyApi } from '../../test/test-util';
+import {
+  testEntityApi,
+  testEntityWithEnumKeyApi,
+  testEntityResourcePath,
+  createTestEntityWithEnumKey,
+  createTestEntity
+} from '../../test/test-util';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
-
-const convertToUriFormat = createUriConverter(defaultDeSerializers);
 
 describe('GetByKeyRequestBuilder', () => {
   describe('execute', () => {
@@ -26,8 +25,7 @@ describe('GetByKeyRequestBuilder', () => {
         {
           path: testEntityResourcePath(
             expected.keyPropertyGuid,
-            expected.keyPropertyString,
-            convertToUriFormat
+            expected.keyPropertyString
           ),
           responseBody: entityData
         },
@@ -94,8 +92,7 @@ describe('GetByKeyRequestBuilder', () => {
       {
         path: testEntityResourcePath(
           expected.keyPropertyGuid,
-          expected.keyPropertyString,
-          convertToUriFormat
+          expected.keyPropertyString
         ),
         responseBody: entityData
       },
@@ -120,8 +117,7 @@ describe('GetByKeyRequestBuilder', () => {
       {
         path: testEntityResourcePath(
           expected.keyPropertyGuid,
-          expected.keyPropertyString,
-          convertToUriFormat
+          expected.keyPropertyString
         ),
         responseBody: entityData,
         responseHeaders: { Etag: versionIdentifier }

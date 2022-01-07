@@ -1,16 +1,11 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   mockUpdateRequest
 } from '../../../../test-resources/test/test-util/request-mocker';
-import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { defaultDeSerializers } from '../de-serializers';
-import { testEntityApi } from '../../test/test-util';
+import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { UpdateRequestBuilder } from './update-request-builder';
-
-const convertToUriFormat = createUriConverter(defaultDeSerializers);
 
 function createTestEntity() {
   const keyPropGuid = uuid();
@@ -43,8 +38,7 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          convertToUriFormat
+          entity.keyPropertyString
         )
       },
       testEntityApi

@@ -3,22 +3,40 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { DeserializedType, RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
-import { DefaultDeSerializers, DeSerializers, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import {
+  DeserializedType,
+  RequestBuilder
+} from '@sap-cloud-sdk/odata-common/internal';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntityWithEnumKey } from './TestEntityWithEnumKey';
 import { TestEnumType } from './TestEnumType';
 
 /**
  * Request builder class for operations supported on the [[TestEntityWithEnumKey]] entity.
  */
-export class TestEntityWithEnumKeyRequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<TestEntityWithEnumKey<T>, T> {
+export class TestEntityWithEnumKeyRequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<TestEntityWithEnumKey<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityWithEnumKey` entity based on its keys.
    * @param keyPropertyEnum1 Key property. See [[TestEntityWithEnumKey.keyPropertyEnum1]].
    * @returns A request builder for creating requests to retrieve one `TestEntityWithEnumKey` entity based on its keys.
    */
-  getByKey(keyPropertyEnum1: DeserializedType<T, 'API_TEST_SRV.A_TestEnumType'>): GetByKeyRequestBuilder<TestEntityWithEnumKey<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityWithEnumKey<T>, T>(this.entityApi, { KeyPropertyEnum1: keyPropertyEnum1 });
+  getByKey(
+    keyPropertyEnum1: DeserializedType<T, 'API_TEST_SRV.A_TestEnumType'>
+  ): GetByKeyRequestBuilder<TestEntityWithEnumKey<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityWithEnumKey<T>, T>(
+      this.entityApi,
+      { KeyPropertyEnum1: keyPropertyEnum1 }
+    );
   }
 
   /**
@@ -26,7 +44,9 @@ export class TestEntityWithEnumKeyRequestBuilder<T extends DeSerializers = Defau
    * @returns A request builder for creating requests to retrieve all `TestEntityWithEnumKey` entities.
    */
   getAll(): GetAllRequestBuilder<TestEntityWithEnumKey<T>, T> {
-    return new GetAllRequestBuilder<TestEntityWithEnumKey<T>, T>(this.entityApi);
+    return new GetAllRequestBuilder<TestEntityWithEnumKey<T>, T>(
+      this.entityApi
+    );
   }
 
   /**
@@ -34,8 +54,13 @@ export class TestEntityWithEnumKeyRequestBuilder<T extends DeSerializers = Defau
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntityWithEnumKey`.
    */
-  create(entity: TestEntityWithEnumKey<T>): CreateRequestBuilder<TestEntityWithEnumKey<T>, T> {
-    return new CreateRequestBuilder<TestEntityWithEnumKey<T>, T>(this.entityApi, entity);
+  create(
+    entity: TestEntityWithEnumKey<T>
+  ): CreateRequestBuilder<TestEntityWithEnumKey<T>, T> {
+    return new CreateRequestBuilder<TestEntityWithEnumKey<T>, T>(
+      this.entityApi,
+      entity
+    );
   }
 
   /**
@@ -43,8 +68,13 @@ export class TestEntityWithEnumKeyRequestBuilder<T extends DeSerializers = Defau
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntityWithEnumKey`.
    */
-  update(entity: TestEntityWithEnumKey<T>): UpdateRequestBuilder<TestEntityWithEnumKey<T>, T> {
-    return new UpdateRequestBuilder<TestEntityWithEnumKey<T>, T>(this.entityApi, entity);
+  update(
+    entity: TestEntityWithEnumKey<T>
+  ): UpdateRequestBuilder<TestEntityWithEnumKey<T>, T> {
+    return new UpdateRequestBuilder<TestEntityWithEnumKey<T>, T>(
+      this.entityApi,
+      entity
+    );
   }
 
   /**
@@ -52,14 +82,25 @@ export class TestEntityWithEnumKeyRequestBuilder<T extends DeSerializers = Defau
    * @param keyPropertyEnum1 Key property. See [[TestEntityWithEnumKey.keyPropertyEnum1]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityWithEnumKey`.
    */
-  delete(keyPropertyEnum1: TestEnumType): DeleteRequestBuilder<TestEntityWithEnumKey<T>, T>;
+  delete(
+    keyPropertyEnum1: TestEnumType
+  ): DeleteRequestBuilder<TestEntityWithEnumKey<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityWithEnumKey`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityWithEnumKey` by taking the entity as a parameter.
    */
-  delete(entity: TestEntityWithEnumKey<T>): DeleteRequestBuilder<TestEntityWithEnumKey<T>, T>;
-  delete(keyPropertyEnum1OrEntity: any): DeleteRequestBuilder<TestEntityWithEnumKey<T>, T> {
-    return new DeleteRequestBuilder<TestEntityWithEnumKey<T>, T>(this.entityApi, keyPropertyEnum1OrEntity instanceof TestEntityWithEnumKey ? keyPropertyEnum1OrEntity : { KeyPropertyEnum1: keyPropertyEnum1OrEntity! });
+  delete(
+    entity: TestEntityWithEnumKey<T>
+  ): DeleteRequestBuilder<TestEntityWithEnumKey<T>, T>;
+  delete(
+    keyPropertyEnum1OrEntity: any
+  ): DeleteRequestBuilder<TestEntityWithEnumKey<T>, T> {
+    return new DeleteRequestBuilder<TestEntityWithEnumKey<T>, T>(
+      this.entityApi,
+      keyPropertyEnum1OrEntity instanceof TestEntityWithEnumKey
+        ? keyPropertyEnum1OrEntity
+        : { KeyPropertyEnum1: keyPropertyEnum1OrEntity! }
+    );
   }
 }

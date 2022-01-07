@@ -3,21 +3,39 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { DeserializedType, RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
-import { DefaultDeSerializers, DeSerializers, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import {
+  DeserializedType,
+  RequestBuilder
+} from '@sap-cloud-sdk/odata-common/internal';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntityMultiLink } from './TestEntityMultiLink';
 
 /**
  * Request builder class for operations supported on the [[TestEntityMultiLink]] entity.
  */
-export class TestEntityMultiLinkRequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<TestEntityMultiLink<T>, T> {
+export class TestEntityMultiLinkRequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<TestEntityMultiLink<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityMultiLink` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityMultiLink.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityMultiLink` entity based on its keys.
    */
-  getByKey(keyProperty: DeserializedType<T, 'Edm.String'>): GetByKeyRequestBuilder<TestEntityMultiLink<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityMultiLink<T>, T>(this.entityApi, { KeyProperty: keyProperty });
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityMultiLink<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityMultiLink<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
+    );
   }
 
   /**
@@ -33,8 +51,13 @@ export class TestEntityMultiLinkRequestBuilder<T extends DeSerializers = Default
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntityMultiLink`.
    */
-  create(entity: TestEntityMultiLink<T>): CreateRequestBuilder<TestEntityMultiLink<T>, T> {
-    return new CreateRequestBuilder<TestEntityMultiLink<T>, T>(this.entityApi, entity);
+  create(
+    entity: TestEntityMultiLink<T>
+  ): CreateRequestBuilder<TestEntityMultiLink<T>, T> {
+    return new CreateRequestBuilder<TestEntityMultiLink<T>, T>(
+      this.entityApi,
+      entity
+    );
   }
 
   /**
@@ -42,8 +65,13 @@ export class TestEntityMultiLinkRequestBuilder<T extends DeSerializers = Default
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntityMultiLink`.
    */
-  update(entity: TestEntityMultiLink<T>): UpdateRequestBuilder<TestEntityMultiLink<T>, T> {
-    return new UpdateRequestBuilder<TestEntityMultiLink<T>, T>(this.entityApi, entity);
+  update(
+    entity: TestEntityMultiLink<T>
+  ): UpdateRequestBuilder<TestEntityMultiLink<T>, T> {
+    return new UpdateRequestBuilder<TestEntityMultiLink<T>, T>(
+      this.entityApi,
+      entity
+    );
   }
 
   /**
@@ -57,8 +85,17 @@ export class TestEntityMultiLinkRequestBuilder<T extends DeSerializers = Default
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityMultiLink` by taking the entity as a parameter.
    */
-  delete(entity: TestEntityMultiLink<T>): DeleteRequestBuilder<TestEntityMultiLink<T>, T>;
-  delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntityMultiLink<T>, T> {
-    return new DeleteRequestBuilder<TestEntityMultiLink<T>, T>(this.entityApi, keyPropertyOrEntity instanceof TestEntityMultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
+  delete(
+    entity: TestEntityMultiLink<T>
+  ): DeleteRequestBuilder<TestEntityMultiLink<T>, T>;
+  delete(
+    keyPropertyOrEntity: any
+  ): DeleteRequestBuilder<TestEntityMultiLink<T>, T> {
+    return new DeleteRequestBuilder<TestEntityMultiLink<T>, T>(
+      this.entityApi,
+      keyPropertyOrEntity instanceof TestEntityMultiLink
+        ? keyPropertyOrEntity
+        : { KeyProperty: keyPropertyOrEntity! }
+    );
   }
 }

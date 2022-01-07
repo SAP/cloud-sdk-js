@@ -1,14 +1,20 @@
 import '@sap-cloud-sdk/odata-common/internal';
-import { ActionImportRequestBuilder, DeSerializers, DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
+import {
+  ActionImportRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 /**
  * Type of the parameters to be passed to [[createTestEntityById]].
  */
-export interface CreateTestEntityByIdParameters<DeSerializersT extends DeSerializers> {
-    /**
-     * Id.
-     */
-    id: number;
+export interface CreateTestEntityByIdParameters<
+  DeSerializersT extends DeSerializers
+> {
+  /**
+   * Id.
+   */
+  id: number;
 }
 /**
  * Create Test Entity By Id.
@@ -16,15 +22,26 @@ export interface CreateTestEntityByIdParameters<DeSerializersT extends DeSeriali
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function createTestEntityById<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: CreateTestEntityByIdParameters<DeSerializersT>, deSerializers?: DeSerializersT): ActionImportRequestBuilder<DeSerializersT, CreateTestEntityByIdParameters<DeSerializersT>, TestEntity>;
+export declare function createTestEntityById<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: CreateTestEntityByIdParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  CreateTestEntityByIdParameters<DeSerializersT>,
+  TestEntity
+>;
 /**
  * Type of the parameters to be passed to [[createTestEntityByIdReturnId]].
  */
-export interface CreateTestEntityByIdReturnIdParameters<DeSerializersT extends DeSerializers> {
-    /**
-     * Id.
-     */
-    id: number;
+export interface CreateTestEntityByIdReturnIdParameters<
+  DeSerializersT extends DeSerializers
+> {
+  /**
+   * Id.
+   */
+  id: number;
 }
 /**
  * Create Test Entity By Id Return Id.
@@ -32,9 +49,18 @@ export interface CreateTestEntityByIdReturnIdParameters<DeSerializersT extends D
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function createTestEntityByIdReturnId<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: CreateTestEntityByIdReturnIdParameters<DeSerializersT>, deSerializers?: DeSerializersT): ActionImportRequestBuilder<DeSerializersT, CreateTestEntityByIdReturnIdParameters<DeSerializersT>, number>;
+export declare function createTestEntityByIdReturnId<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
+  number
+>;
 export declare const actionImports: {
-    createTestEntityById: typeof createTestEntityById;
-    createTestEntityByIdReturnId: typeof createTestEntityByIdReturnId;
+  createTestEntityById: typeof createTestEntityById;
+  createTestEntityByIdReturnId: typeof createTestEntityByIdReturnId;
 };
 //# sourceMappingURL=action-imports.d.ts.map

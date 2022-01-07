@@ -66,5 +66,5 @@ export function imports(service: VdmServiceMetadata): Import[] {
       ],
       moduleIdentifier: `@sap-cloud-sdk/odata-${service.oDataVersion}`
     }
-  ].sort();
+  ];
 }

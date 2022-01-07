@@ -63,6 +63,9 @@ async function test() {
     if (response.isReadResponse()) {
       // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
       response;
+
+      // $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
+      const result = response.as(testEntityApi);
     }
   }
 
@@ -87,6 +90,11 @@ async function test() {
     if (responseCustomDeserializer.isReadResponse()) {
       // $ExpectType ReadResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
       responseCustomDeserializer;
+
+      // $ExpectType TestEntity<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
+      const result = responseCustomDeserializer.as(
+        testService(custom).testEntityApi
+      );
     }
   }
 }

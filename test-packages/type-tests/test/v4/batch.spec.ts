@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {
   batch,
+  TestEntityApi,
   testService
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { ReadResponse } from '@sap-cloud-sdk/odata-v4/internal';
@@ -23,6 +24,9 @@ async function test() {
     if (response.isReadResponse()) {
       // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>
       response;
+
+      // $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>[]
+      const result = response.as(testEntityApi);
     }
   }
 
@@ -47,6 +51,11 @@ async function test() {
     if (responseCustomDeserializer.isReadResponse()) {
       // $ExpectType ReadResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>
       responseCustomDeserializer;
+
+      // $ExpectType TestEntity<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>[]
+      const result = responseCustomDeserializer.as(
+        testService(custom).testEntityApi
+      );
     }
   }
 }

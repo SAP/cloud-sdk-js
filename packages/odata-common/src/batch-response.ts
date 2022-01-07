@@ -21,7 +21,7 @@ interface BatchResponseTypeGuards<DeSerializersT extends DeSerializers> {
  * @internal
  */
 export interface WriteResponses<DeSerializersT extends DeSerializers>
-  extends TypeGuards<DeSerializersT> {
+  extends BatchResponseTypeGuards<DeSerializersT> {
   responses: WriteResponse<DeSerializersT>[];
 }
 /**

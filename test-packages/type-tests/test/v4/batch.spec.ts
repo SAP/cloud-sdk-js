@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
   batch,
-  TestEntityApi,
   testService
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { ReadResponse } from '@sap-cloud-sdk/odata-v4/internal';

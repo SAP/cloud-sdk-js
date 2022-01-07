@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   changeset as otherServiceChangeset,
   multipleSchemasService

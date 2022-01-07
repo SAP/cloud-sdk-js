@@ -60,13 +60,13 @@ async function test() {
   if (response.isSuccess()) {
     // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>> | WriteResponses<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
     response;
-    if (response.isReadResponse()) {
-      // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
-      response;
+  }
+  if (response.isReadResponse()) {
+    // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+    response;
 
-      // $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
-      const result = response.as(testEntityApi);
-    }
+    // $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
+    const result = response.as(testEntityApi);
   }
 
   // Custom deserializer - first vaule in generic from string to number
@@ -87,14 +87,14 @@ async function test() {
   if (responseCustomDeserializer.isSuccess()) {
     // $ExpectType ReadResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>> | WriteResponses<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
     responseCustomDeserializer;
-    if (responseCustomDeserializer.isReadResponse()) {
-      // $ExpectType ReadResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
-      responseCustomDeserializer;
+  }
+  if (responseCustomDeserializer.isReadResponse()) {
+    // $ExpectType ReadResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+    responseCustomDeserializer;
 
-      // $ExpectType TestEntity<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
-      const result = responseCustomDeserializer.as(
+    // $ExpectType TestEntity<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
+    const result = responseCustomDeserializer.as(
         testService(custom).testEntityApi
-      );
-    }
+    );
   }
 }

@@ -1,5 +1,6 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
+  BatchResponse,
   ErrorResponse,
   ReadResponse,
   WriteResponse,
@@ -44,9 +45,7 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
   deserializeBatchResponse(
     parsedBatchResponse: (ResponseData[] | ResponseData)[]
   ): (
-    | ErrorResponse
-    | ReadResponse<DeSerializersT>
-    | WriteResponses<DeSerializersT>
+   BatchResponse<DeSerializersT>
   )[] {
     // TODO replace to batch response
     return parsedBatchResponse.map(responseData => {
@@ -72,7 +71,9 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
         this.deserializer
       ),
       isSuccess: () => true,
-      isReadResponse: () => true
+      isError: () => false,
+      isReadResponse: ()=>true,
+      isWriteResponses: ()=>false,
     };
   }
 
@@ -80,7 +81,10 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
     return {
       ...responseData,
       responseType: 'ErrorResponse',
-      isSuccess: () => false
+      isSuccess: () => false,
+      isError: () => true,
+      isReadResponse: ()=>false,
+      isWriteResponses: ()=>false,
     };
   }
 
@@ -107,7 +111,9 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
         this.deserializeChangeSetSubResponse(subResponseData)
       ),
       isSuccess: () => true,
-      isReadResponse: () => false
+      isError: () => false,
+      isReadResponse: ()=>false,
+      isWriteResponses: ()=>true,
     };
   }
 

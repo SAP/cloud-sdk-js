@@ -8,28 +8,28 @@ export type BatchResponse<DeSerializersT extends DeSerializers> =
   | ReadResponse<DeSerializersT>
   | WriteResponses<DeSerializersT>;
 
-interface SuccessTypeGuard<DeSerializersT extends DeSerializers> {
-  isSuccess: () => this is
-    | ReadResponse<DeSerializersT>
-    | WriteResponses<DeSerializersT>;
-}
 
-interface ReadResponseTypeGuard<DeSerializersT extends DeSerializers> {
+
+interface TypeGuards<DeSerializersT extends DeSerializers> {
   isReadResponse: () => this is ReadResponse<DeSerializersT>;
+  isSuccess: () => this is
+      | ReadResponse<DeSerializersT>
+      | WriteResponses<DeSerializersT>;
+  isError: () => this is ErrorResponse;
+  isWriteResponses: () => this is WriteResponses<DeSerializersT>;
 }
 
 /**
  * @internal
  */
 export interface WriteResponses<DeSerializersT extends DeSerializers>
-  extends SuccessTypeGuard<DeSerializersT>,
-    ReadRespneTypeGuard<DeSerializersT> {
+  extends TypeGuards<DeSerializersT> {
   responses: WriteResponse<DeSerializersT>[];
 }
 /**
  * @internal
  */
-export interface ErrorResponse extends SuccessTypeGuard<any> {
+export interface ErrorResponse extends TypeGuards<any> {
   responseType: 'ErrorResponse'; // to make ErrorResponse structurally different and make typeguards work as expected
   httpCode: number;
   body: Record<string, any>;
@@ -38,8 +38,7 @@ export interface ErrorResponse extends SuccessTypeGuard<any> {
  * @internal
  */
 export interface ReadResponse<DeSerializersT extends DeSerializers>
-  extends SuccessTypeGuard<DeSerializersT>,
-    ReadRespneTypeGuard<DeSerializersT> {
+  extends TypeGuards<DeSerializersT> {
   responseType: 'ReadResponse'; // to make ReadResponse structurally different and make typeguards work as expected
   httpCode: number;
   body: Record<string, any>;

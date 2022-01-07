@@ -3,11 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v4';
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import { TestComplexType1, TestComplexType1Field } from './TestComplexType1';
 import { TestEnumType1 } from './TestEnumType1';
@@ -15,10 +11,7 @@ import { TestEnumType1 } from './TestEnumType1';
 /**
  * This class represents the entity "A_TestEntity1" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class TestEntity1<T extends DeSerializers = DefaultDeSerializers>
-  extends Entity
-  implements TestEntity1Type<T>
-{
+export class TestEntity1<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntity1Type<T> {
   /**
    * Technical entity name for TestEntity1.
    */
@@ -52,9 +45,7 @@ export class TestEntity1<T extends DeSerializers = DefaultDeSerializers>
   complexTypeProperty?: TestComplexType1<T> | null;
 }
 
-export interface TestEntity1Type<
-  T extends DeSerializers = DefaultDeSerializers
-> {
+export interface TestEntity1Type<T extends DeSerializers = DefaultDeSerializers> {
   keyPropertyString: DeserializedType<T, 'Edm.String'>;
   int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   enumProperty?: TestEnumType1 | null;

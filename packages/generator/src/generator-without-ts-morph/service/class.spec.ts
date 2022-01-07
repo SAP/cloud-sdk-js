@@ -54,6 +54,6 @@ describe('class', () => {
     const result = serviceClass({
       ...service
     });
-    expect(result).toContain('get batch( ): typeof batch');
+    expect(result).toContain('get batch(): typeof batch');
   });
 });

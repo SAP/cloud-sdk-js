@@ -99,6 +99,10 @@ async function readClasses(): Promise<string[]> {
   );
 }
 
+function removeBatch(service: string): string{
+  return service.replace(/get batch\(\)\: typeof batch \{\n\s+return batch;\n\s+}/g,'');
+}
+
 async function generateCommonTestEntity() {
   const classes = await readClasses();
   const [
@@ -127,7 +131,7 @@ async function generateCommonTestEntity() {
     linkApi,
     entity,
     entityApi,
-    service,
+    removeBatch(service),
     'export const { commonEntityApi } = commonService();'
   ].join(unixEOL);
   await promises.writeFile(

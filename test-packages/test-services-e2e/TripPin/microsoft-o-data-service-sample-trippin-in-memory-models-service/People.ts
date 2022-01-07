@@ -3,11 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v4';
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import { Location } from './Location';
 import { PersonGender } from './PersonGender';
@@ -16,10 +12,7 @@ import { Photos, PhotosType } from './Photos';
 /**
  * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export class People<T extends DeSerializers = DefaultDeSerializers>
-  extends Entity
-  implements PeopleType<T>
-{
+export class People<T extends DeSerializers = DefaultDeSerializers> extends Entity implements PeopleType<T> {
   /**
    * Technical entity name for People.
    */
@@ -27,8 +20,7 @@ export class People<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath =
-    'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * All key fields of the People entity
    */

@@ -3,5 +3,5 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-export * from './default-api';
-export * from './schema';
+    export * from './default-api';
+    export * from './schema';

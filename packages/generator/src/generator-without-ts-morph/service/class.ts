@@ -77,8 +77,8 @@ function getActionFunctionImports(
 
 function getBatch() {
   return codeBlock`
-  get batch( ): typeof batch {
-    return batch
+  get batch(): typeof batch {
+    return batch;
   }
   `;
 }

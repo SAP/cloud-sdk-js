@@ -76,17 +76,17 @@ async function test() {
   };
 
   // $ExpectType BatchResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
-  const responsesCustomDesirializer = await batch(
+  const responsesCustomDeserializer = await batch(
     testService(custom).testEntityApi.requestBuilder().getAll()
   ).execute({} as any);
 
-  const responseCustomDesirializer = responsesCustomDesirializer[0];
-  if (responseCustomDesirializer.isSuccess()) {
+  const responseCustomDeserializer = responsesCustomDeserializer[0];
+  if (responseCustomDeserializer.isSuccess()) {
     // $ExpectType ReadResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>> | WriteResponses<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
-    responseCustomDesirializer;
-    if (responseCustomDesirializer.isReadResponse()) {
+    responseCustomDeserializer;
+    if (responseCustomDeserializer.isReadResponse()) {
       // $ExpectType ReadResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
-      responseCustomDesirializer;
+      responseCustomDeserializer;
     }
   }
 }

@@ -1,10 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { CommonEntity, commonEntityApi } from '../../test/common-entity';
-import {
-  commonODataUri,
-  commonUriConverter
-} from '../../test/common-request-config';
-import { testEntityResourcePath } from '../../../../test-resources/test/test-util';
+import { commonODataUri } from '../../test/common-request-config';
+import { testEntityResourcePath } from '../../test/test-util';
 import { DefaultDeSerializers } from '../de-serializers';
 import { ODataGetByKeyRequestConfig } from './odata-get-by-key-request-config';
 
@@ -26,12 +23,7 @@ describe('ODataGetByKeyRequestConfig', () => {
       KeyPropertyString: keyPropString
     };
     expect(config.resourcePath()).toEqual(
-      testEntityResourcePath(
-        keyPropGuid,
-        keyPropString,
-        commonUriConverter,
-        'A_CommonEntity'
-      )
+      testEntityResourcePath(keyPropGuid, keyPropString)
     );
   });
 

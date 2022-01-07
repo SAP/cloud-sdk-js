@@ -4,9 +4,8 @@ import {
   createGetResourcePathForKeys,
   createUriConverter
 } from '@sap-cloud-sdk/odata-common/internal';
-import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { defaultDeSerializers } from '../de-serializers';
-import { testEntityApi } from '../../test/test-util';
+import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 
 const uriConverter = createUriConverter(defaultDeSerializers);
 const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
@@ -21,7 +20,7 @@ describe('get resource path', () => {
     };
 
     expect(getResourcePathForKeys(keys, testEntityApi)).toEqual(
-      testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
+      testEntityResourcePath(keyPropGuid, keyPropString)
     );
   });
 

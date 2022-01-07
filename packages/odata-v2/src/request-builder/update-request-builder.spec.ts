@@ -1,17 +1,17 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   mockUpdateRequest
-} from '../../../../test-resources/test/test-util/request-mocker';
-import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { defaultDeSerializers } from '../de-serializers';
-import { testEntityApi, testEntityMultiLinkApi } from '../../test/test-util';
+} from '../../../../test-resources/test/test-util';
+import {
+  testEntityApi,
+  testEntityMultiLinkApi,
+  testEntityResourcePath
+} from '../../test/test-util';
 import { UpdateRequestBuilder } from './update-request-builder';
 
-const uriConverter = createUriConverter(defaultDeSerializers);
 function createTestEntity() {
   const keyPropGuid = uuid();
   const keyPropString = 'stringId';
@@ -71,8 +71,7 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
+          entity.keyPropertyString
         )
       },
       testEntityApi
@@ -100,8 +99,7 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
+          entity.keyPropertyString
         )
       },
       testEntityApi
@@ -129,8 +127,7 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
+          entity.keyPropertyString
         )
       },
       testEntityApi
@@ -159,8 +156,7 @@ describe('UpdateRequestBuilder', () => {
         body: putRequestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
+          entity.keyPropertyString
         ),
         method: 'put'
       },
@@ -183,8 +179,7 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
+          entity.keyPropertyString
         )
       },
       testEntityApi
@@ -220,8 +215,7 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
+          entity.keyPropertyString
         ),
         additionalHeaders: { 'if-match': 'not-a-star' }
       },
@@ -245,8 +239,7 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
+          entity.keyPropertyString
         ),
         additionalHeaders: { 'if-match': customVersionIdentifier }
       },
@@ -270,8 +263,7 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
+          entity.keyPropertyString
         ),
         additionalHeaders: { 'if-match': '*' }
       },
@@ -319,8 +311,7 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
+          entity.keyPropertyString
         ),
         statusCode: 204,
         responseHeaders: { Etag: eTag }
@@ -349,8 +340,7 @@ describe('UpdateRequestBuilder', () => {
       {
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
+          entity.keyPropertyString
         ),
         statusCode: 201
       },
@@ -394,8 +384,7 @@ describe('UpdateRequestBuilder', () => {
           body: requestBody,
           path: testEntityResourcePath(
             entity.keyPropertyGuid,
-            entity.keyPropertyString,
-            uriConverter
+            entity.keyPropertyString
           ),
           responseBody: response
         },

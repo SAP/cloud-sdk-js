@@ -1,4 +1,9 @@
-import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  TestEntity,
+  testService
+} from '@sap-cloud-sdk/test-services/v2/test-service';
+import { defaultDeSerializers } from '../src';
 
 export const {
   testEntityApi,
@@ -7,3 +12,38 @@ export const {
   testEntityLvl2MultiLinkApi,
   testEntityLvl2SingleLinkApi
 } = testService();
+
+export function createTestEntity(
+  originalData: Record<string, any>
+): TestEntity {
+  const entity = testEntityApi
+    .entityBuilder()
+    .keyPropertyGuid(originalData.KeyPropertyGuid)
+    .keyPropertyString(originalData.KeyPropertyString)
+    .stringProperty(originalData.StringProperty)
+    .booleanProperty(originalData.BooleanProperty)
+    .int16Property(originalData.Int16Property)
+    .build()
+    .setOrInitializeRemoteState();
+
+  if (originalData.to_SingleLink) {
+    entity.toSingleLink = testEntitySingleLinkApi
+      .entityBuilder()
+      .keyProperty(originalData.to_SingleLink.KeyProperty)
+      .build();
+  }
+
+  if (originalData.to_MultiLink) {
+    entity.toMultiLink = originalData.to_MultiLink.map(ml =>
+      testEntityMultiLinkApi.entityBuilder().keyProperty(ml.KeyProperty).build()
+    );
+  }
+
+  return entity;
+}
+
+export function testEntityResourcePath(guid, str): string {
+  return `A_TestEntity(KeyPropertyGuid=${createUriConverter(
+    defaultDeSerializers
+  )(guid, 'Edm.Guid')},KeyPropertyString='${str}')`;
+}

@@ -33,7 +33,9 @@
   },
   "dependencies": {
     "@sap-cloud-sdk/odata-common": "^1.50.0",
-    "typescript": "~4.4.4",
     "@js-temporal/polyfill": "^0.3.0"
+  },
+  "devDependencies": {
+    "typescript": "~4.4.4"
   }
 }

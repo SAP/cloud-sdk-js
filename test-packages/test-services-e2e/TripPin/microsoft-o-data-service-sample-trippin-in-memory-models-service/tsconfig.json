@@ -2,9 +2,7 @@
   "compilerOptions": {
     "target": "es2019",
     "module": "commonjs",
-    "lib": [
-      "esnext"
-    ],
+    "lib": ["esnext"],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -14,13 +12,6 @@
     "inlineSources": false,
     "strict": true
   },
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "dist/**/*",
-    "test/**/*",
-    "**/*.spec.ts",
-    "node_modules/**/*"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"]
 }

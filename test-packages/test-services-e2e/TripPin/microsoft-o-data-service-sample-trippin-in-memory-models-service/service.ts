@@ -13,6 +13,7 @@ import {
 } from './function-imports';
 import { resetDataSource, ResetDataSourceParameters } from './action-imports';
 import { BigNumber } from 'bignumber.js';
+import { batch } from './BatchRequest';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,
@@ -142,5 +143,9 @@ export class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
       resetDataSource: (parameter: ResetDataSourceParameters<DeSerializersT>) =>
         resetDataSource(parameter, this.deSerializers)
     };
+  }
+
+  get batch(): typeof batch {
+    return batch;
   }
 }

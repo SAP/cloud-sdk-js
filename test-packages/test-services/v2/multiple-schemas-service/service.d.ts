@@ -1,5 +1,6 @@
 import { MultiSchemaTestEntityApi } from './MultiSchemaTestEntityApi';
 import { BigNumber } from 'bignumber.js';
+import { batch } from './BatchRequest';
 import { Moment } from 'moment';
 import {
   DeSerializers,
@@ -75,5 +76,6 @@ export declare class MultipleSchemasService<
   constructor(deSerializers: DeSerializersT);
   private initApi;
   get multiSchemaTestEntityApi(): MultiSchemaTestEntityApi<DeSerializersT>;
+  get batch(): typeof batch;
 }
 //# sourceMappingURL=service.d.ts.map

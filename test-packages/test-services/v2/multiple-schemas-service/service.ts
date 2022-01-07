@@ -5,6 +5,7 @@
  */
 import { MultiSchemaTestEntityApi } from './MultiSchemaTestEntityApi';
 import { BigNumber } from 'bignumber.js';
+import { batch } from './BatchRequest';
 import { Moment } from 'moment';
 import {
   defaultDeSerializers,
@@ -98,5 +99,9 @@ export class MultipleSchemasService<
 
   get multiSchemaTestEntityApi(): MultiSchemaTestEntityApi<DeSerializersT> {
     return this.initApi('multiSchemaTestEntityApi', MultiSchemaTestEntityApi);
+  }
+
+  get batch(): typeof batch {
+    return batch;
   }
 }

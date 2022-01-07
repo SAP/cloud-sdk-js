@@ -22,7 +22,7 @@ export function entityImportDeclarations(
     ),
     ...complexTypeImportDeclarations(entity.properties),
     ...enumTypeImportDeclarations(entity.properties)
-  ].sort();
+  ];
 }
 /**
  * @internal

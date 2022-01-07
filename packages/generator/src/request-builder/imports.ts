@@ -28,7 +28,7 @@ export function requestBuilderImportDeclarations(
     ),
     entityImportDeclaration(entity),
     ...entityKeyImportDeclaration(entity.keys)
-  ].sort();
+  ];
 }
 
 function requestBuilderImports(entity: VdmEntity) {

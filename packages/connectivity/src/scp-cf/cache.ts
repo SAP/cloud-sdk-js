@@ -125,9 +125,9 @@ function inferExpirationTime(
 function inferExpirationTimeFromDate(expirationTime: DateInputObject): number {
   const currentDate = new Date();
   const milliseconds =
-    ((expirationTime?.hours ?? 0) * 60 * 60 * 1000) +
-    ((expirationTime?.minutes ?? 0) * 60 * 1000) +
-    ((expirationTime?.seconds ?? 0) * 1000) +
+    (expirationTime?.hours ?? 0) * 60 * 60 * 1000 +
+    (expirationTime?.minutes ?? 0) * 60 * 1000 +
+    (expirationTime?.seconds ?? 0) * 1000 +
     (expirationTime?.milliseconds ?? 0);
 
   return currentDate

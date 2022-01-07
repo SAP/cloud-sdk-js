@@ -10,7 +10,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers, entityDeserializer } from '../de-serializers';
 import { BatchResponse } from '../batch-response';
-import {responseDataAccessor} from "./response-data-accessor";
+import { responseDataAccessor } from './response-data-accessor';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.

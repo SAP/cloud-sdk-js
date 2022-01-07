@@ -20,16 +20,18 @@ export type BatchResponse<
  */
 export type WriteResponses<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
->  = WriteResponsesCommon<DeSerializersT>;
+> = WriteResponsesCommon<DeSerializersT>;
 
 /**
  * @internal
  */
-export  type ReadResponse<
+export type ReadResponse<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
->  = ReadResponseCommon<DeSerializersT>;
+> = ReadResponseCommon<DeSerializersT>;
 
 /**
  * @internal
  */
-export type WriteResponse<DeSerializersT extends DeSerializers  = DefaultDeSerializers> = WriteResponseCommon<DeSerializersT>;
+export type WriteResponse<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> = WriteResponseCommon<DeSerializersT>;

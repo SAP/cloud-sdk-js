@@ -9,7 +9,6 @@ exports.Casetest_1Api = void 0;
 const Casetest_1_1 = require('./Casetest_1');
 const Casetest_1RequestBuilder_1 = require('./Casetest_1RequestBuilder');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 class Casetest_1Api {
   constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
     this.entityConstructor = Casetest_1_1.Casetest_1;
@@ -23,7 +22,7 @@ class Casetest_1Api {
     return new Casetest_1RequestBuilder_1.Casetest_1RequestBuilder(this);
   }
   entityBuilder() {
-    return (0, internal_1.entityBuilder)(this);
+    return (0, odata_v2_1.entityBuilder)(this);
   }
   customField(fieldName, isNullable = false) {
     return new odata_v2_1.CustomField(
@@ -34,7 +33,7 @@ class Casetest_1Api {
     );
   }
   get schema() {
-    const fieldBuilder = new internal_1.FieldBuilder(
+    const fieldBuilder = new odata_v2_1.FieldBuilder(
       Casetest_1_1.Casetest_1,
       this.deSerializers
     );
@@ -53,7 +52,7 @@ class Casetest_1Api {
        *
        * All fields selector.
        */
-      ALL_FIELDS: new internal_1.AllFields('*', Casetest_1_1.Casetest_1)
+      ALL_FIELDS: new odata_v2_1.AllFields('*', Casetest_1_1.Casetest_1)
     };
   }
 }

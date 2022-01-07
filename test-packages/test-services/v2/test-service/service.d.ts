@@ -29,10 +29,13 @@ import {
   CreateTestComplexTypeParameters,
   FContinueParameters
 } from './function-imports';
-import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
-import { DeSerializers, DefaultDeSerializers } from '@sap-cloud-sdk/odata-v2';
+import {
+  DeSerializers,
+  DefaultDeSerializers,
+  Time
+} from '@sap-cloud-sdk/odata-v2';
 export declare function testService<
   BinaryT = string,
   BooleanT = boolean,

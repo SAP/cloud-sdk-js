@@ -7,19 +7,17 @@ import { PersonGender } from './PersonGender';
 import {
   CustomField,
   DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v4';
-import {
+  DeSerializers,
+  AllFields,
+  EntityBuilderType,
+  EntityApi,
   EdmTypeField,
   CollectionField,
   EnumField,
   OrderableEdmTypeField,
   OneToManyLink,
-  OneToOneLink,
-  AllFields,
-  EntityBuilderType,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
+  OneToOneLink
+} from '@sap-cloud-sdk/odata-v4';
 export declare class PeopleApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<People<DeSerializersT>, DeSerializersT>

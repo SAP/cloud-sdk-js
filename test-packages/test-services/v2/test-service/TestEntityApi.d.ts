@@ -10,17 +10,15 @@ import { TestComplexTypeField } from './TestComplexType';
 import {
   CustomField,
   DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v2';
-import {
+  DeSerializers,
+  AllFields,
+  EntityBuilderType,
+  EntityApi,
   EdmTypeField,
   OrderableEdmTypeField,
   Link,
-  OneToOneLink,
-  AllFields,
-  EntityBuilderType,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
+  OneToOneLink
+} from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<TestEntity<DeSerializersT>, DeSerializersT>

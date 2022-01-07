@@ -9,7 +9,6 @@ exports.TestEntityCircularLinkParentApi = void 0;
 const TestEntityCircularLinkParent_1 = require('./TestEntityCircularLinkParent');
 const TestEntityCircularLinkParentRequestBuilder_1 = require('./TestEntityCircularLinkParentRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 class TestEntityCircularLinkParentApi {
   constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
     this.entityConstructor =
@@ -18,12 +17,12 @@ class TestEntityCircularLinkParentApi {
   }
   _addNavigationProperties(linkedApis) {
     this.navigationPropertyFields = {
-      TO_FIRST_CHILD: new internal_1.OneToOneLink(
+      TO_FIRST_CHILD: new odata_v4_1.OneToOneLink(
         'to_FirstChild',
         this,
         linkedApis[0]
       ),
-      TO_CHILDREN: new internal_1.OneToManyLink(
+      TO_CHILDREN: new odata_v4_1.OneToManyLink(
         'to_Children',
         this,
         linkedApis[1]
@@ -37,7 +36,7 @@ class TestEntityCircularLinkParentApi {
     );
   }
   entityBuilder() {
-    return (0, internal_1.entityBuilder)(this);
+    return (0, odata_v4_1.entityBuilder)(this);
   }
   customField(fieldName, isNullable = false) {
     return new odata_v4_1.CustomField(
@@ -48,7 +47,7 @@ class TestEntityCircularLinkParentApi {
     );
   }
   get schema() {
-    const fieldBuilder = new internal_1.FieldBuilder(
+    const fieldBuilder = new odata_v4_1.FieldBuilder(
       TestEntityCircularLinkParent_1.TestEntityCircularLinkParent,
       this.deSerializers
     );
@@ -67,7 +66,7 @@ class TestEntityCircularLinkParentApi {
        *
        * All fields selector.
        */
-      ALL_FIELDS: new internal_1.AllFields(
+      ALL_FIELDS: new odata_v4_1.AllFields(
         '*',
         TestEntityCircularLinkParent_1.TestEntityCircularLinkParent
       )

@@ -9,7 +9,6 @@ exports.TestEntityOtherMultiLinkApi = void 0;
 const TestEntityOtherMultiLink_1 = require('./TestEntityOtherMultiLink');
 const TestEntityOtherMultiLinkRequestBuilder_1 = require('./TestEntityOtherMultiLinkRequestBuilder');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 class TestEntityOtherMultiLinkApi {
   constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
     this.entityConstructor =
@@ -26,7 +25,7 @@ class TestEntityOtherMultiLinkApi {
     );
   }
   entityBuilder() {
-    return (0, internal_1.entityBuilder)(this);
+    return (0, odata_v2_1.entityBuilder)(this);
   }
   customField(fieldName, isNullable = false) {
     return new odata_v2_1.CustomField(
@@ -37,7 +36,7 @@ class TestEntityOtherMultiLinkApi {
     );
   }
   get schema() {
-    const fieldBuilder = new internal_1.FieldBuilder(
+    const fieldBuilder = new odata_v2_1.FieldBuilder(
       TestEntityOtherMultiLink_1.TestEntityOtherMultiLink,
       this.deSerializers
     );
@@ -56,7 +55,7 @@ class TestEntityOtherMultiLinkApi {
        *
        * All fields selector.
        */
-      ALL_FIELDS: new internal_1.AllFields(
+      ALL_FIELDS: new odata_v2_1.AllFields(
         '*',
         TestEntityOtherMultiLink_1.TestEntityOtherMultiLink
       )

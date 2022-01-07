@@ -14,7 +14,6 @@ exports.actionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const service_1 = require('./service');
 const TestComplexType_1 = require('./TestComplexType');
@@ -157,7 +156,7 @@ function testActionImportSharedEntityReturnType(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportSharedEntityReturnType',
     data =>
-      (0, internal_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, odata_v4_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestActionImportSharedEntityReturnType'
       ),
@@ -182,7 +181,7 @@ function testActionImportSharedEntityReturnTypeCollection(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportSharedEntityReturnTypeCollection',
     data =>
-      (0, internal_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, odata_v4_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestActionImportSharedEntityReturnTypeCollection'
       ),

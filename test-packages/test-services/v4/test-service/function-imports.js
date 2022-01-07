@@ -18,7 +18,6 @@ exports.functionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const service_1 = require('./service');
 const TestComplexType_1 = require('./TestComplexType');
@@ -77,17 +76,17 @@ function testFunctionImportNullableTest(
   deSerializers = odata_v4_1.defaultDeSerializers
 ) {
   const params = {
-    nullablePerDefault: new internal_1.FunctionImportParameter(
+    nullablePerDefault: new odata_v4_1.FunctionImportParameter(
       'NullablePerDefault',
       'Edm.String',
       parameters.nullablePerDefault
     ),
-    nullableExplicit: new internal_1.FunctionImportParameter(
+    nullableExplicit: new odata_v4_1.FunctionImportParameter(
       'NullableExplicit',
       'Edm.String',
       parameters.nullableExplicit
     ),
-    nonNullable: new internal_1.FunctionImportParameter(
+    nonNullable: new odata_v4_1.FunctionImportParameter(
       'NonNullable',
       'Edm.String',
       parameters.nonNullable
@@ -166,7 +165,7 @@ function testFunctionImportSharedEntityReturnType(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnType',
     data =>
-      (0, internal_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, odata_v4_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnType'
       ),
@@ -190,7 +189,7 @@ function testFunctionImportSharedEntityReturnTypeCollection(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnTypeCollection',
     data =>
-      (0, internal_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, odata_v4_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnTypeCollection'
       ),
@@ -260,22 +259,22 @@ function testFunctionImportMultipleParams(
   deSerializers = odata_v4_1.defaultDeSerializers
 ) {
   const params = {
-    stringParam: new internal_1.FunctionImportParameter(
+    stringParam: new odata_v4_1.FunctionImportParameter(
       'StringParam',
       'Edm.String',
       parameters.stringParam
     ),
-    nonNullableStringParam: new internal_1.FunctionImportParameter(
+    nonNullableStringParam: new odata_v4_1.FunctionImportParameter(
       'NonNullableStringParam',
       'Edm.String',
       parameters.nonNullableStringParam
     ),
-    nullableBooleanParam: new internal_1.FunctionImportParameter(
+    nullableBooleanParam: new odata_v4_1.FunctionImportParameter(
       'NullableBooleanParam',
       'Edm.Boolean',
       parameters.nullableBooleanParam
     ),
-    nullableGeographyPointParam: new internal_1.FunctionImportParameter(
+    nullableGeographyPointParam: new odata_v4_1.FunctionImportParameter(
       'NullableGeographyPointParam',
       'Edm.Any',
       parameters.nullableGeographyPointParam

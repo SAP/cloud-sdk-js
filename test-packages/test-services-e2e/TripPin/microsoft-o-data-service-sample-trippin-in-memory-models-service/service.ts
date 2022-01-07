@@ -12,14 +12,14 @@ import {
   GetNearestAirportParameters
 } from './function-imports';
 import { resetDataSource, ResetDataSourceParameters } from './action-imports';
-import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,
   DeSerializers,
   DefaultDeSerializers,
-  mergeDefaultDeSerializersWith
+  mergeDefaultDeSerializersWith,
+  Time
 } from '@sap-cloud-sdk/odata-v4';
 
 export function microsoftODataServiceSampleTrippinInMemoryModelsService<

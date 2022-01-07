@@ -1,9 +1,9 @@
 import {
   Entity,
   DefaultDeSerializers,
-  DeSerializers
+  DeSerializers,
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import { TestComplexType1 } from './TestComplexType1';
 import { TestEnumType1 } from './TestEnumType1';
 /**

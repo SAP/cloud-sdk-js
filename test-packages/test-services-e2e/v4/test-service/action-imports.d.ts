@@ -1,4 +1,3 @@
-import '@sap-cloud-sdk/odata-common/internal';
 import {
   ActionImportRequestBuilder,
   DeSerializers,

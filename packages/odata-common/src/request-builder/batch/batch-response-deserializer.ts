@@ -45,7 +45,6 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
   deserializeBatchResponse(
     parsedBatchResponse: (ResponseData[] | ResponseData)[]
   ): BatchResponse<DeSerializersT>[] {
-    // TODO replace to batch response
     return parsedBatchResponse.map(responseData => {
       if (Array.isArray(responseData)) {
         return this.deserializeChangeSet(responseData);

@@ -39,7 +39,7 @@ async function test() {
   };
 
   // $ExpectType BatchResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>[]
-  const responsesCustomDeserializer = await batch(
+  const responsesCustomDeserializer = await testService().batch(
     testService(custom).testEntityApi.requestBuilder().getAll()
   ).execute({} as any);
 

@@ -52,7 +52,7 @@ const responseWithDefault = {} as ReadResponse;
 
 async function test() {
   // $ExpectType BatchResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
-  const responses = await batch(
+  const responses = await testService().batch(
     testEntityApi.requestBuilder().getAll()
   ).execute({} as any);
 

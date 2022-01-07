@@ -14,7 +14,7 @@ interface SuccessTypeGuard<DeSerializersT extends DeSerializers> {
     | WriteResponses<DeSerializersT>;
 }
 
-interface ReadRespneTypeGuard<DeSerializersT extends DeSerializers> {
+interface ReadResponseTypeGuard<DeSerializersT extends DeSerializers> {
   isReadResponse: () => this is ReadResponse<DeSerializersT>;
 }
 

@@ -44,9 +44,7 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
    */
   deserializeBatchResponse(
     parsedBatchResponse: (ResponseData[] | ResponseData)[]
-  ): (
-   BatchResponse<DeSerializersT>
-  )[] {
+  ): BatchResponse<DeSerializersT>[] {
     // TODO replace to batch response
     return parsedBatchResponse.map(responseData => {
       if (Array.isArray(responseData)) {
@@ -72,8 +70,8 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
       ),
       isSuccess: () => true,
       isError: () => false,
-      isReadResponse: ()=>true,
-      isWriteResponses: ()=>false,
+      isReadResponse: () => true,
+      isWriteResponses: () => false
     };
   }
 
@@ -83,8 +81,8 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
       responseType: 'ErrorResponse',
       isSuccess: () => false,
       isError: () => true,
-      isReadResponse: ()=>false,
-      isWriteResponses: ()=>false,
+      isReadResponse: () => false,
+      isWriteResponses: () => false
     };
   }
 
@@ -112,8 +110,8 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
       ),
       isSuccess: () => true,
       isError: () => false,
-      isReadResponse: ()=>false,
-      isWriteResponses: ()=>true,
+      isReadResponse: () => false,
+      isWriteResponses: () => true
     };
   }
 

@@ -8,13 +8,11 @@ export type BatchResponse<DeSerializersT extends DeSerializers> =
   | ReadResponse<DeSerializersT>
   | WriteResponses<DeSerializersT>;
 
-
-
 interface TypeGuards<DeSerializersT extends DeSerializers> {
   isReadResponse: () => this is ReadResponse<DeSerializersT>;
   isSuccess: () => this is
-      | ReadResponse<DeSerializersT>
-      | WriteResponses<DeSerializersT>;
+    | ReadResponse<DeSerializersT>
+    | WriteResponses<DeSerializersT>;
   isError: () => this is ErrorResponse;
   isWriteResponses: () => this is WriteResponses<DeSerializersT>;
 }

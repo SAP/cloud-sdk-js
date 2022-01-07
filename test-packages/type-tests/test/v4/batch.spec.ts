@@ -55,7 +55,7 @@ async function test() {
 
     // $ExpectType TestEntity<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>[]
     const result = responseCustomDeserializer.as(
-        testService(custom).testEntityApi
+      testService(custom).testEntityApi
     );
   }
 }

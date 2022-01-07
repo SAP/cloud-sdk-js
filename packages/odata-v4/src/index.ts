@@ -32,7 +32,7 @@ export {
   GetByKeyRequestBuilder,
   UpdateRequestBuilder
 } from './request-builder';
-export { ODataBatchRequestBuilder } from './request-builder/batch-request-builder';
+export { ODataBatchRequestBuilder } from './request-builder';
 export { ActionImportParameter } from './request';
 
 export { Entity } from './entity';

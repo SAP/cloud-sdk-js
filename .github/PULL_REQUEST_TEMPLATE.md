@@ -1,4 +1,4 @@
-Please provide a description of what your change does and why it is needed.
+<!-- Please provide a description of what your change does and why it is needed. -->
 
 Closes SAP/cloud-sdk-backlog#ISSUENUMBER.
 

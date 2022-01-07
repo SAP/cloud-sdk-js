@@ -12,6 +12,7 @@ const TestEntity3Api_1 = require('./TestEntity3Api');
 const TestEntity4Api_1 = require('./TestEntity4Api');
 const function_imports_1 = require('./function-imports');
 const action_imports_1 = require('./action-imports');
+const BatchRequest_1 = require('./BatchRequest');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 function multipleSchemasService(
   deSerializers = odata_v4_1.defaultDeSerializers
@@ -71,6 +72,9 @@ class MultipleSchemasService {
           this.deSerializers
         )
     };
+  }
+  get batch() {
+    return BatchRequest_1.batch;
   }
 }
 exports.MultipleSchemasService = MultipleSchemasService;

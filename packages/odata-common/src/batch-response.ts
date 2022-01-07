@@ -27,7 +27,7 @@ export interface WriteResponses<DeSerializersT extends DeSerializers>
 /**
  * @internal
  */
-export interface ErrorResponse extends TypeGuards<any> {
+export interface ErrorResponse extends BatchResponseTypeGuards<any> {
   responseType: 'ErrorResponse'; // to make ErrorResponse structurally different and make typeguards work as expected
   httpCode: number;
   body: Record<string, any>;

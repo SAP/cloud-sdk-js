@@ -78,16 +78,16 @@ export const defaultTestServicePath = '/odata/test-service';
 export type ReadTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | GetAllRequestBuilder<TestEntity, DeSerializersT>
-  | GetAllRequestBuilder<TestEntityLink, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntity, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntityLink, DeSerializersT>;
+  | GetAllRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>;
 export type WriteTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | CreateRequestBuilder<TestEntity, DeSerializersT>
-  | UpdateRequestBuilder<TestEntity, DeSerializersT>
-  | DeleteRequestBuilder<TestEntity, DeSerializersT>
-  | CreateRequestBuilder<TestEntityLink, DeSerializersT>
-  | UpdateRequestBuilder<TestEntityLink, DeSerializersT>
-  | DeleteRequestBuilder<TestEntityLink, DeSerializersT>;
+  | CreateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>;

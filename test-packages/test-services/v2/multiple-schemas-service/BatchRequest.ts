@@ -78,11 +78,14 @@ export const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
 export type ReadMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | GetAllRequestBuilder<MultiSchemaTestEntity, DeSerializersT>
-  | GetByKeyRequestBuilder<MultiSchemaTestEntity, DeSerializersT>;
+  | GetAllRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<
+      MultiSchemaTestEntity<DeSerializersT>,
+      DeSerializersT
+    >;
 export type WriteMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | CreateRequestBuilder<MultiSchemaTestEntity, DeSerializersT>
-  | UpdateRequestBuilder<MultiSchemaTestEntity, DeSerializersT>
-  | DeleteRequestBuilder<MultiSchemaTestEntity, DeSerializersT>;
+  | CreateRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>;

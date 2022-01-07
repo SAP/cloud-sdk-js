@@ -5,7 +5,7 @@ export * from './request-builder';
 export * from './batch-response';
 export * from './selectable';
 export * from './uri-conversion';
-export * from './request-builder/batch-request-builder';
+export * from './request-builder';
 export * from './edm-types';
 export * from './entity';
 export * from './extract-odata-etag';

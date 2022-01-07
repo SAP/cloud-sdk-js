@@ -3,4 +3,3 @@ paths:
 paths-ignore:
   - packages/**/node_modules
   - packages/**/dist
-  - '**/*.spec.ts'

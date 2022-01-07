@@ -107,8 +107,7 @@ function cacheRetrievedDestination(
   const key = getDestinationCacheKey(decodedJwt, destination.name, isolation);
   const expiresIn = first(destination.authTokens || [])?.expiresIn;
   const expirationTime = expiresIn
-    ? // ? moment().add(expiresIn, 'second').unix() * 1000
-      Date.now() + Number(expiresIn) * 1000
+    ? Date.now() + parseInt(expiresIn) * 1000
     : undefined;
   cache.set(key, destination, expirationTime);
 }

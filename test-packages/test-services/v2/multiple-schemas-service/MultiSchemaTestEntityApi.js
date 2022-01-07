@@ -9,7 +9,6 @@ exports.MultiSchemaTestEntityApi = void 0;
 const MultiSchemaTestEntity_1 = require('./MultiSchemaTestEntity');
 const MultiSchemaTestEntityRequestBuilder_1 = require('./MultiSchemaTestEntityRequestBuilder');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 class MultiSchemaTestEntityApi {
   constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
     this.entityConstructor = MultiSchemaTestEntity_1.MultiSchemaTestEntity;
@@ -25,7 +24,7 @@ class MultiSchemaTestEntityApi {
     );
   }
   entityBuilder() {
-    return (0, internal_1.entityBuilder)(this);
+    return (0, odata_v2_1.entityBuilder)(this);
   }
   customField(fieldName, isNullable = false) {
     return new odata_v2_1.CustomField(
@@ -36,7 +35,7 @@ class MultiSchemaTestEntityApi {
     );
   }
   get schema() {
-    const fieldBuilder = new internal_1.FieldBuilder(
+    const fieldBuilder = new odata_v2_1.FieldBuilder(
       MultiSchemaTestEntity_1.MultiSchemaTestEntity,
       this.deSerializers
     );
@@ -55,7 +54,7 @@ class MultiSchemaTestEntityApi {
        *
        * All fields selector.
        */
-      ALL_FIELDS: new internal_1.AllFields(
+      ALL_FIELDS: new odata_v2_1.AllFields(
         '*',
         MultiSchemaTestEntity_1.MultiSchemaTestEntity
       )

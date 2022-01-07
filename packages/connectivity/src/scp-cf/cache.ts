@@ -1,16 +1,21 @@
-import moment from 'moment';
-
 interface CacheInterface<T> {
   hasKey(key: string): boolean;
   get(key: string): T | undefined;
   set(key: string, item: T, expirationTime?: number): void;
 }
 
+interface DateInputObject {
+  hours?: number;
+  minutes?: number;
+  seconds?: number;
+  milliseconds?: number;
+}
+
 /**
  * @internal
  */
 export interface CacheEntry<T> {
-  expires?: moment.Moment;
+  expires?: number;
   entry: T;
 }
 
@@ -52,9 +57,9 @@ export class Cache<T> implements CacheInterface<T> {
    * Default validity period for each entry in cache.
    * If `undefined`, all cached entries will be valid indefinitely.
    */
-  private defaultValidityTime: moment.MomentInputObject | undefined;
+  private defaultValidityTime: DateInputObject | undefined;
 
-  constructor(validityTime?: moment.MomentInputObject) {
+  constructor(validityTime?: DateInputObject) {
     this.cache = {};
     this.defaultValidityTime = validityTime;
   }
@@ -95,7 +100,7 @@ export class Cache<T> implements CacheInterface<T> {
   set(key: string | undefined, entry: T, expirationTime?: number): void {
     if (key) {
       const expires = expirationTime
-        ? moment(expirationTime)
+        ? expirationTime
         : inferExpirationTime(this.defaultValidityTime);
       this.cache[key] = { entry, expires };
     }
@@ -106,11 +111,26 @@ function isExpired<T>(item: CacheEntry<T>): boolean {
   if (item.expires === undefined) {
     return false;
   }
-  return !item.expires.isAfter(moment());
+  return item.expires < Date.now();
 }
 
 function inferExpirationTime(
-  expirationTime: moment.MomentInputObject | undefined
-): moment.Moment | undefined {
-  return expirationTime ? moment().add(expirationTime) : undefined;
+  expirationTime: DateInputObject | undefined
+): number | undefined {
+  return expirationTime
+    ? inferExpirationTimeFromDate(expirationTime)
+    : undefined;
+}
+
+function inferExpirationTimeFromDate(expirationTime: DateInputObject): number {
+  const currentDate = new Date();
+  const milliseconds =
+    (expirationTime?.hours ?? 0) * 60 * 60 * 1000 +
+    (expirationTime?.minutes ?? 0) * 60 * 1000 +
+    (expirationTime?.seconds ?? 0) * 1000 +
+    (expirationTime?.milliseconds ?? 0);
+
+  return currentDate
+    .setMilliseconds(currentDate.getMilliseconds() + milliseconds)
+    .valueOf();
 }

@@ -86,10 +86,10 @@ export function getApiSpecificUsage(
       header: usageHeaderText
     };
   }
-  if (service.actionsImports) {
+  if (service.actionImports) {
     const actionImport = getActionFunctionImport(
       service.originalFileName,
-      service.actionsImports
+      service.actionImports
     );
     return {
       ...actionImportCodeSample(

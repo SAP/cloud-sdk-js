@@ -1,9 +1,9 @@
 import {
   Entity,
   DefaultDeSerializers,
-  DeSerializers
+  DeSerializers,
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import { AirportLocation } from './AirportLocation';
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".

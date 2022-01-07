@@ -4,22 +4,20 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  Entity
-} from '@sap-cloud-sdk/odata-v4';
-import {
   CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
   DeserializedType,
   EdmTypeField,
+  Entity,
   EnumField,
   FieldBuilder,
   FieldOptions,
   OrderableEdmTypeField,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-v4';
 
 /**
  * TestLvl2NestedComplexType

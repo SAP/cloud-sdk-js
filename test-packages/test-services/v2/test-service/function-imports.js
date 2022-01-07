@@ -22,7 +22,6 @@ exports.functionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const service_1 = require('./service');
 const TestComplexType_1 = require('./TestComplexType');
@@ -162,7 +161,7 @@ function testFunctionImportSharedEntityReturnType(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnType',
     data =>
-      (0, internal_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, odata_v2_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnType'
       ),
@@ -187,7 +186,7 @@ function testFunctionImportSharedEntityReturnTypeCollection(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnTypeCollection',
     data =>
-      (0, internal_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, odata_v2_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnTypeCollection'
       ),
@@ -233,7 +232,7 @@ function testFunctionImportUnsupportedEdmTypes(
   deSerializers = odata_v2_1.defaultDeSerializers
 ) {
   const params = {
-    simpleParam: new internal_1.FunctionImportParameter(
+    simpleParam: new odata_v2_1.FunctionImportParameter(
       'SimpleParam',
       'Edm.Any',
       parameters.simpleParam
@@ -293,7 +292,7 @@ function testFunctionImportGet(
   deSerializers = odata_v2_1.defaultDeSerializers
 ) {
   const params = {
-    simpleParam: new internal_1.FunctionImportParameter(
+    simpleParam: new odata_v2_1.FunctionImportParameter(
       'SimpleParam',
       'Edm.String',
       parameters.simpleParam
@@ -326,7 +325,7 @@ function testFunctionImportPost(
   deSerializers = odata_v2_1.defaultDeSerializers
 ) {
   const params = {
-    simpleParam: new internal_1.FunctionImportParameter(
+    simpleParam: new odata_v2_1.FunctionImportParameter(
       'SimpleParam',
       'Edm.String',
       parameters.simpleParam
@@ -359,12 +358,12 @@ function testFunctionImportMultipleParams(
   deSerializers = odata_v2_1.defaultDeSerializers
 ) {
   const params = {
-    stringParam: new internal_1.FunctionImportParameter(
+    stringParam: new odata_v2_1.FunctionImportParameter(
       'StringParam',
       'Edm.String',
       parameters.stringParam
     ),
-    booleanParam: new internal_1.FunctionImportParameter(
+    booleanParam: new odata_v2_1.FunctionImportParameter(
       'BooleanParam',
       'Edm.Boolean',
       parameters.booleanParam

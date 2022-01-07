@@ -3,21 +3,19 @@ import {
   defaultDestination,
   mockCountRequest,
   mockGetRequest,
-  unmockDestinationsEnv
-} from '../../../../test-resources/test/test-util/request-mocker';
-import {
+  unmockDestinationsEnv,
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
-  createOriginalTestEntityDataWithLinks,
-  createTestEntityV4 as createTestEntity
-} from '../../../../test-resources/test/test-util/test-data';
+  createOriginalTestEntityDataWithLinks
+} from '../../../../test-resources/test/test-util';
 import { any } from '../filter';
 import { DefaultDeSerializers } from '../de-serializers';
 import {
   testEntityApi,
   testEntityLvl2MultiLinkApi,
   testEntityMultiLinkApi,
-  testEntitySingleLinkApi
+  testEntitySingleLinkApi,
+  createTestEntity
 } from '../../test/test-util';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
@@ -56,7 +54,7 @@ describe('GetAllRequestBuilder', () => {
     });
   });
 
-  it('is built correctly for selects inside of an expand.', async () => {
+  it('is built correctly for selects inside of an expand', async () => {
     const expected =
       '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$expand=to_SingleLink($select=BooleanProperty)';
     const actual = await requestBuilder

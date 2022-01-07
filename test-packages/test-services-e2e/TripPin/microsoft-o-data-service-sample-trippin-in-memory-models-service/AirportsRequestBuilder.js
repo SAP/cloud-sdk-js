@@ -6,13 +6,12 @@ exports.AirportsRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const Airports_1 = require('./Airports');
 /**
  * Request builder class for operations supported on the [[Airports]] entity.
  */
-class AirportsRequestBuilder extends internal_1.RequestBuilder {
+class AirportsRequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `Airports` entity based on its keys.
    * @param icaoCode Key property. See [[Airports.icaoCode]].

@@ -7,12 +7,12 @@ exports.AirportLocation = exports.AirportLocationField = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const City_1 = require('./City');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
  * AirportLocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-class AirportLocationField extends internal_1.ComplexTypeField {
+class AirportLocationField extends odata_v4_1.ComplexTypeField {
   /**
    * Creates an instance of AirportLocationField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -20,7 +20,7 @@ class AirportLocationField extends internal_1.ComplexTypeField {
    */
   constructor(fieldName, fieldOf, deSerializers, fieldOptions) {
     super(fieldName, fieldOf, deSerializers, AirportLocation, fieldOptions);
-    this._fieldBuilder = new internal_1.FieldBuilder(this, this.deSerializers);
+    this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
     /**
      * Representation of the [[AirportLocation.loc]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

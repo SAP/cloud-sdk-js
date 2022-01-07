@@ -27,11 +27,12 @@ describe('imports', () => {
 const expectedEntityImports = [
   {
     moduleSpecifier: '@sap-cloud-sdk/odata-v2',
-    namedImports: ['Entity', 'DefaultDeSerializers', 'DeSerializers']
-  },
-  {
-    moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
-    namedImports: ['DeserializedType']
+    namedImports: [
+      'Entity',
+      'DefaultDeSerializers',
+      'DeSerializers',
+      'DeserializedType'
+    ]
   }
 ];
 

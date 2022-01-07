@@ -6,12 +6,7 @@ import {
   propertyFieldTypeImportNames,
   propertyTypeImportNames
 } from '../../imports';
-import {
-  odataCommonImport,
-  odataImport,
-  complexTypeImports,
-  enumTypeImports
-} from './imports';
+import { odataImport, complexTypeImports, enumTypeImports } from './imports';
 import { classContent } from './class';
 
 export function entityApiFile(
@@ -62,24 +57,22 @@ function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
         'defaultDeSerializers',
         'DefaultDeSerializers',
         'DeSerializers',
-        'mergeDefaultDeSerializersWith'
+        'mergeDefaultDeSerializersWith',
+        'AllFields',
+        'entityBuilder',
+        'EntityBuilderType',
+        'EntityApi',
+        'FieldBuilder',
+        'Time',
+        ...propertyTypeImportNames(entity.properties),
+        ...propertyFieldTypeImportNames(entity.properties),
+        ...navPropertyFieldTypeImportNames(
+          entity.navigationProperties,
+          service.oDataVersion
+        )
       ],
       service.oDataVersion
-    ),
-    odataCommonImport([
-      ...propertyTypeImportNames(entity.properties),
-      ...propertyFieldTypeImportNames(entity.properties),
-      ...navPropertyFieldTypeImportNames(
-        entity.navigationProperties,
-        service.oDataVersion
-      ),
-      'AllFields',
-      'entityBuilder',
-      'EntityBuilderType',
-      'EntityApi',
-      'FieldBuilder',
-      'Time'
-    ])
+    )
   ];
 }
 

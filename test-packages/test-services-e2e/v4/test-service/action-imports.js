@@ -9,7 +9,6 @@ exports.actionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const service_1 = require('./service');
 /**

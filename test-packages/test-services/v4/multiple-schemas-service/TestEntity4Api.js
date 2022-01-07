@@ -9,7 +9,6 @@ exports.TestEntity4Api = void 0;
 const TestEntity4_1 = require('./TestEntity4');
 const TestEntity4RequestBuilder_1 = require('./TestEntity4RequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 class TestEntity4Api {
   constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
     this.entityConstructor = TestEntity4_1.TestEntity4;
@@ -23,7 +22,7 @@ class TestEntity4Api {
     return new TestEntity4RequestBuilder_1.TestEntity4RequestBuilder(this);
   }
   entityBuilder() {
-    return (0, internal_1.entityBuilder)(this);
+    return (0, odata_v4_1.entityBuilder)(this);
   }
   customField(fieldName, isNullable = false) {
     return new odata_v4_1.CustomField(
@@ -34,7 +33,7 @@ class TestEntity4Api {
     );
   }
   get schema() {
-    const fieldBuilder = new internal_1.FieldBuilder(
+    const fieldBuilder = new odata_v4_1.FieldBuilder(
       TestEntity4_1.TestEntity4,
       this.deSerializers
     );
@@ -62,7 +61,7 @@ class TestEntity4Api {
        *
        * All fields selector.
        */
-      ALL_FIELDS: new internal_1.AllFields('*', TestEntity4_1.TestEntity4)
+      ALL_FIELDS: new odata_v4_1.AllFields('*', TestEntity4_1.TestEntity4)
     };
   }
 }

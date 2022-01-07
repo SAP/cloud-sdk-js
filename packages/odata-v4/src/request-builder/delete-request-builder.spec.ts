@@ -1,16 +1,11 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   mockDeleteRequest
 } from '../../../../test-resources/test/test-util/request-mocker';
-import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { defaultDeSerializers } from '../de-serializers';
-import { testEntityApi } from '../../test/test-util';
+import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { DeleteRequestBuilder } from './delete-request-builder';
-
-const convertToUriFormat = createUriConverter(defaultDeSerializers);
 
 describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();
@@ -23,11 +18,7 @@ describe('DeleteRequestBuilder', () => {
   it('should resolve if only the key is given.', async () => {
     mockDeleteRequest(
       {
-        path: testEntityResourcePath(
-          keyPropGuid,
-          keyPropString,
-          convertToUriFormat
-        )
+        path: testEntityResourcePath(keyPropGuid, keyPropString)
       },
       testEntityApi
     );
@@ -51,11 +42,7 @@ describe('DeleteRequestBuilder', () => {
 
     mockDeleteRequest(
       {
-        path: testEntityResourcePath(
-          keyPropGuid,
-          keyPropString,
-          convertToUriFormat
-        ),
+        path: testEntityResourcePath(keyPropGuid, keyPropString),
         additionalHeaders: {
           'if-match': versionId
         }

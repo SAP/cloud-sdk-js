@@ -12,10 +12,10 @@ import {
   testFilterInt16,
   testFilterSingleLink,
   testFilterString,
-  testFilterStringEncoding
-} from '../../../../test-resources/test/test-util/filter-factory';
+  testFilterStringEncoding,
+  testEntityApi
+} from '../../test/test-util';
 import { filterFunctions } from '../filter-functions';
-import { testEntityApi } from '../../test/test-util';
 import { defaultDeSerializers } from '../de-serializers';
 import { createODataUri } from './odata-uri';
 

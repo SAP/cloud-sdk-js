@@ -39,12 +39,12 @@ describe('buildHttpRequestConfig', () => {
     const withOrigin: HttpRequestConfigWithOrigin = {
       method: 'get',
       headers: {
-        DestinationProperty: { Authorization: 'destProp' },
-        RequestConfig: { Authorization: 'reqConfig' }
+        destinationProperty: { Authorization: 'destProp' },
+        requestConfig: { Authorization: 'reqConfig' }
       },
       params: {
-        Custom: { param: 'custom' },
-        RequestConfig: { param: 'reqConfig' }
+        custom: { param: 'custom' },
+        requestConfig: { param: 'reqConfig' }
       }
     };
 
@@ -60,9 +60,9 @@ describe('buildHttpRequestConfig', () => {
 describe('getOptionWithPriority', () => {
   it('should merge options', () => {
     const originOptions: OriginOptions = {
-      Custom: { Authorization: 'customAuth' },
-      Destination: { 'sap-client': '001' },
-      RequestConfig: { 'if-match': 'etag' }
+      custom: { Authorization: 'customAuth' },
+      destination: { 'sap-client': '001' },
+      requestConfig: { 'if-match': 'etag' }
     };
     const expected = {
       Authorization: 'customAuth',
@@ -74,13 +74,13 @@ describe('getOptionWithPriority', () => {
 
   it('should use options with higher priority', () => {
     const originOptions: OriginOptions = {
-      Custom: { param1: 'customParam1' },
-      DestinationProperty: {
+      custom: { param1: 'customParam1' },
+      destinationProperty: {
         param1: 'destPropParam1',
         param2: 'destPropParam2'
       },
-      Destination: { param2: 'destParam2', param3: 'destParam3' },
-      RequestConfig: { param3: 'reqParam3', param4: 'reqParam4' }
+      destination: { param2: 'destParam2', param3: 'destParam3' },
+      requestConfig: { param3: 'reqParam3', param4: 'reqParam4' }
     };
     const expected = {
       param1: 'customParam1',
@@ -93,8 +93,8 @@ describe('getOptionWithPriority', () => {
 
   it('should use options with higher priority and ignore case', () => {
     const originOptions: OriginOptions = {
-      Custom: { Authorization: 'customAuth' },
-      Destination: { AuTHORizaTION: 'destAuth', 'sap-client': '001' }
+      custom: { Authorization: 'customAuth' },
+      destination: { AuTHORizaTION: 'destAuth', 'sap-client': '001' }
     };
     const expected = {
       Authorization: 'customAuth',

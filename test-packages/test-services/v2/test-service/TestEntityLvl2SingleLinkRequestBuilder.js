@@ -6,13 +6,12 @@ exports.TestEntityLvl2SingleLinkRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
 /**
  * Request builder class for operations supported on the [[TestEntityLvl2SingleLink]] entity.
  */
-class TestEntityLvl2SingleLinkRequestBuilder extends internal_1.RequestBuilder {
+class TestEntityLvl2SingleLinkRequestBuilder extends odata_v2_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityLvl2SingleLink` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityLvl2SingleLink.keyProperty]].

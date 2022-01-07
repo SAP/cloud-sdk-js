@@ -11,7 +11,6 @@ const PeopleRequestBuilder_1 = require('./PeopleRequestBuilder');
 const Location_1 = require('./Location');
 const PersonGender_1 = require('./PersonGender');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 class PeopleApi {
   constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
     this.entityConstructor = People_1.People;
@@ -19,8 +18,8 @@ class PeopleApi {
   }
   _addNavigationProperties(linkedApis) {
     this.navigationPropertyFields = {
-      FRIENDS: new internal_1.OneToManyLink('Friends', this, linkedApis[0]),
-      PHOTO: new internal_1.OneToOneLink('Photo', this, linkedApis[1])
+      FRIENDS: new odata_v4_1.OneToManyLink('Friends', this, linkedApis[0]),
+      PHOTO: new odata_v4_1.OneToOneLink('Photo', this, linkedApis[1])
     };
     return this;
   }
@@ -28,7 +27,7 @@ class PeopleApi {
     return new PeopleRequestBuilder_1.PeopleRequestBuilder(this);
   }
   entityBuilder() {
-    return (0, internal_1.entityBuilder)(this);
+    return (0, odata_v4_1.entityBuilder)(this);
   }
   customField(fieldName, isNullable = false) {
     return new odata_v4_1.CustomField(
@@ -39,7 +38,7 @@ class PeopleApi {
     );
   }
   get schema() {
-    const fieldBuilder = new internal_1.FieldBuilder(
+    const fieldBuilder = new odata_v4_1.FieldBuilder(
       People_1.People,
       this.deSerializers
     );
@@ -108,7 +107,7 @@ class PeopleApi {
        *
        * All fields selector.
        */
-      ALL_FIELDS: new internal_1.AllFields('*', People_1.People)
+      ALL_FIELDS: new odata_v4_1.AllFields('*', People_1.People)
     };
   }
 }

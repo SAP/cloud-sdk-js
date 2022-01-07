@@ -1,15 +1,13 @@
 import {
-  DeserializedType,
-  RequestBuilder
-} from '@sap-cloud-sdk/odata-common/internal';
-import {
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   CreateRequestBuilder,
   UpdateRequestBuilder,
-  DeleteRequestBuilder
+  DeleteRequestBuilder,
+  DeserializedType,
+  RequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
 import { TestEntityLvl2SingleLink } from './TestEntityLvl2SingleLink';
 /**

@@ -7,14 +7,9 @@ import {
   mockCountRequest,
   mockDestinationsEnv,
   mockGetRequest,
-  unmockDestinationsEnv
-} from '../../../../test-resources/test/test-util/request-mocker';
-import {
+  unmockDestinationsEnv,
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
-  createTestEntity
-} from '../../../../test-resources/test/test-util/test-data';
-import {
   expectAllMocksUsed,
   certificateMultipleResponse,
   certificateSingleResponse,
@@ -28,7 +23,11 @@ import {
   providerServiceToken
 } from '../../../../test-resources/test/test-util';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
-import { testEntityApi, testEntitySingleLinkApi } from '../../test/test-util';
+import {
+  testEntityApi,
+  testEntitySingleLinkApi,
+  createTestEntity
+} from '../../test/test-util';
 import { DefaultDeSerializers } from '../de-serializers';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 

@@ -1,18 +1,16 @@
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
-import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   defaultHost,
-  mockCreateRequest
-} from '../../../../test-resources/test/test-util/request-mocker';
-import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { testPostRequestOutcome } from '../../../../test-resources/test/test-util/testPostRequestOutcome';
-import { defaultDeSerializers } from '../de-serializers';
+  mockCreateRequest,
+  testPostRequestOutcome
+} from '../../../../test-resources/test/test-util';
 import {
   testEntityApi,
   testEntityMultiLinkApi,
-  testEntitySingleLinkApi
+  testEntitySingleLinkApi,
+  testEntityResourcePath
 } from '../../test/test-util';
 import { CreateRequestBuilder } from './create-request-builder';
 
@@ -208,8 +206,7 @@ describe('CreateRequestBuilder', () => {
 
     const toChildPath = `${testEntityResourcePath(
       parentKeyGuid,
-      parentKeyString,
-      createUriConverter(defaultDeSerializers)
+      parentKeyString
     )}/to_MultiLink`;
 
     mockCreateRequest(

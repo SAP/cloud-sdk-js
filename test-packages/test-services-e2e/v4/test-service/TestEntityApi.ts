@@ -12,19 +12,17 @@ import {
   defaultDeSerializers,
   DefaultDeSerializers,
   DeSerializers,
-  mergeDefaultDeSerializersWith
-} from '@sap-cloud-sdk/odata-v4';
-import {
-  Time,
-  OrderableEdmTypeField,
-  EdmTypeField,
-  OneToManyLink,
+  mergeDefaultDeSerializersWith,
   AllFields,
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
-} from '@sap-cloud-sdk/odata-common/internal';
+  FieldBuilder,
+  Time,
+  OrderableEdmTypeField,
+  EdmTypeField,
+  OneToManyLink
+} from '@sap-cloud-sdk/odata-v4';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 export class TestEntityApi<

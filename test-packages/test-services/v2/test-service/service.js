@@ -20,6 +20,7 @@ const TestEntityEndsWithApi_1 = require('./TestEntityEndsWithApi');
 const TestEntityEndsWithSomethingElseApi_1 = require('./TestEntityEndsWithSomethingElseApi');
 const CaseTestApi_1 = require('./CaseTestApi');
 const Casetest_1Api_1 = require('./Casetest_1Api');
+const function_imports_1 = require('./function-imports');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 function testService(deSerializers = odata_v2_1.defaultDeSerializers) {
   return new TestService(
@@ -168,6 +169,83 @@ class TestService {
   }
   get casetest_1Api() {
     return this.initApi('casetest_1Api', Casetest_1Api_1.Casetest_1Api);
+  }
+  get functionImports() {
+    return {
+      testFunctionImportNoReturnType: parameter =>
+        (0, function_imports_1.testFunctionImportNoReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportEdmReturnType: parameter =>
+        (0, function_imports_1.testFunctionImportEdmReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportEdmReturnTypeCollection: parameter =>
+        (0, function_imports_1.testFunctionImportEdmReturnTypeCollection)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportEntityReturnType: parameter =>
+        (0, function_imports_1.testFunctionImportEntityReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportEntityReturnTypeCollection: parameter =>
+        (0, function_imports_1.testFunctionImportEntityReturnTypeCollection)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportSharedEntityReturnType: parameter =>
+        (0, function_imports_1.testFunctionImportSharedEntityReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportSharedEntityReturnTypeCollection: parameter =>
+        (0,
+        function_imports_1.testFunctionImportSharedEntityReturnTypeCollection)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportComplexReturnType: parameter =>
+        (0, function_imports_1.testFunctionImportComplexReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportUnsupportedEdmTypes: parameter =>
+        (0, function_imports_1.testFunctionImportUnsupportedEdmTypes)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportComplexReturnTypeCollection: parameter =>
+        (0, function_imports_1.testFunctionImportComplexReturnTypeCollection)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportGet: parameter =>
+        (0, function_imports_1.testFunctionImportGet)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportPost: parameter =>
+        (0, function_imports_1.testFunctionImportPost)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportMultipleParams: parameter =>
+        (0, function_imports_1.testFunctionImportMultipleParams)(
+          parameter,
+          this.deSerializers
+        ),
+      createTestComplexType: parameter =>
+        (0, function_imports_1.createTestComplexType)(
+          parameter,
+          this.deSerializers
+        ),
+      fContinue: parameter =>
+        (0, function_imports_1.fContinue)(parameter, this.deSerializers)
+    };
   }
 }
 exports.TestService = TestService;

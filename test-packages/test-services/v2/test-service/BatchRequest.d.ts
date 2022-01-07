@@ -5,7 +5,8 @@ import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
-  UpdateRequestBuilder
+  UpdateRequestBuilder,
+  BatchChangeSet
 } from '@sap-cloud-sdk/odata-v2';
 import {
   TestEntity,
@@ -23,7 +24,6 @@ import {
   CaseTest,
   Casetest_1
 } from './index';
-import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * Batch builder for operations supported on the Test Service.
  * @param requests The requests of the batch

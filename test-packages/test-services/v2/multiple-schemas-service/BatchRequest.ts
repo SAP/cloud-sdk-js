@@ -10,11 +10,11 @@ import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
-  UpdateRequestBuilder
+  UpdateRequestBuilder,
+  BatchChangeSet
 } from '@sap-cloud-sdk/odata-v2';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { MultiSchemaTestEntity } from './index';
-import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Batch builder for operations supported on the Multiple Schemas Service.

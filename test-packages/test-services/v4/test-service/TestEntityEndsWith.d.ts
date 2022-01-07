@@ -1,9 +1,9 @@
 import {
   Entity,
   DefaultDeSerializers,
-  DeSerializers
+  DeSerializers,
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */

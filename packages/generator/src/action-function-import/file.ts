@@ -19,7 +19,7 @@ import { functionImportFunction } from './function';
 export function actionImportSourceFile(
   service: VdmServiceMetadata
 ): SourceFileStructure {
-  if (!service.actionsImports) {
+  if (!service.actionImports) {
     throw new Error(
       'Tried to create action import source files without actions in service metadata.'
     );
@@ -29,11 +29,11 @@ export function actionImportSourceFile(
     statements: [
       ...importDeclarationsFunction(service),
       ...flat(
-        service.actionsImports.map(action =>
+        service.actionImports.map(action =>
           actionImportStatements(action, service)
         )
       ),
-      exportStatement(service.actionsImports, 'actionImports')
+      exportStatement(service.actionImports, 'actionImports')
     ]
   };
 }

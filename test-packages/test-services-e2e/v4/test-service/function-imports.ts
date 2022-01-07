@@ -3,7 +3,6 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   edmToTs,
   FunctionImportRequestBuilder,
@@ -13,7 +12,8 @@ import {
   transformReturnValueForEntity,
   transformReturnValueForEdmTypeList,
   DefaultDeSerializers,
-  defaultDeSerializers
+  defaultDeSerializers,
+  FunctionImportParameter
 } from '@sap-cloud-sdk/odata-v4';
 import { testService } from './service';
 import { TestEntity } from './TestEntity';

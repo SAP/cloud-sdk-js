@@ -11,7 +11,6 @@ exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath =
  */
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const util_1 = require('@sap-cloud-sdk/util');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 function batch(first, ...rest) {
   return new odata_v4_1.ODataBatchRequestBuilder(
     exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath,
@@ -20,7 +19,7 @@ function batch(first, ...rest) {
 }
 exports.batch = batch;
 function changeset(first, ...rest) {
-  return new internal_1.BatchChangeSet(
+  return new odata_v4_1.BatchChangeSet(
     (0, util_1.variadicArgumentToArray)(first, rest)
   );
 }

@@ -17,14 +17,54 @@ import { TestEntityCircularLinkParentApi } from './TestEntityCircularLinkParentA
 import { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
 import { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
 import { TestEntityEndsWithSomethingElseApi } from './TestEntityEndsWithSomethingElseApi';
-import { Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  testFunctionImportEdmReturnType,
+  testFunctionImportEdmReturnTypeCollection,
+  testFunctionImportNullableTest,
+  testFunctionImportEntityReturnType,
+  testFunctionImportEntityReturnTypeCollection,
+  testFunctionImportSharedEntityReturnType,
+  testFunctionImportSharedEntityReturnTypeCollection,
+  testFunctionImportComplexReturnType,
+  testFunctionImportComplexReturnTypeCollection,
+  testFunctionImportMultipleParams,
+  testFunctionImportWithDifferentName,
+  TestFunctionImportEdmReturnTypeParameters,
+  TestFunctionImportEdmReturnTypeCollectionParameters,
+  TestFunctionImportNullableTestParameters,
+  TestFunctionImportEntityReturnTypeParameters,
+  TestFunctionImportEntityReturnTypeCollectionParameters,
+  TestFunctionImportSharedEntityReturnTypeParameters,
+  TestFunctionImportSharedEntityReturnTypeCollectionParameters,
+  TestFunctionImportComplexReturnTypeParameters,
+  TestFunctionImportComplexReturnTypeCollectionParameters,
+  TestFunctionImportMultipleParamsParameters,
+  TestFunctionImportWithDifferentNameParameters
+} from './function-imports';
+import {
+  testActionImportNoParameterNoReturnType,
+  testActionImportMultipleParameterComplexReturnType,
+  testActionImportUnsupportedEdmTypes,
+  testActionImportNoParameterEntityReturnType,
+  testActionImportSharedEntityReturnType,
+  testActionImportSharedEntityReturnTypeCollection,
+  testActionImportNullableTest,
+  TestActionImportNoParameterNoReturnTypeParameters,
+  TestActionImportMultipleParameterComplexReturnTypeParameters,
+  TestActionImportUnsupportedEdmTypesParameters,
+  TestActionImportNoParameterEntityReturnTypeParameters,
+  TestActionImportSharedEntityReturnTypeParameters,
+  TestActionImportSharedEntityReturnTypeCollectionParameters,
+  TestActionImportNullableTestParameters
+} from './action-imports';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,
   DeSerializers,
   DefaultDeSerializers,
-  mergeDefaultDeSerializersWith
+  mergeDefaultDeSerializersWith,
+  Time
 } from '@sap-cloud-sdk/odata-v4';
 
 export function testService<
@@ -238,5 +278,100 @@ export class TestService<
       'testEntityEndsWithSomethingElseApi',
       TestEntityEndsWithSomethingElseApi
     );
+  }
+
+  get functionImports() {
+    return {
+      testFunctionImportEdmReturnType: (
+        parameter: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>
+      ) => testFunctionImportEdmReturnType(parameter, this.deSerializers),
+      testFunctionImportEdmReturnTypeCollection: (
+        parameter: TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>
+      ) =>
+        testFunctionImportEdmReturnTypeCollection(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportNullableTest: (
+        parameter: TestFunctionImportNullableTestParameters<DeSerializersT>
+      ) => testFunctionImportNullableTest(parameter, this.deSerializers),
+      testFunctionImportEntityReturnType: (
+        parameter: TestFunctionImportEntityReturnTypeParameters<DeSerializersT>
+      ) => testFunctionImportEntityReturnType(parameter, this.deSerializers),
+      testFunctionImportEntityReturnTypeCollection: (
+        parameter: TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>
+      ) =>
+        testFunctionImportEntityReturnTypeCollection(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportSharedEntityReturnType: (
+        parameter: TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>
+      ) =>
+        testFunctionImportSharedEntityReturnType(parameter, this.deSerializers),
+      testFunctionImportSharedEntityReturnTypeCollection: (
+        parameter: TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>
+      ) =>
+        testFunctionImportSharedEntityReturnTypeCollection(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportComplexReturnType: (
+        parameter: TestFunctionImportComplexReturnTypeParameters<DeSerializersT>
+      ) => testFunctionImportComplexReturnType(parameter, this.deSerializers),
+      testFunctionImportComplexReturnTypeCollection: (
+        parameter: TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>
+      ) =>
+        testFunctionImportComplexReturnTypeCollection(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportMultipleParams: (
+        parameter: TestFunctionImportMultipleParamsParameters<DeSerializersT>
+      ) => testFunctionImportMultipleParams(parameter, this.deSerializers),
+      testFunctionImportWithDifferentName: (
+        parameter: TestFunctionImportWithDifferentNameParameters<DeSerializersT>
+      ) => testFunctionImportWithDifferentName(parameter, this.deSerializers)
+    };
+  }
+
+  get actionImports() {
+    return {
+      testActionImportNoParameterNoReturnType: (
+        parameter: TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>
+      ) =>
+        testActionImportNoParameterNoReturnType(parameter, this.deSerializers),
+      testActionImportMultipleParameterComplexReturnType: (
+        parameter: TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>
+      ) =>
+        testActionImportMultipleParameterComplexReturnType(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportUnsupportedEdmTypes: (
+        parameter: TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>
+      ) => testActionImportUnsupportedEdmTypes(parameter, this.deSerializers),
+      testActionImportNoParameterEntityReturnType: (
+        parameter: TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>
+      ) =>
+        testActionImportNoParameterEntityReturnType(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportSharedEntityReturnType: (
+        parameter: TestActionImportSharedEntityReturnTypeParameters<DeSerializersT>
+      ) =>
+        testActionImportSharedEntityReturnType(parameter, this.deSerializers),
+      testActionImportSharedEntityReturnTypeCollection: (
+        parameter: TestActionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>
+      ) =>
+        testActionImportSharedEntityReturnTypeCollection(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportNullableTest: (
+        parameter: TestActionImportNullableTestParameters<DeSerializersT>
+      ) => testActionImportNullableTest(parameter, this.deSerializers)
+    };
   }
 }

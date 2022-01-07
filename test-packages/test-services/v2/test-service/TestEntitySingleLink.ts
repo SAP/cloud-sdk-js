@@ -6,9 +6,9 @@
 import {
   Entity,
   DefaultDeSerializers,
-  DeSerializers
+  DeSerializers,
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v2';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import {
   TestEntityLvl2MultiLink,
   TestEntityLvl2MultiLinkType

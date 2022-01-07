@@ -146,7 +146,7 @@ describe('setTestDestinationInEnv', () => {
       mockAllTestDestinations();
     } catch (error) {
       expect(error.message).toBe(
-        'Parsing mocked destinations failed, destination with name "SYS_001" already exists in the "destinations" environment variables.'
+        'Parsing destinations failed, destination with name "SYS_001" already exists in the "destinations" environment variables.'
       );
     }
   });

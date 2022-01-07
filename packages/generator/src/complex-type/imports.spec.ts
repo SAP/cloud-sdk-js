@@ -13,16 +13,14 @@ describe('complex type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-v2',
-        namedImports: ['DefaultDeSerializers', 'DeSerializers', 'Entity']
-      },
-      {
-        kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
+          'DeSerializers',
+          'DefaultDeSerializers',
           'DeserializedType',
           'EdmTypeField',
+          'Entity',
           'FieldBuilder',
           'FieldOptions',
           'OrderableEdmTypeField',
@@ -43,16 +41,14 @@ describe('complex type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-v2',
-        namedImports: ['DefaultDeSerializers', 'DeSerializers', 'Entity']
-      },
-      {
-        kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
+          'DeSerializers',
+          'DefaultDeSerializers',
           'DeserializedType',
           'EdmTypeField',
+          'Entity',
           'FieldBuilder',
           'FieldOptions',
           'OrderableEdmTypeField',
@@ -82,16 +78,14 @@ describe('complex type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-v2',
-        namedImports: ['DefaultDeSerializers', 'DeSerializers', 'Entity']
-      },
-      {
-        kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
+          'DeSerializers',
+          'DefaultDeSerializers',
           'DeserializedType',
           'EdmTypeField',
+          'Entity',
           'FieldBuilder',
           'FieldOptions',
           'OrderableEdmTypeField',

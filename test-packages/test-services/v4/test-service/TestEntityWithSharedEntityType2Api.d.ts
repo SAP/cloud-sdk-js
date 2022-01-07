@@ -3,14 +3,12 @@ import { TestEntityWithSharedEntityType2RequestBuilder } from './TestEntityWithS
 import {
   CustomField,
   DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v4';
-import {
-  EdmTypeField,
+  DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
+  EntityApi,
+  EdmTypeField
+} from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityWithSharedEntityType2Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements

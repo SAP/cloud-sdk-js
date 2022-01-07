@@ -1,5 +1,4 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import moment from 'moment';
 import { Cache } from './cache';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 
@@ -22,9 +21,7 @@ const ClientCredentialsTokenCache = (
     cache.set(
       getCacheKey(url, clientId),
       token,
-      token.expires_in
-        ? moment().add(token.expires_in, 'second').unix() * 1000
-        : undefined
+      token.expires_in ? Date.now() + token.expires_in * 1000 : undefined
     );
   },
   clear: (): void => {

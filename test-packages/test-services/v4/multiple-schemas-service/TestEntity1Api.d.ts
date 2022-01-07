@@ -5,16 +5,14 @@ import { TestEnumType1 } from './TestEnumType1';
 import {
   CustomField,
   DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v4';
-import {
-  EdmTypeField,
-  OrderableEdmTypeField,
-  EnumField,
+  DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
+  EntityApi,
+  EdmTypeField,
+  OrderableEdmTypeField,
+  EnumField
+} from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntity1Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<TestEntity1<DeSerializersT>, DeSerializersT>

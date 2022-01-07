@@ -11,11 +11,6 @@ describe('function-import generation', () => {
     expect(importDeclarationsAction(service as VdmServiceMetadata)).toEqual([
       {
         kind: 16,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
-        namedImports: ['FunctionImportParameter']
-      },
-      {
-        kind: 16,
         moduleSpecifier: '@sap-cloud-sdk/odata-v4',
         namedImports: [
           'edmToTs',
@@ -23,7 +18,8 @@ describe('function-import generation', () => {
           'DeSerializers',
           'transformReturnValueForEdmType',
           'DefaultDeSerializers',
-          'defaultDeSerializers'
+          'defaultDeSerializers',
+          'FunctionImportParameter'
         ]
       },
       {

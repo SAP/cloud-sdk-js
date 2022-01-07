@@ -10,7 +10,8 @@ import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
-  UpdateRequestBuilder
+  UpdateRequestBuilder,
+  BatchChangeSet
 } from '@sap-cloud-sdk/odata-v2';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
@@ -29,7 +30,6 @@ import {
   CaseTest,
   Casetest_1
 } from './index';
-import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Batch builder for operations supported on the Test Service.

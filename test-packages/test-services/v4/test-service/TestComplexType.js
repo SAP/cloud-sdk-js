@@ -8,12 +8,12 @@ exports.TestComplexType = exports.TestComplexTypeField = void 0;
  */
 const TestNestedComplexType_1 = require('./TestNestedComplexType');
 const TestEnumType_1 = require('./TestEnumType');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
  * TestComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-class TestComplexTypeField extends internal_1.ComplexTypeField {
+class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
   /**
    * Creates an instance of TestComplexTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -21,7 +21,7 @@ class TestComplexTypeField extends internal_1.ComplexTypeField {
    */
   constructor(fieldName, fieldOf, deSerializers, fieldOptions) {
     super(fieldName, fieldOf, deSerializers, TestComplexType, fieldOptions);
-    this._fieldBuilder = new internal_1.FieldBuilder(this, this.deSerializers);
+    this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
     /**
      * Representation of the [[TestComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

@@ -11,8 +11,7 @@ import {
   odataImportDeclaration,
   propertyTypeImportNames,
   externalImportDeclarations,
-  mergeImportDeclarations,
-  odataCommonImportDeclaration
+  mergeImportDeclarations
 } from '../imports';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
@@ -43,11 +42,6 @@ function actionFunctionImportDeclarations(
   );
   return [
     ...externalImportDeclarations(parameters),
-    odataCommonImportDeclaration([
-      ...propertyTypeImportNames(parameters),
-      ...common,
-      ...responseTransformerFunctionCommon
-    ]),
     odataImportDeclaration(
       [
         ...edmRelatedImports(returnTypes),
@@ -56,7 +50,10 @@ function actionFunctionImportDeclarations(
         ...responseTransformerFunctionVersionDependent,
         'DeSerializers',
         'DefaultDeSerializers',
-        'defaultDeSerializers'
+        'defaultDeSerializers',
+        ...propertyTypeImportNames(parameters),
+        ...common,
+        ...responseTransformerFunctionCommon
       ],
       oDataVersion
     ),
@@ -136,14 +133,14 @@ function returnTypeImport(
 export function importDeclarationsFunction(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
-  if (!service.actionsImports) {
+  if (!service.actionImports) {
     return [];
   }
 
   const actionImportPayloadElements = flat(
-    service.actionsImports.map(actionImport => actionImport.parameters)
+    service.actionImports.map(actionImport => actionImport.parameters)
   );
-  const returnTypes = service.actionsImports.map(
+  const returnTypes = service.actionImports.map(
     actionImport => actionImport.returnType
   );
   return actionFunctionImportDeclarations(

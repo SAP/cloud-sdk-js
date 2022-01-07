@@ -4,14 +4,12 @@ import { AirportLocationField } from './AirportLocation';
 import {
   CustomField,
   DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v4';
-import {
-  EdmTypeField,
+  DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
+  EntityApi,
+  EdmTypeField
+} from '@sap-cloud-sdk/odata-v4';
 export declare class AirportsApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<Airports<DeSerializersT>, DeSerializersT>

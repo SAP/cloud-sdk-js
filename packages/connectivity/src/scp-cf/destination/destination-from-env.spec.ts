@@ -8,7 +8,8 @@ import {
 import { Destination } from './destination-service-types';
 import {
   getDestinationFromEnvByName,
-  getDestinationsFromEnv
+  getDestinationsFromEnv,
+  registerDestination
 } from './destination-from-env';
 import { getDestination } from './destination-accessor';
 
@@ -204,5 +205,69 @@ describe('env-destination-accessor', () => {
         '"Error in parsing the destinations from the environment variable."'
       );
     });
+  });
+});
+
+describe('registerDestination', () => {
+  const mockDestination: Destination = {
+    name: 'MockedDestination',
+    url: 'https://example.com'
+  };
+
+  const mockDestinationFromEnv: Destination = {
+    name: 'MockedDestination',
+    url: 'https://example.com',
+    authTokens: [],
+    certificates: [],
+    authentication: 'NoAuthentication',
+    isTrustingAllCertificates: false,
+    originalProperties: {
+      name: 'MockedDestination',
+      url: 'https://example.com',
+      authTokens: [],
+      certificates: [],
+      authentication: 'NoAuthentication',
+      isTrustingAllCertificates: false
+    }
+  };
+
+  afterEach(() => {
+    unmockDestinationsEnv();
+    jest.resetAllMocks();
+  });
+
+  it('should set the destination in the environment variables', () => {
+    mockDestinationsEnv(environmentDestination);
+
+    registerDestination(mockDestination);
+    const actual = getDestinationsFromEnv();
+
+    const expected = [destinationFromEnv, mockDestination];
+    expected.forEach((e, index) => {
+      expect(actual[index]).toMatchObject(e);
+    });
+    expect(
+      getDestination({ destinationName: 'MockedDestination' })
+    ).resolves.toMatchObject(mockDestinationFromEnv);
+  });
+
+  it('should throw an exception if a property of the destination is missing', () => {
+    const badDestination: Destination = {
+      url: 'https://test.com'
+    };
+    expect(() => {
+      registerDestination(badDestination);
+    }).toThrowErrorMatchingInlineSnapshot(
+      '"The registerDestination function requires a destination name and url."'
+    );
+  });
+
+  it('should throw an exception if a name conflict occurs', () => {
+    registerDestination(mockDestination);
+    expect(() => {
+      registerDestination(mockDestination);
+    }).toThrowErrorMatchingInlineSnapshot(
+      '"Parsing destinations failed, destination with name \\"MockedDestination\\" already exists in the \\"destinations\\" environment variables."'
+    );
   });
 });

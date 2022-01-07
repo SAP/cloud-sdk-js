@@ -11,6 +11,8 @@ const PhotosApi_1 = require('./PhotosApi');
 const PeopleApi_1 = require('./PeopleApi');
 const AirlinesApi_1 = require('./AirlinesApi');
 const AirportsApi_1 = require('./AirportsApi');
+const function_imports_1 = require('./function-imports');
+const action_imports_1 = require('./action-imports');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 function microsoftODataServiceSampleTrippinInMemoryModelsService(
   deSerializers = odata_v4_1.defaultDeSerializers
@@ -49,6 +51,18 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService {
   }
   get airportsApi() {
     return this.initApi('airportsApi', AirportsApi_1.AirportsApi);
+  }
+  get functionImports() {
+    return {
+      getNearestAirport: parameter =>
+        (0, function_imports_1.getNearestAirport)(parameter, this.deSerializers)
+    };
+  }
+  get actionImports() {
+    return {
+      resetDataSource: parameter =>
+        (0, action_imports_1.resetDataSource)(parameter, this.deSerializers)
+    };
   }
 }
 exports.MicrosoftODataServiceSampleTrippinInMemoryModelsService =

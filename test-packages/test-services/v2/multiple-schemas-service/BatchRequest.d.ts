@@ -41,12 +41,15 @@ export declare const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
 export declare type ReadMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | GetAllRequestBuilder<MultiSchemaTestEntity, DeSerializersT>
-  | GetByKeyRequestBuilder<MultiSchemaTestEntity, DeSerializersT>;
+  | GetAllRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<
+      MultiSchemaTestEntity<DeSerializersT>,
+      DeSerializersT
+    >;
 export declare type WriteMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | CreateRequestBuilder<MultiSchemaTestEntity, DeSerializersT>
-  | UpdateRequestBuilder<MultiSchemaTestEntity, DeSerializersT>
-  | DeleteRequestBuilder<MultiSchemaTestEntity, DeSerializersT>;
+  | CreateRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>;
 //# sourceMappingURL=BatchRequest.d.ts.map

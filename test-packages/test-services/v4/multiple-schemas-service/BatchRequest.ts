@@ -79,26 +79,26 @@ export const defaultMultipleSchemasServicePath =
 export type ReadMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | GetAllRequestBuilder<TestEntity1, DeSerializersT>
-  | GetAllRequestBuilder<TestEntity2, DeSerializersT>
-  | GetAllRequestBuilder<TestEntity3, DeSerializersT>
-  | GetAllRequestBuilder<TestEntity4, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntity1, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntity2, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntity3, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntity4, DeSerializersT>;
+  | GetAllRequestBuilder<TestEntity1<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<TestEntity2<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<TestEntity3<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity1<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity2<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity3<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>;
 export type WriteMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | CreateRequestBuilder<TestEntity1, DeSerializersT>
-  | UpdateRequestBuilder<TestEntity1, DeSerializersT>
-  | DeleteRequestBuilder<TestEntity1, DeSerializersT>
-  | CreateRequestBuilder<TestEntity2, DeSerializersT>
-  | UpdateRequestBuilder<TestEntity2, DeSerializersT>
-  | DeleteRequestBuilder<TestEntity2, DeSerializersT>
-  | CreateRequestBuilder<TestEntity3, DeSerializersT>
-  | UpdateRequestBuilder<TestEntity3, DeSerializersT>
-  | DeleteRequestBuilder<TestEntity3, DeSerializersT>
-  | CreateRequestBuilder<TestEntity4, DeSerializersT>
-  | UpdateRequestBuilder<TestEntity4, DeSerializersT>
-  | DeleteRequestBuilder<TestEntity4, DeSerializersT>;
+  | CreateRequestBuilder<TestEntity1<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity1<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity1<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<TestEntity2<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity2<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity2<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<TestEntity3<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity3<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity3<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>;

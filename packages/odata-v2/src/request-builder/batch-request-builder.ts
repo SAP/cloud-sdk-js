@@ -5,12 +5,12 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import {
   deserializeBatchResponse,
-  BatchResponse,
   parseBatchResponse,
   BatchRequestBuilder
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { entityDeserializer } from '../de-serializers';
+import { BatchResponse } from '../batch-response';
 import { responseDataAccessor } from './response-data-accessor';
 
 /**

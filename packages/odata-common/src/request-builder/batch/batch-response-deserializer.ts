@@ -46,7 +46,7 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
   ): (
     | ErrorResponse
     | ReadResponse<DeSerializersT>
-    | WriteResponses<DeSerializersT>
+    | WriteResponses<DeSerializersT>// TODO replace to batch response
   )[] {
     return parsedBatchResponse.map(responseData => {
       if (Array.isArray(responseData)) {
@@ -63,18 +63,20 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
   ): ReadResponse<DeSerializersT> {
     return {
       ...responseData,
+      responseType:'ReadResponse',
       type: this.getApi(responseData.body)!,
       as: asReadResponse(
         responseData.body,
         this.responseDataAccessor,
         this.deserializer
       ),
-      isSuccess: () => true
+      isSuccess: () => true,
+      isReadResponse: () =>true
     };
   }
 
   private deserializeErrorResponse(responseData: ResponseData): ErrorResponse {
-    return { ...responseData, isSuccess: () => false };
+    return { ...responseData,responseType:'ErrorResponse', isSuccess: () => false };
   }
 
   private deserializeChangeSetSubResponse(
@@ -82,6 +84,7 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
   ): WriteResponse<DeSerializersT> {
     return {
       ...responseData,
+      responseType:'WriteResponse',
       type: this.getApi(responseData.body),
       as: asWriteResponse(
         responseData.body,
@@ -98,7 +101,8 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
       responses: changesetData.map(subResponseData =>
         this.deserializeChangeSetSubResponse(subResponseData)
       ),
-      isSuccess: () => true
+      isSuccess: () => true,
+      isReadResponse: ()=> false
     };
   }
 

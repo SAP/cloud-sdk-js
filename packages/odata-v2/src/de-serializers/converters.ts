@@ -1,13 +1,13 @@
 /* eslint-disable valid-jsdoc */
 
 import moment from 'moment';
-import { Time, durationRegex_v2 } from '@sap-cloud-sdk/odata-common/internal';
+import { Time, durationRegexV2 } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * @internal
  */
 export function deserializeToTime(value: string): Time {
-  const regexResult = durationRegex_v2.exec(value);
+  const regexResult = durationRegexV2.exec(value);
   if (!regexResult) {
     throw new Error(`Failed to parse the value: ${value} to time.`);
   }

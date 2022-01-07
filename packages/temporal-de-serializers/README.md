@@ -3,21 +3,21 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
-# @sap-cloud-sdk/temporal-middleware
+# @sap-cloud-sdk/temporal-de-serializers
 
 This package contains the [Temporal](https://tc39.es/proposal-temporal/docs/) based middleware for date/time (de-)serialization in the SAP Cloud SDK.
 
 ## Installation
 
 ```
-$ npm install @sap-cloud-sdk/temporal-middleware
+$ npm install @sap-cloud-sdk/temporal-de-serializers
 ```
 
 ## Usage
 ```
-import { temporalDeSerializers_v4 } from '@sap-cloud-sdk/temporal-middleware';
+import { temporalDeSerializersV4 } from '@sap-cloud-sdk/temporal-de-serializers';
 
-const { businessPartnerApi } = businessPartnerService(temporalDeSerializers_v4);
+const { businessPartnerApi } = businessPartnerService(temporalDeSerializersV4);
 businessPartnerApi
   .entityBuilder()
   .organizationFoundationDate(

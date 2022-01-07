@@ -1,5 +1,5 @@
 /* eslint-disable valid-jsdoc */
-import { Time, durationRegex_v4 } from '@sap-cloud-sdk/odata-common/internal';
+import { Time, durationRegexV4 } from '@sap-cloud-sdk/odata-common/internal';
 import moment from 'moment';
 /**
  * @internal
@@ -50,7 +50,7 @@ export function serializeToDateTimeOffset(value: moment.Moment): string {
  * @internal
  */
 export function deserializeDurationToMoment(value: string): moment.Duration {
-  const captured = durationRegex_v4.exec(value);
+  const captured = durationRegexV4.exec(value);
   if (!captured || captured[0] !== value) {
     throw new Error(
       `Provided duration value ${value} does not follow the Edm.Duration pattern: +/- P0DT0H0M0S`

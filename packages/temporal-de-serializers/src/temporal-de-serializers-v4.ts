@@ -2,13 +2,13 @@
 import { Temporal } from '@js-temporal/polyfill';
 import {
   DeSerializer,
-  durationRegex_v4
+  durationRegexV4
 } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Temporal (de-)serializers for Odata-v4.
  */
-export const temporalDeSerializers_v4 = {
+export const temporalDeSerializersV4 = {
   'Edm.Date': {
     deserialize: deserializeDateToTemporal,
     serialize: serializePlainDateToDate,
@@ -95,7 +95,7 @@ export function deserializeDurationToTemporal(
   value: string
 ): Temporal.Duration {
   try {
-    const match = value.match(durationRegex_v4);
+    const match = value.match(durationRegexV4);
     if (match && match[0] !== value) {
       throw new Error();
     }

@@ -294,7 +294,7 @@ export async function generateSourcesForService(
     );
   }
 
-  if (service.actionsImports && service.actionsImports.length) {
+  if (service.actionImports && service.actionImports.length) {
     logger.info(`[${service.originalFileName}] Generating action imports ...`);
     sourceFile(
       serviceDir,

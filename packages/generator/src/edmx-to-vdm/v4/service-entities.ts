@@ -50,6 +50,6 @@ export function getServiceEntitiesV4(
     enumTypes,
     entities,
     functionImports,
-    actionsImports
+    actionImports: actionsImports
   };
 }

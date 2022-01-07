@@ -1,21 +1,23 @@
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   TestEntity,
+  TestEntityWithEnumKey,
   testService
-} from '@sap-cloud-sdk/test-services/v2/test-service';
-import { defaultDeSerializers } from '../src';
+} from '@sap-cloud-sdk/test-services/v4/test-service';
+import { defaultDeSerializers } from '../../src';
 
 export const {
   testEntityApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi,
   testEntityLvl2MultiLinkApi,
-  testEntityLvl2SingleLinkApi
+  testEntityLvl2SingleLinkApi,
+  testEntityWithEnumKeyApi,
+  testEntityCircularLinkParentApi,
+  testEntityCircularLinkChildApi
 } = testService();
 
-export function createTestEntity(
-  originalData: Record<string, any>
-): TestEntity {
+export function createTestEntity(originalData): TestEntity {
   const entity = testEntityApi
     .entityBuilder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
@@ -23,6 +25,7 @@ export function createTestEntity(
     .stringProperty(originalData.StringProperty)
     .booleanProperty(originalData.BooleanProperty)
     .int16Property(originalData.Int16Property)
+    .enumProperty(originalData.EnumProperty)
     .build()
     .setOrInitializeRemoteState();
 
@@ -40,6 +43,16 @@ export function createTestEntity(
   }
 
   return entity;
+}
+
+export function createTestEntityWithEnumKey(
+  originalData
+): TestEntityWithEnumKey {
+  return testEntityWithEnumKeyApi
+    .entityBuilder()
+    .keyPropertyEnum1(originalData.KeyPropertyEnum1)
+    .build()
+    .setOrInitializeRemoteState();
 }
 
 export function testEntityResourcePath(guid, str): string {

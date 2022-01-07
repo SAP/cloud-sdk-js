@@ -54,7 +54,7 @@ describe('GetAllRequestBuilder', () => {
     });
   });
 
-  it('is built correctly for selects inside of an expand.', async () => {
+  it('is built correctly for selects inside of an expand', async () => {
     const expected =
       '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$expand=to_SingleLink($select=BooleanProperty)';
     const actual = await requestBuilder

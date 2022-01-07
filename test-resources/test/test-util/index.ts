@@ -3,7 +3,6 @@ export * from './batch-test-util';
 export * from './destination-service-mocks';
 export * from './environment-mocks';
 export * from './example-destination-service-responses';
-export * from './filter-factory';
 export * from './keys';
 export * from './mocked-access-tokens';
 export * from './test-data';

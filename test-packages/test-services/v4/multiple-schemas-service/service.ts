@@ -7,6 +7,18 @@ import { TestEntity1Api } from './TestEntity1Api';
 import { TestEntity2Api } from './TestEntity2Api';
 import { TestEntity3Api } from './TestEntity3Api';
 import { TestEntity4Api } from './TestEntity4Api';
+import {
+  testFunctionImportEntityReturnType1,
+  testFunctionImportEntityReturnType2,
+  TestFunctionImportEntityReturnType1Parameters,
+  TestFunctionImportEntityReturnType2Parameters
+} from './function-imports';
+import {
+  testActionImportNoParameterComplexReturnType1,
+  testActionImportNoParameterComplexReturnType2,
+  TestActionImportNoParameterComplexReturnType1Parameters,
+  TestActionImportNoParameterComplexReturnType2Parameters
+} from './action-imports';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
@@ -116,5 +128,35 @@ export class MultipleSchemasService<
 
   get testEntity4Api(): TestEntity4Api<DeSerializersT> {
     return this.initApi('testEntity4Api', TestEntity4Api);
+  }
+
+  get functionImports() {
+    return {
+      testFunctionImportEntityReturnType1: (
+        parameter: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>
+      ) => testFunctionImportEntityReturnType1(parameter, this.deSerializers),
+      testFunctionImportEntityReturnType2: (
+        parameter: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>
+      ) => testFunctionImportEntityReturnType2(parameter, this.deSerializers)
+    };
+  }
+
+  get actionImports() {
+    return {
+      testActionImportNoParameterComplexReturnType1: (
+        parameter: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>
+      ) =>
+        testActionImportNoParameterComplexReturnType1(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportNoParameterComplexReturnType2: (
+        parameter: TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>
+      ) =>
+        testActionImportNoParameterComplexReturnType2(
+          parameter,
+          this.deSerializers
+        )
+    };
   }
 }

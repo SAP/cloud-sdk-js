@@ -133,14 +133,14 @@ function returnTypeImport(
 export function importDeclarationsFunction(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
-  if (!service.actionsImports) {
+  if (!service.actionImports) {
     return [];
   }
 
   const actionImportPayloadElements = flat(
-    service.actionsImports.map(actionImport => actionImport.parameters)
+    service.actionImports.map(actionImport => actionImport.parameters)
   );
-  const returnTypes = service.actionsImports.map(
+  const returnTypes = service.actionImports.map(
     actionImport => actionImport.returnType
   );
   return actionFunctionImportDeclarations(

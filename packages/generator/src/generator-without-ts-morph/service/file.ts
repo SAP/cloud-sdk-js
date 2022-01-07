@@ -48,10 +48,6 @@ export function imports(service: VdmServiceMetadata): Import[] {
     ...functionImports,
     ...actionImports,
     {
-      names: ['Time'],
-      moduleIdentifier: '@sap-cloud-sdk/odata-common/internal'
-    },
-    {
       names: ['BigNumber'],
       moduleIdentifier: 'bignumber.js'
     },
@@ -69,7 +65,8 @@ export function imports(service: VdmServiceMetadata): Import[] {
         'defaultDeSerializers',
         'DeSerializers',
         'DefaultDeSerializers',
-        'mergeDefaultDeSerializersWith'
+        'mergeDefaultDeSerializersWith',
+        'Time'
       ],
       moduleIdentifier: `@sap-cloud-sdk/odata-${service.oDataVersion}`
     }

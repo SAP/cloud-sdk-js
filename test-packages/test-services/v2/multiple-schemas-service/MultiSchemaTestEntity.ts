@@ -3,13 +3,22 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v2';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers,
+  DeserializedType
+} from '@sap-cloud-sdk/odata-v2';
 
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class MultiSchemaTestEntity<T extends DeSerializers = DefaultDeSerializers> extends Entity implements MultiSchemaTestEntityType<T> {
+export class MultiSchemaTestEntity<
+    T extends DeSerializers = DefaultDeSerializers
+  >
+  extends Entity
+  implements MultiSchemaTestEntityType<T>
+{
   /**
    * Technical entity name for MultiSchemaTestEntity.
    */
@@ -28,6 +37,8 @@ export class MultiSchemaTestEntity<T extends DeSerializers = DefaultDeSerializer
   keyProperty!: DeserializedType<T, 'Edm.String'>;
 }
 
-export interface MultiSchemaTestEntityType<T extends DeSerializers = DefaultDeSerializers> {
+export interface MultiSchemaTestEntityType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }

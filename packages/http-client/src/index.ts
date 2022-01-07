@@ -8,7 +8,6 @@ export {
   HttpRequestOptions,
   HttpResponse,
   Method,
-  Origin,
   OriginOptions
 } from './http-client-types';
 export { mergeOptionsWithPriority } from './http-request-config';

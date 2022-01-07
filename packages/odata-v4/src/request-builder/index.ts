@@ -7,3 +7,4 @@ export * from './get-by-key-request-builder';
 export * from './response-data-accessor';
 export * from './response-transformers';
 export * from './update-request-builder';
+export * from './batch-request-builder';

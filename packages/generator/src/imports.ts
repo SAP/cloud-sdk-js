@@ -46,18 +46,6 @@ export function externalImportDeclaration(
 /**
  * @internal
  */
-export function odataCommonImportDeclaration(
-  namedImports: string[]
-): ImportDeclarationStructure {
-  return {
-    kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
-    namedImports: unique(namedImports)
-  };
-}
-/**
- * @internal
- */
 export function odataImportDeclaration(
   namedImports: string[],
   odataVersion: ODataVersion,

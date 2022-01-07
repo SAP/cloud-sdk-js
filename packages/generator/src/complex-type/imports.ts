@@ -3,8 +3,7 @@ import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   odataImportDeclaration,
-  enumTypeImportDeclarations,
-  odataCommonImportDeclaration
+  enumTypeImportDeclarations
 } from '../imports';
 import { VdmComplexType } from '../vdm-types';
 /* eslint-disable valid-jsdoc */
@@ -20,11 +19,10 @@ export function importDeclarations(
     ...complexTypeImportDeclarations(complexType.properties),
     ...enumTypeImportDeclarations(complexType.properties),
     odataImportDeclaration(
-      ['DefaultDeSerializers', 'DeSerializers', 'Entity'],
-      oDataVersion
-    ),
-    odataCommonImportDeclaration(
       [
+        'DefaultDeSerializers',
+        'DeSerializers',
+        'Entity',
         'ComplexTypeField',
         'ConstructorOrField',
         'DeserializedType',
@@ -34,7 +32,8 @@ export function importDeclarations(
         'OrderableEdmTypeField',
         'PropertyMetadata',
         ...(oDataVersion === 'v4' ? ['CollectionField', 'EnumField'] : [])
-      ].sort()
+      ].sort(),
+      oDataVersion
     )
   ];
 }

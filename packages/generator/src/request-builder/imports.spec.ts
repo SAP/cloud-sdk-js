@@ -8,11 +8,6 @@ describe('imports', () => {
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
-        namedImports: ['DeserializedType', 'RequestBuilder', 'Time']
-      },
-      {
-        kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-v2',
         namedImports: [
           'DefaultDeSerializers',
@@ -20,7 +15,10 @@ describe('imports', () => {
           'GetAllRequestBuilder',
           'GetByKeyRequestBuilder',
           'CreateRequestBuilder',
-          'UpdateRequestBuilder'
+          'UpdateRequestBuilder',
+          'DeserializedType',
+          'RequestBuilder',
+          'Time'
         ]
       },
       {

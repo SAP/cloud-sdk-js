@@ -3,13 +3,22 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v4';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers,
+  DeserializedType
+} from '@sap-cloud-sdk/odata-v4';
 
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType2" of service "API_TEST_SRV".
  */
-export class TestEntityWithSharedEntityType2<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityWithSharedEntityType2Type<T> {
+export class TestEntityWithSharedEntityType2<
+    T extends DeSerializers = DefaultDeSerializers
+  >
+  extends Entity
+  implements TestEntityWithSharedEntityType2Type<T>
+{
   /**
    * Technical entity name for TestEntityWithSharedEntityType2.
    */
@@ -29,6 +38,8 @@ export class TestEntityWithSharedEntityType2<T extends DeSerializers = DefaultDe
   keyProperty!: DeserializedType<T, 'Edm.String'>;
 }
 
-export interface TestEntityWithSharedEntityType2Type<T extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntityWithSharedEntityType2Type<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }

@@ -3,15 +3,22 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v4';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers,
+  DeserializedType
+} from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType2, TestComplexType2Field } from './TestComplexType2';
 import { TestEnumType2 } from './TestEnumType2';
 
 /**
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class TestEntity3<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntity3Type<T> {
+export class TestEntity3<T extends DeSerializers = DefaultDeSerializers>
+  extends Entity
+  implements TestEntity3Type<T>
+{
   /**
    * Technical entity name for TestEntity3.
    */
@@ -40,7 +47,9 @@ export class TestEntity3<T extends DeSerializers = DefaultDeSerializers> extends
   complexTypeProperty?: TestComplexType2<T> | null;
 }
 
-export interface TestEntity3Type<T extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntity3Type<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   keyPropertyString: DeserializedType<T, 'Edm.String'>;
   enumProperty?: TestEnumType2 | null;
   complexTypeProperty?: TestComplexType2<T> | null;

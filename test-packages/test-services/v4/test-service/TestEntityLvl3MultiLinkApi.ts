@@ -5,50 +5,47 @@
  */
 import { TestEntityLvl3MultiLink } from './TestEntityLvl3MultiLink';
 import { TestEntityLvl3MultiLinkRequestBuilder } from './TestEntityLvl3MultiLinkRequestBuilder';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
-import { EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  CustomField,
+  defaultDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers,
+  mergeDefaultDeSerializersWith,
+  AllFields,
+  entityBuilder,
+  EntityBuilderType,
+  EntityApi,
+  FieldBuilder,
+  Time,
+  EdmTypeField
+} from '@sap-cloud-sdk/odata-v4';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class TestEntityLvl3MultiLinkApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
-    EntityApi<
-      TestEntityLvl3MultiLink<
-        DeSerializersT
-      >, 
-      DeSerializersT
-    > {
+export class TestEntityLvl3MultiLinkApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<TestEntityLvl3MultiLink<DeSerializersT>, DeSerializersT>
+{
   public deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {
-      
-    };
+  private navigationPropertyFields!: {};
 
-  _addNavigationProperties(
-      linkedApis: [
-        
-      ]): this {
-        this.navigationPropertyFields = {
-          
-        };
-        return this;
-      }
-  
+  _addNavigationProperties(linkedApis: []): this {
+    this.navigationPropertyFields = {};
+    return this;
+  }
+
   entityConstructor = TestEntityLvl3MultiLink;
-  
-  requestBuilder(): TestEntityLvl3MultiLinkRequestBuilder<
-    DeSerializersT
-  > {
+
+  requestBuilder(): TestEntityLvl3MultiLinkRequestBuilder<DeSerializersT> {
     return new TestEntityLvl3MultiLinkRequestBuilder<DeSerializersT>(this);
   }
-  
+
   entityBuilder(): EntityBuilderType<
-    TestEntityLvl3MultiLink<
-      DeSerializersT
-    >,
+    TestEntityLvl3MultiLink<DeSerializersT>,
     DeSerializersT
   > {
     return entityBuilder(this);
@@ -58,8 +55,7 @@ export class TestEntityLvl3MultiLinkApi<DeSerializersT extends DeSerializers = D
     fieldName: string,
     isNullable: NullableT = false as NullableT
   ): CustomField<
-  TestEntityLvl3MultiLink<
-      DeSerializersT>,
+    TestEntityLvl3MultiLink<DeSerializersT>,
     DeSerializersT,
     NullableT
   > {
@@ -72,29 +68,44 @@ export class TestEntityLvl3MultiLinkApi<DeSerializersT extends DeSerializers = D
   }
 
   get schema() {
-    const fieldBuilder = new FieldBuilder(TestEntityLvl3MultiLink, this.deSerializers);
-    return { 
-    /**
- * Static representation of the [[stringProperty]] property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-STRING_PROPERTY: fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true),
-/**
- * Static representation of the [[guidProperty]] property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-GUID_PROPERTY: fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true),
-/**
- * Static representation of the [[keyProperty]] property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
-...this.navigationPropertyFields,
-/**
- * 
- * All fields selector.
- */
-ALL_FIELDS: new AllFields('*', TestEntityLvl3MultiLink) 
-  };
+    const fieldBuilder = new FieldBuilder(
+      TestEntityLvl3MultiLink,
+      this.deSerializers
+    );
+    return {
+      /**
+       * Static representation of the [[stringProperty]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
+        'StringProperty',
+        'Edm.String',
+        true
+      ),
+      /**
+       * Static representation of the [[guidProperty]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
+        'GuidProperty',
+        'Edm.Guid',
+        true
+      ),
+      /**
+       * Static representation of the [[keyProperty]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+        'KeyProperty',
+        'Edm.String',
+        false
+      ),
+      ...this.navigationPropertyFields,
+      /**
+       *
+       * All fields selector.
+       */
+      ALL_FIELDS: new AllFields('*', TestEntityLvl3MultiLink)
+    };
   }
 }

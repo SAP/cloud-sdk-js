@@ -7,62 +7,63 @@ import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 import { TestEntityCircularLinkChildRequestBuilder } from './TestEntityCircularLinkChildRequestBuilder';
 import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 import { TestEntityCircularLinkParentApi } from './TestEntityCircularLinkParentApi';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
-import { EdmTypeField, OneToOneLink, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  CustomField,
+  defaultDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers,
+  mergeDefaultDeSerializersWith,
+  AllFields,
+  entityBuilder,
+  EntityBuilderType,
+  EntityApi,
+  FieldBuilder,
+  Time,
+  EdmTypeField,
+  OneToOneLink
+} from '@sap-cloud-sdk/odata-v4';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class TestEntityCircularLinkChildApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
-    EntityApi<
-      TestEntityCircularLinkChild<
-        DeSerializersT
-      >, 
-      DeSerializersT
-    > {
+export class TestEntityCircularLinkChildApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements
+    EntityApi<TestEntityCircularLinkChild<DeSerializersT>, DeSerializersT>
+{
   public deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
   private navigationPropertyFields!: {
-      /**
-       * Static representation of the one-to-one navigation property [[toParent]] for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      TO_PARENT: OneToOneLink<
-            TestEntityCircularLinkChild<DeSerializersT>,
-            DeSerializersT,
-            TestEntityCircularLinkParent<DeSerializersT>
-          >
-    };
+    /**
+     * Static representation of the one-to-one navigation property [[toParent]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_PARENT: OneToOneLink<
+      TestEntityCircularLinkChild<DeSerializersT>,
+      DeSerializersT,
+      TestEntityCircularLinkParent<DeSerializersT>
+    >;
+  };
 
   _addNavigationProperties(
-      linkedApis: [
-        TestEntityCircularLinkParentApi<DeSerializersT>
-      ]): this {
-        this.navigationPropertyFields = {
-          TO_PARENT: new OneToOneLink(
-              'to_Parent',
-              this,
-              linkedApis[0]
-            )
-        };
-        return this;
-      }
-  
+    linkedApis: [TestEntityCircularLinkParentApi<DeSerializersT>]
+  ): this {
+    this.navigationPropertyFields = {
+      TO_PARENT: new OneToOneLink('to_Parent', this, linkedApis[0])
+    };
+    return this;
+  }
+
   entityConstructor = TestEntityCircularLinkChild;
-  
-  requestBuilder(): TestEntityCircularLinkChildRequestBuilder<
-    DeSerializersT
-  > {
+
+  requestBuilder(): TestEntityCircularLinkChildRequestBuilder<DeSerializersT> {
     return new TestEntityCircularLinkChildRequestBuilder<DeSerializersT>(this);
   }
-  
+
   entityBuilder(): EntityBuilderType<
-    TestEntityCircularLinkChild<
-      DeSerializersT
-    >,
+    TestEntityCircularLinkChild<DeSerializersT>,
     DeSerializersT
   > {
     return entityBuilder(this);
@@ -72,8 +73,7 @@ export class TestEntityCircularLinkChildApi<DeSerializersT extends DeSerializers
     fieldName: string,
     isNullable: NullableT = false as NullableT
   ): CustomField<
-  TestEntityCircularLinkChild<
-      DeSerializersT>,
+    TestEntityCircularLinkChild<DeSerializersT>,
     DeSerializersT,
     NullableT
   > {
@@ -86,19 +86,26 @@ export class TestEntityCircularLinkChildApi<DeSerializersT extends DeSerializers
   }
 
   get schema() {
-    const fieldBuilder = new FieldBuilder(TestEntityCircularLinkChild, this.deSerializers);
-    return { 
-    /**
- * Static representation of the [[keyProperty]] property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
-...this.navigationPropertyFields,
-/**
- * 
- * All fields selector.
- */
-ALL_FIELDS: new AllFields('*', TestEntityCircularLinkChild) 
-  };
+    const fieldBuilder = new FieldBuilder(
+      TestEntityCircularLinkChild,
+      this.deSerializers
+    );
+    return {
+      /**
+       * Static representation of the [[keyProperty]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+        'KeyProperty',
+        'Edm.String',
+        false
+      ),
+      ...this.navigationPropertyFields,
+      /**
+       *
+       * All fields selector.
+       */
+      ALL_FIELDS: new AllFields('*', TestEntityCircularLinkChild)
+    };
   }
 }

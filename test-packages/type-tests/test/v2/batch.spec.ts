@@ -50,30 +50,30 @@ batch([changeSetTestEntity, changeSetTestEntity]);
 // $ExpectType ReadResponse<DefaultDeSerializers>
 const responseWithDefault = {} as ReadResponse;
 
-async () => {
+async function test() {
   // $ExpectType BatchResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
-  const responses = await testService()
-    .batch(testEntityApi.requestBuilder().getAll())
-    .execute({} as any);
+  const responses = await batch(
+    testEntityApi.requestBuilder().getAll()
+  ).execute({} as any);
 
   const response = responses[0];
   if (response.isSuccess()) {
     // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>> | WriteResponses<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
     response;
-    if (response.isReadResponse()) {
-      // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
-      response;
+  }
+  if (response.isReadResponse()) {
+    // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+    response;
 
-      // $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
-      const result = response.as(testEntityApi);
-    }
+    // $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
+    const result = response.as(testEntityApi);
   }
 
-  // Custom deserializer - first value in generic from string to number
+  // Custom deserializer - first vaule in generic from string to number
   const custom = {
     'Edm.Binary': {
-      deserialize: (): number => 1,
-      serialize: (): string => '1',
+      deserialize: (val: string): number => 1,
+      serialize: (val: number): string => '1',
       serializeToUri: () => ''
     }
   };
@@ -87,12 +87,14 @@ async () => {
   if (responseCustomDeserializer.isSuccess()) {
     // $ExpectType ReadResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>> | WriteResponses<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
     responseCustomDeserializer;
-    if (responseCustomDeserializer.isReadResponse()) {
-      // $ExpectType ReadResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
-      responseCustomDeserializer;
-
-      // $ExpectType TestEntity<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
-      responseCustomDeserializer.as(testService(custom).testEntityApi);
-    }
   }
-};
+  if (responseCustomDeserializer.isReadResponse()) {
+    // $ExpectType ReadResponse<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+    responseCustomDeserializer;
+
+    // $ExpectType TestEntity<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
+    const result = responseCustomDeserializer.as(
+      testService(custom).testEntityApi
+    );
+  }
+}

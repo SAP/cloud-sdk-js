@@ -13,8 +13,7 @@ describe('file', () => {
     );
 
     expect(imports.map(i => i.moduleSpecifier)).toEqual([
-      '@sap-cloud-sdk/odata-v2',
-      '@sap-cloud-sdk/odata-common/internal'
+      '@sap-cloud-sdk/odata-v2'
     ]);
 
     const entities = (actual.statements as any[]).filter(
@@ -44,7 +43,6 @@ describe('file', () => {
 
     expect(imports.map(i => i.moduleSpecifier)).toIncludeSameMembers([
       '@sap-cloud-sdk/odata-v2',
-      '@sap-cloud-sdk/odata-common/internal',
       './ComplexDesert'
     ]);
 

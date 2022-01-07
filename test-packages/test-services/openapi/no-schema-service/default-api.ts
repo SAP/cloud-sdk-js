@@ -13,5 +13,8 @@ export const DefaultApi = {
    * Create a request builder for execution of get requests to the '/' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
-  get: () => new OpenApiRequestBuilder<any>('get', '/')
+  get: () => new OpenApiRequestBuilder<any>(
+    'get',
+    '/'
+  )
 };

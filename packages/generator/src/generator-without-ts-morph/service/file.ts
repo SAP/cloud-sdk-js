@@ -56,6 +56,10 @@ export function imports(service: VdmServiceMetadata): Import[] {
       moduleIdentifier: 'bignumber.js'
     },
     {
+      names: ['batch'],
+      moduleIdentifier: './BatchRequest'
+    },
+    {
       names:
         service.oDataVersion === 'v2' ? ['Moment'] : ['Moment', 'Duration'],
       moduleIdentifier: 'moment'

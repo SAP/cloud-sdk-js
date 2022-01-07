@@ -49,4 +49,11 @@ describe('class', () => {
       'myAction:(parameter:paraName<DeSerializersT>)=>myAction(parameter,this.deSerializers)'
     );
   });
+
+  it('contains batch object', () => {
+    const result = serviceClass({
+      ...service
+    });
+    expect(result).toContain('get batch( ): typeof batch');
+  });
 });

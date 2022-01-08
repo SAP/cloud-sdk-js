@@ -202,7 +202,7 @@
         }
       }
     },
-    "value" : 6.328781431334624,
+    "value" : 6.57056092843327,
     "weight" : 1.0,
     "confidence" : 10.0,
     "usedValues" : [ {
@@ -465,7 +465,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 202,
+        "number" : 215,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -476,7 +476,7 @@
         "number" : 2,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "202 commits in the last 3 months results to 10.00 points", "2 contributors increase the score value from 10.00 to 10.50" ],
+      "explanation" : [ "215 commits in the last 3 months results to 10.00 points", "2 contributors increase the score value from 10.00 to 10.50" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
@@ -555,7 +555,7 @@
           }
         }
       },
-      "value" : 7.727272727272727,
+      "value" : 8.863636363636363,
       "weight" : 1.0,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -825,7 +825,7 @@
             }
           }
         },
-        "value" : 7.0,
+        "value" : 9.5,
         "weight" : 1.0,
         "confidence" : 10.0,
         "usedValues" : [ {
@@ -904,7 +904,7 @@
             "type" : "CodeqlScore",
             "name" : "How a project uses CodeQL"
           },
-          "value" : 5.0,
+          "value" : 10.0,
           "weight" : 1.0,
           "confidence" : 10.0,
           "usedValues" : [ {
@@ -921,7 +921,7 @@
               "type" : "BooleanFeature",
               "name" : "If a project runs CodeQL checks for commits"
             },
-            "flag" : false,
+            "flag" : true,
             "explanation" : [ ]
           }, {
             "type" : "BooleanValue",
@@ -1300,7 +1300,7 @@
             }
           }
         },
-        "value" : 7.727272727272727,
+        "value" : 8.863636363636363,
         "weight" : 1.0,
         "confidence" : 10.0,
         "usedValues" : [ {
@@ -1570,7 +1570,7 @@
               }
             }
           },
-          "value" : 7.0,
+          "value" : 9.5,
           "weight" : 1.0,
           "confidence" : 10.0,
           "usedValues" : [ {
@@ -1649,7 +1649,7 @@
               "type" : "CodeqlScore",
               "name" : "How a project uses CodeQL"
             },
-            "value" : 5.0,
+            "value" : 10.0,
             "weight" : 1.0,
             "confidence" : 10.0,
             "usedValues" : [ {
@@ -1666,7 +1666,7 @@
                 "type" : "BooleanFeature",
                 "name" : "If a project runs CodeQL checks for commits"
               },
-              "flag" : false,
+              "flag" : true,
               "explanation" : [ ]
             }, {
               "type" : "BooleanValue",

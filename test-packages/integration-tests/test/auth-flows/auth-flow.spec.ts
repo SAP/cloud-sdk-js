@@ -1,7 +1,6 @@
 import {
   Destination,
   executeHttpRequest,
-  getService,
   wrapJwtInHeader,
   getDestination,
   getDestinationFromDestinationService

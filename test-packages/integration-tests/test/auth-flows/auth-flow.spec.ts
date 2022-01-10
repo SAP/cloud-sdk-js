@@ -25,7 +25,6 @@ describe('OAuth flows', () => {
     accessToken = readUserAccessToken();
     systems = readSystems();
     loadLocalVcap();
-    destinationService = getService('destination');
   });
 
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {

@@ -209,7 +209,7 @@ describe('env-destination-accessor', () => {
 });
 
 describe('registerDestination', () => {
-  const mockDestination: Destination = {
+  const mockDestination = {
     name: 'MockedDestination',
     url: 'https://example.com'
   };
@@ -249,17 +249,6 @@ describe('registerDestination', () => {
     expect(
       getDestination({ destinationName: 'MockedDestination' })
     ).resolves.toMatchObject(mockDestinationFromEnv);
-  });
-
-  it('should throw an exception if a property of the destination is missing', () => {
-    const badDestination: Destination = {
-      url: 'https://test.com'
-    };
-    expect(() => {
-      registerDestination(badDestination);
-    }).toThrowErrorMatchingInlineSnapshot(
-      '"The registerDestination function requires a destination name and url."'
-    );
   });
 
   it('should throw an exception if a name conflict occurs', () => {

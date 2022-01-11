@@ -167,9 +167,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         this.config.customHeaders
       );
       return {
-        Custom: this.customHeaders(),
-        Destination: destinationRelatedHeaders,
-        RequestConfig: { ...this.defaultHeaders(), ...this.eTagHeaders() }
+        custom: this.customHeaders(),
+        destination: destinationRelatedHeaders,
+        requestConfig: { ...this.defaultHeaders(), ...this.eTagHeaders() }
       };
     } catch (error) {
       throw new ErrorWithCause(
@@ -257,9 +257,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   private queryParameters(): OriginOptions {
     return {
-      Custom: this.config.customQueryParameters,
-      Destination: this.destination?.queryParameters,
-      RequestConfig: this.config.queryParameters()
+      custom: this.config.customQueryParameters,
+      destination: this.destination?.queryParameters,
+      requestConfig: this.config.queryParameters()
     };
   }
 }

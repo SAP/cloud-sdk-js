@@ -20,6 +20,7 @@ import {
   TestActionImportNoParameterComplexReturnType2Parameters
 } from './action-imports';
 import { BigNumber } from 'bignumber.js';
+import { batch } from './BatchRequest';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,
@@ -158,5 +159,9 @@ export class MultipleSchemasService<
           this.deSerializers
         )
     };
+  }
+
+  get batch(): typeof batch {
+    return batch;
   }
 }

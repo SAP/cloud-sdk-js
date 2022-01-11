@@ -13,6 +13,7 @@ import {
   CreateTestEntityByIdReturnIdParameters
 } from './action-imports';
 import { BigNumber } from 'bignumber.js';
+import { batch } from './BatchRequest';
 import { Moment, Duration } from 'moment';
 import {
   DeSerializers,
@@ -152,5 +153,6 @@ export declare class TestService<
       number
     >;
   };
+  get batch(): typeof batch;
 }
 //# sourceMappingURL=service.d.ts.map

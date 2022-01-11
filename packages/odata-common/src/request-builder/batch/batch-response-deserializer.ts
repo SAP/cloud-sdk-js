@@ -1,5 +1,6 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
+  BatchResponse,
   ErrorResponse,
   ReadResponse,
   WriteResponse,
@@ -43,11 +44,7 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
    */
   deserializeBatchResponse(
     parsedBatchResponse: (ResponseData[] | ResponseData)[]
-  ): (
-    | ErrorResponse
-    | ReadResponse<DeSerializersT>
-    | WriteResponses<DeSerializersT>
-  )[] {
+  ): BatchResponse<DeSerializersT>[] {
     return parsedBatchResponse.map(responseData => {
       if (Array.isArray(responseData)) {
         return this.deserializeChangeSet(responseData);
@@ -63,18 +60,29 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
   ): ReadResponse<DeSerializersT> {
     return {
       ...responseData,
+      responseType: 'ReadResponse',
       type: this.getApi(responseData.body)!,
       as: asReadResponse(
         responseData.body,
         this.responseDataAccessor,
         this.deserializer
       ),
-      isSuccess: () => true
+      isSuccess: () => true,
+      isError: () => false,
+      isReadResponse: () => true,
+      isWriteResponses: () => false
     };
   }
 
   private deserializeErrorResponse(responseData: ResponseData): ErrorResponse {
-    return { ...responseData, isSuccess: () => false };
+    return {
+      ...responseData,
+      responseType: 'ErrorResponse',
+      isSuccess: () => false,
+      isError: () => true,
+      isReadResponse: () => false,
+      isWriteResponses: () => false
+    };
   }
 
   private deserializeChangeSetSubResponse(
@@ -82,6 +90,7 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
   ): WriteResponse<DeSerializersT> {
     return {
       ...responseData,
+      responseType: 'WriteResponse',
       type: this.getApi(responseData.body),
       as: asWriteResponse(
         responseData.body,
@@ -98,7 +107,10 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
       responses: changesetData.map(subResponseData =>
         this.deserializeChangeSetSubResponse(subResponseData)
       ),
-      isSuccess: () => true
+      isSuccess: () => true,
+      isError: () => false,
+      isReadResponse: () => false,
+      isWriteResponses: () => true
     };
   }
 

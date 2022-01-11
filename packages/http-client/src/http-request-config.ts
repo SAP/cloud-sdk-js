@@ -2,7 +2,6 @@ import { createLogger, exclude, mergeIgnoreCase } from '@sap-cloud-sdk/util';
 import {
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
-  Origin,
   OriginOptions
 } from './http-client-types';
 
@@ -71,18 +70,20 @@ export function mergeOptionsWithPriority(
   headersOrParams?: OriginOptions
 ): Record<string, string> | undefined {
   if (headersOrParams) {
-    return getAllOriginsAsc().reduce(
-      (prev, origin) => mergeIgnoreCase(prev, headersOrParams[origin]),
-      {} as Record<string, string>
+    return origins.reduce(
+      (mergedHeadersOrParams, origin) =>
+        mergeIgnoreCase(mergedHeadersOrParams, headersOrParams[origin]),
+      {}
     );
   }
 }
 
 /**
- * Get all [[Origin]]s as an array in an ascent order (from low to high priority).
- * @returns Origins in an ascent oder.
- * @internal
+ * All origins ordered from low to high priority.
  */
-export function getAllOriginsAsc(): Origin[] {
-  return ['RequestConfig', 'Destination', 'DestinationProperty', 'Custom'];
-}
+const origins = [
+  'requestConfig',
+  'destination',
+  'destinationProperty',
+  'custom'
+];

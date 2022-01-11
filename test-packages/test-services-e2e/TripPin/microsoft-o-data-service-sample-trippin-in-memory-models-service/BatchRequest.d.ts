@@ -46,27 +46,27 @@ export declare const defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServ
 export declare type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | GetAllRequestBuilder<Photos, DeSerializersT>
-  | GetAllRequestBuilder<People, DeSerializersT>
-  | GetAllRequestBuilder<Airlines, DeSerializersT>
-  | GetAllRequestBuilder<Airports, DeSerializersT>
-  | GetByKeyRequestBuilder<Photos, DeSerializersT>
-  | GetByKeyRequestBuilder<People, DeSerializersT>
-  | GetByKeyRequestBuilder<Airlines, DeSerializersT>
-  | GetByKeyRequestBuilder<Airports, DeSerializersT>;
+  | GetAllRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<Airports<DeSerializersT>, DeSerializersT>;
 export declare type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | CreateRequestBuilder<Photos, DeSerializersT>
-  | UpdateRequestBuilder<Photos, DeSerializersT>
-  | DeleteRequestBuilder<Photos, DeSerializersT>
-  | CreateRequestBuilder<People, DeSerializersT>
-  | UpdateRequestBuilder<People, DeSerializersT>
-  | DeleteRequestBuilder<People, DeSerializersT>
-  | CreateRequestBuilder<Airlines, DeSerializersT>
-  | UpdateRequestBuilder<Airlines, DeSerializersT>
-  | DeleteRequestBuilder<Airlines, DeSerializersT>
-  | CreateRequestBuilder<Airports, DeSerializersT>
-  | UpdateRequestBuilder<Airports, DeSerializersT>
-  | DeleteRequestBuilder<Airports, DeSerializersT>;
+  | CreateRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<Airports<DeSerializersT>, DeSerializersT>;
 //# sourceMappingURL=BatchRequest.d.ts.map

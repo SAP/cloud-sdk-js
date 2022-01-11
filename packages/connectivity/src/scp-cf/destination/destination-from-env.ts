@@ -124,16 +124,10 @@ export function searchEnvVariablesForDestination(
       if (destination) {
         if (destination.forwardAuthToken) {
           destination.authTokens = destinationAuthToken(options.jwt);
-          logger.info(
-            `Successfully retrieved destination '${options.destinationName}' from environment variable.`
-          );
-        } else {
-          logger.warn(
-            `Successfully retrieved destination '${options.destinationName}' from environment variable.` +
-              'This is discouraged for productive applications. ' +
-              'Unset the variable to read destinations from the destination service on SAP Business Technology Platform.'
-          );
         }
+        logger.info(
+          `Successfully retrieved destination '${options.destinationName}' from environment variable.`
+        );
         return destination;
       }
     } catch (error) {

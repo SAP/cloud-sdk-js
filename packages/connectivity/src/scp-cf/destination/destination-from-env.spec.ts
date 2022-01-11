@@ -101,11 +101,11 @@ describe('env-destination-accessor', () => {
       mockDestinationsEnv(destinationFromEnv);
 
       const logger = createLogger('env-destination-accessor');
-      const warnSpy = jest.spyOn(logger, 'warn');
+      const warnSpy = jest.spyOn(logger, 'info');
       await getDestination({ destinationName: 'FINAL-DESTINATION' });
       expect(warnSpy).toHaveBeenCalledWith(
         expect.stringMatching(
-          /from environment variable.This is discouraged for productive applications./
+          /Successfully retrieved destination 'FINAL-DESTINATION' from environment variable./
         )
       );
     });

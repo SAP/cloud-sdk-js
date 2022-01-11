@@ -1,16 +1,24 @@
 /**
  * @internal
- * This is a copied from @types/jsonwebtoken.
+ * This is copied from `@types/jsonwebtoken`.
  */
 export type Algorithm =
-  'HS256' | 'HS384' | 'HS512' |
-  'RS256' | 'RS384' | 'RS512' |
-  'ES256' | 'ES384' | 'ES512' |
-  'PS256' | 'PS384' | 'PS512' |
-  'none';
+  | 'HS256'
+  | 'HS384'
+  | 'HS512'
+  | 'RS256'
+  | 'RS384'
+  | 'RS512'
+  | 'ES256'
+  | 'ES384'
+  | 'ES512'
+  | 'PS256'
+  | 'PS384'
+  | 'PS512'
+  | 'none';
 
 /**
- * This is a copied from @types/jsonwebtoken.
+ * This is copied from `@types/jsonwebtoken`.
  */
 export interface JwtPayload {
   [key: string]: any;
@@ -25,7 +33,7 @@ export interface JwtPayload {
 
 /**
  * @internal
- * This is a copied from @types/jsonwebtoken.
+ * This is copied from `@types/jsonwebtoken`.
  */
 export interface JwtHeader {
   alg: string | Algorithm;
@@ -42,7 +50,7 @@ export interface JwtHeader {
 
 /**
  * @internal
- * This is a copied from @types/jsonwebtoken.
+ * This is copied from `@types/jsonwebtoken`.
  */
 export interface Jwt {
   header: JwtHeader;

@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [core] Fix `OAuth2Password` auth type for the missing token in the header. 
 
 
 # 1.53.0

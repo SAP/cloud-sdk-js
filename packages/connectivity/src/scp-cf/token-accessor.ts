@@ -1,5 +1,5 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload } from './jsonwebtoken-type'
 import { decodeJwt } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';

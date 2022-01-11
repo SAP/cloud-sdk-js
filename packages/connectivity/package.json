@@ -42,7 +42,6 @@
     "opossum": "^6.0.0"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^8.3.8",
     "@types/opossum": "^6.2.0",
     "nock": "^13.0.11"
   }

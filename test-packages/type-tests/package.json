@@ -12,12 +12,14 @@
     "check:dependencies": "echo Nothing to check here."
   },
   "dependencies": {
+    "@sap-cloud-sdk/connectivity": "^1.50.0",
     "@sap-cloud-sdk/http-client": "^1.50.0",
     "@sap-cloud-sdk/odata-v2": "^1.50.0",
     "@sap-cloud-sdk/odata-v4": "^1.50.0",
     "@sap-cloud-sdk/test-services": "^1.50.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.3.8",
     "dtslint": "^4.0.0"
   }
 }

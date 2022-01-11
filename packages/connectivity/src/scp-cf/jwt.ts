@@ -1,8 +1,8 @@
 import { IncomingMessage } from 'http';
 import * as url from 'url';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { Jwt, JwtHeader, JwtPayload } from './jsonwebtoken-type';
 import { decode, verify } from 'jsonwebtoken';
+import { Jwt, JwtHeader, JwtPayload } from './jsonwebtoken-type';
 import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
 import { XsuaaServiceCredentials } from './environment-accessor-types';

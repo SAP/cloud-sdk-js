@@ -6,6 +6,7 @@ import { isNavigationProperty, nonEnumerable } from './properties-util';
 import type { CustomField, Field, Link } from './selectable';
 import type { RequestBuilder } from './request-builder';
 import { DefaultDeSerializers, DeSerializers } from './de-serializers';
+import {inferEntity} from "./helper-types";
 
 /**
  * @internal
@@ -332,8 +333,9 @@ export interface EntityIdentifiable<
  */
 export function isSelectedProperty<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
->(json: any, field: Field<EntityT> | Link<EntityT, DeSerializersT>): boolean {
+    DeSerializersT extends DeSerializers,
+    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>
+>(json: any, field: Field<EntityT> | Link<EntityT, DeSerializersT,LinkedEntityApiT>): boolean {
   return json.hasOwnProperty(field._fieldName);
 }
 
@@ -342,9 +344,9 @@ export function isSelectedProperty<
  */
 export function isExistentProperty<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase
->(json: any, link: Link<EntityT, DeSerializersT, LinkedEntityT>): boolean {
+    DeSerializersT extends DeSerializers,
+    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
+>(json: any, link: Link<EntityT, DeSerializersT, LinkedEntityApiT>): boolean {
   return isSelectedProperty(json, link) && json[link._fieldName] !== null;
 }
 
@@ -352,10 +354,10 @@ export function isExistentProperty<
  * @internal
  */
 export function isExpandedProperty<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase
->(json: any, link: Link<EntityT, DeSerializersT, LinkedEntityT>): boolean {
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
+    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
+>(json: any, link: Link<EntityT, DeSerializersT, LinkedEntityApiT>): boolean {
   return (
     isExistentProperty(json, link) &&
     !json[link._fieldName].hasOwnProperty('__deferred')

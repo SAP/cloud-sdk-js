@@ -1,5 +1,6 @@
-import { EntityBase } from '../entity-base';
+import {EntityApi, EntityBase} from '../entity-base';
 import { Orderable, OrderLink, Order } from '../order';
+import {DefaultDeSerializers, DeSerializers} from "../de-serializers";
 
 /**
  * Get an object containing the given order bys as query parameter, or an empty object if none was given.
@@ -8,8 +9,8 @@ import { Orderable, OrderLink, Order } from '../order';
  * @returns An object containing the query parameter or an empty object
  * @internal
  */
-export function getOrderBy<EntityT extends EntityBase>(
-  orderBy: Orderable<EntityT>[]
+export function getOrderBy<EntityT extends EntityBase,  DeSerializersT extends DeSerializers>(
+  orderBy: Orderable<EntityT,DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]
 ): Partial<{ orderby: string }> {
   if (typeof orderBy !== 'undefined' && orderBy.length) {
     return {
@@ -19,12 +20,14 @@ export function getOrderBy<EntityT extends EntityBase>(
   return {};
 }
 
-function getODataOrderByExpressions<OrderByEntityT extends EntityBase>(
-  orderBys: Orderable<OrderByEntityT>[],
+function getODataOrderByExpressions<  OrderByEntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
+    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>>(
+  orderBys: Orderable<OrderByEntityT,DeSerializersT,LinkedEntityApiT>[],
   parentFieldNames: string[] = []
 ): string[] {
   return orderBys.reduce(
-    (expressions: string[], orderBy: Orderable<OrderByEntityT>) => {
+    (expressions: string[], orderBy: Orderable<OrderByEntityT,DeSerializersT,LinkedEntityApiT>) => {
       if (orderBy instanceof OrderLink) {
         return [
           ...expressions,
@@ -42,9 +45,10 @@ function getODataOrderByExpressions<OrderByEntityT extends EntityBase>(
 
 function getOrderByExpressionForOrderLink<
   OrderByEntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+DeSerializersT extends DeSerializers,
+  LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>
 >(
-  orderBy: OrderLink<OrderByEntityT, LinkedEntityT>,
+  orderBy: OrderLink<OrderByEntityT,DeSerializersT,LinkedEntityApiT>,
   parentFieldNames: string[] = []
 ): string {
   return getODataOrderByExpressions(orderBy.orderBy, [
@@ -53,7 +57,7 @@ function getOrderByExpressionForOrderLink<
   ]).join(',');
 }
 
-function getOrderByExpressionForOrder<OrderByEntityT extends EntityBase>(
+function getOrderByExpressionForOrder<  OrderByEntityT extends EntityBase   >(
   orderBy: Order<OrderByEntityT>,
   parentFieldNames: string[] = []
 ): string {

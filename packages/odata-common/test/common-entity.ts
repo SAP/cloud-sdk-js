@@ -346,7 +346,7 @@ export class CommonEntityApi<
     TO_SINGLE_LINK: OneToOneLink<
       CommonEntity<DeSerializersT>,
       DeSerializersT,
-      CommonEntitySingleLink<DeSerializersT>
+      CommonEntitySingleLinkApi<DeSerializersT>
     >;
   };
 
@@ -515,3 +515,4 @@ export class CommonService<
 }
 
 export const { commonEntityApi } = commonService();
+

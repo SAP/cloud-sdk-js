@@ -9,15 +9,16 @@ import {
 import { DeSerializers } from '../de-serializers';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
+import {inferEntity} from "@sap-cloud-sdk/odata-common";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getExpandWrapped<
-  EntityT extends EntityBase,
+  EntityApiT extends EntityApi<EntityBase,DeSerializersT>,
   DeSerializersT extends DeSerializers
 >(
-  selects: Selectable<EntityT, DeSerializersT>[],
-  expands: Expandable<EntityT, DeSerializersT>[],
-  entityApi: EntityApi<EntityT, DeSerializersT>
+  selects: Selectable<inferEntity<EntityApiT>, DeSerializersT>[],
+  expands: Expandable<inferEntity<EntityApiT>, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[],
+  entityApi: EntityApiT
 ): Partial<{ expand: string }> {
   return getExpand(expands, entityApi);
 }

@@ -1,5 +1,5 @@
 import { DeSerializers } from './de-serializers';
-import { EntityBase, ODataVersionOf } from './entity-base';
+import {EntityApi, EntityBase, ODataVersionOf} from './entity-base';
 import { OneToManyLink, AllFields, OneToOneLink } from './selectable';
 
 /**
@@ -10,10 +10,10 @@ import { OneToManyLink, AllFields, OneToOneLink } from './selectable';
 export type Expandable<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase = EntityBase
+  LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>
 > = ODataVersionOf<EntityT> extends 'v2'
   ? never
   :
-      | OneToOneLink<EntityT, DeSerializersT, LinkedEntityT>
-      | OneToManyLink<EntityT, DeSerializersT, LinkedEntityT>
+      | OneToOneLink<EntityT, DeSerializersT, LinkedEntityApiT>
+      | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>
       | AllFields<EntityT>;

@@ -18,11 +18,11 @@ import {
   Filter,
   isFilter
 } from '../filter';
-import { UriConverter } from '../de-serializers';
+import {DefaultDeSerializers, UriConverter} from '../de-serializers';
 import { ComplexTypeField, OneToManyLink } from '../selectable';
 
 type GetFilterType = <EntityT extends EntityBase>(
-  filter: Filterable<EntityT, any>,
+  filter: Filterable<EntityT, any,any>,
   entityApi: EntityApi<EntityT, any>
 ) => Partial<{ filter: string }>;
 
@@ -50,7 +50,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
    * @returns An object containing the query parameter with encoding or an empty object.
    */
   function getFilter<EntityT extends EntityBase>(
-    filter: Filterable<EntityT, any>,
+    filter: Filterable<EntityT, DefaultDeSerializers,EntityApi<EntityBase,DefaultDeSerializers>>,
     entityApi: EntityApi<EntityT, any>
   ): Partial<{ filter: string }> {
     if (typeof filter !== 'undefined') {
@@ -65,7 +65,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   }
 
   function getODataFilterExpression<FilterEntityT extends EntityBase>(
-    filter: Filterable<FilterEntityT, any>,
+    filter: Filterable<FilterEntityT,DefaultDeSerializers,EntityApi<EntityBase,DefaultDeSerializers>>,
     parentFieldNames: string[] = [],
     targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel = 0
@@ -195,7 +195,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpressionForUnaryFilter<
     FilterEntityT extends EntityBase
   >(
-    filter: UnaryFilter<FilterEntityT>,
+    filter: UnaryFilter<FilterEntityT,DefaultDeSerializers>,
     parentFieldNames: string[],
     targetEntityApi: EntityApi<EntityBase, any>
   ): string {
@@ -229,7 +229,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpressionForFilterList<
     FilterEntityT extends EntityBase
   >(
-    filter: FilterList<FilterEntityT, any>,
+    filter: FilterList<FilterEntityT,DefaultDeSerializers>,
     parentFieldNames: string[],
     targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel: number
@@ -275,7 +275,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpressionForFilterLink<
     FilterEntityT extends EntityBase
   >(
-    filter: FilterLink<FilterEntityT, any, EntityBase>,
+    filter: FilterLink<FilterEntityT,DefaultDeSerializers,EntityApi<EntityBase,DefaultDeSerializers>>,
     parentFieldNames: string[],
     lambdaExpressionLevel: number
   ): string {
@@ -295,7 +295,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   }
 
   function getODataFilterExpressionForFilter<FilterEntityT extends EntityBase>(
-    filter: Filter<FilterEntityT, any, any>,
+    filter: Filter<FilterEntityT, DefaultDeSerializers, any>,
     parentFieldNames: string[],
     targetEntityApi: EntityApi<EntityBase, any>
   ): string {

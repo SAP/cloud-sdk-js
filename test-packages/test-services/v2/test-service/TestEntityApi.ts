@@ -49,7 +49,7 @@ export class TestEntityApi<
     TO_MULTI_LINK: Link<
       TestEntity<DeSerializersT>,
       DeSerializersT,
-      TestEntityMultiLink<DeSerializersT>
+      TestEntityMultiLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.

@@ -9,6 +9,7 @@ import { getEntityKeys } from './get-keys';
 import { getOrderBy } from './get-orderby';
 import { createGetFilter } from './get-filter';
 import { createGetResourcePathForKeys } from './get-resource-path';
+import {inferEntity} from "../helper-types";
 
 /**
  * @internal
@@ -18,19 +19,19 @@ import { createGetResourcePathForKeys } from './get-resource-path';
 export interface ODataUri<DeSerializersT extends DeSerializers> {
   getExpand<EntityT extends EntityBase>(
     selects: Selectable<EntityT, DeSerializersT>[],
-    expands: Expandable<EntityT, DeSerializersT>[],
+    expands: Expandable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[],
     entityApi: EntityApi<EntityT, DeSerializersT>
   ): Partial<{ expand: string }>;
   getFilter<EntityT extends EntityBase>(
-    filter: Filterable<EntityT, DeSerializersT>,
+    filter: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>,
     entityApi: EntityApi<EntityT, DeSerializersT>
   ): Partial<{ filter: string }>;
   getEntityKeys<EntityT extends EntityBase>(
     entity: EntityT,
-    entityApi: EntityApi<EntityT, DeSerializersT>
+    entityApi: EntityApi<EntityT,DeSerializersT>
   ): Record<string, any>;
   getOrderBy<EntityT extends EntityBase>(
-    orderBy: Orderable<EntityT>[]
+    orderBy: Orderable<EntityT,DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]
   ): Partial<{ orderby: string }>;
   getResourcePathForKeys<EntityT extends EntityBase>(
     keys: Record<string, any>,
@@ -66,7 +67,7 @@ export function createODataUri<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT,
   getExpand: <EntityT extends EntityBase>(
     selects: Selectable<EntityT, DeSerializersT>[],
-    expands: Expandable<EntityT, DeSerializersT>[],
+    expands: Expandable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[],
     entityApi: EntityApi<EntityT, DeSerializersT>
   ) => Partial<{ expand: string }>,
 

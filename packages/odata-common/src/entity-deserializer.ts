@@ -23,6 +23,7 @@ import {
   ComplexTypeField,
   OneToOneLink
 } from './selectable';
+import {inferEntity} from "./helper-types";
 
 const logger = createLogger({
   package: 'odata-common',
@@ -73,11 +74,11 @@ export function entityDeserializer<T extends DeSerializers>(
    * @param requestHeader - Optional parameter which may be used to add a version identifier (ETag) to the entity
    * @returns An instance of the entity class.
    */
-  function deserializeEntity<EntityT extends EntityBase, JsonT>(
+  function deserializeEntity<EntityApiT extends EntityApi<EntityBase,any>, JsonT>(
     json: Partial<JsonT>,
-    entityApi: EntityApi<EntityT, any>,
+    entityApi: EntityApiT,
     requestHeader?: any
-  ): EntityT {
+  ): inferEntity<EntityApiT> {
     const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
     return Object.values(entityApi.schema)
       .filter(field => isSelectedProperty(json, field))
@@ -99,7 +100,7 @@ export function entityDeserializer<T extends DeSerializers>(
     JsonT
   >(
     json: Partial<JsonT>,
-    field: Field<EntityT> | Link<EntityT, DeSerializersT>
+    field: Field<EntityT> | Link<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>
   ) {
     if (field instanceof EdmTypeField) {
       return edmToTs(json[field._fieldName], field.edmType);
@@ -129,9 +130,9 @@ export function entityDeserializer<T extends DeSerializers>(
   function getLinkFromJson<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
-    LinkedEntityT extends EntityBase,
+    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
     JsonT
-  >(json: Partial<JsonT>, link: Link<EntityT, DeSerializersT, LinkedEntityT>) {
+  >(json: Partial<JsonT>, link: Link<EntityT, DeSerializersT, LinkedEntityApiT>) {
     return link instanceof OneToOneLink
       ? getSingleLinkFromJson(json, link)
       : getMultiLinkFromJson(json, link);
@@ -142,12 +143,12 @@ export function entityDeserializer<T extends DeSerializers>(
   function getSingleLinkFromJson<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
-    LinkedEntityT extends EntityBase,
+    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
     JsonT
   >(
     json: Partial<JsonT>,
-    link: Link<EntityT, DeSerializersT, LinkedEntityT>
-  ): LinkedEntityT | null {
+    link: Link<EntityT, DeSerializersT, LinkedEntityApiT>
+  ): inferEntity<LinkedEntityApiT> | null {
     if (isExpandedProperty(json, link)) {
       return deserializeEntity(json[link._fieldName], link._linkedEntityApi);
     }
@@ -157,12 +158,12 @@ export function entityDeserializer<T extends DeSerializers>(
   function getMultiLinkFromJson<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
-    LinkedEntityT extends EntityBase,
+    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
     JsonT
   >(
     json: Partial<JsonT>,
-    link: Link<EntityT, DeSerializersT, LinkedEntityT>
-  ): LinkedEntityT[] | undefined {
+    link: Link<EntityT, DeSerializersT, LinkedEntityApiT>
+  ): inferEntity<LinkedEntityApiT>[] | undefined {
     if (isSelectedProperty(json, link)) {
       const results = extractDataFromOneToManyLink(json[link._fieldName]);
       return results.map(linkJson =>

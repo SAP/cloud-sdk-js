@@ -66,7 +66,7 @@ export abstract class CreateRequestBuilderBase<
    */
   asChildOf<ParentEntityT extends EntityBase>(
     parentEntity: ParentEntityT,
-    linkField: Link<ParentEntityT, DeSerializersT, EntityT>
+    linkField: Link<ParentEntityT, DeSerializersT, EntityApi<EntityT,any>>
   ): this {
     this.requestConfig.parentKeys = this.oDataUri.getEntityKeys(
       parentEntity,

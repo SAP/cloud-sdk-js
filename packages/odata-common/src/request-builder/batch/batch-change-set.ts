@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
-import { EntityBase } from '../../entity-base';
+import {EntityApi, EntityBase} from '../../entity-base';
 import { CreateRequestBuilderBase } from '../create-request-builder-base';
 import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
 import { UpdateRequestBuilderBase } from '../update-request-builder-base';

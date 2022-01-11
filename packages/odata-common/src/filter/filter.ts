@@ -1,6 +1,6 @@
 import { DeSerializers } from '../de-serializers';
 import { EdmTypeShared } from '../edm-types';
-import { EntityBase, EntityIdentifiable, ODataVersionOf } from '../entity-base';
+import {EntityApi, EntityBase, EntityIdentifiable, ODataVersionOf} from '../entity-base';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 
@@ -74,7 +74,7 @@ export function isFilter<
   DeSerializersT extends DeSerializers,
   FieldT
 >(
-  filterable: Filterable<EntityT, DeSerializersT>
+  filterable: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>
 ): filterable is Filter<EntityT, DeSerializersT, FieldT> {
   return (
     typeof filterable['field'] !== 'undefined' &&

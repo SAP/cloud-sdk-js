@@ -1,5 +1,5 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityBase } from '../entity-base';
+import {EntityApi, EntityBase} from '../entity-base';
 import { FilterList } from './filter-list';
 import type { Filterable } from './filterable';
 
@@ -30,7 +30,7 @@ export function isFilterLambdaExpression<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
-  filterable: Filterable<EntityT, DeSerializersT>
+  filterable: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>
 ): filterable is FilterLambdaExpression<EntityT, DeSerializersT> {
   return 'lambdaOperator' in filterable;
 }

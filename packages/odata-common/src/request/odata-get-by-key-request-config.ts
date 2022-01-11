@@ -20,7 +20,7 @@ export class ODataGetByKeyRequestConfig<
 {
   keys: Record<string, any>;
   selects: Selectable<EntityT, DeSerializersT>[] = [];
-  expands: Expandable<EntityT, DeSerializersT>[];
+  expands: Expandable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[];
 
   /**
    * Creates an instance of ODataGetByKeyRequestConfig.

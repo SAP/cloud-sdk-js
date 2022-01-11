@@ -1,8 +1,9 @@
-import { EntityBase } from '../entity-base';
+import {EntityApi, EntityBase} from '../entity-base';
 import { Order, Orderable, OrderLink } from '../order';
 import { Filterable, FilterLink } from '../filter';
 import { DeSerializers } from '../de-serializers';
-import { Link } from './link';
+import {Link} from './link';
+import {inferEntity} from "../helper-types";
 
 /**
  * Represents a link from one entity to one other linked entity (as opposed to a list of linked entities). In OData v2 a `OneToOneLink` can be used to filter and order a selection on an entity based on filters and orders on a linked entity.
@@ -11,19 +12,19 @@ import { Link } from './link';
  * @internal
  */
 export class OneToOneLink<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase
-> extends Link<EntityT, DeSerializersT, LinkedEntityT> {
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
+    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
+> extends Link<EntityT, DeSerializersT,LinkedEntityApiT> {
   /**
    * List of criteria of the linked entity to order the given entity by with descending priority.
    */
-  orderBys: Order<LinkedEntityT>[] = [];
+  orderBys: Order<inferEntity<LinkedEntityApiT>>[] = [];
 
   /**
    * Filterables to apply to the given entity based on the linked entity.
    */
-  filters: Filterable<LinkedEntityT, DeSerializersT>;
+  filters: Filterable<inferEntity<LinkedEntityApiT>, DeSerializersT,LinkedEntityApiT>;
 
   clone(): this {
     const clonedLink = super.clone();
@@ -45,8 +46,8 @@ export class OneToOneLink<
    * @returns Newly created order link
    */
   orderBy(
-    ...orderBy: Orderable<LinkedEntityT>[]
-  ): OrderLink<EntityT, LinkedEntityT> {
+    ...orderBy: Orderable<inferEntity<LinkedEntityApiT>,DeSerializersT,EntityApi<EntityT,any>>[]
+  ): OrderLink<EntityT, DeSerializersT,LinkedEntityApiT> {
     return new OrderLink(this, orderBy);
   }
 
@@ -56,8 +57,8 @@ export class OneToOneLink<
    * @returns Newly created [[FilterLink]].
    */
   filter(
-    ...filters: Filterable<LinkedEntityT, DeSerializersT>[]
-  ): FilterLink<EntityT, DeSerializersT, LinkedEntityT> {
+    ...filters: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+  ): FilterLink<EntityT, DeSerializersT, LinkedEntityApiT> {
     return new FilterLink(this, filters);
   }
 }

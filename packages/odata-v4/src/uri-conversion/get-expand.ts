@@ -6,12 +6,13 @@ import {
   and,
   createGetFilter,
   getOrderBy,
-  EntityApi
+  EntityApi, EntityBase
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 import { getSelect } from './get-select';
 import { uriConverter } from './uri-value-converter';
+import {inferEntity} from "@sap-cloud-sdk/odata-common";
 
 function prependDollar(param: string): string {
   return `$${param}`;
@@ -26,11 +27,13 @@ function prependDollar(param: string): string {
  * @returns An object containing the query parameter or an empty object/
  */
 export function getExpand<
-  EntityT extends Entity,
-  DeSerializersT extends DeSerializers
+    EntityT extends Entity,
+  // EntityApiT extends EntityApi<EntityT,DeSerializersT>,
+  DeSerializersT extends DeSerializers,
+    LinkedEntityT extends Entity
 >(
-  expands: Expandable<EntityT, DeSerializersT>[] = [],
-  entityApi: EntityApi<EntityT, DeSerializersT>
+  expands: Expandable<EntityT, DeSerializersT,EntityApi<LinkedEntityT,DeSerializersT>>[] = [],
+  entityApi: EntityApi<EntityT,DeSerializersT>
 ): Partial<{ expand: string }> {
   return expands.length
     ? {
@@ -42,11 +45,14 @@ export function getExpand<
 }
 
 function getExpandAsString<
-  EntityT extends Entity,
-  DeSerializersT extends DeSerializers
+    EntityT extends Entity,
+  // EntityApiT extends EntityApi<EntityT,DeSerializersT>,
+  DeSerializersT extends DeSerializers,
+    LinkedEntityT extends Entity
+    // LinkedEntityApiT extends EntityApi<Entity,DeSerializersT>
 >(
-  expand: Expandable<EntityT, DeSerializersT>,
-  entityApi: EntityApi<EntityT, DeSerializersT>
+  expand: Expandable<EntityT, DeSerializersT,EntityApi<LinkedEntityT,DeSerializersT>>,
+  entityApi: EntityApi<EntityT,DeSerializersT>
 ): string {
   if (expand instanceof AllFields) {
     return '*';
@@ -55,6 +61,7 @@ function getExpandAsString<
   let params = {};
 
   if (expand instanceof Link) {
+    // const typedExpand:Link<EntityT, DeSerializersT,LinkedEntityApiT> = expand
     params = {
       ...params,
       ...getSelect(expand._selects),

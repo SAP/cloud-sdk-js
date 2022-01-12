@@ -17,3 +17,4 @@ export * from './expandable';
 export * from './entity-serializer';
 export * from './entity-deserializer';
 export * from './header-builder';
+export * from './helper-types';

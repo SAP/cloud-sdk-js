@@ -153,9 +153,7 @@ const edmToFieldTypeMapping: EdmTypeMapping = {
 /**
  * @internal
  */
-export function getFallbackEdmTypeIfNeeded(
-  edmType: string
-): EdmTypeShared {
+export function getFallbackEdmTypeIfNeeded(edmType: string): EdmTypeShared {
   if (edmType in edmToTsTypeMapping) {
     return edmType as EdmTypeShared;
   }

@@ -64,7 +64,6 @@ export class OneToManyLink<
       | Filterable<
           inferEntity<LinkedEntityApiT>,
           DeSerializersT
-          // EntityApi<EntityBase, DeSerializersT>
         >
       | OneToManyLink<
           inferEntity<LinkedEntityApiT>,

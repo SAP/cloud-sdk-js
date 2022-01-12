@@ -64,7 +64,7 @@ export function and<
   expressions: Filterable<
     EntityT,
     DeSerializersT,LinkedEntityApiT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >[]
 ): FilterList<EntityT, DeSerializersT,LinkedEntityApiT>;
 
@@ -79,7 +79,7 @@ export function and<
   ...expressions: Filterable<
     EntityT,
     DeSerializersT,LinkedEntityApiT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >[]
 ): FilterList<EntityT, DeSerializersT,LinkedEntityApiT>;
 
@@ -101,13 +101,13 @@ export function and<
         EntityT,
         DeSerializersT,
       LinkedEntityApiT
-        // EntityApi<EntityBase, DeSerializersT>
+
       >[],
   ...rest: Filterable<
     EntityT,
     DeSerializersT,
       LinkedEntityApiT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >[]
 ): FilterList<EntityT, DeSerializersT,LinkedEntityApiT> {
   return new FilterList(variadicArgumentToArray(first, rest));
@@ -136,7 +136,7 @@ export function or<
     EntityT,
     DeSerializersT,
       LinkedEntityApiT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >[]
 ): FilterList<EntityT, DeSerializersT,LinkedEntityApiT>;
 
@@ -152,7 +152,7 @@ export function or<
     EntityT,
     DeSerializersT,
       LinkedEntityApiT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >[]
 ): FilterList<EntityT, DeSerializersT,LinkedEntityApiT>;
 
@@ -173,13 +173,13 @@ export function or<
         EntityT,
         DeSerializersT,
       LinkedEntityApiT
-        // EntityApi<EntityBase, DeSerializersT>
+
       >[],
   ...rest: Filterable<
     EntityT,
     DeSerializersT,
       LinkedEntityApiT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >[]
 ): FilterList<EntityT, DeSerializersT,LinkedEntityApiT> {
   return new FilterList([], variadicArgumentToArray(first, rest));
@@ -198,7 +198,7 @@ export function not<
   filter: Filterable<
     EntityT,
     DeSerializersT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >
 ): UnaryFilter<EntityT, DeSerializersT> {
   return new UnaryFilter(filter, 'not');

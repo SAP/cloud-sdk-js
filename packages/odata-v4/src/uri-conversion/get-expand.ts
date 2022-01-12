@@ -20,7 +20,7 @@ function prependDollar(param: string): string {
 //
 export function getExpandForOneToMany<
   EntityT extends Entity,
-  // EntityApiT extends EntityApi<EntityT,DeSerializersT>,
+
   DeSerializersT extends DeSerializers,
   LinkedEntityT extends Entity,
   LinkedEntityApiT extends EntityApi<LinkedEntityT, DeSerializersT>
@@ -28,7 +28,7 @@ export function getExpandForOneToMany<
   oneToMany: Expandable<
     EntityT,
     DeSerializersT,
-    // EntityApi<LinkedEntityT, DeSerializersT>
+
     LinkedEntityApiT
   >[] = []
 ): Partial<{ expand: string }> {
@@ -45,7 +45,7 @@ export function getExpandForOneToMany<
  */
 export function getExpand<
   EntityT extends Entity,
-  // EntityApiT extends EntityApi<EntityT,DeSerializersT>,
+
   DeSerializersT extends DeSerializers
   // LinkedEntityT extends Entity,
   // LinkedEntityApiT extends EntityApi<LinkedEntityT,DeSerializersT>
@@ -53,8 +53,6 @@ export function getExpand<
   expands: Expandable<
     EntityT,
     DeSerializersT
-    // EntityApi<LinkedEntityT, DeSerializersT>
-    //   EntityApi<Entity,DeSerializersT>
   >[] = [],
   entityApi: EntityApi<EntityT, DeSerializersT>
 ): Partial<{ expand: string }> {
@@ -69,17 +67,11 @@ export function getExpand<
 
 function getExpandAsString<
   EntityT extends Entity,
-  // EntityApiT extends EntityApi<EntityT,DeSerializersT>,
   DeSerializersT extends DeSerializers
-  // LinkedEntityT extends Entity
-  // LinkedEntityApiT extends EntityApi<Entity,DeSerializersT>
 >(
   expand: Expandable<
     EntityT,
     DeSerializersT
-    // EntityApi<LinkedEntityT, DeSerializersT>
-    //   LinkedEntityApiT
-    //   EntityApi<Entity,DeSerializersT>
   >,
   entityApi: EntityApi<EntityT, DeSerializersT>
 ): string {

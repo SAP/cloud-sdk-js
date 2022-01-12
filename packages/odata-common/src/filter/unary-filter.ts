@@ -15,7 +15,7 @@ export class UnaryFilter<
     public singleOperand: Filterable<
       EntityT,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
+
     >,
     public operator: UnaryFilterOperator
   ) {}
@@ -34,7 +34,7 @@ export function isUnaryFilter<
   filterable: Filterable<
     T,
     DeSerializersT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >
 ): filterable is UnaryFilter<T, DeSerializersT> {
   return (

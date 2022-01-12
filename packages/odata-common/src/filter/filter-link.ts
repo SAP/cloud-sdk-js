@@ -44,7 +44,7 @@ export class FilterLink<
     public filters: Filterable<
       inferEntity<LinkedEntityApiT>,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
+
     >[]
   ) {}
 }

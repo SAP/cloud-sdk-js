@@ -29,7 +29,6 @@ export interface ODataUri<DeSerializersT extends DeSerializers> {
     filter: Filterable<
       EntityT,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
     >,
     entityApi: EntityApi<EntityT, DeSerializersT>
   ): Partial<{ filter: string }>;

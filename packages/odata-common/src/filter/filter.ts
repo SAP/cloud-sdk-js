@@ -77,7 +77,7 @@ export function isFilter<
   filterable: Filterable<
     EntityT,
     DeSerializersT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >
 ): filterable is Filter<EntityT, DeSerializersT, FieldT> {
   return (

@@ -39,7 +39,6 @@ export function isBooleanFilterFunction<
   filterable: Filterable<
     EntityT,
     DeSerializersT
-    // EntityApi<EntityBase, DeSerializersT>
   >
 ): filterable is BooleanFilterFunction<EntityT> {
   return (

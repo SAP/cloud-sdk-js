@@ -25,7 +25,7 @@ export class ODataGetAllRequestConfig<
   filter: Filterable<
     EntityT,
     DeSerializersT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >;
   orderBy: Orderable<
     EntityT,

@@ -35,7 +35,6 @@ export function isFilterLambdaExpression<
   filterable: Filterable<
     EntityT,
     DeSerializersT
-    // EntityApi<EntityBase, DeSerializersT>
   >
 ): filterable is FilterLambdaExpression<EntityT, DeSerializersT,LinkedEntityApiT> {
   return 'lambdaOperator' in filterable;

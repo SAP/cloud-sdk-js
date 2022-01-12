@@ -65,7 +65,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     filter: Filterable<
       EntityT,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
+
     >,
     entityApi: EntityApi<TargetEntityT, any>
   ): Partial<{ filter: string }> {
@@ -88,7 +88,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     filter: Filterable<
       FilterEntityT,
       DeSerializersT
-      // EntityApi<TargetEntityT, DeSerializersT>
+
     >,
     parentFieldNames: string[] = [],
     targetEntityApi: EntityApi<EntityBase, any>,

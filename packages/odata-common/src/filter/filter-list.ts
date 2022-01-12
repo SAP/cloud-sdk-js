@@ -29,12 +29,12 @@ export class FilterList<
     public andFilters: Filterable<
       EntityT,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
+
     >[] = [],
     public orFilters: Filterable<
       EntityT,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
+
     >[] = []
   ) {}
 }
@@ -53,7 +53,7 @@ export function isFilterList<
     EntityT,
     DeSerializersT,
       LinkedEntityApiT
-    // EntityApi<EntityBase, DeSerializersT>
+
   >
 ): filterable is FilterList<EntityT, DeSerializersT,LinkedEntityApiT> {
   return (

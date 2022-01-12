@@ -44,14 +44,14 @@ export class GetAllRequestBuilder<
     expressions: Filterable<
       EntityT,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
+
     >[]
   ): this;
   filter(
     ...expressions: Filterable<
       EntityT,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
+
     >[]
   ): this;
   filter(
@@ -60,17 +60,17 @@ export class GetAllRequestBuilder<
       | Filterable<
           EntityT,
           DeSerializersT
-          // EntityApi<EntityBase, DeSerializersT>
+
         >
       | Filterable<
           EntityT,
           DeSerializersT
-          // EntityApi<EntityBase, DeSerializersT>
+
         >[],
     ...rest: Filterable<
       EntityT,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
+
     >[]
   ): this {
     this.requestConfig.filter = and(variadicArgumentToArray(first, rest));

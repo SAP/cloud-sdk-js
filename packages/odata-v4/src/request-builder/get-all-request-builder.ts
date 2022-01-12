@@ -87,7 +87,7 @@ export class GetAllRequestBuilder<
     ...expressions: Filterable<
       EntityT,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
+
     >[]
   ): this {
     this.requestConfig.filter = and(toFilterableList(expressions)) as any;

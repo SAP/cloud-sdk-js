@@ -68,7 +68,7 @@ export class OneToOneLink<
     ...filters: Filterable<
       inferEntity<LinkedEntityApiT>,
       DeSerializersT
-      // EntityApi<EntityBase, DeSerializersT>
+
     >[]
   ): FilterLink<EntityT, DeSerializersT, LinkedEntityApiT> {
     return new FilterLink(this, filters);

@@ -1,5 +1,5 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityBase, EntityIdentifiable } from '../entity-base';
+import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 import { OneToManyLink } from '../selectable';
 import type { Filterable } from './filterable';
 
@@ -10,7 +10,8 @@ import type { Filterable } from './filterable';
  */
 export class FilterList<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers,
+    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
@@ -46,14 +47,15 @@ export class FilterList<
  */
 export function isFilterList<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers,LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
   filterable: Filterable<
     EntityT,
-    DeSerializersT
+    DeSerializersT,
+      LinkedEntityApiT
     // EntityApi<EntityBase, DeSerializersT>
   >
-): filterable is FilterList<EntityT, DeSerializersT> {
+): filterable is FilterList<EntityT, DeSerializersT,LinkedEntityApiT> {
   return (
     typeof filterable['field'] === 'undefined' &&
     typeof filterable['operator'] === 'undefined' &&

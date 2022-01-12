@@ -15,10 +15,11 @@ import { Link } from './link';
 export function toFilterableList<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase
->(
-  filters: Filterable<EntityT, DeSerializersT, LinkedEntityT>[]
-): Filterable<EntityT, DeSerializersT, LinkedEntityT>[] {
+  // LinkedEntityT extends EntityBase,
+    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+    >(
+  filters: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+): Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[] {
   return filters.map(f => (f instanceof OneToManyLink ? f._filters : f));
 }
 

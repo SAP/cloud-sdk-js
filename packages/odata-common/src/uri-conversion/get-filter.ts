@@ -232,9 +232,11 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   }
 
   function getODataFilterExpressionForFilterLambdaExpression<
-    FilterEntityT extends EntityBase
+    FilterEntityT extends EntityBase,
+      DeSerializersT extends DeSerializers,
+      LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
   >(
-    filter: FilterLambdaExpression<FilterEntityT, any>,
+    filter: FilterLambdaExpression<FilterEntityT, DeSerializersT,LinkedEntityApiT>,
     parentFieldNames: string[],
     targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel: number
@@ -253,9 +255,10 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
 
   function getODataFilterExpressionForFilterList<
     FilterEntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
+    DeSerializersT extends DeSerializers,
+      LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
   >(
-    filter: FilterList<FilterEntityT, DeSerializersT>,
+    filter: FilterList<FilterEntityT, DeSerializersT,LinkedEntityApiT>,
     parentFieldNames: string[],
     targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel: number

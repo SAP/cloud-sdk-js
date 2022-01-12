@@ -74,11 +74,7 @@ export function isFilter<
   DeSerializersT extends DeSerializers,
   FieldT
 >(
-  filterable: Filterable<
-    EntityT,
-    DeSerializersT
-
-  >
+  filterable: Filterable<EntityT, DeSerializersT>
 ): filterable is Filter<EntityT, DeSerializersT, FieldT> {
   return (
     typeof filterable['field'] !== 'undefined' &&

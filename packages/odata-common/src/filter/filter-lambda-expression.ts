@@ -16,10 +16,10 @@ export type FilterLambdaOperator = 'any' | 'all';
 export class FilterLambdaExpression<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > {
   constructor(
-    public filters: FilterList<EntityT, DeSerializersT,LinkedEntityApiT>,
+    public filters: FilterList<EntityT, DeSerializersT, LinkedEntityApiT>,
     public lambdaOperator: FilterLambdaOperator
   ) {}
 }
@@ -30,12 +30,13 @@ export class FilterLambdaExpression<
 export function isFilterLambdaExpression<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
-  filterable: Filterable<
-    EntityT,
-    DeSerializersT
-  >
-): filterable is FilterLambdaExpression<EntityT, DeSerializersT,LinkedEntityApiT> {
+  filterable: Filterable<EntityT, DeSerializersT>
+): filterable is FilterLambdaExpression<
+  EntityT,
+  DeSerializersT,
+  LinkedEntityApiT
+> {
   return 'lambdaOperator' in filterable;
 }

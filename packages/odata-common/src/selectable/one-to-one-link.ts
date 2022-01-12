@@ -24,11 +24,7 @@ export class OneToOneLink<
   /**
    * Filterables to apply to the given entity based on the linked entity.
    */
-  filters: Filterable<
-    inferEntity<LinkedEntityApiT>,
-    DeSerializersT
-    // LinkedEntityApiT
-  >;
+  filters: Filterable<inferEntity<LinkedEntityApiT>, DeSerializersT>;
 
   clone(): this {
     const clonedLink = super.clone();
@@ -65,11 +61,7 @@ export class OneToOneLink<
    * @returns Newly created [[FilterLink]].
    */
   filter(
-    ...filters: Filterable<
-      inferEntity<LinkedEntityApiT>,
-      DeSerializersT
-
-    >[]
+    ...filters: Filterable<inferEntity<LinkedEntityApiT>, DeSerializersT>[]
   ): FilterLink<EntityT, DeSerializersT, LinkedEntityApiT> {
     return new FilterLink(this, filters);
   }

@@ -41,11 +41,7 @@ export class FilterLink<
    */
   constructor(
     public link: Link<EntityT, DeSerializersT, LinkedEntityApiT>,
-    public filters: Filterable<
-      inferEntity<LinkedEntityApiT>,
-      DeSerializersT
-
-    >[]
+    public filters: Filterable<inferEntity<LinkedEntityApiT>, DeSerializersT>[]
   ) {}
 }
 

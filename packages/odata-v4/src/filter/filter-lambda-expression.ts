@@ -3,9 +3,9 @@ import {
   EntityBase,
   and,
   Filterable,
-  toFilterableList
+  toFilterableList,
+  EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-import { EntityApi } from '@sap-cloud-sdk/odata-common/dist/entity-base';
 import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 
@@ -17,11 +17,10 @@ import { Entity } from '../entity';
 export function any<
   EntityT extends Entity,
   DeSerializersT extends DeSerializers,
-  // LinkedEntityT extends EntityBase,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
-    >(
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+>(
   ...filters: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
-): FilterLambdaExpression<EntityT, DeSerializersT,LinkedEntityApiT> {
+): FilterLambdaExpression<EntityT, DeSerializersT, LinkedEntityApiT> {
   return new FilterLambdaExpression(and(toFilterableList(filters)), 'any');
 }
 
@@ -35,9 +34,9 @@ export function all<
   EntityT extends Entity,
   DeSerializersT extends DeSerializers,
   // LinkedEntityT extends EntityBase,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
-    >(
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+>(
   ...filters: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
-): FilterLambdaExpression<EntityT, DeSerializersT,LinkedEntityApiT> {
+): FilterLambdaExpression<EntityT, DeSerializersT, LinkedEntityApiT> {
   return new FilterLambdaExpression(and(toFilterableList(filters)), 'all');
 }

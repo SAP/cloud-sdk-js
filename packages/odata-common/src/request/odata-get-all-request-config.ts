@@ -22,11 +22,7 @@ export class ODataGetAllRequestConfig<
 {
   top: number;
   skip: number;
-  filter: Filterable<
-    EntityT,
-    DeSerializersT
-
-  >;
+  filter: Filterable<EntityT, DeSerializersT>;
   orderBy: Orderable<
     EntityT,
     DeSerializersT,

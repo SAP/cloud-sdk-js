@@ -30,11 +30,7 @@ export interface WithGetAllRestrictions<
 > extends WithSelection<EntityT, DeSerializersT> {
   top: number;
   skip: number;
-  filter: Filterable<
-    EntityT,
-    DeSerializersT
-
-  >;
+  filter: Filterable<EntityT, DeSerializersT>;
   orderBy: Orderable<
     EntityT,
     DeSerializersT,

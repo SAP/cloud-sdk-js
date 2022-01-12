@@ -371,7 +371,6 @@ export function isExpandedProperty<
  */
 export function entityBuilder<
   EntityT extends EntityBase,
-
   DeSerializersT extends DeSerializers
 >(
   entityApi: EntityApi<EntityT, DeSerializersT>

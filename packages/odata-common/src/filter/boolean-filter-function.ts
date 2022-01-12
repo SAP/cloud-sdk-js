@@ -36,10 +36,7 @@ export function isBooleanFilterFunction<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
-  filterable: Filterable<
-    EntityT,
-    DeSerializersT
-  >
+  filterable: Filterable<EntityT, DeSerializersT>
 ): filterable is BooleanFilterFunction<EntityT> {
   return (
     typeof filterable['functionName'] !== 'undefined' &&

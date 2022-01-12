@@ -11,7 +11,7 @@ import type { Filterable } from './filterable';
 export class FilterList<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
@@ -26,16 +26,8 @@ export class FilterList<
    * @param orFilters - Filters to be combined by logical disjunction (`or`)
    */
   constructor(
-    public andFilters: Filterable<
-      EntityT,
-      DeSerializersT
-
-    >[] = [],
-    public orFilters: Filterable<
-      EntityT,
-      DeSerializersT
-
-    >[] = []
+    public andFilters: Filterable<EntityT, DeSerializersT>[] = [],
+    public orFilters: Filterable<EntityT, DeSerializersT>[] = []
   ) {}
 }
 
@@ -47,15 +39,11 @@ export class FilterList<
  */
 export function isFilterList<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  DeSerializersT extends DeSerializers,
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
-  filterable: Filterable<
-    EntityT,
-    DeSerializersT,
-      LinkedEntityApiT
-
-  >
-): filterable is FilterList<EntityT, DeSerializersT,LinkedEntityApiT> {
+  filterable: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>
+): filterable is FilterList<EntityT, DeSerializersT, LinkedEntityApiT> {
   return (
     typeof filterable['field'] === 'undefined' &&
     typeof filterable['operator'] === 'undefined' &&

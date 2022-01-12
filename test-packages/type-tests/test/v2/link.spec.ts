@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
 
 const custom = {

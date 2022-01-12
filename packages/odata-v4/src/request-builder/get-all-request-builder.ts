@@ -83,13 +83,7 @@ export class GetAllRequestBuilder<
    * @param expressions - Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */
-  filter(
-    ...expressions: Filterable<
-      EntityT,
-      DeSerializersT
-
-    >[]
-  ): this {
+  filter(...expressions: Filterable<EntityT, DeSerializersT>[]): this {
     this.requestConfig.filter = and(toFilterableList(expressions)) as any;
     return this;
   }

@@ -26,8 +26,8 @@ export type Filterable<
 > =
   | Filter<EntityT, DeSerializersT, any>
   | FilterLink<EntityT, DeSerializersT, LinkedEntityApiT>
-  | FilterList<EntityT, DeSerializersT,LinkedEntityApiT>
-  | FilterLambdaExpression<EntityT, DeSerializersT,LinkedEntityApiT>
+  | FilterList<EntityT, DeSerializersT, LinkedEntityApiT>
+  | FilterLambdaExpression<EntityT, DeSerializersT, LinkedEntityApiT>
   | UnaryFilter<EntityT, DeSerializersT>
   | BooleanFilterFunction<EntityT>
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;
@@ -61,12 +61,8 @@ export function and<
   DeSerializersT extends DeSerializers,
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
-  expressions: Filterable<
-    EntityT,
-    DeSerializersT,LinkedEntityApiT
-
-  >[]
-): FilterList<EntityT, DeSerializersT,LinkedEntityApiT>;
+  expressions: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+): FilterList<EntityT, DeSerializersT, LinkedEntityApiT>;
 
 /**
  * @internal
@@ -74,14 +70,10 @@ export function and<
 export function and<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
-  ...expressions: Filterable<
-    EntityT,
-    DeSerializersT,LinkedEntityApiT
-
-  >[]
-): FilterList<EntityT, DeSerializersT,LinkedEntityApiT>;
+  ...expressions: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+): FilterList<EntityT, DeSerializersT, LinkedEntityApiT>;
 
 /**
  * @param first - first
@@ -92,24 +84,14 @@ export function and<
 export function and<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
   first:
     | undefined
-    | Filterable<EntityT, DeSerializersT,LinkedEntityApiT>
-    | Filterable<
-        EntityT,
-        DeSerializersT,
-      LinkedEntityApiT
-
-      >[],
-  ...rest: Filterable<
-    EntityT,
-    DeSerializersT,
-      LinkedEntityApiT
-
-  >[]
-): FilterList<EntityT, DeSerializersT,LinkedEntityApiT> {
+    | Filterable<EntityT, DeSerializersT, LinkedEntityApiT>
+    | Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[],
+  ...rest: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+): FilterList<EntityT, DeSerializersT, LinkedEntityApiT> {
   return new FilterList(variadicArgumentToArray(first, rest));
 }
 
@@ -130,15 +112,10 @@ export function and<
 export function or<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
-  expressions: Filterable<
-    EntityT,
-    DeSerializersT,
-      LinkedEntityApiT
-
-  >[]
-): FilterList<EntityT, DeSerializersT,LinkedEntityApiT>;
+  expressions: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+): FilterList<EntityT, DeSerializersT, LinkedEntityApiT>;
 
 /**
  * @internal
@@ -146,15 +123,10 @@ export function or<
 export function or<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
-  ...expressions: Filterable<
-    EntityT,
-    DeSerializersT,
-      LinkedEntityApiT
-
-  >[]
-): FilterList<EntityT, DeSerializersT,LinkedEntityApiT>;
+  ...expressions: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+): FilterList<EntityT, DeSerializersT, LinkedEntityApiT>;
 
 /**
  * @param first - first
@@ -165,23 +137,13 @@ export function or<
 export function or<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
   first:
-    | Filterable<EntityT, DeSerializersT,LinkedEntityApiT> // , EntityApi<EntityBase, DeSerializersT>>
-    | Filterable<
-        EntityT,
-        DeSerializersT,
-      LinkedEntityApiT
-
-      >[],
-  ...rest: Filterable<
-    EntityT,
-    DeSerializersT,
-      LinkedEntityApiT
-
-  >[]
-): FilterList<EntityT, DeSerializersT,LinkedEntityApiT> {
+    | Filterable<EntityT, DeSerializersT, LinkedEntityApiT> // , EntityApi<EntityBase, DeSerializersT>>
+    | Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[],
+  ...rest: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+): FilterList<EntityT, DeSerializersT, LinkedEntityApiT> {
   return new FilterList([], variadicArgumentToArray(first, rest));
 }
 
@@ -195,11 +157,7 @@ export function not<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
-  filter: Filterable<
-    EntityT,
-    DeSerializersT
-
-  >
+  filter: Filterable<EntityT, DeSerializersT>
 ): UnaryFilter<EntityT, DeSerializersT> {
   return new UnaryFilter(filter, 'not');
 }

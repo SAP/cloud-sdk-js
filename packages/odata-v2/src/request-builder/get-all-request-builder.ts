@@ -40,38 +40,14 @@ export class GetAllRequestBuilder<
    * @param expressions - Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */
-  filter(
-    expressions: Filterable<
-      EntityT,
-      DeSerializersT
-
-    >[]
-  ): this;
-  filter(
-    ...expressions: Filterable<
-      EntityT,
-      DeSerializersT
-
-    >[]
-  ): this;
+  filter(expressions: Filterable<EntityT, DeSerializersT>[]): this;
+  filter(...expressions: Filterable<EntityT, DeSerializersT>[]): this;
   filter(
     first:
       | undefined
-      | Filterable<
-          EntityT,
-          DeSerializersT
-
-        >
-      | Filterable<
-          EntityT,
-          DeSerializersT
-
-        >[],
-    ...rest: Filterable<
-      EntityT,
-      DeSerializersT
-
-    >[]
+      | Filterable<EntityT, DeSerializersT>
+      | Filterable<EntityT, DeSerializersT>[],
+    ...rest: Filterable<EntityT, DeSerializersT>[]
   ): this {
     this.requestConfig.filter = and(variadicArgumentToArray(first, rest));
     return this;

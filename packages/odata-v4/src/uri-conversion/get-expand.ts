@@ -17,24 +17,6 @@ function prependDollar(param: string): string {
   return `$${param}`;
 }
 
-//
-export function getExpandForOneToMany<
-  EntityT extends Entity,
-
-  DeSerializersT extends DeSerializers,
-  LinkedEntityT extends Entity,
-  LinkedEntityApiT extends EntityApi<LinkedEntityT, DeSerializersT>
->(
-  oneToMany: Expandable<
-    EntityT,
-    DeSerializersT,
-
-    LinkedEntityApiT
-  >[] = []
-): Partial<{ expand: string }> {
-  return {} as any;
-}
-// (OneToManyLink<EntityT,DeSerializersT,LinkedEntityApiT>|AllFields<EntityT>|OneToOneLink<EntityT, DeSerializersT, LinkedEntityApiT>)[]
 /**
  * @internal
  * Get an object containing the given expand as a query parameter, or an empty object if none was given.
@@ -45,15 +27,9 @@ export function getExpandForOneToMany<
  */
 export function getExpand<
   EntityT extends Entity,
-
   DeSerializersT extends DeSerializers
-  // LinkedEntityT extends Entity,
-  // LinkedEntityApiT extends EntityApi<LinkedEntityT,DeSerializersT>
 >(
-  expands: Expandable<
-    EntityT,
-    DeSerializersT
-  >[] = [],
+  expands: Expandable<EntityT, DeSerializersT>[] = [],
   entityApi: EntityApi<EntityT, DeSerializersT>
 ): Partial<{ expand: string }> {
   return expands.length
@@ -69,10 +45,7 @@ function getExpandAsString<
   EntityT extends Entity,
   DeSerializersT extends DeSerializers
 >(
-  expand: Expandable<
-    EntityT,
-    DeSerializersT
-  >,
+  expand: Expandable<EntityT, DeSerializersT>,
   entityApi: EntityApi<EntityT, DeSerializersT>
 ): string {
   if (expand instanceof AllFields) {

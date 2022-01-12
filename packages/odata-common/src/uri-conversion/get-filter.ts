@@ -62,11 +62,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     TargetEntityT extends EntityBase,
     DeSerializersT extends DeSerializers
   >(
-    filter: Filterable<
-      EntityT,
-      DeSerializersT
-
-    >,
+    filter: Filterable<EntityT, DeSerializersT>,
     entityApi: EntityApi<TargetEntityT, any>
   ): Partial<{ filter: string }> {
     if (typeof filter !== 'undefined') {
@@ -85,11 +81,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     TargetEntityT extends EntityBase,
     DeSerializersT extends DeSerializers
   >(
-    filter: Filterable<
-      FilterEntityT,
-      DeSerializersT
-
-    >,
+    filter: Filterable<FilterEntityT, DeSerializersT>,
     parentFieldNames: string[] = [],
     targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel = 0
@@ -233,10 +225,14 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
 
   function getODataFilterExpressionForFilterLambdaExpression<
     FilterEntityT extends EntityBase,
-      DeSerializersT extends DeSerializers,
-      LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+    DeSerializersT extends DeSerializers,
+    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
   >(
-    filter: FilterLambdaExpression<FilterEntityT, DeSerializersT,LinkedEntityApiT>,
+    filter: FilterLambdaExpression<
+      FilterEntityT,
+      DeSerializersT,
+      LinkedEntityApiT
+    >,
     parentFieldNames: string[],
     targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel: number
@@ -256,9 +252,9 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpressionForFilterList<
     FilterEntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
-      LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
   >(
-    filter: FilterList<FilterEntityT, DeSerializersT,LinkedEntityApiT>,
+    filter: FilterList<FilterEntityT, DeSerializersT, LinkedEntityApiT>,
     parentFieldNames: string[],
     targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel: number

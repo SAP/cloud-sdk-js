@@ -23,7 +23,11 @@ import {
   defaultDeSerializers,
   entityDeserializer
 } from '../src/internal';
-import {CommonEntity, CommonEntityApi, commonEntityApi} from './common-entity';
+import {
+  CommonEntity,
+  CommonEntityApi,
+  commonEntityApi
+} from './common-entity';
 
 export const commonUriConverter = createUriConverter(defaultDeSerializersRaw);
 export const commonODataUri = createODataUri(

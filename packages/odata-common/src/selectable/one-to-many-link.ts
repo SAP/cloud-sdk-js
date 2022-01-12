@@ -15,9 +15,8 @@ import { Link } from './link';
 export function toFilterableList<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  // LinkedEntityT extends EntityBase,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
-    >(
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+>(
   filters: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
 ): Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[] {
   return filters.map(f => (f instanceof OneToManyLink ? f._filters : f));
@@ -61,10 +60,7 @@ export class OneToManyLink<
    */
   filter(
     ...expressions: (
-      | Filterable<
-          inferEntity<LinkedEntityApiT>,
-          DeSerializersT
-        >
+      | Filterable<inferEntity<LinkedEntityApiT>, DeSerializersT>
       | OneToManyLink<
           inferEntity<LinkedEntityApiT>,
           DeSerializersT,

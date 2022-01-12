@@ -12,11 +12,7 @@ export class UnaryFilter<
   DeSerializersT extends DeSerializers
 > {
   constructor(
-    public singleOperand: Filterable<
-      EntityT,
-      DeSerializersT
-
-    >,
+    public singleOperand: Filterable<EntityT, DeSerializersT>,
     public operator: UnaryFilterOperator
   ) {}
 }
@@ -31,11 +27,7 @@ export function isUnaryFilter<
   T extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
-  filterable: Filterable<
-    T,
-    DeSerializersT
-
-  >
+  filterable: Filterable<T, DeSerializersT>
 ): filterable is UnaryFilter<T, DeSerializersT> {
   return (
     typeof filterable['singleOperand'] !== 'undefined' &&

@@ -1,10 +1,10 @@
-import {EntityApi, EntityBase} from '../entity-base';
+import { EntityBase } from '../entity-base';
+import { DeSerializers } from '../de-serializers';
 import {
   FilterFunction,
   FilterFunctionParameterType
 } from './filter-function-base';
 import { Filterable } from './filterable';
-import {DefaultDeSerializers} from "../de-serializers";
 
 /**
  * Representation of a filter function, that returns a value of type boolean.
@@ -32,8 +32,15 @@ export class BooleanFilterFunction<
  * @returns boolean
  * @internal
  */
-export function isBooleanFilterFunction<EntityT extends EntityBase>(
-  filterable: Filterable<EntityT, DefaultDeSerializers,EntityApi<EntityBase,DefaultDeSerializers>>
+export function isBooleanFilterFunction<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  filterable: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >
 ): filterable is BooleanFilterFunction<EntityT> {
   return (
     typeof filterable['functionName'] !== 'undefined' &&

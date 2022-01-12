@@ -1,9 +1,9 @@
-import {EntityApi, EntityBase} from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { Order, Orderable, OrderLink } from '../order';
 import { Filterable, FilterLink } from '../filter';
 import { DeSerializers } from '../de-serializers';
-import {Link} from './link';
-import {inferEntity} from "../helper-types";
+import { inferEntity } from '../helper-types';
+import { Link } from './link';
 
 /**
  * Represents a link from one entity to one other linked entity (as opposed to a list of linked entities). In OData v2 a `OneToOneLink` can be used to filter and order a selection on an entity based on filters and orders on a linked entity.
@@ -12,10 +12,10 @@ import {inferEntity} from "../helper-types";
  * @internal
  */
 export class OneToOneLink<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
-> extends Link<EntityT, DeSerializersT,LinkedEntityApiT> {
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+> extends Link<EntityT, DeSerializersT, LinkedEntityApiT> {
   /**
    * List of criteria of the linked entity to order the given entity by with descending priority.
    */
@@ -24,7 +24,11 @@ export class OneToOneLink<
   /**
    * Filterables to apply to the given entity based on the linked entity.
    */
-  filters: Filterable<inferEntity<LinkedEntityApiT>, DeSerializersT,LinkedEntityApiT>;
+  filters: Filterable<
+    inferEntity<LinkedEntityApiT>,
+    DeSerializersT
+    // LinkedEntityApiT
+  >;
 
   clone(): this {
     const clonedLink = super.clone();
@@ -46,8 +50,12 @@ export class OneToOneLink<
    * @returns Newly created order link
    */
   orderBy(
-    ...orderBy: Orderable<inferEntity<LinkedEntityApiT>,DeSerializersT,EntityApi<EntityT,any>>[]
-  ): OrderLink<EntityT, DeSerializersT,LinkedEntityApiT> {
+    ...orderBy: Orderable<
+      inferEntity<LinkedEntityApiT>,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): OrderLink<EntityT, DeSerializersT, LinkedEntityApiT> {
     return new OrderLink(this, orderBy);
   }
 
@@ -57,7 +65,11 @@ export class OneToOneLink<
    * @returns Newly created [[FilterLink]].
    */
   filter(
-    ...filters: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+    ...filters: Filterable<
+      inferEntity<LinkedEntityApiT>,
+      DeSerializersT
+      // EntityApi<EntityBase, DeSerializersT>
+    >[]
   ): FilterLink<EntityT, DeSerializersT, LinkedEntityApiT> {
     return new FilterLink(this, filters);
   }

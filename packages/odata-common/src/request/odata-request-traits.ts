@@ -1,4 +1,4 @@
-import {EntityApi, EntityBase} from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
 import { Orderable } from '../order';
 import { Filterable } from '../filter';
@@ -30,8 +30,16 @@ export interface WithGetAllRestrictions<
 > extends WithSelection<EntityT, DeSerializersT> {
   top: number;
   skip: number;
-  filter: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>;
-  orderBy: Orderable<EntityT,DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[];
+  filter: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >;
+  orderBy: Orderable<
+    EntityT,
+    DeSerializersT,
+    EntityApi<EntityBase, DeSerializersT>
+  >[];
 }
 
 /**

@@ -6,7 +6,8 @@ import {
   Expandable,
   EntityApi,
   toFilterableList,
-  and, EntityBase
+  and,
+  EntityBase
 } from '@sap-cloud-sdk/odata-common/internal';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
@@ -39,14 +40,38 @@ export class GetAllRequestBuilder<
     );
   }
 
-  expand(expands: Expandable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]): this;
-  expand(...expands: Expandable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]): this;
+  expand(
+    expands: Expandable<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): this;
+  expand(
+    ...expands: Expandable<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): this;
   expand(
     first:
       | undefined
-      | Expandable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>
-      | Expandable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[],
-    ...rest: Expandable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]
+      | Expandable<
+          EntityT,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >
+      | Expandable<
+          EntityT,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >[],
+    ...rest: Expandable<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
   ): this {
     this.requestConfig.expands = variadicArgumentToArray(first, rest);
     return this;
@@ -58,7 +83,13 @@ export class GetAllRequestBuilder<
    * @param expressions - Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */
-  filter(...expressions: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]): this {
+  filter(
+    ...expressions: Filterable<
+      EntityT,
+      DeSerializersT
+      // EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): this {
     this.requestConfig.filter = and(toFilterableList(expressions)) as any;
     return this;
   }

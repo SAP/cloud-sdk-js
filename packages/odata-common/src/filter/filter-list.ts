@@ -1,5 +1,5 @@
 import { DeSerializers } from '../de-serializers';
-import {EntityApi, EntityBase, EntityIdentifiable} from '../entity-base';
+import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { OneToManyLink } from '../selectable';
 import type { Filterable } from './filterable';
 
@@ -25,8 +25,16 @@ export class FilterList<
    * @param orFilters - Filters to be combined by logical disjunction (`or`)
    */
   constructor(
-    public andFilters: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[] = [],
-    public orFilters: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[] = []
+    public andFilters: Filterable<
+      EntityT,
+      DeSerializersT
+      // EntityApi<EntityBase, DeSerializersT>
+    >[] = [],
+    public orFilters: Filterable<
+      EntityT,
+      DeSerializersT
+      // EntityApi<EntityBase, DeSerializersT>
+    >[] = []
   ) {}
 }
 
@@ -40,7 +48,11 @@ export function isFilterList<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
-  filterable: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>
+  filterable: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >
 ): filterable is FilterList<EntityT, DeSerializersT> {
   return (
     typeof filterable['field'] === 'undefined' &&

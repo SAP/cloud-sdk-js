@@ -64,11 +64,38 @@ export abstract class GetAllRequestBuilderBase<
    * @param orderBy - OrderBy statements to order the response by
    * @returns The request builder itself, to facilitate method chaining
    */
-  orderBy(orderBy: Orderable<EntityT,DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]): this;
-  orderBy(...orderBy: Orderable<EntityT,DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]): this;
   orderBy(
-    first: undefined | Orderable<EntityT,DeSerializersT,EntityApi<EntityBase,DeSerializersT>> | Orderable<EntityT,DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[],
-    ...rest: Orderable<EntityT,DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]
+    orderBy: Orderable<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): this;
+  orderBy(
+    ...orderBy: Orderable<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): this;
+  orderBy(
+    first:
+      | undefined
+      | Orderable<
+          EntityT,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >
+      | Orderable<
+          EntityT,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >[],
+    ...rest: Orderable<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
   ): this {
     this.requestConfig.orderBy = variadicArgumentToArray(first, rest);
     return this;

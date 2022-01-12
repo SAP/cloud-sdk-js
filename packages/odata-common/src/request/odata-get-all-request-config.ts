@@ -22,10 +22,22 @@ export class ODataGetAllRequestConfig<
 {
   top: number;
   skip: number;
-  filter: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>;
-  orderBy: Orderable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[];
+  filter: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >;
+  orderBy: Orderable<
+    EntityT,
+    DeSerializersT,
+    EntityApi<EntityBase, DeSerializersT>
+  >[];
   selects: Selectable<EntityT, DeSerializersT>[];
-  expands: Expandable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[];
+  expands: Expandable<
+    EntityT,
+    DeSerializersT,
+    EntityApi<EntityBase, DeSerializersT>
+  >[];
 
   /**
    * Creates an instance of ODataGetAllRequestConfig.

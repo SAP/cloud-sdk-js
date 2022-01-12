@@ -21,7 +21,7 @@ export class ODataCreateRequestConfig<
   /**
    * Field that links the parent entity class to the child entity class.
    */
-  childField: Link<EntityBase, DeSerializersT, EntityApi<EntityT,any>>;
+  childField: Link<EntityBase, DeSerializersT, EntityApi<EntityT, any>>;
 
   /**
    * Creates an instance of ODataRequest.

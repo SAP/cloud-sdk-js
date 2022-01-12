@@ -1,8 +1,8 @@
-import {DefaultDeSerializers, DeSerializers} from '../de-serializers';
-import {EntityApi, EntityBase, EntityIdentifiable} from '../entity-base';
-import {Link} from '../selectable';
+import { DeSerializers } from '../de-serializers';
+import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
+import { Link } from '../selectable';
+import { inferEntity } from '../helper-types';
 import type { Filterable } from './filterable';
-import {inferEntity} from "../helper-types";
 
 /**
  * Data structure to represent filter on properties of a navigation property (link).
@@ -18,21 +18,21 @@ import {inferEntity} from "../helper-types";
  * @internal
  */
 export class FilterLink<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
    * Entity type of the entity tp be filtered.
    */
   readonly _entity: EntityT;
+  readonly _deSerializers: DeSerializersT;
 
   /**
    * Linked entity to be filtered by.
    */
   readonly _linkedEntityType: inferEntity<LinkedEntityApiT>;
-  _deSerializers: DeSerializersT;
 
   /**
    * Creates an instance of `FilterLink`.
@@ -40,8 +40,12 @@ export class FilterLink<
    * @param filters - List of filterables for the linked entity.
    */
   constructor(
-    public link: Link<EntityT, DeSerializersT,LinkedEntityApiT>,
-    public filters: Filterable<EntityT, DeSerializersT,LinkedEntityApiT>[]
+    public link: Link<EntityT, DeSerializersT, LinkedEntityApiT>,
+    public filters: Filterable<
+      inferEntity<LinkedEntityApiT>,
+      DeSerializersT
+      // EntityApi<EntityBase, DeSerializersT>
+    >[]
   ) {}
 }
 
@@ -52,11 +56,11 @@ export class FilterLink<
  * @internal
  */
 export function isFilterLink<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
-  filterable: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>
+  filterable: Filterable<EntityT, DeSerializersT>
 ): filterable is FilterLink<EntityT, DeSerializersT, LinkedEntityApiT> {
   return (
     typeof filterable['link'] !== 'undefined' &&

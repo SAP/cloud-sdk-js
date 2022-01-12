@@ -1,8 +1,8 @@
-import {EntityApi, EntityBase} from '../entity-base';
-import {Link} from '../selectable';
+import { EntityApi, EntityBase } from '../entity-base';
+import { Link } from '../selectable';
+import { DeSerializers } from '../de-serializers';
+import { inferEntity } from '../helper-types';
 import type { Orderable } from './orderable';
-import {DeSerializers} from "../de-serializers";
-import {inferEntity} from "../helper-types";
 
 /**
  * Link to represent an order by on a linked entity.
@@ -11,9 +11,9 @@ import {inferEntity} from "../helper-types";
  * @internal
  */
 export class OrderLink<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > {
   readonly entityType: EntityT;
   readonly linkedEntityType: inferEntity<LinkedEntityApiT>;
@@ -24,7 +24,11 @@ export class OrderLink<
    * @param orderBy - A list of orderables based on the linked entity
    */
   constructor(
-    public link: Link<EntityT, DeSerializersT,LinkedEntityApiT>,
-    public orderBy: Orderable<inferEntity<LinkedEntityApiT>,DeSerializersT,EntityApi<EntityT,any>>[]
+    public link: Link<EntityT, DeSerializersT, LinkedEntityApiT>,
+    public orderBy: Orderable<
+      inferEntity<LinkedEntityApiT>,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
   ) {}
 }

@@ -23,7 +23,7 @@ import {
   ComplexTypeField,
   OneToOneLink
 } from './selectable';
-import {inferEntity} from "./helper-types";
+import { inferEntity } from './helper-types';
 
 const logger = createLogger({
   package: 'odata-common',
@@ -74,7 +74,10 @@ export function entityDeserializer<T extends DeSerializers>(
    * @param requestHeader - Optional parameter which may be used to add a version identifier (ETag) to the entity
    * @returns An instance of the entity class.
    */
-  function deserializeEntity<EntityApiT extends EntityApi<EntityBase,any>, JsonT>(
+  function deserializeEntity<
+    EntityApiT extends EntityApi<EntityBase, any>,
+    JsonT
+  >(
     json: Partial<JsonT>,
     entityApi: EntityApiT,
     requestHeader?: any
@@ -100,7 +103,9 @@ export function entityDeserializer<T extends DeSerializers>(
     JsonT
   >(
     json: Partial<JsonT>,
-    field: Field<EntityT> | Link<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>
+    field:
+      | Field<EntityT>
+      | Link<EntityT, DeSerializersT, EntityApi<EntityBase, DeSerializersT>>
   ) {
     if (field instanceof EdmTypeField) {
       return edmToTs(json[field._fieldName], field.edmType);
@@ -130,9 +135,12 @@ export function entityDeserializer<T extends DeSerializers>(
   function getLinkFromJson<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
+    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>,
     JsonT
-  >(json: Partial<JsonT>, link: Link<EntityT, DeSerializersT, LinkedEntityApiT>) {
+  >(
+    json: Partial<JsonT>,
+    link: Link<EntityT, DeSerializersT, LinkedEntityApiT>
+  ) {
     return link instanceof OneToOneLink
       ? getSingleLinkFromJson(json, link)
       : getMultiLinkFromJson(json, link);
@@ -143,7 +151,7 @@ export function entityDeserializer<T extends DeSerializers>(
   function getSingleLinkFromJson<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
+    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>,
     JsonT
   >(
     json: Partial<JsonT>,
@@ -158,7 +166,7 @@ export function entityDeserializer<T extends DeSerializers>(
   function getMultiLinkFromJson<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>,
+    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>,
     JsonT
   >(
     json: Partial<JsonT>,

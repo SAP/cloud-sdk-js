@@ -1,16 +1,15 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
-import type {OneToManyLink} from '../selectable';
+import type { OneToManyLink } from '../selectable';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-base';
 import type { BooleanFilterFunction } from './boolean-filter-function';
 import type { Filter } from './filter';
 import { UnaryFilter } from './unary-filter';
 import { FilterList } from './filter-list';
 import { FilterLambdaExpression } from './filter-lambda-expression';
 import { FilterLink } from './filter-link';
-import {EntityApi} from "../entity-base";
-import {Link} from "../selectable";
-import {inferEntity} from "../helper-types";
+// import { commonService} from "../../test/common-entity";
 
 /**
  * A union of all types that can be used for filtering.
@@ -18,17 +17,24 @@ import {inferEntity} from "../helper-types";
  * @internal
  */
 export type Filterable<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase,DeSerializersT>
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  LinkedEntityT extends EntityBase = EntityBase
+  // LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT> = EntityApi<
+  //   EntityBase,
+  //   DeSerializersT
+  // >
 > =
   | Filter<EntityT, DeSerializersT, any>
-  | FilterLink<EntityT, DeSerializersT,LinkedEntityApiT>
+  | FilterLink<EntityT, DeSerializersT, EntityApi<LinkedEntityT, DeSerializersT>>
   | FilterList<EntityT, DeSerializersT>
   | FilterLambdaExpression<EntityT, DeSerializersT>
-  | UnaryFilter<EntityT,DeSerializersT>
+  | UnaryFilter<EntityT, DeSerializersT>
   | BooleanFilterFunction<EntityT>
-  | OneToManyLink<EntityT,DeSerializersT,LinkedEntityApiT>;
+  | OneToManyLink<EntityT, DeSerializersT, EntityApi<LinkedEntityT, DeSerializersT>>;
+
+// const {commonEntityApi,commonEntitySingleLinkApi} = commonService()
+// const withAnd = and(commonEntityApi.schema.TO_SINGLE_LINK.filter(commonEntitySingleLinkApi.schema.STRING_PROPERTY.equals("")))
 
 /**
  * Combine [[Filterable]]s with logical `and` to create a [[FilterList]].
@@ -55,7 +61,11 @@ export function and<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
-  expressions: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]
+  expressions: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >[]
 ): FilterList<EntityT, DeSerializersT>;
 
 /**
@@ -65,7 +75,11 @@ export function and<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
-  ...expressions: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]
+  ...expressions: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >[]
 ): FilterList<EntityT, DeSerializersT>;
 
 /**
@@ -80,9 +94,17 @@ export function and<
 >(
   first:
     | undefined
-    | Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>
-    | Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[],
-  ...rest: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]
+    | Filterable<EntityT, DeSerializersT>
+    | Filterable<
+        EntityT,
+        DeSerializersT
+        // EntityApi<EntityBase, DeSerializersT>
+      >[],
+  ...rest: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >[]
 ): FilterList<EntityT, DeSerializersT> {
   return new FilterList(variadicArgumentToArray(first, rest));
 }
@@ -105,7 +127,11 @@ export function or<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
-  expressions: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]
+  expressions: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >[]
 ): FilterList<EntityT, DeSerializersT>;
 
 /**
@@ -115,7 +141,11 @@ export function or<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
-  ...expressions: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]
+  ...expressions: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >[]
 ): FilterList<EntityT, DeSerializersT>;
 
 /**
@@ -129,9 +159,17 @@ export function or<
   DeSerializersT extends DeSerializers
 >(
   first:
-    | Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>
-    | Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[],
-  ...rest: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>[]
+    | Filterable<EntityT, DeSerializersT> // , EntityApi<EntityBase, DeSerializersT>>
+    | Filterable<
+        EntityT,
+        DeSerializersT
+        // EntityApi<EntityBase, DeSerializersT>
+      >[],
+  ...rest: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >[]
 ): FilterList<EntityT, DeSerializersT> {
   return new FilterList([], variadicArgumentToArray(first, rest));
 }
@@ -145,6 +183,12 @@ export function or<
 export function not<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
->(filter: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>): UnaryFilter<EntityT,DeSerializersT> {
+>(
+  filter: Filterable<
+    EntityT,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >
+): UnaryFilter<EntityT, DeSerializersT> {
   return new UnaryFilter(filter, 'not');
 }

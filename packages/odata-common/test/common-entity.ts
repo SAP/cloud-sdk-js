@@ -515,4 +515,3 @@ export class CommonService<
 }
 
 export const { commonEntityApi } = commonService();
-

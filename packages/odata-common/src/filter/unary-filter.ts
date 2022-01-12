@@ -1,15 +1,22 @@
-import type {EntityApi, EntityBase} from '../entity-base';
+import type { EntityBase } from '../entity-base';
+import { DeSerializers } from '../de-serializers';
 import type { Filterable } from './filterable';
-import {DefaultDeSerializers, DeSerializers} from "../de-serializers";
 
 type UnaryFilterOperator = 'not';
 
 /**
  * @internal
  */
-export class UnaryFilter<EntityT extends EntityBase,DeSerializersT extends DeSerializers> {
+export class UnaryFilter<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> {
   constructor(
-    public singleOperand: Filterable<EntityT, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>,
+    public singleOperand: Filterable<
+      EntityT,
+      DeSerializersT
+      // EntityApi<EntityBase, DeSerializersT>
+    >,
     public operator: UnaryFilterOperator
   ) {}
 }
@@ -20,9 +27,16 @@ export class UnaryFilter<EntityT extends EntityBase,DeSerializersT extends DeSer
  * @returns boolean
  * @internal
  */
-export function isUnaryFilter<T extends EntityBase,DeSerializersT extends DeSerializers>(
-  filterable: Filterable<T, DeSerializersT,EntityApi<EntityBase,DeSerializersT>>
-): filterable is UnaryFilter<T,DeSerializersT> {
+export function isUnaryFilter<
+  T extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  filterable: Filterable<
+    T,
+    DeSerializersT
+    // EntityApi<EntityBase, DeSerializersT>
+  >
+): filterable is UnaryFilter<T, DeSerializersT> {
   return (
     typeof filterable['singleOperand'] !== 'undefined' &&
     typeof filterable['operator'] !== 'undefined'

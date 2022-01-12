@@ -367,6 +367,7 @@ export function hasEntities(service: VdmServiceMetadata): boolean {
 }
 
 /**
+ * @internal
  * This is copied from the `@sap-cloud-sdk/odata-common`
  */
 export type EdmTypeShared =

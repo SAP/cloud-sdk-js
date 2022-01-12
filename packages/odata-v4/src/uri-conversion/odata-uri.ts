@@ -34,9 +34,14 @@ export function createODataUri<DeSerializersT extends DeSerializers>(
     return getExpand(expands, entityApi);
   }
 
-  const getSelectLocal: <EntityT extends Entity>(
+  //This enforces the same DeSerializersT on the getSelect method. If we change something on the selec method signature this will fail in contrast to use of as XYZ.
+  const getSelectWithSameDeSerializer: <EntityT extends Entity>(
     selects: Selectable<EntityT, DeSerializersT>[]
   ) => Partial<{ select: string }> = getSelect;
 
-  return createODataUriBase(deSerializers, getExpandWrapped, getSelectLocal);
+  return createODataUriBase(
+    deSerializers,
+    getExpandWrapped,
+    getSelectWithSameDeSerializer
+  );
 }

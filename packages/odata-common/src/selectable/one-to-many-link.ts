@@ -41,8 +41,6 @@ export class OneToManyLink<
   >[] = [];
   _top: number;
   _skip: number;
-  // TODO remove if not needed
-  _deSerializers: DeSerializersT;
 
   clone(): this {
     const clonedLink = super.clone();

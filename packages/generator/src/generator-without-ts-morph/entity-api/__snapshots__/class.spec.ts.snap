@@ -23,7 +23,7 @@ exports[`entity api class gets proper class content 1`] = `
       TO_BRUNCH: OneToOneLink<
             Breakfast<DeSerializersT>,
             DeSerializersT,
-            Brunch<DeSerializersT>
+            BrunchApi<DeSerializersT>
           >
     };
 

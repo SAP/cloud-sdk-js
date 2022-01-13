@@ -101,11 +101,11 @@ describe('env-destination-accessor', () => {
       mockDestinationsEnv(destinationFromEnv);
 
       const logger = createLogger('env-destination-accessor');
-      const warnSpy = jest.spyOn(logger, 'warn');
+      const infoSpy = jest.spyOn(logger, 'info');
       await getDestination({ destinationName: 'FINAL-DESTINATION' });
-      expect(warnSpy).toHaveBeenCalledWith(
+      expect(infoSpy).toHaveBeenCalledWith(
         expect.stringMatching(
-          /from environment variable.This is discouraged for productive applications./
+          /Successfully retrieved destination 'FINAL-DESTINATION' from environment variable./
         )
       );
     });
@@ -209,7 +209,7 @@ describe('env-destination-accessor', () => {
 });
 
 describe('registerDestination', () => {
-  const mockDestination: Destination = {
+  const mockDestination = {
     name: 'MockedDestination',
     url: 'https://example.com'
   };
@@ -249,17 +249,6 @@ describe('registerDestination', () => {
     expect(
       getDestination({ destinationName: 'MockedDestination' })
     ).resolves.toMatchObject(mockDestinationFromEnv);
-  });
-
-  it('should throw an exception if a property of the destination is missing', () => {
-    const badDestination: Destination = {
-      url: 'https://test.com'
-    };
-    expect(() => {
-      registerDestination(badDestination);
-    }).toThrowErrorMatchingInlineSnapshot(
-      '"The registerDestination function requires a destination name and url."'
-    );
   });
 
   it('should throw an exception if a name conflict occurs', () => {

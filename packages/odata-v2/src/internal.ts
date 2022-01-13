@@ -1,6 +1,7 @@
 export * from './de-serializers';
 export * from './request';
 export * from './request-builder';
+export * from './batch-response';
 export * from './selectable';
 export * from './uri-conversion';
 export * from './edm-types';

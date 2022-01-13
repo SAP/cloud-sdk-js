@@ -50,6 +50,8 @@ export function serviceClass(service: VdmServiceMetadata): string {
     ${getActionFunctionImports(service, 'functionImports')}
     
     ${getActionFunctionImports(service, 'actionImports')}
+    
+    ${getBatch()}
   }`;
 }
 
@@ -69,6 +71,14 @@ function getActionFunctionImports(
   return codeBlock`
   get ${type}( ) {
     return {${lines.join(',')}}
+  }
+  `;
+}
+
+function getBatch() {
+  return codeBlock`
+  get batch(): typeof batch {
+    return batch;
   }
   `;
 }

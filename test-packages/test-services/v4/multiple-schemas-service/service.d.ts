@@ -11,6 +11,7 @@ import {
   TestActionImportNoParameterComplexReturnType2Parameters
 } from './action-imports';
 import { BigNumber } from 'bignumber.js';
+import { batch } from './BatchRequest';
 import { Moment, Duration } from 'moment';
 import {
   DeSerializers,
@@ -124,5 +125,6 @@ export declare class MultipleSchemasService<
       import('./TestComplexType2').TestComplexType2<DefaultDeSerializers>
     >;
   };
+  get batch(): typeof batch;
 }
 //# sourceMappingURL=service.d.ts.map

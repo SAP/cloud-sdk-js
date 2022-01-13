@@ -50,6 +50,7 @@ import {
   FContinueParameters
 } from './function-imports';
 import { BigNumber } from 'bignumber.js';
+import { batch } from './BatchRequest';
 import { Moment } from 'moment';
 import {
   defaultDeSerializers,
@@ -321,5 +322,9 @@ export class TestService<
       fContinue: (parameter: FContinueParameters<DeSerializersT>) =>
         fContinue(parameter, this.deSerializers)
     };
+  }
+
+  get batch(): typeof batch {
+    return batch;
   }
 }

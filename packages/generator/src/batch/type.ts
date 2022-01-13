@@ -33,7 +33,7 @@ function getWriteRequestType(service: VdmServiceMetadata): string {
   return service.entities
     .map(
       e =>
-        `CreateRequestBuilder<${e.className}, DeSerializersT> | UpdateRequestBuilder<${e.className}, DeSerializersT> | DeleteRequestBuilder<${e.className}, DeSerializersT>`
+        `CreateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | UpdateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | DeleteRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
     )
     .join(' | ');
 }
@@ -42,10 +42,12 @@ function getReadRequestType(service: VdmServiceMetadata): string {
   return Array.prototype
     .concat(
       service.entities.map(
-        e => `GetAllRequestBuilder<${e.className}, DeSerializersT>`
+        e =>
+          `GetAllRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
       ),
       service.entities.map(
-        e => `GetByKeyRequestBuilder<${e.className}, DeSerializersT>`
+        e =>
+          `GetByKeyRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
       )
     )
     .join('|');

@@ -34,12 +34,6 @@ export interface CachingOptions {
    * A boolean value that indicates whether to read destinations from cache.
    */
   useCache?: boolean;
-
-  /**
-   * The isolation strategy used for caching destinations. For the available options, see [[IsolationStrategy]].
-   * By default, IsolationStrategy.Tenant is set.
-   */
-  isolationStrategy?: IsolationStrategy; // TODO: this is kind of too generic. For destinations, this makes sense, whereas for caching access tokens this has no effect at all.
 }
 
 /**

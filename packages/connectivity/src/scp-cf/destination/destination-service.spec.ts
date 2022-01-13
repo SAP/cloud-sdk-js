@@ -264,8 +264,8 @@ describe('destination service', () => {
       const actual = await fetchDestination(
         destinationServiceUri,
         jwt,
-        destinationName,
-        { enableCircuitBreaker: false }
+
+        { destinationName,enableCircuitBreaker: false }
       );
       expect(actual).toMatchObject(expected);
     });
@@ -300,7 +300,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
       const spy = jest.spyOn(axios, 'request');
-      await fetchDestination(destinationServiceUri, jwt, destinationName, {
+      await fetchDestination(destinationServiceUri, jwt, {destinationName,
         enableCircuitBreaker: false
       });
       const expectedConfig: AxiosRequestConfig = {
@@ -354,7 +354,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
       const spy = jest.spyOn(axios, 'request');
-      await fetchDestination(destinationServiceUri, jwt, destinationName, {
+      await fetchDestination(destinationServiceUri, jwt,  {destinationName,
         enableCircuitBreaker: false
       });
       const expectedConfig: AxiosRequestConfig = {
@@ -451,8 +451,8 @@ describe('destination service', () => {
       const actual = await fetchDestination(
         destinationServiceUri,
         jwt,
-        destinationName,
-        { enableCircuitBreaker: false }
+
+        {destinationName, enableCircuitBreaker: false }
       );
       expect(actual).toMatchObject(expected);
     });
@@ -469,7 +469,7 @@ describe('destination service', () => {
         .reply(500);
 
       await expect(
-        fetchDestination(destinationServiceUri, jwt, destinationName, {
+        fetchDestination(destinationServiceUri, jwt,  {destinationName,
           enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
@@ -491,7 +491,7 @@ describe('destination service', () => {
         .reply(400, response);
 
       await expect(() =>
-        fetchDestination(destinationServiceUri, jwt, destinationName, {
+        fetchDestination(destinationServiceUri, jwt,  {destinationName,
           enableCircuitBreaker: false
         })
       ).rejects.toThrowError();

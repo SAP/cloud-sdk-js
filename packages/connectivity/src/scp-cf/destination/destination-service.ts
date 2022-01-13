@@ -19,6 +19,7 @@ import {
 } from './destination';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
+import {DestinationFetchOptions, DestinationOptions} from "./destination-accessor-types";
 
 const logger = createLogger({
   package: 'connectivity',
@@ -45,7 +46,7 @@ let circuitBreaker: DestinationCircuitBreaker<
 export function fetchInstanceDestinations(
   destinationServiceUri: string,
   jwt: string,
-  options?: ResilienceOptions & CachingOptions
+  options?: DestinationOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
     destinationServiceUri,
@@ -66,7 +67,7 @@ export function fetchInstanceDestinations(
 export function fetchSubaccountDestinations(
   destinationServiceUri: string,
   jwt: string,
-  options?: ResilienceOptions & CachingOptions
+  options?: DestinationOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
     destinationServiceUri,
@@ -80,7 +81,7 @@ async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
   type: DestinationType,
-  options?: ResilienceOptions & CachingOptions
+  options?: DestinationOptions
 ): Promise<Destination[]> {
   const targetUri = `${destinationServiceUri.replace(
     /\/$/,
@@ -142,7 +143,6 @@ export interface AuthAndExchangeTokens {
  * Fetches a specific destination with authenticationType OAuth2UserTokenExchange by name from the given URI, including authorization tokens.
  * @param destinationServiceUri - The URI of the destination service
  * @param token - The access token or AuthAndExchangeTokens if you want to include the X-user-token for OAuth2UserTokenExchange.
- * @param destinationName - The name of the desired destination
  * @param options - Options to use by retrieving destinations
  * @returns A Promise resolving to the destination
  * @internal
@@ -150,13 +150,11 @@ export interface AuthAndExchangeTokens {
 export async function fetchDestination(
   destinationServiceUri: string,
   token: string | AuthAndExchangeTokens,
-  destinationName: string,
-  options?: ResilienceOptions & CachingOptions
+  options: DestinationFetchOptions
 ): Promise<Destination> {
   return fetchDestinationByTokens(
     destinationServiceUri,
     typeof token === 'string' ? { authHeaderJwt: token } : token,
-    destinationName,
     options
   );
 }
@@ -164,13 +162,12 @@ export async function fetchDestination(
 async function fetchDestinationByTokens(
   destinationServiceUri: string,
   tokens: AuthAndExchangeTokens,
-  destinationName: string,
-  options?: ResilienceOptions & CachingOptions
+  options: DestinationFetchOptions
 ): Promise<Destination> {
   const targetUri = `${destinationServiceUri.replace(
     /\/$/,
     ''
-  )}/destination-configuration/v1/destinations/${destinationName}`;
+  )}/destination-configuration/v1/destinations/${options.destinationName}`;
 
   if (options?.useCache) {
     const destinationsFromCache =
@@ -213,7 +210,7 @@ async function fetchDestinationByTokens(
     .catch(error => {
       {
         throw new ErrorWithCause(
-          `Failed to fetch destination ${destinationName}.${errorMessageFromResponse(
+          `Failed to fetch destination ${options.destinationName}.${errorMessageFromResponse(
             error
           )}`,
           error

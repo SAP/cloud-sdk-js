@@ -34,7 +34,7 @@ export class ODataBatchRequestBuilder<
           parsedResponse,
           this.getEntityToApiMap(),
           responseDataAccessor,
-          entityDeserializer(this.deSerializers)
+          entityDeserializer(this.deSerializers!)
         )
       )
       .catch(error => {

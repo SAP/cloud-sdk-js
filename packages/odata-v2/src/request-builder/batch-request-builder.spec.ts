@@ -3,10 +3,6 @@ import nock from 'nock';
 
 describe('batch request', () => {
   const { batch, testEntityApi } = testService();
-  const testEntity = testEntityApi
-    .entityBuilder()
-    .stringProperty('4711')
-    .build();
   const boundary = 'test-boundary';
   const getAllResponse = `--${boundary}
 Content-Type: application/http

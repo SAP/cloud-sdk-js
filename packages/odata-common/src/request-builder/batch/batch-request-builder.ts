@@ -39,7 +39,9 @@ export class BatchRequestBuilder<
     )[] // readonly entityToConstructorMap: Record< //   string, //   EntityApi<EntityBase, DeSerializersT> // >
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
-    this.deSerializers = Object.values(this.getEntityToApiMap())[0].deSerializers;
+    this.deSerializers = Object.values(
+      this.getEntityToApiMap()
+    )[0].deSerializers;
   }
 
   withSubRequestPathType(subRequestPathType: BatchSubRequestPathType): this {

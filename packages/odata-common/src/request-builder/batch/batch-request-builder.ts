@@ -22,6 +22,8 @@ export class BatchRequestBuilder<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > extends MethodRequestBuilder<ODataBatchRequestConfig> {
   // FIXME: MethodRequestBuilder is too broad here. Should be getAll and getByKey
+  readonly deSerializers: DeSerializersT;
+
   /**
    * Creates an instance of ODataBatchRequestBuilder.
    * @param defaultServicePath - Service path
@@ -37,6 +39,7 @@ export class BatchRequestBuilder<
     )[] // readonly entityToConstructorMap: Record< //   string, //   EntityApi<EntityBase, DeSerializersT> // >
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
+    this.deSerializers = Object.values(this.getEntityToApiMap())[0].deSerializers;
   }
 
   withSubRequestPathType(subRequestPathType: BatchSubRequestPathType): this {

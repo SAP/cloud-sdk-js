@@ -11,6 +11,8 @@ import {
   getDestinationFromDestinationService,
   serviceToken
 } from '../../../../packages/connectivity/src/internal';
+import { businessPartnerService } from '../bp-new/business-partner-service';
+import { changeset } from '../bp-new/business-partner-service/BatchRequest';
 import {
   loadLocalVcap,
   readSystems,
@@ -32,6 +34,28 @@ describe('OAuth flows', () => {
     loadLocalVcap();
     destinationService = getService('destination');
   });
+
+  it('get BP basic provider direct',async ()=>{
+    const { businessPartnerApi,batch }  =  businessPartnerService();
+    const destination = await getDestination({ destinationName:'CC8-HTTP-BASIC' });
+    const getAllRequest = businessPartnerApi.requestBuilder().getAll().top(1);
+    const bups = await batch(getAllRequest).execute(destination!);
+
+    if(bups[0].isReadResponse()){
+      // const result = bups[0].as(businessPartnerApi)
+
+      // result[0].firstName = "test123"
+      const newBp = businessPartnerApi.entityBuilder().firstName('Frank').lastName('MusterMann').businessPartnerCategory('1').build();
+      const writeRequest = businessPartnerApi.requestBuilder().create(newBp);
+      const responseUpdate = await batch(changeset([writeRequest])).execute(destination!);
+      if(responseUpdate[0].isWriteResponses()){
+        const resultWrite = responseUpdate[0].responses[0].as!(businessPartnerApi);// !.responses[0]!.as(businessPartnerApi)
+        console.log(responseUpdate);
+      }
+    }
+
+    console.log('finished');
+  },60000);
 
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {
     const destination = await getDestination({

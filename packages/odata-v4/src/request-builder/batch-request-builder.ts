@@ -19,8 +19,6 @@ import { responseDataAccessor } from './response-data-accessor';
 export class ODataBatchRequestBuilder<
   DeSerializersT extends DeSerializers
 > extends BatchRequestBuilder<DeSerializersT> {
-  private deSerializers: DeSerializersT;
-
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.
    * @param destination - Targeted destination or DestinationFetchOptions on which the request is performed.

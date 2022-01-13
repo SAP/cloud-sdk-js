@@ -11,14 +11,14 @@
     "test": "yarn dtslint --expectOnly --localTs ../../node_modules/typescript/lib test",
     "check:dependencies": "echo Nothing to check here."
   },
-  "dependencies": {
+  "devDependencies": {
     "@sap-cloud-sdk/connectivity": "^1.50.0",
+    "@sap-cloud-sdk/generator": "^1.50.0",
     "@sap-cloud-sdk/http-client": "^1.50.0",
+    "@sap-cloud-sdk/odata-common": "^1.50.0",
     "@sap-cloud-sdk/odata-v2": "^1.50.0",
     "@sap-cloud-sdk/odata-v4": "^1.50.0",
-    "@sap-cloud-sdk/test-services": "^1.50.0"
-  },
-  "devDependencies": {
+    "@sap-cloud-sdk/test-services": "^1.50.0",
     "@types/jsonwebtoken": "^8.3.8",
     "dtslint": "^4.0.0"
   }

@@ -12,8 +12,8 @@
     "check:dependencies": "echo Nothing to check here."
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator": "^1.50.0",
     "@sap-cloud-sdk/connectivity": "^1.50.0",
+    "@sap-cloud-sdk/generator": "^1.50.0",
     "@sap-cloud-sdk/http-client": "^1.50.0",
     "@sap-cloud-sdk/odata-common": "^1.50.0",
     "@sap-cloud-sdk/odata-v2": "^1.50.0",

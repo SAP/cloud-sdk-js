@@ -101,7 +101,7 @@ describe('env-destination-accessor', () => {
       mockDestinationsEnv(destinationFromEnv);
 
       const logger = createLogger('env-destination-accessor');
-      const warnSpy = jest.spyOn(logger, 'info');
+      const infoSpy = jest.spyOn(logger, 'info');
       await getDestination({ destinationName: 'FINAL-DESTINATION' });
       expect(warnSpy).toHaveBeenCalledWith(
         expect.stringMatching(

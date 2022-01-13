@@ -11,8 +11,6 @@ import {
   getDestinationFromDestinationService,
   serviceToken
 } from '../../../../packages/connectivity/src/internal';
-import { businessPartnerService } from '../bp-new/business-partner-service';
-import { changeset } from '../bp-new/business-partner-service/BatchRequest';
 import {
   loadLocalVcap,
   readSystems,
@@ -35,28 +33,6 @@ describe('OAuth flows', () => {
     destinationService = getService('destination');
   });
 
-  it('get BP basic provider direct',async ()=>{
-    const { businessPartnerApi,batch }  =  businessPartnerService();
-    const destination = await getDestination({ destinationName:'CC8-HTTP-BASIC' });
-    const getAllRequest = businessPartnerApi.requestBuilder().getAll().top(1);
-    const bups = await batch(getAllRequest).execute(destination!);
-
-    if(bups[0].isReadResponse()){
-      // const result = bups[0].as(businessPartnerApi)
-
-      // result[0].firstName = "test123"
-      const newBp = businessPartnerApi.entityBuilder().firstName('Frank').lastName('MusterMann').businessPartnerCategory('1').build();
-      const writeRequest = businessPartnerApi.requestBuilder().create(newBp);
-      const responseUpdate = await batch(changeset([writeRequest])).execute(destination!);
-      if(responseUpdate[0].isWriteResponses()){
-        const resultWrite = responseUpdate[0].responses[0].as!(businessPartnerApi);// !.responses[0]!.as(businessPartnerApi)
-        console.log(responseUpdate);
-      }
-    }
-
-    console.log('finished');
-  },60000);
-
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {
     const destination = await getDestination({
       destinationName: systems.destination.providerOauth2Password
@@ -73,9 +49,9 @@ describe('OAuth flows', () => {
     });
 
     const result = await BusinessPartner.requestBuilder()
-      .getAll()
-      .top(1)
-      .execute(destination!);
+        .getAll()
+        .top(1)
+        .execute(destination!);
     expect(result.length).toBe(1);
   }, 60000);
 
@@ -99,12 +75,12 @@ describe('OAuth flows', () => {
     });
 
     const buPa = BusinessPartner.builder()
-      .businessPartnerCategory('1')
-      .lastName('name')
-      .build();
+        .businessPartnerCategory('1')
+        .lastName('name')
+        .build();
     const result = await BusinessPartner.requestBuilder()
-      .create(buPa)
-      .execute(destination!);
+        .create(buPa)
+        .execute(destination!);
     expect(result.lastName).toBe('name');
   }, 60000);
 
@@ -115,9 +91,9 @@ describe('OAuth flows', () => {
     });
 
     const result = await BusinessPartner.requestBuilder()
-      .getAll()
-      .top(1)
-      .execute(destination!);
+        .getAll()
+        .top(1)
+        .execute(destination!);
     expect(result.length).toBe(1);
   }, 60000);
 
@@ -137,27 +113,27 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     const result = await BusinessPartner.requestBuilder()
-      .getAll()
-      .top(1)
-      .execute(destination!);
+        .getAll()
+        .top(1)
+        .execute(destination!);
     expect(result.length).toBe(1);
   }, 60000);
 
   xit('OAuth2ClientCredentials: Provider Destination (common token url)', async () => {
     let destination = await getDestination({
       destinationName:
-        systems.destination.providerOauth2ClientCredentialsCommonTokenURL
+      systems.destination.providerOauth2ClientCredentialsCommonTokenURL
     });
     expect(destination!.authTokens![0]!.error).toBeUndefined();
     destination = await getDestination({
       destinationName:
-        systems.destination.providerOauth2ClientCredentialsCommonTokenURL,
+      systems.destination.providerOauth2ClientCredentialsCommonTokenURL,
       jwt: accessToken.subscriber
     });
     expect(destination!.authTokens![0]!.error).toBeUndefined();
     destination = await getDestination({
       destinationName:
-        systems.destination.providerOauth2ClientCredentialsCommonTokenURL,
+      systems.destination.providerOauth2ClientCredentialsCommonTokenURL,
       jwt: accessToken.provider
     });
     expect(destination!.authTokens![0]!.error).toBeUndefined();
@@ -212,13 +188,13 @@ describe('OAuth flows', () => {
   xit('OAuth2UserTokenExchange: Provider destination (common token url)', async () => {
     let destination = await getDestination({
       destinationName:
-        systems.destination.providerOauth2UserTokenExchangeCommonTokenURL,
+      systems.destination.providerOauth2UserTokenExchangeCommonTokenURL,
       jwt: accessToken.subscriber
     });
     expect(destination!.authTokens![0].error).toBeNull();
     destination = await getDestination({
       destinationName:
-        systems.destination.providerOauth2UserTokenExchangeCommonTokenURL,
+      systems.destination.providerOauth2UserTokenExchangeCommonTokenURL,
       jwt: accessToken.provider
     });
     expect(destination!.authTokens![0].error).toBeNull();
@@ -233,13 +209,13 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     const response = await executeHttpRequest(
-      {
-        url: 'https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations'
-      },
-      {
-        method: 'get',
-        headers: wrapJwtInHeader(destination!.authTokens![0].value).headers
-      }
+        {
+          url: 'https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations'
+        },
+        {
+          method: 'get',
+          headers: wrapJwtInHeader(destination!.authTokens![0].value).headers
+        }
     );
 
     expect(response.status).toBe(200);
@@ -256,7 +232,7 @@ describe('OAuth flows', () => {
       jwt: accessToken.subscriber
     });
     expect(destination!.authTokens![0].error).toMatch(
-      /Invalid issuer.*token did not match expected/
+        /Invalid issuer.*token did not match expected/
     );
     assertDedicatedTokenUrl(destination!);
   }, 60000);
@@ -278,13 +254,13 @@ describe('OAuth flows', () => {
   xit('OAuth2JWTBearer: Provider Destination  (common token service URL)', async () => {
     let destination = await getDestination({
       destinationName:
-        systems.destination.providerOauth2JWTBearerCommonTokenURL,
+      systems.destination.providerOauth2JWTBearerCommonTokenURL,
       jwt: accessToken.provider
     });
     expect(destination!.authTokens![0]!.error).toBeNull();
     destination = await getDestination({
       destinationName:
-        systems.destination.providerOauth2JWTBearerCommonTokenURL,
+      systems.destination.providerOauth2JWTBearerCommonTokenURL,
       jwt: accessToken.subscriber
     });
     expect(destination!.authTokens![0]!.error).toBeNull();
@@ -309,9 +285,9 @@ describe('OAuth flows', () => {
     });
     expect(destination!.certificates!.length).toBe(1);
     const bps = await BusinessPartner.requestBuilder()
-      .getAll()
-      .top(5)
-      .execute(destination!);
+        .getAll()
+        .top(5)
+        .execute(destination!);
     expect(bps.length).toBeGreaterThan(0);
   }, 10000);
 
@@ -320,16 +296,16 @@ describe('OAuth flows', () => {
   xit('ClientCertificate: Fetches the certificate and uses it - ignoring broken proxy', async () => {
     process.env.HTTPS_PROXY = 'http://someHost:1234'; // we changed to xssec which does not consider the no_proxy when calling the token. We would need a proper local forward everything proxy
     process.env.NO_PROXY =
-      'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token,https://my300470-api.s4hana.ondemand.com';
+        'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token,https://my300470-api.s4hana.ondemand.com';
 
     const destination = await getDestination({
       destinationName: systems.s4.providerClientCert
     });
     expect(destination!.certificates!.length).toBe(1);
     const bps = await BusinessPartner.requestBuilder()
-      .getAll()
-      .top(5)
-      .execute(destination!);
+        .getAll()
+        .top(5)
+        .execute(destination!);
     expect(bps.length).toBeGreaterThan(0);
   }, 60000);
 
@@ -341,31 +317,31 @@ describe('OAuth flows', () => {
     // Call to backend will not work because the proxy is not rechable, but you can check the set headers.
     expect(destination?.proxyConfiguration).toBeDefined();
     expect(
-      destination?.proxyConfiguration?.headers?.['Proxy-Authorization']
+        destination?.proxyConfiguration?.headers?.['Proxy-Authorization']
     ).toBeDefined();
     expect(
-      destination?.proxyConfiguration?.headers?.[
-        'SAP-Connectivity-Authentication'
-      ]
+        destination?.proxyConfiguration?.headers?.[
+            'SAP-Connectivity-Authentication'
+            ]
     ).toBeDefined();
   }, 60000);
 
   xit('IAS: token exchange by making an xsuaa call', async () => {
     const iasToken = accessToken.iasProvider;
     const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
-      .credentials;
+        .credentials;
     const token = await new Promise(
-      (resolve: (value: string) => void, reject) => {
-        xssec.requests.requestUserToken(
-          iasToken,
-          xsuaaConfig,
-          null,
-          null,
-          null,
-          xsuaaConfig.subaccountid,
-          (err: Error, xsuaaToken) => (err ? reject(err) : resolve(xsuaaToken))
-        );
-      }
+        (resolve: (value: string) => void, reject) => {
+          xssec.requests.requestUserToken(
+              iasToken,
+              xsuaaConfig,
+              null,
+              null,
+              null,
+              xsuaaConfig.subaccountid,
+              (err: Error, xsuaaToken) => (err ? reject(err) : resolve(xsuaaToken))
+          );
+        }
     );
     const decoded = decodeJwt(token);
     expect(decoded.scope.length).toBeGreaterThan(0);
@@ -374,13 +350,13 @@ describe('OAuth flows', () => {
   xit('IAS: token exchange with xssec createSecurityContext', async () => {
     const iasToken = accessToken.iasProvider;
     const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
-      .credentials;
+        .credentials;
     const token = await new Promise((resolve: (p: string) => void, reject) => {
       xssec.createSecurityContext(
-        iasToken,
-        xsuaaConfig,
-        (err: Error, context, tokenInfo) =>
-          err ? reject(err) : resolve(tokenInfo.getTokenValue())
+          iasToken,
+          xsuaaConfig,
+          (err: Error, context, tokenInfo) =>
+              err ? reject(err) : resolve(tokenInfo.getTokenValue())
       );
     });
     const decoded = decodeJwt(token);
@@ -390,16 +366,16 @@ describe('OAuth flows', () => {
   xit('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const iasToken = accessToken.iasProvider;
     const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
-      .credentials;
+        .credentials;
     const xsuaaToken = await new Promise(
-      (resolve: (p: string) => void, reject) => {
-        xssec.createSecurityContext(
-          iasToken,
-          xsuaaConfig,
-          (err: Error, context, tokenInfo) =>
-            err ? reject(err) : resolve(tokenInfo.getTokenValue())
-        );
-      }
+        (resolve: (p: string) => void, reject) => {
+          xssec.createSecurityContext(
+              iasToken,
+              xsuaaConfig,
+              (err: Error, context, tokenInfo) =>
+                  err ? reject(err) : resolve(tokenInfo.getTokenValue())
+          );
+        }
     );
 
     const clientGrant = await serviceToken('destination', {
@@ -407,9 +383,9 @@ describe('OAuth flows', () => {
     });
 
     const destination = await fetchDestination(
-      destinationService!.credentials.uri,
-      clientGrant,
-      systems.workflow.providerOAuth2ClientCredentials
+        destinationService!.credentials.uri,
+        clientGrant,
+        systems.workflow.providerOAuth2ClientCredentials
     );
     expect(destination.authTokens![0].error).toBeNull();
 
@@ -422,16 +398,16 @@ describe('OAuth flows', () => {
 
 function assertCommenTokenUrl(destination: Destination) {
   expect(
-    destination.originalProperties!.destinationConfiguration[
-      'tokenServiceURLType'
-    ]
+      destination.originalProperties!.destinationConfiguration[
+          'tokenServiceURLType'
+          ]
   ).toBe('Common');
 }
 
 function assertDedicatedTokenUrl(destination: Destination) {
   expect(
-    destination.originalProperties!.destinationConfiguration[
-      'tokenServiceURLType'
-    ]
+      destination.originalProperties!.destinationConfiguration[
+          'tokenServiceURLType'
+          ]
   ).toBe('Dedicated');
 }

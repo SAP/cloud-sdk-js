@@ -1,6 +1,6 @@
 import * as xssec from '@sap/xssec';
 import CircuitBreaker from 'opossum';
-import { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';

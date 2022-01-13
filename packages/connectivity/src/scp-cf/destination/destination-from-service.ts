@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt, isUserToken, JwtPair, verifyJwt } from '../jwt';
 import { IsolationStrategy } from '../cache';
 import { jwtBearerToken, serviceToken } from '../token-accessor';

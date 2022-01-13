@@ -103,7 +103,7 @@ describe('env-destination-accessor', () => {
       const logger = createLogger('env-destination-accessor');
       const infoSpy = jest.spyOn(logger, 'info');
       await getDestination({ destinationName: 'FINAL-DESTINATION' });
-      expect(warnSpy).toHaveBeenCalledWith(
+      expect(infoSpy).toHaveBeenCalledWith(
         expect.stringMatching(
           /Successfully retrieved destination 'FINAL-DESTINATION' from environment variable./
         )

@@ -89,6 +89,7 @@ function getAdditionalProperties(
 }
 
 /**
+ * @internal
  * Get additional headers and/or query parameters from a destination.
  * Destinations can specify additional headers and/or query parameters, that should be added to every request against the given destination.
  * They are specified in the following format:
@@ -96,7 +97,7 @@ function getAdditionalProperties(
  * @param destinationConfig - Original destination config that could include additional headers or query parameters.
  * @returns An object with either the headers or query parameters and their values, depending on the `originalKeyPrefix`.
  */
-function getAdditionalHeadersAndQueryParameters(
+export function getAdditionalHeadersAndQueryParameters(
   destinationConfig: DestinationConfiguration
 ): Pick<Destination, 'headers' | 'queryParameters'> {
   const additionalHeaders = getAdditionalProperties(

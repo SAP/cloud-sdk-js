@@ -1,14 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
-  buildHttpRequestConfig,
   filterCustomRequestConfig,
   mergeOptionsWithPriority
 } from './http-request-config';
-import {
-  HttpRequestConfig,
-  HttpRequestConfigWithOrigin,
-  OriginOptions
-} from './http-client-types';
+import { OriginOptions } from './http-client-types';
 
 const logger = createLogger('http-request-config');
 
@@ -34,39 +29,14 @@ describe('filterCustomRequestConfig', () => {
   });
 });
 
-describe('buildHttpRequestConfig', () => {
-  it('should pick headers and params with higher priorities', () => {
-    const withOrigin: HttpRequestConfigWithOrigin = {
-      method: 'get',
-      headers: {
-        destinationProperty: { Authorization: 'destProp' },
-        requestConfig: { Authorization: 'reqConfig' }
-      },
-      params: {
-        custom: { param: 'custom' },
-        requestConfig: { param: 'reqConfig' }
-      }
-    };
-
-    const expected: HttpRequestConfig = {
-      method: 'get',
-      headers: { Authorization: 'destProp' },
-      params: { param: 'custom' }
-    };
-    expect(buildHttpRequestConfig(withOrigin)).toStrictEqual(expected);
-  });
-});
-
 describe('getOptionWithPriority', () => {
   it('should merge options', () => {
     const originOptions: OriginOptions = {
       custom: { Authorization: 'customAuth' },
-      destination: { 'sap-client': '001' },
       requestConfig: { 'if-match': 'etag' }
     };
     const expected = {
       Authorization: 'customAuth',
-      'sap-client': '001',
       'if-match': 'etag'
     };
     expect(mergeOptionsWithPriority(originOptions)).toStrictEqual(expected);
@@ -75,18 +45,11 @@ describe('getOptionWithPriority', () => {
   it('should use options with higher priority', () => {
     const originOptions: OriginOptions = {
       custom: { param1: 'customParam1' },
-      destinationProperty: {
-        param1: 'destPropParam1',
-        param2: 'destPropParam2'
-      },
-      destination: { param2: 'destParam2', param3: 'destParam3' },
-      requestConfig: { param3: 'reqParam3', param4: 'reqParam4' }
+      requestConfig: { param1: 'reqParam1', param2: 'reqParam2' }
     };
     const expected = {
       param1: 'customParam1',
-      param2: 'destPropParam2',
-      param3: 'destParam3',
-      param4: 'reqParam4'
+      param2: 'reqParam2'
     };
     expect(mergeOptionsWithPriority(originOptions)).toStrictEqual(expected);
   });
@@ -94,7 +57,7 @@ describe('getOptionWithPriority', () => {
   it('should use options with higher priority and ignore case', () => {
     const originOptions: OriginOptions = {
       custom: { Authorization: 'customAuth' },
-      destination: { AuTHORizaTION: 'destAuth', 'sap-client': '001' }
+      requestConfig: { AuTHORizaTION: 'requestConfigAuth', 'sap-client': '001' }
     };
     const expected = {
       Authorization: 'customAuth',

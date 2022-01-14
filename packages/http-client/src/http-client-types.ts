@@ -38,14 +38,26 @@ export type HttpRequestConfig = HttpRequestConfigBase & {
 };
 
 /**
- * @internal
+ * This interface is similar to [[HttpRequestConfig]], whilst the `headers` and `params` can be defined with "origin" information.
+ * @see [[OriginOptions]]
  */
 export type HttpRequestConfigWithOrigin = HttpRequestConfigBase & {
   params?: OriginOptions;
   headers?: OriginOptions;
 };
 
-interface HttpRequestConfigBase {
+/**
+ * @internal
+ */
+export type HttpRequestConfigWithOriginInternal = HttpRequestConfigBase & {
+  params?: OriginOptionsInternal;
+  headers?: OriginOptionsInternal;
+};
+
+/**
+ * @internal
+ */
+export interface HttpRequestConfigBase {
   [key: string]: any;
   url?: string;
   method: Method;
@@ -89,7 +101,19 @@ export interface HttpRequestOptions {
   fetchCsrfToken?: boolean;
 }
 
+/**
+ * This interface is used for defining e.g., headers and query parameters with origin information.
+ * The priorities are defined in the [[origins]].
+ */
 export interface OriginOptions {
+  requestConfig: Record<string, string>;
+  custom?: Record<string, string>;
+}
+
+/**
+ * @internal
+ */
+export interface OriginOptionsInternal {
   requestConfig?: Record<string, string>;
   destination?: Record<string, string>;
   destinationProperty?: Record<string, string>;

@@ -11,7 +11,11 @@ import {
   Destination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-import { HttpRequestConfig } from './http-client-types';
+import {
+  HttpRequestConfig,
+  HttpRequestConfigBase,
+  HttpRequestConfigWithOrigin
+} from './http-client-types';
 import { executeHttpRequest } from '.';
 
 const logger = createLogger({
@@ -66,11 +70,16 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
   destination: Destination | DestinationFetchOptions,
   requestConfig: Partial<T>
 ): Promise<Record<string, any>> {
-  const axiosConfig: HttpRequestConfig = {
+  const axiosConfig: HttpRequestConfigWithOrigin = {
     method: 'head',
     ...requestConfig,
-    headers: buildCsrfFetchHeaders(requestConfig.headers),
-    url: requestConfig.url
+    params: {
+      requestConfig: requestConfig.params || {}
+    },
+    headers: {
+      custom: buildCsrfFetchHeaders(requestConfig.headers),
+      requestConfig: requestConfig.headers || {}
+    }
   };
 
   // The S/4 does a redirect if the CSRF token is fetched in case the '/' is not in the URL.
@@ -118,14 +127,14 @@ function getResponseHeadersFromError(error: any): Record<string, any> {
   return error.response?.headers || {};
 }
 
-function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {
+function appendSlash<T extends HttpRequestConfigBase>(requestConfig: T): T {
   if (!requestConfig.url!.endsWith('/')) {
     requestConfig.url = `${requestConfig.url}/`;
   }
   return requestConfig;
 }
 
-function removeSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {
+function removeSlash<T extends HttpRequestConfigBase>(requestConfig: T): T {
   if (requestConfig.url!.endsWith('/')) {
     requestConfig.url = removeTrailingSlashes(requestConfig.url!);
   }

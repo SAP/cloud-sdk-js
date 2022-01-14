@@ -17,7 +17,13 @@ const logger = createLogger({
   messageContext: 'authorization-header'
 });
 
-function getAuthHeader(
+/**
+ * Get an authentication header from given custom headers.
+ * @param authenticationType - The authentication type of a destination
+ * @param customHeaders - Custom headers.
+ * @returns An authentication header.
+ */
+export function getAuthHeader(
   authenticationType: AuthenticationType | undefined,
   customHeaders?: Record<string, any>
 ): AuthenticationHeaderOnPrem | AuthenticationHeaderCloud | undefined {

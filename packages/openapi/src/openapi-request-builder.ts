@@ -10,7 +10,7 @@ import {
 import {
   Method,
   HttpResponse,
-  executeHttpRequestWithOrigin
+  executeHttpRequest
 } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
@@ -96,7 +96,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     if (isNullish(destination)) {
       throw Error(noDestinationErrorMessage(destination));
     }
-    return executeHttpRequestWithOrigin(
+    return executeHttpRequest(
       resolvedDestination as Destination,
       {
         ...filterCustomRequestConfig(this.customRequestConfiguration),
@@ -129,11 +129,11 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private getHeaders(): OriginOptions {
-    return { custom: this.customHeaders };
+    return { custom: this.customHeaders, requestConfig: {} };
   }
 
   private getParameters(): OriginOptions {
-    return { requestConfig: this.parameters?.queryParameters };
+    return { requestConfig: this.parameters?.queryParameters || {} };
   }
 
   private getPath(): string {

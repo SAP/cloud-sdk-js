@@ -141,7 +141,7 @@ export async function buildRequestWithMergedHeadersAndQueryParameters(
     Destination,
     'headers' | 'queryParameters'
   > = getAdditionalHeadersAndQueryParameters(
-    destination.originalProperties as DestinationConfiguration
+    (destination.originalProperties as DestinationConfiguration) || {}
   );
 
   const mergedQueryParameter = mergeOptionsWithPriority({

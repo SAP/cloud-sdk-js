@@ -3,7 +3,7 @@ import {
   filterCustomRequestConfig,
   mergeOptionsWithPriority
 } from './http-request-config';
-import { OriginOptions } from './http-client-types';
+import { OriginOptionsInternal } from './http-client-types';
 
 const logger = createLogger('http-request-config');
 
@@ -31,7 +31,7 @@ describe('filterCustomRequestConfig', () => {
 
 describe('getOptionWithPriority', () => {
   it('should merge options', () => {
-    const originOptions: OriginOptions = {
+    const originOptions: OriginOptionsInternal = {
       custom: { Authorization: 'customAuth' },
       requestConfig: { 'if-match': 'etag' }
     };
@@ -43,19 +43,26 @@ describe('getOptionWithPriority', () => {
   });
 
   it('should use options with higher priority', () => {
-    const originOptions: OriginOptions = {
+    const originOptions: OriginOptionsInternal = {
       custom: { param1: 'customParam1' },
-      requestConfig: { param1: 'reqParam1', param2: 'reqParam2' }
+      destinationProperty: {
+        param1: 'destPropParam1',
+        param2: 'destPropParam2'
+      },
+      destination: { param2: 'destParam2', param3: 'destParam3' },
+      requestConfig: { param3: 'reqParam3', param4: 'reqParam4' }
     };
     const expected = {
       param1: 'customParam1',
-      param2: 'reqParam2'
+      param2: 'destPropParam2',
+      param3: 'destParam3',
+      param4: 'reqParam4'
     };
     expect(mergeOptionsWithPriority(originOptions)).toStrictEqual(expected);
   });
 
   it('should use options with higher priority and ignore case', () => {
-    const originOptions: OriginOptions = {
+    const originOptions: OriginOptionsInternal = {
       custom: { Authorization: 'customAuth' },
       requestConfig: { AuTHORizaTION: 'requestConfigAuth', 'sap-client': '001' }
     };

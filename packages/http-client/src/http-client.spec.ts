@@ -3,6 +3,10 @@ import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { Destination, Protocol } from '@sap-cloud-sdk/connectivity';
+import {
+  connectivityProxyConfigMock,
+  defaultDestination
+} from '../../../test-resources/test/test-util';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
@@ -677,6 +681,45 @@ sap-client:001`);
   });
 
   describe('buildRequestWithMergedHeadersAndQueryParameters', () => {
+    it('uses authTokens if present on a destination', async () => {
+      const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        headers: {
+          requestConfig: {}
+        }
+      };
+      const destination: Destination = {
+        ...defaultDestination,
+        authentication: 'OAuth2SAMLBearerAssertion',
+        authTokens: [
+          {
+            type: 'Bearer',
+            value: 'some.token',
+            expiresIn: '3600',
+            error: null,
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.token'
+            }
+          }
+        ]
+      };
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        httpRequestConfigWithOrigin,
+        destination,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        headers: {
+          authorization: 'Bearer some.token',
+          'sap-client': '123'
+        },
+        params: {}
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+
     it('should merge and resolve conflicts', async () => {
       const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
         method: 'get',
@@ -715,6 +758,67 @@ sap-client:001`);
         params: {
           param1: 'destPropParam1'
         }
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should add location id headers to the headers if there is a cloudConnectorLocationId in the destination', async () => {
+      const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        headers: {
+          requestConfig: {}
+        }
+      };
+      const destination: Destination = {
+        url: 'http://example.com',
+        cloudConnectorLocationId: 'Potsdam'
+      };
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        httpRequestConfigWithOrigin,
+        destination,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        headers: {
+          'SAP-Connectivity-SCC-Location_ID': 'Potsdam'
+        },
+        params: {}
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+    it('should add proxy headers to the headers if there is a proxy configuration in the destination', async () => {
+      const proxyHeaders = {
+        'Proxy-Authorization': 'Bearer jwt',
+        'SAP-Connectivity-Authentication': 'Bearer jwt'
+      };
+      const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        headers: {
+          requestConfig: {}
+        }
+      };
+      const destination: Destination = {
+        url: 'http://example.com',
+        proxyType: 'OnPremise',
+        proxyConfiguration: {
+          ...connectivityProxyConfigMock,
+          headers: proxyHeaders
+        },
+        authentication: 'PrincipalPropagation'
+      };
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        httpRequestConfigWithOrigin,
+        destination,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        headers: {
+          'Proxy-Authorization': 'Bearer jwt',
+          'SAP-Connectivity-Authentication': 'Bearer jwt'
+        },
+        params: {}
       };
       expect(actual).toStrictEqual(expected);
     });

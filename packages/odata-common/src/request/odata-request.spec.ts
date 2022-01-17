@@ -10,6 +10,7 @@ import {
 } from '../internal';
 import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity, commonEntityApi } from '../../test/common-entity';
+import { OriginOptions } from '@sap-cloud-sdk/http-client';
 
 describe('OData Request', () => {
   describe('format', () => {
@@ -38,7 +39,7 @@ describe('OData Request', () => {
       destination?
     ): ODataRequest<any> {
       const req = createRequest(configConstructor, destination);
-      jest.spyOn(req, 'headers').mockResolvedValue({});
+      jest.spyOn(req, 'headers').mockResolvedValue({} as OriginOptions);
       return req;
     }
   });
@@ -47,33 +48,6 @@ describe('OData Request', () => {
     it('should have json parameter by default for get request', () => {
       const request = createRequest(ODataGetAllRequestConfig);
       expect(request.query()).toEqual('?$format=json');
-    });
-
-    it('should prioritize destination query parameters over SDK built parameters', () => {
-      const request = createRequest(ODataGetAllRequestConfig, {
-        url: '',
-        queryParameters: { $format: 'destinationParam' }
-      });
-      expect(request.query()).toEqual('?$format=destinationParam');
-    });
-
-    it('should prioritize custom query parameters over SDK built parameters', () => {
-      const request = createRequest(ODataGetAllRequestConfig);
-      request.config.customQueryParameters = {
-        $format: 'customParam'
-      };
-      expect(request.query()).toEqual('?$format=customParam');
-    });
-
-    it('should prioritize custom query parameters over destination parameters', () => {
-      const request = createRequest(ODataGetAllRequestConfig, {
-        url: '',
-        queryParameters: { $format: 'destinationParam' }
-      });
-      request.config.customQueryParameters = {
-        $format: 'customParam'
-      };
-      expect(request.query()).toEqual('?$format=customParam');
     });
   });
 

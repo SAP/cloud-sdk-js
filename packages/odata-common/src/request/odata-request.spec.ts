@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
+import { OriginOptions } from '@sap-cloud-sdk/http-client';
 import {
   DefaultDeSerializers,
   ODataCreateRequestConfig,
@@ -10,7 +11,6 @@ import {
 } from '../internal';
 import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity, commonEntityApi } from '../../test/common-entity';
-import { OriginOptions } from '@sap-cloud-sdk/http-client';
 
 describe('OData Request', () => {
   describe('format', () => {

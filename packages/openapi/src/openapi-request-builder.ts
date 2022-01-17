@@ -129,7 +129,10 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private getHeaders(): OriginOptions {
-    return { custom: this.customHeaders, requestConfig: {} };
+    if (Object.keys(this.customHeaders).length > 0) {
+      return { custom: this.customHeaders, requestConfig: {} };
+    }
+    return { requestConfig: {} };
   }
 
   private getParameters(): OriginOptions {

@@ -22,12 +22,26 @@
 
 ## Improvements
 
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.53.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.53.1<br>
+Blog: TBD<br>
+
+## Improvements
+
 - [generator] Update the version of `@sap/edm-converters` to make sure node 14 is supported.
 
 ## Fixed Issues
 
 - [core] Fix `OAuth2Password` auth type for the missing token in the header. 
-
 
 # 1.53.0
 

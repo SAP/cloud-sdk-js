@@ -158,8 +158,13 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         throw Error('The destination is undefined.');
       }
 
+      if (Object.keys(this.customHeaders()).length > 0) {
+        return {
+          custom: this.customHeaders(),
+          requestConfig: { ...this.defaultHeaders(), ...this.eTagHeaders() }
+        };
+      }
       return {
-        custom: this.customHeaders(),
         requestConfig: { ...this.defaultHeaders(), ...this.eTagHeaders() }
       };
     } catch (error) {
@@ -247,8 +252,13 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   private queryParameters(): OriginOptions {
+    if (Object.keys(this.config.customQueryParameters).length > 0) {
+      return {
+        custom: this.config.customQueryParameters,
+        requestConfig: this.config.queryParameters()
+      };
+    }
     return {
-      custom: this.config.customQueryParameters,
       requestConfig: this.config.queryParameters()
     };
   }

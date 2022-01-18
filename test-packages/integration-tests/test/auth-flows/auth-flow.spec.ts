@@ -215,7 +215,8 @@ describe('OAuth flows', () => {
       {
         method: 'get',
         headers: {
-          custom: wrapJwtInHeader(destination!.authTokens![0].value).headers, requestConfig: {}
+          custom: wrapJwtInHeader(destination!.authTokens![0].value).headers,
+          requestConfig: {}
         }
       }
     );

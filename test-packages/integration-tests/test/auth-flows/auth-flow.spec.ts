@@ -41,7 +41,7 @@ describe('OAuth flows', () => {
 
     expect(destination!.authTokens![0].type).toBe('SAML2.0');
     expect(destination!.authTokens![0].value).toBeDefined();
-  });
+  },60000);
 
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {
     const destination = await getDestination({
@@ -61,7 +61,7 @@ describe('OAuth flows', () => {
     const result = await BusinessPartner.requestBuilder()
       .getAll()
       .top(1)
-      .execute(destination!);
+      .execute(destination! as any);
     expect(result.length).toBe(1);
   }, 60000);
 
@@ -90,7 +90,7 @@ describe('OAuth flows', () => {
       .build();
     const result = await BusinessPartner.requestBuilder()
       .create(buPa)
-      .execute(destination!);
+      .execute(destination! as any);
     expect(result.lastName).toBe('name');
   }, 60000);
 
@@ -103,7 +103,7 @@ describe('OAuth flows', () => {
     const result = await BusinessPartner.requestBuilder()
       .getAll()
       .top(1)
-      .execute(destination!);
+      .execute(destination! as any);
     expect(result.length).toBe(1);
   }, 60000);
 
@@ -125,7 +125,7 @@ describe('OAuth flows', () => {
     const result = await BusinessPartner.requestBuilder()
       .getAll()
       .top(1)
-      .execute(destination!);
+      .execute(destination! as any);
     expect(result.length).toBe(1);
   }, 60000);
 
@@ -147,7 +147,7 @@ describe('OAuth flows', () => {
       jwt: accessToken.provider
     });
     expect(destination!.authTokens![0]!.error).toBeUndefined();
-    assertCommenTokenUrl(destination!);
+    assertCommenTokenUrl(destination! as any);
   }, 60000);
 
   xit('OAuth2ClientCredentials: Provider Destination (dedicated token service url)', async () => {
@@ -165,7 +165,7 @@ describe('OAuth flows', () => {
       jwt: accessToken.subscriber
     });
     expect(destination!.authTokens![0]!.error).toBeNull();
-    assertDedicatedTokenUrl(destination!);
+    assertDedicatedTokenUrl(destination! as any);
   }, 60000);
 
   xit('OAuth2ClientCredentials: Provider Destination & Provider Jwt (workflow)', async () => {
@@ -176,7 +176,7 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination!, { method: 'get' });
+    const response = await executeHttpRequest(destination! as any, { method: 'get' });
 
     expect(response.status).toBe(200);
   }, 60000);
@@ -190,7 +190,7 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination!, { method: 'get' });
+    const response = await executeHttpRequest(destination! as any, { method: 'get' });
 
     expect(response.status).toBe(200);
   }, 60000);
@@ -208,7 +208,7 @@ describe('OAuth flows', () => {
       jwt: accessToken.provider
     });
     expect(destination!.authTokens![0].error).toBeNull();
-    assertCommenTokenUrl(destination!);
+    assertCommenTokenUrl(destination! as any);
   }, 60000);
 
   xit('OAuth2UserTokenExchange: Subscriber destination and Subscriber Jwt', async () => {
@@ -244,7 +244,7 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toMatch(
       /Invalid issuer.*token did not match expected/
     );
-    assertDedicatedTokenUrl(destination!);
+    assertDedicatedTokenUrl(destination! as any);
   }, 60000);
 
   xit('OAuth2JWTBearer: Provider Destination & Provider Token (workflow call)', async () => {
@@ -256,7 +256,7 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination!, { method: 'get' });
+    const response = await executeHttpRequest(destination! as any, { method: 'get' });
 
     expect(response.status).toBe(200);
   }, 60000);
@@ -297,7 +297,7 @@ describe('OAuth flows', () => {
     const bps = await BusinessPartner.requestBuilder()
       .getAll()
       .top(5)
-      .execute(destination!);
+      .execute(destination! as any);
     expect(bps.length).toBeGreaterThan(0);
   }, 10000);
 
@@ -315,7 +315,7 @@ describe('OAuth flows', () => {
     const bps = await BusinessPartner.requestBuilder()
       .getAll()
       .top(5)
-      .execute(destination!);
+      .execute(destination! as any);
     expect(bps.length).toBeGreaterThan(0);
   }, 60000);
 
@@ -400,7 +400,7 @@ describe('OAuth flows', () => {
     expect(destination.authTokens![0].error).toBeNull();
 
     destination.url = destination.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination, { method: 'get' });
+    const response = await executeHttpRequest(destination! as any, { method: 'get' });
 
     expect(response.status).toBe(200);
   }, 60000);

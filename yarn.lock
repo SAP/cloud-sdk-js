@@ -1787,6 +1787,28 @@
     "@sap-cloud-sdk/util" "^1.52.0"
     axios "^0.21.1"
 
+"@sap-cloud-sdk/analytics@^1.53.1":
+  version "1.53.1"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/analytics/-/analytics-1.53.1.tgz#b67c91b3fc056ae51a70cfc1abbde94febdce6be"
+  integrity sha512-4Rls1nUwfDIxrkKpK8sr89mZlMhKo/pwxcLvclXX86+cgovqkYLoxh8uf8IVx5KGGi5mp//QhVvr0Sw6sIp4qw==
+  dependencies:
+    "@sap-cloud-sdk/util" "^1.53.1"
+    axios "^0.21.1"
+
+"@sap-cloud-sdk/connectivity@^2.0.0-20211028124158.0+e990f0fe", "@sap-cloud-sdk/connectivity@^2.0.0-beta.1-20220118074129.0+c0d497ba":
+  version "2.0.0-beta.1-20220118074129.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/connectivity/-/connectivity-2.0.0-beta.1-20220118074129.0.tgz#76314b9f3a7d91fe497d2c2f011cc6be47e484a0"
+  integrity sha512-1Dj2TdtGcCIH9Txd81FAq33l/yI7Lc5CKYFvLEdcRgoPyllb4Vl2a0guJj9/nArtRB9Kuxg5QT1Dk88plmmw1A==
+  dependencies:
+    "@sap-cloud-sdk/util" "^2.0.0-beta.1-20220118074129.0+c0d497ba"
+    "@sap/xsenv" "^3.0.0"
+    "@sap/xssec" "^3.2.7"
+    axios "^0.24.0"
+    http-proxy-agent "^5.0.0"
+    https-proxy-agent "^5.0.0"
+    jsonwebtoken "^8.5.1"
+    opossum "^6.0.0"
+
 "@sap-cloud-sdk/core@^1.41", "@sap-cloud-sdk/core@^1.51.0":
   version "1.52.0"
   resolved "https://registry.npmjs.org/@sap-cloud-sdk/core/-/core-1.52.0.tgz#e1886e7d043fb2127b74a180f76ed33c0ac6fa8f"
@@ -1807,12 +1829,140 @@
     uuid "^8.2.0"
     voca "^1.4.0"
 
+"@sap-cloud-sdk/core@^1.53.1":
+  version "1.53.1"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/core/-/core-1.53.1.tgz#de65ef06468cf833f477c049ffb0e466ad768056"
+  integrity sha512-hJH0DPnbYTO0PUh6MdZ6hfnEJqxorZtOL30DqcwOa/P+vZksVIEMgeFoE+gwdqEsk3ddBLRm6uGKHGmbMdDg4g==
+  dependencies:
+    "@sap-cloud-sdk/analytics" "^1.53.1"
+    "@sap-cloud-sdk/util" "^1.53.1"
+    "@sap/xsenv" "^3.0.0"
+    "@sap/xssec" "^3.2.7"
+    "@types/jsonwebtoken" "^8.3.8"
+    axios "^0.21.1"
+    bignumber.js "^9.0.0"
+    http-proxy-agent "^5.0.0"
+    https-proxy-agent "^5.0.0"
+    jsonwebtoken "^8.5.1"
+    moment "^2.29.0"
+    opossum "^6.0.0"
+    uuid "^8.2.0"
+    voca "^1.4.0"
+
+"@sap-cloud-sdk/generator-common@^1.53.1":
+  version "1.53.1"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/generator-common/-/generator-common-1.53.1.tgz#3db55d363d9eb7a0580ac16b5dc6484fee2c115d"
+  integrity sha512-sXWeUbdzuJcTi/a2FKn0Et6miBdi9lP6aDJhywT1bZNUyljNCTNMMUyvKJnStsPrNdO0MgcbjdEx3b62frxmlw==
+  dependencies:
+    "@sap-cloud-sdk/util" "^1.53.1"
+    axios "^0.21.1"
+    fast-levenshtein "~3.0.0"
+    fs-extra "^10.0.0"
+    glob "^7.1.6"
+    typescript "~4.3.4"
+
+"@sap-cloud-sdk/generator@latest":
+  version "1.53.1"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/generator/-/generator-1.53.1.tgz#02e051701d7da87487f9b201e3c2c53424262564"
+  integrity sha512-/z5H/LdzWESI2j+c/n8Vy6C+hL84ESJL7dmgBB0bZtYIz2fGRsf0cODKg7M6Q+ZuekgKhbfM1XkY2MH1f80vBQ==
+  dependencies:
+    "@sap-cloud-sdk/core" "^1.53.1"
+    "@sap-cloud-sdk/generator-common" "^1.53.1"
+    "@sap-cloud-sdk/util" "^1.53.1"
+    "@sap/edm-converters" "~1.0.41"
+    "@types/fs-extra" "^9.0.1"
+    "@types/glob" "^7.1.2"
+    execa "^5.0.0"
+    fast-xml-parser "^3.16.0"
+    fs-extra "^10.0.0"
+    glob "^7.1.6"
+    ts-morph "^12.0.0"
+    typescript "~4.3.4"
+    voca "^1.4.0"
+    yargs "^17.0.1"
+
+"@sap-cloud-sdk/http-client@^2.0.0-20211028124158.0+e990f0fe":
+  version "2.0.0-beta.1-20220118074129.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/http-client/-/http-client-2.0.0-beta.1-20220118074129.0.tgz#8a17ade26a0fc759412ad082782e675338d1fec3"
+  integrity sha512-1C5VqgYsvhdSM+Dl9Vke3m6dbSgBoMCHkBl2UHKXHTqc+DdZlNn2cJhEau6JNYlsw59iHhhyQpVPvg+bi1n8kw==
+  dependencies:
+    "@sap-cloud-sdk/connectivity" "^2.0.0-beta.1-20220118074129.0+c0d497ba"
+    "@sap-cloud-sdk/util" "^2.0.0-beta.1-20220118074129.0+c0d497ba"
+    axios "^0.24.0"
+
+"@sap-cloud-sdk/odata-common@^2.0.0-20211028124158.0+e990f0fe", "@sap-cloud-sdk/odata-common@latest":
+  version "2.0.0-20211028124158.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-common/-/odata-common-2.0.0-20211028124158.0.tgz#6ea8a3ac6a38d26e7c55d13150cf4305d7fda271"
+  integrity sha512-MqtgglvpuCipUnhzwDWb2KkTq+87T9FhLJ/Z8pI8sZDzAPo8Peo44FwnPTMbCWV21xT396Id1wpUF5nywUSXmg==
+  dependencies:
+    "@sap-cloud-sdk/connectivity" "^2.0.0-20211028124158.0+e990f0fe"
+    "@sap-cloud-sdk/http-client" "^2.0.0-20211028124158.0+e990f0fe"
+    "@sap-cloud-sdk/util" "^2.0.0-20211028124158.0+e990f0fe"
+    axios "^0.23.0"
+    bignumber.js "^9.0.0"
+    moment "^2.29.0"
+    typescript "~4.4.4"
+    uuid "^8.2.0"
+    voca "^1.4.0"
+
+"@sap-cloud-sdk/odata-v2@latest":
+  version "2.0.0-20211028124158.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-v2/-/odata-v2-2.0.0-20211028124158.0.tgz#c9d778bc799408f8cd77e1e749b035160a6a9ee9"
+  integrity sha512-jJADGH3Nnqht/Z6elqmUPbBDz6pOrN8pa/LP6pjtaDkknNRbalemM3dvW1lJ0re7VLHJF7/Wg2WziZY2P6tbxg==
+  dependencies:
+    "@sap-cloud-sdk/connectivity" "^2.0.0-20211028124158.0+e990f0fe"
+    "@sap-cloud-sdk/http-client" "^2.0.0-20211028124158.0+e990f0fe"
+    "@sap-cloud-sdk/odata-common" "^2.0.0-20211028124158.0+e990f0fe"
+    "@sap-cloud-sdk/util" "^2.0.0-20211028124158.0+e990f0fe"
+    bignumber.js "^9.0.0"
+    moment "^2.29.0"
+    typescript "~4.4.4"
+    uuid "^8.2.0"
+
+"@sap-cloud-sdk/openapi-generator@latest":
+  version "1.53.1"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/openapi-generator/-/openapi-generator-1.53.1.tgz#f25592fd97ecadf788e9e354a9e9343893558fc8"
+  integrity sha512-DUjogjvf4dw3XZgS99c574mR2Zp4v2Fb5WeZY6rUwLx1u1TAOKNAtPi37Jpa1RfAMHK90s3P0bnTznMymtOM1w==
+  dependencies:
+    "@apidevtools/swagger-parser" "^10.0.2"
+    "@sap-cloud-sdk/generator-common" "^1.53.1"
+    "@sap-cloud-sdk/util" "^1.53.1"
+    glob "^7.1.6"
+    js-yaml "^4.0.0"
+    openapi-types "^9.3.0"
+    swagger2openapi "^7.0.4"
+    yargs "^17.1.1"
+
 "@sap-cloud-sdk/util@^1.52.0":
   version "1.52.0"
   resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.52.0.tgz#d4f094000046d2617d840e45412695dc2d9551c0"
   integrity sha512-B5tiLwO7BtZlGH3Qsg7yFv9RZgSiFcBhj3acAretWr0nF9/emZGiwX38TQuNEfdX0oaNddGiKmZgKI47pA6eBA==
   dependencies:
     axios "^0.21.1"
+    chalk "^4.1.0"
+    logform "^2.2.0"
+    promise.allsettled "^1.0.4"
+    voca "^1.4.0"
+    winston "^3.3.3"
+
+"@sap-cloud-sdk/util@^1.53.1":
+  version "1.53.1"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.53.1.tgz#f90231775f128c3040dc5f2cdfc4f8c383a21fdf"
+  integrity sha512-zhaXZqo4pj0y0+29PQGPI++pZjXJFeAP97uXRyfAJNI02UNL6yy7hRTTiIzzGqRMcqIk4IveIIrjHDbU1SAFVg==
+  dependencies:
+    axios "^0.21.1"
+    chalk "^4.1.0"
+    logform "^2.2.0"
+    promise.allsettled "^1.0.4"
+    voca "^1.4.0"
+    winston "^3.3.3"
+
+"@sap-cloud-sdk/util@^2.0.0-20211028124158.0+e990f0fe", "@sap-cloud-sdk/util@^2.0.0-beta.1-20220118074129.0+c0d497ba":
+  version "2.0.0-beta.1-20220118074129.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-2.0.0-beta.1-20220118074129.0.tgz#e8003add27b704b82bf0dadf9616bab5d567f64a"
+  integrity sha512-ZSdbF5pwyl4fsAwNEa2DndjY8wgCM7tsDQX6cW1p18SWAn2Xlwqo4A0wbmyjRaA8w4EThDigiTc2vs4d3dSttA==
+  dependencies:
+    axios "^0.24.0"
     chalk "^4.1.0"
     logform "^2.2.0"
     promise.allsettled "^1.0.4"
@@ -1887,7 +2037,7 @@
   dependencies:
     "@sap-cloud-sdk/core" "^1.51.0"
 
-"@sap/edm-converters@~1.0.21":
+"@sap/edm-converters@~1.0.21", "@sap/edm-converters@~1.0.41":
   version "1.0.41"
   resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.41.tgz#e38cdd69b49ac407ef3c6637f78f1c6ea26ada4d"
   integrity sha512-Af7L7amlh06YXfOK2ufjKUZXhcuwXSt0uzPDrHbVBvN1lQS8Gj4BxzXTbnskiFweTR2CFuhoqsSaV2r/7l9mYw==
@@ -1948,6 +2098,16 @@
   version "2.0.0"
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
+
+"@ts-morph/common@~0.11.1":
+  version "0.11.1"
+  resolved "https://registry.npmjs.org/@ts-morph/common/-/common-0.11.1.tgz#281af2a0642b19354d8aa07a0d50dfdb4aa8164e"
+  integrity sha512-7hWZS0NRpEsNV8vWJzg7FEz6V8MaLNeJOmwmghqUXTpzk16V1LLZhdo+4QvE/+zv4cVci0OviuJFnqhEfoV3+g==
+  dependencies:
+    fast-glob "^3.2.7"
+    minimatch "^3.0.4"
+    mkdirp "^1.0.4"
+    path-browserify "^1.0.1"
 
 "@ts-morph/common@~0.12.2":
   version "0.12.2"
@@ -2764,6 +2924,13 @@ axios@^0.21.0, axios@^0.21.1, axios@^0.21.4:
   dependencies:
     follow-redirects "^1.14.0"
 
+axios@^0.23.0:
+  version "0.23.0"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.23.0.tgz#b0fa5d0948a8d1d75e3d5635238b6c4625b05149"
+  integrity sha512-NmvAE4i0YAv5cKq8zlDoPd1VLKAqX5oLuZKs8xkJa4qi6RGn0uhCYFjWtHHC9EM/MwOwYWOs53W+V0aqEXq1sg==
+  dependencies:
+    follow-redirects "^1.14.4"
+
 axios@^0.24.0:
   version "0.24.0"
   resolved "https://registry.npmjs.org/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
@@ -3268,6 +3435,11 @@ co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.npmjs.org/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
+
+code-block-writer@^10.1.1:
+  version "10.1.1"
+  resolved "https://registry.npmjs.org/code-block-writer/-/code-block-writer-10.1.1.tgz#ad5684ed4bfb2b0783c8b131281ae84ee640a42f"
+  integrity sha512-67ueh2IRGst/51p0n6FvPrnRjAGHY5F8xdjkgrYE7DDzpJe6qA07RYQ9VcoUeo5ATOjSOiWpSL3SWBRRbempMw==
 
 code-block-writer@^11.0.0:
   version "11.0.0"
@@ -7802,6 +7974,11 @@ openapi-types@^10.0.0:
   resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-10.0.0.tgz#0debbf663b2feed0322030b5b7c9080804076934"
   integrity sha512-Y8xOCT2eiKGYDzMW9R4x5cmfc3vGaaI4EL2pwhDmodWw1HlK18YcZ4uJxc7Rdp7/gGzAygzH9SXr6GKYIXbRcQ==
 
+openapi-types@^9.3.0:
+  version "9.3.1"
+  resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-9.3.1.tgz#617ae6db3efd3e3f68e849f65ced58801d01d3cf"
+  integrity sha512-/Yvsd2D7miYB4HLJ3hOOS0+vnowQpaT75FsHzr/y5M9P4q9bwa7RcbW2YdH6KZBn8ceLbKGnHxMZ1CHliGHUFw==
+
 opossum@^6.0.0:
   version "6.3.0"
   resolved "https://registry.npmjs.org/opossum/-/opossum-6.3.0.tgz#c4d21a8f5ec4acced62ecaab1c07652c202b1a22"
@@ -9845,6 +10022,14 @@ ts-jest@^27.0.5:
     semver "7.x"
     yargs-parser "20.x"
 
+ts-morph@^12.0.0:
+  version "12.2.0"
+  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-12.2.0.tgz#3332319cecd44aff0b7b410f1fe39637499b1a1b"
+  integrity sha512-WHXLtFDcIRwoqaiu0elAoZ/AmI+SwwDafnPKjgJmdwJ2gRVO0jMKBt88rV2liT/c6MTsXyuWbGFiHe9MRddWJw==
+  dependencies:
+    "@ts-morph/common" "~0.11.1"
+    code-block-writer "^10.1.1"
+
 ts-morph@^13.0.1:
   version "13.0.2"
   resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-13.0.2.tgz#55546023493ef82389d9e4f28848a556c784bac4"
@@ -10037,6 +10222,11 @@ typescript@^3.9.5, typescript@^3.9.7:
   version "3.9.10"
   resolved "https://registry.npmjs.org/typescript/-/typescript-3.9.10.tgz#70f3910ac7a51ed6bef79da7800690b19bf778b8"
   integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
+
+typescript@~4.3.4:
+  version "4.3.5"
+  resolved "https://registry.npmjs.org/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
+  integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
 
 typescript@~4.4.4:
   version "4.4.4"

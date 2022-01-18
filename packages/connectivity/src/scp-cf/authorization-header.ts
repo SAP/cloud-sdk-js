@@ -212,7 +212,7 @@ async function getAuthenticationRelatedHeaders(
     case 'NoAuthentication':
     case 'ClientCertificateAuthentication':
       return;
-    case 'SamlAssertion':
+    case 'SAMLAssertion':
       logger.warn('Destination authentication flow is \'SamlAssertion\' and the auth header contains the SAML assertion. In most cases you want to translate the assertion to a Bearer token using the \'OAuth2SAMLBearerAssertion\' flow.');
     case 'OAuth2SAMLBearerAssertion':
     case 'OAuth2UserTokenExchange':

@@ -209,7 +209,7 @@ export type AuthenticationType =
   | 'PrincipalPropagation'
   | 'NoAuthentication'
   | 'BasicAuthentication'
-  | 'SamlAssertion'
+  | 'SAMLAssertion'
   | 'OAuth2SAMLBearerAssertion'
   | 'OAuth2ClientCredentials'
   | 'OAuth2UserTokenExchange'

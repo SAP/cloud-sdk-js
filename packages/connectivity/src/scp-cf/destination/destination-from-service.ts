@@ -119,7 +119,7 @@ class DestinationFromServiceRetriever {
     if (
       destination.authentication === 'OAuth2UserTokenExchange' ||
       destination.authentication === 'OAuth2JWTBearer' ||
-      destination.authentication === 'SamlAssertion' ||
+      destination.authentication === 'SAMLAssertion' ||
       (destination.authentication === 'OAuth2SAMLBearerAssertion' &&
         !da.usesSystemUser(destination))
     ) {

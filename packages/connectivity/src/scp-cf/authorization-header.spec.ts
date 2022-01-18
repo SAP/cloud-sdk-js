@@ -139,7 +139,7 @@ describe('getAuthHeaders', () => {
     it('should add the auth token from the destination', async () => {
       const destination: Destination = {
         ...defaultDestination,
-        authentication: 'SamlAssertion',
+        authentication: 'SAMLAssertion',
         authTokens: [
           {
             type: 'SAML2.0',

@@ -218,6 +218,7 @@ async function getAuthenticationRelatedHeaders(
     case 'OAuth2UserTokenExchange':
     case 'OAuth2JWTBearer':
     case 'OAuth2ClientCredentials':
+    case 'OAuth2Password':
       return headerFromTokens(
         destination.authentication,
         destination.authTokens

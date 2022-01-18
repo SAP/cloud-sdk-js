@@ -33,6 +33,16 @@ describe('OAuth flows', () => {
     destinationService = getService('destination');
   });
 
+  it('get assertion test',async()=>{
+    const destination = await getDestination({
+      destinationName: systems.s4.providerSamlAssertion,
+      jwt:accessToken.provider
+    });
+
+    expect(destination!.authTokens![0].type).toBe('SAML2.0');
+    expect(destination!.authTokens![0].value).toBeDefined();
+  });
+
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {
     const destination = await getDestination({
       destinationName: systems.destination.providerOauth2Password

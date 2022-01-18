@@ -719,6 +719,32 @@ describe('authentication types', () => {
     });
   });
 
+  describe('autehntication type SamlAssertion',  ()=>{
+    it('receives the saml assertion in the destination',async()=>{
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(
+            nock,
+            oauthPasswordMultipleResponse,
+            200,
+            providerServiceToken
+        ),
+        mockSingleDestinationCall(
+            nock,
+            oauthPasswordSingleResponse,
+            200,
+            destinationName,
+            wrapJwtInHeader(providerServiceToken).headers
+        )
+      ];
+
+      const expected = parseDestination(oauthPasswordSingleResponse);
+      const actual = await getDestination({ destinationName });
+      expect(actual).toMatchObject(expected);
+      expectAllMocksUsed(httpMocks);
+    });
+  });
+
   describe('authentication type OAuth2Password', () => {
     beforeEach(() => {
       clientCredentialsTokenCache.clear();

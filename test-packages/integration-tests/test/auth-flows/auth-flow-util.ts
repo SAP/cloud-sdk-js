@@ -47,6 +47,7 @@ export interface Systems {
     providerClientCert: string;
     providerOAuth2SAMLBearerAssertion: string;
     subscriberBasic: string;
+    providerSamlAssertion: string;
   };
   workflow: {
     providerOAuth2ClientCredentials: string;

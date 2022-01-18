@@ -18,6 +18,7 @@ const logger = createLogger({
 });
 
 /**
+ * @internal
  * Get an authentication header from given custom headers.
  * @param authenticationType - The authentication type of a destination
  * @param customHeaders - Custom headers.

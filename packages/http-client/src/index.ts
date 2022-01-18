@@ -1,6 +1,7 @@
 export { buildHttpRequest, executeHttpRequest } from './http-client';
 export {
   HttpRequestConfig,
+  HttpRequestConfigWithOrigin,
   HttpRequestOptions,
   HttpResponse,
   Method,

@@ -104,11 +104,10 @@ describe('DestinationServiceCache', () => {
     );
     expect(directCall.originalProperties).toEqual(singleDest);
     await expect(
-      fetchDestination(
-        destinationServiceUrl,
-        subscriberServiceToken,
-        { useCache: true,destinationName: singleDest.Name }
-      )
+      fetchDestination(destinationServiceUrl, subscriberServiceToken, {
+        useCache: true,
+        destinationName: singleDest.Name
+      })
     ).resolves.not.toThrow();
 
     const cache = getDestinationFromCache(
@@ -129,7 +128,11 @@ describe('DestinationServiceCache', () => {
     const directCall = await fetchDestination(
       destinationServiceUrl,
       subscriberUserJwt,
-      { useCache: true, isolationStrategy: IsolationStrategy.Tenant_User,destinationName: singleDest.Name }
+      {
+        useCache: true,
+        isolationStrategy: IsolationStrategy.Tenant_User,
+        destinationName: singleDest.Name
+      }
     );
 
     const cache = getDestinationFromCache(

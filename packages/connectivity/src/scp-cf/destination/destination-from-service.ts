@@ -20,7 +20,6 @@ import {
 } from './destination-selection-strategies';
 import {
   DestinationFetchOptions,
-  DestinationOptions,
   DestinationsByType
 } from './destination-accessor-types';
 import {
@@ -339,7 +338,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destinationResult: DestinationSearchResult
   ): Promise<AuthAndExchangeTokens> {
     const { destination, origin } = destinationResult;
-    const {destinationName} = this.options
+    const { destinationName } = this.options;
     if (!this.subscriberToken || !isUserToken(this.subscriberToken.userJwt)) {
       throw Error(
         `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
@@ -504,7 +503,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         subscriber,
         provider: emptyDestinationByType
       },
-     this.options.destinationName
+      this.options.destinationName
     );
 
     if (destination) {

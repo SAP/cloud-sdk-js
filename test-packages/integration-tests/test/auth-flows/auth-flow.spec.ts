@@ -385,7 +385,7 @@ describe('OAuth flows', () => {
     const destination = await fetchDestination(
       destinationService!.credentials.uri,
       clientGrant,
-      systems.workflow.providerOAuth2ClientCredentials
+      { destinationName: systems.workflow.providerOAuth2ClientCredentials }
     );
     expect(destination.authTokens![0].error).toBeNull();
 

@@ -10,7 +10,6 @@ import {
   circuitBreakerDefaultOptions,
   ResilienceOptions
 } from '../resilience-options';
-import { CachingOptions } from '../cache';
 import { urlAndAgent } from '../../http-agent';
 import {
   DestinationConfiguration,
@@ -19,7 +18,10 @@ import {
 } from './destination';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
-import {DestinationFetchOptions, DestinationOptions} from "./destination-accessor-types";
+import {
+  DestinationFetchOptions,
+  DestinationOptions
+} from './destination-accessor-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -210,9 +212,9 @@ async function fetchDestinationByTokens(
     .catch(error => {
       {
         throw new ErrorWithCause(
-          `Failed to fetch destination ${options.destinationName}.${errorMessageFromResponse(
-            error
-          )}`,
+          `Failed to fetch destination ${
+            options.destinationName
+          }.${errorMessageFromResponse(error)}`,
           error
         );
       }

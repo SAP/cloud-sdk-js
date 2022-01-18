@@ -23,7 +23,9 @@ const attempts = circuitBreakerDefaultOptions.volumeThreshold!;
 describe('circuit breaker', () => {
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for destination service', async () => {
     const request = () =>
-      fetchDestination(destinationServiceUri, jwt, {destinationName:'FINAL-DESTINATION'});
+      fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'FINAL-DESTINATION'
+      });
 
     nock(destinationServiceUri)
       .get(/.*/)

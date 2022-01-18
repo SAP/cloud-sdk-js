@@ -125,8 +125,6 @@ The recommended way to get in touch with us is to create an issue on [GitHub](ht
 Select the issue category `Bug`, `Feature` or `Question` depending on the nature of your request.
 We try to provide fixes, features and answers as soon as possible.
 
-We also monitor questions on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk?tab=Newest) and [ansers.sap.com](https://answers.sap.com/tags/73555000100800000895) but prefer issues on github.
-
 ## Contribute
 
 If you would like to contribute to the SAP Cloud SDK, please make yourself familiar with our [contributing guidelines](https://github.com/SAP/cloud-sdk-js/blob/main/CONTRIBUTING.md) and follow the given instructions.

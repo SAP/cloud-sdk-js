@@ -194,7 +194,7 @@ export type DestinationRetrievalOptions = CachingOptions &
   ResilienceOptions & {
     /**
      * The isolation strategy used for caching destinations. For the available options, see [[IsolationStrategy]].
-     * By default, IsolationStrategy.Tenant is set.
+     * By default, IsolationStrategy.Tenant_User is set.
      */
     isolationStrategy?: IsolationStrategy;
   };

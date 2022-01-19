@@ -91,7 +91,7 @@ export const oauthPasswordSingleResponse = destinationSingleResponse(
 );
 
 export const samlAssertionMultipleResponse: DestinationConfiguration[] = [
-  destinationWithAuthType('SamlAssertion')
+  destinationWithAuthType('SAMLAssertion')
 ];
 export const samlAssertionSingleResponse = destinationSingleResponse(
   oauthPasswordMultipleResponse

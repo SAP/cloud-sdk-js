@@ -53,7 +53,7 @@ function destinationWithAuthType(
 
 function destinationSingleResponse(
   multipleResponse: DestinationConfiguration[],
-  type: 'Bearer'|'SAML2.0' = 'Bearer'
+  type: 'Bearer' | 'SAML2.0' = 'Bearer'
 ): DestinationJson {
   return {
     owner: {
@@ -94,7 +94,7 @@ export const samlAssertionMultipleResponse: DestinationConfiguration[] = [
   destinationWithAuthType('SamlAssertion')
 ];
 export const samlAssertionSingleResponse = destinationSingleResponse(
-    oauthPasswordMultipleResponse
+  oauthPasswordMultipleResponse
 );
 
 export const oauthJwtBearerResponse: DestinationConfiguration[] = [

@@ -159,7 +159,9 @@ describe('getAuthHeaders', () => {
       });
       const warnSpy = jest.spyOn(logger, 'warn');
       const actual = await getAuthHeaders(destination);
-      expect(warnSpy).toHaveBeenCalledWith('Destination authentication flow is \'SamlAssertion\' and the auth header contains the SAML assertion. In most cases you want to translate the assertion to a Bearer token using the \'OAuth2SAMLBearerAssertion\' flow.');
+      expect(warnSpy).toHaveBeenCalledWith(
+        "Destination authentication flow is 'SamlAssertion' and the auth header contains the SAML assertion. In most cases you want to translate the assertion to a Bearer token using the 'OAuth2SAMLBearerAssertion' flow."
+      );
 
       expect(actual).toEqual({
         authorization: destination.authTokens![0].http_header.value

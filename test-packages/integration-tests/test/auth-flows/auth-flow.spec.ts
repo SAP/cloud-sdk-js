@@ -21,6 +21,8 @@ import {
 
 /* Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests. */
 
+// TODO remove the as any from the destinations once version 2.0 of vdm is released.
+
 describe('OAuth flows', () => {
   let destinationService;
   let accessToken: UserAccessTokens;
@@ -33,15 +35,15 @@ describe('OAuth flows', () => {
     destinationService = getService('destination');
   });
 
-  it('get assertion test',async()=>{
+  it('get assertion test', async () => {
     const destination = await getDestination({
       destinationName: systems.s4.providerSamlAssertion,
-      jwt:accessToken.provider
+      jwt: accessToken.provider
     });
 
     expect(destination!.authTokens![0].type).toBe('SAML2.0');
     expect(destination!.authTokens![0].value).toBeDefined();
-  },60000);
+  }, 60000);
 
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {
     const destination = await getDestination({
@@ -176,7 +178,9 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination! as any, { method: 'get' });
+    const response = await executeHttpRequest(destination! as any, {
+      method: 'get'
+    });
 
     expect(response.status).toBe(200);
   }, 60000);
@@ -190,7 +194,9 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination! as any, { method: 'get' });
+    const response = await executeHttpRequest(destination! as any, {
+      method: 'get'
+    });
 
     expect(response.status).toBe(200);
   }, 60000);
@@ -256,7 +262,9 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination! as any, { method: 'get' });
+    const response = await executeHttpRequest(destination! as any, {
+      method: 'get'
+    });
 
     expect(response.status).toBe(200);
   }, 60000);
@@ -400,7 +408,9 @@ describe('OAuth flows', () => {
     expect(destination.authTokens![0].error).toBeNull();
 
     destination.url = destination.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination! as any, { method: 'get' });
+    const response = await executeHttpRequest(destination! as any, {
+      method: 'get'
+    });
 
     expect(response.status).toBe(200);
   }, 60000);

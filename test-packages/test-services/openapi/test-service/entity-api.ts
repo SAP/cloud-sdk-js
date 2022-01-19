@@ -86,4 +86,4 @@ export const EntityApi = {
     new OpenApiRequestBuilder<number>('get', '/entities/count')
 };
 
-EntityApi.getAllEntities()
+EntityApi.getAllEntities();

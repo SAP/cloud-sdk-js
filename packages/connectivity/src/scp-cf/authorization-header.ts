@@ -213,12 +213,16 @@ async function getAuthenticationRelatedHeaders(
     case 'ClientCertificateAuthentication':
       return;
     case 'SAMLAssertion':
-      logger.warn('Destination authentication flow is \'SamlAssertion\' and the auth header contains the SAML assertion. In most cases you want to translate the assertion to a Bearer token using the \'OAuth2SAMLBearerAssertion\' flow.');
     case 'OAuth2SAMLBearerAssertion':
     case 'OAuth2UserTokenExchange':
     case 'OAuth2JWTBearer':
     case 'OAuth2ClientCredentials':
     case 'OAuth2Password':
+      if (destination.authentication === 'SAMLAssertion') {
+        logger.warn(
+          "Destination authentication flow is 'SamlAssertion' and the auth header contains the SAML assertion. In most cases you want to translate the assertion to a Bearer token using the 'OAuth2SAMLBearerAssertion' flow."
+        );
+      }
       return headerFromTokens(
         destination.authentication,
         destination.authTokens

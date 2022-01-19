@@ -719,22 +719,22 @@ describe('authentication types', () => {
     });
   });
 
-  describe('autehntication type SamlAssertion',  ()=>{
-    it('receives the saml assertion in the destination',async()=>{
+  describe('autehntication type SamlAssertion', () => {
+    it('receives the saml assertion in the destination', async () => {
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
         mockSubaccountDestinationsCall(
-            nock,
-            oauthPasswordMultipleResponse,
-            200,
-            providerServiceToken
+          nock,
+          oauthPasswordMultipleResponse,
+          200,
+          providerServiceToken
         ),
         mockSingleDestinationCall(
-            nock,
-            oauthPasswordSingleResponse,
-            200,
-            destinationName,
-            wrapJwtInHeader(providerServiceToken).headers
+          nock,
+          oauthPasswordSingleResponse,
+          200,
+          destinationName,
+          wrapJwtInHeader(providerServiceToken).headers
         )
       ];
 

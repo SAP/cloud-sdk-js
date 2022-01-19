@@ -35,7 +35,7 @@ describe('OAuth flows', () => {
     destinationService = getService('destination');
   });
 
-  it('get assertion test', async () => {
+  xit('get assertion test', async () => {
     const destination = await getDestination({
       destinationName: systems.s4.providerSamlAssertion,
       jwt: accessToken.provider

@@ -270,7 +270,7 @@ export function verifyJwtWithKey(
         return reject('Invalid JWT. Token verification yielded `undefined`.');
       }
       if (typeof decodedToken === 'string') {
-        return resolve(decodeJwt(decodedToken));
+        return resolve(JSON.parse(decodedToken));
       }
       return resolve(decodedToken);
     });

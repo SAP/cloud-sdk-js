@@ -2,7 +2,7 @@ import {
   DeleteRequestBuilderBase,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 import { createODataUri } from '../uri-conversion';
 
@@ -12,7 +12,7 @@ import { createODataUri } from '../uri-conversion';
  */
 export class DeleteRequestBuilder<
   EntityT extends Entity,
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
 > extends DeleteRequestBuilderBase<EntityT, DeSerializersT> {
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.

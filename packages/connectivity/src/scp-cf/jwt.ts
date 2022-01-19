@@ -2,7 +2,12 @@ import { IncomingMessage } from 'http';
 import * as url from 'url';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { decode, verify } from 'jsonwebtoken';
-import { Jwt, JwtHeader, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
+import {
+  Jwt,
+  JwtHeader,
+  JwtPayload,
+  JwtWithPayloadObject
+} from './jsonwebtoken-type';
 import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
@@ -31,7 +36,7 @@ export function decodeJwt(token: string): JwtPayload {
  */
 export function decodeJwtComplete(token: string): JwtWithPayloadObject {
   const decodedToken = decode(token, { complete: true, json: true });
-  if (decodedToken !== null && isJwtWithPayloadObject(decodedToken)){
+  if (decodedToken !== null && isJwtWithPayloadObject(decodedToken)) {
     return decodedToken;
   }
   throw new Error(
@@ -422,6 +427,6 @@ export function isUserToken(token: JwtPair | undefined): token is JwtPair {
   return !(keys.length === 1 && keys[0] === 'iss');
 }
 
-function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject{
-  return typeof decoded.payload !== 'string'
+function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
+  return typeof decoded.payload !== 'string';
 }

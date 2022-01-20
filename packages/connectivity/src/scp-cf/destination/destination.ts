@@ -1,13 +1,11 @@
 import { assoc } from '@sap-cloud-sdk/util';
-import {
-  DestinationFetchOptions,
-  isDestinationFetchOptions
-} from './destination-accessor-types';
+import { isDestinationFetchOptions } from './destination-accessor-types';
 import {
   AuthenticationType,
   Destination,
   DestinationAuthToken,
-  DestinationCertificate
+  DestinationCertificate,
+  DestinationOrFetchOptionsXOR
 } from './destination-service-types';
 
 /**
@@ -164,7 +162,7 @@ function isHttpDestination(destinationInput: Record<string, any>): boolean {
  * @returns string containing information on the destination
  */
 export function toDestinationNameUrl(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptionsXOR
 ): string {
   return isDestinationFetchOptions(destination)
     ? `name: ${destination.destinationName}`
@@ -324,7 +322,7 @@ const configMapping: Record<string, keyof Destination> = {
 };
 
 export function noDestinationErrorMessage(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptionsXOR
 ): string {
   return isDestinationFetchOptions(destination)
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`

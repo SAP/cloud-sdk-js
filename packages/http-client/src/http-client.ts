@@ -11,6 +11,7 @@ import {
   buildHeadersForDestination,
   Destination,
   DestinationFetchOptions,
+  DestinationOrFetchOptionsXOR,
   toDestinationNameUrl,
   useOrFetchDestination,
   getAgentConfig
@@ -40,7 +41,7 @@ const logger = createLogger({
  * @returns A [[DestinationHttpRequestConfig]].
  */
 export async function buildHttpRequest(
-  destination: Destination | DestinationFetchOptions,
+  destination: DestinationOrFetchOptionsXOR,
   customHeaders?: Record<string, any>
 ): Promise<DestinationHttpRequestConfig> {
   if (customHeaders) {
@@ -75,7 +76,7 @@ export async function buildHttpRequest(
  * @internal
  */
 export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
-  destination: Destination | DestinationFetchOptions,
+  destination: DestinationOrFetchOptionsXOR,
   requestConfig: T
 ): Promise<T & DestinationHttpRequestConfig> {
   return buildHttpRequest(destination).then(destinationConfig =>
@@ -95,7 +96,7 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
  */
 export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   return async function <T extends HttpRequestConfig>(
-    destination: Destination | DestinationFetchOptions,
+    destination: DestinationOrFetchOptionsXOR,
     requestConfig: T,
     options?: HttpRequestOptions
   ): Promise<ReturnT> {
@@ -134,7 +135,7 @@ function logRequestInformation(request: HttpRequestConfig) {
  * @internal
  */
 export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
-  destination: Destination | DestinationFetchOptions,
+  destination: DestinationOrFetchOptionsXOR,
   requestConfig?: Partial<T>
 ): Promise<AxiosRequestConfig> {
   const destinationRequestConfig = await buildHttpRequest(
@@ -147,6 +148,17 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
   return { ...getAxiosConfigWithDefaultsWithoutMethod(), ...request };
 }
 
+// Overload signatures for executeHttpRequest
+// export function executeHttpRequest<T extends HttpRequestConfig>(
+//   destination: Destination,
+//   requestConfig: T,
+//   options?: HttpRequestOptions
+// ): Promise<HttpResponse>;
+// export function executeHttpRequest<T extends HttpRequestConfig>(
+//   destination: DestinationFetchOptions,
+//   requestConfig: T,
+//   options?: HttpRequestOptions
+// ): Promise<HttpResponse>;
 // TODO: deprecate this and consider switching to executeHttpRequestWithOrigin
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
@@ -157,7 +169,7 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  * @returns A promise resolving to an [[HttpResponse]].
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(
-  destination: Destination | DestinationFetchOptions,
+  destination: DestinationOrFetchOptionsXOR,
   requestConfig: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
@@ -208,7 +220,7 @@ function buildHeaders(
 }
 
 function resolveDestination(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptionsXOR
 ): Promise<Destination | null> {
   return useOrFetchDestination(destination).catch(error => {
     throw new ErrorWithCause('Failed to load destination.', error);
@@ -310,7 +322,7 @@ export function shouldHandleCsrfToken(
 }
 
 async function getCsrfHeaders(
-  destination: Destination | DestinationFetchOptions,
+  destination: DestinationOrFetchOptionsXOR,
   request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
   const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
@@ -327,7 +339,7 @@ async function getCsrfHeaders(
 }
 
 async function addCsrfTokenToHeader(
-  destination: Destination | DestinationFetchOptions,
+  destination: DestinationOrFetchOptionsXOR,
   request: HttpRequestConfig & DestinationHttpRequestConfig,
   httpRequestOptions?: HttpRequestOptions
 ): Promise<Record<string, string>> {

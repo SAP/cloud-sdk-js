@@ -1,8 +1,5 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import {
-  Destination,
-  DestinationFetchOptions
-} from '@sap-cloud-sdk/connectivity';
+import { DestinationOrFetchOptionsXOR } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   Constructable,
@@ -70,7 +67,7 @@ export abstract class GetRequestBuilderBase<
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions
+    destination: DestinationOrFetchOptionsXOR
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

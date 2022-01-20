@@ -85,7 +85,7 @@ function headerFromTokens(
     );
   }
   const authToken = usableTokens[0];
-  // The value property of the destination service has already the pattern e.g. Bearer Token so it can be used directly.
+  // The value property of the destination service has already the pattern e.g. "Bearer Token" so it can be used directly.
   return toAuthorizationHeader(authToken.http_header.value);
 }
 

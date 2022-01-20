@@ -8,7 +8,7 @@ import {
   serializeZonedDateTimeToDateTimeOffset,
   serializeDurationToDuration,
   serializePlainTimeToTime
-} from './temporal-de-serializers';
+} from './temporal-de-serializers-v4';
 
 describe('edmToTs()', () => {
   it('should parse Edm.Date to Temporal PlainDate', () => {

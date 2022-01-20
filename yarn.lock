@@ -1914,11 +1914,11 @@
     verror "1.10.0"
 
 "@sap/xssec@^3.2.5", "@sap/xssec@^3.2.7":
-  version "3.2.11"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.11.tgz#372373e07a1787a57b772cca1ff19aec759bbf51"
-  integrity sha512-DJwydkN6gpmq1nJNwOopM5N6iqpV6ng5X7inqTTaGMn8OYJama0fwcN6m+VdjJzA2d/1lOiD63E+ubnqlU5LDQ==
+  version "3.2.12"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.12.tgz#be5c3ef5829edafc6547562fbc8a6c20cad11583"
+  integrity sha512-Uhooyklldsft5aC0O/af9dc2qlqcO4Udm1wiPBB+XGSpNHwopb/o+7zJwoxWH3naziYsIHElBaGv6fm8sPG3cQ==
   dependencies:
-    axios "^0.21.4"
+    axios "^0.25.0"
     debug "4.3.2"
     jsonwebtoken "^8.5.1"
     lru-cache "6.0.0"
@@ -2757,7 +2757,7 @@ aws4@^1.8.0:
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axios@^0.21.0, axios@^0.21.1, axios@^0.21.4:
+axios@^0.21.0, axios@^0.21.1:
   version "0.21.4"
   resolved "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
@@ -2770,6 +2770,13 @@ axios@^0.24.0:
   integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
   dependencies:
     follow-redirects "^1.14.4"
+
+axios@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.25.0.tgz#349cfbb31331a9b4453190791760a8d35b093e0a"
+  integrity sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==
+  dependencies:
+    follow-redirects "^1.14.7"
 
 babel-code-frame@^6.22.0:
   version "6.26.0"
@@ -4850,7 +4857,7 @@ fn.name@1.x.x:
   resolved "https://registry.npmjs.org/fn.name/-/fn.name-1.1.0.tgz#26cad8017967aea8731bc42961d04a3d5988accc"
   integrity sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==
 
-follow-redirects@^1.14.0, follow-redirects@^1.14.4:
+follow-redirects@^1.14.0, follow-redirects@^1.14.4, follow-redirects@^1.14.7:
   version "1.14.7"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
   integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==

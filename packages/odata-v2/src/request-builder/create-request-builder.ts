@@ -4,7 +4,11 @@ import {
   entitySerializer,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DefaultDeSerializers, DeSerializers, entityDeserializer } from '../de-serializers';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  entityDeserializer
+} from '../de-serializers';
 import { Entity } from '../entity';
 import { createODataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';

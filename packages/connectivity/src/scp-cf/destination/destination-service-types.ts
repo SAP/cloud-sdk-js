@@ -1,7 +1,6 @@
 import { CachingOptions, IsolationStrategy } from '../cache';
 import { ProxyConfiguration } from '../connectivity-service-types';
 import { ResilienceOptions } from '../resilience-options';
-import { DestinationFetchOptions } from './destination-accessor-types';
 
 /**
  * A resolved destination containing information needed to execute requests, such as the system URL.
@@ -233,14 +232,3 @@ export enum DestinationType {
   Instance = 'instance',
   Subaccount = 'subaccount'
 }
-
-// type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
-// type XOR<T, U> = (Without<T, U> & Required<U>) | (Without<U, T> & Required<T>)
-
-type Without<T> = { [P in keyof T]?: never };
-type XOR<T, U> = (Without<T> & U) | (Without<U> & T);
-
-export type DestinationOrFetchOptionsXOR = XOR<
-  Destination,
-  DestinationFetchOptions
->;

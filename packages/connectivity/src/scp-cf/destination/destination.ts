@@ -1,11 +1,10 @@
 import { assoc } from '@sap-cloud-sdk/util';
-import { isDestinationFetchOptions } from './destination-accessor-types';
+import { DestinationFetchOptions, isDestinationFetchOptions } from './destination-accessor-types';
 import {
   AuthenticationType,
   Destination,
   DestinationAuthToken,
-  DestinationCertificate,
-  DestinationOrFetchOptionsXOR
+  DestinationCertificate
 } from './destination-service-types';
 
 /**
@@ -328,3 +327,14 @@ export function noDestinationErrorMessage(
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
+
+// type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+// type XOR<T, U> = (Without<T, U> & Required<U>) | (Without<U, T> & Required<T>)
+
+type Without<T> = { [P in keyof T]?: never };
+type XOR<T, U> = (Without<T> & U) | (Without<U> & T);
+
+export type DestinationOrFetchOptionsXOR = XOR<
+  Destination,
+  DestinationFetchOptions
+>;

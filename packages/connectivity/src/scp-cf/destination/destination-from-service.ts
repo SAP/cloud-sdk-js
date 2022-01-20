@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt, isUserToken, JwtPair, verifyJwt } from '../jwt';
 import { IsolationStrategy } from '../cache';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
@@ -20,7 +20,6 @@ import {
 } from './destination-selection-strategies';
 import {
   DestinationFetchOptions,
-  DestinationOptions,
   DestinationsByType
 } from './destination-accessor-types';
 import {
@@ -98,7 +97,6 @@ class DestinationFromServiceRetriever {
       await DestinationFromServiceRetriever.getProviderServiceToken(options);
 
     const da = new DestinationFromServiceRetriever(
-      options.destinationName,
       options,
       subscriberToken,
       providerToken
@@ -190,13 +188,12 @@ class DestinationFromServiceRetriever {
   }
 
   private options: RequiredProperties<
-    Omit<DestinationOptions, 'userJwt' | 'iss'>,
+    Omit<DestinationFetchOptions, 'userJwt' | 'iss'>,
     'isolationStrategy' | 'selectionStrategy' | 'useCache'
   >;
 
   private constructor(
-    readonly name: string,
-    options: DestinationOptions,
+    options: DestinationFetchOptions,
     readonly subscriberToken: SubscriberTokens | undefined,
     readonly providerServiceToken: JwtPair
   ) {
@@ -283,7 +280,6 @@ class DestinationFromServiceRetriever {
     return fetchDestination(
       this.destinationServiceCredentials.uri,
       jwt,
-      this.name,
       this.options
     );
   }
@@ -342,6 +338,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destinationResult: DestinationSearchResult
   ): Promise<AuthAndExchangeTokens> {
     const { destination, origin } = destinationResult;
+    const { destinationName } = this.options;
     if (!this.subscriberToken || !isUserToken(this.subscriberToken.userJwt)) {
       throw Error(
         `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
@@ -353,7 +350,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     // Case 1 Destination in provider and jwt issued for provider account -> not extra x-user-token header needed
     if (this.isProviderAndSubscriberSameTenant()) {
       logger.debug(
-        `UserExchange flow started without user exchange token for destination ${this.name} of the provider account.`
+        `UserExchange flow started without user exchange token for destination ${destinationName} of the provider account.`
       );
       return {
         authHeaderJwt: await jwtBearerToken(
@@ -369,7 +366,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         ? this.subscriberToken.serviceJwt
         : this.providerServiceToken;
     logger.debug(
-      `UserExchange flow started for destination ${this.name} of the ${origin} account.`
+      `UserExchange flow started for destination ${destinationName} of the ${origin} account.`
     );
 
     return {
@@ -466,7 +463,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         subscriber: emptyDestinationByType,
         provider
       },
-      this.name
+      this.options.destinationName
     );
     if (destination) {
       return {
@@ -480,7 +477,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private getProviderDestinationCache(): DestinationSearchResult | undefined {
     const destination = destinationCache.retrieveDestinationFromCache(
       this.providerServiceToken.decoded,
-      this.name,
+      this.options.destinationName,
       this.options.isolationStrategy
     );
 
@@ -506,7 +503,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         subscriber,
         provider: emptyDestinationByType
       },
-      this.name
+      this.options.destinationName
     );
 
     if (destination) {
@@ -517,7 +514,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private getSubscriberDestinationCache(): DestinationSearchResult | undefined {
     const destination = destinationCache.retrieveDestinationFromCache(
       this.selectSubscriberJwt(),
-      this.name,
+      this.options.destinationName,
       this.options.isolationStrategy
     );
 

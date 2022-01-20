@@ -9,6 +9,7 @@ export * from './environment-accessor-types';
 export * from './get-protocol';
 export * from './header-builder-for-destination';
 export * from './identity-service';
+export * from './jsonwebtoken-type';
 export * from './jwt';
 export * from './protocol';
 export * from './resilience-options';

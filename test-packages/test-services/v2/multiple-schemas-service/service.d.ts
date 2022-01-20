@@ -1,8 +1,12 @@
 import { MultiSchemaTestEntityApi } from './MultiSchemaTestEntityApi';
-import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
+import { batch, changeset } from './BatchRequest';
 import { Moment } from 'moment';
-import { DeSerializers, DefaultDeSerializers } from '@sap-cloud-sdk/odata-v2';
+import {
+  DeSerializers,
+  DefaultDeSerializers,
+  Time
+} from '@sap-cloud-sdk/odata-v2';
 export declare function multipleSchemasService<
   BinaryT = string,
   BooleanT = boolean,
@@ -72,5 +76,7 @@ export declare class MultipleSchemasService<
   constructor(deSerializers: DeSerializersT);
   private initApi;
   get multiSchemaTestEntityApi(): MultiSchemaTestEntityApi<DeSerializersT>;
+  get batch(): typeof batch;
+  get changeset(): typeof changeset;
 }
 //# sourceMappingURL=service.d.ts.map

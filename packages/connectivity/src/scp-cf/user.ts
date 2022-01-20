@@ -1,4 +1,4 @@
-import { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload } from './jsonwebtoken-type';
 import {
   checkMandatoryValue,
   JwtKeyMapping,

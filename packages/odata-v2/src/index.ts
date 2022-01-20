@@ -18,6 +18,7 @@ export {
 
 export {
   CreateRequestBuilder,
+  CountRequestBuilder,
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
@@ -37,3 +38,5 @@ export {
 } from './de-serializers';
 
 export type { DefaultDeSerializers, DeSerializers } from './de-serializers';
+
+export * from './common';

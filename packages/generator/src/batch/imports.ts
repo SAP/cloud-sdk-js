@@ -18,7 +18,8 @@ export function importBatchDeclarations(
         'GetAllRequestBuilder',
         'GetByKeyRequestBuilder',
         'ODataBatchRequestBuilder',
-        'UpdateRequestBuilder'
+        'UpdateRequestBuilder',
+        'BatchChangeSet'
       ],
       service.oDataVersion
     ),
@@ -31,11 +32,6 @@ export function importBatchDeclarations(
       kind: StructureKind.ImportDeclaration,
       moduleSpecifier: './index',
       namedImports: getNamedImports(service)
-    },
-    {
-      kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
-      namedImports: ['BatchChangeSet']
     }
   ];
 }

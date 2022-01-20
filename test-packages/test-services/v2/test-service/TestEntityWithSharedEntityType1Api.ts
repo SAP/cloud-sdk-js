@@ -10,17 +10,15 @@ import {
   defaultDeSerializers,
   DefaultDeSerializers,
   DeSerializers,
-  mergeDefaultDeSerializersWith
-} from '@sap-cloud-sdk/odata-v2';
-import {
-  EdmTypeField,
+  mergeDefaultDeSerializersWith,
   AllFields,
   entityBuilder,
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  Time
-} from '@sap-cloud-sdk/odata-common/internal';
+  Time,
+  EdmTypeField
+} from '@sap-cloud-sdk/odata-v2';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
 export class TestEntityWithSharedEntityType1Api<

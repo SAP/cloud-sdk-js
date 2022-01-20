@@ -3,13 +3,13 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   FunctionImportRequestBuilder,
   DeSerializers,
   transformReturnValueForEntity,
   DefaultDeSerializers,
-  defaultDeSerializers
+  defaultDeSerializers,
+  FunctionImportParameter
 } from '@sap-cloud-sdk/odata-v4';
 import { multipleSchemasService } from './service';
 import { TestEntity1 } from './TestEntity1';

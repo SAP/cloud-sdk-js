@@ -25,6 +25,7 @@
     "packages/util",
     "packages/openapi-generator",
     "packages/generator-common",
+    "packages/temporal-de-serializers",
     "test-packages/integration-tests",
     "test-packages/e2e-tests",
     "test-packages/test-services",
@@ -67,6 +68,7 @@
     "odata-v4": "yarn workspace @sap-cloud-sdk/odata-v4",
     "test-util": "yarn workspace @sap-cloud-sdk/test-util",
     "util": "yarn workspace @sap-cloud-sdk/util",
+    "temporal-de-serializers": "yarn workspace @sap-cloud-sdk/temporal-de-serializers",
     "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
     "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"

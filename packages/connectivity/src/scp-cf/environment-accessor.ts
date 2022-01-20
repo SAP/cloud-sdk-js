@@ -5,7 +5,7 @@ import {
   unique
 } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
-import { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload } from './jsonwebtoken-type';
 import { audiences, decodeJwt } from './jwt';
 import {
   DestinationServiceCredentials,

@@ -3,15 +3,13 @@ import { PhotosRequestBuilder } from './PhotosRequestBuilder';
 import {
   CustomField,
   DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v4';
-import {
-  OrderableEdmTypeField,
-  EdmTypeField,
+  DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
+  EntityApi,
+  OrderableEdmTypeField,
+  EdmTypeField
+} from '@sap-cloud-sdk/odata-v4';
 export declare class PhotosApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<Photos<DeSerializersT>, DeSerializersT>

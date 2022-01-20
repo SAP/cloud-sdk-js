@@ -89,17 +89,9 @@ export interface HttpRequestOptions {
   fetchCsrfToken?: boolean;
 }
 
-/**
- * Origins of http request options. This indicates the priority of an http request option.
- * Http request options with higher priorities will be used when reaching conflicts.
- * The priority is "Custom" \> "DestinationProperty" \> "Destination" \> "RequestConfig"
- */
-export type Origin =
-  | 'Custom'
-  | 'DestinationProperty'
-  | 'Destination'
-  | 'RequestConfig';
-
-export type OriginOptions = {
-  [key in Origin]?: Record<string, string>;
-};
+export interface OriginOptions {
+  requestConfig?: Record<string, string>;
+  destination?: Record<string, string>;
+  destinationProperty?: Record<string, string>;
+  custom?: Record<string, string>;
+}

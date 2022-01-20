@@ -25,6 +25,7 @@ export {
 
 export {
   ActionImportRequestBuilder,
+  CountRequestBuilder,
   CreateRequestBuilder,
   DeleteRequestBuilder,
   FunctionImportRequestBuilder,
@@ -32,7 +33,7 @@ export {
   GetByKeyRequestBuilder,
   UpdateRequestBuilder
 } from './request-builder';
-export { ODataBatchRequestBuilder } from './batch-request-builder';
+export { ODataBatchRequestBuilder } from './request-builder';
 export { ActionImportParameter } from './request';
 
 export { Entity } from './entity';
@@ -49,3 +50,4 @@ export {
 } from './de-serializers';
 
 export type { DefaultDeSerializers, DeSerializers } from './de-serializers';
+export * from './common';

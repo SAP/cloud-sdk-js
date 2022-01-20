@@ -14,6 +14,7 @@ import {
 import { customTestDeSerializers } from '../../../../test-resources/test/test-util/custom-de-serializers';
 import { filterFunctions } from '../filter-functions';
 import { filterFunction } from '../filter-function';
+import { testEntityApi } from '../../test/test-util';
 import {
   defaultDeSerializers,
   mergeDefaultDeSerializersWith

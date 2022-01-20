@@ -8,6 +8,9 @@ exports.TestService = exports.testService = void 0;
  */
 const TestEntityApi_1 = require('./TestEntityApi');
 const TestEntityLinkApi_1 = require('./TestEntityLinkApi');
+const function_imports_1 = require('./function-imports');
+const action_imports_1 = require('./action-imports');
+const BatchRequest_1 = require('./BatchRequest');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 function testService(deSerializers = odata_v4_1.defaultDeSerializers) {
   return new TestService(
@@ -39,6 +42,42 @@ class TestService {
       'testEntityLinkApi',
       TestEntityLinkApi_1.TestEntityLinkApi
     );
+  }
+  get functionImports() {
+    return {
+      concatStrings: parameter =>
+        (0, function_imports_1.concatStrings)(parameter, this.deSerializers),
+      getAll: parameter =>
+        (0, function_imports_1.getAll)(parameter, this.deSerializers),
+      getByKey: parameter =>
+        (0, function_imports_1.getByKey)(parameter, this.deSerializers),
+      returnCollection: parameter =>
+        (0, function_imports_1.returnCollection)(parameter, this.deSerializers),
+      returnInt: parameter =>
+        (0, function_imports_1.returnInt)(parameter, this.deSerializers),
+      returnSapCloudSdk: parameter =>
+        (0, function_imports_1.returnSapCloudSdk)(parameter, this.deSerializers)
+    };
+  }
+  get actionImports() {
+    return {
+      createTestEntityById: parameter =>
+        (0, action_imports_1.createTestEntityById)(
+          parameter,
+          this.deSerializers
+        ),
+      createTestEntityByIdReturnId: parameter =>
+        (0, action_imports_1.createTestEntityByIdReturnId)(
+          parameter,
+          this.deSerializers
+        )
+    };
+  }
+  get batch() {
+    return BatchRequest_1.batch;
+  }
+  get changeset() {
+    return BatchRequest_1.changeset;
   }
 }
 exports.TestService = TestService;

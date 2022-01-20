@@ -4,21 +4,19 @@ import {
 } from './TestNestedComplexType';
 import { TestEnumType } from './TestEnumType';
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  Entity
-} from '@sap-cloud-sdk/odata-v4';
-import {
   CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
   DeserializedType,
   EdmTypeField,
+  Entity,
   EnumField,
   FieldOptions,
   OrderableEdmTypeField,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-v4';
 /**
  * TestComplexType
  */

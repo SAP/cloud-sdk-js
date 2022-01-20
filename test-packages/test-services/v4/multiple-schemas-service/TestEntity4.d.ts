@@ -1,9 +1,9 @@
 import {
   Entity,
   DefaultDeSerializers,
-  DeSerializers
+  DeSerializers,
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "A_TestEntity4" of service "API_MULTIPLE_SCHEMAS_SRV".
  */

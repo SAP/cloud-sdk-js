@@ -5,10 +5,10 @@ import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
-  UpdateRequestBuilder
+  UpdateRequestBuilder,
+  BatchChangeSet
 } from '@sap-cloud-sdk/odata-v2';
 import { MultiSchemaTestEntity } from './index';
-import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * Batch builder for operations supported on the Multiple Schemas Service.
  * @param requests The requests of the batch
@@ -41,12 +41,15 @@ export declare const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
 export declare type ReadMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | GetAllRequestBuilder<MultiSchemaTestEntity, DeSerializersT>
-  | GetByKeyRequestBuilder<MultiSchemaTestEntity, DeSerializersT>;
+  | GetAllRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<
+      MultiSchemaTestEntity<DeSerializersT>,
+      DeSerializersT
+    >;
 export declare type WriteMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | CreateRequestBuilder<MultiSchemaTestEntity, DeSerializersT>
-  | UpdateRequestBuilder<MultiSchemaTestEntity, DeSerializersT>
-  | DeleteRequestBuilder<MultiSchemaTestEntity, DeSerializersT>;
+  | CreateRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>;
 //# sourceMappingURL=BatchRequest.d.ts.map

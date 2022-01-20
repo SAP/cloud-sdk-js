@@ -13,6 +13,7 @@ import {
   testFilterSingleLink,
   testFilterString,
   testFilterStringEncoding,
+<<<<<<< HEAD
   testEntityApi,
   testEntityApiCustom,
   testFilterStringCustom,
@@ -24,6 +25,12 @@ import {
   mergeDefaultDeSerializersWith
 } from '../de-serializers';
 import { customTestDeSerializers } from '../../../../test-resources/test/test-util/custom-de-serializers';
+=======
+  testEntityApi
+} from '../../test/test-util';
+import { filterFunctions } from '../filter-functions';
+import { defaultDeSerializers } from '../de-serializers';
+>>>>>>> c0fa20cf49ad55c8899d1ba249fac42a8c4c6291
 import { createODataUri } from './odata-uri';
 
 const oDataUri = createODataUri(defaultDeSerializers);

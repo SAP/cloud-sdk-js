@@ -5,8 +5,7 @@ exports[`entity api file gets proper file 1`] = `
 import { BreakfastRequestBuilder } from './BreakfastRequestBuilder';
 import { Brunch } from './Brunch';
 import { BrunchApi } from './BrunchApi';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
-import { Time, EdmTypeField, OrderableEdmTypeField, OneToOneLink, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder } from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time, EdmTypeField, OrderableEdmTypeField, OneToOneLink } from '@sap-cloud-sdk/odata-v2';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
 export class BreakfastApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 

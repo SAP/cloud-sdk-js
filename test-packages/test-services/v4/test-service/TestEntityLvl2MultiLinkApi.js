@@ -9,7 +9,6 @@ exports.TestEntityLvl2MultiLinkApi = void 0;
 const TestEntityLvl2MultiLink_1 = require('./TestEntityLvl2MultiLink');
 const TestEntityLvl2MultiLinkRequestBuilder_1 = require('./TestEntityLvl2MultiLinkRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 class TestEntityLvl2MultiLinkApi {
   constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
     this.entityConstructor = TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink;
@@ -17,7 +16,7 @@ class TestEntityLvl2MultiLinkApi {
   }
   _addNavigationProperties(linkedApis) {
     this.navigationPropertyFields = {
-      TO_MULTI_LINK_2: new internal_1.OneToManyLink(
+      TO_MULTI_LINK_2: new odata_v4_1.OneToManyLink(
         'to_MultiLink2',
         this,
         linkedApis[0]
@@ -31,7 +30,7 @@ class TestEntityLvl2MultiLinkApi {
     );
   }
   entityBuilder() {
-    return (0, internal_1.entityBuilder)(this);
+    return (0, odata_v4_1.entityBuilder)(this);
   }
   customField(fieldName, isNullable = false) {
     return new odata_v4_1.CustomField(
@@ -42,7 +41,7 @@ class TestEntityLvl2MultiLinkApi {
     );
   }
   get schema() {
-    const fieldBuilder = new internal_1.FieldBuilder(
+    const fieldBuilder = new odata_v4_1.FieldBuilder(
       TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink,
       this.deSerializers
     );
@@ -97,7 +96,7 @@ class TestEntityLvl2MultiLinkApi {
        *
        * All fields selector.
        */
-      ALL_FIELDS: new internal_1.AllFields(
+      ALL_FIELDS: new odata_v4_1.AllFields(
         '*',
         TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink
       )

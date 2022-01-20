@@ -20,6 +20,9 @@ const TestEntityCircularLinkParentApi_1 = require('./TestEntityCircularLinkParen
 const TestEntityCircularLinkChildApi_1 = require('./TestEntityCircularLinkChildApi');
 const TestEntityEndsWithApi_1 = require('./TestEntityEndsWithApi');
 const TestEntityEndsWithSomethingElseApi_1 = require('./TestEntityEndsWithSomethingElseApi');
+const function_imports_1 = require('./function-imports');
+const action_imports_1 = require('./action-imports');
+const BatchRequest_1 = require('./BatchRequest');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 function testService(deSerializers = odata_v4_1.defaultDeSerializers) {
   return new TestService(
@@ -186,6 +189,112 @@ class TestService {
       'testEntityEndsWithSomethingElseApi',
       TestEntityEndsWithSomethingElseApi_1.TestEntityEndsWithSomethingElseApi
     );
+  }
+  get functionImports() {
+    return {
+      testFunctionImportEdmReturnType: parameter =>
+        (0, function_imports_1.testFunctionImportEdmReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportEdmReturnTypeCollection: parameter =>
+        (0, function_imports_1.testFunctionImportEdmReturnTypeCollection)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportNullableTest: parameter =>
+        (0, function_imports_1.testFunctionImportNullableTest)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportEntityReturnType: parameter =>
+        (0, function_imports_1.testFunctionImportEntityReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportEntityReturnTypeCollection: parameter =>
+        (0, function_imports_1.testFunctionImportEntityReturnTypeCollection)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportSharedEntityReturnType: parameter =>
+        (0, function_imports_1.testFunctionImportSharedEntityReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportSharedEntityReturnTypeCollection: parameter =>
+        (0,
+        function_imports_1.testFunctionImportSharedEntityReturnTypeCollection)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportComplexReturnType: parameter =>
+        (0, function_imports_1.testFunctionImportComplexReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportComplexReturnTypeCollection: parameter =>
+        (0, function_imports_1.testFunctionImportComplexReturnTypeCollection)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportMultipleParams: parameter =>
+        (0, function_imports_1.testFunctionImportMultipleParams)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportWithDifferentName: parameter =>
+        (0, function_imports_1.testFunctionImportWithDifferentName)(
+          parameter,
+          this.deSerializers
+        )
+    };
+  }
+  get actionImports() {
+    return {
+      testActionImportNoParameterNoReturnType: parameter =>
+        (0, action_imports_1.testActionImportNoParameterNoReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportMultipleParameterComplexReturnType: parameter =>
+        (0,
+        action_imports_1.testActionImportMultipleParameterComplexReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportUnsupportedEdmTypes: parameter =>
+        (0, action_imports_1.testActionImportUnsupportedEdmTypes)(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportNoParameterEntityReturnType: parameter =>
+        (0, action_imports_1.testActionImportNoParameterEntityReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportSharedEntityReturnType: parameter =>
+        (0, action_imports_1.testActionImportSharedEntityReturnType)(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportSharedEntityReturnTypeCollection: parameter =>
+        (0, action_imports_1.testActionImportSharedEntityReturnTypeCollection)(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportNullableTest: parameter =>
+        (0, action_imports_1.testActionImportNullableTest)(
+          parameter,
+          this.deSerializers
+        )
+    };
+  }
+  get batch() {
+    return BatchRequest_1.batch;
+  }
+  get changeset() {
+    return BatchRequest_1.changeset;
   }
 }
 exports.TestService = TestService;

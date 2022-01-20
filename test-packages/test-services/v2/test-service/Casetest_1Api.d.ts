@@ -3,14 +3,12 @@ import { Casetest_1RequestBuilder } from './Casetest_1RequestBuilder';
 import {
   CustomField,
   DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v2';
-import {
-  EdmTypeField,
+  DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
+  EntityApi,
+  EdmTypeField
+} from '@sap-cloud-sdk/odata-v2';
 export declare class Casetest_1Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<Casetest_1<DeSerializersT>, DeSerializersT>

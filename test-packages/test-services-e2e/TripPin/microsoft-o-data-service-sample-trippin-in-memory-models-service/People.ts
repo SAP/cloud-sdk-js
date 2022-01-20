@@ -6,9 +6,9 @@
 import {
   Entity,
   DefaultDeSerializers,
-  DeSerializers
+  DeSerializers,
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import { Location } from './Location';
 import { PersonGender } from './PersonGender';
 import { Photos, PhotosType } from './Photos';

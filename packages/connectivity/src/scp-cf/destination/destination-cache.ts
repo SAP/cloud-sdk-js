@@ -1,5 +1,4 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import moment from 'moment';
 import { Cache, IsolationStrategy } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
@@ -108,7 +107,7 @@ function cacheRetrievedDestination(
   const key = getDestinationCacheKey(decodedJwt, destination.name, isolation);
   const expiresIn = first(destination.authTokens || [])?.expiresIn;
   const expirationTime = expiresIn
-    ? moment().add(expiresIn, 'second').unix() * 1000
+    ? Date.now() + parseInt(expiresIn) * 1000
     : undefined;
   cache.set(key, destination, expirationTime);
 }

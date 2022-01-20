@@ -35,12 +35,10 @@
     "@sap-cloud-sdk/util": "^1.50.0",
     "@sap/xsenv": "^3.0.0",
     "@sap/xssec": "^3.2.7",
-    "@types/jsonwebtoken": "^8.3.8",
     "axios": "^0.24.0",
     "http-proxy-agent": "^5.0.0",
     "https-proxy-agent": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.29.0",
     "opossum": "^6.0.0"
   },
   "devDependencies": {

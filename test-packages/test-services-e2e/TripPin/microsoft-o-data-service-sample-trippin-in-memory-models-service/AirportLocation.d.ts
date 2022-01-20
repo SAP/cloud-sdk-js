@@ -1,17 +1,15 @@
 import { CityField } from './City';
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  Entity
-} from '@sap-cloud-sdk/odata-v4';
-import {
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
   DeserializedType,
   EdmTypeField,
+  Entity,
   FieldOptions,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-v4';
 /**
  * AirportLocation
  */

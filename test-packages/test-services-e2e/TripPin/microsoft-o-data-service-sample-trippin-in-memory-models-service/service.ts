@@ -7,14 +7,20 @@ import { PhotosApi } from './PhotosApi';
 import { PeopleApi } from './PeopleApi';
 import { AirlinesApi } from './AirlinesApi';
 import { AirportsApi } from './AirportsApi';
-import { Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  getNearestAirport,
+  GetNearestAirportParameters
+} from './function-imports';
+import { resetDataSource, ResetDataSourceParameters } from './action-imports';
 import { BigNumber } from 'bignumber.js';
+import { batch, changeset } from './BatchRequest';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,
   DeSerializers,
   DefaultDeSerializers,
-  mergeDefaultDeSerializersWith
+  mergeDefaultDeSerializersWith,
+  Time
 } from '@sap-cloud-sdk/odata-v4';
 
 export function microsoftODataServiceSampleTrippinInMemoryModelsService<
@@ -122,5 +128,28 @@ export class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
 
   get airportsApi(): AirportsApi<DeSerializersT> {
     return this.initApi('airportsApi', AirportsApi);
+  }
+
+  get functionImports() {
+    return {
+      getNearestAirport: (
+        parameter: GetNearestAirportParameters<DeSerializersT>
+      ) => getNearestAirport(parameter, this.deSerializers)
+    };
+  }
+
+  get actionImports() {
+    return {
+      resetDataSource: (parameter: ResetDataSourceParameters<DeSerializersT>) =>
+        resetDataSource(parameter, this.deSerializers)
+    };
+  }
+
+  get batch(): typeof batch {
+    return batch;
+  }
+
+  get changeset(): typeof changeset {
+    return changeset;
   }
 }

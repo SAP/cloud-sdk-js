@@ -10,6 +10,9 @@ const TestEntity1Api_1 = require('./TestEntity1Api');
 const TestEntity2Api_1 = require('./TestEntity2Api');
 const TestEntity3Api_1 = require('./TestEntity3Api');
 const TestEntity4Api_1 = require('./TestEntity4Api');
+const function_imports_1 = require('./function-imports');
+const action_imports_1 = require('./action-imports');
+const BatchRequest_1 = require('./BatchRequest');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 function multipleSchemasService(
   deSerializers = odata_v4_1.defaultDeSerializers
@@ -41,6 +44,40 @@ class MultipleSchemasService {
   }
   get testEntity4Api() {
     return this.initApi('testEntity4Api', TestEntity4Api_1.TestEntity4Api);
+  }
+  get functionImports() {
+    return {
+      testFunctionImportEntityReturnType1: parameter =>
+        (0, function_imports_1.testFunctionImportEntityReturnType1)(
+          parameter,
+          this.deSerializers
+        ),
+      testFunctionImportEntityReturnType2: parameter =>
+        (0, function_imports_1.testFunctionImportEntityReturnType2)(
+          parameter,
+          this.deSerializers
+        )
+    };
+  }
+  get actionImports() {
+    return {
+      testActionImportNoParameterComplexReturnType1: parameter =>
+        (0, action_imports_1.testActionImportNoParameterComplexReturnType1)(
+          parameter,
+          this.deSerializers
+        ),
+      testActionImportNoParameterComplexReturnType2: parameter =>
+        (0, action_imports_1.testActionImportNoParameterComplexReturnType2)(
+          parameter,
+          this.deSerializers
+        )
+    };
+  }
+  get batch() {
+    return BatchRequest_1.batch;
+  }
+  get changeset() {
+    return BatchRequest_1.changeset;
   }
 }
 exports.MultipleSchemasService = MultipleSchemasService;

@@ -5,14 +5,35 @@
  */
 import { TestEntityApi } from './TestEntityApi';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
-import { Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  concatStrings,
+  getAll,
+  getByKey,
+  returnCollection,
+  returnInt,
+  returnSapCloudSdk,
+  ConcatStringsParameters,
+  GetAllParameters,
+  GetByKeyParameters,
+  ReturnCollectionParameters,
+  ReturnIntParameters,
+  ReturnSapCloudSdkParameters
+} from './function-imports';
+import {
+  createTestEntityById,
+  createTestEntityByIdReturnId,
+  CreateTestEntityByIdParameters,
+  CreateTestEntityByIdReturnIdParameters
+} from './action-imports';
 import { BigNumber } from 'bignumber.js';
+import { batch, changeset } from './BatchRequest';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,
   DeSerializers,
   DefaultDeSerializers,
-  mergeDefaultDeSerializersWith
+  mergeDefaultDeSerializersWith,
+  Time
 } from '@sap-cloud-sdk/odata-v4';
 
 export function testService<
@@ -107,5 +128,43 @@ export class TestService<
 
   get testEntityLinkApi(): TestEntityLinkApi<DeSerializersT> {
     return this.initApi('testEntityLinkApi', TestEntityLinkApi);
+  }
+
+  get functionImports() {
+    return {
+      concatStrings: (parameter: ConcatStringsParameters<DeSerializersT>) =>
+        concatStrings(parameter, this.deSerializers),
+      getAll: (parameter: GetAllParameters<DeSerializersT>) =>
+        getAll(parameter, this.deSerializers),
+      getByKey: (parameter: GetByKeyParameters<DeSerializersT>) =>
+        getByKey(parameter, this.deSerializers),
+      returnCollection: (
+        parameter: ReturnCollectionParameters<DeSerializersT>
+      ) => returnCollection(parameter, this.deSerializers),
+      returnInt: (parameter: ReturnIntParameters<DeSerializersT>) =>
+        returnInt(parameter, this.deSerializers),
+      returnSapCloudSdk: (
+        parameter: ReturnSapCloudSdkParameters<DeSerializersT>
+      ) => returnSapCloudSdk(parameter, this.deSerializers)
+    };
+  }
+
+  get actionImports() {
+    return {
+      createTestEntityById: (
+        parameter: CreateTestEntityByIdParameters<DeSerializersT>
+      ) => createTestEntityById(parameter, this.deSerializers),
+      createTestEntityByIdReturnId: (
+        parameter: CreateTestEntityByIdReturnIdParameters<DeSerializersT>
+      ) => createTestEntityByIdReturnId(parameter, this.deSerializers)
+    };
+  }
+
+  get batch(): typeof batch {
+    return batch;
+  }
+
+  get changeset(): typeof changeset {
+    return changeset;
   }
 }

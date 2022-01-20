@@ -5,10 +5,10 @@ import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
-  UpdateRequestBuilder
+  UpdateRequestBuilder,
+  BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity, TestEntityLink } from './index';
-import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * Batch builder for operations supported on the Test Service.
  * @param requests The requests of the batch
@@ -41,17 +41,17 @@ export declare const defaultTestServicePath = '/odata/test-service';
 export declare type ReadTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | GetAllRequestBuilder<TestEntity, DeSerializersT>
-  | GetAllRequestBuilder<TestEntityLink, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntity, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntityLink, DeSerializersT>;
+  | GetAllRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>;
 export declare type WriteTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
-  | CreateRequestBuilder<TestEntity, DeSerializersT>
-  | UpdateRequestBuilder<TestEntity, DeSerializersT>
-  | DeleteRequestBuilder<TestEntity, DeSerializersT>
-  | CreateRequestBuilder<TestEntityLink, DeSerializersT>
-  | UpdateRequestBuilder<TestEntityLink, DeSerializersT>
-  | DeleteRequestBuilder<TestEntityLink, DeSerializersT>;
+  | CreateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>;
 //# sourceMappingURL=BatchRequest.d.ts.map

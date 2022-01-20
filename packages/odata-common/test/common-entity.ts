@@ -512,10 +512,6 @@ export class CommonService<
   get commonEntitySingleLinkApi(): CommonEntitySingleLinkApi<DeSerializersT> {
     return this.initApi('commonEntitySingleLinkApi', CommonEntitySingleLinkApi);
   }
-
-  get changeset(): typeof changeset {
-    return changeset;
-  }
 }
 
 export const { commonEntityApi } = commonService();

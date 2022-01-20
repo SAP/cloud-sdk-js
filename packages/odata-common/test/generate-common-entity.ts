@@ -99,11 +99,13 @@ async function readClasses(): Promise<string[]> {
   );
 }
 
-function removeBatch(service: string): string {
-  return service.replace(
-    /get batch\(\): typeof batch \{\n\s+return batch;\n\s+}/g,
-    ''
-  );
+function removeBatchFunctions(service: string): string {
+  return service
+    .replace(/get batch\(\): typeof batch \{\n\s+return batch;\n\s+}/g, '')
+    .replace(
+      /get changeset\(\): typeof changeset \{\n\s+return changeset;\n\s+}/g,
+      ''
+    );
 }
 
 async function generateCommonTestEntity() {
@@ -134,7 +136,7 @@ async function generateCommonTestEntity() {
     linkApi,
     entity,
     entityApi,
-    removeBatch(service),
+    removeBatchFunctions(service),
     'export const { commonEntityApi } = commonService();'
   ].join(unixEOL);
   await promises.writeFile(

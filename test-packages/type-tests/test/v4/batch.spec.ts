@@ -33,8 +33,8 @@ async function test() {
   // Custom deserializer - first vaule in generic from string to number
   const custom = {
     'Edm.Binary': {
-      deserialize: (val: string): number => 1,
-      serialize: (val: number): string => '1',
+      deserialize: (): number => 1,
+      serialize: (): string => '1',
       serializeToUri: () => ''
     }
   };
@@ -54,8 +54,6 @@ async function test() {
     responseCustomDeserializer;
 
     // $ExpectType TestEntity<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>[]
-    const result = responseCustomDeserializer.as(
-      testService(custom).testEntityApi
-    );
+    responseCustomDeserializer.as(testService(custom).testEntityApi);
   }
 }

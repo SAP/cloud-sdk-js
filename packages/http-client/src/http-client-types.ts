@@ -33,8 +33,8 @@ export type Method =
  * This interface is compatible with AxiosRequestConfig.
  */
 export type HttpRequestConfig = HttpRequestConfigBase & {
-  params?: Record<string, string>;
-  headers?: Record<string, string>;
+  params?: Record<string, any>;
+  headers?: Record<string, any>;
 };
 
 /**
@@ -98,16 +98,16 @@ export interface HttpRequestOptions {
  * The priorities are defined in the [[origins]].
  */
 export interface OriginOptions {
-  requestConfig: Record<string, string>;
-  custom?: Record<string, string>;
+  requestConfig: Record<string, any>;
+  custom?: Record<string, any>;
 }
 
 /**
  * @internal
  */
 export interface OriginOptionsInternal {
-  requestConfig?: Record<string, string>;
-  destination?: Record<string, string>;
-  destinationProperty?: Record<string, string>;
-  custom?: Record<string, string>;
+  requestConfig?: Record<string, any>;
+  destination?: Record<string, any>;
+  destinationProperty?: Record<string, any>;
+  custom?: Record<string, any>;
 }

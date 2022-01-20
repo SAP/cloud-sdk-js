@@ -30,7 +30,7 @@ import {
   FContinueParameters
 } from './function-imports';
 import { BigNumber } from 'bignumber.js';
-import { batch } from './BatchRequest';
+import { batch, changeset } from './BatchRequest';
 import { Moment } from 'moment';
 import {
   DeSerializers,
@@ -233,5 +233,6 @@ export declare class TestService<
     >;
   };
   get batch(): typeof batch;
+  get changeset(): typeof changeset;
 }
 //# sourceMappingURL=service.d.ts.map

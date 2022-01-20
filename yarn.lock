@@ -1787,28 +1787,6 @@
     "@sap-cloud-sdk/util" "^1.52.0"
     axios "^0.21.1"
 
-"@sap-cloud-sdk/analytics@^1.53.1":
-  version "1.53.1"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/analytics/-/analytics-1.53.1.tgz#b67c91b3fc056ae51a70cfc1abbde94febdce6be"
-  integrity sha512-4Rls1nUwfDIxrkKpK8sr89mZlMhKo/pwxcLvclXX86+cgovqkYLoxh8uf8IVx5KGGi5mp//QhVvr0Sw6sIp4qw==
-  dependencies:
-    "@sap-cloud-sdk/util" "^1.53.1"
-    axios "^0.21.1"
-
-"@sap-cloud-sdk/connectivity@^2.0.0-20211028124158.0+e990f0fe", "@sap-cloud-sdk/connectivity@^2.0.0-beta.1-20220118074129.0+c0d497ba":
-  version "2.0.0-beta.1-20220118074129.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/connectivity/-/connectivity-2.0.0-beta.1-20220118074129.0.tgz#76314b9f3a7d91fe497d2c2f011cc6be47e484a0"
-  integrity sha512-1Dj2TdtGcCIH9Txd81FAq33l/yI7Lc5CKYFvLEdcRgoPyllb4Vl2a0guJj9/nArtRB9Kuxg5QT1Dk88plmmw1A==
-  dependencies:
-    "@sap-cloud-sdk/util" "^2.0.0-beta.1-20220118074129.0+c0d497ba"
-    "@sap/xsenv" "^3.0.0"
-    "@sap/xssec" "^3.2.7"
-    axios "^0.24.0"
-    http-proxy-agent "^5.0.0"
-    https-proxy-agent "^5.0.0"
-    jsonwebtoken "^8.5.1"
-    opossum "^6.0.0"
-
 "@sap-cloud-sdk/core@^1.41", "@sap-cloud-sdk/core@^1.51.0":
   version "1.52.0"
   resolved "https://registry.npmjs.org/@sap-cloud-sdk/core/-/core-1.52.0.tgz#e1886e7d043fb2127b74a180f76ed33c0ac6fa8f"
@@ -1829,140 +1807,12 @@
     uuid "^8.2.0"
     voca "^1.4.0"
 
-"@sap-cloud-sdk/core@^1.53.1":
-  version "1.53.1"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/core/-/core-1.53.1.tgz#de65ef06468cf833f477c049ffb0e466ad768056"
-  integrity sha512-hJH0DPnbYTO0PUh6MdZ6hfnEJqxorZtOL30DqcwOa/P+vZksVIEMgeFoE+gwdqEsk3ddBLRm6uGKHGmbMdDg4g==
-  dependencies:
-    "@sap-cloud-sdk/analytics" "^1.53.1"
-    "@sap-cloud-sdk/util" "^1.53.1"
-    "@sap/xsenv" "^3.0.0"
-    "@sap/xssec" "^3.2.7"
-    "@types/jsonwebtoken" "^8.3.8"
-    axios "^0.21.1"
-    bignumber.js "^9.0.0"
-    http-proxy-agent "^5.0.0"
-    https-proxy-agent "^5.0.0"
-    jsonwebtoken "^8.5.1"
-    moment "^2.29.0"
-    opossum "^6.0.0"
-    uuid "^8.2.0"
-    voca "^1.4.0"
-
-"@sap-cloud-sdk/generator-common@^1.53.1":
-  version "1.53.1"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/generator-common/-/generator-common-1.53.1.tgz#3db55d363d9eb7a0580ac16b5dc6484fee2c115d"
-  integrity sha512-sXWeUbdzuJcTi/a2FKn0Et6miBdi9lP6aDJhywT1bZNUyljNCTNMMUyvKJnStsPrNdO0MgcbjdEx3b62frxmlw==
-  dependencies:
-    "@sap-cloud-sdk/util" "^1.53.1"
-    axios "^0.21.1"
-    fast-levenshtein "~3.0.0"
-    fs-extra "^10.0.0"
-    glob "^7.1.6"
-    typescript "~4.3.4"
-
-"@sap-cloud-sdk/generator@latest":
-  version "1.53.1"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/generator/-/generator-1.53.1.tgz#02e051701d7da87487f9b201e3c2c53424262564"
-  integrity sha512-/z5H/LdzWESI2j+c/n8Vy6C+hL84ESJL7dmgBB0bZtYIz2fGRsf0cODKg7M6Q+ZuekgKhbfM1XkY2MH1f80vBQ==
-  dependencies:
-    "@sap-cloud-sdk/core" "^1.53.1"
-    "@sap-cloud-sdk/generator-common" "^1.53.1"
-    "@sap-cloud-sdk/util" "^1.53.1"
-    "@sap/edm-converters" "~1.0.41"
-    "@types/fs-extra" "^9.0.1"
-    "@types/glob" "^7.1.2"
-    execa "^5.0.0"
-    fast-xml-parser "^3.16.0"
-    fs-extra "^10.0.0"
-    glob "^7.1.6"
-    ts-morph "^12.0.0"
-    typescript "~4.3.4"
-    voca "^1.4.0"
-    yargs "^17.0.1"
-
-"@sap-cloud-sdk/http-client@^2.0.0-20211028124158.0+e990f0fe":
-  version "2.0.0-beta.1-20220118074129.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/http-client/-/http-client-2.0.0-beta.1-20220118074129.0.tgz#8a17ade26a0fc759412ad082782e675338d1fec3"
-  integrity sha512-1C5VqgYsvhdSM+Dl9Vke3m6dbSgBoMCHkBl2UHKXHTqc+DdZlNn2cJhEau6JNYlsw59iHhhyQpVPvg+bi1n8kw==
-  dependencies:
-    "@sap-cloud-sdk/connectivity" "^2.0.0-beta.1-20220118074129.0+c0d497ba"
-    "@sap-cloud-sdk/util" "^2.0.0-beta.1-20220118074129.0+c0d497ba"
-    axios "^0.24.0"
-
-"@sap-cloud-sdk/odata-common@^2.0.0-20211028124158.0+e990f0fe", "@sap-cloud-sdk/odata-common@latest":
-  version "2.0.0-20211028124158.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-common/-/odata-common-2.0.0-20211028124158.0.tgz#6ea8a3ac6a38d26e7c55d13150cf4305d7fda271"
-  integrity sha512-MqtgglvpuCipUnhzwDWb2KkTq+87T9FhLJ/Z8pI8sZDzAPo8Peo44FwnPTMbCWV21xT396Id1wpUF5nywUSXmg==
-  dependencies:
-    "@sap-cloud-sdk/connectivity" "^2.0.0-20211028124158.0+e990f0fe"
-    "@sap-cloud-sdk/http-client" "^2.0.0-20211028124158.0+e990f0fe"
-    "@sap-cloud-sdk/util" "^2.0.0-20211028124158.0+e990f0fe"
-    axios "^0.23.0"
-    bignumber.js "^9.0.0"
-    moment "^2.29.0"
-    typescript "~4.4.4"
-    uuid "^8.2.0"
-    voca "^1.4.0"
-
-"@sap-cloud-sdk/odata-v2@latest":
-  version "2.0.0-20211028124158.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-v2/-/odata-v2-2.0.0-20211028124158.0.tgz#c9d778bc799408f8cd77e1e749b035160a6a9ee9"
-  integrity sha512-jJADGH3Nnqht/Z6elqmUPbBDz6pOrN8pa/LP6pjtaDkknNRbalemM3dvW1lJ0re7VLHJF7/Wg2WziZY2P6tbxg==
-  dependencies:
-    "@sap-cloud-sdk/connectivity" "^2.0.0-20211028124158.0+e990f0fe"
-    "@sap-cloud-sdk/http-client" "^2.0.0-20211028124158.0+e990f0fe"
-    "@sap-cloud-sdk/odata-common" "^2.0.0-20211028124158.0+e990f0fe"
-    "@sap-cloud-sdk/util" "^2.0.0-20211028124158.0+e990f0fe"
-    bignumber.js "^9.0.0"
-    moment "^2.29.0"
-    typescript "~4.4.4"
-    uuid "^8.2.0"
-
-"@sap-cloud-sdk/openapi-generator@latest":
-  version "1.53.1"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/openapi-generator/-/openapi-generator-1.53.1.tgz#f25592fd97ecadf788e9e354a9e9343893558fc8"
-  integrity sha512-DUjogjvf4dw3XZgS99c574mR2Zp4v2Fb5WeZY6rUwLx1u1TAOKNAtPi37Jpa1RfAMHK90s3P0bnTznMymtOM1w==
-  dependencies:
-    "@apidevtools/swagger-parser" "^10.0.2"
-    "@sap-cloud-sdk/generator-common" "^1.53.1"
-    "@sap-cloud-sdk/util" "^1.53.1"
-    glob "^7.1.6"
-    js-yaml "^4.0.0"
-    openapi-types "^9.3.0"
-    swagger2openapi "^7.0.4"
-    yargs "^17.1.1"
-
 "@sap-cloud-sdk/util@^1.52.0":
   version "1.52.0"
   resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.52.0.tgz#d4f094000046d2617d840e45412695dc2d9551c0"
   integrity sha512-B5tiLwO7BtZlGH3Qsg7yFv9RZgSiFcBhj3acAretWr0nF9/emZGiwX38TQuNEfdX0oaNddGiKmZgKI47pA6eBA==
   dependencies:
     axios "^0.21.1"
-    chalk "^4.1.0"
-    logform "^2.2.0"
-    promise.allsettled "^1.0.4"
-    voca "^1.4.0"
-    winston "^3.3.3"
-
-"@sap-cloud-sdk/util@^1.53.1":
-  version "1.53.1"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.53.1.tgz#f90231775f128c3040dc5f2cdfc4f8c383a21fdf"
-  integrity sha512-zhaXZqo4pj0y0+29PQGPI++pZjXJFeAP97uXRyfAJNI02UNL6yy7hRTTiIzzGqRMcqIk4IveIIrjHDbU1SAFVg==
-  dependencies:
-    axios "^0.21.1"
-    chalk "^4.1.0"
-    logform "^2.2.0"
-    promise.allsettled "^1.0.4"
-    voca "^1.4.0"
-    winston "^3.3.3"
-
-"@sap-cloud-sdk/util@^2.0.0-20211028124158.0+e990f0fe", "@sap-cloud-sdk/util@^2.0.0-beta.1-20220118074129.0+c0d497ba":
-  version "2.0.0-beta.1-20220118074129.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-2.0.0-beta.1-20220118074129.0.tgz#e8003add27b704b82bf0dadf9616bab5d567f64a"
-  integrity sha512-ZSdbF5pwyl4fsAwNEa2DndjY8wgCM7tsDQX6cW1p18SWAn2Xlwqo4A0wbmyjRaA8w4EThDigiTc2vs4d3dSttA==
-  dependencies:
-    axios "^0.24.0"
     chalk "^4.1.0"
     logform "^2.2.0"
     promise.allsettled "^1.0.4"
@@ -2037,7 +1887,7 @@
   dependencies:
     "@sap-cloud-sdk/core" "^1.51.0"
 
-"@sap/edm-converters@~1.0.21", "@sap/edm-converters@~1.0.41":
+"@sap/edm-converters@~1.0.21":
   version "1.0.41"
   resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.41.tgz#e38cdd69b49ac407ef3c6637f78f1c6ea26ada4d"
   integrity sha512-Af7L7amlh06YXfOK2ufjKUZXhcuwXSt0uzPDrHbVBvN1lQS8Gj4BxzXTbnskiFweTR2CFuhoqsSaV2r/7l9mYw==
@@ -2064,11 +1914,11 @@
     verror "1.10.0"
 
 "@sap/xssec@^3.2.5", "@sap/xssec@^3.2.7":
-  version "3.2.11"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.11.tgz#372373e07a1787a57b772cca1ff19aec759bbf51"
-  integrity sha512-DJwydkN6gpmq1nJNwOopM5N6iqpV6ng5X7inqTTaGMn8OYJama0fwcN6m+VdjJzA2d/1lOiD63E+ubnqlU5LDQ==
+  version "3.2.12"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.12.tgz#be5c3ef5829edafc6547562fbc8a6c20cad11583"
+  integrity sha512-Uhooyklldsft5aC0O/af9dc2qlqcO4Udm1wiPBB+XGSpNHwopb/o+7zJwoxWH3naziYsIHElBaGv6fm8sPG3cQ==
   dependencies:
-    axios "^0.21.4"
+    axios "^0.25.0"
     debug "4.3.2"
     jsonwebtoken "^8.5.1"
     lru-cache "6.0.0"
@@ -2098,16 +1948,6 @@
   version "2.0.0"
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
-
-"@ts-morph/common@~0.11.1":
-  version "0.11.1"
-  resolved "https://registry.npmjs.org/@ts-morph/common/-/common-0.11.1.tgz#281af2a0642b19354d8aa07a0d50dfdb4aa8164e"
-  integrity sha512-7hWZS0NRpEsNV8vWJzg7FEz6V8MaLNeJOmwmghqUXTpzk16V1LLZhdo+4QvE/+zv4cVci0OviuJFnqhEfoV3+g==
-  dependencies:
-    fast-glob "^3.2.7"
-    minimatch "^3.0.4"
-    mkdirp "^1.0.4"
-    path-browserify "^1.0.1"
 
 "@ts-morph/common@~0.12.2":
   version "0.12.2"
@@ -2917,19 +2757,12 @@ aws4@^1.8.0:
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axios@^0.21.0, axios@^0.21.1, axios@^0.21.4:
+axios@^0.21.0, axios@^0.21.1:
   version "0.21.4"
   resolved "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
-
-axios@^0.23.0:
-  version "0.23.0"
-  resolved "https://registry.npmjs.org/axios/-/axios-0.23.0.tgz#b0fa5d0948a8d1d75e3d5635238b6c4625b05149"
-  integrity sha512-NmvAE4i0YAv5cKq8zlDoPd1VLKAqX5oLuZKs8xkJa4qi6RGn0uhCYFjWtHHC9EM/MwOwYWOs53W+V0aqEXq1sg==
-  dependencies:
-    follow-redirects "^1.14.4"
 
 axios@^0.24.0:
   version "0.24.0"
@@ -2937,6 +2770,13 @@ axios@^0.24.0:
   integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
   dependencies:
     follow-redirects "^1.14.4"
+
+axios@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.25.0.tgz#349cfbb31331a9b4453190791760a8d35b093e0a"
+  integrity sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==
+  dependencies:
+    follow-redirects "^1.14.7"
 
 babel-code-frame@^6.22.0:
   version "6.26.0"
@@ -3435,11 +3275,6 @@ co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.npmjs.org/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
-
-code-block-writer@^10.1.1:
-  version "10.1.1"
-  resolved "https://registry.npmjs.org/code-block-writer/-/code-block-writer-10.1.1.tgz#ad5684ed4bfb2b0783c8b131281ae84ee640a42f"
-  integrity sha512-67ueh2IRGst/51p0n6FvPrnRjAGHY5F8xdjkgrYE7DDzpJe6qA07RYQ9VcoUeo5ATOjSOiWpSL3SWBRRbempMw==
 
 code-block-writer@^11.0.0:
   version "11.0.0"
@@ -5022,7 +4857,7 @@ fn.name@1.x.x:
   resolved "https://registry.npmjs.org/fn.name/-/fn.name-1.1.0.tgz#26cad8017967aea8731bc42961d04a3d5988accc"
   integrity sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==
 
-follow-redirects@^1.14.0, follow-redirects@^1.14.4:
+follow-redirects@^1.14.0, follow-redirects@^1.14.4, follow-redirects@^1.14.7:
   version "1.14.7"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
   integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
@@ -7169,10 +7004,10 @@ map-obj@^4.0.0:
   resolved "https://registry.npmjs.org/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-marked@^3.0.8:
-  version "3.0.8"
-  resolved "https://registry.npmjs.org/marked/-/marked-3.0.8.tgz#2785f0dc79cbdc6034be4bb4f0f0a396bd3f8aeb"
-  integrity sha512-0gVrAjo5m0VZSJb4rpL59K1unJAMb/hm8HRXqasD8VeC8m91ytDPMritgFSlKonfdt+rRYYpP/JfLxgIX8yoSw==
+marked@^4.0.10:
+  version "4.0.10"
+  resolved "https://registry.npmjs.org/marked/-/marked-4.0.10.tgz#423e295385cc0c3a70fa495e0df68b007b879423"
+  integrity sha512-+QvuFj0nGgO970fySghXGmuw+Fd0gD2x3+MqCWLIPf5oxdv1Ka6b2q+z9RP01P/IaKPMEramy+7cNy/Lw8c3hw==
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -7930,13 +7765,6 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-onigasm@^2.2.5:
-  version "2.2.5"
-  resolved "https://registry.npmjs.org/onigasm/-/onigasm-2.2.5.tgz#cc4d2a79a0fa0b64caec1f4c7ea367585a676892"
-  integrity sha512-F+th54mPc0l1lp1ZcFMyL/jTs2Tlq4SqIHKIXGZOR/VkHkF9A7Fr5rRr5+ZG/lWeRsyrClLYRq7s/yFQ/XhWCA==
-  dependencies:
-    lru-cache "^5.1.1"
-
 ono@^4.0.11:
   version "4.0.11"
   resolved "https://registry.npmjs.org/ono/-/ono-4.0.11.tgz#c7f4209b3e396e8a44ef43b9cedc7f5d791d221d"
@@ -7973,11 +7801,6 @@ openapi-types@^10.0.0:
   version "10.0.0"
   resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-10.0.0.tgz#0debbf663b2feed0322030b5b7c9080804076934"
   integrity sha512-Y8xOCT2eiKGYDzMW9R4x5cmfc3vGaaI4EL2pwhDmodWw1HlK18YcZ4uJxc7Rdp7/gGzAygzH9SXr6GKYIXbRcQ==
-
-openapi-types@^9.3.0:
-  version "9.3.1"
-  resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-9.3.1.tgz#617ae6db3efd3e3f68e849f65ced58801d01d3cf"
-  integrity sha512-/Yvsd2D7miYB4HLJ3hOOS0+vnowQpaT75FsHzr/y5M9P4q9bwa7RcbW2YdH6KZBn8ceLbKGnHxMZ1CHliGHUFw==
 
 opossum@^6.0.0:
   version "6.3.0"
@@ -9277,13 +9100,13 @@ shebang-regex@^3.0.0:
   resolved "https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shiki@^0.9.12:
-  version "0.9.12"
-  resolved "https://registry.npmjs.org/shiki/-/shiki-0.9.12.tgz#70cbc8c1bb78ff7b356f84a7eecdb040efddd247"
-  integrity sha512-VXcROdldv0/Qu0w2XvzU4IrvTeBNs/Kj/FCmtcEXGz7Tic/veQzliJj6tEiAgoKianhQstpYmbPDStHU5Opqcw==
+shiki@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.npmjs.org/shiki/-/shiki-0.10.0.tgz#85f21ecfa95b377ff64db6c71442c22c220e9540"
+  integrity sha512-iczxaIYeBFHTFrQPb9DVy2SKgYxC4Wo7Iucm7C17cCh2Ge/refnvHscUOxM85u57MfLoNOtjoEFUWt9gBexblA==
   dependencies:
     jsonc-parser "^3.0.0"
-    onigasm "^2.2.5"
+    vscode-oniguruma "^1.6.1"
     vscode-textmate "5.2.0"
 
 shimmer@^1.1.0, shimmer@^1.2.0:
@@ -10022,14 +9845,6 @@ ts-jest@^27.0.5:
     semver "7.x"
     yargs-parser "20.x"
 
-ts-morph@^12.0.0:
-  version "12.2.0"
-  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-12.2.0.tgz#3332319cecd44aff0b7b410f1fe39637499b1a1b"
-  integrity sha512-WHXLtFDcIRwoqaiu0elAoZ/AmI+SwwDafnPKjgJmdwJ2gRVO0jMKBt88rV2liT/c6MTsXyuWbGFiHe9MRddWJw==
-  dependencies:
-    "@ts-morph/common" "~0.11.1"
-    code-block-writer "^10.1.1"
-
 ts-morph@^13.0.1:
   version "13.0.2"
   resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-13.0.2.tgz#55546023493ef82389d9e4f28848a556c784bac4"
@@ -10208,25 +10023,20 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typedoc@^0.22.3:
-  version "0.22.10"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.22.10.tgz#221e1a2b17bcb71817ef027dc4c4969d572e7620"
-  integrity sha512-hQYZ4WtoMZ61wDC6w10kxA42+jclWngdmztNZsDvIz7BMJg7F2xnT+uYsUa7OluyKossdFj9E9Ye4QOZKTy8SA==
+  version "0.22.11"
+  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.22.11.tgz#a3d7f4577eef9fc82dd2e8f4e2915e69f884c250"
+  integrity sha512-pVr3hh6dkS3lPPaZz1fNpvcrqLdtEvXmXayN55czlamSgvEjh+57GUqfhAI1Xsuu/hNHUT1KNSx8LH2wBP/7SA==
   dependencies:
     glob "^7.2.0"
     lunr "^2.3.9"
-    marked "^3.0.8"
+    marked "^4.0.10"
     minimatch "^3.0.4"
-    shiki "^0.9.12"
+    shiki "^0.10.0"
 
 typescript@^3.9.5, typescript@^3.9.7:
   version "3.9.10"
   resolved "https://registry.npmjs.org/typescript/-/typescript-3.9.10.tgz#70f3910ac7a51ed6bef79da7800690b19bf778b8"
   integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
-
-typescript@~4.3.4:
-  version "4.3.5"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
-  integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
 
 typescript@~4.4.4:
   version "4.4.4"
@@ -10418,6 +10228,11 @@ voca@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/voca/-/voca-1.4.0.tgz#e15ac58b38290b72acc0c330366b6cc7984924d7"
   integrity sha512-8Xz4H3vhYRGbFupLtl6dHwMx0ojUcjt0HYkqZ9oBCfipd/5mD7Md58m2/dq7uPuZU/0T3Gb1m66KS9jn+I+14Q==
+
+vscode-oniguruma@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.npmjs.org/vscode-oniguruma/-/vscode-oniguruma-1.6.1.tgz#2bf4dfcfe3dd2e56eb549a3068c8ee39e6c30ce5"
+  integrity sha512-vc4WhSIaVpgJ0jJIejjYxPvURJavX6QG41vu0mGhqywMkQqulezEqEQ3cO3gc8GvcOpX6ycmKGqRoROEMBNXTQ==
 
 vscode-textmate@5.2.0:
   version "5.2.0"

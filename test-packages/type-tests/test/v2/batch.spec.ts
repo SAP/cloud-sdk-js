@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {
   changeset as otherServiceChangeset,
   multipleSchemasService
@@ -47,10 +46,10 @@ batch([changeSetTestEntity, changeSetTestEntity]);
 // // $ExpectError
 // Batch(changeSetTestEntity, changeSetOtherServiceTestEntity);
 
-// $ExpectType ReadResponse<DefaultDeSerializers>
-const responseWithDefault = {} as ReadResponse;
+// $ExpectType () => ReadResponse<DefaultDeSerializers>
+(): ReadResponse => ({} as any);
 
-async function test() {
+async () => {
   // $ExpectType BatchResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
   const responses = await testService()
     .batch(testEntityApi.requestBuilder().getAll())
@@ -93,8 +92,6 @@ async function test() {
     responseCustomDeserializer;
 
     // $ExpectType TestEntity<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
-    const result = responseCustomDeserializer.as(
-      testService(custom).testEntityApi
-    );
+    responseCustomDeserializer.as(testService(custom).testEntityApi);
   }
-}
+};

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {
   batch,
   testService
@@ -7,10 +6,10 @@ import { ReadResponse } from '@sap-cloud-sdk/odata-v4/internal';
 
 const { testEntityApi } = testService();
 
-// $ExpectType ReadResponse<DefaultDeSerializers>
-const responseWithDefault = {} as ReadResponse;
+// $ExpectType () => ReadResponse<DefaultDeSerializers>
+(): ReadResponse => ({} as any);
 
-async function test() {
+async () => {
   // $ExpectType BatchResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>[]
   const responses = await testService()
     .batch(testEntityApi.requestBuilder().getAll())
@@ -27,7 +26,7 @@ async function test() {
     response;
 
     // $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>[]
-    const result = response.as(testEntityApi);
+    response.as(testEntityApi);
   }
 
   // Custom deserializer - first vaule in generic from string to number
@@ -56,4 +55,4 @@ async function test() {
     // $ExpectType TestEntity<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>[]
     responseCustomDeserializer.as(testService(custom).testEntityApi);
   }
-}
+};

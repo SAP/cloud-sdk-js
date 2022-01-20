@@ -17,8 +17,9 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import {
   DestinationConfiguration,
-  getAdditionalHeadersAndQueryParameters,
-  getAuthHeader
+  getAuthHeader,
+  getAdditionalHeaders,
+  getAdditionalQueryParameters
 } from '@sap-cloud-sdk/connectivity/internal';
 import {
   DestinationHttpRequestConfig,
@@ -136,35 +137,60 @@ export async function buildRequestWithMergedHeadersAndQueryParameters(
 ): Promise<HttpRequestConfig & DestinationHttpRequestConfig> {
   const { paramsOriginOptions, headersOriginOptions, requestConfigBase } =
     splitRequestConfig(requestConfig);
-  const headersDestination = await buildHeaders(destination);
-  const headersAndQueryParametersDestinationProperty: Pick<
-    Destination,
-    'headers' | 'queryParameters'
-  > = getAdditionalHeadersAndQueryParameters(
-    (destination.originalProperties as DestinationConfiguration) || {}
-  );
 
-  const mergedQueryParameter = mergeOptionsWithPriority({
-    ...paramsOriginOptions,
-    destinationProperty:
-      headersAndQueryParametersDestinationProperty.queryParameters,
-    destination: destination.queryParameters
-  });
-  const customAuthHeader = getAuthHeader(
-    destination.authentication,
-    headersOriginOptions?.custom
+  const mergedQueryParameter = getMergedParameters(
+    destination,
+    paramsOriginOptions
   );
-  const mergedHeaders = mergeOptionsWithPriority({
-    requestConfig: headersOriginOptions?.requestConfig,
-    custom: { ...headersOriginOptions?.custom, ...customAuthHeader },
-    destinationProperty: headersAndQueryParametersDestinationProperty.headers,
-    destination: headersDestination
-  });
+  const mergedHeaders = await getMergedHeaders(
+    destination,
+    headersOriginOptions
+  );
 
   const request = merge(destinationRequestConfig, requestConfigBase);
   request.headers = mergedHeaders || {};
   request.params = mergedQueryParameter || {};
   return request;
+}
+
+async function getMergedHeaders(
+  destination: Destination,
+  headersOriginOptions?: OriginOptions
+): Promise<Record<string, string> | undefined> {
+  const headersDestination = await buildHeaders(destination);
+  const customAuthHeader = getAuthHeader(
+    destination.authentication,
+    headersOriginOptions?.custom
+  );
+
+  const queryParametersDestinationProperty: Pick<Destination, 'headers'> =
+    getAdditionalHeaders(
+      (destination.originalProperties as DestinationConfiguration) || {}
+    );
+
+  return mergeOptionsWithPriority({
+    requestConfig: headersOriginOptions?.requestConfig,
+    custom: { ...headersOriginOptions?.custom, ...customAuthHeader },
+    destinationProperty: queryParametersDestinationProperty,
+    destination: headersDestination
+  });
+}
+
+function getMergedParameters(
+  destination: Destination,
+  paramsOriginOptions?: OriginOptions
+): Record<string, string> | undefined {
+  const queryParametersDestinationProperty: Pick<
+    Destination,
+    'queryParameters'
+  > = getAdditionalQueryParameters(
+    (destination.originalProperties as DestinationConfiguration) || {}
+  );
+  return mergeOptionsWithPriority({
+    ...paramsOriginOptions,
+    destinationProperty: queryParametersDestinationProperty,
+    destination: destination.queryParameters
+  });
 }
 
 function splitRequestConfig(requestConfig: HttpRequestConfigWithOrigin): {
@@ -259,16 +285,7 @@ function resolveDestination(
 function merge<T extends HttpRequestConfig>(
   destinationRequestConfig: DestinationHttpRequestConfig,
   customRequestConfig: T
-): T & DestinationHttpRequestConfig;
-function merge<T extends HttpRequestConfig>(
-  destinationRequestConfig: DestinationHttpRequestConfig,
-  customRequestConfig: Partial<T>
-): Partial<T> & DestinationHttpRequestConfig;
-
-function merge<T extends HttpRequestConfig>(
-  destinationRequestConfig: DestinationHttpRequestConfig,
-  customRequestConfig: T | Partial<T>
-): (T | Partial<T>) & DestinationHttpRequestConfig {
+): T & DestinationHttpRequestConfig {
   return {
     ...destinationRequestConfig,
     ...customRequestConfig,

@@ -265,7 +265,7 @@ authorization:*******
 sap-client:001`);
     });
 
-    it('warn when custom headers are used', async () => {
+    it('logs when custom headers are used', async () => {
       nock('https://example.com', {
         reqheaders: {
           authorization: 'abc',

@@ -38,20 +38,12 @@ export type HttpRequestConfig = HttpRequestConfigBase & {
 };
 
 /**
- * This interface is similar to [[HttpRequestConfig]], whilst the `headers` and `params` can be defined with "origin" information.
+ * This interface is similar to [[HttpRequestConfig]]. In addition, the `headers` and `params` can be defined with "origin" information.
  * @see [[OriginOptions]]
  */
 export type HttpRequestConfigWithOrigin = HttpRequestConfigBase & {
   params?: OriginOptions;
   headers?: OriginOptions;
-};
-
-/**
- * @internal
- */
-export type HttpRequestConfigWithOriginInternal = HttpRequestConfigBase & {
-  params?: OriginOptionsInternal;
-  headers?: OriginOptionsInternal;
 };
 
 /**

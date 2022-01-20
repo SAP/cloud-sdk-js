@@ -74,11 +74,12 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
     method: 'head',
     ...requestConfig,
     params: {
-      requestConfig: requestConfig.params || {}
+      custom: requestConfig.params || {},
+      requestConfig: {}
     },
     headers: {
       custom: buildCsrfFetchHeaders(requestConfig.headers),
-      requestConfig: requestConfig.headers || {}
+      requestConfig: {}
     }
   };
 

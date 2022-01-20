@@ -100,19 +100,65 @@ function getAdditionalProperties(
 export function getAdditionalHeadersAndQueryParameters(
   destinationConfig: DestinationConfiguration
 ): Pick<Destination, 'headers' | 'queryParameters'> {
+  const additionalProperties = {};
+
+  const additionalHeaders = getAdditionalHeaders(destinationConfig);
+  if (Object.keys(additionalHeaders).length) {
+    additionalProperties['headers'] = additionalHeaders;
+  }
+
+  const additionalQueryParameters =
+    getAdditionalQueryParameters(destinationConfig);
+  if (Object.keys(additionalQueryParameters).length) {
+    additionalProperties['queryParameters'] = additionalQueryParameters;
+  }
+
+  return additionalProperties;
+}
+
+/**
+ * @internal
+ * Get additional headers from a destination.
+ * Destinations can specify additional headers, that should be added to every request against the given destination.
+ * They are specified in the following format:
+ * `URL.headers.<header-name>`
+ * @param destinationConfig - Original destination config that could include additional headers.
+ * @returns An object with either the headers or query parameters and their values, depending on the `originalKeyPrefix`.
+ */
+export function getAdditionalHeaders(
+  destinationConfig: DestinationConfiguration
+): Pick<Destination, 'headers'> {
   const additionalHeaders = getAdditionalProperties(
     destinationConfig,
     'URL.headers.'
-  );
-  const additionalQueryParameters = getAdditionalProperties(
-    destinationConfig,
-    'URL.queries.'
   );
 
   const additionalProperties = {};
   if (Object.keys(additionalHeaders).length) {
     additionalProperties['headers'] = additionalHeaders;
   }
+
+  return additionalProperties;
+}
+
+/**
+ * @internal
+ * Get additional query parameters from a destination.
+ * Destinations can specify additional query parameters, that should be added to every request against the given destination.
+ * They are specified in the following format:
+ * `URL.queries.<query-parameter-name>`
+ * @param destinationConfig - Original destination config that could include additional headers or query parameters.
+ * @returns An object with either the headers or query parameters and their values, depending on the `originalKeyPrefix`.
+ */
+export function getAdditionalQueryParameters(
+  destinationConfig: DestinationConfiguration
+): Pick<Destination, 'queryParameters'> {
+  const additionalQueryParameters = getAdditionalProperties(
+    destinationConfig,
+    'URL.queries.'
+  );
+
+  const additionalProperties = {};
   if (Object.keys(additionalQueryParameters).length) {
     additionalProperties['queryParameters'] = additionalQueryParameters;
   }

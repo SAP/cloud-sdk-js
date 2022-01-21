@@ -1,7 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
-
-const { testEntityApi } = testService();
+import { testEntityApi, testEntityApiCustom } from './test-data';
 
 export const testFilterString = {
   filter: testEntityApi.schema.STRING_PROPERTY.equals('test'),
@@ -41,4 +39,18 @@ export const testFilterSingleLink = {
   ),
   odataStr:
     "to_SingleLink/KeyProperty eq 'test' and to_SingleLink/BooleanProperty eq false"
+};
+
+export const testFilterStringCustom = {
+  filter: testEntityApiCustom.schema.STRING_PROPERTY.equals(15),
+  odataStr: "StringProperty eq 'URI(15)'"
+};
+
+export const testFilterSingleLinkCustom = {
+  filter: testEntityApiCustom.schema.TO_SINGLE_LINK.filter(
+    testEntityApiCustom.schema.TO_SINGLE_LINK._linkedEntityApi.schema.KEY_PROPERTY.equals(
+      15
+    )
+  ),
+  odataStr: "to_SingleLink/KeyProperty eq 'URI(15)'"
 };

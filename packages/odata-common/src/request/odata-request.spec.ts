@@ -1,15 +1,13 @@
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import {
-  DefaultDeSerializers,
-  ODataCreateRequestConfig,
-  ODataDeleteRequestConfig,
-  ODataGetAllRequestConfig,
-  ODataRequest,
-  ODataUpdateRequestConfig
-} from '../internal';
 import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity, commonEntityApi } from '../../test/common-entity';
+import { DefaultDeSerializers } from '../de-serializers';
+import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
+import { ODataCreateRequestConfig } from './odata-create-request-config';
+import { ODataUpdateRequestConfig } from './odata-update-request-config';
+import { ODataDeleteRequestConfig } from './odata-delete-request-config';
+import { ODataRequest } from './odata-request';
 
 describe('OData Request', () => {
   describe('format', () => {

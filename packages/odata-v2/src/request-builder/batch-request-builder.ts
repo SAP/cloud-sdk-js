@@ -8,8 +8,11 @@ import {
   parseBatchResponse,
   BatchRequestBuilder
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers/de-serializers';
-import { DefaultDeSerializers, entityDeserializer } from '../de-serializers';
+import {
+  DeSerializers,
+  DefaultDeSerializers,
+  entityDeserializer
+} from '../de-serializers';
 import { BatchResponse } from '../batch-response';
 import { responseDataAccessor } from './response-data-accessor';
 

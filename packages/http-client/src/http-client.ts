@@ -163,10 +163,9 @@ async function getMergedHeaders(
     headersOriginOptions?.custom
   );
 
-  const queryParametersDestinationProperty: Pick<Destination, 'headers'> =
-    getAdditionalHeaders(
-      (destination.originalProperties as DestinationConfiguration) || {}
-    );
+  const queryParametersDestinationProperty = getAdditionalHeaders(
+    (destination.originalProperties as DestinationConfiguration) || {}
+  ).headers;
 
   return mergeOptionsWithPriority({
     requestConfig: headersOriginOptions?.requestConfig,
@@ -180,12 +179,9 @@ function getMergedParameters(
   destination: Destination,
   paramsOriginOptions?: OriginOptions
 ): Record<string, string> | undefined {
-  const queryParametersDestinationProperty: Pick<
-    Destination,
-    'queryParameters'
-  > = getAdditionalQueryParameters(
+  const queryParametersDestinationProperty = getAdditionalQueryParameters(
     (destination.originalProperties as DestinationConfiguration) || {}
-  );
+  ).queryParameters;
   return mergeOptionsWithPriority({
     ...paramsOriginOptions,
     destinationProperty: queryParametersDestinationProperty,

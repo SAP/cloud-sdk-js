@@ -1,3 +1,4 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   defaultBasicCredentials,
   defaultDestination
@@ -131,6 +132,39 @@ describe('getAuthHeaders', () => {
       ).resolves.toEqual({
         'Proxy-Authorization': 'someProxyValue',
         'SAP-Connectivity-Authentication': 'someValueDestination'
+      });
+    });
+  });
+  describe('SamlAssertion', () => {
+    it('should add the auth token from the destination', async () => {
+      const destination: Destination = {
+        ...defaultDestination,
+        authentication: 'SAMLAssertion',
+        authTokens: [
+          {
+            type: 'SAML2.0',
+            value: 'some.token',
+            expiresIn: '3600',
+            error: null,
+            http_header: {
+              key: 'Authorization',
+              value: 'SAML2.0 some.token'
+            }
+          }
+        ]
+      };
+      const logger = createLogger({
+        package: 'connectivity',
+        messageContext: 'authorization-header'
+      });
+      const warnSpy = jest.spyOn(logger, 'warn');
+      const actual = await getAuthHeaders(destination);
+      expect(warnSpy).toHaveBeenCalledWith(
+        "Destination authentication flow is 'SamlAssertion' and the auth header contains the SAML assertion. In most cases you want to translate the assertion to a Bearer token using the 'OAuth2SAMLBearerAssertion' flow."
+      );
+
+      expect(actual).toEqual({
+        authorization: destination.authTokens![0].http_header.value
       });
     });
   });

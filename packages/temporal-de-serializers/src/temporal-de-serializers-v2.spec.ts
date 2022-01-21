@@ -6,7 +6,7 @@ import {
   serializeFromPlainDateTime,
   serializeFromPlainTime,
   serializeFromZonedDateTime
-} from './temporal-de-serializers';
+} from './temporal-de-serializers-v2';
 
 describe('EDM to Temporal', () => {
   it('returns a non utc date if there is no offset', () => {

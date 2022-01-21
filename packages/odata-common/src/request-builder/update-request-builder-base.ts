@@ -1,6 +1,6 @@
 import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
+import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { EntitySerializer } from '../entity-serializer';
 import { ODataUpdateRequestConfig, ODataRequest } from '../request';
@@ -8,6 +8,7 @@ import { ODataUri } from '../uri-conversion';
 import { Selectable } from '../selectable';
 import { DeSerializers } from '../de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
+import {EntityApi} from "../entity-api";
 
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.

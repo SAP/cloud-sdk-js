@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { upperCaseSnakeCase } from '@sap-cloud-sdk/util';
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
 import {
   FilterLambdaExpression,
@@ -24,6 +24,7 @@ import {
   UriConverter
 } from '../de-serializers';
 import { ComplexTypeField, OneToManyLink } from '../selectable';
+import {EntityApi} from "../entity-api";
 
 type GetFilterType = <
   EntityT extends EntityBase,

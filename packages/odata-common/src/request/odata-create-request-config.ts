@@ -1,8 +1,9 @@
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { Link } from '../selectable';
 import { DeSerializers } from '../de-serializers';
 import { ODataRequestConfig } from './odata-request-config';
+import {EntityApi} from "../entity-api";
 
 /**
  * OData create request configuration for an entity type.

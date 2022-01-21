@@ -1,8 +1,9 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
+import {EntityApi} from "../entity-api";
 
 /**
  * OData delete request configuration for an entity type.

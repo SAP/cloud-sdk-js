@@ -3,7 +3,7 @@ import {
   Destination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
 import { Orderable } from '../order';
 import { ODataGetAllRequestConfig } from '../request';
@@ -12,6 +12,7 @@ import { ResponseDataAccessor } from '../response-data-accessor';
 import { DeSerializers } from '../de-serializers';
 import { CountRequestBuilder } from './count-request-builder';
 import { GetRequestBuilderBase } from './get-request-builder-base';
+import {EntityApi} from "../entity-api";
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]

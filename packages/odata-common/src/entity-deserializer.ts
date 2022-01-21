@@ -5,7 +5,6 @@ import {
 } from '@sap-cloud-sdk/util';
 import { createValueDeserializer, DeSerializers } from './de-serializers';
 import {
-  EntityApi,
   EntityBase,
   isExpandedProperty,
   isSelectedProperty
@@ -23,7 +22,7 @@ import {
   ComplexTypeField,
   OneToOneLink
 } from './selectable';
-import { inferEntity } from './helper-types';
+import {EntityApi, EntityType} from "./entity-api";
 
 const logger = createLogger({
   package: 'odata-common',
@@ -81,7 +80,7 @@ export function entityDeserializer<T extends DeSerializers>(
     json: Partial<JsonT>,
     entityApi: EntityApiT,
     requestHeader?: any
-  ): inferEntity<EntityApiT> {
+  ): EntityType<EntityApiT> {
     const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
     return Object.values(entityApi.schema)
       .filter(field => isSelectedProperty(json, field))
@@ -156,7 +155,7 @@ export function entityDeserializer<T extends DeSerializers>(
   >(
     json: Partial<JsonT>,
     link: Link<EntityT, DeSerializersT, LinkedEntityApiT>
-  ): inferEntity<LinkedEntityApiT> | null {
+  ): EntityType<LinkedEntityApiT> | null {
     if (isExpandedProperty(json, link)) {
       return deserializeEntity(json[link._fieldName], link._linkedEntityApi);
     }
@@ -171,7 +170,7 @@ export function entityDeserializer<T extends DeSerializers>(
   >(
     json: Partial<JsonT>,
     link: Link<EntityT, DeSerializersT, LinkedEntityApiT>
-  ): inferEntity<LinkedEntityApiT>[] | undefined {
+  ): EntityType<LinkedEntityApiT>[] | undefined {
     if (isSelectedProperty(json, link)) {
       const results = extractDataFromOneToManyLink(json[link._fieldName]);
       return results.map(linkJson =>

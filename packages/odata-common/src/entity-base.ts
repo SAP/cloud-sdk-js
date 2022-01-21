@@ -1,11 +1,11 @@
 /* eslint-disable max-classes-per-file */
 
-import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
-import { EntityBuilder } from './entity-builder';
-import { isNavigationProperty, nonEnumerable } from './properties-util';
-import type { CustomField, Field, Link } from './selectable';
-import type { RequestBuilder } from './request-builder';
-import { DefaultDeSerializers, DeSerializers } from './de-serializers';
+import {camelCase, equal, isNullish} from '@sap-cloud-sdk/util';
+import {EntityBuilder} from './entity-builder';
+import {isNavigationProperty, nonEnumerable} from './properties-util';
+import type {Field, Link} from './selectable';
+import {DeSerializers} from './de-serializers';
+import {EntityApi} from "./entity-api";
 
 /**
  * @internal
@@ -20,27 +20,6 @@ export interface Constructable<EntityT extends EntityBase> {
   _defaultServicePath: string;
   _keys: string[];
   new (...args: any[]): EntityT;
-}
-
-/**
- * @internal
- * Represents the API of an entity, including its request and entity builders as well as its schema.
- * @typeparam EntityT - Type of the entity.
- * @typeparam DeSerializersT - Type of the (de-)serializers.
- * @typeparam JsonT - Type of the entity without methods.
- */
-export interface EntityApi<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> {
-  deSerializers: DeSerializersT;
-  requestBuilder(): RequestBuilder<EntityT, DeSerializersT>;
-  entityBuilder(): EntityBuilderType<EntityT, DeSerializersT>;
-  entityConstructor: Constructable<EntityT>;
-  schema: Record<string, any>;
-  customField<NullableT extends boolean>(
-    fieldName: string
-  ): CustomField<EntityT, DeSerializersT, NullableT>;
 }
 
 /**

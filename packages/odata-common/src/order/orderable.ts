@@ -1,5 +1,5 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import {
   ComplexTypePropertyFields,
   SimpleTypeFields,
@@ -7,6 +7,7 @@ import {
 } from '../selectable';
 import { Order } from './order';
 import { OrderLink } from './order-link';
+import {EntityApi} from "../entity-api";
 
 /**
  * A union of all types that can be used for ordering.

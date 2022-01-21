@@ -24,11 +24,11 @@ export class UnaryFilter<
  * @internal
  */
 export function isUnaryFilter<
-  T extends EntityBase,
+  EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
-  filterable: Filterable<T, DeSerializersT>
-): filterable is UnaryFilter<T, DeSerializersT> {
+  filterable: Filterable<EntityT, DeSerializersT>
+): filterable is UnaryFilter<EntityT, DeSerializersT> {
   return (
     typeof filterable['singleOperand'] !== 'undefined' &&
     typeof filterable['operator'] !== 'undefined'

@@ -1,5 +1,5 @@
 import { createLogger, upperCaseSnakeCase } from '@sap-cloud-sdk/util';
-import { EntityApi, EntityBase } from './entity-base';
+import { EntityBase } from './entity-base';
 import {
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
@@ -13,6 +13,7 @@ import {
 } from './selectable';
 import { EdmTypeShared, isEdmType } from './edm-types';
 import { createValueSerializer, DeSerializers } from './de-serializers';
+import {EntityApi} from "./entity-api";
 
 const logger = createLogger({
   package: 'odata-common',

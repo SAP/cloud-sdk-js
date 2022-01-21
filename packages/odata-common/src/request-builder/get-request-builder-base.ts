@@ -7,8 +7,7 @@ import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   Constructable,
   EntityIdentifiable,
-  EntityBase,
-  EntityApi
+  EntityBase
 } from '../entity-base';
 import { Selectable } from '../selectable';
 import {
@@ -17,6 +16,7 @@ import {
 } from '../request';
 import { DeSerializers } from '../de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
+import {EntityApi} from "../entity-api";
 
 /**
  * @internal

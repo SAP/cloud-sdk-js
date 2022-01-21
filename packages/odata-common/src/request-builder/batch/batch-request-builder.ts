@@ -6,12 +6,13 @@ import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig, ODataRequest } from '../../request';
 import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
-import { EntityApi, EntityBase } from '../../entity-base';
+import { EntityBase } from '../../entity-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { BatchChangeSet } from './batch-change-set';
 import { BatchSubRequestPathType } from './batch-request-options';
 import { serializeBatchRequest } from './batch-request-serializer';
+import {EntityApi} from "../../entity-api";
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.

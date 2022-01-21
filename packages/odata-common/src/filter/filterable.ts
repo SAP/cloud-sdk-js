@@ -2,13 +2,13 @@ import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
 import type { OneToManyLink } from '../selectable';
 import { DeSerializers } from '../de-serializers';
-import { EntityApi } from '../entity-base';
 import type { BooleanFilterFunction } from './boolean-filter-function';
 import type { Filter } from './filter';
 import { UnaryFilter } from './unary-filter';
 import { FilterList } from './filter-list';
 import { FilterLambdaExpression } from './filter-lambda-expression';
 import { FilterLink } from './filter-link';
+import {EntityApi} from "../entity-api";
 // import { commonService} from "../../test/common-entity";
 
 /**
@@ -31,9 +31,6 @@ export type Filterable<
   | UnaryFilter<EntityT, DeSerializersT>
   | BooleanFilterFunction<EntityT>
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;
-
-// const {commonEntityApi,commonEntitySingleLinkApi} = commonService()
-// const withAnd = and(commonEntityApi.schema.TO_SINGLE_LINK.filter(commonEntitySingleLinkApi.schema.STRING_PROPERTY.equals("")))
 
 /**
  * Combine [[Filterable]]s with logical `and` to create a [[FilterList]].
@@ -140,7 +137,7 @@ export function or<
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
   first:
-    | Filterable<EntityT, DeSerializersT, LinkedEntityApiT> // , EntityApi<EntityBase, DeSerializersT>>
+    | Filterable<EntityT, DeSerializersT, LinkedEntityApiT>
     | Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[],
   ...rest: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
 ): FilterList<EntityT, DeSerializersT, LinkedEntityApiT> {

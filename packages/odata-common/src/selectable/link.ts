@@ -1,8 +1,8 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
+import { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { Expandable } from '../expandable';
-import { inferEntity } from '../helper-types';
 import type { Selectable } from './selectable';
+import {EntityApi, EntityType} from "../entity-api";
 
 /**
  * Represents a navigation property of an OData entity.
@@ -34,9 +34,9 @@ export class Link<
   /**
    * List of selectables on the linked entity.
    */
-  _selects: Selectable<inferEntity<LinkedEntityApiT>, DeSerializersT>[] = [];
+  _selects: Selectable<EntityType<LinkedEntityApiT>, DeSerializersT>[] = [];
   _expand: Expandable<
-    inferEntity<LinkedEntityApiT>,
+    EntityType<LinkedEntityApiT>,
     DeSerializersT,
     EntityApi<EntityBase, DeSerializersT>
   >[] = [];
@@ -61,7 +61,7 @@ export class Link<
    * @returns The link itself, to facilitate method chaining
    */
   select(
-    ...selects: Selectable<inferEntity<LinkedEntityApiT>, DeSerializersT>[]
+    ...selects: Selectable<EntityType<LinkedEntityApiT>, DeSerializersT>[]
   ): this {
     const link = this.clone();
     link._selects = selects;
@@ -70,7 +70,7 @@ export class Link<
 
   expand(
     ...expands: Expandable<
-      inferEntity<LinkedEntityApiT>,
+      EntityType<LinkedEntityApiT>,
       DeSerializersT,
       EntityApi<EntityBase, DeSerializersT>
     >[]

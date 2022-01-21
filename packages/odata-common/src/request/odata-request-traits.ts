@@ -1,8 +1,9 @@
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
 import { Orderable } from '../order';
 import { Filterable } from '../filter';
 import { DeSerializers } from '../de-serializers';
+import {EntityApi} from "../entity-api";
 
 /**
  * @internal

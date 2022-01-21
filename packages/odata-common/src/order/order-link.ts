@@ -1,8 +1,8 @@
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { Link } from '../selectable';
 import { DeSerializers } from '../de-serializers';
-import { inferEntity } from '../helper-types';
 import type { Orderable } from './orderable';
+import {EntityApi, EntityType} from "../entity-api";
 
 /**
  * Link to represent an order by on a linked entity.
@@ -16,7 +16,7 @@ export class OrderLink<
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > {
   readonly entityType: EntityT;
-  readonly linkedEntityType: inferEntity<LinkedEntityApiT>;
+  readonly linkedEntityType: EntityType<LinkedEntityApiT>;
 
   /**
    * Creates an instance of OrderLink.
@@ -26,7 +26,7 @@ export class OrderLink<
   constructor(
     public link: Link<EntityT, DeSerializersT, LinkedEntityApiT>,
     public orderBy: Orderable<
-      inferEntity<LinkedEntityApiT>,
+      EntityType<LinkedEntityApiT>,
       DeSerializersT,
       EntityApi<EntityBase, DeSerializersT>
     >[]

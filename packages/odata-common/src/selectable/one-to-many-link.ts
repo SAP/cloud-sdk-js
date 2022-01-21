@@ -3,9 +3,8 @@ import { FilterLink } from '../filter';
 import { Orderable } from '../order';
 import type { Filterable } from '../filter';
 import { DeSerializers } from '../de-serializers';
-import { EntityApi } from '../entity-base';
-import { inferEntity } from '../helper-types';
 import { Link } from './link';
+import {EntityApi, EntityType} from "../entity-api";
 
 /**
  * @param filters - filters
@@ -35,7 +34,7 @@ export class OneToManyLink<
 > extends Link<EntityT, DeSerializersT, LinkedEntityApiT> {
   _filters: FilterLink<EntityT, DeSerializersT, LinkedEntityApiT>;
   _orderBy: Orderable<
-    inferEntity<LinkedEntityApiT>,
+    EntityType<LinkedEntityApiT>,
     DeSerializersT,
     EntityApi<EntityBase, DeSerializersT>
   >[] = [];
@@ -58,9 +57,9 @@ export class OneToManyLink<
    */
   filter(
     ...expressions: (
-      | Filterable<inferEntity<LinkedEntityApiT>, DeSerializersT>
+      | Filterable<EntityType<LinkedEntityApiT>, DeSerializersT>
       | OneToManyLink<
-          inferEntity<LinkedEntityApiT>,
+          EntityType<LinkedEntityApiT>,
           DeSerializersT,
           EntityApi<EntityBase, DeSerializersT>
         >
@@ -79,7 +78,7 @@ export class OneToManyLink<
    */
   orderBy(
     ...orderBy: Orderable<
-      inferEntity<LinkedEntityApiT>,
+      EntityType<LinkedEntityApiT>,
       DeSerializersT,
       EntityApi<EntityBase, DeSerializersT>
     >[]

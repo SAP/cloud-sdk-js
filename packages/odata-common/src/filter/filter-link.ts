@@ -1,8 +1,8 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
+import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { Link } from '../selectable';
-import { inferEntity } from '../helper-types';
 import type { Filterable } from './filterable';
+import {EntityApi, EntityType} from "../entity-api";
 
 /**
  * Data structure to represent filter on properties of a navigation property (link).
@@ -32,7 +32,7 @@ export class FilterLink<
   /**
    * Linked entity to be filtered by.
    */
-  readonly _linkedEntityType: inferEntity<LinkedEntityApiT>;
+  readonly _linkedEntityType: EntityType<LinkedEntityApiT>;
 
   /**
    * Creates an instance of `FilterLink`.
@@ -41,7 +41,7 @@ export class FilterLink<
    */
   constructor(
     public link: Link<EntityT, DeSerializersT, LinkedEntityApiT>,
-    public filters: Filterable<inferEntity<LinkedEntityApiT>, DeSerializersT>[]
+    public filters: Filterable<EntityType<LinkedEntityApiT>, DeSerializersT>[]
   ) {}
 }
 

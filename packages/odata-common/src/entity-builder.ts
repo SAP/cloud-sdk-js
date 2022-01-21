@@ -4,8 +4,9 @@ import {
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
 import { isNavigationProperty } from './properties-util';
-import type { EntityApi, EntityBase } from './entity-base';
+import type { EntityBase } from './entity-base';
 import { DeSerializers } from './de-serializers';
+import {EntityApi} from "./entity-api";
 
 const logger = createLogger({
   package: 'odata-common',

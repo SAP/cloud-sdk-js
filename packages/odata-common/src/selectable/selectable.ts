@@ -1,4 +1,4 @@
-import { EntityApi, EntityBase, ODataVersionOf } from '../entity-base';
+import { EntityBase, ODataVersionOf } from '../entity-base';
 import { DeSerializers } from '../de-serializers';
 import type { CollectionField } from './collection-field';
 import type { AllFields } from './all-fields';
@@ -6,6 +6,7 @@ import type { ComplexTypeField } from './complex-type-field';
 import type { CustomField } from './custom-field';
 import type { Link } from './link';
 import type { SimpleTypeFields } from './simple-type-fields';
+import {EntityApi} from "../entity-api";
 
 /**
  * @internal

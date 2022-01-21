@@ -1,7 +1,8 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { FilterList } from './filter-list';
 import type { Filterable } from './filterable';
+import {EntityApi} from "../entity-api";
 
 /* eslint-disable valid-jsdoc */
 

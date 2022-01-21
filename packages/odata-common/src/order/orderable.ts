@@ -16,7 +16,7 @@ import { OrderLink } from './order-link';
  */
 export type Orderable<
   EntityT extends EntityBase,
-  LinkedEntityApiT extends EntityApi<EntityBase>
+  LinkedEntityApiT extends EntityApi<EntityBase>=EntityApi<EntityBase>
 > = Order<EntityT> | OrderLink<EntityT, LinkedEntityApiT>;
 
 /**

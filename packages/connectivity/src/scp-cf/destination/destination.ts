@@ -331,9 +331,6 @@ export function noDestinationErrorMessage(
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
 
-// type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
-// type XOR<T, U> = (Without<T, U> & Required<U>) | (Without<U, T> & Required<T>)
-
 type Without<T> = { [P in keyof T]?: never };
 type XOR<T, U> = (Without<T> & U) | (Without<U> & T);
 

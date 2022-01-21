@@ -8,8 +8,8 @@ import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { ODataDeleteRequestConfig } from '../request';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
-import {EntityApi} from "../entity-api";
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
  * @typeparam EntityT - Type of the entity to be deleted

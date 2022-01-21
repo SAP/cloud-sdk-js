@@ -3,8 +3,8 @@ import { FilterLink } from '../filter';
 import { Orderable } from '../order';
 import type { Filterable } from '../filter';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi, EntityType } from '../entity-api';
 import { Link } from './link';
-import {EntityApi, EntityType} from "../entity-api";
 
 /**
  * @param filters - filters

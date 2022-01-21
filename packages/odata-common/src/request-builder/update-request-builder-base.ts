@@ -7,8 +7,8 @@ import { ODataUpdateRequestConfig, ODataRequest } from '../request';
 import { ODataUri } from '../uri-conversion';
 import { Selectable } from '../selectable';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
-import {EntityApi} from "../entity-api";
 
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.

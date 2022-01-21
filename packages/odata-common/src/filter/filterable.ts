@@ -2,13 +2,13 @@ import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
 import type { OneToManyLink } from '../selectable';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import type { BooleanFilterFunction } from './boolean-filter-function';
 import type { Filter } from './filter';
 import { UnaryFilter } from './unary-filter';
 import { FilterList } from './filter-list';
 import { FilterLambdaExpression } from './filter-lambda-expression';
 import { FilterLink } from './filter-link';
-import {EntityApi} from "../entity-api";
 // import { commonService} from "../../test/common-entity";
 
 /**

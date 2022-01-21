@@ -5,9 +5,9 @@ import { Expandable } from '../expandable';
 import { Orderable } from '../order';
 import { ODataUri } from '../uri-conversion';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithGetAllRestrictions } from './odata-request-traits';
-import {EntityApi} from "../entity-api";
 
 /**
  * OData getAll request configuration for an entity type.

@@ -1,8 +1,8 @@
 import { DeSerializers } from '../de-serializers';
 import { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { Expandable } from '../expandable';
+import { EntityApi, EntityType } from '../entity-api';
 import type { Selectable } from './selectable';
-import {EntityApi, EntityType} from "../entity-api";
 
 /**
  * Represents a navigation property of an OData entity.

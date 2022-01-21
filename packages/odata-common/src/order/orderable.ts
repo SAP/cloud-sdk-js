@@ -5,9 +5,9 @@ import {
   SimpleTypeFields,
   Link
 } from '../selectable';
+import { EntityApi } from '../entity-api';
 import { Order } from './order';
 import { OrderLink } from './order-link';
-import {EntityApi} from "../entity-api";
 
 /**
  * A union of all types that can be used for ordering.

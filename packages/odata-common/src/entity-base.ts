@@ -1,11 +1,11 @@
 /* eslint-disable max-classes-per-file */
 
-import {camelCase, equal, isNullish} from '@sap-cloud-sdk/util';
-import {EntityBuilder} from './entity-builder';
-import {isNavigationProperty, nonEnumerable} from './properties-util';
-import type {Field, Link} from './selectable';
-import {DeSerializers} from './de-serializers';
-import {EntityApi} from "./entity-api";
+import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
+import { EntityBuilder } from './entity-builder';
+import { isNavigationProperty, nonEnumerable } from './properties-util';
+import type { Field, Link } from './selectable';
+import { DeSerializers } from './de-serializers';
+import { EntityApi } from './entity-api';
 
 /**
  * @internal

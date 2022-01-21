@@ -10,8 +10,8 @@ import { ODataGetByKeyRequestConfig } from '../request';
 import { Selectable } from '../selectable';
 import { ODataUri } from '../uri-conversion';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { GetRequestBuilderBase } from './get-request-builder-base';
-import {EntityApi} from "../entity-api";
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
  * @typeparam EntityT - Type of the entity to be requested

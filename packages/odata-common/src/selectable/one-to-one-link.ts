@@ -2,8 +2,8 @@ import { EntityBase } from '../entity-base';
 import { Order, Orderable, OrderLink } from '../order';
 import { Filterable, FilterLink } from '../filter';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi, EntityType } from '../entity-api';
 import { Link } from './link';
-import {EntityApi, EntityType} from "../entity-api";
 
 /**
  * Represents a link from one entity to one other linked entity (as opposed to a list of linked entities). In OData v2 a `OneToOneLink` can be used to filter and order a selection on an entity based on filters and orders on a linked entity.

@@ -1,7 +1,7 @@
 import { DeSerializers } from './de-serializers';
 import { EntityBase, ODataVersionOf } from './entity-base';
 import { OneToManyLink, AllFields, OneToOneLink } from './selectable';
-import {EntityApi} from "./entity-api";
+import { EntityApi } from './entity-api';
 
 /**
  * Represents everything that can be used in an `.expand` statement. Only relevant for OData v4 requests.

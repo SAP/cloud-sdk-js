@@ -13,7 +13,7 @@ import {
 } from './selectable';
 import { EdmTypeShared, isEdmType } from './edm-types';
 import { createValueSerializer, DeSerializers } from './de-serializers';
-import {EntityApi} from "./entity-api";
+import { EntityApi } from './entity-api';
 
 const logger = createLogger({
   package: 'odata-common',

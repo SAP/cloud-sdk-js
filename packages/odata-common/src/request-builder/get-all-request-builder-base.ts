@@ -10,9 +10,9 @@ import { ODataGetAllRequestConfig } from '../request';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { CountRequestBuilder } from './count-request-builder';
 import { GetRequestBuilderBase } from './get-request-builder-base';
-import {EntityApi} from "../entity-api";
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]

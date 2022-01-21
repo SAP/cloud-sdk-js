@@ -1,8 +1,8 @@
 import { DeSerializers } from '../de-serializers';
 import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { Link } from '../selectable';
+import { EntityApi, EntityType } from '../entity-api';
 import type { Filterable } from './filterable';
-import {EntityApi, EntityType} from "../entity-api";
 
 /**
  * Data structure to represent filter on properties of a navigation property (link).

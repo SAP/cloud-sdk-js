@@ -1,8 +1,8 @@
 import { EntityBase } from '../entity-base';
 import { Link } from '../selectable';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi, EntityType } from '../entity-api';
 import type { Orderable } from './orderable';
-import {EntityApi, EntityType} from "../entity-api";
 
 /**
  * Link to represent an order by on a linked entity.

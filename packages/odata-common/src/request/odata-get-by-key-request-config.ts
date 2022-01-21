@@ -1,11 +1,11 @@
-import { EntityBase} from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { Expandable } from '../expandable';
 import { Selectable } from '../selectable';
 import { ODataUri } from '../uri-conversion';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { WithKeys, WithSelection } from './odata-request-traits';
 import { ODataRequestConfig } from './odata-request-config';
-import {EntityApi} from "../entity-api";
 
 /**
  * OData getByKey request configuration for an entity type.

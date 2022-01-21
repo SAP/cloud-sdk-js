@@ -1,7 +1,7 @@
 import { EntityBase } from '../entity-base';
 import { Orderable, OrderLink, Order } from '../order';
 import { DeSerializers } from '../de-serializers';
-import {EntityApi} from "../entity-api";
+import { EntityApi } from '../entity-api';
 
 /**
  * Get an object containing the given order bys as query parameter, or an empty object if none was given.

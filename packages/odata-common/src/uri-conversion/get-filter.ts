@@ -24,7 +24,7 @@ import {
   UriConverter
 } from '../de-serializers';
 import { ComplexTypeField, OneToManyLink } from '../selectable';
-import {EntityApi} from "../entity-api";
+import { EntityApi } from '../entity-api';
 
 type GetFilterType = <
   EntityT extends EntityBase,

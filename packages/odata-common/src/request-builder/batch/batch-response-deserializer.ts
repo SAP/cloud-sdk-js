@@ -10,8 +10,8 @@ import { DeSerializers } from '../../de-serializers';
 import { EntityBase } from '../../entity-base';
 import { EntityDeserializer } from '../../entity-deserializer';
 import { ResponseDataAccessor } from '../../response-data-accessor';
+import { EntityApi } from '../../entity-api';
 import { ResponseData, isHttpSuccessCode } from './batch-response-parser';
-import {EntityApi} from "../../entity-api";
 
 const logger = createLogger({
   package: 'odata-common',

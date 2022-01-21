@@ -22,7 +22,7 @@ import {
   ComplexTypeField,
   OneToOneLink
 } from './selectable';
-import {EntityApi, EntityType} from "./entity-api";
+import { EntityApi, EntityType } from './entity-api';
 
 const logger = createLogger({
   package: 'odata-common',

@@ -1,6 +1,6 @@
 import { camelCase } from '@sap-cloud-sdk/util';
-import { EntityBase} from '../entity-base';
-import {EntityApi} from "../entity-api";
+import { EntityBase } from '../entity-base';
+import { EntityApi } from '../entity-api';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.

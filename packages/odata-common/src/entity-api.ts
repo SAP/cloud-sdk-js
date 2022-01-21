@@ -33,7 +33,7 @@ export interface EntityApi<
  */
 export type EntityType<forExtraction> = forExtraction extends EntityApi<
   infer EntityT,
-  infer DeserializerT
+  any
 >
   ? EntityT
   : never;

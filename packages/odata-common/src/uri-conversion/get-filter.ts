@@ -255,7 +255,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     DeSerializersT extends DeSerializers,
     LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
   >(
-    filter: FilterList<FilterEntityT, DeSerializersT, LinkedEntityApiT>,
+    filter: FilterList<FilterEntityT, DeSerializersT>,
     parentFieldNames: string[],
     targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel: number

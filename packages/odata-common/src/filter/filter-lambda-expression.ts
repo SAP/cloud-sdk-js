@@ -20,7 +20,7 @@ export class FilterLambdaExpression<
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > {
   constructor(
-    public filters: FilterList<EntityT, DeSerializersT, LinkedEntityApiT>,
+    public filters: FilterList<EntityT, DeSerializersT>,
     public lambdaOperator: FilterLambdaOperator
   ) {}
 }

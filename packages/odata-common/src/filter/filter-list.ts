@@ -11,8 +11,7 @@ import type { Filterable } from './filterable';
  */
 export class FilterList<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  DeSerializersT extends DeSerializers
 > implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
@@ -44,7 +43,7 @@ export function isFilterList<
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
   filterable: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>
-): filterable is FilterList<EntityT, DeSerializersT, LinkedEntityApiT> {
+): filterable is FilterList<EntityT, DeSerializersT> {
   return (
     typeof filterable['field'] === 'undefined' &&
     typeof filterable['operator'] === 'undefined' &&

@@ -9,7 +9,6 @@ import { UnaryFilter } from './unary-filter';
 import { FilterList } from './filter-list';
 import { FilterLambdaExpression } from './filter-lambda-expression';
 import { FilterLink } from './filter-link';
-// import { commonService} from "../../test/common-entity";
 
 /**
  * A union of all types that can be used for filtering.
@@ -55,10 +54,9 @@ export type Filterable<
  */
 export function and<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  DeSerializersT extends DeSerializers
 >(
-  expressions: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+  expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
 
 /**
@@ -108,10 +106,9 @@ export function and<
  */
 export function or<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  DeSerializersT extends DeSerializers
 >(
-  expressions: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+  expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
 
 /**
@@ -133,13 +130,12 @@ export function or<
  */
 export function or<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  DeSerializersT extends DeSerializers
 >(
   first:
-    | Filterable<EntityT, DeSerializersT, LinkedEntityApiT>
-    | Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[],
-  ...rest: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+    | Filterable<EntityT, DeSerializersT>
+    | Filterable<EntityT, DeSerializersT>[],
+  ...rest: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT> {
   return new FilterList([], variadicArgumentToArray(first, rest));
 }

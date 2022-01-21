@@ -58,7 +58,7 @@ import {
   TestActionImportNullableTestParameters
 } from './action-imports';
 import { BigNumber } from 'bignumber.js';
-import { batch } from './BatchRequest';
+import { batch, changeset } from './BatchRequest';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,
@@ -378,5 +378,9 @@ export class TestService<
 
   get batch(): typeof batch {
     return batch;
+  }
+
+  get changeset(): typeof changeset {
+    return changeset;
   }
 }

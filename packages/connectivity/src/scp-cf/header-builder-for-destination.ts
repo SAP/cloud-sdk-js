@@ -7,33 +7,22 @@ import { getAuthHeaders } from './authorization-header';
 import { Destination } from './destination';
 
 export async function buildHeadersForDestination(
-  destination: Destination,
-  customHeaders?: Record<string, any>
+  destination: Destination
 ): Promise<Record<string, string>> {
-  const authHeaders = await getAuthHeaders(destination, customHeaders);
+  const authHeaders = await getAuthHeaders(destination);
 
-  const sapHeaders = getSapHeaders(destination, customHeaders);
+  const sapHeaders = getSapHeaders(destination);
 
-  return mergeIgnoreCase(
-    mergeLeftIgnoreCase(destination.headers, customHeaders),
-    {
-      ...authHeaders,
-      ...sapHeaders
-    }
-  );
+  return mergeIgnoreCase(destination.headers, {
+    ...authHeaders,
+    ...sapHeaders
+  });
 }
 
-function getSapHeaders(
-  destination: Destination,
-  customHeaders?: Record<string, any>
-): Record<string, string> {
+function getSapHeaders(destination: Destination): Record<string, string> {
   const defaultHeaders = pickNonNullish({
     'sap-client': destination.sapClient,
     'SAP-Connectivity-SCC-Location_ID': destination.cloudConnectorLocationId
   });
-  const destinationHeaders = mergeLeftIgnoreCase(
-    defaultHeaders,
-    destination.headers
-  );
-  return mergeLeftIgnoreCase(destinationHeaders, customHeaders);
+  return mergeLeftIgnoreCase(defaultHeaders, destination.headers);
 }

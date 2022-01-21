@@ -38,8 +38,7 @@
     "@sap-cloud-sdk/odata-common": "^1.50.0",
     "bignumber.js": "^9.0.0",
     "uuid": "^8.2.0",
-    "moment": "^2.29.0",
-    "@js-temporal/polyfill": "^0.3.0"
+    "moment": "^2.29.0"
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-services": "^1.50.0",

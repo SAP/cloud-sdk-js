@@ -266,7 +266,7 @@ describe('GetAllRequestBuilder', () => {
           .get(/.*/)
           .reply(200, 'iss token used on the way')
       ];
-      const spy = jest.spyOn(httpClient, 'executeHttpRequestWithOrigin');
+      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
       const response = await requestBuilder.executeRaw({
         destinationName: 'ERNIE-UND-CERT',
         iss: onlyIssuerXsuaaUrl
@@ -276,11 +276,15 @@ describe('GetAllRequestBuilder', () => {
         parseDestination(certificateSingleResponse),
         {
           headers: {
-            accept: 'application/json',
-            'content-type': 'application/json'
+            requestConfig: {
+              accept: 'application/json',
+              'content-type': 'application/json'
+            }
           },
           params: {
-            $format: 'json'
+            requestConfig: {
+              $format: 'json'
+            }
           },
           url: 'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
           method: 'get',

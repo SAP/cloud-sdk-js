@@ -9,15 +9,11 @@ import {
   removeSlashes,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import {
-  buildHeadersForDestination,
-  Destination,
-  sanitizeDestination
-} from '@sap-cloud-sdk/connectivity';
+import { Destination, sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import {
   HttpResponse,
-  executeHttpRequestWithOrigin,
-  mergeOptionsWithPriority
+  mergeOptionsWithPriority,
+  executeHttpRequest
 } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
@@ -162,13 +158,13 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         throw Error('The destination is undefined.');
       }
 
-      const destinationRelatedHeaders = await buildHeadersForDestination(
-        this.destination,
-        this.config.customHeaders
-      );
+      if (Object.keys(this.customHeaders()).length > 0) {
+        return {
+          custom: this.customHeaders(),
+          requestConfig: { ...this.defaultHeaders(), ...this.eTagHeaders() }
+        };
+      }
       return {
-        custom: this.customHeaders(),
-        destination: destinationRelatedHeaders,
         requestConfig: { ...this.defaultHeaders(), ...this.eTagHeaders() }
       };
     } catch (error) {
@@ -230,7 +226,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeHttpRequestWithOrigin(
+    return executeHttpRequest(
       destination,
       {
         ...filterCustomRequestConfig(this.config.customRequestConfiguration),
@@ -256,9 +252,13 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   private queryParameters(): OriginOptions {
+    if (Object.keys(this.config.customQueryParameters).length > 0) {
+      return {
+        custom: this.config.customQueryParameters,
+        requestConfig: this.config.queryParameters()
+      };
+    }
     return {
-      custom: this.config.customQueryParameters,
-      destination: this.destination?.queryParameters,
       requestConfig: this.config.queryParameters()
     };
   }

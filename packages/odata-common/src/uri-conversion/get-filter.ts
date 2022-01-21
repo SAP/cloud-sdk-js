@@ -79,7 +79,6 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
 
   function getODataFilterExpression<
     FilterEntityT extends EntityBase,
-    TargetEntityT extends EntityBase,
     DeSerializersT extends DeSerializers
   >(
     filter: Filterable<FilterEntityT, DeSerializersT>,

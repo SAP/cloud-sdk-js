@@ -102,14 +102,17 @@ export function getAdditionalHeadersAndQueryParameters(
 ): Pick<Destination, 'headers' | 'queryParameters'> {
   const additionalProperties = {};
 
-  const additionalHeaders = getAdditionalHeaders(destinationConfig);
-  if (Object.keys(additionalHeaders).length) {
+  const additionalHeaders = getAdditionalHeaders(destinationConfig).headers;
+  if (additionalHeaders && Object.keys(additionalHeaders).length) {
     additionalProperties['headers'] = additionalHeaders;
   }
 
   const additionalQueryParameters =
-    getAdditionalQueryParameters(destinationConfig);
-  if (Object.keys(additionalQueryParameters).length) {
+    getAdditionalQueryParameters(destinationConfig).queryParameters;
+  if (
+    additionalQueryParameters &&
+    Object.keys(additionalQueryParameters).length
+  ) {
     additionalProperties['queryParameters'] = additionalQueryParameters;
   }
 

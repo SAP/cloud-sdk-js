@@ -68,10 +68,7 @@ export abstract class GetAllRequestBuilderBase<
   orderBy(orderBy: Orderable<EntityT>[]): this;
   orderBy(...orderBy: Orderable<EntityT>[]): this;
   orderBy(
-    first:
-      | undefined
-      | Orderable<EntityT>
-      | Orderable<EntityT>[],
+    first: undefined | Orderable<EntityT> | Orderable<EntityT>[],
     ...rest: Orderable<EntityT>[]
   ): this {
     this.requestConfig.orderBy = variadicArgumentToArray(first, rest);

@@ -1,5 +1,4 @@
 import { EntityBase } from '../entity-base';
-import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import {
   FilterFunction,
   FilterFunctionParameterType

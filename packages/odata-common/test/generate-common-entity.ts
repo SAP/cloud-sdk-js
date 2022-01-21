@@ -137,7 +137,8 @@ async function generateCommonTestEntity() {
     entity,
     entityApi,
     removeBatchFunctions(service),
-    'export const { commonEntityApi } = commonService();'
+    'export const { commonEntityApi } = commonService();',
+    'export const { commonEntityApi: commonEntityApiCustom } = commonService(\n  customTestDeSerializers\n);'
   ].join(unixEOL);
   await promises.writeFile(
     resolve(__dirname, 'common-entity.ts'),
@@ -149,8 +150,9 @@ async function generateCommonTestEntity() {
 const disclaimer = `/* This entity was generated from the COMMON_SRV.edmx and the generate-test-service.ts script.
 The idea behind this entity is to use only odata-common imports and use it in the tests for the odata-common functionality.*/`;
 const imports = `
-  import {Moment} from "moment";
-  import {BigNumber} from "bignumber.js";
-  import { AllFields, Constructable, EntityBuilderType,entityBuilder, OneToOneLink,defaultDeSerializers, mergeDefaultDeSerializersWith, Time, EntityApi, Field, DeSerializers,DefaultDeSerializers,DeserializedType, CollectionField, OrderableEdmTypeField, CustomField, ComplexTypeField, ConstructorOrField, EdmTypeField, FieldBuilder, FieldOptions, PropertyMetadata, EntityBase as Entity } from '../src/internal';    
+  import { Moment } from "moment";
+  import { BigNumber } from "bignumber.js";
+  import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time } from '../src/internal';    
+  import { customTestDeSerializers } from '../../../test-resources/test/test-util';
   `;
 const disableEslint = '/* eslint-disable */';

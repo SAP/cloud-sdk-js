@@ -1,13 +1,14 @@
 /* eslint-disable valid-jsdoc */
 import { Temporal } from '@js-temporal/polyfill';
-import { DeSerializer } from '@sap-cloud-sdk/odata-common/internal';
-import { durationRegex } from './converters';
+import {
+  DeSerializer,
+  durationRegexV2
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Temporal (de-)serializers for Odata-v2.
- * @internal
  */
-export const temporalDeSerializers = {
+export const temporalDeSerializersV2 = {
   'Edm.DateTime': {
     deserialize: deserializeToPlainDateTime,
     serialize: serializeFromPlainDateTime,
@@ -109,7 +110,7 @@ export function serializeFromZonedDateTime(
  * @internal
  */
 export function deserializeToPlainTime(value: string): Temporal.PlainTime {
-  const regexResult = durationRegex.exec(value);
+  const regexResult = durationRegexV2.exec(value);
   if (!regexResult) {
     throw new Error(`Failed to parse the value: ${value} to time.`);
   }

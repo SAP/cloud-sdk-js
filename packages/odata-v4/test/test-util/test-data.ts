@@ -4,6 +4,7 @@ import {
   TestEntityWithEnumKey,
   testService
 } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { customTestDeSerializers } from '../../../../test-resources/test/test-util';
 import { defaultDeSerializers } from '../../src';
 
 export const {
@@ -16,6 +17,10 @@ export const {
   testEntityCircularLinkParentApi,
   testEntityCircularLinkChildApi
 } = testService();
+
+export const { testEntityApi: testEntityApiCustom } = testService(
+  customTestDeSerializers
+);
 
 export function createTestEntity(originalData): TestEntity {
   const entity = testEntityApi

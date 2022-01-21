@@ -2,18 +2,18 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import {
   CommonEntity,
   commonEntityApi,
+  commonEntityApiCustom,
   CommonEntitySingleLinkApi
 } from '../test/common-entity';
-import { EntityBuilder } from './internal';
 
 describe('EntityBuilder', () => {
   it('should build an empty entity when no properties are defined', () => {
-    const builder = new EntityBuilder<CommonEntity, any>(commonEntityApi);
+    const builder = commonEntityApi.entityBuilder();
     expect(builder.build()).toEqual(new CommonEntity(commonEntityApi.schema));
   });
 
   it('should build an entity with custom fields', () => {
-    const builder = new EntityBuilder<CommonEntity, any>(commonEntityApi);
+    const builder = commonEntityApi.entityBuilder();
     const expected = { SomeCustomField: null };
     expect(
       builder
@@ -24,7 +24,7 @@ describe('EntityBuilder', () => {
   });
 
   it('ignores existing fields in custom fields', () => {
-    const builder = new EntityBuilder<CommonEntity, any>(commonEntityApi);
+    const builder = commonEntityApi.entityBuilder();
     const expected = { SomeCustomField: null };
     expect(
       builder
@@ -36,6 +36,14 @@ describe('EntityBuilder', () => {
         .build()
         .getCustomFields()
     ).toEqual(expected);
+  });
+
+  it('builds an entity with custom (de-)serializers', () => {
+    const builder = commonEntityApiCustom.entityBuilder();
+    builder.stringProperty;
+    expect(builder.build()).toEqual(
+      new CommonEntity(commonEntityApiCustom.schema)
+    );
   });
 
   describe('fromJson', () => {

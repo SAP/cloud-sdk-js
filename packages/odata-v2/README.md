@@ -3,7 +3,7 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
-# @sap-cloud-sdk/odata-2
+# @sap-cloud-sdk/odata-v2
 
 This package contains functions of OData v2 client.
 
@@ -11,11 +11,9 @@ This package contains functions of OData v2 client.
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
 ## Support
 
-The recommended way to get in touch with us is to create an issue in our [github repository](https://github.com/SAP/cloud-sdk-js/issues).
+The recommended way to get in touch with us is to create an issue on [GitHub](https://github.com/SAP/cloud-sdk-js/issues).
 Select the issue category `Bug`, `Feature` or `Question` depending on the nature of your request.
 We try to provide fixes, features and answers as soon as possible.
-
-We also monitor questions on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk?tab=Newest) and [ansers.sap.com](https://answers.sap.com/tags/73555000100800000895) but prefer issues on github.
 
 ## Contribute
 

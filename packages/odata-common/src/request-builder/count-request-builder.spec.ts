@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Filter } from '../internal';
 import { defaultDestination } from '../../../../test-resources/test/test-util/request-mocker';
 import { getAllRequestBuilder } from '../../test/common-request-config';
+import { Filter } from '../filter';
 
 describe('CountRequestBuilder', () => {
   const requestBuilder = getAllRequestBuilder();

@@ -1,6 +1,6 @@
 import { PathLike, readFileSync } from 'fs';
 import path, { basename } from 'path';
-import { parse } from 'fast-xml-parser';
+import { XMLParser } from 'fast-xml-parser';
 import { ODataVersion, removeFileExtension } from '@sap-cloud-sdk/util';
 import { forceArray } from '../generator-utils';
 import { SwaggerMetadata } from '../swagger-parser';
@@ -44,10 +44,10 @@ export function readEdmxFile(edmxPath: PathLike): EdmxMetadata {
 }
 
 function parseEdmxFile(edmx: string, edmxPath: PathLike): EdmxMetadata {
-  const parsedEdmx = parse(edmx, {
+  const parsedEdmx = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: ''
-  });
+  }).parse(edmx);
   const root = getRoot(parsedEdmx);
   return parseMetadata(root, getODataVersion(parsedEdmx), edmxPath);
 }

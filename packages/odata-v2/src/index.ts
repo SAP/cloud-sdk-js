@@ -18,6 +18,7 @@ export {
 
 export {
   CreateRequestBuilder,
+  CountRequestBuilder,
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,

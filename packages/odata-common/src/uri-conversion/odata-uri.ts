@@ -35,11 +35,7 @@ export interface ODataUri<DeSerializersT extends DeSerializers> {
     entityApi: EntityApi<EntityT, DeSerializersT>
   ): Record<string, any>;
   getOrderBy<EntityT extends EntityBase>(
-    orderBy: Orderable<
-      EntityT,
-      DeSerializersT,
-      EntityApi<EntityBase, DeSerializersT>
-    >[]
+    orderBy: Orderable<EntityT, EntityApi<EntityBase>>[]
   ): Partial<{ orderby: string }>;
   getResourcePathForKeys<EntityT extends EntityBase>(
     keys: Record<string, any>,

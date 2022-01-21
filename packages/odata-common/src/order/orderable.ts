@@ -16,9 +16,8 @@ import { OrderLink } from './order-link';
  */
 export type Orderable<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
-> = Order<EntityT> | OrderLink<EntityT, DeSerializersT, LinkedEntityApiT>;
+  LinkedEntityApiT extends EntityApi<EntityBase>
+> = Order<EntityT> | OrderLink<EntityT, LinkedEntityApiT>;
 
 /**
  * A union of all types that can be used as input for ordering.

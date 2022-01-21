@@ -37,7 +37,7 @@ export interface EntityApi<
   requestBuilder(): RequestBuilder<EntityT, DeSerializersT>;
   entityBuilder(): EntityBuilderType<EntityT, DeSerializersT>;
   entityConstructor: Constructable<EntityT>;
-  schema;
+  schema: Record<string, any>;
   customField<NullableT extends boolean>(
     fieldName: string
   ): CustomField<EntityT, DeSerializersT, NullableT>;

@@ -79,7 +79,7 @@ export function entityDeserializer<T extends DeSerializers>(
     requestHeader?: any
   ): EntityT {
     const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
-    return Object.values(entityApi.schema as Record<string, any>)
+    return Object.values(entityApi.schema)
       .filter(field => isSelectedProperty(json, field))
       .reduce((entity, staticField) => {
         entity[camelCase(staticField._fieldName)] = getFieldValue(

@@ -1,7 +1,7 @@
-import { DefaultDeSerializers, DeSerializers } from './de-serializers';
-import { RequestBuilder } from './request-builder';
-import { CustomField } from './selectable';
-import { Constructable, EntityBase, EntityBuilderType } from './entity-base';
+import type { DefaultDeSerializers, DeSerializers } from './de-serializers';
+import type { RequestBuilder } from './request-builder';
+import type { CustomField } from './selectable';
+import type { Constructable, EntityBase, EntityBuilderType } from './entity-base';
 
 /**
  * @internal

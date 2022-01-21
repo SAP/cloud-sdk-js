@@ -46,7 +46,6 @@ export type Filterable<
  * @typeparam EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `and`.
  * @returns The newly created FilterList.
- * @internal
  */
 export function and<
   EntityT extends EntityBase,
@@ -54,23 +53,12 @@ export function and<
 >(
   expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
-
-/**
- * @internal
- */
 export function and<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
   ...expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
-
-/**
- * @param first - first
- * @param rest - rest
- * @returns A FilterList
- * @internal
- */
 export function and<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
@@ -96,7 +84,6 @@ export function and<
  * @typeparam EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `or`
  * @returns The newly created FilterList
- * @internal
  */
 export function or<
   EntityT extends EntityBase,
@@ -104,23 +91,12 @@ export function or<
 >(
   expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
-
-/**
- * @internal
- */
 export function or<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 >(
   ...expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
-
-/**
- * @param first - first
- * @param rest - rest
- * @returns A FilterList
- * @internal
- */
 export function or<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
@@ -137,7 +113,6 @@ export function or<
  * Negate a filter.
  * @param filter - The filter to negate.
  * @returns The negated filter.
- * @internal
  */
 export function not<
   EntityT extends EntityBase,

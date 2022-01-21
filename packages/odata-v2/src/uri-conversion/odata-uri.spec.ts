@@ -29,13 +29,13 @@ import { createODataUri } from './odata-uri';
 const oDataUri = createODataUri(defaultDeSerializers);
 
 describe('getFilter', () => {
-  it('for filter values with encoding', () => {
+  it('transforms filter values with encoding to string', () => {
     expect(
       oDataUri.getFilter(testFilterStringEncoding.filter, testEntityApi).filter
     ).toBe(encodeURIComponent(testFilterStringEncoding.odataStr));
   });
 
-  it('for simple filters', () => {
+  it('transforms simple filters to string', () => {
     expect(
       oDataUri.getFilter(
         and(testFilterString.filter, testFilterBoolean.filter),
@@ -48,13 +48,13 @@ describe('getFilter', () => {
     );
   });
 
-  it('for simple unary filters', () => {
+  it('transforms simple unary filters to string', () => {
     expect(
       oDataUri.getFilter(not(testFilterString.filter), testEntityApi).filter
     ).toBe(encodeURIComponent(`not (${testFilterString.odataStr})`));
   });
 
-  it('for nested filters', () => {
+  it('transforms nested filters to string', () => {
     expect(
       oDataUri.getFilter(
         and(
@@ -71,7 +71,7 @@ describe('getFilter', () => {
     );
   });
 
-  it("for nested filters with 'and' operator only", () => {
+  it("transforms nested filters with 'and' operator only to string", () => {
     expect(
       oDataUri.getFilter(
         and(
@@ -87,7 +87,7 @@ describe('getFilter', () => {
     );
   });
 
-  it('for nested multidimensional filters', () => {
+  it('transforms nested multidimensional filters to string', () => {
     expect(
       oDataUri.getFilter(
         and(
@@ -108,7 +108,7 @@ describe('getFilter', () => {
     );
   });
 
-  it('for nested unary filters', () => {
+  it('transforms nested unary filters to string', () => {
     expect(
       oDataUri.getFilter(
         not(
@@ -127,13 +127,13 @@ describe('getFilter', () => {
     );
   });
 
-  it('for guids', () => {
+  it('transforms guids to string', () => {
     expect(
       oDataUri.getFilter(testFilterGuid.filter, testEntityApi).filter
     ).toBe(encodeURIComponent(testFilterGuid.odataStr));
   });
 
-  it('for complex types', () => {
+  it('transforms complex types to string', () => {
     expect(
       oDataUri.getFilter(
         testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty.equals(
@@ -146,7 +146,7 @@ describe('getFilter', () => {
 });
 
 describe('getFilter for custom fields', () => {
-  it('for custom string field', () => {
+  it('transforms custom string field to string', () => {
     expect(
       oDataUri.getFilter(
         testEntityApi
@@ -158,7 +158,7 @@ describe('getFilter for custom fields', () => {
     ).toBe(encodeURIComponent("CustomFieldString ne 'customFieldTest'"));
   });
 
-  it('for custom double field', () => {
+  it('transforms custom double field to string', () => {
     expect(
       oDataUri.getFilter(
         testEntityApi
@@ -170,7 +170,7 @@ describe('getFilter for custom fields', () => {
     ).toBe(encodeURIComponent('CustomFieldDouble ge 13D'));
   });
 
-  it('for custom moment field', () => {
+  it('transforms custom moment field to string', () => {
     expect(
       oDataUri.getFilter(
         testEntityApi
@@ -186,7 +186,7 @@ describe('getFilter for custom fields', () => {
     );
   });
 
-  it('for custom time field', () => {
+  it('transforms custom time field to string', () => {
     expect(
       oDataUri.getFilter(
         testEntityApi
@@ -198,7 +198,7 @@ describe('getFilter for custom fields', () => {
     ).toBe(encodeURIComponent("CustomFieldTime eq time'PT01H01M01S'"));
   });
 
-  it('for custom boolean field', () => {
+  it('transforms custom boolean field to string', () => {
     expect(
       oDataUri.getFilter(
         testEntityApi
@@ -212,7 +212,7 @@ describe('getFilter for custom fields', () => {
 });
 
 describe('getFilter for filter functions', () => {
-  it('for custom filter function', () => {
+  it('transforms custom filter function to string', () => {
     const fn = filterFunction(
       'fn',
       'int',
@@ -225,12 +225,12 @@ describe('getFilter for filter functions', () => {
     );
   });
 
-  it('for custom filter function with boolean filter function without eq/ne', () => {
+  it('transforms custom filter function with boolean filter function without eq/ne to string', () => {
     const fn = filterFunction('fn', 'boolean', 'str');
     expect(oDataUri.getFilter(fn, testEntityApi).filter).toBe("fn('str')");
   });
 
-  it('for custom nested filter function', () => {
+  it('transforms custom nested filter function to string', () => {
     const fnNested = filterFunction('fnNested', 'boolean');
     const fn = filterFunction('fn', 'string', fnNested);
     expect(oDataUri.getFilter(fn.equals('test'), testEntityApi).filter).toBe(
@@ -238,7 +238,7 @@ describe('getFilter for filter functions', () => {
     );
   });
 
-  it('for custom filter function with date', () => {
+  it('transforms custom filter function with date to string', () => {
     const date = moment.utc().year(2000).month(0).date(1).startOf('date');
     const dateFn = filterFunction('fn', 'int', date).equals(1);
     expect(oDataUri.getFilter(dateFn, testEntityApi).filter).toEqual(
@@ -246,7 +246,7 @@ describe('getFilter for filter functions', () => {
     );
   });
 
-  it('for length filter function', () => {
+  it('transforms length filter function to string', () => {
     expect(
       oDataUri.getFilter(
         filterFunctions()
@@ -257,14 +257,14 @@ describe('getFilter for filter functions', () => {
     ).toBe(encodeURIComponent('length(StringProperty) eq 3'));
   });
 
-  it('for round filter function with default double', () => {
+  it('transforms round filter function with default double to string', () => {
     expect(
       oDataUri.getFilter(filterFunctions().round(10.1).equals(3), testEntityApi)
         .filter
     ).toBe(encodeURIComponent('round(10.1) eq 3D'));
   });
 
-  it('for round filter function with decimal', () => {
+  it('transforms round filter function with decimal to string', () => {
     expect(
       oDataUri.getFilter(
         filterFunctions().round(10.1, 'decimal').equals(3),
@@ -273,7 +273,7 @@ describe('getFilter for filter functions', () => {
     ).toBe(encodeURIComponent('round(10.1) eq 3M'));
   });
 
-  it('for startsWith filter function with eq/ne', () => {
+  it('transforms startsWith filter function with eq/ne to string', () => {
     expect(
       oDataUri.getFilter(
         filterFunctions().startsWith('string', 'str').equals(false),
@@ -282,7 +282,7 @@ describe('getFilter for filter functions', () => {
     ).toBe(encodeURIComponent("startswith('string','str') eq false"));
   });
 
-  it('for startsWith filter function without eq/ne', () => {
+  it('transforms startsWith filter function without eq/ne to string', () => {
     expect(
       oDataUri.getFilter(
         filterFunctions().startsWith('string', 'str'),
@@ -291,7 +291,7 @@ describe('getFilter for filter functions', () => {
     ).toBe(encodeURIComponent("startswith('string','str')"));
   });
 
-  it('for startsWith filter function with not operator with eq/ne', () => {
+  it('transforms startsWith filter function with not operator with eq/ne to string', () => {
     expect(
       oDataUri.getFilter(
         not(filterFunctions().startsWith('string', 'str').equals(false)),
@@ -300,7 +300,7 @@ describe('getFilter for filter functions', () => {
     ).toBe(encodeURIComponent("not (startswith('string','str') eq false)"));
   });
 
-  it('for startsWith filter function with not operator without eq/ne', () => {
+  it('transforms startsWith filter function with not operator without eq/ne to string', () => {
     expect(
       oDataUri.getFilter(
         not(filterFunctions().startsWith('string', 'str')),
@@ -315,7 +315,7 @@ describe('getFilter for custom (de-)serializers', () => {
     mergeDefaultDeSerializersWith(customTestDeSerializers)
   );
 
-  it('for simple filter', () => {
+  it('transforms simple filter to string', () => {
     expect(
       oDataUriCustom.getFilter(
         testFilterStringCustom.filter,
@@ -324,7 +324,7 @@ describe('getFilter for custom (de-)serializers', () => {
     ).toBe(encodeURIComponent(testFilterStringCustom.odataStr));
   });
 
-  it('for linked filter', () => {
+  it('transforms linked filter to string', () => {
     expect(
       oDataUriCustom.getFilter(
         testFilterSingleLinkCustom.filter,

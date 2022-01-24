@@ -76,6 +76,9 @@ class TestService {
   get batch() {
     return BatchRequest_1.batch;
   }
+  get changeset() {
+    return BatchRequest_1.changeset;
+  }
 }
 exports.TestService = TestService;
 //# sourceMappingURL=service.js.map

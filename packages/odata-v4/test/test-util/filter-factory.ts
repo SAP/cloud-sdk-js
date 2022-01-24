@@ -1,11 +1,12 @@
 import { or } from '@sap-cloud-sdk/odata-common/internal';
 import {
   TestEnumType,
-  testService as testServiceV4
+  testService
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { all, any, filterFunctions } from '../../src';
+import { testEntityApiCustom } from './test-data';
 
-const { testEntityApi, testEntityMultiLinkApi } = testServiceV4();
+const { testEntityApi, testEntityMultiLinkApi } = testService();
 
 export const testFilterString = {
   filter: testEntityApi.schema.STRING_PROPERTY.equals('test'),
@@ -101,4 +102,21 @@ export const testFilterLambdaExpressionFilterFunctionOnLink = {
 export const testFilterEnum = {
   filter: testEntityApi.schema.ENUM_PROPERTY.equals(TestEnumType.Member1),
   odataStr: "EnumProperty eq 'Member1'"
+};
+
+export const testFilterLambdaExpressionCustom = {
+  filter: testEntityApiCustom.schema.TO_MULTI_LINK.filter(
+    any(
+      testEntityApiCustom.schema.TO_MULTI_LINK._linkedEntityApi.schema.STRING_PROPERTY.equals(
+        15
+      )
+    ),
+    all(
+      testEntityApiCustom.schema.TO_MULTI_LINK._linkedEntityApi.schema.STRING_PROPERTY.equals(
+        20
+      )
+    )
+  )._filters,
+  odataStr:
+    "(to_MultiLink/any(a0:(a0/StringProperty eq 'URI(15)')) and to_MultiLink/all(a0:(a0/StringProperty eq 'URI(20)')))"
 };

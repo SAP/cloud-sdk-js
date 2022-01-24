@@ -1,9 +1,5 @@
 import { createLogger, exclude, mergeIgnoreCase } from '@sap-cloud-sdk/util';
-import {
-  HttpRequestConfig,
-  HttpRequestConfigWithOrigin,
-  OriginOptions
-} from './http-client-types';
+import { OriginOptionsInternal } from './http-client-types';
 
 const logger = createLogger({
   package: 'http-client',
@@ -47,27 +43,12 @@ const defaultDisallowedKeys = [
 ];
 
 /**
- * Build [[HttpRequestConfig]] from [[HttpRequestConfigWithOrigin]]
- * @param configWithOrigin - An http request config with origin information
- * @returns The resulting [[HttpRequestConfig]]
- * @internal
- */
-export function buildHttpRequestConfig(
-  configWithOrigin: HttpRequestConfigWithOrigin
-): HttpRequestConfig {
-  const requestConfig = configWithOrigin as HttpRequestConfig;
-  requestConfig.headers = mergeOptionsWithPriority(configWithOrigin.headers);
-  requestConfig.params = mergeOptionsWithPriority(configWithOrigin.params);
-  return requestConfig;
-}
-
-/**
  * Merge options from a given [[OriginOptions]]. When reaching conflicts, values with higher priorities are chosen.
  * @param headersOrParams - Given options with origin information.
  * @returns The resulting merged options.
  */
 export function mergeOptionsWithPriority(
-  headersOrParams?: OriginOptions
+  headersOrParams?: OriginOptionsInternal
 ): Record<string, string> | undefined {
   if (headersOrParams) {
     return origins.reduce(
@@ -79,9 +60,10 @@ export function mergeOptionsWithPriority(
 }
 
 /**
+ * @internal
  * All origins ordered from low to high priority.
  */
-const origins = [
+export const origins = [
   'requestConfig',
   'destination',
   'destinationProperty',

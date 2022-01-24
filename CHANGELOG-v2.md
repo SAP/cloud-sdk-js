@@ -433,6 +433,7 @@
 
 - [connectivity] Create a new package with minimal API.
 - [connectivity] Add `registerDestination` function to create destinations in the `destinations` environment variable.
+- [connectivity] Support the `SamlAssertion` flow in destination retrieval.
 - [http-client] Create a new package with minimal API.
 
 ## Improvements

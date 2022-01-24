@@ -3,7 +3,11 @@ import {
   EntityIdentifiable,
   GetByKeyRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers, entityDeserializer } from '../de-serializers';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  entityDeserializer
+} from '../de-serializers';
 import { Entity } from '../entity';
 import { createODataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
@@ -16,7 +20,7 @@ import { responseDataAccessor } from './response-data-accessor';
  */
 export class GetByKeyRequestBuilder<
     EntityT extends Entity,
-    DeSerializersT extends DeSerializers
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
   >
   extends GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>

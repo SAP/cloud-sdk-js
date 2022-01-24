@@ -3,6 +3,7 @@ import {
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
+import { first } from '@sap-cloud-sdk/util';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig, ODataRequest } from '../../request';
 import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
@@ -23,6 +24,8 @@ export class BatchRequestBuilder<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > extends MethodRequestBuilder<ODataBatchRequestConfig> {
   // FIXME: MethodRequestBuilder is too broad here. Should be getAll and getByKey
+  readonly deSerializers: DeSerializersT | undefined;
+
   /**
    * Creates an instance of ODataBatchRequestBuilder.
    * @param defaultServicePath - Service path
@@ -35,9 +38,12 @@ export class BatchRequestBuilder<
       | BatchChangeSet<DeSerializersT>
       | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
       | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
-    )[] // readonly entityToConstructorMap: Record< //   string, //   EntityApi<EntityBase, DeSerializersT> // >
+    )[]
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
+    this.deSerializers = first(
+      Object.values(this.getEntityToApiMap())
+    )?.deSerializers;
   }
 
   withSubRequestPathType(subRequestPathType: BatchSubRequestPathType): this {

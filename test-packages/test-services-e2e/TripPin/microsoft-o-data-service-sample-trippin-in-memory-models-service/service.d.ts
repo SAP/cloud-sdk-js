@@ -5,7 +5,7 @@ import { AirportsApi } from './AirportsApi';
 import { GetNearestAirportParameters } from './function-imports';
 import { ResetDataSourceParameters } from './action-imports';
 import { BigNumber } from 'bignumber.js';
-import { batch } from './BatchRequest';
+import { batch, changeset } from './BatchRequest';
 import { Moment, Duration } from 'moment';
 import {
   DeSerializers,
@@ -106,5 +106,6 @@ export declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
     >;
   };
   get batch(): typeof batch;
+  get changeset(): typeof changeset;
 }
 //# sourceMappingURL=service.d.ts.map

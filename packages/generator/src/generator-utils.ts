@@ -1,4 +1,3 @@
-import { EdmTypeShared } from '@sap-cloud-sdk/odata-common/internal';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   VdmNavigationProperty,
@@ -88,11 +87,11 @@ export function isNullableParameter(parameter: any): boolean {
  * @internal
  */
 export type EdmTypeMapping = {
-  [key in EdmTypeShared<'any'>]: string | undefined;
+  [key in EdmTypeShared]: string | undefined;
 };
 
 type EdmTypeMappingWithoutEnum = {
-  [key in Exclude<EdmTypeShared<'any'>, 'Edm.Enum'>]: string | undefined;
+  [key in Exclude<EdmTypeShared, 'Edm.Enum'>]: string | undefined;
 };
 
 const edmToTsTypeMapping: EdmTypeMappingWithoutEnum = {
@@ -154,11 +153,9 @@ const edmToFieldTypeMapping: EdmTypeMapping = {
 /**
  * @internal
  */
-export function getFallbackEdmTypeIfNeeded(
-  edmType: string
-): EdmTypeShared<any> {
+export function getFallbackEdmTypeIfNeeded(edmType: string): EdmTypeShared {
   if (edmType in edmToTsTypeMapping) {
-    return edmType as EdmTypeShared<any>;
+    return edmType as EdmTypeShared;
   }
   logger.warn(
     `The EDM type '${edmType}' is unknown or not supported by the SAP Cloud SDK. Using "any" as fallback.`
@@ -366,3 +363,33 @@ const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 export function hasEntities(service: VdmServiceMetadata): boolean {
   return !!service.entities?.length;
 }
+
+/**
+ * @internal
+ * This is copied from the `@sap-cloud-sdk/odata-common`
+ */
+export type EdmTypeShared =
+  // type EdmTypeCommon
+  | 'Edm.String'
+  | 'Edm.Boolean'
+  | 'Edm.Decimal'
+  | 'Edm.Double'
+  | 'Edm.Single'
+  | 'Edm.Float'
+  | 'Edm.Int16'
+  | 'Edm.Int32'
+  | 'Edm.Int64'
+  | 'Edm.SByte'
+  | 'Edm.Binary'
+  | 'Edm.Guid'
+  | 'Edm.Byte'
+  | 'Edm.Any'
+  // ExclusiveEdmTypeV2
+  | 'Edm.DateTimeOffset'
+  | 'Edm.DateTime'
+  // ExclusiveEdmTypeV4
+  | 'Edm.Time'
+  | 'Edm.Date'
+  | 'Edm.Duration'
+  | 'Edm.TimeOfDay'
+  | 'Edm.Enum';

@@ -3,7 +3,11 @@ import {
   TestEntity,
   testService
 } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { defaultDeSerializers } from '../../src';
+import { defaultDeSerializers, CustomDeSerializers } from '../../src';
+import {
+  customStringPropertyValue,
+  customTestDeSerializers
+} from '../../../../test-resources/test/test-util';
 
 export const {
   testEntityApi,
@@ -12,6 +16,10 @@ export const {
   testEntityLvl2MultiLinkApi,
   testEntityLvl2SingleLinkApi
 } = testService();
+
+export const { testEntityApi: testEntityApiCustom } = testService(
+  customTestDeSerializers
+);
 
 export function createTestEntity(
   originalData: Record<string, any>
@@ -48,6 +56,32 @@ export function createTestEntity(
     );
   }
 
+  return entity;
+}
+
+export function createTestEntityWithCustomDeSerializers(
+  originalData: Record<string, any>
+): TestEntity<CustomDeSerializers<typeof customTestDeSerializers>> {
+  const entity = createTestEntity(originalData) as unknown as TestEntity<
+    CustomDeSerializers<typeof customTestDeSerializers>
+  >;
+
+  if (entity.keyPropertyString) {
+    entity.keyPropertyString = customStringPropertyValue;
+  }
+  if (entity.stringProperty) {
+    entity.stringProperty = customStringPropertyValue;
+  }
+
+  if (entity.toSingleLink) {
+    entity.toSingleLink.keyProperty = customStringPropertyValue;
+  }
+
+  if (entity.toMultiLink) {
+    entity.toMultiLink.forEach(link => {
+      link.keyProperty = customStringPropertyValue;
+    });
+  }
   return entity;
 }
 

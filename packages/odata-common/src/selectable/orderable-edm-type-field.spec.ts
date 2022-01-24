@@ -1,11 +1,9 @@
-import {
-  EntityBase,
-  FieldType,
-  Filter,
-  OrderableEdmTypeField
-} from '../internal';
 import { CommonComplexTypeField, CommonEntity } from '../../test/common-entity';
 import { defaultDeSerializers, DeSerializers } from '../de-serializers';
+import { EntityBase } from '../entity-base';
+import { Filter } from '../filter';
+import { FieldType } from './field';
+import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 export function checkFilter<
   EntityT extends EntityBase,

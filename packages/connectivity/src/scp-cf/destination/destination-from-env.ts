@@ -124,16 +124,10 @@ export function searchEnvVariablesForDestination(
       if (destination) {
         if (destination.forwardAuthToken) {
           destination.authTokens = destinationAuthToken(options.jwt);
-          logger.info(
-            `Successfully retrieved destination '${options.destinationName}' from environment variable.`
-          );
-        } else {
-          logger.warn(
-            `Successfully retrieved destination '${options.destinationName}' from environment variable.` +
-              'This is discouraged for productive applications. ' +
-              'Unset the variable to read destinations from the destination service on SAP Business Technology Platform.'
-          );
         }
+        logger.info(
+          `Successfully retrieved destination '${options.destinationName}' from environment variable.`
+        );
         return destination;
       }
     } catch (error) {
@@ -202,9 +196,9 @@ function destinationHasName(
  * Set a given destination in the `destinations` environment variable.
  *
  * Throws an error if a destination with the same name as the given test destination already exists.
- * @param destination - Test destination to add to the `destinations` environment variable
+ * @param destination - A destination to add to the `destinations` environment variable
  */
-export function registerDestination(destination: Destination): void {
+export function registerDestination(destination: DestinationWithName): void {
   const currentDestinations = getDestinationsFromEnv();
   const existingNames = new Set<string>(
     currentDestinations.filter(destinationHasName).map(dest => dest.name)

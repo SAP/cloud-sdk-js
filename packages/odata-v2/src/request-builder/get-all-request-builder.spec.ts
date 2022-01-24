@@ -20,13 +20,16 @@ import {
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
-  providerServiceToken
+  providerServiceToken,
+  createOriginalTestEntityDataWithLinks
 } from '../../../../test-resources/test/test-util';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import {
   testEntityApi,
   testEntitySingleLinkApi,
-  createTestEntity
+  createTestEntity,
+  testEntityApiCustom,
+  createTestEntityWithCustomDeSerializers
 } from '../../test/test-util';
 import { DefaultDeSerializers } from '../de-serializers';
 import { GetAllRequestBuilder } from './get-all-request-builder';
@@ -193,6 +196,25 @@ describe('GetAllRequestBuilder', () => {
       const count = await requestBuilder.count().execute(defaultDestination);
       expect(count).toBe(4711);
     });
+
+    it('executes request and deserializes entities with custom (de-)serializer', async () => {
+      const entityData = createOriginalTestEntityDataWithLinks();
+
+      mockGetRequest(
+        {
+          responseBody: { d: { results: [entityData] } }
+        },
+        testEntityApiCustom
+      );
+
+      const [entity] = await testEntityApiCustom
+        .requestBuilder()
+        .getAll()
+        .execute(defaultDestination);
+      expect(entity).toEqual(
+        createTestEntityWithCustomDeSerializers(entityData)
+      );
+    });
   });
 
   describe('executeRaw', () => {
@@ -244,7 +266,7 @@ describe('GetAllRequestBuilder', () => {
           .get(/.*/)
           .reply(200, 'iss token used on the way')
       ];
-      const spy = jest.spyOn(httpClient, 'executeHttpRequestWithOrigin');
+      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
       const response = await requestBuilder.executeRaw({
         destinationName: 'ERNIE-UND-CERT',
         iss: onlyIssuerXsuaaUrl
@@ -254,11 +276,15 @@ describe('GetAllRequestBuilder', () => {
         parseDestination(certificateSingleResponse),
         {
           headers: {
-            accept: 'application/json',
-            'content-type': 'application/json'
+            requestConfig: {
+              accept: 'application/json',
+              'content-type': 'application/json'
+            }
           },
           params: {
-            $format: 'json'
+            requestConfig: {
+              $format: 'json'
+            }
           },
           url: 'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
           method: 'get',

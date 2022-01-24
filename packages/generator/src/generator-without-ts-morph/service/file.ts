@@ -52,7 +52,7 @@ export function imports(service: VdmServiceMetadata): Import[] {
       moduleIdentifier: 'bignumber.js'
     },
     {
-      names: ['batch'],
+      names: ['batch', 'changeset'],
       moduleIdentifier: './BatchRequest'
     },
     {

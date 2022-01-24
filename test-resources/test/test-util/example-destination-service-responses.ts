@@ -52,7 +52,8 @@ function destinationWithAuthType(
 }
 
 function destinationSingleResponse(
-  multipleResponse: DestinationConfiguration[]
+  multipleResponse: DestinationConfiguration[],
+  type: 'Bearer' | 'SAML2.0' = 'Bearer'
 ): DestinationJson {
   return {
     owner: {
@@ -62,7 +63,7 @@ function destinationSingleResponse(
     destinationConfiguration: multipleResponse[0],
     authTokens: [
       {
-        type: 'Bearer',
+        type,
         value: 'token',
         expires_in: '3600'
       }
@@ -86,6 +87,13 @@ export const oauthPasswordMultipleResponse: DestinationConfiguration[] = [
   destinationWithAuthType('OAuth2Password')
 ];
 export const oauthPasswordSingleResponse = destinationSingleResponse(
+  oauthPasswordMultipleResponse
+);
+
+export const samlAssertionMultipleResponse: DestinationConfiguration[] = [
+  destinationWithAuthType('SAMLAssertion')
+];
+export const samlAssertionSingleResponse = destinationSingleResponse(
   oauthPasswordMultipleResponse
 );
 

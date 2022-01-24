@@ -10,7 +10,8 @@
     "./packages/openapi/**/*",
     "./packages/generator/**/*",
     "./packages/openapi-generator/**/*",
-    "./packages/test-util/**/*"
+    "./packages/test-util/**/*",
+    "./packages/temporal-de-serializers/**/*"
   ],
   "exclude": ["**/*.spec.ts"],
   "references": [
@@ -43,6 +44,9 @@
     },
     {
       "path": "./packages/test-util"
+    },
+    {
+      "path": "./packages/temporal-de-serializers"
     }
   ],
   "typedocOptions": {

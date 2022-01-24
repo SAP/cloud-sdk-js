@@ -13,7 +13,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DeSerializers } from '../de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
 
 const logger = createLogger({
@@ -27,7 +27,7 @@ const logger = createLogger({
  */
 export class UpdateRequestBuilder<
     EntityT extends Entity,
-    DeSerializersT extends DeSerializers
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
   >
   extends UpdateRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>

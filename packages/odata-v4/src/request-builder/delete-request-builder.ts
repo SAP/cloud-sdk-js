@@ -3,7 +3,7 @@ import {
   EntityApi,
   FieldType
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 import { createODataUri } from '../uri-conversion';
 
@@ -13,7 +13,7 @@ import { createODataUri } from '../uri-conversion';
  */
 export class DeleteRequestBuilder<
   EntityT extends Entity,
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
 > extends DeleteRequestBuilderBase<EntityT, DeSerializersT> {
   readonly _entity: EntityT;
 

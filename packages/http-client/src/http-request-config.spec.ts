@@ -1,14 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
-  buildHttpRequestConfig,
   filterCustomRequestConfig,
   mergeOptionsWithPriority
 } from './http-request-config';
-import {
-  HttpRequestConfig,
-  HttpRequestConfigWithOrigin,
-  OriginOptions
-} from './http-client-types';
+import { OriginOptionsInternal } from './http-client-types';
 
 const logger = createLogger('http-request-config');
 
@@ -34,46 +29,21 @@ describe('filterCustomRequestConfig', () => {
   });
 });
 
-describe('buildHttpRequestConfig', () => {
-  it('should pick headers and params with higher priorities', () => {
-    const withOrigin: HttpRequestConfigWithOrigin = {
-      method: 'get',
-      headers: {
-        destinationProperty: { Authorization: 'destProp' },
-        requestConfig: { Authorization: 'reqConfig' }
-      },
-      params: {
-        custom: { param: 'custom' },
-        requestConfig: { param: 'reqConfig' }
-      }
-    };
-
-    const expected: HttpRequestConfig = {
-      method: 'get',
-      headers: { Authorization: 'destProp' },
-      params: { param: 'custom' }
-    };
-    expect(buildHttpRequestConfig(withOrigin)).toStrictEqual(expected);
-  });
-});
-
 describe('getOptionWithPriority', () => {
   it('should merge options', () => {
-    const originOptions: OriginOptions = {
+    const originOptions: OriginOptionsInternal = {
       custom: { Authorization: 'customAuth' },
-      destination: { 'sap-client': '001' },
       requestConfig: { 'if-match': 'etag' }
     };
     const expected = {
       Authorization: 'customAuth',
-      'sap-client': '001',
       'if-match': 'etag'
     };
     expect(mergeOptionsWithPriority(originOptions)).toStrictEqual(expected);
   });
 
   it('should use options with higher priority', () => {
-    const originOptions: OriginOptions = {
+    const originOptions: OriginOptionsInternal = {
       custom: { param1: 'customParam1' },
       destinationProperty: {
         param1: 'destPropParam1',
@@ -92,9 +62,9 @@ describe('getOptionWithPriority', () => {
   });
 
   it('should use options with higher priority and ignore case', () => {
-    const originOptions: OriginOptions = {
+    const originOptions: OriginOptionsInternal = {
       custom: { Authorization: 'customAuth' },
-      destination: { AuTHORizaTION: 'destAuth', 'sap-client': '001' }
+      requestConfig: { AuTHORizaTION: 'requestConfigAuth', 'sap-client': '001' }
     };
     const expected = {
       Authorization: 'customAuth',

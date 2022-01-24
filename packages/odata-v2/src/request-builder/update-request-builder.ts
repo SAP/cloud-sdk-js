@@ -1,5 +1,5 @@
 import { createLogger, isNullish } from '@sap-cloud-sdk/util';
-import { DestinationOrFetchOptionsXOR } from '@sap-cloud-sdk/connectivity';
+import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   EntityIdentifiable,
@@ -57,7 +57,7 @@ export class UpdateRequestBuilder<
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the entity once it was updated
    */
-  async execute(destination: DestinationOrFetchOptionsXOR): Promise<EntityT> {
+  async execute(destination: DestinationOrFetchOptions): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
     }
@@ -75,7 +75,7 @@ export class UpdateRequestBuilder<
    * @returns A promise resolving to an [[HttpResponse]] when the request is executed or `undefined` otherwise.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptionsXOR
+    destination: DestinationOrFetchOptions
   ): Promise<HttpResponse | undefined> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       logger.info(

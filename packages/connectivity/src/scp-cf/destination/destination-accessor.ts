@@ -1,5 +1,5 @@
 import {
-  DestinationOrFetchOptionsXOR,
+  DestinationOrFetchOptions,
   sanitizeDestination
 } from './destination';
 import { Destination } from './destination-service-types';
@@ -24,7 +24,7 @@ import {
  * @returns A promise resolving to the requested destination on success.
  */
 export async function useOrFetchDestination(
-  destination: DestinationOrFetchOptionsXOR
+  destination: DestinationOrFetchOptions
 ): Promise<Destination | null> {
   return isDestinationFetchOptions(destination)
     ? getDestination(destination)

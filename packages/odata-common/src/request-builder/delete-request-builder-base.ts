@@ -1,5 +1,5 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { DestinationOrFetchOptionsXOR } from '@sap-cloud-sdk/connectivity';
+import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
@@ -60,7 +60,7 @@ export abstract class DeleteRequestBuilderBase<
    * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving once the entity was deleted
    */
-  async execute(destination: DestinationOrFetchOptionsXOR): Promise<void> {
+  async execute(destination: DestinationOrFetchOptions): Promise<void> {
     return (
       this.executeRaw(destination)
         // Transform response to void
@@ -77,7 +77,7 @@ export abstract class DeleteRequestBuilderBase<
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: DestinationOrFetchOptionsXOR
+    destination: DestinationOrFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

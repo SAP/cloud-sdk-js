@@ -1,4 +1,4 @@
-import { DestinationOrFetchOptionsXOR } from '@sap-cloud-sdk/connectivity';
+import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityBase } from '../entity-base';
 import { ODataCountRequestConfig } from '../request';
@@ -33,7 +33,7 @@ export class CountRequestBuilder<
    * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving to the number of entities
    */
-  async execute(destination: DestinationOrFetchOptionsXOR): Promise<number> {
+  async execute(destination: DestinationOrFetchOptions): Promise<number> {
     return this.executeRaw(destination).then(response => {
       if (typeof response.data !== 'number') {
         throw new Error('Count request did not return a bare number.');
@@ -48,7 +48,7 @@ export class CountRequestBuilder<
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: DestinationOrFetchOptionsXOR
+    destination: DestinationOrFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

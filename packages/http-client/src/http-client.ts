@@ -10,7 +10,7 @@ import axios from 'axios';
 import {
   buildHeadersForDestination,
   Destination,
-  DestinationOrFetchOptionsXOR,
+  DestinationOrFetchOptions,
   toDestinationNameUrl,
   useOrFetchDestination,
   getAgentConfig
@@ -47,7 +47,7 @@ const logger = createLogger({
  * @returns A [[DestinationHttpRequestConfig]].
  */
 export async function buildHttpRequest(
-  destination: DestinationOrFetchOptionsXOR
+  destination: DestinationOrFetchOptions
 ): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
   if (!resolvedDestination) {
@@ -72,7 +72,7 @@ export async function buildHttpRequest(
  * @internal
  */
 export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
-  destination: DestinationOrFetchOptionsXOR,
+  destination: DestinationOrFetchOptions,
   requestConfig: T
 ): Promise<T & DestinationHttpRequestConfig> {
   return buildHttpRequest(destination).then(destinationConfig =>
@@ -92,7 +92,7 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
  */
 export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   return async function <T extends HttpRequestConfigWithOrigin>(
-    destination: DestinationOrFetchOptionsXOR,
+    destination: DestinationOrFetchOptions,
     requestConfig: T,
     options?: HttpRequestOptions
   ): Promise<ReturnT> {
@@ -243,7 +243,7 @@ function logRequestInformation(request: HttpRequestConfig) {
  * @returns A promise resolving to an [[HttpResponse]].
  */
 export function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
-  destination: DestinationOrFetchOptionsXOR,
+  destination: DestinationOrFetchOptions,
   requestConfig: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
@@ -271,7 +271,7 @@ function buildHeaders(
 }
 
 function resolveDestination(
-  destination: DestinationOrFetchOptionsXOR
+  destination: DestinationOrFetchOptions
 ): Promise<Destination | null> {
   return useOrFetchDestination(destination).catch(error => {
     throw new ErrorWithCause('Failed to load destination.', error);
@@ -364,7 +364,7 @@ export function shouldHandleCsrfToken(
 }
 
 async function getCsrfHeaders(
-  destination: DestinationOrFetchOptionsXOR,
+  destination: DestinationOrFetchOptions,
   request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
   const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
@@ -381,7 +381,7 @@ async function getCsrfHeaders(
 }
 
 async function addCsrfTokenToHeader(
-  destination: DestinationOrFetchOptionsXOR,
+  destination: DestinationOrFetchOptions,
   request: HttpRequestConfig & DestinationHttpRequestConfig,
   httpRequestOptions?: HttpRequestOptions
 ): Promise<Record<string, string>> {

@@ -5,7 +5,7 @@ export {
   sanitizeDestination,
   Destination,
   DestinationFetchOptions,
-  DestinationOrFetchOptionsXOR,
+  DestinationOrFetchOptions,
   DestinationAccessorOptions,
   getDestination,
   useOrFetchDestination,

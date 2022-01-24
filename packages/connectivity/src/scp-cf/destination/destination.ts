@@ -214,7 +214,7 @@ function isHttpDestination(destinationInput: Record<string, any>): boolean {
  * @returns string containing information on the destination
  */
 export function toDestinationNameUrl(
-  destination: DestinationOrFetchOptionsXOR
+  destination: DestinationOrFetchOptions
 ): string {
   return isDestinationFetchOptions(destination)
     ? `name: ${destination.destinationName}`
@@ -374,7 +374,7 @@ const configMapping: Record<string, keyof Destination> = {
 };
 
 export function noDestinationErrorMessage(
-  destination: DestinationOrFetchOptionsXOR
+  destination: DestinationOrFetchOptions
 ): string {
   return isDestinationFetchOptions(destination)
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
@@ -382,9 +382,9 @@ export function noDestinationErrorMessage(
 }
 
 type Without<T> = { [P in keyof T]?: never };
-type XOR<T, U> = (Without<T> & U) | (Without<U> & T);
+type Xor<T, U> = (Without<T> & U) | (Without<U> & T);
 
-export type DestinationOrFetchOptionsXOR = XOR<
+export type DestinationOrFetchOptions = Xor<
   Destination,
   DestinationFetchOptions
 >;

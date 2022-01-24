@@ -7,7 +7,7 @@ import {
   pickValueIgnoreCase,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import { DestinationOrFetchOptionsXOR } from '@sap-cloud-sdk/connectivity';
+import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import {
   HttpRequestConfig,
   HttpRequestConfigBase,
@@ -29,7 +29,7 @@ const logger = createLogger({
  * @internal
  */
 export async function buildCsrfHeaders<T extends HttpRequestConfig>(
-  destination: DestinationOrFetchOptionsXOR,
+  destination: DestinationOrFetchOptions,
   requestConfig: Partial<T>
 ): Promise<Record<string, any>> {
   const csrfHeaders = await makeCsrfRequest(destination, requestConfig);
@@ -64,7 +64,7 @@ export function buildCsrfFetchHeaders(headers: any): Record<string, any> {
 }
 
 function makeCsrfRequest<T extends HttpRequestConfig>(
-  destination: DestinationOrFetchOptionsXOR,
+  destination: DestinationOrFetchOptions,
   requestConfig: Partial<T>
 ): Promise<Record<string, any>> {
   const axiosConfig: HttpRequestConfigWithOrigin = {

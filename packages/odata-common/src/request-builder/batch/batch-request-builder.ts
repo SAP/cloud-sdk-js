@@ -1,4 +1,4 @@
-import { DestinationOrFetchOptionsXOR } from '@sap-cloud-sdk/connectivity';
+import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { first } from '@sap-cloud-sdk/util';
 import { MethodRequestBuilder } from '../request-builder-base';
@@ -49,10 +49,10 @@ export class BatchRequestBuilder<
 
   build(): ODataRequest<ODataBatchRequestConfig>;
   build(
-    destination: DestinationOrFetchOptionsXOR
+    destination: DestinationOrFetchOptions
   ): Promise<ODataRequest<ODataBatchRequestConfig>>;
   build(
-    destination?: DestinationOrFetchOptionsXOR
+    destination?: DestinationOrFetchOptions
   ):
     | ODataRequest<ODataBatchRequestConfig>
     | Promise<ODataRequest<ODataBatchRequestConfig>> {
@@ -67,7 +67,7 @@ export class BatchRequestBuilder<
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: DestinationOrFetchOptionsXOR
+    destination: DestinationOrFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

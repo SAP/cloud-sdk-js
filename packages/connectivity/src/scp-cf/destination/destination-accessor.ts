@@ -1,7 +1,4 @@
-import {
-  DestinationOrFetchOptions,
-  sanitizeDestination
-} from './destination';
+import { DestinationOrFetchOptions, sanitizeDestination } from './destination';
 import { Destination } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
 import { searchServiceBindingForDestination } from './destination-from-vcap';

@@ -10,7 +10,6 @@ import axios from 'axios';
 import {
   buildHeadersForDestination,
   Destination,
-  DestinationFetchOptions,
   DestinationOrFetchOptionsXOR,
   toDestinationNameUrl,
   useOrFetchDestination,

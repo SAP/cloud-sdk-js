@@ -1,4 +1,4 @@
-import { assoc } from '@sap-cloud-sdk/util';
+import { assoc, Xor } from '@sap-cloud-sdk/util';
 import {
   DestinationFetchOptions,
   isDestinationFetchOptions
@@ -380,12 +380,6 @@ export function noDestinationErrorMessage(
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
-
-type Without<T> = { [P in keyof T]?: never };
-/**
- * XOR of two types containing keys with different names.
- */
-type Xor<T, U> = (Without<T> & U) | (Without<U> & T);
 
 export type DestinationOrFetchOptions = Xor<
   Destination,

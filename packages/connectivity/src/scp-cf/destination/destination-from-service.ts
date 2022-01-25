@@ -27,7 +27,8 @@ import {
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
-import { destinationCache, IsolationStrategy } from './destination-cache';
+import { destinationCache } from './destination-cache';
+import {IsolationStrategy} from "./destination-cache";
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,

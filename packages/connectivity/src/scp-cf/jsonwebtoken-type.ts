@@ -54,6 +54,15 @@ export interface JwtHeader {
  */
 export interface Jwt {
   header: JwtHeader;
+  payload: JwtPayload | string;
+  signature: string;
+}
+
+/**
+ * @internal
+ */
+export interface JwtWithPayloadObject {
+  header: JwtHeader;
   payload: JwtPayload;
   signature: string;
 }

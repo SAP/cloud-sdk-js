@@ -54,6 +54,8 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
     );
     mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
     mockSubaccountDestinationsCall(nock, [], 200, providerToken);
+    destinationCache.clear();
+    destinationServiceCache.clear();
   });
 
   afterEach(() => {
@@ -80,7 +82,6 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   });
 
   it('changing the isolation should produce a cache miss', async () => {
-    // The destination-service has an own cahce where only isolation strategy Tenant and Tenant_User are used.
     // In order to also miss the cache there the two allowed strategies must be used.
     await getDestination({
       destinationName: 'FINAL-DESTINATION',

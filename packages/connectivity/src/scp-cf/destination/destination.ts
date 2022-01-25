@@ -382,6 +382,9 @@ export function noDestinationErrorMessage(
 }
 
 type Without<T> = { [P in keyof T]?: never };
+/**
+ * XOR of two types containing keys with different names.
+ */
 type Xor<T, U> = (Without<T> & U) | (Without<U> & T);
 
 export type DestinationOrFetchOptions = Xor<

@@ -1,4 +1,4 @@
-import { sanitizeDestination } from './destination';
+import { DestinationOrFetchOptions, sanitizeDestination } from './destination';
 import { Destination } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
 import { searchServiceBindingForDestination } from './destination-from-vcap';
@@ -21,7 +21,7 @@ import {
  * @returns A promise resolving to the requested destination on success.
  */
 export async function useOrFetchDestination(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptions
 ): Promise<Destination | null> {
   return isDestinationFetchOptions(destination)
     ? getDestination(destination)

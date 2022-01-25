@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache, IsolationStrategy } from '../cache';
+import { Cache } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { Destination } from './destination-service-types';
@@ -9,6 +9,15 @@ const logger = createLogger({
   package: 'connectivity',
   messageContext: 'destination-cache'
 });
+
+/**
+ * Enumerator that selects the isolation type of destination in cache.
+ * The used isolation strategy is either `Tenant` or `Tenant_User` because we want to get results for subaccount and provider tenants which rules out no-isolation or user isolation.
+ */
+export enum IsolationStrategy {
+  Tenant = 'Tenant',
+  Tenant_User = 'TenantUser'
+}
 
 const DestinationCache = (cache: Cache<Destination>) => ({
   retrieveDestinationFromCache: (
@@ -60,22 +69,12 @@ export function getDestinationCacheKey(
   const tenant = tenantId(decodedJwt);
   const user = userId(decodedJwt);
   switch (isolationStrategy) {
-    case IsolationStrategy.No_Isolation:
-      return `::${destinationName}`;
     case IsolationStrategy.Tenant:
       if (tenant) {
         return `${tenant}::${destinationName}`;
       }
       logger.warn(
         `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id is undefined.`
-      );
-      return;
-    case IsolationStrategy.User:
-      if (user) {
-        return `:${user}:${destinationName}`;
-      }
-      logger.warn(
-        `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but user id is undefined.`
       );
       return;
     case IsolationStrategy.Tenant_User:

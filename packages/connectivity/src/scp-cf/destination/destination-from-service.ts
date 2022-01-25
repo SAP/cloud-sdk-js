@@ -1,7 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt, isUserToken, JwtPair, verifyJwt } from '../jwt';
-import { IsolationStrategy } from '../cache';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
@@ -28,7 +27,7 @@ import {
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
-import { destinationCache } from './destination-cache';
+import { destinationCache, IsolationStrategy } from './destination-cache';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -199,9 +198,11 @@ class DestinationFromServiceRetriever {
     readonly providerServiceToken: JwtPair
   ) {
     const defaultOptions = {
-      isolationStrategy: IsolationStrategy.Tenant_User,
+      isolationStrategy: options.jwt
+        ? IsolationStrategy.Tenant_User
+        : IsolationStrategy.Tenant,
       selectionStrategy: subscriberFirst,
-      useCache: false,
+      useCache: !!options.isolationStrategy,
       ...options
     };
     this.options = { ...defaultOptions, ...options };

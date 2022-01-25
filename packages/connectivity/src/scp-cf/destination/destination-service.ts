@@ -4,7 +4,7 @@ import {
   propertyExists
 } from '@sap-cloud-sdk/util';
 import CircuitBreaker from 'opossum';
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   circuitBreakerDefaultOptions,
@@ -18,10 +18,7 @@ import {
 } from './destination';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
-import {
-  DestinationFetchOptions,
-  DestinationOptions
-} from './destination-accessor-types';
+import { DestinationFetchOptions } from './destination-accessor-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -32,6 +29,11 @@ type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
   [requestConfig: AxiosRequestConfig],
   AxiosResponse<ResponseType>
 >;
+
+type DestionsServiceOptions = ResilienceOptions &
+  Pick<DestinationFetchOptions, 'useCache'>;
+type DestionServiceOptions = ResilienceOptions &
+  Pick<DestinationFetchOptions, 'destinationName'>;
 
 let circuitBreaker: DestinationCircuitBreaker<
   DestinationJson | DestinationConfiguration
@@ -48,7 +50,7 @@ let circuitBreaker: DestinationCircuitBreaker<
 export function fetchInstanceDestinations(
   destinationServiceUri: string,
   jwt: string,
-  options?: DestinationOptions
+  options?: DestionsServiceOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
     destinationServiceUri,
@@ -69,7 +71,7 @@ export function fetchInstanceDestinations(
 export function fetchSubaccountDestinations(
   destinationServiceUri: string,
   jwt: string,
-  options?: DestinationOptions
+  options?: DestionsServiceOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
     destinationServiceUri,
@@ -83,7 +85,7 @@ async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
   type: DestinationType,
-  options?: DestinationOptions
+  options?: DestionsServiceOptions
 ): Promise<Destination[]> {
   const targetUri = `${destinationServiceUri.replace(
     /\/$/,
@@ -94,8 +96,7 @@ async function fetchDestinations(
     const destinationsFromCache =
       destinationServiceCache.retrieveDestinationsFromCache(
         targetUri,
-        decodeJwt(jwt),
-        options.isolationStrategy
+        decodeJwt(jwt)
       );
     if (destinationsFromCache) {
       return destinationsFromCache;
@@ -113,8 +114,7 @@ async function fetchDestinations(
         destinationServiceCache.cacheRetrievedDestinations(
           targetUri,
           decodeJwt(jwt),
-          destinations,
-          options.isolationStrategy
+          destinations
         );
       }
       return destinations;
@@ -152,7 +152,7 @@ export interface AuthAndExchangeTokens {
 export async function fetchDestination(
   destinationServiceUri: string,
   token: string | AuthAndExchangeTokens,
-  options: DestinationFetchOptions
+  options: DestionServiceOptions
 ): Promise<Destination> {
   return fetchDestinationByTokens(
     destinationServiceUri,
@@ -164,29 +164,13 @@ export async function fetchDestination(
 async function fetchDestinationByTokens(
   destinationServiceUri: string,
   tokens: AuthAndExchangeTokens,
-  options: DestinationFetchOptions
+  options: DestionServiceOptions
 ): Promise<Destination> {
   const targetUri = `${destinationServiceUri.replace(
     /\/$/,
     ''
   )}/destination-configuration/v1/destinations/${options.destinationName}`;
 
-  if (options?.useCache) {
-    const destinationsFromCache =
-      destinationServiceCache.retrieveDestinationsFromCache(
-        targetUri,
-        decodeJwt(tokens.authHeaderJwt),
-        options.isolationStrategy
-      );
-    if (destinationsFromCache) {
-      if (destinationsFromCache.length > 1) {
-        logger.warn(
-          'More than one destination found in the cache. This should not happen. First element used.'
-        );
-      }
-      return destinationsFromCache[0];
-    }
-  }
   let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
   authHeader = tokens.exchangeHeaderJwt
     ? { ...authHeader, 'X-user-token': tokens.exchangeHeaderJwt }
@@ -199,14 +183,6 @@ async function fetchDestinationByTokens(
   return callDestinationService(targetUri, authHeader, options)
     .then(response => {
       const destination: Destination = parseDestination(response.data);
-      if (options?.useCache) {
-        destinationServiceCache.cacheRetrievedDestinations(
-          targetUri,
-          decodeJwt(tokens.authHeaderJwt),
-          [destination],
-          options.isolationStrategy
-        );
-      }
       return destination;
     })
     .catch(error => {

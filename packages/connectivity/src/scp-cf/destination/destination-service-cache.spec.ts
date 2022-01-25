@@ -11,12 +11,8 @@ import {
   mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
-import { IsolationStrategy } from '../cache';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import {
-  fetchDestination,
-  fetchSubaccountDestinations
-} from './destination-service';
+import { fetchSubaccountDestinations } from './destination-service';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 
@@ -96,152 +92,31 @@ describe('DestinationServiceCache', () => {
     nock.cleanAll();
   });
 
-  it('should cache single destination with tenant isolation per default.', async () => {
-    const directCall = await fetchDestination(
-      destinationServiceUrl,
-      subscriberServiceToken,
-      { useCache: true, destinationName: singleDest.Name }
+  it('should cache destinations per tenant.', async () => {
+    const directCallSubscriber = await populateCacheDestinations(
+      subscriberServiceToken
     );
-    expect(directCall.originalProperties).toEqual(singleDest);
-    await expect(
-      fetchDestination(destinationServiceUrl, subscriberServiceToken, {
-        useCache: true,
-        destinationName: singleDest.Name
-      })
-    ).resolves.not.toThrow();
-
-    const cache = getDestinationFromCache(
-      subscriberServiceToken,
-      singleDest.Name,
-      IsolationStrategy.Tenant
-    );
-    expect(cache).toEqual(directCall);
-    const cacheUndefined = getDestinationFromCache(
-      subscriberUserJwt,
-      singleDest.Name,
-      IsolationStrategy.Tenant_User
-    );
-    expect(cacheUndefined).toBeUndefined();
-  });
-
-  it('should cache single destination with tenant_user isolation.', async () => {
-    const directCall = await fetchDestination(
-      destinationServiceUrl,
-      subscriberUserJwt,
-      {
-        useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant_User,
-        destinationName: singleDest.Name
-      }
+    const directCallProvider = await populateCacheDestinations(
+      providerServiceToken
     );
 
-    const cache = getDestinationFromCache(
-      subscriberUserJwt,
-      singleDest.Name,
-      IsolationStrategy.Tenant_User
-    );
-    expect(cache).toEqual(directCall);
-    const cacheUndefined = getDestinationFromCache(
-      subscriberServiceToken,
-      singleDest.Name,
-      IsolationStrategy.Tenant
-    );
-    expect(cacheUndefined).toBeUndefined();
-  });
-
-  it('should cache multiple destinations with tenant isolation per default.', async () => {
-    const directCall = await fetchSubaccountDestinations(
-      destinationServiceUrl,
-      subscriberServiceToken,
-      { useCache: true }
-    );
-    await expect(
-      fetchSubaccountDestinations(
-        destinationServiceUrl,
-        subscriberServiceToken,
-        { useCache: true }
-      )
-    ).resolves.not.toThrow();
-
-    const cache = getDestinationsFromCache(
-      subscriberServiceToken,
-      IsolationStrategy.Tenant
-    );
-    expect(cache).toEqual(directCall);
-    const cacheUndefined = getDestinationsFromCache(
-      subscriberServiceToken,
-      IsolationStrategy.Tenant_User
-    );
-    expect(cacheUndefined).toBeUndefined();
-  });
-
-  it('should cache multiple destinations with tenant_user isolation.', async () => {
-    const directCall = await fetchSubaccountDestinations(
-      destinationServiceUrl,
-      subscriberUserJwt,
-      { useCache: true, isolationStrategy: IsolationStrategy.Tenant_User }
-    );
-
-    const cache = getDestinationsFromCache(
-      subscriberUserJwt,
-      IsolationStrategy.Tenant_User
-    );
-    expect(cache).toEqual(directCall);
-
-    const cacheUndefined = getDestinationsFromCache(
-      subscriberServiceToken,
-      IsolationStrategy.Tenant
-    );
-    expect(cacheUndefined).toBeUndefined();
-  });
-
-  it('should cache always with tenant isolation.', async () => {
-    const directCallSubscriber = await fetchSubaccountDestinations(
-      destinationServiceUrl,
-      subscriberServiceToken,
-      { useCache: true, isolationStrategy: IsolationStrategy.No_Isolation }
-    );
-    const directCallProvider = await fetchSubaccountDestinations(
-      destinationServiceUrl,
-      providerServiceToken,
-      { useCache: true, isolationStrategy: IsolationStrategy.User }
-    );
-
-    const cacheSubscriber = getDestinationsFromCache(
-      subscriberServiceToken,
-      IsolationStrategy.Tenant
-    );
+    const cacheSubscriber = getDestinationsFromCache(subscriberServiceToken);
     expect(cacheSubscriber).toEqual(directCallSubscriber);
-    const cacheProvider = getDestinationsFromCache(
-      providerServiceToken,
-      IsolationStrategy.Tenant
-    );
+
+    const cacheProvider = getDestinationsFromCache(providerServiceToken);
     expect(cacheProvider).toEqual(directCallProvider);
   });
 });
 
-function getDestinationFromCache(
-  token: string,
-  name: string,
-  isolation: IsolationStrategy
-): Destination | undefined {
-  const result = destinationServiceCache.retrieveDestinationsFromCache(
-    `${destinationServiceUrl}/destination-configuration/v1/destinations/${name}`,
-    decodeJwt(token),
-    isolation
-  );
-  if (result) {
-    return result[0];
-  }
-}
-
-function getDestinationsFromCache(
-  token: string,
-  isolation: IsolationStrategy
-): Destination[] | undefined {
+function getDestinationsFromCache(token: string): Destination[] | undefined {
   return destinationServiceCache.retrieveDestinationsFromCache(
     `${destinationServiceUrl}/destination-configuration/v1/${DestinationType.Subaccount}Destinations`,
-    decodeJwt(token),
-    isolation
+    decodeJwt(token)
   );
+}
+
+async function populateCacheDestinations(token): Promise<Destination[]> {
+  return fetchSubaccountDestinations(destinationServiceUrl, token, {
+    useCache: true
+  });
 }

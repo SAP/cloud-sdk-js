@@ -176,12 +176,12 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-209 commits in the last 3 months results to 10.00 points
+210 commits in the last 3 months results to 10.00 points
 2 contributors increase the score value from 10.00 to 10.50
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **209**
+1.  Number of commits in the last three months: **210**
 1.  Number of contributors in the last three months: **2**
 
 ### Project popularity
@@ -238,7 +238,7 @@ Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 This sub-score is based on 2 features:
 
 1.  Is it included to OSS-Fuzz? **No**
-1.  Programming languages: **JAVASCRIPT, TYPESCRIPT, OTHER**
+1.  Programming languages: **JAVASCRIPT, TYPESCRIPT**
 
 ### Memory-safety testing
 
@@ -253,7 +253,7 @@ This sub-score is based on 4 features:
 1.  Does it use AddressSanitizer? **No**
 1.  Does it use MemorySanitizer? **No**
 1.  Does it use UndefinedBehaviorSanitizer? **No**
-1.  Programming languages: **JAVASCRIPT, TYPESCRIPT, OTHER**
+1.  Programming languages: **JAVASCRIPT, TYPESCRIPT**
 
 ### Static analysis
 
@@ -296,7 +296,7 @@ This sub-score is based on 4 features:
 1.  Does it use Dependabot? **Yes**
 1.  Does it use GitHub as the main development platform? **Yes**
 1.  Package managers: **NPM, YARN**
-1.  Programming languages: **JAVASCRIPT, TYPESCRIPT, OTHER**
+1.  Programming languages: **JAVASCRIPT, TYPESCRIPT**
 
 ### OWASP Dependency Check score
 
@@ -322,7 +322,7 @@ Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  Programming languages: **JAVASCRIPT, TYPESCRIPT, OTHER**
+1.  Programming languages: **JAVASCRIPT, TYPESCRIPT**
 1.  The worst LGTM grade of the project: **A**
 
 ### How a project uses CodeQL
@@ -338,7 +338,7 @@ This sub-score is based on 4 features:
 1.  Does it run CodeQL scans? **Yes**
 1.  Does it use CodeQL checks for pull requests? **Yes**
 1.  Does it use LGTM checks? **No**
-1.  Programming languages: **JAVASCRIPT, TYPESCRIPT, OTHER**
+1.  Programming languages: **JAVASCRIPT, TYPESCRIPT**
 
 ### FindSecBugs score
 
@@ -351,7 +351,7 @@ Score: **N/A**, confidence is 10.0 (max), weight is 0.5 (medium)
 This sub-score is based on 2 features:
 
 1.  Does it use FindSecBugs? **No**
-1.  Programming languages: **JAVASCRIPT, TYPESCRIPT, OTHER**
+1.  Programming languages: **JAVASCRIPT, TYPESCRIPT**
 
 
 

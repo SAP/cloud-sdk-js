@@ -23,7 +23,6 @@ export interface Constructable<EntityT extends EntityBase> {
 }
 
 /**
- * @internal
  * Represents the API of an entity, including its request and entity builders as well as its schema.
  * @typeparam EntityT - Type of the entity.
  * @typeparam DeSerializersT - Type of the (de-)serializers.
@@ -44,7 +43,6 @@ export interface EntityApi<
 }
 
 /**
- * @internal
  * Entity builder type with check for EntityT.
  */
 export type EntityBuilderType<
@@ -363,11 +361,12 @@ export function isExpandedProperty<
 }
 
 /**
- * @internal
+ * Create an entity builder for an entity API.
+ * @param entityApi - The entity API to build entities for.
+ * @returns An entity builder instance for the given entity API.
  */
 export function entityBuilder<
   EntityT extends EntityBase,
-  // EntityApiT extends EntityApi<EntityT, DeSerializersT>,
   DeSerializersT extends DeSerializers
 >(
   entityApi: EntityApi<EntityT, DeSerializersT>

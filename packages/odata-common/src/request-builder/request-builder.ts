@@ -2,7 +2,7 @@ import { DeSerializers } from '../de-serializers';
 import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 
 /**
- * @internal
+ * Represents a request builder for a given entity API.
  */
 export abstract class RequestBuilder<
   EntityT extends EntityBase,

@@ -7,8 +7,7 @@ import { Link } from './link';
 /**
  * Represents a link from one entity to one other linked entity (as opposed to a list of linked entities). In OData v2 a `OneToOneLink` can be used to filter and order a selection on an entity based on filters and orders on a linked entity.
  * @typeparam EntityT - Type of the entity to be linked from
- * @typeparam LinkedEntityT - Type of the entity to be linked to
- * @internal
+ * @typeparam LinkedEntityT - Type of the entity to be linked to.
  */
 export class OneToOneLink<
   EntityT extends EntityBase,

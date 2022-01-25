@@ -74,7 +74,6 @@ export interface DeSerializer<DeserializedT> {
 }
 
 /**
- * @internal
  * Infers the deserialized type for an EDM type from the given (de-)serializers type.
  * @typeparam DeSerializersT - Type of the (de-)serializers.
  * @typeparam EdmT - Return type of the deserialize function for the given EDM type.

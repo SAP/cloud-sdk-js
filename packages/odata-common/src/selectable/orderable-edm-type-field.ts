@@ -10,7 +10,6 @@ import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
  * @typeparam EdmT - EDM type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
- * @internal
  */
 export class OrderableEdmTypeField<
   EntityT extends EntityBase,

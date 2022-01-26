@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import {
-  alwaysProvider,
   Destination,
   getDestination,
   IsolationStrategy

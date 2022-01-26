@@ -4,9 +4,8 @@ export {
   toDestinationNameUrl,
   sanitizeDestination,
   Destination,
-  DestinationRetrievalOptions,
-  DestinationOptions,
   DestinationFetchOptions,
+  DestinationOrFetchOptions,
   DestinationAccessorOptions,
   getDestination,
   useOrFetchDestination,
@@ -25,13 +24,19 @@ export {
   retrieveJwt,
   VerifyJwtOptions,
   jwtBearerToken,
+  JwtPayload,
   serviceToken,
   Service,
-  ServiceCredentials,
   buildHeadersForDestination,
   getClientCredentialsToken,
   getUserToken,
   registerDestination
+} from './scp-cf';
+
+export type {
+  DestinationRetrievalOptions,
+  DestinationOptions,
+  ServiceCredentials
 } from './scp-cf';
 
 export { getAgentConfig } from './http-agent';

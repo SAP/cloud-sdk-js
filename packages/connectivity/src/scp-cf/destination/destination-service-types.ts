@@ -1,4 +1,4 @@
-import { CachingOptions } from '../cache';
+import { CachingOptions, IsolationStrategy } from '../cache';
 import { ProxyConfiguration } from '../connectivity-service-types';
 import { ResilienceOptions } from '../resilience-options';
 
@@ -190,10 +190,17 @@ export interface DestinationCertificate {
 /**
  * Options to use while fetching destinations. Encompasses both [[DestinationCachingOptions]] and [[ResilienceOptions]] interfaces.
  */
-export type DestinationRetrievalOptions = CachingOptions & ResilienceOptions;
+export type DestinationRetrievalOptions = CachingOptions &
+  ResilienceOptions & {
+    /**
+     * The isolation strategy used for caching destinations. For the available options, see [[IsolationStrategy]].
+     * By default, IsolationStrategy.Tenant_User is set.
+     */
+    isolationStrategy?: IsolationStrategy;
+  };
 
 /**
- * Typeguard to find if object is DestinationFetchOptions.
+ * Typeguard to find if object is a Destination.
  * @param destination - Destination to be checked
  * @returns boolean
  * @internal
@@ -209,6 +216,7 @@ export type AuthenticationType =
   | 'PrincipalPropagation'
   | 'NoAuthentication'
   | 'BasicAuthentication'
+  | 'SAMLAssertion'
   | 'OAuth2SAMLBearerAssertion'
   | 'OAuth2ClientCredentials'
   | 'OAuth2UserTokenExchange'

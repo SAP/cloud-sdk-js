@@ -1,4 +1,4 @@
-import { assoc } from '@sap-cloud-sdk/util';
+import { assoc, Xor } from '@sap-cloud-sdk/util';
 import {
   DestinationFetchOptions,
   isDestinationFetchOptions
@@ -89,6 +89,7 @@ function getAdditionalProperties(
 }
 
 /**
+ * @internal
  * Get additional headers and/or query parameters from a destination.
  * Destinations can specify additional headers and/or query parameters, that should be added to every request against the given destination.
  * They are specified in the following format:
@@ -96,22 +97,71 @@ function getAdditionalProperties(
  * @param destinationConfig - Original destination config that could include additional headers or query parameters.
  * @returns An object with either the headers or query parameters and their values, depending on the `originalKeyPrefix`.
  */
-function getAdditionalHeadersAndQueryParameters(
+export function getAdditionalHeadersAndQueryParameters(
   destinationConfig: DestinationConfiguration
 ): Pick<Destination, 'headers' | 'queryParameters'> {
+  const additionalProperties = {};
+
+  const additionalHeaders = getAdditionalHeaders(destinationConfig).headers;
+  if (additionalHeaders && Object.keys(additionalHeaders).length) {
+    additionalProperties['headers'] = additionalHeaders;
+  }
+
+  const additionalQueryParameters =
+    getAdditionalQueryParameters(destinationConfig).queryParameters;
+  if (
+    additionalQueryParameters &&
+    Object.keys(additionalQueryParameters).length
+  ) {
+    additionalProperties['queryParameters'] = additionalQueryParameters;
+  }
+
+  return additionalProperties;
+}
+
+/**
+ * @internal
+ * Get additional headers from a destination.
+ * Destinations can specify additional headers, that should be added to every request against the given destination.
+ * They are specified in the following format:
+ * `URL.headers.<header-name>`
+ * @param destinationConfig - Original destination config that could include additional headers.
+ * @returns An object with either the headers or query parameters and their values, depending on the `originalKeyPrefix`.
+ */
+export function getAdditionalHeaders(
+  destinationConfig: DestinationConfiguration
+): Pick<Destination, 'headers'> {
   const additionalHeaders = getAdditionalProperties(
     destinationConfig,
     'URL.headers.'
-  );
-  const additionalQueryParameters = getAdditionalProperties(
-    destinationConfig,
-    'URL.queries.'
   );
 
   const additionalProperties = {};
   if (Object.keys(additionalHeaders).length) {
     additionalProperties['headers'] = additionalHeaders;
   }
+
+  return additionalProperties;
+}
+
+/**
+ * @internal
+ * Get additional query parameters from a destination.
+ * Destinations can specify additional query parameters, that should be added to every request against the given destination.
+ * They are specified in the following format:
+ * `URL.queries.<query-parameter-name>`
+ * @param destinationConfig - Original destination config that could include additional headers or query parameters.
+ * @returns An object with either the headers or query parameters and their values, depending on the `originalKeyPrefix`.
+ */
+export function getAdditionalQueryParameters(
+  destinationConfig: DestinationConfiguration
+): Pick<Destination, 'queryParameters'> {
+  const additionalQueryParameters = getAdditionalProperties(
+    destinationConfig,
+    'URL.queries.'
+  );
+
+  const additionalProperties = {};
   if (Object.keys(additionalQueryParameters).length) {
     additionalProperties['queryParameters'] = additionalQueryParameters;
   }
@@ -164,7 +214,7 @@ function isHttpDestination(destinationInput: Record<string, any>): boolean {
  * @returns string containing information on the destination
  */
 export function toDestinationNameUrl(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptions
 ): string {
   return isDestinationFetchOptions(destination)
     ? `name: ${destination.destinationName}`
@@ -324,9 +374,14 @@ const configMapping: Record<string, keyof Destination> = {
 };
 
 export function noDestinationErrorMessage(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptions
 ): string {
   return isDestinationFetchOptions(destination)
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
+
+export type DestinationOrFetchOptions = Xor<
+  Destination,
+  DestinationFetchOptions
+>;

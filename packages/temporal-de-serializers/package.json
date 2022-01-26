@@ -1,0 +1,41 @@
+{
+  "name": "@sap-cloud-sdk/temporal-de-serializers",
+  "version": "1.50.0",
+  "description": "SAP Cloud SDK for JavaScript temporal-based middleware for date/time (de-)serialization",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "license": "Apache-2.0",
+  "keywords": [
+    "sap-cloud-sdk",
+    "cloud-sdk",
+    "sap-cloud-platform",
+    "temporal-de-serializers"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "internal.js",
+    "internal.d.ts"
+  ],
+  "repository": "github:SAP/cloud-sdk-js",
+  "scripts": {
+    "compile": "yarn tsc -b",
+    "prepare": "yarn compile",
+    "test": "yarn jest",
+    "coverage": "yarn jest --coverage",
+    "check:dependencies": "depcheck ."
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/odata-common": "^1.50.0",
+    "@js-temporal/polyfill": "^0.3.0"
+  },
+  "devDependencies": {
+    "typescript": "~4.5.5"
+  }
+}

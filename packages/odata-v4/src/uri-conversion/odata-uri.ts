@@ -6,7 +6,6 @@ import {
   ODataUri,
   Selectable
 } from '@sap-cloud-sdk/odata-common/internal';
-// import { inferEntity } from '@sap-cloud-sdk/odata-common';
 import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 import { getExpand } from './get-expand';
@@ -34,7 +33,8 @@ export function createODataUri<DeSerializersT extends DeSerializers>(
     return getExpand(expands, entityApi);
   }
 
-  // This enforces the same DeSerializersT on the getSelect function. If we change something on the getSelect function signature this will fail in contrast to use of as XYZ.
+  // This enforces the same DeSerializersT on the getSelect function.
+  // If we change something on the getSelect function signature this will fail in contrast to use of a type assertion "as typeof getSelect".
   const getSelectWithSameDeSerializer: <EntityT extends Entity>(
     selects: Selectable<EntityT, DeSerializersT>[]
   ) => Partial<{ select: string }> = getSelect;

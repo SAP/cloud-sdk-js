@@ -7,5 +7,5 @@
     "noEmit": true,
     "target": "es2019"
   },
-  "references": [{ "path": "../../../" }]
+  "include": ["../../../../test-resources/test/test-util"]
 }

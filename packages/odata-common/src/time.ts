@@ -1,6 +1,18 @@
 /**
  * @internal
  */
+export const durationRegexV2 =
+  /PT(?<hours>\d{1,2}H)?(?<minutes>\d{1,2}M)?(?<seconds>\d{1,2}S)?/;
+
+/**
+ * @internal
+ */
+export const durationRegexV4 =
+  /([+-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
+
+/**
+ * @internal
+ */
 export interface Time {
   hours: number;
   minutes: number;

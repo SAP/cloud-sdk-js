@@ -33,19 +33,23 @@ export type Method =
  * This interface is compatible with AxiosRequestConfig.
  */
 export type HttpRequestConfig = HttpRequestConfigBase & {
-  params?: Record<string, string>;
-  headers?: Record<string, string>;
+  params?: Record<string, any>;
+  headers?: Record<string, any>;
 };
 
 /**
- * @internal
+ * This interface is similar to [[HttpRequestConfig]]. In addition, the `headers` and `params` can be defined with "origin" information.
+ * @see [[OriginOptions]]
  */
 export type HttpRequestConfigWithOrigin = HttpRequestConfigBase & {
   params?: OriginOptions;
   headers?: OriginOptions;
 };
 
-interface HttpRequestConfigBase {
+/**
+ * @internal
+ */
+export interface HttpRequestConfigBase {
   [key: string]: any;
   url?: string;
   method: Method;
@@ -89,9 +93,21 @@ export interface HttpRequestOptions {
   fetchCsrfToken?: boolean;
 }
 
+/**
+ * This interface is used for defining e.g., headers and query parameters with origin information.
+ * The priorities are defined in the [[origins]].
+ */
 export interface OriginOptions {
-  requestConfig?: Record<string, string>;
-  destination?: Record<string, string>;
-  destinationProperty?: Record<string, string>;
-  custom?: Record<string, string>;
+  requestConfig: Record<string, any>;
+  custom?: Record<string, any>;
+}
+
+/**
+ * @internal
+ */
+export interface OriginOptionsInternal {
+  requestConfig?: Record<string, any>;
+  destination?: Record<string, any>;
+  destinationProperty?: Record<string, any>;
+  custom?: Record<string, any>;
 }

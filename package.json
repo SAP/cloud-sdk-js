@@ -25,6 +25,7 @@
     "packages/util",
     "packages/openapi-generator",
     "packages/generator-common",
+    "packages/temporal-de-serializers",
     "test-packages/integration-tests",
     "test-packages/e2e-tests",
     "test-packages/test-services",
@@ -67,6 +68,7 @@
     "odata-v4": "yarn workspace @sap-cloud-sdk/odata-v4",
     "test-util": "yarn workspace @sap-cloud-sdk/test-util",
     "util": "yarn workspace @sap-cloud-sdk/util",
+    "temporal-de-serializers": "yarn workspace @sap-cloud-sdk/temporal-de-serializers",
     "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
     "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
@@ -86,7 +88,7 @@
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jest": "^25.0.1",
+    "eslint-plugin-jest": "^26.0.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-tsdoc": "^0.2.14",
     "eslint-plugin-unused-imports": "^2.0.0",
@@ -100,7 +102,7 @@
     "ts-jest": "^27.0.5",
     "ts-node": "^10.0.0",
     "typedoc": "^0.22.3",
-    "typescript": "~4.4.4"
+    "typescript": "~4.5.5"
   },
   "dependencies": {},
   "resolutions": {
@@ -108,6 +110,7 @@
     "color-string": ">=1.5.5",
     "dot-prop": ">=5.1.1",
     "expect": ">=27.2.3",
+    "json-schema": ">=0.4.0",
     "netmask": ">=2.0.1 ",
     "path-parse": ">=1.0.7",
     "postcss": ">=8.2.10",

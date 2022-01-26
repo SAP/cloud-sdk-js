@@ -11,13 +11,17 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
-import { DeSerializers, entityDeserializer } from '../de-serializers';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  entityDeserializer
+} from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 
 export class GetAllRequestBuilder<
     EntityT extends Entity,
-    DeSerializersT extends DeSerializers
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
   >
   extends GetAllRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>

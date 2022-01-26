@@ -37,6 +37,9 @@ class MultipleSchemasService {
   get batch() {
     return BatchRequest_1.batch;
   }
+  get changeset() {
+    return BatchRequest_1.changeset;
+  }
 }
 exports.MultipleSchemasService = MultipleSchemasService;
 //# sourceMappingURL=service.js.map

@@ -1,8 +1,5 @@
 import { createLogger, isNullish } from '@sap-cloud-sdk/util';
-import {
-  Destination,
-  DestinationFetchOptions
-} from '@sap-cloud-sdk/connectivity';
+import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   EntityIdentifiable,
@@ -16,7 +13,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DeSerializers } from '../de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
 
 const logger = createLogger({
@@ -30,7 +27,7 @@ const logger = createLogger({
  */
 export class UpdateRequestBuilder<
     EntityT extends Entity,
-    DeSerializersT extends DeSerializers
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
   >
   extends UpdateRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
@@ -60,9 +57,7 @@ export class UpdateRequestBuilder<
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the entity once it was updated
    */
-  async execute(
-    destination: Destination | DestinationFetchOptions
-  ): Promise<EntityT> {
+  async execute(destination: DestinationOrFetchOptions): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
     }
@@ -80,7 +75,7 @@ export class UpdateRequestBuilder<
    * @returns A promise resolving to an [[HttpResponse]] when the request is executed or `undefined` otherwise.
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions
+    destination: DestinationOrFetchOptions
   ): Promise<HttpResponse | undefined> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       logger.info(

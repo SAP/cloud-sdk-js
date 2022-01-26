@@ -6,29 +6,31 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import {
   AllFields,
+  CollectionField,
+  ComplexTypeField,
   Constructable,
-  EntityBuilderType,
-  entityBuilder,
-  OneToOneLink,
+  ConstructorOrField,
+  CustomField,
+  CustomDeSerializers,
   defaultDeSerializers,
-  mergeDefaultDeSerializersWith,
-  Time,
-  EntityApi,
-  Field,
-  DeSerializers,
   DefaultDeSerializers,
   DeserializedType,
-  CollectionField,
-  OrderableEdmTypeField,
-  CustomField,
-  ComplexTypeField,
-  ConstructorOrField,
+  DeSerializers,
   EdmTypeField,
+  EntityApi,
+  EntityBase as Entity,
+  entityBuilder,
+  EntityBuilderType,
+  Field,
   FieldBuilder,
   FieldOptions,
+  mergeDefaultDeSerializersWith,
+  OneToOneLink,
+  OrderableEdmTypeField,
   PropertyMetadata,
-  EntityBase as Entity
+  Time
 } from '../src/internal';
+import { customTestDeSerializers } from '../../../test-resources/test/test-util';
 
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
@@ -515,3 +517,6 @@ export class CommonService<
 }
 
 export const { commonEntityApi } = commonService();
+export const { commonEntityApi: commonEntityApiCustom } = commonService(
+  customTestDeSerializers
+);

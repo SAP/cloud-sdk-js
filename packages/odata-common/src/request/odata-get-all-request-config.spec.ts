@@ -1,7 +1,8 @@
-import { asc, ODataGetAllRequestConfig } from '../internal';
 import { CommonEntity, commonEntityApi } from '../../test/common-entity';
 import { commonODataUri } from '../../test/common-request-config';
 import { DefaultDeSerializers } from '../de-serializers';
+import { asc } from '../order';
+import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
 
 describe('ODataGetAllRequestConfig', () => {
   let config: ODataGetAllRequestConfig<CommonEntity, DefaultDeSerializers>;

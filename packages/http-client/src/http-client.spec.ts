@@ -3,16 +3,21 @@ import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { Destination, Protocol } from '@sap-cloud-sdk/connectivity';
+import {
+  connectivityProxyConfigMock,
+  defaultDestination
+} from '../../../test-resources/test/test-util';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
-  HttpRequest,
   HttpRequestConfig,
+  HttpRequestConfigWithOrigin,
   HttpResponse
 } from './http-client-types';
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
+  buildRequestWithMergedHeadersAndQueryParameters,
   executeHttpRequest,
   shouldHandleCsrfToken
 } from './http-client';
@@ -75,26 +80,6 @@ describe('generic http client', () => {
 
       expect(actualProxy).toMatchObject(expectedProxy);
       expect(actualProxy.httpAgent).toBeDefined();
-    });
-
-    it('warn when custom headers are used', async () => {
-      const logger = createLogger({
-        package: 'http-client',
-        messageContext: 'http-client'
-      });
-      const infoSpy = jest.spyOn(logger, 'info');
-
-      await buildHttpRequest(httpsDestination, {
-        authorization: 'abc',
-        'sap-client': '001',
-        'SAP-Connectivity-SCC-Location_ID': 'efg'
-      });
-      expect(infoSpy).toBeCalledWith(
-        `The following custom headers will overwrite headers created by the SDK:
-  - "authorization"
-  - "sap-client"
-  - "SAP-Connectivity-SCC-Location_ID"`
-      );
     });
 
     it('throws useful error messages when finding the destination fails', async () => {
@@ -236,12 +221,14 @@ describe('generic http client', () => {
         })
         .reply(200, { res: 'ult' }, { sharp: 'header' });
 
-      const config: HttpRequestConfig = {
+      const config: HttpRequestConfigWithOrigin = {
         method: 'GET',
         url: '/api/entity',
         params: {
-          a: 'a',
-          b: 'b'
+          requestConfig: {
+            a: 'a',
+            b: 'b'
+          }
         }
       };
 
@@ -261,7 +248,7 @@ describe('generic http client', () => {
         .get('/api/entity')
         .reply(200, { res: 'ult' }, { sharp: 'header' });
 
-      const config: HttpRequestConfig = {
+      const config: HttpRequestConfigWithOrigin = {
         method: 'GET',
         url: '/api/entity'
       };
@@ -276,6 +263,44 @@ describe('generic http client', () => {
 The headers of the request are:
 authorization:*******
 sap-client:001`);
+    });
+
+    it('logs when custom headers are used', async () => {
+      nock('https://example.com', {
+        reqheaders: {
+          authorization: 'abc',
+          'sap-client': '001',
+          'SAP-Connectivity-SCC-Location_ID': 'efg'
+        }
+      })
+        .get('/api/entity')
+        .reply(200, { res: 'ult' }, { sharp: 'header' });
+      const config: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        url: '/api/entity',
+        headers: {
+          custom: {
+            authorization: 'abc',
+            'sap-client': '001',
+            'SAP-Connectivity-SCC-Location_ID': 'efg'
+          },
+          requestConfig: {}
+        }
+      };
+      const logger = createLogger({
+        package: 'http-client',
+        messageContext: 'http-client'
+      });
+      const infoSpy = jest.spyOn(logger, 'info');
+
+      await executeHttpRequest(httpsDestination, config);
+
+      expect(infoSpy).toBeCalledWith(
+        `The following custom headers will overwrite headers created by the SDK:
+  - "authorization"
+  - "sap-client"
+  - "SAP-Connectivity-SCC-Location_ID"`
+      );
     });
 
     it('also works also in more complex cases in more complex cases', async () => {
@@ -295,15 +320,18 @@ sap-client:001`);
         })
         .reply(200);
 
-      const config: HttpRequest = {
+      const config: HttpRequestConfigWithOrigin = {
         baseURL: 'https://custom.example.com',
         method: 'POST',
         url: '/api/entity',
         headers: {
-          'content-type': 'application/json',
-          accept: 'application/json',
-          'x-csrf-token': 'Fetch',
-          authorization: 'custom-auth-header'
+          custom: {
+            'content-type': 'application/json',
+            accept: 'application/json',
+            'x-csrf-token': 'Fetch',
+            authorization: 'custom-auth-header'
+          },
+          requestConfig: {}
         },
         data: {
           a: 1,
@@ -336,8 +364,10 @@ sap-client:001`);
           method: 'get',
           url: '/api/entity',
           params: {
-            a: 'a',
-            b: 'b'
+            requestConfig: {
+              a: 'a',
+              b: 'b'
+            }
           }
         })
       ).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -373,14 +403,17 @@ sap-client:001`);
         })
         .reply(200);
 
-      const config: HttpRequest = {
+      const config: HttpRequestConfigWithOrigin = {
         baseURL: 'https://example.com',
         method: 'POST',
         url: '/api/entity',
         headers: {
-          authorization: 'custom-auth-header',
-          'content-type': 'application/json',
-          accept: 'application/json'
+          custom: {
+            authorization: 'custom-auth-header',
+            'content-type': 'application/json',
+            accept: 'application/json'
+          },
+          requestConfig: {}
         },
         data: {
           a: 1
@@ -420,14 +453,17 @@ sap-client:001`);
         })
         .reply(200);
 
-      const config: HttpRequest = {
+      const config: HttpRequestConfigWithOrigin = {
         baseURL: 'https://example.com',
         method: 'POST',
         url: '/api/entity',
         headers: {
-          authorization: 'custom-auth-header',
-          'content-type': 'application/json',
-          accept: 'application/json'
+          custom: {
+            authorization: 'custom-auth-header',
+            'content-type': 'application/json',
+            accept: 'application/json'
+          },
+          requestConfig: {}
         },
         data: {
           a: 1
@@ -456,15 +492,18 @@ sap-client:001`);
         })
         .reply(200);
 
-      const config: HttpRequest = {
+      const config: HttpRequestConfigWithOrigin = {
         baseURL: 'https://example.com',
         method: 'POST',
         url: '/api/entity',
         headers: {
-          authorization: 'custom-auth-header',
-          'content-type': 'application/json',
-          accept: 'application/json',
-          'x-csrf-token': csrfToken
+          custom: {
+            authorization: 'custom-auth-header',
+            'content-type': 'application/json',
+            accept: 'application/json',
+            'x-csrf-token': csrfToken
+          },
+          requestConfig: {}
         },
         data: {
           a: 1
@@ -490,11 +529,11 @@ sap-client:001`);
         .mockImplementationOnce(async () => 'post response');
 
       const httpsAgentOption = { ca: 'CA' };
-      const config: HttpRequest = {
+      const config: HttpRequestConfigWithOrigin = {
         baseURL: 'https://www.example.com',
         url: 'api',
         method: 'post',
-        headers: {},
+        headers: { requestConfig: {} },
         httpsAgent: new https.Agent(httpsAgentOption)
       };
 
@@ -638,6 +677,150 @@ sap-client:001`);
           method: 'post'
         })
       );
+    });
+  });
+
+  describe('buildRequestWithMergedHeadersAndQueryParameters', () => {
+    it('uses authTokens if present on a destination', async () => {
+      const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        headers: {
+          requestConfig: {}
+        }
+      };
+      const destination: Destination = {
+        ...defaultDestination,
+        authentication: 'OAuth2SAMLBearerAssertion',
+        authTokens: [
+          {
+            type: 'Bearer',
+            value: 'some.token',
+            expiresIn: '3600',
+            error: null,
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.token'
+            }
+          }
+        ]
+      };
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        httpRequestConfigWithOrigin,
+        destination,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        headers: {
+          authorization: 'Bearer some.token',
+          'sap-client': '123'
+        },
+        params: {}
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should merge and resolve conflicts', async () => {
+      const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        url: '/api/entity',
+        headers: {
+          custom: {
+            'IF-match': 'customEtag'
+          },
+          requestConfig: {
+            Authorization: 'reqConfigAuth',
+            'if-match': 'reqConfigEtag'
+          }
+        }
+      };
+      const destination: Destination = {
+        url: 'http://example.com',
+        headers: { 'sap-client': '001' },
+        originalProperties: {
+          'URL.headers.AUTHORIZATION': 'destPropAuth',
+          'URL.queries.param1': 'destPropParam1'
+        }
+      };
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        httpRequestConfigWithOrigin,
+        destination,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        url: '/api/entity',
+        headers: {
+          AUTHORIZATION: 'destPropAuth',
+          'IF-match': 'customEtag',
+          'sap-client': '001'
+        },
+        params: {
+          param1: 'destPropParam1'
+        }
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should add location id headers to the headers if there is a cloudConnectorLocationId in the destination', async () => {
+      const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        headers: {
+          requestConfig: {}
+        }
+      };
+      const destination: Destination = {
+        url: 'http://example.com',
+        cloudConnectorLocationId: 'Potsdam'
+      };
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        httpRequestConfigWithOrigin,
+        destination,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        headers: {
+          'SAP-Connectivity-SCC-Location_ID': 'Potsdam'
+        },
+        params: {}
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+    it('should add proxy headers to the headers if there is a proxy configuration in the destination', async () => {
+      const proxyHeaders = {
+        'Proxy-Authorization': 'Bearer jwt',
+        'SAP-Connectivity-Authentication': 'Bearer jwt'
+      };
+      const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        headers: {
+          requestConfig: {}
+        }
+      };
+      const destination: Destination = {
+        url: 'http://example.com',
+        proxyType: 'OnPremise',
+        proxyConfiguration: {
+          ...connectivityProxyConfigMock,
+          headers: proxyHeaders
+        },
+        authentication: 'PrincipalPropagation'
+      };
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        httpRequestConfigWithOrigin,
+        destination,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        headers: {
+          'Proxy-Authorization': 'Bearer jwt',
+          'SAP-Connectivity-Authentication': 'Bearer jwt'
+        },
+        params: {}
+      };
+      expect(actual).toStrictEqual(expected);
     });
   });
 

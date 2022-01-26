@@ -1,6 +1,5 @@
-import { getEntityConstructor } from '../internal';
 import { CommonEntity, CommonEntityApi } from '../../test/common-entity';
-import { getEdmType } from './complex-type-field';
+import { getEdmType, getEntityConstructor } from './complex-type-field';
 
 describe('complex-type-field', () => {
   const { COMPLEX_TYPE_PROPERTY } = new CommonEntityApi().schema;

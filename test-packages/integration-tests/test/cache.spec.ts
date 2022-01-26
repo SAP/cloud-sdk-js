@@ -118,29 +118,25 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
     delete process.env['VCAP_SERVICES'];
   });
 
-  it('getting the same destination twice should produce a cache hit', async () => {
+  it('caches the Destinations service call which fixed isolation Tenant (only simple auth flows)', async () => {
     await populateDestinationsServiceCache();
 
-    await getDestination({
-      destinationName: 'FINAL-DESTINATION',
-      useCache: true,
-      selectionStrategy: alwaysProvider,
-      isolationStrategy: IsolationStrategy.Tenant
-    });
-  });
-
-  it('caches the Destinations service call which is sufficient for destinations without auth token', async () => {
-    await populateDestinationsServiceCache();
-
-    const destinationRequest = await getDestination({
+    const destinationRequestTenantUser = await getDestination({
       destinationName: 'FINAL-DESTINATION',
       useCache: true,
       isolationStrategy: IsolationStrategy.Tenant_User
     });
-    expect(destinationRequest).toBeDefined();
+    expect(destinationRequestTenantUser).toBeDefined();
+
+    const destinationRequestTenant = await getDestination({
+      destinationName: 'FINAL-DESTINATION',
+      useCache: true,
+      isolationStrategy: IsolationStrategy.Tenant
+    });
+    expect(destinationRequestTenant).toBeDefined();
   });
 
-  it('caches the destination for auth flow', async () => {
+  it('caches the destination retrieval for relevant auth flow', async () => {
     const directCall = await populateDestinationCache();
 
     const cache = await getDestination({
@@ -151,6 +147,15 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
     });
     expect(cache).toBeDefined();
     expect(cache).toEqual(directCall);
+
+    await expect(
+      getDestination({
+        destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
+        useCache: true,
+        jwt: providerUserToken,
+        isolationStrategy: IsolationStrategy.Tenant_User
+      })
+    ).rejects.toThrowError(/Nock: No match for request/);
   }, 600000);
 
   // Fill the cache of the destinations-service endpoint, which is enough for simple auth flow destinations

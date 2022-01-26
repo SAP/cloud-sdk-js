@@ -20,7 +20,7 @@ export function any<
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
   ...filters: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
-): FilterLambdaExpression<EntityT, DeSerializersT, LinkedEntityApiT> {
+): FilterLambdaExpression<EntityT, DeSerializersT> {
   return new FilterLambdaExpression(and(toFilterableList(filters)), 'any');
 }
 
@@ -33,10 +33,9 @@ export function any<
 export function all<
   EntityT extends Entity,
   DeSerializersT extends DeSerializers,
-  // LinkedEntityT extends EntityBase,
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
   ...filters: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
-): FilterLambdaExpression<EntityT, DeSerializersT, LinkedEntityApiT> {
+): FilterLambdaExpression<EntityT, DeSerializersT> {
   return new FilterLambdaExpression(and(toFilterableList(filters)), 'all');
 }

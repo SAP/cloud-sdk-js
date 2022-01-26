@@ -1,6 +1,5 @@
 import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
-import { EntityApi } from '../entity-api';
 import { FilterList } from './filter-list';
 import type { Filterable } from './filterable';
 
@@ -16,8 +15,7 @@ export type FilterLambdaOperator = 'any' | 'all';
  */
 export class FilterLambdaExpression<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  DeSerializersT extends DeSerializers
 > {
   constructor(
     public filters: FilterList<EntityT, DeSerializersT>,
@@ -30,14 +28,9 @@ export class FilterLambdaExpression<
  */
 export function isFilterLambdaExpression<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  DeSerializersT extends DeSerializers
 >(
   filterable: Filterable<EntityT, DeSerializersT>
-): filterable is FilterLambdaExpression<
-  EntityT,
-  DeSerializersT,
-  LinkedEntityApiT
-> {
+): filterable is FilterLambdaExpression<EntityT, DeSerializersT> {
   return 'lambdaOperator' in filterable;
 }

@@ -26,7 +26,7 @@ export type Filterable<
   | Filter<EntityT, DeSerializersT, any>
   | FilterLink<EntityT, DeSerializersT, LinkedEntityApiT>
   | FilterList<EntityT, DeSerializersT>
-  | FilterLambdaExpression<EntityT, DeSerializersT, LinkedEntityApiT>
+  | FilterLambdaExpression<EntityT, DeSerializersT>
   | UnaryFilter<EntityT, DeSerializersT>
   | BooleanFilterFunction<EntityT>
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;

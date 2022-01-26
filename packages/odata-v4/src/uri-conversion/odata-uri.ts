@@ -6,7 +6,6 @@ import {
   ODataUri,
   Selectable
 } from '@sap-cloud-sdk/odata-common/internal';
-// import { inferEntity } from '@sap-cloud-sdk/odata-common';
 import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 import { getExpand } from './get-expand';

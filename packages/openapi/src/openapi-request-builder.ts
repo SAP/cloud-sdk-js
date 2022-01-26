@@ -5,7 +5,7 @@ import {
   Destination,
   noDestinationErrorMessage,
   useOrFetchDestination,
-  DestinationFetchOptions
+  DestinationOrFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import {
   Method,
@@ -86,7 +86,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns A promise resolving to an HttpResponse.
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions
+    destination: DestinationOrFetchOptions
   ): Promise<HttpResponse> {
     const fetchCsrfToken =
       this._fetchCsrfToken &&
@@ -116,9 +116,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to the requested return type.
    */
-  async execute(
-    destination: Destination | DestinationFetchOptions
-  ): Promise<ResponseT> {
+  async execute(destination: DestinationOrFetchOptions): Promise<ResponseT> {
     const response = await this.executeRaw(destination);
     if (isAxiosResponse(response)) {
       return response.data;

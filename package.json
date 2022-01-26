@@ -108,6 +108,7 @@
   "resolutions": {
     "agent-base": ">=6.0.2",
     "color-string": ">=1.5.5",
+    "dot-prop": "^6.0.1",
     "expect": ">=27.2.3",
     "json-schema": ">=0.4.0",
     "netmask": ">=2.0.1 ",

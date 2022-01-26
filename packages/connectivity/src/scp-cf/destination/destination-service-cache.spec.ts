@@ -7,22 +7,15 @@ import {
   subscriberUserJwt
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
-  mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
-import { decodeJwt, wrapJwtInHeader } from '../jwt';
+import { decodeJwt } from '../jwt';
 import { fetchSubaccountDestinations } from './destination-service';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 
 const destinationServiceUrl = 'https://myDestination.service.url';
-const singleDest = {
-  URL: 'https://destination1.example',
-  Name: 'destName',
-  ProxyType: 'any',
-  Authentication: 'NoAuthentication'
-};
 
 const subscriberDest = {
   URL: 'https://subscriber.example',
@@ -70,22 +63,6 @@ describe('DestinationServiceCache', () => {
       providerServiceToken,
       destinationServiceUrl
     );
-    mockSingleDestinationCall(
-      nock,
-      singleDest,
-      200,
-      singleDest.Name,
-      wrapJwtInHeader(subscriberServiceToken).headers,
-      { uri: destinationServiceUrl }
-    );
-    mockSingleDestinationCall(
-      nock,
-      singleDest,
-      200,
-      singleDest.Name,
-      wrapJwtInHeader(subscriberUserJwt).headers,
-      { uri: destinationServiceUrl }
-    );
   });
   afterEach(() => {
     destinationServiceCache.clear();
@@ -99,6 +76,7 @@ describe('DestinationServiceCache', () => {
     const directCallProvider = await populateCacheDestinations(
       providerServiceToken
     );
+    expect(directCallProvider.length).toEqual(2);
 
     const cacheSubscriber = getDestinationsFromCache(subscriberServiceToken);
     expect(cacheSubscriber).toEqual(directCallSubscriber);

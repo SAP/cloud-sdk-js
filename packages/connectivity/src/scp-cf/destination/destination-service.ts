@@ -99,6 +99,9 @@ async function fetchDestinations(
         decodeJwt(jwt)
       );
     if (destinationsFromCache) {
+      logger.debug(
+        `Destinations retrieved from cache. There were ${destinationsFromCache.length} destinations returned from the cache.`
+      );
       return destinationsFromCache;
     }
   }

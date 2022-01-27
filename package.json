@@ -12,6 +12,7 @@
     "sap-cloud-platform"
   ],
   "repository": "github:SAP/cloud-sdk-js",
+  "type": "module",
   "workspaces": [
     "packages/connectivity",
     "packages/http-client",
@@ -72,7 +73,7 @@
     "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
     "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests",
-    "test:run-execa-ts": "ts-node test-execa.ts",
+    "test:run-execa-ts": "node --loader ts-node/esm test-execa.ts",
     "test:compile-execa-ts": "tsc test-execa.ts",
     "test:run-execa-js": "node test-execa-js.js",
     "test:run-execa-js-fix": "node test-execa-js-fix.js"
@@ -109,7 +110,8 @@
     "typescript": "~4.5.5"
   },
   "dependencies": {
-    "execa": "6.0.0"
+    "execa": "6.0.0",
+    "yarn": "^1.22.17"
   },
   "resolutions": {
     "agent-base": ">=6.0.2",

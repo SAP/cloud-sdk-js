@@ -5,7 +5,9 @@
 
 # @sap-cloud-sdk/odata-common
 
-This package contains common functions of OData client.
+This package contains common functionality for the SAP Cloud SDK OData clients.
+It should not be used directly.
+Use the `@sap-cloud-sdk/odata-v2` and `@sap-cloud-sdk/odata-v4` packages instead.
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->

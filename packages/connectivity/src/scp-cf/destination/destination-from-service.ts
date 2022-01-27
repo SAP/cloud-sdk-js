@@ -416,6 +416,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
           this.subscriberToken?.userJwt
         );
       case ProxyStrategy.INTERNET_PROXY:
+      case ProxyStrategy.PRIVATELINK_PROXY:
         return addProxyConfigurationInternet(destination);
       case ProxyStrategy.NO_PROXY:
         return destination;

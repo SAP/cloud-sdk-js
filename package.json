@@ -74,7 +74,8 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests",
     "test:run-execa-ts": "ts-node test-execa.ts",
     "test:compile-execa-ts": "tsc test-execa.ts",
-    "test:run-execa-js": "node test-execa-js.js"
+    "test:run-execa-js": "node test-execa-js.js",
+    "test:run-execa-js-fix": "node test-execa-js-fix.js"
   },
   "devDependencies": {
     "@types/jest": "^27.0.0",

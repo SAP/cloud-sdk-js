@@ -1,5 +1,8 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
 
+/**
+ * @internal
+ */
 export interface Import {
   /**
    * Names of the exports that are to be imported.
@@ -15,6 +18,9 @@ export interface Import {
   typeOnly?: boolean;
 }
 
+/**
+ * @internal
+ */
 export function serializeImports(imports: Import[]): string {
   const relevantImports = imports.filter(({ names }) => names.length);
   return relevantImports

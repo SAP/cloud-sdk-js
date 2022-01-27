@@ -4,6 +4,9 @@ import {
   VdmEntity
 } from '../../vdm-types';
 
+/**
+ * @internal
+ */
 export function matchEntity(
   navProp: VdmNavigationProperty,
   service: VdmServiceMetadata

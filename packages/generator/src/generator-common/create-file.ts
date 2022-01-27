@@ -4,6 +4,9 @@ import { codeBlock, ErrorWithCause, unixEOL } from '@sap-cloud-sdk/util';
 
 const { writeFile } = promises;
 
+/**
+ * @internal
+ */
 export async function createFile(
   directoryPath: string,
   fileName: string,

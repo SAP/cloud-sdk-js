@@ -75,6 +75,9 @@ function getFieldInitializer(
   };
 }
 
+/**
+ * @internal
+ */
 export function createPropertyFieldInitializerForEntity(
   prop: VdmProperty,
   fieldBuilderName = '_fieldBuilder'
@@ -100,6 +103,9 @@ export function createPropertyFieldInitializerForEntity(
   return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
 }
 
+/**
+ * @internal
+ */
 export function getPropertyFieldType(
   entity: VdmEntity,
   prop: VdmProperty,
@@ -117,7 +123,6 @@ export function getPropertyFieldType(
 
   if (prop.isComplex) {
     return 'Comple';
-    return `${fieldBuilderName}.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
   }
 
   if (prop.isEnum) {

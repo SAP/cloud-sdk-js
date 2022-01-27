@@ -9,6 +9,9 @@ import {
 import { odataImport, complexTypeImports, enumTypeImports } from './imports';
 import { classContent } from './class';
 
+/**
+ * @internal
+ */
 export function entityApiFile(
   entity: VdmEntity,
   service: VdmServiceMetadata

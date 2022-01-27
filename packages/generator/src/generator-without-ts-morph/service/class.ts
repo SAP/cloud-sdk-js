@@ -7,6 +7,9 @@ import {
   getGenericTypesWithDefault
 } from '../de-serializers-generic-types';
 
+/**
+ * @internal
+ */
 export function serviceBuilder(
   serviceName: string,
   oDataVersion: ODataVersion
@@ -25,6 +28,9 @@ export function serviceBuilder(
   `;
 }
 
+/**
+ * @internal
+ */
 export function serviceClass(service: VdmServiceMetadata): string {
   return codeBlock`export class ${
     service.className

@@ -6,6 +6,9 @@ import {
 } from './navigation-properties';
 import { getSchema } from './schema';
 
+/**
+ * @internal
+ */
 export function classContent(
   entity: VdmEntity,
   service: VdmServiceMetadata

@@ -1,7 +1,4 @@
-import {
-  Destination,
-  DestinationFetchOptions
-} from '@sap-cloud-sdk/connectivity';
+import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { ODataRequestConfig } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
@@ -32,9 +29,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving to the requested return type
    */
-  async execute(
-    destination: Destination | DestinationFetchOptions
-  ): Promise<ReturnT> {
+  async execute(destination: DestinationOrFetchOptions): Promise<ReturnT> {
     return this.executeRaw(destination).then(response =>
       this.responseTransformer(response.data)
     );
@@ -46,7 +41,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions
+    destination: DestinationOrFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

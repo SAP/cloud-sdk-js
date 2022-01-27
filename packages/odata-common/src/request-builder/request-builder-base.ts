@@ -1,7 +1,6 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
-  Destination,
-  DestinationFetchOptions,
+  DestinationOrFetchOptions,
   noDestinationErrorMessage,
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
@@ -26,9 +25,7 @@ export abstract class MethodRequestBuilder<
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns Promise resolving to the URL for the request
    */
-  async url(
-    destination: Destination | DestinationFetchOptions
-  ): Promise<string> {
+  async url(destination: DestinationOrFetchOptions): Promise<string> {
     const request = await this.build(destination);
     return request.url();
   }
@@ -108,7 +105,7 @@ export abstract class MethodRequestBuilder<
 
   protected build(): ODataRequest<RequestConfigT>;
   protected build(
-    destination: Destination | DestinationFetchOptions
+    destination: DestinationOrFetchOptions
   ): Promise<ODataRequest<RequestConfigT>>;
   /**
    * Build an ODataRequest that holds essential configuration for the service request and executes it.
@@ -116,7 +113,7 @@ export abstract class MethodRequestBuilder<
    * @returns The OData request executor including the destination configuration, if one was given.
    */
   protected build(
-    destination?: Destination | DestinationFetchOptions
+    destination?: DestinationOrFetchOptions
   ): ODataRequest<RequestConfigT> | Promise<ODataRequest<RequestConfigT>> {
     if (destination) {
       return useOrFetchDestination(destination)

@@ -742,3 +742,44 @@ describe('get destination cache key', () => {
     );
   });
 });
+
+describe('get destination with PrivateLink proxy type', () => {
+  const privateLinkDest = {
+    URL: 'https://subscriber.example',
+    Name: 'PrivateLinkDest',
+    ProxyType: 'PrivateLink',
+    Authentication: 'NoAuthentication'
+  };
+
+  it('should log that PrivateLink proxy type is used.', async () => {
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
+    mockJwtBearerToken();
+
+    mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+    mockSubaccountDestinationsCall(
+      nock,
+      [privateLinkDest],
+      200,
+      subscriberServiceToken
+    );
+
+    const logger = createLogger({
+      package: 'connectivity',
+      messageContext: 'proxy-util'
+    });
+    const info = jest.spyOn(logger, 'info');
+    const destinationFromFirstCall = await getDestination({
+      destinationName: 'PrivateLinkDest',
+      jwt: subscriberUserJwt,
+      useCache: true,
+      cacheVerificationKeys: false,
+      iasToXsuaaTokenExchange: false
+    });
+    expect(info).toBeCalledWith(
+      'PrivateLink destination proxy settings will be used.'
+    );
+    expect(destinationFromFirstCall?.proxyType).toBe('PrivateLink');
+  });
+});

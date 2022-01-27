@@ -375,9 +375,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       exchangeHeaderJwt: this.subscriberToken.userJwt.encoded // token considered for user and tenant
     };
 
-    throw new Error(
-      `Not possible to build tokens for ${destination.authentication} flow for destination ${destination.name}.`
-    );
   }
 
   /**

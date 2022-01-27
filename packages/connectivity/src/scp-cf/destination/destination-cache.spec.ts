@@ -796,7 +796,7 @@ describe('get destination with PrivateLink proxy type', () => {
     });
     const info = jest.spyOn(logger, 'info');
 
-    const destinationFromFirstCall = await getDestination({
+    await getDestination({
       destinationName: 'PrivateLinkDest',
       jwt: subscriberUserJwt,
       useCache: true,
@@ -807,6 +807,7 @@ describe('get destination with PrivateLink proxy type', () => {
       'PrivateLink destination proxy settings will be used.'
     );
   });
+
   it('should behave like internet proxy, so call addProxyConfigurationInternet but still use proxy type PrivateLink', async () => {
     const internetConfig = jest.spyOn(
       ProxyUtil,

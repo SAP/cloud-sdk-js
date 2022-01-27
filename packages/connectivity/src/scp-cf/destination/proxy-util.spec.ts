@@ -33,6 +33,12 @@ describe('proxy-util', () => {
     url: 'http://example.com'
   };
 
+  const privateLinkDestination: Destination = {
+    name: 'privateLinkDestination',
+    url: 'https://example.com',
+    proxyType: 'PrivateLink'
+  };
+
   it('should use proxy type OnPrem if the destination is onPrem - even if HTTP(S)_PROXY env are present.', () => {
     process.env['https_proxy'] = 'https://some.proxy.com:443';
 
@@ -76,6 +82,10 @@ describe('proxy-util', () => {
 
     process.env['http_proxy'] = 'envIsNowSet';
     expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.INTERNET_PROXY);
+  });
+
+  it('should use PrivateLink proxy if proxy type is Privatelink.', () => {
+    expect(proxyStrategy(privateLinkDestination)).toBe(ProxyStrategy.PRIVATELINK_PROXY);
   });
 
   it('should use the proxy env with the  protocol indicated by the destination.', () => {

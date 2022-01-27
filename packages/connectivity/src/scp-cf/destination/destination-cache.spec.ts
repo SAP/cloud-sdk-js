@@ -47,6 +47,7 @@ import {
 } from './destination-service-types';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { parseDestination } from './destination';
+import * as ProxyUtil from './proxy-util';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',
@@ -744,14 +745,7 @@ describe('get destination cache key', () => {
 });
 
 describe('get destination with PrivateLink proxy type', () => {
-  const privateLinkDest = {
-    URL: 'https://subscriber.example',
-    Name: 'PrivateLinkDest',
-    ProxyType: 'PrivateLink',
-    Authentication: 'NoAuthentication'
-  };
-
-  it('should log that PrivateLink proxy type is used.', async () => {
+  beforeEach(() => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
@@ -764,12 +758,44 @@ describe('get destination with PrivateLink proxy type', () => {
       200,
       subscriberServiceToken
     );
+  });
 
+  afterEach(() => {
+    destinationCache.clear();
+    destinationServiceCache.clear();
+    nock.cleanAll();
+  });
+
+  const privateLinkDest = {
+    URL: 'https://subscriber.example',
+    Name: 'PrivateLinkDest',
+    ProxyType: 'PrivateLink',
+    Authentication: 'NoAuthentication'
+  };
+
+  const receivePrivateLinkDest: Destination = {
+    authTokens: [],
+    authentication: 'NoAuthentication',
+    certificates: [],
+    isTrustingAllCertificates: false,
+    name: 'PrivateLinkDest',
+    originalProperties: {
+          'Authentication': 'NoAuthentication',
+          'Name': 'PrivateLinkDest',
+          'ProxyType': 'PrivateLink',
+          'URL': 'https://subscriber.example',
+    },
+    proxyType: 'PrivateLink',
+    url: 'https://subscriber.example'
+  };
+
+  it('should log that PrivateLink proxy type is used.', async () => {
     const logger = createLogger({
       package: 'connectivity',
       messageContext: 'proxy-util'
     });
     const info = jest.spyOn(logger, 'info');
+
     const destinationFromFirstCall = await getDestination({
       destinationName: 'PrivateLinkDest',
       jwt: subscriberUserJwt,
@@ -780,6 +806,19 @@ describe('get destination with PrivateLink proxy type', () => {
     expect(info).toBeCalledWith(
       'PrivateLink destination proxy settings will be used.'
     );
+  });
+  it('should behave like internet proxy, so call addProxyConfigurationInternet but still use proxy type PrivateLink', async () => {
+    const internetConfig = jest.spyOn(ProxyUtil, 'addProxyConfigurationInternet');
+
+    const destinationFromFirstCall = await getDestination({
+      destinationName: 'PrivateLinkDest',
+      jwt: subscriberUserJwt,
+      useCache: true,
+      cacheVerificationKeys: false,
+      iasToXsuaaTokenExchange: false
+    });
+
     expect(destinationFromFirstCall?.proxyType).toBe('PrivateLink');
+    expect(internetConfig).toHaveBeenCalledWith(receivePrivateLinkDest);
   });
 });

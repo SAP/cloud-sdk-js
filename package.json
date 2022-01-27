@@ -71,7 +71,10 @@
     "temporal-de-serializers": "yarn workspace @sap-cloud-sdk/temporal-de-serializers",
     "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
     "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
-    "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
+    "type-tests": "yarn workspace @sap-cloud-sdk/type-tests",
+    "test:run-execa-ts": "ts-node test-execa.ts",
+    "test:compile-execa-ts": "tsc test-execa.ts",
+    "test:run-execa-js": "node test-execa-js.js"
   },
   "devDependencies": {
     "@types/jest": "^27.0.0",
@@ -104,7 +107,9 @@
     "typedoc": "^0.22.3",
     "typescript": "~4.5.5"
   },
-  "dependencies": {},
+  "dependencies": {
+    "execa": "6.0.0"
+  },
   "resolutions": {
     "agent-base": ">=6.0.2",
     "color-string": ">=1.5.5",

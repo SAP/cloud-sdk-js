@@ -780,10 +780,10 @@ describe('get destination with PrivateLink proxy type', () => {
     isTrustingAllCertificates: false,
     name: 'PrivateLinkDest',
     originalProperties: {
-          'Authentication': 'NoAuthentication',
-          'Name': 'PrivateLinkDest',
-          'ProxyType': 'PrivateLink',
-          'URL': 'https://subscriber.example',
+      Authentication: 'NoAuthentication',
+      Name: 'PrivateLinkDest',
+      ProxyType: 'PrivateLink',
+      URL: 'https://subscriber.example'
     },
     proxyType: 'PrivateLink',
     url: 'https://subscriber.example'
@@ -808,7 +808,10 @@ describe('get destination with PrivateLink proxy type', () => {
     );
   });
   it('should behave like internet proxy, so call addProxyConfigurationInternet but still use proxy type PrivateLink', async () => {
-    const internetConfig = jest.spyOn(ProxyUtil, 'addProxyConfigurationInternet');
+    const internetConfig = jest.spyOn(
+      ProxyUtil,
+      'addProxyConfigurationInternet'
+    );
 
     const destinationFromFirstCall = await getDestination({
       destinationName: 'PrivateLinkDest',

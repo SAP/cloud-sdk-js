@@ -374,7 +374,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       authHeaderJwt: serviceJwt.encoded, // token to get destination from service
       exchangeHeaderJwt: this.subscriberToken.userJwt.encoded // token considered for user and tenant
     };
-
   }
 
   /**

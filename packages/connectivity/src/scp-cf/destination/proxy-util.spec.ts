@@ -85,7 +85,9 @@ describe('proxy-util', () => {
   });
 
   it('should use PrivateLink proxy if proxy type is Privatelink.', () => {
-    expect(proxyStrategy(privateLinkDestination)).toBe(ProxyStrategy.PRIVATELINK_PROXY);
+    expect(proxyStrategy(privateLinkDestination)).toBe(
+      ProxyStrategy.PRIVATELINK_PROXY
+    );
   });
 
   it('should use the proxy env with the  protocol indicated by the destination.', () => {

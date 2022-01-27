@@ -31,9 +31,7 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
   }
 
   if (destination.proxyType === 'PrivateLink') {
-    logger.info(
-      'PrivateLink destination proxy settings will be used.'
-    );
+    logger.info('PrivateLink destination proxy settings will be used.');
     return ProxyStrategy.PRIVATELINK_PROXY;
   }
 

@@ -31,7 +31,7 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
   }
 
   if (destination.proxyType === 'PrivateLink') {
-    logger.info('PrivateLink destination proxy settings will be used.');
+    logger.info('PrivateLink destination proxy settings will be used. This is not supported in local/CI/CD environments.');
     return ProxyStrategy.PRIVATELINK_PROXY;
   }
 

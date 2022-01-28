@@ -195,7 +195,7 @@ describe('get destination with PrivateLink proxy type', () => {
       iasToXsuaaTokenExchange: false
     });
     expect(info).toBeCalledWith(
-      'PrivateLink destination proxy settings will be used.'
+      'PrivateLink destination proxy settings will be used. This is not supported in local/CI/CD environments.'
     );
   });
 

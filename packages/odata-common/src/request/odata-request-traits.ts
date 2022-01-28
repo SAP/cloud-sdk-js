@@ -3,6 +3,7 @@ import { Selectable } from '../selectable';
 import { Orderable } from '../order';
 import { Filterable } from '../filter';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 
 /**
  * @internal
@@ -31,7 +32,7 @@ export interface WithGetAllRestrictions<
   top: number;
   skip: number;
   filter: Filterable<EntityT, DeSerializersT>;
-  orderBy: Orderable<EntityT>[];
+  orderBy: Orderable<EntityT, EntityApi<EntityBase>>[];
 }
 
 /**

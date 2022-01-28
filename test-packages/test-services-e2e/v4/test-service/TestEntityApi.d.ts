@@ -1,6 +1,5 @@
 import { TestEntity } from './TestEntity';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
-import { TestEntityLink } from './TestEntityLink';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
 import {
   CustomField,
@@ -70,7 +69,7 @@ export declare class TestEntityApi<
     TO_MULTI_LINK: OneToManyLink<
       TestEntity<DeSerializersT>,
       DeSerializersT,
-      TestEntityLink<DeSerializersT>
+      TestEntityLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the [[keyTestEntity]] property for query construction.

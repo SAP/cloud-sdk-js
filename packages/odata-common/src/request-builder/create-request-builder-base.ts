@@ -3,12 +3,13 @@ import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion';
-import type { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
+import type { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request';
 import { Link } from '../selectable';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -63,7 +64,7 @@ export abstract class CreateRequestBuilderBase<
    */
   asChildOf<ParentEntityT extends EntityBase>(
     parentEntity: ParentEntityT,
-    linkField: Link<ParentEntityT, DeSerializersT, EntityT>
+    linkField: Link<ParentEntityT, DeSerializersT, EntityApi<EntityT, any>>
   ): this {
     this.requestConfig.parentKeys = this.oDataUri.getEntityKeys(
       parentEntity,

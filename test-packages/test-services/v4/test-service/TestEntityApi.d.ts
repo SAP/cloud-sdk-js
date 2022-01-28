@@ -1,8 +1,6 @@
 import { TestEntity } from './TestEntity';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
-import { TestEntityMultiLink } from './TestEntityMultiLink';
 import { TestEntityMultiLinkApi } from './TestEntityMultiLinkApi';
-import { TestEntitySingleLink } from './TestEntitySingleLink';
 import { TestEntitySingleLinkApi } from './TestEntitySingleLinkApi';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
@@ -83,7 +81,7 @@ export declare class TestEntityApi<
     TO_MULTI_LINK: OneToManyLink<
       TestEntity<DeSerializersT>,
       DeSerializersT,
-      TestEntityMultiLink<DeSerializersT>
+      TestEntityMultiLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
@@ -92,7 +90,7 @@ export declare class TestEntityApi<
     TO_OTHER_MULTI_LINK: OneToManyLink<
       TestEntity<DeSerializersT>,
       DeSerializersT,
-      TestEntityMultiLink<DeSerializersT>
+      TestEntityMultiLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
@@ -101,7 +99,7 @@ export declare class TestEntityApi<
     TO_SINGLE_LINK: OneToOneLink<
       TestEntity<DeSerializersT>,
       DeSerializersT,
-      TestEntitySingleLink<DeSerializersT>
+      TestEntitySingleLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the [[keyPropertyGuid]] property for query construction.

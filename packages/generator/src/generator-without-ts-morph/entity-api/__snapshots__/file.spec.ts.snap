@@ -30,7 +30,7 @@ export class BreakfastApi<DeSerializersT extends DeSerializers = DefaultDeSerial
       TO_BRUNCH: OneToOneLink<
             Breakfast<DeSerializersT>,
             DeSerializersT,
-            Brunch<DeSerializersT>
+            BrunchApi<DeSerializersT>
           >
     };
 

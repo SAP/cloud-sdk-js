@@ -1,6 +1,5 @@
 import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
-import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 import { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
 import {
   CustomField,
@@ -72,7 +71,7 @@ export declare class TestEntityCircularLinkParentApi<
     TO_CHILD: Link<
       TestEntityCircularLinkParent<DeSerializersT>,
       DeSerializersT,
-      TestEntityCircularLinkChild<DeSerializersT>
+      TestEntityCircularLinkChildApi<DeSerializersT>
     >;
     /**
      * Static representation of the [[keyProperty]] property for query construction.

@@ -1,5 +1,6 @@
 import { EntityBase } from '../entity-base';
 import { Link } from '../selectable';
+import { EntityApi, EntityType } from '../entity-api';
 import type { Orderable } from './orderable';
 
 /**
@@ -10,10 +11,10 @@ import type { Orderable } from './orderable';
  */
 export class OrderLink<
   EntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  LinkedEntityApiT extends EntityApi<EntityBase, any>
 > {
   readonly entityType: EntityT;
-  readonly linkedEntityType: LinkedEntityT;
+  readonly linkedEntityType: EntityType<LinkedEntityApiT>;
 
   /**
    * Creates an instance of OrderLink.
@@ -21,7 +22,10 @@ export class OrderLink<
    * @param orderBy - A list of orderables based on the linked entity
    */
   constructor(
-    public link: Link<EntityT, any, LinkedEntityT>,
-    public orderBy: Orderable<LinkedEntityT>[]
+    public link: Link<EntityT, any, LinkedEntityApiT>,
+    public orderBy: Orderable<
+      EntityType<LinkedEntityApiT>,
+      EntityApi<EntityBase, any>
+    >[]
   ) {}
 }

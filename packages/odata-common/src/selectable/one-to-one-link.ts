@@ -46,7 +46,7 @@ export class OneToOneLink<
    * @returns Newly created order link
    */
   orderBy(
-    ...orderBy: Orderable<EntityType<LinkedEntityApiT>, EntityApi<EntityBase>>[]
+    ...orderBy: Orderable<EntityType<LinkedEntityApiT>>[]
   ): OrderLink<EntityT, LinkedEntityApiT> {
     return new OrderLink(this, orderBy);
   }

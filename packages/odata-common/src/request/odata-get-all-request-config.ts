@@ -24,7 +24,7 @@ export class ODataGetAllRequestConfig<
   top: number;
   skip: number;
   filter: Filterable<EntityT, DeSerializersT>;
-  orderBy: Orderable<EntityT, EntityApi<EntityBase>>[];
+  orderBy: Orderable<EntityT>[];
   selects: Selectable<EntityT, DeSerializersT>[];
   expands: Expandable<
     EntityT,

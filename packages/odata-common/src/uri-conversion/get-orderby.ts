@@ -10,11 +10,8 @@ import { EntityApi } from '../entity-api';
  * @returns An object containing the query parameter or an empty object
  * @internal
  */
-export function getOrderBy<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
->(
-  orderBy: Orderable<EntityT, EntityApi<EntityBase>>[]
+export function getOrderBy<EntityT extends EntityBase>(
+  orderBy: Orderable<EntityT>[]
 ): Partial<{ orderby: string }> {
   if (typeof orderBy !== 'undefined' && orderBy.length) {
     return {

@@ -33,8 +33,7 @@ export class OneToManyLink<
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > extends Link<EntityT, DeSerializersT, LinkedEntityApiT> {
   _filters: FilterLink<EntityT, DeSerializersT, LinkedEntityApiT>;
-  _orderBy: Orderable<EntityType<LinkedEntityApiT>, EntityApi<EntityBase>>[] =
-    [];
+  _orderBy: Orderable<EntityType<LinkedEntityApiT>>[] = [];
   _top: number;
   _skip: number;
 
@@ -73,9 +72,7 @@ export class OneToManyLink<
    ** @param orderBy - OrderBy statements to order the response by.
    * @returns The request builder itself, to facilitate method chaining.
    */
-  orderBy(
-    ...orderBy: Orderable<EntityType<LinkedEntityApiT>, EntityApi<EntityBase>>[]
-  ): this {
+  orderBy(...orderBy: Orderable<EntityType<LinkedEntityApiT>>[]): this {
     const link = this.clone();
     link._orderBy = orderBy;
     return link;

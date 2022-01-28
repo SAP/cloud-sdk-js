@@ -59,21 +59,19 @@ export function and<
 ): FilterList<EntityT, DeSerializersT>;
 export function and<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  DeSerializersT extends DeSerializers
 >(
-  ...expressions: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+  ...expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
 export function and<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  DeSerializersT extends DeSerializers
 >(
   first:
     | undefined
-    | Filterable<EntityT, DeSerializersT, LinkedEntityApiT>
-    | Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[],
-  ...rest: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+    | Filterable<EntityT, DeSerializersT>
+    | Filterable<EntityT, DeSerializersT>[],
+  ...rest: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT> {
   return new FilterList(variadicArgumentToArray(first, rest));
 }
@@ -99,10 +97,9 @@ export function or<
 ): FilterList<EntityT, DeSerializersT>;
 export function or<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+  DeSerializersT extends DeSerializers
 >(
-  ...expressions: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+  ...expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
 export function or<
   EntityT extends EntityBase,

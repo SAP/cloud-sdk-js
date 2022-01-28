@@ -1,6 +1,8 @@
+const rewire = require('rewire')
+const verificationKeyRewired = rewire('../../../../node_modules/@sap/xssec/lib/verificationkey.js')
 import { IncomingMessage } from 'http';
 import { Socket } from 'net';
-import { unixEOL } from '@sap-cloud-sdk/util';
+import {ErrorWithCause, unixEOL} from '@sap-cloud-sdk/util';
 import nock = require('nock');
 import {
   publicKey,
@@ -8,6 +10,7 @@ import {
   xsuaaBindingMock
 } from '../../../../test-resources/test/test-util';
 import { audiences, retrieveJwt, verificationKeyCache, verifyJwt } from './jwt';
+const LRU = require('lru-cache');
 
 const jwtPayload = {
   sub: '1234567890',
@@ -81,18 +84,31 @@ describe('jwt', () => {
     });
 
     afterEach(() => {
+
+
       nock.cleanAll();
       verificationKeyCache.clear();
       delete process.env.VCAP_SERVICES;
     });
 
     it('succeeds and decodes for correct key', async () => {
-      nock(jku).get('/').reply(200, responseWithPublicKey());
-
+      nock(jku).get('/').times(999).reply(200, responseWithPublicKey());
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku),{cacheVerificationKeys:true}) //remove cache after xssec is fixed
       ).resolves.toEqual(jwtPayload);
-    });
+
+      const myCache = new LRU()
+      const keys = myCache.keys()
+
+      // const foo = new verificationKey({},"XSUAA",{})
+
+      //still not working only const = require is exposed
+      // not clear how to clean the cache between tests perhaps require file again so that value is unset?
+      const cache = verificationKeyRewired.__get__("keyCache")
+      // const properties = foo.properties()
+      // const cacheKeys = foo['getKeyCache']().keys
+      console.log(cache.keys())
+    },600000);
 
     it('succeeds and decodes for correct inline key', async () => {
       nock(jku)
@@ -107,13 +123,12 @@ describe('jwt', () => {
     it('fails for no key', async () => {
       nock(jku).get('/').reply(200, { keys: [] });
 
-      await expect(() =>
+      await expect(
         verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).rejects.toMatchObject({
-        message: 'Failed to verify JWT. Could not retrieve verification key.',
-        cause: {
-          message:
-            'No verification keys have been returned by the XSUAA service.'
+        message:'Failed to verify JWT.',
+        cause:{
+          message:`Obtained token keys from UAA, but key with requested keyID "https://my-jku-url.authentication.sap.hana.ondemand.comkey-id-1" still not found in cache.`
         }
       });
     });
@@ -126,9 +141,9 @@ describe('jwt', () => {
       await expect(() =>
         verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).rejects.toMatchObject({
-        message: 'Failed to verify JWT. Could not retrieve verification key.',
+        message: 'Failed to verify JWT.',
         cause: {
-          message: 'Could not find verification key for the given key ID.'
+          message: `Obtained token keys from UAA, but key with requested keyID "https://my-jku-url.authentication.sap.hana.ondemand.comkey-id-1" still not found in cache.`
         }
       });
     });
@@ -160,11 +175,11 @@ describe('jwt', () => {
       // We mock only a single HTTP call
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      await verifyJwt(signedJwtForVerification(jwtPayload, jku));
+      await verifyJwt(signedJwtForVerification(jwtPayload, jku),{cacheVerificationKeys:true});
 
       // But due to caching multiple calls should not lead to errors
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku),{cacheVerificationKeys:true})
       ).resolves.toEqual(jwtPayload);
     });
 

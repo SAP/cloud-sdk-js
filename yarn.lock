@@ -1913,7 +1913,7 @@
     debug "4.2.0"
     verror "1.10.0"
 
-"@sap/xssec@^3.2.5", "@sap/xssec@^3.2.7":
+"@sap/xssec@^3.2.12", "@sap/xssec@^3.2.5", "@sap/xssec@^3.2.7":
   version "3.2.12"
   resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.12.tgz#be5c3ef5829edafc6547562fbc8a6c20cad11583"
   integrity sha512-Uhooyklldsft5aC0O/af9dc2qlqcO4Udm1wiPBB+XGSpNHwopb/o+7zJwoxWH3naziYsIHElBaGv6fm8sPG3cQ==
@@ -4367,7 +4367,7 @@ eslint-visitor-keys@^3.0.0, eslint-visitor-keys@^3.1.0, eslint-visitor-keys@^3.2
   resolved "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.2.0.tgz#6fbb166a6798ee5991358bc2daa1ba76cc1254a1"
   integrity sha512-IOzT0X126zn7ALX0dwFiUQEdsfzrm4+ISsQS8nukaJXwEyYKRSnEIIDULYg1mCtGp7UUXgfGl7BIolXREQK+XQ==
 
-eslint@^7.0.0:
+eslint@^7.0.0, eslint@^7.32.0:
   version "7.32.0"
   resolved "https://registry.npmjs.org/eslint/-/eslint-7.32.0.tgz#c6d328a14be3fb08c8d1d21e12c02fdb7a2a812d"
   integrity sha512-VHZ8gX+EDfz+97jGcgyGCyRia/dPOd6Xh9yPv8Bl1+SoaIwD+a/vlrOmGRUyOYu7MwUhc7CxqeaDZU13S4+EpA==
@@ -8867,6 +8867,13 @@ reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+
+rewire@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/rewire/-/rewire-6.0.0.tgz#54f4fcda4df9928d28af1eb54a318bc51ca9aa99"
+  integrity sha512-7sZdz5dptqBCapJYocw9EcppLU62KMEqDLIILJnNET2iqzXHaQfaVP5SOJ06XvjX+dNIDJbzjw0ZWzrgDhtjYg==
+  dependencies:
+    eslint "^7.32.0"
 
 rimraf@2, rimraf@^2.6.1, rimraf@^2.6.3:
   version "2.7.1"

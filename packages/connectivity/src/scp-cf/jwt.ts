@@ -1,3 +1,4 @@
+import * as xssec from '@sap/xssec';
 import { IncomingMessage } from 'http';
 import * as url from 'url';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
@@ -150,29 +151,46 @@ export async function verifyJwt(
   token: string,
   options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
-  options = { ...defaultVerifyJwtOptions, ...options };
 
-  const creds = getXsuaaServiceCredentials(token);
-  const header = decodeJwtComplete(token).header;
+  const disableCache = options?.cacheVerificationKeys ? false : true;
+  const credentials = getXsuaaServiceCredentials(token);
 
-  validateJwtHeaderForVerification(header, creds.uaadomain);
-  const cacheKey = buildCacheKey(header.jku, header.kid);
+  const promise = new Promise<JwtPayload>((resolve, reject) => {
+    const context = xssec.createSecurityContext(token, {disableCache,credentials}, function(error, securityContext, tokenInfo) {
+      if (error) {
+        return reject(error)
+      }
+       return resolve(tokenInfo.getPayload())
+    });
+  })
+  return promise.catch(e=>{
+    throw new ErrorWithCause('Failed to verify JWT.',e)})
+      .then(data=>data)
 
-  if (options.cacheVerificationKeys) {
-    const key = verificationKeyCache.get(cacheKey);
-    if (key) {
-      return verifyJwtWithKey(token, key.value).catch(error => {
-        logger.warn(
-          'Unable to verify JWT with cached key, fetching new verification key.'
-        );
-        logger.warn(`Original error: ${error.message}`);
 
-        return fetchAndCacheKeyAndVerify(creds, header, token, options);
-      });
-    }
-  }
-
-  return fetchAndCacheKeyAndVerify(creds, header, token, options); // Verify only here
+  // options = { ...defaultVerifyJwtOptions, ...options };
+  //
+  // const creds = getXsuaaServiceCredentials(token);
+  // const header = decodeJwtComplete(token).header;
+  //
+  // validateJwtHeaderForVerification(header, creds.uaadomain);
+  // const cacheKey = buildCacheKey(header.jku, header.kid);
+  //
+  // if (options.cacheVerificationKeys) {
+  //   const key = verificationKeyCache.get(cacheKey);
+  //   if (key) {
+  //     return verifyJwtWithKey(token, key.value).catch(error => {
+  //       logger.warn(
+  //         'Unable to verify JWT with cached key, fetching new verification key.'
+  //       );
+  //       logger.warn(`Original error: ${error.message}`);
+  //
+  //       return fetchAndCacheKeyAndVerify(creds, header, token, options);
+  //     });
+  //   }
+  // }
+  //
+  // return fetchAndCacheKeyAndVerify(creds, header, token, options); // Verify only here
 }
 
 async function fetchAndCacheKeyAndVerify(

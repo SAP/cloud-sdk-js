@@ -1,8 +1,10 @@
 import https from 'https';
+import http from 'http';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { Destination, Protocol } from '@sap-cloud-sdk/connectivity';
+import { Destination, Protocol, ProxyConfiguration } from '@sap-cloud-sdk/connectivity';
 import {
   connectivityProxyConfigMock,
   defaultDestination
@@ -681,6 +683,27 @@ sap-client:001`);
           method: 'post'
         })
       );
+    });
+
+    xit('test axios proxy redirect', () => {
+      const proxyConfiguration: ProxyConfiguration = {
+        host: 'localhost',
+        port: 8080,
+        protocol: Protocol.HTTP
+      };
+      // A fake proxy server
+      http.createServer(function (req, res) {
+        res.writeHead(302, { location: 'https://example.com' });
+        res.end();
+      }).listen(8080);
+
+      axios({
+        method: 'get',
+        url: 'https://google.com',
+        httpsAgent: new HttpsProxyAgent(proxyConfiguration)
+      })
+      .then((r) => r.data)
+      .catch(console.error);
     });
   });
 

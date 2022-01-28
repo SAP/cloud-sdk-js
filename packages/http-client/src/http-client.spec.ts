@@ -4,7 +4,11 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { Destination, Protocol, ProxyConfiguration } from '@sap-cloud-sdk/connectivity';
+import {
+  Destination,
+  Protocol,
+  ProxyConfiguration
+} from '@sap-cloud-sdk/connectivity';
 import {
   connectivityProxyConfigMock,
   defaultDestination
@@ -692,18 +696,24 @@ sap-client:001`);
         protocol: Protocol.HTTP
       };
       // A fake proxy server
-      http.createServer(function (req, res) {
-        res.writeHead(302, { location: 'https://example.com' });
-        res.end();
-      }).listen(8080);
+      http
+        .createServer(function (req, res) {
+          res.writeHead(302, { location: 'https://example.com' });
+          res.end();
+        })
+        .listen(8080);
 
       axios({
         method: 'get',
         url: 'https://google.com',
         httpsAgent: new HttpsProxyAgent(proxyConfiguration)
       })
-      .then((r) => r.data)
-      .catch(console.error);
+        .then(r => r.data)
+        .catch(error => {
+          expect(error.message).toContain(
+            'Maximum number of redirects exceeded'
+          );
+        });
     });
   });
 

@@ -580,154 +580,152 @@ describe('destination cache', () => {
     });
   });
 
-  beforeEach(() => {
-    destinationCache.clear();
-  });
-
-  it('should cache the destination correctly', () => {
-    const dummyJwt = { user_id: 'user', zid: 'tenant' };
-    destinationCache.cacheRetrievedDestination(
-      dummyJwt,
-      destinationOne,
-      IsolationStrategy.User
-    );
-    const actual1 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.User
-    );
-    const actual2 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.Tenant
-    );
-    const actual3 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.Tenant_User
-    );
-    const actual4 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.No_Isolation
-    );
-
-    const expected = [destinationOne, undefined, undefined, undefined];
-
-    expect([actual1, actual2, actual3, actual4]).toEqual(expected);
-  });
-
-  it('should not hit cache when Tenant_User is chosen but user id is missing', () => {
-    const dummyJwt = { zid: 'tenant' };
-    destinationCache.cacheRetrievedDestination(
-      dummyJwt,
-      destinationOne,
-      IsolationStrategy.Tenant_User
-    );
-    const actual1 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.User
-    );
-    const actual2 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.Tenant
-    );
-    const actual3 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.Tenant_User
-    );
-    const actual4 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.No_Isolation
-    );
-
-    const expected = [undefined, undefined, undefined, undefined];
-
-    expect([actual1, actual2, actual3, actual4]).toEqual(expected);
-  });
-
-  it('should not hit cache when Tenant is chosen but tenant id is missing', () => {
-    const dummyJwt = { user_id: 'user' };
-    destinationCache.cacheRetrievedDestination(
-      dummyJwt,
-      destinationOne,
-      IsolationStrategy.Tenant
-    );
-    const actual1 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.User
-    );
-    const actual2 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.Tenant
-    );
-    const actual3 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.Tenant_User
-    );
-    const actual4 = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.No_Isolation
-    );
-
-    const expected = [undefined, undefined, undefined, undefined];
-
-    expect([actual1, actual2, actual3, actual4]).toEqual(expected);
-  });
-
-  it('should return undefined when the destination is not valid', () => {
-    jest.useFakeTimers('modern');
-    const dummyJwt = { user_id: 'user', zid: 'tenant' };
-    destinationCache.cacheRetrievedDestination(
-      dummyJwt,
-      destinationOne,
-      IsolationStrategy.User
-    );
-    const minutesToExpire = 6;
-    jest.advanceTimersByTime(60000 * minutesToExpire);
-
-    const actual = destinationCache.retrieveDestinationFromCache(
-      dummyJwt,
-      'destToCache1',
-      IsolationStrategy.User
-    );
-
-    expect(actual).toBeUndefined();
-  });
-
-  it('should return undefined when the destination is not valid and has an auth token expiration time', () => {
-    jest.useFakeTimers('modern');
-    const dummyJwt = { user_id: 'user', zid: 'tenant' };
-    const destination = {
-      ...destinationOne,
-      authTokens: [{ expiresIn: '60' } as DestinationAuthToken]
-    };
-    destinationCache.cacheRetrievedDestination(
-      dummyJwt,
-      destination,
-      IsolationStrategy.User
-    );
-    const retrieveDestination = () =>
-      destinationCache.retrieveDestinationFromCache(
+  describe('caching without mocs', () => {
+    it('should cache the destination correctly', () => {
+      const dummyJwt = { user_id: 'user', zid: 'tenant' };
+      destinationCache.cacheRetrievedDestination(
         dummyJwt,
-        destination.name!,
+        destinationOne,
+        IsolationStrategy.User
+      );
+      const actual1 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.User
+      );
+      const actual2 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.Tenant
+      );
+      const actual3 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.Tenant_User
+      );
+      const actual4 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.No_Isolation
+      );
+
+      const expected = [destinationOne, undefined, undefined, undefined];
+
+      expect([actual1, actual2, actual3, actual4]).toEqual(expected);
+    });
+
+    it('should not hit cache when Tenant_User is chosen but user id is missing', () => {
+      const dummyJwt = { zid: 'tenant' };
+      destinationCache.cacheRetrievedDestination(
+        dummyJwt,
+        destinationOne,
+        IsolationStrategy.Tenant_User
+      );
+      const actual1 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.User
+      );
+      const actual2 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.Tenant
+      );
+      const actual3 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.Tenant_User
+      );
+      const actual4 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.No_Isolation
+      );
+
+      const expected = [undefined, undefined, undefined, undefined];
+
+      expect([actual1, actual2, actual3, actual4]).toEqual(expected);
+    });
+
+    it('should not hit cache when Tenant is chosen but tenant id is missing', () => {
+      const dummyJwt = { user_id: 'user' };
+      destinationCache.cacheRetrievedDestination(
+        dummyJwt,
+        destinationOne,
+        IsolationStrategy.Tenant
+      );
+      const actual1 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.User
+      );
+      const actual2 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.Tenant
+      );
+      const actual3 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.Tenant_User
+      );
+      const actual4 = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.No_Isolation
+      );
+
+      const expected = [undefined, undefined, undefined, undefined];
+
+      expect([actual1, actual2, actual3, actual4]).toEqual(expected);
+    });
+
+    it('should return undefined when the destination is not valid', () => {
+      jest.useFakeTimers('modern');
+      const dummyJwt = { user_id: 'user', zid: 'tenant' };
+      destinationCache.cacheRetrievedDestination(
+        dummyJwt,
+        destinationOne,
+        IsolationStrategy.User
+      );
+      const minutesToExpire = 6;
+      jest.advanceTimersByTime(60000 * minutesToExpire);
+
+      const actual = destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
         IsolationStrategy.User
       );
 
-    expect(retrieveDestination()).toEqual(destination);
+      expect(actual).toBeUndefined();
+    });
 
-    const minutesToExpire = 2;
-    jest.advanceTimersByTime(60000 * minutesToExpire);
+    it('should return undefined when the destination is not valid and has an auth token expiration time', () => {
+      jest.useFakeTimers('modern');
+      const dummyJwt = { user_id: 'user', zid: 'tenant' };
+      const destination = {
+        ...destinationOne,
+        authTokens: [{ expiresIn: '60' } as DestinationAuthToken]
+      };
+      destinationCache.cacheRetrievedDestination(
+        dummyJwt,
+        destination,
+        IsolationStrategy.User
+      );
+      const retrieveDestination = () =>
+        destinationCache.retrieveDestinationFromCache(
+          dummyJwt,
+          destination.name!,
+          IsolationStrategy.User
+        );
 
-    expect(retrieveDestination()).toBeUndefined();
+      expect(retrieveDestination()).toEqual(destination);
+
+      const minutesToExpire = 2;
+      jest.advanceTimersByTime(60000 * minutesToExpire);
+
+      expect(retrieveDestination()).toBeUndefined();
+    });
   });
 });
 

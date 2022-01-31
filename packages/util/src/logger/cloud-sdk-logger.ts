@@ -141,7 +141,7 @@ export function getLogger(
  * @param messageContextOrLogger - Message context of the logger to change the log level for or the logger itself
  */
 export function setLogLevel(
-  level: LogLevel | '',
+  level: LogLevel,
   messageContextOrLogger: string | Logger = DEFAULT_LOGGER__MESSAGE_CONTEXT
 ): void {
   const messageContext =

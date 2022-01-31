@@ -710,9 +710,7 @@ sap-client:001`);
       })
         .then(r => r.data)
         .catch(error => {
-          expect(error.message).toContain(
-            'Maximum number of redirects exceeded'
-          );
+          throw new Error(error);
         });
     });
   });

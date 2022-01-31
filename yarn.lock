@@ -4003,7 +4003,7 @@ domutils@^2.4.2:
     domelementtype "^2.2.0"
     domhandler "^4.2.0"
 
-dot-prop@>=5.1.1, dot-prop@^5.1.0, dot-prop@^6.0.1:
+dot-prop@^5.1.0, dot-prop@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npmjs.org/dot-prop/-/dot-prop-6.0.1.tgz#fc26b3cf142b9e59b74dbd39ed66ce620c681083"
   integrity sha512-tE7ztYzXHIeyvc7N+hR3oi7FIbf/NIjVP9hmAt3yMXzrQ072/fpjGLx2GxNxGxUl5V73MEqYzioOMoVhGMJ5cA==

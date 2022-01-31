@@ -689,7 +689,12 @@ sap-client:001`);
       );
     });
 
-    // Axios requests are not redirected via proxy
+    /* eslint-disable no-console */
+    /**
+     * https://github.com/SAP/cloud-sdk-backlog/issues/560.
+     * Actual: request is successfull.
+     * Expected: Axios requests should pass via the proxy and hence result in a redirect loop.
+     * */
     xit('test axios proxy redirect', () => {
       const proxyConfiguration: ProxyConfiguration = {
         host: 'localhost',
@@ -709,10 +714,8 @@ sap-client:001`);
         url: 'https://google.com',
         httpsAgent: new HttpsProxyAgent(proxyConfiguration)
       })
-        .then(r => r.data)
-        .catch(error => {
-          throw new Error(error);
-        });
+        .then(r => console.log(r))
+        .catch(console.error);
     });
   });
 

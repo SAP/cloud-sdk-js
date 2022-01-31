@@ -19,7 +19,6 @@ describe('Cloud SDK Logger', () => {
 
   afterEach(() => {
     logger.close();
-    setLogLevel('', messageContext);
   });
 
   describe('createLogger', () => {
@@ -210,6 +209,7 @@ describe('Cloud SDK Logger', () => {
 
   describe('set global log level', () => {
     const level = 'error';
+    const messageContext2 = 'test-global-module';
 
     beforeAll(() => {
       setGlobalLogLevel(level);
@@ -220,21 +220,20 @@ describe('Cloud SDK Logger', () => {
     });
 
     it('should have the global log level, if not applied a more specific level', () => {
-      logger = createLogger(messageContext);
-
+      logger = createLogger(messageContext2);
       expect(logger.level).toEqual(getGlobalLogLevel());
     });
 
     it('should have the log level, if applied a more specific level after creation', () => {
-      logger = createLogger(messageContext);
-      setLogLevel('warn', messageContext);
+      logger = createLogger(messageContext2);
+      setLogLevel('warn', messageContext2);
 
       expect(logger.level).toEqual('warn');
     });
 
     it('should have the log level, if applied a more specific level before creation', () => {
-      setLogLevel('warn', messageContext);
-      logger = createLogger(messageContext);
+      setLogLevel('warn', messageContext2);
+      logger = createLogger(messageContext2);
 
       expect(logger.level).toEqual('warn');
     });

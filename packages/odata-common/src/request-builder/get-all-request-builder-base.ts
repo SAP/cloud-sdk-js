@@ -1,15 +1,13 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import {
-  Destination,
-  DestinationFetchOptions
-} from '@sap-cloud-sdk/connectivity';
-import { EntityApi, EntityBase } from '../entity-base';
+import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import { EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
 import { Orderable } from '../order';
 import { ODataGetAllRequestConfig } from '../request';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { CountRequestBuilder } from './count-request-builder';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 
@@ -108,9 +106,7 @@ export abstract class GetAllRequestBuilderBase<
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the requested entities
    */
-  async execute(
-    destination: Destination | DestinationFetchOptions
-  ): Promise<EntityT[]> {
+  async execute(destination: DestinationOrFetchOptions): Promise<EntityT[]> {
     return this.executeRaw(destination).then(response =>
       this.dataAccessor
         .getCollectionResult(response.data)

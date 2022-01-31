@@ -70,7 +70,7 @@ export declare class TestEntityCircularLinkChildApi<
     TO_PARENT: Link<
       TestEntityCircularLinkChild<DeSerializersT>,
       DeSerializersT,
-      TestEntityCircularLinkChild<DeSerializersT>
+      TestEntityCircularLinkChildApi<DeSerializersT>
     >;
     /**
      * Static representation of the [[keyProperty]] property for query construction.

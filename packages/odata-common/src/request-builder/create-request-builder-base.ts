@@ -1,17 +1,15 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import {
-  Destination,
-  DestinationFetchOptions
-} from '@sap-cloud-sdk/connectivity';
+import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion';
-import type { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
+import type { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request';
 import { Link } from '../selectable';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -66,7 +64,7 @@ export abstract class CreateRequestBuilderBase<
    */
   asChildOf<ParentEntityT extends EntityBase>(
     parentEntity: ParentEntityT,
-    linkField: Link<ParentEntityT, DeSerializersT, EntityT>
+    linkField: Link<ParentEntityT, DeSerializersT, EntityApi<EntityT, any>>
   ): this {
     this.requestConfig.parentKeys = this.oDataUri.getEntityKeys(
       parentEntity,
@@ -81,9 +79,7 @@ export abstract class CreateRequestBuilderBase<
    * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving to the created entity
    */
-  async execute(
-    destination: Destination | DestinationFetchOptions
-  ): Promise<EntityT> {
+  async execute(destination: DestinationOrFetchOptions): Promise<EntityT> {
     return this.executeRaw(destination)
       .then(response =>
         this.deserializer.deserializeEntity(
@@ -103,7 +99,7 @@ export abstract class CreateRequestBuilderBase<
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions
+    destination: DestinationOrFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

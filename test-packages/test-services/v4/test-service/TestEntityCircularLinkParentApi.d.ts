@@ -1,6 +1,5 @@
 import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
-import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 import { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
 import {
   CustomField,
@@ -78,7 +77,7 @@ export declare class TestEntityCircularLinkParentApi<
     TO_FIRST_CHILD: OneToOneLink<
       TestEntityCircularLinkParent<DeSerializersT>,
       DeSerializersT,
-      TestEntityCircularLinkChild<DeSerializersT>
+      TestEntityCircularLinkChildApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-many navigation property [[toChildren]] for query construction.
@@ -87,7 +86,7 @@ export declare class TestEntityCircularLinkParentApi<
     TO_CHILDREN: OneToManyLink<
       TestEntityCircularLinkParent<DeSerializersT>,
       DeSerializersT,
-      TestEntityCircularLinkChild<DeSerializersT>
+      TestEntityCircularLinkChildApi<DeSerializersT>
     >;
     /**
      * Static representation of the [[keyProperty]] property for query construction.

@@ -1,4 +1,5 @@
 import type { EntityBase } from '../entity-base';
+import { DeSerializers } from '../de-serializers';
 import type { Filterable } from './filterable';
 
 type UnaryFilterOperator = 'not';
@@ -6,9 +7,12 @@ type UnaryFilterOperator = 'not';
 /**
  * @internal
  */
-export class UnaryFilter<EntityT extends EntityBase> {
+export class UnaryFilter<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> {
   constructor(
-    public singleOperand: Filterable<EntityT, any>,
+    public singleOperand: Filterable<EntityT, DeSerializersT>,
     public operator: UnaryFilterOperator
   ) {}
 }
@@ -19,9 +23,12 @@ export class UnaryFilter<EntityT extends EntityBase> {
  * @returns boolean
  * @internal
  */
-export function isUnaryFilter<T extends EntityBase>(
-  filterable: Filterable<T, any>
-): filterable is UnaryFilter<T> {
+export function isUnaryFilter<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  filterable: Filterable<EntityT, DeSerializersT>
+): filterable is UnaryFilter<EntityT, DeSerializersT> {
   return (
     typeof filterable['singleOperand'] !== 'undefined' &&
     typeof filterable['operator'] !== 'undefined'

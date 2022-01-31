@@ -1,15 +1,13 @@
-import {
-  Destination,
-  DestinationFetchOptions
-} from '@sap-cloud-sdk/connectivity';
+import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { first } from '@sap-cloud-sdk/util';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig, ODataRequest } from '../../request';
 import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
-import { EntityApi, EntityBase } from '../../entity-base';
+import { EntityBase } from '../../entity-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
+import { EntityApi } from '../../entity-api';
 import { BatchChangeSet } from './batch-change-set';
 import { BatchSubRequestPathType } from './batch-request-options';
 import { serializeBatchRequest } from './batch-request-serializer';
@@ -52,10 +50,10 @@ export class BatchRequestBuilder<
 
   build(): ODataRequest<ODataBatchRequestConfig>;
   build(
-    destination: Destination | DestinationFetchOptions
+    destination: DestinationOrFetchOptions
   ): Promise<ODataRequest<ODataBatchRequestConfig>>;
   build(
-    destination?: Destination | DestinationFetchOptions
+    destination?: DestinationOrFetchOptions
   ):
     | ODataRequest<ODataBatchRequestConfig>
     | Promise<ODataRequest<ODataBatchRequestConfig>> {
@@ -70,7 +68,7 @@ export class BatchRequestBuilder<
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions
+    destination: DestinationOrFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

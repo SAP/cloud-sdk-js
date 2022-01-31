@@ -1,8 +1,6 @@
 import { TestEntitySingleLink } from './TestEntitySingleLink';
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import { TestEntityLvl2MultiLink } from './TestEntityLvl2MultiLink';
 import { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';
-import { TestEntityLvl2SingleLink } from './TestEntityLvl2SingleLink';
 import { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
 import {
   CustomField,
@@ -78,7 +76,7 @@ export declare class TestEntitySingleLinkApi<
     TO_MULTI_LINK: Link<
       TestEntitySingleLink<DeSerializersT>,
       DeSerializersT,
-      TestEntityLvl2MultiLink<DeSerializersT>
+      TestEntityLvl2MultiLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
@@ -87,7 +85,7 @@ export declare class TestEntitySingleLinkApi<
     TO_SINGLE_LINK: OneToOneLink<
       TestEntitySingleLink<DeSerializersT>,
       DeSerializersT,
-      TestEntityLvl2SingleLink<DeSerializersT>
+      TestEntityLvl2SingleLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the [[keyProperty]] property for query construction.

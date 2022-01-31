@@ -52,7 +52,7 @@ export class TestEntityApi<
     TO_MULTI_LINK: OneToManyLink<
       TestEntity<DeSerializersT>,
       DeSerializersT,
-      TestEntityMultiLink<DeSerializersT>
+      TestEntityMultiLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
@@ -61,7 +61,7 @@ export class TestEntityApi<
     TO_OTHER_MULTI_LINK: OneToManyLink<
       TestEntity<DeSerializersT>,
       DeSerializersT,
-      TestEntityMultiLink<DeSerializersT>
+      TestEntityMultiLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
@@ -70,7 +70,7 @@ export class TestEntityApi<
     TO_SINGLE_LINK: OneToOneLink<
       TestEntity<DeSerializersT>,
       DeSerializersT,
-      TestEntitySingleLink<DeSerializersT>
+      TestEntitySingleLinkApi<DeSerializersT>
     >;
   };
 

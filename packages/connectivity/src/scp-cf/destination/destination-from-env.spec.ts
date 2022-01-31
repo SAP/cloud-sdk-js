@@ -1,6 +1,5 @@
 import * as assert from 'assert';
-import { createLogger, encodeBase64 } from '@sap-cloud-sdk/util';
-import { JwtHeader, JwtPayload } from 'jsonwebtoken';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   mockDestinationsEnv,
   unmockDestinationsEnv
@@ -11,7 +10,6 @@ import {
   getDestinationsFromEnv
 } from './destination-from-env';
 import { getDestination } from './destination-accessor';
-import {registerDestination} from "./destination-from-register";
 
 const environmentDestination = {
   name: 'FINAL-DESTINATION',
@@ -36,8 +34,6 @@ const destinationFromEnv: Destination = {
   url: 'https://mys4hana.com'
 };
 
-
-
 const environmentDestinationConfig = {
   Name: 'TESTINATION',
   URL: 'https://mys4hana.com'
@@ -61,9 +57,7 @@ describe('env-destination-accessor', () => {
     jest.resetAllMocks();
   });
 
-
   describe('getDestinationsFromEnv()', () => {
-
     it('infos if destination are read from enviorment and forwardAuthToken is not enabled.', async () => {
       mockDestinationsEnv(destinationFromEnv);
 
@@ -71,9 +65,9 @@ describe('env-destination-accessor', () => {
       const infoSpy = jest.spyOn(logger, 'info');
       await getDestination({ destinationName: 'FINAL-DESTINATION' });
       expect(infoSpy).toHaveBeenCalledWith(
-          expect.stringMatching(
-              /Successfully retrieved destination 'FINAL-DESTINATION' from environment variable./
-          )
+        expect.stringMatching(
+          /Successfully retrieved destination 'FINAL-DESTINATION' from environment variable./
+        )
       );
     });
 
@@ -200,28 +194,4 @@ describe('registerDestination', () => {
     unmockDestinationsEnv();
     jest.resetAllMocks();
   });
-
-  // it('should set the destination in the environment variables', () => {
-  //   mockDestinationsEnv(environmentDestination);
-  //
-  //   registerDestination(mockDestination);
-  //   const actual = getDestinationsFromEnv();
-  //
-  //   const expected = [destinationFromEnv, mockDestination];
-  //   expected.forEach((e, index) => {
-  //     expect(actual[index]).toMatchObject(e);
-  //   });
-  //   expect(
-  //     getDestination({ destinationName: 'MockedDestination' })
-  //   ).resolves.toMatchObject(mockDestinationFromEnv);
-  // });
-
-  // it('should throw an exception if a name conflict occurs', () => {
-  //   registerDestination(mockDestination);
-  //   expect(() => {
-  //     registerDestination(mockDestination);
-  //   }).toThrowErrorMatchingInlineSnapshot(
-  //     '"Parsing destinations failed, destination with name \\"MockedDestination\\" already exists in the \\"destinations\\" environment variables."'
-  //   );
-  // });
 });

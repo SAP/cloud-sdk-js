@@ -689,6 +689,7 @@ sap-client:001`);
       );
     });
 
+    // Axios requests are not redirected via proxy
     xit('test axios proxy redirect', () => {
       const proxyConfiguration: ProxyConfiguration = {
         host: 'localhost',

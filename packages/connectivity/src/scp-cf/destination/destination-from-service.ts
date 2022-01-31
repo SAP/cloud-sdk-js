@@ -11,6 +11,7 @@ import { isIdenticalTenant } from '../tenant';
 import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { userId } from '../user';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -198,9 +199,9 @@ class DestinationFromServiceRetriever {
     readonly providerServiceToken: JwtPair
   ) {
     const defaultOptions = {
-      isolationStrategy: options.jwt
-        ? IsolationStrategy.Tenant_User
-        : IsolationStrategy.Tenant,
+      isolationStrategy: getIsolationStrategy(
+        subscriberToken?.userJwt?.decoded
+      ),
       selectionStrategy: subscriberFirst,
       useCache: !!options.isolationStrategy,
       ...options
@@ -578,4 +579,12 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       this.getSubscriberDestinationService()
     );
   }
+}
+
+function getIsolationStrategy(jwt: JwtPayload | undefined): IsolationStrategy {
+  if (jwt && userId(jwt)) {
+    return IsolationStrategy.Tenant_User;
+  }
+
+  return IsolationStrategy.Tenant;
 }

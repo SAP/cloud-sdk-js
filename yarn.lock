@@ -1924,11 +1924,11 @@
     verror "1.10.0"
 
 "@sap/xssec@^3.2.7":
-  version "3.2.7"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.7.tgz#32f0ca62a21d2e7a8332036e8be7c13d6ca809f6"
-  integrity sha512-f04YNXKCZqmHfjUHst9vyl6Z5mPk0LMhLrQcPIxk3cLavKnkiRK0a9rcMQC1/TsjWGLIbeVm4fVsSr75r4+rAw==
+  version "3.2.12"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.12.tgz#be5c3ef5829edafc6547562fbc8a6c20cad11583"
+  integrity sha512-Uhooyklldsft5aC0O/af9dc2qlqcO4Udm1wiPBB+XGSpNHwopb/o+7zJwoxWH3naziYsIHElBaGv6fm8sPG3cQ==
   dependencies:
-    axios "^0.21.4"
+    axios "^0.25.0"
     debug "4.3.2"
     jsonwebtoken "^8.5.1"
     lru-cache "6.0.0"
@@ -2731,12 +2731,19 @@ aws4@^1.8.0:
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axios@^0.21.0, axios@^0.21.1, axios@^0.21.4:
+axios@^0.21.0, axios@^0.21.1:
   version "0.21.4"
   resolved "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
+
+axios@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.25.0.tgz#349cfbb31331a9b4453190791760a8d35b093e0a"
+  integrity sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==
+  dependencies:
+    follow-redirects "^1.14.7"
 
 babel-code-frame@^6.22.0:
   version "6.26.0"
@@ -4790,6 +4797,11 @@ follow-redirects@^1.14.0:
   version "1.14.4"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.4.tgz#838fdf48a8bbdd79e52ee51fb1c94e3ed98b9379"
   integrity sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==
+
+follow-redirects@^1.14.7:
+  version "1.14.7"
+  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
+  integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
 
 forever-agent@~0.6.1:
   version "0.6.1"

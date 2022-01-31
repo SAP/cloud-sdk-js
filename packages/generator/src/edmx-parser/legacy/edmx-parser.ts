@@ -2,7 +2,7 @@
 
 import { PathLike, readFileSync } from 'fs';
 import path from 'path';
-import { parse } from 'fast-xml-parser';
+import { XMLParser } from 'fast-xml-parser';
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   EdmxMetadata as EdmxMetadataV2,
@@ -27,10 +27,10 @@ function parseEdmxFile(
   edmx: string,
   edmxPath: PathLike
 ): EdmxMetadataV2 | EdmxMetadataV4 {
-  const parsedEdmx = parse(edmx, {
+  const parsedEdmx = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: ''
-  });
+  }).parse;
   const root = getRoot(parsedEdmx);
   const metaData = parseBaseMetadata(
     root,

@@ -73,8 +73,9 @@
     "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
     "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests",
-    "test:run-execa-ts": "node --loader ts-node/esm test-execa.ts",
+    "test:run-execa-ts": "ts-node test-execa.ts",
     "test:compile-execa-ts": "tsc test-execa.ts",
+    "test:run-execa.js": "node test-execa.js",
     "test:run-execa-js": "node test-execa-js.js",
     "test:run-execa-js-fix": "node test-execa-js-fix.js"
   },

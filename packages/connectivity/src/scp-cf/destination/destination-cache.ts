@@ -10,7 +10,12 @@ const logger = createLogger({
   messageContext: 'destination-cache'
 });
 
-const DestinationCache = (cache: Cache<Destination>) => ({
+/**
+ * @internal
+ * @param cache
+ * @constructor
+ */
+export const DestinationCache = (cache: Cache<Destination>) => ({
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,

@@ -8,10 +8,10 @@ import {
 import { Destination } from './destination-service-types';
 import {
   getDestinationFromEnvByName,
-  getDestinationsFromEnv,
-  registerDestination
+  getDestinationsFromEnv
 } from './destination-from-env';
 import { getDestination } from './destination-accessor';
+import {registerDestination} from "./destination-from-register";
 
 const environmentDestination = {
   name: 'FINAL-DESTINATION',
@@ -36,11 +36,7 @@ const destinationFromEnv: Destination = {
   url: 'https://mys4hana.com'
 };
 
-const destinationWithForwarding: Destination = {
-  forwardAuthToken: true,
-  url: 'https://mys4hana.com',
-  name: 'FORWARD-TOKEN-DESTINATION'
-};
+
 
 const environmentDestinationConfig = {
   Name: 'TESTINATION',
@@ -65,53 +61,22 @@ describe('env-destination-accessor', () => {
     jest.resetAllMocks();
   });
 
-  describe('getDestination', () => {
-    it('adds the auth token if forwardAuthToken is enabled', async () => {
-      mockDestinationsEnv(destinationWithForwarding);
-      const jwtPayload: JwtPayload = { exp: 1234 };
-      const jwtHeader: JwtHeader = { alg: 'HS256' };
-      const fullToken = `${encodeBase64(
-        JSON.stringify(jwtHeader)
-      )}.${encodeBase64(JSON.stringify(jwtPayload))}.SomeHash`;
-      const actual = await getDestination({
-        destinationName: 'FORWARD-TOKEN-DESTINATION',
-        jwt: fullToken
-      });
-      expect(actual?.authTokens![0].expiresIn).toEqual('1234');
-      expect(actual?.authTokens![0].value).toEqual(fullToken);
-      expect(actual?.authTokens![0].http_header.value).toEqual(
-        `Bearer ${fullToken}`
-      );
-    });
 
-    it('warns if forwardAuthToken is enabled but no token provided.', async () => {
-      mockDestinationsEnv(destinationWithForwarding);
+  describe('getDestinationsFromEnv()', () => {
 
-      const logger = createLogger('env-destination-accessor');
-      const warnSpy = jest.spyOn(logger, 'warn');
-      await getDestination({ destinationName: 'FORWARD-TOKEN-DESTINATION' });
-      expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringMatching(
-          /Option 'forwardAuthToken' was set on destination but no token was provided to forward./
-        )
-      );
-    });
-
-    it('warns if destination are read from enviorment and forwardAuthToken is not enabled.', async () => {
+    it('infos if destination are read from enviorment and forwardAuthToken is not enabled.', async () => {
       mockDestinationsEnv(destinationFromEnv);
 
       const logger = createLogger('env-destination-accessor');
       const infoSpy = jest.spyOn(logger, 'info');
       await getDestination({ destinationName: 'FINAL-DESTINATION' });
       expect(infoSpy).toHaveBeenCalledWith(
-        expect.stringMatching(
-          /Successfully retrieved destination 'FINAL-DESTINATION' from environment variable./
-        )
+          expect.stringMatching(
+              /Successfully retrieved destination 'FINAL-DESTINATION' from environment variable./
+          )
       );
     });
-  });
 
-  describe('getDestinationsFromEnv()', () => {
     it('should return all destinations from environment variables', () => {
       mockDestinationsEnv(environmentDestination, environmentDestinationConfig);
 
@@ -236,27 +201,27 @@ describe('registerDestination', () => {
     jest.resetAllMocks();
   });
 
-  it('should set the destination in the environment variables', () => {
-    mockDestinationsEnv(environmentDestination);
+  // it('should set the destination in the environment variables', () => {
+  //   mockDestinationsEnv(environmentDestination);
+  //
+  //   registerDestination(mockDestination);
+  //   const actual = getDestinationsFromEnv();
+  //
+  //   const expected = [destinationFromEnv, mockDestination];
+  //   expected.forEach((e, index) => {
+  //     expect(actual[index]).toMatchObject(e);
+  //   });
+  //   expect(
+  //     getDestination({ destinationName: 'MockedDestination' })
+  //   ).resolves.toMatchObject(mockDestinationFromEnv);
+  // });
 
-    registerDestination(mockDestination);
-    const actual = getDestinationsFromEnv();
-
-    const expected = [destinationFromEnv, mockDestination];
-    expected.forEach((e, index) => {
-      expect(actual[index]).toMatchObject(e);
-    });
-    expect(
-      getDestination({ destinationName: 'MockedDestination' })
-    ).resolves.toMatchObject(mockDestinationFromEnv);
-  });
-
-  it('should throw an exception if a name conflict occurs', () => {
-    registerDestination(mockDestination);
-    expect(() => {
-      registerDestination(mockDestination);
-    }).toThrowErrorMatchingInlineSnapshot(
-      '"Parsing destinations failed, destination with name \\"MockedDestination\\" already exists in the \\"destinations\\" environment variables."'
-    );
-  });
+  // it('should throw an exception if a name conflict occurs', () => {
+  //   registerDestination(mockDestination);
+  //   expect(() => {
+  //     registerDestination(mockDestination);
+  //   }).toThrowErrorMatchingInlineSnapshot(
+  //     '"Parsing destinations failed, destination with name \\"MockedDestination\\" already exists in the \\"destinations\\" environment variables."'
+  //   );
+  // });
 });

@@ -43,7 +43,7 @@ export class TestEntityCircularLinkChildApi<
     TO_PARENT: OneToOneLink<
       TestEntityCircularLinkChild<DeSerializersT>,
       DeSerializersT,
-      TestEntityCircularLinkParent<DeSerializersT>
+      TestEntityCircularLinkParentApi<DeSerializersT>
     >;
   };
 

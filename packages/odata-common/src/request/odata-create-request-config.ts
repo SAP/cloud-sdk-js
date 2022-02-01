@@ -1,7 +1,8 @@
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { Link } from '../selectable';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { ODataRequestConfig } from './odata-request-config';
 
 /**
@@ -21,7 +22,7 @@ export class ODataCreateRequestConfig<
   /**
    * Field that links the parent entity class to the child entity class.
    */
-  childField: Link<EntityBase, DeSerializersT, EntityT>;
+  childField: Link<EntityBase, DeSerializersT, EntityApi<EntityT, any>>;
 
   /**
    * Creates an instance of ODataRequest.

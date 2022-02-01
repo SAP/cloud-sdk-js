@@ -1,7 +1,6 @@
 import {
   DeleteRequestBuilderBase,
-  EntityApi,
-  FieldType
+  EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
@@ -24,7 +23,7 @@ export class DeleteRequestBuilder<
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
-    keysOrEntity: Record<string, FieldType> | Entity
+    keysOrEntity: Record<string, any> | Entity
   ) {
     super(entityApi, createODataUri(entityApi.deSerializers), keysOrEntity);
   }

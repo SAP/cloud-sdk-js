@@ -6,7 +6,8 @@ import {
   Expandable,
   EntityApi,
   toFilterableList,
-  and
+  and,
+  EntityBase
 } from '@sap-cloud-sdk/odata-common/internal';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
@@ -43,14 +44,38 @@ export class GetAllRequestBuilder<
     );
   }
 
-  expand(expands: Expandable<EntityT, DeSerializersT>[]): this;
-  expand(...expands: Expandable<EntityT, DeSerializersT>[]): this;
+  expand(
+    expands: Expandable<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): this;
+  expand(
+    ...expands: Expandable<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): this;
   expand(
     first:
       | undefined
-      | Expandable<EntityT, DeSerializersT>
-      | Expandable<EntityT, DeSerializersT>[],
-    ...rest: Expandable<EntityT, DeSerializersT>[]
+      | Expandable<
+          EntityT,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >
+      | Expandable<
+          EntityT,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >[],
+    ...rest: Expandable<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
   ): this {
     this.requestConfig.expands = variadicArgumentToArray(first, rest);
     return this;

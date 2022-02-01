@@ -1,6 +1,5 @@
 import { TestEntityLvl2MultiLink } from './TestEntityLvl2MultiLink';
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
-import { TestEntityLvl3MultiLink } from './TestEntityLvl3MultiLink';
 import { TestEntityLvl3MultiLinkApi } from './TestEntityLvl3MultiLinkApi';
 import {
   CustomField,
@@ -74,7 +73,7 @@ export declare class TestEntityLvl2MultiLinkApi<
     TO_MULTI_LINK_2: OneToManyLink<
       TestEntityLvl2MultiLink<DeSerializersT>,
       DeSerializersT,
-      TestEntityLvl3MultiLink<DeSerializersT>
+      TestEntityLvl3MultiLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the [[stringProperty]] property for query construction.

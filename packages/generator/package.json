@@ -52,7 +52,6 @@
     "@sap/edm-converters": "~1.0.21",
     "@types/fs-extra": "^9.0.1",
     "@types/glob": "^7.1.2",
-    "execa": "^5.0.0",
     "fast-xml-parser": "^4.0.1",
     "fs-extra": "^10.0.0",
     "glob": "^7.1.6",
@@ -63,8 +62,9 @@
   },
   "devDependencies": {
     "@types/yargs": "^17.0.0",
+    "execa": "^5.0.0",
     "mock-fs": "^5.0.0",
-    "jest-extended": "^1.0.0",
+    "jest-extended": "^2.0.0",
     "nock": "^13.0.11"
   }
 }

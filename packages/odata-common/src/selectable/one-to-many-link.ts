@@ -3,6 +3,7 @@ import { FilterLink } from '../filter';
 import { Orderable } from '../order';
 import type { Filterable } from '../filter';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi, EntityType } from '../entity-api';
 import { Link } from './link';
 
 /**
@@ -13,10 +14,10 @@ import { Link } from './link';
 export function toFilterableList<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
-  filters: Filterable<EntityT, DeSerializersT, LinkedEntityT>[]
-): Filterable<EntityT, DeSerializersT>[] {
+  filters: Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[]
+): Filterable<EntityT, DeSerializersT, LinkedEntityApiT>[] {
   return filters.map(f => (f instanceof OneToManyLink ? f._filters : f));
 }
 
@@ -24,15 +25,14 @@ export function toFilterableList<
  * Represents a one to many relation for OData v4 entities.
  * For OData v2 entities the [[Link]] is used to represent one to many relation.
  * See [[Link]] for more information.
- * @internal
  */
 export class OneToManyLink<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase
-> extends Link<EntityT, DeSerializersT, LinkedEntityT> {
-  _filters: FilterLink<EntityT, DeSerializersT, LinkedEntityT>;
-  _orderBy: Orderable<LinkedEntityT>[] = [];
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
+> extends Link<EntityT, DeSerializersT, LinkedEntityApiT> {
+  _filters: FilterLink<EntityT, DeSerializersT, LinkedEntityApiT>;
+  _orderBy: Orderable<EntityType<LinkedEntityApiT>>[] = [];
   _top: number;
   _skip: number;
 
@@ -52,8 +52,12 @@ export class OneToManyLink<
    */
   filter(
     ...expressions: (
-      | Filterable<LinkedEntityT, DeSerializersT>
-      | OneToManyLink<LinkedEntityT, DeSerializersT, EntityBase>
+      | Filterable<EntityType<LinkedEntityApiT>, DeSerializersT>
+      | OneToManyLink<
+          EntityType<LinkedEntityApiT>,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >
     )[]
   ): this {
     const link = this.clone();
@@ -67,7 +71,7 @@ export class OneToManyLink<
    ** @param orderBy - OrderBy statements to order the response by.
    * @returns The request builder itself, to facilitate method chaining.
    */
-  orderBy(...orderBy: Orderable<LinkedEntityT>[]): this {
+  orderBy(...orderBy: Orderable<EntityType<LinkedEntityApiT>>[]): this {
     const link = this.clone();
     link._orderBy = orderBy;
     return link;

@@ -11,7 +11,7 @@ export const durationRegexV4 =
   /([+-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
 
 /**
- * @internal
+ * Interface to represent Time or Duration.
  */
 export interface Time {
   hours: number;

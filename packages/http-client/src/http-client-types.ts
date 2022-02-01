@@ -84,11 +84,10 @@ export interface HttpResponse extends KnownHttpResponseFields {
 }
 
 export interface HttpRequestOptions {
-  // TODO: 2.0 update docs when default value is changed to true.
   /**
    * A boolean value that indicates whether to fetch the csrf token for a non-get request.
    * For a get request, the csrf token is not fetched and this option is ignored.
-   * By default, the value is `false`.
+   * By default, the value is `true`.
    */
   fetchCsrfToken?: boolean;
 }

@@ -8,12 +8,16 @@ import {
   readCompilerOptions,
   transpileDirectory
 } from '@sap-cloud-sdk/generator-common/internal';
+
 const { readFile, lstat, readdir } = promises;
+
 const logger = createLogger('check-public-api');
+
 const pathToTsConfigRoot = join(__dirname, '../tsconfig.json');
 const pathRootNodeModules = resolve(__dirname, '../node_modules');
 export const regexExportedIndex = /\{([\w,]+)\}/g;
 export const regexExportedInternal = /\.\/([\w-]+)/g;
+
 function mockFileSystem(pathToPackage: string) {
   const { pathToSource, pathToTsConfig } = paths(pathToPackage);
   mock({
@@ -119,7 +123,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   checkIndexFileExists(indexFilePath);
 
   const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
-  const allExportedIndex = await parseIndexFile(indexFilePath); // parseBarrelFile(indexFile, /\{([\w,]+)\}/g);
+  const allExportedIndex = await parseIndexFile(indexFilePath);
 
   const setsAreEqual = compareApisAndLog(
     allExportedIndex,
@@ -240,7 +244,7 @@ export async function parseIndexFile(filePath: string): Promise<string[]> {
   const cwd = dirname(filePath);
   const fileContent = await readFile(filePath, 'utf-8');
   checkInternalReExports(fileContent, filePath);
-  const localExports = parseBarrelFile(fileContent, /\{([\w,]+)\}from'\./g);
+  const localExports = parseBarrelFile(fileContent, regexExportedIndex);
   const starFiles = captureGroupsFromGlobalRegex(
     /export \* from '([\w/.]+)'/g,
     fileContent

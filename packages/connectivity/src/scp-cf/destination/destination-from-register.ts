@@ -47,7 +47,7 @@ export function registerDestination(
   }
 
   registerDestinationCache.cacheRetrievedDestination(
-    decodedJwt(options),
+    decoodedJwtOrZid(options),
     destination,
     isolationStrategt(options)
   );
@@ -65,7 +65,7 @@ export function searchRegisteredDestination(
 ): Destination | null {
   const destination =
     registerDestinationCache.retrieveDestinationFromCache(
-      decodedJwt(options),
+      decoodedJwtOrZid(options),
       options.destinationName,
       isolationStrategt(options)
     ) || null;
@@ -78,7 +78,7 @@ export function searchRegisteredDestination(
   );
 
   return destination &&
-  (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
+    (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
       proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
     ? addProxyConfigurationInternet(destination)
     : destination;
@@ -94,7 +94,13 @@ function isolationStrategt(
   return hasUserId ? IsolationStrategy.Tenant_User : IsolationStrategy.Tenant;
 }
 
-function decodedJwt(options?: RegisterDestinationOptions): Record<string, any> {
+/**
+ * This method either decodes the given JWT. If the JWT is not given it will use the subdomain if the XSUAA and create a Object with zid this subdomain.
+ * This is then passed on to build the cache key.
+ * @param options
+ * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid)
+ */
+function decoodedJwtOrZid(options?: RegisterDestinationOptions): Record<string, any> {
   const providerTenantId = parseSubdomain(
     getXsuaaServiceCredentials(options?.jwt).url
   );

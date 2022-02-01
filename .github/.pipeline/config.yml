@@ -1,0 +1,6 @@
+steps:
+  detectExecuteScan:
+    projectName: '@sap/cloud-sdk-os'
+    groups:
+      - 'SAP Cloud SDK JS'
+    serverUrl: 'https://sap.blackducksoftware.com/'

@@ -32,7 +32,7 @@ type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
 
 type DestinationsServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'useCache'>;
-type DestionServiceOptions = ResilienceOptions &
+type DestinationServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'destinationName'>;
 
 let circuitBreaker: DestinationCircuitBreaker<

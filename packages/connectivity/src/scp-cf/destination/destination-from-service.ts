@@ -198,7 +198,7 @@ class DestinationFromServiceRetriever {
     readonly providerServiceToken: JwtPair
   ) {
     const defaultOptions = {
-      isolationStrategy: getIsolationStrategy(
+      isolationStrategy: getDefaultIsolationStrategy(
         subscriberToken?.userJwt?.decoded
       ),
       selectionStrategy: subscriberFirst,
@@ -579,7 +579,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 }
 
-function getIsolationStrategy(jwt: JwtPayload | undefined): IsolationStrategy {
+function getDefaultIsolationStrategy(jwt: JwtPayload | undefined): IsolationStrategy {
   if (jwt && userId(jwt)) {
     return IsolationStrategy.Tenant_User;
   }

@@ -330,10 +330,13 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   };
 }
 
-function getDefaultHttpRequestOptions(): HttpRequestOptions {
-  // TODO: 2.0 change to true
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
+export function getDefaultHttpRequestOptions(): HttpRequestOptions {
   return {
-    fetchCsrfToken: false
+    fetchCsrfToken: true
   };
 }
 

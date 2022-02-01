@@ -122,7 +122,7 @@ export function getPropertyFieldType(
   }
 
   if (prop.isComplex) {
-    return 'Comple';
+    return 'Complex';
   }
 
   if (prop.isEnum) {

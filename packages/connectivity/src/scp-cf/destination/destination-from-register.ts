@@ -78,7 +78,8 @@ export function searchRegisteredDestination(
   );
 
   return destination &&
-    proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY
+  (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
+      proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
     ? addProxyConfigurationInternet(destination)
     : destination;
 }

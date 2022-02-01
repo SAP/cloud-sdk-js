@@ -122,7 +122,7 @@ export function getPropertyFieldType(
   }
 
   if (prop.isComplex) {
-    return 'Complex';
+    return `${fieldBuilderName}.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
   }
 
   if (prop.isEnum) {

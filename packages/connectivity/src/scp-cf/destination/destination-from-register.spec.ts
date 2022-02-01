@@ -154,7 +154,7 @@ describe('register-destination', () => {
     );
   });
 
-  it('infos if  registered destination is retrieved.', async () => {
+  it('infos if registered destination is retrieved.', async () => {
     registerDestination(testDestination);
 
     const logger = createLogger('register-destination');

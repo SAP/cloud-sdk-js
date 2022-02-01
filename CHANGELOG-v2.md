@@ -35,7 +35,6 @@
   - `DestinationJson`
   - `DestinationProxyType`
   - `DestinationSelectionStrategies`
-  - `DestinationSelectionStrategy`
   - `DestinationServiceCredentials`
   - `DestinationType`
   - `DestinationsByType`

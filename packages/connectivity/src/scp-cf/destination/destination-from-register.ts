@@ -47,7 +47,7 @@ export function registerDestination(
   }
 
   registerDestinationCache.cacheRetrievedDestination(
-    decoodedJwtOrZid(options),
+    decodedJwtOrZid(options),
     destination,
     isolationStrategy(options)
   );
@@ -65,7 +65,7 @@ export function searchRegisteredDestination(
 ): Destination | null {
   const destination =
     registerDestinationCache.retrieveDestinationFromCache(
-      decoodedJwtOrZid(options),
+      decodedJwtOrZid(options),
       options.destinationName,
       isolationStrategy(options)
     ) || null;
@@ -106,7 +106,7 @@ function isolationStrategy(
  * @param options - Options passed to register the destination containing the jwt.
  * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid)
  */
-function decoodedJwtOrZid(
+function decodedJwtOrZid(
   options?: RegisterDestinationOptions
 ): Record<string, any> {
   const providerTenantId = parseSubdomain(

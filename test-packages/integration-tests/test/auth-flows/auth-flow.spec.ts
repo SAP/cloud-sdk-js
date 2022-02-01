@@ -342,6 +342,13 @@ describe('OAuth flows', () => {
       ]
     ).toBeDefined();
   }, 60000);
+
+  xit('PrivateLink: Provider Destination', async () => {
+    const myDestination = await getDestination(
+      systems.destination.providerBasicPrivateLink
+    );
+    expect(myDestination?.proxyType).toEqual('PrivateLink');
+  });
 });
 
 function assertCommenTokenUrl(destination: Destination) {

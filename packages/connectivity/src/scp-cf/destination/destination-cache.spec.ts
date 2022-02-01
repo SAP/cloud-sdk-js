@@ -354,6 +354,7 @@ describe('destination cache', () => {
       });
       expect(actual).toEqual(destinationOne);
     });
+    
     it('enables cache if isolation strategy TenantUser is provided', async () => {
       destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),

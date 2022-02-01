@@ -1,7 +1,6 @@
-import { createLogger, encodeBase64 } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { JwtHeader, JwtPayload } from 'jsonwebtoken';
 import {
-  mockDestinationsEnv,
   mockServiceBindings,
   providerServiceToken,
   subscriberServiceToken,
@@ -16,14 +15,13 @@ import {
   searchRegisteredDestination
 } from './destination-from-register';
 import { getDestination } from './destination-accessor';
-import { Destination } from './destination-service-types';
 
 const testDestination: DestinationWithName = {
   name: 'RegisteredDestination',
   url: 'https://example.com'
 };
 
-const destinationWithForwarding: Destination = {
+const destinationWithForwarding: DestinationWithName = {
   forwardAuthToken: true,
   url: 'https://mys4hana.com',
   name: 'FORWARD-TOKEN-DESTINATION'
@@ -121,18 +119,26 @@ describe('register-destination', () => {
       destinationName: testDestination.name
     });
     expect(actual?.proxyConfiguration?.host).toEqual('some.http.com');
+    delete process.env['https_proxy'];
   });
 
   it('adds the auth token if forwardAuthToken is enabled', async () => {
-    mockDestinationsEnv(destinationWithForwarding);
-    const jwtPayload: JwtPayload = { exp: 1234 };
+    registerDestination(destinationWithForwarding);
+    const jwtPayload: JwtPayload = { exp: 1234, zid: 'provider' };
     const jwtHeader: JwtHeader = { alg: 'HS256' };
-    const fullToken = `${encodeBase64(
-      JSON.stringify(jwtHeader)
-    )}.${encodeBase64(JSON.stringify(jwtPayload))}.SomeHash`;
+
+    const payloadEncoded = new Buffer(JSON.stringify(jwtPayload)).toString(
+      'base64url'
+    );
+    const headerEncoded = new Buffer(JSON.stringify(jwtHeader)).toString(
+      'base64url'
+    );
+
+    const fullToken = `${headerEncoded}.${payloadEncoded}.SomeHash`;
     const actual = await getDestination({
       destinationName: 'FORWARD-TOKEN-DESTINATION',
-      jwt: fullToken
+      jwt: fullToken,
+      isolationStrategy: IsolationStrategy.Tenant
     });
     expect(actual?.authTokens![0].expiresIn).toEqual('1234');
     expect(actual?.authTokens![0].value).toEqual(fullToken);
@@ -142,9 +148,9 @@ describe('register-destination', () => {
   });
 
   it('warns if forwardAuthToken is enabled but no token provided.', async () => {
-    mockDestinationsEnv(destinationWithForwarding);
+    registerDestination(destinationWithForwarding);
 
-    const logger = createLogger('env-destination-accessor');
+    const logger = createLogger('register-destination');
     const warnSpy = jest.spyOn(logger, 'warn');
     await getDestination({ destinationName: 'FORWARD-TOKEN-DESTINATION' });
     expect(warnSpy).toHaveBeenCalledWith(

@@ -1,5 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { JwtHeader, JwtPayload } from 'jsonwebtoken';
+import base64url from 'base64url';
 import {
   mockServiceBindings,
   providerServiceToken,
@@ -127,12 +128,8 @@ describe('register-destination', () => {
     const jwtPayload: JwtPayload = { exp: 1234, zid: 'provider' };
     const jwtHeader: JwtHeader = { alg: 'HS256' };
 
-    const payloadEncoded = new Buffer(JSON.stringify(jwtPayload)).toString(
-      'base64url'
-    );
-    const headerEncoded = new Buffer(JSON.stringify(jwtHeader)).toString(
-      'base64url'
-    );
+    const payloadEncoded = base64url(JSON.stringify(jwtPayload));
+    const headerEncoded = base64url(JSON.stringify(jwtHeader));
 
     const fullToken = `${headerEncoded}.${payloadEncoded}.SomeHash`;
     const actual = await getDestination({

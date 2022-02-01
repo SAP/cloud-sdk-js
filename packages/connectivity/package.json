@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@types/opossum": "^6.2.0",
-    "nock": "^13.0.11"
+    "nock": "^13.0.11",
+    "base64url": "^3.0.1"
   }
 }

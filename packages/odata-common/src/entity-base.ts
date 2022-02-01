@@ -23,7 +23,6 @@ export interface Constructable<EntityT extends EntityBase> {
 }
 
 /**
- * @internal
  * Entity builder type with check for EntityT.
  */
 export type EntityBuilderType<

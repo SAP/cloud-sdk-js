@@ -8,7 +8,6 @@ import type {
 } from './entity-base';
 
 /**
- * @internal
  * Represents the API of an entity, including its request and entity builders as well as its schema.
  * @typeparam EntityT - Type of the entity.
  * @typeparam DeSerializersT - Type of the (de-)serializers.

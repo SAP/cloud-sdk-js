@@ -166,7 +166,7 @@ export interface DestinationAuthToken {
   };
 }
 
-export type DestinationProxyType = 'OnPremise' | 'Internet' | null;
+export type DestinationProxyType = 'OnPremise' | 'Internet' | 'PrivateLink' | null;
 
 /**
  * Represents a certificate attached to a destination.

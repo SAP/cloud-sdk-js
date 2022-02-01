@@ -28,6 +28,14 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
     );
     return ProxyStrategy.ON_PREMISE_PROXY;
   }
+
+  if (destination.proxyType === 'PrivateLink') {
+    logger.info(
+      'PrivateLink destination proxy settings will be used. This is not supported in local/CI/CD environments.'
+    );
+    return ProxyStrategy.PRIVATELINK_PROXY;
+  }
+
   const destinationProtocol = getProtocolOrDefault(destination);
   if (!getProxyEnvValue(destinationProtocol)) {
     logger.info(
@@ -253,5 +261,6 @@ export function proxyAgent(
 export enum ProxyStrategy {
   NO_PROXY,
   ON_PREMISE_PROXY,
-  INTERNET_PROXY
+  INTERNET_PROXY,
+  PRIVATELINK_PROXY
 }

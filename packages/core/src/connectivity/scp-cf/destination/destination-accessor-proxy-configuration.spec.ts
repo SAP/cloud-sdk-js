@@ -1,4 +1,5 @@
 import nock from 'nock';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings
@@ -14,7 +15,8 @@ import {
 } from '../../../../test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
-  subscriberServiceToken
+  subscriberServiceToken,
+  subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
@@ -23,8 +25,10 @@ import {
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../test/test-util/example-destination-service-responses';
 import { Protocol } from '../protocol';
+import * as ProxyUtil from '../../../http-agent/proxy-util';
 import { getDestination } from './destination-accessor';
 import { parseDestination } from './destination';
+import { Destination, destinationCache, destinationServiceCache } from '.';
 
 describe('proxy configuration', () => {
   afterEach(() => {
@@ -125,5 +129,87 @@ describe('proxy configuration', () => {
     const actual = await getDestination('OnPremise');
     expect(actual).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+  });
+});
+
+describe('get destination with PrivateLink proxy type', () => {
+  beforeEach(() => {
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
+    mockJwtBearerToken();
+
+    mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+    mockSubaccountDestinationsCall(
+      nock,
+      [privateLinkDest],
+      200,
+      subscriberServiceToken
+    );
+  });
+
+  afterEach(() => {
+    destinationCache.clear();
+    destinationServiceCache.clear();
+    nock.cleanAll();
+  });
+
+  const privateLinkDest = {
+    URL: 'https://subscriber.example',
+    Name: 'PrivateLinkDest',
+    ProxyType: 'PrivateLink',
+    Authentication: 'NoAuthentication'
+  };
+
+  const receivePrivateLinkDest: Destination = {
+    authTokens: [],
+    authentication: 'NoAuthentication',
+    certificates: [],
+    isTrustingAllCertificates: false,
+    name: 'PrivateLinkDest',
+    originalProperties: {
+      Authentication: 'NoAuthentication',
+      Name: 'PrivateLinkDest',
+      ProxyType: 'PrivateLink',
+      URL: 'https://subscriber.example'
+    },
+    proxyType: 'PrivateLink',
+    url: 'https://subscriber.example'
+  };
+
+  it('should log that PrivateLink proxy type is used.', async () => {
+    const logger = createLogger({
+      package: 'connectivity',
+      messageContext: 'proxy-util'
+    });
+    const info = jest.spyOn(logger, 'info');
+
+    await getDestination('PrivateLinkDest',
+      {
+        userJwt: subscriberUserJwt,
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
+      }
+    );
+    expect(info).toBeCalledWith(
+      'PrivateLink destination proxy settings will be used. This is not supported in local/CI/CD environments.'
+    );
+  });
+
+  it('should behave like internet proxy, so call addProxyConfigurationInternet but still use proxy type PrivateLink', async () => {
+    const internetConfig = jest.spyOn(
+      ProxyUtil,
+      'addProxyConfigurationInternet'
+    );
+
+    const destinationFromFirstCall = await getDestination({
+      destinationName: 'PrivateLinkDest',
+      userJwt: subscriberUserJwt,
+      cacheVerificationKeys: false,
+      iasToXsuaaTokenExchange: false
+    });
+
+    expect(destinationFromFirstCall?.proxyType).toBe('PrivateLink');
+    expect(internetConfig).toHaveBeenCalledWith(receivePrivateLinkDest);
   });
 });

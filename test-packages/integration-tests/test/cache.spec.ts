@@ -175,7 +175,6 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       providerUserToken,
       xsuaaBindingMock.credentials
     );
-    // destinationBindingClientSecretMock.credentials)
 
     mockUserTokenGrantCall(
       providerXsuaaUrl,

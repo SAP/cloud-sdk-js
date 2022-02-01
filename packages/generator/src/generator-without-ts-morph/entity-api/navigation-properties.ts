@@ -83,7 +83,7 @@ function navigationPropertyType(
     `${navProp.staticPropertyName}: ${linkClass(navProp, service.oDataVersion)}<
       ${entity.className}<DeSerializersT>,
       DeSerializersT,
-      ${toEntity}<DeSerializersT>
+      ${toEntity}Api<DeSerializersT>
     >`
   ].join('\n');
 }

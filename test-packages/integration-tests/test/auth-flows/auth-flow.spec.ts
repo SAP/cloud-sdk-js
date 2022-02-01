@@ -384,6 +384,13 @@ describe('OAuth flows', () => {
     expect(decoded.scope.length).toBeGreaterThan(0);
   }, 60000);
 
+  xit('PrivateLink: Provider Destination', async () => {
+    const myDestination = await getDestination({
+      destinationName: systems.destination.providerBasicPrivateLink
+    });
+    expect(myDestination?.proxyType).toEqual('PrivateLink');
+  });
+
   xit('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const iasToken = accessToken.iasProvider;
     const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]

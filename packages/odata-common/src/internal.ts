@@ -12,6 +12,7 @@ export * from './batch-response';
 export * from './response-data-accessor';
 export * from './edm-types';
 export * from './entity-base';
+export * from './entity-api';
 export * from './time';
 export * from './expandable';
 export * from './entity-serializer';

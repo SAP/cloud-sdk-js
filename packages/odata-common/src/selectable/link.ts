@@ -1,6 +1,7 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityBase, EntityIdentifiable, EntityApi } from '../entity-base';
+import { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { Expandable } from '../expandable';
+import { EntityApi, EntityType } from '../entity-api';
 import type { Selectable } from './selectable';
 
 /**
@@ -19,12 +20,11 @@ import type { Selectable } from './selectable';
  * See also: [[Selectable]]
  * @typeparam EntityT - Type of the entity to be linked from
  * @typeparam LinkedEntityT - Type of the entity to be linked to
- * @internal
  */
 export class Link<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase = any
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _entity: EntityT;
@@ -33,8 +33,12 @@ export class Link<
   /**
    * List of selectables on the linked entity.
    */
-  _selects: Selectable<LinkedEntityT, DeSerializersT>[] = [];
-  _expand: Expandable<LinkedEntityT, DeSerializersT>[] = [];
+  _selects: Selectable<EntityType<LinkedEntityApiT>, DeSerializersT>[] = [];
+  _expand: Expandable<
+    EntityType<LinkedEntityApiT>,
+    DeSerializersT,
+    EntityApi<EntityBase, DeSerializersT>
+  >[] = [];
 
   /**
    * Creates an instance of Link.
@@ -45,7 +49,7 @@ export class Link<
   constructor(
     readonly _fieldName: string,
     readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
-    readonly _linkedEntityApi: EntityApi<LinkedEntityT, DeSerializersT>
+    readonly _linkedEntityApi: LinkedEntityApiT
   ) {}
 
   /**
@@ -55,13 +59,21 @@ export class Link<
    * @param selects - Selection of fields or links on a linked entity
    * @returns The link itself, to facilitate method chaining
    */
-  select(...selects: Selectable<LinkedEntityT, DeSerializersT>[]): this {
+  select(
+    ...selects: Selectable<EntityType<LinkedEntityApiT>, DeSerializersT>[]
+  ): this {
     const link = this.clone();
     link._selects = selects;
     return link;
   }
 
-  expand(...expands: Expandable<LinkedEntityT, DeSerializersT>[]): this {
+  expand(
+    ...expands: Expandable<
+      EntityType<LinkedEntityApiT>,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): this {
     const link = this.clone();
     link._expand = expands;
     return link;

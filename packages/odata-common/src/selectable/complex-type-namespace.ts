@@ -8,7 +8,7 @@ export interface ComplexTypeNamespace<ComplexT> {
 }
 
 /**
- * @internal
+ * Interface to represent meta information on a property of a complex type.
  */
 export interface PropertyMetadata<ComplexT = any> {
   name: keyof ComplexT;
@@ -18,7 +18,7 @@ export interface PropertyMetadata<ComplexT = any> {
 }
 
 /**
- * Typeguard for the ComplexTypeNamespace
+ * Type guard for the ComplexTypeNamespace
  * @param val - value to be checked
  * @returns boolean
  * @internal

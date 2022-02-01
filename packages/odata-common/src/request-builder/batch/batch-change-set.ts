@@ -5,10 +5,8 @@ import { CreateRequestBuilderBase } from '../create-request-builder-base';
 import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
 import { UpdateRequestBuilderBase } from '../update-request-builder-base';
 
-// FIXME: MethodRequestBuilder is too broad here. Should be create, update and delete
 /**
  * Representation of a batch change set, which holds a collection of write operations.
- * @internal
  */
 export class BatchChangeSet<
   DeSerializersT extends DeSerializers = DefaultDeSerializers

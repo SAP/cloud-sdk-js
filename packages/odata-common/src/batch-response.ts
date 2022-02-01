@@ -1,5 +1,6 @@
 import { DeSerializers } from './de-serializers';
-import { EntityApi, EntityBase } from './entity-base';
+import { EntityBase } from './entity-base';
+import { EntityApi } from './entity-api';
 /**
  * @internal
  */

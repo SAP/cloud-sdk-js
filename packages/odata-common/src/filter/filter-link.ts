@@ -1,6 +1,7 @@
 import { DeSerializers } from '../de-serializers';
 import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { Link } from '../selectable';
+import { EntityApi, EntityType } from '../entity-api';
 import type { Filterable } from './filterable';
 
 /**
@@ -19,19 +20,19 @@ import type { Filterable } from './filterable';
 export class FilterLink<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase = EntityBase
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
    * Entity type of the entity tp be filtered.
    */
   readonly _entity: EntityT;
+  readonly _deSerializers: DeSerializersT;
 
   /**
    * Linked entity to be filtered by.
    */
-  readonly _linkedEntityType: LinkedEntityT;
-  _deSerializers: DeSerializersT;
+  readonly _linkedEntityType: EntityType<LinkedEntityApiT>;
 
   /**
    * Creates an instance of `FilterLink`.
@@ -39,8 +40,8 @@ export class FilterLink<
    * @param filters - List of filterables for the linked entity.
    */
   constructor(
-    public link: Link<EntityT, DeSerializersT, LinkedEntityT>,
-    public filters: Filterable<LinkedEntityT, DeSerializersT>[]
+    public link: Link<EntityT, DeSerializersT, LinkedEntityApiT>,
+    public filters: Filterable<EntityType<LinkedEntityApiT>, DeSerializersT>[]
   ) {}
 }
 
@@ -53,10 +54,10 @@ export class FilterLink<
 export function isFilterLink<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedT extends EntityBase
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
-  filterable: Filterable<EntityT, DeSerializersT, LinkedT>
-): filterable is FilterLink<EntityT, DeSerializersT, LinkedT> {
+  filterable: Filterable<EntityT, DeSerializersT>
+): filterable is FilterLink<EntityT, DeSerializersT, LinkedEntityApiT> {
   return (
     typeof filterable['link'] !== 'undefined' &&
     typeof filterable['filters'] !== 'undefined'

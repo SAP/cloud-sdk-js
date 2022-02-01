@@ -56,7 +56,7 @@ export function registerDestination(
 export type DestinationWithName = Omit<Destination, 'name'> & { name: string };
 
 /**
- * Internal
+ * @internal
  * @param options - The options for searching the cahce
  * @returns Destination - the destination from cache
  */

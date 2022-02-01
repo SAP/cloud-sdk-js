@@ -16,7 +16,6 @@ import {
   searchRegisteredDestination
 } from './destination-from-register';
 import { getDestination } from './destination-accessor';
-// import {setTestDestination} from "@sap-cloud-sdk/test-util";
 import { Destination } from './destination-service-types';
 
 const testDestination: DestinationWithName = {

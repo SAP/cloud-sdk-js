@@ -49,8 +49,7 @@ export function mockUserTokenGrantCall(
   accessTokenAssertion: string,
   creds: ServiceCredentials
 ) {
-  return nock(uri, {
-  })
+  return nock(uri, {})
     .post('/oauth/token', {
       client_id: creds.clientid,
       client_secret: creds.clientsecret,

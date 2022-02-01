@@ -202,7 +202,7 @@ class DestinationFromServiceRetriever {
         subscriberToken?.userJwt?.decoded
       ),
       selectionStrategy: subscriberFirst,
-      useCache: !!options.isolationStrategy,
+      useCache: !!options.isolationStrategy
     };
     this.options = { ...defaultOptions, ...options };
   }
@@ -579,7 +579,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 }
 
-function getDefaultIsolationStrategy(jwt: JwtPayload | undefined): IsolationStrategy {
+function getDefaultIsolationStrategy(
+  jwt: JwtPayload | undefined
+): IsolationStrategy {
   if (jwt && userId(jwt)) {
     return IsolationStrategy.Tenant_User;
   }

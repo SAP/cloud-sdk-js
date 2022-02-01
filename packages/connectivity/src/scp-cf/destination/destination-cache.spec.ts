@@ -302,7 +302,7 @@ describe('destination cache', () => {
 
     const destName = destinationOne.name!;
 
-    it('disables the cache per default', async () => {
+    it('disables the cache by default', async () => {
       destinationCache.cacheRetrievedDestination(
         { user_id: 'user', zid: 'tenant' },
         destinationOne,

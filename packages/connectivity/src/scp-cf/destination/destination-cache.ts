@@ -10,12 +10,29 @@ const logger = createLogger({
   messageContext: 'destination-cache'
 });
 
-/**
- * @internal
- * @param cache
- * @constructor
- */
-export const DestinationCache = (cache: Cache<Destination>) => ({
+interface DestinationCacheType {
+  retrieveDestinationFromCache: (
+    decodedJwt: Record<string, any>,
+    name: string,
+    isolation: IsolationStrategy
+  ) => Destination | undefined;
+  cacheRetrievedDestination: (
+    decodedJwt: Record<string, any>,
+    destination: Destination,
+    isolation: IsolationStrategy
+  ) => void;
+  cacheRetrievedDestinations: (
+    decodedJwt: Record<string, any>,
+    retrievedDestinations: DestinationsByType,
+    isolation: IsolationStrategy
+  ) => void;
+  clear: () => void;
+  getCacheInstance: () => Cache<Destination>;
+}
+
+export const DestinationCache = (
+  cache: Cache<Destination>
+): DestinationCacheType => ({
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,
@@ -41,7 +58,7 @@ export const DestinationCache = (cache: Cache<Destination>) => ({
       cacheRetrievedDestination(decodedJwt, dest, isolation, cache)
     );
   },
-  clear: () => {
+  clear: (): void => {
     cache.clear();
   },
   getCacheInstance: () => cache

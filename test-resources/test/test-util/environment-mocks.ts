@@ -84,7 +84,7 @@ export const connectivityBindingMock: Service = {
   }
 };
 
-interface MockServiceBindings {
+export interface MockServiceBindings {
   xsuaa: Service[];
   destination: Service[];
   connectivity: Service[];

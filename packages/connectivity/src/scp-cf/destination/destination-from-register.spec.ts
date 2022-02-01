@@ -1,6 +1,5 @@
 import { createLogger, encodeBase64 } from '@sap-cloud-sdk/util';
 import { JwtHeader, JwtPayload } from 'jsonwebtoken';
-import { setTestDestination } from '@sap-cloud-sdk/test-util';
 import {
   mockDestinationsEnv,
   mockServiceBindings,
@@ -32,8 +31,6 @@ const destinationWithForwarding: Destination = {
 };
 
 describe('register-destination', () => {
-  beforeEach(() => {});
-
   beforeAll(() => {
     mockServiceBindings();
   });
@@ -59,18 +56,6 @@ describe('register-destination', () => {
       jwt: providerServiceToken
     });
     expect(actual).toEqual(testDestination);
-  });
-
-  it('retrieves env destinations before registered ones', async () => {
-    registerDestination(testDestination);
-    setTestDestination({
-      ...testDestination,
-      authentication: 'BasicAuthentication'
-    });
-    const actual = await getDestination({
-      destinationName: testDestination.name
-    });
-    expect(actual?.authentication).toEqual('BasicAuthentication');
   });
 
   it('retunrs undefined if destination key is not found', async () => {

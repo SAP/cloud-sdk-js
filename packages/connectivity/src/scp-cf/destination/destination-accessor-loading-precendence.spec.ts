@@ -1,82 +1,107 @@
-import { sanitizeDestination } from './destination';
-import { useOrFetchDestination } from './destination-accessor';
+import {
+  MockServiceBindings,
+  mockServiceBindings
+} from '../../../../../test-resources/test/test-util';
+import { getDestination, useOrFetchDestination } from './destination-accessor';
+import {
+  DestinationWithName,
+  registerDestination,
+  registerDestinationCache
+} from './destination-from-register';
 
 function mockEnvDestinations() {
-  process.env['destinations'] = JSON.stringify(environmentDestinations);
+  process.env['destinations'] = JSON.stringify([
+    testDestination('http://env-dest.com')
+  ]);
 }
 
-const environmentDestinations = [
-  {
-    name: 'TESTINATION',
-    url: 'https://my.system.com',
-    username: 'myuser',
-    password: 'mypw'
-  }
-];
+function mockServiceBindingDestination(existingMock: MockServiceBindings) {
+  const serviceBindings = {
+    's4-hana-cloud': [
+      {
+        binding_name: null,
+        credentials: {
+          Authentication: 'BasicAuthentication',
+          Password: '<redacted>',
+          URL: 'https://service-binding-dest.com',
+          User: 'adaa579f-3583-4812-a172-52a44194cb6f'
+        },
+        instance_name: 'instance-name',
+        label: 'label',
+        name: destinationName,
+        plan: 'some-plan',
+        provider: null,
+        syslog_drain_url: null,
+        tags: ['s4-hana-cloud'],
+        volume_mounts: []
+      }
+    ],
+    ...existingMock
+  };
+
+  process.env.VCAP_SERVICES = JSON.stringify(serviceBindings);
+}
+
+const destinationName = 'TESTINATION';
+
+function testDestination(url: string): DestinationWithName {
+  return {
+    name: destinationName,
+    url
+  };
+}
+
 describe('destination loading precedence', () => {
+  beforeEach(() => {
+    const serviceBindings = mockServiceBindings();
+    mockEnvDestinations();
+    mockServiceBindingDestination(serviceBindings);
+    registerDestination(testDestination('http://register-dest.com'));
+  });
+
   afterEach(() => {
     delete process.env['VCAP_SERVICES'];
     delete process.env['destinations'];
+    registerDestinationCache.clear();
   });
 
-  it('reads from env when only destinationName specified', async () => {
-    mockEnvDestinations();
-
-    const expected = sanitizeDestination(environmentDestinations[0]);
-    const actual = await useOrFetchDestination({
-      destinationName: 'TESTINATION',
-      cacheVerificationKeys: false
+  it('retrieves env destinations first', async () => {
+    const actual = await getDestination({
+      destinationName
     });
-    expect(actual).toMatchObject(expected);
+    expect(actual?.url).toEqual('http://env-dest.com');
   });
 
-  it('tries to build a destination from service bindings when there are no destinations mocked', async () => {
-    const serviceBindings = {
-      's4-hana-cloud': [
-        {
-          binding_name: null,
-          credentials: {
-            Authentication: 'BasicAuthentication',
-            Password: '<redacted>',
-            URL: 'https://my.system.com',
-            User: 'adaa579f-3583-4812-a172-52a44194cb6f'
-          },
-          instance_name: 'instance-name',
-          label: 'label',
-          name: 'destination-name',
-          plan: 'some-plan',
-          provider: null,
-          syslog_drain_url: null,
-          tags: ['s4-hana-cloud'],
-          volume_mounts: []
-        }
-      ]
-    };
+  it('retrieves registered destinations second', async () => {
+    delete process.env['destinations'];
+    const actual = await getDestination({
+      destinationName
+    });
 
-    process.env.VCAP_SERVICES = JSON.stringify(serviceBindings);
-
-    const expectedXFS4cloud = {
-      url: 'https://my.system.com',
-      authentication: 'BasicAuthentication',
-      username: 'adaa579f-3583-4812-a172-52a44194cb6f',
-      password: '<redacted>'
-    };
-
-    expect(
-      await useOrFetchDestination({ destinationName: 'destination-name' })
-    ).toEqual(expectedXFS4cloud);
-
-    delete process.env.VCAP_SERVICES;
+    expect(actual?.url).toEqual('http://register-dest.com');
   });
 
-  it('tries to fetch destinations normally when neither the destinations env variables is there nor a service binding exists for a given name', async () => {
+  it('retrieves service binding destinations third', async () => {
+    delete process.env['destinations'];
+    registerDestinationCache.clear();
+    const actual = await getDestination({
+      destinationName
+    });
+    expect(actual?.url).toEqual('https://service-binding-dest.com');
+  });
+
+  it('retrieves destinations from destination-service last', async () => {
+    delete process.env['destinations'];
+    registerDestinationCache.clear();
+    mockServiceBindings();
+
     await expect(
       useOrFetchDestination({
         destinationName: 'non-existent',
         cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Unable to get access token for \\"destination\\" service. No service instance of type \\"destination\\" found."'
+      '"Could not fetch client credentials token for service of type \\"destination\\"."'
     );
   });
 });

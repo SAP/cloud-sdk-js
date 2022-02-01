@@ -9,7 +9,8 @@ import {
   getDestinationFromEnvByName,
   getDestinationsFromEnv
 } from './destination-from-env';
-import { getDestination } from './destination-accessor';
+import { getDestination, useOrFetchDestination } from './destination-accessor';
+import { sanitizeDestination } from './destination';
 
 const environmentDestination = {
   name: 'FINAL-DESTINATION',
@@ -164,34 +165,16 @@ describe('env-destination-accessor', () => {
         '"Error in parsing the destinations from the environment variable."'
       );
     });
-  });
-});
 
-describe('registerDestination', () => {
-  const mockDestination = {
-    name: 'MockedDestination',
-    url: 'https://example.com'
-  };
+    it('reads from env when only destinationName specified', async () => {
+      mockDestinationsEnv(environmentDestination);
 
-  const mockDestinationFromEnv: Destination = {
-    name: 'MockedDestination',
-    url: 'https://example.com',
-    authTokens: [],
-    certificates: [],
-    authentication: 'NoAuthentication',
-    isTrustingAllCertificates: false,
-    originalProperties: {
-      name: 'MockedDestination',
-      url: 'https://example.com',
-      authTokens: [],
-      certificates: [],
-      authentication: 'NoAuthentication',
-      isTrustingAllCertificates: false
-    }
-  };
-
-  afterEach(() => {
-    unmockDestinationsEnv();
-    jest.resetAllMocks();
+      const expected = sanitizeDestination(environmentDestination);
+      const actual = await useOrFetchDestination({
+        destinationName: 'FINAL-DESTINATION',
+        cacheVerificationKeys: false
+      });
+      expect(actual).toMatchObject(expected);
+    });
   });
 });

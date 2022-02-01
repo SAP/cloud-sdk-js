@@ -15,7 +15,8 @@ export {
   OrderableEdmTypeField,
   PropertyMetadata
 } from './selectable';
-export { EntityApi, entityBuilder, EntityBuilderType } from './entity-base';
+export { entityBuilder, EntityBuilderType } from './entity-base';
+export { EntityApi } from './entity-api';
 export { DeserializedType } from './de-serializers';
 export { BatchChangeSet, RequestBuilder } from './request-builder';
 export { FunctionImportParameter } from './request';

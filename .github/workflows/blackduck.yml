@@ -33,12 +33,13 @@ jobs:
         uses: SAP/project-piper-action@master
         with:
           command: detectExecuteScan
-          flags: --version=$PROJECT_VERSION \
-                 --scanProperties="--detect.yarn.prod.only=true \ 
-                 --blackduck.signature.scanner.memory=4096 \
-                 --detect.timeout=6000 \
-                 --blackduck.trust.cert=true \
-                 --logging.level.com.synopsys.integration=DEBUG"
+          flags: \
+            --version=$PROJECT_VERSION \
+            --scanProperties="\
+            --detect.yarn.prod.only=true \
+            --blackduck.signature.scanner.memory=4096 \
+            --detect.timeout=6000 \
+            --blackduck.trust.cert=true"
         env:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
           PROJECT_VERSION: ${{ env.project_version }}

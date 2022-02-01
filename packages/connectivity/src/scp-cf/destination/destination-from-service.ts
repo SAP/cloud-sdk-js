@@ -66,7 +66,6 @@ const emptyDestinationByType: DestinationsByType = {
  * Requires the following service bindings: destination, XSUAA
  * By default, selects subscriber over provider and instance over subaccount destinations.
  *
- * If the destinations are read from the environment, the jwt will be ignored.
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
  */

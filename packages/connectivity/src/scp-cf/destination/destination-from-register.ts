@@ -84,6 +84,12 @@ export function searchRegisteredDestination(
     : destination;
 }
 
+/**
+ * If a explicit isolation strategy is given by the user this is used. If not the isolation strategy is determined in the following way:
+ * If a JWT is given and it contains a user_id the isolation is 'TenantUser'. If no JWT is given or it does not contian a user the isolation is 'Tenant'
+ * @param options - Options passed to register the destination containing the jwt.
+ * @returns The isolation strategy
+ */
 function isolationStrategy(
   options?: RegisterDestinationOptions
 ): IsolationStrategy {

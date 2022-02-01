@@ -10,7 +10,7 @@ const logger = createLogger({
   messageContext: 'destination-cache'
 });
 
-interface DestinationCacheType {
+export interface DestinationCacheType {
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,

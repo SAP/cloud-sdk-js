@@ -354,7 +354,7 @@ describe('destination cache', () => {
       });
       expect(actual).toEqual(destinationOne);
     });
-    
+
     it('enables cache if isolation strategy TenantUser is provided', async () => {
       destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),
@@ -386,7 +386,7 @@ describe('destination cache', () => {
           jwt: subscriberServiceToken,
           iasToXsuaaTokenExchange: false
         })
-      ).rejects.toThrowError(/Failed to fetch instance destinations./);
+      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
       expect(warn).toBeCalledWith(
         'Cannot get cache key. Isolation strategy TenantUser is used, but tenant id or user id is undefined.'
       );

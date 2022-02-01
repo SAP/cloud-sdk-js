@@ -204,7 +204,6 @@ class DestinationFromServiceRetriever {
       ),
       selectionStrategy: subscriberFirst,
       useCache: !!options.isolationStrategy,
-      ...options
     };
     this.options = { ...defaultOptions, ...options };
   }

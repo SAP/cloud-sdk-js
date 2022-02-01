@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [core] Proxy type `PrivateLink` is now supported
 
 ## Improvements
 

@@ -326,7 +326,7 @@ describe('destination cache', () => {
       expect(actual).toEqual(destinationOne);
     });
 
-    it('uses cache with isolation strategy UserTenant if JWT is provided', async () => {
+    it('uses cache with isolation strategy TenantUser if JWT is provided', async () => {
       destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),
         destinationOne,

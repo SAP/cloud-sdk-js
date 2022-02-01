@@ -60,5 +60,6 @@ export interface Systems {
     providerOauth2JWTBearerCommonTokenURL: string;
     providerOauth2UserTokenExchange: string;
     providerOauth2UserTokenExchangeCommonTokenURL: string;
+    providerBasicPrivateLink: string;
   };
 }

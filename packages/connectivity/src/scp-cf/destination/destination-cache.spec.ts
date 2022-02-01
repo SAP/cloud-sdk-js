@@ -313,7 +313,7 @@ describe('destination cache', () => {
       ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
     });
 
-    it('uses cache with isolation strategy Tenant if not JWT is provided', async () => {
+    it('uses cache with isolation strategy Tenant if no JWT is provided', async () => {
       destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         destinationOne,

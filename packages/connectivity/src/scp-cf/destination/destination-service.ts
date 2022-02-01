@@ -30,7 +30,7 @@ type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
   AxiosResponse<ResponseType>
 >;
 
-type DestionsServiceOptions = ResilienceOptions &
+type DestinationsServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'useCache'>;
 type DestionServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'destinationName'>;

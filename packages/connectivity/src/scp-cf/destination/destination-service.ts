@@ -50,7 +50,7 @@ let circuitBreaker: DestinationCircuitBreaker<
 export function fetchInstanceDestinations(
   destinationServiceUri: string,
   jwt: string,
-  options?: DestionsServiceOptions
+  options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
     destinationServiceUri,
@@ -71,7 +71,7 @@ export function fetchInstanceDestinations(
 export function fetchSubaccountDestinations(
   destinationServiceUri: string,
   jwt: string,
-  options?: DestionsServiceOptions
+  options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
     destinationServiceUri,
@@ -85,7 +85,7 @@ async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
   type: DestinationType,
-  options?: DestionsServiceOptions
+  options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
   const targetUri = `${destinationServiceUri.replace(
     /\/$/,
@@ -155,7 +155,7 @@ export interface AuthAndExchangeTokens {
 export async function fetchDestination(
   destinationServiceUri: string,
   token: string | AuthAndExchangeTokens,
-  options: DestionServiceOptions
+  options: DestinationServiceOptions
 ): Promise<Destination> {
   return fetchDestinationByTokens(
     destinationServiceUri,
@@ -167,7 +167,7 @@ export async function fetchDestination(
 async function fetchDestinationByTokens(
   destinationServiceUri: string,
   tokens: AuthAndExchangeTokens,
-  options: DestionServiceOptions
+  options: DestinationServiceOptions
 ): Promise<Destination> {
   const targetUri = `${destinationServiceUri.replace(
     /\/$/,

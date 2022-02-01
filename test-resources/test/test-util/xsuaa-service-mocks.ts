@@ -50,7 +50,6 @@ export function mockUserTokenGrantCall(
   creds: ServiceCredentials
 ) {
   return nock(uri, {
-    // reqheaders: xsuaaRequestHeaders({ authorization: `Bearer ${accessTokenResponse}` })
   })
     .post('/oauth/token', {
       client_id: creds.clientid,

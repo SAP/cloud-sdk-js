@@ -1,15 +1,11 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { decodeJwt } from '../jwt';
 import {
   sanitizeDestination,
   isDestinationConfiguration,
   parseDestination
 } from './destination';
 import { DestinationFetchOptions } from './destination-accessor-types';
-import type {
-  Destination,
-  DestinationAuthToken
-} from './destination-service-types';
+import type { Destination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,

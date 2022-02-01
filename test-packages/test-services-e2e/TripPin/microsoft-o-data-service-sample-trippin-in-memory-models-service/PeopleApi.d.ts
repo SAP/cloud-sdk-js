@@ -1,6 +1,5 @@
 import { People } from './People';
 import { PeopleRequestBuilder } from './PeopleRequestBuilder';
-import { Photos } from './Photos';
 import { PhotosApi } from './PhotosApi';
 import { Location } from './Location';
 import { PersonGender } from './PersonGender';
@@ -72,7 +71,7 @@ export declare class PeopleApi<
     FRIENDS: OneToManyLink<
       People<DeSerializersT>,
       DeSerializersT,
-      People<DeSerializersT>
+      PeopleApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-one navigation property [[photo]] for query construction.
@@ -81,7 +80,7 @@ export declare class PeopleApi<
     PHOTO: OneToOneLink<
       People<DeSerializersT>,
       DeSerializersT,
-      Photos<DeSerializersT>
+      PhotosApi<DeSerializersT>
     >;
     /**
      * Static representation of the [[userName]] property for query construction.

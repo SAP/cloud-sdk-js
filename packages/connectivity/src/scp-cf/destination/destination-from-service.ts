@@ -374,10 +374,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       authHeaderJwt: serviceJwt.encoded, // token to get destination from service
       exchangeHeaderJwt: this.subscriberToken.userJwt.encoded // token considered for user and tenant
     };
-
-    throw new Error(
-      `Not possible to build tokens for ${destination.authentication} flow for destination ${destination.name}.`
-    );
   }
 
   /**
@@ -416,6 +412,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
           this.subscriberToken?.userJwt
         );
       case ProxyStrategy.INTERNET_PROXY:
+      case ProxyStrategy.PRIVATELINK_PROXY:
         return addProxyConfigurationInternet(destination);
       case ProxyStrategy.NO_PROXY:
         return destination;

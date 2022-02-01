@@ -44,7 +44,7 @@ export class TestEntityCircularLinkParentApi<
     TO_FIRST_CHILD: OneToOneLink<
       TestEntityCircularLinkParent<DeSerializersT>,
       DeSerializersT,
-      TestEntityCircularLinkChild<DeSerializersT>
+      TestEntityCircularLinkChildApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-many navigation property [[toChildren]] for query construction.
@@ -53,7 +53,7 @@ export class TestEntityCircularLinkParentApi<
     TO_CHILDREN: OneToManyLink<
       TestEntityCircularLinkParent<DeSerializersT>,
       DeSerializersT,
-      TestEntityCircularLinkChild<DeSerializersT>
+      TestEntityCircularLinkChildApi<DeSerializersT>
     >;
   };
 

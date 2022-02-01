@@ -1,8 +1,9 @@
-import { EntityBase, EntityApi } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { Expandable } from '../expandable';
 import { Selectable } from '../selectable';
 import { ODataUri } from '../uri-conversion';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { WithKeys, WithSelection } from './odata-request-traits';
 import { ODataRequestConfig } from './odata-request-config';
 
@@ -20,7 +21,11 @@ export class ODataGetByKeyRequestConfig<
 {
   keys: Record<string, any>;
   selects: Selectable<EntityT, DeSerializersT>[] = [];
-  expands: Expandable<EntityT, DeSerializersT>[];
+  expands: Expandable<
+    EntityT,
+    DeSerializersT,
+    EntityApi<EntityBase, DeSerializersT>
+  >[];
 
   /**
    * Creates an instance of ODataGetByKeyRequestConfig.

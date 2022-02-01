@@ -3,9 +3,9 @@
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
-import type { CustomField, Field, Link } from './selectable';
-import type { RequestBuilder } from './request-builder';
-import { DefaultDeSerializers, DeSerializers } from './de-serializers';
+import type { Field, Link } from './selectable';
+import { DeSerializers } from './de-serializers';
+import { EntityApi } from './entity-api';
 
 /**
  * @internal
@@ -23,26 +23,7 @@ export interface Constructable<EntityT extends EntityBase> {
 }
 
 /**
- * Represents the API of an entity, including its request and entity builders as well as its schema.
- * @typeparam EntityT - Type of the entity.
- * @typeparam DeSerializersT - Type of the (de-)serializers.
- * @typeparam JsonT - Type of the entity without methods.
- */
-export interface EntityApi<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> {
-  deSerializers: DeSerializersT;
-  requestBuilder(): RequestBuilder<EntityT, DeSerializersT>;
-  entityBuilder(): EntityBuilderType<EntityT, DeSerializersT>;
-  entityConstructor: Constructable<EntityT>;
-  schema: Record<string, any>;
-  customField<NullableT extends boolean>(
-    fieldName: string
-  ): CustomField<EntityT, DeSerializersT, NullableT>;
-}
-
-/**
+ * @internal
  * Entity builder type with check for EntityT.
  */
 export type EntityBuilderType<
@@ -328,32 +309,30 @@ export interface EntityIdentifiable<
 /**
  * @internal
  */
-export function isSelectedProperty<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
->(json: any, field: Field<EntityT> | Link<EntityT, DeSerializersT>): boolean {
+export function isSelectedProperty(
+  json: any,
+  field: Field<any> | Link<any, any, any>
+): boolean {
   return json.hasOwnProperty(field._fieldName);
 }
 
 /**
  * @internal
  */
-export function isExistentProperty<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase
->(json: any, link: Link<EntityT, DeSerializersT, LinkedEntityT>): boolean {
+export function isExistentProperty(
+  json: any,
+  link: Link<any, any, any>
+): boolean {
   return isSelectedProperty(json, link) && json[link._fieldName] !== null;
 }
 
 /**
  * @internal
  */
-export function isExpandedProperty<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase
->(json: any, link: Link<EntityT, DeSerializersT, LinkedEntityT>): boolean {
+export function isExpandedProperty(
+  json: any,
+  link: Link<any, any, any>
+): boolean {
   return (
     isExistentProperty(json, link) &&
     !json[link._fieldName].hasOwnProperty('__deferred')

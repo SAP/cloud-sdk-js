@@ -46,7 +46,7 @@ export class TestEntitySingleLinkApi<
     TO_MULTI_LINK: OneToManyLink<
       TestEntitySingleLink<DeSerializersT>,
       DeSerializersT,
-      TestEntityLvl2MultiLink<DeSerializersT>
+      TestEntityLvl2MultiLinkApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
@@ -55,7 +55,7 @@ export class TestEntitySingleLinkApi<
     TO_SINGLE_LINK: OneToOneLink<
       TestEntitySingleLink<DeSerializersT>,
       DeSerializersT,
-      TestEntityLvl2SingleLink<DeSerializersT>
+      TestEntityLvl2SingleLinkApi<DeSerializersT>
     >;
   };
 

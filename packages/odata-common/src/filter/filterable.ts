@@ -2,6 +2,7 @@ import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
 import type { OneToManyLink } from '../selectable';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import type { BooleanFilterFunction } from './boolean-filter-function';
 import type { Filter } from './filter';
 import { UnaryFilter } from './unary-filter';
@@ -17,15 +18,18 @@ import { FilterLink } from './filter-link';
 export type Filterable<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase = EntityBase
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT> = EntityApi<
+    EntityBase,
+    DeSerializersT
+  >
 > =
   | Filter<EntityT, DeSerializersT, any>
-  | FilterLink<EntityT, DeSerializersT, LinkedEntityT>
+  | FilterLink<EntityT, DeSerializersT, LinkedEntityApiT>
   | FilterList<EntityT, DeSerializersT>
   | FilterLambdaExpression<EntityT, DeSerializersT>
-  | UnaryFilter<EntityT>
+  | UnaryFilter<EntityT, DeSerializersT>
   | BooleanFilterFunction<EntityT>
-  | OneToManyLink<EntityT, DeSerializersT, LinkedEntityT>;
+  | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;
 
 /**
  * Combine [[Filterable]]s with logical `and` to create a [[FilterList]].
@@ -117,6 +121,8 @@ export function or<
 export function not<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
->(filter: Filterable<EntityT, DeSerializersT>): UnaryFilter<EntityT> {
+>(
+  filter: Filterable<EntityT, DeSerializersT>
+): UnaryFilter<EntityT, DeSerializersT> {
   return new UnaryFilter(filter, 'not');
 }

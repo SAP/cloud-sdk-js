@@ -420,6 +420,8 @@
   - `serviceToken` uses jwt instead of userJwt now.
   - `jwtBearerToken` uses jwt instead of userJwt now.
   - `fetchVerificationKeys` merged with `executeFetchVerificationKeys`, now only accepts url as parameter
+- [http-client] changed the following implementations
+  - `executeHttpRequest` fetches CsrfToken for non-GET requests by default.
 
 ## Known Issues
 

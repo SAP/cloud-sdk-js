@@ -1,12 +1,13 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
 import { Orderable } from '../order';
 import { ODataGetAllRequestConfig } from '../request';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { CountRequestBuilder } from './count-request-builder';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 

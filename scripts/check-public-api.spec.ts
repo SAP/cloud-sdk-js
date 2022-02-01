@@ -97,9 +97,9 @@ describe('check-public-api', () => {
       }
     });
     expect(typeDescriptorPaths('dir1')).toEqual([
-      'dir1/file1.d.ts',
       'dir1/dir2/file2.d.ts',
-      'dir1/dir2/file3.d.ts'
+      'dir1/dir2/file3.d.ts',
+      'dir1/file1.d.ts'
     ]);
     mock.restore();
   });

@@ -15,7 +15,7 @@ const logger = createLogger('check-public-api');
 
 const pathToTsConfigRoot = join(__dirname, '../tsconfig.json');
 const pathRootNodeModules = resolve(__dirname, '../node_modules');
-export const regexExportedIndex = /\{([\w,]+)\}/g;
+export const regexExportedIndex = /\{([\w,]+)\}from'\./g;
 export const regexExportedInternal = /\.\/([\w-]+)/g;
 
 function mockFileSystem(pathToPackage: string) {

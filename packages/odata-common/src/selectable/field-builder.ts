@@ -57,7 +57,6 @@ type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
  * Field builder to orchestrate the creation of the different kinds of fields.
  * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
  * @typeparam DeSerializersT - Type of the (de-)serializers.
- * @internal
  */
 export class FieldBuilder<
   FieldOfT extends ConstructorOrField<any>,

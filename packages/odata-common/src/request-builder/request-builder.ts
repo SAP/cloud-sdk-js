@@ -3,7 +3,7 @@ import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { EntityApi } from '../entity-api';
 
 /**
- * @internal
+ * Represents a request builder for a given entity API.
  */
 export abstract class RequestBuilder<
   EntityT extends EntityBase,

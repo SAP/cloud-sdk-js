@@ -20,7 +20,6 @@ import type { Selectable } from './selectable';
  * See also: [[Selectable]]
  * @typeparam EntityT - Type of the entity to be linked from
  * @typeparam LinkedEntityT - Type of the entity to be linked to
- * @internal
  */
 export class Link<
   EntityT extends EntityBase,

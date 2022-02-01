@@ -1,25 +1,27 @@
 export {
-  Time,
+  AllFields,
+  and,
+  BatchChangeSet,
   CollectionField,
   ComplexTypeField,
+  ConstructorOrField,
+  DeserializedType,
   EdmTypeField,
+  entityBuilder,
+  EntityApi,
+  EntityBuilderType,
   EnumField,
   FieldBuilder,
-  OrderableEdmTypeField,
-  PropertyMetadata,
-  ConstructorOrField,
   FieldOptions,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  DeserializedType,
-  RequestBuilder,
-  BatchChangeSet,
   FunctionImportParameter,
+  Link,
+  not,
   OneToManyLink,
   OneToOneLink,
-  throwErrorWhenReturnTypeIsUnionType
-} from '@sap-cloud-sdk/odata-common/internal';
-
-export { and, or, not } from '@sap-cloud-sdk/odata-common';
+  or,
+  OrderableEdmTypeField,
+  PropertyMetadata,
+  RequestBuilder,
+  throwErrorWhenReturnTypeIsUnionType,
+  Time
+} from '@sap-cloud-sdk/odata-common';

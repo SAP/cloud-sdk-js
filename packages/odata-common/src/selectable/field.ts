@@ -1,25 +1,7 @@
-import BigNumber from 'bignumber.js';
 import { EntityBase, Constructable } from '../entity-base';
-import { Time } from '../time';
-
-/**
- * Union type to represent all possible types of a field.
- * @internal
- */
-export type FieldType =
-  | string
-  | number
-  | boolean
-  | Time
-  | moment.Moment
-  | moment.Duration
-  | BigNumber
-  | null
-  | undefined;
 
 /**
  * Optional settings for fields.
- * @internal
  */
 export interface FieldOptions<
   NullableT extends boolean = false,

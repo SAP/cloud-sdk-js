@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache, IsolationStrategy } from '../cache';
+import { Cache } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { Destination } from './destination-service-types';
@@ -19,7 +19,6 @@ export enum IsolationStrategy {
   Tenant_User = 'TenantUser'
 }
 
-const DestinationCache = (cache: Cache<Destination>) => ({
 export interface DestinationCacheType {
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,

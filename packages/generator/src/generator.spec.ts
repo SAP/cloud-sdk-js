@@ -207,7 +207,7 @@ describe('generator', () => {
     );
 
     expect(getInstallODataErrorMessage(project!)).toMatchInlineSnapshot(
-      `"Did you forget to install \\"@sap-cloud-sdk/odata-v2\\"?"`
+      '"Did you forget to install \\"@sap-cloud-sdk/odata-v2\\"?"'
     );
   });
 });

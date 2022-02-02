@@ -59,7 +59,7 @@ describe('env-destination-accessor', () => {
   });
 
   describe('getDestinationsFromEnv()', () => {
-    it('infos if destination are read from enviorment and forwardAuthToken is not enabled.', async () => {
+    it('informs if destination are read from environment and forwardAuthToken is not enabled', async () => {
       mockDestinationsEnv(destinationFromEnv);
 
       const logger = createLogger('env-destination-accessor');

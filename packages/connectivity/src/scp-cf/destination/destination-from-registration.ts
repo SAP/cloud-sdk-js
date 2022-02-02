@@ -20,6 +20,7 @@ const logger = createLogger({
   package: 'connectivity',
   messageContext: 'register-destination'
 });
+
 /**
  * @internal
  */
@@ -56,6 +57,9 @@ export function registerDestination(
   );
 }
 
+/**
+ * @internal
+ */
 export type DestinationWithName = Destination & { name: string };
 
 /**

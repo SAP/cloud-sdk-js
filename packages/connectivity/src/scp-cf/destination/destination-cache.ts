@@ -20,6 +20,10 @@ export enum IsolationStrategy {
   Tenant_User = 'TenantUser'
 }
 
+// eslint-disable-next-line
+/**
+ * @internal
+ */
 export interface DestinationCacheType {
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
@@ -40,6 +44,10 @@ export interface DestinationCacheType {
   getCacheInstance: () => Cache<Destination>;
 }
 
+// eslint-disable-next-line
+/**
+ * @internal
+ */
 export const DestinationCache = (
   cache: Cache<Destination>
 ): DestinationCacheType => ({
@@ -134,6 +142,7 @@ function cacheRetrievedDestination(
   cache.set(key, destination, expirationTime);
 }
 
+// eslint-disable-next-line
 /**
  * @internal
  */
@@ -141,12 +150,14 @@ export const destinationCache = DestinationCache(
   new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 })
 );
 
+// eslint-disable-next-line
+/**
+ * @internal
+ */
 export function getDefaultIsolationStrategy(
   jwt: JwtPayload | undefined
 ): IsolationStrategy {
-  if (jwt && userId(jwt)) {
-    return IsolationStrategy.Tenant_User;
-  }
-
-  return IsolationStrategy.Tenant;
+  return jwt && userId(jwt)
+    ? IsolationStrategy.Tenant_User
+    : IsolationStrategy.Tenant;
 }

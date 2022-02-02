@@ -202,7 +202,7 @@ class DestinationFromServiceRetriever {
         subscriberToken?.userJwt?.decoded
       ),
       selectionStrategy: subscriberFirst,
-      useCache: !!options.isolationStrategy,
+      useCache: !!options.isolationStrategy
     };
     this.options = { ...defaultOptions, ...options };
   }

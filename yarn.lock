@@ -4020,9 +4020,9 @@ dts-critic@latest:
     yargs "^15.3.1"
 
 dtslint@^4.0.0:
-  version "4.1.6"
-  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.1.6.tgz#0399a34583ba1057d260b1c0009d5c6fa8b3d79e"
-  integrity sha512-AlEYz68dHznzxtSsxaULqxGdXUObhv/YyyNBny9w90Z+EQygFGpbfaPLqq5jZwEBslCKPjsrpElqGtVHZXAw6g==
+  version "4.2.1"
+  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.2.1.tgz#c416db9bb7ce3face599b7097b9cd0e7f478fdf7"
+  integrity sha512-57mWY9osUEfS6k62ATS9RSgug1dZcuN4O31hO76u+iEexa6VUEbKoPGaA2mNtc0FQDcdTl0zEUtti79UQKSQyQ==
   dependencies:
     "@definitelytyped/header-parser" latest
     "@definitelytyped/typescript-versions" latest
@@ -7237,7 +7237,7 @@ mute-stream@0.0.8, mute-stream@~0.0.4:
   resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-nanoid@^3.1.30:
+nanoid@^3.2.0:
   version "3.2.0"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.2.0.tgz#62667522da6673971cca916a6d3eff3f415ff80c"
   integrity sha512-fmsZYa9lpn69Ad5eDn7FMcnnSR+8R34W9qJEijxYhTbfOWzr22n1QxCMzXLK+ODyW2973V3Fux959iQoUxzUIA==
@@ -8270,13 +8270,13 @@ postcss-values-parser@^5.0.0:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.1.7, postcss@^8.2.13:
-  version "8.4.5"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.5.tgz#bae665764dfd4c6fcc24dc0fdf7e7aa00cc77f95"
-  integrity sha512-jBDboWM8qpaqwkMwItqTQTiFikhs/67OYVvblFFTM7MrZjt6yMKd6r2kgXizEbTTljacm4NldIlZnhbjr84QYg==
+  version "8.4.6"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.6.tgz#c5ff3c3c457a23864f32cb45ac9b741498a09ae1"
+  integrity sha512-OovjwIzs9Te46vlEx7+uXB0PLijpwjXGKXjVGGPIGubGpq7uh5Xgf6D6FiJ/SzJMBosHDp6a2hiXOS97iBXcaA==
   dependencies:
-    nanoid "^3.1.30"
+    nanoid "^3.2.0"
     picocolors "^1.0.0"
-    source-map-js "^1.0.1"
+    source-map-js "^1.0.2"
 
 precinct@^8.0.0, precinct@^8.1.0:
   version "8.1.0"
@@ -9231,7 +9231,7 @@ sort-keys@^4.0.0:
   dependencies:
     is-plain-obj "^2.0.0"
 
-source-map-js@^1.0.1:
+source-map-js@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
   integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==

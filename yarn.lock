@@ -3982,9 +3982,9 @@ dts-critic@latest:
     yargs "^15.3.1"
 
 dtslint@^4.0.0:
-  version "4.1.6"
-  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.1.6.tgz#0399a34583ba1057d260b1c0009d5c6fa8b3d79e"
-  integrity sha512-AlEYz68dHznzxtSsxaULqxGdXUObhv/YyyNBny9w90Z+EQygFGpbfaPLqq5jZwEBslCKPjsrpElqGtVHZXAw6g==
+  version "4.2.1"
+  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.2.1.tgz#c416db9bb7ce3face599b7097b9cd0e7f478fdf7"
+  integrity sha512-57mWY9osUEfS6k62ATS9RSgug1dZcuN4O31hO76u+iEexa6VUEbKoPGaA2mNtc0FQDcdTl0zEUtti79UQKSQyQ==
   dependencies:
     "@definitelytyped/header-parser" latest
     "@definitelytyped/typescript-versions" latest

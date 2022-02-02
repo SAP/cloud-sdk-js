@@ -15,8 +15,19 @@
   "publishConfig": {
     "access": "public"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./internal": {
+      "import": "./dist/internal.mjs",
+      "require": "./dist/internal.js"
+    }
+  },
   "files": [
     "dist/**/*.js",
+    "dist/**/*.mjs",
     "dist/**/*.js.map",
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map",
@@ -27,6 +38,7 @@
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
+    "wrap-esm": "yarn gen-esm-wrapper ./dist/index ./dist/index.mjs && yarn gen-esm-wrapper ./dist/internal ./dist/internal.mjs",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck ."

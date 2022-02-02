@@ -7717,11 +7717,6 @@ openapi-types@^10.0.0:
   resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-10.0.0.tgz#0debbf663b2feed0322030b5b7c9080804076934"
   integrity sha512-Y8xOCT2eiKGYDzMW9R4x5cmfc3vGaaI4EL2pwhDmodWw1HlK18YcZ4uJxc7Rdp7/gGzAygzH9SXr6GKYIXbRcQ==
 
-openapi-types@^9.3.0:
-  version "9.3.0"
-  resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-9.3.0.tgz#2d90549edb928cf06cf83018485a1a5961fbd2b9"
-  integrity sha512-sR23YjmuwDSMsQVZDHbV9mPgi0RyniQlqR0AQxTC2/F3cpSjRFMH3CFPjoWvNqhC4OxPkDYNb2l8Mc1Me6D/KQ==
-
 opossum@^6.0.0:
   version "6.3.0"
   resolved "https://registry.npmjs.org/opossum/-/opossum-6.3.0.tgz#c4d21a8f5ec4acced62ecaab1c07652c202b1a22"

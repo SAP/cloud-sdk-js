@@ -160,6 +160,6 @@ export function getDefaultIsolationStrategy(
   jwt: JwtPayload | undefined
 ): IsolationStrategy {
   return jwt && userId(jwt)
-      ? IsolationStrategy.Tenant_User
-      : IsolationStrategy.Tenant;
+    ? IsolationStrategy.Tenant_User
+    : IsolationStrategy.Tenant;
 }

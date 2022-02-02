@@ -6,6 +6,7 @@ import {
   getGenericTypes,
   getGenericTypesWithDefault
 } from '../de-serializers-generic-types';
+import { hasEntities } from '../../generator-utils';
 
 export function serviceBuilder(
   serviceName: string,
@@ -26,6 +27,7 @@ export function serviceBuilder(
 }
 
 export function serviceClass(service: VdmServiceMetadata): string {
+  const serviceHasEntities = hasEntities(service);
   return codeBlock`export class ${
     service.className
   }<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
@@ -51,9 +53,9 @@ export function serviceClass(service: VdmServiceMetadata): string {
     
     ${getActionFunctionImports(service, 'actionImports')}
     
-    ${getBatch()}
+    ${serviceHasEntities ? getBatch() : ''}
 
-    ${getChangeset()}
+    ${serviceHasEntities ? getChangeset() : ''}
   }`;
 }
 

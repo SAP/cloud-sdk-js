@@ -38,7 +38,7 @@ describe('register-destination', () => {
     unmockDestinationsEnv();
   });
 
-  it('registers destiantion and retrieves it', async () => {
+  it('registers destination and retrieves it', async () => {
     // parseDestination({}as any)
     registerDestination(testDestination);
     const actual = await getDestination({
@@ -56,7 +56,7 @@ describe('register-destination', () => {
     expect(actual).toEqual(testDestination);
   });
 
-  it('retunrs undefined if destination key is not found', async () => {
+  it('returns undefined if destination key is not found', async () => {
     const actual = searchRegisteredDestination({
       destinationName: 'Non-existing-destination'
     });

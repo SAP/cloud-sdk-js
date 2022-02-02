@@ -10,8 +10,8 @@ const TestEntityApi_1 = require('./TestEntityApi');
 const TestEntityLinkApi_1 = require('./TestEntityLinkApi');
 const function_imports_1 = require('./function-imports');
 const action_imports_1 = require('./action-imports');
-const BatchRequest_1 = require('./BatchRequest');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const BatchRequest_1 = require('./BatchRequest');
 function testService(deSerializers = odata_v4_1.defaultDeSerializers) {
   return new TestService(
     (0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers)

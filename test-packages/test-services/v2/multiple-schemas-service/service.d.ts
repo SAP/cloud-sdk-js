@@ -1,12 +1,12 @@
 import { MultiSchemaTestEntityApi } from './MultiSchemaTestEntityApi';
 import { BigNumber } from 'bignumber.js';
-import { batch, changeset } from './BatchRequest';
 import { Moment } from 'moment';
 import {
   DeSerializers,
   DefaultDeSerializers,
   Time
 } from '@sap-cloud-sdk/odata-v2';
+import { batch, changeset } from './BatchRequest';
 export declare function multipleSchemasService<
   BinaryT = string,
   BooleanT = boolean,

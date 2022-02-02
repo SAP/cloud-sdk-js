@@ -10,7 +10,11 @@ import {
   getGeneratedFiles
 } from '../test/test-util/generator';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
-import { generate, generateProject } from './generator';
+import {
+  generate,
+  generateProject,
+  getInstallODataErrorMessage
+} from './generator';
 import { GeneratorOptions } from './generator-options';
 import * as csnGeneration from './service/csn';
 
@@ -43,6 +47,7 @@ describe('generator', () => {
       const sourceFiles = await promises.readdir(
         join(outPutPath, 'test-service')
       );
+
       expect(
         sourceFiles.find(file => file === 'some-test-markdown.md')
       ).toBeDefined();
@@ -188,6 +193,22 @@ describe('generator', () => {
         ])
       );
     });
+  });
+
+  it('recommends to install odata packages', async () => {
+    const project = await generateProject(
+      createOptions({
+        inputDir: pathTestService,
+        outputDir: outPutPath,
+        forceOverwrite: true,
+        generateJs: true,
+        additionalFiles: '../../../*.md'
+      })
+    );
+
+    expect(getInstallODataErrorMessage(project!)).toMatchInlineSnapshot(
+      '"Did you forget to install \\"@sap-cloud-sdk/odata-v2\\"?"'
+    );
   });
 });
 

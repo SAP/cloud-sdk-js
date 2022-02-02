@@ -1,9 +1,9 @@
 import { VerifyJwtOptions } from '../jwt';
-import {
+import type {
   Destination,
   DestinationRetrievalOptions
 } from './destination-service-types';
-import { DestinationSelectionStrategy } from './destination-selection-strategies';
+import type { DestinationSelectionStrategy } from './destination-selection-strategies';
 
 /**
  * @internal

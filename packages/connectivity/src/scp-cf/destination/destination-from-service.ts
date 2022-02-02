@@ -1,7 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt, isUserToken, JwtPair, verifyJwt } from '../jwt';
-import { IsolationStrategy } from '../cache';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
@@ -12,6 +11,7 @@ import { isIdenticalTenant } from '../tenant';
 import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { userId } from '../user';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -28,7 +28,7 @@ import {
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
-import { destinationCache } from './destination-cache';
+import { destinationCache, IsolationStrategy } from './destination-cache';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -66,7 +66,6 @@ const emptyDestinationByType: DestinationsByType = {
  * Requires the following service bindings: destination, XSUAA
  * By default, selects subscriber over provider and instance over subaccount destinations.
  *
- * If the destinations are read from the environment, the jwt will be ignored.
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
  */
@@ -199,10 +198,11 @@ class DestinationFromServiceRetriever {
     readonly providerServiceToken: JwtPair
   ) {
     const defaultOptions = {
-      isolationStrategy: IsolationStrategy.Tenant_User,
+      isolationStrategy: getDefaultIsolationStrategy(
+        subscriberToken?.userJwt?.decoded
+      ),
       selectionStrategy: subscriberFirst,
-      useCache: false,
-      ...options
+      useCache: !!options.isolationStrategy
     };
     this.options = { ...defaultOptions, ...options };
   }
@@ -577,4 +577,14 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       this.getSubscriberDestinationService()
     );
   }
+}
+
+function getDefaultIsolationStrategy(
+  jwt: JwtPayload | undefined
+): IsolationStrategy {
+  if (jwt && userId(jwt)) {
+    return IsolationStrategy.Tenant_User;
+  }
+
+  return IsolationStrategy.Tenant;
 }

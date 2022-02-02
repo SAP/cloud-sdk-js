@@ -19,16 +19,6 @@ export interface CacheEntry<T> {
   entry: T;
 }
 
-/**
- * Enumerator that selects the isolation type of destination in cache.
- */
-export enum IsolationStrategy {
-  Tenant = 'Tenant',
-  User = 'User',
-  Tenant_User = 'TenantUser',
-  No_Isolation = 'NoIsolation'
-}
-
 export interface CachingOptions {
   /**
    * A boolean value that indicates whether to read destinations from cache.

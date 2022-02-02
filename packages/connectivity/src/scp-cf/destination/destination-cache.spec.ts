@@ -10,7 +10,9 @@ import {
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   connectivityProxyConfigMock,
-  mockServiceBindings
+  mockServiceBindings,
+  onlyIssuerXsuaaUrl,
+  TestTenants
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   mockJwtBearerToken,
@@ -31,7 +33,7 @@ import {
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import { IsolationStrategy } from '../cache';
+import { signedJwt } from '../../../../../test-resources/test/test-util';
 import { destinationServiceCache } from './destination-service-cache';
 import { getDestination } from './destination-accessor';
 import {
@@ -39,7 +41,11 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import { destinationCache, getDestinationCacheKey } from './destination-cache';
+import {
+  destinationCache,
+  getDestinationCacheKey,
+  IsolationStrategy
+} from './destination-cache';
 import {
   AuthenticationType,
   Destination,
@@ -184,40 +190,13 @@ describe('destination cache', () => {
 
       const c1 = getSubscriberCache(IsolationStrategy.Tenant);
       const c2 = getProviderCache(IsolationStrategy.Tenant);
-      const c3 = getSubscriberCache(IsolationStrategy.User);
-      const c4 = getProviderCache(IsolationStrategy.No_Isolation);
       const c5 = getSubscriberCache(IsolationStrategy.Tenant_User);
       const c6 = getProviderCache(IsolationStrategy.Tenant_User);
 
       expect(c1).toBeUndefined();
       expect(c2).toBeUndefined();
-      expect(c3).toBeUndefined();
-      expect(c4).toBeUndefined();
       expect(c5!.url).toBe('https://subscriber.example');
       expect(c6).toBeUndefined();
-    });
-
-    it('retrieved  provider destinations are cached using only destination name in "NoIsolation" type', async () => {
-      await getDestination({
-        destinationName: 'ProviderDest',
-        jwt: subscriberUserJwt,
-        useCache: true,
-        isolationStrategy: IsolationStrategy.No_Isolation,
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
-      });
-
-      const c1 = getSubscriberCache(IsolationStrategy.No_Isolation);
-      const c2 = getProviderCache(IsolationStrategy.No_Isolation);
-      const c3 = getSubscriberCache(IsolationStrategy.User);
-      const c4 = getSubscriberCache(IsolationStrategy.Tenant);
-      const c5 = getSubscriberCache(IsolationStrategy.Tenant_User);
-
-      expect(c1).toBeUndefined();
-      expect(c2!.url).toBe('https://provider.example');
-      expect(c3).toBeUndefined();
-      expect(c4).toBeUndefined();
-      expect(c5).toBeUndefined();
     });
 
     it('caches only subscriber if the destination names are the same and subscriber first', async () => {
@@ -314,6 +293,134 @@ describe('destination cache', () => {
 
       expect(c1).toBeUndefined();
       expect(c2!.url).toBe('https://subscriber2.example');
+    });
+  });
+
+  describe('caching options', () => {
+    beforeEach(() => {
+      mockServiceBindings();
+      mockServiceToken();
+      mockVerifyJwt();
+    });
+
+    const destName = destinationOne.name!;
+
+    it('disables the cache by default', async () => {
+      destinationCache.cacheRetrievedDestination(
+        { user_id: 'user', zid: 'tenant' },
+        destinationOne,
+        IsolationStrategy.Tenant
+      );
+      await expect(
+        getDestination({ destinationName: destName })
+      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
+    });
+
+    it('uses cache with isolation strategy Tenant if no JWT is provided', async () => {
+      destinationCache.cacheRetrievedDestination(
+        decodeJwt(providerServiceToken),
+        destinationOne,
+        IsolationStrategy.Tenant
+      );
+      const actual = await getDestination({
+        destinationName: destName,
+        useCache: true
+      });
+      expect(actual).toEqual(destinationOne);
+    });
+
+    it('uses cache with isolation strategy Tenant and iss ', async () => {
+      destinationCache
+        .getCacheInstance()
+        .set(
+          `${TestTenants.SUBSCRIBER_ONLY_ISS}::${destinationOne.name}`,
+          destinationOne
+        );
+
+      const actual = await getDestination({
+        destinationName: destName,
+        iss: onlyIssuerXsuaaUrl,
+        useCache: true
+      });
+      expect(actual).toEqual(destinationOne);
+    });
+
+    it('uses cache with isolation strategy TenantUser if JWT is provided', async () => {
+      destinationCache.cacheRetrievedDestination(
+        decodeJwt(subscriberUserJwt),
+        destinationOne,
+        IsolationStrategy.Tenant_User
+      );
+      const actual = await getDestination({
+        destinationName: destName,
+        useCache: true,
+        jwt: subscriberUserJwt,
+        iasToXsuaaTokenExchange: false
+      });
+      expect(actual).toEqual(destinationOne);
+    });
+
+    it('enables cache if isolation strategy Tenant is provided', async () => {
+      destinationCache.cacheRetrievedDestination(
+        decodeJwt(providerServiceToken),
+        destinationOne,
+        IsolationStrategy.Tenant
+      );
+      const actual = await getDestination({
+        destinationName: destName,
+        isolationStrategy: IsolationStrategy.Tenant,
+        iasToXsuaaTokenExchange: false
+      });
+      expect(actual).toEqual(destinationOne);
+    });
+
+    it('enables cache if isolation strategy TenantUser is provided', async () => {
+      destinationCache.cacheRetrievedDestination(
+        decodeJwt(subscriberUserJwt),
+        destinationOne,
+        IsolationStrategy.Tenant_User
+      );
+      const actual = await getDestination({
+        destinationName: destName,
+        isolationStrategy: IsolationStrategy.Tenant_User,
+        jwt: subscriberUserJwt,
+        iasToXsuaaTokenExchange: false
+      });
+      expect(actual).toEqual(destinationOne);
+    });
+
+    it('ignores cache if isolation requires tenant but tenant info is not provided', async () => {
+      const logger = createLogger('destination-cache');
+      const warn = jest.spyOn(logger, 'warn');
+
+      await expect(
+        getDestination({
+          destinationName: destName,
+          isolationStrategy: IsolationStrategy.Tenant,
+          jwt: signedJwt({ user_id: 'onlyUserInJwt' }),
+          iasToXsuaaTokenExchange: false
+        })
+      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
+      expect(warn).toBeCalledWith(
+        'Cannot get cache key. Isolation strategy Tenant is used, but tenant id is undefined.'
+      );
+    });
+
+    it('ignores cache if isolation requires user JWT but the JWT is not provided', async () => {
+      const logger = createLogger('destination-cache');
+      const warn = jest.spyOn(logger, 'warn');
+
+      await expect(
+        getDestination({
+          destinationName: destName,
+          isolationStrategy: IsolationStrategy.Tenant_User,
+          jwt: subscriberServiceToken,
+          iasToXsuaaTokenExchange: false
+        })
+      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
+      expect(warn).toBeCalledWith(
+        'Cannot get cache key. Isolation strategy TenantUser is used, but tenant id or user id is undefined.'
+      );
     });
   });
 
@@ -494,14 +601,14 @@ describe('destination cache', () => {
       destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),
         parsedDestination,
-        IsolationStrategy.User
+        IsolationStrategy.Tenant_User
       );
 
       const actual = await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.User,
+        isolationStrategy: IsolationStrategy.Tenant_User,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });
@@ -586,32 +693,23 @@ describe('destination cache', () => {
       destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destinationOne,
-        IsolationStrategy.User
+        IsolationStrategy.Tenant_User
       );
+
       const actual1 = destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.User
+        IsolationStrategy.Tenant_User
       );
       const actual2 = destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant
       );
-      const actual3 = destinationCache.retrieveDestinationFromCache(
-        dummyJwt,
-        'destToCache1',
-        IsolationStrategy.Tenant_User
-      );
-      const actual4 = destinationCache.retrieveDestinationFromCache(
-        dummyJwt,
-        'destToCache1',
-        IsolationStrategy.No_Isolation
-      );
 
-      const expected = [destinationOne, undefined, undefined, undefined];
+      const expected = [destinationOne, undefined];
 
-      expect([actual1, actual2, actual3, actual4]).toEqual(expected);
+      expect([actual1, actual2]).toEqual(expected);
     });
 
     it('should not hit cache when Tenant_User is chosen but user id is missing', () => {
@@ -621,30 +719,21 @@ describe('destination cache', () => {
         destinationOne,
         IsolationStrategy.Tenant_User
       );
+
       const actual1 = destinationCache.retrieveDestinationFromCache(
-        dummyJwt,
-        'destToCache1',
-        IsolationStrategy.User
-      );
-      const actual2 = destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant
       );
-      const actual3 = destinationCache.retrieveDestinationFromCache(
+      const actual2 = destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant_User
       );
-      const actual4 = destinationCache.retrieveDestinationFromCache(
-        dummyJwt,
-        'destToCache1',
-        IsolationStrategy.No_Isolation
-      );
 
-      const expected = [undefined, undefined, undefined, undefined];
+      const expected = [undefined, undefined];
 
-      expect([actual1, actual2, actual3, actual4]).toEqual(expected);
+      expect([actual1, actual2]).toEqual(expected);
     });
 
     it('should not hit cache when Tenant is chosen but tenant id is missing', () => {
@@ -657,27 +746,17 @@ describe('destination cache', () => {
       const actual1 = destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.User
+        IsolationStrategy.Tenant
       );
       const actual2 = destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.Tenant
-      );
-      const actual3 = destinationCache.retrieveDestinationFromCache(
-        dummyJwt,
-        'destToCache1',
         IsolationStrategy.Tenant_User
       );
-      const actual4 = destinationCache.retrieveDestinationFromCache(
-        dummyJwt,
-        'destToCache1',
-        IsolationStrategy.No_Isolation
-      );
 
-      const expected = [undefined, undefined, undefined, undefined];
+      const expected = [undefined, undefined];
 
-      expect([actual1, actual2, actual3, actual4]).toEqual(expected);
+      expect([actual1, actual2]).toEqual(expected);
     });
 
     it('should return undefined when the destination is not valid', () => {
@@ -686,7 +765,7 @@ describe('destination cache', () => {
       destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destinationOne,
-        IsolationStrategy.User
+        IsolationStrategy.Tenant_User
       );
       const minutesToExpire = 6;
       jest.advanceTimersByTime(60000 * minutesToExpire);
@@ -694,7 +773,7 @@ describe('destination cache', () => {
       const actual = destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.User
+        IsolationStrategy.Tenant_User
       );
 
       expect(actual).toBeUndefined();
@@ -710,13 +789,13 @@ describe('destination cache', () => {
       destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destination,
-        IsolationStrategy.User
+        IsolationStrategy.Tenant_User
       );
       const retrieveDestination = () =>
         destinationCache.retrieveDestinationFromCache(
           dummyJwt,
           destination.name!,
-          IsolationStrategy.User
+          IsolationStrategy.Tenant_User
         );
 
       expect(retrieveDestination()).toEqual(destination);

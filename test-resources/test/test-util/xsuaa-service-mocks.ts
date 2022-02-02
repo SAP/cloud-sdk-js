@@ -44,20 +44,21 @@ export function mockClientCredentialsGrantWithCertCall(
 
 export function mockUserTokenGrantCall(
   uri: string,
-  response: any,
-  responseCode: number,
-  accessToken: string,
-  clientId: string
+  times: number,
+  accessTokenResponse: string,
+  accessTokenAssertion: string,
+  creds: ServiceCredentials
 ) {
-  return nock(uri, {
-    reqheaders: xsuaaRequestHeaders({ authorization: `Bearer ${accessToken}` })
-  })
+  return nock(uri, {})
     .post('/oauth/token', {
-      client_id: clientId,
-      grant_type: 'user_token',
+      client_id: creds.clientid,
+      client_secret: creds.clientsecret,
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      assertion: accessTokenAssertion,
       response_type: 'token'
     })
-    .reply(responseCode, response);
+    .times(times)
+    .reply(200, accessTokenResponse);
 }
 
 export function mockRefreshTokenGrantCall(

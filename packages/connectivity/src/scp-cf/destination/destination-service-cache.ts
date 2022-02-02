@@ -1,27 +1,25 @@
 import { JwtPayload } from '../jsonwebtoken-type';
-import { Cache, IsolationStrategy } from '../cache';
+import { Cache } from '../cache';
 import { Destination } from './destination-service-types';
-import { getDestinationCacheKey } from './destination-cache';
+import { getDestinationCacheKey, IsolationStrategy } from './destination-cache';
 
 const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
   retrieveDestinationsFromCache: (
     targetUrl: string,
-    decodedJwt: JwtPayload,
-    isolationStrategy?: IsolationStrategy
+    decodedJwt: JwtPayload
   ): Destination[] | undefined =>
     cache.get(
-      getDestinationCacheKeyService(targetUrl, decodedJwt, isolationStrategy)
+      getDestinationCacheKey(decodedJwt, targetUrl, IsolationStrategy.Tenant)
     ),
   cacheRetrievedDestinations: (
     destinationServiceUri: string,
     decodedJwt: JwtPayload,
-    destinations: Destination[],
-    isolationStrategy?: IsolationStrategy
+    destinations: Destination[]
   ): void => {
-    const key = getDestinationCacheKeyService(
-      destinationServiceUri,
+    const key = getDestinationCacheKey(
       decodedJwt,
-      isolationStrategy
+      destinationServiceUri,
+      IsolationStrategy.Tenant
     );
     cache.set(key, destinations);
   },
@@ -30,26 +28,6 @@ const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
   },
   getCacheInstance: () => cache
 });
-
-// The destination service URI contains the destination name (single request) or the instance/subaccount information for get all requests.
-// The used isolation strategy is either `Tenant` or `Tenant_User` because we want to get results for subaccount and provider tenants which rules out no-isolation or user isolation.
-function getDestinationCacheKeyService(
-  destinationServiceUri: string,
-  decodedJwt: JwtPayload,
-  isolationStrategy?: IsolationStrategy
-): string | undefined {
-  const usedIsolationStrategy =
-    isolationStrategy === IsolationStrategy.Tenant ||
-    isolationStrategy === IsolationStrategy.Tenant_User
-      ? isolationStrategy
-      : IsolationStrategy.Tenant;
-
-  return getDestinationCacheKey(
-    decodedJwt,
-    destinationServiceUri,
-    usedIsolationStrategy
-  );
-}
 
 /**
  * @internal

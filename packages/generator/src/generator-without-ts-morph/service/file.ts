@@ -1,5 +1,6 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
 import { Import, serializeImports } from '../../generator-common';
+import { hasEntities } from '../../generator-utils';
 import { VdmServiceMetadata } from '../../vdm-types';
 import { serviceBuilder, serviceClass } from './class';
 
@@ -40,7 +41,7 @@ export function imports(service: VdmServiceMetadata): Import[] {
   );
 
   const actionImports = getImports(service.actionImports, 'action-imports');
-  return [
+  const serviceImports = [
     ...service.entities.map(entity => ({
       names: [`${entity.className}Api`],
       moduleIdentifier: `./${entity.className}Api`
@@ -50,10 +51,6 @@ export function imports(service: VdmServiceMetadata): Import[] {
     {
       names: ['BigNumber'],
       moduleIdentifier: 'bignumber.js'
-    },
-    {
-      names: ['batch', 'changeset'],
-      moduleIdentifier: './BatchRequest'
     },
     {
       names:
@@ -71,4 +68,13 @@ export function imports(service: VdmServiceMetadata): Import[] {
       moduleIdentifier: `@sap-cloud-sdk/odata-${service.oDataVersion}`
     }
   ];
+
+  if (hasEntities(service)) {
+    serviceImports.push({
+      names: ['batch', 'changeset'],
+      moduleIdentifier: './BatchRequest'
+    });
+  }
+
+  return serviceImports;
 }

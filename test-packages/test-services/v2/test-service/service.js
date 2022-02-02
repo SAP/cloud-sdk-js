@@ -21,8 +21,8 @@ const TestEntityEndsWithSomethingElseApi_1 = require('./TestEntityEndsWithSometh
 const CaseTestApi_1 = require('./CaseTestApi');
 const Casetest_1Api_1 = require('./Casetest_1Api');
 const function_imports_1 = require('./function-imports');
-const BatchRequest_1 = require('./BatchRequest');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+const BatchRequest_1 = require('./BatchRequest');
 function testService(deSerializers = odata_v2_1.defaultDeSerializers) {
   return new TestService(
     (0, odata_v2_1.mergeDefaultDeSerializersWith)(deSerializers)

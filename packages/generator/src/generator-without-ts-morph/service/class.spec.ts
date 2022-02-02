@@ -50,10 +50,60 @@ describe('class', () => {
     );
   });
 
-  it('contains batch object', () => {
+  it('contains batch and changeset functions if there are entities', () => {
+    const result = serviceClass({
+      ...service,
+      entities: [
+        {
+          entitySetName: 'entitySet',
+          entityTypeName: 'entityType',
+          className: 'className',
+          creatable: false,
+          updatable: false,
+          deletable: false,
+          keys: [
+            {
+              originalName: 'prop',
+              description: 'desc',
+              instancePropertyName: 'prop',
+              propertyNameAsParam: 'prop',
+              staticPropertyName: 'prop',
+              isCollection: false,
+              nullable: false,
+              edmType: 'Edm.String',
+              jsType: 'string',
+              fieldType: 'Field'
+            }
+          ],
+          properties: [
+            {
+              originalName: 'prop',
+              description: 'desc',
+              instancePropertyName: 'prop',
+              propertyNameAsParam: 'prop',
+              staticPropertyName: 'prop',
+              isCollection: false,
+              nullable: false,
+              edmType: 'Edm.String',
+              jsType: 'string',
+              fieldType: 'Field'
+            }
+          ],
+          navigationProperties: [],
+          description: 'desc',
+          entityTypeNamespace: 'ns'
+        }
+      ]
+    });
+    expect(result).toContain('get batch(): typeof batch');
+    expect(result).toContain('get changeset(): typeof changeset');
+  });
+
+  it('does not contain batch nor changeset functions if there are no entities', () => {
     const result = serviceClass({
       ...service
     });
-    expect(result).toContain('get batch(): typeof batch');
+    expect(result).not.toContain('get batch(): typeof batch');
+    expect(result).not.toContain('get changeset(): typeof changeset');
   });
 });

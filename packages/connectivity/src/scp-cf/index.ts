@@ -20,3 +20,4 @@ export * from './user';
 export * from './verification-keys';
 export * from './xsuaa-service-types';
 export * from './xsuaa-service';
+export { IsolationStrategy } from './destination';

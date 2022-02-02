@@ -29,7 +29,8 @@ export const subscriberServiceToken = signedJwt(subscriberServiceTokenPayload);
  * See docs on [[DestinationAccessorOptions]] for more details.
  */
 export const onlyIssuerServiceTokenPayload = {
-  iss: onlyIssuerXsuaaUrl
+  iss: onlyIssuerXsuaaUrl,
+  zid: TestTenants.SUBSCRIBER_ONLY_ISS
 };
 
 export const onlyIssuerServiceToken = signedJwt(onlyIssuerServiceTokenPayload);

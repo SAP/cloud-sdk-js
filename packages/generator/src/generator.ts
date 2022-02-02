@@ -98,6 +98,8 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 
 /**
  * @internal
+ * @param projectAndServices - Generated project with services.
+ * @returns An error message with a recommendation to install specific SDK packages.
  */
 export function getInstallODataErrorMessage(
   projectAndServices: ProjectAndServices

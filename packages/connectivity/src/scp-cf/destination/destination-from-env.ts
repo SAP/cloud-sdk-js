@@ -154,11 +154,3 @@ export function validateNameAvailable(
 export function setDestinationsInEnv(destinations: Destination[]): void {
   process.env.destinations = JSON.stringify(destinations);
 }
-
-type DestinationWithName = Omit<Destination, 'name'> & { name: string };
-
-function destinationHasName(
-  destination: Destination
-): destination is DestinationWithName {
-  return !!destination.name;
-}

@@ -5,7 +5,11 @@ import { getXsuaaServiceCredentials } from '../environment-accessor';
 import { parseSubdomain } from '../subdomain-replacer';
 import { Destination, DestinationAuthToken } from './destination-service-types';
 import { DestinationFetchOptions } from './destination-accessor-types';
-import {DestinationCache, getIsolationStrategy, IsolationStrategy} from './destination-cache';
+import {
+  DestinationCache,
+  getIsolationStrategy,
+  IsolationStrategy
+} from './destination-cache';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -52,7 +56,7 @@ export function registerDestination(
   );
 }
 
-export type DestinationWithName = Omit<Destination, 'name'> & { name: string };
+export type DestinationWithName = Destination & { name: string };
 
 /**
  * @internal

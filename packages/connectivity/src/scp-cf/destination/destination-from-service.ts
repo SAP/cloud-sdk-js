@@ -1,24 +1,38 @@
-import {createLogger} from '@sap-cloud-sdk/util';
-import {JwtPayload} from '../jsonwebtoken-type';
-import {decodeJwt, isUserToken, JwtPair, verifyJwt} from '../jwt';
-import {jwtBearerToken, serviceToken} from '../token-accessor';
-import {addProxyConfigurationOnPrem} from '../connectivity-service';
-import {getDestinationService, getDestinationServiceCredentialsList} from '../environment-accessor';
-import {isIdenticalTenant} from '../tenant';
-import {DestinationServiceCredentials} from '../environment-accessor-types';
-import {exchangeToken, isTokenExchangeEnabled} from '../identity-service';
-import {getSubdomainAndZoneId} from '../xsuaa-service';
-import {Destination} from './destination-service-types';
-import {alwaysProvider, alwaysSubscriber, subscriberFirst} from './destination-selection-strategies';
-import {DestinationFetchOptions, DestinationsByType} from './destination-accessor-types';
+import { createLogger } from '@sap-cloud-sdk/util';
+import { JwtPayload } from '../jsonwebtoken-type';
+import { decodeJwt, isUserToken, JwtPair, verifyJwt } from '../jwt';
+import { jwtBearerToken, serviceToken } from '../token-accessor';
+import { addProxyConfigurationOnPrem } from '../connectivity-service';
+import {
+  getDestinationService,
+  getDestinationServiceCredentialsList
+} from '../environment-accessor';
+import { isIdenticalTenant } from '../tenant';
+import { DestinationServiceCredentials } from '../environment-accessor-types';
+import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
+import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { Destination } from './destination-service-types';
+import {
+  alwaysProvider,
+  alwaysSubscriber,
+  subscriberFirst
+} from './destination-selection-strategies';
+import {
+  DestinationFetchOptions,
+  DestinationsByType
+} from './destination-accessor-types';
 import {
   AuthAndExchangeTokens,
   fetchDestination,
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
-import {destinationCache, getIsolationStrategy} from './destination-cache';
-import {addProxyConfigurationInternet, ProxyStrategy, proxyStrategy} from './proxy-util';
+import { destinationCache, getIsolationStrategy } from './destination-cache';
+import {
+  addProxyConfigurationInternet,
+  ProxyStrategy,
+  proxyStrategy
+} from './proxy-util';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -563,4 +577,3 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     );
   }
 }
-

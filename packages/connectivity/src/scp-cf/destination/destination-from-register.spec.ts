@@ -38,7 +38,7 @@ describe('register-destination', () => {
     unmockDestinationsEnv();
   });
 
-  it('registers destiantion and retrieves it', async () => {
+  it('registers destination and retrieves it', async () => {
     // parseDestination({}as any)
     registerDestination(testDestination);
     const actual = await getDestination({

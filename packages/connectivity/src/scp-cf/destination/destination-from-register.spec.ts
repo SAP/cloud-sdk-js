@@ -56,7 +56,7 @@ describe('register-destination', () => {
     expect(actual).toEqual(testDestination);
   });
 
-  it('retunrs undefined if destination key is not found', async () => {
+  it('returns undefined if destination key is not found', async () => {
     const actual = searchRegisteredDestination({
       destinationName: 'Non-existing-destination'
     });

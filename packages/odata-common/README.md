@@ -3,9 +3,11 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
-# @sap-cloud-sdk/odata-common/internal
+# @sap-cloud-sdk/odata-common
 
-This package contains common functions of OData client.
+This package contains common functionality for the SAP Cloud SDK OData clients.
+It should not be used directly.
+Use the `@sap-cloud-sdk/odata-v2` and `@sap-cloud-sdk/odata-v4` packages instead.
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->

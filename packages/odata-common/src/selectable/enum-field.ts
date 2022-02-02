@@ -12,7 +12,6 @@ import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
  * @typeparam EnumT - Enum type that contains all valid enum entries for this field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
- * @internal
  */
 export class EnumField<
   EntityT extends EntityBase,

@@ -22,19 +22,19 @@ export enum IsolationStrategy {
 
 export interface DestinationCacheType {
   retrieveDestinationFromCache: (
-    decodedJwt: Record<string, any>,
-    name: string,
-    isolation: IsolationStrategy
+      decodedJwt: Record<string, any>,
+      name: string,
+      isolation: IsolationStrategy
   ) => Destination | undefined;
   cacheRetrievedDestination: (
-    decodedJwt: Record<string, any>,
-    destination: Destination,
-    isolation: IsolationStrategy
+      decodedJwt: Record<string, any>,
+      destination: Destination,
+      isolation: IsolationStrategy
   ) => void;
   cacheRetrievedDestinations: (
-    decodedJwt: Record<string, any>,
-    retrievedDestinations: DestinationsByType,
-    isolation: IsolationStrategy
+      decodedJwt: Record<string, any>,
+      retrievedDestinations: DestinationsByType,
+      isolation: IsolationStrategy
   ) => void;
   clear: () => void;
   getCacheInstance: () => Cache<Destination>;

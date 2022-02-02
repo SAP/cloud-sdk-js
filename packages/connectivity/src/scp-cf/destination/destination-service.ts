@@ -4,7 +4,7 @@ import {
   propertyExists
 } from '@sap-cloud-sdk/util';
 import CircuitBreaker from 'opossum';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   circuitBreakerDefaultOptions,
@@ -30,9 +30,9 @@ type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
   AxiosResponse<ResponseType>
 >;
 
-type DestionsServiceOptions = ResilienceOptions &
+type DestinationsServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'useCache'>;
-type DestionServiceOptions = ResilienceOptions &
+type DestinationServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'destinationName'>;
 
 let circuitBreaker: DestinationCircuitBreaker<
@@ -50,7 +50,7 @@ let circuitBreaker: DestinationCircuitBreaker<
 export function fetchInstanceDestinations(
   destinationServiceUri: string,
   jwt: string,
-  options?: DestionsServiceOptions
+  options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
     destinationServiceUri,
@@ -71,7 +71,7 @@ export function fetchInstanceDestinations(
 export function fetchSubaccountDestinations(
   destinationServiceUri: string,
   jwt: string,
-  options?: DestionsServiceOptions
+  options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
     destinationServiceUri,
@@ -85,7 +85,7 @@ async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
   type: DestinationType,
-  options?: DestionsServiceOptions
+  options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
   const targetUri = `${destinationServiceUri.replace(
     /\/$/,
@@ -155,7 +155,7 @@ export interface AuthAndExchangeTokens {
 export async function fetchDestination(
   destinationServiceUri: string,
   token: string | AuthAndExchangeTokens,
-  options: DestionServiceOptions
+  options: DestinationServiceOptions
 ): Promise<Destination> {
   return fetchDestinationByTokens(
     destinationServiceUri,
@@ -167,7 +167,7 @@ export async function fetchDestination(
 async function fetchDestinationByTokens(
   destinationServiceUri: string,
   tokens: AuthAndExchangeTokens,
-  options: DestionServiceOptions
+  options: DestinationServiceOptions
 ): Promise<Destination> {
   const targetUri = `${destinationServiceUri.replace(
     /\/$/,

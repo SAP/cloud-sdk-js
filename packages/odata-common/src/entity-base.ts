@@ -23,7 +23,6 @@ export interface Constructable<EntityT extends EntityBase> {
 }
 
 /**
- * @internal
  * Entity builder type with check for EntityT.
  */
 export type EntityBuilderType<
@@ -340,7 +339,9 @@ export function isExpandedProperty(
 }
 
 /**
- * @internal
+ * Create an entity builder for an entity API.
+ * @param entityApi - The entity API to build entities for.
+ * @returns An entity builder instance for the given entity API.
  */
 export function entityBuilder<
   EntityT extends EntityBase,

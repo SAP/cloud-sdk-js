@@ -25,7 +25,6 @@ export function toFilterableList<
  * Represents a one to many relation for OData v4 entities.
  * For OData v2 entities the [[Link]] is used to represent one to many relation.
  * See [[Link]] for more information.
- * @internal
  */
 export class OneToManyLink<
   EntityT extends EntityBase,

@@ -42,12 +42,15 @@ export { uriConverter } from './uri-conversion';
 export { all, any } from './filter';
 
 export {
-  CustomDeSerializers,
   defaultDeSerializers,
   edmToTs,
   entityDeserializer,
   mergeDefaultDeSerializersWith
 } from './de-serializers';
 
-export type { DefaultDeSerializers, DeSerializers } from './de-serializers';
+export type {
+  CustomDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers
+} from './de-serializers';
 export * from './common';

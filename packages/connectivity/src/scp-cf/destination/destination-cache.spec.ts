@@ -10,7 +10,7 @@ import {
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   connectivityProxyConfigMock,
-  mockServiceBindings
+  mockServiceBindings, onlyIssuerXsuaaUrl, TestTenants
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   mockJwtBearerToken,
@@ -31,6 +31,7 @@ import {
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
+import { IsolationStrategy } from '../cache';
 import { destinationServiceCache } from './destination-service-cache';
 import { getDestination } from './destination-accessor';
 import {
@@ -38,11 +39,7 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import {
-  destinationCache,
-  getDestinationCacheKey,
-  IsolationStrategy
-} from './destination-cache';
+import { destinationCache, getDestinationCacheKey } from './destination-cache';
 import {
   AuthenticationType,
   Destination,
@@ -50,6 +47,7 @@ import {
 } from './destination-service-types';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { parseDestination } from './destination';
+import {signedJwt} from "../../../../../test-resources/test/test-util";
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',
@@ -326,6 +324,22 @@ describe('destination cache', () => {
       expect(actual).toEqual(destinationOne);
     });
 
+    it('uses cache with isolation strategy Tenant and iss ', async () => {
+      destinationCache
+          .getCacheInstance()
+          .set(
+              `${TestTenants.SUBSCRIBER_ONLY_ISS}::${destinationOne.name}`,
+              destinationOne
+          );
+
+      const actual = await getDestination({
+        destinationName: destName,
+        iss: onlyIssuerXsuaaUrl,
+        useCache: true
+      });
+      expect(actual).toEqual(destinationOne);
+    });
+
     it('uses cache with isolation strategy TenantUser if JWT is provided', async () => {
       destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),
@@ -370,15 +384,27 @@ describe('destination cache', () => {
       expect(actual).toEqual(destinationOne);
     });
 
+    it('ignores cache if isolation requires tenant but tenant info is not provided', async () => {
+      const logger = createLogger('destination-cache');
+      const warn = jest.spyOn(logger, 'warn');
+
+      await expect(
+          getDestination({
+            destinationName: destName,
+            isolationStrategy: IsolationStrategy.Tenant,
+            jwt: signedJwt({ user_id: 'onlyUserInJwt' }),
+            iasToXsuaaTokenExchange: false
+          })
+      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
+      expect(warn).toBeCalledWith(
+          'Cannot get cache key. Isolation strategy Tenant is used, but tenant id is undefined.'
+      );
+    });
+
     it('ignores cache if isolation requires user JWT but the JWT is not provided', async () => {
       const logger = createLogger('destination-cache');
       const warn = jest.spyOn(logger, 'warn');
 
-      destinationCache.cacheRetrievedDestination(
-        decodeJwt(subscriberUserJwt),
-        destinationOne,
-        IsolationStrategy.Tenant_User
-      );
       await expect(
         getDestination({
           destinationName: destName,

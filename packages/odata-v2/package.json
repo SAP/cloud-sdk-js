@@ -17,11 +17,9 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
     "./internal": {
-      "import": "./dist/internal.mjs",
       "require": "./dist/internal.js"
     }
   },

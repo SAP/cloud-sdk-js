@@ -159,9 +159,7 @@ export const destinationCache = DestinationCache(
 export function getDefaultIsolationStrategy(
   jwt: JwtPayload | undefined
 ): IsolationStrategy {
-  if (jwt && userId(jwt)) {
-    return IsolationStrategy.Tenant_User;
-  }
-
-  return IsolationStrategy.Tenant;
+  return jwt && userId(jwt)
+      ? IsolationStrategy.Tenant_User
+      : IsolationStrategy.Tenant;
 }

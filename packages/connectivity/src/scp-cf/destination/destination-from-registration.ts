@@ -7,7 +7,7 @@ import { Destination, DestinationAuthToken } from './destination-service-types';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
   DestinationCache,
-  getIsolationStrategy,
+  getDefaultIsolationStrategy,
   IsolationStrategy
 } from './destination-cache';
 import {
@@ -101,7 +101,7 @@ function isolationStrategy(
   }
   const decoded = options?.jwt ? decodeJwt(options.jwt) : undefined;
 
-  return getIsolationStrategy(decoded);
+  return getDefaultIsolationStrategy(decoded);
 }
 
 /**

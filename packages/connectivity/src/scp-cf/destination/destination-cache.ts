@@ -22,19 +22,19 @@ export enum IsolationStrategy {
 
 export interface DestinationCacheType {
   retrieveDestinationFromCache: (
-      decodedJwt: Record<string, any>,
-      name: string,
-      isolation: IsolationStrategy
+    decodedJwt: Record<string, any>,
+    name: string,
+    isolation: IsolationStrategy
   ) => Destination | undefined;
   cacheRetrievedDestination: (
-      decodedJwt: Record<string, any>,
-      destination: Destination,
-      isolation: IsolationStrategy
+    decodedJwt: Record<string, any>,
+    destination: Destination,
+    isolation: IsolationStrategy
   ) => void;
   cacheRetrievedDestinations: (
-      decodedJwt: Record<string, any>,
-      retrievedDestinations: DestinationsByType,
-      isolation: IsolationStrategy
+    decodedJwt: Record<string, any>,
+    retrievedDestinations: DestinationsByType,
+    isolation: IsolationStrategy
   ) => void;
   clear: () => void;
   getCacheInstance: () => Cache<Destination>;
@@ -141,7 +141,7 @@ export const destinationCache = DestinationCache(
   new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 })
 );
 
-export function getIsolationStrategy(
+export function getDefaultIsolationStrategy(
   jwt: JwtPayload | undefined
 ): IsolationStrategy {
   if (jwt && userId(jwt)) {

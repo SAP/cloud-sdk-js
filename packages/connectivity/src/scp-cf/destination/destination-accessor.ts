@@ -7,7 +7,7 @@ import {
   DestinationFetchOptions,
   isDestinationFetchOptions
 } from './destination-accessor-types';
-import { searchRegisteredDestination } from './destination-from-register';
+import { searchRegisteredDestination } from './destination-from-registration';
 
 /**
  * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination

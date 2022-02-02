@@ -7,7 +7,7 @@ import {
   DestinationWithName,
   registerDestination,
   registerDestinationCache
-} from './destination-from-register';
+} from './destination-from-registration';
 
 function mockEnvDestinations() {
   process.env['destinations'] = JSON.stringify([

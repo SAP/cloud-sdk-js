@@ -3,6 +3,7 @@ export * from './destination-accessor-types';
 export * from './destination-cache';
 export * from './destination-from-env';
 export * from './destination-from-service';
+export * from './destination-from-registration';
 export * from './destination-from-vcap';
 export * from './destination-selection-strategies';
 export * from './destination-service-cache';

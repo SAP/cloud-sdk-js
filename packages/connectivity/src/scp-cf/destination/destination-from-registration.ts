@@ -30,7 +30,7 @@ type RegisterDestinationOptions = Pick<
 >;
 
 /**
- * Set a given destination in the `destinations` environment variable.
+ * Registers a destination in a cache for later usage.
  *
  * Throws an error if a destination with the same name as the given test destination already exists.
  * @param destination - A destination to add to the `destinations` cache

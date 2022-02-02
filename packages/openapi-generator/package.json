@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/openapi-generator",
-  "version": "1.53.1",
+  "version": "1.54.0",
   "description": "SAP Cloud SDK for JavaScript OpenAPI client generator",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -35,8 +35,8 @@
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.0.2",
-    "@sap-cloud-sdk/generator-common": "^1.53.1",
-    "@sap-cloud-sdk/util": "^1.53.1",
+    "@sap-cloud-sdk/generator-common": "^1.54.0",
+    "@sap-cloud-sdk/util": "^1.54.0",
     "glob": "^7.1.6",
     "js-yaml": "^4.0.0",
     "openapi-types": "^10.0.0",

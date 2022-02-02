@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- [core] Proxy type `PrivateLink` is now supported
+-
 
 ## Improvements
 
@@ -28,6 +28,16 @@
 
 -
 
+
+# 1.54.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.54.0<br>
+Blog: TBD<br>
+
+## New Functionality
+
+- [core] Proxy type `PrivateLink` is now supported
 
 # 1.53.1
 

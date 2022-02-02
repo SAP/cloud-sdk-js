@@ -32,10 +32,12 @@
     "prepare": "yarn compile",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck "
+    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/odata-v2,@sap-cloud-sdk/odata-v4'"
   },
   "dependencies": {
     "@sap-cloud-sdk/generator-common": "^1.50.0",
+    "@sap-cloud-sdk/odata-v2": "^1.50.0",
+    "@sap-cloud-sdk/odata-v4": "^1.50.0",
     "@sap-cloud-sdk/util": "^1.50.0",
     "@sap/edm-converters": "~1.0.21",
     "@types/fs-extra": "^9.0.1",

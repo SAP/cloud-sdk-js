@@ -42,7 +42,7 @@ export function registerDestination(
 ): void {
   if (!destination.name || !destination.url) {
     throw Error(
-      'The registerDestination function requires a destination name and url.'
+      'Registering destinations requires a destination name and url.'
     );
   }
 

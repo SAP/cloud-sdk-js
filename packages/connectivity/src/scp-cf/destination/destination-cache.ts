@@ -1,9 +1,10 @@
-import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache } from '../cache';
-import { tenantId } from '../tenant';
-import { userId } from '../user';
-import { Destination } from './destination-service-types';
-import { DestinationsByType } from './destination-accessor-types';
+import {createLogger, first} from '@sap-cloud-sdk/util';
+import {Cache} from '../cache';
+import {tenantId} from '../tenant';
+import {userId} from '../user';
+import {Destination} from './destination-service-types';
+import {DestinationsByType} from './destination-accessor-types';
+import {JwtPayload} from "../jsonwebtoken-type";
 
 const logger = createLogger({
   package: 'connectivity',
@@ -139,3 +140,13 @@ function cacheRetrievedDestination(
 export const destinationCache = DestinationCache(
   new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 })
 );
+
+export function getIsolationStrategy(
+    jwt: JwtPayload | undefined
+): IsolationStrategy {
+  if (jwt && userId(jwt)) {
+    return IsolationStrategy.Tenant_User;
+  }
+
+  return IsolationStrategy.Tenant;
+}

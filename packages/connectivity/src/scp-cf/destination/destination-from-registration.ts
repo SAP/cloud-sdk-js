@@ -1,12 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Cache, IsolationStrategy } from '../cache';
+import { Cache } from '../cache';
 import { decodeJwt } from '../jwt';
-import { userId } from '../user';
 import { getXsuaaServiceCredentials } from '../environment-accessor';
 import { parseSubdomain } from '../subdomain-replacer';
 import { Destination, DestinationAuthToken } from './destination-service-types';
 import { DestinationFetchOptions } from './destination-accessor-types';
-import { DestinationCache } from './destination-cache';
+import {DestinationCache, getIsolationStrategy, IsolationStrategy} from './destination-cache';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -96,8 +95,9 @@ function isolationStrategy(
   if (options?.isolationStrategy) {
     return options.isolationStrategy;
   }
-  const hasUserId = options?.jwt && userId(decodeJwt(options.jwt));
-  return hasUserId ? IsolationStrategy.Tenant_User : IsolationStrategy.Tenant;
+  const decoded = options?.jwt ? decodeJwt(options.jwt) : undefined;
+
+  return getIsolationStrategy(decoded);
 }
 
 /**

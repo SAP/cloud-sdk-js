@@ -8,7 +8,6 @@ import {
   subscriberUserJwt,
   unmockDestinationsEnv
 } from '../../../../../test-resources/test/test-util';
-import { IsolationStrategy } from '../cache';
 import {
   DestinationWithName,
   registerDestination,
@@ -16,6 +15,7 @@ import {
   searchRegisteredDestination
 } from './destination-from-registration';
 import { getDestination } from './destination-accessor';
+import { IsolationStrategy } from './destination-cache';
 
 const testDestination: DestinationWithName = {
   name: 'RegisteredDestination',

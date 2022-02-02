@@ -1,6 +1,10 @@
 import { PathLike } from 'fs';
 import { resolve, dirname } from 'path';
-import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  ErrorWithCause,
+  splitInChunks
+} from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
   Directory,
@@ -75,12 +79,44 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       directories,
       options.processesJsGeneration || defaultValueProcessesJsGeneration
     );
-    await chunks.reduce(
-      (all, chunk) => all.then(() => transpileDirectories(chunk)),
-      Promise.resolve()
-    );
+    try {
+      await chunks.reduce(
+        (all, chunk) => all.then(() => transpileDirectories(chunk)),
+        Promise.resolve()
+      );
+    } catch (err) {
+      if (err.message?.includes('error TS2307')) {
+        throw new ErrorWithCause(
+          getInstallODataErrorMessage(projectAndServices),
+          err
+        );
+      }
+      throw err;
+    }
   }
 }
+
+/**
+ * @internal
+ */
+export function getInstallODataErrorMessage(
+  projectAndServices: ProjectAndServices
+): string {
+  const hasV2 = projectAndServices.services.some(
+    service => service.oDataVersion === 'v2'
+  );
+  const hasV4 = projectAndServices.services.some(
+    service => service.oDataVersion === 'v4'
+  );
+
+  if (hasV2 && hasV4) {
+    return 'Did you forget to install "@sap-cloud-sdk/odata-v2" and "@sap-cloud-sdk/odata-v4"?';
+  }
+  return `Did you forget to install "@sap-cloud-sdk/odata-v${
+    hasV2 ? '2' : '4'
+  }"?`;
+}
+
 /* eslint-disable valid-jsdoc */
 
 /**

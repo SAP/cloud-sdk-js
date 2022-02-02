@@ -6,7 +6,7 @@ import {
   getGenericTypes,
   getGenericTypesWithDefault
 } from '../de-serializers-generic-types';
-
+/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

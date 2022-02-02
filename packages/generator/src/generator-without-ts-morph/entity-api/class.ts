@@ -5,7 +5,7 @@ import {
   navigationPropertyFieldsVariable
 } from './navigation-properties';
 import { getSchema } from './schema';
-
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

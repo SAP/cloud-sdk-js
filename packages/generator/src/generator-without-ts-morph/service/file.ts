@@ -2,7 +2,7 @@ import { codeBlock } from '@sap-cloud-sdk/util';
 import { Import, serializeImports } from '../../generator-common';
 import { VdmServiceMetadata } from '../../vdm-types';
 import { serviceBuilder, serviceClass } from './class';
-
+/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

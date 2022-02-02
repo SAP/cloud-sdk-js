@@ -21,7 +21,7 @@ import {
   VdmServiceMetadata
 } from '../vdm-types';
 
-// eslint-disable-next-line valid-jsdoc
+/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

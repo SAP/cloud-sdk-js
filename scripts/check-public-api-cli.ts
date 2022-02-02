@@ -18,7 +18,7 @@ async function checkApiPackages() {
     resolve(__dirname, '../packages/temporal-de-serializers')
   );
 }
-
+/* eslint-disable no-console */
 process.on('unhandledRejection', function (err) {
   console.error(err);
   process.exit(1);

@@ -20,6 +20,7 @@ const logger = createLogger({
   package: 'connectivity',
   messageContext: 'register-destination'
 });
+
 /**
  * @internal
  */

@@ -7,8 +7,8 @@ exports.MultipleSchemasService = exports.multipleSchemasService = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const MultiSchemaTestEntityApi_1 = require('./MultiSchemaTestEntityApi');
-const BatchRequest_1 = require('./BatchRequest');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+const BatchRequest_1 = require('./BatchRequest');
 function multipleSchemasService(
   deSerializers = odata_v2_1.defaultDeSerializers
 ) {

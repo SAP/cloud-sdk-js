@@ -20,6 +20,9 @@ export enum IsolationStrategy {
   Tenant_User = 'TenantUser'
 }
 
+/**
+ * @internal
+ */
 export interface DestinationCacheType {
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
@@ -40,6 +43,12 @@ export interface DestinationCacheType {
   getCacheInstance: () => Cache<Destination>;
 }
 
+/**
+ * DestinationCache constructor.
+ * @param cache - Cache object which is used in DestiantionCache
+ * @returns A destination cache object.
+ * @internal
+ */
 export const DestinationCache = (
   cache: Cache<Destination>
 ): DestinationCacheType => ({
@@ -141,6 +150,12 @@ export const destinationCache = DestinationCache(
   new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 })
 );
 
+/**
+ * Determin the default Isolation strategy if not given as option.
+ * @param jwt - JWT to determine the default isolation strategy
+ * @returns The isolation strategy based on the JWT. If no JWT is given it defaults to Tenant isolation
+ * @internal
+ */
 export function getDefaultIsolationStrategy(
   jwt: JwtPayload | undefined
 ): IsolationStrategy {

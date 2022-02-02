@@ -56,6 +56,9 @@ export function registerDestination(
   );
 }
 
+/**
+ * @internal
+ */
 export type DestinationWithName = Destination & { name: string };
 
 /**

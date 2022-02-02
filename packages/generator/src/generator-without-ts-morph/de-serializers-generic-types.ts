@@ -1,11 +1,17 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
-
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function getGenericTypesWithDefault(oDataVersion: ODataVersion): string {
   return getGenericTypeAndDefault(oDataVersion)
     .map(typeAndDefault => `${typeAndDefault[0]} = ${typeAndDefault[1]}`)
     .join(',\n');
 }
 
+/**
+ * @internal
+ */
 export function getGenericTypes(oDataVersion: ODataVersion): string {
   return getGenericTypeAndDefault(oDataVersion)
     .map(typeAndDefault => typeAndDefault[0])

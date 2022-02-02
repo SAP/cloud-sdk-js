@@ -8,6 +8,10 @@ import {
 } from '../de-serializers-generic-types';
 import { hasEntities } from '../../generator-utils';
 
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function serviceBuilder(
   serviceName: string,
   oDataVersion: ODataVersion
@@ -26,6 +30,9 @@ export function serviceBuilder(
   `;
 }
 
+/**
+ * @internal
+ */
 export function serviceClass(service: VdmServiceMetadata): string {
   const serviceHasEntities = hasEntities(service);
   return codeBlock`export class ${

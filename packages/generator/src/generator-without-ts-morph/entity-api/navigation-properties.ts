@@ -7,7 +7,10 @@ import {
   VdmNavigationProperty
 } from '../../vdm-types';
 import { matchEntity } from './match-entity';
-
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function navigationPropertyFieldsVariable(
   entity: VdmEntity,
   service: VdmServiceMetadata
@@ -17,6 +20,9 @@ export function navigationPropertyFieldsVariable(
   };`;
 }
 
+/**
+ * @internal
+ */
 export function addNavigationPropertyFieldsFunction(
   entity: VdmEntity,
   service: VdmServiceMetadata

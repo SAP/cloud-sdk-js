@@ -3,7 +3,10 @@ import { Import, serializeImports } from '../../generator-common';
 import { hasEntities } from '../../generator-utils';
 import { VdmServiceMetadata } from '../../vdm-types';
 import { serviceBuilder, serviceClass } from './class';
-
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function serviceFile(service: VdmServiceMetadata): string {
   return codeBlock`${serializeImports(imports(service))}
   
@@ -34,6 +37,9 @@ function getImports(
   ];
 }
 
+/**
+ * @internal
+ */
 export function imports(service: VdmServiceMetadata): Import[] {
   const functionImports = getImports(
     service.functionImports,

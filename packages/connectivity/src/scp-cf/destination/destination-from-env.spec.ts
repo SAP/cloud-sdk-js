@@ -1,6 +1,5 @@
 import * as assert from 'assert';
-import { createLogger, encodeBase64 } from '@sap-cloud-sdk/util';
-import { JwtHeader, JwtPayload } from 'jsonwebtoken';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   mockDestinationsEnv,
   unmockDestinationsEnv
@@ -8,10 +7,10 @@ import {
 import { Destination } from './destination-service-types';
 import {
   getDestinationFromEnvByName,
-  getDestinationsFromEnv,
-  registerDestination
+  getDestinationsFromEnv
 } from './destination-from-env';
-import { getDestination } from './destination-accessor';
+import { getDestination, useOrFetchDestination } from './destination-accessor';
+import { sanitizeDestination } from './destination';
 
 const environmentDestination = {
   name: 'FINAL-DESTINATION',
@@ -34,12 +33,6 @@ const destinationFromEnv: Destination = {
   password: 'mypw',
   username: 'myuser',
   url: 'https://mys4hana.com'
-};
-
-const destinationWithForwarding: Destination = {
-  forwardAuthToken: true,
-  url: 'https://mys4hana.com',
-  name: 'FORWARD-TOKEN-DESTINATION'
 };
 
 const environmentDestinationConfig = {
@@ -65,39 +58,8 @@ describe('env-destination-accessor', () => {
     jest.resetAllMocks();
   });
 
-  describe('getDestination', () => {
-    it('adds the auth token if forwardAuthToken is enabled', async () => {
-      mockDestinationsEnv(destinationWithForwarding);
-      const jwtPayload: JwtPayload = { exp: 1234 };
-      const jwtHeader: JwtHeader = { alg: 'HS256' };
-      const fullToken = `${encodeBase64(
-        JSON.stringify(jwtHeader)
-      )}.${encodeBase64(JSON.stringify(jwtPayload))}.SomeHash`;
-      const actual = await getDestination({
-        destinationName: 'FORWARD-TOKEN-DESTINATION',
-        jwt: fullToken
-      });
-      expect(actual?.authTokens![0].expiresIn).toEqual('1234');
-      expect(actual?.authTokens![0].value).toEqual(fullToken);
-      expect(actual?.authTokens![0].http_header.value).toEqual(
-        `Bearer ${fullToken}`
-      );
-    });
-
-    it('warns if forwardAuthToken is enabled but no token provided.', async () => {
-      mockDestinationsEnv(destinationWithForwarding);
-
-      const logger = createLogger('env-destination-accessor');
-      const warnSpy = jest.spyOn(logger, 'warn');
-      await getDestination({ destinationName: 'FORWARD-TOKEN-DESTINATION' });
-      expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringMatching(
-          /Option 'forwardAuthToken' was set on destination but no token was provided to forward./
-        )
-      );
-    });
-
-    it('warns if destination are read from enviorment and forwardAuthToken is not enabled.', async () => {
+  describe('getDestinationsFromEnv()', () => {
+    it('infos if destination are read from enviorment and forwardAuthToken is not enabled.', async () => {
       mockDestinationsEnv(destinationFromEnv);
 
       const logger = createLogger('env-destination-accessor');
@@ -109,9 +71,7 @@ describe('env-destination-accessor', () => {
         )
       );
     });
-  });
 
-  describe('getDestinationsFromEnv()', () => {
     it('should return all destinations from environment variables', () => {
       mockDestinationsEnv(environmentDestination, environmentDestinationConfig);
 
@@ -205,58 +165,16 @@ describe('env-destination-accessor', () => {
         '"Error in parsing the destinations from the environment variable."'
       );
     });
-  });
-});
 
-describe('registerDestination', () => {
-  const mockDestination = {
-    name: 'MockedDestination',
-    url: 'https://example.com'
-  };
+    it('reads from env when only destinationName specified', async () => {
+      mockDestinationsEnv(environmentDestination);
 
-  const mockDestinationFromEnv: Destination = {
-    name: 'MockedDestination',
-    url: 'https://example.com',
-    authTokens: [],
-    certificates: [],
-    authentication: 'NoAuthentication',
-    isTrustingAllCertificates: false,
-    originalProperties: {
-      name: 'MockedDestination',
-      url: 'https://example.com',
-      authTokens: [],
-      certificates: [],
-      authentication: 'NoAuthentication',
-      isTrustingAllCertificates: false
-    }
-  };
-
-  afterEach(() => {
-    unmockDestinationsEnv();
-    jest.resetAllMocks();
-  });
-
-  it('should set the destination in the environment variables', () => {
-    mockDestinationsEnv(environmentDestination);
-
-    registerDestination(mockDestination);
-    const actual = getDestinationsFromEnv();
-
-    const expected = [destinationFromEnv, mockDestination];
-    expected.forEach((e, index) => {
-      expect(actual[index]).toMatchObject(e);
+      const expected = sanitizeDestination(environmentDestination);
+      const actual = await useOrFetchDestination({
+        destinationName: 'FINAL-DESTINATION',
+        cacheVerificationKeys: false
+      });
+      expect(actual).toMatchObject(expected);
     });
-    expect(
-      getDestination({ destinationName: 'MockedDestination' })
-    ).resolves.toMatchObject(mockDestinationFromEnv);
-  });
-
-  it('should throw an exception if a name conflict occurs', () => {
-    registerDestination(mockDestination);
-    expect(() => {
-      registerDestination(mockDestination);
-    }).toThrowErrorMatchingInlineSnapshot(
-      '"Parsing destinations failed, destination with name \\"MockedDestination\\" already exists in the \\"destinations\\" environment variables."'
-    );
   });
 });

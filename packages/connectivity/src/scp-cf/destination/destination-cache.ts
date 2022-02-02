@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache } from '../cache';
+import { Cache, IsolationStrategy } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { Destination } from './destination-service-types';
@@ -20,6 +20,29 @@ export enum IsolationStrategy {
 }
 
 const DestinationCache = (cache: Cache<Destination>) => ({
+export interface DestinationCacheType {
+  retrieveDestinationFromCache: (
+    decodedJwt: Record<string, any>,
+    name: string,
+    isolation: IsolationStrategy
+  ) => Destination | undefined;
+  cacheRetrievedDestination: (
+    decodedJwt: Record<string, any>,
+    destination: Destination,
+    isolation: IsolationStrategy
+  ) => void;
+  cacheRetrievedDestinations: (
+    decodedJwt: Record<string, any>,
+    retrievedDestinations: DestinationsByType,
+    isolation: IsolationStrategy
+  ) => void;
+  clear: () => void;
+  getCacheInstance: () => Cache<Destination>;
+}
+
+export const DestinationCache = (
+  cache: Cache<Destination>
+): DestinationCacheType => ({
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,
@@ -45,7 +68,7 @@ const DestinationCache = (cache: Cache<Destination>) => ({
       cacheRetrievedDestination(decodedJwt, dest, isolation, cache)
     );
   },
-  clear: () => {
+  clear: (): void => {
     cache.clear();
   },
   getCacheInstance: () => cache

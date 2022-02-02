@@ -13,8 +13,8 @@ const AirlinesApi_1 = require('./AirlinesApi');
 const AirportsApi_1 = require('./AirportsApi');
 const function_imports_1 = require('./function-imports');
 const action_imports_1 = require('./action-imports');
-const BatchRequest_1 = require('./BatchRequest');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const BatchRequest_1 = require('./BatchRequest');
 function microsoftODataServiceSampleTrippinInMemoryModelsService(
   deSerializers = odata_v4_1.defaultDeSerializers
 ) {

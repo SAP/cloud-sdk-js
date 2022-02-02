@@ -4,7 +4,7 @@ import {
   propertyExists
 } from '@sap-cloud-sdk/util';
 import CircuitBreaker from 'opossum';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   circuitBreakerDefaultOptions,

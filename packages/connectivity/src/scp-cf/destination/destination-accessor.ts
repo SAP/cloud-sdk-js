@@ -7,6 +7,7 @@ import {
   DestinationFetchOptions,
   isDestinationFetchOptions
 } from './destination-accessor-types';
+import { searchRegisteredDestination } from './destination-from-registration';
 
 /**
  * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination
@@ -44,6 +45,7 @@ export async function getDestination(
 ): Promise<Destination | null> {
   return (
     searchEnvVariablesForDestination(options) ||
+    searchRegisteredDestination(options) ||
     searchServiceBindingForDestination(options.destinationName) ||
     getDestinationFromDestinationService(options)
   );

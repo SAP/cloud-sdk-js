@@ -20,7 +20,6 @@ export enum IsolationStrategy {
   Tenant_User = 'TenantUser'
 }
 
-// eslint-disable-next-line
 /**
  * @internal
  */
@@ -44,8 +43,10 @@ export interface DestinationCacheType {
   getCacheInstance: () => Cache<Destination>;
 }
 
-// eslint-disable-next-line
 /**
+ * DestinationCache constructor.
+ * @param cache - Cache object which is used in DestiantionCache
+ * @returns A destination cache object.
  * @internal
  */
 export const DestinationCache = (
@@ -142,7 +143,6 @@ function cacheRetrievedDestination(
   cache.set(key, destination, expirationTime);
 }
 
-// eslint-disable-next-line
 /**
  * @internal
  */
@@ -150,8 +150,10 @@ export const destinationCache = DestinationCache(
   new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 })
 );
 
-// eslint-disable-next-line
 /**
+ * Determin the default Isolation strategy if not given as option.
+ * @param jwt - JWT to determine the default isolation strategy
+ * @returns The isolation strategy based on the JWT. If no JWT is given it defaults to Tenant isolation
  * @internal
  */
 export function getDefaultIsolationStrategy(

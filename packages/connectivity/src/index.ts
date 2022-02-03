@@ -20,6 +20,7 @@ export {
   Destination,
   DestinationFetchOptions,
   DestinationAccessorOptions,
+  DestinationSelectionStrategies,
   JwtPayload,
   ProxyConfiguration,
   ProxyConfigurationHeaders,

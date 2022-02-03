@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
-- [core] Switch the default isolation strategy from `IsolationStrategy.Tenant` to `IsolationStrategy.Tenant_User`, when setting `useCache` to true for destination lookup functions like `getDestination`.
+-
 
 ## New Functionality
 
@@ -23,6 +23,21 @@
 ## Improvements
 
 -
+
+## Fixed Issues
+
+-
+
+
+# 2.0.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/2.0.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [core] Switch the default isolation strategy from `IsolationStrategy.Tenant` to `IsolationStrategy.Tenant_User`, when setting `useCache` to true for destination lookup functions like `getDestination`.
 
 ## Fixed Issues
 

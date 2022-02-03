@@ -184,7 +184,6 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       // xsuaaBindingMock.credentials)
       destinationBindingClientSecretMock.credentials
     );
-    const decoded = decodeJwtComplete(providerUserToken);
 
     return getDestination({
       destinationName: 'FINAL-DESTINATION-AUTH-FLOW',

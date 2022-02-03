@@ -25,3 +25,5 @@ jobs:
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           yarn lerna publish from-package --force-publish -y
+        env:
+          NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

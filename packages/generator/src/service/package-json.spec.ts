@@ -102,4 +102,3 @@ xdescribe('package-json', () => {
           `);
   });
 });
-

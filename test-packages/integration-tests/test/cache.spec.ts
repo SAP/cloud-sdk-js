@@ -10,10 +10,7 @@ import {
   destinationServiceCache,
   clientCredentialsTokenCache
 } from '@sap-cloud-sdk/connectivity/internal';
-import {
-  decodeJwtComplete,
-  wrapJwtInHeader
-} from '@sap-cloud-sdk/connectivity/dist/scp-cf';
+import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf';
 import {
   mockClientCredentialsGrantCall,
   mockUserTokenGrantCall
@@ -184,7 +181,6 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       // xsuaaBindingMock.credentials)
       destinationBindingClientSecretMock.credentials
     );
-    const decoded = decodeJwtComplete(providerUserToken);
 
     return getDestination({
       destinationName: 'FINAL-DESTINATION-AUTH-FLOW',

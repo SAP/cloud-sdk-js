@@ -3,8 +3,8 @@ import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
 
 const custom = {
   'Edm.Binary': {
-    deserialize: (val: string): number => 1,
-    serialize: (val: number): string => '1',
+    deserialize: (): number => 1,
+    serialize: (): string => '1',
     serializeToUri: () => ''
   }
 };

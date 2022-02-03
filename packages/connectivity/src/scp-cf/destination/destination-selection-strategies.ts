@@ -64,7 +64,6 @@ export function subscriberFirst(
 
 /**
  * Selector of destination selection strategies. See [[alwaysProvider]], [[alwaysSubscriber]] and [[subscriberFirst]] for more information available selection strategies.
- * @internal
  */
 export const DestinationSelectionStrategies = {
   alwaysProvider,

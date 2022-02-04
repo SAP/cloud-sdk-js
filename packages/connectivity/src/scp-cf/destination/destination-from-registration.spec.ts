@@ -39,15 +39,14 @@ describe('register-destination', () => {
   });
 
   it('registers destination and retrieves it', async () => {
-    // parseDestination({}as any)
     registerDestination(testDestination);
     const actual = await getDestination({
       destinationName: testDestination.name
     });
     expect(actual).toEqual(testDestination);
   });
-  it('registers destiantion and retrieves it with JWT', async () => {
-    // parseDestination({}as any)
+
+  it('registers destination and retrieves it with JWT', async () => {
     registerDestination(testDestination, { jwt: providerServiceToken });
     const actual = await getDestination({
       destinationName: testDestination.name,
@@ -168,5 +167,31 @@ describe('register-destination', () => {
         /Successfully retrieved destination '\w+' from registered destinations./
       )
     );
+  });
+});
+
+describe('register-destination without xsuaa binding', () => {
+  beforeAll(() => {
+    mockServiceBindings(undefined, false);
+  });
+
+  afterEach(() => {
+    registerDestinationCache.clear();
+    unmockDestinationsEnv();
+  });
+
+  it('registers destination and retrieves it with JWT', async () => {
+    registerDestination(testDestination, { jwt: providerServiceToken });
+    const actual = await getDestination({
+      destinationName: testDestination.name,
+      jwt: providerServiceToken
+    });
+    expect(actual).toEqual(testDestination);
+  });
+
+  it('throw an error when no jwt is provided', async () => {
+    expect(() =>
+      registerDestination(testDestination)
+    ).toThrowErrorMatchingSnapshot();
   });
 });

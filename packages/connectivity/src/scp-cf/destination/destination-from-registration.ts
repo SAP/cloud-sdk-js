@@ -117,11 +117,15 @@ function isolationStrategy(
 function decodedJwtOrZid(
   options?: RegisterDestinationOptions
 ): Record<string, any> {
+  if (options?.jwt) {
+    return decodeJwt(options.jwt);
+  }
+
   const providerTenantId = parseSubdomain(
     getXsuaaServiceCredentials(options?.jwt).url
   );
 
-  return options?.jwt ? decodeJwt(options.jwt) : { zid: providerTenantId };
+  return { zid: providerTenantId };
 }
 
 function destinationAuthToken(

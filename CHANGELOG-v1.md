@@ -1,5 +1,5 @@
+[//]: # "Please don't delete the following comments and keep them in the beginning of this document. Also, keep the first line empty."
 
-[//]: # (Please don't delete the following comments and keep them in the beginning of this document. Also, keep the first line empty.)
 [//]: # (Example known issue: Making OData requests using a proxy defined in the environment variables is not possible \(see improvements\).)
 [//]: # (Example compatibility note: [core] Rename `entityConstructor`, `linkedEntity`, `fieldName` [properties]\(https://help.sap.com/doc/7f30fcdb8c424be9b1d4ecbfd7dd972f/1.0/en-US/classes/_sap_cloud_sdk_core.entity.html\) in generated entities to `_entityConstructor`, `_linkedEntity`, `_fieldName`.)
 [//]: # (Example new functionality: [generator] Support the generation of clients for services using nested complex types.)
@@ -28,7 +28,6 @@
 
 -
 
-
 # 1.54.0
 
 Release Date: TBD<br>
@@ -51,7 +50,7 @@ Blog: TBD<br>
 
 ## Fixed Issues
 
-- [core] Fix `OAuth2Password` auth type for the missing token in the header. 
+- [core] Fix `OAuth2Password` auth type for the missing token in the header.
 
 # 1.53.0
 
@@ -160,7 +159,7 @@ Blog: TBD<br>
 
 ## Fixed Issues
 
-- [core] Fix failing destination retrieval for `OnPremise` proxy type and basic authentication. 
+- [core] Fix failing destination retrieval for `OnPremise` proxy type and basic authentication.
 - [openapi-generator] Fix generation of options per service configuration files to always use POSIX-style file path separators independent of operating system.
 
 # 1.48.0
@@ -171,9 +170,9 @@ Blog: TBD<br>
 
 ## Compatibility Notes
 
-- [odata-generator] Consider the `Nullable` property on action and function import parameters and return types correctly. 
-For parameters this is uncritical because the type is extended from `T` to `T | null` if the property is nullable. 
-For return types the same extension could lead compile errors after client regeneration because the is broadened including `null`. 
+- [odata-generator] Consider the `Nullable` property on action and function import parameters and return types correctly.
+  For parameters this is uncritical because the type is extended from `T` to `T | null` if the property is nullable.
+  For return types the same extension could lead compile errors after client regeneration because the is broadened including `null`.
 
 ## New Functionality
 
@@ -227,7 +226,7 @@ Blog: TBD<br>
 - [eslint-config] Remove `brace-style` rule for compatibility with Prettier 2.3.
 - [openapi-generator] Change the basis for directory, package, and service names, when generating clients. If not specified otherwise, the default is based on the directory name instead of the service name.
 - [core] Deprecate JWT related interfaces in favor of the interfaces provided by the `jsonwebtoken` library.
-The following interfaces were deprecated:
+  The following interfaces were deprecated:
   - `JWTHeader` (use `JwtHeader` instead, the property `typ` is now optional)
   - `JWTPayload` (use `JwtPayload` instead)
   - `CompleteDecodedJWT` (use `Jwt` instead)
@@ -244,7 +243,7 @@ The following interfaces were deprecated:
 
 - [core] Support setting custom `SAP-Connectivity-Authentication` headers for Principal Propagation.
 - [openapi-generator] Improve the error message for invalid or unsupported path patterns.
-- [openapi-generator] Improve the error message when detecting invalid Swagger 2.0 specification files. 
+- [openapi-generator] Improve the error message when detecting invalid Swagger 2.0 specification files.
 - [core] Improve types in convenience functions for JWT access. See "Compatibility Notes" for details.
 
 ## Fixed Issues
@@ -296,7 +295,7 @@ Blog: TBD<br>
 
 ## Compatibility Notes
 
-- [core] Use `HEAD` instead of `GET` when fetching CSRF tokens. Change the URL for CSRF token fetching in OData requests from the service URL to the request URL. 
+- [core] Use `HEAD` instead of `GET` when fetching CSRF tokens. Change the URL for CSRF token fetching in OData requests from the service URL to the request URL.
 - [test-util] Use `HEAD` for `mockHeaderRequest()` to align with the core behavior.
 - [core] Remove experimental `Exclude` type, which was accidentally exposed as non-experimental.
 - [openapi-generator] Rename the CLI generator command from `generate-openapi-client` to `openapi-generator`.
@@ -313,8 +312,8 @@ Blog: TBD<br>
 
 - [odata] Allow using filter functions with boolean return types directly in the `filter()` of OData request builders without `equals(true)`.
 - [odata-generator] Disable the `execute` function, when an entity type is shared by multiple entity sets and is used as the return type of function/action imports.
-- [openapi-generator] Introduce `verbose` option to enable verbose logging. 
-- [openapi-generator] Introduce `overwrite` option to allow overwriting of existing files. 
+- [openapi-generator] Introduce `verbose` option to enable verbose logging.
+- [openapi-generator] Introduce `overwrite` option to allow overwriting of existing files.
 - [openapi-generator] Introduce `include` option to allow copying files to the generated clients.
 
 # 1.41.0
@@ -326,7 +325,7 @@ Blog: TBD<br>
 ## Compatibility Notes
 
 - [core] Deprecated `userApprovedServiceToken`, `refreshTokenGrant` and `userTokenGrant`.
-- [openapi-generator] Replace the underlying Java-based OpenAPI generator with a custom implementation. 
+- [openapi-generator] Replace the underlying Java-based OpenAPI generator with a custom implementation.
 - [odata-generator] The type of one-to-one navigation properties is now optional.
 
 ## New Functionality
@@ -350,7 +349,7 @@ Blog: TBD<br>
 
 ## Known Issues
 
-- 
+-
 
 ## Compatibility Notes
 

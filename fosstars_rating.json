@@ -16,12 +16,6 @@
             "type" : "NoHttpToolScore",
             "name" : "If a project uses nohttp tool"
           }, {
-            "type" : "FuzzingScore",
-            "name" : "How a project uses fuzzing"
-          }, {
-            "type" : "MemorySafetyTestingScore",
-            "name" : "How a project tests for memory-safety issues"
-          }, {
             "type" : "StaticAnalysisScore",
             "name" : "How a project uses static analysis for security testing",
             "subScores" : [ {
@@ -36,7 +30,7 @@
             } ],
             "weights" : {
               "values" : {
-                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 },
@@ -44,20 +38,26 @@
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
               }
             }
+          }, {
+            "type" : "FuzzingScore",
+            "name" : "How a project uses fuzzing"
+          }, {
+            "type" : "MemorySafetyTestingScore",
+            "name" : "How a project tests for memory-safety issues"
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
                 "type" : "ImmutableWeight",
-                "value" : 1.0
+                "value" : 0.2
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -65,11 +65,11 @@
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.2
-              },
               "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
@@ -77,12 +77,6 @@
           }
         },
         "name" : "Assesses security testing and vulnerability discovery"
-      }, {
-        "type" : "ProjectSecurityAwarenessScore",
-        "name" : "How well open-source community is aware about security"
-      }, {
-        "type" : "UnpatchedVulnerabilitiesScore",
-        "name" : "How well vulnerabilities are patched"
       }, {
         "type" : "ProjectSecurityTestingScore",
         "name" : "How well security testing is done for an open-source project",
@@ -92,12 +86,6 @@
         }, {
           "type" : "NoHttpToolScore",
           "name" : "If a project uses nohttp tool"
-        }, {
-          "type" : "FuzzingScore",
-          "name" : "How a project uses fuzzing"
-        }, {
-          "type" : "MemorySafetyTestingScore",
-          "name" : "How a project tests for memory-safety issues"
         }, {
           "type" : "StaticAnalysisScore",
           "name" : "How a project uses static analysis for security testing",
@@ -113,7 +101,7 @@
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -121,20 +109,26 @@
                 "type" : "ImmutableWeight",
                 "value" : 0.5
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
             }
           }
+        }, {
+          "type" : "FuzzingScore",
+          "name" : "How a project uses fuzzing"
+        }, {
+          "type" : "MemorySafetyTestingScore",
+          "name" : "How a project tests for memory-safety issues"
         } ],
         "weights" : {
           "values" : {
-            "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
               "type" : "ImmutableWeight",
-              "value" : 1.0
+              "value" : 0.2
             },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
               "type" : "ImmutableWeight",
               "value" : 1.0
             },
@@ -142,16 +136,22 @@
               "type" : "ImmutableWeight",
               "value" : 1.0
             },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 0.2
-            },
             "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 1.0
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
               "type" : "ImmutableWeight",
               "value" : 1.0
             }
           }
         }
+      }, {
+        "type" : "ProjectSecurityAwarenessScore",
+        "name" : "How well open-source community is aware about security"
+      }, {
+        "type" : "UnpatchedVulnerabilitiesScore",
+        "name" : "How well vulnerabilities are patched"
       }, {
         "type" : "CommunityCommitmentScore",
         "name" : "How well open-source community commits to support an open-source project"
@@ -167,17 +167,29 @@
       } ],
       "weights" : {
         "values" : {
-          "com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore" : {
+          "com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore" : {
             "type" : "ImmutableWeight",
-            "value" : 0.2
+            "value" : 0.6
+          },
+          "com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore" : {
+            "type" : "ImmutableWeight",
+            "value" : 0.5
           },
           "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore" : {
             "type" : "ImmutableWeight",
             "value" : 1.0
           },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore" : {
+          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore" : {
             "type" : "ImmutableWeight",
-            "value" : 0.6
+            "value" : 0.9
+          },
+          "com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore" : {
+            "type" : "ImmutableWeight",
+            "value" : 0.2
+          },
+          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore" : {
+            "type" : "ImmutableWeight",
+            "value" : 0.5
           },
           "com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore" : {
             "type" : "ImmutableWeight",
@@ -186,26 +198,588 @@
           "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectActivityScore" : {
             "type" : "ImmutableWeight",
             "value" : 0.5
-          },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore" : {
-            "type" : "ImmutableWeight",
-            "value" : 0.9
-          },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore" : {
-            "type" : "ImmutableWeight",
-            "value" : 0.5
-          },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore" : {
-            "type" : "ImmutableWeight",
-            "value" : 0.5
           }
         }
       }
     },
-    "value" : 6.5708800773694405,
+    "value" : 6.619235976789168,
     "weight" : 1.0,
     "confidence" : 10.0,
     "usedValues" : [ {
+      "type" : "ScoreValue",
+      "score" : {
+        "type" : "ProjectSecurityTestingScore",
+        "name" : "How well security testing is done for an open-source project",
+        "subScores" : [ {
+          "type" : "DependencyScanScore",
+          "name" : "How a project scans its dependencies for vulnerabilities"
+        }, {
+          "type" : "NoHttpToolScore",
+          "name" : "If a project uses nohttp tool"
+        }, {
+          "type" : "StaticAnalysisScore",
+          "name" : "How a project uses static analysis for security testing",
+          "subScores" : [ {
+            "type" : "LgtmScore",
+            "name" : "How a project addresses issues reported by LGTM"
+          }, {
+            "type" : "FindSecBugsScore",
+            "name" : "How a project uses FindSecBugs"
+          }, {
+            "type" : "CodeqlScore",
+            "name" : "How a project uses CodeQL"
+          } ],
+          "weights" : {
+            "values" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 0.5
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              }
+            }
+          }
+        }, {
+          "type" : "FuzzingScore",
+          "name" : "How a project uses fuzzing"
+        }, {
+          "type" : "MemorySafetyTestingScore",
+          "name" : "How a project tests for memory-safety issues"
+        } ],
+        "weights" : {
+          "values" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 0.2
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 1.0
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 1.0
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 1.0
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 1.0
+            }
+          }
+        }
+      },
+      "value" : 9.09090909090909,
+      "weight" : 1.0,
+      "confidence" : 10.0,
+      "usedValues" : [ {
+        "type" : "ScoreValue",
+        "score" : {
+          "type" : "DependencyScanScore",
+          "name" : "How a project scans its dependencies for vulnerabilities"
+        },
+        "value" : 10.0,
+        "weight" : 1.0,
+        "confidence" : 10.0,
+        "usedValues" : [ {
+          "type" : "ScoreValue",
+          "score" : {
+            "type" : "DependabotScore",
+            "name" : "How a project uses Dependabot"
+          },
+          "value" : 10.0,
+          "weight" : 1.0,
+          "confidence" : 10.0,
+          "usedValues" : [ {
+            "type" : "BooleanValue",
+            "feature" : {
+              "type" : "BooleanFeature",
+              "name" : "If a project uses Dependabot"
+            },
+            "flag" : true,
+            "explanation" : [ ]
+          }, {
+            "type" : "BooleanValue",
+            "feature" : {
+              "type" : "BooleanFeature",
+              "name" : "If a project uses GitHub as the main development platform"
+            },
+            "flag" : true,
+            "explanation" : [ ]
+          }, {
+            "type" : "PackageManagersValue",
+            "feature" : {
+              "type" : "PackageManagersFeature",
+              "name" : "A set of package managers"
+            },
+            "packageManagers" : {
+              "packageManagers" : [ "NPM", "YARN" ]
+            },
+            "explanation" : [ ]
+          }, {
+            "type" : "LanguagesValue",
+            "feature" : {
+              "type" : "LanguagesFeature",
+              "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
+            },
+            "explanation" : [ ]
+          } ],
+          "explanation" : [ ],
+          "isUnknown" : false,
+          "isNotApplicable" : false,
+          "feature" : {
+            "type" : "DependabotScore",
+            "name" : "How a project uses Dependabot"
+          }
+        }, {
+          "type" : "ScoreValue",
+          "score" : {
+            "type" : "OwaspDependencyScanScore",
+            "name" : "How a project uses OWASP Dependency Check to scan dependencies for vulnerabilities"
+          },
+          "value" : 0.0,
+          "weight" : 1.0,
+          "confidence" : 10.0,
+          "usedValues" : [ {
+            "type" : "OwaspDependencyCheckUsageValue",
+            "feature" : {
+              "type" : "OwaspDependencyCheckUsageFeature",
+              "name" : "How OWASP Dependency Check is used"
+            },
+            "value" : "NOT_USED",
+            "explanation" : [ ]
+          }, {
+            "type" : "OwaspDependencyCheckCvssThresholdValue",
+            "feature" : {
+              "type" : "OwaspDependencyCheckCvssThreshold",
+              "name" : "A CVSS threshold for OWASP Dependency Check to fail the build"
+            },
+            "number" : 0.0,
+            "specified" : false,
+            "explanation" : [ ]
+          }, {
+            "type" : "PackageManagersValue",
+            "feature" : {
+              "type" : "PackageManagersFeature",
+              "name" : "A set of package managers"
+            },
+            "packageManagers" : {
+              "packageManagers" : [ "NPM", "YARN" ]
+            },
+            "explanation" : [ ]
+          } ],
+          "explanation" : [ ],
+          "isUnknown" : false,
+          "isNotApplicable" : true,
+          "feature" : {
+            "type" : "OwaspDependencyScanScore",
+            "name" : "How a project uses OWASP Dependency Check to scan dependencies for vulnerabilities"
+          }
+        } ],
+        "explanation" : [ ],
+        "isUnknown" : false,
+        "isNotApplicable" : false,
+        "feature" : {
+          "type" : "DependencyScanScore",
+          "name" : "How a project scans its dependencies for vulnerabilities"
+        }
+      }, {
+        "type" : "ScoreValue",
+        "score" : {
+          "type" : "NoHttpToolScore",
+          "name" : "If a project uses nohttp tool"
+        },
+        "value" : 0.0,
+        "weight" : 0.2,
+        "confidence" : 10.0,
+        "usedValues" : [ {
+          "type" : "BooleanValue",
+          "feature" : {
+            "type" : "BooleanFeature",
+            "name" : "If a project uses nohttp tool"
+          },
+          "flag" : false,
+          "explanation" : [ ]
+        }, {
+          "type" : "PackageManagersValue",
+          "feature" : {
+            "type" : "PackageManagersFeature",
+            "name" : "A set of package managers"
+          },
+          "packageManagers" : {
+            "packageManagers" : [ "NPM", "YARN" ]
+          },
+          "explanation" : [ ]
+        } ],
+        "explanation" : [ ],
+        "isUnknown" : false,
+        "isNotApplicable" : false,
+        "feature" : {
+          "type" : "NoHttpToolScore",
+          "name" : "If a project uses nohttp tool"
+        }
+      }, {
+        "type" : "ScoreValue",
+        "score" : {
+          "type" : "StaticAnalysisScore",
+          "name" : "How a project uses static analysis for security testing",
+          "subScores" : [ {
+            "type" : "LgtmScore",
+            "name" : "How a project addresses issues reported by LGTM"
+          }, {
+            "type" : "FindSecBugsScore",
+            "name" : "How a project uses FindSecBugs"
+          }, {
+            "type" : "CodeqlScore",
+            "name" : "How a project uses CodeQL"
+          } ],
+          "weights" : {
+            "values" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 0.5
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              }
+            }
+          }
+        },
+        "value" : 10.0,
+        "weight" : 1.0,
+        "confidence" : 10.0,
+        "usedValues" : [ {
+          "type" : "ScoreValue",
+          "score" : {
+            "type" : "LgtmScore",
+            "name" : "How a project addresses issues reported by LGTM"
+          },
+          "value" : 10.0,
+          "weight" : 1.0,
+          "confidence" : 10.0,
+          "usedValues" : [ {
+            "type" : "LgtmGradeValue",
+            "feature" : {
+              "type" : "LgtmGradeFeature",
+              "name" : "The worst LGTM grade of a project"
+            },
+            "value" : "A+",
+            "explanation" : [ ]
+          }, {
+            "type" : "LanguagesValue",
+            "feature" : {
+              "type" : "LanguagesFeature",
+              "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
+            },
+            "explanation" : [ ]
+          } ],
+          "explanation" : [ ],
+          "isUnknown" : false,
+          "isNotApplicable" : false,
+          "feature" : {
+            "type" : "LgtmScore",
+            "name" : "How a project addresses issues reported by LGTM"
+          }
+        }, {
+          "type" : "ScoreValue",
+          "score" : {
+            "type" : "FindSecBugsScore",
+            "name" : "How a project uses FindSecBugs"
+          },
+          "value" : 0.0,
+          "weight" : 0.5,
+          "confidence" : 10.0,
+          "usedValues" : [ {
+            "type" : "LanguagesValue",
+            "feature" : {
+              "type" : "LanguagesFeature",
+              "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
+            },
+            "explanation" : [ ]
+          }, {
+            "type" : "BooleanValue",
+            "feature" : {
+              "type" : "BooleanFeature",
+              "name" : "If an open-source project uses FindSecBugs"
+            },
+            "flag" : false,
+            "explanation" : [ ]
+          } ],
+          "explanation" : [ ],
+          "isUnknown" : false,
+          "isNotApplicable" : true,
+          "feature" : {
+            "type" : "FindSecBugsScore",
+            "name" : "How a project uses FindSecBugs"
+          }
+        }, {
+          "type" : "ScoreValue",
+          "score" : {
+            "type" : "CodeqlScore",
+            "name" : "How a project uses CodeQL"
+          },
+          "value" : 10.0,
+          "weight" : 1.0,
+          "confidence" : 10.0,
+          "usedValues" : [ {
+            "type" : "BooleanValue",
+            "feature" : {
+              "type" : "BooleanFeature",
+              "name" : "If a project uses LGTM checks for commits"
+            },
+            "flag" : false,
+            "explanation" : [ ]
+          }, {
+            "type" : "BooleanValue",
+            "feature" : {
+              "type" : "BooleanFeature",
+              "name" : "If a project runs CodeQL checks for commits"
+            },
+            "flag" : true,
+            "explanation" : [ ]
+          }, {
+            "type" : "BooleanValue",
+            "feature" : {
+              "type" : "BooleanFeature",
+              "name" : "If a project runs CodeQL scans"
+            },
+            "flag" : true,
+            "explanation" : [ ]
+          }, {
+            "type" : "LanguagesValue",
+            "feature" : {
+              "type" : "LanguagesFeature",
+              "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
+            },
+            "explanation" : [ ]
+          } ],
+          "explanation" : [ ],
+          "isUnknown" : false,
+          "isNotApplicable" : false,
+          "feature" : {
+            "type" : "CodeqlScore",
+            "name" : "How a project uses CodeQL"
+          }
+        } ],
+        "explanation" : [ ],
+        "isUnknown" : false,
+        "isNotApplicable" : false,
+        "feature" : {
+          "type" : "StaticAnalysisScore",
+          "name" : "How a project uses static analysis for security testing",
+          "subScores" : [ {
+            "type" : "LgtmScore",
+            "name" : "How a project addresses issues reported by LGTM"
+          }, {
+            "type" : "FindSecBugsScore",
+            "name" : "How a project uses FindSecBugs"
+          }, {
+            "type" : "CodeqlScore",
+            "name" : "How a project uses CodeQL"
+          } ],
+          "weights" : {
+            "values" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 0.5
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              }
+            }
+          }
+        }
+      }, {
+        "type" : "ScoreValue",
+        "score" : {
+          "type" : "FuzzingScore",
+          "name" : "How a project uses fuzzing"
+        },
+        "value" : 0.0,
+        "weight" : 1.0,
+        "confidence" : 10.0,
+        "usedValues" : [ {
+          "type" : "LanguagesValue",
+          "feature" : {
+            "type" : "LanguagesFeature",
+            "name" : "A set of programming languages"
+          },
+          "languages" : {
+            "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
+          },
+          "explanation" : [ ]
+        }, {
+          "type" : "BooleanValue",
+          "feature" : {
+            "type" : "BooleanFeature",
+            "name" : "If an open-source project is included to OSS-Fuzz project"
+          },
+          "flag" : false,
+          "explanation" : [ ]
+        } ],
+        "explanation" : [ ],
+        "isUnknown" : false,
+        "isNotApplicable" : true,
+        "feature" : {
+          "type" : "FuzzingScore",
+          "name" : "How a project uses fuzzing"
+        }
+      }, {
+        "type" : "ScoreValue",
+        "score" : {
+          "type" : "MemorySafetyTestingScore",
+          "name" : "How a project tests for memory-safety issues"
+        },
+        "value" : 0.0,
+        "weight" : 1.0,
+        "confidence" : 10.0,
+        "usedValues" : [ {
+          "type" : "LanguagesValue",
+          "feature" : {
+            "type" : "LanguagesFeature",
+            "name" : "A set of programming languages"
+          },
+          "languages" : {
+            "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
+          },
+          "explanation" : [ ]
+        }, {
+          "type" : "BooleanValue",
+          "feature" : {
+            "type" : "BooleanFeature",
+            "name" : "If an open-source project uses AddressSanitizer"
+          },
+          "flag" : false,
+          "explanation" : [ ]
+        }, {
+          "type" : "BooleanValue",
+          "feature" : {
+            "type" : "BooleanFeature",
+            "name" : "If an open-source project uses MemorySanitizer"
+          },
+          "flag" : false,
+          "explanation" : [ ]
+        }, {
+          "type" : "BooleanValue",
+          "feature" : {
+            "type" : "BooleanFeature",
+            "name" : "If an open-source project uses UndefinedBehaviorSanitizer"
+          },
+          "flag" : false,
+          "explanation" : [ ]
+        } ],
+        "explanation" : [ ],
+        "isUnknown" : false,
+        "isNotApplicable" : true,
+        "feature" : {
+          "type" : "MemorySafetyTestingScore",
+          "name" : "How a project tests for memory-safety issues"
+        }
+      } ],
+      "explanation" : [ ],
+      "isUnknown" : false,
+      "isNotApplicable" : false,
+      "feature" : {
+        "type" : "ProjectSecurityTestingScore",
+        "name" : "How well security testing is done for an open-source project",
+        "subScores" : [ {
+          "type" : "DependencyScanScore",
+          "name" : "How a project scans its dependencies for vulnerabilities"
+        }, {
+          "type" : "NoHttpToolScore",
+          "name" : "If a project uses nohttp tool"
+        }, {
+          "type" : "StaticAnalysisScore",
+          "name" : "How a project uses static analysis for security testing",
+          "subScores" : [ {
+            "type" : "LgtmScore",
+            "name" : "How a project addresses issues reported by LGTM"
+          }, {
+            "type" : "FindSecBugsScore",
+            "name" : "How a project uses FindSecBugs"
+          }, {
+            "type" : "CodeqlScore",
+            "name" : "How a project uses CodeQL"
+          } ],
+          "weights" : {
+            "values" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 0.5
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              }
+            }
+          }
+        }, {
+          "type" : "FuzzingScore",
+          "name" : "How a project uses fuzzing"
+        }, {
+          "type" : "MemorySafetyTestingScore",
+          "name" : "How a project tests for memory-safety issues"
+        } ],
+        "weights" : {
+          "values" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 0.2
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 1.0
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 1.0
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 1.0
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 1.0
+            }
+          }
+        }
+      }
+    }, {
       "type" : "ScoreValue",
       "score" : {
         "type" : "ProjectSecurityAwarenessScore",
@@ -361,763 +935,6 @@
     }, {
       "type" : "ScoreValue",
       "score" : {
-        "type" : "UnpatchedVulnerabilitiesScore",
-        "name" : "How well vulnerabilities are patched"
-      },
-      "value" : 10.0,
-      "weight" : 0.5,
-      "confidence" : 10.0,
-      "usedValues" : [ {
-        "type" : "VulnerabilitiesValue",
-        "vulnerabilities" : {
-          "entries" : [ {
-            "id" : "CVE-2021-41251",
-            "cvss" : {
-              "version" : "V3",
-              "value" : 5.9
-            },
-            "references" : [ {
-              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1770",
-              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1770"
-            }, {
-              "description" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32",
-              "url" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32"
-            }, {
-              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1769",
-              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1769"
-            } ],
-            "resolution" : "PATCHED",
-            "introduced" : null,
-            "fixed" : null,
-            "published" : "2021-11-05",
-            "vulnerableVersions" : [ {
-              "versionStart" : null,
-              "versionEnd" : null
-            } ]
-          } ]
-        },
-        "feature" : {
-          "type" : "VulnerabilitiesInProject",
-          "name" : "Info about vulnerabilities in open-source project"
-        },
-        "explanation" : [ ]
-      } ],
-      "explanation" : [ "No unpatched vulnerabilities found which is good" ],
-      "isUnknown" : false,
-      "isNotApplicable" : false,
-      "feature" : {
-        "type" : "UnpatchedVulnerabilitiesScore",
-        "name" : "How well vulnerabilities are patched"
-      }
-    }, {
-      "type" : "ScoreValue",
-      "score" : {
-        "type" : "CommunityCommitmentScore",
-        "name" : "How well open-source community commits to support an open-source project"
-      },
-      "value" : 8.0,
-      "weight" : 0.5,
-      "confidence" : 10.0,
-      "usedValues" : [ {
-        "type" : "BooleanValue",
-        "feature" : {
-          "type" : "BooleanFeature",
-          "name" : "If an open-source project is supported by a company"
-        },
-        "flag" : true,
-        "explanation" : [ ]
-      }, {
-        "type" : "BooleanValue",
-        "feature" : {
-          "type" : "BooleanFeature",
-          "name" : "If an open-source project belongs to Apache Foundation"
-        },
-        "flag" : false,
-        "explanation" : [ ]
-      }, {
-        "type" : "BooleanValue",
-        "feature" : {
-          "type" : "BooleanFeature",
-          "name" : "If an open-source project belongs to Eclipse Foundation"
-        },
-        "flag" : false,
-        "explanation" : [ ]
-      } ],
-      "explanation" : [ ],
-      "isUnknown" : false,
-      "isNotApplicable" : false,
-      "feature" : {
-        "type" : "CommunityCommitmentScore",
-        "name" : "How well open-source community commits to support an open-source project"
-      }
-    }, {
-      "type" : "ScoreValue",
-      "score" : {
-        "type" : "ProjectActivityScore",
-        "name" : "Open-source project activity score"
-      },
-      "value" : 10.0,
-      "weight" : 0.5,
-      "confidence" : 10.0,
-      "usedValues" : [ {
-        "type" : "IntegerValue",
-        "feature" : {
-          "type" : "PositiveIntegerFeature",
-          "name" : "Number of commits in the last three months"
-        },
-        "number" : 229,
-        "explanation" : [ ]
-      }, {
-        "type" : "IntegerValue",
-        "feature" : {
-          "type" : "PositiveIntegerFeature",
-          "name" : "Number of contributors in the last three months"
-        },
-        "number" : 1,
-        "explanation" : [ ]
-      } ],
-      "explanation" : [ "229 commits in the last 3 months results to 10.00 points" ],
-      "isUnknown" : false,
-      "isNotApplicable" : false,
-      "feature" : {
-        "type" : "ProjectActivityScore",
-        "name" : "Open-source project activity score"
-      }
-    }, {
-      "type" : "ScoreValue",
-      "score" : {
-        "type" : "ProjectSecurityTestingScore",
-        "name" : "How well security testing is done for an open-source project",
-        "subScores" : [ {
-          "type" : "DependencyScanScore",
-          "name" : "How a project scans its dependencies for vulnerabilities"
-        }, {
-          "type" : "NoHttpToolScore",
-          "name" : "If a project uses nohttp tool"
-        }, {
-          "type" : "FuzzingScore",
-          "name" : "How a project uses fuzzing"
-        }, {
-          "type" : "MemorySafetyTestingScore",
-          "name" : "How a project tests for memory-safety issues"
-        }, {
-          "type" : "StaticAnalysisScore",
-          "name" : "How a project uses static analysis for security testing",
-          "subScores" : [ {
-            "type" : "LgtmScore",
-            "name" : "How a project addresses issues reported by LGTM"
-          }, {
-            "type" : "FindSecBugsScore",
-            "name" : "How a project uses FindSecBugs"
-          }, {
-            "type" : "CodeqlScore",
-            "name" : "How a project uses CodeQL"
-          } ],
-          "weights" : {
-            "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.5
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              }
-            }
-          }
-        } ],
-        "weights" : {
-          "values" : {
-            "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 1.0
-            },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 1.0
-            },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 1.0
-            },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 0.2
-            },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 1.0
-            }
-          }
-        }
-      },
-      "value" : 8.863636363636363,
-      "weight" : 1.0,
-      "confidence" : 10.0,
-      "usedValues" : [ {
-        "type" : "ScoreValue",
-        "score" : {
-          "type" : "DependencyScanScore",
-          "name" : "How a project scans its dependencies for vulnerabilities"
-        },
-        "value" : 10.0,
-        "weight" : 1.0,
-        "confidence" : 10.0,
-        "usedValues" : [ {
-          "type" : "ScoreValue",
-          "score" : {
-            "type" : "DependabotScore",
-            "name" : "How a project uses Dependabot"
-          },
-          "value" : 10.0,
-          "weight" : 1.0,
-          "confidence" : 10.0,
-          "usedValues" : [ {
-            "type" : "BooleanValue",
-            "feature" : {
-              "type" : "BooleanFeature",
-              "name" : "If a project uses Dependabot"
-            },
-            "flag" : true,
-            "explanation" : [ ]
-          }, {
-            "type" : "BooleanValue",
-            "feature" : {
-              "type" : "BooleanFeature",
-              "name" : "If a project uses GitHub as the main development platform"
-            },
-            "flag" : true,
-            "explanation" : [ ]
-          }, {
-            "type" : "PackageManagersValue",
-            "feature" : {
-              "type" : "PackageManagersFeature",
-              "name" : "A set of package managers"
-            },
-            "packageManagers" : {
-              "packageManagers" : [ "NPM", "YARN" ]
-            },
-            "explanation" : [ ]
-          }, {
-            "type" : "LanguagesValue",
-            "feature" : {
-              "type" : "LanguagesFeature",
-              "name" : "A set of programming languages"
-            },
-            "languages" : {
-              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
-            },
-            "explanation" : [ ]
-          } ],
-          "explanation" : [ ],
-          "isUnknown" : false,
-          "isNotApplicable" : false,
-          "feature" : {
-            "type" : "DependabotScore",
-            "name" : "How a project uses Dependabot"
-          }
-        }, {
-          "type" : "ScoreValue",
-          "score" : {
-            "type" : "OwaspDependencyScanScore",
-            "name" : "How a project uses OWASP Dependency Check to scan dependencies for vulnerabilities"
-          },
-          "value" : 0.0,
-          "weight" : 1.0,
-          "confidence" : 10.0,
-          "usedValues" : [ {
-            "type" : "OwaspDependencyCheckUsageValue",
-            "feature" : {
-              "type" : "OwaspDependencyCheckUsageFeature",
-              "name" : "How OWASP Dependency Check is used"
-            },
-            "value" : "NOT_USED",
-            "explanation" : [ ]
-          }, {
-            "type" : "OwaspDependencyCheckCvssThresholdValue",
-            "feature" : {
-              "type" : "OwaspDependencyCheckCvssThreshold",
-              "name" : "A CVSS threshold for OWASP Dependency Check to fail the build"
-            },
-            "number" : 0.0,
-            "specified" : false,
-            "explanation" : [ ]
-          }, {
-            "type" : "PackageManagersValue",
-            "feature" : {
-              "type" : "PackageManagersFeature",
-              "name" : "A set of package managers"
-            },
-            "packageManagers" : {
-              "packageManagers" : [ "NPM", "YARN" ]
-            },
-            "explanation" : [ ]
-          } ],
-          "explanation" : [ ],
-          "isUnknown" : false,
-          "isNotApplicable" : true,
-          "feature" : {
-            "type" : "OwaspDependencyScanScore",
-            "name" : "How a project uses OWASP Dependency Check to scan dependencies for vulnerabilities"
-          }
-        } ],
-        "explanation" : [ ],
-        "isUnknown" : false,
-        "isNotApplicable" : false,
-        "feature" : {
-          "type" : "DependencyScanScore",
-          "name" : "How a project scans its dependencies for vulnerabilities"
-        }
-      }, {
-        "type" : "ScoreValue",
-        "score" : {
-          "type" : "NoHttpToolScore",
-          "name" : "If a project uses nohttp tool"
-        },
-        "value" : 0.0,
-        "weight" : 0.2,
-        "confidence" : 10.0,
-        "usedValues" : [ {
-          "type" : "BooleanValue",
-          "feature" : {
-            "type" : "BooleanFeature",
-            "name" : "If a project uses nohttp tool"
-          },
-          "flag" : false,
-          "explanation" : [ ]
-        }, {
-          "type" : "PackageManagersValue",
-          "feature" : {
-            "type" : "PackageManagersFeature",
-            "name" : "A set of package managers"
-          },
-          "packageManagers" : {
-            "packageManagers" : [ "NPM", "YARN" ]
-          },
-          "explanation" : [ ]
-        } ],
-        "explanation" : [ ],
-        "isUnknown" : false,
-        "isNotApplicable" : false,
-        "feature" : {
-          "type" : "NoHttpToolScore",
-          "name" : "If a project uses nohttp tool"
-        }
-      }, {
-        "type" : "ScoreValue",
-        "score" : {
-          "type" : "FuzzingScore",
-          "name" : "How a project uses fuzzing"
-        },
-        "value" : 0.0,
-        "weight" : 1.0,
-        "confidence" : 10.0,
-        "usedValues" : [ {
-          "type" : "LanguagesValue",
-          "feature" : {
-            "type" : "LanguagesFeature",
-            "name" : "A set of programming languages"
-          },
-          "languages" : {
-            "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
-          },
-          "explanation" : [ ]
-        }, {
-          "type" : "BooleanValue",
-          "feature" : {
-            "type" : "BooleanFeature",
-            "name" : "If an open-source project is included to OSS-Fuzz project"
-          },
-          "flag" : false,
-          "explanation" : [ ]
-        } ],
-        "explanation" : [ ],
-        "isUnknown" : false,
-        "isNotApplicable" : true,
-        "feature" : {
-          "type" : "FuzzingScore",
-          "name" : "How a project uses fuzzing"
-        }
-      }, {
-        "type" : "ScoreValue",
-        "score" : {
-          "type" : "MemorySafetyTestingScore",
-          "name" : "How a project tests for memory-safety issues"
-        },
-        "value" : 0.0,
-        "weight" : 1.0,
-        "confidence" : 10.0,
-        "usedValues" : [ {
-          "type" : "LanguagesValue",
-          "feature" : {
-            "type" : "LanguagesFeature",
-            "name" : "A set of programming languages"
-          },
-          "languages" : {
-            "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
-          },
-          "explanation" : [ ]
-        }, {
-          "type" : "BooleanValue",
-          "feature" : {
-            "type" : "BooleanFeature",
-            "name" : "If an open-source project uses AddressSanitizer"
-          },
-          "flag" : false,
-          "explanation" : [ ]
-        }, {
-          "type" : "BooleanValue",
-          "feature" : {
-            "type" : "BooleanFeature",
-            "name" : "If an open-source project uses MemorySanitizer"
-          },
-          "flag" : false,
-          "explanation" : [ ]
-        }, {
-          "type" : "BooleanValue",
-          "feature" : {
-            "type" : "BooleanFeature",
-            "name" : "If an open-source project uses UndefinedBehaviorSanitizer"
-          },
-          "flag" : false,
-          "explanation" : [ ]
-        } ],
-        "explanation" : [ ],
-        "isUnknown" : false,
-        "isNotApplicable" : true,
-        "feature" : {
-          "type" : "MemorySafetyTestingScore",
-          "name" : "How a project tests for memory-safety issues"
-        }
-      }, {
-        "type" : "ScoreValue",
-        "score" : {
-          "type" : "StaticAnalysisScore",
-          "name" : "How a project uses static analysis for security testing",
-          "subScores" : [ {
-            "type" : "LgtmScore",
-            "name" : "How a project addresses issues reported by LGTM"
-          }, {
-            "type" : "FindSecBugsScore",
-            "name" : "How a project uses FindSecBugs"
-          }, {
-            "type" : "CodeqlScore",
-            "name" : "How a project uses CodeQL"
-          } ],
-          "weights" : {
-            "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.5
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              }
-            }
-          }
-        },
-        "value" : 9.5,
-        "weight" : 1.0,
-        "confidence" : 10.0,
-        "usedValues" : [ {
-          "type" : "ScoreValue",
-          "score" : {
-            "type" : "LgtmScore",
-            "name" : "How a project addresses issues reported by LGTM"
-          },
-          "value" : 9.0,
-          "weight" : 1.0,
-          "confidence" : 10.0,
-          "usedValues" : [ {
-            "type" : "LgtmGradeValue",
-            "feature" : {
-              "type" : "LgtmGradeFeature",
-              "name" : "The worst LGTM grade of a project"
-            },
-            "value" : "A",
-            "explanation" : [ ]
-          }, {
-            "type" : "LanguagesValue",
-            "feature" : {
-              "type" : "LanguagesFeature",
-              "name" : "A set of programming languages"
-            },
-            "languages" : {
-              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
-            },
-            "explanation" : [ ]
-          } ],
-          "explanation" : [ ],
-          "isUnknown" : false,
-          "isNotApplicable" : false,
-          "feature" : {
-            "type" : "LgtmScore",
-            "name" : "How a project addresses issues reported by LGTM"
-          }
-        }, {
-          "type" : "ScoreValue",
-          "score" : {
-            "type" : "FindSecBugsScore",
-            "name" : "How a project uses FindSecBugs"
-          },
-          "value" : 0.0,
-          "weight" : 0.5,
-          "confidence" : 10.0,
-          "usedValues" : [ {
-            "type" : "LanguagesValue",
-            "feature" : {
-              "type" : "LanguagesFeature",
-              "name" : "A set of programming languages"
-            },
-            "languages" : {
-              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
-            },
-            "explanation" : [ ]
-          }, {
-            "type" : "BooleanValue",
-            "feature" : {
-              "type" : "BooleanFeature",
-              "name" : "If an open-source project uses FindSecBugs"
-            },
-            "flag" : false,
-            "explanation" : [ ]
-          } ],
-          "explanation" : [ ],
-          "isUnknown" : false,
-          "isNotApplicable" : true,
-          "feature" : {
-            "type" : "FindSecBugsScore",
-            "name" : "How a project uses FindSecBugs"
-          }
-        }, {
-          "type" : "ScoreValue",
-          "score" : {
-            "type" : "CodeqlScore",
-            "name" : "How a project uses CodeQL"
-          },
-          "value" : 10.0,
-          "weight" : 1.0,
-          "confidence" : 10.0,
-          "usedValues" : [ {
-            "type" : "BooleanValue",
-            "feature" : {
-              "type" : "BooleanFeature",
-              "name" : "If a project uses LGTM checks for commits"
-            },
-            "flag" : false,
-            "explanation" : [ ]
-          }, {
-            "type" : "BooleanValue",
-            "feature" : {
-              "type" : "BooleanFeature",
-              "name" : "If a project runs CodeQL checks for commits"
-            },
-            "flag" : true,
-            "explanation" : [ ]
-          }, {
-            "type" : "BooleanValue",
-            "feature" : {
-              "type" : "BooleanFeature",
-              "name" : "If a project runs CodeQL scans"
-            },
-            "flag" : true,
-            "explanation" : [ ]
-          }, {
-            "type" : "LanguagesValue",
-            "feature" : {
-              "type" : "LanguagesFeature",
-              "name" : "A set of programming languages"
-            },
-            "languages" : {
-              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
-            },
-            "explanation" : [ ]
-          } ],
-          "explanation" : [ ],
-          "isUnknown" : false,
-          "isNotApplicable" : false,
-          "feature" : {
-            "type" : "CodeqlScore",
-            "name" : "How a project uses CodeQL"
-          }
-        } ],
-        "explanation" : [ ],
-        "isUnknown" : false,
-        "isNotApplicable" : false,
-        "feature" : {
-          "type" : "StaticAnalysisScore",
-          "name" : "How a project uses static analysis for security testing",
-          "subScores" : [ {
-            "type" : "LgtmScore",
-            "name" : "How a project addresses issues reported by LGTM"
-          }, {
-            "type" : "FindSecBugsScore",
-            "name" : "How a project uses FindSecBugs"
-          }, {
-            "type" : "CodeqlScore",
-            "name" : "How a project uses CodeQL"
-          } ],
-          "weights" : {
-            "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.5
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              }
-            }
-          }
-        }
-      } ],
-      "explanation" : [ ],
-      "isUnknown" : false,
-      "isNotApplicable" : false,
-      "feature" : {
-        "type" : "ProjectSecurityTestingScore",
-        "name" : "How well security testing is done for an open-source project",
-        "subScores" : [ {
-          "type" : "DependencyScanScore",
-          "name" : "How a project scans its dependencies for vulnerabilities"
-        }, {
-          "type" : "NoHttpToolScore",
-          "name" : "If a project uses nohttp tool"
-        }, {
-          "type" : "FuzzingScore",
-          "name" : "How a project uses fuzzing"
-        }, {
-          "type" : "MemorySafetyTestingScore",
-          "name" : "How a project tests for memory-safety issues"
-        }, {
-          "type" : "StaticAnalysisScore",
-          "name" : "How a project uses static analysis for security testing",
-          "subScores" : [ {
-            "type" : "LgtmScore",
-            "name" : "How a project addresses issues reported by LGTM"
-          }, {
-            "type" : "FindSecBugsScore",
-            "name" : "How a project uses FindSecBugs"
-          }, {
-            "type" : "CodeqlScore",
-            "name" : "How a project uses CodeQL"
-          } ],
-          "weights" : {
-            "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.5
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              }
-            }
-          }
-        } ],
-        "weights" : {
-          "values" : {
-            "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 1.0
-            },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 1.0
-            },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 1.0
-            },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 0.2
-            },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 1.0
-            }
-          }
-        }
-      }
-    }, {
-      "type" : "ScoreValue",
-      "score" : {
-        "type" : "ProjectPopularityScore",
-        "name" : "Open-source project popularity score"
-      },
-      "value" : 0.139,
-      "weight" : 0.5,
-      "confidence" : 10.0,
-      "usedValues" : [ {
-        "type" : "IntegerValue",
-        "feature" : {
-          "type" : "PositiveIntegerFeature",
-          "name" : "Number of stars for a GitHub repository"
-        },
-        "number" : 89,
-        "explanation" : [ ]
-      }, {
-        "type" : "IntegerValue",
-        "feature" : {
-          "type" : "PositiveIntegerFeature",
-          "name" : "Number of watchers for a GitHub repository"
-        },
-        "number" : 15,
-        "explanation" : [ ]
-      } ],
-      "explanation" : [ ],
-      "isUnknown" : false,
-      "isNotApplicable" : false,
-      "feature" : {
-        "type" : "ProjectPopularityScore",
-        "name" : "Open-source project popularity score"
-      }
-    }, {
-      "type" : "ScoreValue",
-      "score" : {
-        "type" : "SecurityReviewScore",
-        "name" : "How security reviews have been done for an open source project"
-      },
-      "value" : 0.0,
-      "weight" : 0.2,
-      "confidence" : 10.0,
-      "usedValues" : [ {
-        "type" : "SecurityReviewsValue",
-        "feature" : {
-          "type" : "SecurityReviewsFeature",
-          "name" : "Security reviews for a project"
-        },
-        "reviews" : [ ],
-        "explanation" : [ ]
-      } ],
-      "explanation" : [ "No security reviews have been done" ],
-      "isUnknown" : false,
-      "isNotApplicable" : false,
-      "feature" : {
-        "type" : "SecurityReviewScore",
-        "name" : "How security reviews have been done for an open source project"
-      }
-    }, {
-      "type" : "ScoreValue",
-      "score" : {
         "type" : "VulnerabilityDiscoveryAndSecurityTestingScore",
         "securityTestingScore" : {
           "type" : "ProjectSecurityTestingScore",
@@ -1128,12 +945,6 @@
           }, {
             "type" : "NoHttpToolScore",
             "name" : "If a project uses nohttp tool"
-          }, {
-            "type" : "FuzzingScore",
-            "name" : "How a project uses fuzzing"
-          }, {
-            "type" : "MemorySafetyTestingScore",
-            "name" : "How a project tests for memory-safety issues"
           }, {
             "type" : "StaticAnalysisScore",
             "name" : "How a project uses static analysis for security testing",
@@ -1149,7 +960,7 @@
             } ],
             "weights" : {
               "values" : {
-                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 },
@@ -1157,20 +968,26 @@
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
               }
             }
+          }, {
+            "type" : "FuzzingScore",
+            "name" : "How a project uses fuzzing"
+          }, {
+            "type" : "MemorySafetyTestingScore",
+            "name" : "How a project tests for memory-safety issues"
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
                 "type" : "ImmutableWeight",
-                "value" : 1.0
+                "value" : 0.2
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -1178,11 +995,11 @@
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.2
-              },
               "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
@@ -1240,12 +1057,6 @@
             "type" : "NoHttpToolScore",
             "name" : "If a project uses nohttp tool"
           }, {
-            "type" : "FuzzingScore",
-            "name" : "How a project uses fuzzing"
-          }, {
-            "type" : "MemorySafetyTestingScore",
-            "name" : "How a project tests for memory-safety issues"
-          }, {
             "type" : "StaticAnalysisScore",
             "name" : "How a project uses static analysis for security testing",
             "subScores" : [ {
@@ -1260,7 +1071,7 @@
             } ],
             "weights" : {
               "values" : {
-                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 },
@@ -1268,20 +1079,26 @@
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
               }
             }
+          }, {
+            "type" : "FuzzingScore",
+            "name" : "How a project uses fuzzing"
+          }, {
+            "type" : "MemorySafetyTestingScore",
+            "name" : "How a project tests for memory-safety issues"
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
                 "type" : "ImmutableWeight",
-                "value" : 1.0
+                "value" : 0.2
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -1289,18 +1106,18 @@
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.2
-              },
               "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
             }
           }
         },
-        "value" : 8.863636363636363,
+        "value" : 9.09090909090909,
         "weight" : 1.0,
         "confidence" : 10.0,
         "usedValues" : [ {
@@ -1455,92 +1272,6 @@
         }, {
           "type" : "ScoreValue",
           "score" : {
-            "type" : "FuzzingScore",
-            "name" : "How a project uses fuzzing"
-          },
-          "value" : 0.0,
-          "weight" : 1.0,
-          "confidence" : 10.0,
-          "usedValues" : [ {
-            "type" : "LanguagesValue",
-            "feature" : {
-              "type" : "LanguagesFeature",
-              "name" : "A set of programming languages"
-            },
-            "languages" : {
-              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
-            },
-            "explanation" : [ ]
-          }, {
-            "type" : "BooleanValue",
-            "feature" : {
-              "type" : "BooleanFeature",
-              "name" : "If an open-source project is included to OSS-Fuzz project"
-            },
-            "flag" : false,
-            "explanation" : [ ]
-          } ],
-          "explanation" : [ ],
-          "isUnknown" : false,
-          "isNotApplicable" : true,
-          "feature" : {
-            "type" : "FuzzingScore",
-            "name" : "How a project uses fuzzing"
-          }
-        }, {
-          "type" : "ScoreValue",
-          "score" : {
-            "type" : "MemorySafetyTestingScore",
-            "name" : "How a project tests for memory-safety issues"
-          },
-          "value" : 0.0,
-          "weight" : 1.0,
-          "confidence" : 10.0,
-          "usedValues" : [ {
-            "type" : "LanguagesValue",
-            "feature" : {
-              "type" : "LanguagesFeature",
-              "name" : "A set of programming languages"
-            },
-            "languages" : {
-              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
-            },
-            "explanation" : [ ]
-          }, {
-            "type" : "BooleanValue",
-            "feature" : {
-              "type" : "BooleanFeature",
-              "name" : "If an open-source project uses AddressSanitizer"
-            },
-            "flag" : false,
-            "explanation" : [ ]
-          }, {
-            "type" : "BooleanValue",
-            "feature" : {
-              "type" : "BooleanFeature",
-              "name" : "If an open-source project uses MemorySanitizer"
-            },
-            "flag" : false,
-            "explanation" : [ ]
-          }, {
-            "type" : "BooleanValue",
-            "feature" : {
-              "type" : "BooleanFeature",
-              "name" : "If an open-source project uses UndefinedBehaviorSanitizer"
-            },
-            "flag" : false,
-            "explanation" : [ ]
-          } ],
-          "explanation" : [ ],
-          "isUnknown" : false,
-          "isNotApplicable" : true,
-          "feature" : {
-            "type" : "MemorySafetyTestingScore",
-            "name" : "How a project tests for memory-safety issues"
-          }
-        }, {
-          "type" : "ScoreValue",
-          "score" : {
             "type" : "StaticAnalysisScore",
             "name" : "How a project uses static analysis for security testing",
             "subScores" : [ {
@@ -1555,7 +1286,7 @@
             } ],
             "weights" : {
               "values" : {
-                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 },
@@ -1563,14 +1294,14 @@
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
               }
             }
           },
-          "value" : 9.5,
+          "value" : 10.0,
           "weight" : 1.0,
           "confidence" : 10.0,
           "usedValues" : [ {
@@ -1579,7 +1310,7 @@
               "type" : "LgtmScore",
               "name" : "How a project addresses issues reported by LGTM"
             },
-            "value" : 9.0,
+            "value" : 10.0,
             "weight" : 1.0,
             "confidence" : 10.0,
             "usedValues" : [ {
@@ -1588,7 +1319,7 @@
                 "type" : "LgtmGradeFeature",
                 "name" : "The worst LGTM grade of a project"
               },
-              "value" : "A",
+              "value" : "A+",
               "explanation" : [ ]
             }, {
               "type" : "LanguagesValue",
@@ -1713,7 +1444,7 @@
             } ],
             "weights" : {
               "values" : {
-                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 },
@@ -1721,12 +1452,98 @@
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
               }
             }
+          }
+        }, {
+          "type" : "ScoreValue",
+          "score" : {
+            "type" : "FuzzingScore",
+            "name" : "How a project uses fuzzing"
+          },
+          "value" : 0.0,
+          "weight" : 1.0,
+          "confidence" : 10.0,
+          "usedValues" : [ {
+            "type" : "LanguagesValue",
+            "feature" : {
+              "type" : "LanguagesFeature",
+              "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
+            },
+            "explanation" : [ ]
+          }, {
+            "type" : "BooleanValue",
+            "feature" : {
+              "type" : "BooleanFeature",
+              "name" : "If an open-source project is included to OSS-Fuzz project"
+            },
+            "flag" : false,
+            "explanation" : [ ]
+          } ],
+          "explanation" : [ ],
+          "isUnknown" : false,
+          "isNotApplicable" : true,
+          "feature" : {
+            "type" : "FuzzingScore",
+            "name" : "How a project uses fuzzing"
+          }
+        }, {
+          "type" : "ScoreValue",
+          "score" : {
+            "type" : "MemorySafetyTestingScore",
+            "name" : "How a project tests for memory-safety issues"
+          },
+          "value" : 0.0,
+          "weight" : 1.0,
+          "confidence" : 10.0,
+          "usedValues" : [ {
+            "type" : "LanguagesValue",
+            "feature" : {
+              "type" : "LanguagesFeature",
+              "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVASCRIPT", "TYPESCRIPT" ]
+            },
+            "explanation" : [ ]
+          }, {
+            "type" : "BooleanValue",
+            "feature" : {
+              "type" : "BooleanFeature",
+              "name" : "If an open-source project uses AddressSanitizer"
+            },
+            "flag" : false,
+            "explanation" : [ ]
+          }, {
+            "type" : "BooleanValue",
+            "feature" : {
+              "type" : "BooleanFeature",
+              "name" : "If an open-source project uses MemorySanitizer"
+            },
+            "flag" : false,
+            "explanation" : [ ]
+          }, {
+            "type" : "BooleanValue",
+            "feature" : {
+              "type" : "BooleanFeature",
+              "name" : "If an open-source project uses UndefinedBehaviorSanitizer"
+            },
+            "flag" : false,
+            "explanation" : [ ]
+          } ],
+          "explanation" : [ ],
+          "isUnknown" : false,
+          "isNotApplicable" : true,
+          "feature" : {
+            "type" : "MemorySafetyTestingScore",
+            "name" : "How a project tests for memory-safety issues"
           }
         } ],
         "explanation" : [ ],
@@ -1742,12 +1559,6 @@
             "type" : "NoHttpToolScore",
             "name" : "If a project uses nohttp tool"
           }, {
-            "type" : "FuzzingScore",
-            "name" : "How a project uses fuzzing"
-          }, {
-            "type" : "MemorySafetyTestingScore",
-            "name" : "How a project tests for memory-safety issues"
-          }, {
             "type" : "StaticAnalysisScore",
             "name" : "How a project uses static analysis for security testing",
             "subScores" : [ {
@@ -1762,7 +1573,7 @@
             } ],
             "weights" : {
               "values" : {
-                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 },
@@ -1770,20 +1581,26 @@
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
               }
             }
+          }, {
+            "type" : "FuzzingScore",
+            "name" : "How a project uses fuzzing"
+          }, {
+            "type" : "MemorySafetyTestingScore",
+            "name" : "How a project tests for memory-safety issues"
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
                 "type" : "ImmutableWeight",
-                "value" : 1.0
+                "value" : 0.2
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -1791,11 +1608,11 @@
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.2
-              },
               "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
@@ -1818,12 +1635,6 @@
             "type" : "NoHttpToolScore",
             "name" : "If a project uses nohttp tool"
           }, {
-            "type" : "FuzzingScore",
-            "name" : "How a project uses fuzzing"
-          }, {
-            "type" : "MemorySafetyTestingScore",
-            "name" : "How a project tests for memory-safety issues"
-          }, {
             "type" : "StaticAnalysisScore",
             "name" : "How a project uses static analysis for security testing",
             "subScores" : [ {
@@ -1838,7 +1649,7 @@
             } ],
             "weights" : {
               "values" : {
-                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 },
@@ -1846,20 +1657,26 @@
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
               }
             }
+          }, {
+            "type" : "FuzzingScore",
+            "name" : "How a project uses fuzzing"
+          }, {
+            "type" : "MemorySafetyTestingScore",
+            "name" : "How a project tests for memory-safety issues"
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
                 "type" : "ImmutableWeight",
-                "value" : 1.0
+                "value" : 0.2
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -1867,11 +1684,11 @@
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.2
-              },
               "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
@@ -1879,6 +1696,189 @@
           }
         },
         "name" : "Assesses security testing and vulnerability discovery"
+      }
+    }, {
+      "type" : "ScoreValue",
+      "score" : {
+        "type" : "UnpatchedVulnerabilitiesScore",
+        "name" : "How well vulnerabilities are patched"
+      },
+      "value" : 10.0,
+      "weight" : 0.5,
+      "confidence" : 10.0,
+      "usedValues" : [ {
+        "type" : "VulnerabilitiesValue",
+        "vulnerabilities" : {
+          "entries" : [ {
+            "id" : "CVE-2021-41251",
+            "cvss" : {
+              "version" : "V3",
+              "value" : 5.9
+            },
+            "references" : [ {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1770",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1770"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32",
+              "url" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1769",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1769"
+            } ],
+            "resolution" : "PATCHED",
+            "introduced" : null,
+            "fixed" : null,
+            "published" : "2021-11-05",
+            "vulnerableVersions" : [ {
+              "versionStart" : null,
+              "versionEnd" : null
+            } ]
+          } ]
+        },
+        "feature" : {
+          "type" : "VulnerabilitiesInProject",
+          "name" : "Info about vulnerabilities in open-source project"
+        },
+        "explanation" : [ ]
+      } ],
+      "explanation" : [ "No unpatched vulnerabilities found which is good" ],
+      "isUnknown" : false,
+      "isNotApplicable" : false,
+      "feature" : {
+        "type" : "UnpatchedVulnerabilitiesScore",
+        "name" : "How well vulnerabilities are patched"
+      }
+    }, {
+      "type" : "ScoreValue",
+      "score" : {
+        "type" : "CommunityCommitmentScore",
+        "name" : "How well open-source community commits to support an open-source project"
+      },
+      "value" : 8.0,
+      "weight" : 0.5,
+      "confidence" : 10.0,
+      "usedValues" : [ {
+        "type" : "BooleanValue",
+        "feature" : {
+          "type" : "BooleanFeature",
+          "name" : "If an open-source project is supported by a company"
+        },
+        "flag" : true,
+        "explanation" : [ ]
+      }, {
+        "type" : "BooleanValue",
+        "feature" : {
+          "type" : "BooleanFeature",
+          "name" : "If an open-source project belongs to Apache Foundation"
+        },
+        "flag" : false,
+        "explanation" : [ ]
+      }, {
+        "type" : "BooleanValue",
+        "feature" : {
+          "type" : "BooleanFeature",
+          "name" : "If an open-source project belongs to Eclipse Foundation"
+        },
+        "flag" : false,
+        "explanation" : [ ]
+      } ],
+      "explanation" : [ ],
+      "isUnknown" : false,
+      "isNotApplicable" : false,
+      "feature" : {
+        "type" : "CommunityCommitmentScore",
+        "name" : "How well open-source community commits to support an open-source project"
+      }
+    }, {
+      "type" : "ScoreValue",
+      "score" : {
+        "type" : "ProjectActivityScore",
+        "name" : "Open-source project activity score"
+      },
+      "value" : 10.0,
+      "weight" : 0.5,
+      "confidence" : 10.0,
+      "usedValues" : [ {
+        "type" : "IntegerValue",
+        "feature" : {
+          "type" : "PositiveIntegerFeature",
+          "name" : "Number of commits in the last three months"
+        },
+        "number" : 244,
+        "explanation" : [ ]
+      }, {
+        "type" : "IntegerValue",
+        "feature" : {
+          "type" : "PositiveIntegerFeature",
+          "name" : "Number of contributors in the last three months"
+        },
+        "number" : 3,
+        "explanation" : [ ]
+      } ],
+      "explanation" : [ "244 commits in the last 3 months results to 10.00 points", "3 contributors increase the score value from 10.00 to 11.00" ],
+      "isUnknown" : false,
+      "isNotApplicable" : false,
+      "feature" : {
+        "type" : "ProjectActivityScore",
+        "name" : "Open-source project activity score"
+      }
+    }, {
+      "type" : "ScoreValue",
+      "score" : {
+        "type" : "ProjectPopularityScore",
+        "name" : "Open-source project popularity score"
+      },
+      "value" : 0.139,
+      "weight" : 0.5,
+      "confidence" : 10.0,
+      "usedValues" : [ {
+        "type" : "IntegerValue",
+        "feature" : {
+          "type" : "PositiveIntegerFeature",
+          "name" : "Number of stars for a GitHub repository"
+        },
+        "number" : 89,
+        "explanation" : [ ]
+      }, {
+        "type" : "IntegerValue",
+        "feature" : {
+          "type" : "PositiveIntegerFeature",
+          "name" : "Number of watchers for a GitHub repository"
+        },
+        "number" : 15,
+        "explanation" : [ ]
+      } ],
+      "explanation" : [ ],
+      "isUnknown" : false,
+      "isNotApplicable" : false,
+      "feature" : {
+        "type" : "ProjectPopularityScore",
+        "name" : "Open-source project popularity score"
+      }
+    }, {
+      "type" : "ScoreValue",
+      "score" : {
+        "type" : "SecurityReviewScore",
+        "name" : "How security reviews have been done for an open source project"
+      },
+      "value" : 0.0,
+      "weight" : 0.2,
+      "confidence" : 10.0,
+      "usedValues" : [ {
+        "type" : "SecurityReviewsValue",
+        "feature" : {
+          "type" : "SecurityReviewsFeature",
+          "name" : "Security reviews for a project"
+        },
+        "reviews" : [ ],
+        "explanation" : [ ]
+      } ],
+      "explanation" : [ "No security reviews have been done" ],
+      "isUnknown" : false,
+      "isNotApplicable" : false,
+      "feature" : {
+        "type" : "SecurityReviewScore",
+        "name" : "How security reviews have been done for an open source project"
       }
     } ],
     "explanation" : [ ],
@@ -1899,12 +1899,6 @@
             "type" : "NoHttpToolScore",
             "name" : "If a project uses nohttp tool"
           }, {
-            "type" : "FuzzingScore",
-            "name" : "How a project uses fuzzing"
-          }, {
-            "type" : "MemorySafetyTestingScore",
-            "name" : "How a project tests for memory-safety issues"
-          }, {
             "type" : "StaticAnalysisScore",
             "name" : "How a project uses static analysis for security testing",
             "subScores" : [ {
@@ -1919,7 +1913,7 @@
             } ],
             "weights" : {
               "values" : {
-                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 },
@@ -1927,20 +1921,26 @@
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
               }
             }
+          }, {
+            "type" : "FuzzingScore",
+            "name" : "How a project uses fuzzing"
+          }, {
+            "type" : "MemorySafetyTestingScore",
+            "name" : "How a project tests for memory-safety issues"
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
                 "type" : "ImmutableWeight",
-                "value" : 1.0
+                "value" : 0.2
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -1948,11 +1948,11 @@
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.2
-              },
               "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
@@ -1960,12 +1960,6 @@
           }
         },
         "name" : "Assesses security testing and vulnerability discovery"
-      }, {
-        "type" : "ProjectSecurityAwarenessScore",
-        "name" : "How well open-source community is aware about security"
-      }, {
-        "type" : "UnpatchedVulnerabilitiesScore",
-        "name" : "How well vulnerabilities are patched"
       }, {
         "type" : "ProjectSecurityTestingScore",
         "name" : "How well security testing is done for an open-source project",
@@ -1975,12 +1969,6 @@
         }, {
           "type" : "NoHttpToolScore",
           "name" : "If a project uses nohttp tool"
-        }, {
-          "type" : "FuzzingScore",
-          "name" : "How a project uses fuzzing"
-        }, {
-          "type" : "MemorySafetyTestingScore",
-          "name" : "How a project tests for memory-safety issues"
         }, {
           "type" : "StaticAnalysisScore",
           "name" : "How a project uses static analysis for security testing",
@@ -1996,7 +1984,7 @@
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -2004,20 +1992,26 @@
                 "type" : "ImmutableWeight",
                 "value" : 0.5
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
             }
           }
+        }, {
+          "type" : "FuzzingScore",
+          "name" : "How a project uses fuzzing"
+        }, {
+          "type" : "MemorySafetyTestingScore",
+          "name" : "How a project tests for memory-safety issues"
         } ],
         "weights" : {
           "values" : {
-            "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
               "type" : "ImmutableWeight",
-              "value" : 1.0
+              "value" : 0.2
             },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
               "type" : "ImmutableWeight",
               "value" : 1.0
             },
@@ -2025,16 +2019,22 @@
               "type" : "ImmutableWeight",
               "value" : 1.0
             },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 0.2
-            },
             "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 1.0
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
               "type" : "ImmutableWeight",
               "value" : 1.0
             }
           }
         }
+      }, {
+        "type" : "ProjectSecurityAwarenessScore",
+        "name" : "How well open-source community is aware about security"
+      }, {
+        "type" : "UnpatchedVulnerabilitiesScore",
+        "name" : "How well vulnerabilities are patched"
       }, {
         "type" : "CommunityCommitmentScore",
         "name" : "How well open-source community commits to support an open-source project"
@@ -2050,35 +2050,35 @@
       } ],
       "weights" : {
         "values" : {
-          "com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore" : {
+          "com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore" : {
             "type" : "ImmutableWeight",
-            "value" : 0.2
+            "value" : 0.6
+          },
+          "com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore" : {
+            "type" : "ImmutableWeight",
+            "value" : 0.5
           },
           "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore" : {
             "type" : "ImmutableWeight",
             "value" : 1.0
           },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore" : {
+          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore" : {
             "type" : "ImmutableWeight",
-            "value" : 0.6
+            "value" : 0.9
+          },
+          "com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore" : {
+            "type" : "ImmutableWeight",
+            "value" : 0.2
+          },
+          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore" : {
+            "type" : "ImmutableWeight",
+            "value" : 0.5
           },
           "com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore" : {
             "type" : "ImmutableWeight",
             "value" : 0.5
           },
           "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectActivityScore" : {
-            "type" : "ImmutableWeight",
-            "value" : 0.5
-          },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore" : {
-            "type" : "ImmutableWeight",
-            "value" : 0.9
-          },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore" : {
-            "type" : "ImmutableWeight",
-            "value" : 0.5
-          },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore" : {
             "type" : "ImmutableWeight",
             "value" : 0.5
           }

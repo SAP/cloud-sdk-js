@@ -202,7 +202,7 @@
         }
       }
     },
-    "value" : 6.570880077369439,
+    "value" : 6.619235976789168,
     "weight" : 1.0,
     "confidence" : 10.0,
     "usedValues" : [ {
@@ -277,7 +277,7 @@
           }
         }
       },
-      "value" : 8.863636363636363,
+      "value" : 9.09090909090909,
       "weight" : 1.0,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -461,7 +461,7 @@
             }
           }
         },
-        "value" : 9.5,
+        "value" : 10.0,
         "weight" : 1.0,
         "confidence" : 10.0,
         "usedValues" : [ {
@@ -470,7 +470,7 @@
             "type" : "LgtmScore",
             "name" : "How a project addresses issues reported by LGTM"
           },
-          "value" : 9.0,
+          "value" : 10.0,
           "weight" : 1.0,
           "confidence" : 10.0,
           "usedValues" : [ {
@@ -479,7 +479,7 @@
               "type" : "LgtmGradeFeature",
               "name" : "The worst LGTM grade of a project"
             },
-            "value" : "A",
+            "value" : "A+",
             "explanation" : [ ]
           }, {
             "type" : "LanguagesValue",
@@ -1117,7 +1117,7 @@
             }
           }
         },
-        "value" : 8.863636363636363,
+        "value" : 9.09090909090909,
         "weight" : 1.0,
         "confidence" : 10.0,
         "usedValues" : [ {
@@ -1301,7 +1301,7 @@
               }
             }
           },
-          "value" : 9.5,
+          "value" : 10.0,
           "weight" : 1.0,
           "confidence" : 10.0,
           "usedValues" : [ {
@@ -1310,7 +1310,7 @@
               "type" : "LgtmScore",
               "name" : "How a project addresses issues reported by LGTM"
             },
-            "value" : 9.0,
+            "value" : 10.0,
             "weight" : 1.0,
             "confidence" : 10.0,
             "usedValues" : [ {
@@ -1319,7 +1319,7 @@
                 "type" : "LgtmGradeFeature",
                 "name" : "The worst LGTM grade of a project"
               },
-              "value" : "A",
+              "value" : "A+",
               "explanation" : [ ]
             }, {
               "type" : "LanguagesValue",

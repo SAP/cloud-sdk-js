@@ -1,0 +1,102 @@
+name: 1.0-pr-build
+
+on:
+  pull_request: ~
+
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --depth=1
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - run: yarn test:unit
+        env:
+          SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
+      - run: yarn test:integration
+      - run: yarn test:type
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --depth=1
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+        name: Static Code Check
+      - run: yarn check:test-service
+        name: Test Service Version Check
+      - run: yarn check:dependencies
+        name: Undeclared dependency Check
+      - run: yarn check:circular
+        name: Circular dependency Check
+      - run: yarn doc
+        name: API Doc Check
+      - run: yarn check:license
+        name: License Check
+      - name: REUSE Compliance Check
+        uses: fsfe/reuse-action@v1.1
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --depth=1
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - run: yarn test:e2e
+  dependabot:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+    needs: [tests, checks, e2e-tests]
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.1.1
+        with:
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Approve a PR
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

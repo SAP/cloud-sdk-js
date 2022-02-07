@@ -7,7 +7,7 @@ name: 'code-ql'
 
 on:
   push:
-    branches: ['main', '1.0-main']
+    branches: ['main']
     tags: ['v*']
     paths-ignore:
       - 'docs/**'

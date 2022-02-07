@@ -3,7 +3,7 @@ name: build
 on:
   pull_request: ~
   push:
-    branches: ['main', '1.0-main']
+    branches: ['main']
     tags: ['v*']
     paths-ignore:
       - 'docs/**'

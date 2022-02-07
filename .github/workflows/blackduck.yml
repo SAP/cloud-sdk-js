@@ -3,7 +3,7 @@ name: blackduck-scan
 on:
   pull_request: ~
   push:
-    branches: ['main', '1.0-main']
+    branches: ['main']
 
 jobs:
   tests:

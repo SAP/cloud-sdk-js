@@ -1,7 +1,11 @@
-name: 1.0-pr-build
+name: 1.0-build
 
 on:
   pull_request: ~
+  push:
+    branches: ['1.0-main']
+    paths-ignore:
+      - 'docs/**'
 
 jobs:
   tests:

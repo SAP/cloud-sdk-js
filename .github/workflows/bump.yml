@@ -29,6 +29,3 @@ jobs:
       - name: Bump patch version
         if: github.event.inputs.bump == 'patch'
         run: yarn lerna version patch --force-publish -y
-      - name: Bump patch version
-        if: github.event.inputs.bump == 'major'
-        run: yarn lerna version major --force-publish -y

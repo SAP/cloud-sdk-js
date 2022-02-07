@@ -4,7 +4,7 @@
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/cloud-sdk-js)](https://api.reuse.software/info/github.com/SAP/cloud-sdk-js)
 [![Fosstars security rating](https://github.com/SAP/cloud-sdk-js/blob/fosstars-report/fosstars_badge.svg)](https://github.com/SAP/cloud-sdk-js/blob/fosstars-report/fosstars_report.md)
 
-# SAP Cloud SDK
+# SAP Cloud SDK 
 
 An SDK to reduce your development effort when building side-by-side extension applications on SAP Business Technology Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
 

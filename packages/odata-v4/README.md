@@ -5,7 +5,7 @@
 
 # @sap-cloud-sdk/odata-v4
 
-This package contains functions of OData v2 client.
+This package contains functions of OData v4 client.
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->

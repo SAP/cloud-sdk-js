@@ -17,7 +17,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v1')
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
-          yarn lerna publish from-package --force-publish -y
+          yarn lerna publish from-package --dist-tag legacy --force-publish -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
       - name: Version 2 Stable Release

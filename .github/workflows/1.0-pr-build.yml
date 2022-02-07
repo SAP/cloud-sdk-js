@@ -1,12 +1,7 @@
-name: build
+name: 1.0-pr-build
 
 on:
   pull_request: ~
-  push:
-    branches: [main]
-    tags: ['v*']
-    paths-ignore:
-      - 'docs/**'
 
 jobs:
   tests:
@@ -105,32 +100,3 @@ jobs:
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  draft-github-release:
-    if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
-    needs: [tests, checks]
-    steps:
-      - uses: actions/checkout@v2
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '12.x'
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - uses: ./.github/actions/get-changelog
-        name: Get Changelog
-        id: get-changelog
-      - uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          draft: true
-          body: ${{ steps.get-changelog.outputs.changelog }}

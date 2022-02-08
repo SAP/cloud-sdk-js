@@ -43,3 +43,21 @@ jobs:
         env:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
           PROJECT_VERSION: ${{ env.project_version }}
+      - name: Sleep on retry
+        if: ${{ failure() }}
+        run: sleep 60
+      - name: Blackduck Scan Retry
+        uses: SAP/project-piper-action@de2106c218782b7caa3989c7a8af8f3b9d5fa36b
+        if: ${{ failure() }}
+        with:
+          command: detectExecuteScan
+          flags: \
+            --version=$PROJECT_VERSION \
+            --scanProperties="\
+            --detect.yarn.prod.only=true \
+            --blackduck.signature.scanner.memory=4096 \
+            --detect.timeout=6000 \
+            --blackduck.trust.cert=true"
+        env:
+          PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
+          PROJECT_VERSION: ${{ env.project_version }}

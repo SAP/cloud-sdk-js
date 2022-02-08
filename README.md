@@ -110,19 +110,11 @@ If you are using an old version of the SAP Cloud SDK, you might want to read [ho
 
 ### SAP Cloud SDK CLI
 
-The [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) is deprecated. We have provided starter projects with example applications to show how you can integrate the SAP Cloud SDK into your projects.
+The [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) is deprecated. We have provided sample projects with example applications to show how you can integrate the SAP Cloud SDK into your projects.
 
 ### SAP Cloud SDK Sample Projects
 
 We have created multiple [sample projects](https://github.com/SAP-samples/cloud-sdk-js) which showcase the use of the SAP Cloud SDK for TypeScript/JavaScript in different scenarios.
-
-We currently have the following projects available:
-
-- SAP BTP Cloud Foundry Environment - [starter project](https://github.com/SAP-samples/cloud-sdk-js/tree/main/samples/cf-sample-application)
-- SAP BTP Cloud Foundry Environment in combination with CAP - [starter project](https://github.com/SAP-samples/cloud-sdk-js/tree/main/samples/cds-sample-application)
-- Plain Kubernetes with SAP Gardener - [starter project](https://github.com/SAP-samples/cloud-sdk-js/tree/main/samples/k8s-sample-application)
-- Kubernetes with SAP Gardener packaged with Helm - [starter project](https://github.com/SAP-samples/cloud-sdk-js/tree/main/samples/helm-sample-application)
-
 Each project outlines the configurations needed to execute it locally and to deploy the project to SAP Business Technology Platform.
 
 ### Virtual Data Model (VDM)

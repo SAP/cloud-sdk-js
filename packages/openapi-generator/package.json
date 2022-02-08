@@ -20,7 +20,6 @@
   },
   "files": [
     "dist",
-    "bin/openapi-jar",
     "internal.d.ts",
     "internal.js"
   ],

@@ -189,7 +189,7 @@ describe('register-destination without xsuaa binding', () => {
     expect(actual).toEqual(testDestination);
   });
 
-  it('throw an error when no jwt is provided', async () => {
+  it('throws an error when no JWT is provided', async () => {
     expect(() =>
       registerDestination(testDestination)
     ).toThrowErrorMatchingSnapshot();

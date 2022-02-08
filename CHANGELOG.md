@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [openapi-generator] Add `@sap-cloud-sdk/openapi` as a dependency to the OpenAPI generator to fix errors during generation with `--transpile` enabled.
 
 # 2.0.0
 

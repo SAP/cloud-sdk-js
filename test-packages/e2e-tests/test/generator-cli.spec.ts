@@ -4,7 +4,10 @@ import * as fs from 'fs-extra';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 
 describe('generator-cli', () => {
-  const pathToGenerator = path.resolve(__dirname, '../../../packages/generator/src/generator-cli.ts');
+  const pathToGenerator = path.resolve(
+    __dirname,
+    '../../../packages/generator/src/generator-cli.ts'
+  );
   const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
   const outputDir = path.resolve(__dirname, 'generator-test-output');
 

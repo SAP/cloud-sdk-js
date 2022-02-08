@@ -32,7 +32,9 @@
     "moment": "^2.29.0",
     "openapi-backend": "^5.0.0",
     "pm2": "^5.1.2",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "execa": "^5.0.0",
+    "fs-extra": "^10.0.0"
   },
   "cds": {
     "cdsc": {

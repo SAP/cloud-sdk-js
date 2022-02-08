@@ -31,7 +31,7 @@
     "readme": "npx ts-node generate-readme.ts",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/openapi'"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.0.3",

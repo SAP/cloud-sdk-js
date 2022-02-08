@@ -10,8 +10,11 @@ An SDK to reduce your development effort when building side-by-side extension ap
 
 ## Announcement - Upgrade Strategy
 
-Our team is working on a version 2 of the SAP Cloud SDK for JavaScript, expected to be released January 2022.
-We announced the release in a [post on our documentation portal](https://sap.github.io/cloud-sdk/docs/js/announcing-version-2).
+We have released version 2 of the SAP Cloud SDK for JavaScript on npm.
+Check out the [upgrade guide](https://sap.github.io/cloud-sdk/docs/js/guides/upgrade-to-version-2) for detailed instructions.
+The upgrade effort should be around 1 day for an average project and should not take more than a week for larger projects.
+
+It is recommended to upgrade to version 2 as version 1.x will not be actively maintained, with the exception of critical security vulnerabilities for up to 6 months.
 
 Please share your ideas, suggestions or improvements in our [GitHub discussion](https://github.com/SAP/cloud-sdk-js/discussions/1518).
 
@@ -22,12 +25,15 @@ Check our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api) and [
 ### Table of Contents
 
 - [Packages](#packages)
-  - [@sap-cloud-sdk/core](#sap-cloud-sdkcore)
+  - [@sap-cloud-sdk/connectivity](#sap-cloud-connectivity)
+  - [@sap-cloud-sdk/http-client](#sap-cloud-http-client)
+  - [@sap-cloud-sdk/odata-v2](#sap-cloud-odata-v2)
   - [@sap-cloud-sdk/generator](#sap-cloud-sdkgenerator)
   - [@sap-cloud-sdk/test-util](#sap-cloud-sdktest-util)
 - [How to switch to the Open Source version of the SAP Cloud SDK](#how-to-switch-to-the-open-source-version-of-the-sap-cloud-sdk)
 - [Related Projects](#related-projects)
   - [SAP Cloud SDK CLI](#sap-cloud-sdk-cli)
+  - [Sample Projects](#sap-cloud-sdk-starter-projects)
   - [Virtual Data Model (VDM)](#virtual-data-model-vdm)
   - [Project "Piper"](#project-piper)
 - [Feedback](#feedback)
@@ -39,14 +45,40 @@ Check our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api) and [
 
 This project publishes multiple packages and is managed using [lerna](https://github.com/lerna/lerna).
 
-### @sap-cloud-sdk/core
+### @sap-cloud-sdk/http-client
 
-The core is the heart of the SAP Cloud SDK and contains the functionality that is essential to every project powered by the SDK. Any OData client built by the SAP Cloud SDK, be it the VDM or clients built by the generator are using the core. We recommend to install this in addition to your clients.
+This package contains the generic http-client functionality with built-in connectivity with `executeHttpRequest()`. The generic http-client adds SAP infrastructure specific functionality on top of a standard HTTP Client.
 
-To install the SAP Cloud SDK core in your project, run:
+To install the SAP Cloud SDK http-client in your project, run:
 
 ```bash
-$ npm install @sap-cloud-sdk/core
+$ npm install @sap-cloud-sdk/http-client
+```
+
+### @sap-cloud-sdk/conectivity
+
+This package contains all Cloud Foundry connectivity service related methods like `getDestination()` and `registerDestination()`.
+
+To install the SAP Cloud SDK conectivity in your project, run:
+
+```bash
+$ npm install @sap-cloud-sdk/conectivity
+```
+
+### @sap-cloud-sdk/odata-v2
+
+This package contains all OData version 2 specific functionality, like the request builders for create/update operations, predefined filter functions, batch. Package `@sap-cloud-sdk/odata-v4` contains the same functionality for OData verison 4.
+
+To install the SAP Cloud SDK odata-v2 in your project, run:
+
+```bash
+$ npm install @sap-cloud-sdk/odata-v2
+```
+
+Similarly, to install the SAP Cloud SDK odata-v4, use:
+
+```bash
+$ npm install @sap-cloud-sdk/odata-v4
 ```
 
 ### @sap-cloud-sdk/generator
@@ -78,7 +110,12 @@ If you are using an old version of the SAP Cloud SDK, you might want to read [ho
 
 ### SAP Cloud SDK CLI
 
-To reduce the development effort even more, you can use the [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) to start a new [NestJS](https://github.com/nestjs/nest) project, including the SDK right from the get go and supporting you do deploy your project to SAP Business Technology Platform.
+The [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) is deprecated. We have provided sample projects with example applications to show how you can integrate the SAP Cloud SDK into your projects.
+
+### SAP Cloud SDK Sample Projects
+
+We have created multiple [sample projects](https://github.com/SAP-samples/cloud-sdk-js) which showcase the use of the SAP Cloud SDK for TypeScript/JavaScript in different scenarios.
+Each project outlines the configurations needed to execute it locally and to deploy the project to SAP Business Technology Platform.
 
 ### Virtual Data Model (VDM)
 
@@ -101,7 +138,7 @@ The goal of project "Piper" is to substantially ease setting up continuous deliv
 
 ## Feedback
 
-Feel free to leave your feedback in form of GitHub issues for bugs and feature requests. If you have broader questions, we are active on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk+javascript) too.
+Feel free to leave your feedback in form of [GitHub issues](https://github.com/SAP/cloud-sdk-js/issues) for bugs and feature requests. If you have broader questions, we are active on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk+javascript) too.
 
 ## Contribute
 

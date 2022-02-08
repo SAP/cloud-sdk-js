@@ -90,7 +90,9 @@ function parseReturnTypes(
     return getComplexReturnType(isCollection, isNullable, complexType);
   }
 
-  throw Error(`Unable to find a return type for name ${returnType}.`);
+  throw Error(
+    `Unable to find a return type for name ${JSON.stringify(returnType)}.`
+  );
 }
 
 function findEdmType(returnType: string): string | undefined {

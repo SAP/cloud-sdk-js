@@ -19,7 +19,7 @@ describe('entity', () => {
           ['CollectionProperty', 'Collection(Edm.String)', false]
         ])
       ],
-      [createTestEntitySet('TestEntity', 'TestEntityType')]
+      [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
     );
 
     const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
@@ -42,7 +42,7 @@ describe('entity', () => {
           ]
         ])
       ],
-      [createTestEntitySet('TestEntity', 'TestEntityType')]
+      [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
     );
 
     const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
@@ -61,7 +61,7 @@ describe('entity', () => {
           ['CollectionProperty', 'Collection(namespace.TestComplexType)', false]
         ])
       ],
-      [createTestEntitySet('TestEntity', 'TestEntityType')]
+      [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
     );
 
     const formatter = getFormatter();
@@ -92,7 +92,7 @@ describe('entity', () => {
         )
       ],
       [
-        createTestEntitySet('TestEntity', 'TestEntityType', [
+        createTestEntitySet('TestEntity', 'ns.TestEntityType', [
           ['SingleNavProperty', 'TestEntity']
         ])
       ]
@@ -117,7 +117,7 @@ describe('entity', () => {
         )
       ],
       [
-        createTestEntitySet('TestEntity', 'TestEntityType', [
+        createTestEntitySet('TestEntity', 'ns.TestEntityType', [
           ['CollectionNavProperty', 'TestEntity']
         ])
       ]
@@ -149,7 +149,7 @@ describe('entity', () => {
         )
       ],
       [
-        createTestEntitySet('TestEntity', 'TestEntityType', [
+        createTestEntitySet('TestEntity', 'ns.TestEntityType', [
           ['SingleNavProperty', 'TestEntity'],
           ['CollectionNavProperty', 'TestEntity']
         ])

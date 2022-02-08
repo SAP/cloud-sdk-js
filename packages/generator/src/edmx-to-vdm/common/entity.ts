@@ -142,7 +142,7 @@ export function joinEntityMetadata<
   swagger?: SwaggerMetadata
 ): JoinedEntityMetadata<EntitySetT, EntityTypeT>[] {
   return entitySets.map(entitySet => {
-    let entityType = entityTypes.find(
+    const entityType = entityTypes.find(
       t => `${t.Namespace}.${t.Name}` === entitySet.EntityType
     );
 

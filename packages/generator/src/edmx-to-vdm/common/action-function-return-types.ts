@@ -1,4 +1,4 @@
-import { first, last } from '@sap-cloud-sdk/util';
+import { first } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import {
   VdmActionImportReturnType,

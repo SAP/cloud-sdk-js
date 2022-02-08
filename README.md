@@ -75,7 +75,7 @@ To install the SAP Cloud SDK odata-v2 in your project, run:
 $ npm install @sap-cloud-sdk/odata-v2
 ```
 
-Similary, to install the SAP Cloud SDK odata-v4, use:
+Similarly, to install the SAP Cloud SDK odata-v4, use:
 
 ```bash
 $ npm install @sap-cloud-sdk/odata-v4
@@ -112,9 +112,9 @@ If you are using an old version of the SAP Cloud SDK, you might want to read [ho
 
 The [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) is deprecated. We have provided starter projects with example applications to show how you can integrate the SAP Cloud SDK into your projects.
 
-### SAP Cloud SDK Starter Projects
+### SAP Cloud SDK Sample Projects
 
-We have created multiple starter projects in our [samples repository](https://github.com/SAP-samples/cloud-sdk-js) which showcase the use of the SAP Cloud SDK for TypeScript/JavaScript in different scenarios.
+We have created multiple [sample projects](https://github.com/SAP-samples/cloud-sdk-js) which showcase the use of the SAP Cloud SDK for TypeScript/JavaScript in different scenarios.
 
 We currently have the following projects available:
 
@@ -146,7 +146,7 @@ The goal of project "Piper" is to substantially ease setting up continuous deliv
 
 ## Feedback
 
-Feel free to leave your feedback in form of [GitHub](https://github.com/SAP/cloud-sdk-js/issues) issues for bugs and feature requests. If you have broader questions, we are active on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk+javascript) too.
+Feel free to leave your feedback in form of [GitHub issues](https://github.com/SAP/cloud-sdk-js/issues) for bugs and feature requests. If you have broader questions, we are active on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk+javascript) too.
 
 ## Contribute
 

@@ -304,8 +304,7 @@ describe('destination service', () => {
         enableCircuitBreaker: false
       });
       const expectedConfig: AxiosRequestConfig = {
-        baseURL:
-          'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
+        url: 'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         method: 'get',
         proxy: false,
         headers: {
@@ -358,8 +357,7 @@ describe('destination service', () => {
         enableCircuitBreaker: false
       });
       const expectedConfig: AxiosRequestConfig = {
-        baseURL:
-          'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
+        url: 'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         headers: {
           Authorization: `Bearer ${jwt}`
         },

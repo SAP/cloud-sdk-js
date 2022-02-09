@@ -11,12 +11,12 @@ import {
   ResilienceOptions
 } from '../resilience-options';
 import { CachingOptions } from '../cache';
+import { urlAndAgent } from '../../../http-agent';
 import {
   DestinationConfiguration,
   DestinationJson,
   parseDestination
 } from './destination';
-import { urlAndAgent } from '../../../http-agent';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 

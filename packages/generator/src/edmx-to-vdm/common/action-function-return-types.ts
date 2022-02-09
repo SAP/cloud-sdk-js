@@ -24,7 +24,7 @@ import { getApiName } from '../../generator-without-ts-morph/service';
 export function parseFunctionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
   serviceName: string
 ): VdmFunctionImportReturnType {
@@ -42,7 +42,7 @@ export function parseFunctionImportReturnTypes(
 export function parseActionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
   serviceName: string
 ): VdmActionImportReturnType {
@@ -58,7 +58,7 @@ export function parseActionImportReturnTypes(
 function parseReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
   serviceName: string
 ): VdmFunctionImportReturnType | VdmActionImportReturnType {
@@ -114,8 +114,8 @@ function findEntityTypes(
 
 function findComplexType(
   returnType: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
-): Omit<VdmComplexType, 'factoryName'> | undefined {
+  complexTypes: VdmComplexType[]
+): VdmComplexType | undefined {
   returnType = parseTypeName(returnType);
   return complexTypes.find(
     e => `${e.namespace}.${e.originalName}` === returnType
@@ -184,7 +184,7 @@ function getEntityReturnType(
 function getComplexReturnType(
   isCollection: boolean,
   isNullable: boolean,
-  complexType: Omit<VdmComplexType, 'factoryName'>
+  complexType: VdmComplexType
 ): VdmFunctionImportReturnType {
   return {
     returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,

@@ -114,7 +114,6 @@ export interface VdmComplexType {
   originalName: string;
   properties: VdmProperty[];
   typeName: string;
-  factoryName: string;
   fieldType: string;
   namespace: string;
 }

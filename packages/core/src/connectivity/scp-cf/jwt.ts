@@ -10,7 +10,7 @@ import { Cache } from './cache';
 import { fetchVerificationKeys } from './verification-keys';
 import type { RegisteredJWTClaimsTenant } from './tenant';
 import type { RegisteredJWTClaimsUser } from './user';
-import {JwtWithPayloadObject} from "./jsonwebtoken-type";
+import { JwtWithPayloadObject } from './jsonwebtoken-type';
 
 const logger = createLogger({
   package: 'core',
@@ -462,7 +462,6 @@ export function isUserToken(token: JwtPair | undefined): token is JwtPair {
   const keys = Object.keys(token.decoded);
   return !(keys.length === 1 && keys[0] === 'iss');
 }
-
 
 function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
     return typeof decoded.payload !== 'string';

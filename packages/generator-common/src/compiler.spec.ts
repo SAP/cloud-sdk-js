@@ -186,7 +186,7 @@ describe('compilation', () => {
         lib: ['non-existing-lib']
       })
     ).rejects.toThrowError(
-      /error TS6231: Could not resolve the path .* with the extensions: '\.ts', '\.tsx', '\.d\.ts'\./
+      /error TS6231: Could not resolve the path .* with the extensions: '\.ts', '\.tsx', '\.d\.ts'\.*/
     );
   });
 });

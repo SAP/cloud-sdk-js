@@ -1,3 +1,10 @@
+/* eslint-disable tsdoc/syntax */
+/**
+ * [[include:odata-common/README.md]]
+ * @packageDocumentation
+ * @module @sap-cloud-sdk/odata-common
+ */
+
 export { and, or, not } from './filter';
 export { Time } from './time';
 export {

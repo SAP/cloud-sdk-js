@@ -1,3 +1,10 @@
+/* eslint-disable tsdoc/syntax */
+/**
+ * [[include:connectivity/README.md]]
+ * @packageDocumentation
+ * @module @sap-cloud-sdk/connectivity
+ */
+
 export {
   parseDestination,
   noDestinationErrorMessage,

@@ -202,7 +202,7 @@
         }
       }
     },
-    "value" : 6.619235976789168,
+    "value" : 6.874555125725338,
     "weight" : 1.0,
     "confidence" : 10.0,
     "usedValues" : [ {
@@ -1008,37 +1008,13 @@
         },
         "name" : "Assesses security testing and vulnerability discovery"
       },
-      "value" : 8.0,
+      "value" : 10.0,
       "weight" : 0.6,
       "confidence" : 10.0,
       "usedValues" : [ {
         "type" : "VulnerabilitiesValue",
         "vulnerabilities" : {
-          "entries" : [ {
-            "id" : "CVE-2021-41251",
-            "cvss" : {
-              "version" : "V3",
-              "value" : 5.9
-            },
-            "references" : [ {
-              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1770",
-              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1770"
-            }, {
-              "description" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32",
-              "url" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32"
-            }, {
-              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1769",
-              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1769"
-            } ],
-            "resolution" : "PATCHED",
-            "introduced" : null,
-            "fixed" : null,
-            "published" : "2021-11-05",
-            "vulnerableVersions" : [ {
-              "versionStart" : null,
-              "versionEnd" : null
-            } ]
-          } ]
+          "entries" : [ ]
         },
         "feature" : {
           "type" : "VulnerabilitiesInProject",
@@ -1709,31 +1685,7 @@
       "usedValues" : [ {
         "type" : "VulnerabilitiesValue",
         "vulnerabilities" : {
-          "entries" : [ {
-            "id" : "CVE-2021-41251",
-            "cvss" : {
-              "version" : "V3",
-              "value" : 5.9
-            },
-            "references" : [ {
-              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1770",
-              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1770"
-            }, {
-              "description" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32",
-              "url" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32"
-            }, {
-              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1769",
-              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1769"
-            } ],
-            "resolution" : "PATCHED",
-            "introduced" : null,
-            "fixed" : null,
-            "published" : "2021-11-05",
-            "vulnerableVersions" : [ {
-              "versionStart" : null,
-              "versionEnd" : null
-            } ]
-          } ]
+          "entries" : [ ]
         },
         "feature" : {
           "type" : "VulnerabilitiesInProject",
@@ -1804,7 +1756,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 241,
+        "number" : 245,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1815,7 +1767,7 @@
         "number" : 3,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "241 commits in the last 3 months results to 10.00 points", "3 contributors increase the score value from 10.00 to 11.00" ],
+      "explanation" : [ "245 commits in the last 3 months results to 10.00 points", "3 contributors increase the score value from 10.00 to 11.00" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {

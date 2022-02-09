@@ -38,7 +38,7 @@ export function decodeJwtComplete(token: string): JwtWithPayloadObject {
     return decodedToken;
   }
   throw new Error(
-      'JwtError: The given jwt payload does not encode valid JSON.'
+    'JwtError: The given jwt payload does not encode valid JSON.'
   );
 }
 
@@ -464,5 +464,5 @@ export function isUserToken(token: JwtPair | undefined): token is JwtPair {
 }
 
 function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
-    return typeof decoded.payload !== 'string';
+  return typeof decoded.payload !== 'string';
 }

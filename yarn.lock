@@ -1904,7 +1904,7 @@
     axios "^0.21.1"
     fs-extra "9.0.1"
 
-"@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.5.4":
+"@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.8.0":
   version "5.8.0"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.8.0.tgz#081b1a4875d5ab6fed221cef9d44051f6bc621e5"
   integrity sha512-u2kAOXOO+cdkN4CEs2fr642ypkjovfYgLAD0uh815KsRsiNI5i4QNSHbYpc7Ab7v+6fQprP0j7NLzxzPT17Y0g==

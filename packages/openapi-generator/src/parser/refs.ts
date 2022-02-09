@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { $Refs, resolve } from '@apidevtools/swagger-parser';
+import { $Refs } from '@apidevtools/swagger-parser';
 import { pascalCase, kebabCase } from '@sap-cloud-sdk/util';
 import { isReferenceObject } from '../schema-util';
 import { SchemaNaming } from '../openapi-types';
@@ -7,6 +7,7 @@ import { SchemaRefMapping } from './parsing-info';
 import { ensureUniqueNames } from './unique-naming';
 import { ParserOptions } from './options';
 import { ensureValidSchemaNames } from './schema-naming';
+import { resolveBound } from './swagger-parser-workaround';
 
 /**
  * Convenience function to invoke the creation of the OpenApiDocumentRefs builder.
@@ -37,7 +38,7 @@ export class OpenApiDocumentRefs {
     options: ParserOptions
   ): Promise<OpenApiDocumentRefs> {
     return new OpenApiDocumentRefs(
-      await resolve(document),
+      await resolveBound(document),
       OpenApiDocumentRefs.parseSchemaRefMapping(document, options)
     );
   }

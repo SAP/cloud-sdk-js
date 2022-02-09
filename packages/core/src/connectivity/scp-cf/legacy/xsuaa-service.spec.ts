@@ -38,7 +38,7 @@ describe('xsuaa', () => {
       const spy = jest.spyOn(axios, 'request');
       await clientCredentialsGrant(providerXsuaaClientCredentials, creds);
       const expectedConfig: AxiosRequestConfig = {
-        baseURL: 'https://provider.example.com/oauth/token',
+        url: 'https://provider.example.com/oauth/token',
         method: 'post',
         data: 'grant_type=client_credentials',
         proxy: false,
@@ -70,7 +70,7 @@ describe('xsuaa', () => {
       const spy = jest.spyOn(axios, 'request');
       await clientCredentialsGrant(providerXsuaaClientCredentials, creds);
       const expectedConfig: AxiosRequestConfig = {
-        baseURL: 'https://provider.example.com/oauth/token',
+        url: 'https://provider.example.com/oauth/token',
         proxy: false,
         method: 'post',
         data: 'grant_type=client_credentials',

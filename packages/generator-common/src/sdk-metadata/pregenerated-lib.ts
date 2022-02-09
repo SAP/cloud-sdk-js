@@ -19,7 +19,7 @@ export async function isPublishedNpmPackage(
 export async function getLatestVersionOfNpmPackage(
   npmPackageName: string
 ): Promise<string> {
-  const response = await axios.request({
+  const response = await axios.request<{ version: string }>({
     url: `http://registry.npmjs.org/${npmPackageName}/latest`,
     method: 'GET'
   });

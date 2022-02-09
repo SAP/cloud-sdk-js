@@ -188,13 +188,13 @@ export function getUrlProtocol(destination: Destination): Protocol | undefined {
  */
 export function urlAndAgent(
   targetUri: string
-): Pick<HttpRequestConfig, 'baseURL' | 'httpAgent' | 'httpsAgent' | 'proxy'> {
+): Pick<HttpRequestConfig, 'url' | 'httpAgent' | 'httpsAgent' | 'proxy'> {
   let destination: Destination = { url: targetUri, proxyType: 'Internet' };
   if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
     destination = addProxyConfigurationInternet(destination);
   }
   return {
-    baseURL: destination.url,
+    url: destination.url,
     ...getAgentConfig(destination)
   };
 }

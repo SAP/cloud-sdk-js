@@ -12,7 +12,11 @@ import {
 } from '../resilience-options';
 import { CachingOptions } from '../cache';
 import { urlAndAgent } from '../../../http-agent';
-import { parseDestination } from './destination';
+import {
+  DestinationConfiguration,
+  DestinationJson,
+  parseDestination
+} from './destination';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 
@@ -21,12 +25,14 @@ const logger = createLogger({
   messageContext: 'destination-service'
 });
 
-type DestinationCircuitBreaker = CircuitBreaker<
+type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
   [requestConfig: AxiosRequestConfig],
-  AxiosResponse
+  AxiosResponse<ResponseType>
 >;
 
-let circuitBreaker: DestinationCircuitBreaker;
+let circuitBreaker: DestinationCircuitBreaker<
+  DestinationJson | DestinationConfiguration
+>;
 
 /**
  * Fetches all instance destinations from the given URI.
@@ -134,6 +140,7 @@ export interface AuthAndExchangeTokens {
  * @param destinationName - The name of the desired destination
  * @param options - Options to use by retrieving destinations
  * @returns A Promise resolving to the destination
+ * @internal
  */
 export async function fetchDestination(
   destinationServiceUri: string,
@@ -210,7 +217,9 @@ async function fetchDestinationByTokens(
     });
 }
 
-function errorMessageFromResponse(error: AxiosError): string {
+function errorMessageFromResponse(
+  error: AxiosError<{ ErrorMessage: string }>
+): string {
   return propertyExists(error, 'response', 'data', 'ErrorMessage')
     ? ` ${error.response!.data.ErrorMessage}`
     : '';
@@ -220,7 +229,7 @@ function callDestinationService(
   uri: string,
   headers: Record<string, any>,
   options: ResilienceOptions = { enableCircuitBreaker: true }
-): Promise<AxiosResponse> {
+): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
   const config: AxiosRequestConfig = {
     ...urlAndAgent(uri),
     proxy: false,
@@ -235,12 +244,15 @@ function callDestinationService(
   return axios.request(config);
 }
 
-function getCircuitBreaker(): DestinationCircuitBreaker {
+function getCircuitBreaker(): DestinationCircuitBreaker<
+  DestinationJson | DestinationConfiguration
+> {
+  const request: (
+    config: AxiosRequestConfig
+  ) => Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> =
+    axios.request;
   if (!circuitBreaker) {
-    circuitBreaker = new CircuitBreaker(
-      axios.request,
-      circuitBreakerDefaultOptions
-    );
+    circuitBreaker = new CircuitBreaker(request, circuitBreakerDefaultOptions);
   }
   return circuitBreaker;
 }

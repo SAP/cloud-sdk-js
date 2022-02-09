@@ -10,6 +10,7 @@ import { Cache } from './cache';
 import { fetchVerificationKeys } from './verification-keys';
 import type { RegisteredJWTClaimsTenant } from './tenant';
 import type { RegisteredJWTClaimsUser } from './user';
+import {JwtWithPayloadObject} from "./jsonwebtoken-type";
 
 const logger = createLogger({
   package: 'core',
@@ -29,15 +30,16 @@ export function decodeJwt(token: string): JwtPayload {
  * Decode JWT and return the complete decoded token.
  * @param token - JWT to be decoded.
  * @returns Decoded token containing payload, header and signature.
+ *  @internal
  */
-export function decodeJwtComplete(token: string): Jwt {
-  const decodedToken = decode(token, { complete: true });
-  if (decodedToken === null || typeof decodedToken === 'string') {
-    throw new Error(
-      'JwtError: The given jwt payload does not encode valid JSON.'
-    );
+export function decodeJwtComplete(token: string): JwtWithPayloadObject {
+  const decodedToken = decode(token, { complete: true, json: true });
+  if (decodedToken !== null && isJwtWithPayloadObject(decodedToken)) {
+    return decodedToken;
   }
-  return decodedToken;
+  throw new Error(
+      'JwtError: The given jwt payload does not encode valid JSON.'
+  );
 }
 
 /**
@@ -262,6 +264,9 @@ export function verifyJwtWithKey(
       if (!decodedToken) {
         return reject('Invalid JWT. Token verification yielded `undefined`.');
       }
+      if (typeof decodedToken === 'string') {
+        return resolve(JSON.parse(decodedToken));
+      }
       return resolve(decodedToken);
     });
   });
@@ -456,4 +461,9 @@ export function isUserToken(token: JwtPair | undefined): token is JwtPair {
   // Check if it is an Issuer Payload
   const keys = Object.keys(token.decoded);
   return !(keys.length === 1 && keys[0] === 'iss');
+}
+
+
+function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
+    return typeof decoded.payload !== 'string';
 }

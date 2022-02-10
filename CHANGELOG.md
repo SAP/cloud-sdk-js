@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [util] Add `sanitizeRecord` function to `cloud-sdk-logger` which replaces potentially sensitive information in a `Record<string, any>` based on a list of sensistive keys.
 
 ## Fixed Issues
 

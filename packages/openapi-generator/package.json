@@ -20,7 +20,6 @@
   },
   "files": [
     "dist",
-    "bin/openapi-jar",
     "internal.d.ts",
     "internal.js"
   ],
@@ -31,11 +30,12 @@
     "readme": "npx ts-node generate-readme.ts",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/openapi'"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.0.3",
     "@sap-cloud-sdk/generator-common": "^2.0.0",
+    "@sap-cloud-sdk/openapi": "^2.0.0",
     "@sap-cloud-sdk/util": "^2.0.0",
     "glob": "^7.1.6",
     "js-yaml": "^4.0.0",

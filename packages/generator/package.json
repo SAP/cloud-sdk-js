@@ -51,7 +51,7 @@
     "yargs": "^17.0.1"
   },
   "devDependencies": {
-    "@sap/cloud-sdk-vdm-business-partner-service": "^1.24.0",
+    "@sap/cloud-sdk-vdm-business-partner-service": "^2.0.0",
     "@types/yargs": "^17.0.0",
     "mock-fs": "^5.0.0",
     "nock": "^13.0.11"

@@ -775,17 +775,6 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@jest/types@^27.5.0":
-  version "27.5.0"
-  resolved "https://registry.npmjs.org/@jest/types/-/types-27.5.0.tgz#6ad04a5c5355fd9f46e5cf761850e0edb3c209dd"
-  integrity sha512-oDHEp7gwSgA82RZ6pzUL3ugM2njP/lVB1MsxRZNOBk+CoNvh9SpH1lQixPFc/kDlV50v59csiW4HLixWmhmgPQ==
-  dependencies:
-    "@types/istanbul-lib-coverage" "^2.0.0"
-    "@types/istanbul-reports" "^3.0.0"
-    "@types/node" "*"
-    "@types/yargs" "^16.0.0"
-    chalk "^4.0.0"
-
 "@jest/types@^27.5.1":
   version "27.5.1"
   resolved "https://registry.npmjs.org/@jest/types/-/types-27.5.1.tgz#3c79ec4a8ba61c170bf937bcf9e98a9df175ec80"
@@ -1782,6 +1771,67 @@
   optionalDependencies:
     npmlog "2 || ^3.1.0 || ^4.0.0"
 
+"@sap-cloud-sdk/connectivity@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/connectivity/-/connectivity-2.0.0.tgz#598711c62b30a89ae55a280bd9c45b79d1e8f996"
+  integrity sha512-623CdiR5lEgxeW8aQI3TzMYDynrqc199Y/TrmPC3v/E2M/P3i65QyL4GnAecmA3kra/kKQQ9XMNMUjDHwGdaYQ==
+  dependencies:
+    "@sap-cloud-sdk/util" "^2.0.0"
+    "@sap/xsenv" "^3.0.0"
+    "@sap/xssec" "^3.2.7"
+    axios "^0.24.0"
+    http-proxy-agent "^5.0.0"
+    https-proxy-agent "^5.0.0"
+    jsonwebtoken "^8.5.1"
+    opossum "^6.0.0"
+
+"@sap-cloud-sdk/http-client@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/http-client/-/http-client-2.0.0.tgz#b058fb4a35b45d5c760bbd3363006f179ce3b61a"
+  integrity sha512-oGRkdR6EVQNMA1S7qsxQmF8UlA2egDHioA4LOZFf77gRCnpTyh2ekrmQ8JJeMtFr5/oma32oaePyotpJzYv4jg==
+  dependencies:
+    "@sap-cloud-sdk/connectivity" "^2.0.0"
+    "@sap-cloud-sdk/util" "^2.0.0"
+    axios "^0.24.0"
+
+"@sap-cloud-sdk/odata-common@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-common/-/odata-common-2.0.0.tgz#8aef584fccc523acd236108667a7a20422cfb4d6"
+  integrity sha512-JXVtXo4arNx12zvZBmnxXmO/+mCGFTm0sVpfMQ6kaC5x7Bdilr9MSGhZ/16yKgoxN4YkYWVaYwaJeK0wvpAfSQ==
+  dependencies:
+    "@sap-cloud-sdk/connectivity" "^2.0.0"
+    "@sap-cloud-sdk/http-client" "^2.0.0"
+    "@sap-cloud-sdk/util" "^2.0.0"
+    bignumber.js "^9.0.0"
+    moment "^2.29.0"
+    uuid "^8.2.0"
+    voca "^1.4.0"
+
+"@sap-cloud-sdk/odata-v2@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-v2/-/odata-v2-2.0.0.tgz#e856513b3043c520d4d69fe1e7c796db3b7dd3fd"
+  integrity sha512-dLAfOfxaiO/5EtWcpWHq6qRJ0V3MGzFzN4mv02Cixww9bKah6NtUR2++7vKiMY/oZAgvprBQ+U2M1RA6rVT4gg==
+  dependencies:
+    "@sap-cloud-sdk/connectivity" "^2.0.0"
+    "@sap-cloud-sdk/http-client" "^2.0.0"
+    "@sap-cloud-sdk/odata-common" "^2.0.0"
+    "@sap-cloud-sdk/util" "^2.0.0"
+    bignumber.js "^9.0.0"
+    moment "^2.29.0"
+    uuid "^8.2.0"
+
+"@sap-cloud-sdk/util@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-2.0.0.tgz#38e49f094e3c27680c3267ca022810712a9147e0"
+  integrity sha512-Jyta5Ka8Gty5ei6unJGFikMV/qcobXMtVKu2y3EkJDVBqo7jdPk/NxQJI4ErdwkXSLTR5P202x0W3Z+jPKbS3w==
+  dependencies:
+    axios "^0.24.0"
+    chalk "^4.1.0"
+    logform "^2.2.0"
+    promise.allsettled "^1.0.4"
+    voca "^1.4.0"
+    winston "^3.3.3"
+
 "@sap/cds-compiler@^2.4.4":
   version "2.7.0"
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.7.0.tgz#f7d06c16746a21be37c9d0feab63d233b9d8c68e"
@@ -1853,12 +1903,13 @@
     "@sap/cds-compiler" "^2.4.4"
     "@sap/cds-foss" "^3"
 
-"@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
-  version "1.28.2"
-  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.28.2.tgz#400a6364073ef113099cc2607370e10278a8a5fa"
-  integrity sha512-rHMqsVY884KSjcv/nJh77bcRtlImXD3R3Rqdhh9z88P20th8cKoQjrhquqdJ3Bm37Y83+7nF/j2D/R+StNlRdA==
+"@sap/cloud-sdk-vdm-business-partner-service@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-2.0.0.tgz#a79f0decd34ec015c51d75a3eb85dd1f3b6d7fa7"
+  integrity sha512-UuBf12slBxX/hWSmk3IIMbLM9G+frjPRV6RjZJhzQg5wbtGnKY2mBGkFKMBnmlemuo7HcXOhufrqyUNzmixoHQ==
   dependencies:
-    "@sap-cloud-sdk/core" "^1.51.0"
+    "@sap-cloud-sdk/odata-common" "^2.0.0"
+    "@sap-cloud-sdk/odata-v2" "^2.0.0"
 
 "@sap/edm-converters@~1.0.41":
   version "1.0.41"
@@ -2700,6 +2751,13 @@ axios@^0.21.0, axios@^0.21.1:
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
+
+axios@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
+  dependencies:
+    follow-redirects "^1.14.4"
 
 axios@^0.25.0:
   version "0.25.0"
@@ -4475,14 +4533,14 @@ exit@^0.1.2:
   integrity sha1-BjJjj42HfMghB9MKD/8aF8uhzQw=
 
 expect@>=27.2.3, expect@^27.5.1:
-  version "27.5.0"
-  resolved "https://registry.npmjs.org/expect/-/expect-27.5.0.tgz#ea2fbebb483c274043098c34a53923a0aee493f0"
-  integrity sha512-z73GZ132cBqrapO0X6BeRjyBXqOt9YeRtnDteHJIQqp5s2pZ41Hz23VUbsVFMfkrsFLU9GwoIRS0ZzLuFK8M5w==
+  version "27.5.1"
+  resolved "https://registry.npmjs.org/expect/-/expect-27.5.1.tgz#83ce59f1e5bdf5f9d2b94b61d2050db48f3fef74"
+  integrity sha512-E1q5hSUG2AmYQwQJ041nvgpkODHQvB+RKlB4IYdru6uJsyFTRyZAP463M+1lINorwbqAmUggi6+WwkD8lCS/Dw==
   dependencies:
-    "@jest/types" "^27.5.0"
-    jest-get-type "^27.5.0"
-    jest-matcher-utils "^27.5.0"
-    jest-message-util "^27.5.0"
+    "@jest/types" "^27.5.1"
+    jest-get-type "^27.5.1"
+    jest-matcher-utils "^27.5.1"
+    jest-message-util "^27.5.1"
 
 express@^4.17.1:
   version "4.17.2"
@@ -4744,6 +4802,11 @@ follow-redirects@^1.14.0, follow-redirects@^1.14.7:
   version "1.14.7"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
   integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
+
+follow-redirects@^1.14.4:
+  version "1.14.8"
+  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.8.tgz#016996fb9a11a100566398b1c6839337d7bfa8fc"
+  integrity sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==
 
 forever-agent@~0.6.1:
   version "0.6.1"
@@ -5887,7 +5950,7 @@ jest-config@^27.5.1:
     slash "^3.0.0"
     strip-json-comments "^3.1.1"
 
-jest-diff@^27.0.0, jest-diff@^27.2.5, jest-diff@^27.5.0:
+jest-diff@^27.0.0, jest-diff@^27.2.5:
   version "27.5.0"
   resolved "https://registry.npmjs.org/jest-diff/-/jest-diff-27.5.0.tgz#34dc608a3b9159df178dd480b6d835b5e6b92082"
   integrity sha512-zztvHDCq/QcAVv+o6rts0reupSOxyrX+KLQEOMWCW2trZgcBFgp/oTK7hJCGpXvEIqKrQzyQlaPKn9W04+IMQg==
@@ -6029,16 +6092,6 @@ jest-leak-detector@^27.5.1:
     jest-get-type "^27.5.1"
     pretty-format "^27.5.1"
 
-jest-matcher-utils@^27.5.0:
-  version "27.5.0"
-  resolved "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-27.5.0.tgz#d2fc737224fb3bfa38eaa2393ac5bc953d5c5697"
-  integrity sha512-5ruyzWMGb1ilCWD6ECwNdOhQBeIXAjHmHd5c3uO6quR7RIMHPRP2ucOaejz2j+0R0Ko4GanWM6SqXAeF8nYN5g==
-  dependencies:
-    chalk "^4.0.0"
-    jest-diff "^27.5.0"
-    jest-get-type "^27.5.0"
-    pretty-format "^27.5.0"
-
 jest-matcher-utils@^27.5.1:
   version "27.5.1"
   resolved "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-27.5.1.tgz#9c0cdbda8245bc22d2331729d1091308b40cf8ab"
@@ -6048,21 +6101,6 @@ jest-matcher-utils@^27.5.1:
     jest-diff "^27.5.1"
     jest-get-type "^27.5.1"
     pretty-format "^27.5.1"
-
-jest-message-util@^27.5.0:
-  version "27.5.0"
-  resolved "https://registry.npmjs.org/jest-message-util/-/jest-message-util-27.5.0.tgz#654a781b38a305b1fd8120053c784c67bca00a52"
-  integrity sha512-lfbWRhTtmZMEHPAtl0SrvNzK1F4UnVNMHOliRQT2BJ4sBFzIb0gBCHA4ebWD4o6l1fUyvDPxM01K9OIMQTAdQw==
-  dependencies:
-    "@babel/code-frame" "^7.12.13"
-    "@jest/types" "^27.5.0"
-    "@types/stack-utils" "^2.0.0"
-    chalk "^4.0.0"
-    graceful-fs "^4.2.9"
-    micromatch "^4.0.4"
-    pretty-format "^27.5.0"
-    slash "^3.0.0"
-    stack-utils "^2.0.3"
 
 jest-message-util@^27.5.1:
   version "27.5.1"

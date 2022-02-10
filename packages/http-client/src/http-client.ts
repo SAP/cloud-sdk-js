@@ -4,7 +4,8 @@ import {
   createLogger,
   ErrorWithCause,
   pickIgnoreCase,
-  unixEOL
+  unixEOL,
+  sanitizeRecord
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import {
@@ -218,16 +219,15 @@ function logCustomHeadersWarning(customHeaders?: Record<string, string>) {
 function logRequestInformation(request: HttpRequestConfig) {
   const basicRequestInfo = `Execute '${request.method}' request with target: ${request.url}.`;
   if (request.headers) {
-    const headerText = Object.keys(request.headers).reduce((previous, key) => {
-      if (
-        key.toLowerCase().includes('authentication') ||
-        key.toLowerCase().includes('authorization')
-      ) {
-        return `${previous}${unixEOL}${key}:*******`;
-      }
-      return `${previous}${unixEOL}${key}:${request.headers![key]}`;
-    }, 'The headers of the request are:');
-    logger.debug(`${basicRequestInfo}${unixEOL}${headerText}`);
+    const headerText = Object.entries(sanitizeRecord(request.headers))
+      .map(([key, value]) => `${key}:${value}`)
+      .join(unixEOL);
+
+    logger.debug(
+      `${basicRequestInfo}${unixEOL}The headers of the request are:${unixEOL}${headerText}`
+    );
+  } else {
+    logger.debug(basicRequestInfo);
   }
 }
 

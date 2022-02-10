@@ -270,7 +270,7 @@ describe('generic http client', () => {
       expect(debugSpy)
         .toHaveBeenCalledWith(`Execute 'GET' request with target: /api/entity.
 The headers of the request are:
-authorization:*******
+authorization:<DATA NOT LOGGED TO PREVENT LEAKING SENSITIVE DATA>
 sap-client:001`);
     });
 

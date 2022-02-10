@@ -181,6 +181,57 @@ export function getGlobalLogLevel(): string | undefined {
   return container.options.level;
 }
 
+const defaultSensitiveKeys = [
+  'access_token',
+  'authentication',
+  'authorization',
+  'apiKey',
+  'credentials',
+  'csrf',
+  'xsrf',
+  'secret',
+  'password',
+  'JTENANT',
+  'JSESSION'
+];
+
+/**
+ * Potentially sensitive keys will be matched case-insensitive and as substrings.
+ * Matches will be replaced with a placeholder string.
+ * @param input - The record to be sanitized.
+ * @param replacementString - The placeholder string.
+ * @param sensitiveKeys - The list of keys to be replaced. This overrides the default list.
+ * @returns The sanitized copy of the input record.
+ */
+export function sanitizeRecord<T = any>(
+  input: Record<string, T>,
+  replacementString = '<DATA NOT LOGGED TO PREVENT LEAKING SENSITIVE DATA>',
+  sensitiveKeys: string[] = defaultSensitiveKeys
+): Record<string, T> {
+  const normalizedKeys = sensitiveKeys.map(key => key.toLowerCase());
+  return Object.fromEntries(
+    Object.entries(input).map(([inputKey, value]) => {
+      if (
+        normalizedKeys.some(normalizedKey =>
+          inputKey.toLowerCase().includes(normalizedKey)
+        )
+      ) {
+        return [inputKey, replacementString];
+      }
+      if (
+        inputKey.toLowerCase() === 'cookie' &&
+        typeof value === 'string' &&
+        normalizedKeys.some(normalizedKey =>
+          value.toLowerCase().includes(normalizedKey)
+        )
+      ) {
+        return [inputKey, replacementString];
+      }
+      return [inputKey, value];
+    })
+  );
+}
+
 function getMessageContext(logger: Logger): string | undefined {
   // This is a workaround for the missing defaultMeta property on the winston logger.
   const loggerOptions = logger as WinstonLoggerOptions;

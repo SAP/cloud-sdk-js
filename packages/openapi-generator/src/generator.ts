@@ -5,7 +5,8 @@ import {
   kebabCase,
   finishAll,
   setLogLevel,
-  formatJson
+  formatJson,
+  ErrorWithCause
 } from '@sap-cloud-sdk/util';
 import {
   getSdkMetadataFileNames,
@@ -91,6 +92,14 @@ export async function generateWithParsedOptions(
         ? 'Some clients could not be generated.'
         : 'Could not generate client.';
     await finishAll(promises, errorMessage);
+  } catch (err) {
+    if (err.message?.includes('error TS2307')) {
+      throw new ErrorWithCause(
+        'Did you forget to install "@sap-cloud-sdk/openapi"?',
+        err
+      );
+    }
+    throw err;
   } finally {
     if (options.optionsPerService) {
       await generateOptionsPerService(

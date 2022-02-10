@@ -55,8 +55,12 @@ export function getPropertyFromEntityContainer(
   );
 }
 
-function addNamespace<T>(obj: T, namespace: string): T & { Namespace: string } {
-  return { ...obj, Namespace: namespace };
+function addNamespace<T>(
+  obj: T,
+  namespace: string | string[]
+): T & { Namespace: string } {
+  const Namespace = Array.isArray(namespace) ? namespace[0] : namespace;
+  return { ...obj, Namespace };
 }
 
 /**
@@ -72,7 +76,10 @@ export function getMergedPropertyWithNamespace(
 ): any[] {
   return flat(
     forceArray(root).map(s =>
-      forceArray(s[property]).map(p => addNamespace(p, s.Namespace))
+      // If the property has a namespace take it over the higher level schema namespace
+      forceArray(s[property]).map(p =>
+        addNamespace(p, p.Namespace || s.Namespace)
+      )
     )
   );
 }

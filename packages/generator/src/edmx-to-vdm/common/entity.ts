@@ -142,15 +142,9 @@ export function joinEntityMetadata<
   swagger?: SwaggerMetadata
 ): JoinedEntityMetadata<EntitySetT, EntityTypeT>[] {
   return entitySets.map(entitySet => {
-    let entityType = entityTypes.find(
+    const entityType = entityTypes.find(
       t => `${t.Namespace}.${t.Name}` === entitySet.EntityType
     );
-    // TODO 1584 remove this block after testing all the SAP S/4HANA EDMX files
-    if (!entityType) {
-      entityType = entityTypes.find(
-        t => t.Name === last(entitySet.EntityType.split('.'))
-      );
-    }
 
     if (!entityType) {
       throw Error(

@@ -1,4 +1,4 @@
-import { first, last } from '@sap-cloud-sdk/util';
+import { first } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import {
   VdmActionImportReturnType,
@@ -90,7 +90,9 @@ function parseReturnTypes(
     return getComplexReturnType(isCollection, isNullable, complexType);
   }
 
-  throw Error(`Unable to find a return type for name ${returnType}.`);
+  throw Error(
+    `Unable to find a return type for name ${JSON.stringify(returnType)}.`
+  );
 }
 
 function findEdmType(returnType: string): string | undefined {
@@ -105,15 +107,9 @@ function findEntityTypes(
   entities: VdmEntity[]
 ): VdmEntity[] {
   returnType = parseTypeName(returnType);
-  const entity = entities.filter(
+  return entities.filter(
     e => `${e.entityTypeNamespace}.${e.entityTypeName}` === returnType
   );
-  // TODO 1584 remove this block after testing all the s/4 edmx files
-  if (!entity.length) {
-    const parsedReturnType = last(returnType.split('.'));
-    return entities.filter(e => e.entityTypeName === parsedReturnType);
-  }
-  return entity;
 }
 
 function findComplexType(
@@ -121,15 +117,9 @@ function findComplexType(
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): Omit<VdmComplexType, 'factoryName'> | undefined {
   returnType = parseTypeName(returnType);
-  const complexType = complexTypes.find(
+  return complexTypes.find(
     e => `${e.namespace}.${e.originalName}` === returnType
   );
-  // TODO 1584 remove this block after testing all the s/4 edmx files
-  if (!complexType) {
-    const parsedReturnType = last(returnType.split('.'));
-    return complexTypes.find(c => c.originalName === parsedReturnType);
-  }
-  return complexType;
 }
 
 function getVoidReturnType(): VdmFunctionImportReturnType {

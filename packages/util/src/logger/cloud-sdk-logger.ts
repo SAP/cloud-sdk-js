@@ -208,7 +208,8 @@ function isSensitive(
   sensitiveKeys: string[]
 ): boolean {
   const normalizedKeys = sensitiveKeys.map(key => key.toLowerCase());
-  const input = isCookieHeader(inputKey, value) ? inputKey : value;
+  // If checking cookie header, it matches the content instead of the key
+  const input = isCookieHeader(inputKey, value) ? value : inputKey;
   return normalizedKeys.some(normalizedKey =>
     input.toLowerCase().includes(normalizedKey)
   );

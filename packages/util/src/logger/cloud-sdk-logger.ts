@@ -196,6 +196,29 @@ const defaultSensitiveKeys = [
 ];
 
 /**
+ * Check if the input key contains or matches any of the sensitive keys
+ * @param inputKey - Key of the record to be sanitized
+ * @param value - Value corresponding to the inputKey
+ * @param sensitiveKeys - List of keys to be matched
+ * @returns A boolean to indicate if the key contains or matches any sensitive key
+ */
+function isSensitive(
+  inputKey: string,
+  value: any,
+  sensitiveKeys: string[]
+): boolean {
+  const normalizedKeys = sensitiveKeys.map(key => key.toLowerCase());
+  const input = isCookieHeader(inputKey, value) ? inputKey : value;
+  return normalizedKeys.some(normalizedKey =>
+    input.toLowerCase().includes(normalizedKey)
+  );
+}
+
+function isCookieHeader(inputKey: string, value: any): boolean {
+  return inputKey.toLowerCase() === 'cookie' && typeof value === 'string';
+}
+
+/**
  * Potentially sensitive keys will be matched case-insensitive and as substrings.
  * Matches will be replaced with a placeholder string.
  * @param input - The record to be sanitized.
@@ -208,27 +231,12 @@ export function sanitizeRecord<T = any>(
   replacementString = '<DATA NOT LOGGED TO PREVENT LEAKING SENSITIVE DATA>',
   sensitiveKeys: string[] = defaultSensitiveKeys
 ): Record<string, T> {
-  const normalizedKeys = sensitiveKeys.map(key => key.toLowerCase());
   return Object.fromEntries(
-    Object.entries(input).map(([inputKey, value]) => {
-      if (
-        normalizedKeys.some(normalizedKey =>
-          inputKey.toLowerCase().includes(normalizedKey)
-        )
-      ) {
-        return [inputKey, replacementString];
-      }
-      if (
-        inputKey.toLowerCase() === 'cookie' &&
-        typeof value === 'string' &&
-        normalizedKeys.some(normalizedKey =>
-          value.toLowerCase().includes(normalizedKey)
-        )
-      ) {
-        return [inputKey, replacementString];
-      }
-      return [inputKey, value];
-    })
+    Object.entries(input).map(([inputKey, value]) =>
+      isSensitive(inputKey, value, sensitiveKeys)
+        ? [inputKey, replacementString]
+        : [inputKey, value]
+    )
   );
 }
 

@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [connectivity] Add details to error message for missing "URL" properties in destinations.
 
 ## Fixed Issues
 

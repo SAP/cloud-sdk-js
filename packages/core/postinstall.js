@@ -16,7 +16,7 @@ function printUpgradeAnnouncement() {
       'We will ensure that upgrading takes less than one day of effort when using our upgrade guide.'
     );
     console.log(
-      'Read more in our release post: https://blogs.sap.com/2022/02/09/we-proudly-prese…k-for-javascript/'
+      'Read more in our release post: https://blogs.sap.com/2022/02/11/we-proudly-present-version-2.0-of-the-sap-cloud-sdk-for-javascript/'
     );
     console.log('');
     console.log(

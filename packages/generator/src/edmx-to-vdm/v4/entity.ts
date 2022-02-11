@@ -46,7 +46,7 @@ export function joinEntityTypes<T extends EdmxEntityTypeV4>(
  */
 export function generateEntitiesV4(
   serviceMetadata: ServiceMetadata,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes: VdmComplexType[],
   enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {

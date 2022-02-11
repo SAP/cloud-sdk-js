@@ -12,7 +12,7 @@ export function generateComplexTypesV4(
   serviceMetadata: ServiceMetadata,
   enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
-): Omit<VdmComplexType, 'factoryName'>[] {
+): VdmComplexType[] {
   return transformComplexTypesBase(
     parseComplexTypesV4(serviceMetadata.edmx.root),
     enumTypes,

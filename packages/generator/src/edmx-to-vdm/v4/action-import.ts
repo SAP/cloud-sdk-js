@@ -79,7 +79,7 @@ export function generateActionImportsV4(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
   entities: VdmEntity[],
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmActionImport[] {
   const actions = parseActions(serviceMetadata.edmx.root);

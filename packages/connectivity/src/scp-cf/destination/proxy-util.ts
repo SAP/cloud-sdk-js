@@ -2,7 +2,7 @@ import { AgentOptions } from 'https';
 import { URL } from 'url';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, sanitizeRecord } from '@sap-cloud-sdk/util';
 import { Protocol } from '../protocol';
 import { ProxyConfiguration } from '../connectivity-service-types';
 import { basicHeader } from '../authorization-header';
@@ -168,10 +168,12 @@ export function parseProxyEnv(
     if (proxyConfig) {
       const loggableConfig = {
         ...proxyConfig,
-        headers: proxyConfig.headers
-          ? 'Authorization header present. Not logged for security reasons.'
-          : 'No authorization header present.'
+        headers: sanitizeRecord(
+          proxyConfig.headers || {},
+          'Authorization header present. Not logged for security reasons.'
+        )
       };
+
       logger.debug(
         `Used Proxy Configuration: ${JSON.stringify(loggableConfig, null, 2)}.`
       );

@@ -30,7 +30,7 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "axios": "^0.25.0",
+    "axios": "^0.26.0",
     "chalk": "^4.1.0",
     "logform": "^2.2.0",
     "promise.allsettled": "^1.0.4",

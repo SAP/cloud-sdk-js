@@ -1,9 +1,8 @@
 name: blackduck-scan
 
 on:
-  pull_request: ~
-  push:
-    branches: ['main']
+  schedule:
+    - cron: 0 23 * * *
 
 jobs:
   tests:
@@ -28,7 +27,7 @@ jobs:
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
       - run: sudo apt-get install jq
-      - run: echo "project_version=$(lerna ls -l --json | jq '.[0].version' | tr -d '"')-${GITHUB_REF_NAME}" >> $GITHUB_ENV
+      - run: echo "project_version=$(lerna ls -l --json | jq '.[0].version' | tr -d '"')" >> $GITHUB_ENV
       - name: Blackduck Scan
         uses: SAP/project-piper-action@de2106c218782b7caa3989c7a8af8f3b9d5fa36b
         with:

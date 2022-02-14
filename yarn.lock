@@ -1823,22 +1823,10 @@
     uuid "^8.2.0"
     voca "^1.4.0"
 
-"@sap-cloud-sdk/util@^1.41":
+"@sap-cloud-sdk/util@^1.41", "@sap-cloud-sdk/util@^1.52.0":
   version "1.54.0"
   resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.54.0.tgz#ed2085fd03fac763cb1bc269980de0890963bcf5"
   integrity sha512-WT5eTmYC4maBMQ6colVesWsASAcSlxMc+KxesfPM9109C84XEe7r/XjUTjXbWzvByJpCiukK1i4St2lh2WQMUQ==
-  dependencies:
-    axios "^0.21.1"
-    chalk "^4.1.0"
-    logform "^2.2.0"
-    promise.allsettled "^1.0.4"
-    voca "^1.4.0"
-    winston "^3.3.3"
-
-"@sap-cloud-sdk/util@^1.52.0":
-  version "1.52.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.52.0.tgz#d4f094000046d2617d840e45412695dc2d9551c0"
-  integrity sha512-B5tiLwO7BtZlGH3Qsg7yFv9RZgSiFcBhj3acAretWr0nF9/emZGiwX38TQuNEfdX0oaNddGiKmZgKI47pA6eBA==
   dependencies:
     axios "^0.21.1"
     chalk "^4.1.0"
@@ -1899,9 +1887,9 @@
     fs-extra "9.0.1"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.8.0":
-  version "5.8.0"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.8.0.tgz#081b1a4875d5ab6fed221cef9d44051f6bc621e5"
-  integrity sha512-u2kAOXOO+cdkN4CEs2fr642ypkjovfYgLAD0uh815KsRsiNI5i4QNSHbYpc7Ab7v+6fQprP0j7NLzxzPT17Y0g==
+  version "5.8.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.8.1.tgz#724ae0b5be471389222ea5ca203521ca48797c8c"
+  integrity sha512-PjEzRa1KgcNSebKk/M6p2DKni2baCvaOO+t596ZbliiuQnwe/QOuDjVSeM8zFEVF34PL5wl76qkAa8Tsrkm7Ng==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"

@@ -181,6 +181,66 @@ export function getGlobalLogLevel(): string | undefined {
   return container.options.level;
 }
 
+const defaultSensitiveKeys = [
+  'access_token',
+  'authentication',
+  'authorization',
+  'apiKey',
+  'credentials',
+  'csrf',
+  'xsrf',
+  'secret',
+  'password',
+  'JTENANT',
+  'JSESSION'
+];
+
+/**
+ * Check if the input key contains or matches any of the sensitive keys
+ * @param inputKey - Key of the record to be sanitized
+ * @param value - Value corresponding to the inputKey
+ * @param sensitiveKeys - List of keys to be matched
+ * @returns A boolean to indicate if the key contains or matches any sensitive key
+ */
+function isSensitive(
+  inputKey: string,
+  value: any,
+  sensitiveKeys: string[]
+): boolean {
+  const normalizedKeys = sensitiveKeys.map(key => key.toLowerCase());
+  // If checking cookie header, it matches the content instead of the key
+  const input = isCookieHeader(inputKey, value) ? value : inputKey;
+  return normalizedKeys.some(normalizedKey =>
+    input.toLowerCase().includes(normalizedKey)
+  );
+}
+
+function isCookieHeader(inputKey: string, value: any): boolean {
+  return inputKey.toLowerCase() === 'cookie' && typeof value === 'string';
+}
+
+/**
+ * Potentially sensitive keys will be matched case-insensitive and as substrings.
+ * Matches will be replaced with a placeholder string.
+ * @param input - The record to be sanitized.
+ * @param replacementString - The placeholder string.
+ * @param sensitiveKeys - The list of keys to be replaced. This overrides the default list.
+ * @returns The sanitized copy of the input record.
+ */
+export function sanitizeRecord<T = any>(
+  input: Record<string, T>,
+  replacementString = '<DATA NOT LOGGED TO PREVENT LEAKING SENSITIVE DATA>',
+  sensitiveKeys: string[] = defaultSensitiveKeys
+): Record<string, T> {
+  return Object.fromEntries(
+    Object.entries(input).map(([inputKey, value]) =>
+      isSensitive(inputKey, value, sensitiveKeys)
+        ? [inputKey, replacementString]
+        : [inputKey, value]
+    )
+  );
+}
+
 function getMessageContext(logger: Logger): string | undefined {
   // This is a workaround for the missing defaultMeta property on the winston logger.
   const loggerOptions = logger as WinstonLoggerOptions;

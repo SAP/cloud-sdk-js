@@ -1,3 +1,10 @@
+/* eslint-disable tsdoc/syntax */
+/**
+ * [[include:odata-v4/README.md]]
+ * @packageDocumentation
+ * @module @sap-cloud-sdk/odata-v4
+ */
+
 export { filterFunction } from './filter-function';
 
 export {

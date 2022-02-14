@@ -23,9 +23,11 @@
 ## Improvements
 
 - [connectivity] Add details to error message for missing "URL" properties in destinations.
+- [util] Add `sanitizeRecord` function to `cloud-sdk-logger` which replaces potentially sensitive information in a `Record<string, any>` based on a list of sensistive keys.
 
 ## Fixed Issues
 
+- [openapi-generator] Add `@sap-cloud-sdk/openapi` as a dependency to the OpenAPI generator to fix errors during generation with `--transpile` enabled.
 - [connectivity] Fix an issue when using registering destinations with a JWT but without XSUAA service binding.
 - [connectivity] Fix a missing export `DestinationSelectionStrategies`.
 

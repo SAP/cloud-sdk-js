@@ -118,7 +118,6 @@ export const complexMeal: VdmComplexType = {
   originalName: 'ComplexMealName',
   typeName: 'ComplexMealType',
   fieldType: 'ComplexMealField',
-  factoryName: 'createComplexMeal',
   properties: [
     {
       originalName: 'Complexity',
@@ -152,7 +151,6 @@ export const complexDesert: VdmComplexType = {
   originalName: 'ComplexDesert',
   typeName: 'ComplexDesert',
   fieldType: 'ComplexDesertField',
-  factoryName: 'createComplexDesert',
   properties: [
     {
       originalName: 'Amount',
@@ -186,7 +184,6 @@ export const complexMealWithDesert: VdmComplexType = {
   originalName: 'ComplexMealWithDesertName',
   typeName: 'ComplexMealWithDesertType',
   fieldType: 'ComplexMealWithDesertField',
-  factoryName: 'createComplexMealWithDesert',
   properties: [
     {
       originalName: 'ComplexDesert',

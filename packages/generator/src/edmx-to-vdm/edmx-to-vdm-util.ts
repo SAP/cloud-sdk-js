@@ -88,7 +88,7 @@ export function isComplexTypeOrEnumType(typeName: string): boolean {
  */
 export function isComplexType(
   name: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+  complexTypes: VdmComplexType[]
 ): boolean {
   return isComplexTypeOrEnumType(name)
     ? !!findComplexType(name, complexTypes)
@@ -142,7 +142,7 @@ export function getTypeMappingActionFunction(
 export function typesForCollection(
   typeName: string,
   enumTypes: VdmEnumType[],
-  complexTypes?: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes?: VdmComplexType[],
   formattedTypes?: Record<string, any>
 ): VdmMappedEdmType {
   const typeInsideCollection = parseCollectionTypeName(typeName);

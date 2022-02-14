@@ -127,11 +127,6 @@ export class ServiceNameFormatter {
     return this.originalToComplexTypeName(str);
   }
 
-  typeNameToFactoryName(str: string): string {
-    const factoryName = `create${str}`;
-    return this.serviceWideNameGenerator.generateAndSaveUniqueName(factoryName);
-  }
-
   originalToNavigationPropertyName(
     entitySetName: string,
     originalPropertyName: string

@@ -1,3 +1,10 @@
+/* eslint-disable tsdoc/syntax */
+/**
+ * [[include:http-client/README.md]]
+ * @packageDocumentation
+ * @module @sap-cloud-sdk/http-client
+ */
+
 export { buildHttpRequest, executeHttpRequest } from './http-client';
 export {
   HttpRequestOptions,

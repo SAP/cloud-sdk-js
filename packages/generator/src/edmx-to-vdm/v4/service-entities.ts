@@ -1,7 +1,6 @@
 import { ServiceMetadata } from '../../edmx-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmServiceEntities } from '../../vdm-types';
-import { includeFactoryName } from '../common';
 import { generateFunctionImportsV4 } from './function-import';
 import { generateComplexTypesV4 } from './complex-type';
 import { generateEntitiesV4 } from './entity';
@@ -46,7 +45,7 @@ export function getServiceEntitiesV4(
   );
 
   return {
-    complexTypes: includeFactoryName(complexTypes, formatter),
+    complexTypes,
     enumTypes,
     entities,
     functionImports,

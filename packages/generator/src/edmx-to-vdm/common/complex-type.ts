@@ -22,21 +22,7 @@ import { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
 import { enumTypeForName } from './entity';
 
-// TODO: this should be removed once the deprecated complex type factory is removed
 /* eslint-disable valid-jsdoc */
-
-/**
- * @internal
- */
-export function includeFactoryName(
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  formatter: ServiceNameFormatter
-): VdmComplexType[] {
-  return complexTypes.map(c => ({
-    ...c,
-    factoryName: formatter.typeNameToFactoryName(c.typeName)
-  }));
-}
 /**
  * @internal
  */
@@ -44,7 +30,7 @@ export function transformComplexTypesBase(
   complexTypes: EdmxComplexTypeBase[],
   enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
-): Omit<VdmComplexType, 'factoryName'>[] {
+): VdmComplexType[] {
   const formattedTypes = complexTypes.reduce(
     (formatted, c) => ({
       ...formatted,

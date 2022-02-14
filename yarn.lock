@@ -775,17 +775,6 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@jest/types@^27.5.0":
-  version "27.5.0"
-  resolved "https://registry.npmjs.org/@jest/types/-/types-27.5.0.tgz#6ad04a5c5355fd9f46e5cf761850e0edb3c209dd"
-  integrity sha512-oDHEp7gwSgA82RZ6pzUL3ugM2njP/lVB1MsxRZNOBk+CoNvh9SpH1lQixPFc/kDlV50v59csiW4HLixWmhmgPQ==
-  dependencies:
-    "@types/istanbul-lib-coverage" "^2.0.0"
-    "@types/istanbul-reports" "^3.0.0"
-    "@types/node" "*"
-    "@types/yargs" "^16.0.0"
-    chalk "^4.0.0"
-
 "@jest/types@^27.5.1":
   version "27.5.1"
   resolved "https://registry.npmjs.org/@jest/types/-/types-27.5.1.tgz#3c79ec4a8ba61c170bf937bcf9e98a9df175ec80"
@@ -1833,20 +1822,10 @@
     axios "^0.21.1"
     fs-extra "9.0.1"
 
-"@sap/cds@^5.0.0":
-  version "5.5.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.5.4.tgz#76d931ec5f274fb947b7af81954a3c8e5519a096"
-  integrity sha512-q9AVRfm8zlPjcVqrz9SVu5mB/Xtodd+DjQyKe/xJ1zVj83I2yOrH0Q+0NPonMGSHvnOFZhduu4ZswHLCXZM0jw==
-  dependencies:
-    "@sap-cloud-sdk/core" "^1.41"
-    "@sap-cloud-sdk/util" "^1.41"
-    "@sap/cds-compiler" "^2.4.4"
-    "@sap/cds-foss" "^3"
-
-"@sap/cds@^5.4.0", "@sap/cds@^5.8.0":
-  version "5.8.0"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.8.0.tgz#081b1a4875d5ab6fed221cef9d44051f6bc621e5"
-  integrity sha512-u2kAOXOO+cdkN4CEs2fr642ypkjovfYgLAD0uh815KsRsiNI5i4QNSHbYpc7Ab7v+6fQprP0j7NLzxzPT17Y0g==
+"@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.8.0":
+  version "5.8.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.8.1.tgz#724ae0b5be471389222ea5ca203521ca48797c8c"
+  integrity sha512-PjEzRa1KgcNSebKk/M6p2DKni2baCvaOO+t596ZbliiuQnwe/QOuDjVSeM8zFEVF34PL5wl76qkAa8Tsrkm7Ng==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"
@@ -4475,14 +4454,14 @@ exit@^0.1.2:
   integrity sha1-BjJjj42HfMghB9MKD/8aF8uhzQw=
 
 expect@>=27.2.3, expect@^27.5.1:
-  version "27.5.0"
-  resolved "https://registry.npmjs.org/expect/-/expect-27.5.0.tgz#ea2fbebb483c274043098c34a53923a0aee493f0"
-  integrity sha512-z73GZ132cBqrapO0X6BeRjyBXqOt9YeRtnDteHJIQqp5s2pZ41Hz23VUbsVFMfkrsFLU9GwoIRS0ZzLuFK8M5w==
+  version "27.5.1"
+  resolved "https://registry.npmjs.org/expect/-/expect-27.5.1.tgz#83ce59f1e5bdf5f9d2b94b61d2050db48f3fef74"
+  integrity sha512-E1q5hSUG2AmYQwQJ041nvgpkODHQvB+RKlB4IYdru6uJsyFTRyZAP463M+1lINorwbqAmUggi6+WwkD8lCS/Dw==
   dependencies:
-    "@jest/types" "^27.5.0"
-    jest-get-type "^27.5.0"
-    jest-matcher-utils "^27.5.0"
-    jest-message-util "^27.5.0"
+    "@jest/types" "^27.5.1"
+    jest-get-type "^27.5.1"
+    jest-matcher-utils "^27.5.1"
+    jest-message-util "^27.5.1"
 
 express@^4.17.1:
   version "4.17.2"
@@ -5887,7 +5866,7 @@ jest-config@^27.5.1:
     slash "^3.0.0"
     strip-json-comments "^3.1.1"
 
-jest-diff@^27.0.0, jest-diff@^27.2.5, jest-diff@^27.5.0:
+jest-diff@^27.0.0, jest-diff@^27.2.5:
   version "27.5.0"
   resolved "https://registry.npmjs.org/jest-diff/-/jest-diff-27.5.0.tgz#34dc608a3b9159df178dd480b6d835b5e6b92082"
   integrity sha512-zztvHDCq/QcAVv+o6rts0reupSOxyrX+KLQEOMWCW2trZgcBFgp/oTK7hJCGpXvEIqKrQzyQlaPKn9W04+IMQg==
@@ -6029,16 +6008,6 @@ jest-leak-detector@^27.5.1:
     jest-get-type "^27.5.1"
     pretty-format "^27.5.1"
 
-jest-matcher-utils@^27.5.0:
-  version "27.5.0"
-  resolved "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-27.5.0.tgz#d2fc737224fb3bfa38eaa2393ac5bc953d5c5697"
-  integrity sha512-5ruyzWMGb1ilCWD6ECwNdOhQBeIXAjHmHd5c3uO6quR7RIMHPRP2ucOaejz2j+0R0Ko4GanWM6SqXAeF8nYN5g==
-  dependencies:
-    chalk "^4.0.0"
-    jest-diff "^27.5.0"
-    jest-get-type "^27.5.0"
-    pretty-format "^27.5.0"
-
 jest-matcher-utils@^27.5.1:
   version "27.5.1"
   resolved "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-27.5.1.tgz#9c0cdbda8245bc22d2331729d1091308b40cf8ab"
@@ -6048,21 +6017,6 @@ jest-matcher-utils@^27.5.1:
     jest-diff "^27.5.1"
     jest-get-type "^27.5.1"
     pretty-format "^27.5.1"
-
-jest-message-util@^27.5.0:
-  version "27.5.0"
-  resolved "https://registry.npmjs.org/jest-message-util/-/jest-message-util-27.5.0.tgz#654a781b38a305b1fd8120053c784c67bca00a52"
-  integrity sha512-lfbWRhTtmZMEHPAtl0SrvNzK1F4UnVNMHOliRQT2BJ4sBFzIb0gBCHA4ebWD4o6l1fUyvDPxM01K9OIMQTAdQw==
-  dependencies:
-    "@babel/code-frame" "^7.12.13"
-    "@jest/types" "^27.5.0"
-    "@types/stack-utils" "^2.0.0"
-    chalk "^4.0.0"
-    graceful-fs "^4.2.9"
-    micromatch "^4.0.4"
-    pretty-format "^27.5.0"
-    slash "^3.0.0"
-    stack-utils "^2.0.3"
 
 jest-message-util@^27.5.1:
   version "27.5.1"

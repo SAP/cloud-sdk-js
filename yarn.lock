@@ -1827,20 +1827,10 @@
     axios "^0.21.1"
     fs-extra "9.0.1"
 
-"@sap/cds@^5.0.0":
-  version "5.5.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.5.4.tgz#76d931ec5f274fb947b7af81954a3c8e5519a096"
-  integrity sha512-q9AVRfm8zlPjcVqrz9SVu5mB/Xtodd+DjQyKe/xJ1zVj83I2yOrH0Q+0NPonMGSHvnOFZhduu4ZswHLCXZM0jw==
-  dependencies:
-    "@sap-cloud-sdk/core" "^1.41"
-    "@sap-cloud-sdk/util" "^1.41"
-    "@sap/cds-compiler" "^2.4.4"
-    "@sap/cds-foss" "^3"
-
-"@sap/cds@^5.4.0", "@sap/cds@^5.8.0":
-  version "5.8.0"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.8.0.tgz#081b1a4875d5ab6fed221cef9d44051f6bc621e5"
-  integrity sha512-u2kAOXOO+cdkN4CEs2fr642ypkjovfYgLAD0uh815KsRsiNI5i4QNSHbYpc7Ab7v+6fQprP0j7NLzxzPT17Y0g==
+"@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.8.0":
+  version "5.8.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.8.1.tgz#724ae0b5be471389222ea5ca203521ca48797c8c"
+  integrity sha512-PjEzRa1KgcNSebKk/M6p2DKni2baCvaOO+t596ZbliiuQnwe/QOuDjVSeM8zFEVF34PL5wl76qkAa8Tsrkm7Ng==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"

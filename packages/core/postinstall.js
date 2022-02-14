@@ -10,7 +10,7 @@ function printUpgradeAnnouncement() {
     console.log('🚀 SAP Cloud SDK Announcement');
     console.log('');
     console.log(
-      'The SAP Cloud SDK released version 2.0 on February 2022 and older versions are not actively supported.'
+      'The SAP Cloud SDK released version 2.0 in February 2022 and older versions are not actively supported.'
     );
     console.log(
       'We will ensure that upgrading takes less than one day of effort when using our upgrade guide.'

@@ -18,6 +18,7 @@ Releases are triggered by bumping the version using `lerna`.
 We have a github [workflow](https://github.com/SAP/cloud-sdk-js/actions/workflows/bump.yml?query=workflow%3Abump) to do this.
 
 Depending on the version you want to release, you have to choose:
+
 - `main`, as default value, for version 2 release
 - `1.0-main`, for version 1 release
 
@@ -36,6 +37,11 @@ Once all checks have passed, you can publish the release by pressing the green "
 This will trigger the release pipeline, that publishes all modules to npm.
 
 As a last follow-up task you can adjust the value for the release date in the CHANGELOG.md and if you already have the link to the blog post as well.
+
+## How to update api doc
+
+- For version 2, everything is automated, no further actions are needed.
+- For version 1, you should generate docs locally and push to [here](https://github.com/SAP/cloud-sdk-js/tree/main/docs/api), because the latest tag should not point to version 1.
 
 ### What to do when the build fails
 

@@ -1,4 +1,4 @@
-import { caps, unixEOL } from '@sap-cloud-sdk/util';
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
@@ -6,23 +6,29 @@ import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 import { functionImportReturnType } from './return-type';
 
 const parameterName = 'parameters';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function functionImportFunction(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const returnType = functionImportReturnType(
-    functionImport,
-    service.oDataVersion
-  );
+  const returnType = functionImportReturnType(functionImport);
   return {
     kind: StructureKind.Function,
-    name: functionImport.name,
+    name: `${functionImport.name}<DeSerializersT extends DeSerializers = DefaultDeSerializers>`,
     isExported: true,
     parameters: [
       {
         name: parameterName,
-        type: functionImport.parametersTypeName
+        type: `${functionImport.parametersTypeName}<DeSerializersT>`
+      },
+      {
+        name: 'deSerializers',
+        type: 'DeSerializersT',
+        initializer: 'defaultDeSerializers as any'
       }
     ],
     returnType,
@@ -36,6 +42,9 @@ export function functionImportFunction(
     ]
   };
 }
+/**
+ * @internal
+ */
 export const additionalDocForEntityNotDeserializable =
   "The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.";
 
@@ -51,24 +60,20 @@ function getFunctionImportStatements(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
 ): string {
-  const context = functionImport.parameters
-    ? functionImport.parameters.reduce((cumulator, currentParameters) => {
-        if (cumulator !== `const params = {${unixEOL}`) {
-          cumulator += `,${unixEOL}`;
-        }
-        cumulator += `${currentParameters.parameterName}: new FunctionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
-        return cumulator;
-      }, `const params = {${unixEOL}`) + `${unixEOL}}`
-    : '{}';
+  const paramsLines = (functionImport.parameters || []).map(
+    param =>
+      `${param.parameterName}: new FunctionImportParameter('${param.originalName}', '${param.edmType}', ${parameterName}.${param.parameterName})`
+  );
+  const params = `const params = {\n${paramsLines.join(',\n')}\n};`;
 
   let parameters = getRequestBuilderArgumentsBase(functionImport, service);
   if (service.oDataVersion === 'v2') {
     parameters = [`'${functionImport.httpMethod}'`, ...parameters];
   }
 
-  const returnStatement = `return new FunctionImportRequestBuilder${caps(
-    service.oDataVersion
-  )}(${parameters.join(', ')});`;
+  const returnStatement = `return new FunctionImportRequestBuilder(${parameters.join(
+    ', '
+  )});`;
 
-  return context + unixEOL + unixEOL + returnStatement;
+  return [params, '\n', returnStatement].join('\n');
 }

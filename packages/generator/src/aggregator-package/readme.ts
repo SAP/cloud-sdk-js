@@ -1,7 +1,12 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { helpfulLinksSection } from '../service';
+import { helpfulLinksSection } from '@sap-cloud-sdk/generator-common/internal';
 import { VdmServiceMetadata } from '../vdm-types';
-export function readme(
+
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
+export function aggregatorReadme(
   services: VdmServiceMetadata[],
   npmPackageName: string
 ): string {

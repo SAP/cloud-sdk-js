@@ -5,5 +5,5 @@
  * @module @sap-cloud-sdk/generator
  */
 
-export * from './generator';
-export * from './generator-options';
+export { generate } from './generator';
+export { GeneratorOptions } from './generator-options';

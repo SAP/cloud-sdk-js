@@ -5,30 +5,32 @@ exports.functionImports =
   exports.testFunctionImportEntityReturnType1 =
     void 0;
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
-var TestEntity1_1 = require('./TestEntity1');
-var TestEntity2_1 = require('./TestEntity2');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const service_1 = require('./service');
 /**
  * Test Function Import Entity Return Type 1.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportEntityReturnType1(parameters) {
-  var params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+function testFunctionImportEntityReturnType1(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
+  const params = {};
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType1',
-    function (data) {
-      return core_1.transformReturnValueForEntityV4(
+    data =>
+      (0, odata_v4_1.transformReturnValueForEntity)(
         data,
-        TestEntity1_1.TestEntity1
-      );
-    },
-    params
+        (0, service_1.multipleSchemasService)(deSerializers).testEntity1Api
+      ),
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportEntityReturnType1 =
@@ -38,24 +40,27 @@ exports.testFunctionImportEntityReturnType1 =
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportEntityReturnType2(parameters) {
-  var params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+function testFunctionImportEntityReturnType2(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
+  const params = {};
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType2',
-    function (data) {
-      return core_1.transformReturnValueForEntityV4(
+    data =>
+      (0, odata_v4_1.transformReturnValueForEntity)(
         data,
-        TestEntity2_1.TestEntity2
-      );
-    },
-    params
+        (0, service_1.multipleSchemasService)(deSerializers).testEntity2Api
+      ),
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportEntityReturnType2 =
   testFunctionImportEntityReturnType2;
 exports.functionImports = {
-  testFunctionImportEntityReturnType1: testFunctionImportEntityReturnType1,
-  testFunctionImportEntityReturnType2: testFunctionImportEntityReturnType2
+  testFunctionImportEntityReturnType1,
+  testFunctionImportEntityReturnType2
 };
 //# sourceMappingURL=function-imports.js.map

@@ -1,28 +1,21 @@
 import { promises as promisesFs } from 'fs';
-import {
-  resolve,
-  parse,
-  basename,
-  dirname,
-  join,
-  relative,
-  posix,
-  sep
-} from 'path';
+import { resolve, parse, basename, dirname, relative, posix, sep } from 'path';
 import {
   createLogger,
   kebabCase,
   finishAll,
   setLogLevel,
-  formatJson
+  formatJson,
+  ErrorWithCause
 } from '@sap-cloud-sdk/util';
 import {
   getSdkMetadataFileNames,
   getSdkVersion,
   readCompilerOptions,
   sdkMetadataHeader,
-  transpileDirectory
-} from '@sap-cloud-sdk/generator-common';
+  transpileDirectory,
+  copyFiles
+} from '@sap-cloud-sdk/generator-common/internal';
 import {
   apiFile,
   packageJson,
@@ -35,7 +28,7 @@ import {
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
-import { createFile, copyFile } from './file-writer';
+import { createFile } from './file-writer';
 import {
   parseGeneratorOptions,
   tsconfigJson,
@@ -64,6 +57,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
  * Main entry point for the OpenAPI client generation.
  * Generates models and API files.
  * @param options - Options to configure generation.
+ * @internal
  */
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
@@ -98,6 +92,14 @@ export async function generateWithParsedOptions(
         ? 'Some clients could not be generated.'
         : 'Could not generate client.';
     await finishAll(promises, errorMessage);
+  } catch (err) {
+    if (err.message?.includes('error TS2307')) {
+      throw new ErrorWithCause(
+        'Did you forget to install "@sap-cloud-sdk/openapi"?',
+        err
+      );
+    }
+    throw err;
   } finally {
     if (options.optionsPerService) {
       await generateOptionsPerService(
@@ -108,7 +110,7 @@ export async function generateWithParsedOptions(
 
     if (!options.packageJson) {
       logger.info(
-        "Finished generation. Don't forget to add @sap-cloud-sdk/core to your dependencies."
+        "Finished generation. Don't forget to add @sap-cloud-sdk/openapi to your dependencies."
       );
     }
   }
@@ -146,7 +148,7 @@ async function generateSources(
   }
 
   if (options.include) {
-    await copyAdditionalFiles(serviceDir, options.include, options.overwrite);
+    await copyFiles(options.include, serviceDir, options.overwrite);
   }
 
   if (tsConfig) {
@@ -256,7 +258,7 @@ async function generateService(
  * Gives the relative path with respect to process.cwd() using posix file separator '/'.
  * @param absolutePath - The absolute path
  * @returns The relative path
- * @hidden
+ * @internal
  */
 export function getRelPathWithPosixSeparator(absolutePath: string): string {
   return relative(process.cwd(), absolutePath).split(sep).join(posix.sep);
@@ -266,6 +268,7 @@ export function getRelPathWithPosixSeparator(absolutePath: string): string {
  * Recursively searches through a given input path and returns all file paths as a string array.
  * @param input - the path to the input directory.
  * @returns all file paths as a string array.
+ * @internal
  */
 export async function getInputFilePaths(input: string): Promise<string[]> {
   if ((await lstat(input)).isFile()) {
@@ -280,27 +283,6 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
       ...(await getInputFilePaths(resolve(input, directoryContent)))
     ],
     Promise.resolve([] as string[])
-  );
-}
-
-// TODO 1728 move to a new package to reduce code duplication.
-async function copyAdditionalFiles(
-  serviceDir: string,
-  additionalFiles: string[],
-  overwrite: boolean
-): Promise<void[]> {
-  logger.verbose(
-    `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
-  );
-
-  return Promise.all(
-    additionalFiles.map(filePath =>
-      copyFile(
-        resolve(filePath),
-        join(serviceDir, basename(filePath)),
-        overwrite
-      )
-    )
   );
 }
 

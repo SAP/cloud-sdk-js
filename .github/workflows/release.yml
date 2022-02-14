@@ -13,9 +13,17 @@ jobs:
           ref: 'main'
       - uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
+          node-version: '14.x'
       - run: yarn install --frozen-lockfile
-      - name: Stable Release
+      - name: Version 1 Stable Release
+        if: startsWith(github.ref, 'refs/tags/v1')
+        run: |
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
+          yarn lerna publish from-package --dist-tag legacy --force-publish -y
+        env:
+          NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
+      - name: Version 2 Stable Release
+        if: startsWith(github.ref, 'refs/tags/v2')
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           yarn lerna publish from-package --force-publish -y

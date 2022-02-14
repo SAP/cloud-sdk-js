@@ -1,6 +1,7 @@
 import { promises } from 'fs';
 import { join } from 'path';
 import { unixEOL, codeBlock, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { getCopyrightHeader } from '@sap-cloud-sdk/generator-common/internal';
 
 const { writeFile } = promises;
 
@@ -11,6 +12,7 @@ const { writeFile } = promises;
  * @param content - Content to be written to the file. A copyright statement will be added to this.
  * @param overwrite - Whether or not existing files should be overwritten.
  * @param withCopyright - Whether the generated file contains the copyright information.
+ * @internal
  */
 export async function createFile(
   directoryPath: string,
@@ -47,15 +49,4 @@ ${getCopyrightHeader()}
 ${content}
 ` + unixEOL
   );
-}
-
-// TODO 1728 move to a new package for reduce code duplication.
-function getCopyrightHeader(): string {
-  return codeBlock`
-/*
- * Copyright (c) ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
- `;
 }

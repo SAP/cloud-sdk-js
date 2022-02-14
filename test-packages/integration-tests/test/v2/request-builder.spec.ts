@@ -1,27 +1,27 @@
-import {
-  TestEntity,
-  TestEntityMultiLink
-} from '@sap-cloud-sdk/test-services/v2/test-service';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { basicHeader, wrapJwtInHeader } from '@sap-cloud-sdk/core';
+import {
+  basicHeader,
+  wrapJwtInHeader
+} from '@sap-cloud-sdk/connectivity/internal';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall
-} from '@sap-cloud-sdk/core/test/test-util/destination-service-mocks';
+} from '../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
   destinationBindingClientSecretMock,
   mockServiceBindings,
   providerXsuaaUrl
-} from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
-import { privateKey } from '@sap-cloud-sdk/core/test/test-util/keys';
-import { mockClientCredentialsGrantCall } from '@sap-cloud-sdk/core/test/test-util/xsuaa-service-mocks';
-import { destinationName } from '@sap-cloud-sdk/core/test/test-util/example-destination-service-responses';
+} from '../../../../test-resources/test/test-util/environment-mocks';
+import { privateKey } from '../../../../test-resources/test/test-util/keys';
+import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
+import { destinationName } from '../../../../test-resources/test/test-util/example-destination-service-responses';
 import { singleTestEntityMultiLinkResponse } from '../test-data/single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
+import { testEntityApi, testEntityMultiLinkApi } from './test-util';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = 'A_TestEntity';
@@ -87,7 +87,10 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder().getAll().execute(destination);
+    const request = testEntityApi
+      .requestBuilder()
+      .getAll()
+      .execute(destination);
 
     await expect(request).resolves.not.toThrow();
   });
@@ -102,7 +105,7 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder().getAll().execute({
+    const request = testEntityApi.requestBuilder().getAll().execute({
       url: destinationServiceUri
     });
 
@@ -127,9 +130,10 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
-      .withCustomHeaders({ authorization: 'customcustom' })
+      .addCustomHeaders({ authorization: 'customcustom' })
       .execute({
         destinationName: 'Testination'
       });
@@ -170,9 +174,10 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
-      .withCustomHeaders({ authorization: 'customcustom' })
+      .addCustomHeaders({ authorization: 'customcustom' })
       .execute({
         destinationName: 'FINAL-DESTINATION'
       });
@@ -194,7 +199,8 @@ describe('Request Builder', () => {
       )
       .reply(200, response);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getByKey('aaaabbbb-cccc-dddd-eeee-ffff00001111', 'abcd1234')
       .execute(destination);
 
@@ -214,9 +220,13 @@ describe('Request Builder', () => {
       )
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
-      .select(TestEntity.ALL_FIELDS, TestEntity.TO_SINGLE_LINK)
+      .select(
+        testEntityApi.schema.ALL_FIELDS,
+        testEntityApi.schema.TO_SINGLE_LINK
+      )
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();
@@ -236,9 +246,10 @@ describe('Request Builder', () => {
       )
       .reply(200, response);
 
-    const testEntity = await TestEntity.requestBuilder()
+    const testEntity = await testEntityApi
+      .requestBuilder()
       .getByKey('aaaabbbb-cccc-dddd-eeee-ffff00001111', 'abcd1234')
-      .select(TestEntity.TO_SINGLE_LINK)
+      .select(testEntityApi.schema.TO_SINGLE_LINK)
       .execute(destination);
 
     expect(testEntity.toSingleLink).toBeDefined();
@@ -264,9 +275,11 @@ describe('Request Builder', () => {
       })
       .reply(200, response);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .create(
-        TestEntity.builder()
+        testEntityApi
+          .entityBuilder()
           .stringProperty('someProperty')
           .int16Property(16)
           .booleanProperty(false)
@@ -299,13 +312,16 @@ describe('Request Builder', () => {
       )
       .reply(200, singleTestEntityMultiLinkResponse());
 
-    const parentEntity = new TestEntity();
+    const parentEntity = testEntityApi.entityBuilder().build();
     parentEntity.keyPropertyGuid = 'aaaabbbb-cccc-dddd-eeee-ffff00001111';
     parentEntity.keyPropertyString = 'abcd1234';
 
-    const request = TestEntityMultiLink.requestBuilder()
-      .create(TestEntityMultiLink.builder().stringProperty('prop').build())
-      .asChildOf(parentEntity, TestEntity.TO_MULTI_LINK)
+    const request = testEntityMultiLinkApi
+      .requestBuilder()
+      .create(
+        testEntityMultiLinkApi.entityBuilder().stringProperty('prop').build()
+      )
+      .asChildOf(parentEntity, testEntityApi.schema.TO_MULTI_LINK)
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();
@@ -333,9 +349,11 @@ describe('Request Builder', () => {
       )
       .reply(204);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .update(
-        TestEntity.builder()
+        testEntityApi
+          .entityBuilder()
           .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
           .keyPropertyString('abcd1234')
           .stringProperty('newStringProp')
@@ -347,9 +365,11 @@ describe('Request Builder', () => {
   });
 
   it('should fail for update request without keys', async () => {
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .update(
-        TestEntity.builder()
+        testEntityApi
+          .entityBuilder()
           .stringProperty('test')
           .booleanProperty(false)
           .build()
@@ -378,7 +398,8 @@ describe('Request Builder', () => {
       )
       .reply(204);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .delete('aaaabbbb-cccc-dddd-eeee-ffff00001111', 'abcd1234')
       .execute(destination);
 
@@ -390,7 +411,8 @@ describe('Request Builder', () => {
       'A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)'
     );
 
-    const entity = TestEntity.builder()
+    const entity = testEntityApi
+      .entityBuilder()
       .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
       .keyPropertyString('abcd1234')
       .build()
@@ -411,7 +433,8 @@ describe('Request Builder', () => {
       )
       .reply(204);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .delete(entity)
       .execute(destination);
 
@@ -445,9 +468,11 @@ describe('Request Builder', () => {
       })
       .reply(200, response);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .create(
-        TestEntity.builder()
+        testEntityApi
+          .entityBuilder()
           .stringProperty('stringProp')
           .int16Property(145)
           .booleanProperty(true)
@@ -469,9 +494,10 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
-      .withCustomHeaders({
+      .addCustomHeaders({
         authorization: 'customcustom'
       })
       .execute({
@@ -493,7 +519,8 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
       .addCustomHeaders({
         authorization: 'customcustom'
@@ -517,7 +544,8 @@ describe('Request Builder', () => {
       })
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
       .addCustomQueryParameters({
         testParameter: 'customcustom'
@@ -539,7 +567,8 @@ describe('Request Builder', () => {
       })
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
       .addCustomQueryParameters({
         testParameter: 'customcustom'
@@ -609,7 +638,7 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, {});
 
-    const request = TestEntity.requestBuilder().getAll().execute({
+    const request = testEntityApi.requestBuilder().getAll().execute({
       destinationName: 'FINAL-DESTINATION'
     });
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -7,6 +7,10 @@ export * from './Photos';
 export * from './People';
 export * from './Airlines';
 export * from './Airports';
+export * from './PhotosApi';
+export * from './PeopleApi';
+export * from './AirlinesApi';
+export * from './AirportsApi';
 export * from './PhotosRequestBuilder';
 export * from './PeopleRequestBuilder';
 export * from './AirlinesRequestBuilder';
@@ -17,4 +21,6 @@ export * from './EventLocation';
 export * from './AirportLocation';
 export * from './PersonGender';
 export * from './function-imports';
+export * from './action-imports';
 export * from './BatchRequest';
+export * from './service';

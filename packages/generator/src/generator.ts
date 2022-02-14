@@ -1,6 +1,10 @@
 import { PathLike } from 'fs';
-import { resolve, basename, dirname } from 'path';
-import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
+import { resolve, dirname } from 'path';
+import {
+  createLogger,
+  ErrorWithCause,
+  splitInChunks
+} from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
   Directory,
@@ -17,26 +21,20 @@ import {
   getSdkMetadataFileNames,
   getVersionForClient,
   sdkMetadataHeader,
-  getSdkVersion,
   transpileDirectory,
-  readCompilerOptions
-} from '@sap-cloud-sdk/generator-common';
-import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
-import { readme as aggregatorReadme } from './aggregator-package/readme';
+  readCompilerOptions,
+  copyFiles
+} from '@sap-cloud-sdk/generator-common/internal';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';
-import { copyFile, otherFile, sourceFile } from './file-generator';
+import { otherFile, sourceFile } from './file-generator';
 import {
   defaultValueProcessesJsGeneration,
   GeneratorOptions
 } from './generator-options';
-import {
-  cloudSdkVdmHack,
-  hasEntities,
-  npmCompliantName
-} from './generator-utils';
-import { parseAllServices } from './edmx-to-vdm';
+import { hasEntities } from './generator-utils';
+import { parseAllServices } from './service-generator';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';
@@ -45,14 +43,16 @@ import { npmrc } from './service/npmrc';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
-import { typedocJson } from './service/typedoc-json';
 import { VdmServiceMetadata } from './vdm-types';
 import {
   actionImportSourceFile,
   functionImportSourceFile
-} from './action-function-import';
+} from './action-function-import/file';
 import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetadata, getServiceDescription } from './sdk-metadata';
+import { createFile } from './generator-common/create-file';
+import { entityApiFile } from './generator-without-ts-morph';
+import { serviceFile } from './generator-without-ts-morph/service/file';
 
 const logger = createLogger({
   package: 'generator',
@@ -60,12 +60,17 @@ const logger = createLogger({
 });
 
 export async function generate(options: GeneratorOptions): Promise<void> {
-  const project = await generateProject(options);
-  if (!project) {
+  const projectAndServices = await generateProject(options);
+  if (!projectAndServices) {
     throw Error('The project is undefined.');
   }
+  const project = projectAndServices.project;
+  const services = projectAndServices.services;
 
   await project.save();
+
+  await generateFilesWithoutTsMorph(services, options);
+
   if (options.generateJs) {
     const directories = project
       .getDirectories()
@@ -74,13 +79,51 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       directories,
       options.processesJsGeneration || defaultValueProcessesJsGeneration
     );
-    await chunks.reduce(
-      (all, chunk) => all.then(() => transpileDirectories(chunk)),
-      Promise.resolve()
-    );
+    try {
+      await chunks.reduce(
+        (all, chunk) => all.then(() => transpileDirectories(chunk)),
+        Promise.resolve()
+      );
+    } catch (err) {
+      if (err.message?.includes('error TS2307')) {
+        throw new ErrorWithCause(
+          getInstallODataErrorMessage(projectAndServices),
+          err
+        );
+      }
+      throw err;
+    }
   }
 }
 
+/**
+ * @internal
+ * @param projectAndServices - Generated project with services.
+ * @returns An error message with a recommendation to install specific SDK packages.
+ */
+export function getInstallODataErrorMessage(
+  projectAndServices: ProjectAndServices
+): string {
+  const hasV2 = projectAndServices.services.some(
+    service => service.oDataVersion === 'v2'
+  );
+  const hasV4 = projectAndServices.services.some(
+    service => service.oDataVersion === 'v4'
+  );
+
+  if (hasV2 && hasV4) {
+    return 'Did you forget to install "@sap-cloud-sdk/odata-v2" and "@sap-cloud-sdk/odata-v4"?';
+  }
+  return `Did you forget to install "@sap-cloud-sdk/odata-v${
+    hasV2 ? '2' : '4'
+  }"?`;
+}
+
+/* eslint-disable valid-jsdoc */
+
+/**
+ * @internal
+ */
 export async function transpileDirectories(
   directories: Directory[]
 ): Promise<void[]> {
@@ -91,10 +134,12 @@ export async function transpileDirectories(
     })
   );
 }
-
+/**
+ * @internal
+ */
 export async function generateProject(
   options: GeneratorOptions
-): Promise<Project | undefined> {
+): Promise<ProjectAndServices | undefined> {
   options = sanitizeOptions(options);
   const services = parseServices(options);
 
@@ -124,60 +169,77 @@ export async function generateProject(
     { overwrite: true }
   );
 
-  await generateAggregatorPackage(services, options, project);
-
-  return project;
+  return { project, services };
 }
 
-async function generateAggregatorPackage(
+/**
+ * @internal
+ */
+export interface ProjectAndServices {
+  project: Project;
+  services: VdmServiceMetadata[];
+}
+
+async function generateFilesWithoutTsMorph(
   services: VdmServiceMetadata[],
-  options: GeneratorOptions,
-  project: Project
+  options: GeneratorOptions
 ): Promise<void> {
-  if (
-    typeof options.aggregatorNpmPackageName !== 'undefined' &&
-    typeof options.aggregatorDirectoryName !== 'undefined'
-  ) {
-    const aggregatorPackageDir = project.createDirectory(
-      resolvePath(options.aggregatorDirectoryName, options)
-    );
-    logger.info(
-      `Generating package.json for project: ${aggregatorPackageDir}...`
-    );
-    otherFile(
-      aggregatorPackageDir,
-      'package.json',
-      aggregatorPackageJson(
-        cloudSdkVdmHack(npmCompliantName(options.aggregatorNpmPackageName)),
-        services.map(service => service.npmPackageName),
-        options.versionInPackageJson,
-        await getSdkVersion()
-      ),
-      options.forceOverwrite
-    );
+  const promises = services.flatMap(service => [
+    generateEntityApis(service, options),
+    generateServiceFile(service, options),
+    generateAdditionalFiles(service, options)
+  ]);
+  await Promise.all(promises);
+}
 
-    if (options.writeReadme) {
-      logger.info(
-        `Generating README.md for project: ${aggregatorPackageDir}...`
-      );
-      otherFile(
-        aggregatorPackageDir,
-        'README.md',
-        aggregatorReadme(services, options.aggregatorNpmPackageName),
-        options.forceOverwrite
-      );
-    }
-
-    if (options.additionalFiles) {
-      logger.info(
-        `Copying additional files matching ${options.additionalFiles} for project: ${aggregatorPackageDir}...`
-      );
-
-      copyAdditionalFiles(aggregatorPackageDir, options);
-    }
+async function generateAdditionalFiles(
+  service: VdmServiceMetadata,
+  options: GeneratorOptions
+): Promise<void> {
+  if (options.additionalFiles) {
+    const additionalFilesDir = resolve(
+      options.inputDir.toString(),
+      options.additionalFiles
+    );
+    const serviceDir = resolvePath(service.directoryName, options);
+    const files = new GlobSync(additionalFilesDir).found;
+    await copyFiles(files, serviceDir, options.forceOverwrite);
   }
 }
 
+async function generateServiceFile(
+  service: VdmServiceMetadata,
+  options: GeneratorOptions
+): Promise<void> {
+  const serviceDir = resolvePath(service.directoryName, options);
+  await createFile(
+    serviceDir,
+    'service.ts',
+    serviceFile(service),
+    options.forceOverwrite
+  );
+}
+
+async function generateEntityApis(
+  service: VdmServiceMetadata,
+  options: GeneratorOptions
+): Promise<void> {
+  const serviceDir = resolvePath(service.directoryName, options);
+  await Promise.all(
+    service.entities.map(entity =>
+      createFile(
+        serviceDir,
+        `${entity.className}Api.ts`,
+        entityApiFile(entity, service),
+        options.forceOverwrite
+      )
+    )
+  );
+}
+
+/**
+ * @internal
+ */
 export async function generateSourcesForService(
   service: VdmServiceMetadata,
   project: Project,
@@ -197,7 +259,8 @@ export async function generateSourcesForService(
         service.npmPackageName,
         await getVersionForClient(options.versionInPackageJson),
         getServiceDescription(service, options),
-        options.sdkAfterVersionScript
+        options.sdkAfterVersionScript,
+        service.oDataVersion
       ),
       options.forceOverwrite
     );
@@ -269,7 +332,7 @@ export async function generateSourcesForService(
     );
   }
 
-  if (service.actionsImports && service.actionsImports.length) {
+  if (service.actionImports && service.actionImports.length) {
     logger.info(`[${service.originalFileName}] Generating action imports ...`);
     sourceFile(
       serviceDir,
@@ -291,26 +354,9 @@ export async function generateSourcesForService(
     );
   }
 
-  if (options.additionalFiles) {
-    logger.info(
-      `Copying additional files matching ${options.additionalFiles} for project: ${serviceDir}...`
-    );
-    copyAdditionalFiles(serviceDir, options);
-  }
-
   if (options.generateNpmrc) {
     logger.info(`[${service.originalFileName}] Generating .npmrc for ...`);
     otherFile(serviceDir, '.npmrc', npmrc(), options.forceOverwrite);
-  }
-
-  if (options.generateTypedocJson) {
-    logger.info(`[${service.originalFileName}] Generating typedoc.json ...`);
-    otherFile(
-      serviceDir,
-      'typedoc.json',
-      typedocJson(),
-      options.forceOverwrite
-    );
   }
 
   if (options.generateCSN) {
@@ -374,7 +420,7 @@ function projectOptions(): ProjectOptions {
       quoteKind: QuoteKind.Single
     },
     compilerOptions: {
-      target: ScriptTarget.ES5,
+      target: ScriptTarget.ES2019,
       module: ModuleKind.CommonJS,
       declaration: true,
       declarationMap: true,
@@ -401,26 +447,7 @@ function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
   options.serviceMapping =
     options.serviceMapping ||
     resolve(options.inputDir.toString(), 'service-mapping.json');
-  options.aggregatorDirectoryName =
-    options.aggregatorDirectoryName || options.aggregatorNpmPackageName;
   return options;
-}
-
-// TODO 1728 move to a new package for reduce code duplication.
-function copyAdditionalFiles(
-  toDirectory: Directory,
-  options: GeneratorOptions
-) {
-  if (options.additionalFiles) {
-    new GlobSync(options.additionalFiles).found.forEach(filePath => {
-      copyFile(
-        filePath,
-        basename(filePath),
-        toDirectory,
-        options.forceOverwrite
-      );
-    });
-  }
 }
 
 function resolvePath(path: PathLike, options: GeneratorOptions): string {

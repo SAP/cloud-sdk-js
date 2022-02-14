@@ -3,14 +3,16 @@ import {
   FunctionDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import { caps } from '@sap-cloud-sdk/util';
 import { addLeadingNewline, getFunctionDoc } from '../typedoc';
 import { VdmServiceMetadata } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function batchFunction(
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const versionInCaps = caps(service.oDataVersion);
   const type = getBatchParameterType(service);
 
   const docs = [
@@ -26,7 +28,7 @@ export function batchFunction(
             }
           ],
           returns: {
-            type: `ODataBatchRequestBuilder${versionInCaps}`,
+            type: 'ODataBatchRequestBuilder ',
             description: 'A request builder for batch.'
           }
         }
@@ -38,35 +40,39 @@ export function batchFunction(
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: '...requests', type: asArray(type) }],
-      returnType: `ODataBatchRequestBuilder${versionInCaps}`,
+      returnType: 'ODataBatchRequestBuilder<DeSerializersT>',
       docs
     },
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: 'requests', type: asArray(type) }],
-      returnType: `ODataBatchRequestBuilder${versionInCaps}`
+      returnType: 'ODataBatchRequestBuilder<DeSerializersT>'
     }
   ];
 
   return {
     kind: StructureKind.Function,
-    name: 'batch',
+    name: 'batch<DeSerializersT extends DeSerializers>',
     isExported: true,
     parameters: [
       { name: 'first', type: `undefined|${type}|${asArray(type)}` },
       { name: '...rest', type: asArray(type) }
     ],
-    returnType: `ODataBatchRequestBuilder${versionInCaps}`,
-    statements: `return new ODataBatchRequestBuilder${versionInCaps}(default${service.className}Path, variadicArgumentToArray(first,rest), map);`,
+    returnType: 'ODataBatchRequestBuilder<DeSerializersT>',
+    statements: `return new ODataBatchRequestBuilder(
+      default${service.className}Path,
+      variadicArgumentToArray(first,rest)
+    );`,
     overloads
   };
 }
-
+/**
+ * @internal
+ */
 export function changesetFunction(
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const versionInCaps = caps(service.oDataVersion);
-  const type = `Write${service.className}RequestBuilder`;
+  const type = `Write${service.className}RequestBuilder<DeSerializersT>`;
 
   const docs = [
     addLeadingNewline(
@@ -81,7 +87,7 @@ export function changesetFunction(
             }
           ],
           returns: {
-            type: `ODataBatchChangeSet${versionInCaps}`,
+            type: 'BatchChangeSet',
             description: 'A change set for batch.'
           }
         }
@@ -93,26 +99,27 @@ export function changesetFunction(
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: '...requests', type: asArray(type) }],
-      returnType: `ODataBatchChangeSet${versionInCaps}<Write${service.className}RequestBuilder>`,
+      returnType: 'BatchChangeSet<DeSerializersT>',
       docs
     },
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: 'requests', type: asArray(type) }],
-      returnType: `ODataBatchChangeSet${versionInCaps}<Write${service.className}RequestBuilder>`
+      returnType: 'BatchChangeSet<DeSerializersT>'
     }
   ];
 
   return {
     kind: StructureKind.Function,
-    name: 'changeset',
+    name: 'changeset<DeSerializersT extends DeSerializers>',
     isExported: true,
     parameters: [
       { name: 'first', type: `undefined|${type}|${asArray(type)}` },
       { name: '...rest', type: asArray(type) }
     ],
-    returnType: `ODataBatchChangeSet${versionInCaps}<Write${service.className}RequestBuilder>`,
-    statements: `return new ODataBatchChangeSet${versionInCaps}(variadicArgumentToArray(first,rest));`,
+    returnType: 'BatchChangeSet<DeSerializersT>',
+    statements:
+      'return new BatchChangeSet(variadicArgumentToArray(first,rest));',
     overloads
   };
 }
@@ -122,7 +129,5 @@ function asArray(type: string): string {
 }
 
 function getBatchParameterType(service: VdmServiceMetadata): string {
-  return `Read${service.className}RequestBuilder | ODataBatchChangeSet${caps(
-    service.oDataVersion
-  )}<Write${service.className}RequestBuilder>`;
+  return `Read${service.className}RequestBuilder<DeSerializersT> | BatchChangeSet<DeSerializersT>`;
 }

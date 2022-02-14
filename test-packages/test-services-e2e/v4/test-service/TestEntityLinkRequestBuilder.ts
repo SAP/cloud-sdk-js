@@ -1,22 +1,27 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  CreateRequestBuilderV4,
-  UpdateRequestBuilderV4,
-  DeleteRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  DefaultDeSerializers,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder,
+  DeserializedType,
+  RequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntityLink } from './TestEntityLink';
 
 /**
  * Request builder class for operations supported on the [[TestEntityLink]] entity.
  */
-export class TestEntityLinkRequestBuilder extends RequestBuilder<TestEntityLink> {
+export class TestEntityLinkRequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<TestEntityLink<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityLink` entity based on its keys.
    * @param keyTestEntityLink Key property. See [[TestEntityLink.keyTestEntityLink]].
@@ -24,10 +29,10 @@ export class TestEntityLinkRequestBuilder extends RequestBuilder<TestEntityLink>
    * @returns A request builder for creating requests to retrieve one `TestEntityLink` entity based on its keys.
    */
   getByKey(
-    keyTestEntityLink: number,
-    keyToTestEntity: number
-  ): GetByKeyRequestBuilderV4<TestEntityLink> {
-    return new GetByKeyRequestBuilderV4(TestEntityLink, {
+    keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>,
+    keyToTestEntity: DeserializedType<T, 'Edm.Int32'>
+  ): GetByKeyRequestBuilder<TestEntityLink<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityLink<T>, T>(this.entityApi, {
       KeyTestEntityLink: keyTestEntityLink,
       KeyToTestEntity: keyToTestEntity
     });
@@ -37,8 +42,8 @@ export class TestEntityLinkRequestBuilder extends RequestBuilder<TestEntityLink>
    * Returns a request builder for querying all `TestEntityLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityLink` entities.
    */
-  getAll(): GetAllRequestBuilderV4<TestEntityLink> {
-    return new GetAllRequestBuilderV4(TestEntityLink);
+  getAll(): GetAllRequestBuilder<TestEntityLink<T>, T> {
+    return new GetAllRequestBuilder<TestEntityLink<T>, T>(this.entityApi);
   }
 
   /**
@@ -46,8 +51,13 @@ export class TestEntityLinkRequestBuilder extends RequestBuilder<TestEntityLink>
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntityLink`.
    */
-  create(entity: TestEntityLink): CreateRequestBuilderV4<TestEntityLink> {
-    return new CreateRequestBuilderV4(TestEntityLink, entity);
+  create(
+    entity: TestEntityLink<T>
+  ): CreateRequestBuilder<TestEntityLink<T>, T> {
+    return new CreateRequestBuilder<TestEntityLink<T>, T>(
+      this.entityApi,
+      entity
+    );
   }
 
   /**
@@ -55,8 +65,13 @@ export class TestEntityLinkRequestBuilder extends RequestBuilder<TestEntityLink>
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntityLink`.
    */
-  update(entity: TestEntityLink): UpdateRequestBuilderV4<TestEntityLink> {
-    return new UpdateRequestBuilderV4(TestEntityLink, entity);
+  update(
+    entity: TestEntityLink<T>
+  ): UpdateRequestBuilder<TestEntityLink<T>, T> {
+    return new UpdateRequestBuilder<TestEntityLink<T>, T>(
+      this.entityApi,
+      entity
+    );
   }
 
   /**
@@ -68,19 +83,19 @@ export class TestEntityLinkRequestBuilder extends RequestBuilder<TestEntityLink>
   delete(
     keyTestEntityLink: number,
     keyToTestEntity: number
-  ): DeleteRequestBuilderV4<TestEntityLink>;
+  ): DeleteRequestBuilder<TestEntityLink<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityLink`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityLink` by taking the entity as a parameter.
    */
-  delete(entity: TestEntityLink): DeleteRequestBuilderV4<TestEntityLink>;
+  delete(entity: TestEntityLink<T>): DeleteRequestBuilder<TestEntityLink<T>, T>;
   delete(
     keyTestEntityLinkOrEntity: any,
     keyToTestEntity?: number
-  ): DeleteRequestBuilderV4<TestEntityLink> {
-    return new DeleteRequestBuilderV4(
-      TestEntityLink,
+  ): DeleteRequestBuilder<TestEntityLink<T>, T> {
+    return new DeleteRequestBuilder<TestEntityLink<T>, T>(
+      this.entityApi,
       keyTestEntityLinkOrEntity instanceof TestEntityLink
         ? keyTestEntityLinkOrEntity
         : {

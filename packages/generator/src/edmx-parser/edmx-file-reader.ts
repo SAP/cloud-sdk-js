@@ -1,11 +1,13 @@
 import { PathLike, readFileSync } from 'fs';
 import path, { basename } from 'path';
-import { parse } from 'fast-xml-parser';
+import { XMLParser } from 'fast-xml-parser';
 import { ODataVersion, removeFileExtension } from '@sap-cloud-sdk/util';
 import { forceArray } from '../generator-utils';
-import { SwaggerMetadata } from '../swagger-parser/swagger-types';
+import { SwaggerMetadata } from '../swagger-parser';
 import { getMergedPropertyWithNamespace } from './common';
-
+/**
+ * @internal
+ */
 export interface EdmxMetadata {
   path: PathLike;
   oDataVersion: ODataVersion;
@@ -30,6 +32,10 @@ function parseMetadata(
   };
 }
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function readEdmxFile(edmxPath: PathLike): EdmxMetadata {
   const edmxFile = readFileSync(path.resolve(edmxPath.toString()), {
     encoding: 'utf-8'
@@ -38,10 +44,10 @@ export function readEdmxFile(edmxPath: PathLike): EdmxMetadata {
 }
 
 function parseEdmxFile(edmx: string, edmxPath: PathLike): EdmxMetadata {
-  const parsedEdmx = parse(edmx, {
+  const parsedEdmx = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: ''
-  });
+  }).parse(edmx);
   const root = getRoot(parsedEdmx);
   return parseMetadata(root, getODataVersion(parsedEdmx), edmxPath);
 }
@@ -62,7 +68,9 @@ function parseLink(root): string | undefined {
     return selfLink.href;
   }
 }
-
+/**
+ * @internal
+ */
 export interface ServiceMetadata {
   edmx: EdmxMetadata;
   swagger?: SwaggerMetadata;

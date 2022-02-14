@@ -1,28 +1,30 @@
-import { filterFunctionsV4, filterFunctionV4 } from '@sap-cloud-sdk/core';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { testService } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { filterFunction, filterFunctions } from '@sap-cloud-sdk/odata-v4';
 
-// $ExpectType Filter<TestEntity, string>
-filterFunctionsV4
-  .substring(TestEntity.STRING_PROPERTY, TestEntity.INT_16_PROPERTY)
+const testEntitySchema = testService().testEntityApi.schema;
+
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, any, string>
+filterFunctions()
+  .substring(testEntitySchema.STRING_PROPERTY, testEntitySchema.INT_16_PROPERTY)
   .equals('test');
 
-// $ExpectType BooleanFilterFunction<TestEntity>
-filterFunctionsV4.contains(TestEntity.STRING_PROPERTY, 'test');
+// $ExpectType BooleanFilterFunction<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>>
+filterFunctions().contains(testEntitySchema.STRING_PROPERTY, 'test');
 
-// $ExpectType BooleanFilterFunction<TestEntity>
-filterFunctionsV4.hasSubset(TestEntity.COLLECTION_PROPERTY, [1]);
+// $ExpectType BooleanFilterFunction<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>>
+filterFunctions().hasSubset(testEntitySchema.COLLECTION_PROPERTY, [1]);
 
 // $ExpectError
-filterFunctionsV4.hasSubset(['1'], [1]);
+filterFunctions().hasSubset(['1'], [1]);
 
 // $ExpectType BooleanFilterFunction<Entity>
-filterFunctionV4('fn', 'boolean');
+filterFunction('fn', 'boolean');
 
 // $ExpectType DateFilterFunction<Entity>
-filterFunctionV4('fn', 'datetimeoffset');
+filterFunction('fn', 'datetimeoffset');
 
 // $ExpectType CollectionFilterFunction<Entity, number>
-filterFunctionV4('fn', 'int[]');
+filterFunction('fn', 'int[]');
 
 // $ExpectError
-filterFunctionV4('fn', 'int[]').equals(['test']);
+filterFunction('fn', 'int[]').equals(['test']);

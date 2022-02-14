@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -8,38 +8,40 @@ import {
   TestLvl2NestedComplexTypeField
 } from './TestLvl2NestedComplexType';
 import {
+  CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
+  DeserializedType,
   EdmTypeField,
-  EntityV4,
+  Entity,
+  EnumField,
   FieldBuilder,
   FieldOptions,
-  FieldType,
-  PropertyMetadata,
-  deserializeComplexTypeV4
-} from '@sap-cloud-sdk/core';
+  OrderableEdmTypeField,
+  PropertyMetadata
+} from '@sap-cloud-sdk/odata-v4';
 
 /**
  * TestNestedComplexType
  */
-export interface TestNestedComplexType {
+export interface TestNestedComplexType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * String Property.
    * @nullable
    */
-  stringProperty?: string;
+  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * Complex Type Property.
    * @nullable
    */
-  complexTypeProperty?: TestLvl2NestedComplexType;
-}
-
-/**
- * @deprecated Since v1.6.0. Use [[TestNestedComplexType.build]] instead.
- */
-export function createTestNestedComplexType(json: any): TestNestedComplexType {
-  return TestNestedComplexType.build(json);
+  complexTypeProperty?: DeserializedType<
+    DeSerializersT,
+    'API_TEST_SRV.A_TestLvl2NestedComplexType'
+  >;
 }
 
 /**
@@ -47,32 +49,50 @@ export function createTestNestedComplexType(json: any): TestNestedComplexType {
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class TestNestedComplexTypeField<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<
   EntityT,
+  DeSerializersT,
   TestNestedComplexType,
   NullableT,
   SelectableT
 > {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', true, false> =
-    this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
+  stringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  > = this._fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
+    true
+  );
   /**
    * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty: TestLvl2NestedComplexTypeField<EntityT, true, false> =
-    this._fieldBuilder.buildComplexTypeField(
-      'ComplexTypeProperty',
-      TestLvl2NestedComplexTypeField,
-      true
-    );
+  complexTypeProperty: TestLvl2NestedComplexTypeField<
+    EntityT,
+    DeSerializersT,
+    true,
+    false
+  > = this._fieldBuilder.buildComplexTypeField(
+    'ComplexTypeProperty',
+    TestLvl2NestedComplexTypeField,
+    true
+  );
 
   /**
    * Creates an instance of TestNestedComplexTypeField.
@@ -82,9 +102,16 @@ export class TestNestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, TestNestedComplexType, fieldOptions);
+    super(
+      fieldName,
+      fieldOf,
+      deSerializers,
+      TestNestedComplexType,
+      fieldOptions
+    );
   }
 }
 
@@ -106,13 +133,4 @@ export namespace TestNestedComplexType {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
-   */
-  export function build(json: {
-    [keys: string]: FieldType | TestLvl2NestedComplexType;
-  }): TestNestedComplexType {
-    return deserializeComplexTypeV4(json, TestNestedComplexType);
-  }
 }

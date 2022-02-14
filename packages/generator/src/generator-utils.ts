@@ -1,4 +1,3 @@
-import { EdmTypeShared } from '@sap-cloud-sdk/core';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   VdmNavigationProperty,
@@ -19,6 +18,7 @@ function hasCapability(object: any, capability: string) {
  * Checks if the `sap:deletable` property is present on the given input.
  * @param entity - Object to be checked.
  * @returns `true` if the property `sap:deletable` has the value 'true' or is not present in the object.
+ * @internal
  */
 export function isDeletable(entity: any): boolean {
   return hasCapability(entity, 'sap:deletable');
@@ -28,6 +28,7 @@ export function isDeletable(entity: any): boolean {
  * Checks if the `sap:updatable` property is present on the given input.
  * @param entity - Object to be checked.
  * @returns `true` if the property `sap:updatable` has the value 'true' or is not present in the object.
+ * @internal
  */
 export function isUpdatable(entity: any): boolean {
   return hasCapability(entity, 'sap:updatable');
@@ -37,6 +38,7 @@ export function isUpdatable(entity: any): boolean {
  * Checks if the `sap:creatable` property is present on the given input.
  * @param entity - Object to be checked.
  * @returns `true` if the property `sap:creatable` has the value 'true' or is not present in the object.
+ * @internal
  */
 export function isCreatable(entity: any): boolean {
   return hasCapability(entity, 'sap:creatable');
@@ -46,6 +48,7 @@ export function isCreatable(entity: any): boolean {
  * Checks if the `sap:sortable` property is present on the given input.
  * @param property - Object to be checked.
  * @returns `true` if the property `sap:sortable` has the value 'true' or is not present in the object.
+ * @internal
  */
 export function isSortable(property: any): boolean {
   return hasCapability(property, 'sap:sortable');
@@ -55,6 +58,7 @@ export function isSortable(property: any): boolean {
  * Checks if the `sap:filterable` property is present on the given input.
  * @param property - Object to be checked.
  * @returns `true` if the property `sap:filterable` has the value 'true' or is not present in the object.
+ * @internal
  */
 export function isFilterable(property: any): boolean {
   return hasCapability(property, 'sap:filterable');
@@ -64,6 +68,7 @@ export function isFilterable(property: any): boolean {
  * Checks if the `Nullable` property is present on the given input.
  * @param property - Object to be checked.
  * @returns `true` if the property `Nullable` has the value 'true' or is not present in the object.
+ * @internal
  */
 export function isNullableProperty(property: any): boolean {
   return hasCapability(property, 'Nullable');
@@ -73,17 +78,20 @@ export function isNullableProperty(property: any): boolean {
  * Checks if the 'Nullable' property is present on the given input.
  * @param parameter - Object to be checked.
  * @returns `false` if the property `Nullable` has the value 'false' or is not present in the object.
+ * @internal
  */
 export function isNullableParameter(parameter: any): boolean {
   return !!parameter['Nullable'] && parameter['Nullable'] !== 'false';
 }
-
+/**
+ * @internal
+ */
 export type EdmTypeMapping = {
-  [key in EdmTypeShared<'any'>]: string | undefined;
+  [key in EdmTypeShared]: string | undefined;
 };
 
 type EdmTypeMappingWithoutEnum = {
-  [key in Exclude<EdmTypeShared<'any'>, 'Edm.Enum'>]: string | undefined;
+  [key in Exclude<EdmTypeShared, 'Edm.Enum'>]: string | undefined;
 };
 
 const edmToTsTypeMapping: EdmTypeMappingWithoutEnum = {
@@ -140,19 +148,23 @@ const edmToFieldTypeMapping: EdmTypeMapping = {
   'Edm.TimeOfDay': 'OrderableEdmTypeField',
   'Edm.Enum': 'EdmTypeField'
 };
+/* eslint-disable valid-jsdoc */
 
-export function getFallbackEdmTypeIfNeeded(
-  edmType: string
-): EdmTypeShared<any> {
+/**
+ * @internal
+ */
+export function getFallbackEdmTypeIfNeeded(edmType: string): EdmTypeShared {
   if (edmType in edmToTsTypeMapping) {
-    return edmType as EdmTypeShared<any>;
+    return edmType as EdmTypeShared;
   }
   logger.warn(
     `The EDM type '${edmType}' is unknown or not supported by the SAP Cloud SDK. Using "any" as fallback.`
   );
   return 'Edm.Any';
 }
-
+/**
+ * @internal
+ */
 export function edmToTsType(edmType: string): string {
   const tsType = edmToTsTypeMapping[edmType];
   if (!tsType) {
@@ -162,7 +174,9 @@ export function edmToTsType(edmType: string): string {
   }
   return tsType;
 }
-
+/**
+ * @internal
+ */
 export function edmToFieldType(edmType: string): string {
   const fieldType = edmToFieldTypeMapping[edmType];
   if (!fieldType) {
@@ -172,7 +186,9 @@ export function edmToFieldType(edmType: string): string {
   }
   return fieldType;
 }
-
+/**
+ * @internal
+ */
 export function edmToComplexPropertyType(edmType: string): string {
   const fieldType = edmToFieldType(edmType);
   if (!fieldType) {
@@ -182,7 +198,9 @@ export function edmToComplexPropertyType(edmType: string): string {
   }
   return fieldType;
 }
-
+/**
+ * @internal
+ */
 export function forceArray(obj: any): any[] {
   if (!obj) {
     return [];
@@ -192,7 +210,9 @@ export function forceArray(obj: any): any[] {
   }
   return obj;
 }
-
+/**
+ * @internal
+ */
 export function ensureString(obj: any): string {
   if (typeof obj === 'undefined' || obj === null) {
     return '';
@@ -202,11 +222,15 @@ export function ensureString(obj: any): string {
   }
   return `${obj}`;
 }
-
+/**
+ * @internal
+ */
 export function endWithDot(text: string): string {
   return !text || text.endsWith('.') || text.endsWith(':') ? text : `${text}.`;
 }
-
+/**
+ * @internal
+ */
 export function linkClass(
   navProperty: VdmNavigationProperty,
   oDataVersion: ODataVersion
@@ -217,13 +241,15 @@ export function linkClass(
       : 'Link'
     : 'OneToOneLink';
 }
-
+/**
+ * @internal
+ */
 export function getGenericParameters(
   entityClassName: string,
   prop: VdmProperty,
   isSelectable: boolean
 ): string {
-  const params = [entityClassName];
+  const params = [entityClassName, 'DeSerializersT'];
   if (prop.isCollection) {
     if (prop.isEnum) {
       params.push(`typeof ${prop.jsType}`);
@@ -241,7 +267,6 @@ export function getGenericParameters(
       params.push(`'${prop.edmType}'`);
     }
   }
-
   params.push(prop.nullable.toString());
   params.push(isSelectable.toString());
 
@@ -253,6 +278,7 @@ export function getGenericParameters(
  * @param string - The string to be prefixed.
  * @param prefix - The optional prefix.
  * @returns Prefixed string.
+ * @internal
  */
 export function prefixString(string: string, prefix?: string): string {
   return prefix ? `${prefix}${string}` : string;
@@ -262,6 +288,7 @@ export function prefixString(string: string, prefix?: string): string {
  * Takes a name and returns a transformation that is guaranteed to be compliant with npm naming rules.
  * @param name - The name to be transformed if necessary.
  * @returns Name that is guaranteed to be compliant.
+ * @internal
  */
 export function npmCompliantName(name: string): string {
   let compliantName = trimToNpmMaxLength(name);
@@ -270,6 +297,9 @@ export function npmCompliantName(name: string): string {
 }
 
 // We use this function to still be able to generate the "cloud-sdk-vdm" package, even though the prefix + name logic does not allow it normally
+/**
+ * @internal
+ */
 export function cloudSdkVdmHack(name: string): string {
   return name === '@sap/cloud-sdk-vdm-' ? name.slice(0, -1) : name;
 }
@@ -327,7 +357,39 @@ const makeNpmCompliant = (name: string) => {
 
 const npmMaxLength = 214;
 const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
-
+/**
+ * @internal
+ */
 export function hasEntities(service: VdmServiceMetadata): boolean {
   return !!service.entities?.length;
 }
+
+/**
+ * @internal
+ * This is copied from the `@sap-cloud-sdk/odata-common`
+ */
+export type EdmTypeShared =
+  // type EdmTypeCommon
+  | 'Edm.String'
+  | 'Edm.Boolean'
+  | 'Edm.Decimal'
+  | 'Edm.Double'
+  | 'Edm.Single'
+  | 'Edm.Float'
+  | 'Edm.Int16'
+  | 'Edm.Int32'
+  | 'Edm.Int64'
+  | 'Edm.SByte'
+  | 'Edm.Binary'
+  | 'Edm.Guid'
+  | 'Edm.Byte'
+  | 'Edm.Any'
+  // ExclusiveEdmTypeV2
+  | 'Edm.DateTimeOffset'
+  | 'Edm.DateTime'
+  // ExclusiveEdmTypeV4
+  | 'Edm.Time'
+  | 'Edm.Date'
+  | 'Edm.Duration'
+  | 'Edm.TimeOfDay'
+  | 'Edm.Enum';

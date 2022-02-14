@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/openapi-generator",
-  "version": "1.53.0",
+  "version": "2.0.0",
   "description": "SAP Cloud SDK for JavaScript OpenAPI client generator",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -20,7 +20,6 @@
   },
   "files": [
     "dist",
-    "bin/openapi-jar",
     "internal.d.ts",
     "internal.js"
   ],
@@ -31,15 +30,16 @@
     "readme": "npx ts-node generate-readme.ts",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/openapi'"
   },
   "dependencies": {
-    "@apidevtools/swagger-parser": "^10.0.2",
-    "@sap-cloud-sdk/generator-common": "^1.53.0",
-    "@sap-cloud-sdk/util": "^1.53.0",
+    "@apidevtools/swagger-parser": "^10.0.3",
+    "@sap-cloud-sdk/generator-common": "^2.0.0",
+    "@sap-cloud-sdk/openapi": "^2.0.0",
+    "@sap-cloud-sdk/util": "^2.0.0",
     "glob": "^7.1.6",
     "js-yaml": "^4.0.0",
-    "openapi-types": "^9.3.0",
+    "openapi-types": "^10.0.0",
     "swagger2openapi": "^7.0.4",
     "yargs": "^17.1.1"
   },
@@ -48,6 +48,6 @@
     "@types/yargs": "^17.0.2",
     "mock-fs": "^5.0.0",
     "nock": "^13.0.11",
-    "typescript": "~4.3.4"
+    "typescript": "~4.5.5"
   }
 }

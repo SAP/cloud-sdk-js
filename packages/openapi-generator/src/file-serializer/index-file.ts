@@ -5,6 +5,7 @@ import { OpenApiDocument } from '../openapi-types';
  * Serialize an index file for the root directory of the generated service.
  * @param openApiDocument - The parsed document to serialize into an index file.
  * @returns The serialized index file contents.
+ * @internal
  */
 export function apiIndexFile(openApiDocument: OpenApiDocument): string {
   const files = [
@@ -20,6 +21,7 @@ export function apiIndexFile(openApiDocument: OpenApiDocument): string {
  * Serialize an index file for the schema directory of the generated service.
  * @param openApiDocument - The parsed document to serialize into an index file for the schema directory.
  * @returns The serialized index file contents.
+ * @internal
  */
 export function schemaIndexFile(openApiDocument: OpenApiDocument): string {
   return exportAllFiles(openApiDocument.schemas.map(schema => schema.fileName));

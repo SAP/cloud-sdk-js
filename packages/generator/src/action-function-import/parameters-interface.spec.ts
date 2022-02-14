@@ -10,7 +10,7 @@ describe('parameters-interface', () => {
   it('function parameter interface with non nullable parameter', () => {
     expect(parametersInterface(orderBreakfast)).toEqual({
       kind: StructureKind.Interface,
-      name: 'Params',
+      name: 'Params<DeSerializersT extends DeSerializers>',
       isExported: true,
       properties: [
         {
@@ -29,7 +29,7 @@ describe('parameters-interface', () => {
   it('function parameter interface with nullable parameter', () => {
     expect(parametersInterface(orderBreakfastNullable)).toEqual({
       kind: StructureKind.Interface,
-      name: 'Params',
+      name: 'Params<DeSerializersT extends DeSerializers>',
       isExported: true,
       properties: [
         {

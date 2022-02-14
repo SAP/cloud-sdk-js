@@ -66,14 +66,12 @@ export const brunchEntity: VdmEntity = {
 export const toBrunch: VdmNavigationProperty = {
   from: 'Breakfast',
   to: brunchEntity.entitySetName,
-  isMultiLink: false,
   isCollection: false,
   instancePropertyName: 'toBrunch',
   staticPropertyName: 'TO_BRUNCH',
   propertyNameAsParam: 'toBrunch',
   originalName: 'TO_BRUNCH',
-  toEntityClassName: brunchEntity.className,
-  multiplicity: '1-1'
+  toEntityClassName: brunchEntity.className
 };
 
 export const breakfastEntity: VdmEntity = {
@@ -120,7 +118,6 @@ export const complexMeal: VdmComplexType = {
   originalName: 'ComplexMealName',
   typeName: 'ComplexMealType',
   fieldType: 'ComplexMealField',
-  factoryName: 'createComplexMeal',
   properties: [
     {
       originalName: 'Complexity',
@@ -154,7 +151,6 @@ export const complexDesert: VdmComplexType = {
   originalName: 'ComplexDesert',
   typeName: 'ComplexDesert',
   fieldType: 'ComplexDesertField',
-  factoryName: 'createComplexDesert',
   properties: [
     {
       originalName: 'Amount',
@@ -188,7 +184,6 @@ export const complexMealWithDesert: VdmComplexType = {
   originalName: 'ComplexMealWithDesertName',
   typeName: 'ComplexMealWithDesertType',
   fieldType: 'ComplexMealWithDesertField',
-  factoryName: 'createComplexMealWithDesert',
   properties: [
     {
       originalName: 'ComplexDesert',
@@ -237,7 +232,7 @@ const orderBreakfastBuilder = (isNullable: boolean): VdmFunctionImport => ({
   ],
   parametersTypeName: 'Params',
   returnType: {
-    builderFunction: '(val) => edmToTs(val, Edm.String)',
+    builderFunction: "(val) => edmToTs(val, 'Edm.String', deSerializers)",
     returnType: 'string',
     isCollection: false,
     isNullable: false,

@@ -1,8 +1,10 @@
-import { basicHeader, Destination } from '@sap-cloud-sdk/core';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import nock from 'nock';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
+import { Destination } from '@sap-cloud-sdk/connectivity';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
+import { testEntityApi } from './test-util';
 
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
@@ -52,7 +54,8 @@ describe('Custom Fields', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponseWithCustomField);
 
-    const entities = await TestEntity.requestBuilder()
+    const entities = await testEntityApi
+      .requestBuilder()
       .getAll()
       .execute(destination);
     const actual = entities[0].getCustomField('MyCustomField');
@@ -73,9 +76,10 @@ describe('Custom Fields', () => {
       .get(`${servicePath}/${entityName}?$format=json&$select=MyCustomField`)
       .reply(200, getAllResponseWithCustomField);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
-      .select(TestEntity.customField('MyCustomField'))
+      .select(testEntityApi.customField('MyCustomField'))
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();
@@ -97,10 +101,11 @@ describe('Custom Fields', () => {
       )
       .reply(200, getAllResponseWithCustomField);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
       .filter(
-        TestEntity.customField('MyCustomField').edmString().equals('ToMatch')
+        testEntityApi.customField('MyCustomField').edmString().equals('ToMatch')
       )
       .execute(destination);
 
@@ -146,13 +151,15 @@ describe('Custom Fields', () => {
       )
       .reply(204);
 
-    const entities = await TestEntity.requestBuilder()
+    const entities = await testEntityApi
+      .requestBuilder()
       .getAll()
       .execute(destination);
     const entity = entities[0];
     entity.setCustomField('MyCustomField', 'NewValue');
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .update(entity)
       .execute(destination);
 
@@ -181,9 +188,11 @@ describe('Custom Fields', () => {
       })
       .reply(200, response);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .create(
-        TestEntity.builder()
+        testEntityApi
+          .entityBuilder()
           .stringProperty('stringProp')
           .int16Property(19)
           .withCustomFields({ MyCustomField: 'CustomField' })

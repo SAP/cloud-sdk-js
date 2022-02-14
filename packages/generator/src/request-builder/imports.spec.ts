@@ -1,21 +1,24 @@
 import { StructureKind } from 'ts-morph';
 import { breakfastEntity } from '../../test/test-util/data-model';
-import { importDeclarations } from './imports';
+import { requestBuilderImportDeclarations } from './imports';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = importDeclarations(breakfastEntity, 'v2');
+    const actual = requestBuilderImportDeclarations(breakfastEntity, 'v2');
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/core',
+        moduleSpecifier: '@sap-cloud-sdk/odata-v2',
         namedImports: [
-          'Time',
+          'DefaultDeSerializers',
+          'DeSerializers',
+          'GetAllRequestBuilder',
+          'GetByKeyRequestBuilder',
+          'CreateRequestBuilder',
+          'UpdateRequestBuilder',
+          'DeserializedType',
           'RequestBuilder',
-          'GetAllRequestBuilderV2',
-          'GetByKeyRequestBuilderV2',
-          'CreateRequestBuilderV2',
-          'UpdateRequestBuilderV2'
+          'Time'
         ]
       },
       {

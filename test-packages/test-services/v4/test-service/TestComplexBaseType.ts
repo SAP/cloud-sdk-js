@@ -1,36 +1,35 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
+  DeserializedType,
   EdmTypeField,
-  EntityV4,
+  Entity,
+  EnumField,
   FieldBuilder,
   FieldOptions,
-  FieldType,
-  PropertyMetadata,
-  deserializeComplexTypeV4
-} from '@sap-cloud-sdk/core';
+  OrderableEdmTypeField,
+  PropertyMetadata
+} from '@sap-cloud-sdk/odata-v4';
 
 /**
  * TestComplexBaseType
  */
-export interface TestComplexBaseType {
+export interface TestComplexBaseType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Base String Property.
    * @nullable
    */
-  baseStringProperty?: string;
-}
-
-/**
- * @deprecated Since v1.6.0. Use [[TestComplexBaseType.build]] instead.
- */
-export function createTestComplexBaseType(json: any): TestComplexBaseType {
-  return TestComplexBaseType.build(json);
+  baseStringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
 
 /**
@@ -38,26 +37,36 @@ export function createTestComplexBaseType(json: any): TestComplexBaseType {
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class TestComplexBaseTypeField<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<
   EntityT,
+  DeSerializersT,
   TestComplexBaseType,
   NullableT,
   SelectableT
 > {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: EdmTypeField<EntityT, 'Edm.String', true, false> =
-    this._fieldBuilder.buildEdmTypeField(
-      'BaseStringProperty',
-      'Edm.String',
-      true
-    );
+  baseStringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  > = this._fieldBuilder.buildEdmTypeField(
+    'BaseStringProperty',
+    'Edm.String',
+    true
+  );
 
   /**
    * Creates an instance of TestComplexBaseTypeField.
@@ -67,9 +76,10 @@ export class TestComplexBaseTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, TestComplexBaseType, fieldOptions);
+    super(fieldName, fieldOf, deSerializers, TestComplexBaseType, fieldOptions);
   }
 }
 
@@ -85,13 +95,4 @@ export namespace TestComplexBaseType {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
-   */
-  export function build(json: {
-    [keys: string]: FieldType;
-  }): TestComplexBaseType {
-    return deserializeComplexTypeV4(json, TestComplexBaseType);
-  }
 }

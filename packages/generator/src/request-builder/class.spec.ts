@@ -5,9 +5,11 @@ import { requestBuilderClass } from './class';
 
 describe('request builder class', () => {
   it('should generate request builder correctly', () => {
-    const requestBuilder = requestBuilderClass(breakfastEntity, 'v2');
-    expect(requestBuilder.name).toBe('BreakfastRequestBuilder');
-    expect(requestBuilder.extends).toBe('RequestBuilder<Breakfast>');
+    const requestBuilder = requestBuilderClass(breakfastEntity);
+    expect(requestBuilder.name).toBe(
+      'BreakfastRequestBuilder<T extends DeSerializers = DefaultDeSerializers>'
+    );
+    expect(requestBuilder.extends).toBe('RequestBuilder<Breakfast<T>, T>');
 
     const methods = requestBuilder.methods!.map(method => ({
       name: method.name,
@@ -17,30 +19,33 @@ describe('request builder class', () => {
     }));
     const getByKey = {
       name: 'getByKey',
-      returnType: 'GetByKeyRequestBuilderV2<Breakfast>',
-      statements: `return new GetByKeyRequestBuilderV2(Breakfast, {EntityName: entityName,${unixEOL}BreakfastTime: breakfastTime});`,
+      returnType: 'GetByKeyRequestBuilder<Breakfast<T>, T>',
+      statements: `return new GetByKeyRequestBuilder<Breakfast<T>, T>(this.entityApi, {EntityName: entityName,${unixEOL}BreakfastTime: breakfastTime});`,
       parameters: [
-        { name: 'entityName', type: 'string' },
-        { name: 'breakfastTime', type: 'Time' }
+        { name: 'entityName', type: "DeserializedType<T, 'Edm.String'>" },
+        { name: 'breakfastTime', type: "DeserializedType<T, 'Edm.DateTime'>" }
       ]
     };
     const getAll = {
       name: 'getAll',
-      returnType: 'GetAllRequestBuilderV2<Breakfast>',
-      statements: 'return new GetAllRequestBuilderV2(Breakfast);',
+      returnType: 'GetAllRequestBuilder<Breakfast<T>, T>',
+      statements:
+        'return new GetAllRequestBuilder<Breakfast<T>, T>(this.entityApi);',
       parameters: undefined
     };
     const create = {
       name: 'create',
-      returnType: 'CreateRequestBuilderV2<Breakfast>',
-      statements: 'return new CreateRequestBuilderV2(Breakfast, entity);',
-      parameters: [{ name: 'entity', type: 'Breakfast' }]
+      returnType: 'CreateRequestBuilder<Breakfast<T>, T>',
+      statements:
+        'return new CreateRequestBuilder<Breakfast<T>, T>(this.entityApi, entity);',
+      parameters: [{ name: 'entity', type: 'Breakfast<T>' }]
     };
     const update = {
       name: 'update',
-      returnType: 'UpdateRequestBuilderV2<Breakfast>',
-      statements: 'return new UpdateRequestBuilderV2(Breakfast, entity);',
-      parameters: [{ name: 'entity', type: 'Breakfast' }]
+      returnType: 'UpdateRequestBuilder<Breakfast<T>, T>',
+      statements:
+        'return new UpdateRequestBuilder<Breakfast<T>, T>(this.entityApi, entity);',
+      parameters: [{ name: 'entity', type: 'Breakfast<T>' }]
     };
     expect(methods).toEqual([getByKey, getAll, create, update]);
   });
@@ -62,7 +67,7 @@ describe('request builder class', () => {
     };
     corruptedEntity.properties.push(accompaniment);
     corruptedEntity.keys.push(accompaniment);
-    const requestBuilder = requestBuilderClass(corruptedEntity, 'v4');
+    const requestBuilder = requestBuilderClass(corruptedEntity);
     const methods = requestBuilder
       .methods!.filter(
         method => method.name === 'getByKey' || method.name === 'delete'
@@ -74,14 +79,14 @@ describe('request builder class', () => {
         parameters: method.parameters
       }));
     const params = [
-      { name: 'entityName', type: 'string' },
-      { name: 'breakfastTime', type: 'Time' },
-      { name: 'pWith', type: 'string' }
+      { name: 'entityName', type: "DeserializedType<T, 'Edm.String'>" },
+      { name: 'breakfastTime', type: "DeserializedType<T, 'Edm.DateTime'>" },
+      { name: 'pWith', type: "DeserializedType<T, 'Edm.String'>" }
     ];
     const getByKeyRequestBuilder = {
       name: 'getByKey',
-      returnType: 'GetByKeyRequestBuilderV4<Breakfast>',
-      statements: `return new GetByKeyRequestBuilderV4(Breakfast, {EntityName: entityName,${unixEOL}BreakfastTime: breakfastTime,${unixEOL}With: pWith});`,
+      returnType: 'GetByKeyRequestBuilder<Breakfast<T>, T>',
+      statements: `return new GetByKeyRequestBuilder<Breakfast<T>, T>(this.entityApi, {EntityName: entityName,${unixEOL}BreakfastTime: breakfastTime,${unixEOL}With: pWith});`,
       parameters: params
     };
 
@@ -92,8 +97,8 @@ describe('request builder class', () => {
     ];
     const deleteRequestBuilder = {
       name: 'delete',
-      returnType: 'DeleteRequestBuilderV4<Breakfast>',
-      statements: `return new DeleteRequestBuilderV4(Breakfast, entityNameOrEntity instanceof Breakfast ? entityNameOrEntity : {EntityName: entityNameOrEntity!,${unixEOL}BreakfastTime: breakfastTime!,${unixEOL}With: pWith!});`,
+      returnType: 'DeleteRequestBuilder<Breakfast<T>, T>',
+      statements: `return new DeleteRequestBuilder<Breakfast<T>, T>(this.entityApi, entityNameOrEntity instanceof Breakfast ? entityNameOrEntity : {EntityName: entityNameOrEntity!,${unixEOL}BreakfastTime: breakfastTime!,${unixEOL}With: pWith!});`,
       parameters: deleteParams
     };
     expect(methods).toEqual([getByKeyRequestBuilder, deleteRequestBuilder]);

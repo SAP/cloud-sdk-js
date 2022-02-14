@@ -24,11 +24,13 @@ var __exportStar =
   };
 Object.defineProperty(exports, '__esModule', { value: true });
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 __exportStar(require('./MultiSchemaTestEntity'), exports);
+__exportStar(require('./MultiSchemaTestEntityApi'), exports);
 __exportStar(require('./MultiSchemaTestEntityRequestBuilder'), exports);
 __exportStar(require('./BatchRequest'), exports);
+__exportStar(require('./service'), exports);
 //# sourceMappingURL=index.js.map

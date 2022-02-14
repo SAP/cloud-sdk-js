@@ -5,7 +5,11 @@ import {
   EdmxEntitySetBase,
   EdmxEntityTypeBase
 } from './edmx-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function parseComplexTypesBase(root: any): EdmxComplexTypeBase[] {
   return getMergedPropertyWithNamespace(root, 'ComplexType').map(c => ({
     ...c,
@@ -13,7 +17,9 @@ export function parseComplexTypesBase(root: any): EdmxComplexTypeBase[] {
     Namespace: c.Namespace
   }));
 }
-
+/**
+ * @internal
+ */
 export function parseEntityTypesBase(root: any): EdmxEntityTypeBase<any>[] {
   return getMergedPropertyWithNamespace(root, 'EntityType').map(e => ({
     ...e,
@@ -25,11 +31,15 @@ export function parseEntityTypesBase(root: any): EdmxEntityTypeBase<any>[] {
     Namespace: e.Namespace
   }));
 }
-
+/**
+ * @internal
+ */
 export function parseEntitySetsBase(root: any): EdmxEntitySetBase[] {
   return getPropertyFromEntityContainer(root, 'EntitySet');
 }
-
+/**
+ * @internal
+ */
 export function getPropertyFromEntityContainer(
   schema: any,
   entityContainerProperty: string
@@ -45,8 +55,12 @@ export function getPropertyFromEntityContainer(
   );
 }
 
-function addNamespace<T>(obj: T, namespace: string): T & { Namespace: string } {
-  return { ...obj, Namespace: namespace };
+function addNamespace<T>(
+  obj: T,
+  namespace: string | string[]
+): T & { Namespace: string } {
+  const Namespace = Array.isArray(namespace) ? namespace[0] : namespace;
+  return { ...obj, Namespace };
 }
 
 /**
@@ -54,6 +68,7 @@ function addNamespace<T>(obj: T, namespace: string): T & { Namespace: string } {
  * @param root - One or more schemas
  * @param property - The property that will be merged
  * @returns A collection containing the merged property
+ * @internal
  */
 export function getMergedPropertyWithNamespace(
   root: any,
@@ -61,7 +76,10 @@ export function getMergedPropertyWithNamespace(
 ): any[] {
   return flat(
     forceArray(root).map(s =>
-      forceArray(s[property]).map(p => addNamespace(p, s.Namespace))
+      // If the property has a namespace take it over the higher level schema namespace
+      forceArray(s[property]).map(p =>
+        addNamespace(p, p.Namespace || s.Namespace)
+      )
     )
   );
 }

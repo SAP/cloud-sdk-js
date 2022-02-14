@@ -23,20 +23,20 @@ const returnTypeComplexType: VdmActionFunctionImportReturnType = {
 
 describe('response-transformer-function', () => {
   it('responseTransformerFunctionName of entity', () => {
-    expect(responseTransformerFunctionName(returnTypeEntity, 'v2')).toEqual(
-      'transformReturnValueForEntityV2'
+    expect(responseTransformerFunctionName(returnTypeEntity)).toEqual(
+      'transformReturnValueForEntity'
     );
   });
 
   it('responseTransformerFunctionName of complex type and list', () => {
-    expect(
-      responseTransformerFunctionName(returnTypeComplexType, 'v4')
-    ).toEqual('transformReturnValueForComplexTypeListV4');
+    expect(responseTransformerFunctionName(returnTypeComplexType)).toEqual(
+      'transformReturnValueForComplexTypeList'
+    );
   });
 
   it('responseTransformerFunctionName of edmType', () => {
-    expect(
-      responseTransformerFunctionName(orderBreakfast.returnType, 'v2')
-    ).toEqual('transformReturnValueForEdmTypeV2');
+    expect(responseTransformerFunctionName(orderBreakfast.returnType)).toEqual(
+      'transformReturnValueForEdmType'
+    );
   });
 });

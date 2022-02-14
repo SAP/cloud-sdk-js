@@ -5,9 +5,9 @@ import {
   EdmxActionImport,
   EdmxComplexType,
   EdmxEntitySet,
-  EdmxEntityType
+  EdmxEntityTypeV4
 } from '../../edmx-parser/v4';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { ServiceMetadata } from '../../edmx-parser';
 import { generateEntitiesV4 } from './entity';
 import { generateActionImportsV4 } from './action-import';
 import { generateComplexTypesV4 } from './complex-type';
@@ -24,6 +24,7 @@ describe('action-import', () => {
     const entities = generateEntitiesV4(service, [], [], formatter);
     const actionImport = generateActionImportsV4(
       service,
+      'myServiceWithActions',
       entities,
       [],
       formatter
@@ -105,6 +106,7 @@ describe('action-import', () => {
 
     const actionImports = generateActionImportsV4(
       service,
+      'myTestServiceName',
       entities,
       complexTypes,
       getFormatter()
@@ -119,7 +121,7 @@ describe('action-import', () => {
     const formatter = getFormatter();
     const service =
       createServiceMetadataWithActionImportLinksToUndefinedAction();
-    generateActionImportsV4(service, [], [], formatter);
+    generateActionImportsV4(service, 'myTestServiceName', [], [], formatter);
     expect(warnSpy).toBeCalledWith(
       expect.stringContaining(
         'Could not find actions referenced by the following action imports.'
@@ -134,7 +136,13 @@ describe('action-import', () => {
     const formatter = getFormatter();
     const service = createServiceWithActions();
     const entities = generateEntitiesV4(service, [], [], formatter);
-    generateActionImportsV4(service, entities, [], formatter);
+    generateActionImportsV4(
+      service,
+      'myTestServiceName',
+      entities,
+      [],
+      formatter
+    );
     expect(warnSpy).not.toBeCalled();
   });
 });
@@ -211,7 +219,7 @@ function createTestProperty(name: string, type = 'Edm.String'): EdmxProperty {
 }
 
 function createTestServiceData(
-  entityTypes: EdmxEntityType[],
+  entityTypes: EdmxEntityTypeV4[],
   entitySets: EdmxEntitySet[],
   complexType: EdmxComplexType[] = [getComplexType()],
   actions: EdmxAction[] = [],
@@ -250,7 +258,7 @@ function createImportsForActions(actions: EdmxAction[]): EdmxActionImport[] {
 }
 
 function createServiceWithActions(): ServiceMetadata {
-  const entitySet = createTestEntitySet('TestEntity', 'TestEntityType', []);
+  const entitySet = createTestEntitySet('TestEntity', 'ns.TestEntityType', []);
   const entityType = createEntityType('TestEntityType', [], []);
   const actionNoReturnNoParameter = createAction(
     'ActionNoReturnNoParameter',
@@ -259,7 +267,7 @@ function createServiceWithActions(): ServiceMetadata {
   );
   const actionWithReturnWithParameter = createAction(
     'ActionWithReturnWithParameter',
-    'TestEntityType',
+    'ns.TestEntityType',
     [{ Name: 'StringParameter', Type: 'Edm.String', Nullable: 'false' }]
   );
   return createTestServiceData([entityType], [entitySet], undefined, [

@@ -11,20 +11,20 @@ describe('interface', () => {
     const actual = complexTypeInterface(complexMeal);
     expect(actual).toEqual({
       kind: StructureKind.Interface,
-      name: 'ComplexMealType',
+      name: 'ComplexMealType<DeSerializersT extends DeSerializers = DefaultDeSerializers>',
       isExported: true,
       properties: [
         {
           kind: StructureKind.PropertySignature,
           name: 'complexity',
-          type: 'string',
+          type: "DeserializedType<DeSerializersT, 'Edm.String'>",
           hasQuestionToken: false,
           docs: [`${unixEOL}something something very good`]
         },
         {
           kind: StructureKind.PropertySignature,
           name: 'amount',
-          type: 'number',
+          type: "DeserializedType<DeSerializersT, 'Edm.Int16'>",
           hasQuestionToken: false,
           docs: [`${unixEOL}something something very much`]
         }
@@ -37,20 +37,20 @@ describe('interface', () => {
     const actual = complexTypeInterface(complexMealWithDesert);
     expect(actual).toEqual({
       kind: StructureKind.Interface,
-      name: 'ComplexMealWithDesertType',
+      name: 'ComplexMealWithDesertType<DeSerializersT extends DeSerializers = DefaultDeSerializers>',
       isExported: true,
       properties: [
         {
           kind: StructureKind.PropertySignature,
           name: 'complexDesert',
-          type: 'ComplexDesert',
+          type: "DeserializedType<DeSerializersT, 'ComplexDesert'>",
           hasQuestionToken: false,
           docs: [`${unixEOL}the desert`]
         },
         {
           kind: StructureKind.PropertySignature,
           name: 'amount',
-          type: 'number',
+          type: "DeserializedType<DeSerializersT, 'Edm.Int16'>",
           hasQuestionToken: false,
           docs: [`${unixEOL}something something very much`]
         }

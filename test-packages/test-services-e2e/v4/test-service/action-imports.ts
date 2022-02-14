@@ -1,21 +1,28 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  transformReturnValueForEntityV4,
-  transformReturnValueForEdmTypeV4,
-  edmToTsV4,
+  edmToTs,
   ActionImportRequestBuilder,
-  ActionImportParameter
-} from '@sap-cloud-sdk/core';
+  ActionImportParameter,
+  transformReturnValueForEntity,
+  transformReturnValueForEdmType,
+  DeSerializers,
+  DefaultDeSerializers,
+  defaultDeSerializers
+} from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
 import { TestEntity } from './TestEntity';
+import { TestEntityApi } from './TestEntityApi';
 
 /**
  * Type of the parameters to be passed to [[createTestEntityById]].
  */
-export interface CreateTestEntityByIdParameters {
+export interface CreateTestEntityByIdParameters<
+  DeSerializersT extends DeSerializers
+> {
   /**
    * Id.
    */
@@ -28,9 +35,16 @@ export interface CreateTestEntityByIdParameters {
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function createTestEntityById(
-  parameters: CreateTestEntityByIdParameters
-): ActionImportRequestBuilder<CreateTestEntityByIdParameters, TestEntity> {
+export function createTestEntityById<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: CreateTestEntityByIdParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  CreateTestEntityByIdParameters<DeSerializersT>,
+  TestEntity
+> {
   const params = {
     id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };
@@ -38,15 +52,22 @@ export function createTestEntityById(
   return new ActionImportRequestBuilder(
     '/odata/test-service',
     'createTestEntityById',
-    data => transformReturnValueForEntityV4(data, TestEntity),
-    params
+    data =>
+      transformReturnValueForEntity(
+        data,
+        testService(deSerializers).testEntityApi
+      ),
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[createTestEntityByIdReturnId]].
  */
-export interface CreateTestEntityByIdReturnIdParameters {
+export interface CreateTestEntityByIdReturnIdParameters<
+  DeSerializersT extends DeSerializers
+> {
   /**
    * Id.
    */
@@ -59,9 +80,16 @@ export interface CreateTestEntityByIdReturnIdParameters {
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function createTestEntityByIdReturnId(
-  parameters: CreateTestEntityByIdReturnIdParameters
-): ActionImportRequestBuilder<CreateTestEntityByIdReturnIdParameters, number> {
+export function createTestEntityByIdReturnId<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
+  number
+> {
   const params = {
     id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };
@@ -70,10 +98,11 @@ export function createTestEntityByIdReturnId(
     '/odata/test-service',
     'createTestEntityByIdReturnId',
     data =>
-      transformReturnValueForEdmTypeV4(data, val =>
-        edmToTsV4(val.value, 'Edm.Int32')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.value, 'Edm.Int32', deSerializers)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 

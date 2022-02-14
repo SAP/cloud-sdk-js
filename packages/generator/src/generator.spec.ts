@@ -1,6 +1,8 @@
-import { resolve } from 'path';
+import { join, resolve } from 'path';
+import { promises } from 'fs';
 import nock = require('nock');
 import { FunctionDeclaration, SourceFile } from 'ts-morph';
+import mock from 'mock-fs';
 import { createOptions } from '../test/test-util/create-generator-options';
 import {
   checkStaticProperties,
@@ -8,40 +10,62 @@ import {
   getGeneratedFiles
 } from '../test/test-util/generator';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
-import { generateProject } from './generator';
+import {
+  generate,
+  generateProject,
+  getInstallODataErrorMessage
+} from './generator';
 import { GeneratorOptions } from './generator-options';
 import * as csnGeneration from './service/csn';
 
+const pathTestResources = resolve(__dirname, '../../../test-resources');
+const pathTestService = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
+const outPutPath = 'mockOutput';
+
 describe('generator', () => {
-  describe('common', () => {
+  describe('common mock-fs', () => {
+    beforeEach(() => {
+      mock({
+        [outPutPath]: {},
+        [pathTestResources]: mock.load(pathTestResources)
+      });
+    });
+
+    afterEach(() => {
+      mock.restore();
+    });
     it('copies the additional files matching the glob.', async () => {
-      const project = await generateProject(
+      await generate(
         createOptions({
-          inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+          inputDir: pathTestService,
+          outputDir: outPutPath,
           forceOverwrite: true,
-          additionalFiles: '../../test-resources/*.md'
+          additionalFiles: '../../../*.md'
         })
       );
 
-      const sourceFiles = project!.getSourceFiles();
-      expect(
-        sourceFiles.find(file => file.getBaseName() === 'some-test-markdown.md')
-      ).toBeDefined();
-      expect(
-        sourceFiles.find(file => file.getBaseName() === 'CHANGELOG.md')
-      ).toBeDefined();
-    });
+      const sourceFiles = await promises.readdir(
+        join(outPutPath, 'test-service')
+      );
 
+      expect(
+        sourceFiles.find(file => file === 'some-test-markdown.md')
+      ).toBeDefined();
+      expect(sourceFiles.find(file => file === 'CHANGELOG.md')).toBeDefined();
+    });
+  });
+
+  describe('common ts-morph', () => {
     it('generates the api hub metadata and writes to the input folder', async () => {
       nock('http://registry.npmjs.org/').head(/.*/).reply(404);
       const project = await generateProject(
         createOptions({
-          inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+          inputDir: pathTestService,
           forceOverwrite: true,
           generateSdkMetadata: true
         })
       );
-      const sourceFiles = project!.getSourceFiles();
+      const sourceFiles = project!.project!.getSourceFiles();
       const clientFile = sourceFiles.find(
         file => file.getBaseName() === 'API_TEST_SRV_CLIENT_JS.json'
       );
@@ -55,7 +79,7 @@ describe('generator', () => {
           /test-resources\/odata-service-specs\/v2\/API_TEST_SRV\/sdk-metadata/
         );
       });
-    });
+    }, 10000);
   });
   describe('edmx-to-csn', () => {
     const testGeneratorOptions: GeneratorOptions = createOptions({
@@ -94,15 +118,11 @@ describe('generator', () => {
       expect(testEntityFile).toBeDefined();
       expect(testEntityFile!.getClasses().length).toBe(1);
       expect(testEntityFile!.getInterfaces().length).toBe(1);
-      expect(testEntityFile!.getModules().length).toBe(1);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(24);
+      expect(entityClass!.getProperties().length).toBe(25);
 
       checkStaticProperties(entityClass!);
-
-      const entityNamespace = testEntityFile!.getModule('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(27);
     });
 
     it('generates function-imports.ts file', () => {
@@ -129,30 +149,23 @@ describe('generator', () => {
       expect(testEntityFile).toBeDefined();
       expect(testEntityFile!.getClasses().length).toBe(1);
       expect(testEntityFile!.getInterfaces().length).toBe(1);
-      expect(testEntityFile!.getModules().length).toBe(1);
       const imports = testEntityFile!
         .getImportStringLiterals()
         .map(stringLiteral => stringLiteral.getLiteralValue());
       expect(imports).toEqual([
-        './TestEntityRequestBuilder',
-        'moment',
-        'bignumber.js',
+        '@sap-cloud-sdk/odata-v4',
         './TestComplexType',
         './TestEnumType',
         './TestEnumTypeInt64',
         './TestEnumTypeWithOneMember',
-        '@sap-cloud-sdk/core',
         './TestEntityMultiLink',
         './TestEntitySingleLink'
       ]);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(32);
+      expect(entityClass!.getProperties().length).toBe(33);
 
       checkStaticProperties(entityClass!);
-
-      const entityNamespace = testEntityFile!.getModule('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(35);
     });
 
     it('generates function-imports.ts file', () => {
@@ -180,6 +193,22 @@ describe('generator', () => {
         ])
       );
     });
+  });
+
+  it('recommends to install odata packages', async () => {
+    const project = await generateProject(
+      createOptions({
+        inputDir: pathTestService,
+        outputDir: outPutPath,
+        forceOverwrite: true,
+        generateJs: true,
+        additionalFiles: '../../../*.md'
+      })
+    );
+
+    expect(getInstallODataErrorMessage(project!)).toMatchInlineSnapshot(
+      '"Did you forget to install \\"@sap-cloud-sdk/odata-v2\\"?"'
+    );
   });
 });
 

@@ -8,6 +8,10 @@ import { actionImportReturnType } from './return-type';
 
 const parameterName = 'parameters';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function actionImportFunction(
   actionImport: VdmActionImport,
   service: VdmServiceMetadata
@@ -15,12 +19,17 @@ export function actionImportFunction(
   const returnType = actionImportReturnType(actionImport);
   return {
     kind: StructureKind.Function,
-    name: actionImport.name,
+    name: `${actionImport.name}<DeSerializersT extends DeSerializers = DefaultDeSerializers>`,
     isExported: true,
     parameters: [
       {
         name: parameterName,
-        type: actionImport.parametersTypeName
+        type: `${actionImport.parametersTypeName}<DeSerializersT>`
+      },
+      {
+        name: 'deSerializers',
+        type: 'DeSerializersT',
+        initializer: 'defaultDeSerializers as any'
       }
     ],
     returnType,

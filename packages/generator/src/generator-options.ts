@@ -2,9 +2,6 @@ import { PathLike } from 'fs';
 import { resolve } from 'path';
 import { Options } from 'yargs';
 
-/**
- * @hidden
- */
 export interface GeneratorOptions {
   inputDir: PathLike;
   outputDir: PathLike;
@@ -14,10 +11,7 @@ export interface GeneratorOptions {
   additionalFiles?: string;
   forceOverwrite: boolean;
   clearOutputDir: boolean;
-  aggregatorNpmPackageName?: string;
-  aggregatorDirectoryName?: string;
   generateNpmrc: boolean;
-  generateTypedocJson: boolean;
   generatePackageJson: boolean;
   versionInPackageJson?: string;
   generateJs: boolean;
@@ -27,7 +21,9 @@ export interface GeneratorOptions {
   s4hanaCloud: boolean;
   generateCSN: boolean;
 }
-
+/**
+ * @internal
+ */
 export const defaultValueProcessesJsGeneration = 16;
 
 type KeysToOptions = {
@@ -39,7 +35,7 @@ function coercePathArg(arg?: string): string | undefined {
 }
 
 /**
- * @hidden
+ * @internal
  */
 export const generatorOptionsCli: KeysToOptions = {
   inputDir: {
@@ -85,7 +81,7 @@ export const generatorOptionsCli: KeysToOptions = {
   },
   additionalFiles: {
     describe:
-      'Glob describing additional files to be added to the each generated service directory.',
+      'Glob describing additional files to be added to the each generated service directory - relative to the inputDir.',
     type: 'string',
     coerce: coercePathArg,
     normalize: true,
@@ -103,28 +99,11 @@ export const generatorOptionsCli: KeysToOptions = {
     type: 'boolean',
     default: false
   },
-  aggregatorNpmPackageName: {
-    describe:
-      'When provided, the generator will generate an additional package with the provided name that has dependencies to all other generated packages.',
-    type: 'string',
-    hidden: true
-  },
-  aggregatorDirectoryName: {
-    describe: 'Hack for cloud-sdk-vdm package',
-    type: 'string',
-    hidden: true
-  },
   generateNpmrc: {
     describe:
       'Deprecated. If set to true the generator will generate an .npmrc file specifying a registry for @sap scoped dependencies. This is not necessary anymore and will be skipped by default.',
     type: 'boolean',
     default: false
-  },
-  generateTypedocJson: {
-    describe:
-      'By default, the generator will generate a typedoc.json file for each package, used for the corresponding "doc" npm script. When set to false, the generator will skip the generation of the typedoc.json.',
-    type: 'boolean',
-    default: true
   },
   generatePackageJson: {
     describe:

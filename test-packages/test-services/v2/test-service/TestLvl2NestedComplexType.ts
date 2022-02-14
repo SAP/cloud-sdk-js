@@ -1,38 +1,33 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
+  DeserializedType,
   EdmTypeField,
-  EntityV2,
+  Entity,
   FieldBuilder,
   FieldOptions,
-  FieldType,
-  PropertyMetadata,
-  deserializeComplexTypeV2
-} from '@sap-cloud-sdk/core';
+  OrderableEdmTypeField,
+  PropertyMetadata
+} from '@sap-cloud-sdk/odata-v2';
 
 /**
  * TestLvl2NestedComplexType
  */
-export interface TestLvl2NestedComplexType {
+export interface TestLvl2NestedComplexType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * String Property.
    * @nullable
    */
-  stringProperty?: string;
-}
-
-/**
- * @deprecated Since v1.6.0. Use [[TestLvl2NestedComplexType.build]] instead.
- */
-export function createTestLvl2NestedComplexType(
-  json: any
-): TestLvl2NestedComplexType {
-  return TestLvl2NestedComplexType.build(json);
+  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
 
 /**
@@ -40,22 +35,36 @@ export function createTestLvl2NestedComplexType(
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class TestLvl2NestedComplexTypeField<
-  EntityT extends EntityV2,
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<
   EntityT,
+  DeSerializersT,
   TestLvl2NestedComplexType,
   NullableT,
   SelectableT
 > {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', true, false> =
-    this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
+  stringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  > = this._fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
+    true
+  );
 
   /**
    * Creates an instance of TestLvl2NestedComplexTypeField.
@@ -65,9 +74,16 @@ export class TestLvl2NestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, TestLvl2NestedComplexType, fieldOptions);
+    super(
+      fieldName,
+      fieldOf,
+      deSerializers,
+      TestLvl2NestedComplexType,
+      fieldOptions
+    );
   }
 }
 
@@ -84,13 +100,4 @@ export namespace TestLvl2NestedComplexType {
         isCollection: false
       }
     ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
-   */
-  export function build(json: {
-    [keys: string]: FieldType;
-  }): TestLvl2NestedComplexType {
-    return deserializeComplexTypeV2(json, TestLvl2NestedComplexType);
-  }
 }

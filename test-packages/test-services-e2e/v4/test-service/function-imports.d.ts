@@ -1,9 +1,13 @@
-import { FunctionImportRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import {
+  FunctionImportRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 /**
  * Type of the parameters to be passed to [[concatStrings]].
  */
-export interface ConcatStringsParameters {
+export interface ConcatStringsParameters<DeSerializersT extends DeSerializers> {
   /**
    * Str 1.
    */
@@ -18,25 +22,39 @@ export interface ConcatStringsParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function concatStrings(
-  parameters: ConcatStringsParameters
-): FunctionImportRequestBuilderV4<ConcatStringsParameters, string>;
+export declare function concatStrings<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: ConcatStringsParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  ConcatStringsParameters<DeSerializersT>,
+  string
+>;
 /**
  * Type of the parameters to be passed to [[getAll]].
  */
-export interface GetAllParameters {}
+export interface GetAllParameters<DeSerializersT extends DeSerializers> {}
 /**
  * Get All.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function getAll(
-  parameters: GetAllParameters
-): FunctionImportRequestBuilderV4<GetAllParameters, TestEntity[]>;
+export declare function getAll<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: GetAllParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  GetAllParameters<DeSerializersT>,
+  TestEntity[]
+>;
 /**
  * Type of the parameters to be passed to [[getByKey]].
  */
-export interface GetByKeyParameters {
+export interface GetByKeyParameters<DeSerializersT extends DeSerializers> {
   /**
    * Param.
    */
@@ -47,13 +65,22 @@ export interface GetByKeyParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function getByKey(
-  parameters: GetByKeyParameters
-): FunctionImportRequestBuilderV4<GetByKeyParameters, TestEntity>;
+export declare function getByKey<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: GetByKeyParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  GetByKeyParameters<DeSerializersT>,
+  TestEntity
+>;
 /**
  * Type of the parameters to be passed to [[returnCollection]].
  */
-export interface ReturnCollectionParameters {
+export interface ReturnCollectionParameters<
+  DeSerializersT extends DeSerializers
+> {
   /**
    * Param.
    */
@@ -64,13 +91,20 @@ export interface ReturnCollectionParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function returnCollection(
-  parameters: ReturnCollectionParameters
-): FunctionImportRequestBuilderV4<ReturnCollectionParameters, number[]>;
+export declare function returnCollection<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: ReturnCollectionParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  ReturnCollectionParameters<DeSerializersT>,
+  number[]
+>;
 /**
  * Type of the parameters to be passed to [[returnInt]].
  */
-export interface ReturnIntParameters {
+export interface ReturnIntParameters<DeSerializersT extends DeSerializers> {
   /**
    * Param.
    */
@@ -81,21 +115,37 @@ export interface ReturnIntParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function returnInt(
-  parameters: ReturnIntParameters
-): FunctionImportRequestBuilderV4<ReturnIntParameters, number>;
+export declare function returnInt<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: ReturnIntParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  ReturnIntParameters<DeSerializersT>,
+  number
+>;
 /**
  * Type of the parameters to be passed to [[returnSapCloudSdk]].
  */
-export interface ReturnSapCloudSdkParameters {}
+export interface ReturnSapCloudSdkParameters<
+  DeSerializersT extends DeSerializers
+> {}
 /**
  * Return Sap Cloud Sdk.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function returnSapCloudSdk(
-  parameters: ReturnSapCloudSdkParameters
-): FunctionImportRequestBuilderV4<ReturnSapCloudSdkParameters, string>;
+export declare function returnSapCloudSdk<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: ReturnSapCloudSdkParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  ReturnSapCloudSdkParameters<DeSerializersT>,
+  string
+>;
 export declare const functionImports: {
   concatStrings: typeof concatStrings;
   getAll: typeof getAll;

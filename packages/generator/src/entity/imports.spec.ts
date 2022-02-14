@@ -1,9 +1,9 @@
 import { breakfastEntity, foodService } from '../../test/test-util/data-model';
-import { importDeclarations, otherEntityImports } from './imports';
+import { entityImportDeclarations, otherEntityImports } from './imports';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = importDeclarations(breakfastEntity, 'v2');
+    const actual = entityImportDeclarations(breakfastEntity, 'v2');
 
     expect(
       actual.map(imports => ({
@@ -26,27 +26,12 @@ describe('imports', () => {
 
 const expectedEntityImports = [
   {
-    moduleSpecifier: './BreakfastRequestBuilder',
-    namedImports: ['BreakfastRequestBuilder']
-  },
-  {
-    moduleSpecifier: 'bignumber.js',
-    namedImports: ['BigNumber']
-  },
-  {
-    moduleSpecifier: '@sap-cloud-sdk/core',
+    moduleSpecifier: '@sap-cloud-sdk/odata-v2',
     namedImports: [
-      'AllFields',
-      'Constructable',
-      'CustomFieldV2',
-      'EdmTypeField',
-      'EntityBuilderType',
-      'EntityV2',
-      'Field',
-      'FieldBuilder',
-      'OneToOneLink',
-      'OrderableEdmTypeField',
-      'Time'
+      'Entity',
+      'DefaultDeSerializers',
+      'DeSerializers',
+      'DeserializedType'
     ]
   }
 ];

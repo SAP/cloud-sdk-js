@@ -5,12 +5,19 @@ import {
 } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
 import { hasEntities } from '../generator-utils';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
   return {
     kind: StructureKind.SourceFile,
     statements: [
       ...service.entities.map(entity => exportStatement(entity.className)),
+      ...service.entities.map(entity =>
+        exportStatement(`${entity.className}Api`)
+      ),
       ...service.entities.map(entity =>
         exportStatement(`${entity.className}RequestBuilder`)
       ),
@@ -21,7 +28,11 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
       ...(service.functionImports && service.functionImports.length
         ? [exportStatement('function-imports')]
         : []),
-      ...(hasEntities(service) ? [exportStatement('BatchRequest')] : [])
+      ...(service.actionImports && service.actionImports.length
+        ? [exportStatement('action-imports')]
+        : []),
+      ...(hasEntities(service) ? [exportStatement('BatchRequest')] : []),
+      exportStatement('service')
     ]
   };
 }

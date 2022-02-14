@@ -1,22 +1,28 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { caps } from '@sap-cloud-sdk/util';
-import { coreImportDeclaration } from '../imports';
+import { odataImportDeclaration } from '../imports';
 import { VdmServiceMetadata } from '../vdm-types';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function importBatchDeclarations(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
-  const versionInCaps = caps(service.oDataVersion);
   return [
-    coreImportDeclaration([
-      `CreateRequestBuilder${versionInCaps}`,
-      `DeleteRequestBuilder${versionInCaps}`,
-      `GetAllRequestBuilder${versionInCaps}`,
-      `GetByKeyRequestBuilder${versionInCaps}`,
-      `ODataBatchChangeSet${versionInCaps}`,
-      `ODataBatchRequestBuilder${versionInCaps}`,
-      `UpdateRequestBuilder${versionInCaps}`
-    ]),
+    odataImportDeclaration(
+      [
+        'CreateRequestBuilder',
+        'DeleteRequestBuilder',
+        'DeSerializers',
+        'GetAllRequestBuilder',
+        'GetByKeyRequestBuilder',
+        'ODataBatchRequestBuilder',
+        'UpdateRequestBuilder',
+        'BatchChangeSet'
+      ],
+      service.oDataVersion
+    ),
     {
       kind: StructureKind.ImportDeclaration,
       moduleSpecifier: '@sap-cloud-sdk/util',

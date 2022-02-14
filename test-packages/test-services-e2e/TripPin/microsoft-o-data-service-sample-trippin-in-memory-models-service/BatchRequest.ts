@@ -1,17 +1,18 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  CreateRequestBuilderV4,
-  DeleteRequestBuilderV4,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  ODataBatchChangeSetV4,
-  ODataBatchRequestBuilderV4,
-  UpdateRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  ODataBatchRequestBuilder,
+  UpdateRequestBuilder,
+  BatchChangeSet
+} from '@sap-cloud-sdk/odata-v4';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Photos, People, Airlines, Airports } from './index';
 
@@ -20,36 +21,35 @@ import { Photos, People, Airlines, Airports } from './index';
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(
+export function batch<DeSerializersT extends DeSerializers>(
   ...requests: Array<
-    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilderV4;
-export function batch(
+): ODataBatchRequestBuilder<DeSerializersT>;
+export function batch<DeSerializersT extends DeSerializers>(
   requests: Array<
-    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilderV4;
-export function batch(
+): ODataBatchRequestBuilder<DeSerializersT>;
+export function batch<DeSerializersT extends DeSerializers>(
   first:
     | undefined
-    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
     | Array<
-        | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-        | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+        | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+        | BatchChangeSet<DeSerializersT>
       >,
   ...rest: Array<
-    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilderV4 {
-  return new ODataBatchRequestBuilderV4(
+): ODataBatchRequestBuilder<DeSerializersT> {
+  return new ODataBatchRequestBuilder(
     defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath,
-    variadicArgumentToArray(first, rest),
-    map
+    variadicArgumentToArray(first, rest)
   );
 }
 
@@ -58,51 +58,55 @@ export function batch(
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export function changeset(
-  ...requests: Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
-export function changeset(
-  requests: Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
-export function changeset(
+export function changeset<DeSerializersT extends DeSerializers>(
+  ...requests: Array<
+    WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+  >
+): BatchChangeSet<DeSerializersT>;
+export function changeset<DeSerializersT extends DeSerializers>(
+  requests: Array<
+    WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+  >
+): BatchChangeSet<DeSerializersT>;
+export function changeset<DeSerializersT extends DeSerializers>(
   first:
     | undefined
-    | WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>,
-  ...rest: Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder> {
-  return new ODataBatchChangeSetV4(variadicArgumentToArray(first, rest));
+    | WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+    | Array<
+        WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+      >,
+  ...rest: Array<
+    WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+  >
+): BatchChangeSet<DeSerializersT> {
+  return new BatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
 export const defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath =
   'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
-const map = {
-  Photos: Photos,
-  People: People,
-  Airlines: Airlines,
-  Airports: Airports
-};
-export type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder =
-
-    | GetAllRequestBuilderV4<Photos>
-    | GetAllRequestBuilderV4<People>
-    | GetAllRequestBuilderV4<Airlines>
-    | GetAllRequestBuilderV4<Airports>
-    | GetByKeyRequestBuilderV4<Photos>
-    | GetByKeyRequestBuilderV4<People>
-    | GetByKeyRequestBuilderV4<Airlines>
-    | GetByKeyRequestBuilderV4<Airports>;
-export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder =
-
-    | CreateRequestBuilderV4<Photos>
-    | UpdateRequestBuilderV4<Photos>
-    | DeleteRequestBuilderV4<Photos>
-    | CreateRequestBuilderV4<People>
-    | UpdateRequestBuilderV4<People>
-    | DeleteRequestBuilderV4<People>
-    | CreateRequestBuilderV4<Airlines>
-    | UpdateRequestBuilderV4<Airlines>
-    | DeleteRequestBuilderV4<Airlines>
-    | CreateRequestBuilderV4<Airports>
-    | UpdateRequestBuilderV4<Airports>
-    | DeleteRequestBuilderV4<Airports>;
+export type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
+  DeSerializersT extends DeSerializers
+> =
+  | GetAllRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<Airports<DeSerializersT>, DeSerializersT>;
+export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
+  DeSerializersT extends DeSerializers
+> =
+  | CreateRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<Airports<DeSerializersT>, DeSerializersT>;

@@ -1,45 +1,47 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { City, CityField } from './City';
 import {
+  CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
+  DeserializedType,
   EdmTypeField,
-  EntityV4,
+  Entity,
+  EnumField,
   FieldBuilder,
   FieldOptions,
-  FieldType,
-  PropertyMetadata,
-  deserializeComplexTypeV4
-} from '@sap-cloud-sdk/core';
+  OrderableEdmTypeField,
+  PropertyMetadata
+} from '@sap-cloud-sdk/odata-v4';
 
 /**
  * EventLocation
  */
-export interface EventLocation {
+export interface EventLocation<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Building Info.
    * @nullable
    */
-  buildingInfo?: string;
+  buildingInfo?: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * Address.
    */
-  address: string;
+  address: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * City.
    */
-  city: City;
-}
-
-/**
- * @deprecated Since v1.6.0. Use [[EventLocation.build]] instead.
- */
-export function createEventLocation(json: any): EventLocation {
-  return EventLocation.build(json);
+  city: DeserializedType<
+    DeSerializersT,
+    'Microsoft.OData.SampleService.Models.TripPin.City'
+  >;
 }
 
 /**
@@ -47,28 +49,43 @@ export function createEventLocation(json: any): EventLocation {
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class EventLocationField<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends ComplexTypeField<EntityT, EventLocation, NullableT, SelectableT> {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+> extends ComplexTypeField<
+  EntityT,
+  DeSerializersT,
+  EventLocation,
+  NullableT,
+  SelectableT
+> {
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo: EdmTypeField<EntityT, 'Edm.String', true, false> =
-    this._fieldBuilder.buildEdmTypeField('BuildingInfo', 'Edm.String', true);
+  buildingInfo: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  > = this._fieldBuilder.buildEdmTypeField('BuildingInfo', 'Edm.String', true);
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, 'Edm.String', false, false> =
+  address: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false> =
     this._fieldBuilder.buildEdmTypeField('Address', 'Edm.String', false);
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT, false, false> =
+  city: CityField<EntityT, DeSerializersT, false, false> =
     this._fieldBuilder.buildComplexTypeField('City', CityField, false);
 
   /**
@@ -79,9 +96,10 @@ export class EventLocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, EventLocation, fieldOptions);
+    super(fieldName, fieldOf, deSerializers, EventLocation, fieldOptions);
   }
 }
 
@@ -109,13 +127,4 @@ export namespace EventLocation {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
-   */
-  export function build(json: {
-    [keys: string]: FieldType | City;
-  }): EventLocation {
-    return deserializeComplexTypeV4(json, EventLocation);
-  }
 }

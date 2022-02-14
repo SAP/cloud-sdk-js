@@ -1,4 +1,4 @@
-import { unixEOL, caps, ODataVersion } from '@sap-cloud-sdk/util';
+import { unixEOL } from '@sap-cloud-sdk/util';
 import {
   ClassDeclarationStructure,
   PropertyDeclarationStructure,
@@ -11,25 +11,26 @@ import {
   getComplexTypePropertyDescription
 } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function fieldTypeClass(
-  complexType: VdmComplexType,
-  oDataVersion: ODataVersion
+  complexType: VdmComplexType
 ): ClassDeclarationStructure {
   return {
     kind: StructureKind.Class,
-    name: `${complexType.fieldType}<EntityT extends Entity${caps(
-      oDataVersion
-    )}, NullableT extends boolean = false, SelectableT extends boolean = false>`,
-    extends: `ComplexTypeField<EntityT, ${complexType.typeName}, NullableT, SelectableT>`,
+    name: `${complexType.fieldType}<EntityT extends Entity, DeSerializersT extends DeSerializers = DefaultDeSerializers, NullableT extends boolean = false, SelectableT extends boolean = false>`,
+    extends: `ComplexTypeField<EntityT, DeSerializersT, ${complexType.typeName}, NullableT, SelectableT>`,
     isExported: true,
     properties: [
       {
         kind: StructureKind.Property,
         scope: Scope.Private,
         name: '_fieldBuilder',
-        type: 'FieldBuilder<this>',
-        initializer: 'new FieldBuilder(this)'
+        type: 'FieldBuilder<this, DeSerializersT>',
+        initializer: 'new FieldBuilder(this, this.deSerializers)'
       },
       ...properties(complexType)
     ],
@@ -46,6 +47,10 @@ export function fieldTypeClass(
             type: 'ConstructorOrField<EntityT>'
           },
           {
+            name: 'deSerializers',
+            type: 'DeSerializersT'
+          },
+          {
             name: 'fieldOptions',
             type: 'FieldOptions<NullableT, SelectableT>',
             hasQuestionToken: true
@@ -55,7 +60,7 @@ export function fieldTypeClass(
           `${unixEOL}Creates an instance of ${complexType.fieldType}.${unixEOL}@param fieldName - Actual name of the field as used in the OData request.${unixEOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
         ],
         statements: [
-          `super(fieldName, fieldOf, ${complexType.typeName}, fieldOptions);`
+          `super(fieldName, fieldOf, deSerializers, ${complexType.typeName}, fieldOptions);`
         ]
       }
     ]
@@ -82,7 +87,9 @@ function property(
     docs: [getComplexTypePropertyDescription(prop, complexType.typeName)]
   };
 }
-
+/**
+ * @internal
+ */
 export function createPropertyFieldInitializer(prop: VdmProperty): string {
   if (prop.isCollection) {
     if (prop.isEnum) {

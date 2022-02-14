@@ -24,7 +24,7 @@ var __exportStar =
   };
 Object.defineProperty(exports, '__esModule', { value: true });
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -32,6 +32,10 @@ __exportStar(require('./Photos'), exports);
 __exportStar(require('./People'), exports);
 __exportStar(require('./Airlines'), exports);
 __exportStar(require('./Airports'), exports);
+__exportStar(require('./PhotosApi'), exports);
+__exportStar(require('./PeopleApi'), exports);
+__exportStar(require('./AirlinesApi'), exports);
+__exportStar(require('./AirportsApi'), exports);
 __exportStar(require('./PhotosRequestBuilder'), exports);
 __exportStar(require('./PeopleRequestBuilder'), exports);
 __exportStar(require('./AirlinesRequestBuilder'), exports);
@@ -42,5 +46,7 @@ __exportStar(require('./EventLocation'), exports);
 __exportStar(require('./AirportLocation'), exports);
 __exportStar(require('./PersonGender'), exports);
 __exportStar(require('./function-imports'), exports);
+__exportStar(require('./action-imports'), exports);
 __exportStar(require('./BatchRequest'), exports);
+__exportStar(require('./service'), exports);
 //# sourceMappingURL=index.js.map

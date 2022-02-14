@@ -1,5 +1,6 @@
-import { caps, flat, ODataVersion } from '@sap-cloud-sdk/util';
+import { flat, ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import voca from 'voca';
 import {
   VdmActionFunctionImportReturnType,
   VdmParameter,
@@ -7,58 +8,81 @@ import {
   VdmServiceMetadata
 } from '../vdm-types';
 import {
-  coreImportDeclaration,
-  corePropertyTypeImportNames,
+  odataImportDeclaration,
+  propertyTypeImportNames,
   externalImportDeclarations,
   mergeImportDeclarations
 } from '../imports';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
+/* eslint-disable valid-jsdoc */
 function actionFunctionImportDeclarations(
   returnTypes: VdmActionFunctionImportReturnType[],
   parameters: VdmParameter[],
-  additionalImports: string[],
-  oDataVersion: ODataVersion
+  additionalImports: { name: string; version: ODataVersion | 'common' }[],
+  { oDataVersion, className }: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
+  const responseTransformerFunctionCommon = returnTypes.find(returnType =>
+    isEntityNotDeserializable(returnType)
+  )
+    ? ['throwErrorWhenReturnTypeIsUnionType']
+    : [];
+  const responseTransformerFunctionVersionDependent = returnTypes
+    .filter(returnType => !isEntityNotDeserializable(returnType))
+    .map(returnType => responseTransformerFunctionName(returnType));
+  const [version, common] = additionalImports.reduce(
+    ([v, c], current) => {
+      if (current.version === 'common') {
+        return [v, [...c, current.name]];
+      }
+      return [[...v, current.name], c];
+    },
+    [[], []]
+  );
   return [
     ...externalImportDeclarations(parameters),
-    coreImportDeclaration([
-      ...corePropertyTypeImportNames(parameters),
-      ...returnTypes.map(returnType =>
-        isEntityNotDeserializable(returnType)
-          ? 'throwErrorWhenReturnTypeIsUnionType'
-          : responseTransformerFunctionName(returnType, oDataVersion)
-      ),
-      ...edmRelatedImports(returnTypes, oDataVersion),
-      ...complexTypeRelatedImports(returnTypes, oDataVersion),
-      ...additionalImports
-    ]),
+    odataImportDeclaration(
+      [
+        ...edmRelatedImports(returnTypes),
+        ...complexTypeRelatedImports(returnTypes),
+        ...version,
+        ...responseTransformerFunctionVersionDependent,
+        'DeSerializers',
+        'DefaultDeSerializers',
+        'defaultDeSerializers',
+        ...propertyTypeImportNames(parameters),
+        ...common,
+        ...responseTransformerFunctionCommon
+      ],
+      oDataVersion
+    ),
+    {
+      kind: StructureKind.ImportDeclaration,
+      namedImports: [voca.decapitalize(className)],
+      moduleSpecifier: './service'
+    },
     ...returnTypeImports(returnTypes)
   ];
 }
 
 function complexTypeRelatedImports(
-  returnTypes: VdmActionFunctionImportReturnType[],
-  oDataVersion: ODataVersion
+  returnTypes: VdmActionFunctionImportReturnType[]
 ) {
   return returnTypes.some(
     returnType =>
       returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
   )
-    ? [`deserializeComplexType${caps(oDataVersion)}`]
+    ? ['entityDeserializer']
     : [];
 }
 
-function edmRelatedImports(
-  returnTypes: VdmActionFunctionImportReturnType[],
-  oDataVersion: ODataVersion
-) {
+function edmRelatedImports(returnTypes: VdmActionFunctionImportReturnType[]) {
   return returnTypes.some(
     returnType =>
       returnType.returnTypeCategory === VdmReturnTypeCategory.EDM_TYPE
   )
-    ? [`edmToTs${caps(oDataVersion)}`]
+    ? ['edmToTs']
     : [];
 }
 
@@ -73,41 +97,66 @@ function returnTypeImports(
           returnType.returnTypeCategory !== VdmReturnTypeCategory.VOID &&
           returnType.returnTypeCategory !== VdmReturnTypeCategory.NEVER
       )
-      .map(returnType => returnTypeImport(returnType))
+      .reduce(
+        (imports, returnType) => [...imports, ...returnTypeImport(returnType)],
+        []
+      )
   );
 }
 
 function returnTypeImport(
   returnType: VdmActionFunctionImportReturnType
-): ImportDeclarationStructure {
-  return {
-    kind: StructureKind.ImportDeclaration,
-    namedImports: [returnType.returnType],
-    moduleSpecifier: `./${returnType.returnType}`
-  };
+): ImportDeclarationStructure[] {
+  const typeImports: ImportDeclarationStructure[] = [
+    {
+      kind: StructureKind.ImportDeclaration,
+      namedImports: [returnType.returnType],
+      moduleSpecifier: `./${returnType.returnType}`
+    }
+  ];
+  if (returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY) {
+    return [
+      ...typeImports,
+      {
+        kind: StructureKind.ImportDeclaration,
+        namedImports: [`${returnType.returnType}Api`],
+        moduleSpecifier: `./${returnType.returnType}Api`
+      }
+    ];
+  }
+  return typeImports;
 }
 
+/**
+ * @internal
+ */
 export function importDeclarationsFunction(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
-  if (!service.actionsImports) {
+  if (!service.actionImports) {
     return [];
   }
 
   const actionImportPayloadElements = flat(
-    service.actionsImports.map(actionImport => actionImport.parameters)
+    service.actionImports.map(actionImport => actionImport.parameters)
   );
-  const returnTypes = service.actionsImports.map(
+  const returnTypes = service.actionImports.map(
     actionImport => actionImport.returnType
   );
   return actionFunctionImportDeclarations(
     returnTypes,
     actionImportPayloadElements,
-    ['ActionImportRequestBuilder', 'ActionImportParameter'],
-    service.oDataVersion
+    [
+      { name: 'ActionImportRequestBuilder', version: service.oDataVersion },
+      { name: 'ActionImportParameter', version: service.oDataVersion }
+    ],
+    service
   );
 }
 
+/**
+ * @internal
+ */
 export function importDeclarationsAction(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
@@ -121,9 +170,10 @@ export function importDeclarationsAction(
     returnTypes,
     functionImportParameters,
     [
-      `FunctionImportRequestBuilder${caps(service.oDataVersion)}`,
-      'FunctionImportParameter'
+      { name: 'FunctionImportRequestBuilder', version: service.oDataVersion },
+      { name: 'DeSerializers', version: service.oDataVersion },
+      { name: 'FunctionImportParameter', version: 'common' }
     ],
-    service.oDataVersion
+    service
   );
 }

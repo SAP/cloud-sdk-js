@@ -1,5 +1,4 @@
-import { promises, Dirent } from 'fs';
-import path from 'path';
+import { resolve, join } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';
 import {
@@ -7,21 +6,10 @@ import {
   GeneratorOptions
 } from '../packages/openapi-generator/src';
 import { ODataVersion } from '../packages/util/src';
+import { generateCommonEntity } from '../packages/odata-common/test/generate-common-entity';
 
-const { readFile, readdir, writeFile } = promises;
-const odataServiceSpecsDir = path.join('test-resources', 'odata-service-specs');
-const openApiServiceSpecsDir = path.join(
-  'test-resources',
-  'openapi-service-specs'
-);
-const packageOutputDir = path.resolve('test-packages', 'test-services');
-const coreUnitTestOutputDir = path.resolve(
-  'packages',
-  'core',
-  'test',
-  'test-util',
-  'test-services'
-);
+const odataServiceSpecsDir = join('test-resources', 'odata-service-specs');
+const packageOutputDir = resolve('test-packages', 'test-services');
 
 const generatorConfigOData = {
   forceOverwrite: true,
@@ -30,7 +18,6 @@ const generatorConfigOData = {
   writeReadme: false,
   clearOutputDir: true,
   generateNpmrc: false,
-  generateTypedocJson: false,
   generatePackageJson: false,
   generateCSN: false,
   generateSdkMetadata: false,
@@ -40,8 +27,8 @@ const generatorConfigOData = {
 };
 
 const generatorConfigOpenApi: GeneratorOptions = {
-  input: path.resolve('test-resources', 'openapi-service-specs'),
-  outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
+  input: resolve('test-resources', 'openapi-service-specs'),
+  outputDir: resolve('test-packages', 'test-services', 'openapi'),
   clearOutputDir: true,
   transpile: true,
   packageJson: true,
@@ -59,84 +46,10 @@ function generateTestServicesPackage(
 ): Promise<void> {
   return generateOdata({
     ...generatorConfigOData,
-    inputDir: path.join(odataServiceSpecsDir, version),
+    inputDir: join(odataServiceSpecsDir, version),
     outputDir: `${outputDir}/${version}`,
     generateJs: true
   });
-}
-
-async function generateTestServicesWithLocalCoreModules(
-  outputDirBase: string,
-  version: ODataVersion | 'openapi'
-): Promise<void> {
-  const outputDir = path.resolve(outputDirBase, version);
-  if (version !== 'openapi') {
-    await generateOdata({
-      ...generatorConfigOData,
-      inputDir: path.join(odataServiceSpecsDir, version),
-      outputDir
-    });
-  } else {
-    await generateOpenApi({
-      ...generatorConfigOpenApi,
-      input: openApiServiceSpecsDir,
-      outputDir,
-      packageJson: false,
-      transpile: false,
-      include: undefined,
-      readme: false
-    });
-  }
-
-  (await readServiceDirectories()).forEach(serviceDirectory =>
-    readServiceDirectory(serviceDirectory).then((dirents: Dirent[]) =>
-      dirents
-        .filter(dirent => dirent.isFile())
-        .forEach(dirent =>
-          readServiceFile(serviceDirectory, dirent.name).then(data => {
-            replaceWithLocalModules(serviceDirectory, dirent.name, data);
-          })
-        )
-    )
-  );
-
-  async function readServiceDirectories() {
-    try {
-      return readdir(outputDir);
-    } catch (dirErr) {
-      throw Error(`Reading output directory failed: ${dirErr}`);
-    }
-  }
-
-  async function readServiceDirectory(serviceDirectory): Promise<Dirent[]> {
-    return readdir(path.resolve(outputDir, serviceDirectory), {
-      withFileTypes: true
-    }).catch(serviceDirErr => {
-      throw Error(`Reading test service directory failed: ${serviceDirErr}`);
-    });
-  }
-
-  async function readServiceFile(serviceDirectory, file) {
-    return readFile(path.resolve(outputDir, serviceDirectory, file), {
-      encoding: 'utf8'
-    }).catch(fileReadErr => {
-      throw Error(`Reading test service file '${file}' failed: ${fileReadErr}`);
-    });
-  }
-
-  async function replaceWithLocalModules(serviceDirectory, file, data) {
-    return writeFile(
-      path.resolve(outputDir, serviceDirectory, file),
-      data.replace('@sap-cloud-sdk/core', '../../../../../src'),
-      {
-        encoding: 'utf8'
-      }
-    ).catch(fileWriteErr => {
-      throw Error(
-        `Writing test service file' ${file}' failed: ${fileWriteErr}`
-      );
-    });
-  }
 }
 
 async function generateAll(): Promise<void> {
@@ -147,32 +60,31 @@ async function generateAll(): Promise<void> {
   });
 
   const arg = process.argv[2];
+
+  if (arg === 'common' || arg === 'all') {
+    await generateCommonEntity();
+  }
+
   if (arg === 'v2' || arg === 'odata' || arg === 'all') {
     await generateTestServicesPackage(packageOutputDir, 'v2');
-    await generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
   }
 
   if (arg === 'v4' || arg === 'odata' || arg === 'all') {
     await generateTestServicesPackage(packageOutputDir, 'v4');
-    await generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
   }
 
   if (arg === 'e2e' || arg === 'all') {
     await generateOdata({
       ...generatorConfigOData,
-      inputDir: path.resolve('test-resources', 'odata-service-specs-e2e', 'v4'),
-      outputDir: path.resolve('test-packages', 'test-services-e2e', 'v4'),
+      inputDir: resolve('test-resources', 'odata-service-specs-e2e', 'v4'),
+      outputDir: resolve('test-packages', 'test-services-e2e', 'v4'),
       generateJs: true
     });
 
     await generateOdata({
       ...generatorConfigOData,
-      inputDir: path.resolve(
-        'test-resources',
-        'odata-service-specs-e2e',
-        'TripPin'
-      ),
-      outputDir: path.resolve('test-packages', 'test-services-e2e', 'TripPin'),
+      inputDir: resolve('test-resources', 'odata-service-specs-e2e', 'TripPin'),
+      outputDir: resolve('test-packages', 'test-services-e2e', 'TripPin'),
       generateJs: true
     });
   }
@@ -182,10 +94,6 @@ async function generateAll(): Promise<void> {
       ...generatorConfigOpenApi,
       transpile: true
     });
-    await generateTestServicesWithLocalCoreModules(
-      coreUnitTestOutputDir,
-      'openapi'
-    );
   }
 }
 

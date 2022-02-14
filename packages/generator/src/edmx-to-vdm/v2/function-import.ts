@@ -1,22 +1,29 @@
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { transformFunctionImportBase } from '../common';
+import {
+  transformFunctionImportBase,
+  parseFunctionImportReturnTypes
+} from '../common';
 import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
-import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
-import { parseFunctionImports } from '../../edmx-parser/v2';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser';
+import { parseFunctionImportsV2 } from '../../edmx-parser/v2';
+import { ServiceMetadata } from '../../edmx-parser';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 
 const extractResponse = (functionName: string) => (response: string) =>
   `${response}.${functionName}`;
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function generateFunctionImportsV2(
   serviceMetadata: ServiceMetadata,
+  serviceName: string,
   entities: VdmEntity[],
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmFunctionImport[] {
-  const edmxFunctionImports = parseFunctionImports(serviceMetadata.edmx.root);
+  const edmxFunctionImports = parseFunctionImportsV2(serviceMetadata.edmx.root);
 
   return (
     edmxFunctionImports
@@ -45,7 +52,7 @@ export function generateFunctionImportsV2(
             entities,
             complexTypes,
             extractResponse(f.Name),
-            serviceMetadata.edmx.oDataVersion
+            serviceName
           )
         };
       })

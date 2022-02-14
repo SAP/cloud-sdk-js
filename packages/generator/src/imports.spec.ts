@@ -1,17 +1,17 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import {
-  complexTypeImportDeclarations,
-  coreNavPropertyFieldTypeImportNames,
-  corePropertyFieldTypeImportNames,
-  corePropertyTypeImportNames,
-  externalImportDeclarations,
-  mergeImportDeclarations
-} from '../src/imports';
-import { VdmNavigationProperty, VdmProperty } from '../src/vdm-types';
-import {
   bigNumberImport,
   momentImport
 } from '../test/test-util/import-declaration-structures';
+import { VdmNavigationProperty, VdmProperty } from './vdm-types';
+import {
+  complexTypeImportDeclarations,
+  navPropertyFieldTypeImportNames,
+  propertyFieldTypeImportNames,
+  propertyTypeImportNames,
+  externalImportDeclarations,
+  mergeImportDeclarations
+} from './imports';
 
 const momentProperty = {
   jsType: 'Moment',
@@ -82,10 +82,10 @@ describe('imports', () => {
     });
   });
 
-  describe('core import name list', () => {
+  describe('property import name list', () => {
     it('contains time property when there is a time property', () => {
       expect(
-        corePropertyTypeImportNames([
+        propertyTypeImportNames([
           stringProperty,
           timeProperty,
           momentProperty,
@@ -96,7 +96,7 @@ describe('imports', () => {
 
     it('does not contain time property when there is no time property', () => {
       expect(
-        corePropertyTypeImportNames([
+        propertyTypeImportNames([
           stringProperty,
           momentProperty,
           numberProperty
@@ -106,7 +106,7 @@ describe('imports', () => {
 
     it('contains unique field name imports', () => {
       expect(
-        corePropertyFieldTypeImportNames([
+        propertyFieldTypeImportNames([
           stringProperty,
           timeProperty,
           stringProperty,
@@ -118,13 +118,13 @@ describe('imports', () => {
 
     it('contains unique one-to-many link import', () => {
       expect(
-        coreNavPropertyFieldTypeImportNames([multiLink, multiLink], 'v2')
+        navPropertyFieldTypeImportNames([multiLink, multiLink], 'v2')
       ).toEqual(['Link']);
     });
 
     it('contains unique one to one link import', () => {
       expect(
-        coreNavPropertyFieldTypeImportNames([oneToOneLink, oneToOneLink], 'v2')
+        navPropertyFieldTypeImportNames([oneToOneLink, oneToOneLink], 'v2')
       ).toEqual(['OneToOneLink']);
     });
   });

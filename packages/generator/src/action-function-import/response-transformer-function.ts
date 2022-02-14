@@ -1,19 +1,20 @@
-import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   VdmActionFunctionImportReturnType,
   VdmFunctionImportReturnType,
   VdmReturnTypeCategory
 } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function responseTransformerFunctionName(
-  returnType: VdmActionFunctionImportReturnType,
-  oDataVersion: ODataVersion
+  returnType: VdmActionFunctionImportReturnType
 ): string {
   const transformationFn = singleTransformationFunction(returnType);
-  const versionInCaps = caps(oDataVersion);
   return returnType.isCollection
-    ? `${transformationFn}List${versionInCaps}`
-    : `${transformationFn}${versionInCaps}`;
+    ? `${transformationFn}List`
+    : `${transformationFn}`;
 }
 
 function singleTransformationFunction(

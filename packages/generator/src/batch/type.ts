@@ -1,48 +1,53 @@
 import { StructureKind, TypeAliasDeclarationStructure } from 'ts-morph';
-import { caps } from '@sap-cloud-sdk/util';
 import { VdmServiceMetadata } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function readRequestType(
   service: VdmServiceMetadata
 ): TypeAliasDeclarationStructure {
   return {
     kind: StructureKind.TypeAlias,
-    name: `Read${service.className}RequestBuilder`,
+    name: `Read${service.className}RequestBuilder<DeSerializersT extends DeSerializers>`,
     isExported: true,
     type: getReadRequestType(service)
   };
 }
-
+/**
+ * @internal
+ */
 export function writeRequestType(
   service: VdmServiceMetadata
 ): TypeAliasDeclarationStructure {
   return {
     kind: StructureKind.TypeAlias,
-    name: `Write${service.className}RequestBuilder`,
+    name: `Write${service.className}RequestBuilder<DeSerializersT extends DeSerializers>`,
     isExported: true,
     type: getWriteRequestType(service)
   };
 }
 
 function getWriteRequestType(service: VdmServiceMetadata): string {
-  const versionInCaps = caps(service.oDataVersion);
   return service.entities
     .map(
       e =>
-        `CreateRequestBuilder${versionInCaps}<${e.className}> | UpdateRequestBuilder${versionInCaps}<${e.className}> | DeleteRequestBuilder${versionInCaps}<${e.className}>`
+        `CreateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | UpdateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | DeleteRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
     )
     .join(' | ');
 }
 
 function getReadRequestType(service: VdmServiceMetadata): string {
-  const versionInCaps = caps(service.oDataVersion);
   return Array.prototype
     .concat(
       service.entities.map(
-        e => `GetAllRequestBuilder${versionInCaps}<${e.className}>`
+        e =>
+          `GetAllRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
       ),
       service.entities.map(
-        e => `GetByKeyRequestBuilder${versionInCaps}<${e.className}>`
+        e =>
+          `GetByKeyRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
       )
     )
     .join('|');

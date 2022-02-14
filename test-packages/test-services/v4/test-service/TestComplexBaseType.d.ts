@@ -1,38 +1,38 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
+  DeserializedType,
   EdmTypeField,
-  EntityV4,
+  Entity,
   FieldOptions,
-  FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-v4';
 /**
  * TestComplexBaseType
  */
-export interface TestComplexBaseType {
+export interface TestComplexBaseType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Base String Property.
    * @nullable
    */
-  baseStringProperty?: string;
+  baseStringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
-/**
- * @deprecated Since v1.6.0. Use [[TestComplexBaseType.build]] instead.
- */
-export declare function createTestComplexBaseType(
-  json: any
-): TestComplexBaseType;
 /**
  * TestComplexBaseTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class TestComplexBaseTypeField<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<
   EntityT,
+  DeSerializersT,
   TestComplexBaseType,
   NullableT,
   SelectableT
@@ -42,7 +42,13 @@ export declare class TestComplexBaseTypeField<
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: EdmTypeField<EntityT, 'Edm.String', true, false>;
+  baseStringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  >;
   /**
    * Creates an instance of TestComplexBaseTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -51,6 +57,7 @@ export declare class TestComplexBaseTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 }
@@ -59,9 +66,5 @@ export declare namespace TestComplexBaseType {
    * Metadata information on all properties of the `TestComplexBaseType` complex type.
    */
   const _propertyMetadata: PropertyMetadata<TestComplexBaseType>[];
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
-   */
-  function build(json: { [keys: string]: FieldType }): TestComplexBaseType;
 }
 //# sourceMappingURL=TestComplexBaseType.d.ts.map

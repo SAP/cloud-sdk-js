@@ -1,4 +1,3 @@
-import { StructureKind } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
 import { orderBreakfast } from '../../test/test-util/data-model';
 import { importDeclarationsAction } from './import';
@@ -11,14 +10,22 @@ describe('function-import generation', () => {
 
     expect(importDeclarationsAction(service as VdmServiceMetadata)).toEqual([
       {
-        kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/core',
+        kind: 16,
+        moduleSpecifier: '@sap-cloud-sdk/odata-v4',
         namedImports: [
-          'transformReturnValueForEdmTypeV2',
-          'edmToTsV2',
-          'FunctionImportRequestBuilderV2',
+          'edmToTs',
+          'FunctionImportRequestBuilder',
+          'DeSerializers',
+          'transformReturnValueForEdmType',
+          'DefaultDeSerializers',
+          'defaultDeSerializers',
           'FunctionImportParameter'
         ]
+      },
+      {
+        kind: 16,
+        moduleSpecifier: './service',
+        namedImports: ['']
       }
     ]);
   });

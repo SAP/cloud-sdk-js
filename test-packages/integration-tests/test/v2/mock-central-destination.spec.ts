@@ -1,12 +1,12 @@
 import { unlinkSync, writeFileSync } from 'fs';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import nock from 'nock';
 import {
   mockAllTestDestinations,
   unmockAllTestDestinations
 } from '@sap-cloud-sdk/test-util';
-import nock from 'nock';
-import { basicHeader } from '@sap-cloud-sdk/core';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
+import { testEntityApi } from './test-util';
 
 describe('mockAllTestDestinations', () => {
   afterEach(() => {
@@ -32,7 +32,8 @@ describe('mockAllTestDestinations', () => {
       .get('/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json')
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
       .execute({ destinationName: 'SYS_001' });
 

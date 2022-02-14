@@ -1,13 +1,17 @@
 import { InterfaceDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
 import { addLeadingNewline } from '../typedoc';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function parametersInterface(
   actionFunctionImport: VdmFunctionImport | VdmActionImport
 ): InterfaceDeclarationStructure {
   return {
     kind: StructureKind.Interface,
-    name: actionFunctionImport.parametersTypeName,
+    name: `${actionFunctionImport.parametersTypeName}<DeSerializersT extends DeSerializers>`,
     isExported: true,
     properties: actionFunctionImport.parameters.map(parameter => ({
       name: parameter.parameterName,

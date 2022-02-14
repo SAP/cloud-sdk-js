@@ -1,6 +1,16 @@
 version: 2
 updates:
   - package-ecosystem: npm
+    target-branch: 1.0-main
+    directory: '/'
+    schedule:
+      interval: daily
+      time: '01:00'
+      timezone: 'Europe/Berlin'
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: npm
+    target-branch: main
     directory: '/'
     schedule:
       interval: daily

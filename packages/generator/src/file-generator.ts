@@ -1,13 +1,18 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { codeBlock, createLogger } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { Directory, SourceFile, SourceFileStructure } from 'ts-morph';
+import { getCopyrightHeader } from '@sap-cloud-sdk/generator-common/internal';
 
 const logger = createLogger({
   package: 'generator',
   messageContext: 'file-generator'
 });
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function sourceFile(
   directory: Directory,
   relativePath: string,
@@ -25,7 +30,9 @@ export function sourceFile(
   file.formatText({ insertSpaceAfterCommaDelimiter: true });
   return file;
 }
-
+/**
+ * @internal
+ */
 export function otherFile(
   directory: Directory,
   relativePath: string,
@@ -36,7 +43,9 @@ export function otherFile(
     overwrite
   });
 }
-
+/**
+ * @internal
+ */
 export function copyFile(
   fromPath: string,
   toRelativePath: string,
@@ -56,15 +65,4 @@ export function copyFile(
 function addFileComment(content: SourceFileStructure): SourceFileStructure {
   content.leadingTrivia = getCopyrightHeader();
   return content;
-}
-
-// TODO 1728 move to a new package for reduce code duplication.
-function getCopyrightHeader(): string {
-  return codeBlock`
-/*
- * Copyright (c) ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
- `;
 }

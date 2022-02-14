@@ -4,8 +4,9 @@ import {
   testActionImportNullableTest,
   testActionImportUnsupportedEdmTypes
 } from '@sap-cloud-sdk/test-services/v4/test-service/action-imports';
+import { testService } from '@sap-cloud-sdk/test-services/v4/test-service';
 
-// $ExpectType ActionImportRequestBuilder<TestActionImportNoParameterNoReturnTypeParameters, undefined>
+// $ExpectType ActionImportRequestBuilder<DefaultDeSerializers, TestActionImportNoParameterNoReturnTypeParameters<DefaultDeSerializers>, undefined>
 const noReturnTypeRequestBuilder = testActionImportNoParameterNoReturnType({});
 
 // $ExpectType Promise<undefined>
@@ -13,19 +14,19 @@ noReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType ActionImportRequestBuilder<TestActionImportMultipleParameterComplexReturnTypeParameters, TestComplexType>
+// $ExpectType ActionImportRequestBuilder<DefaultDeSerializers, TestActionImportMultipleParameterComplexReturnTypeParameters<DefaultDeSerializers>, TestComplexType<DefaultDeSerializers>>
 const complexReturnTypeRequestBuilder =
   testActionImportMultipleParameterComplexReturnType({
     stringParam: 'stringParam',
     nonNullableStringParam: 'nonNullableStringParam'
   });
 
-// $ExpectType Promise<TestComplexType>
+// $ExpectType Promise<TestComplexType<DefaultDeSerializers>>
 complexReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType ActionImportRequestBuilder<TestActionImportUnsupportedEdmTypesParameters, any>
+// $ExpectType ActionImportRequestBuilder<DefaultDeSerializers, TestActionImportUnsupportedEdmTypesParameters<DefaultDeSerializers>, any>
 const unsupportedEdmTypesRequestBuilder = testActionImportUnsupportedEdmTypes({
   simpleParam: 123
 });
@@ -38,17 +39,20 @@ unsupportedEdmTypesRequestBuilder.execute({
 // $ExpectError
 testActionImportNullableTest({});
 
-// $ExpectType ActionImportRequestBuilder<TestActionImportNullableTestParameters, TestComplexType | null>
+// $ExpectType ActionImportRequestBuilder<DefaultDeSerializers, TestActionImportNullableTestParameters<DefaultDeSerializers>, TestComplexType<DefaultDeSerializers> | null>
 testActionImportNullableTest({
   nonNullable: 'someValue',
   nullablePerDefault: null,
   nullableExplicit: null
 });
 
-// $ExpectType ActionImportRequestBuilder<TestActionImportNullableTestParameters, TestComplexType | null>
+// $ExpectType ActionImportRequestBuilder<DefaultDeSerializers, TestActionImportNullableTestParameters<DefaultDeSerializers>, TestComplexType<DefaultDeSerializers> | null>
 testActionImportNullableTest({ nonNullable: 'someValue' });
 
-// $ExpectType Promise<TestComplexType | null>
+// $ExpectType Promise<TestComplexType<DefaultDeSerializers> | null>
 testActionImportNullableTest({ nonNullable: 'someValue' }).execute({
   url: 'someUrl'
 });
+
+// $ExpectType ActionImportRequestBuilder<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>, TestActionImportNoParameterNoReturnTypeParameters<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>, undefined>
+testService().actionImports.testActionImportNoParameterNoReturnType({});

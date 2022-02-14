@@ -13,9 +13,9 @@ module.exports = {
         '**/node_modules/**/*',
         'test-packages/test-services/**/*',
         'test-packages/test-services-e2e/**/*',
-        'packages/core/test/test-util/test-services/**/*',
         'packages/rest-generator/test/test-services/**/*',
         'test-resources/cli/**/*',
+        '**/test-output/**',
         '**/README.md'
       ]
     },
@@ -25,11 +25,11 @@ module.exports = {
     'dist',
     'node_modules',
     'README.md',
-    'packages/core/test/test-util/test-services',
     'test-packages/test-services',
     'test-packages/test-services-e2e',
     'packages/rest-generator/test/test-services',
-    'test-resources/cli/'
+    'test-resources/cli/',
+    'test-resources/generator/test-output'
   ],
   overrides: [
     {

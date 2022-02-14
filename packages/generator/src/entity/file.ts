@@ -1,10 +1,13 @@
 import { SourceFileStructure, StructureKind } from 'ts-morph';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 import { entityClass } from './class';
-import { importDeclarations, otherEntityImports } from './imports';
+import { entityImportDeclarations, otherEntityImports } from './imports';
 import { entityTypeInterface } from './interface';
-import { entityNamespace } from './namespace';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function entitySourceFile(
   entity: VdmEntity,
   service: VdmServiceMetadata
@@ -12,11 +15,10 @@ export function entitySourceFile(
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...importDeclarations(entity, service.oDataVersion),
-      entityClass(entity, service),
+      ...entityImportDeclarations(entity, service.oDataVersion),
       ...otherEntityImports(entity, service),
-      entityTypeInterface(entity, service),
-      entityNamespace(entity, service)
+      entityClass(entity, service),
+      entityTypeInterface(entity, service)
     ]
   };
 }

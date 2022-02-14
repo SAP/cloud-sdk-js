@@ -3,11 +3,11 @@ import {
   EdmxActionImport,
   EdmxComplexType,
   EdmxEntitySet,
-  EdmxEntityType
+  EdmxEntityTypeV4
 } from '../../edmx-parser/v4';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { EdmxProperty } from '../../edmx-parser/common';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { ServiceMetadata } from '../../edmx-parser';
 import { generateComplexTypesV4 } from './complex-type';
 import { generateEntitiesV4 } from './entity';
 
@@ -19,7 +19,7 @@ describe('entity', () => {
           ['CollectionProperty', 'Collection(Edm.String)', false]
         ])
       ],
-      [createTestEntitySet('TestEntity', 'TestEntityType')]
+      [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
     );
 
     const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
@@ -42,7 +42,7 @@ describe('entity', () => {
           ]
         ])
       ],
-      [createTestEntitySet('TestEntity', 'TestEntityType')]
+      [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
     );
 
     const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
@@ -61,7 +61,7 @@ describe('entity', () => {
           ['CollectionProperty', 'Collection(namespace.TestComplexType)', false]
         ])
       ],
-      [createTestEntitySet('TestEntity', 'TestEntityType')]
+      [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
     );
 
     const formatter = getFormatter();
@@ -92,7 +92,7 @@ describe('entity', () => {
         )
       ],
       [
-        createTestEntitySet('TestEntity', 'TestEntityType', [
+        createTestEntitySet('TestEntity', 'ns.TestEntityType', [
           ['SingleNavProperty', 'TestEntity']
         ])
       ]
@@ -103,7 +103,6 @@ describe('entity', () => {
       from: 'TestEntityType',
       to: 'TestEntity',
       toEntityClassName: 'TestEntity',
-      multiplicity: '1 - 1',
       isCollection: false
     });
   });
@@ -118,7 +117,7 @@ describe('entity', () => {
         )
       ],
       [
-        createTestEntitySet('TestEntity', 'TestEntityType', [
+        createTestEntitySet('TestEntity', 'ns.TestEntityType', [
           ['CollectionNavProperty', 'TestEntity']
         ])
       ]
@@ -129,7 +128,6 @@ describe('entity', () => {
       from: 'TestEntityType',
       to: 'TestEntity',
       toEntityClassName: 'TestEntity',
-      multiplicity: '1 - *',
       isCollection: true
     });
   });
@@ -151,7 +149,7 @@ describe('entity', () => {
         )
       ],
       [
-        createTestEntitySet('TestEntity', 'TestEntityType', [
+        createTestEntitySet('TestEntity', 'ns.TestEntityType', [
           ['SingleNavProperty', 'TestEntity'],
           ['CollectionNavProperty', 'TestEntity']
         ])
@@ -231,7 +229,7 @@ function createImportsForActions(actions: EdmxAction[]): EdmxActionImport[] {
 }
 
 function createTestServiceData(
-  entityTypes: EdmxEntityType[],
+  entityTypes: EdmxEntityTypeV4[],
   entitySets: EdmxEntitySet[],
   complexType: EdmxComplexType[] = [getComplexType()],
   actions: EdmxAction[] = [],
@@ -266,7 +264,7 @@ export function createEntityType(
   properties: [string, string, boolean][],
   navigationProperties: [string, string][] = [],
   namespace: string = defaultNamespace
-): EdmxEntityType {
+): EdmxEntityTypeV4 {
   return {
     'sap:content-version': '',
     Key: {

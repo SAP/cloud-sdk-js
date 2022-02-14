@@ -1,29 +1,36 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV2,
-  GetByKeyRequestBuilderV2,
-  CreateRequestBuilderV2,
-  UpdateRequestBuilderV2,
-  DeleteRequestBuilderV2
-} from '@sap-cloud-sdk/core';
+  DefaultDeSerializers,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder,
+  DeserializedType,
+  RequestBuilder
+} from '@sap-cloud-sdk/odata-v2';
 import { CaseTest } from './CaseTest';
 
 /**
  * Request builder class for operations supported on the [[CaseTest]] entity.
  */
-export class CaseTestRequestBuilder extends RequestBuilder<CaseTest> {
+export class CaseTestRequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<CaseTest<T>, T> {
   /**
    * Returns a request builder for retrieving one `CaseTest` entity based on its keys.
    * @param keyPropertyString Key property. See [[CaseTest.keyPropertyString]].
    * @returns A request builder for creating requests to retrieve one `CaseTest` entity based on its keys.
    */
-  getByKey(keyPropertyString: string): GetByKeyRequestBuilderV2<CaseTest> {
-    return new GetByKeyRequestBuilderV2(CaseTest, {
+  getByKey(
+    keyPropertyString: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<CaseTest<T>, T> {
+    return new GetByKeyRequestBuilder<CaseTest<T>, T>(this.entityApi, {
       KeyPropertyString: keyPropertyString
     });
   }
@@ -32,8 +39,8 @@ export class CaseTestRequestBuilder extends RequestBuilder<CaseTest> {
    * Returns a request builder for querying all `CaseTest` entities.
    * @returns A request builder for creating requests to retrieve all `CaseTest` entities.
    */
-  getAll(): GetAllRequestBuilderV2<CaseTest> {
-    return new GetAllRequestBuilderV2(CaseTest);
+  getAll(): GetAllRequestBuilder<CaseTest<T>, T> {
+    return new GetAllRequestBuilder<CaseTest<T>, T>(this.entityApi);
   }
 
   /**
@@ -41,8 +48,8 @@ export class CaseTestRequestBuilder extends RequestBuilder<CaseTest> {
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `CaseTest`.
    */
-  create(entity: CaseTest): CreateRequestBuilderV2<CaseTest> {
-    return new CreateRequestBuilderV2(CaseTest, entity);
+  create(entity: CaseTest<T>): CreateRequestBuilder<CaseTest<T>, T> {
+    return new CreateRequestBuilder<CaseTest<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -50,8 +57,8 @@ export class CaseTestRequestBuilder extends RequestBuilder<CaseTest> {
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `CaseTest`.
    */
-  update(entity: CaseTest): UpdateRequestBuilderV2<CaseTest> {
-    return new UpdateRequestBuilderV2(CaseTest, entity);
+  update(entity: CaseTest<T>): UpdateRequestBuilder<CaseTest<T>, T> {
+    return new UpdateRequestBuilder<CaseTest<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -59,16 +66,16 @@ export class CaseTestRequestBuilder extends RequestBuilder<CaseTest> {
    * @param keyPropertyString Key property. See [[CaseTest.keyPropertyString]].
    * @returns A request builder for creating requests that delete an entity of type `CaseTest`.
    */
-  delete(keyPropertyString: string): DeleteRequestBuilderV2<CaseTest>;
+  delete(keyPropertyString: string): DeleteRequestBuilder<CaseTest<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `CaseTest`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `CaseTest` by taking the entity as a parameter.
    */
-  delete(entity: CaseTest): DeleteRequestBuilderV2<CaseTest>;
-  delete(keyPropertyStringOrEntity: any): DeleteRequestBuilderV2<CaseTest> {
-    return new DeleteRequestBuilderV2(
-      CaseTest,
+  delete(entity: CaseTest<T>): DeleteRequestBuilder<CaseTest<T>, T>;
+  delete(keyPropertyStringOrEntity: any): DeleteRequestBuilder<CaseTest<T>, T> {
+    return new DeleteRequestBuilder<CaseTest<T>, T>(
+      this.entityApi,
       keyPropertyStringOrEntity instanceof CaseTest
         ? keyPropertyStringOrEntity
         : { KeyPropertyString: keyPropertyStringOrEntity! }

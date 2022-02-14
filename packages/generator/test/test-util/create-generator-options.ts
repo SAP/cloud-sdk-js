@@ -13,7 +13,6 @@ export function createOptions(
     clearOutputDir: false,
     s4hanaCloud: false,
     generateNpmrc: false,
-    generateTypedocJson: false,
     generatePackageJson: false,
     generateJs: false,
     sdkAfterVersionScript: false,

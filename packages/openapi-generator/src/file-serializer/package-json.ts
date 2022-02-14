@@ -7,6 +7,7 @@ import { unixEOL } from '@sap-cloud-sdk/util';
  * @param sdkVersion - The version of the SAP Cloud SDK used.
  * @param packageVersion - The version of the npm package.
  * @returns The package.json contents.
+ * @internal
  */
 export function packageJson(
   packageName: string,
@@ -32,17 +33,15 @@ export function packageJson(
           url: ''
         },
         scripts: {
-          compile: 'npx tsc',
-          doc: 'npx typedoc'
+          compile: 'npx tsc'
         },
         dependencies: {
-          '@sap-cloud-sdk/core': `^${sdkVersion}`
+          '@sap-cloud-sdk/openapi': `^${sdkVersion}`
         },
         peerDependencies: {
-          '@sap-cloud-sdk/core': `^${sdkVersion}`
+          '@sap-cloud-sdk/openapi': `^${sdkVersion}`
         },
         devDependencies: {
-          typedoc: '^0.20.36',
           typescript: '~4.1.2'
         }
       },
@@ -51,7 +50,11 @@ export function packageJson(
     ) + unixEOL
   );
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export const genericDescription = (packageName: string): string =>
   `SAP Cloud SDK for JavaScript: Generated client for OpenAPI service ${packageName
     .split('-')

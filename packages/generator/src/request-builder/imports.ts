@@ -1,51 +1,57 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { caps, ODataVersion, unique } from '@sap-cloud-sdk/util';
+import { ODataVersion, unique } from '@sap-cloud-sdk/util';
 import {
-  coreImportDeclaration,
-  corePropertyTypeImportNames,
+  odataImportDeclaration,
+  propertyTypeImportNames,
   externalImportDeclarations
 } from '../imports';
 import { VdmEntity, VdmProperty } from '../vdm-types';
 
-export function importDeclarations(
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
+export function requestBuilderImportDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(entity.keys),
-    coreImportDeclaration([
-      ...corePropertyTypeImportNames(entity.keys),
-      ...requestBuilderCoreImportDeclarations(entity, oDataVersion)
-    ]),
+    odataImportDeclaration(
+      [
+        ...requestBuilderImports(entity),
+        'DeserializedType',
+        'RequestBuilder',
+        ...propertyTypeImportNames(entity.keys)
+      ],
+      oDataVersion
+    ),
     entityImportDeclaration(entity),
     ...entityKeyImportDeclaration(entity.keys)
   ];
 }
 
-function requestBuilderCoreImportDeclarations(
-  entity: VdmEntity,
-  oDataVersion: ODataVersion
-) {
-  const versionInCap = caps(oDataVersion);
-  const coreImports = [
-    'RequestBuilder',
-    `GetAllRequestBuilder${versionInCap}`,
-    `GetByKeyRequestBuilder${versionInCap}`
+function requestBuilderImports(entity: VdmEntity) {
+  const imports = [
+    'DefaultDeSerializers',
+    'DeSerializers',
+    'GetAllRequestBuilder',
+    'GetByKeyRequestBuilder'
   ];
 
   if (entity.creatable) {
-    coreImports.push(`CreateRequestBuilder${versionInCap}`);
+    imports.push('CreateRequestBuilder');
   }
 
   if (entity.updatable) {
-    coreImports.push(`UpdateRequestBuilder${versionInCap}`);
+    imports.push('UpdateRequestBuilder');
   }
 
   if (entity.deletable) {
-    coreImports.push(`DeleteRequestBuilder${versionInCap}`);
+    imports.push('DeleteRequestBuilder');
   }
 
-  return coreImports;
+  return imports;
 }
 
 function entityImportDeclaration(

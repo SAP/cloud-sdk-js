@@ -1,44 +1,46 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { City, CityField } from './City';
 import {
+  CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
+  DeserializedType,
   EdmTypeField,
-  EntityV4,
+  Entity,
+  EnumField,
   FieldBuilder,
   FieldOptions,
-  FieldType,
-  PropertyMetadata,
-  deserializeComplexTypeV4
-} from '@sap-cloud-sdk/core';
+  OrderableEdmTypeField,
+  PropertyMetadata
+} from '@sap-cloud-sdk/odata-v4';
 
 /**
  * AirportLocation
  */
-export interface AirportLocation {
+export interface AirportLocation<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Loc.
    */
-  loc: any;
+  loc: DeserializedType<DeSerializersT, 'Edm.Any'>;
   /**
    * Address.
    */
-  address: string;
+  address: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * City.
    */
-  city: City;
-}
-
-/**
- * @deprecated Since v1.6.0. Use [[AirportLocation.build]] instead.
- */
-export function createAirportLocation(json: any): AirportLocation {
-  return AirportLocation.build(json);
+  city: DeserializedType<
+    DeSerializersT,
+    'Microsoft.OData.SampleService.Models.TripPin.City'
+  >;
 }
 
 /**
@@ -46,28 +48,38 @@ export function createAirportLocation(json: any): AirportLocation {
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class AirportLocationField<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends ComplexTypeField<EntityT, AirportLocation, NullableT, SelectableT> {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+> extends ComplexTypeField<
+  EntityT,
+  DeSerializersT,
+  AirportLocation,
+  NullableT,
+  SelectableT
+> {
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[AirportLocation.loc]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  loc: EdmTypeField<EntityT, 'Edm.Any', false, false> =
+  loc: EdmTypeField<EntityT, DeSerializersT, 'Edm.Any', false, false> =
     this._fieldBuilder.buildEdmTypeField('Loc', 'Edm.Any', false);
   /**
    * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, 'Edm.String', false, false> =
+  address: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false> =
     this._fieldBuilder.buildEdmTypeField('Address', 'Edm.String', false);
   /**
    * Representation of the [[AirportLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT, false, false> =
+  city: CityField<EntityT, DeSerializersT, false, false> =
     this._fieldBuilder.buildComplexTypeField('City', CityField, false);
 
   /**
@@ -78,9 +90,10 @@ export class AirportLocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, AirportLocation, fieldOptions);
+    super(fieldName, fieldOf, deSerializers, AirportLocation, fieldOptions);
   }
 }
 
@@ -108,13 +121,4 @@ export namespace AirportLocation {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
-   */
-  export function build(json: {
-    [keys: string]: FieldType | City;
-  }): AirportLocation {
-    return deserializeComplexTypeV4(json, AirportLocation);
-  }
 }

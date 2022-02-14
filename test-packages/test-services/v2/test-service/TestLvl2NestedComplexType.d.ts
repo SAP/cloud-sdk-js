@@ -1,38 +1,38 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
+  DeserializedType,
   EdmTypeField,
-  EntityV2,
+  Entity,
   FieldOptions,
-  FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-v2';
 /**
  * TestLvl2NestedComplexType
  */
-export interface TestLvl2NestedComplexType {
+export interface TestLvl2NestedComplexType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * String Property.
    * @nullable
    */
-  stringProperty?: string;
+  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
-/**
- * @deprecated Since v1.6.0. Use [[TestLvl2NestedComplexType.build]] instead.
- */
-export declare function createTestLvl2NestedComplexType(
-  json: any
-): TestLvl2NestedComplexType;
 /**
  * TestLvl2NestedComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class TestLvl2NestedComplexTypeField<
-  EntityT extends EntityV2,
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<
   EntityT,
+  DeSerializersT,
   TestLvl2NestedComplexType,
   NullableT,
   SelectableT
@@ -42,7 +42,13 @@ export declare class TestLvl2NestedComplexTypeField<
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', true, false>;
+  stringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  >;
   /**
    * Creates an instance of TestLvl2NestedComplexTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -51,6 +57,7 @@ export declare class TestLvl2NestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 }
@@ -59,11 +66,5 @@ export declare namespace TestLvl2NestedComplexType {
    * Metadata information on all properties of the `TestLvl2NestedComplexType` complex type.
    */
   const _propertyMetadata: PropertyMetadata<TestLvl2NestedComplexType>[];
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
-   */
-  function build(json: {
-    [keys: string]: FieldType;
-  }): TestLvl2NestedComplexType;
 }
 //# sourceMappingURL=TestLvl2NestedComplexType.d.ts.map

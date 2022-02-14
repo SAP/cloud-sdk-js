@@ -1,4 +1,3 @@
-import { parse } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
 import { ServiceOptions } from '../options';
@@ -6,6 +5,7 @@ import { parseSchema, parseSchemaProperties } from './schema';
 import { parseApis } from './api';
 import { createRefs, OpenApiDocumentRefs } from './refs';
 import { ParserOptions } from './options';
+import { parseBound } from './swagger-parser-workaround';
 
 /**
  * Parse an OpenAPI document.
@@ -13,6 +13,7 @@ import { ParserOptions } from './options';
  * @param serviceOptions - Service options as defined in the options per service.
  * @param options - Parser options.
  * @returns The parsed OpenAPI document representation
+ * @internal
  */
 export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
@@ -20,7 +21,7 @@ export async function parseOpenApiDocument(
   options: ParserOptions
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
-  const document = (await parse(clonedContent)) as OpenAPIV3.Document;
+  const document = (await parseBound(clonedContent)) as OpenAPIV3.Document;
   const refs = await createRefs(document, options);
 
   return {
@@ -31,7 +32,11 @@ export async function parseOpenApiDocument(
     schemas: parseSchemas(document, refs, options)
   };
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function parseSchemas(
   document: OpenAPIV3.Document,
   refs: OpenApiDocumentRefs,

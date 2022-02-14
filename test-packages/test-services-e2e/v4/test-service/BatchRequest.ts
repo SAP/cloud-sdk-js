@@ -1,17 +1,18 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  CreateRequestBuilderV4,
-  DeleteRequestBuilderV4,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  ODataBatchChangeSetV4,
-  ODataBatchRequestBuilderV4,
-  UpdateRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  ODataBatchRequestBuilder,
+  UpdateRequestBuilder,
+  BatchChangeSet
+} from '@sap-cloud-sdk/odata-v4';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { TestEntity, TestEntityLink } from './index';
 
@@ -20,36 +21,35 @@ import { TestEntity, TestEntityLink } from './index';
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(
+export function batch<DeSerializersT extends DeSerializers>(
   ...requests: Array<
-    | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>
+    | ReadTestServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilderV4;
-export function batch(
+): ODataBatchRequestBuilder<DeSerializersT>;
+export function batch<DeSerializersT extends DeSerializers>(
   requests: Array<
-    | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>
+    | ReadTestServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilderV4;
-export function batch(
+): ODataBatchRequestBuilder<DeSerializersT>;
+export function batch<DeSerializersT extends DeSerializers>(
   first:
     | undefined
-    | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>
+    | ReadTestServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
     | Array<
-        | ReadTestServiceRequestBuilder
-        | ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>
+        | ReadTestServiceRequestBuilder<DeSerializersT>
+        | BatchChangeSet<DeSerializersT>
       >,
   ...rest: Array<
-    | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>
+    | ReadTestServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilderV4 {
-  return new ODataBatchRequestBuilderV4(
+): ODataBatchRequestBuilder<DeSerializersT> {
+  return new ODataBatchRequestBuilder(
     defaultTestServicePath,
-    variadicArgumentToArray(first, rest),
-    map
+    variadicArgumentToArray(first, rest)
   );
 }
 
@@ -58,33 +58,36 @@ export function batch(
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export function changeset(
-  ...requests: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>;
-export function changeset(
-  requests: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>;
-export function changeset(
+export function changeset<DeSerializersT extends DeSerializers>(
+  ...requests: Array<WriteTestServiceRequestBuilder<DeSerializersT>>
+): BatchChangeSet<DeSerializersT>;
+export function changeset<DeSerializersT extends DeSerializers>(
+  requests: Array<WriteTestServiceRequestBuilder<DeSerializersT>>
+): BatchChangeSet<DeSerializersT>;
+export function changeset<DeSerializersT extends DeSerializers>(
   first:
     | undefined
-    | WriteTestServiceRequestBuilder
-    | Array<WriteTestServiceRequestBuilder>,
-  ...rest: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteTestServiceRequestBuilder> {
-  return new ODataBatchChangeSetV4(variadicArgumentToArray(first, rest));
+    | WriteTestServiceRequestBuilder<DeSerializersT>
+    | Array<WriteTestServiceRequestBuilder<DeSerializersT>>,
+  ...rest: Array<WriteTestServiceRequestBuilder<DeSerializersT>>
+): BatchChangeSet<DeSerializersT> {
+  return new BatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
 export const defaultTestServicePath = '/odata/test-service';
-const map = { TestEntity: TestEntity, TestEntityLink: TestEntityLink };
-export type ReadTestServiceRequestBuilder =
-  | GetAllRequestBuilderV4<TestEntity>
-  | GetAllRequestBuilderV4<TestEntityLink>
-  | GetByKeyRequestBuilderV4<TestEntity>
-  | GetByKeyRequestBuilderV4<TestEntityLink>;
-export type WriteTestServiceRequestBuilder =
-  | CreateRequestBuilderV4<TestEntity>
-  | UpdateRequestBuilderV4<TestEntity>
-  | DeleteRequestBuilderV4<TestEntity>
-  | CreateRequestBuilderV4<TestEntityLink>
-  | UpdateRequestBuilderV4<TestEntityLink>
-  | DeleteRequestBuilderV4<TestEntityLink>;
+export type ReadTestServiceRequestBuilder<
+  DeSerializersT extends DeSerializers
+> =
+  | GetAllRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>;
+export type WriteTestServiceRequestBuilder<
+  DeSerializersT extends DeSerializers
+> =
+  | CreateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>;

@@ -1,162 +1,175 @@
-import { and, asc, desc, or } from '@sap-cloud-sdk/core';
-import {
-  TestEntity,
-  TestEntityMultiLink,
-  TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common/internal';
+
+const { testEntityApi, testEntityMultiLinkApi } = testService();
+
+const testEntitySchema = testEntityApi.schema;
+const testEntityMultiLinkSchema = testEntityMultiLinkApi.schema;
+const testEntityInstance = testEntityApi.entityBuilder().build();
+const testMultiLinkInstance = testEntityMultiLinkApi.entityBuilder().build();
+
 /**
  * REQUEST BUILDER
  */
-// $ExpectType TestEntityRequestBuilder
-TestEntity.requestBuilder();
+// $ExpectType TestEntityRequestBuilder<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityApi.requestBuilder();
 
 /**
  * METHOD REQUEST BUILDERS
  */
-// $ExpectType GetAllRequestBuilder<TestEntity>
-const testEntityGetAllRequest = TestEntity.requestBuilder().getAll();
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+const testEntityGetAllRequest = testEntityApi.requestBuilder().getAll();
 
-// $ExpectType GetByKeyRequestBuilder<TestEntity>
-TestEntity.requestBuilder().getByKey('uuid', 'test');
+// $ExpectType GetByKeyRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityApi.requestBuilder().getByKey('uuid', 'test');
 
-// $ExpectType CreateRequestBuilder<TestEntity>
-TestEntity.requestBuilder().create(new TestEntity());
+// $ExpectType CreateRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityApi.requestBuilder().create(testEntityInstance);
 
-// $ExpectType UpdateRequestBuilder<TestEntity>
-TestEntity.requestBuilder().update(new TestEntity());
-
-// $ExpectError
-TestEntity.requestBuilder().create(new TestEntityMultiLink());
+// $ExpectType UpdateRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityApi.requestBuilder().update(testEntityInstance);
 
 // $ExpectError
-TestEntity.requestBuilder().update(new TestEntityMultiLink());
+testEntityApi.requestBuilder().create(testMultiLinkInstance);
+
+// $ExpectError
+testEntityApi.requestBuilder().update(testMultiLinkInstance);
 
 /**
  * AsChildOf
  */
-// $ExpectType CreateRequestBuilder<TestEntityMultiLink>
-TestEntityMultiLink.requestBuilder()
-  .create(new TestEntityMultiLink())
-  .asChildOf(new TestEntity(), TestEntity.TO_MULTI_LINK);
+// $ExpectType CreateRequestBuilder<TestEntityMultiLink<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityMultiLinkApi
+  .requestBuilder()
+  .create(testMultiLinkInstance)
+  .asChildOf(testEntityInstance, testEntitySchema.TO_MULTI_LINK);
 
-TestEntityMultiLink.requestBuilder()
-  .create(new TestEntityMultiLink())
-  .asChildOf(new TestEntity(), TestEntity.TO_OTHER_MULTI_LINK); // $ExpectError
+testEntityMultiLinkApi
+  .requestBuilder()
+  .create(testMultiLinkInstance)
+  .asChildOf(testEntityInstance, testEntitySchema.TO_OTHER_MULTI_LINK); // $ExpectError
 
-TestEntityMultiLink.requestBuilder()
-  .create(new TestEntityMultiLink())
-  .asChildOf(new TestEntityMultiLink(), TestEntity.TO_MULTI_LINK); // $ExpectError
+testEntityMultiLinkApi
+  .requestBuilder()
+  .create(testMultiLinkInstance)
+  .asChildOf(testMultiLinkInstance, testEntitySchema.TO_MULTI_LINK); // $ExpectError
 
 /**
  * SELECTION
  */
-// $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.select(TestEntity.STRING_PROPERTY);
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityGetAllRequest.select(testEntitySchema.STRING_PROPERTY);
 
 // $ExpectError
-testEntityGetAllRequest.select(TestEntityMultiLink.STRING_PROPERTY);
+testEntityGetAllRequest.select(testEntityMultiLinkSchema.STRING_PROPERTY);
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.select(TestEntity.customField('CustomField'));
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityGetAllRequest.select(testEntityApi.customField('CustomField'));
 
-// $ExpectError
-testEntityGetAllRequest.select(TestEntityMultiLink.customField('CustomField'));
+testEntityGetAllRequest.select(
+  testEntityMultiLinkApi.customField('CustomField') // $ExpectError
+);
 
 /**
  * SELECTION & EXPANSION
  */
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityGetAllRequest.select(
-  TestEntity.TO_MULTI_LINK.select(TestEntityMultiLink.STRING_PROPERTY)
+  testEntitySchema.TO_MULTI_LINK.select(
+    testEntityMultiLinkSchema.STRING_PROPERTY
+  )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityGetAllRequest.select(
-  TestEntity.TO_SINGLE_LINK.select(TestEntitySingleLink.BOOLEAN_PROPERTY)
+  testEntitySchema.TO_SINGLE_LINK.select(
+    testEntityMultiLinkSchema.BOOLEAN_PROPERTY
+  )
 );
 
 testEntityGetAllRequest.select(
-  TestEntity.TO_MULTI_LINK.select(
-    TestEntity.KEY_PROPERTY_GUID // $ExpectError
+  testEntitySchema.TO_MULTI_LINK.select(
+    testEntitySchema.KEY_PROPERTY_GUID // $ExpectError
   )
 );
 
 /**
  * FILTER
  */
-// $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.filter(TestEntity.STRING_PROPERTY.equals('test'));
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityGetAllRequest.filter(testEntitySchema.STRING_PROPERTY.equals('test'));
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityGetAllRequest.filter(
-  TestEntity.STRING_PROPERTY.equals('test'),
-  TestEntity.BOOLEAN_PROPERTY.notEquals(false)
+  testEntitySchema.STRING_PROPERTY.equals('test'),
+  testEntitySchema.BOOLEAN_PROPERTY.notEquals(false)
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityGetAllRequest.filter(
   and(
-    TestEntity.STRING_PROPERTY.equals('test'),
-    TestEntity.BOOLEAN_PROPERTY.notEquals(true)
+    testEntitySchema.STRING_PROPERTY.equals('test'),
+    testEntitySchema.BOOLEAN_PROPERTY.notEquals(true)
   )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityGetAllRequest.filter(
   or(
-    TestEntity.STRING_PROPERTY.equals('test'),
-    TestEntity.BOOLEAN_PROPERTY.notEquals(false)
+    testEntitySchema.STRING_PROPERTY.equals('test'),
+    testEntitySchema.BOOLEAN_PROPERTY.notEquals(false)
   )
 );
 
 testEntityGetAllRequest.filter(
-  TestEntityMultiLink.STRING_PROPERTY.equals('test') // $ExpectError
+  testEntityMultiLinkSchema.STRING_PROPERTY.equals('test') // $ExpectError
 );
 
 testEntityGetAllRequest.filter(
-  and(TestEntityMultiLink.STRING_PROPERTY.equals('test')) // $ExpectError
+  and(testEntityMultiLinkSchema.STRING_PROPERTY.equals('test')) // $ExpectError
 );
 
 testEntityGetAllRequest.filter(
-  or(TestEntityMultiLink.STRING_PROPERTY.equals('test')) // $ExpectError
+  or(testEntityMultiLinkSchema.STRING_PROPERTY.equals('test')) // $ExpectError
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityGetAllRequest.filter(
-  TestEntity.customField('SomeCustomField').edmString().equals('test')
+  testEntityApi.customField('SomeCustomField').edmString().equals('test')
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityGetAllRequest.filter(
-  TestEntity.customField('SomeCustomField').edmDouble().equals(1234)
+  testEntityApi.customField('SomeCustomField').edmDouble().equals(1234)
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityGetAllRequest.filter(
-  TestEntity.customField('SomeCustomField')
+  testEntityApi
+    .customField('SomeCustomField')
     .edmTime()
     .equals({ seconds: 1, minutes: 1, hours: 1 })
 );
 
-TestEntity.customField('SomeCustomField').edmString().equals(13214); // $ExpectError
+testEntitySchema.customField('SomeCustomField').edmString().equals(13214); // $ExpectError
 
-TestEntity.customField('SomeCustomField').edmDouble().equals('aString'); // $ExpectError
+testEntitySchema.customField('SomeCustomField').edmDouble().equals('aString'); // $ExpectError
 
 /**
  * ORDER BY
  */
-// $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.orderBy(asc(TestEntity.STRING_PROPERTY));
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityGetAllRequest.orderBy(asc(testEntitySchema.STRING_PROPERTY));
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
-testEntityGetAllRequest.orderBy(desc(TestEntity.STRING_PROPERTY));
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityGetAllRequest.orderBy(desc(testEntitySchema.STRING_PROPERTY));
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityGetAllRequest.orderBy(
-  asc(TestEntity.STRING_PROPERTY),
-  desc(TestEntity.STRING_PROPERTY)
+  asc(testEntitySchema.STRING_PROPERTY),
+  desc(testEntitySchema.STRING_PROPERTY)
 );
 
 testEntityGetAllRequest.orderBy(
-  asc(TestEntityMultiLink.STRING_PROPERTY) // $ExpectError
+  asc(testEntityMultiLinkSchema.STRING_PROPERTY) // $ExpectError
 );

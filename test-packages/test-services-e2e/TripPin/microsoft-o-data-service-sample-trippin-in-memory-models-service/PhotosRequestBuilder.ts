@@ -1,38 +1,45 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { BigNumber } from 'bignumber.js';
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  CreateRequestBuilderV4,
-  UpdateRequestBuilderV4,
-  DeleteRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  DefaultDeSerializers,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder,
+  DeserializedType,
+  RequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { Photos } from './Photos';
 
 /**
  * Request builder class for operations supported on the [[Photos]] entity.
  */
-export class PhotosRequestBuilder extends RequestBuilder<Photos> {
+export class PhotosRequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<Photos<T>, T> {
   /**
    * Returns a request builder for retrieving one `Photos` entity based on its keys.
    * @param id Key property. See [[Photos.id]].
    * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
    */
-  getByKey(id: BigNumber): GetByKeyRequestBuilderV4<Photos> {
-    return new GetByKeyRequestBuilderV4(Photos, { Id: id });
+  getByKey(
+    id: DeserializedType<T, 'Edm.Int64'>
+  ): GetByKeyRequestBuilder<Photos<T>, T> {
+    return new GetByKeyRequestBuilder<Photos<T>, T>(this.entityApi, { Id: id });
   }
 
   /**
    * Returns a request builder for querying all `Photos` entities.
    * @returns A request builder for creating requests to retrieve all `Photos` entities.
    */
-  getAll(): GetAllRequestBuilderV4<Photos> {
-    return new GetAllRequestBuilderV4(Photos);
+  getAll(): GetAllRequestBuilder<Photos<T>, T> {
+    return new GetAllRequestBuilder<Photos<T>, T>(this.entityApi);
   }
 
   /**
@@ -40,8 +47,8 @@ export class PhotosRequestBuilder extends RequestBuilder<Photos> {
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `Photos`.
    */
-  create(entity: Photos): CreateRequestBuilderV4<Photos> {
-    return new CreateRequestBuilderV4(Photos, entity);
+  create(entity: Photos<T>): CreateRequestBuilder<Photos<T>, T> {
+    return new CreateRequestBuilder<Photos<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -49,8 +56,8 @@ export class PhotosRequestBuilder extends RequestBuilder<Photos> {
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `Photos`.
    */
-  update(entity: Photos): UpdateRequestBuilderV4<Photos> {
-    return new UpdateRequestBuilderV4(Photos, entity);
+  update(entity: Photos<T>): UpdateRequestBuilder<Photos<T>, T> {
+    return new UpdateRequestBuilder<Photos<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -58,16 +65,16 @@ export class PhotosRequestBuilder extends RequestBuilder<Photos> {
    * @param id Key property. See [[Photos.id]].
    * @returns A request builder for creating requests that delete an entity of type `Photos`.
    */
-  delete(id: BigNumber): DeleteRequestBuilderV4<Photos>;
+  delete(id: BigNumber): DeleteRequestBuilder<Photos<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `Photos`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `Photos` by taking the entity as a parameter.
    */
-  delete(entity: Photos): DeleteRequestBuilderV4<Photos>;
-  delete(idOrEntity: any): DeleteRequestBuilderV4<Photos> {
-    return new DeleteRequestBuilderV4(
-      Photos,
+  delete(entity: Photos<T>): DeleteRequestBuilder<Photos<T>, T>;
+  delete(idOrEntity: any): DeleteRequestBuilder<Photos<T>, T> {
+    return new DeleteRequestBuilder<Photos<T>, T>(
+      this.entityApi,
       idOrEntity instanceof Photos ? idOrEntity : { Id: idOrEntity! }
     );
   }

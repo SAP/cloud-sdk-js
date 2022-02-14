@@ -21,6 +21,10 @@ import {
   VdmServiceMetadata
 } from '../vdm-types';
 
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function entityNamespace(
   entity: VdmEntity,
   service: VdmServiceMetadata
@@ -67,30 +71,65 @@ function getFieldInitializer(
 ): OptionalKind<VariableDeclarationStructure> {
   return {
     name: prop.staticPropertyName,
-    initializer: createPropertyFieldInitializer(prop)
+    initializer: createPropertyFieldInitializerForEntity(prop)
   };
 }
 
-function createPropertyFieldInitializer(prop: VdmProperty): string {
+/**
+ * @internal
+ */
+export function createPropertyFieldInitializerForEntity(
+  prop: VdmProperty,
+  fieldBuilderName = '_fieldBuilder'
+): string {
   if (prop.isCollection) {
     if (prop.isComplex) {
-      return `_fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+      return `${fieldBuilderName}.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
     }
     if (prop.isEnum) {
-      return `_fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+      return `${fieldBuilderName}.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
     }
-    return `_fieldBuilder.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+    return `${fieldBuilderName}.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
   }
 
   if (prop.isComplex) {
-    return `_fieldBuilder.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
+    return `${fieldBuilderName}.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
   }
 
   if (prop.isEnum) {
-    return `_fieldBuilder.buildEnumField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+    return `${fieldBuilderName}.buildEnumField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
   }
 
-  return `_fieldBuilder.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+  return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+}
+
+/**
+ * @internal
+ */
+export function getPropertyFieldType(
+  entity: VdmEntity,
+  prop: VdmProperty,
+  fieldBuilderName = '_fieldBuilder'
+): string {
+  if (prop.isCollection) {
+    if (prop.isComplex) {
+      return `CollectionField<${entity.className}, DeSerializersT, ${prop.jsType}, ${prop.nullable}, true>`;
+    }
+    if (prop.isEnum) {
+      return `CollectionField<${entity.className}, DeSerializersT, string, ${prop.nullable}, true>`;
+    }
+    return `CollectionField<${entity.className}, DeSerializersT, DeSerializedType<DeSerializersT,, ${prop.nullable}, true>`;
+  }
+
+  if (prop.isComplex) {
+    return `${fieldBuilderName}.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
+  }
+
+  if (prop.isEnum) {
+    return `${fieldBuilderName}.buildEnumField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+  }
+
+  return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
 }
 
 function property(prop: VdmProperty): VariableStatementStructure {

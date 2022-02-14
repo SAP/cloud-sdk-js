@@ -11,11 +11,15 @@ import { exportStatement } from './export-statement';
 import { actionImportFunction } from './action';
 import { importDeclarationsAction, importDeclarationsFunction } from './import';
 import { functionImportFunction } from './function';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function actionImportSourceFile(
   service: VdmServiceMetadata
 ): SourceFileStructure {
-  if (!service.actionsImports) {
+  if (!service.actionImports) {
     throw new Error(
       'Tried to create action import source files without actions in service metadata.'
     );
@@ -25,11 +29,11 @@ export function actionImportSourceFile(
     statements: [
       ...importDeclarationsFunction(service),
       ...flat(
-        service.actionsImports.map(action =>
+        service.actionImports.map(action =>
           actionImportStatements(action, service)
         )
       ),
-      exportStatement(service.actionsImports, 'actionImports')
+      exportStatement(service.actionImports, 'actionImports')
     ]
   };
 }
@@ -43,7 +47,9 @@ function actionImportStatements(
     actionImportFunction(actionImport, service)
   ];
 }
-
+/**
+ * @internal
+ */
 export function functionImportSourceFile(
   service: VdmServiceMetadata
 ): SourceFileStructure {

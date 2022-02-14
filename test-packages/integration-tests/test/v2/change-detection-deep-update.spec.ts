@@ -1,13 +1,11 @@
-import {
-  TestEntity,
-  TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import nock from 'nock';
-import { basicHeader } from '@sap-cloud-sdk/core';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import {
   testEntityKeyPropGuid,
   testEntityKeyPropString
 } from '../test-data/keys';
+import { testEntityApi, testEntitySingleLinkApi } from './test-util';
 
 function mockCsrfTokenRequest(
   host: string,
@@ -62,7 +60,8 @@ describe('deep-update and change detection', () => {
   const csrfToken = 'csrf-token';
 
   it('change detection ignores navigation properties and complex types', async () => {
-    const testEntity = TestEntity.builder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .stringProperty('yes')
       .booleanProperty(false)
       .int16Property(1234)
@@ -72,7 +71,8 @@ describe('deep-update and change detection', () => {
       .setOrInitializeRemoteState();
 
     testEntity.stringProperty = 'yes';
-    testEntity.toSingleLink = TestEntitySingleLink.builder()
+    testEntity.toSingleLink = testEntitySingleLinkApi
+      .entityBuilder()
       .stringProperty('abc')
       .build();
     testEntity.complexTypeProperty = {
@@ -91,7 +91,8 @@ describe('deep-update and change detection', () => {
       }
     );
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .update(testEntity)
       .execute(destination);
 
@@ -99,7 +100,8 @@ describe('deep-update and change detection', () => {
   });
 
   it('change detection can be overruled by explicitly requiring a field', async () => {
-    const testEntity = TestEntity.builder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .stringProperty('yes')
       .booleanProperty(false)
       .int16Property(1234)
@@ -109,7 +111,8 @@ describe('deep-update and change detection', () => {
       .setOrInitializeRemoteState();
 
     testEntity.stringProperty = 'no';
-    testEntity.toSingleLink = TestEntitySingleLink.builder()
+    testEntity.toSingleLink = testEntitySingleLinkApi
+      .entityBuilder()
       .stringProperty('abc')
       .build();
     testEntity.complexTypeProperty = {
@@ -143,11 +146,12 @@ describe('deep-update and change detection', () => {
       )
       .reply(204);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .update(testEntity)
-      .requiredFields(
-        TestEntity.TO_SINGLE_LINK,
-        TestEntity.COMPLEX_TYPE_PROPERTY
+      .setRequiredFields(
+        testEntityApi.schema.TO_SINGLE_LINK,
+        testEntityApi.schema.COMPLEX_TYPE_PROPERTY
       )
       .execute(destination);
 

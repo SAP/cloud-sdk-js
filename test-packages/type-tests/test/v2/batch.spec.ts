@@ -1,31 +1,35 @@
 import {
   changeset as otherServiceChangeset,
-  MultiSchemaTestEntity
+  multipleSchemasService
 } from '@sap-cloud-sdk/test-services/v2/multiple-schemas-service';
 import {
   batch,
   changeset as testEntityChangeset,
-  TestEntity
+  testService
 } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { ReadResponse } from '@sap-cloud-sdk/odata-v2/internal';
+import { customTestDeSerializers } from '../../../../test-resources/test/test-util';
 
-const createTestEntity = TestEntity.requestBuilder().create(
-  TestEntity.builder().build()
-);
-const createTestEntityFromOtherService =
-  MultiSchemaTestEntity.requestBuilder().create(
-    MultiSchemaTestEntity.builder().build()
-  );
+const { testEntityApi } = testService();
+const { multiSchemaTestEntityApi } = multipleSchemasService();
 
-// $ExpectType ODataBatchChangeSet<WriteTestServiceRequestBuilder>
+const createTestEntity = testEntityApi
+  .requestBuilder()
+  .create(testEntityApi.entityBuilder().build());
+const createTestEntityFromOtherService = multiSchemaTestEntityApi
+  .requestBuilder()
+  .create(multiSchemaTestEntityApi.entityBuilder().build());
+
+// $ExpectType BatchChangeSet<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 const changeSetTestEntity = testEntityChangeset(createTestEntity);
 
-// $ExpectType ODataBatchChangeSet<WriteTestServiceRequestBuilder>
+// $ExpectType BatchChangeSet<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityChangeset(createTestEntity, createTestEntity);
 
-// $ExpectType ODataBatchChangeSet<WriteTestServiceRequestBuilder>
+// $ExpectType BatchChangeSet<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityChangeset([createTestEntity, createTestEntity]);
 
-// $ExpectType ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+// $ExpectType BatchChangeSet<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 otherServiceChangeset(createTestEntityFromOtherService);
 
 // // $ExpectError
@@ -34,11 +38,54 @@ otherServiceChangeset(createTestEntityFromOtherService);
 // // $ExpectError
 // TestEntityChangeset(createTestEntity, createTestEntityFromOtherService);
 
-// $ExpectType ODataBatchRequestBuilder
+// $ExpectType ODataBatchRequestBuilder<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 batch(changeSetTestEntity, changeSetTestEntity);
 
-// $ExpectType ODataBatchRequestBuilder
+// $ExpectType ODataBatchRequestBuilder<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 batch([changeSetTestEntity, changeSetTestEntity]);
 
 // // $ExpectError
 // Batch(changeSetTestEntity, changeSetOtherServiceTestEntity);
+
+// $ExpectType () => ReadResponse<DefaultDeSerializers>
+(): ReadResponse => ({} as any);
+
+async () => {
+  // $ExpectType BatchResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
+  const responses = await testService()
+    .batch(testEntityApi.requestBuilder().getAll())
+    .execute({} as any);
+
+  const response = responses[0];
+  if (response.isSuccess()) {
+    // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>> | WriteResponses<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+    response;
+  }
+  if (response.isReadResponse()) {
+    // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+    response;
+
+    // $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>[]
+    response.as(testEntityApi);
+  }
+
+  // $ExpectType BatchResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, number, any, Moment, Moment, Time>>[]
+  const responsesCustomDeserializer = await batch(
+    testService(customTestDeSerializers).testEntityApi.requestBuilder().getAll()
+  ).execute({} as any);
+
+  const responseCustomDeserializer = responsesCustomDeserializer[0];
+  if (responseCustomDeserializer.isSuccess()) {
+    // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, number, any, Moment, Moment, Time>> | WriteResponses<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, number, any, Moment, Moment, Time>>
+    responseCustomDeserializer;
+  }
+  if (responseCustomDeserializer.isReadResponse()) {
+    // $ExpectType ReadResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, number, any, Moment, Moment, Time>>
+    responseCustomDeserializer;
+
+    // $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, number, any, Moment, Moment, Time>>[]
+    responseCustomDeserializer.as(
+      testService(customTestDeSerializers).testEntityApi
+    );
+  }
+};

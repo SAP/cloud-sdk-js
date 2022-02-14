@@ -9,14 +9,19 @@ import {
   VdmProperty,
   VdmServiceMetadata
 } from '../vdm-types';
+import { getPropertyType } from './class';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function entityTypeInterface(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): InterfaceDeclarationStructure {
   return {
     kind: StructureKind.Interface,
-    name: `${entity.className}Type`,
+    name: `${entity.className}Type<T extends DeSerializers = DefaultDeSerializers>`,
     isExported: true,
     properties: [...properties(entity), ...navProperties(entity, service)]
   };
@@ -30,9 +35,7 @@ function property(prop: VdmProperty): PropertySignatureStructure {
   return {
     kind: StructureKind.PropertySignature,
     name: prop.instancePropertyName + (prop.nullable ? '?' : ''),
-    type: prop.isCollection
-      ? `${prop.jsType}[]` + (prop.nullable ? ' | null' : '')
-      : prop.jsType + (prop.nullable ? ' | null' : '')
+    type: getPropertyType(prop)
   };
 }
 
@@ -61,6 +64,7 @@ function navProperty(
   return {
     kind: StructureKind.PropertySignature,
     name: navProp.instancePropertyName + (navProp.isCollection ? '' : '?'),
-    type: entity.className + 'Type' + (navProp.isCollection ? '[]' : ' | null')
+    type:
+      entity.className + 'Type<T>' + (navProp.isCollection ? '[]' : ' | null')
   };
 }

@@ -33,6 +33,8 @@ function readJson(fileName: string) {
 export interface UserAccessTokens {
   provider: string;
   subscriber: string;
+  iasProvider: string;
+  iasSubscriber: string;
 }
 
 export interface Systems {
@@ -45,6 +47,7 @@ export interface Systems {
     providerClientCert: string;
     providerOAuth2SAMLBearerAssertion: string;
     subscriberBasic: string;
+    providerSamlAssertion: string;
   };
   workflow: {
     providerOAuth2ClientCredentials: string;
@@ -60,5 +63,6 @@ export interface Systems {
     providerOauth2JWTBearerCommonTokenURL: string;
     providerOauth2UserTokenExchange: string;
     providerOauth2UserTokenExchangeCommonTokenURL: string;
+    providerBasicPrivateLink: string;
   };
 }

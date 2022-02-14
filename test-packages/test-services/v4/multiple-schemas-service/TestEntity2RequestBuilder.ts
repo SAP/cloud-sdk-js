@@ -1,29 +1,36 @@
 /*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  CreateRequestBuilderV4,
-  UpdateRequestBuilderV4,
-  DeleteRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  DefaultDeSerializers,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder,
+  DeserializedType,
+  RequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity2 } from './TestEntity2';
 
 /**
  * Request builder class for operations supported on the [[TestEntity2]] entity.
  */
-export class TestEntity2RequestBuilder extends RequestBuilder<TestEntity2> {
+export class TestEntity2RequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<TestEntity2<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntity2` entity based on its keys.
    * @param keyPropertyString Key property. See [[TestEntity2.keyPropertyString]].
    * @returns A request builder for creating requests to retrieve one `TestEntity2` entity based on its keys.
    */
-  getByKey(keyPropertyString: string): GetByKeyRequestBuilderV4<TestEntity2> {
-    return new GetByKeyRequestBuilderV4(TestEntity2, {
+  getByKey(
+    keyPropertyString: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntity2<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntity2<T>, T>(this.entityApi, {
       KeyPropertyString: keyPropertyString
     });
   }
@@ -32,8 +39,8 @@ export class TestEntity2RequestBuilder extends RequestBuilder<TestEntity2> {
    * Returns a request builder for querying all `TestEntity2` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity2` entities.
    */
-  getAll(): GetAllRequestBuilderV4<TestEntity2> {
-    return new GetAllRequestBuilderV4(TestEntity2);
+  getAll(): GetAllRequestBuilder<TestEntity2<T>, T> {
+    return new GetAllRequestBuilder<TestEntity2<T>, T>(this.entityApi);
   }
 
   /**
@@ -41,8 +48,8 @@ export class TestEntity2RequestBuilder extends RequestBuilder<TestEntity2> {
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntity2`.
    */
-  create(entity: TestEntity2): CreateRequestBuilderV4<TestEntity2> {
-    return new CreateRequestBuilderV4(TestEntity2, entity);
+  create(entity: TestEntity2<T>): CreateRequestBuilder<TestEntity2<T>, T> {
+    return new CreateRequestBuilder<TestEntity2<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -50,8 +57,8 @@ export class TestEntity2RequestBuilder extends RequestBuilder<TestEntity2> {
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntity2`.
    */
-  update(entity: TestEntity2): UpdateRequestBuilderV4<TestEntity2> {
-    return new UpdateRequestBuilderV4(TestEntity2, entity);
+  update(entity: TestEntity2<T>): UpdateRequestBuilder<TestEntity2<T>, T> {
+    return new UpdateRequestBuilder<TestEntity2<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -59,16 +66,18 @@ export class TestEntity2RequestBuilder extends RequestBuilder<TestEntity2> {
    * @param keyPropertyString Key property. See [[TestEntity2.keyPropertyString]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntity2`.
    */
-  delete(keyPropertyString: string): DeleteRequestBuilderV4<TestEntity2>;
+  delete(keyPropertyString: string): DeleteRequestBuilder<TestEntity2<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntity2`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntity2` by taking the entity as a parameter.
    */
-  delete(entity: TestEntity2): DeleteRequestBuilderV4<TestEntity2>;
-  delete(keyPropertyStringOrEntity: any): DeleteRequestBuilderV4<TestEntity2> {
-    return new DeleteRequestBuilderV4(
-      TestEntity2,
+  delete(entity: TestEntity2<T>): DeleteRequestBuilder<TestEntity2<T>, T>;
+  delete(
+    keyPropertyStringOrEntity: any
+  ): DeleteRequestBuilder<TestEntity2<T>, T> {
+    return new DeleteRequestBuilder<TestEntity2<T>, T>(
+      this.entityApi,
       keyPropertyStringOrEntity instanceof TestEntity2
         ? keyPropertyStringOrEntity
         : { KeyPropertyString: keyPropertyStringOrEntity! }

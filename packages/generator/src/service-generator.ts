@@ -50,9 +50,16 @@ class ServiceGenerator {
       serviceMetadata,
       serviceDefinitionPaths
     );
+
     const vdmServiceEntities = isV2Metadata(serviceMetadata.edmx)
-      ? getServiceEntitiesV2(serviceMetadata)
-      : getServiceEntitiesV4(serviceMetadata);
+      ? getServiceEntitiesV2(
+          serviceMetadata,
+          vdmServicePackageMetaData.className
+        )
+      : getServiceEntitiesV4(
+          serviceMetadata,
+          vdmServicePackageMetaData.className
+        );
 
     return {
       ...vdmServicePackageMetaData,
@@ -115,6 +122,7 @@ class ServiceGenerator {
 /**
  * @param options - Generator options
  * @returns the parsed services
+ * @internal
  */
 export function parseAllServices(
   options: GeneratorOptions
@@ -128,6 +136,7 @@ export function parseAllServices(
  * @param mappings - mappings for VDM service names to desired name
  * @param globalNameFormatter - Instance of global name formatter to be used for the parsing process
  * @returns the parsed service
+ * @internal
  */
 export function parseService(
   serviceDefinitionPaths: ServiceDefinitionPaths,
@@ -141,6 +150,10 @@ export function parseService(
     .generateService(serviceDefinitionPaths);
 }
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function getServiceName(service: VdmServiceMetadata): string {
   return service.namespaces.length === 1
     ? service.namespaces[0]

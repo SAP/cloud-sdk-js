@@ -6,30 +6,33 @@ import {
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function getRequestBuilderArgumentsBase(
   actionFunctionImport: VdmFunctionImport | VdmActionImport,
   service: VdmServiceMetadata
 ): string[] {
-  const transformer = getTransformer(actionFunctionImport, service);
+  const transformer = getTransformer(actionFunctionImport);
   return [
     `'${service.servicePath}'`,
     `'${actionFunctionImport.originalName}'`,
     transformer,
-    'params'
+    'params',
+    'deSerializers'
   ];
 }
 
 function getTransformer(
-  actionFunctionImport: VdmFunctionImport | VdmActionImport,
-  service: VdmServiceMetadata
+  actionFunctionImport: VdmFunctionImport | VdmActionImport
 ): string {
   if (isEntityNotDeserializable(actionFunctionImport.returnType)) {
     return `(data) => throwErrorWhenReturnTypeIsUnionType(data, '${actionFunctionImport.originalName}')`;
   }
   if (actionFunctionImport.returnType.builderFunction) {
     return `(data) => ${responseTransformerFunctionName(
-      actionFunctionImport.returnType,
-      service.oDataVersion
+      actionFunctionImport.returnType
     )}(data, ${actionFunctionImport.returnType.builderFunction})`;
   }
   throw Error(

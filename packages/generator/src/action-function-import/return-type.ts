@@ -1,4 +1,3 @@
-import { caps } from '@sap-cloud-sdk/util';
 import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 
@@ -39,22 +38,27 @@ function wrapRequestBuilderAroundType(
   parameterName: string,
   type: string
 ) {
-  return `${requestBuilderName}<${parameterName}, ${type}>`;
+  return `${requestBuilderName}<DeSerializersT, ${parameterName}<DeSerializersT>, ${type}>`;
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function actionImportReturnType(actionImport: VdmActionImport): string {
   return actionFunctionImportReturnType(
     actionImport,
     'ActionImportRequestBuilder'
   );
 }
-
+/**
+ * @internal
+ */
 export function functionImportReturnType(
-  actionImport: VdmActionImport,
-  oDataVersion: string
+  actionImport: VdmActionImport
 ): string {
   return actionFunctionImportReturnType(
     actionImport,
-    `FunctionImportRequestBuilder${caps(oDataVersion)}`
+    'FunctionImportRequestBuilder'
   );
 }

@@ -10,7 +10,10 @@ describe('imports', () => {
     const imports = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.ImportDeclaration
     );
-    expect(imports.length).toBe(2);
+    expect(imports.map(i => i.moduleSpecifier)).toIncludeSameMembers([
+      '@sap-cloud-sdk/odata-v2',
+      './Breakfast'
+    ]);
 
     const classes = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.Class

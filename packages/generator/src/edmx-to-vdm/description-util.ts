@@ -12,7 +12,12 @@ import {
   SwaggerPath,
   SwaggerPathParameter,
   SwaggerProperty
-} from '../swagger-parser/swagger-types';
+} from '../swagger-parser';
+/* eslint-disable valid-jsdoc */
+
+/**
+ * @internal
+ */
 export function longDescription(
   documented: EdmxDocumented,
   described?: SwaggerDescribed
@@ -28,7 +33,9 @@ export function longDescription(
   }
   return endWithDot(docs.trim());
 }
-
+/**
+ * @internal
+ */
 export function shortPropertyDescription(
   property: EdmxProperty,
   swaggerProperty?: SwaggerProperty
@@ -40,7 +47,9 @@ export function shortPropertyDescription(
     '';
   return endWithDot(desc.trim());
 }
-
+/**
+ * @internal
+ */
 export function propertyDescription(
   property: EdmxProperty,
   swaggerProperty?: SwaggerProperty
@@ -49,7 +58,9 @@ export function propertyDescription(
   const long = longDescription(property, swaggerProperty);
   return `${short}${unixEOL}${long}`.trim();
 }
-
+/**
+ * @internal
+ */
 export function parameterDescription(
   parameter: EdmxParameter,
   swaggerParameter?: SwaggerPathParameter
@@ -58,20 +69,27 @@ export function parameterDescription(
   const long = longDescription(parameter, swaggerParameter);
   return endWithDot((long || short).trim());
 }
-
+/**
+ * @internal
+ */
 export function functionImportDescription(
   swaggerDefinition: SwaggerPath | undefined,
   originalName: string
 ): string {
   return endWithDot(swaggerDefinition?.summary || titleFormat(originalName));
 }
-
+/**
+ * @internal
+ */
 export function actionImportDescription(
   swaggerDefinition: SwaggerPath | undefined,
   originalName: string
 ): string {
   return functionImportDescription(swaggerDefinition, originalName);
 }
+/**
+ * @internal
+ */
 export function entityDescription(
   entity: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   className: string

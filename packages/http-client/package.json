@@ -1,0 +1,43 @@
+{
+  "name": "@sap-cloud-sdk/http-client",
+  "version": "2.0.0",
+  "description": "SAP Cloud SDK for JavaScript http-client",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "license": "Apache-2.0",
+  "keywords": [
+    "sap-cloud-sdk",
+    "cloud-sdk",
+    "sap-cloud-platform",
+    "http-client"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "internal.js",
+    "internal.d.ts"
+  ],
+  "repository": "github:SAP/cloud-sdk-js",
+  "scripts": {
+    "compile": "yarn tsc -b",
+    "prepare": "yarn compile",
+    "test": "yarn jest",
+    "coverage": "yarn jest --coverage",
+    "check:dependencies": "depcheck ."
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/connectivity": "^2.0.0",
+    "@sap-cloud-sdk/util": "^2.0.0",
+    "axios": "^0.24.0"
+  },
+  "devDependencies": {
+    "https-proxy-agent": "^5.0.0",
+    "nock": "^13.0.11"
+  }
+}

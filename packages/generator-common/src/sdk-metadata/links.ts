@@ -1,5 +1,8 @@
 import type { Links } from './sdk-metadata-types';
-
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function getLinks(
   executeRequestUrl: string,
   generationManualUrl: string,

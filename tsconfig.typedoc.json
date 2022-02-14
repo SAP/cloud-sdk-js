@@ -2,22 +2,39 @@
   "extends": "./tsconfig.json",
   "include": [
     "./packages/util/**/*",
-    "./packages/analytics/**/*",
-    "./packages/core/**/*",
+    "./packages/odata-common/**/*",
+    "./packages/odata-v2/**/*",
+    "./packages/odata-v4/**/*",
+    "./packages/connectivity/**/*",
+    "./packages/http-client/**/*",
+    "./packages/openapi/**/*",
     "./packages/generator/**/*",
     "./packages/openapi-generator/**/*",
-    "./packages/test-util/**/*"
+    "./packages/test-util/**/*",
+    "./packages/temporal-de-serializers/**/*"
   ],
-  "exclude": ["./packages/core/test/test-util/test-services", "**/*.spec.ts"],
+  "exclude": ["**/*.spec.ts"],
   "references": [
     {
       "path": "./packages/util"
     },
     {
-      "path": "./packages/analytics"
+      "path": "./packages/odata-common"
     },
     {
-      "path": "./packages/core"
+      "path": "./packages/odata-v2"
+    },
+    {
+      "path": "./packages/odata-v4"
+    },
+    {
+      "path": "./packages/connectivity"
+    },
+    {
+      "path": "./packages/http-client"
+    },
+    {
+      "path": "./packages/openapi"
     },
     {
       "path": "./packages/generator"
@@ -27,17 +44,25 @@
     },
     {
       "path": "./packages/test-util"
+    },
+    {
+      "path": "./packages/temporal-de-serializers"
     }
   ],
   "typedocOptions": {
-    "out": "docs/api/1.53.0",
+    "out": "docs/api/2.0.0",
     "entryPoints": [
       "packages/util/src/index.ts",
-      "packages/analytics/src/index.ts",
-      "packages/core/src/index.ts",
+      "packages/connectivity/src/index.ts",
+      "packages/http-client/src/index.ts",
+      "packages/odata-common/src/index.ts",
+      "packages/odata-v2/src/index.ts",
+      "packages/odata-v4/src/index.ts",
+      "packages/openapi/src/index.ts",
       "packages/generator/src/index.ts",
       "packages/openapi-generator/src/index.ts",
-      "packages/test-util/src/index.ts"
+      "packages/test-util/src/index.ts",
+      "packages/temporal-de-serializers/src/index.ts"
     ],
     "name": "SAP Cloud SDK for JavaScript / TypeScript",
     "readme": "DOCUMENTATION.md",

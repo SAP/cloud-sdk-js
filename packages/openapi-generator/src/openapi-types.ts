@@ -3,6 +3,7 @@ import { ServiceOptions } from './options';
 
 /**
  * Representation of an OpenAPI specification/document.
+ * @internal
  */
 export interface OpenApiDocument {
   /**
@@ -33,6 +34,7 @@ export interface OpenApiDocument {
 
 /**
  * Represents one API of the service.
+ * @internal
  */
 export interface OpenApiApi {
   /**
@@ -48,6 +50,7 @@ export interface OpenApiApi {
 
 /**
  * Representation of an operation.
+ * @internal
  */
 export interface OpenApiOperation
   extends Omit<OpenAPIV3.OperationObject, 'requestBody'> {
@@ -105,17 +108,20 @@ const supportedMethods = {
 
 /**
  * Methods supported by OpenAPI and SAP Cloud SDK.
+ * @internal
  */
 export type Method = typeof supportedMethods[keyof typeof supportedMethods];
 
 /**
  * Get supported methods.
  * @returns Methods supported by OpenAPI and SAP Cloud SDK.
+ * @internal
  */
 export const methods: Method[] = Object.values(supportedMethods);
 
 /**
  * Representation of a parameter for both queries and path parameters.
+ * @internal
  */
 export interface OpenApiParameter
   extends Omit<OpenAPIV3.ParameterObject, 'schema'>,
@@ -128,6 +134,7 @@ export interface OpenApiParameter
 
 /**
  * Representation of a request body.
+ * @internal
  */
 export interface OpenApiRequestBody {
   /**
@@ -148,6 +155,7 @@ export interface OpenApiRequestBody {
 
 /**
  * Represents all possible Types of schemas.
+ * @internal
  */
 export type OpenApiSchema =
   | OpenApiReferenceSchema
@@ -162,6 +170,7 @@ export type OpenApiSchema =
 
 /**
  * Represents a reference to a schema, that has a name.
+ * @internal
  */
 export interface OpenApiNamedSchema {
   /**
@@ -187,6 +196,7 @@ export interface OpenApiNamedSchema {
 
 /**
  * Represents a reference to a schema, that will be saved in a file.
+ * @internal
  */
 export interface OpenApiPersistedSchema extends SchemaNaming {
   /**
@@ -207,6 +217,7 @@ export interface OpenApiPersistedSchema extends SchemaNaming {
 
 /**
  * Represents an object that can be referenced by the given path.
+ * @internal
  */
 export interface WithRefPath {
   /**
@@ -217,6 +228,7 @@ export interface WithRefPath {
 
 /**
  * A schema representing an array.
+ * @internal
  */
 export interface OpenApiArraySchema {
   /**
@@ -232,6 +244,7 @@ export interface OpenApiArraySchema {
 
 /**
  * Any schema that is no other specific schema. This includes primitive types.
+ * @internal
  */
 export interface OpenApiSimpleSchema {
   /**
@@ -242,6 +255,7 @@ export interface OpenApiSimpleSchema {
 
 /**
  * Schema representing an enum type.
+ * @internal
  */
 export interface OpenApiEnumSchema extends OpenApiSimpleSchema {
   /**
@@ -252,6 +266,7 @@ export interface OpenApiEnumSchema extends OpenApiSimpleSchema {
 
 /**
  * Schema representing an object.
+ * @internal
  */
 export interface OpenApiObjectSchema {
   /**
@@ -266,6 +281,7 @@ export interface OpenApiObjectSchema {
 
 /**
  * Represents a type where one of the given schemas can be chosen exclusively.
+ * @internal
  */
 export interface OpenApiOneOfSchema {
   /**
@@ -276,6 +292,7 @@ export interface OpenApiOneOfSchema {
 
 /**
  * Represents a type where all of the given schemas are combined into one.
+ * @internal
  */
 export interface OpenApiAllOfSchema {
   /**
@@ -286,6 +303,7 @@ export interface OpenApiAllOfSchema {
 
 /**
  * Represents a type where one of the given schemas can be chosen inclusively.
+ * @internal
  */
 export interface OpenApiAnyOfSchema {
   /**
@@ -296,6 +314,7 @@ export interface OpenApiAnyOfSchema {
 
 /**
  * Represents a type where any type can be used except the given one.
+ * @internal
  */
 export interface OpenApiNotSchema {
   /**
@@ -306,6 +325,7 @@ export interface OpenApiNotSchema {
 
 /**
  * Represents the schema of a property.
+ * @internal
  */
 export interface OpenApiObjectSchemaProperty extends OpenApiNamedSchema {
   /**
@@ -316,11 +336,13 @@ export interface OpenApiObjectSchemaProperty extends OpenApiNamedSchema {
 
 /**
  * Represents a schema referencing another schema by name.
+ * @internal
  */
 export type OpenApiReferenceSchema = OpenAPIV3.ReferenceObject & SchemaNaming;
 
 /**
  * Represents an object containing the parsed names for a schema.
+ * @internal
  */
 export interface SchemaNaming {
   /**
@@ -333,7 +355,9 @@ export interface SchemaNaming {
    */
   fileName: string;
 }
-
+/**
+ * @internal
+ */
 export interface OpenApiSchemaProperties {
   /**
    * Serves as a hint at the contents of the type.

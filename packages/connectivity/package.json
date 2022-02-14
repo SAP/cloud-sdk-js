@@ -1,0 +1,49 @@
+{
+  "name": "@sap-cloud-sdk/connectivity",
+  "version": "2.0.0",
+  "description": "SAP Cloud SDK for JavaScript connectivity",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "license": "Apache-2.0",
+  "keywords": [
+    "sap-cloud-sdk",
+    "cloud-sdk",
+    "sap-cloud-platform",
+    "connectivity"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "internal.js",
+    "internal.d.ts"
+  ],
+  "repository": "github:SAP/cloud-sdk-js",
+  "scripts": {
+    "compile": "yarn tsc -b",
+    "prepare": "yarn compile",
+    "test": "yarn jest",
+    "coverage": "yarn jest --coverage",
+    "check:dependencies": "depcheck ."
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/util": "^2.0.0",
+    "@sap/xsenv": "^3.0.0",
+    "@sap/xssec": "^3.2.7",
+    "axios": "^0.24.0",
+    "http-proxy-agent": "^5.0.0",
+    "https-proxy-agent": "^5.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "opossum": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/opossum": "^6.2.0",
+    "base64url": "^3.0.1",
+    "nock": "^13.0.11"
+  }
+}

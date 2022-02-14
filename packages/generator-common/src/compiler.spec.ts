@@ -16,8 +16,10 @@ import {
 } from './compiler';
 
 describe('compiler options', () => {
+  const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
   beforeAll(() => {
     mock({
+      [pathRootNodeModules]: mock.load(pathRootNodeModules),
       'config1/tsconfig.json': JSON.stringify({
         compilerOptions: { moduleResolution: 'node' }
       }),
@@ -28,7 +30,7 @@ describe('compiler options', () => {
         compilerOptions: { lib: ['es5'] }
       }),
       'config4/tsconfig.json': JSON.stringify({
-        compilerOptions: { target: 'es2016' }
+        compilerOptions: { target: 'es2019' }
       }),
       'config5/tsconfig.json': JSON.stringify({
         compilerOptions: { module: 'AMD' }
@@ -83,7 +85,7 @@ describe('compiler options', () => {
 
   it('parses the module script target', async () => {
     await expect(readCompilerOptions('config4')).resolves.toEqual({
-      target: ScriptTarget.ES2016
+      target: ScriptTarget.ES2019
     });
   });
 
@@ -118,7 +120,7 @@ describe('compilation', () => {
   function compilerConfig(outFolder): CompilerOptions {
     return {
       outDir: outFolder,
-      target: ScriptTarget.ES5,
+      target: ScriptTarget.ES2019,
       declaration: true,
       declarationMap: true,
       sourceMap: true,
@@ -175,7 +177,7 @@ describe('compilation', () => {
     await expect(
       transpileDirectory('broken-src', compilerConfig('broken-dist'))
     ).rejects.toThrowError(
-      "broken-src/file.ts:3:4 - error TS2588: Cannot assign to 'foo' because it is a constant"
+      "error TS2588: Cannot assign to 'foo' because it is a constant"
     );
   });
 
@@ -186,7 +188,7 @@ describe('compilation', () => {
         lib: ['non-existing-lib']
       })
     ).rejects.toThrowError(
-      /error TS6231: Could not resolve the path .* with the extensions: '\.ts', '\.tsx', '\.d\.ts'\./
+      /error TS6231: Could not resolve the path .* with the extensions: '\.ts', '\.tsx', '\.d\.ts'\.*/
     );
   });
 });

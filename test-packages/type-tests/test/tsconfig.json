@@ -4,7 +4,8 @@
     "esModuleInterop": true,
     "lib": ["es6"],
     "strict": true,
-    "noEmit": true
+    "noEmit": true,
+    "target": "es2019"
   },
-  "references": [{ "path": "../../../packages/core" }]
+  "include": ["../../../../test-resources/test/test-util"]
 }

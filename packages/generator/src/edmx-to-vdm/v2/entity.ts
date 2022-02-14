@@ -17,23 +17,27 @@ import {
 import {
   EdmxAssociation,
   EdmxAssociationSet,
-  EdmxEntityType,
+  EdmxEntityTypeV2,
   End,
   JoinedAssociationMetadata,
   parseAssociation,
   parseAssociationSets,
-  parseEntitySets,
+  parseEntitySetsV2,
   parseEntityTypes
 } from '../../edmx-parser/v2';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { ServiceMetadata } from '../../edmx-parser';
 import { stripNamespace } from '../edmx-to-vdm-util';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function generateEntitiesV2(
   serviceMetadata: ServiceMetadata,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
-  const entitySets = parseEntitySets(serviceMetadata.edmx.root);
+  const entitySets = parseEntitySetsV2(serviceMetadata.edmx.root);
   const entityTypes = parseEntityTypes(serviceMetadata.edmx.root);
   const entitiesMetadata = joinEntityMetadata(
     entitySets,
@@ -65,7 +69,7 @@ export function generateEntitiesV2(
 }
 
 function navigationProperties(
-  entity: JoinedEntityMetadata<EdmxEntitySetBase, EdmxEntityType>,
+  entity: JoinedEntityMetadata<EdmxEntitySetBase, EdmxEntityTypeV2>,
   associations: JoinedAssociationMetadata[],
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter
@@ -101,13 +105,13 @@ function navigationProperties(
       from: entity.entityType.Name,
       to: to.EntitySet,
       toEntityClassName: classNames[to.EntitySet],
-      multiplicity: from.Multiplicity + ' - ' + to.Multiplicity,
-      isMultiLink: to.Multiplicity.endsWith('*'),
       isCollection: to.Multiplicity.endsWith('*')
     };
   });
 }
-
+/**
+ * @internal
+ */
 export function joinAssociationMetadata(
   associationSets: EdmxAssociationSet[],
   associations: EdmxAssociation[]

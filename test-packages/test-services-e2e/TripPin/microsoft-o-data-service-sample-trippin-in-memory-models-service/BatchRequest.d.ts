@@ -1,65 +1,72 @@
 import {
-  CreateRequestBuilderV4,
-  DeleteRequestBuilderV4,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  ODataBatchChangeSetV4,
-  ODataBatchRequestBuilderV4,
-  UpdateRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  ODataBatchRequestBuilder,
+  UpdateRequestBuilder,
+  BatchChangeSet
+} from '@sap-cloud-sdk/odata-v4';
 import { Photos, People, Airlines, Airports } from './index';
 /**
  * Batch builder for operations supported on the Microsoft O Data Service Sample Trippin In Memory Models Service.
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export declare function batch(
+export declare function batch<DeSerializersT extends DeSerializers>(
   ...requests: Array<
-    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilderV4;
-export declare function batch(
+): ODataBatchRequestBuilder<DeSerializersT>;
+export declare function batch<DeSerializersT extends DeSerializers>(
   requests: Array<
-    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilderV4;
+): ODataBatchRequestBuilder<DeSerializersT>;
 /**
  * Change set constructor consists of write operations supported on the Microsoft O Data Service Sample Trippin In Memory Models Service.
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export declare function changeset(
-  ...requests: Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
-export declare function changeset(
-  requests: Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
+export declare function changeset<DeSerializersT extends DeSerializers>(
+  ...requests: Array<
+    WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+  >
+): BatchChangeSet<DeSerializersT>;
+export declare function changeset<DeSerializersT extends DeSerializers>(
+  requests: Array<
+    WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<DeSerializersT>
+  >
+): BatchChangeSet<DeSerializersT>;
 export declare const defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath =
   'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
-export declare type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder =
-
-    | GetAllRequestBuilderV4<Photos>
-    | GetAllRequestBuilderV4<People>
-    | GetAllRequestBuilderV4<Airlines>
-    | GetAllRequestBuilderV4<Airports>
-    | GetByKeyRequestBuilderV4<Photos>
-    | GetByKeyRequestBuilderV4<People>
-    | GetByKeyRequestBuilderV4<Airlines>
-    | GetByKeyRequestBuilderV4<Airports>;
-export declare type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder =
-
-    | CreateRequestBuilderV4<Photos>
-    | UpdateRequestBuilderV4<Photos>
-    | DeleteRequestBuilderV4<Photos>
-    | CreateRequestBuilderV4<People>
-    | UpdateRequestBuilderV4<People>
-    | DeleteRequestBuilderV4<People>
-    | CreateRequestBuilderV4<Airlines>
-    | UpdateRequestBuilderV4<Airlines>
-    | DeleteRequestBuilderV4<Airlines>
-    | CreateRequestBuilderV4<Airports>
-    | UpdateRequestBuilderV4<Airports>
-    | DeleteRequestBuilderV4<Airports>;
+export declare type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
+  DeSerializersT extends DeSerializers
+> =
+  | GetAllRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<Airports<DeSerializersT>, DeSerializersT>;
+export declare type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
+  DeSerializersT extends DeSerializers
+> =
+  | CreateRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<People<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<Airports<DeSerializersT>, DeSerializersT>;
 //# sourceMappingURL=BatchRequest.d.ts.map

@@ -1,12 +1,13 @@
 import {
-  CreateRequestBuilderV2,
-  DeleteRequestBuilderV2,
-  GetAllRequestBuilderV2,
-  GetByKeyRequestBuilderV2,
-  ODataBatchChangeSetV2,
-  ODataBatchRequestBuilderV2,
-  UpdateRequestBuilderV2
-} from '@sap-cloud-sdk/core';
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  ODataBatchRequestBuilder,
+  UpdateRequestBuilder,
+  BatchChangeSet
+} from '@sap-cloud-sdk/odata-v2';
 import {
   TestEntity,
   TestEntityMultiLink,
@@ -28,100 +29,224 @@ import {
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export declare function batch(
+export declare function batch<DeSerializersT extends DeSerializers>(
   ...requests: Array<
-    | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>
+    | ReadTestServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilderV2;
-export declare function batch(
+): ODataBatchRequestBuilder<DeSerializersT>;
+export declare function batch<DeSerializersT extends DeSerializers>(
   requests: Array<
-    | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>
+    | ReadTestServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilderV2;
+): ODataBatchRequestBuilder<DeSerializersT>;
 /**
  * Change set constructor consists of write operations supported on the Test Service.
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export declare function changeset(
-  ...requests: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>;
-export declare function changeset(
-  requests: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSetV2<WriteTestServiceRequestBuilder>;
+export declare function changeset<DeSerializersT extends DeSerializers>(
+  ...requests: Array<WriteTestServiceRequestBuilder<DeSerializersT>>
+): BatchChangeSet<DeSerializersT>;
+export declare function changeset<DeSerializersT extends DeSerializers>(
+  requests: Array<WriteTestServiceRequestBuilder<DeSerializersT>>
+): BatchChangeSet<DeSerializersT>;
 export declare const defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-export declare type ReadTestServiceRequestBuilder =
-  | GetAllRequestBuilderV2<TestEntity>
-  | GetAllRequestBuilderV2<TestEntityMultiLink>
-  | GetAllRequestBuilderV2<TestEntityOtherMultiLink>
-  | GetAllRequestBuilderV2<TestEntityLvl2MultiLink>
-  | GetAllRequestBuilderV2<TestEntitySingleLink>
-  | GetAllRequestBuilderV2<TestEntityLvl2SingleLink>
-  | GetAllRequestBuilderV2<TestEntityWithSharedEntityType1>
-  | GetAllRequestBuilderV2<TestEntityWithSharedEntityType2>
-  | GetAllRequestBuilderV2<TestEntityCircularLinkParent>
-  | GetAllRequestBuilderV2<TestEntityCircularLinkChild>
-  | GetAllRequestBuilderV2<TestEntityEndsWith>
-  | GetAllRequestBuilderV2<TestEntityEndsWithSomethingElse>
-  | GetAllRequestBuilderV2<CaseTest>
-  | GetAllRequestBuilderV2<Casetest_1>
-  | GetByKeyRequestBuilderV2<TestEntity>
-  | GetByKeyRequestBuilderV2<TestEntityMultiLink>
-  | GetByKeyRequestBuilderV2<TestEntityOtherMultiLink>
-  | GetByKeyRequestBuilderV2<TestEntityLvl2MultiLink>
-  | GetByKeyRequestBuilderV2<TestEntitySingleLink>
-  | GetByKeyRequestBuilderV2<TestEntityLvl2SingleLink>
-  | GetByKeyRequestBuilderV2<TestEntityWithSharedEntityType1>
-  | GetByKeyRequestBuilderV2<TestEntityWithSharedEntityType2>
-  | GetByKeyRequestBuilderV2<TestEntityCircularLinkParent>
-  | GetByKeyRequestBuilderV2<TestEntityCircularLinkChild>
-  | GetByKeyRequestBuilderV2<TestEntityEndsWith>
-  | GetByKeyRequestBuilderV2<TestEntityEndsWithSomethingElse>
-  | GetByKeyRequestBuilderV2<CaseTest>
-  | GetByKeyRequestBuilderV2<Casetest_1>;
-export declare type WriteTestServiceRequestBuilder =
-  | CreateRequestBuilderV2<TestEntity>
-  | UpdateRequestBuilderV2<TestEntity>
-  | DeleteRequestBuilderV2<TestEntity>
-  | CreateRequestBuilderV2<TestEntityMultiLink>
-  | UpdateRequestBuilderV2<TestEntityMultiLink>
-  | DeleteRequestBuilderV2<TestEntityMultiLink>
-  | CreateRequestBuilderV2<TestEntityOtherMultiLink>
-  | UpdateRequestBuilderV2<TestEntityOtherMultiLink>
-  | DeleteRequestBuilderV2<TestEntityOtherMultiLink>
-  | CreateRequestBuilderV2<TestEntityLvl2MultiLink>
-  | UpdateRequestBuilderV2<TestEntityLvl2MultiLink>
-  | DeleteRequestBuilderV2<TestEntityLvl2MultiLink>
-  | CreateRequestBuilderV2<TestEntitySingleLink>
-  | UpdateRequestBuilderV2<TestEntitySingleLink>
-  | DeleteRequestBuilderV2<TestEntitySingleLink>
-  | CreateRequestBuilderV2<TestEntityLvl2SingleLink>
-  | UpdateRequestBuilderV2<TestEntityLvl2SingleLink>
-  | DeleteRequestBuilderV2<TestEntityLvl2SingleLink>
-  | CreateRequestBuilderV2<TestEntityWithSharedEntityType1>
-  | UpdateRequestBuilderV2<TestEntityWithSharedEntityType1>
-  | DeleteRequestBuilderV2<TestEntityWithSharedEntityType1>
-  | CreateRequestBuilderV2<TestEntityWithSharedEntityType2>
-  | UpdateRequestBuilderV2<TestEntityWithSharedEntityType2>
-  | DeleteRequestBuilderV2<TestEntityWithSharedEntityType2>
-  | CreateRequestBuilderV2<TestEntityCircularLinkParent>
-  | UpdateRequestBuilderV2<TestEntityCircularLinkParent>
-  | DeleteRequestBuilderV2<TestEntityCircularLinkParent>
-  | CreateRequestBuilderV2<TestEntityCircularLinkChild>
-  | UpdateRequestBuilderV2<TestEntityCircularLinkChild>
-  | DeleteRequestBuilderV2<TestEntityCircularLinkChild>
-  | CreateRequestBuilderV2<TestEntityEndsWith>
-  | UpdateRequestBuilderV2<TestEntityEndsWith>
-  | DeleteRequestBuilderV2<TestEntityEndsWith>
-  | CreateRequestBuilderV2<TestEntityEndsWithSomethingElse>
-  | UpdateRequestBuilderV2<TestEntityEndsWithSomethingElse>
-  | DeleteRequestBuilderV2<TestEntityEndsWithSomethingElse>
-  | CreateRequestBuilderV2<CaseTest>
-  | UpdateRequestBuilderV2<CaseTest>
-  | DeleteRequestBuilderV2<CaseTest>
-  | CreateRequestBuilderV2<Casetest_1>
-  | UpdateRequestBuilderV2<Casetest_1>
-  | DeleteRequestBuilderV2<Casetest_1>;
+export declare type ReadTestServiceRequestBuilder<
+  DeSerializersT extends DeSerializers
+> =
+  | GetAllRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<TestEntityMultiLink<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<
+      TestEntityOtherMultiLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetAllRequestBuilder<
+      TestEntityLvl2MultiLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetAllRequestBuilder<TestEntitySingleLink<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<
+      TestEntityLvl2SingleLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetAllRequestBuilder<
+      TestEntityWithSharedEntityType1<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetAllRequestBuilder<
+      TestEntityWithSharedEntityType2<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetAllRequestBuilder<
+      TestEntityCircularLinkParent<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetAllRequestBuilder<
+      TestEntityCircularLinkChild<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetAllRequestBuilder<TestEntityEndsWith<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<
+      TestEntityEndsWithSomethingElse<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetAllRequestBuilder<CaseTest<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntityMultiLink<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<
+      TestEntityOtherMultiLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetByKeyRequestBuilder<
+      TestEntityLvl2MultiLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetByKeyRequestBuilder<TestEntitySingleLink<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<
+      TestEntityLvl2SingleLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetByKeyRequestBuilder<
+      TestEntityWithSharedEntityType1<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetByKeyRequestBuilder<
+      TestEntityWithSharedEntityType2<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetByKeyRequestBuilder<
+      TestEntityCircularLinkParent<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetByKeyRequestBuilder<
+      TestEntityCircularLinkChild<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetByKeyRequestBuilder<TestEntityEndsWith<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<
+      TestEntityEndsWithSomethingElse<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetByKeyRequestBuilder<CaseTest<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>;
+export declare type WriteTestServiceRequestBuilder<
+  DeSerializersT extends DeSerializers
+> =
+  | CreateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<TestEntityMultiLink<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntityMultiLink<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntityMultiLink<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<
+      TestEntityOtherMultiLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | UpdateRequestBuilder<
+      TestEntityOtherMultiLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | DeleteRequestBuilder<
+      TestEntityOtherMultiLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | CreateRequestBuilder<
+      TestEntityLvl2MultiLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | UpdateRequestBuilder<
+      TestEntityLvl2MultiLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | DeleteRequestBuilder<
+      TestEntityLvl2MultiLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | CreateRequestBuilder<TestEntitySingleLink<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntitySingleLink<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntitySingleLink<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<
+      TestEntityLvl2SingleLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | UpdateRequestBuilder<
+      TestEntityLvl2SingleLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | DeleteRequestBuilder<
+      TestEntityLvl2SingleLink<DeSerializersT>,
+      DeSerializersT
+    >
+  | CreateRequestBuilder<
+      TestEntityWithSharedEntityType1<DeSerializersT>,
+      DeSerializersT
+    >
+  | UpdateRequestBuilder<
+      TestEntityWithSharedEntityType1<DeSerializersT>,
+      DeSerializersT
+    >
+  | DeleteRequestBuilder<
+      TestEntityWithSharedEntityType1<DeSerializersT>,
+      DeSerializersT
+    >
+  | CreateRequestBuilder<
+      TestEntityWithSharedEntityType2<DeSerializersT>,
+      DeSerializersT
+    >
+  | UpdateRequestBuilder<
+      TestEntityWithSharedEntityType2<DeSerializersT>,
+      DeSerializersT
+    >
+  | DeleteRequestBuilder<
+      TestEntityWithSharedEntityType2<DeSerializersT>,
+      DeSerializersT
+    >
+  | CreateRequestBuilder<
+      TestEntityCircularLinkParent<DeSerializersT>,
+      DeSerializersT
+    >
+  | UpdateRequestBuilder<
+      TestEntityCircularLinkParent<DeSerializersT>,
+      DeSerializersT
+    >
+  | DeleteRequestBuilder<
+      TestEntityCircularLinkParent<DeSerializersT>,
+      DeSerializersT
+    >
+  | CreateRequestBuilder<
+      TestEntityCircularLinkChild<DeSerializersT>,
+      DeSerializersT
+    >
+  | UpdateRequestBuilder<
+      TestEntityCircularLinkChild<DeSerializersT>,
+      DeSerializersT
+    >
+  | DeleteRequestBuilder<
+      TestEntityCircularLinkChild<DeSerializersT>,
+      DeSerializersT
+    >
+  | CreateRequestBuilder<TestEntityEndsWith<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntityEndsWith<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntityEndsWith<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<
+      TestEntityEndsWithSomethingElse<DeSerializersT>,
+      DeSerializersT
+    >
+  | UpdateRequestBuilder<
+      TestEntityEndsWithSomethingElse<DeSerializersT>,
+      DeSerializersT
+    >
+  | DeleteRequestBuilder<
+      TestEntityEndsWithSomethingElse<DeSerializersT>,
+      DeSerializersT
+    >
+  | CreateRequestBuilder<CaseTest<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<CaseTest<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<CaseTest<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>;
 //# sourceMappingURL=BatchRequest.d.ts.map

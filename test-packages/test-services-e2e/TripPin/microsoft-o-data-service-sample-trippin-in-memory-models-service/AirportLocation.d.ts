@@ -1,59 +1,69 @@
-import { City, CityField } from './City';
+import { CityField } from './City';
 import {
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
+  DeserializedType,
   EdmTypeField,
-  EntityV4,
+  Entity,
   FieldOptions,
-  FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-v4';
 /**
  * AirportLocation
  */
-export interface AirportLocation {
+export interface AirportLocation<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Loc.
    */
-  loc: any;
+  loc: DeserializedType<DeSerializersT, 'Edm.Any'>;
   /**
    * Address.
    */
-  address: string;
+  address: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * City.
    */
-  city: City;
+  city: DeserializedType<
+    DeSerializersT,
+    'Microsoft.OData.SampleService.Models.TripPin.City'
+  >;
 }
-/**
- * @deprecated Since v1.6.0. Use [[AirportLocation.build]] instead.
- */
-export declare function createAirportLocation(json: any): AirportLocation;
 /**
  * AirportLocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class AirportLocationField<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends ComplexTypeField<EntityT, AirportLocation, NullableT, SelectableT> {
+> extends ComplexTypeField<
+  EntityT,
+  DeSerializersT,
+  AirportLocation,
+  NullableT,
+  SelectableT
+> {
   private _fieldBuilder;
   /**
    * Representation of the [[AirportLocation.loc]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  loc: EdmTypeField<EntityT, 'Edm.Any', false, false>;
+  loc: EdmTypeField<EntityT, DeSerializersT, 'Edm.Any', false, false>;
   /**
    * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, 'Edm.String', false, false>;
+  address: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false>;
   /**
    * Representation of the [[AirportLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT, false, false>;
+  city: CityField<EntityT, DeSerializersT, false, false>;
   /**
    * Creates an instance of AirportLocationField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -62,6 +72,7 @@ export declare class AirportLocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 }
@@ -70,9 +81,5 @@ export declare namespace AirportLocation {
    * Metadata information on all properties of the `AirportLocation` complex type.
    */
   const _propertyMetadata: PropertyMetadata<AirportLocation>[];
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
-   */
-  function build(json: { [keys: string]: FieldType | City }): AirportLocation;
 }
 //# sourceMappingURL=AirportLocation.d.ts.map

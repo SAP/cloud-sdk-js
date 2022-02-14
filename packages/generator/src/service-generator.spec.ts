@@ -255,7 +255,6 @@ describe('service-generator', () => {
         expect(complexTypes.length).toEqual(3);
         expect(complexType.typeName).toEqual('TestComplexType');
         expect(complexType.originalName).toEqual('A_TestComplexType');
-        expect(complexType.factoryName).toEqual('createTestComplexType_1');
         expect(complexType.fieldType).toEqual('TestComplexTypeField');
         expect(complexType.properties.length).toEqual(17);
 
@@ -320,22 +319,19 @@ describe('service-generator', () => {
 
         const complexTypeName = 'TestComplexType';
         const functionImportName = 'createTestComplexType';
-        const factoryName = 'createTestComplexType_1';
         const expectedReturnType = {
           returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
           returnType: 'TestComplexType',
           builderFunction:
-            '(data) => deserializeComplexTypeV2(data, TestComplexType)',
+            '(data) => entityDeserializer(\n          deSerializers\n        ).deserializeComplexType(data, TestComplexType)',
           isCollection: false,
-          isNullable: false,
-          isMulti: false
+          isNullable: false
         };
 
         expect(functionImport.name).toEqual(functionImportName);
         expect(functionImport.returnType).toEqual(expectedReturnType);
 
         expect(complexType.typeName).toEqual(complexTypeName);
-        expect(complexType.factoryName).toEqual(factoryName);
       });
 
       it('does not clash with reserved JavaScript keywords', () => {
@@ -367,7 +363,7 @@ describe('service-generator', () => {
 
         expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
         expect(functionImport.returnType.builderFunction).toEqual(
-          "(val) => edmToTsV2(val.TestFunctionImportEdmReturnType, 'Edm.Boolean')"
+          "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.Boolean', deSerializers)"
         );
 
         const functionImportUnsupportedEdmTypes = service.functionImports.find(
@@ -377,7 +373,7 @@ describe('service-generator', () => {
         expect(
           functionImportUnsupportedEdmTypes.returnType.builderFunction
         ).toEqual(
-          "(val) => edmToTsV2(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any')"
+          "(val) => edmToTs(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any', deSerializers)"
         );
         expect(functionImportUnsupportedEdmTypes.parameters[0].edmType).toEqual(
           'Edm.Any'
@@ -487,7 +483,7 @@ describe('service-generator', () => {
 
         expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
         expect(functionImport.returnType.builderFunction).toEqual(
-          "(val) => edmToTsV4(val.value, 'Edm.Boolean')"
+          "(val) => edmToTs(val.value, 'Edm.Boolean', deSerializers)"
         );
       });
 
@@ -499,7 +495,7 @@ describe('service-generator', () => {
           })
         );
 
-        const actions = services[0].actionsImports;
+        const actions = services[0].actionImports;
 
         expect(actions?.length).toEqual(7);
         const actionWithUnsupportedEdmType = actions?.find(
@@ -508,7 +504,7 @@ describe('service-generator', () => {
         );
         expect(
           actionWithUnsupportedEdmType?.returnType.builderFunction
-        ).toEqual("(val) => edmToTsV4(val.value, 'Edm.Any')");
+        ).toEqual("(val) => edmToTs(val.value, 'Edm.Any', deSerializers)");
         expect(actionWithUnsupportedEdmType?.parameters[0].edmType).toEqual(
           'Edm.Any'
         );

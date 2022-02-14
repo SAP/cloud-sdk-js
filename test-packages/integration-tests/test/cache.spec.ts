@@ -1,26 +1,65 @@
-import {
-  alwaysProvider,
-  clientCredentialsTokenCache,
-  destinationServiceCache,
-  destinationCache,
-  getDestination,
-  IsolationStrategy
-} from '@sap-cloud-sdk/core';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import {
-  mockInstanceDestinationsCall,
-  mockSubaccountDestinationsCall
-} from '../../../packages/core/test/test-util/destination-service-mocks';
+  Destination,
+  getDestination,
+  IsolationStrategy
+} from '@sap-cloud-sdk/connectivity';
+import {
+  destinationCache,
+  destinationServiceCache,
+  clientCredentialsTokenCache
+} from '@sap-cloud-sdk/connectivity/internal';
+import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf';
+import {
+  mockClientCredentialsGrantCall,
+  mockUserTokenGrantCall
+} from '../../../test-resources/test/test-util/xsuaa-service-mocks';
+import {
+  privateKey,
+  publicKey
+} from '../../../test-resources/test/test-util/keys';
 import {
   destinationBindingClientSecretMock,
   mockServiceBindings,
-  providerXsuaaUrl
-} from '../../../packages/core/test/test-util/environment-mocks';
-import { privateKey } from '../../../packages/core/test/test-util/keys';
-import { mockClientCredentialsGrantCall } from '../../../packages/core/test/test-util/xsuaa-service-mocks';
+  providerXsuaaUrl,
+  xsuaaBindingMock
+} from '../../../test-resources/test/test-util/environment-mocks';
+import {
+  mockInstanceDestinationsCall,
+  mockSingleDestinationCall,
+  mockSubaccountDestinationsCall
+} from '../../../test-resources/test/test-util/destination-service-mocks';
 
 describe('CacheDestination & CacheClientCredentialToken', () => {
+  const jku = `http://${xsuaaBindingMock.credentials.uaadomain}`;
+  const kid = 'myKidTest';
+  const providerUserToken = jwt.sign(
+    {
+      zid: 'provider_token',
+      user_id: 'user_id',
+      aud: 'xsapp-myapp!123',
+      iss: providerXsuaaUrl
+    },
+    privateKey,
+    {
+      // algorithm: 'RS256',
+      header: { alg: 'RS256', jku, kid }
+    }
+  );
+
+  const providerServiceToken = jwt.sign(
+    {
+      zid: 'provider_token',
+      aud: 'xsapp-myapp!123',
+      iss: providerXsuaaUrl
+    },
+    privateKey,
+    {
+      header: { alg: 'RS256', jku, kid }
+    }
+  );
+
   beforeEach(() => {
     mockServiceBindings();
     const destination = {
@@ -33,25 +72,38 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       URL: 'https://example.com',
       authTokens: []
     };
-    const providerToken = jwt.sign(
-      {
-        zid: 'provider_token',
-        user_id: 'user_id'
-      },
-      privateKey,
-      {
-        algorithm: 'RS512'
-      }
-    );
+    const destinationAuthFlow = {
+      Name: 'FINAL-DESTINATION-AUTH-FLOW',
+      Authentication: 'OAuth2JWTBearer',
+      Password: 'password',
+      User: 'username',
+      ProxyType: 'Internet',
+      sapclient: null,
+      URL: 'https://example.com',
+      authTokens: [{}]
+    };
 
+    mockVerificationKeyRetrieval(jku, kid);
     mockClientCredentialsGrantCall(
       providerXsuaaUrl,
-      { access_token: providerToken },
+      { access_token: providerServiceToken },
       200,
       destinationBindingClientSecretMock.credentials
     );
-    mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
-    mockSubaccountDestinationsCall(nock, [], 200, providerToken);
+    mockInstanceDestinationsCall(
+      nock,
+      [destination, destinationAuthFlow],
+      200,
+      providerServiceToken
+    );
+    mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
+    mockSingleDestinationCall(
+      nock,
+      destinationAuthFlow,
+      200,
+      destinationAuthFlow.Name,
+      wrapJwtInHeader(providerUserToken).headers
+    );
   });
 
   afterEach(() => {
@@ -62,30 +114,97 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
     delete process.env['VCAP_SERVICES'];
   });
 
-  it('getting the same destination twice should produce a cache hit', async () => {
-    await getDestination('FINAL-DESTINATION', {
-      useCache: true,
-      selectionStrategy: alwaysProvider,
-      isolationStrategy: IsolationStrategy.Tenant
-    });
-    await getDestination('FINAL-DESTINATION', {
-      useCache: true,
-      selectionStrategy: alwaysProvider,
-      isolationStrategy: IsolationStrategy.Tenant
-    });
-  });
+  it('caches the Destinations service call which fixed isolation Tenant (only simple auth flows)', async () => {
+    await populateDestinationsServiceCache();
 
-  it('changing the isolation should produce a cache miss', async () => {
-    // The destination-service has an own cahce where only isolation strategy Tenant and Tenant_User are used.
-    // In order to also miss the cache there the two allowed strategies must be used.
-    await getDestination('FINAL-DESTINATION', {
-      useCache: true,
-      isolationStrategy: IsolationStrategy.Tenant
-    });
-    const destinationRequest = getDestination('FINAL-DESTINATION', {
+    const destinationRequestTenantUser = await getDestination({
+      destinationName: 'FINAL-DESTINATION',
       useCache: true,
       isolationStrategy: IsolationStrategy.Tenant_User
     });
-    await expect(destinationRequest).rejects.toThrowErrorMatchingSnapshot();
+    expect(destinationRequestTenantUser).toBeDefined();
+
+    const destinationRequestTenant = await getDestination({
+      destinationName: 'FINAL-DESTINATION',
+      useCache: true,
+      isolationStrategy: IsolationStrategy.Tenant
+    });
+    expect(destinationRequestTenant).toBeDefined();
   });
+
+  it('caches the destination retrieval for relevant auth flow', async () => {
+    const directCall = await populateDestinationCache();
+
+    const cache = await getDestination({
+      destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
+      useCache: true,
+      jwt: providerUserToken,
+      isolationStrategy: IsolationStrategy.Tenant_User
+    });
+    expect(cache).toBeDefined();
+    expect(cache).toEqual(directCall);
+
+    await expect(
+      getDestination({
+        destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
+        useCache: true,
+        jwt: providerUserToken,
+        isolationStrategy: IsolationStrategy.Tenant_User
+      })
+    ).rejects.toThrowError(/Nock: No match for request/);
+  }, 600000);
+
+  // Fill the cache of the destinations-service endpoint, which is enough for simple auth flow destinations
+  async function populateDestinationsServiceCache(): Promise<void> {
+    await getDestination({
+      destinationName: 'FINAL-DESTINATION',
+      useCache: true,
+      isolationStrategy: IsolationStrategy.Tenant
+    });
+  }
+
+  // Do the full logic in destination-from-serive.ts included auth flow leading to a filled destination cache
+  async function populateDestinationCache(): Promise<Destination | null> {
+    mockUserTokenGrantCall(
+      providerXsuaaUrl,
+      2,
+      providerUserToken,
+      providerUserToken,
+      xsuaaBindingMock.credentials
+    );
+
+    mockUserTokenGrantCall(
+      providerXsuaaUrl,
+      1,
+      providerUserToken,
+      providerUserToken,
+      // xsuaaBindingMock.credentials)
+      destinationBindingClientSecretMock.credentials
+    );
+
+    return getDestination({
+      destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
+      useCache: true,
+      jwt: providerUserToken,
+      isolationStrategy: IsolationStrategy.Tenant_User
+    });
+  }
 });
+
+function mockVerificationKeyRetrieval(jku: string, kid: string) {
+  const response = {
+    keys: [
+      {
+        kty: 'RSA',
+        e: 'AQAB',
+        use: 'sig',
+        kid,
+        alg: 'RS256',
+        value: publicKey,
+        n: 'AMf4zeb9Zqf01Z_Z00KGFSFHwrFAx2t1Ka-bQ2Qu5s5U6zdj58K7s8ku8NSXfkrasFuP75_O7mtmJWc1PDm9I0eJWzjwimhyItJMjbSV0L0Oy2TxvHqUC28dCCD_1i1VVbQfGy-Tlrh5mt6VJ4m25gE7WzoeS5LENsyzJ4BI1BediUMs06Y6EJGoadATXv3a5QKjtud5HomOtxS-m3pSoyRpkqnZ6LUl8Qdspvh0NEoWjb0xSxL4tvjm5MoxloBaUGqAnBqtCl9MtJj8zr3RbDU_qwRXZB4iviZet_Em4ptc_XyLRWx_YYlcGN-0fay7R9WCotz7gEzI3_wye5lJbg0'
+      }
+    ]
+  };
+
+  nock(jku).get('/').times(2).reply(200, response);
+}

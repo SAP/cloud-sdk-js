@@ -1,13 +1,13 @@
 import { resolve } from 'path';
-import { readEdmxFile } from '../../../src/edmx-parser/edmx-file-reader';
-import { parseComplexTypesBase } from '../../../src/edmx-parser/common/edmx-parser';
+import { readEdmxFile } from '../edmx-file-reader';
+import { parseComplexTypesBase } from '../common';
 import {
   parseAssociation,
   parseAssociationSets,
-  parseEntitySets as parseEntitySetsV2,
+  parseEntitySetsV2,
   parseEntityTypes as parseEntityTypesV2,
-  parseFunctionImports as parseFunctionImportsV2
-} from '../../../src/edmx-parser/v2';
+  parseFunctionImportsV2
+} from '../v2';
 import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 
 describe('edmx-edmx-parser', () => {

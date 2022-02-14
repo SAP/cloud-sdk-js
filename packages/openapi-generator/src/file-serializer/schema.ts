@@ -4,7 +4,7 @@ import {
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty
 } from '../openapi-types';
-import { getType } from '../parser/type-mapping';
+import { getType } from '../parser';
 import {
   isReferenceObject,
   isArraySchema,
@@ -21,6 +21,7 @@ import {
  * Serialize a schema.
  * @param schema - Parsed schema to be serialized.
  * @returns The serialized schema
+ * @internal
  */
 export function serializeSchema(schema: OpenApiSchema): string {
   if (isReferenceObject(schema)) {
@@ -107,7 +108,11 @@ function serializePropertyWithDocumentation(
   }
   return serialized;
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function schemaPropertyDocumentation(
   schema: OpenApiObjectSchemaProperty
 ): string {

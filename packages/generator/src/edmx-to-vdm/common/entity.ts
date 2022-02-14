@@ -17,10 +17,7 @@ import {
   VdmEnumType
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
-  applyPrefixOnJsConfictParam,
-  applyPrefixOnJsConflictParam
-} from '../../name-formatting-strategies';
+import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
 import { entityDescription, propertyDescription } from '../description-util';
 import {
   EdmxEntitySetBase,
@@ -44,11 +41,15 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'entity'
 });
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function transformEntityBase(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   classNames: Record<string, any>,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes: VdmComplexType[],
   enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
 ): Omit<VdmEntity, 'navigationProperties'> {
@@ -84,7 +85,7 @@ function keys(props: VdmProperty[], edmxKeys: EdmxNamed[]): VdmProperty[] {
 
 function properties(
   entity: JoinedEntityMetadata<EdmxEntitySetBase, any>,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
   enumTypes: VdmEnumType[]
 ): VdmProperty[] {
@@ -116,7 +117,7 @@ function properties(
         entity.entitySet.Name,
         p.Name
       ),
-      propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
+      propertyNameAsParam: applyPrefixOnJsConflictParam(instancePropertyName),
       edmType: typeMapping.edmType,
       jsType: typeMapping.jsType,
       fieldType: typeMapping.fieldType,
@@ -129,7 +130,9 @@ function properties(
     };
   });
 }
-
+/**
+ * @internal
+ */
 export function joinEntityMetadata<
   EntitySetT extends EdmxEntitySetBase,
   EntityTypeT extends EdmxEntityTypeBase<any>
@@ -139,15 +142,9 @@ export function joinEntityMetadata<
   swagger?: SwaggerMetadata
 ): JoinedEntityMetadata<EntitySetT, EntityTypeT>[] {
   return entitySets.map(entitySet => {
-    let entityType = entityTypes.find(
+    const entityType = entityTypes.find(
       t => `${t.Namespace}.${t.Name}` === entitySet.EntityType
     );
-    // TODO 1584 remove this block after testing all the SAP S/4HANA EDMX files
-    if (!entityType) {
-      entityType = entityTypes.find(
-        t => t.Name === last(entitySet.EntityType.split('.'))
-      );
-    }
 
     if (!entityType) {
       throw Error(
@@ -172,7 +169,9 @@ export function joinEntityMetadata<
     return joined;
   });
 }
-
+/**
+ * @internal
+ */
 export function navigationPropertyBase(
   navPropName: string,
   entitySetName: string,
@@ -199,7 +198,9 @@ export function navigationPropertyBase(
     propertyNameAsParam: applyPrefixOnJsConflictParam(instancePropertyName)
   };
 }
-
+/**
+ * @internal
+ */
 export function createEntityClassNames(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>[],
   formatter: ServiceNameFormatter
@@ -215,7 +216,7 @@ export function createEntityClassNames(
 
 function getTypeMappingEntityProperties(
   typeName: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[],
+  complexTypes: VdmComplexType[],
   enumTypes: VdmEnumType[],
   isComplex: boolean,
   isEnum: boolean
@@ -250,7 +251,7 @@ function getTypeMappingEntityProperties(
 
 function complexTypeFieldForName(
   name: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+  complexTypes: VdmComplexType[]
 ): string {
   const complexType = findComplexType(name, complexTypes);
   if (complexType) {
@@ -263,22 +264,28 @@ function complexTypeFieldForName(
 }
 
 const getPostfix = (type: string) => last(type.split('.'));
-
+/**
+ * @internal
+ */
 export const findComplexType = (
   name: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
-): Omit<VdmComplexType, 'factoryName'> | undefined =>
+  complexTypes: VdmComplexType[]
+): VdmComplexType | undefined =>
   complexTypes.find(c => c.originalName === getPostfix(name));
-
+/**
+ * @internal
+ */
 export const findEnumType = (
   name: string,
   enumTypes: VdmEnumType[]
 ): VdmEnumType | undefined =>
   enumTypes.find(e => e.originalName === getPostfix(name));
-
+/**
+ * @internal
+ */
 export function complexTypeForName(
   name: string,
-  complexTypes: Omit<VdmComplexType, 'factoryName'>[]
+  complexTypes: VdmComplexType[]
 ): string {
   const complexType = findComplexType(name, complexTypes);
   if (complexType) {
@@ -289,7 +296,9 @@ export function complexTypeForName(
   );
   return 'any';
 }
-
+/**
+ * @internal
+ */
 export function enumTypeForName(
   name: string,
   enumTypes: VdmEnumType[]

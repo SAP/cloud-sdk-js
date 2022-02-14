@@ -1,37 +1,39 @@
 import { ImportDeclarationStructure } from 'ts-morph';
-import { caps, ODataVersion } from '@sap-cloud-sdk/util';
+import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
-  coreImportDeclaration,
-  corePropertyFieldTypeImportNames,
-  corePropertyTypeImportNames,
-  enumTypeImportDeclarations,
-  externalImportDeclarations
+  odataImportDeclaration,
+  enumTypeImportDeclarations
 } from '../imports';
 import { VdmComplexType } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function importDeclarations(
   complexType: VdmComplexType,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
-  const versionInCaps = caps(oDataVersion);
   return [
-    ...externalImportDeclarations(complexType.properties),
     ...complexTypeImportDeclarations(complexType.properties),
     ...enumTypeImportDeclarations(complexType.properties),
-    coreImportDeclaration(
+    odataImportDeclaration(
       [
-        ...corePropertyTypeImportNames(complexType.properties),
-        ...corePropertyFieldTypeImportNames(complexType.properties),
+        'DefaultDeSerializers',
+        'DeSerializers',
+        'Entity',
         'ComplexTypeField',
         'ConstructorOrField',
-        `deserializeComplexType${versionInCaps}`,
-        `Entity${versionInCaps}`,
+        'DeserializedType',
+        'EdmTypeField',
         'FieldBuilder',
-        'FieldType',
         'FieldOptions',
-        'PropertyMetadata'
-      ].sort()
+        'OrderableEdmTypeField',
+        'PropertyMetadata',
+        ...(oDataVersion === 'v4' ? ['CollectionField', 'EnumField'] : [])
+      ].sort(),
+      oDataVersion
     )
   ];
 }

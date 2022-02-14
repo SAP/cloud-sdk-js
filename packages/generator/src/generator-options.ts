@@ -14,6 +14,7 @@ export interface GeneratorOptions {
   generateNpmrc: boolean;
   generatePackageJson: boolean;
   versionInPackageJson?: string;
+  licenseInPackageJson?: string;
   generateJs: boolean;
   generateSdkMetadata?: boolean;
   processesJsGeneration?: number;
@@ -115,6 +116,12 @@ export const generatorOptionsCli: KeysToOptions = {
     describe:
       'By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version.',
     type: 'string'
+  },
+  licenseInPackageJson: {
+    describe:
+        'License to be used on the generated package.json. Only considered is \'generatePackageJson\' is enabled.',
+    type: 'string',
+    requiresArg: false
   },
   generateJs: {
     describe:

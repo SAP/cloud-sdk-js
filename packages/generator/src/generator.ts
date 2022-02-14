@@ -256,11 +256,8 @@ export async function generateSourcesForService(
       serviceDir,
       'package.json',
       await packageJson(
-        service.npmPackageName,
-        await getVersionForClient(options.versionInPackageJson),
-        getServiceDescription(service, options),
-        options.sdkAfterVersionScript,
-        service.oDataVersion
+        service,
+          options
       ),
       options.forceOverwrite
     );

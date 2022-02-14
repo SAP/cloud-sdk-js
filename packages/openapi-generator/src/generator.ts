@@ -340,7 +340,7 @@ async function generateMetadata(
 async function generatePackageJson(
   serviceDir: string,
   { packageName, directoryName }: ServiceOptions,
-  { packageVersion, overwrite }: ParsedGeneratorOptions
+  { packageVersion, overwrite,licenseInPackageJson }: ParsedGeneratorOptions
 ) {
   logger.verbose(`Generating package.json in ${serviceDir}.`);
 
@@ -351,7 +351,8 @@ async function generatePackageJson(
       packageName,
       genericDescription(directoryName),
       await getSdkVersion(),
-      packageVersion
+      packageVersion,
+      licenseInPackageJson
     ),
     overwrite,
     false

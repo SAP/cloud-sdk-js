@@ -1,30 +1,32 @@
 import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
-import { getSdkVersion } from '@sap-cloud-sdk/generator-common/internal';
+import {getSdkVersion, getVersionForClient} from '@sap-cloud-sdk/generator-common/internal';
+import {VdmServiceMetadata} from "../vdm-types";
+import {Project} from "ts-morph";
+import {GeneratorOptions} from "../generator-options";
+import {getServiceDescription} from "../sdk-metadata";
 
 // eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */
 export async function packageJson(
-  npmPackageName: string,
-  version: string,
-  description: string,
-  sdkAfterVersionScript: boolean,
-  oDataVersion: ODataVersion
+    service: VdmServiceMetadata,
+    options: GeneratorOptions
 ): Promise<string> {
   const oDataModule =
-    oDataVersion === 'v2'
+    service.oDataVersion === 'v2'
       ? '@sap-cloud-sdk/odata-v2'
       : '@sap-cloud-sdk/odata-v4';
   return (
     JSON.stringify(
       {
-        name: npmPackageName,
-        version,
-        description,
+        name: service.npmPackageName,
+        version:  await getVersionForClient(options.versionInPackageJson),
+        description: getServiceDescription(service, options),
         homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
         main: './index.js',
         types: './index.d.ts',
+        ...(options.licenseInPackageJson ? { license: options.licenseInPackageJson }:{}),
         publishConfig: {
           access: 'public'
         },
@@ -41,7 +43,7 @@ export async function packageJson(
         },
         scripts: {
           compile: 'npx tsc',
-          ...(sdkAfterVersionScript
+          ...(options.sdkAfterVersionScript
             ? { version: 'node ../../../after-version-update.js' }
             : {})
         },

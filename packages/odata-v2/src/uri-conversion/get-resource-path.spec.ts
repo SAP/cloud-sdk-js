@@ -66,4 +66,15 @@ describe('get resource path', () => {
       'There are too many key properties. Ignoring the following keys: StringProperty'
     );
   });
+
+  it('URI encodes keys with special characters', () => {
+    const keys = {
+      KeyPropertyGuid: uuid(),
+      KeyPropertyString: 'DEV?TEST06'
+    };
+    const expected =
+      /A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='DEV%3FTEST06'\)/;
+
+    expect(getResourcePathForKeys(keys, testEntityApi)).toMatch(expected);
+  });
 });

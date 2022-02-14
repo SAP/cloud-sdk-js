@@ -184,8 +184,12 @@ function validateDestinationConfig(
     isHttpDestination(destinationConfig) &&
     typeof destinationConfig.URL === 'undefined'
   ) {
+    const detailedMessage = destinationConfig.Name
+      ? `, but destination with name "${destinationConfig.Name}" has no property 'URL'`
+      : '';
+
     throw Error(
-      "Property 'URL' of destination configuration must not be undefined."
+      `Property 'URL' of destination configuration must not be undefined${detailedMessage}.`
     );
   }
 }

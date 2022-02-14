@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@sap-cloud-sdk/util": "^1.54.0",
-    "axios": "^0.25.0",
+    "axios": "^0.26.0",
     "fast-levenshtein": "~3.0.0",
     "fs-extra": "^10.0.0",
     "glob": "^7.1.6",

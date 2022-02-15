@@ -9,9 +9,7 @@ function printUpgradeAnnouncement() {
     console.log('============================================');
     console.log('🚀 SAP Cloud SDK Announcement');
     console.log('');
-    console.log(
-      'The SAP Cloud SDK has released version 2.'
-    );
+    console.log('The SAP Cloud SDK has released version 2.');
     console.log(
       'Read more in our upgrade guidance: https://sap.github.io/cloud-sdk/docs/js/guides/upgrade-to-version-2'
     );

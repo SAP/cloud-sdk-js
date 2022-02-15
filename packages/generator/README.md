@@ -6,8 +6,9 @@
 <!-- sap-cloud-sdk-2.0-announcement -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
 # Version 2 Release
-The SAP Cloud SDK has release version 2.
-Check the [upgrade guidance](https://sap.github.io/cloud-sdk/docs/js/guides/upgrade-to-version-2) for more details.
+
+The SAP Cloud SDK has released version 2.
+Check the [upgrade guide](https://sap.github.io/cloud-sdk/docs/js/guides/upgrade-to-version-2) for more details.
 Make sure you understand our [release policy](https://sap.github.io/cloud-sdk/docs/js/release-policy).
 <!-- sap-cloud-sdk-2.0-announcement-stop -->
 

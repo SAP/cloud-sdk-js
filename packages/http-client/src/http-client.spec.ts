@@ -759,6 +759,46 @@ sap-client:001`);
       expect(actual).toStrictEqual(expected);
     });
 
+    it('should encode query parameters excluding the custom ones.',async ()=>{
+      const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        url: '/api/entity',
+        params: {
+          custom: {
+            'customParam': 'Not/Encoded'
+          },
+          requestConfig: {
+            // Authorization: 'reqConfigAuth',
+          }
+        }
+      };
+      const destination: Destination = {
+        url: 'http://example.com',
+        queryParameters:{
+          destProp:'encoding#Done'
+        },
+        originalProperties: {
+          'URL.queries.destUrlProp': 'encoding?Done'
+        }
+      };
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+          httpRequestConfigWithOrigin,
+          destination,
+          {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        url: '/api/entity',
+        headers:{},
+        params: {
+               "customParam": "Not/Encoded",
+               "destProp": "encoding%23Done",
+               "destUrlProp": "encoding%3FDone",
+        }
+      };
+      expect(actual).toStrictEqual(expected);
+    })
+
     it('should merge and resolve conflicts', async () => {
       const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
         method: 'get',

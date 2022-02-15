@@ -31,7 +31,7 @@ import {
   HttpRequestConfigWithOrigin,
   HttpRequestOptions,
   HttpResponse,
-  OriginOptions
+  OriginOptions, OriginOptionsInternal
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
 import { buildCsrfHeaders } from './csrf-token-header';
@@ -121,6 +121,22 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   };
 }
 
+
+function encodeRequestQueryParameters(  parameter: Record<string, string>|undefined): Record<string, string>|undefined{
+  if(parameter){
+    return Object.keys(parameter).reduce((encodedParams,key)=>({...encodedParams,[key]:encodeURIComponent(parameter[key])}),{})
+  }
+}
+function getEncodedParameters(parameters:OriginOptionsInternal):OriginOptionsInternal {
+
+  return {
+    custom : parameters.custom,
+    requestConfig : encodeRequestQueryParameters(parameters.requestConfig),
+    destinationProperty: encodeRequestQueryParameters(parameters.destinationProperty),
+    destination: encodeRequestQueryParameters(parameters.destination)
+  };
+}
+
 /**
  * @internal
  * Build a request config from a given request config and a destination.
@@ -139,10 +155,7 @@ export async function buildRequestWithMergedHeadersAndQueryParameters(
   const { paramsOriginOptions, headersOriginOptions, requestConfigBase } =
     splitRequestConfig(requestConfig);
 
-  const mergedQueryParameter = getMergedParameters(
-    destination,
-    paramsOriginOptions
-  );
+  const mergedQueryParameter = getMergedAndEncodedParameter(destination,paramsOriginOptions);
   const mergedHeaders = await getMergedHeaders(
     destination,
     headersOriginOptions
@@ -176,18 +189,21 @@ async function getMergedHeaders(
   });
 }
 
-function getMergedParameters(
+function getMergedAndEncodedParameter(
   destination: Destination,
   paramsOriginOptions?: OriginOptions
-): Record<string, string> | undefined {
+): Record<string,any>|undefined{
+
   const queryParametersDestinationProperty = getAdditionalQueryParameters(
     (destination.originalProperties as DestinationConfiguration) || {}
   ).queryParameters;
-  return mergeOptionsWithPriority({
+  const allParameter =  {
     ...paramsOriginOptions,
     destinationProperty: queryParametersDestinationProperty,
     destination: destination.queryParameters
-  });
+  };
+  const encoded = getEncodedParameters(allParameter)
+  return mergeOptionsWithPriority(encoded)
 }
 
 function splitRequestConfig(requestConfig: HttpRequestConfigWithOrigin): {

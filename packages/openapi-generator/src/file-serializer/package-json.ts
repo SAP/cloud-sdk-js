@@ -1,45 +1,30 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
+import {
+  PackageJsonOptions,
+  packageJsonBase
+} from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * Generate the package.json for an openapi client so it can be released as an npm module.
- * @param packageName - The name of the npm package.
- * @param description - The description of the  npm package.
- * @param sdkVersion - The version of the SAP Cloud SDK used.
- * @param packageVersion - The version of the npm package.
+ * @param options - Options to generate the package.json
  * @returns The package.json contents.
  * @internal
  */
-export function packageJson(
-  packageName: string,
-  description: string,
-  sdkVersion: string,
-  packageVersion: string
-): string {
+export function packageJson(options: PackageJsonOptions): string {
   return (
     JSON.stringify(
       {
-        name: packageName,
-        version: packageVersion,
-        description,
-        homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
-        main: './index.js',
-        types: './index.d.ts',
-        publishConfig: {
-          access: 'public'
-        },
+        ...packageJsonBase(options),
         files: ['**/*.js', '**/*.js.map', '**/*.d.ts', '**/d.ts.map'],
-        repository: {
-          type: 'git',
-          url: ''
-        },
+
         scripts: {
           compile: 'npx tsc'
         },
         dependencies: {
-          '@sap-cloud-sdk/openapi': `^${sdkVersion}`
+          '@sap-cloud-sdk/openapi': `^${options.sdkVersion}`
         },
         peerDependencies: {
-          '@sap-cloud-sdk/openapi': `^${sdkVersion}`
+          '@sap-cloud-sdk/openapi': `^${options.sdkVersion}`
         },
         devDependencies: {
           typescript: '~4.1.2'

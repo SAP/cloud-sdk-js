@@ -34,7 +34,7 @@
   "dependencies": {
     "@sap-cloud-sdk/connectivity": "^2.0.0",
     "@sap-cloud-sdk/util": "^2.0.0",
-    "axios": "^0.24.0"
+    "axios": "^0.26.0"
   },
   "devDependencies": {
     "https-proxy-agent": "^5.0.0",

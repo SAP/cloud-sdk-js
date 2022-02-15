@@ -89,6 +89,13 @@ export const generatorOptions = {
       'When enabled, a `package.json`, that specifies dependencies and scripts for transpilation and documentation generation is generated.',
     default: false
   },
+  licenseInPackageJson: {
+    string: true,
+    description:
+      "License to be used on the generated package.json. Only considered if 'packageJson' is enabled.",
+    coerce: (input?: string): string | undefined =>
+      typeof input !== 'undefined' ? input : undefined
+  },
   verbose: {
     boolean: true,
     alias: 'v',

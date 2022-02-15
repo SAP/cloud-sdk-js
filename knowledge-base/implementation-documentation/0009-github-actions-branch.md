@@ -40,7 +40,7 @@ The whole pipeline can be found [here](https://github.com/SAP/cloud-sdk-js/blob/
 
 ### Publish a new release
 
-When click "publish" for a new github release, branch information is completely independent, so we maintain on the default branch.
+When clicking "publish" for a new github release (see release [doc](https://github.com/SAP/cloud-sdk-js/blob/main/knowledge-base/how-tos/0001-release.md#how-to-trigger-a-release)), branch information is completely independent, so we maintain on the default branch.
 Check a partial example below:
 
 ```

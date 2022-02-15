@@ -1,5 +1,8 @@
 import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
-import { PackageJsonOptions as PackageJsonOptionsBase } from '@sap-cloud-sdk/generator-common/internal';
+import {
+  packageJsonBase,
+  PackageJsonOptions as PackageJsonOptionsBase
+} from '@sap-cloud-sdk/generator-common/internal';
 
 export interface PackageJsonOptions extends PackageJsonOptionsBase {
   sdkAfterVersionScript: boolean;
@@ -22,16 +25,7 @@ export async function packageJson(
   return (
     JSON.stringify(
       {
-        name: options.npmPackageName,
-        version: options.version,
-        description: options.description,
-        homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
-        main: './index.js',
-        types: './index.d.ts',
-        ...(options.license ? { license: options.license } : {}),
-        publishConfig: {
-          access: 'public'
-        },
+        ...packageJsonBase(options),
         files: [
           '**/*.js',
           '**/*.js.map',
@@ -39,10 +33,6 @@ export async function packageJson(
           '**/d.ts.map',
           '**/*-csn.json'
         ],
-        repository: {
-          type: 'git',
-          url: ''
-        },
         scripts: {
           compile: 'npx tsc',
           ...(options.sdkAfterVersionScript

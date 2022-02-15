@@ -1,5 +1,8 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { PackageJsonOptions } from '@sap-cloud-sdk/generator-common/internal';
+import {
+  PackageJsonOptions,
+  packageJsonBase
+} from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * Generate the package.json for an openapi client so it can be released as an npm module.
@@ -11,21 +14,9 @@ export function packageJson(options: PackageJsonOptions): string {
   return (
     JSON.stringify(
       {
-        name: options.npmPackageName,
-        version: options.version,
-        description: options.description,
-        homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
-        main: './index.js',
-        types: './index.d.ts',
-        ...(options.license ? { license: options.license } : {}),
-        publishConfig: {
-          access: 'public'
-        },
+        ...packageJsonBase(options),
         files: ['**/*.js', '**/*.js.map', '**/*.d.ts', '**/d.ts.map'],
-        repository: {
-          type: 'git',
-          url: ''
-        },
+
         scripts: {
           compile: 'npx tsc'
         },

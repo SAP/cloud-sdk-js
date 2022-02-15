@@ -3,6 +3,14 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
+<!-- sap-cloud-sdk-2.0-announcement -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
+# Version 2 Release
+The SAP Cloud SDK has release version 2.
+Check the [upgrade guidance](https://sap.github.io/cloud-sdk/docs/js/guides/upgrade-to-version-2) for more details.
+Make sure you understand our [release policy](https://sap.github.io/cloud-sdk/docs/js/release-policy).
+<!-- sap-cloud-sdk-2.0-announcement-stop -->
+
 # @sap-cloud-sdk/generator-common
 
 This package contains common functions of OData client generator and OpenAPI clint generator.

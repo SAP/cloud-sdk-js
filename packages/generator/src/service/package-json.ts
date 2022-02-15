@@ -1,32 +1,34 @@
 import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
-import {getSdkVersion, getVersionForClient} from '@sap-cloud-sdk/generator-common/internal';
-import {VdmServiceMetadata} from "../vdm-types";
-import {Project} from "ts-morph";
-import {GeneratorOptions} from "../generator-options";
-import {getServiceDescription} from "../sdk-metadata";
+import { PackageJsonOptions as PackageJsonOptionsBase } from '@sap-cloud-sdk/generator-common/internal';
 
-// eslint-disable-next-line valid-jsdoc
+export interface PackageJsonOptions extends PackageJsonOptionsBase {
+  sdkAfterVersionScript: boolean;
+  oDataVersion: ODataVersion;
+}
+
 /**
+ * Generate the package.json for an odata client so it can be released as an npm module.
+ * @param options - Options to generate the package.json
+ * @returns The package.json contents.
  * @internal
  */
 export async function packageJson(
-    service: VdmServiceMetadata,
-    options: GeneratorOptions
+  options: PackageJsonOptions
 ): Promise<string> {
   const oDataModule =
-    service.oDataVersion === 'v2'
+    options.oDataVersion === 'v2'
       ? '@sap-cloud-sdk/odata-v2'
       : '@sap-cloud-sdk/odata-v4';
   return (
     JSON.stringify(
       {
-        name: service.npmPackageName,
-        version:  await getVersionForClient(options.versionInPackageJson),
-        description: getServiceDescription(service, options),
+        name: options.npmPackageName,
+        version: options.version,
+        description: options.description,
         homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
         main: './index.js',
         types: './index.d.ts',
-        ...(options.licenseInPackageJson ? { license: options.licenseInPackageJson }:{}),
+        ...(options.license ? { license: options.license } : {}),
         publishConfig: {
           access: 'public'
         },
@@ -48,12 +50,12 @@ export async function packageJson(
             : {})
         },
         dependencies: {
-          '@sap-cloud-sdk/odata-common': `^${await getSdkVersion()}`,
-          [oDataModule]: `^${await getSdkVersion()}`
+          '@sap-cloud-sdk/odata-common': `^${options.sdkVersion}`,
+          [oDataModule]: `^${options.sdkVersion}`
         },
         peerDependencies: {
-          '@sap-cloud-sdk/odata-common': `^${await getSdkVersion()}`,
-          [oDataModule]: `^${await getSdkVersion()}`
+          '@sap-cloud-sdk/odata-common': `^${options.sdkVersion}`,
+          [oDataModule]: `^${options.sdkVersion}`
         },
         devDependencies: {
           typescript: '~4.5'

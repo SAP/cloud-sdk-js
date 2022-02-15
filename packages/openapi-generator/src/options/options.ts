@@ -92,9 +92,9 @@ export const generatorOptions = {
   licenseInPackageJson: {
     string: true,
     description:
-        'License to be used on the generated package.json. Only considered is \'packageJson\' is enabled.',
+      "License to be used on the generated package.json. Only considered is 'packageJson' is enabled.",
     coerce: (input?: string): string | undefined =>
-        typeof input !== 'undefined' ? input : undefined
+      typeof input !== 'undefined' ? input : undefined
   },
   verbose: {
     boolean: true,

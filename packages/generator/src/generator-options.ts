@@ -119,7 +119,7 @@ export const generatorOptionsCli: KeysToOptions = {
   },
   licenseInPackageJson: {
     describe:
-        'License to be used on the generated package.json. Only considered is \'generatePackageJson\' is enabled.',
+      "License to be used on the generated package.json. Only considered is 'generatePackageJson' is enabled.",
     type: 'string',
     requiresArg: false
   },

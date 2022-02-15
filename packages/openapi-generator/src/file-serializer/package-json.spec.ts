@@ -8,9 +8,15 @@ describe('packageJson', () => {
   });
 
   it('includes the license', () => {
-    const parsed = JSON.parse(packageJson('workflow-service', 'description', '1.35.0', '1.23.1','my license information'));
-    expect(
-        parsed.license
-    ).toBe('my license information');
+    const parsed = JSON.parse(
+      packageJson(
+        'workflow-service',
+        'description',
+        '1.35.0',
+        '1.23.1',
+        'my license information'
+      )
+    );
+    expect(parsed.license).toBe('my license information');
   });
 });

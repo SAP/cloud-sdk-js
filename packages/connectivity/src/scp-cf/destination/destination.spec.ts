@@ -94,11 +94,19 @@ describe('parseDestination', () => {
     expect(destination).not.toHaveProperty('queryParameters');
   });
 
-  it('throws an error if there is no `URL` given', () => {
+  it('throws an error if there is no `URL` given with `Name`', () => {
     expect(() =>
       parseDestination({
         Name: 'DEST'
       } as any)
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Property \'URL\' of destination configuration must not be undefined, but destination with name \\"DEST\\" has no property \'URL\'."'
+    );
+  });
+
+  it('throws an error if there is no `URL` given without `Name`', () => {
+    expect(() =>
+      parseDestination({} as any)
     ).toThrowErrorMatchingInlineSnapshot(
       '"Property \'URL\' of destination configuration must not be undefined."'
     );

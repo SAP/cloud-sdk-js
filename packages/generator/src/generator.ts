@@ -23,7 +23,8 @@ import {
   sdkMetadataHeader,
   transpileDirectory,
   readCompilerOptions,
-  copyFiles
+  copyFiles,
+  getSdkVersion
 } from '@sap-cloud-sdk/generator-common/internal';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
@@ -255,13 +256,15 @@ export async function generateSourcesForService(
     otherFile(
       serviceDir,
       'package.json',
-      await packageJson(
-        service.npmPackageName,
-        await getVersionForClient(options.versionInPackageJson),
-        getServiceDescription(service, options),
-        options.sdkAfterVersionScript,
-        service.oDataVersion
-      ),
+      await packageJson({
+        npmPackageName: service.npmPackageName,
+        version: await getVersionForClient(options.versionInPackageJson),
+        sdkVersion: await getSdkVersion(),
+        description: getServiceDescription(service, options),
+        sdkAfterVersionScript: options.sdkAfterVersionScript,
+        oDataVersion: service.oDataVersion,
+        license: options.licenseInPackageJson
+      }),
       options.forceOverwrite
     );
   }

@@ -14,6 +14,7 @@ export function isInfOrNan(value: string | number): boolean {
 }
 
 /**
+ * As per OData URL Syntax rules, single quotes within string literals must be represented as two consecutive single quotes.
  * @internal
  */
 export function convertToUriForEdmString(value: any): string {

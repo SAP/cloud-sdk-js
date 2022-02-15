@@ -102,15 +102,6 @@ export function createGetResourcePathForKeys(
     return keys;
   }
 
-  /**
-   * Returns an entities keys as key-value pairs.
-   * encodeURIComponent does not escape single quote character.
-   * If value contains ', the uriConverter method encodes the single quote.
-   * @param key - Name of a key property of an entity.
-   * @param value - Value of the given key.
-   * @param schema - Schema of an entity.
-   * @returns Key and encoded value as formatted string.
-   */
   function keyToOData(
     key: string,
     value: any,

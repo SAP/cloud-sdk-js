@@ -7,6 +7,8 @@ const startTagCommonReadme = '<!-- sap-cloud-sdk-common-readme -->';
 const endTagCommonReadme = '<!-- sap-cloud-sdk-common-readme-stop -->';
 const startTagLogo = '<!-- sap-cloud-sdk-logo -->';
 const endTagLogo = '<!-- sap-cloud-sdk-logo-stop -->';
+const startTagV2Announcement = '<!-- sap-cloud-sdk-2.0-announcement -->';
+const endTagV2Announcement = '<!-- sap-cloud-sdk-2.0-announcement-stop -->';
 
 const logoContent = `<a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>${unixEOL}`;
 const infoNoManualEdit =
@@ -19,18 +21,29 @@ const genericContent = readFileSync(
   { encoding: 'utf8' }
 );
 
+const version2AnnouncementContent = readFileSync(
+  resolve(__dirname, '2.0-announcement.md'),
+  { encoding: 'utf8' }
+);
+
 function insertCommonContent(oldFileContent: string): string {
-  const newFileContent = replaceContentUsingTags(
+  const withCommonReadme = replaceContentUsingTags(
     startTagCommonReadme,
     endTagCommonReadme,
     genericContent,
     oldFileContent
   );
-  return replaceContentUsingTags(
+  const withCommonReadmeAndLogo = replaceContentUsingTags(
     startTagLogo,
     endTagLogo,
     logoContent,
-    newFileContent
+    withCommonReadme
+  );
+  return replaceContentUsingTags(
+    startTagV2Announcement,
+    endTagV2Announcement,
+    version2AnnouncementContent,
+    withCommonReadmeAndLogo
   );
 }
 

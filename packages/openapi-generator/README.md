@@ -36,66 +36,71 @@ Generate OpenAPI client(s), that use the connectivity features of the SAP Cloud 
 Usage: openapi-generator --input <input> --outputDir <outputDirectory>
 
 Options:
-      --help               Show help                                   [boolean]
-      --version            Show version number                         [boolean]
-  -i, --input              Specify the path to the directory or file containing
-                           the OpenAPI service definition(s) to generate clients
-                           for. Accepts Swagger and OpenAPI definitions as YAML
-                           and JSON files. Throws an error if the path does not
-                           exist.                            [string] [required]
-  -o, --outputDir          Specify the path to the directory to generate the
-                           client(s) in. Each client is generated into a
-                           subdirectory within the given output directory.
-                           Creates the directory if it does not exist. Customize
-                           subdirectory naming through `--optionsPerService`.
+      --help                  Show help                                [boolean]
+      --version               Show version number                      [boolean]
+  -i, --input                 Specify the path to the directory or file
+                              containing the OpenAPI service definition(s) to
+                              generate clients for. Accepts Swagger and OpenAPI
+                              definitions as YAML and JSON files. Throws an
+                              error if the path does not exist.
                                                              [string] [required]
-  -t, --transpile          Transpile the generated TypeScript code. When enabled
-                           a default `tsconfig.json` will be generated and used.
-                           It emits `.js`, `.js.map`, `.d.ts` and `.d.ts.map`
-                           files. To configure transpilation set `--tsconfig`.
+  -o, --outputDir             Specify the path to the directory to generate the
+                              client(s) in. Each client is generated into a
+                              subdirectory within the given output directory.
+                              Creates the directory if it does not exist.
+                              Customize subdirectory naming through
+                              `--optionsPerService`.         [string] [required]
+  -t, --transpile             Transpile the generated TypeScript code. When
+                              enabled a default `tsconfig.json` will be
+                              generated and used. It emits `.js`, `.js.map`,
+                              `.d.ts` and `.d.ts.map` files. To configure
+                              transpilation set `--tsconfig`.
                                                       [boolean] [default: false]
-      --include            Include files matching the given glob into the root
-                           of each generated client directory.          [string]
-      --overwrite          Allow to overwrite files, that already exist. This is
-                           useful, when running the generation regularly.
+      --include               Include files matching the given glob into the
+                              root of each generated client directory.  [string]
+      --overwrite             Allow to overwrite files, that already exist. This
+                              is useful, when running the generation regularly.
                                                       [boolean] [default: false]
-      --clearOutputDir     Remove all files in the output directory before
-                           generation. Be cautious when using this option, as it
-                           really removes EVERYTHING in the output directory.
+      --clearOutputDir        Remove all files in the output directory before
+                              generation. Be cautious when using this option, as
+                              it really removes EVERYTHING in the output
+                              directory.              [boolean] [default: false]
+      --skipValidation        By default, the generation fails, when there are
+                              duplicate or invalid names for operations and/or
+                              path parameters after transforming them to camel
+                              case. Set this to true to enable unique and valid
+                              name generation. The names will then be generated
+                              by appending numbers and prepending prefixes.
                                                       [boolean] [default: false]
-      --skipValidation     By default, the generation fails, when there are
-                           duplicate or invalid names for operations and/or path
-                           parameters after transforming them to camel case. Set
-                           this to true to enable unique and valid name
-                           generation. The names will then be generated by
-                           appending numbers and prepending prefixes.
+      --tsConfig              Replace the default `tsconfig.json` by passing a
+                              path to a custom config. By default, a
+                              `tsconfig.json` is only generated, when
+                              transpilation is enabled (`--transpile`). If a
+                              directory is passed, a `tsconfig.json` file is
+                              read from this directory.                 [string]
+      --packageJson           When enabled, a `package.json`, that specifies
+                              dependencies and scripts for transpilation and
+                              documentation generation is generated.
                                                       [boolean] [default: false]
-      --tsConfig           Replace the default `tsconfig.json` by passing a path
-                           to a custom config. By default, a `tsconfig.json` is
-                           only generated, when transpilation is enabled
-                           (`--transpile`). If a directory is passed, a
-                           `tsconfig.json` file is read from this directory.
+      --licenseInPackageJson  License to be used on the generated package.json.
+                              Only considered is 'packageJson' is enabled.
                                                                         [string]
-      --packageJson        When enabled, a `package.json`, that specifies
-                           dependencies and scripts for transpilation and
-                           documentation generation is generated.
-                                                      [boolean] [default: false]
-  -v, --verbose            Turn on verbose logging.   [boolean] [default: false]
-      --optionsPerService  Set the path to a file containing the options per
-                           service. The configuration allows to set a
-                           `directoryName` and `packageName` for every service,
-                           identified by the path to the original file. It also
-                           makes sure that names do not change between generator
-                           runs. If a directory is passed, a
-                           `options-per-service.json` file is read/created in
-                           this directory.                              [string]
-  -c, --config             Set the path to a file containing the options for
-                           generation instead of setting the options on the
-                           command line. When combining the `config` option with
-                           other options on the command line, the command line
-                           options take precedence. If a directory is passed, a
-                           `config.json` file is read from this directory.
-                                                                        [string]
+  -v, --verbose               Turn on verbose logging.[boolean] [default: false]
+      --optionsPerService     Set the path to a file containing the options per
+                              service. The configuration allows to set a
+                              `directoryName` and `packageName` for every
+                              service, identified by the path to the original
+                              file. It also makes sure that names do not change
+                              between generator runs. If a directory is passed,
+                              a `options-per-service.json` file is read/created
+                              in this directory.                        [string]
+  -c, --config                Set the path to a file containing the options for
+                              generation instead of setting the options on the
+                              command line. When combining the `config` option
+                              with other options on the command line, the
+                              command line options take precedence. If a
+                              directory is passed, a `config.json` file is read
+                              from this directory.                      [string]
 ```
 <!-- commandsstop -->
 

@@ -83,7 +83,7 @@ Options:
                               documentation generation is generated.
                                                       [boolean] [default: false]
       --licenseInPackageJson  License to be used on the generated package.json.
-                              Only considered is 'packageJson' is enabled.
+                              Only considered if 'packageJson' is enabled.
                                                                         [string]
   -v, --verbose               Turn on verbose logging.[boolean] [default: false]
       --optionsPerService     Set the path to a file containing the options per

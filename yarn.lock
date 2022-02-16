@@ -1871,11 +1871,11 @@
     verror "1.10.0"
 
 "@sap/xssec@^3.2.7":
-  version "3.2.12"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.12.tgz#be5c3ef5829edafc6547562fbc8a6c20cad11583"
-  integrity sha512-Uhooyklldsft5aC0O/af9dc2qlqcO4Udm1wiPBB+XGSpNHwopb/o+7zJwoxWH3naziYsIHElBaGv6fm8sPG3cQ==
+  version "3.2.13"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.13.tgz#ec7c923a2f9b003eb2da96454dbf083a17052adc"
+  integrity sha512-F/hFDDf00y/n1ngbnHS9yTcyZqN88q3tMWbG2/AmJYz0PvBGgfmkgkcKxVq+D+aIQmtBJpWZ43H9Pu53MOcJfQ==
   dependencies:
-    axios "^0.25.0"
+    axios "^0.26.0"
     debug "4.3.2"
     jsonwebtoken "^8.5.1"
     lru-cache "6.0.0"
@@ -2684,13 +2684,6 @@ axios@^0.21.0, axios@^0.21.1:
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
-
-axios@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.npmjs.org/axios/-/axios-0.25.0.tgz#349cfbb31331a9b4453190791760a8d35b093e0a"
-  integrity sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==
-  dependencies:
-    follow-redirects "^1.14.7"
 
 axios@^0.26.0:
   version "0.26.0"
@@ -4726,7 +4719,7 @@ fn.name@1.x.x:
   resolved "https://registry.npmjs.org/fn.name/-/fn.name-1.1.0.tgz#26cad8017967aea8731bc42961d04a3d5988accc"
   integrity sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==
 
-follow-redirects@^1.14.0, follow-redirects@^1.14.7, follow-redirects@^1.14.8:
+follow-redirects@^1.14.0, follow-redirects@^1.14.8:
   version "1.14.8"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.8.tgz#016996fb9a11a100566398b1c6839337d7bfa8fc"
   integrity sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==

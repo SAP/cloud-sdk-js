@@ -26,3 +26,7 @@ export * from './service-mapping';
 export * from './service-name-formatter';
 export * from './typedoc';
 export * from './vdm-types';
+
+// Had to be added for public API check
+export * from './generator-common';
+export * from './generator-without-ts-morph';

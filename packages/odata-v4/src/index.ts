@@ -1,3 +1,10 @@
+/* eslint-disable tsdoc/syntax */
+/**
+ * [[include:odata-v4/README.md]]
+ * @packageDocumentation
+ * @module @sap-cloud-sdk/odata-v4
+ */
+
 export { filterFunction } from './filter-function';
 
 export {
@@ -42,12 +49,15 @@ export { uriConverter } from './uri-conversion';
 export { all, any } from './filter';
 
 export {
-  CustomDeSerializers,
   defaultDeSerializers,
   edmToTs,
   entityDeserializer,
   mergeDefaultDeSerializersWith
 } from './de-serializers';
 
-export type { DefaultDeSerializers, DeSerializers } from './de-serializers';
+export type {
+  CustomDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers
+} from './de-serializers';
 export * from './common';

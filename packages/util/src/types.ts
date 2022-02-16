@@ -11,3 +11,9 @@ export type ODataVersion = 'v2' | 'v4';
 export function caps(oDataVersion: any): 'V2' | 'V4' {
   return oDataVersion ? oDataVersion.toUpperCase() : 'V2';
 }
+
+type Without<T> = { [P in keyof T]?: never };
+/**
+ * XOR of two types containing keys with different names.
+ */
+export type Xor<T, U> = (Without<T> & U) | (Without<U> & T);

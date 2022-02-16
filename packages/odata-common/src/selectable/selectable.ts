@@ -1,5 +1,6 @@
 import { EntityBase, ODataVersionOf } from '../entity-base';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import type { CollectionField } from './collection-field';
 import type { AllFields } from './all-fields';
 import type { ComplexTypeField } from './complex-type-field';
@@ -16,7 +17,7 @@ export type Selectable<
 > = ODataVersionOf<EntityT> extends 'v2'
   ?
       | SimpleTypeFields<EntityT>
-      | Link<EntityT, DeSerializersT, EntityBase>
+      | Link<EntityT, DeSerializersT, EntityApi<EntityBase, DeSerializersT>>
       | ComplexTypeField<EntityT, DeSerializersT, any, boolean, boolean>
       | CustomField<EntityT, any, boolean>
       | CollectionField<EntityT, DeSerializersT, any, boolean, boolean>

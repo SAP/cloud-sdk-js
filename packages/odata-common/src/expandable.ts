@@ -1,6 +1,7 @@
 import { DeSerializers } from './de-serializers';
 import { EntityBase, ODataVersionOf } from './entity-base';
 import { OneToManyLink, AllFields, OneToOneLink } from './selectable';
+import { EntityApi } from './entity-api';
 
 /**
  * Represents everything that can be used in an `.expand` statement. Only relevant for OData v4 requests.
@@ -10,10 +11,13 @@ import { OneToManyLink, AllFields, OneToOneLink } from './selectable';
 export type Expandable<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase = EntityBase
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT> = EntityApi<
+    EntityBase,
+    DeSerializersT
+  >
 > = ODataVersionOf<EntityT> extends 'v2'
   ? never
   :
-      | OneToOneLink<EntityT, DeSerializersT, LinkedEntityT>
-      | OneToManyLink<EntityT, DeSerializersT, LinkedEntityT>
+      | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>
+      | OneToOneLink<EntityT, DeSerializersT, LinkedEntityApiT>
       | AllFields<EntityT>;

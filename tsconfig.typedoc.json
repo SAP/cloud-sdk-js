@@ -50,15 +50,19 @@
     }
   ],
   "typedocOptions": {
-    "out": "docs/api/1.50.0",
+    "out": "docs/api/2.0.0",
     "entryPoints": [
       "packages/util/src/index.ts",
       "packages/connectivity/src/index.ts",
       "packages/http-client/src/index.ts",
+      "packages/odata-common/src/index.ts",
+      "packages/odata-v2/src/index.ts",
+      "packages/odata-v4/src/index.ts",
       "packages/openapi/src/index.ts",
       "packages/generator/src/index.ts",
       "packages/openapi-generator/src/index.ts",
-      "packages/test-util/src/index.ts"
+      "packages/test-util/src/index.ts",
+      "packages/temporal-de-serializers/src/index.ts"
     ],
     "name": "SAP Cloud SDK for JavaScript / TypeScript",
     "readme": "DOCUMENTATION.md",

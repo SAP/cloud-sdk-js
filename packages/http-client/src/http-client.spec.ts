@@ -1,8 +1,14 @@
 import https from 'https';
+import http from 'http';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { Destination, Protocol } from '@sap-cloud-sdk/connectivity';
+import {
+  Destination,
+  Protocol,
+  ProxyConfiguration
+} from '@sap-cloud-sdk/connectivity';
 import {
   connectivityProxyConfigMock,
   defaultDestination
@@ -19,6 +25,7 @@ import {
   buildHttpRequest,
   buildRequestWithMergedHeadersAndQueryParameters,
   executeHttpRequest,
+  getDefaultHttpRequestOptions,
   shouldHandleCsrfToken
 } from './http-client';
 
@@ -221,6 +228,7 @@ describe('generic http client', () => {
         })
         .reply(200, { res: 'ult' }, { sharp: 'header' });
 
+      jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
       const config: HttpRequestConfigWithOrigin = {
         method: 'GET',
         url: '/api/entity',
@@ -236,6 +244,7 @@ describe('generic http client', () => {
       expect(response.data.res).toBe('ult');
       expect(response.status).toBe(200);
       expect(response.headers).toMatchObject({ sharp: 'header' });
+      expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
     });
 
     it('logs request information', async () => {
@@ -261,7 +270,7 @@ describe('generic http client', () => {
       expect(debugSpy)
         .toHaveBeenCalledWith(`Execute 'GET' request with target: /api/entity.
 The headers of the request are:
-authorization:*******
+authorization:<DATA NOT LOGGED TO PREVENT LEAKING SENSITIVE DATA>
 sap-client:001`);
     });
 
@@ -303,7 +312,7 @@ sap-client:001`);
       );
     });
 
-    it('also works also in more complex cases in more complex cases', async () => {
+    it('also works also in more complex cases', async () => {
       nock('https://custom.example.com', {
         reqheaders: {
           'content-type': 'application/json',
@@ -375,7 +384,7 @@ sap-client:001`);
       );
     });
 
-    it('fetches csrf token headers when fetchCsrfToken is true', async () => {
+    it('fetches csrf token headers for non-get requests by default', async () => {
       const csrfToken = 'some-csrf-token';
       nock('https://example.com', {
         reqheaders: {
@@ -419,13 +428,14 @@ sap-client:001`);
           a: 1
         }
       };
-
+      jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
       await expect(
-        executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
+        executeHttpRequest(httpsDestination, config)
       ).resolves.not.toThrow();
+      expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalled();
     });
 
-    it('fetches csrf token headers even the status of the response is not 2xx', async () => {
+    it('fetches csrf token headers even when the response status is not 2xx', async () => {
       const csrfToken = 'some-csrf-token';
       nock('https://example.com', {
         reqheaders: {
@@ -471,11 +481,11 @@ sap-client:001`);
       };
 
       await expect(
-        executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
+        executeHttpRequest(httpsDestination, config)
       ).resolves.not.toThrow();
     });
 
-    it('should not fetch csrf token headers when fetchCsrfToken is true and the the request contains the token in the header', async () => {
+    it('should not fetch csrf token headers when fetchCsrfToken is true(default) and request contains the token in the header', async () => {
       const csrfToken = 'some-csrf-token';
 
       nock('https://example.com', {
@@ -511,9 +521,7 @@ sap-client:001`);
       };
 
       jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
-      await executeHttpRequest(httpsDestination, config, {
-        fetchCsrfToken: true
-      });
+      await executeHttpRequest(httpsDestination, config);
       expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
     });
 
@@ -537,9 +545,7 @@ sap-client:001`);
         httpsAgent: new https.Agent(httpsAgentOption)
       };
 
-      await executeHttpRequest(httpsDestination, config, {
-        fetchCsrfToken: true
-      });
+      await executeHttpRequest(httpsDestination, config);
       expect(spy).toHaveBeenNthCalledWith(
         2,
         expect.objectContaining({
@@ -659,7 +665,7 @@ sap-client:001`);
         expect.objectContaining({
           proxy: false,
           httpsAgent: expect.objectContaining({
-            proxy: expect.objectContaining({ port: 1234 })
+            proxy: expect.objectContaining({ host: 'dummy', port: 1234 })
           })
         })
       );
@@ -669,7 +675,11 @@ sap-client:001`);
       const destination: Destination = { url: 'https://destinationUrl' };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await expect(
-        executeHttpRequest(destination, { method: 'post' })
+        executeHttpRequest(
+          destination,
+          { method: 'post' },
+          { fetchCsrfToken: false }
+        )
       ).resolves.not.toThrow();
 
       expect(requestSpy).toHaveBeenCalledWith(
@@ -677,6 +687,35 @@ sap-client:001`);
           method: 'post'
         })
       );
+    });
+
+    /* eslint-disable no-console */
+    /**
+     * https://github.com/SAP/cloud-sdk-backlog/issues/560.
+     * Actual: request is successfull.
+     * Expected: Axios requests should pass via the proxy and hence result in a redirect loop.
+     * */
+    xit('test axios proxy redirect', () => {
+      const proxyConfiguration: ProxyConfiguration = {
+        host: 'localhost',
+        port: 8080,
+        protocol: Protocol.HTTP
+      };
+      // A fake proxy server
+      http
+        .createServer(function (req, res) {
+          res.writeHead(302, { location: 'https://example.com' });
+          res.end();
+        })
+        .listen(8080);
+
+      axios({
+        method: 'get',
+        url: 'https://google.com',
+        httpsAgent: new HttpsProxyAgent(proxyConfiguration)
+      })
+        .then(r => console.log(r))
+        .catch(console.error);
     });
   });
 
@@ -825,21 +864,21 @@ sap-client:001`);
   });
 
   describe('shouldHandleCsrfToken', () => {
-    it('should not handle csrf token for get request', () => {
+    it('should not handle csrf token for get request with default HttpRequestOptions', () => {
       const request = { method: 'get' } as HttpRequestConfig;
-      const options = { fetchCsrfToken: true };
+      const options = getDefaultHttpRequestOptions();
       expect(shouldHandleCsrfToken(request, options)).toEqual(false);
     });
 
-    it('should not handle csrf token when fetchCsrfToken is false', () => {
+    it('should not handle csrf token when fetchCsrfToken is overriden to false', () => {
       const request = { method: 'post' } as HttpRequestConfig;
       const options = { fetchCsrfToken: false };
       expect(shouldHandleCsrfToken(request, options)).toEqual(false);
     });
 
-    it('should handle csrf token for non-get request when fetchCsrfToken is true', () => {
+    it('should handle csrf token for non-get request with default HttpRequestOptions', () => {
       const request = { method: 'patch' } as HttpRequestConfig;
-      const options = { fetchCsrfToken: true };
+      const options = getDefaultHttpRequestOptions();
       expect(shouldHandleCsrfToken(request, options)).toEqual(true);
     });
   });

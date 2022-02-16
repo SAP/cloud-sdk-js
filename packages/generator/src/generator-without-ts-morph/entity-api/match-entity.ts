@@ -3,7 +3,10 @@ import {
   VdmServiceMetadata,
   VdmEntity
 } from '../../vdm-types';
-
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function matchEntity(
   navProp: VdmNavigationProperty,
   service: VdmServiceMetadata

@@ -22,7 +22,6 @@ import type { ConstructorOrField } from './constructor-or-field';
  * @typeparam ComplexT - Type of complex type represented by this field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
- * @internal
  */
 export abstract class ComplexTypeField<
   EntityT extends EntityBase,

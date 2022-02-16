@@ -43,7 +43,7 @@ export class TestEntityLvl2MultiLinkApi<
     TO_MULTI_LINK_2: OneToManyLink<
       TestEntityLvl2MultiLink<DeSerializersT>,
       DeSerializersT,
-      TestEntityLvl3MultiLink<DeSerializersT>
+      TestEntityLvl3MultiLinkApi<DeSerializersT>
     >;
   };
 

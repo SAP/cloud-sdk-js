@@ -1,7 +1,8 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache, IsolationStrategy } from '../cache';
+import { Cache } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
+import { JwtPayload } from '../jsonwebtoken-type';
 import { Destination } from './destination-service-types';
 import { DestinationsByType } from './destination-accessor-types';
 
@@ -10,7 +11,47 @@ const logger = createLogger({
   messageContext: 'destination-cache'
 });
 
-const DestinationCache = (cache: Cache<Destination>) => ({
+/**
+ * Enumerator that selects the isolation type of destination in cache.
+ * The used isolation strategy is either `Tenant` or `Tenant_User` because we want to get results for subaccount and provider tenants which rules out no-isolation or user isolation.
+ */
+export enum IsolationStrategy {
+  Tenant = 'Tenant',
+  Tenant_User = 'TenantUser'
+}
+
+/**
+ * @internal
+ */
+export interface DestinationCacheType {
+  retrieveDestinationFromCache: (
+    decodedJwt: Record<string, any>,
+    name: string,
+    isolation: IsolationStrategy
+  ) => Destination | undefined;
+  cacheRetrievedDestination: (
+    decodedJwt: Record<string, any>,
+    destination: Destination,
+    isolation: IsolationStrategy
+  ) => void;
+  cacheRetrievedDestinations: (
+    decodedJwt: Record<string, any>,
+    retrievedDestinations: DestinationsByType,
+    isolation: IsolationStrategy
+  ) => void;
+  clear: () => void;
+  getCacheInstance: () => Cache<Destination>;
+}
+
+/**
+ * DestinationCache constructor.
+ * @param cache - Cache object which is used in DestiantionCache
+ * @returns A destination cache object.
+ * @internal
+ */
+export const DestinationCache = (
+  cache: Cache<Destination>
+): DestinationCacheType => ({
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,
@@ -36,7 +77,7 @@ const DestinationCache = (cache: Cache<Destination>) => ({
       cacheRetrievedDestination(decodedJwt, dest, isolation, cache)
     );
   },
-  clear: () => {
+  clear: (): void => {
     cache.clear();
   },
   getCacheInstance: () => cache
@@ -60,22 +101,12 @@ export function getDestinationCacheKey(
   const tenant = tenantId(decodedJwt);
   const user = userId(decodedJwt);
   switch (isolationStrategy) {
-    case IsolationStrategy.No_Isolation:
-      return `::${destinationName}`;
     case IsolationStrategy.Tenant:
       if (tenant) {
         return `${tenant}::${destinationName}`;
       }
       logger.warn(
         `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id is undefined.`
-      );
-      return;
-    case IsolationStrategy.User:
-      if (user) {
-        return `:${user}:${destinationName}`;
-      }
-      logger.warn(
-        `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but user id is undefined.`
       );
       return;
     case IsolationStrategy.Tenant_User:
@@ -118,3 +149,17 @@ function cacheRetrievedDestination(
 export const destinationCache = DestinationCache(
   new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 })
 );
+
+/**
+ * Determin the default Isolation strategy if not given as option.
+ * @param jwt - JWT to determine the default isolation strategy
+ * @returns The isolation strategy based on the JWT. If no JWT is given it defaults to Tenant isolation
+ * @internal
+ */
+export function getDefaultIsolationStrategy(
+  jwt: JwtPayload | undefined
+): IsolationStrategy {
+  return jwt && userId(jwt)
+    ? IsolationStrategy.Tenant_User
+    : IsolationStrategy.Tenant;
+}

@@ -11,7 +11,7 @@ import { ServiceMetadata } from '../../edmx-parser';
 export function generateComplexTypesV2(
   serviceMetadata: ServiceMetadata,
   formatter: ServiceNameFormatter
-): Omit<VdmComplexType, 'factoryName'>[] {
+): VdmComplexType[] {
   return transformComplexTypesBase(
     parseComplexTypesV2(serviceMetadata.edmx.root),
     [],

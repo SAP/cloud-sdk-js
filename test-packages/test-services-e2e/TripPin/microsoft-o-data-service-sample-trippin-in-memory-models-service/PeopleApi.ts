@@ -48,7 +48,7 @@ export class PeopleApi<
     FRIENDS: OneToManyLink<
       People<DeSerializersT>,
       DeSerializersT,
-      People<DeSerializersT>
+      PeopleApi<DeSerializersT>
     >;
     /**
      * Static representation of the one-to-one navigation property [[photo]] for query construction.
@@ -57,7 +57,7 @@ export class PeopleApi<
     PHOTO: OneToOneLink<
       People<DeSerializersT>,
       DeSerializersT,
-      Photos<DeSerializersT>
+      PhotosApi<DeSerializersT>
     >;
   };
 

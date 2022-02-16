@@ -1,11 +1,16 @@
+/* eslint-disable tsdoc/syntax */
+/**
+ * [[include:connectivity/README.md]]
+ * @packageDocumentation
+ * @module @sap-cloud-sdk/connectivity
+ */
+
 export {
   parseDestination,
   noDestinationErrorMessage,
   toDestinationNameUrl,
   sanitizeDestination,
-  Destination,
-  DestinationFetchOptions,
-  DestinationAccessorOptions,
+  CachingOptions,
   getDestination,
   useOrFetchDestination,
   getDestinationFromDestinationService,
@@ -13,19 +18,22 @@ export {
   alwaysSubscriber,
   subscriberFirst,
   parseProxyEnv,
-  ProxyConfiguration,
-  ProxyConfigurationHeaders,
   Protocol,
-  CachingOptions,
   IsolationStrategy,
-  ResilienceOptions,
   decodeJwt,
   retrieveJwt,
-  VerifyJwtOptions,
   jwtBearerToken,
-  JwtPayload,
   serviceToken,
+  Destination,
+  DestinationFetchOptions,
+  DestinationAccessorOptions,
+  DestinationSelectionStrategies,
+  JwtPayload,
+  ProxyConfiguration,
+  ProxyConfigurationHeaders,
+  ResilienceOptions,
   Service,
+  VerifyJwtOptions,
   buildHeadersForDestination,
   getClientCredentialsToken,
   getUserToken,
@@ -34,6 +42,8 @@ export {
 
 export type {
   DestinationRetrievalOptions,
+  DestinationSelectionStrategy,
+  DestinationOrFetchOptions,
   DestinationOptions,
   ServiceCredentials
 } from './scp-cf';

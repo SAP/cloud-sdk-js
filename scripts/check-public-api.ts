@@ -1,5 +1,5 @@
-import { join, resolve, parse, basename } from 'path';
-import { promises, readFileSync, lstatSync, existsSync, readdirSync } from 'fs';
+import { join, resolve, parse, basename, dirname } from 'path';
+import { promises, existsSync } from 'fs';
 import { GlobSync } from 'glob';
 import { createLogger, flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
@@ -8,12 +8,16 @@ import {
   readCompilerOptions,
   transpileDirectory
 } from '@sap-cloud-sdk/generator-common/internal';
-const { readFile } = promises;
+
+const { readFile, lstat, readdir } = promises;
+
 const logger = createLogger('check-public-api');
+
 const pathToTsConfigRoot = join(__dirname, '../tsconfig.json');
 const pathRootNodeModules = resolve(__dirname, '../node_modules');
-export const regexExportedIndex = /\{([\w,]+)\}/g;
+export const regexExportedIndex = /\{([\w,]+)\}from'\./g;
 export const regexExportedInternal = /\.\/([\w-]+)/g;
+
 function mockFileSystem(pathToPackage: string) {
   const { pathToSource, pathToTsConfig } = paths(pathToPackage);
   mock({
@@ -61,7 +65,7 @@ For a detailed explanation what is happening here have a look at `0007-public-ap
 Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
  @param allExportedIndex - names of the object imported by the index.ts
  @param allExportedTypes - exported object by the .d.ts files
-@param verbose - do a lot of detailed output on the packages
+ @param verbose - do a lot of detailed output on the packages
  @returns boolean - true if the two sets export the same objects.
  */
 function compareApisAndLog(
@@ -113,15 +117,13 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     pathToSource,
     await getCompilerOptions(pathToPackage)
   );
-  checkBarrelRecursive(pathToSource);
-  checkSingleIndexFile(pathToSource);
+  await checkBarrelRecursive(pathToSource);
+
+  const indexFilePath = join(pathToSource, 'index.ts');
+  checkIndexFileExists(indexFilePath);
 
   const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
-
-  const allExportedIndex = parseBarrelFile(
-    await readFile(indexFiles(pathToSource, 'index.ts')[0], 'utf8'),
-    /\{([\w,]+)\}/g
-  );
+  const allExportedIndex = await parseIndexFile(indexFilePath);
 
   const setsAreEqual = compareApisAndLog(
     allExportedIndex,
@@ -137,6 +139,12 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   );
 }
 
+export function checkIndexFileExists(indexFilePath: string): void {
+  if (!existsSync(indexFilePath)) {
+    throw new Error('No index.ts file found in root.');
+  }
+}
+
 /**
  * Get the paths of all `.d.ts` files.
  * @param cwd - Directory which is scanned for type definitions.
@@ -145,7 +153,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
 export function typeDescriptorPaths(cwd: string): string[] {
   const files = new GlobSync('**/*.d.ts', { cwd }).found;
   return files
-    .filter(file => !file.includes('index.d.ts'))
+    .filter(file => !file.endsWith('index.d.ts'))
     .map(file => join(cwd, file));
 }
 
@@ -157,7 +165,7 @@ export interface ExportedObject {
 
 /**
  * execute the parseTypeDefinitionFile for all files in the cwd
- * @param pathCompiled - path to the compiles sources containing the .d.ts files
+ * @param pathCompiled - path to the compiled sources containing the .d.ts files
  * @returns Information on the exported objects
  */
 export async function parseTypeDefinitionFiles(
@@ -175,7 +183,7 @@ export async function parseTypeDefinitionFiles(
 }
 
 /*
- For a deatailed explaination what is happening here have a look at `0007-public-api-check.md` in the implementation documentation.
+ For a detailed explanation what is happening here have a look at `0007-public-api-check.md` in the implementation documentation.
  Parses a `d.ts` file for the exported objects  in it.
  @param fileContent - content of the .d.ts file to be processes
  @returns List of exported object.
@@ -205,35 +213,6 @@ export function parseTypeDefinitionFile(
 }
 
 /**
- * Get index files in the cwd based on pattern
- * @param cwd - Directory scanned for `index.ts` files.
- * @param pattern - Pattern for search.
- * @returns List of index files found in the cwd.
- */
-export function indexFiles(cwd: string, pattern: string): string[] {
-  const files = new GlobSync(pattern, { cwd }).found;
-  return files.map(file => join(cwd, file));
-}
-
-/**
- * Checks that there is exactly one index file on root level.
- * Throws exception if violations are found.
- * @param cwd - Directory for which the rules are checked
-
- */
-export function checkSingleIndexFile(cwd: string): void {
-  const files = indexFiles(cwd, 'index.ts');
-  if (!files.length) {
-    throw Error(`No index.ts file found in ${cwd}`);
-  }
-
-  const content = readFileSync(files[0]);
-  if (content.includes('*')) {
-    throw new Error(`There is a '*' in ${files[0]}`);
-  }
-}
-
-/**
  * Parse a barrel file for the exported objects.
  * It selects all string in \{\} e.g. export \{a,b,c\} from './xyz' will result in [a,b,c]
  * @param fileContent - content of the index file to be parsed.
@@ -247,28 +226,62 @@ export function parseBarrelFile(fileContent: string, regex: RegExp): string[] {
   return flatten(groups.map(group => group.split(',')));
 }
 
+function checkInternalReExports(fileContent: string, filePath: string): void {
+  const internalReExports = parseBarrelFile(
+    fileContent,
+    /\{([\w,]+)\}from'.*\/internal'/g
+  );
+  if (internalReExports.length) {
+    throw new Error(
+      `Re-exporting internal modules is not allowed. ${internalReExports
+        .map(reExport => `'${reExport}'`)
+        .join(', ')} exported in '${filePath}'.`
+    );
+  }
+}
+
+export async function parseIndexFile(filePath: string): Promise<string[]> {
+  const cwd = dirname(filePath);
+  const fileContent = await readFile(filePath, 'utf-8');
+  checkInternalReExports(fileContent, filePath);
+  const localExports = parseBarrelFile(fileContent, regexExportedIndex);
+  const starFiles = captureGroupsFromGlobalRegex(
+    /export \* from '([\w/.]+)'/g,
+    fileContent
+  );
+  const starFileExports = await Promise.all(
+    starFiles.map(async relativeFilePath =>
+      parseIndexFile(resolve(cwd, `${relativeFilePath}.ts`))
+    )
+  );
+  return [...localExports, ...starFileExports.flat()];
+}
+
 function captureGroupsFromGlobalRegex(regex: RegExp, str: string): string[] {
   const groups = Array.from(str.matchAll(regex));
   return groups.map(group => group[1]);
 }
 
-export function checkBarrelRecursive(cwd: string): void {
-  readdirSync(cwd, { withFileTypes: true })
+export async function checkBarrelRecursive(cwd: string): Promise<void> {
+  (await readdir(cwd, { withFileTypes: true }))
     .filter(dirent => dirent.isDirectory())
-    .forEach(subDir => {
+    .forEach(async subDir => {
       if (subDir.name !== '__snapshots__') {
-        checkBarrelRecursive(join(cwd, subDir.name));
+        await checkBarrelRecursive(join(cwd, subDir.name));
       }
     });
-  exportAllInBarrel(
+  await exportAllInBarrel(
     cwd,
     parse(cwd).name === 'src' ? 'internal.ts' : 'index.ts'
   );
 }
 
-export function exportAllInBarrel(cwd: string, barrelFileName: string): void {
+export async function exportAllInBarrel(
+  cwd: string,
+  barrelFileName: string
+): Promise<void> {
   const barrelFilePath = join(cwd, barrelFileName);
-  if (existsSync(barrelFilePath) && lstatSync(barrelFilePath).isFile()) {
+  if (existsSync(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
     const dirContents = new GlobSync('*', {
       ignore: [
         '**/*.spec.ts',
@@ -282,14 +295,14 @@ export function exportAllInBarrel(cwd: string, barrelFileName: string): void {
       cwd
     }).found.map(name => basename(name, '.ts'));
     const exportedFiles = parseBarrelFile(
-      readFileSync(barrelFilePath, 'utf8'),
+      await readFile(barrelFilePath, 'utf8'),
       regexExportedInternal
     );
     if (compareBarrels(dirContents, exportedFiles, barrelFilePath)) {
-      throw Error(`${barrelFileName} is not in sync`);
+      throw Error(`'${barrelFileName}' is not in sync.`);
     }
   } else {
-    throw Error(`No ${barrelFileName} file found in ${cwd}`);
+    throw Error(`No '${barrelFileName}' file found in '${cwd}'.`);
   }
 }
 
@@ -302,7 +315,7 @@ function compareBarrels(
     x => !exportedFiles.includes(x)
   );
   missingBarrelExports.forEach(tsFiles =>
-    logger.error(`${tsFiles} is not exported in ${barrelFilePath}`)
+    logger.error(`'${tsFiles}' is not exported in '${barrelFilePath}'.`)
   );
 
   const extraBarrelExports = exportedFiles.filter(
@@ -310,7 +323,7 @@ function compareBarrels(
   );
   extraBarrelExports.forEach(exports =>
     logger.error(
-      `"${exports}" is exported from the ${barrelFilePath} but does not exist in this directory`
+      `'${exports}' is exported from the '${barrelFilePath}' but does not exist in this directory.`
     )
   );
 

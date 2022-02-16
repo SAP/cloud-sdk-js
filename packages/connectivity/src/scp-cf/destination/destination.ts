@@ -1,4 +1,4 @@
-import { assoc } from '@sap-cloud-sdk/util';
+import { assoc, Xor } from '@sap-cloud-sdk/util';
 import {
   DestinationFetchOptions,
   isDestinationFetchOptions
@@ -184,8 +184,12 @@ function validateDestinationConfig(
     isHttpDestination(destinationConfig) &&
     typeof destinationConfig.URL === 'undefined'
   ) {
+    const detailedMessage = destinationConfig.Name
+      ? `, but destination with name "${destinationConfig.Name}" has no property 'URL'`
+      : '';
+
     throw Error(
-      "Property 'URL' of destination configuration must not be undefined."
+      `Property 'URL' of destination configuration must not be undefined${detailedMessage}.`
     );
   }
 }
@@ -214,7 +218,7 @@ function isHttpDestination(destinationInput: Record<string, any>): boolean {
  * @returns string containing information on the destination
  */
 export function toDestinationNameUrl(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptions
 ): string {
   return isDestinationFetchOptions(destination)
     ? `name: ${destination.destinationName}`
@@ -374,9 +378,14 @@ const configMapping: Record<string, keyof Destination> = {
 };
 
 export function noDestinationErrorMessage(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptions
 ): string {
   return isDestinationFetchOptions(destination)
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
+
+export type DestinationOrFetchOptions = Xor<
+  Destination,
+  DestinationFetchOptions
+>;

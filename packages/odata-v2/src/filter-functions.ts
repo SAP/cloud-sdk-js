@@ -9,9 +9,11 @@ import {
   FilterFunctionNames as FilterFunctionNamesCommon
 } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
-import { DeSerializers } from './de-serializers/de-serializers';
-import { defaultDeSerializers } from './de-serializers/default-de-serializers';
-import { mergeDefaultDeSerializersWith } from './de-serializers/custom-de-serializers';
+import {
+  DeSerializers,
+  defaultDeSerializers,
+  mergeDefaultDeSerializersWith
+} from './de-serializers';
 import { Entity } from './entity';
 
 /* String Functions */

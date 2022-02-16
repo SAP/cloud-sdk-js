@@ -4,13 +4,14 @@ import {
   createLogger,
   ErrorWithCause,
   pickIgnoreCase,
-  unixEOL
+  unixEOL,
+  sanitizeRecord
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import {
   buildHeadersForDestination,
   Destination,
-  DestinationFetchOptions,
+  DestinationOrFetchOptions,
   toDestinationNameUrl,
   useOrFetchDestination,
   getAgentConfig
@@ -47,7 +48,7 @@ const logger = createLogger({
  * @returns A [[DestinationHttpRequestConfig]].
  */
 export async function buildHttpRequest(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptions
 ): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
   if (!resolvedDestination) {
@@ -72,7 +73,7 @@ export async function buildHttpRequest(
  * @internal
  */
 export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
-  destination: Destination | DestinationFetchOptions,
+  destination: DestinationOrFetchOptions,
   requestConfig: T
 ): Promise<T & DestinationHttpRequestConfig> {
   return buildHttpRequest(destination).then(destinationConfig =>
@@ -92,7 +93,7 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
  */
 export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   return async function <T extends HttpRequestConfigWithOrigin>(
-    destination: Destination | DestinationFetchOptions,
+    destination: DestinationOrFetchOptions,
     requestConfig: T,
     options?: HttpRequestOptions
   ): Promise<ReturnT> {
@@ -218,16 +219,15 @@ function logCustomHeadersWarning(customHeaders?: Record<string, string>) {
 function logRequestInformation(request: HttpRequestConfig) {
   const basicRequestInfo = `Execute '${request.method}' request with target: ${request.url}.`;
   if (request.headers) {
-    const headerText = Object.keys(request.headers).reduce((previous, key) => {
-      if (
-        key.toLowerCase().includes('authentication') ||
-        key.toLowerCase().includes('authorization')
-      ) {
-        return `${previous}${unixEOL}${key}:*******`;
-      }
-      return `${previous}${unixEOL}${key}:${request.headers![key]}`;
-    }, 'The headers of the request are:');
-    logger.debug(`${basicRequestInfo}${unixEOL}${headerText}`);
+    const headerText = Object.entries(sanitizeRecord(request.headers))
+      .map(([key, value]) => `${key}:${value}`)
+      .join(unixEOL);
+
+    logger.debug(
+      `${basicRequestInfo}${unixEOL}The headers of the request are:${unixEOL}${headerText}`
+    );
+  } else {
+    logger.debug(basicRequestInfo);
   }
 }
 
@@ -243,7 +243,7 @@ function logRequestInformation(request: HttpRequestConfig) {
  * @returns A promise resolving to an [[HttpResponse]].
  */
 export function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
-  destination: Destination | DestinationFetchOptions,
+  destination: DestinationOrFetchOptions,
   requestConfig: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
@@ -271,7 +271,7 @@ function buildHeaders(
 }
 
 function resolveDestination(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptions
 ): Promise<Destination | null> {
   return useOrFetchDestination(destination).catch(error => {
     throw new ErrorWithCause('Failed to load destination.', error);
@@ -330,10 +330,13 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   };
 }
 
-function getDefaultHttpRequestOptions(): HttpRequestOptions {
-  // TODO: 2.0 change to true
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
+export function getDefaultHttpRequestOptions(): HttpRequestOptions {
   return {
-    fetchCsrfToken: false
+    fetchCsrfToken: true
   };
 }
 
@@ -364,7 +367,7 @@ export function shouldHandleCsrfToken(
 }
 
 async function getCsrfHeaders(
-  destination: Destination | DestinationFetchOptions,
+  destination: DestinationOrFetchOptions,
   request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
   const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
@@ -381,7 +384,7 @@ async function getCsrfHeaders(
 }
 
 async function addCsrfTokenToHeader(
-  destination: Destination | DestinationFetchOptions,
+  destination: DestinationOrFetchOptions,
   request: HttpRequestConfig & DestinationHttpRequestConfig,
   httpRequestOptions?: HttpRequestOptions
 ): Promise<Record<string, string>> {

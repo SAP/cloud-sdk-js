@@ -5,7 +5,6 @@ import {
   BooleanFilterFunction,
   NumberFilterFunction,
   FilterFunctionPrimitiveParameterType,
-  FieldType,
   CollectionField,
   CollectionFilterFunction,
   filterFunctions as filterFunctionsCommon,
@@ -118,7 +117,7 @@ export function now<EntityT extends Entity>(): NumberFilterFunction<EntityT> {
 export function hasSubset<
   EntityT extends Entity,
   ParamT extends FilterFunctionPrimitiveParameterType,
-  ReturnT extends FieldType
+  ReturnT
 >(
   subset:
     | ParamT[]
@@ -142,7 +141,7 @@ export function hasSubset<
 export function hasSubsequence<
   EntityT extends Entity,
   ParamT extends FilterFunctionPrimitiveParameterType,
-  ReturnT extends FieldType
+  ReturnT
 >(
   subsequence:
     | ParamT[]

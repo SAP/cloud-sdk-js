@@ -2,7 +2,7 @@ import { IncomingMessage } from 'http';
 import * as xssec from '@sap/xssec';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { decode } from 'jsonwebtoken';
-import { Jwt, JwtPayload } from './jsonwebtoken-type';
+import { Jwt, JwtPayload,JwtWithPayloadObject } from './jsonwebtoken-type';
 import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
 import { Cache } from './cache';
@@ -27,14 +27,14 @@ export function decodeJwt(token: string): JwtPayload {
  * @returns Decoded token containing payload, header and signature.
  *  @internal
  */
-export function decodeJwtComplete(token: string): Jwt {
-  const decodedToken = decode(token, { complete: true });
-  if (decodedToken === null || typeof decodedToken === 'string') {
-    throw new Error(
-      'JwtError: The given jwt payload does not encode valid JSON.'
-    );
+export function decodeJwtComplete(token: string): JwtWithPayloadObject {
+  const decodedToken = decode(token, { complete: true, json: true });
+  if (decodedToken !== null && isJwtWithPayloadObject(decodedToken)) {
+    return decodedToken;
   }
-  return decodedToken;
+  throw new Error(
+    'JwtError: The given jwt payload does not encode valid JSON.'
+  );
 }
 
 /**
@@ -296,4 +296,8 @@ export function isUserToken(token: JwtPair | undefined): token is JwtPair {
   // Check if it is an Issuer Payload
   const keys = Object.keys(token.decoded);
   return !(keys.length === 1 && keys[0] === 'iss');
+}
+
+function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
+  return typeof decoded.payload !== 'string';
 }

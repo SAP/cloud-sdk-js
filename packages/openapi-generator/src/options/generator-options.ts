@@ -21,6 +21,7 @@ export interface GeneratorOptions {
   skipValidation?: boolean;
   tsConfig?: string;
   packageJson?: boolean;
+  licenseInPackageJson?: string;
   verbose?: boolean;
   optionsPerService?: string;
   packageVersion?: string;
@@ -43,6 +44,7 @@ export interface ParsedGeneratorOptions {
   skipValidation: boolean;
   tsConfig?: string;
   packageJson: boolean;
+  licenseInPackageJson?: string;
   verbose: boolean;
   optionsPerService?: string;
   packageVersion: string;

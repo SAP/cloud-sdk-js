@@ -1,5 +1,5 @@
 /**
- * @internal
+ * Throws an error.
  * @param data - data
  * @param functionActionName - functionActionName
  */

@@ -1,4 +1,4 @@
-import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
+import { businessPartnerService } from '@sap/cloud-sdk-vdm-business-partner-service';
 import * as xssec from '@sap/xssec';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { executeHttpRequest } from '../../../../packages/http-client/src';
@@ -21,12 +21,11 @@ import {
 
 /* Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests. */
 
-// TODO remove the as any from the destinations once version 2.0 of vdm is released.
-
 describe('OAuth flows', () => {
   let destinationService;
   let accessToken: UserAccessTokens;
   let systems: Systems;
+  const { businessPartnerApi } = businessPartnerService();
 
   beforeAll(() => {
     accessToken = readUserAccessToken();
@@ -60,10 +59,11 @@ describe('OAuth flows', () => {
       jwt: accessToken.provider
     });
 
-    const result = await BusinessPartner.requestBuilder()
+    const result = await businessPartnerApi
+      .requestBuilder()
       .getAll()
       .top(1)
-      .execute(destination! as any);
+      .execute(destination!);
     expect(result.length).toBe(1);
   }, 60000);
 
@@ -86,13 +86,15 @@ describe('OAuth flows', () => {
       jwt: accessToken.provider
     });
 
-    const buPa = BusinessPartner.builder()
+    const buPa = businessPartnerApi
+      .entityBuilder()
       .businessPartnerCategory('1')
       .lastName('name')
       .build();
-    const result = await BusinessPartner.requestBuilder()
+    const result = await businessPartnerApi
+      .requestBuilder()
       .create(buPa)
-      .execute(destination! as any);
+      .execute(destination!);
     expect(result.lastName).toBe('name');
   }, 60000);
 
@@ -102,10 +104,11 @@ describe('OAuth flows', () => {
       jwt: accessToken.subscriber
     });
 
-    const result = await BusinessPartner.requestBuilder()
+    const result = await businessPartnerApi
+      .requestBuilder()
       .getAll()
       .top(1)
-      .execute(destination! as any);
+      .execute(destination!);
     expect(result.length).toBe(1);
   }, 60000);
 
@@ -124,10 +127,11 @@ describe('OAuth flows', () => {
     });
     expect(destination!.authTokens![0].error).toBeNull();
 
-    const result = await BusinessPartner.requestBuilder()
+    const result = await businessPartnerApi
+      .requestBuilder()
       .getAll()
       .top(1)
-      .execute(destination! as any);
+      .execute(destination!);
     expect(result.length).toBe(1);
   }, 60000);
 
@@ -149,7 +153,7 @@ describe('OAuth flows', () => {
       jwt: accessToken.provider
     });
     expect(destination!.authTokens![0]!.error).toBeUndefined();
-    assertCommenTokenUrl(destination! as any);
+    assertCommenTokenUrl(destination!);
   }, 60000);
 
   xit('OAuth2ClientCredentials: Provider Destination (dedicated token service url)', async () => {
@@ -167,7 +171,7 @@ describe('OAuth flows', () => {
       jwt: accessToken.subscriber
     });
     expect(destination!.authTokens![0]!.error).toBeNull();
-    assertDedicatedTokenUrl(destination! as any);
+    assertDedicatedTokenUrl(destination!);
   }, 60000);
 
   xit('OAuth2ClientCredentials: Provider Destination & Provider Jwt (workflow)', async () => {
@@ -178,7 +182,7 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination! as any, {
+    const response = await executeHttpRequest(destination!, {
       method: 'get'
     });
 
@@ -194,7 +198,7 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination! as any, {
+    const response = await executeHttpRequest(destination!, {
       method: 'get'
     });
 
@@ -214,7 +218,7 @@ describe('OAuth flows', () => {
       jwt: accessToken.provider
     });
     expect(destination!.authTokens![0].error).toBeNull();
-    assertCommenTokenUrl(destination! as any);
+    assertCommenTokenUrl(destination!);
   }, 60000);
 
   xit('OAuth2UserTokenExchange: Subscriber destination and Subscriber Jwt', async () => {
@@ -253,7 +257,7 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toMatch(
       /Invalid issuer.*token did not match expected/
     );
-    assertDedicatedTokenUrl(destination! as any);
+    assertDedicatedTokenUrl(destination!);
   }, 60000);
 
   xit('OAuth2JWTBearer: Provider Destination & Provider Token (workflow call)', async () => {
@@ -265,7 +269,7 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination! as any, {
+    const response = await executeHttpRequest(destination!, {
       method: 'get'
     });
 
@@ -305,10 +309,11 @@ describe('OAuth flows', () => {
       destinationName: systems.s4.providerClientCert
     });
     expect(destination!.certificates!.length).toBe(1);
-    const bps = await BusinessPartner.requestBuilder()
+    const bps = await businessPartnerApi
+      .requestBuilder()
       .getAll()
       .top(5)
-      .execute(destination! as any);
+      .execute(destination!);
     expect(bps.length).toBeGreaterThan(0);
   }, 10000);
 
@@ -323,10 +328,11 @@ describe('OAuth flows', () => {
       destinationName: systems.s4.providerClientCert
     });
     expect(destination!.certificates!.length).toBe(1);
-    const bps = await BusinessPartner.requestBuilder()
+    const bps = await businessPartnerApi
+      .requestBuilder()
       .getAll()
       .top(5)
-      .execute(destination! as any);
+      .execute(destination!);
     expect(bps.length).toBeGreaterThan(0);
   }, 60000);
 
@@ -383,6 +389,13 @@ describe('OAuth flows', () => {
     const decoded = decodeJwt(token);
     expect(decoded.scope.length).toBeGreaterThan(0);
   }, 60000);
+
+  xit('PrivateLink: Provider Destination', async () => {
+    const myDestination = await getDestination({
+      destinationName: systems.destination.providerBasicPrivateLink
+    });
+    expect(myDestination?.proxyType).toEqual('PrivateLink');
+  });
 
   xit('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const iasToken = accessToken.iasProvider;

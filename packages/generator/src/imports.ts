@@ -7,6 +7,9 @@ import {
   VdmProperty
 } from './vdm-types';
 
+/**
+ * @internal
+ */
 export const potentialExternalImportDeclarations = [
   ['moment', 'Moment', 'Duration'],
   ['bignumber.js', 'BigNumber']

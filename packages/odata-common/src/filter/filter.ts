@@ -34,7 +34,6 @@ export type FilterOperatorByType<FieldT> = FieldT extends string
  * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
  * @internal
  */
-// TODO 2.0 rename to BinaryFilter
 export class Filter<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,

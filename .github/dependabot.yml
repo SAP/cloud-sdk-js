@@ -1,6 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: npm
+    target-branch: 1.0-main
     directory: '/'
     schedule:
       interval: daily
@@ -15,6 +16,4 @@ updates:
       interval: daily
       time: '01:00'
       timezone: 'Europe/Berlin'
-    allowed_updates:
-      - match:
-          update_type: 'security'
+    open-pull-requests-limit: 10

@@ -1,4 +1,4 @@
-import { sanitizeDestination } from './destination';
+import { DestinationOrFetchOptions, sanitizeDestination } from './destination';
 import { Destination } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
 import { searchServiceBindingForDestination } from './destination-from-vcap';
@@ -7,6 +7,7 @@ import {
   DestinationFetchOptions,
   isDestinationFetchOptions
 } from './destination-accessor-types';
+import { searchRegisteredDestination } from './destination-from-registration';
 
 /**
  * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination
@@ -21,7 +22,7 @@ import {
  * @returns A promise resolving to the requested destination on success.
  */
 export async function useOrFetchDestination(
-  destination: Destination | DestinationFetchOptions
+  destination: DestinationOrFetchOptions
 ): Promise<Destination | null> {
   return isDestinationFetchOptions(destination)
     ? getDestination(destination)
@@ -44,6 +45,7 @@ export async function getDestination(
 ): Promise<Destination | null> {
   return (
     searchEnvVariablesForDestination(options) ||
+    searchRegisteredDestination(options) ||
     searchServiceBindingForDestination(options.destinationName) ||
     getDestinationFromDestinationService(options)
   );

@@ -20,7 +20,6 @@ import {
   TestActionImportNoParameterComplexReturnType2Parameters
 } from './action-imports';
 import { BigNumber } from 'bignumber.js';
-import { batch, changeset } from './BatchRequest';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,
@@ -29,6 +28,7 @@ import {
   mergeDefaultDeSerializersWith,
   Time
 } from '@sap-cloud-sdk/odata-v4';
+import { batch, changeset } from './BatchRequest';
 
 export function multipleSchemasService<
   BinaryT = string,

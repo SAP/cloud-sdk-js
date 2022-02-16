@@ -1,10 +1,11 @@
-import { EntityApi, EntityBase } from '../entity-base';
+import { EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
 import { Filterable } from '../filter';
 import { Expandable } from '../expandable';
 import { Orderable } from '../order';
 import { ODataUri } from '../uri-conversion';
 import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithGetAllRestrictions } from './odata-request-traits';
 
@@ -25,7 +26,11 @@ export class ODataGetAllRequestConfig<
   filter: Filterable<EntityT, DeSerializersT>;
   orderBy: Orderable<EntityT>[];
   selects: Selectable<EntityT, DeSerializersT>[];
-  expands: Expandable<EntityT, DeSerializersT>[];
+  expands: Expandable<
+    EntityT,
+    DeSerializersT,
+    EntityApi<EntityBase, DeSerializersT>
+  >[];
 
   /**
    * Creates an instance of ODataGetAllRequestConfig.

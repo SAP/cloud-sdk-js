@@ -8,24 +8,24 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "files": [
     "**/*.js",
     "**/*.js.map",
     "**/*.d.ts",
     "**/d.ts.map"
   ],
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
   "scripts": {
     "compile": "npx tsc"
   },
   "dependencies": {
-    "@sap-cloud-sdk/openapi": "^1.50.0"
+    "@sap-cloud-sdk/openapi": "^2.0.0"
   },
   "peerDependencies": {
-    "@sap-cloud-sdk/openapi": "^1.50.0"
+    "@sap-cloud-sdk/openapi": "^2.0.0"
   },
   "devDependencies": {
     "typescript": "~4.1.2"

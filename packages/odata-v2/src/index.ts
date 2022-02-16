@@ -1,3 +1,10 @@
+/* eslint-disable tsdoc/syntax */
+/**
+ * [[include:odata-v2/README.md]]
+ * @packageDocumentation
+ * @module @sap-cloud-sdk/odata-v2
+ */
+
 export {
   filterFunctions,
   replace,
@@ -30,13 +37,16 @@ export { Entity } from './entity';
 export { CustomField } from './selectable';
 
 export {
-  CustomDeSerializers,
   defaultDeSerializers,
   edmToTs,
   entityDeserializer,
   mergeDefaultDeSerializersWith
 } from './de-serializers';
 
-export type { DefaultDeSerializers, DeSerializers } from './de-serializers';
+export type {
+  CustomDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers
+} from './de-serializers';
 
 export * from './common';

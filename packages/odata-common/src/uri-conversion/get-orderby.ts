@@ -1,5 +1,7 @@
 import { EntityBase } from '../entity-base';
 import { Orderable, OrderLink, Order } from '../order';
+import { DeSerializers } from '../de-serializers';
+import { EntityApi } from '../entity-api';
 
 /**
  * Get an object containing the given order bys as query parameter, or an empty object if none was given.
@@ -19,12 +21,18 @@ export function getOrderBy<EntityT extends EntityBase>(
   return {};
 }
 
-function getODataOrderByExpressions<OrderByEntityT extends EntityBase>(
-  orderBys: Orderable<OrderByEntityT>[],
+function getODataOrderByExpressions<
+  OrderByEntityT extends EntityBase,
+  LinkedEntityApiT extends EntityApi<EntityBase>
+>(
+  orderBys: Orderable<OrderByEntityT, LinkedEntityApiT>[],
   parentFieldNames: string[] = []
 ): string[] {
   return orderBys.reduce(
-    (expressions: string[], orderBy: Orderable<OrderByEntityT>) => {
+    (
+      expressions: string[],
+      orderBy: Orderable<OrderByEntityT, LinkedEntityApiT>
+    ) => {
       if (orderBy instanceof OrderLink) {
         return [
           ...expressions,
@@ -42,9 +50,10 @@ function getODataOrderByExpressions<OrderByEntityT extends EntityBase>(
 
 function getOrderByExpressionForOrderLink<
   OrderByEntityT extends EntityBase,
-  LinkedEntityT extends EntityBase
+  DeSerializersT extends DeSerializers,
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 >(
-  orderBy: OrderLink<OrderByEntityT, LinkedEntityT>,
+  orderBy: OrderLink<OrderByEntityT, LinkedEntityApiT>,
   parentFieldNames: string[] = []
 ): string {
   return getODataOrderByExpressions(orderBy.orderBy, [

@@ -5,13 +5,13 @@ import { AirportsApi } from './AirportsApi';
 import { GetNearestAirportParameters } from './function-imports';
 import { ResetDataSourceParameters } from './action-imports';
 import { BigNumber } from 'bignumber.js';
-import { batch, changeset } from './BatchRequest';
 import { Moment, Duration } from 'moment';
 import {
   DeSerializers,
   DefaultDeSerializers,
   Time
 } from '@sap-cloud-sdk/odata-v4';
+import { batch, changeset } from './BatchRequest';
 export declare function microsoftODataServiceSampleTrippinInMemoryModelsService<
   BinaryT = string,
   BooleanT = boolean,

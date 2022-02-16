@@ -258,7 +258,7 @@ function createImportsForActions(actions: EdmxAction[]): EdmxActionImport[] {
 }
 
 function createServiceWithActions(): ServiceMetadata {
-  const entitySet = createTestEntitySet('TestEntity', 'TestEntityType', []);
+  const entitySet = createTestEntitySet('TestEntity', 'ns.TestEntityType', []);
   const entityType = createEntityType('TestEntityType', [], []);
   const actionNoReturnNoParameter = createAction(
     'ActionNoReturnNoParameter',
@@ -267,7 +267,7 @@ function createServiceWithActions(): ServiceMetadata {
   );
   const actionWithReturnWithParameter = createAction(
     'ActionWithReturnWithParameter',
-    'TestEntityType',
+    'ns.TestEntityType',
     [{ Name: 'StringParameter', Type: 'Edm.String', Nullable: 'false' }]
   );
   return createTestServiceData([entityType], [entitySet], undefined, [

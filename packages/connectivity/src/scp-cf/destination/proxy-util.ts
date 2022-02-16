@@ -2,7 +2,7 @@ import { AgentOptions } from 'https';
 import { URL } from 'url';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, sanitizeRecord } from '@sap-cloud-sdk/util';
 import { Protocol } from '../protocol';
 import { ProxyConfiguration } from '../connectivity-service-types';
 import { basicHeader } from '../authorization-header';
@@ -29,6 +29,14 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
     );
     return ProxyStrategy.ON_PREMISE_PROXY;
   }
+
+  if (destination.proxyType === 'PrivateLink') {
+    logger.info(
+      'PrivateLink destination proxy settings will be used. This is not supported in local/CI/CD environments.'
+    );
+    return ProxyStrategy.PRIVATELINK_PROXY;
+  }
+
   const destinationProtocol = getProtocolOrDefault(destination);
   if (!getProxyEnvValue(destinationProtocol)) {
     logger.info(
@@ -160,10 +168,12 @@ export function parseProxyEnv(
     if (proxyConfig) {
       const loggableConfig = {
         ...proxyConfig,
-        headers: proxyConfig.headers
-          ? 'Authorization header present. Not logged for security reasons.'
-          : 'No authorization header present.'
+        headers: sanitizeRecord(
+          proxyConfig.headers || {},
+          'Authorization header present. Not logged for security reasons.'
+        )
       };
+
       logger.debug(
         `Used Proxy Configuration: ${JSON.stringify(loggableConfig, null, 2)}.`
       );
@@ -257,5 +267,6 @@ export function proxyAgent(
 export enum ProxyStrategy {
   NO_PROXY,
   ON_PREMISE_PROXY,
-  INTERNET_PROXY
+  INTERNET_PROXY,
+  PRIVATELINK_PROXY
 }

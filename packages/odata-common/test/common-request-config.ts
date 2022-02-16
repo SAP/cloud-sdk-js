@@ -23,7 +23,11 @@ import {
   defaultDeSerializers,
   entityDeserializer
 } from '../src/internal';
-import { CommonEntity, commonEntityApi } from './common-entity';
+import {
+  CommonEntity,
+  CommonEntityApi,
+  commonEntityApi
+} from './common-entity';
 
 export const commonUriConverter = createUriConverter(defaultDeSerializersRaw);
 export const commonODataUri = createODataUri(
@@ -41,7 +45,7 @@ const commonEntityDeserializer = entityDeserializer(
 );
 
 interface Options {
-  filter?: Filterable<CommonEntity, any>;
+  filter?: Filterable<CommonEntity, DefaultDeSerializers, CommonEntityApi>;
   headers?: Record<string, any>;
   keys?: Record<string, any>;
   payload?: EntityBase;

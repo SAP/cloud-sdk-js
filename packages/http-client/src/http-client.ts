@@ -140,7 +140,7 @@ function getEncodedParameters(
 ): OriginOptionsInternal {
   return {
     custom: parameters.custom,
-    requestConfig: encodeRequestQueryParameters(parameters.requestConfig),
+    requestConfig: parameters.requestConfig, //sdk parameters are encoded
     destinationProperty: encodeRequestQueryParameters(
       parameters.destinationProperty
     ),

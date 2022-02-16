@@ -25,7 +25,7 @@
     "@sap-cloud-sdk/openapi-generator": "^2.0.1",
     "@sap/cloud-sdk-vdm-business-partner-service": "^2.0.0",
     "bignumber.js": "^9.0.0",
-    "execa": "^5.0.0",
+    "execa": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
     "nock": "^13.0.11",
     "winston": "^3.3.3"

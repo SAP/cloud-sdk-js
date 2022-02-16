@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@types/yargs": "^17.0.0",
-    "execa": "^5.0.0",
+    "execa": "^6.1.0",
     "jest-extended": "^2.0.0",
     "mock-fs": "^5.0.0",
     "nock": "^13.0.11"

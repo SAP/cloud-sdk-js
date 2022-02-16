@@ -27,7 +27,7 @@
     "@sap-cloud-sdk/util": "^2.0.1",
     "@sap/cds": "^5.8.0",
     "@sap/cds-dk": "4.4.2",
-    "execa": "^5.0.0",
+    "execa": "^6.1.0",
     "express": "^4.17.1",
     "fs-extra": "^10.0.0",
     "json-schema-faker": "^0.5.0-rcv.30",

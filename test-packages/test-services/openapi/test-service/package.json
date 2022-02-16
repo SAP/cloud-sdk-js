@@ -22,10 +22,10 @@
     "compile": "npx tsc"
   },
   "dependencies": {
-    "@sap-cloud-sdk/openapi": "^2.0.0"
+    "@sap-cloud-sdk/openapi": "^2.0.1"
   },
   "peerDependencies": {
-    "@sap-cloud-sdk/openapi": "^2.0.0"
+    "@sap-cloud-sdk/openapi": "^2.0.1"
   },
   "devDependencies": {
     "typescript": "~4.1.2"

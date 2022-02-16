@@ -46,6 +46,7 @@ Blog: TBD<br>
 - [openapi-generator] Add `@sap-cloud-sdk/openapi` as a dependency to the OpenAPI generator to fix errors during generation with `--transpile` enabled.
 - [connectivity] Fix an issue when using registering destinations with a JWT but without XSUAA service binding.
 - [connectivity] Fix a missing export `DestinationSelectionStrategies`.
+- [odata-common] Fix URL encoding for `getByKey`
 
 # 2.0.0
 

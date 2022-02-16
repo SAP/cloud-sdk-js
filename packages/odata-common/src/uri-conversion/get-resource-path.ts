@@ -108,7 +108,7 @@ export function createGetResourcePathForKeys(
     schema: Record<string, any>
   ): string {
     const edmType = schema[upperCaseSnakeCase(key)].edmType;
-    return `${key}=${uriConverter(value, edmType)}`;
+    return `${key}=${encodeURIComponent(uriConverter(value, edmType))}`;
   }
 
   function validateKeys<EntityT extends EntityBase>(

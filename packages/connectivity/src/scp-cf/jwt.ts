@@ -2,7 +2,7 @@ import { IncomingMessage } from 'http';
 import * as xssec from '@sap/xssec';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { decode } from 'jsonwebtoken';
-import { Jwt, JwtPayload,JwtWithPayloadObject } from './jsonwebtoken-type';
+import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
 import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
 import { Cache } from './cache';
@@ -135,26 +135,6 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
  *  @internal
  */
 export const verificationKeyCache = new Cache<TokenKey>({ minutes: 15 });
-
-function buildCacheKey(
-  jku: string | undefined,
-  kid: string | undefined
-): string {
-  if (!jku || !kid) {
-    throw new Error(
-      'Could not build cache key. `jku` and/or `kid` is not defined.'
-    );
-  }
-  return jku + kid;
-}
-
-function sanitizeVerificationKey(key: string) {
-  // Add new line after -----BEGIN PUBLIC KEY----- and before -----END PUBLIC KEY----- because the lib won't work otherwise
-  return key
-    .replace(/\n/g, '')
-    .replace(/(KEY\s*-+)([^\n-])/, '$1\n$2')
-    .replace(/([^\n-])(-+\s*END)/, '$1\n$2');
-}
 
 /**
  * Get the issuer URL of a decoded JWT.

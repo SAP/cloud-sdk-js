@@ -34,7 +34,7 @@
   "dependencies": {
     "@sap-cloud-sdk/util": "^1.50.0",
     "@sap/xsenv": "^3.0.0",
-    "@sap/xssec": "^3.2.12",
+    "@sap/xssec": "^3.2.13",
     "axios": "^0.24.0",
     "http-proxy-agent": "^5.0.0",
     "https-proxy-agent": "^5.0.0",
@@ -42,7 +42,6 @@
     "opossum": "^6.0.0"
   },
   "devDependencies": {
-    "rewire" : "^6.0.0",
     "@types/opossum": "^6.2.0",
     "nock": "^13.0.11"
   }

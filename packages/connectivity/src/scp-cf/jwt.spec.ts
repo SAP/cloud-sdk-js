@@ -90,7 +90,7 @@ describe('jwt', () => {
       await expect(
         verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).resolves.toEqual(jwtPayload);
-    }, 600000);
+    });
 
     it('succeeds and decodes for correct inline key', async () => {
       nock(jku)

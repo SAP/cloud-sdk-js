@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [core] Announce 2.0 release in the `postinstall` script.
 
 ## Fixed Issues
 

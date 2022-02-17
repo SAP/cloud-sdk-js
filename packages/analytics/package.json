@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/analytics",
-  "version": "1.54.0",
+  "version": "1.54.1",
   "description": "SAP Cloud SDK Analytics Usage",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -30,11 +30,11 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^1.54.0",
+    "@sap-cloud-sdk/util": "^1.54.1",
     "axios": "^0.26.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/core": "^1.54.0",
+    "@sap-cloud-sdk/core": "^1.54.1",
     "nock": "^13.0.11"
   }
 }

@@ -22,12 +22,22 @@
 
 ## Improvements
 
-- [core] Announce 2.0 release in the `postinstall` script.
+-
 
 ## Fixed Issues
 
 -
 
+
+# 1.54.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.54.1<br>
+Blog: TBD<br>
+
+## Improvements
+
+- [core] Announce 2.0 release in the `postinstall` script.
 
 # 1.54.0
 

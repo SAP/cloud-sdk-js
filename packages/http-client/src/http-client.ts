@@ -135,6 +135,7 @@ function encodeRequestQueryParameters(
     );
   }
 }
+
 function getEncodedParameters(
   parameters: OriginOptionsInternal
 ): OriginOptionsInternal {

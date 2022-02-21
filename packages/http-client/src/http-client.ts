@@ -129,7 +129,7 @@ function encodeRequestQueryParameters(
     return Object.keys(parameter).reduce(
       (encodedParams, key) => ({
         ...encodedParams,
-        [key]: encodeURIComponent(parameter[key])
+        [encodeURIComponent(key)]: encodeURIComponent(parameter[key])
       }),
       {}
     );

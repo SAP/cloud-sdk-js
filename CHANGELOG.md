@@ -23,6 +23,7 @@
 ## Improvements
 
 - [connectivity] Add details to error message for missing "URL" properties in destinations.
+- [connectivity] Use the cache of `xssec` library to cache verification certificates.
 - [util] Add `sanitizeRecord` function to `cloud-sdk-logger` which replaces potentially sensitive information in a `Record<string, any>` based on a list of sensistive keys.
 - [generator] The new CLI option `licenceInPackageJson` offers the possibility to specify the license property in a generated `package.json`.     
 

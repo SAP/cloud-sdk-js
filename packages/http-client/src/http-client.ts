@@ -126,12 +126,11 @@ function encodeRequestQueryParameters(
   parameter: Record<string, string> | undefined
 ): Record<string, string> | undefined {
   if (parameter) {
-    return Object.keys(parameter).reduce(
-      (encodedParams, key) => ({
-        ...encodedParams,
-        [encodeURIComponent(key)]: encodeURIComponent(parameter[key])
-      }),
-      {}
+    return Object.fromEntries(
+      Object.entries(parameter).map(([key, value]) => [
+        encodeURIComponent(key),
+        encodeURIComponent(parameter[key])
+      ])
     );
   }
 }
@@ -140,8 +139,7 @@ function getEncodedParameters(
   parameters: OriginOptionsInternal
 ): OriginOptionsInternal {
   return {
-    custom: parameters.custom,
-    requestConfig: parameters.requestConfig, // sdk parameters are encoded
+    ...parameters, // sdk parameters are encoded and custom parameters should be taken as they are
     destinationProperty: encodeRequestQueryParameters(
       parameters.destinationProperty
     ),
@@ -207,7 +205,7 @@ async function getMergedHeaders(
 function getMergedAndEncodedParameter(
   destination: Destination,
   paramsOriginOptions?: OriginOptions
-): Record<string, any> | undefined {
+): Record<string, string> | undefined {
   const queryParametersDestinationProperty = getAdditionalQueryParameters(
     (destination.originalProperties as DestinationConfiguration) || {}
   ).queryParameters;

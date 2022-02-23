@@ -86,7 +86,7 @@ describe('jwt', () => {
     });
 
     it('succeeds and decodes for correct key', async () => {
-      nock(jku).get('/').times(999).reply(200, responseWithPublicKey());
+      nock(jku).get('/').reply(200, responseWithPublicKey());
       await expect(
         verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).resolves.toEqual(jwtPayload);

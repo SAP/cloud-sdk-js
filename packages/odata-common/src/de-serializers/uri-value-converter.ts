@@ -14,6 +14,8 @@ export function isInfOrNan(value: string | number): boolean {
 }
 
 /**
+ * As per OData URL Syntax rules, single quotes within string literals must be represented as two consecutive single quotes.
+ * encodeURIComponent does not encode single quotes on the high level get-filter and get-resource-path.
  * @internal
  */
 export function convertToUriForEdmString(value: any): string {

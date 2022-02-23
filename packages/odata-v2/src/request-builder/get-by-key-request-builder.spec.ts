@@ -15,6 +15,21 @@ import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 describe('GetByKeyRequestBuilder', () => {
   describe('url', () => {
+    it('returns correct url with URI encoding', async () => {
+      const entity = createTestEntity({
+        KeyPropertyGuid: uuid(),
+        KeyPropertyString: 'DEV?TEST06'
+      });
+      const expected =
+        /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='DEV%3FTEST06'\)\?\$format=json$/;
+
+      const actual = await new GetByKeyRequestBuilder(testEntityApi, {
+        KeyPropertyGuid: entity.keyPropertyGuid,
+        KeyPropertyString: entity.keyPropertyString
+      }).url(defaultDestination);
+      expect(actual).toMatch(expected);
+    });
+
     it('returns correct url with appendPath', async () => {
       const entityData = createOriginalTestEntityData1();
       const entity = createTestEntity(entityData);

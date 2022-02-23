@@ -22,8 +22,23 @@
 
 ## Improvements
 
+-
+
+## Fixed Issues
+
+-
+
+
+# 2.1.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/2.1.0<br>
+Blog: TBD<br>
+
+## Improvements
+
 - [connectivity] Add details to error message for missing "URL" properties in destinations.
-- [util] Add `sanitizeRecord` function to `cloud-sdk-logger` which replaces potentially sensitive information in a `Record<string, any>` based on a list of sensistive keys.
+- [util] Add `sanitizeRecord` function to `cloud-sdk-logger` which replaces potentially sensitive information in a `Record<string, any>` based on a list of sensitive keys.
 - [generator] The new CLI option `licenceInPackageJson` offers the possibility to specify the license property in a generated `package.json`.     
 
 ## Fixed Issues
@@ -31,6 +46,7 @@
 - [openapi-generator] Add `@sap-cloud-sdk/openapi` as a dependency to the OpenAPI generator to fix errors during generation with `--transpile` enabled.
 - [connectivity] Fix an issue when using registering destinations with a JWT but without XSUAA service binding.
 - [connectivity] Fix a missing export `DestinationSelectionStrategies`.
+- [odata-common] Fix URL encoding for `getByKey`
 
 # 2.0.0
 

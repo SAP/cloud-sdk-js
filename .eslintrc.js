@@ -1,6 +1,6 @@
 module.exports = {
   env: { node: true, jest: true },
-  plugins: ['eslint-plugin-tsdoc'],
+  plugins: ['tsdoc', 'jsdoc'],
   extends: ['@sap-cloud-sdk'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -42,6 +42,42 @@ module.exports = {
   ],
   rules: {
     radix: 'off',
-    'tsdoc/syntax': 'error'
+    'tsdoc/syntax': 'off',
+    'valid-jsdoc': 'off',
+
+    // TODO: The jsdoc rules should be moved to the eslint config and all of them should be enabled as errors over time.
+    'jsdoc/check-alignment': 'error',
+    'jsdoc/check-indentation': 'error',
+    'jsdoc/check-param-names': 'warn',
+    'jsdoc/check-syntax': 'error',
+    'jsdoc/multiline-blocks': 'error',
+    'jsdoc/newline-after-description': ['error', 'never'],
+    'jsdoc/no-bad-blocks': 'error',
+    'jsdoc/no-defaults': 'error',
+    'jsdoc/no-types': 'error',
+    'jsdoc/require-asterisk-prefix': 'error',
+    'jsdoc/require-description-complete-sentence': 'warn',
+    'jsdoc/require-description': ['error', { exemptedBy: ['experimental'] }],
+    'jsdoc/require-hyphen-before-param-description': 'error',
+    'jsdoc/require-jsdoc': ['warn', { publicOnly: true }],
+    'jsdoc/require-param-description': 'error',
+    'jsdoc/require-param-name': 'error',
+    'jsdoc/require-param': 'warn',
+    'jsdoc/require-returns-check': 'error',
+    'jsdoc/require-returns-description': 'error',
+    'jsdoc/require-returns': 'warn',
+    'jsdoc/tag-lines': ['error', 'never']
+  },
+  settings: {
+    jsdoc: {
+      ignoreInternal: true
+    }
   }
 };
+
+// requireReturn: false,
+//         requireReturnType: false,
+//         requireParamType: false,
+//         prefer: {
+//           return: 'returns'
+//         }

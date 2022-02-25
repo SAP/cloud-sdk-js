@@ -10,9 +10,3 @@ This should not happen, and should be treated as edge case.
 When necessary, please avoid the following issue:
 
 - when publishing new VDMs for 1.0, the `latest` tag should still point to version 2. Maybe talking to the assembly team for additional information as they handle the bom PR. The worst case would be we release version 1 VDMs followed by version 2 VDMs, as a work around.
-
-## How to plan the support of releasing 1.0 VDMs
-
-1. Migrate our release processes to Azure first to avoid unnecessary overheads for the migration.
-2. Create a ticket and prioritize it.
-3. Move the ticket to the input queue.

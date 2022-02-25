@@ -36,7 +36,7 @@ export async function useOrFetchDestination(
  * - from the destination service
  *
  * If you want to get a destination only from a specific source, use the corresponding function directly
- *  (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).
+ * (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).
  * @param options - The options to retrieve the destination.
  * @returns A promise returning the requested destination on success.
  */

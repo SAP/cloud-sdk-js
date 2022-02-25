@@ -52,7 +52,6 @@ export interface DestinationForServiceBindingsOptions {
 /**
  * Represents the JSON object for a given service binding as obtained from the VCAP_SERVICE environment variable.
  * To see service bindings, run `cf env <app-name>` in the terminal. This will produce output like this:
- *
  * ```
  * {
  * ...
@@ -66,9 +65,7 @@ export interface DestinationForServiceBindingsOptions {
  *     ]
  *   }
  * }
- *
  * ```
- *
  * In this example, the key "s4-hana-cloud" refers to an array of service bindings.
  * @internal
  */
@@ -179,7 +176,8 @@ function xfS4hanaCloudBindingToDestination(
   };
 }
 
-/*
+// eslint-disable-next-line valid-jsdoc
+/**
  * @internal
  */
 export function searchServiceBindingForDestination(

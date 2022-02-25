@@ -3,6 +3,10 @@ import {
   mergeIgnoreCase,
   VALUE_IS_UNDEFINED
 } from '@sap-cloud-sdk/util';
+import {
+  encodeDestinationParameters,
+  ParameterEncoder
+} from '@sap-cloud-sdk/http-client/internal';
 
 /**
  * @internal
@@ -25,6 +29,8 @@ export abstract class ODataRequestConfig {
     'content-type': 'application/json',
     accept: 'application/json'
   };
+
+  readonly parameterEncoder: ParameterEncoder = encodeDestinationParameters;
 
   private _customHeaders: Record<string, string> = {};
   private _customQueryParameters: Record<string, string> = {};

@@ -67,7 +67,6 @@ export interface HttpRequestConfigBase {
   proxy?: false;
   httpAgent?: any;
   httpsAgent?: any;
-  //TODO version 3.0 make the encodeAllParameters function the default encoder for http-client. The OData and OpenApi explicitly set their own decoder
   parameterEncoder?: ParameterEncoder;
 }
 

@@ -61,12 +61,12 @@ async function getCompilerOptions(
 }
 
 /**
-For a detailed explanation what is happening here have a look at `0007-public-api-check.md` in the implementation documentation.
-Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
- @param allExportedIndex - names of the object imported by the index.ts
- @param allExportedTypes - exported object by the .d.ts files
- @param verbose - do a lot of detailed output on the packages
- @returns boolean - true if the two sets export the same objects.
+ * For a detailed explanation what is happening here have a look at `0007-public-api-check.md` in the implementation documentation.
+ * Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
+ * @param allExportedIndex - names of the object imported by the index.ts
+ * @param allExportedTypes - exported object by the .d.ts files
+ * @param verbose - do a lot of detailed output on the packages
+ * @returns boolean - true if the two sets export the same objects.
  */
 function compareApisAndLog(
   allExportedIndex: string[],

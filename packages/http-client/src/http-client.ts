@@ -150,7 +150,7 @@ function getEncodedParameters(
   requestConfig: HttpRequestConfigWithOrigin
 ): OriginOptionsInternal {
   const { parameterEncoder } = requestConfig;
-  //TODO version 3.0 make the encodeAllParameters function the default encoder for http-client. The OData and OpenApi explicitly set their own decoder
+  // TODO version 3.0 make the encodeAllParameters function the default encoder for http-client. The OData and OpenApi explicitly set their own decoder
   if (
     !parameterEncoder ||
     parameterEncoder.name === encodeDestinationParameters.name

@@ -14,7 +14,7 @@ module.exports = {
     sourceType: 'module'
   },
   ignorePatterns: ['dist', 'node_modules'],
-  plugins: ['@typescript-eslint', 'import', 'unused-imports'],
+  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'jsdoc'],
   overrides: [
     {
       files: ['**/test/**/*', '**/*.spec.ts'],
@@ -179,16 +179,38 @@ module.exports = {
     'prefer-object-spread': 'error',
     'space-in-parens': ['error', 'never'],
     'spaced-comment': 'error',
-    'valid-jsdoc': [
-      'error',
-      {
-        requireReturn: false,
-        requireReturnType: false,
-        requireParamType: false,
-        prefer: {
-          return: 'returns'
+    'jsdoc/check-alignment': 'error',
+    'jsdoc/check-indentation': 'error',
+    'jsdoc/check-param-names': 'warn',
+    'jsdoc/check-syntax': 'error',
+    'jsdoc/multiline-blocks': 'error',
+    'jsdoc/newline-after-description': ['error', 'never'],
+    'jsdoc/no-bad-blocks': 'error',
+    'jsdoc/no-defaults': 'error',
+    'jsdoc/no-types': 'error',
+    'jsdoc/require-asterisk-prefix': 'error',
+    'jsdoc/require-description-complete-sentence': 'warn',
+    'jsdoc/require-description': ['error', { exemptedBy: ['experimental'] }],
+    'jsdoc/require-hyphen-before-param-description': 'error',
+    'jsdoc/require-jsdoc': ['warn', { publicOnly: true }],
+    'jsdoc/require-param-description': 'error',
+    'jsdoc/require-param-name': 'error',
+    'jsdoc/require-param': 'warn',
+    'jsdoc/require-returns-check': 'error',
+    'jsdoc/require-returns-description': 'error',
+    'jsdoc/require-returns': 'warn',
+    'jsdoc/tag-lines': ['error', 'never']
+  },
+   settings: {
+    jsdoc: {
+      ignoreInternal: true,
+      structuredTags: {
+        'typeparam': {
+          name: 'text',
+          required: ['name'],
+          type: false
         }
       }
-    ]
+    }
   }
 };

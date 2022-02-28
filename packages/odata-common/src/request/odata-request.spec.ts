@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { OriginOptions } from '@sap-cloud-sdk/http-client';
-import { encodeDestinationParameters } from '@sap-cloud-sdk/http-client/internal';
+import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
 import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity, commonEntityApi } from '../../test/common-entity';
 import { DefaultDeSerializers } from '../de-serializers';
@@ -52,7 +52,7 @@ describe('OData Request', () => {
 
   it('should be noParamEncoder', async () => {
     const request = createRequest(ODataGetAllRequestConfig);
-    expect(request.config.parameterEncoder).toBe(encodeDestinationParameters);
+    expect(request.config.parameterEncoder).toBe(encodeTypedClientRequest);
   });
 
   describe('serviceUrl', () => {

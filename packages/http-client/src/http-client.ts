@@ -124,8 +124,8 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
 }
 
 function encodeRequestQueryParameters(
-  parameter: Record<string, string> | undefined
-): Record<string, string> | undefined {
+  parameter: Record<string, any> | undefined
+): Record<string, any> | undefined {
   if (parameter) {
     return Object.fromEntries(
       Object.entries(parameter).map(([key, value]) => [
@@ -141,7 +141,7 @@ function encodeRequestQueryParameters(
  * @returns The parameters as they are without encoding.
  * @internal
  */
-export const encodeDestinationParameters: ParameterEncoder = (
+export const encodeTypedClientRequest: ParameterEncoder = (
   params: Record<string, any>
 ) => params;
 
@@ -150,25 +150,32 @@ function getEncodedParameters(
   requestConfig: HttpRequestConfigWithOrigin
 ): OriginOptionsInternal {
   const { parameterEncoder } = requestConfig;
-  // TODO version 3.0 make the encodeAllParameters function the default encoder for http-client. The OData and OpenApi explicitly set their own decoder
+  // Custom Parameter encoder given->use it
   if (
-    !parameterEncoder ||
-    parameterEncoder.name === encodeDestinationParameters.name
+    parameterEncoder &&
+    parameterEncoder.name !== encodeTypedClientRequest.name
   ) {
-    return {
-      ...parameters, // sdk parameters are encoded and custom parameters should be taken as they are
-      destinationProperty: encodeRequestQueryParameters(
-        parameters.destinationProperty
-      ),
-      destination: encodeRequestQueryParameters(parameters.destination)
-    };
+    return Object.fromEntries(
+      Object.entries(parameters).map(([key, value]) => [
+        key,
+        parameterEncoder(value)
+      ])
+    );
   }
-  return Object.fromEntries(
-    Object.entries(parameters).map(([key, value]) => [
-      key,
-      parameterEncoder(value)
-    ])
-  );
+
+  // If the parameterEncoder is undefined the executeHttpRequest() was used directly -> encode the request Parameters as wel
+  const requestParameterEncoder = !parameterEncoder
+    ? encodeRequestQueryParameters
+    : encodeTypedClientRequest;
+
+  return {
+    custom: parameters.custom,
+    requestConfig: requestParameterEncoder(parameters.requestConfig),
+    destinationProperty: encodeRequestQueryParameters(
+      parameters.destinationProperty
+    ),
+    destination: encodeRequestQueryParameters(parameters.destination)
+  };
 }
 
 /**

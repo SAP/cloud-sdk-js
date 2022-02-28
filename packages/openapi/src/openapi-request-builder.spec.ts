@@ -5,7 +5,7 @@ import {
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
 import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { encodeDestinationParameters } from '@sap-cloud-sdk/http-client/dist/http-client';
+import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,
@@ -48,7 +48,7 @@ describe('openapi-request-builder', () => {
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
         data: undefined,
-        parameterEncoder: encodeDestinationParameters
+        parameterEncoder: encodeTypedClientRequest
       },
       { fetchCsrfToken: false }
     );
@@ -70,7 +70,7 @@ describe('openapi-request-builder', () => {
         headers: { requestConfig: {} },
         params: { requestConfig: { limit: 100 } },
         data: undefined,
-        parameterEncoder: encodeDestinationParameters
+        parameterEncoder: encodeTypedClientRequest
       },
       { fetchCsrfToken: false }
     );
@@ -91,7 +91,7 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeDestinationParameters,
+        parameterEncoder: encodeTypedClientRequest,
         data: {
           limit: 100
         }
@@ -147,7 +147,7 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeDestinationParameters,
+        parameterEncoder: encodeTypedClientRequest,
         data: {
           limit: 100
         }
@@ -171,7 +171,7 @@ describe('openapi-request-builder', () => {
       {
         method: 'get',
         url: '/test',
-        parameterEncoder: encodeDestinationParameters,
+        parameterEncoder: encodeTypedClientRequest,
         headers: {
           custom: { authorization: 'custom-header' },
           requestConfig: {}
@@ -208,7 +208,7 @@ describe('openapi-request-builder', () => {
         url: '/test/%23test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeDestinationParameters,
+        parameterEncoder: encodeTypedClientRequest,
         data: undefined
       },
       { fetchCsrfToken: false }
@@ -229,7 +229,7 @@ describe('openapi-request-builder', () => {
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
         data: undefined,
-        parameterEncoder: encodeDestinationParameters,
+        parameterEncoder: encodeTypedClientRequest,
         responseType: 'arraybuffer'
       },
       { fetchCsrfToken: false }
@@ -250,7 +250,7 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeDestinationParameters,
+        parameterEncoder: encodeTypedClientRequest,
         data: undefined
       },
       { fetchCsrfToken: false }

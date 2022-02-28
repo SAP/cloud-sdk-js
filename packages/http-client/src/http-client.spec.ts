@@ -27,7 +27,7 @@ import {
   encodeAllParameters,
   executeHttpRequest,
   getDefaultHttpRequestOptions,
-  encodeDestinationParameters,
+  encodeTypedClientRequest,
   shouldHandleCsrfToken
 } from './http-client';
 
@@ -807,7 +807,7 @@ sap-client:001`);
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         {
           ...requestWithParameters,
-          parameterEncoder: encodeDestinationParameters
+          parameterEncoder: encodeTypedClientRequest
         },
         destinationWithParameters,
         {} as DestinationHttpRequestConfig
@@ -816,7 +816,7 @@ sap-client:001`);
         method: 'get',
         url: '/api/entity',
         headers: {},
-        parameterEncoder: encodeDestinationParameters,
+        parameterEncoder: encodeTypedClientRequest,
         params: {
           customParam: 'a/b',
           requestParam: 'a/b',

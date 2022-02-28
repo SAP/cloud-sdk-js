@@ -4,7 +4,7 @@ import {
   VALUE_IS_UNDEFINED
 } from '@sap-cloud-sdk/util';
 import {
-  encodeDestinationParameters,
+  encodeTypedClientRequest,
   ParameterEncoder
 } from '@sap-cloud-sdk/http-client/internal';
 
@@ -30,7 +30,7 @@ export abstract class ODataRequestConfig {
     accept: 'application/json'
   };
 
-  readonly parameterEncoder: ParameterEncoder = encodeDestinationParameters;
+  readonly parameterEncoder: ParameterEncoder = encodeTypedClientRequest;
 
   private _customHeaders: Record<string, string> = {};
   private _customQueryParameters: Record<string, string> = {};

@@ -795,7 +795,7 @@ sap-client:001`);
         headers: {},
         params: {
           customParam: 'a/b',
-          requestParam: 'a%23b',
+          requestParam: 'a%2Fb',
           destProp: 'a%23b',
           destUrlProp: 'a%3Fb'
         }
@@ -803,7 +803,7 @@ sap-client:001`);
       expect(actual).toStrictEqual(expected);
     });
 
-    it('should encode query parameters excluding the custom and request ones if the sdkEncoder is use explicitly.', async () => {
+    it('should encode query parameters excluding the custom and request ones if the sdkEncoder is used explicitly.', async () => {
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         {
           ...requestWithParameters,

@@ -7157,10 +7157,10 @@ mute-stream@0.0.8, mute-stream@~0.0.4:
   resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-nanoid@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.2.0.tgz#62667522da6673971cca916a6d3eff3f415ff80c"
-  integrity sha512-fmsZYa9lpn69Ad5eDn7FMcnnSR+8R34W9qJEijxYhTbfOWzr22n1QxCMzXLK+ODyW2973V3Fux959iQoUxzUIA==
+nanoid@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.1.tgz#6347a18cac88af88f58af0b3594b723d5e99bb35"
+  integrity sha512-n6Vs/3KGyxPQd6uO0eH4Bv0ojGSUvuLlIHtC3Y0kEO23YRge8H9x1GCzLn28YX0H66pMkxuaeESFq4tKISKwdw==
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -7656,9 +7656,9 @@ ono@^4.0.11:
     format-util "^1.0.3"
 
 openapi-backend@^5.1.1:
-  version "5.2.0"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.2.0.tgz#23ed50a53f541ec3bbab7bc31d4b0f8824a17db7"
-  integrity sha512-ykzFWC6pOPdw55/Qx7oxncymXh4Vuv+M5QCgaoIo38lAQ+hhzZXKl9AtSQfa6di9g5rKFs2yrGeAzUV7uLv6RQ==
+  version "5.2.1"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.2.1.tgz#e120c72940a1bca1ee3af1cb8b3ee058cbf9d2cc"
+  integrity sha512-JTRk+ytxvSZ+XZRLpfLyNzQnVWEwMZv7Bl9GVHwwaTadcVjuhK/WLg5xpuAvZwtV1LGLDujCc6w9QjEp0BWVHw==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^9.0.7"
     ajv "^8.6.2"
@@ -8190,11 +8190,11 @@ postcss-values-parser@^5.0.0:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.1.7, postcss@^8.2.13:
-  version "8.4.6"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.6.tgz#c5ff3c3c457a23864f32cb45ac9b741498a09ae1"
-  integrity sha512-OovjwIzs9Te46vlEx7+uXB0PLijpwjXGKXjVGGPIGubGpq7uh5Xgf6D6FiJ/SzJMBosHDp6a2hiXOS97iBXcaA==
+  version "8.4.7"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.7.tgz#f99862069ec4541de386bf57f5660a6c7a0875a8"
+  integrity sha512-L9Ye3r6hkkCeOETQX6iOaWZgjp3LL6Lpqm6EtgbKrgqGGteRMNb9vzBfRL96YOSu8o7x3MfIH9Mo5cPJFGrW6A==
   dependencies:
-    nanoid "^3.2.0"
+    nanoid "^3.3.1"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 

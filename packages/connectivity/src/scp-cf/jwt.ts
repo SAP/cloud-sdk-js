@@ -1,18 +1,11 @@
 import { IncomingMessage } from 'http';
-import * as url from 'url';
+import * as xssec from '@sap/xssec';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { decode, verify } from 'jsonwebtoken';
-import {
-  Jwt,
-  JwtHeader,
-  JwtPayload,
-  JwtWithPayloadObject
-} from './jsonwebtoken-type';
+import { decode } from 'jsonwebtoken';
+import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
 import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
-import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { Cache } from './cache';
-import { fetchVerificationKeys } from './verification-keys';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -91,60 +84,6 @@ function validateAuthHeader(header: string | undefined): boolean {
 }
 
 /**
- * Validate the header in the JWT.
- * The header should contain a `jku` and `kid` property.
- * The URL for fetching the verification key (`jku`) should have the same domain as the XSUAA. So if the UUA domain is "authentication.sap.hana.ondemand.com" the URL should be like
- * "http://something.authentication.sap.hana.ondemand.com/somePath" so the host should end with the domain.
- * @param header - JWT header.
- * @param uaaDomain - Domain given in the XSUAA credentials.
- *  @internal
- */
-function validateJwtHeaderForVerification(
-  header: JwtHeader,
-  uaaDomain: string
-): void {
-  if (!header.jku || !header.kid) {
-    throw new Error(
-      'JWT does not contain verification key URL (`jku`) and/or key ID (`kid`).'
-    );
-  }
-  const jkuDomain = url.parse(header.jku).hostname;
-  if (!uaaDomain || !jkuDomain || !jkuDomain.endsWith(uaaDomain)) {
-    throw new Error(
-      `The domains of the XSUAA and verification URL do not match. The XSUAA domain is '${uaaDomain}' and the jku field provided in the JWT is '${jkuDomain}'.`
-    );
-  }
-}
-
-/*
- Currently we cannot use the xssec JWT verification, because it does not work with our caching.
- Users would not be able to disable the cache for single requests and they could not clear the cache anymore.
- Once we use xssec again, some internal behavior will change and it makes sense to document it in the compatibility notes.
- Proposal (subject to change):
- - [core] Use `@sap/xssec` library for token retrieval and JWT verification which behaves slightly different in some edge cases:
-  - Fail JWT verification if audiences (`aud`) and/or zone id (`zid`) are missing on the JWT.
-  - Attempt verification with the verification key in the xsuaa binding, if the xsuaa url and the jku in the JWT don't match, instead of throwing an error directly.
-  - Attempt verification with the verification key in the xsuaa binding, if `jku` or `kid` are not given in the JWT.
- */
-// async function verifyJwtXssec(
-//   token: string,
-//   options: VerifyJwtOptions
-// ): Promise<any> {
-//   const xsuaaService = resolveService('xsuaa').credentials;
-//   if (!options.cacheVerificationKeys) {
-//     // disable cache
-//     xsuaaService.keyCache = {
-//       cacheSize: 0
-//     };
-//   }
-//   return new Promise((resolve, reject) => {
-//     xssec.createSecurityContext(token, xsuaaService, (error, securityContext) =>
-//       error ? reject(error) : resolve(securityContext)
-//     );
-//   });
-// }
-
-/**
  * Verifies the given JWT and returns the decoded payload.
  * @param token - JWT to be verified
  * @param options - Options to control certain aspects of JWT verification behavior.
@@ -155,49 +94,29 @@ export async function verifyJwt(
   token: string,
   options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
-  options = { ...defaultVerifyJwtOptions, ...options };
+  const disableCache = { ...defaultVerifyJwtOptions, ...options }
+    .cacheVerificationKeys
+    ? false
+    : true;
+  const credentials = getXsuaaServiceCredentials(token);
 
-  const creds = getXsuaaServiceCredentials(token);
-  const header = decodeJwtComplete(token).header;
-
-  validateJwtHeaderForVerification(header, creds.uaadomain);
-  const cacheKey = buildCacheKey(header.jku, header.kid);
-
-  if (options.cacheVerificationKeys) {
-    const key = verificationKeyCache.get(cacheKey);
-    if (key) {
-      return verifyJwtWithKey(token, key.value).catch(error => {
-        logger.warn(
-          'Unable to verify JWT with cached key, fetching new verification key.'
-        );
-        logger.warn(`Original error: ${error.message}`);
-
-        return fetchAndCacheKeyAndVerify(creds, header, token, options);
-      });
-    }
-  }
-
-  return fetchAndCacheKeyAndVerify(creds, header, token, options); // Verify only here
-}
-
-async function fetchAndCacheKeyAndVerify(
-  creds: XsuaaServiceCredentials,
-  header: JwtHeader,
-  token: string,
-  options?: VerifyJwtOptions
-): Promise<JwtPayload> {
-  const key = await getVerificationKey(header).catch(error => {
-    throw new ErrorWithCause(
-      'Failed to verify JWT. Could not retrieve verification key.',
-      error
+  const promise = new Promise<JwtPayload>((resolve, reject) => {
+    xssec.createSecurityContext(
+      token,
+      { disableCache, credentials },
+      function (error, securityContext, tokenInfo) {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(tokenInfo.getPayload());
+      }
     );
   });
-
-  if (options?.cacheVerificationKeys) {
-    verificationKeyCache.set(buildCacheKey(header.jku, header.kid), key);
-  }
-
-  return verifyJwtWithKey(token, key.value);
+  return promise
+    .then(data => data)
+    .catch(e => {
+      throw new ErrorWithCause('Failed to verify JWT.', e);
+    });
 }
 
 /**
@@ -211,79 +130,11 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
   cacheVerificationKeys: true
 };
 
-function getVerificationKey(header: JwtHeader): Promise<TokenKey> {
-  if (typeof header.jku !== 'string') {
-    throw Error('The JWT Header did not contain a XSUAA URL');
-  }
-
-  return fetchVerificationKeys(header.jku).then(verificationKeys => {
-    if (!verificationKeys.length) {
-      throw Error(
-        'No verification keys have been returned by the XSUAA service.'
-      );
-    }
-    const verificationKey = verificationKeys.find(
-      key => key.keyId === header.kid
-    );
-    if (!verificationKey) {
-      throw new Error('Could not find verification key for the given key ID.');
-    }
-    return verificationKey;
-  });
-}
-
 /**
  * 15 minutes is the default value used by the xssec lib
  *  @internal
  */
 export const verificationKeyCache = new Cache<TokenKey>({ minutes: 15 });
-
-function buildCacheKey(
-  jku: string | undefined,
-  kid: string | undefined
-): string {
-  if (!jku || !kid) {
-    throw new Error(
-      'Could not build cache key. `jku` and/or `kid` is not defined.'
-    );
-  }
-  return jku + kid;
-}
-
-/**
- * Verifies the given JWT with the given key and returns the decoded payload.
- * @param token - JWT to be verified.
- * @param key - Key to use for verification.
- * @returns A Promise to the decoded and verified JWT.
- *  @internal
- */
-export function verifyJwtWithKey(
-  token: string,
-  key: string
-): Promise<JwtPayload> {
-  return new Promise((resolve, reject) => {
-    verify(token, sanitizeVerificationKey(key), (err, decodedToken) => {
-      if (err) {
-        return reject(new ErrorWithCause('Invalid JWT.', err));
-      }
-      if (!decodedToken) {
-        return reject('Invalid JWT. Token verification yielded `undefined`.');
-      }
-      if (typeof decodedToken === 'string') {
-        return resolve(JSON.parse(decodedToken));
-      }
-      return resolve(decodedToken);
-    });
-  });
-}
-
-function sanitizeVerificationKey(key: string) {
-  // Add new line after -----BEGIN PUBLIC KEY----- and before -----END PUBLIC KEY----- because the lib won't work otherwise
-  return key
-    .replace(/\n/g, '')
-    .replace(/(KEY\s*-+)([^\n-])/, '$1\n$2')
-    .replace(/([^\n-])(-+\s*END)/, '$1\n$2');
-}
 
 /**
  * Get the issuer URL of a decoded JWT.

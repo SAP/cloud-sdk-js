@@ -40,9 +40,8 @@ export class UpdateRequestBuilder<
 
   /**
    * Executes the query.
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
-   * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to the entity once it was updated
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
+   * @returns A promise resolving to the entity once it was updated.
    */
   async execute(destination: DestinationOrFetchOptions): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
@@ -55,7 +54,7 @@ export class UpdateRequestBuilder<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(

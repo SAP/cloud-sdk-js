@@ -37,8 +37,8 @@ type RegisterDestinationOptions = Pick<
  * Registers a destination in a cache for later usage.
  *
  * Throws an error if a destination with the same name as the given test destination already exists.
- * @param destination - A destination to add to the `destinations` cache
- * @param options - Options how to cache the destination
+ * @param destination - A destination to add to the `destinations` cache.
+ * @param options - Options how to cache the destination.
  */
 export function registerDestination(
   destination: DestinationWithName,
@@ -93,9 +93,9 @@ export function searchRegisteredDestination(
 
 /**
  * If a explicit isolation strategy is given by the user this is used. If not the isolation strategy is determined in the following way:
- * If a JWT is given and it contains a user_id the isolation is 'TenantUser'. If no JWT is given or it does not contian a user the isolation is 'Tenant'
+ * If a JWT is given and it contains a user_id the isolation is 'TenantUser'. If no JWT is given or it does not contian a user the isolation is 'Tenant'.
  * @param options - Options passed to register the destination containing the jwt.
- * @returns The isolation strategy
+ * @returns The isolation strategy.
  */
 function isolationStrategy(
   options?: RegisterDestinationOptions
@@ -112,7 +112,7 @@ function isolationStrategy(
  * This method either decodes the given JWT. If the JWT is not given it will use the subdomain if the XSUAA and create a Object with zid this subdomain.
  * This is then passed on to build the cache key.
  * @param options - Options passed to register the destination containing the jwt.
- * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid)
+ * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid).
  */
 function decodedJwtOrZid(
   options?: RegisterDestinationOptions

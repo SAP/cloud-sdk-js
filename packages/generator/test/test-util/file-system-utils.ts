@@ -3,7 +3,7 @@ import { join } from 'path';
 
 /**
  * Removes a directory and its corresponding sub-directories and files.
- * @param directoryPath - Path of the directory to unlink
+ * @param directoryPath - Path of the directory to unlink.
  */
 export function recursiveRemove(directoryPath: string): void {
   if (

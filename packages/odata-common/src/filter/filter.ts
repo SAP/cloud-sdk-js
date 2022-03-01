@@ -27,11 +27,11 @@ export type FilterOperatorByType<FieldT> = FieldT extends string
  * Represents a filter expression to narrow the data on a [[GetAllRequestBuilder]] request for multiple entities that match the specified criteria.
  * A filter refers to the field of an entity and restricts the request based on an operator and a value. `Entity.FIELD_NAME.operator(value)`
  *
- * Example: `Product.NAME.equals('cloud-sdk')` creates a filter for the entity `Product` that matches in case the field `NAME` equals 'cloud-sdk'.
+ * @example `Product.NAME.equals('cloud-sdk')` creates a filter for the entity `Product` that matches in case the field `NAME` equals 'cloud-sdk'.
  *
- * See also: [[Filterable]]
- * @typeparam EntityT - Type of the entity to be filtered on
- * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
+ * See also: [[Filterable]].
+ * @typeparam EntityT - Type of the entity to be filtered on.
+ * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]].
  * @internal
  */
 export class Filter<
@@ -49,10 +49,10 @@ export class Filter<
 
   /**
    * Creates an instance of Filter.
-   * @param field - Name of the field of the entity to be filtered on or a filter function
-   * @param operator - Function to be used for matching
-   * @param value - Value to be used by the operator
-   * @param edmType - EDM type of the field to filter on, needed for custom fields
+   * @param field - Name of the field of the entity to be filtered on or a filter function.
+   * @param operator - Function to be used for matching.
+   * @param value - Value to be used by the operator.
+   * @param edmType - EDM type of the field to filter on, needed for custom fields.
    */
   constructor(
     public field: string | FilterFunction<EntityT, FieldT>,

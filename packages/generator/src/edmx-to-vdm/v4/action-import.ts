@@ -70,7 +70,6 @@ ${actionImportsWithoutActions
 
   return joinedActionImportData;
 }
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

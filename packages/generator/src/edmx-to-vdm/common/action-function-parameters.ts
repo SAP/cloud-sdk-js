@@ -10,7 +10,6 @@ import {
   EdmxFunctionImportV4 as EdmxFunctionImportV4
 } from '../../edmx-parser/v4';
 import { getTypeMappingActionFunction } from '../edmx-to-vdm-util';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

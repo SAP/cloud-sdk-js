@@ -5,7 +5,6 @@ import {
   EdmxEntitySetBase,
   EdmxEntityTypeBase
 } from './edmx-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

@@ -4,7 +4,6 @@ import { ServiceMetadata } from '../../edmx-parser';
 import { VdmEnumType } from '../../vdm-types';
 import { transformEnumTypesBase } from '../common';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

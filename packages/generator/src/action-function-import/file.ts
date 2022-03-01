@@ -11,7 +11,6 @@ import { exportStatement } from './export-statement';
 import { actionImportFunction } from './action';
 import { importDeclarationsAction, importDeclarationsFunction } from './import';
 import { functionImportFunction } from './function';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

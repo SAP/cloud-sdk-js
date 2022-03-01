@@ -4,7 +4,6 @@ import { entityClass } from './class';
 import { entityImportDeclarations, otherEntityImports } from './imports';
 import { entityTypeInterface } from './interface';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

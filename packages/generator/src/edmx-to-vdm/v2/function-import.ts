@@ -12,7 +12,6 @@ import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 const extractResponse = (functionName: string) => (response: string) =>
   `${response}.${functionName}`;
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

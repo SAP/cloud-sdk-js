@@ -4,7 +4,6 @@ import { VdmEntity } from '../vdm-types';
 import { requestBuilderClass } from './class';
 import { requestBuilderImportDeclarations } from './imports';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

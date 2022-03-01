@@ -2,7 +2,6 @@ import fs = require('fs');
 import edm2csn = require('@sap/edm-converters/lib/edmToCsn/lib/main');
 import { VdmServiceMetadata } from '../vdm-types';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

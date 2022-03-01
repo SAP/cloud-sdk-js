@@ -7,7 +7,6 @@ import { generateEntitiesV4 } from './entity';
 import { generateActionImportsV4 } from './action-import';
 import { generateEnumTypesV4 } from './enum-type';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

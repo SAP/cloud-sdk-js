@@ -179,7 +179,7 @@ function xfS4hanaCloudBindingToDestination(
   };
 }
 
-/*
+/**
  * @internal
  */
 export function searchServiceBindingForDestination(

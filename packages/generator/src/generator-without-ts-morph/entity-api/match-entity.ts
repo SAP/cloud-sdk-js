@@ -3,7 +3,7 @@ import {
   VdmServiceMetadata,
   VdmEntity
 } from '../../vdm-types';
-// eslint-disable-next-line valid-jsdoc
+
 /**
  * @internal
  */

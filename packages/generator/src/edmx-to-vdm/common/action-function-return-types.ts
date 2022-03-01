@@ -16,7 +16,6 @@ import {
 import { EdmxReturnType } from '../../edmx-parser/v4';
 import { isNullableProperty } from '../../generator-utils';
 import { getApiName } from '../../generator-without-ts-morph/service';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

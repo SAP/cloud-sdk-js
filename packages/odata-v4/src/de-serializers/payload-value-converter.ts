@@ -1,5 +1,3 @@
-/* eslint-disable valid-jsdoc */
-
 import { EdmTypeShared } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from './de-serializers';
 

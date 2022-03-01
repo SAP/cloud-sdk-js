@@ -4,7 +4,6 @@ import { OpenApiDocumentRefs } from './refs';
 import { parseMediaType } from './media-type';
 import { ParserOptions } from './options';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

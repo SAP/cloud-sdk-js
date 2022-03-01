@@ -6,7 +6,6 @@ import {
   enumTypeImportDeclarations
 } from '../imports';
 import { VdmComplexType } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

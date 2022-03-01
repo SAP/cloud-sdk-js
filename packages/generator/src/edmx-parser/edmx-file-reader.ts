@@ -32,7 +32,6 @@ function parseMetadata(
   };
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

@@ -3,8 +3,6 @@ import { EntityBase } from '../entity-base';
 import { FilterList } from './filter-list';
 import type { Filterable } from './filterable';
 
-/* eslint-disable valid-jsdoc */
-
 /**
  * @internal
  */

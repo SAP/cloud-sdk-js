@@ -15,7 +15,6 @@ import {
   genericEntityCodeSample
 } from './code-samples';
 import { getActionFunctionImport, getODataEntity } from './code-sample-util';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

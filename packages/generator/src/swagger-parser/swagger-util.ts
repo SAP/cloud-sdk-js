@@ -1,6 +1,5 @@
 import { ApiBusinessHubMetadata } from '../vdm-types';
 import { SwaggerMetadata } from './swagger-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

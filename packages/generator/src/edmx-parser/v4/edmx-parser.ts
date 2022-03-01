@@ -20,7 +20,6 @@ import {
   EdmxFunctionImportV4,
   EdmxNavigationPropertyBinding
 } from './edm-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

@@ -1,5 +1,3 @@
-/* eslint-disable valid-jsdoc */
-
 import { URL } from 'url';
 
 /**

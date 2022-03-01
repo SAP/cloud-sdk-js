@@ -11,7 +11,6 @@ import {
   reservedServiceKeywords
 } from './reserved-words';
 
-/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

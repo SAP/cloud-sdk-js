@@ -8,7 +8,6 @@ import { GeneratorOptions } from '../generator-options';
 import { getGenerationAndUsage } from './generation-and-usage';
 import { getServiceDescription } from './pregenerated-lib';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

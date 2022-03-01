@@ -2,7 +2,6 @@ import { ODataVersion, unique } from '@sap-cloud-sdk/util';
 import { Import } from '../../generator-common';
 import { VdmMappedEdmType, VdmProperty } from '../../vdm-types';
 import { potentialExternalImportDeclarations } from '../../imports';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

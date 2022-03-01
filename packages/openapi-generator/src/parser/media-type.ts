@@ -34,7 +34,6 @@ export function parseApplicationJsonMediaType(
   }
 }
 
-/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

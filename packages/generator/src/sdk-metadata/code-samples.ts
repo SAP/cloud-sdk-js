@@ -11,7 +11,6 @@ import { getActionFunctionParams } from './code-sample-util';
 
 const instructionsText =
   'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose "OData Consumption Manual" from the "Helpful Links" menu.';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

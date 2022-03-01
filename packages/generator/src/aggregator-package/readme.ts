@@ -2,7 +2,6 @@ import { unixEOL } from '@sap-cloud-sdk/util';
 import { helpfulLinksSection } from '@sap-cloud-sdk/generator-common/internal';
 import { VdmServiceMetadata } from '../vdm-types';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

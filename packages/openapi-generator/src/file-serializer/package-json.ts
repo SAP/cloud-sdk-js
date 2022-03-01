@@ -35,7 +35,6 @@ export function packageJson(options: PackageJsonOptions): string {
     ) + unixEOL
   );
 }
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

@@ -3,7 +3,6 @@ import {
   VdmFunctionImportReturnType,
   VdmReturnTypeCategory
 } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

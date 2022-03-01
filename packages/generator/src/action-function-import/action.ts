@@ -8,7 +8,6 @@ import { actionImportReturnType } from './return-type';
 
 const parameterName = 'parameters';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

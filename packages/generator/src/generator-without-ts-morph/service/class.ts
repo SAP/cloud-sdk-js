@@ -8,7 +8,6 @@ import {
 } from '../de-serializers-generic-types';
 import { hasEntities } from '../../generator-utils';
 
-/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

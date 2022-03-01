@@ -13,7 +13,6 @@ import {
   SwaggerPathParameter,
   SwaggerProperty
 } from '../swagger-parser';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

@@ -120,8 +120,6 @@ export function getInstallODataErrorMessage(
   }"?`;
 }
 
-/* eslint-disable valid-jsdoc */
-
 /**
  * @internal
  */

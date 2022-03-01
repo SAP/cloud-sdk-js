@@ -1,7 +1,6 @@
 import { PathLike, readFileSync } from 'fs';
 import path from 'path';
 import { SwaggerMetadata, SwaggerPath } from './swagger-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

@@ -22,7 +22,6 @@ import { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
 import { enumTypeForName } from './entity';
 
-/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

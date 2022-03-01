@@ -1,5 +1,3 @@
-/* eslint-disable valid-jsdoc */
-
 import { EdmTypeShared } from '../edm-types';
 import { DeSerializers } from './de-serializers';
 

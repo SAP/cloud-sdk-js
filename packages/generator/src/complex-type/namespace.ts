@@ -6,7 +6,6 @@ import {
   VariableStatementStructure
 } from 'ts-morph';
 import { VdmComplexType } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

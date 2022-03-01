@@ -1,5 +1,4 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

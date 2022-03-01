@@ -4,7 +4,7 @@ import {
   InstructionWithTextAndHeader,
   PregeneratedLibrary
 } from './sdk-metadata-types';
-/* eslint-disable valid-jsdoc */
+
 /**
  * @internal
  */

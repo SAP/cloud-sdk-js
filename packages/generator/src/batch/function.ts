@@ -5,7 +5,6 @@ import {
 } from 'ts-morph';
 import { addLeadingNewline, getFunctionDoc } from '../typedoc';
 import { VdmServiceMetadata } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

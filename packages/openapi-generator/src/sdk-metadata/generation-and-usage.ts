@@ -10,7 +10,6 @@ import {
 import { OpenApiDocument } from '../openapi-types';
 import { apiSpecificCodeSample, genericCodeSample } from './code-sample';
 import { getMainApi, getMainOperation } from './code-sample-util';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

@@ -27,7 +27,6 @@ import {
 } from '../../edmx-parser/v2';
 import { ServiceMetadata } from '../../edmx-parser';
 import { stripNamespace } from '../edmx-to-vdm-util';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

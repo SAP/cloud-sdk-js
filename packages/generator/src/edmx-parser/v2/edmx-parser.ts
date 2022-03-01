@@ -13,7 +13,6 @@ import {
   EdmxEntityTypeV2,
   EdmxFunctionImportV2
 } from './edm-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

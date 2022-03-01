@@ -2,7 +2,6 @@ import { EnumDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmEnumType } from '../vdm-types';
 import { addLeadingNewline, enumDocs } from '../typedoc';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

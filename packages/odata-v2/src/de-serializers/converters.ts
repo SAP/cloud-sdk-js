@@ -1,5 +1,3 @@
-/* eslint-disable valid-jsdoc */
-
 import moment from 'moment';
 import { Time, durationRegexV2 } from '@sap-cloud-sdk/odata-common/internal';
 

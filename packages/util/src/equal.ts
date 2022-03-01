@@ -1,8 +1,5 @@
 import { isNullish } from './nullish';
-// eslint-disable-next-line valid-jsdoc
-/**
- * hidden
- */
+
 export function equalObjects(
   obj1: Record<string, any>,
   obj2: Record<string, any>
@@ -14,10 +11,6 @@ export function equalObjects(
   );
 }
 
-// eslint-disable-next-line valid-jsdoc
-/**
- * hidden
- */
 export function equal<T>(item1: T, item2: T): boolean {
   if (Array.isArray(item1) && Array.isArray(item2)) {
     return equalArrays(item1 as any[], item2 as any[]);

@@ -76,8 +76,6 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
     : destination;
 }
 
-/* eslint-disable valid-jsdoc */
-
 /**
  * @internal
  */

@@ -40,7 +40,6 @@ function wrapRequestBuilderAroundType(
 ) {
   return `${requestBuilderName}<DeSerializersT, ${parameterName}<DeSerializersT>, ${type}>`;
 }
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

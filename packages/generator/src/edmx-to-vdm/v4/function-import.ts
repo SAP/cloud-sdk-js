@@ -71,7 +71,6 @@ function joinFunctionImportData(
   return joinedFunctionImportData;
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

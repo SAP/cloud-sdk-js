@@ -6,7 +6,6 @@ import {
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

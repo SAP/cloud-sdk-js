@@ -4,6 +4,9 @@ import {
   PackageJsonOptions as PackageJsonOptionsBase
 } from '@sap-cloud-sdk/generator-common/internal';
 
+/**
+ * @internal
+ */
 export interface PackageJsonOptions extends PackageJsonOptionsBase {
   sdkAfterVersionScript: boolean;
   oDataVersion: ODataVersion;

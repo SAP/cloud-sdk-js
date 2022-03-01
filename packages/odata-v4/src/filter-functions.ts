@@ -26,7 +26,6 @@ import {
  * Build a filter function to test whether a string is a substring of the other. Evaluates to boolean.
  * @param substr - The substring to test for. This can either be a string, a reference to a field or another filter function.
  * @param str - The string to test. This can either be a string, a reference to a field or another filter function.
- *
  * @returns The newly created filter function
  */
 export function contains<EntityT extends Entity>(
@@ -111,7 +110,6 @@ export function now<EntityT extends Entity>(): NumberFilterFunction<EntityT> {
  * Build a filter function to test whether a set is a subset of the other, i. e. whether the second parameter can be transformed into the first by reordering and / or removing items. Evaluates to boolean.
  * @param subset - The subset to test for. This can either be an array, a reference to a field or another filter function.
  * @param set - The set to test. This can either be an array, a reference to a field or another filter function.
- *
  * @returns The newly created filter function
  */
 export function hasSubset<
@@ -135,7 +133,6 @@ export function hasSubset<
  * Build a filter function to test whether a set is a subsequence of the other, i. e. whether the second parameter can be transformed into the first by removing items. Evaluates to boolean.
  * @param subsequence - The subsequence to test for. This can either be an array, a reference to a field or another filter function.
  * @param sequence - The sequence to test. This can either be an array, a reference to a field or another filter function.
- *
  * @returns The newly created filter function
  */
 export function hasSubsequence<

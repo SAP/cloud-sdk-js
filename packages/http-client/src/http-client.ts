@@ -123,18 +123,6 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   };
 }
 
-function encodeRequestQueryParameters(
-  parameter: Record<string, any> | undefined
-): Record<string, any> | undefined {
-  if (parameter) {
-    return Object.fromEntries(
-      Object.entries(parameter).map(([key, value]) => [
-        encodeURIComponent(key),
-        encodeURIComponent(value)
-      ])
-    );
-  }
-}
 /**
  * This method does nothing and is only there to indicated that the call was made by Odata or OpenApi client and encoding is already done on filter and key parameters.
  * @param params - Parameters which are returned
@@ -145,37 +133,58 @@ export const encodeTypedClientRequest: ParameterEncoder = (
   params: Record<string, any>
 ) => params;
 
+type foo = keyof OriginOptionsInternal;
+
+function encodeQueryParameters(options: {
+  parameterEncoder: ParameterEncoder;
+  parameters: OriginOptionsInternal;
+  exclude: foo[];
+}): OriginOptionsInternal {
+  const { parameterEncoder, parameters, exclude } = options;
+  return Object.fromEntries(
+    Object.entries(parameters).map(([key, value]) =>
+      exclude.includes(key as keyof OriginOptionsInternal)
+        ? [key, value]
+        : [key, value ? parameterEncoder(value) : value]
+    )
+  );
+}
+
+function isGenericClientDefault(
+  parameterEncoder: ParameterEncoder | undefined
+): parameterEncoder is undefined {
+  return !parameterEncoder;
+}
+
+function isTypedClient(
+  parameterEncoder: ParameterEncoder
+): parameterEncoder is typeof encodeTypedClientRequest {
+  return parameterEncoder.name === encodeTypedClientRequest.name;
+}
+
 function getEncodedParameters(
   parameters: OriginOptionsInternal,
   requestConfig: HttpRequestConfigWithOrigin
 ): OriginOptionsInternal {
   const { parameterEncoder } = requestConfig;
-  // Custom Parameter encoder given->use it
-  if (
-    parameterEncoder &&
-    parameterEncoder.name !== encodeTypedClientRequest.name
-  ) {
-    return Object.fromEntries(
-      Object.entries(parameters).map(([key, value]) => [
-        key,
-        parameterEncoder(value)
-      ])
-    );
+  if (isGenericClientDefault(parameterEncoder)) {
+    return encodeQueryParameters({
+      parameters,
+      parameterEncoder: encodeAllParameters,
+      exclude: ['custom']
+    });
   }
 
-  // If the parameterEncoder is undefined the executeHttpRequest() was used directly -> encode the request Parameters as wel
-  const requestParameterEncoder = !parameterEncoder
-    ? encodeRequestQueryParameters
-    : encodeTypedClientRequest;
+  if (isTypedClient(parameterEncoder)) {
+    return encodeQueryParameters({
+      parameters,
+      parameterEncoder: encodeAllParameters,
+      exclude: ['custom', 'requestConfig']
+    });
+  }
 
-  return {
-    custom: parameters.custom,
-    requestConfig: requestParameterEncoder(parameters.requestConfig),
-    destinationProperty: encodeRequestQueryParameters(
-      parameters.destinationProperty
-    ),
-    destination: encodeRequestQueryParameters(parameters.destination)
-  };
+  // Custom encoder provided for generic client -> use it for all origins
+  return encodeQueryParameters({ parameters, parameterEncoder, exclude: [] });
 }
 
 /**

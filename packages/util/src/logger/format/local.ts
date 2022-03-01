@@ -35,7 +35,7 @@ export const local = combine(
  * Gets the stack of the given error if available, otherwise the message.
  * @param info - object to be transformed.
  * @returns the message string to be used.
- * @hidden
+ * @internal
  */
 export function getMessageOrStack(info: TransformableInfo): string {
   return info.stack && info.level === 'error' ? info.stack : info.message;

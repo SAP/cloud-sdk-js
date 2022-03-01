@@ -1,4 +1,3 @@
-/* eslint-disable tsdoc/syntax */
 /**
  * [[include:test-util/README.md]]
  * @packageDocumentation

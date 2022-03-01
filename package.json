@@ -91,7 +91,6 @@
     "eslint-plugin-jest": "^26.0.0",
     "eslint-plugin-jsdoc": "^37.9.4",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-tsdoc": "^0.2.14",
     "eslint-plugin-unused-imports": "^2.0.0",
     "execa": "^5.0.0",
     "glob": "^7.1.6",

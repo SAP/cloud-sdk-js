@@ -1,4 +1,3 @@
-/* eslint-disable tsdoc/syntax */
 /**
  * [[include:temporal-de-serializers/README.md]]
  * @packageDocumentation

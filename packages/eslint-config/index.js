@@ -201,11 +201,11 @@ module.exports = {
     'jsdoc/require-returns': 'warn',
     'jsdoc/tag-lines': ['error', 'never']
   },
-   settings: {
+  settings: {
     jsdoc: {
       ignoreInternal: true,
       structuredTags: {
-        'typeparam': {
+        typeparam: {
           name: 'text',
           required: ['name'],
           type: false

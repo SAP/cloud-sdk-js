@@ -25,7 +25,7 @@
     "@sap-cloud-sdk/test-services-e2e": "^1.54.1",
     "@sap-cloud-sdk/util": "^1.54.1",
     "@sap/cds": "^5.8.0",
-    "@sap/cds-dk": "4.4.2",
+    "@sap/cds-dk": "4.8.1",
     "express": "^4.17.1",
     "json-schema-faker": "^0.5.0-rcv.30",
     "moment": "^2.29.0",

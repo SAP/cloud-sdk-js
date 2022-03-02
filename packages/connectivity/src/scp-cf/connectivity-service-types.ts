@@ -23,7 +23,7 @@ export interface ProxyConfiguration {
   port: number;
 
   /**
-   * The protocol used by the proxy
+   * The protocol used by the proxy.
    *
    */
   protocol: Protocol;

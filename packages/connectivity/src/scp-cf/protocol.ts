@@ -10,7 +10,7 @@ export namespace Protocol {
   /**
    * Get [[Protocol]] from its string representation.
    * @param protocol - Protocol as string, either 'http'/'https' or 'http:'/'https:'.
-   * @returns Either the matching protocol or undefined
+   * @returns Either the matching protocol or undefined.
    */
   export function of(protocol: string): Protocol | undefined {
     if (protocol.endsWith(':')) {

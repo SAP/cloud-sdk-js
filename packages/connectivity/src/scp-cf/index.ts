@@ -17,7 +17,6 @@ export * from './subdomain-replacer';
 export * from './tenant';
 export * from './token-accessor';
 export * from './user';
-export * from './verification-keys';
 export * from './xsuaa-service-types';
 export * from './xsuaa-service';
 export { IsolationStrategy } from './destination';

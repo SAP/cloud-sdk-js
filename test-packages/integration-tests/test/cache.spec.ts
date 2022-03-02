@@ -133,6 +133,14 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   });
 
   it('caches the destination retrieval for relevant auth flow', async () => {
+    mockUserTokenGrantCall(
+      providerXsuaaUrl,
+      2,
+      providerUserToken,
+      providerUserToken,
+      xsuaaBindingMock.credentials
+    );
+
     const directCall = await populateDestinationCache();
 
     const cache = await getDestination({
@@ -178,7 +186,6 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       1,
       providerUserToken,
       providerUserToken,
-      // xsuaaBindingMock.credentials)
       destinationBindingClientSecretMock.credentials
     );
 

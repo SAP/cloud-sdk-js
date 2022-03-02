@@ -80,7 +80,7 @@ export async function serviceToken(
  * The token is fetched via a JWT bearer token grant using the user token + client credentials.
  *
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
- * @param jwt - The JWT of the user for whom the access token should be fetched
+ * @param jwt - The JWT of the user for whom the access token should be fetched.
  * @param service - The type of the service or an instance of [[Service]].
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns A jwt bearer token.

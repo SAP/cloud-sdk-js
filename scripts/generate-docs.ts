@@ -38,8 +38,8 @@ const pipe =
 
 /**
  * GitHub pages has requirements for links, so additional adjustment is necessary. See example below:
- * https://username.github.io/repo/modules/sap_cloud_sdk_analytics works
- * https://username.github.io/repo/modules/sap_cloud_sdk_analytics.html does not
+ * https://username.github.io/repo/modules/sap_cloud_sdk_analytics works.
+ * https://username.github.io/repo/modules/sap_cloud_sdk_analytics.html does not.
  */
 function adjustForGitHubPages() {
   const documentationFiles = flatten(readDir(resolve(apiDocPath, version)));

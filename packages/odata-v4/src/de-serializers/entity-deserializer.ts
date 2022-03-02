@@ -9,8 +9,8 @@ import { DeSerializers } from './de-serializers';
 /**
  * Entity deserializer instance for v4 entities.
  * See [[EntityDeserializer]] for the provided methods.
- * @param deSerializers - DeSerializer to be used
- * @returns EntityDeserializer
+ * @param deSerializers - DeSerializer to be used.
+ * @returns EntityDeserializer.
  */
 export function entityDeserializer<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT

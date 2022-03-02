@@ -25,7 +25,7 @@ export abstract class GetByKeyRequestBuilderBase<
   /**
    * Creates an instance of GetByKeyRequestBuilder.
    * @param entityApi - Entity API for building and executing the request.
-   * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
+   * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value.
    * @param oDataUri - URI conversion functions.
    * @param entityDeserializer - Entity deserializer.
    * @param dataAccessor - Object access functions for get requests.
@@ -43,8 +43,8 @@ export abstract class GetByKeyRequestBuilderBase<
 
   /**
    * Restrict the response to the given selection of properties in the request.
-   * @param selects - Fields to select in the request
-   * @returns The request builder itself, to facilitate method chaining
+   * @param selects - Fields to select in the request.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   select(...selects: Selectable<EntityT, DeSerializersT>[]): this;
   select(selects: Selectable<EntityT, DeSerializersT>[]): this;
@@ -61,8 +61,8 @@ export abstract class GetByKeyRequestBuilderBase<
 
   /**
    * Execute request.
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
-   * @returns A promise resolving to the requested entity
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
+   * @returns A promise resolving to the requested entity.
    */
   async execute(destination: DestinationOrFetchOptions): Promise<EntityT> {
     return this.executeRaw(destination)

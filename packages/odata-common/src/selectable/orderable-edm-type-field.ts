@@ -6,7 +6,7 @@ import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
 
 /**
  * [[EdmTypeField]], that represents a property with an EDM type, that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.
- * @typeparam EntityT - Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to.
  * @typeparam EdmT - EDM type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
@@ -20,8 +20,8 @@ export class OrderableEdmTypeField<
 > extends EdmTypeField<EntityT, DeSerializersT, EdmT, NullableT, SelectableT> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
+   * @param value - Value to be used in the filter.
+   * @returns The resulting filter.
    */
   greaterThan(
     value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
@@ -35,8 +35,8 @@ export class OrderableEdmTypeField<
 
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'ge', i.e. `>=`.
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
+   * @param value - Value to be used in the filter.
+   * @returns The resulting filter.
    */
   greaterOrEqual(
     value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
@@ -50,8 +50,8 @@ export class OrderableEdmTypeField<
 
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'lt', i.e. `<`.
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
+   * @param value - Value to be used in the filter.
+   * @returns The resulting filter.
    */
   lessThan(
     value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
@@ -65,8 +65,8 @@ export class OrderableEdmTypeField<
 
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'le', i.e. `<=`.
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
+   * @param value - Value to be used in the filter.
+   * @returns The resulting filter.
    */
   lessOrEqual(
     value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>

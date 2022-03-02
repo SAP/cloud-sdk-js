@@ -8,7 +8,7 @@ import { createODataUri } from '../uri-conversion';
 
 /**
  * Create OData query to delete an entity.
- * @typeparam EntityT - Type of the entity to be deleted
+ * @typeparam EntityT - Type of the entity to be deleted.
  */
 export class DeleteRequestBuilder<
   EntityT extends Entity,
@@ -17,7 +17,7 @@ export class DeleteRequestBuilder<
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
    * @param entityApi - Entity API for building and executing the request.
-   * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity
+   * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity.
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
@@ -28,8 +28,8 @@ export class DeleteRequestBuilder<
 
   /**
    * Add an eTag version identifier in the delete request header.
-   * @param eTag - The version identifier of the entity
-   * @returns The builder itself, to facilitate method chaining
+   * @param eTag - The version identifier of the entity.
+   * @returns The builder itself, to facilitate method chaining.
    */
   setVersionIdentifier(eTag: string): this {
     this.requestConfig.eTag = eTag;

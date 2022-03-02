@@ -107,7 +107,7 @@ export function now<EntityT extends Entity>(): NumberFilterFunction<EntityT> {
 
 /* Collection functions */
 /**
- * Build a filter function to test whether a set is a subset of the other, i. e. whether the second parameter can be transformed into the first by reordering and / or removing items. Evaluates to boolean.
+ * Build a filter function to test whether a set is a subset of the other, i.e. whether the second parameter can be transformed into the first by reordering and / or removing items. Evaluates to boolean.
  * @param subset - The subset to test for. This can either be an array, a reference to a field or another filter function.
  * @param set - The set to test. This can either be an array, a reference to a field or another filter function.
  * @returns The newly created filter function.
@@ -130,7 +130,7 @@ export function hasSubset<
 }
 
 /**
- * Build a filter function to test whether a set is a subsequence of the other, i. e. whether the second parameter can be transformed into the first by removing items. Evaluates to boolean.
+ * Build a filter function to test whether a set is a subsequence of the other, i.e. whether the second parameter can be transformed into the first by removing items. Evaluates to boolean.
  * @param subsequence - The subsequence to test for. This can either be an array, a reference to a field or another filter function.
  * @param sequence - The sequence to test. This can either be an array, a reference to a field or another filter function.
  * @returns The newly created filter function.
@@ -152,7 +152,7 @@ export function hasSubsequence<
   return filterFunction('hassubsequence', 'boolean', subsequence, sequence);
 }
 /**
- * TODO: totalseconds, time
+ * TODO: totalseconds, time.
  */
 
 /**

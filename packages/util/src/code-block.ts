@@ -4,12 +4,12 @@ import { trim, trimRight } from './string';
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Transform strings and arguments to a string formatted as a code block, keeping the indentation of sub code blocks.
- * Use in tagged templates, e. g.:
+ * Use in tagged templates, e.g.:
  * ```
  * codeBlock`Code with ${arguments} and more code;`
  * ```
  * @param strings - Strings in the tagged template. In the example above that would be ['Code with ', ' and more code;'].
- * @param args - Arguments in the tagged template. In the example above that would be the resolved value for `arguments`;
+ * @param args - Arguments in the tagged template. In the example above that would be the resolved value for `arguments`;.
  * @returns A string formatted as code block.
  */
 export function codeBlock(

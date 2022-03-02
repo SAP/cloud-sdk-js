@@ -8,8 +8,8 @@ import { createODataUri } from '../uri-conversion';
 
 /**
  * Create an OData request to execute an action import.
- * @typeparam ParametersT - Type of the action import parameters
- * @typeparam ReturnT - Type of the action import return value
+ * @typeparam ParametersT - Type of the action import parameters.
+ * @typeparam ReturnT - Type of the action import return value.
  */
 export class ActionImportRequestBuilder<
   DeSerializersT extends DeSerializers,
@@ -21,11 +21,11 @@ export class ActionImportRequestBuilder<
 > {
   /**
    * Creates an instance of ActionImportRequestBuilder.
-   * @param defaultServicePath - Default path for the service the action belongs to
-   * @param actionImportName - The name of the action import
-   * @param responseTransformer - Transformation function for the response
-   * @param parameters - Parameters to be set in the action
-   * @param deSerializers - DeSerializer used in the action import
+   * @param defaultServicePath - Default path for the service the action belongs to.
+   * @param actionImportName - The name of the action import.
+   * @param responseTransformer - Transformation function for the response.
+   * @param parameters - Parameters to be set in the action.
+   * @param deSerializers - DeSerializer used in the action import.
    */
   constructor(
     defaultServicePath: string,

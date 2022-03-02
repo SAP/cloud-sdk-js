@@ -148,7 +148,7 @@ export interface OpenApiRequestBody {
   schema: OpenApiSchema;
 
   /**
-   * Description of the body
+   * Description of the body.
    */
   description?: string;
 }

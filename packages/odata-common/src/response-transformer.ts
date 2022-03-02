@@ -1,7 +1,7 @@
 /**
  * Throws an error.
- * @param data - data
- * @param functionActionName - functionActionName
+ * @param data - Data.
+ * @param functionActionName - FunctionActionName.
  */
 export function throwErrorWhenReturnTypeIsUnionType(
   data: any,

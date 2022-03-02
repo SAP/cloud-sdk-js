@@ -35,7 +35,7 @@ export class OneToOneLink<
   /**
    * Create order statements for the OData request based on the linked entity. The given statements have descending priority.
    *
-   * Example:
+   * @example
    * ```
    * Entity.requestBuilder()
    *  .getAll()

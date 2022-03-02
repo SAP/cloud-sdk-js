@@ -50,8 +50,8 @@ export class EnumField<
 
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'eq', i.e. `==`.
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
+   * @param value - Value to be used in the filter.
+   * @returns The resulting filter.
    */
   equals(value: EnumType<EnumT>): Filter<EntityT, DeSerializersT, string> {
     return new Filter(this.fieldPath(), 'eq', value, this.edmType);
@@ -59,8 +59,8 @@ export class EnumField<
 
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'ne', i.e. `!=`.
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
+   * @param value - Value to be used in the filter.
+   * @returns The resulting filter.
    */
   notEquals(value: EnumType<EnumT>): Filter<EntityT, DeSerializersT, string> {
     return new Filter(this.fieldPath(), 'ne', value, this.edmType);

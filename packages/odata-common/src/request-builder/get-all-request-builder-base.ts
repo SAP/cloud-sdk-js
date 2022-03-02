@@ -41,8 +41,8 @@ export abstract class GetAllRequestBuilderBase<
   }
   /**
    * Restrict the response to the given selection of properties in the request.
-   * @param selects - Fields to select in the request
-   * @returns The request builder itself, to facilitate method chaining
+   * @param selects - Fields to select in the request.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   select(...selects: Selectable<EntityT, DeSerializersT>[]): this;
   select(selects: Selectable<EntityT, DeSerializersT>[]): this;
@@ -59,8 +59,8 @@ export abstract class GetAllRequestBuilderBase<
 
   /**
    * Add order-by statements to the request.
-   * @param orderBy - OrderBy statements to order the response by
-   * @returns The request builder itself, to facilitate method chaining
+   * @param orderBy - OrderBy statements to order the response by.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   orderBy(orderBy: Orderable<EntityT>[]): this;
   orderBy(...orderBy: Orderable<EntityT>[]): this;
@@ -74,8 +74,8 @@ export abstract class GetAllRequestBuilderBase<
 
   /**
    * Limit number of returned entities.
-   * @param top - Maximum number of entities to return in the response. Can be less, if less entities match the request
-   * @returns The request builder itself, to facilitate method chaining
+   * @param top - Maximum number of entities to return in the response. Can be less, if less entities match the request.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   top(top: number): this {
     this.requestConfig.top = top;
@@ -84,8 +84,8 @@ export abstract class GetAllRequestBuilderBase<
 
   /**
    * Skip number of entities.
-   * @param skip - Number of matching entities to skip. Useful for paging
-   * @returns The request builder itself, to facilitate method chaining
+   * @param skip - Number of matching entities to skip. Useful for paging.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   skip(skip: number): this {
     this.requestConfig.skip = skip;
@@ -94,7 +94,7 @@ export abstract class GetAllRequestBuilderBase<
 
   /**
    * Count the number of entities.
-   * @returns A count request builder for execution
+   * @returns A count request builder for execution.
    */
   count(): CountRequestBuilder<EntityT, DeSerializersT> {
     return new CountRequestBuilder(this);
@@ -102,9 +102,9 @@ export abstract class GetAllRequestBuilderBase<
 
   /**
    * Execute request.
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
-   * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to the requested entities
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
+   * @param options - Options to employ when fetching destinations.
+   * @returns A promise resolving to the requested entities.
    */
   async execute(destination: DestinationOrFetchOptions): Promise<EntityT[]> {
     return this.executeRaw(destination).then(response =>

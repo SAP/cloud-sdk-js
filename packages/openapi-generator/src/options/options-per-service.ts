@@ -13,7 +13,7 @@ const { readFile } = promises;
 export type OptionsPerService = Record<string, ServiceOptions>;
 
 /**
- * Partial OptionsPerService
+ * Partial OptionsPerService.
  */
 type PartialOptionsPerService = Record<string, Partial<ServiceOptions>>;
 

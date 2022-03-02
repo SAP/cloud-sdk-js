@@ -34,7 +34,7 @@ export class UniqueNameGenerator {
   }
 
   /**
-   * Generate a unique name by appending an index separated by the `indexSeparator` if necessary, e. g. if `MyName` is already taken `MyName_1` will be found by default.
+   * Generate a unique name by appending an index separated by the `indexSeparator` if necessary, e.g. if `MyName` is already taken `MyName_1` will be found by default.
    * If the name is already unique nothing is appended.
    * @param name - The name to get a unique name from.
    * @param caseSensitive - Whether to check the already used names in a case sensitive manner.
@@ -45,7 +45,7 @@ export class UniqueNameGenerator {
   }
 
   /**
-   * Generate a unique name by appending an index separated by the `indexSeparator` if necessary, e. g. if `MyName` is already taken `MyName_1` will be found by default.
+   * Generate a unique name by appending an index separated by the `indexSeparator` if necessary, e.g. if `MyName` is already taken `MyName_1` will be found by default.
    * The generated name is added to the used names.
    * If the name is already unique nothing is appended.
    * @param name - The name to get a unique name from.

@@ -49,7 +49,7 @@ export abstract class DeleteRequestBuilderBase<
 
   /**
    * Instructs the request to force an overwrite of the entity by sending an 'If-Match: *' header instead of sending the ETag version identifier.
-   * @returns this The request itself to ease chaining while executing the request
+   * @returns This The request itself to ease chaining while executing the request.
    */
   ignoreVersionIdentifier(): this {
     this.requestConfig.versionIdentifierIgnored = true;
@@ -58,8 +58,8 @@ export abstract class DeleteRequestBuilderBase<
 
   /**
    * Execute query.
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
-   * @returns A promise resolving once the entity was deleted
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
+   * @returns A promise resolving once the entity was deleted.
    */
   async execute(destination: DestinationOrFetchOptions): Promise<void> {
     return (
@@ -74,7 +74,7 @@ export abstract class DeleteRequestBuilderBase<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(

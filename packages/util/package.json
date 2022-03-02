@@ -38,6 +38,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "nock": "^13.0.11"
+    "nock": "^13.0.11",
+    "typescript": "~4.6.2"
   }
 }

@@ -38,6 +38,7 @@
     "axios": "^0.26.0"
   },
   "devDependencies": {
-    "nock": "^13.0.11"
+    "nock": "^13.0.11",
+    "typescript": "~4.6.2"
   }
 }

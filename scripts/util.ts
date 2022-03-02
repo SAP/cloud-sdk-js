@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
-import execa = require('execa');
+import { execa } from 'execa';
 
 export const version = JSON.parse(readFileSync('lerna.json', 'utf8')).version;
 export const docsDir = resolve('docs');

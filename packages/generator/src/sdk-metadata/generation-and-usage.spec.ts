@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import { writeFile, readFile, removeSync } from 'fs-extra';
-import execa = require('execa');
+import { execa } from 'execa';
 import { VdmServiceMetadata } from '../vdm-types';
 import { getApiSpecificUsage } from './generation-and-usage';
 import { entityCodeSample, genericEntityCodeSample } from './code-samples';

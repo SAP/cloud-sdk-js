@@ -189,7 +189,11 @@ module.exports = {
     'jsdoc/no-defaults': 'error',
     'jsdoc/no-types': 'error',
     'jsdoc/require-asterisk-prefix': 'error',
-    'jsdoc/require-description-complete-sentence': 'warn',
+    //"jsdoc/match-description": ['error', { tags: {'typeparam': true }}],
+    'jsdoc/require-description-complete-sentence': [
+      'warn',
+      { abbreviations: ['e.g.', 'i.e.', 'aka.', 'etc.'] } //tags: ['typeparam'],
+    ],
     'jsdoc/require-description': ['error', { exemptedBy: ['experimental'] }],
     'jsdoc/require-hyphen-before-param-description': 'error',
     'jsdoc/require-jsdoc': ['warn', { publicOnly: true }],
@@ -206,7 +210,6 @@ module.exports = {
       ignoreInternal: true,
       structuredTags: {
         typeparam: {
-          name: 'text',
           required: ['name'],
           type: false
         }

@@ -32,7 +32,7 @@ export interface Client {
   emergencyObject?: EmergencyObject;
 
   /**
-   * The information on the pregenerated library. `undefined` if there is no lib generated/
+   * The information on the pregenerated library. `undefined` if there is no lib generated.
    */
   pregeneratedLibrary: PregeneratedLibrary | undefined;
   generationAndUsage: GenerationAndUsage;
@@ -107,10 +107,10 @@ export type MultiLineText = string;
 export interface ServiceStatus {
   /**
    * Generation status of the service:
-   * `certified`: published libraries
-   * `verified`: generation tested and succeeded
-   * `unknown`: generation not tested
-   * `failed`: generation tested and failed
+   * `certified`: published libraries.
+   * `verified`: generation tested and succeeded.
+   * `unknown`: generation not tested.
+   * `failed`: generation tested and failed.
    *
    */
   status: 'certified' | 'verified' | 'unknown' | 'failed';

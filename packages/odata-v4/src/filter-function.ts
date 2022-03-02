@@ -63,10 +63,10 @@ export function filterFunction<EntityT extends Entity>(
 
 /**
  * Build a custom filter function.
- * @param functionName - the name of the function, e.g., `substring`
- * @param returnType - the return type of the filter function
- * @param parameters - the parameter(s) used in the function
- * @returns An instance of filter function suited for the given return type
+ * @param functionName - the name of the function, e.g., `substring`.
+ * @param returnType - the return type of the filter function.
+ * @param parameters - the parameter(s) used in the function/
+ * @returns An instance of filter function suited for the given return type.
  */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,

@@ -12,7 +12,7 @@ import { FilterLink } from './filter-link';
 
 /**
  * A union of all types that can be used for filtering.
- * @typeparam EntityT - Type of the entity to be filtered on
+ * @typeparam EntityT - Type of the entity to be filtered on.
  * @internal
  */
 export type Filterable<
@@ -33,8 +33,7 @@ export type Filterable<
 
 /**
  * Combine [[Filterable]]s with logical `and` to create a [[FilterList]].
- *
- * Example:
+ * @example
  * ```ts
  * Entity.requestBuilder()
  *  .getAll()
@@ -78,16 +77,15 @@ export function and<
 
 /**
  * Combine [[Filterable]]s with logical `or` to create a [[FilterList]].
- *
- * Example:
+ * @example
  * ```ts
  * Entity.requestBuilder()
  *  .getAll()
  *  .filter(or(filterExp1, filterExp2));
  * ```
  * @typeparam EntityT - Type of the entity filter on.
- * @param expressions - Filterables to be combined with logical `or`
- * @returns The newly created FilterList
+ * @param expressions - Filterables to be combined with logical `or`.
+ * @returns The newly created FilterList.
  */
 export function or<
   EntityT extends EntityBase,

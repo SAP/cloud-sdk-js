@@ -40,7 +40,7 @@ export interface DestinationAccessorOptions {
   /**
    * This property is only considered in case no userJwt is provided.
    * It is meant for situations where you do not have a token e.g. background processes.
-   * The value for iss is the issuer field of a JWT e.g. https://<your-subdomain>.localhost:8080/uaa/oauth/token'
+   * The value for iss is the issuer field of a JWT e.g. https://<your-subdomain>.localhost:8080/uaa/oauth/token'.
    *
    * ATTENTION: If this property is used, no validation of the provided subdomain value is done. This is differs from how the `userJwt` is handled.
    * So be careful that the used value is not manipulated and breaks the tenant isolation of your application.

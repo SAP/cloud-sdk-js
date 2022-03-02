@@ -14,7 +14,7 @@ const logger = createLogger({
 
 /**
  * Decode JWT.
- * @param token - JWT to be decoded
+ * @param token - JWT to be decoded.
  * @returns Decoded payload.
  */
 export function decodeJwt(token: string): JwtPayload {
@@ -39,8 +39,8 @@ export function decodeJwtComplete(token: string): JwtWithPayloadObject {
 
 /**
  * Retrieve JWT from a request that is based on the node `IncomingMessage`. Fails if no authorization header is given or has the wrong format. Expected format is 'Bearer <TOKEN>'.
- * @param req - Request to retrieve the JWT from
- * @returns JWT found in header
+ * @param req - Request to retrieve the JWT from.
+ * @returns JWT found in header.
  */
 export function retrieveJwt(req: IncomingMessage): string | undefined {
   const header = authHeader(req);

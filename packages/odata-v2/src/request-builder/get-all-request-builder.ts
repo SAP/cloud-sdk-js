@@ -41,8 +41,8 @@ export class GetAllRequestBuilder<
 
   /**
    * Add filter statements to the request.
-   * @param expressions - Filter expressions to restrict the response
-   * @returns The request builder itself, to facilitate method chaining
+   * @param expressions - Filter expressions to restrict the response.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   filter(expressions: Filterable<EntityT, DeSerializersT>[]): this;
   filter(...expressions: Filterable<EntityT, DeSerializersT>[]): this;

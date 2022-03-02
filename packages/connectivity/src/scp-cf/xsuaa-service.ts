@@ -32,7 +32,7 @@ function getCircuitBreaker() {
 
 /**
  * Wrap a function in a circuit breaker. IMPORTANT: This assumes that the last parameter of the function is `ResilienceOptions` and you do not pass it to the execution of this function.
- * Example:
+ * @example
  * ```
  * function myFn(param: string, options: ResilienceOptions = { enableCircuitBreaker: true }) {
  * if (options.enableCircuitBreaker) {

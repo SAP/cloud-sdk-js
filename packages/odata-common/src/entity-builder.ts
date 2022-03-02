@@ -22,7 +22,7 @@ type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
  * Type to describe possible inputs for `.fromJson`.
  * This is based on the JSON type of an entity and allows all properties to be optional recursively.
  * It also allows setting unknown properties, which will be treated as custom fields.
- * @typeparam JsonT - JSON type of the entity
+ * @typeparam JsonT - JSON type of the entity.
  */
 // prettier-ignore
 type FromJsonType<JsonT> = {
@@ -55,7 +55,7 @@ export class EntityBuilder<
   /**
    * Sets the custom fields for the entity.
    * @param customFields - The custom fields you want to add.
-   * @returns The entity builder itself for method chaining
+   * @returns The entity builder itself for method chaining.
    */
   public withCustomFields(customFields: Record<string, any>): this {
     const validCustomFields = this.filterCustomFields(customFields);

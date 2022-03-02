@@ -45,11 +45,11 @@ export function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
 }
 
 /**
- * Recursively adds the base type data to the current type
- * @param type - An EDMX type that can have a base type (e. g. EntityType or ComplexType)
- * @param types - All parsed EDMX types
- * @param joinTypes - Function to ultimately join types
- * @returns The enriched type (type + base type)
+ * Recursively adds the base type data to the current type.
+ * @param type - An EDMX type that can have a base type (e. g. EntityType or ComplexType).
+ * @param types - All parsed EDMX types.
+ * @param joinTypes - Function to ultimately join types.
+ * @returns The enriched type (type + base type).
  */
 function joinTypeWithBaseType<T extends EdmxDerivedType>(
   type: T,

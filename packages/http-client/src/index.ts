@@ -10,7 +10,8 @@ export {
   HttpRequestOptions,
   HttpResponse,
   Method,
-  OriginOptions
+  OriginOptions,
+  ParameterEncoder
 } from './http-client-types';
 export type {
   HttpRequestConfig,

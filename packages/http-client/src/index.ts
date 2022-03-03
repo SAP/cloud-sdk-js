@@ -5,12 +5,17 @@
  * @module @sap-cloud-sdk/http-client
  */
 
-export { buildHttpRequest, executeHttpRequest } from './http-client';
+export {
+  buildHttpRequest,
+  encodeAllParameters,
+  executeHttpRequest
+} from './http-client';
 export {
   HttpRequestOptions,
   HttpResponse,
   Method,
-  OriginOptions
+  OriginOptions,
+  ParameterEncoder
 } from './http-client-types';
 export type {
   HttpRequestConfig,

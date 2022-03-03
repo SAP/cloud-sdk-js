@@ -18,11 +18,11 @@
 
 ## New Functionality
 
--
+- [http-client] Introduce the `parameterEncoder` option to the request config of the `http-client` to allow custom parameter encoding.  
 
 ## Improvements
 
--
+- [http-client] Introduce consistent query parameter encoding for all non custom parameters.
 
 ## Fixed Issues
 

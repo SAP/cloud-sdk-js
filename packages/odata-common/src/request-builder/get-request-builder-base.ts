@@ -59,7 +59,7 @@ export abstract class GetRequestBuilderBase<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(

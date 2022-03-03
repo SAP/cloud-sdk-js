@@ -14,7 +14,8 @@ import {
 } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
-  OriginOptions
+  OriginOptions,
+  encodeTypedClientRequest
 } from '@sap-cloud-sdk/http-client/internal';
 
 /**
@@ -110,6 +111,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
         headers: this.getHeaders(),
         params: this.getParameters(),
         timeout: this._timeout,
+        parameterEncoder: encodeTypedClientRequest,
         data: this.parameters?.body
       },
       { fetchCsrfToken }

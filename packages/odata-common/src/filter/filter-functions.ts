@@ -292,7 +292,7 @@ export function year<EntityT extends EntityBase>(
 /* Type Functions */
 /**
  * Build a filter function to test whether a selection is of a given type. Evaluates to boolean.
- * @param type - The type to test for, e. g. `API_BUSINESS_PARTNER.A_BusinessPartner`.
+ * @param type - The type to test for, e.g. `API_BUSINESS_PARTNER.A_BusinessPartner`.
  * @returns The newly created filter function
  * @internal
  */
@@ -302,7 +302,7 @@ export function isOf<EntityT extends EntityBase>(
 /**
  * Build a filter function to test whether a field is of a given type. Evaluates to boolean.
  * @param expression - A reference to a field to test for type.
- * @param type - The type to test for, e. g. `API_BUSINESS_PARTNER.A_BusinessPartner`.
+ * @param type - The type to test for, e.g. `API_BUSINESS_PARTNER.A_BusinessPartner`.
  * @returns The newly created filter function
  * @internal
  */
@@ -328,7 +328,7 @@ export function isOf<EntityT extends EntityBase>(
 
 /**
  * Filter functions common to both OData v2 and OData v4. See below for version specific filter functions.
- * Filter functions are used to create more complex filtering expressions, e. g. when filtering by the first letter of a property:
+ * Filter functions are used to create more complex filtering expressions, e.g. when filtering by the first letter of a property:
  * ```
  *  .filter(startsWith(BusinessPartner.FIRST_NAME, 'A').equals(true))
  * ```

@@ -12,10 +12,10 @@ export abstract class ODataFunctionImportRequestConfig<
 > extends ODataRequestConfig {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
-   * @param method - HTTP method for the request
-   * @param defaultServicePath - Default path of the service
+   * @param method - HTTP method for the request.
+   * @param defaultServicePath - Default path of the service.
    * @param functionImportName - The name of the function import.
-   * @param parameters - Object containing the parameters with a value and additional meta information
+   * @param parameters - Object containing the parameters with a value and additional meta information.
    */
   constructor(
     method: RequestMethodType,

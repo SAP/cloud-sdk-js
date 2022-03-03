@@ -48,6 +48,11 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
+  timeout(timeout: number): this {
+    this.requestConfig.timeout = timeout;
+    return this;
+  }
+
   /**
    * Add custom query parameters to the request. If a query parameter with the given name already exists it is overwritten.
    * @param queryParameters - Key-value pairs denoting additional custom query parameters to be set in the request.

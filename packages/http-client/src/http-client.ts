@@ -300,6 +300,8 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
   return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 
+export const defaultTimeoutTarget = 10000;
+
 /**
  * Builds an Axios config with default configuration i.e. no_proxy, default http and https agent and GET as request method.
  * @returns AxiosRequestConfig with default parameters
@@ -323,6 +325,7 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     proxy: false,
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
+    timeout: defaultTimeoutTarget,
     paramsSerializer: (params = {}) =>
       Object.entries(params)
         .map(([key, value]) => `${key}=${value}`)
@@ -377,6 +380,7 @@ async function getCsrfHeaders(
         params: request.params,
         headers: request.headers,
         url: request.url,
+        timeout: request.timeout || defaultTimeoutTarget,
         proxy: request.proxy,
         httpAgent: request.httpAgent,
         httpsAgent: request.httpsAgent

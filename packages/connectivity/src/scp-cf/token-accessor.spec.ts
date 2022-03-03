@@ -20,6 +20,10 @@ import {
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { serviceToken } from './token-accessor';
+import { defaultResilienceBTPServices } from './resilience-options';
+import { getClientCredentialsToken } from './xsuaa-service';
+import { resolveService } from './environment-accessor';
+import * as xsuaaService from './xsuaa-service';
 
 describe('token accessor', () => {
   describe('serviceToken', () => {
@@ -46,6 +50,54 @@ describe('token accessor', () => {
       const actual = await serviceToken('destination');
       expect(actual).toBe(expected);
     });
+
+    it('considers custom timeout for client credentials token', async () => {
+      const jwt = signedJwt({
+        iss: 'https://testeroni.example.com'
+      });
+      async function doDelayTest(enableCircuitBreaker: boolean) {
+        mockClientCredentialsGrantCall(
+          'https://testeroni.example.com',
+          { access_token: '' },
+          200,
+          destinationBindingClientSecretMock.credentials,
+          100
+        );
+        try {
+          await serviceToken('destination', { jwt, timeout: 10 });
+        } catch (err) {
+          expect(err.cause.message).toBe('Token retrieval ran into timeout.');
+          return;
+        }
+        throw new Error('Should not go here.');
+      }
+      await doDelayTest(false);
+      await doDelayTest(true);
+    });
+
+    it('considers default timeout for client credentials token', async () => {
+      jest.spyOn(xsuaaService, 'wrapInTimeout');
+
+      const jwt = signedJwt({
+        iss: 'https://testeroni.example.com'
+      });
+      mockClientCredentialsGrantCall(
+        'https://testeroni.example.com',
+        { access_token: 'testValue' },
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+
+      const token = await getClientCredentialsToken(
+        resolveService('destination'),
+        jwt
+      );
+
+      expect(xsuaaService.wrapInTimeout).toHaveBeenCalledWith(
+        expect.anything(),
+        defaultResilienceBTPServices.timeout
+      );
+    }, 9999999);
 
     it("uses the JWT's issuer as tenant", async () => {
       const expected = signedJwt({ dummy: 'content' });

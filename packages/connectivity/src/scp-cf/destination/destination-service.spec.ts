@@ -4,6 +4,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
+import { defaultResilienceBTPServices } from '../resilience-options';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
@@ -309,6 +310,7 @@ describe('destination service', () => {
           'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         method: 'get',
         proxy: false,
+        timeout: defaultResilienceBTPServices.timeout,
         headers: {
           Authorization: `Bearer ${jwt}`
         },
@@ -321,6 +323,33 @@ describe('destination service', () => {
       };
       expect(spy).toHaveBeenCalledWith(expectedConfig);
       delete process.env.HTTPS_PROXY;
+    });
+
+    it('considers the timeout for destination service', async () => {
+      async function doDelayTest(enableCircuitBreaker: boolean) {
+        nock(destinationServiceUri, {
+          reqheaders: {
+            authorization: `Bearer ${jwt}`
+          }
+        })
+          .get('/destination-configuration/v1/destinations/TIMEOUT-TEST')
+          .delay(100)
+          .reply(200, {});
+        try {
+          await fetchDestination(destinationServiceUri, jwt, {
+            destinationName: 'TIMEOUT-TEST',
+            enableCircuitBreaker,
+            timeout: 10
+          });
+        } catch (err) {
+          expect(err.cause.message).toBe('timeout of 10ms exceeded');
+          return;
+        }
+        throw new Error('Should no go here');
+      }
+
+      await doDelayTest(true);
+      await doDelayTest(false);
     });
 
     it('fetches a destination considering no_proxy', async () => {
@@ -370,6 +399,7 @@ describe('destination service', () => {
         // The jest matchers have problems to match two  instances of an httpsAgent.
         // As a workaround I wanted to assert on proxy:undefined but was not able to achieve this.
         // The "_events" property is only present for the httpAgent and not the httpProxyAgent so this works as an implicit test.
+        timeout: defaultResilienceBTPServices.timeout,
         httpsAgent: expect.objectContaining({
           _events: expect.anything(),
           options: expect.objectContaining({ rejectUnauthorized: true })

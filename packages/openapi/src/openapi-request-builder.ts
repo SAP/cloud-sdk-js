@@ -29,6 +29,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: Record<string, string> = {};
   private _fetchCsrfToken = true;
+  private _timeout: number | undefined = undefined;
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -78,6 +79,11 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     return this;
   }
 
+  timeout(timeout: number): this {
+    this._timeout = timeout;
+    return this;
+  }
+
   /**
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
@@ -103,6 +109,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
         url: this.getPath(),
         headers: this.getHeaders(),
         params: this.getParameters(),
+        timeout: this._timeout,
         data: this.parameters?.body
       },
       { fetchCsrfToken }

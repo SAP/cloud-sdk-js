@@ -234,6 +234,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         params: this.queryParameters(),
         url: this.relativeUrl(true, false),
         method: this.config.method,
+        timeout: this.config.timeout,
         data: this.config.payload
       },
       { fetchCsrfToken: this.config.fetchCsrfToken }

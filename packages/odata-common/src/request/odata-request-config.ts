@@ -31,6 +31,7 @@ export abstract class ODataRequestConfig {
   private _customRequestConfiguration: Record<string, string> = {};
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
+  private _timeout: number | undefined = undefined;
 
   constructor(
     method: RequestMethodType,
@@ -59,6 +60,14 @@ export abstract class ODataRequestConfig {
         defaultHeadersOrContentType
       );
     }
+  }
+
+  set timeout(timeout: number | undefined) {
+    this._timeout = timeout;
+  }
+
+  get timeout(): number | undefined {
+    return this._timeout;
   }
 
   set customHeaders(headers: Record<string, string>) {

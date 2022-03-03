@@ -7,27 +7,19 @@ import { Service } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
   defaultResilienceBTPServices,
-  ResilienceOptions
+  ResilienceOptions,
+  timeoutPromise
 } from './resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
 
 let circuitBreaker: any;
 
-export function wrapInTimeout<T>(
+export async function wrapInTimeout<T>(
   promise: Promise<T>,
   timeout: number
 ): Promise<T> {
   return Promise.race([promise, timeoutPromise<T>(timeout)]);
-}
-
-function timeoutPromise<T>(timeout: number): Promise<T> {
-  return new Promise<T>((resolve, reject) =>
-    setTimeout(
-      () => reject(new Error('Token retrieval ran into timeout.')),
-      timeout
-    )
-  );
 }
 
 function executeFunction<T extends (...args: any[]) => any>(
@@ -99,7 +91,7 @@ export function getSubdomainAndZoneId(
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns Client credentials token.
  */
-export function getClientCredentialsToken(
+export async function getClientCredentialsToken(
   service: string | Service,
   userJwt?: string | JwtPayload,
   options?: ResilienceOptions

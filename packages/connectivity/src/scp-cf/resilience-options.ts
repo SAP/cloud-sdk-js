@@ -27,3 +27,18 @@ export const circuitBreakerDefaultOptions: CircuitBreaker.Options = {
   volumeThreshold: 10,
   resetTimeout: 30000
 };
+
+/**
+ * Creates a promise for a timeout race.
+ * @internal
+ * @param timeout - Value for the timeout
+ * @returns A promise which times out after the given time.
+ */
+export function timeoutPromise<T>(timeout: number): Promise<T> {
+  return new Promise<T>((resolve, reject) =>
+    setTimeout(
+      () => reject(new Error('Token retrieval ran into timeout.')),
+      timeout
+    )
+  );
+}

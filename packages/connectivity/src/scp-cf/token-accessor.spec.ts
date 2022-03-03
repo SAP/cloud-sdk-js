@@ -21,9 +21,7 @@ import {
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { serviceToken } from './token-accessor';
 import { defaultResilienceBTPServices } from './resilience-options';
-import { getClientCredentialsToken } from './xsuaa-service';
-import { resolveService } from './environment-accessor';
-import * as xsuaaService from './xsuaa-service';
+import * as resilience from './resilience-options';
 
 describe('token accessor', () => {
   describe('serviceToken', () => {
@@ -63,20 +61,21 @@ describe('token accessor', () => {
           destinationBindingClientSecretMock.credentials,
           100
         );
-        try {
-          await serviceToken('destination', { jwt, timeout: 10 });
-        } catch (err) {
-          expect(err.cause.message).toBe('Token retrieval ran into timeout.');
-          return;
-        }
-        throw new Error('Should not go here.');
+        // try {
+        await expect(
+          serviceToken('destination', { jwt, timeout: 10 })
+        ).rejects.toMatchObject({
+          cause: {
+            message: 'Token retrieval ran into timeout.'
+          }
+        });
       }
       await doDelayTest(false);
       await doDelayTest(true);
     });
 
     it('considers default timeout for client credentials token', async () => {
-      jest.spyOn(xsuaaService, 'wrapInTimeout');
+      jest.spyOn(resilience, 'timeoutPromise');
 
       const jwt = signedJwt({
         iss: 'https://testeroni.example.com'
@@ -88,16 +87,12 @@ describe('token accessor', () => {
         destinationBindingClientSecretMock.credentials
       );
 
-      const token = await getClientCredentialsToken(
-        resolveService('destination'),
-        jwt
-      );
+      const token = await serviceToken('destination', { jwt });
 
-      expect(xsuaaService.wrapInTimeout).toHaveBeenCalledWith(
-        expect.anything(),
+      expect(resilience.timeoutPromise).toHaveBeenCalledWith(
         defaultResilienceBTPServices.timeout
       );
-    }, 9999999);
+    });
 
     it("uses the JWT's issuer as tenant", async () => {
       const expected = signedJwt({ dummy: 'content' });

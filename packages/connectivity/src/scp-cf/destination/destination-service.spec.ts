@@ -325,7 +325,7 @@ describe('destination service', () => {
       delete process.env.HTTPS_PROXY;
     });
 
-    it('considers the timeout for destination service', async () => {
+    it('considers the custom timeout for destination service', async () => {
       async function doDelayTest(enableCircuitBreaker: boolean) {
         nock(destinationServiceUri, {
           reqheaders: {
@@ -335,21 +335,45 @@ describe('destination service', () => {
           .get('/destination-configuration/v1/destinations/TIMEOUT-TEST')
           .delay(100)
           .reply(200, {});
-        try {
-          await fetchDestination(destinationServiceUri, jwt, {
+        await expect(
+          fetchDestination(destinationServiceUri, jwt, {
             destinationName: 'TIMEOUT-TEST',
             enableCircuitBreaker,
             timeout: 10
-          });
-        } catch (err) {
-          expect(err.cause.message).toBe('timeout of 10ms exceeded');
-          return;
-        }
-        throw new Error('Should no go here');
+          })
+        ).rejects.toMatchObject({
+          cause: {
+            message: 'timeout of 10ms exceeded'
+          }
+        });
       }
 
       await doDelayTest(true);
       await doDelayTest(false);
+    });
+
+    it('considers the default timeout for destination service', async () => {
+      const response = {
+        URL: 'someDestinationUrl'
+      };
+
+      nock(destinationServiceUri, {
+        reqheaders: {
+          authorization: `Bearer ${jwt}`
+        }
+      })
+        .get('/destination-configuration/v1/destinations/timeoutTest')
+        .reply(200, response);
+      const spy = jest.spyOn(axios, 'request');
+      await fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'timeoutTest',
+        enableCircuitBreaker: false
+      });
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          timeout: defaultResilienceBTPServices.timeout
+        })
+      );
     });
 
     it('fetches a destination considering no_proxy', async () => {

@@ -49,7 +49,7 @@ export abstract class DeleteRequestBuilderBase<
 
   /**
    * Instructs the request to force an overwrite of the entity by sending an 'If-Match: *' header instead of sending the ETag version identifier.
-   * @returns This The request itself to ease chaining while executing the request.
+   * @returns The request itself to ease chaining while executing the request.
    */
   ignoreVersionIdentifier(): this {
     this.requestConfig.versionIdentifierIgnored = true;

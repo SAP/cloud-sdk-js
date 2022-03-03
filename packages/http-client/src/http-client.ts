@@ -133,12 +133,10 @@ export const encodeTypedClientRequest: ParameterEncoder = (
   params: Record<string, any>
 ) => params;
 
-type foo = keyof OriginOptionsInternal;
-
 function encodeQueryParameters(options: {
   parameterEncoder: ParameterEncoder;
   parameters: OriginOptionsInternal;
-  exclude: foo[];
+  exclude: (keyof OriginOptionsInternal)[];
 }): OriginOptionsInternal {
   const { parameterEncoder, parameters, exclude } = options;
   return Object.fromEntries(

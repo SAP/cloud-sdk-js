@@ -1,6 +1,6 @@
 /**
  * Internal representation of function import parameters. It adds metadata to the value.
- * @typeparam ValueT - Type of the value
+ * @typeparam ValueT - Type of the value.
  */
 import { EdmTypeShared } from '@sap-cloud-sdk/odata-common/internal';
 

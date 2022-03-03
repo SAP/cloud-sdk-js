@@ -15,11 +15,11 @@ import type { Selectable } from './selectable';
  *
  * NOTE: Due to historical development the Link and its extensions are used in the following way:
  * OData v2 entity: 1:N is a [[Link]], 1:0..1 is a [[OneToOneLink]]
- * OData v4 entity: 1:N is a [[OneToManyLink]], 1:0..1 is a [[OneToOneLink]]
+ * OData v4 entity: 1:N is a [[OneToManyLink]], 1:0..1 is a [[OneToOneLink]].
  *
- * See also: [[Selectable]]
- * @typeparam EntityT - Type of the entity to be linked from
- * @typeparam LinkedEntityT - Type of the entity to be linked to
+ * See also: [[Selectable]].
+ * @typeparam EntityT - Type of the entity to be linked from.
+ * @typeparam LinkedEntityT - Type of the entity to be linked to.
  */
 export class Link<
   EntityT extends EntityBase,
@@ -55,9 +55,9 @@ export class Link<
   /**
    * Creates a selection on a linked entity. Has the same behavior as [[GetAllRequestBuilder.select | GetAllRequestBuilderV2.select]] and [[GetByKeyRequestBuilderV4.select]] but for linked entities.
    *
-   * See also, [[Selectable]]
-   * @param selects - Selection of fields or links on a linked entity
-   * @returns The link itself, to facilitate method chaining
+   * See also, [[Selectable]].
+   * @param selects - Selection of fields or links on a linked entity.
+   * @returns The link itself, to facilitate method chaining.
    */
   select(
     ...selects: Selectable<EntityType<LinkedEntityApiT>, DeSerializersT>[]
@@ -81,10 +81,10 @@ export class Link<
 
   /**
    * Create a new link based on a given link.
-   * @typeparam EntityT - Type of the entity to be linked from
-   * @typeparam LinkedEntityT - Type of the entity to be linked to
-   * @param link - Link to be cloned
-   * @returns Newly created link
+   * @typeparam EntityT - Type of the entity to be linked from.
+   * @typeparam LinkedEntityT - Type of the entity to be linked to.
+   * @param link - Link to be cloned.
+   * @returns Newly created link.
    */
   clone(): this {
     const clonedLink = new (this.constructor as any)(

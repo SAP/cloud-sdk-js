@@ -23,7 +23,7 @@ export abstract class MethodRequestBuilder<
   /**
    * Create the URL based on configuration of the given builder.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns Promise resolving to the URL for the request
+   * @returns Promise resolving to the URL for the request.
    */
   async url(destination: DestinationOrFetchOptions): Promise<string> {
     const request = await this.build(destination);
@@ -32,7 +32,7 @@ export abstract class MethodRequestBuilder<
 
   /**
    * Create the relative URL based on configuration of the given builder.
-   * @returns The relative URL for the request
+   * @returns The relative URL for the request.
    */
   relativeUrl(): string {
     return this.build().relativeUrl();
@@ -51,7 +51,7 @@ export abstract class MethodRequestBuilder<
   /**
    * Add custom query parameters to the request. If a query parameter with the given name already exists it is overwritten.
    * @param queryParameters - Key-value pairs denoting additional custom query parameters to be set in the request.
-   * @returns The request builder itself, to facilitate method chaining
+   * @returns The request builder itself, to facilitate method chaining.
    */
   addCustomQueryParameters(queryParameters: Record<string, string>): this {
     this.requestConfig.addCustomQueryParameters(queryParameters);
@@ -61,8 +61,8 @@ export abstract class MethodRequestBuilder<
   /**
    * Replace the default service path with the given custom path.
    * In case of the SAP S/4HANA APIs the servicePath defaults to `/sap/opu/odata/sap/<SERVICE_NAME>` and can be overwritten here.
-   * @param servicePath - Path to override the default with
-   * @returns The request builder itself, to facilitate method chaining
+   * @param servicePath - Path to override the default with.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   setCustomServicePath(servicePath: string): this {
     this.requestConfig.customServicePath = servicePath;

@@ -8,12 +8,12 @@ const logger = createLogger('documentation-block');
  * Transform strings and arguments to a string formatted as a documentation block.
  * The formatting is block like so no leading or trailing spaces.
  * New lines in the beginning and end are also removed.
- * Use in tagged templates, e. g.:
+ * Use in tagged templates, e.g.:
  * ```
  * documentationBlock`Docs with ${arguments} and more content;`
  * ```
  * @param strings - Strings in the tagged template. In the example above that would be ['Docs with ', ' and more content;'].
- * @param args - Arguments in the tagged template. In the example above that would be the resolved value for `arguments`;
+ * @param args - Arguments in the tagged template. In the example above that would be the resolved value for `arguments`;.
  * @returns A string formatted as documentation block.
  */
 export function documentationBlock(

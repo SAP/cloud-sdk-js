@@ -30,8 +30,8 @@ export class CountRequestBuilder<
   }
   /**
    * Execute request.
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
-   * @returns A promise resolving to the number of entities
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
+   * @returns A promise resolving to the number of entities.
    */
   async execute(destination: DestinationOrFetchOptions): Promise<number> {
     return this.executeRaw(destination).then(response => {
@@ -44,7 +44,7 @@ export class CountRequestBuilder<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(

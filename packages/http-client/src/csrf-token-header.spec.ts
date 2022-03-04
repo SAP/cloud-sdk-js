@@ -1,5 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
+import { defaultResilienceBTPServices } from '@sap-cloud-sdk/connectivity/internal';
 import {
   defaultBasicCredentials,
   defaultDestination,
@@ -92,8 +93,9 @@ describe('buildCsrfHeaders', () => {
 
     expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalledWith(
       expect.anything(),
-      expect.objectContaining({ timeout: defaultDestination })
+      expect.objectContaining({ timeout: defaultResilienceBTPServices.timeout })
     );
+    jest.restoreAllMocks();
   });
 
   it('"cookie" should not be defined in header when not defined in CSRF headers response.', async () => {

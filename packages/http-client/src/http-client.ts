@@ -368,6 +368,9 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
   return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 
+/**
+ * @internal
+ */
 export const defaultTimeoutTarget = 10000;
 
 /**

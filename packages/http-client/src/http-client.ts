@@ -451,7 +451,7 @@ async function getCsrfHeaders(
         params: request.params,
         headers: request.headers,
         url: request.url,
-        timeout: request.timeout || defaultTimeoutTarget,
+        timeout: request.timeout,
         proxy: request.proxy,
         httpAgent: request.httpAgent,
         httpsAgent: request.httpsAgent

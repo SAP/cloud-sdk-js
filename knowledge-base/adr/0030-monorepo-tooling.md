@@ -16,6 +16,14 @@ npm 7 (as well as yarn) support [workspaces](https://docs.npmjs.com/cli/v7/using
 pnpm supports [similar features](https://pnpm.io/feature-comparison) as npm and yarn.
 [Changesets](https://github.com/changesets/changesets) is a tool to manage versioning in multi-package repositories, which is compatible with the alternatives above.
 
+## Criteria
+
+Following tasks are currently done by lerna:
+
+- Hoist dependencies
+- Run tasks in all packages
+- Release new version for packages
+
 ## Decision
 
 ### Nx + ?

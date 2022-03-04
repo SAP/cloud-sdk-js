@@ -13,13 +13,16 @@ export interface ResilienceOptions {
   timeout?: number;
 }
 
+/**
+ * @internal
+ */
 export const defaultResilienceBTPServices: Required<ResilienceOptions> = {
   enableCircuitBreaker: true,
   timeout: 10000
 };
 
 /**
- *  @internal
+ * @internal
  */
 export const circuitBreakerDefaultOptions: CircuitBreaker.Options = {
   timeout: false,

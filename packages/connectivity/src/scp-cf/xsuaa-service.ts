@@ -15,7 +15,7 @@ import { resolveService } from './environment-accessor';
 
 let circuitBreaker: any;
 
-export async function wrapInTimeout<T>(
+async function wrapInTimeout<T>(
   promise: Promise<T>,
   timeout: number
 ): Promise<T> {

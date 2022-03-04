@@ -17,9 +17,9 @@ export class ODataActionImportRequestConfig<
 > extends ODataRequestConfig {
   /**
    * Creates an instance of ODataActionImportRequestConfig.
-   * @param defaultServicePath - Default path of the service
+   * @param defaultServicePath - Default path of the service.
    * @param actionImportName - The name of the action import.
-   * @param parameters - Parameters of the action imports
+   * @param parameters - Parameters of the action imports.
    * @param oDataUri - URI conversion functions.
    */
   constructor(

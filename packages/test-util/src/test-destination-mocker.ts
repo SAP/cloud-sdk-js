@@ -13,8 +13,8 @@ import {
  * Add a destination with the given name from the `systems.json` and `credentials.json` files to the `destinations` environment variable.
  *
  * Throws an error if a destination with the same name as the given test destination already exists.
- * @param name - Name of the test destination to add to the `destinations` environment variable
- * @param options - References to the `systems.json` and `credentials.json` files
+ * @param name - Name of the test destination to add to the `destinations` environment variable.
+ * @param options - References to the `systems.json` and `credentials.json` files.
  */
 export function mockTestDestination(
   name: string,
@@ -28,8 +28,8 @@ export function mockTestDestination(
  * Set a given destination in the `destinations` environment variable.
  *
  * Throws an error if a destination with the same name as the given test destination already exists.
- * @param destination - Test destination to add to the `destinations` environment variable
- * @param options - References to the `systems.json` and `credentials.json` files
+ * @param destination - Test destination to add to the `destinations` environment variable.
+ * @param options - References to the `systems.json` and `credentials.json` files.
  */
 export function setTestDestination(destination: Destination): void {
   const currentDestinations = getDestinationsFromEnv();
@@ -52,7 +52,7 @@ export function setTestDestination(destination: Destination): void {
 /**
  * Removes a destination with the given name from the destinations environment variable. If the given destination name is not found calling this function has no effect.
  * This function should be called to invert the behavior of [[mockTestDestination]]() and [[setTestDestination]]().
- * @param name - Name of the mocked destination to remove
+ * @param name - Name of the mocked destination to remove.
  */
 export function unmockTestDestination(name: string): void {
   const currentDestinations = getDestinationsFromEnv();
@@ -66,7 +66,7 @@ export function unmockTestDestination(name: string): void {
  * Add all destinations from the `systems.json` and `credentials.json` files to the `destinations` environment variable.
  *
  * Throws an error if a destination with the same name as the given test destinations already exists.
- * @param options - References to the `systems.json` and `credentials.json` files
+ * @param options - References to the `systems.json` and `credentials.json` files.
  */
 export function mockAllTestDestinations(
   options?: GetTestDestinationOptions

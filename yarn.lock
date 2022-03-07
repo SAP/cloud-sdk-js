@@ -1923,11 +1923,12 @@
     semver "^7.3.4"
 
 "@sap/xsenv@^3.0.0":
-  version "3.2.0"
-  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.2.0.tgz#98a00568fd96061670f966070e6b318165ee2826"
-  integrity sha512-wxObb+xdbas5JBggPHTrgJ/mA6ZKOx626pNuyE3mc3g5W3B5eW5egEc2lfVVPhl9f1ZphQIh1MKrO1lafaGxdw==
+  version "3.2.1"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.2.1.tgz#18fc1d2a817f72e89f843840fce19326635205e8"
+  integrity sha512-x6fqmYrIStw81o9TiKQIvTyrKRKBkPlwpvX5gyft2jJE+s0ZuKSpmijNTtp8lK4v13Jqvvd8qQr4q6QG0hOZsA==
   dependencies:
     debug "4.3.3"
+    node-cache "^5.1.0"
     verror "1.10.0"
 
 "@sap/xssec@^3.2.5", "@sap/xssec@^3.2.7":
@@ -3263,6 +3264,11 @@ clone-deep@^4.0.1:
     is-plain-object "^2.0.4"
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
+
+clone@2.x:
+  version "2.1.2"
+  resolved "https://registry.npmjs.org/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
+  integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
 clone@^1.0.2:
   version "1.0.4"
@@ -7387,6 +7393,13 @@ node-addon-api@^3.0.0:
   version "3.2.1"
   resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-3.2.1.tgz#81325e0a2117789c0128dab65e7e38f07ceba161"
   integrity sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==
+
+node-cache@^5.1.0:
+  version "5.1.2"
+  resolved "https://registry.npmjs.org/node-cache/-/node-cache-5.1.2.tgz#f264dc2ccad0a780e76253a694e9fd0ed19c398d"
+  integrity sha512-t1QzWwnk4sjLWaQAS8CHgOJ+RAfmHpxFWmc36IWTiWHQfs0w5JDMBS1b1ZxQteo0vVVuWJvIUKHDkkeK7vIGCg==
+  dependencies:
+    clone "2.x"
 
 node-fetch-h2@^2.3.0:
   version "2.3.0"

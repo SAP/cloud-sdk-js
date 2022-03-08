@@ -7832,9 +7832,9 @@ ono@^4.0.11:
     format-util "^1.0.3"
 
 openapi-backend@^5.0.0:
-  version "5.2.1"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.2.1.tgz#e120c72940a1bca1ee3af1cb8b3ee058cbf9d2cc"
-  integrity sha512-JTRk+ytxvSZ+XZRLpfLyNzQnVWEwMZv7Bl9GVHwwaTadcVjuhK/WLg5xpuAvZwtV1LGLDujCc6w9QjEp0BWVHw==
+  version "5.3.0"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.3.0.tgz#0f0c9e2509004f4079b281346fab09d8b0423dc9"
+  integrity sha512-wl9LxdM0hgpy+I1cWsjEn4jPnBprd8QTLVwILG/wPc83cQ1CZ8anNmq0CUSYfhW4jG0oEik8TprSUO+pLeznhA==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^9.0.7"
     ajv "^8.6.2"
@@ -8366,9 +8366,9 @@ postcss-values-parser@^5.0.0:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.1.7, postcss@^8.2.13:
-  version "8.4.7"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.7.tgz#f99862069ec4541de386bf57f5660a6c7a0875a8"
-  integrity sha512-L9Ye3r6hkkCeOETQX6iOaWZgjp3LL6Lpqm6EtgbKrgqGGteRMNb9vzBfRL96YOSu8o7x3MfIH9Mo5cPJFGrW6A==
+  version "8.4.8"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.8.tgz#dad963a76e82c081a0657d3a2f3602ce10c2e032"
+  integrity sha512-2tXEqGxrjvAO6U+CJzDL2Fk2kPHTv1jQsYkSoMeOis2SsYaXRO2COxTdQp99cYvif9JTXaAk9lYGc3VhJt7JPQ==
   dependencies:
     nanoid "^3.3.1"
     picocolors "^1.0.0"

@@ -48,6 +48,11 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
+  /**
+   * Set timeout for requests towards the target system given in the destination.   *
+   * @param timeout - Value is in milliseconds and default value is 10000 (10 seconds).
+   * @returns The request builder itself, to facilitate method chaining.
+   */
   timeout(timeout: number): this {
     this.requestConfig.timeout = timeout;
     return this;

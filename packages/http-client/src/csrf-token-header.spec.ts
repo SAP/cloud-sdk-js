@@ -83,6 +83,7 @@ describe('buildCsrfHeaders', () => {
       expect.anything(),
       expect.objectContaining({ timeout: 123 })
     );
+    jest.restoreAllMocks();
   });
 
   it('considers default timeout on csrf token fetching', async () => {

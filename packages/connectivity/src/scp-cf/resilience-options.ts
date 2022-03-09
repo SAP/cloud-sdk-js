@@ -8,7 +8,7 @@ export interface ResilienceOptions {
   enableCircuitBreaker?: boolean;
 
   /**
-   * Timeout in miliseconds to retrieve the destination.
+   * Timeout in milliseconds to retrieve the destination.
    */
   timeout?: number;
 }
@@ -34,7 +34,7 @@ export const circuitBreakerDefaultOptions: CircuitBreaker.Options = {
 /**
  * Creates a promise for a timeout race.
  * @internal
- * @param timeout - Value for the timeout
+ * @param timeout - Value for the timeout.
  * @returns A promise which times out after the given time.
  */
 export function timeoutPromise<T>(timeout: number): Promise<T> {

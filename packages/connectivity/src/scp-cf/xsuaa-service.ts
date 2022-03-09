@@ -109,7 +109,7 @@ export async function getClientCredentialsToken(
   const serviceCredentials = resolveService(service).credentials;
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  const xssePromise: Promise<ClientCredentialsResponse> = new Promise(
+  const xssecPromise: Promise<ClientCredentialsResponse> = new Promise(
     (resolve, reject) => {
       xssec.requests.requestClientCredentialsToken(
         subdomainAndZoneId.subdomain,
@@ -122,7 +122,7 @@ export async function getClientCredentialsToken(
     }
   );
 
-  return wrapInTimeout(xssePromise, timeout);
+  return wrapInTimeout(xssecPromise, timeout);
 }
 
 /**
@@ -149,7 +149,7 @@ export function getUserToken(
   }
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  const xssePromise = new Promise((resolve: (token: string) => void, reject) =>
+  const xssecPromise = new Promise((resolve: (token: string) => void, reject) =>
     xssec.requests.requestUserToken(
       userJwt,
       service.credentials,
@@ -160,5 +160,5 @@ export function getUserToken(
       (err: Error, token: string) => (err ? reject(err) : resolve(token))
     )
   );
-  return wrapInTimeout(xssePromise, timeout);
+  return wrapInTimeout(xssecPromise, timeout);
 }

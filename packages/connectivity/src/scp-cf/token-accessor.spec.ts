@@ -61,9 +61,12 @@ describe('token accessor', () => {
           destinationBindingClientSecretMock.credentials,
           100
         );
-        // try {
         await expect(
-          serviceToken('destination', { jwt, timeout: 10 })
+          serviceToken('destination', {
+            jwt,
+            timeout: 10,
+            enableCircuitBreaker
+          })
         ).rejects.toMatchObject({
           cause: {
             message: 'Token retrieval ran into timeout.'
@@ -87,7 +90,7 @@ describe('token accessor', () => {
         destinationBindingClientSecretMock.credentials
       );
 
-      const token = await serviceToken('destination', { jwt });
+      await serviceToken('destination', { jwt });
 
       expect(resilience.timeoutPromise).toHaveBeenCalledWith(
         defaultResilienceBTPServices.timeout

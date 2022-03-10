@@ -30,6 +30,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: Record<string, string> = {};
   private _fetchCsrfToken = true;
+  private _timeout: number | undefined = undefined;
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -80,6 +81,16 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
+   * Set timeout for requests towards the target system given in the destination.   *
+   * @param timeout - Value is in milliseconds and default value is 10000 (10 seconds).
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  timeout(timeout: number): this {
+    this._timeout = timeout;
+    return this;
+  }
+
+  /**
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
@@ -104,6 +115,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
         url: this.getPath(),
         headers: this.getHeaders(),
         params: this.getParameters(),
+        timeout: this._timeout,
         parameterEncoder: encodeTypedClientRequest,
         data: this.parameters?.body
       },

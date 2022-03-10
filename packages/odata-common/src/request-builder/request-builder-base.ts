@@ -49,6 +49,16 @@ export abstract class MethodRequestBuilder<
   }
 
   /**
+   * Set timeout for requests towards the target system given in the destination.   *
+   * @param timeout - Value is in milliseconds and default value is 10000 (10 seconds).
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  timeout(timeout: number): this {
+    this.requestConfig.timeout = timeout;
+    return this;
+  }
+
+  /**
    * Add custom query parameters to the request. If a query parameter with the given name already exists it is overwritten.
    * @param queryParameters - Key-value pairs denoting additional custom query parameters to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.

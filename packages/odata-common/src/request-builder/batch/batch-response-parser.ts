@@ -51,7 +51,7 @@ export function getResponseBody(response: string): string {
 
 /**
  * Parse the headers in the string representation of a response headers into an object. This will only look at the highest level of headers.
- * @param response - String representation of a response
+ * @param response - String representation of a response.
  * @returns The headers as an object.
  */
 function parseHeaders(response: string): Record<string, any> {
@@ -66,7 +66,7 @@ function parseHeaders(response: string): Record<string, any> {
 
 /**
  * Get the boundary from the content type header value. Throws an error if no boundary can be found.
- * @param contentType - Value of the content type header
+ * @param contentType - Value of the content type header.
  * @returns The boundary.
  */
 function getBoundary(contentType: string | undefined): string {

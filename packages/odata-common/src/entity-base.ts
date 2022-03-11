@@ -83,7 +83,7 @@ export abstract class EntityBase {
 
   /**
    * Returns a map that contains all entity custom fields.
-   * @returns A map of all defined custom fields in the entity
+   * @returns A map of all defined custom fields in the entity.
    */
   getCustomFields(): Record<string, any> {
     return this._customFields;
@@ -91,8 +91,8 @@ export abstract class EntityBase {
 
   /**
    * Custom field value getter.
-   * @param fieldName - The name of the custom field
-   * @returns The value of the corresponding custom field
+   * @param fieldName - The name of the custom field.
+   * @returns The value of the corresponding custom field.
    */
   getCustomField(fieldName: string): any {
     return this._customFields[fieldName];
@@ -101,9 +101,9 @@ export abstract class EntityBase {
   /**
    * Sets a new custom field in the entity or updates it.
    * Throws an error, if the provided custom field name is already defined by an original field in entity.
-   * @param fieldName - The name of the custom field to update
-   * @param value - The value of the field
-   * @returns The entity itself, to facilitate method chaining
+   * @param fieldName - The name of the custom field to update.
+   * @param value - The value of the field.
+   * @returns The entity itself, to facilitate method chaining.
    */
   setCustomField(fieldName: string, value: any): this {
     if (this.isConflictingCustomField(fieldName)) {
@@ -119,8 +119,8 @@ export abstract class EntityBase {
 
   /**
    * Validates whether a custom field exists in the entity.
-   * @param fieldName - The name of the custom field to update
-   * @returns A boolean value, that indicates whether a custom field is defined in entity
+   * @param fieldName - The name of the custom field to update.
+   * @returns A boolean value, that indicates whether a custom field is defined in entity.
    */
   hasCustomField(fieldName: string): boolean {
     return this._customFields[fieldName] !== undefined;
@@ -129,7 +129,7 @@ export abstract class EntityBase {
   /**
    * Sets custom fields on an entity.
    * @param customFields - Custom fields to set on the entity.
-   * @returns The entity itself, to facilitate method chaining
+   * @returns The entity itself, to facilitate method chaining.
    */
   setCustomFields(customFields: Record<string, any>): this {
     Object.entries(customFields).forEach(([key, value]) => {
@@ -156,7 +156,7 @@ export abstract class EntityBase {
    * This function is called on all read, create and update requests.
    * This function should be called after [[initializeCustomFields]], if custom fields are defined.
    * @param state - State to be set as remote state.
-   * @returns The entity itself, to facilitate method chaining
+   * @returns The entity itself, to facilitate method chaining.
    */
   setOrInitializeRemoteState(state?: Record<string, any>): this {
     if (!this.remoteState) {
@@ -199,7 +199,7 @@ export abstract class EntityBase {
    * Returns all changed properties compared to the last known remote state.
    * The returned properties do not include custom fields.
    * Use [[getUpdatedCustomFields]], if you need custom fields.
-   * @returns EntityBase with all properties that changed
+   * @returns EntityBase with all properties that changed.
    */
   getUpdatedProperties(): Record<string, any> {
     const current = this.asObject();
@@ -213,7 +213,7 @@ export abstract class EntityBase {
    * Returns all changed property names compared to the last known remote state.
    * The returned properties names do not include custom fields.
    * Use [[getUpdatedCustomFields]], if you need custom fields.
-   * @returns EntityBase with all properties that changed
+   * @returns EntityBase with all properties that changed.
    */
   getUpdatedPropertyNames(): string[] {
     const currentState = this.asObject();
@@ -259,8 +259,8 @@ export abstract class EntityBase {
 
   /**
    * Validates whether a field name does not conflict with an original field name and thus can be defined as custom fields.
-   * @param customFieldName - Field name to check
-   * @returns Boolean value that describes whether a field name can be defined as custom field
+   * @param customFieldName - Field name to check.
+   * @returns Boolean value that describes whether a field name can be defined as custom field.
    */
   protected isConflictingCustomField(customFieldName: string): boolean {
     return Object.values(this.schema)
@@ -271,7 +271,7 @@ export abstract class EntityBase {
   /**
    * Creates an object containing all defined properties, navigation properties and custom fields in the entity.
    * @param visitedEntities - List of entities to check in case of circular dependencies.
-   * @returns EntityBase as an object with all defined entity fields
+   * @returns EntityBase as an object with all defined entity fields.
    */
   protected asObject(visitedEntities: EntityBase[] = []): Record<string, any> {
     visitedEntities.push(this);

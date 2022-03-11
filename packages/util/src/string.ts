@@ -44,7 +44,7 @@ export function trim(string: string): string {
 }
 
 /**
- * Remove file extension from a string, e.g. remove 'test.jpg' would return 'test'
+ * Remove file extension from a string, e.g. remove 'test.jpg' would return 'test'.
  * @param fileName - File name to remove the file extension from.
  * @returns File name without extension.
  */

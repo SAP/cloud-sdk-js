@@ -14,8 +14,8 @@ export class BooleanFilterFunction<
 > extends FilterFunction<EntityT, boolean> {
   /**
    * Creates an instance of BooleanFilterFunction.
-   * @param functionName - Name of the function that returns a boolean value
-   * @param parameters - Representation of the parameters passed to the filter function
+   * @param functionName - Name of the function that returns a boolean value.
+   * @param parameters - Representation of the parameters passed to the filter function.
    */
   constructor(
     functionName: string,

@@ -24,9 +24,9 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
 
   /**
    * Creates an instance of Filter for this filter function and the given value using the operator 'eq', i.e. `==`.
-   * @param value - Value to be used in the filter
+   * @param value - Value to be used in the filter.
    * @param edmType - EDM type of the value, used when converting the value to URL. Use `Edm.String` as default value.
-   * @returns The resulting filter
+   * @returns The resulting filter.
    */
   equals(value: ReturnT): Filter<EntityT, any, ReturnT> {
     return new Filter(this, 'eq', value, this.edmType);
@@ -34,9 +34,9 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
 
   /**
    * Creates an instance of Filter for this filter function and the given value using the operator 'ne', i.e. `!=`.
-   * @param value - Value to be used in the filter
+   * @param value - Value to be used in the filter.
    * @param edmType - EDM type of the value, used when converting the value to URL. Use `Edm.String` as default value.
-   * @returns The resulting filter
+   * @returns The resulting filter.
    */
   notEquals(value: ReturnT): Filter<EntityT, any, ReturnT> {
     return new Filter(this, 'ne', value, this.edmType);

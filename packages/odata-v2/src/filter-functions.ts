@@ -21,7 +21,7 @@ import { Entity } from './entity';
  * Build a filter function to test whether a string is a substring of the other. Evaluates to boolean.
  * @param substr - The substring to test for. This can either be a string, a reference to a field or another filter function.
  * @param str - The string to test. This can either be a string, a reference to a field or another filter function.
- * @returns The newly created filter function
+ * @returns The newly created filter function.
  */
 export function substringOf<EntityT extends Entity>(
   substr:
@@ -38,7 +38,7 @@ export function substringOf<EntityT extends Entity>(
  * @param str - The string to get the index from. This can either be a string, a reference to a field or another filter function.
  * @param searchStr - The substring to get the index for. This can either be a string, a reference to a field or another filter function.
  * @param replaceStr - The substring to get the index for. This can either be a string, a reference to a field or another filter function.
- * @returns The newly created filter function
+ * @returns The newly created filter function.
  */
 export function replace<EntityT extends Entity>(
   str:
@@ -68,9 +68,9 @@ export const length = filterFunctionsCommon(defaultDeSerializers).length;
 export const substring = filterFunctionsCommon(defaultDeSerializers).substring;
 
 /**
- * OData v2 specific filter functions
- * @param deSerializers - DeSerializer used in the filter
- * @returns Filter functions object
+ * OData v2 specific filter functions.
+ * @param deSerializers - DeSerializer used in the filter.
+ * @returns Filter functions object.
  */
 export function filterFunctions<
   BinaryT = string,

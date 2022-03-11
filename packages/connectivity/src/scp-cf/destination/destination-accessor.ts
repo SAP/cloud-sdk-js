@@ -14,8 +14,8 @@ import { searchRegisteredDestination } from './destination-from-registration';
  * from the Cloud Foundry destination service).
  *
  * Fetching a destination requires:
- * - a binding to exactly one XSUAA service instance with service plan "application"
- * - a binding to a destination service instance
+ * - A binding to exactly one XSUAA service instance with service plan "application".
+ * - A binding to a destination service instance.
  *
  * If either of the prerequisites is not met or one of the services returns an error, this function will either throw an error or return a promise that rejects.
  * @param destination - A destination or the necessary parameters to fetch one.
@@ -31,9 +31,9 @@ export async function useOrFetchDestination(
 
 /**
  * Builds a destination from one of three sources (in the given order):
- * - from the environment variable "destinations"
- * - from service bindings
- * - from the destination service
+ * - from the environment variable "destinations".
+ * - from service bindings.
+ * - from the destination service.
  *
  * If you want to get a destination only from a specific source, use the corresponding function directly
  * (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).

@@ -5,7 +5,7 @@ import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Create OData request to execute a action or function import.
- * @typeparam ReturnT - Type of the function import return value
+ * @typeparam ReturnT - Type of the function import return value.
  * @internal
  */
 export abstract class ActionFunctionImportRequestBuilderBase<
@@ -13,7 +13,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
   RequestConfigT extends ODataRequestConfig
 > extends MethodRequestBuilder<RequestConfigT> {
   /**
-   * Base class for function  and actions imports
+   * Base class for function  and actions imports.
    * @param responseTransformer - Transformation function for the response.
    * @param requestConfig - Request config for a action or function import.
    */
@@ -25,9 +25,9 @@ export abstract class ActionFunctionImportRequestBuilderBase<
   }
 
   /**
-   * Execute request
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
-   * @returns A promise resolving to the requested return type
+   * Execute request.
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
+   * @returns A promise resolving to the requested return type.
    */
   async execute(destination: DestinationOrFetchOptions): Promise<ReturnT> {
     return this.executeRaw(destination).then(response =>
@@ -37,7 +37,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(

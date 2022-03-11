@@ -40,7 +40,7 @@ export interface DestinationAccessorOptions {
   /**
    * This property is only considered in case no userJwt is provided.
    * It is meant for situations where you do not have a token e.g. background processes.
-   * The value for iss is the issuer field of a JWT e.g. https://<your-subdomain>.localhost:8080/uaa/oauth/token'
+   * The value for iss is the issuer field of a JWT e.g. https://<your-subdomain>.localhost:8080/uaa/oauth/token'.
    *
    * ATTENTION: If this property is used, no validation of the provided subdomain value is done. This is differs from how the `userJwt` is handled.
    * So be careful that the used value is not manipulated and breaks the tenant isolation of your application.
@@ -60,7 +60,7 @@ export type DestinationOptions = DestinationAccessorOptions &
  * 1. If a destination of this [[DestinationFetchOptions.destinationName]] is defined in the environment variable `destinations` (if available), it will be converted into a [[Destination]] and used for the request.
  * 2. Otherwise, the destination service on SAP Business Technology Platform is queried for a destination with the given [[DestinationFetchOptions.destinationName]], using the access token provided as value of property [[jwt]].
  * Additionally, you can set [[DestinationOptions]] for objects of this interface.
- * For more information check out our documentation: https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination
+ * For more information check out our documentation: https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination.
  */
 export interface DestinationFetchOptions extends DestinationOptions {
   /**

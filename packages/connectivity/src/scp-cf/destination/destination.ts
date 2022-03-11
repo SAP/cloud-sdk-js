@@ -215,7 +215,7 @@ function isHttpDestination(destinationInput: Record<string, any>): boolean {
 /**
  * Transform Destination to strings containing destination information.
  * @param destination - Either destiatnation object or destinationName and Jwt.
- * @returns string containing information on the destination
+ * @returns String containing information on the destination.
  */
 export function toDestinationNameUrl(
   destination: DestinationOrFetchOptions

@@ -6,7 +6,8 @@ export function mockClientCredentialsGrantCall(
   uri: string,
   response: any,
   responseCode: number,
-  serviceCredentials: ServiceCredentials
+  serviceCredentials: ServiceCredentials,
+  delay = 0
 ) {
   return nock(uri, {
     reqheaders: xsuaaRequestHeaders()
@@ -17,6 +18,7 @@ export function mockClientCredentialsGrantCall(
       client_secret: serviceCredentials.clientsecret,
       response_type: 'token'
     })
+    .delay(delay)
     .reply(responseCode, response);
 }
 

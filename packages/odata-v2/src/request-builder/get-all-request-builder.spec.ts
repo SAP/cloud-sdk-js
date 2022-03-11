@@ -1,6 +1,7 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
@@ -165,6 +166,26 @@ describe('GetAllRequestBuilder', () => {
       await expect(getAllRequest).rejects.toThrowErrorMatchingSnapshot();
     });
 
+    it('considers custom timeout on the request', async () => {
+      const entityData1 = createOriginalTestEntityData1();
+      mockGetRequest(
+        {
+          query: { $top: 1 },
+          responseBody: { d: { results: [entityData1] } },
+          delay: 100
+        },
+        testEntityApi
+      );
+
+      try {
+        await requestBuilder.top(1).timeout(10).execute(defaultDestination);
+      } catch (err) {
+        expect(err.cause.message).toBe('timeout of 10ms exceeded');
+        return;
+      }
+      throw new Error('Should not reach here.');
+    });
+
     it('sets custom headers instead of destination headers', async () => {
       const entityData = createOriginalTestEntityData1();
       const customAuthHeader = { Authorization: 'custom' };
@@ -281,6 +302,7 @@ describe('GetAllRequestBuilder', () => {
               'content-type': 'application/json'
             }
           },
+          parameterEncoder: encodeTypedClientRequest,
           params: {
             requestConfig: {
               $format: 'json'

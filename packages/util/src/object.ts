@@ -42,9 +42,9 @@ export const renameKeys = (
 /**
  * Create a shallow copy of the given object, that contains the given keys.
  * Non existing keys in the source object are ignored.
- * @param keys - properties to be selected.
- * @param obj - object from which the values are taken.
- * @returns an object with the selected keys and corresponding values.
+ * @param keys - Properties to be selected.
+ * @param obj - Object from which the values are taken.
+ * @returns An object with the selected keys and corresponding values.
  */
 export const pick = <T>(keys: string[], obj: T): Partial<T> => {
   const result = {};
@@ -60,9 +60,9 @@ export const pick = <T>(keys: string[], obj: T): Partial<T> => {
 /**
  * Create a shallow copy of the given object, that does not contain the given keys.
  * Non existing keys in the source object are ignored.
- * @param keys - properties to be selected.
- * @param obj - object from which the values are taken.
- * @returns an object with the selected keys and corresponding values.
+ * @param keys - Properties to be selected.
+ * @param obj - Object from which the values are taken.
+ * @returns An object with the selected keys and corresponding values.
  */
 export const exclude = <T>(keys: string[], obj: T): Partial<T> => {
   const result = {};
@@ -78,10 +78,10 @@ export const exclude = <T>(keys: string[], obj: T): Partial<T> => {
 /**
  * Adds a key value pair to the given objects and returns a shallow copy.
  * If the key is already present it will be overwritten.
- * @param key - key to be added.
- * @param value - value to be added.
- * @param obj - object the key value pair is added to.
- * @returns the object with the key value pair added.
+ * @param key - Key to be added.
+ * @param value - Value to be added.
+ * @param obj - Object the key value pair is added to.
+ * @returns The object with the key value pair added.
  */
 export const assoc = <T>(
   key: string,

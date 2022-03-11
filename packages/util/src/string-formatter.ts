@@ -13,7 +13,7 @@ export const unixEOL = '\n';
 export const webEOL = '\r\n';
 
 /**
- * Convert a string to the uppercase snake case. This format is used e. g. for static properties on entity classes.
+ * Convert a string to the uppercase snake case. This format is used e.g. for static properties on entity classes.
  * @param str - The string to be transformed.
  * @returns The input string in the case used by static methods on entity-classes.
  */
@@ -22,7 +22,7 @@ export function upperCaseSnakeCase(str: string): string {
 }
 
 /**
- * Convert a string to camelCase. This format used e. g. for properties on entity class instances.
+ * Convert a string to camelCase. This format used e.g. for properties on entity class instances.
  * @param str - The string to be transformed.
  * @returns The transformed string.
  */
@@ -40,7 +40,7 @@ export function titleFormat(str: string): string {
 }
 
 /**
- * Convert a string to pascal case. This format is used e. g. for types.
+ * Convert a string to pascal case. This format is used e.g. for types.
  * @param str - The string to be transformed.
  * @returns The transformed string.
  */
@@ -52,7 +52,7 @@ export function pascalCase(str: string): string {
 }
 
 /**
- * Convert a string to kebab case. This format is used e. g. for file names.
+ * Convert a string to kebab case. This format is used e.g. for file names.
  * @param str - The string to be transformed.
  * @returns The transformed string.
  */
@@ -62,7 +62,7 @@ export function kebabCase(str: string): string {
 
 /**
  * Convert a JSON object to a string using formatting in line with the prettier with indentation and new line at the end.
- * @param json - Object to be stringified
+ * @param json - Object to be stringified.
  * @returns The JSON object as string.
  */
 export function formatJson(json: any): string {

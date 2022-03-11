@@ -1,5 +1,5 @@
 /**
- * [[include:generator/README.md]]
+ * [[include:generator/README.md]].
  * @packageDocumentation
  * @module @sap-cloud-sdk/generator
  */

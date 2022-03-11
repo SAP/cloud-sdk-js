@@ -48,7 +48,7 @@ export type HttpRequestConfigWithOrigin = HttpRequestConfigBase & {
 };
 
 /**
- * Type of the parameter encoder
+ * Type of the parameter encoder.
  */
 export type ParameterEncoder = (
   parameter: Record<string, any>

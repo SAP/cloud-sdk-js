@@ -473,8 +473,8 @@ async function addCsrfTokenToHeader(
 
 /**
  * Encoder for encoding all query parameters (key and value) using encodeURIComponent.
- * @param parameter - Parameter to be encoded using encodeURIComponent
- * @returns Encoded parameter object
+ * @param parameter - Parameter to be encoded using encodeURIComponent.
+ * @returns Encoded parameter object.
  */
 export const encodeAllParameters: ParameterEncoder = function (
   parameter: Record<string, any>

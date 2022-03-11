@@ -29,7 +29,6 @@ export function mockTestDestination(
  *
  * Throws an error if a destination with the same name as the given test destination already exists.
  * @param destination - Test destination to add to the `destinations` environment variable.
- * @param options - References to the `systems.json` and `credentials.json` files.
  */
 export function setTestDestination(destination: Destination): void {
   const currentDestinations = getDestinationsFromEnv();

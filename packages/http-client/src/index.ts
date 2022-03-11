@@ -1,5 +1,5 @@
 /**
- * [[include:http-client/README.md]]
+ * [[include:http-client/README.md]].
  * @packageDocumentation
  * @module @sap-cloud-sdk/http-client
  */

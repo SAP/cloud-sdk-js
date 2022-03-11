@@ -189,17 +189,16 @@ module.exports = {
     'jsdoc/no-defaults': 'error',
     'jsdoc/no-types': 'error',
     'jsdoc/require-asterisk-prefix': 'error',
-    //"jsdoc/match-description": ['error', { tags: {'typeparam': true }}],
     'jsdoc/require-description-complete-sentence': [
       'warn',
-      { abbreviations: ['e.g.', 'i.e.', 'aka.', 'etc.'] } //tags: ['typeparam'],
+      { abbreviations: ['e.g.', 'i.e.', 'aka.', 'etc.'] }
     ],
     'jsdoc/require-description': ['error', { exemptedBy: ['experimental'] }],
     'jsdoc/require-hyphen-before-param-description': 'error',
-    'jsdoc/require-jsdoc': ['warn', { publicOnly: true }],
+    'jsdoc/require-jsdoc': ['warn', { publicOnly: true, enableFixer: false }],
     'jsdoc/require-param-description': 'error',
     'jsdoc/require-param-name': 'error',
-    'jsdoc/require-param': 'warn',
+    'jsdoc/require-param': ['warn', { enableFixer: false }],
     'jsdoc/require-returns-check': 'error',
     'jsdoc/require-returns-description': 'error',
     'jsdoc/require-returns': 'warn',
@@ -207,13 +206,7 @@ module.exports = {
   },
   settings: {
     jsdoc: {
-      ignoreInternal: true,
-      structuredTags: {
-        typeparam: {
-          required: ['name'],
-          type: false
-        }
-      }
+      ignoreInternal: true
     }
   }
 };

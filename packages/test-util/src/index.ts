@@ -1,5 +1,5 @@
 /**
- * [[include:test-util/README.md]]
+ * [[include:test-util/README.md]].
  * @packageDocumentation
  * @module @sap-cloud-sdk/test-util
  */

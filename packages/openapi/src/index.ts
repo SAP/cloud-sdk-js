@@ -1,5 +1,5 @@
 /**
- * [[include:openapi/README.md]]
+ * [[include:openapi/README.md]].
  * @packageDocumentation
  * @module @sap-cloud-sdk/openapi
  */

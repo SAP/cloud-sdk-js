@@ -103,7 +103,6 @@ export abstract class GetAllRequestBuilderBase<
   /**
    * Execute request.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @param options - Options to employ when fetching destinations.
    * @returns A promise resolving to the requested entities.
    */
   async execute(destination: DestinationOrFetchOptions): Promise<EntityT[]> {

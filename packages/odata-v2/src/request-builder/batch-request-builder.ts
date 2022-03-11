@@ -23,7 +23,6 @@ export class ODataBatchRequestBuilder<
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.
    * @param destination - Targeted destination or DestinationFetchOptions on which the request is performed.
-   * @param options - Options to employ when fetching destinations.
    * @returns Promise resolving to the requested data.
    */
   async execute(

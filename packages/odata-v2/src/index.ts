@@ -1,5 +1,5 @@
 /**
- * [[include:odata-v2/README.md]]
+ * [[include:odata-v2/README.md]].
  * @packageDocumentation
  * @module @sap-cloud-sdk/odata-v2
  */

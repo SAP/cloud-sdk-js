@@ -14,8 +14,12 @@
     "access": "restricted"
   },
   "scripts": {
-    "test": "echo 'Nothing to test here.'",
-    "check:dependencies": "echo Nothing to check here."
+    "generate": "",
+    "generate:v2": "ts-node scripts/generate-test-services.ts v2 && yarn lint:fix && yarn --frozen-lockfile",
+    "generate:v4": "ts-node scripts/generate-test-services.ts v4 && yarn lint:fix && yarn --frozen-lockfile",
+    "generate:openapi": "ts-node scripts/generate-test-services.ts openapi && yarn lint:fix && yarn --frozen-lockfile",
+    "lint": "eslint --ext .ts . && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
+    "lint:fix": "eslint --ext .ts . --fix && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w"
   },
   "license": "Apache-2.0",
   "dependencies": {

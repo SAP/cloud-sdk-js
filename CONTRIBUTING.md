@@ -6,7 +6,7 @@ Please make sure, that you are familiar with our [style guide](./STYLEGUIDE.md).
 
 ## Project Structure
 
-This project contains multiple packages, that are managed using [lerna](https://github.com/lerna/lerna) and [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/). Productive packages are located in the [`packages`](./packages) directory, test packages are located in the [`test-packages`](./test-packages) directory.
+This project contains multiple packages, that are managed using [turborepo](https://github.com/vercel/turborepo) and [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/). Productive packages are located in the [`packages`](./packages) directory, test packages are located in the [`test-packages`](./test-packages) directory.
 All dependencies that are used in more than one of the packages are hoisted into the root project. Dependencies, that occur only once and binaries will be placed in the node_modules of that specific package. Some of the packages are interdependent, therefore `yarn install` won't work from within those packages. Run `yarn install` in the root directory instead.
 
 ## Testing

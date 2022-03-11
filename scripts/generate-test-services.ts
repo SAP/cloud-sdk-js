@@ -26,9 +26,7 @@ const generatorConfigOData = {
   s4hanaCloud: false
 };
 
-const generatorConfigOpenApi: GeneratorOptions = {
-  input: resolve('test-resources', 'openapi-service-specs'),
-  outputDir: resolve('test-packages', 'test-services', 'openapi'),
+const generatorConfigOpenApi: Partial<GeneratorOptions> = {
   clearOutputDir: true,
   transpile: true,
   packageJson: true,
@@ -92,6 +90,8 @@ async function generateAll(): Promise<void> {
   if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
     await generateOpenApi({
       ...generatorConfigOpenApi,
+      input: resolve('test-resources', 'openapi-service-specs'),
+      outputDir: resolve('test-packages', 'test-services', 'openapi'),
       transpile: true
     });
   }

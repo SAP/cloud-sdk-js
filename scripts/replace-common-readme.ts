@@ -1,7 +1,7 @@
 import { resolve } from 'path';
+import { exit, cwd } from 'process';
 import { promises, readFileSync } from 'fs';
 import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
-import { getProductiveLernaModules } from './util';
 
 const startTagCommonReadme = '<!-- sap-cloud-sdk-common-readme -->';
 const endTagCommonReadme = '<!-- sap-cloud-sdk-common-readme-stop -->';
@@ -12,7 +12,7 @@ const logoContent = `<a href="https://sap.com/s4sdk"><img src="https://help.sap.
 const infoNoManualEdit =
   '<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->';
 
-const logger = createLogger('check-licenses');
+const logger = createLogger('replace-common-readme');
 
 const genericContent = readFileSync(
   resolve(__dirname, 'COMMON-README-PART.md'),
@@ -56,10 +56,7 @@ async function updateReadmeFile(pathModule: string) {
   logger.info(`File ${pathReadme} finished.`);
 }
 
-async function updateReadmeFiles() {
-  logger.info('Generic content is added to README.md files in packages.');
-  const packages = await getProductiveLernaModules();
-  await Promise.all(packages.map(module => updateReadmeFile(module.location)));
-}
-
-updateReadmeFiles();
+updateReadmeFile(cwd()).catch(err => {
+  logger.error(err);
+  exit(1);
+});

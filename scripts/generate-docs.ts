@@ -110,7 +110,7 @@ function insertCopyrightAndTracking() {
   });
 }
 
-const version = JSON.parse(readFileSync('lerna.json', 'utf8')).version;
+const version = JSON.parse(readFileSync('package.json', 'utf8')).version;
 
 function getSortedApiVersions() {
   return readdirSync(apiDocPath)

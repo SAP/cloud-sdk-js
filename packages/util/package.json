@@ -27,7 +27,10 @@
     "prepare": "yarn compile",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck ."
+    "lint": "eslint --ext .ts . && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
+    "lint:fix": "eslint --ext .ts . --fix && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w",
+    "check:dependencies": "depcheck .",
+    "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
     "axios": "^0.26.0",

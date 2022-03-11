@@ -6,12 +6,21 @@ import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
-  ResilienceOptions
+  defaultResilienceBTPServices,
+  ResilienceOptions,
+  timeoutPromise
 } from './resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
 
 let circuitBreaker: any;
+
+async function wrapInTimeout<T>(
+  promise: Promise<T>,
+  timeout: number
+): Promise<T> {
+  return Promise.race([promise, timeoutPromise<T>(timeout)]);
+}
 
 function executeFunction<T extends (...args: any[]) => any>(
   fn: T,
@@ -31,24 +40,16 @@ function getCircuitBreaker() {
 }
 
 /**
- * Wrap a function in a circuit breaker. IMPORTANT: This assumes that the last parameter of the function is `ResilienceOptions` and you do not pass it to the execution of this function.
- * @example
- * ```
- * function myFn(param: string, options: ResilienceOptions = { enableCircuitBreaker: true }) {
- * if (options.enableCircuitBreaker) {
- *   return wrapInCircuitBreaker(getClientCredentialsToken)(service, userJwt);
- * }
- * ```
+ * Wrap a function in a circuit breaker. Important if you trigger this recursively you have to adjust the parameters to avoid an infinite stack.
+ *
  * @param fn - Function to wrap.
- * @returns A function to be called with the original parameters, by omitting the options parameter.
+ * @returns A function to be called with the original parameters.
  */
 function wrapInCircuitBreaker<T extends (...args: any[]) => any>(
   fn: T
 ): (...parameters: Parameters<T>) => ReturnType<T> {
   return (...parameters: Parameters<T>) =>
-    getCircuitBreaker().fire(fn, ...parameters, {
-      enableCircuitBreaker: false
-    });
+    getCircuitBreaker().fire(fn, ...parameters);
 }
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
@@ -90,27 +91,38 @@ export function getSubdomainAndZoneId(
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns Client credentials token.
  */
-export function getClientCredentialsToken(
+export async function getClientCredentialsToken(
   service: string | Service,
   userJwt?: string | JwtPayload,
-  options: ResilienceOptions = { enableCircuitBreaker: true }
+  options?: ResilienceOptions
 ): Promise<ClientCredentialsResponse> {
-  if (options.enableCircuitBreaker) {
-    return wrapInCircuitBreaker(getClientCredentialsToken)(service, userJwt);
+  const { enableCircuitBreaker, timeout } = {
+    ...defaultResilienceBTPServices,
+    ...options
+  };
+  if (enableCircuitBreaker) {
+    return wrapInCircuitBreaker(getClientCredentialsToken)(service, userJwt, {
+      enableCircuitBreaker: false,
+      timeout
+    });
   }
   const serviceCredentials = resolveService(service).credentials;
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  return new Promise((resolve, reject) => {
-    xssec.requests.requestClientCredentialsToken(
-      subdomainAndZoneId.subdomain,
-      serviceCredentials,
-      null,
-      subdomainAndZoneId.zoneId,
-      (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
-        err ? reject(err) : resolve(tokenResponse)
-    );
-  });
+  const xssecPromise: Promise<ClientCredentialsResponse> = new Promise(
+    (resolve, reject) => {
+      xssec.requests.requestClientCredentialsToken(
+        subdomainAndZoneId.subdomain,
+        serviceCredentials,
+        null,
+        subdomainAndZoneId.zoneId,
+        (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
+          err ? reject(err) : resolve(tokenResponse)
+      );
+    }
+  );
+
+  return wrapInTimeout(xssecPromise, timeout);
 }
 
 /**
@@ -123,14 +135,21 @@ export function getClientCredentialsToken(
 export function getUserToken(
   service: Service,
   userJwt: string,
-  options: ResilienceOptions = { enableCircuitBreaker: true }
+  options?: ResilienceOptions
 ): Promise<string> {
-  if (options.enableCircuitBreaker) {
-    return wrapInCircuitBreaker(getUserToken)(service, userJwt);
+  const { enableCircuitBreaker, timeout } = {
+    ...defaultResilienceBTPServices,
+    ...options
+  };
+  if (enableCircuitBreaker) {
+    return wrapInCircuitBreaker(getUserToken)(service, userJwt, {
+      enableCircuitBreaker: false,
+      timeout
+    });
   }
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  return new Promise((resolve: (token: string) => void, reject) =>
+  const xssecPromise = new Promise((resolve: (token: string) => void, reject) =>
     xssec.requests.requestUserToken(
       userJwt,
       service.credentials,
@@ -141,4 +160,5 @@ export function getUserToken(
       (err: Error, token: string) => (err ? reject(err) : resolve(token))
     )
   );
+  return wrapInTimeout(xssecPromise, timeout);
 }

@@ -17,6 +17,7 @@ import {
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
 import {
+  defaultResilienceBTPServices,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
@@ -369,6 +370,11 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
 }
 
 /**
+ * @internal
+ */
+export const defaultTimeoutTarget = 10000;
+
+/**
  * Builds an Axios config with default configuration i.e. no_proxy, default http and https agent and GET as request method.
  * @returns AxiosRequestConfig with default parameters
  * @internal
@@ -391,6 +397,7 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     proxy: false,
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
+    timeout: defaultTimeoutTarget,
     paramsSerializer: (params = {}) =>
       Object.entries(params)
         .map(([key, value]) => `${key}=${value}`)
@@ -445,6 +452,7 @@ async function getCsrfHeaders(
         params: request.params,
         headers: request.headers,
         url: request.url,
+        timeout: request.timeout || defaultResilienceBTPServices.timeout,
         proxy: request.proxy,
         httpAgent: request.httpAgent,
         httpsAgent: request.httpsAgent

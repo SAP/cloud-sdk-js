@@ -24,6 +24,7 @@ import {
   addDestinationToRequestConfig,
   buildHttpRequest,
   buildRequestWithMergedHeadersAndQueryParameters,
+  defaultTimeoutTarget,
   encodeAllParameters,
   executeHttpRequest,
   getDefaultHttpRequestOptions,
@@ -648,6 +649,36 @@ sap-client:001`);
       );
 
       requestSpy.mockRestore();
+    });
+
+    it('uses the default timeout if not given', async () => {
+      const destination: Destination = {
+        url: 'https://destinationUrl'
+      };
+      const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
+      await expect(
+        executeHttpRequest(destination, { method: 'get' })
+      ).resolves.not.toThrow();
+      expect(requestSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          timeout: defaultTimeoutTarget
+        })
+      );
+    });
+
+    it('uses a custom timeout if given', async () => {
+      const destination: Destination = {
+        url: 'https://destinationUrl'
+      };
+      const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
+      await expect(
+        executeHttpRequest(destination, { method: 'get', timeout: 123 })
+      ).resolves.not.toThrow();
+      expect(requestSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          timeout: 123
+        })
+      );
     });
 
     it('overwrites the default axios config with destination related request config', async () => {

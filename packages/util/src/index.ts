@@ -1,5 +1,5 @@
 /**
- * [[include:util/README.md]].
+ * [[include:util/README.md]]
  * @packageDocumentation
  * @module @sap-cloud-sdk/util
  */

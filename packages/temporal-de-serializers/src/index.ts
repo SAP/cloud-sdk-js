@@ -1,5 +1,5 @@
 /**
- * [[include:temporal-de-serializers/README.md]].
+ * [[include:temporal-de-serializers/README.md]]
  * @packageDocumentation
  * @module @sap-cloud-sdk/temporal-de-serializers
  */

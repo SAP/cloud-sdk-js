@@ -37,6 +37,12 @@ module.exports = {
         'import/no-internal-modules': 'off',
         'no-unused-expressions': 'off'
       }
+    },
+    {
+      files: ['**/index.ts'],
+      rules: {
+        'jsdoc/require-description-complete-sentence': 'off'
+      }
     }
   ],
   rules: {

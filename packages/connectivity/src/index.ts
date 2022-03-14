@@ -1,5 +1,5 @@
 /**
- * [[include:connectivity/README.md]].
+ * [[include:connectivity/README.md]]
  * @packageDocumentation
  * @module @sap-cloud-sdk/connectivity
  */

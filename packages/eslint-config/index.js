@@ -195,7 +195,19 @@ module.exports = {
     ],
     'jsdoc/require-description': ['error', { exemptedBy: ['experimental'] }],
     'jsdoc/require-hyphen-before-param-description': 'error',
-    'jsdoc/require-jsdoc': ['warn', { publicOnly: true, enableFixer: false }],
+    'jsdoc/require-jsdoc': [
+      'warn',
+      {
+        publicOnly: true,
+        enableFixer: false,
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSEnumDeclaration',
+          'TSTypeAliasDeclaration',
+          'VariableDeclaration'
+        ]
+      }
+    ],
     'jsdoc/require-param-description': 'error',
     'jsdoc/require-param-name': 'error',
     'jsdoc/require-param': ['warn', { enableFixer: false }],

@@ -32,7 +32,7 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@js-temporal/polyfill": "^0.3.0",
+    "@js-temporal/polyfill": "^0.4.0",
     "@sap-cloud-sdk/odata-common": "^2.1.0"
   },
   "devDependencies": {

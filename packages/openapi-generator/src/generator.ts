@@ -228,7 +228,6 @@ async function createSchemaFiles(
  * @param options - Options to configure generation.
  * @param serviceOptions - Service options as defined in the options per service.
  * @param tsConfig - File content for the `tsconfig.json`.
- * @param serviceName - The unique service name to be used.
  */
 async function generateService(
   inputFilePath: string,

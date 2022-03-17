@@ -41,7 +41,6 @@ function getCircuitBreaker() {
 
 /**
  * Wrap a function in a circuit breaker. Important if you trigger this recursively you have to adjust the parameters to avoid an infinite stack.
- *
  * @param fn - Function to wrap.
  * @returns A function to be called with the original parameters.
  */

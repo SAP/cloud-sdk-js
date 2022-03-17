@@ -81,7 +81,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Set timeout for requests towards the target system given in the destination.   *
+   * Set timeout for requests towards the target system given in the destination.
    * @param timeout - Value is in milliseconds and default value is 10000 (10 seconds).
    * @returns The request builder itself, to facilitate method chaining.
    */

@@ -58,9 +58,9 @@ export abstract class CreateRequestBuilderBase<
 
   /**
    * Specifies the parent of the entity to create.
-   * @param parentEntity - Parent of the entity to create
-   * @param linkField - Static representation of the navigation property that navigates from the parent entity to the child entity
-   * @returns The entity itself, to facilitate method chaining
+   * @param parentEntity - Parent of the entity to create.
+   * @param linkField - Static representation of the navigation property that navigates from the parent entity to the child entity.
+   * @returns The entity itself, to facilitate method chaining.
    */
   asChildOf<ParentEntityT extends EntityBase>(
     parentEntity: ParentEntityT,
@@ -76,8 +76,8 @@ export abstract class CreateRequestBuilderBase<
 
   /**
    * Execute query.
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
-   * @returns A promise resolving to the created entity
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
+   * @returns A promise resolving to the created entity.
    */
   async execute(destination: DestinationOrFetchOptions): Promise<EntityT> {
     return this.executeRaw(destination)
@@ -95,7 +95,7 @@ export abstract class CreateRequestBuilderBase<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(

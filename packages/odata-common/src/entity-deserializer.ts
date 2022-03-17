@@ -70,7 +70,7 @@ export function entityDeserializer<T extends DeSerializers>(
    * If a version identifier is found in the '__metadata' or in the request header, the method also sets it.
    * @param json - The JSON payload.
    * @param entityApi - Entity API to deserialize for.
-   * @param requestHeader - Optional parameter which may be used to add a version identifier (ETag) to the entity
+   * @param requestHeader - Optional parameter which may be used to add a version identifier (ETag) to the entity.
    * @returns An instance of the entity class.
    */
   function deserializeEntity<

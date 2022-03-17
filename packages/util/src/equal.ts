@@ -26,10 +26,6 @@ export function equal<T>(item1: T, item2: T): boolean {
   return item1 === item2;
 }
 
-// eslint-disable-next-line valid-jsdoc
-/**
- * hidden
- */
 export function equalArrays<T>(arr1: T[], arr2: T[]): boolean {
   return (
     arr1.length === arr2.length &&

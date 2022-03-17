@@ -15,7 +15,7 @@ describe('EDM to Temporal', () => {
     ) as Temporal.PlainDateTime;
     expect(dateTimePlain.toString()).toBe('2019-04-30T13:19:42');
     expect(() => Temporal.TimeZone.from(dateTimePlain.toString())).toThrowError(
-      /Invalid time zone specified/
+      /Invalid time zone/
     );
   });
 

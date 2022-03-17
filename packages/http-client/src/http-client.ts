@@ -4,23 +4,24 @@ import {
   createLogger,
   ErrorWithCause,
   pickIgnoreCase,
-  unixEOL,
-  sanitizeRecord
+  sanitizeRecord,
+  unixEOL
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import {
   buildHeadersForDestination,
   Destination,
   DestinationOrFetchOptions,
+  getAgentConfig,
   toDestinationNameUrl,
-  useOrFetchDestination,
-  getAgentConfig
+  useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
 import {
+  defaultResilienceBTPServices,
   DestinationConfiguration,
-  getAuthHeader,
   getAdditionalHeaders,
-  getAdditionalQueryParameters
+  getAdditionalQueryParameters,
+  getAuthHeader
 } from '@sap-cloud-sdk/connectivity/internal';
 import {
   DestinationHttpRequestConfig,
@@ -31,7 +32,9 @@ import {
   HttpRequestConfigWithOrigin,
   HttpRequestOptions,
   HttpResponse,
-  OriginOptions
+  OriginOptions,
+  OriginOptionsInternal,
+  ParameterEncoder
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
 import { buildCsrfHeaders } from './csrf-token-header';
@@ -122,6 +125,68 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
 }
 
 /**
+ * This method does nothing and is only there to indicated that the call was made by Odata or OpenApi client and encoding is already done on filter and key parameters.
+ * @param params - Parameters which are returned
+ * @returns The parameters as they are without encoding.
+ * @internal
+ */
+export const encodeTypedClientRequest: ParameterEncoder = (
+  params: Record<string, any>
+) => params;
+
+function encodeQueryParameters(options: {
+  parameterEncoder: ParameterEncoder;
+  parameters: OriginOptionsInternal;
+  exclude: (keyof OriginOptionsInternal)[];
+}): OriginOptionsInternal {
+  const { parameterEncoder, parameters, exclude } = options;
+  return Object.fromEntries(
+    Object.entries(parameters).map(([key, value]) =>
+      exclude.includes(key as keyof OriginOptionsInternal)
+        ? [key, value]
+        : [key, value ? parameterEncoder(value) : value]
+    )
+  );
+}
+
+function isGenericClientDefault(
+  parameterEncoder: ParameterEncoder | undefined
+): parameterEncoder is undefined {
+  return !parameterEncoder;
+}
+
+function isTypedClient(
+  parameterEncoder: ParameterEncoder
+): parameterEncoder is typeof encodeTypedClientRequest {
+  return parameterEncoder.name === encodeTypedClientRequest.name;
+}
+
+function getEncodedParameters(
+  parameters: OriginOptionsInternal,
+  requestConfig: HttpRequestConfigWithOrigin
+): OriginOptionsInternal {
+  const { parameterEncoder } = requestConfig;
+  if (isGenericClientDefault(parameterEncoder)) {
+    return encodeQueryParameters({
+      parameters,
+      parameterEncoder: encodeAllParameters,
+      exclude: ['custom']
+    });
+  }
+
+  if (isTypedClient(parameterEncoder)) {
+    return encodeQueryParameters({
+      parameters,
+      parameterEncoder: encodeAllParameters,
+      exclude: ['custom', 'requestConfig']
+    });
+  }
+
+  // Custom encoder provided for generic client -> use it for all origins
+  return encodeQueryParameters({ parameters, parameterEncoder, exclude: [] });
+}
+
+/**
  * @internal
  * Build a request config from a given request config and a destination.
  * In addition to merging the information from the request config and the destination, it also picks values with higher priority for headers and query parameters.
@@ -138,11 +203,15 @@ export async function buildRequestWithMergedHeadersAndQueryParameters(
 ): Promise<HttpRequestConfig & DestinationHttpRequestConfig> {
   const { paramsOriginOptions, headersOriginOptions, requestConfigBase } =
     splitRequestConfig(requestConfig);
-
-  const mergedQueryParameter = getMergedParameters(
+  const parameters = collectParametersFromAllOrigins(
     destination,
     paramsOriginOptions
   );
+
+  const encodedParameters = getEncodedParameters(parameters, requestConfig);
+
+  const mergedQueryParameter = mergeOptionsWithPriority(encodedParameters);
+
   const mergedHeaders = await getMergedHeaders(
     destination,
     headersOriginOptions
@@ -176,18 +245,18 @@ async function getMergedHeaders(
   });
 }
 
-function getMergedParameters(
+function collectParametersFromAllOrigins(
   destination: Destination,
   paramsOriginOptions?: OriginOptions
-): Record<string, string> | undefined {
+): OriginOptionsInternal {
   const queryParametersDestinationProperty = getAdditionalQueryParameters(
     (destination.originalProperties as DestinationConfiguration) || {}
   ).queryParameters;
-  return mergeOptionsWithPriority({
+  return {
     ...paramsOriginOptions,
     destinationProperty: queryParametersDestinationProperty,
     destination: destination.queryParameters
-  });
+  };
 }
 
 function splitRequestConfig(requestConfig: HttpRequestConfigWithOrigin): {
@@ -301,6 +370,11 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
 }
 
 /**
+ * @internal
+ */
+export const defaultTimeoutTarget = 10000;
+
+/**
  * Builds an Axios config with default configuration i.e. no_proxy, default http and https agent and GET as request method.
  * @returns AxiosRequestConfig with default parameters
  * @internal
@@ -323,6 +397,7 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     proxy: false,
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
+    timeout: defaultTimeoutTarget,
     paramsSerializer: (params = {}) =>
       Object.entries(params)
         .map(([key, value]) => `${key}=${value}`)
@@ -375,6 +450,7 @@ async function getCsrfHeaders(
         params: request.params,
         headers: request.headers,
         url: request.url,
+        timeout: request.timeout || defaultResilienceBTPServices.timeout,
         proxy: request.proxy,
         httpAgent: request.httpAgent,
         httpsAgent: request.httpsAgent
@@ -392,3 +468,19 @@ async function addCsrfTokenToHeader(
     : {};
   return { ...request.headers, ...csrfHeaders };
 }
+
+/**
+ * Encoder for encoding all query parameters (key and value) using encodeURIComponent.
+ * @param parameter - Parameter to be encoded using encodeURIComponent.
+ * @returns Encoded parameter object.
+ */
+export const encodeAllParameters: ParameterEncoder = function (
+  parameter: Record<string, any>
+): Record<string, any> {
+  return Object.fromEntries(
+    Object.entries(parameter).map(([key, value]) => [
+      encodeURIComponent(key),
+      encodeURIComponent(value)
+    ])
+  );
+};

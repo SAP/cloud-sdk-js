@@ -14,15 +14,15 @@
 
 ## Compatibility Notes
 
--
+- [eslint-config] Since the `valid-jsdoc` rule is deprecated in ESLint, it is replaced by the `eslint-plugin-jsdoc` plugin for checking JSDoc comments. To stop your project from using a specific rule, turn it off by setting the rule ID to `off` under the `rules` key inside your configuration file.
 
 ## New Functionality
 
--
+- [http-client] Introduce the `parameterEncoder` option to the request config of the `http-client` to allow custom parameter encoding.  
 
 ## Improvements
 
--
+- [http-client] Introduce consistent query parameter encoding for all non custom parameters.
 
 ## Fixed Issues
 

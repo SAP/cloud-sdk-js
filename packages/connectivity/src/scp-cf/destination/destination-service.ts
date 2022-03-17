@@ -8,6 +8,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   circuitBreakerDefaultOptions,
+  defaultResilienceBTPServices,
   ResilienceOptions
 } from '../resilience-options';
 import { urlAndAgent } from '../../http-agent';
@@ -211,16 +212,21 @@ function errorMessageFromResponse(
 function callDestinationService(
   uri: string,
   headers: Record<string, any>,
-  options: ResilienceOptions = { enableCircuitBreaker: true }
+  options?: ResilienceOptions
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
+  const { enableCircuitBreaker, timeout } = {
+    ...defaultResilienceBTPServices,
+    ...options
+  };
   const config: AxiosRequestConfig = {
     ...urlAndAgent(uri),
     proxy: false,
     method: 'get',
+    timeout,
     headers
   };
 
-  if (options.enableCircuitBreaker) {
+  if (enableCircuitBreaker) {
     return getCircuitBreaker().fire(config);
   }
 

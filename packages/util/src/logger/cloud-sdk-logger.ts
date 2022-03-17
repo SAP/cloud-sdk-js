@@ -123,8 +123,8 @@ export function createLogger(
 
 /**
  * Get logger for a given message context, if available.
- * @param messageContext - A key for the message context of all messages produced by the logger
- * @returns The logger for the given messageContext if it was created before
+ * @param messageContext - A key for the message context of all messages produced by the logger.
+ * @returns The logger for the given messageContext if it was created before.
  */
 export function getLogger(
   messageContext = DEFAULT_LOGGER__MESSAGE_CONTEXT
@@ -136,9 +136,9 @@ export function getLogger(
 
 /**
  * Change the log level of a logger based on its message context.
- * E. g., to set the log level for the destination accessor module of the SDK to _debug_, simply call `setLogLevel('debug', 'destination-accessor')`.
- * @param level - level to set the logger to. Use an empty string '' as level to unset context level.
- * @param messageContextOrLogger - Message context of the logger to change the log level for or the logger itself
+ * e.g., to set the log level for the destination accessor module of the SDK to _debug_, simply call `setLogLevel('debug', 'destination-accessor')`.
+ * @param level - Level to set the logger to. Use an empty string '' as level to unset context level.
+ * @param messageContextOrLogger - Message context of the logger to change the log level for or the logger itself.
  */
 export function setLogLevel(
   level: LogLevel | '',
@@ -166,7 +166,7 @@ export function setLogLevel(
 
 /**
  * Change the global log level of the container which will set default level for all active loggers.
- * E. g., to set the global log level call `setGlobalLogLevel('debug')`.
+ * e.g., to set the global log level call `setGlobalLogLevel('debug')`.
  * @param level - The log level to set the global log level to.
  */
 export function setGlobalLogLevel(level: LogLevel): void {
@@ -196,11 +196,11 @@ const defaultSensitiveKeys = [
 ];
 
 /**
- * Check if the input key contains or matches any of the sensitive keys
- * @param inputKey - Key of the record to be sanitized
- * @param value - Value corresponding to the inputKey
- * @param sensitiveKeys - List of keys to be matched
- * @returns A boolean to indicate if the key contains or matches any sensitive key
+ * Check if the input key contains or matches any of the sensitive keys.
+ * @param inputKey - Key of the record to be sanitized.
+ * @param value - Value corresponding to the inputKey.
+ * @param sensitiveKeys - List of keys to be matched.
+ * @returns A boolean to indicate if the key contains or matches any sensitive key.
  */
 function isSensitive(
   inputKey: string,

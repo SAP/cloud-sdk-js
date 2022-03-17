@@ -57,8 +57,8 @@ export class Cache<T> implements CacheInterface<T> {
 
   /**
    * Specifies whether an entry with a given key is defined in cache.
-   * @param key - The entry's key
-   * @returns boolean A boolean value that indicates whether the entry exists in cache
+   * @param key - The entry's key.
+   * @returns A boolean value that indicates whether the entry exists in cache.
    */
   hasKey(key: string): boolean {
     return this.cache.hasOwnProperty(key);
@@ -77,9 +77,9 @@ export class Cache<T> implements CacheInterface<T> {
 
   /**
    * Setter of entries in cache.
-   * @param key - The entry's key
-   * @param entry - The entry to cache
-   * @param expirationTime - The time expressed in UTC in which the given entry expires
+   * @param key - The entry's key.
+   * @param entry - The entry to cache.
+   * @param expirationTime - The time expressed in UTC in which the given entry expires.
    */
   set(key: string | undefined, entry: T, expirationTime?: number): void {
     if (key) {

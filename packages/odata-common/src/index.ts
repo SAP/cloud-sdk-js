@@ -1,4 +1,3 @@
-/* eslint-disable tsdoc/syntax */
 /**
  * [[include:odata-common/README.md]]
  * @packageDocumentation

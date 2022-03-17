@@ -23,7 +23,7 @@ const logger = createLogger({
 
 /**
  * Create OData query to update an entity.
- * @typeparam EntityT - Type of the entity to be updated
+ * @typeparam EntityT - Type of the entity to be updated.
  */
 export class UpdateRequestBuilder<
     EntityT extends Entity,
@@ -35,7 +35,7 @@ export class UpdateRequestBuilder<
   /**
    * Creates an instance of UpdateRequestBuilder.
    * @param entityApi - Entity API for building and executing the request.
-   * @param _entity - Entity to be updated
+   * @param _entity - Entity to be updated.
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
@@ -53,9 +53,8 @@ export class UpdateRequestBuilder<
 
   /**
    * Executes the query.
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
-   * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to the entity once it was updated
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
+   * @returns A promise resolving to the entity once it was updated.
    */
   async execute(destination: DestinationOrFetchOptions): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
@@ -70,8 +69,7 @@ export class UpdateRequestBuilder<
 
   /**
    * Execute request and return an [[HttpResponse]]. The request is only executed if some properties of the entity are modified.
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
-   * @param options - Options to employ when fetching destinations
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to an [[HttpResponse]] when the request is executed or `undefined` otherwise.
    */
   async executeRaw(

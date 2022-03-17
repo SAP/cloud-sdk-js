@@ -37,7 +37,7 @@ export type FieldTypeByEdmType<
  * For example, when constructing a query on the BusinessPartner entity, an instance of `EdmTypeField<BusinessPartner, string>`
  * can be supplied as argument to the select function, e.g. `BusinessPartner.FIRST_NAME`.
  *
- * See also: [[Selectable]]
+ * See also: [[Selectable]].
  * @typeparam EntityT - Type of the entity the field belongs to.
  * @typeparam DeSerializersT - Type of the (de-)serializers.
  * @typeparam EdmT - EDM type of the field.
@@ -76,8 +76,8 @@ export class EdmTypeField<
 
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'eq', i.e. `==`.
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
+   * @param value - Value to be used in the filter.
+   * @returns The resulting filter.
    */
   equals(
     value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
@@ -91,8 +91,8 @@ export class EdmTypeField<
 
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'ne', i.e. `!=`.
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
+   * @param value - Value to be used in the filter.
+   * @returns The resulting filter.
    */
   notEquals(
     value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>

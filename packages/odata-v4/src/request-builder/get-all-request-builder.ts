@@ -84,8 +84,8 @@ export class GetAllRequestBuilder<
   // TODO: Reconsider the OneToManyLink here
   /**
    * Add filter statements to the request.
-   * @param expressions - Filter expressions to restrict the response
-   * @returns The request builder itself, to facilitate method chaining
+   * @param expressions - Filter expressions to restrict the response.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   filter(...expressions: Filterable<EntityT, DeSerializersT>[]): this {
     this.requestConfig.filter = and(toFilterableList(expressions)) as any;

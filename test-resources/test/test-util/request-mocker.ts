@@ -64,6 +64,7 @@ interface MockRequestParams {
   query?: Record<string, any>;
   method?: string;
   headers?: Record<string, any>;
+  delay?: number;
 }
 
 export function mockCreateRequest<T extends EntityApi<EntityBase, any>>(
@@ -182,6 +183,7 @@ export function mockRequest(
     destination = defaultDestination,
     path = '',
     statusCode = 200,
+    delay = 0,
     additionalHeaders,
     method = 'get',
     body,
@@ -201,6 +203,7 @@ export function mockRequest(
       body
     )
     .query(query)
+    .delay(delay)
     .reply(statusCode, responseBody, responseHeaders);
 }
 

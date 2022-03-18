@@ -91,7 +91,7 @@ export function microsoftODataServiceSampleTrippinInMemoryModelsService<
     mergeDefaultDeSerializersWith(deSerializers)
   );
 }
-export class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
+class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   private apis: Record<string, any> = {};

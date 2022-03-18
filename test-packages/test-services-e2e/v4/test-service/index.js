@@ -37,8 +37,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
  */
 __exportStar(require('./TestEntity'), exports);
 __exportStar(require('./TestEntityLink'), exports);
-__exportStar(require('./TestEntityApi'), exports);
-__exportStar(require('./TestEntityLinkApi'), exports);
 __exportStar(require('./TestEntityRequestBuilder'), exports);
 __exportStar(require('./TestEntityLinkRequestBuilder'), exports);
 __exportStar(require('./function-imports'), exports);

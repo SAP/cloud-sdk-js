@@ -485,7 +485,7 @@ export function commonService<
 > {
   return new CommonService(mergeDefaultDeSerializersWith(deSerializers));
 }
-export class CommonService<
+class CommonService<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   private apis: Record<string, any> = {};

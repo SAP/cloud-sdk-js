@@ -47,7 +47,7 @@ export class OneToManyLink<
 
   /**
    * Create filter statements to be applied to the OData request based on the linked entity values.
-   * @param filters - Filters based on the linked entity.
+   * @param expressions - Filters based on the linked entity.
    * @returns Newly created `FilterLink`.
    */
   filter(
@@ -68,7 +68,7 @@ export class OneToManyLink<
 
   /**
    * Add order-by statements to the request.
-   ** @param orderBy - OrderBy statements to order the response by.
+   * @param orderBy - OrderBy statements to order the response by.
    * @returns The request builder itself, to facilitate method chaining.
    */
   orderBy(...orderBy: Orderable<EntityType<LinkedEntityApiT>>[]): this {

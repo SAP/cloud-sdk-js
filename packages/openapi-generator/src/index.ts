@@ -1,4 +1,3 @@
-/* eslint-disable tsdoc/syntax */
 /**
  * [[include:openapi-generator/README.md]]
  * @packageDocumentation

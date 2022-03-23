@@ -44,7 +44,7 @@ export class Link<
    * Creates an instance of Link.
    * @param _fieldName - Name of the linking field to be used in the OData request.
    * @param _entityApi - Entity API for building and executing the request.
-   * @param _linkedEntity - Constructor of the linked entity.
+   * @param _linkedEntityApi - Constructor of the linked entity.
    */
   constructor(
     readonly _fieldName: string,
@@ -83,7 +83,6 @@ export class Link<
    * Create a new link based on a given link.
    * @typeparam EntityT - Type of the entity to be linked from.
    * @typeparam LinkedEntityT - Type of the entity to be linked to.
-   * @param link - Link to be cloned.
    * @returns Newly created link.
    */
   clone(): this {

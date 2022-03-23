@@ -46,8 +46,9 @@ export function timeoutPromise<T>(timeout: number): Promise<T> {
 
 /**
  * This is partially copied from CircuitBreaker.Options of `@types/opossum`.
+ * @internal
  */
-interface CircuitBreakerOptions {
+export interface CircuitBreakerOptions {
   timeout?: number | false | undefined;
   errorThresholdPercentage?: number | undefined;
   volumeThreshold?: number | undefined;

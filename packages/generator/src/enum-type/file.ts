@@ -1,7 +1,6 @@
 import { SourceFileStructure, StructureKind } from 'ts-morph';
 import { VdmEnumType } from '../vdm-types';
 import { enumTypeClass } from './enum';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

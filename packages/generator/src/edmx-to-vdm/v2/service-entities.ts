@@ -5,7 +5,6 @@ import { generateFunctionImportsV2 } from './function-import';
 import { generateComplexTypesV2 } from './complex-type';
 import { generateEntitiesV2 } from './entity';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

@@ -41,7 +41,6 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'entity'
 });
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

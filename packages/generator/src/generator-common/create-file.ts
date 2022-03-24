@@ -3,7 +3,6 @@ import { promises } from 'fs';
 import { codeBlock, ErrorWithCause, unixEOL } from '@sap-cloud-sdk/util';
 
 const { writeFile } = promises;
-/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

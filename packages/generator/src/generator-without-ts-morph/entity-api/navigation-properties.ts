@@ -7,7 +7,7 @@ import {
   VdmNavigationProperty
 } from '../../vdm-types';
 import { matchEntity } from './match-entity';
-/* eslint-disable valid-jsdoc */
+
 /**
  * @internal
  */

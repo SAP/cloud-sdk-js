@@ -14,7 +14,6 @@ export const potentialExternalImportDeclarations = [
   ['moment', 'Moment', 'Duration'],
   ['bignumber.js', 'BigNumber']
 ];
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

@@ -8,7 +8,7 @@ import {
 } from '../../imports';
 import { odataImport, complexTypeImports, enumTypeImports } from './imports';
 import { classContent } from './class';
-/* eslint-disable valid-jsdoc */
+
 /**
  * @internal
  */

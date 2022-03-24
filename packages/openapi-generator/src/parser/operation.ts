@@ -54,7 +54,6 @@ export function parseOperation(
     tags: operation.tags!
   };
 }
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

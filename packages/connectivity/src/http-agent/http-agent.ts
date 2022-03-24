@@ -150,7 +150,6 @@ function selectCertificate(destination): DestinationCertificate {
   return certificate;
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options

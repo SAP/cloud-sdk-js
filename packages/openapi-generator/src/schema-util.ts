@@ -165,7 +165,6 @@ export function getSchemaNamingFromRef(
   return schemaNaming;
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

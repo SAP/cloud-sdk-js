@@ -108,7 +108,6 @@ function serializePropertyWithDocumentation(
   }
   return serialized;
 }
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

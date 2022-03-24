@@ -5,7 +5,6 @@ import { getOperationParamCode } from './code-sample-util';
 
 const instructionsText =
   'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OpenAPI client libraries chose "OpenAPI Consumption Manual" from the "Helpful Links" menu.';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

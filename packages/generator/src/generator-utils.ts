@@ -148,7 +148,6 @@ const edmToFieldTypeMapping: EdmTypeMapping = {
   'Edm.TimeOfDay': 'OrderableEdmTypeField',
   'Edm.Enum': 'EdmTypeField'
 };
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

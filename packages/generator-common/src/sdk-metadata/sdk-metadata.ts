@@ -10,7 +10,7 @@ import {
 } from './sdk-metadata-types';
 
 const distanceThreshold = 5;
-/* eslint-disable valid-jsdoc */
+
 /**
  * @internal
  */

@@ -8,7 +8,6 @@ import { EdmxFunctionImportV2 } from '../../edmx-parser/v2';
 import { EdmxFunctionImportV4 } from '../../edmx-parser/v4';
 import { getFunctionImportParameters } from './action-function-parameters';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

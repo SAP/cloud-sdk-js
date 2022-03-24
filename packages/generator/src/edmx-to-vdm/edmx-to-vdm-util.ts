@@ -20,7 +20,6 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-to-vdm-util'
 });
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

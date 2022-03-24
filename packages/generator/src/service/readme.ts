@@ -35,7 +35,6 @@ function businessDocumentationLine(service: VdmServiceMetadata): string[] {
     : [];
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

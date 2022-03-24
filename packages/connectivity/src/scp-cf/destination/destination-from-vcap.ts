@@ -176,7 +176,6 @@ function xfS4hanaCloudBindingToDestination(
   };
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

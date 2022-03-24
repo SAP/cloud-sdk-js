@@ -10,7 +10,6 @@ import {
   VdmServiceMetadata
 } from './vdm-types';
 import { getServiceName } from './service-generator';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

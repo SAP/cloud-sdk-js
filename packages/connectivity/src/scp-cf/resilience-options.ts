@@ -1,5 +1,3 @@
-import CircuitBreaker from 'opossum';
-
 export interface ResilienceOptions {
   /**
    * A boolean value that indicates whether to execute request to SCP-CF services using circuit breaker.
@@ -24,7 +22,7 @@ export const defaultResilienceBTPServices: Required<ResilienceOptions> = {
 /**
  * @internal
  */
-export const circuitBreakerDefaultOptions: CircuitBreaker.Options = {
+export const circuitBreakerDefaultOptions: CircuitBreakerOptions = {
   timeout: false,
   errorThresholdPercentage: 50,
   volumeThreshold: 10,
@@ -44,4 +42,15 @@ export function timeoutPromise<T>(timeout: number): Promise<T> {
       timeout
     )
   );
+}
+
+/**
+ * This is partially copied from CircuitBreaker.Options of `@types/opossum`.
+ * @internal
+ */
+export interface CircuitBreakerOptions {
+  timeout?: number | false | undefined;
+  errorThresholdPercentage?: number | undefined;
+  volumeThreshold?: number | undefined;
+  resetTimeout?: number | undefined;
 }

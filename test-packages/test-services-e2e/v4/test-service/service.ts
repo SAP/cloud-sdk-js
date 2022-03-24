@@ -102,9 +102,7 @@ export function testService<
 > {
   return new TestService(mergeDefaultDeSerializersWith(deSerializers));
 }
-export class TestService<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> {
+class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
   private apis: Record<string, any> = {};
   private deSerializers: DeSerializersT;
 

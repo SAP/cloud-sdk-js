@@ -1,10 +1,10 @@
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { TestEntityApi } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { testService } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response-v4';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response-v4';
 
-const testEntityApi = new TestEntityApi();
+const testEntityApi = testService().testEntityApi;
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = 'A_TestEntity';

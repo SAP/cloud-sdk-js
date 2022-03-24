@@ -76,7 +76,7 @@ export declare function microsoftODataServiceSampleTrippinInMemoryModelsService<
     TimeOfDayT
   >
 >;
-export declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
+declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   private apis;
@@ -108,4 +108,5 @@ export declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
   get batch(): typeof batch;
   get changeset(): typeof changeset;
 }
+export {};
 //# sourceMappingURL=service.d.ts.map

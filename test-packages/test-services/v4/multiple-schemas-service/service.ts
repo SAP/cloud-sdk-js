@@ -98,7 +98,7 @@ export function multipleSchemasService<
     mergeDefaultDeSerializersWith(deSerializers)
   );
 }
-export class MultipleSchemasService<
+class MultipleSchemasService<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   private apis: Record<string, any> = {};

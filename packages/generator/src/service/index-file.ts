@@ -15,9 +15,6 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
     statements: [
       ...service.entities.map(entity => exportStatement(entity.className)),
       ...service.entities.map(entity =>
-        exportStatement(`${entity.className}Api`)
-      ),
-      ...service.entities.map(entity =>
         exportStatement(`${entity.className}RequestBuilder`)
       ),
       ...service.complexTypes.map(complexType =>

@@ -68,7 +68,7 @@ export declare function multipleSchemasService<
     TimeT
   >
 >;
-export declare class MultipleSchemasService<
+declare class MultipleSchemasService<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   private apis;
@@ -79,4 +79,5 @@ export declare class MultipleSchemasService<
   get batch(): typeof batch;
   get changeset(): typeof changeset;
 }
+export {};
 //# sourceMappingURL=service.d.ts.map

@@ -84,7 +84,7 @@ export declare function testService<
     TimeOfDayT
   >
 >;
-export declare class TestService<
+declare class TestService<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   private apis;
@@ -156,4 +156,5 @@ export declare class TestService<
   get batch(): typeof batch;
   get changeset(): typeof changeset;
 }
+export {};
 //# sourceMappingURL=service.d.ts.map

@@ -22,7 +22,10 @@ describe('filterCustomRequestConfig', () => {
       url: 'www.example.com'
     };
     const filtered = filterCustomRequestConfig(customRequestConfig);
-    expect(filtered).toEqual({ responseType: 'arraybuffer' });
+    expect(filtered).toEqual({ 
+      responseType: 'arraybuffer', 
+      method: 'delete' 
+    });
     expect(warnSpy).toBeCalledWith(
       'The following keys are found in the custom request config that will be removed: url'
     );

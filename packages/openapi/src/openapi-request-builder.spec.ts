@@ -258,12 +258,13 @@ describe('openapi-request-builder', () => {
   });
 
   describe('requestConfig', () => {
-    it('should overwrite default request config with filtered custom request config', () => {
+    it('should overwrite default request config with filtered custom request config', async () => {
       const requestBuilder = new OpenApiRequestBuilder('get', '/test');
       requestBuilder.addCustomRequestConfiguration({
         method: 'merge'
       });
-      expect(requestBuilder.requestConfig()['method']).toBe('merge');
+      const reqeustConfig = await requestBuilder.requestConfig();
+      expect(reqeustConfig['method']).toBe('merge');
     });
   });
 });

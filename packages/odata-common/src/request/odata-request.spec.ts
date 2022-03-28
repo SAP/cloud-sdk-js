@@ -121,12 +121,13 @@ describe('OData Request', () => {
   });
 
   describe('requestConfig', () => {
-    it('should overwrite default request config with filtered custom request config', () => {
+    it('should overwrite default request config with filtered custom request config', async () => {
       const request = createRequest(ODataGetAllRequestConfig);
       request.config.customRequestConfiguration = {
         method: 'merge'
       }
-      expect(request.requestConfig()['method']).toBe('merge');
+      const config = await request.requestConfig();
+      expect(config['method']).toBe('merge');
     });
   });
 });

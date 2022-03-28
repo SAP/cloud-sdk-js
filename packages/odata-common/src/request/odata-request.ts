@@ -218,12 +218,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   /**
-   * Get http request config 
-   * @returns Promise of http request config with origin
+   * Get http request config .
+   * @returns Promise of http request config with origin.
    */
-  async requestConfig(): Promise<
-    HttpRequestConfigWithOrigin
-  > {
+  async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
     const defaultConfig = {
       headers: await this.headers(),
       params: this.queryParameters(),
@@ -236,7 +234,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     return {
       ...defaultConfig,
       ...filterCustomRequestConfig(this.config.customRequestConfiguration)
-    }
+    };
   }
 
   /**
@@ -249,11 +247,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeHttpRequest(
-      destination,
-      await this.requestConfig(),
-      { fetchCsrfToken: this.config.fetchCsrfToken }
-    ).catch(error => {
+    return executeHttpRequest(destination, await this.requestConfig(), {
+      fetchCsrfToken: this.config.fetchCsrfToken
+    }).catch(error => {
       throw constructError(error, this.config.method, this.serviceUrl());
     });
   }

@@ -92,12 +92,10 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Get http request config 
-   * @returns Promise of http request config with origin
+   * Get http request config .
+   * @returns Promise of http request config with origin.
    */
-  async requestConfig(): Promise<
-    HttpRequestConfigWithOrigin
-  > {
+  async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
     const defaultConfig = {
       method: this.method,
       url: this.getPath(),
@@ -110,7 +108,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     return {
       ...defaultConfig,
       ...filterCustomRequestConfig(this.customRequestConfiguration)
-    }
+    };
   }
 
   /**
@@ -130,7 +128,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     if (isNullish(destination)) {
       throw Error(noDestinationErrorMessage(destination));
     }
-    
+
     return executeHttpRequest(
       resolvedDestination as Destination,
       await this.requestConfig(),

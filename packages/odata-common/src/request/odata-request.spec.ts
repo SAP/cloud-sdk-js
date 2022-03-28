@@ -125,7 +125,7 @@ describe('OData Request', () => {
       const request = createRequest(ODataGetAllRequestConfig);
       request.config.customRequestConfiguration = {
         method: 'merge'
-      }
+      };
       const config = await request.requestConfig();
       expect(config['method']).toBe('merge');
     });

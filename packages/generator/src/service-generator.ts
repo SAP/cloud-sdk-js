@@ -150,7 +150,6 @@ export function parseService(
     .generateService(serviceDefinitionPaths);
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

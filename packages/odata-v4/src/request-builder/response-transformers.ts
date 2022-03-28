@@ -2,7 +2,6 @@ import { EntityApi } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { DeSerializers, entityDeserializer } from '../de-serializers';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
-/* eslint-disable valid-jsdoc */
 
 export function transformReturnValueForUndefined<ReturnT>(
   data: any,

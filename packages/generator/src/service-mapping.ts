@@ -7,7 +7,6 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'service-mapping'
 });
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

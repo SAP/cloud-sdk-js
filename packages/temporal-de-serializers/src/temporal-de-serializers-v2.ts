@@ -1,4 +1,3 @@
-/* eslint-disable valid-jsdoc */
 import { Temporal } from '@js-temporal/polyfill';
 import {
   DeSerializer,

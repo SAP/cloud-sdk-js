@@ -4,7 +4,6 @@ import { VdmComplexType } from '../../vdm-types';
 import { parseComplexTypesV2 } from '../../edmx-parser/v2';
 import { ServiceMetadata } from '../../edmx-parser';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

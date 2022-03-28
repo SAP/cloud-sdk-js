@@ -2,7 +2,7 @@ import { resetDataSource } from '@sap-cloud-sdk/test-services-e2e/TripPin/micros
 import { PersonGender } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/PersonGender';
 import {
   People,
-  PeopleApi
+  microsoftODataServiceSampleTrippinInMemoryModelsService
 } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
 import {
   any,
@@ -12,9 +12,11 @@ import {
 
 const url = 'https://services.odata.org/';
 const destination = { url };
-const entityBuilder = new PeopleApi().entityBuilder();
-const requestBuilder = new PeopleApi().requestBuilder();
-const schema = new PeopleApi().schema;
+const peopleApi =
+  microsoftODataServiceSampleTrippinInMemoryModelsService().peopleApi;
+const entityBuilder = peopleApi.entityBuilder();
+const requestBuilder = peopleApi.requestBuilder();
+const schema = peopleApi.schema;
 
 async function deletePerson(userName: string): Promise<void> {
   const queried = await requestBuilder.getByKey(userName).execute(destination);
@@ -59,7 +61,7 @@ xdescribe('Request builder', () => {
       person =>
         entityDeserializer(defaultDeSerializers).deserializeEntity(
           person,
-          new PeopleApi()
+          peopleApi
         ) as People
     );
     expect(actual.length).toEqual(4);

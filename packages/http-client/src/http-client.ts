@@ -385,7 +385,7 @@ export function getAxiosConfigWithDefaults(): HttpRequestConfig {
     method: 'get'
   };
 }
-// eslint-disable-next-line valid-jsdoc
+
 /**
  * @internal
  */
@@ -405,7 +405,6 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   };
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */
@@ -426,7 +425,6 @@ function buildHttpRequestOptions(
     : getDefaultHttpRequestOptions();
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

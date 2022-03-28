@@ -69,7 +69,6 @@ function getImports(api: OpenApiApi): Import[] {
 
   return [openApiImports, refImports];
 }
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

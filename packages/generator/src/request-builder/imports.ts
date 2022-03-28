@@ -7,7 +7,6 @@ import {
 } from '../imports';
 import { VdmEntity, VdmProperty } from '../vdm-types';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

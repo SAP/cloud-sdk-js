@@ -8,7 +8,6 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'file-generator'
 });
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

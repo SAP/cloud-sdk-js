@@ -1,5 +1,3 @@
-/* eslint-disable valid-jsdoc */
-
 export function removeSlashes(path: string): string {
   path = removeLeadingSlashes(path);
   path = removeTrailingSlashes(path);

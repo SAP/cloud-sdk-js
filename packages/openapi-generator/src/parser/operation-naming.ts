@@ -74,7 +74,6 @@ function renameOperations(
     return operationInfo;
   });
 }
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

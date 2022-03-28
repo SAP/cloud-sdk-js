@@ -3,7 +3,7 @@ import { OpenApiSchema } from '../openapi-types';
 import { OpenApiDocumentRefs } from './refs';
 import { parseMediaType } from './media-type';
 import { ParserOptions } from './options';
-/* eslint-disable valid-jsdoc */
+
 /**
  * @internal
  */

@@ -303,8 +303,6 @@ export interface EntityIdentifiable<
   readonly _deSerializers: DeSerializersT;
 }
 
-/* eslint-disable valid-jsdoc */
-
 /**
  * @internal
  */

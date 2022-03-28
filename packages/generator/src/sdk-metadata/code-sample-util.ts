@@ -5,7 +5,6 @@ import {
   VdmFunctionImport,
   VdmParameter
 } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

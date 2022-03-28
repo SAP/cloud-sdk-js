@@ -11,7 +11,6 @@ import {
   getComplexTypePropertyDescription
 } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

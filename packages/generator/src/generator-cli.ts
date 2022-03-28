@@ -21,7 +21,6 @@ generate(parseCmdArgs())
     process.exit(1);
   });
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

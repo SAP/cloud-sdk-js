@@ -4341,9 +4341,9 @@ eslint-plugin-jest@^26.0.0:
     "@typescript-eslint/utils" "^5.10.0"
 
 eslint-plugin-jsdoc@^38.0.4:
-  version "38.0.8"
-  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-38.0.8.tgz#6837b5ff7946ba2c164f06232d67ba06ba0aaadf"
-  integrity sha512-28o/4xncAPJIud1ixSSof1tavTGde3hlD1PfcueB1JP+H+lKwzQbp3r1d23SWLqG/HhawEYUz8SAgscvRBmyHg==
+  version "38.1.3"
+  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-38.1.3.tgz#64ead0e535de02e2353ac271607e28e01e25c746"
+  integrity sha512-CJgBG1wzl2735rct2GpzS39lx4t0mlUiv9MvFndQKyqTVOGZLXeSkVNIE5inmg23T0EkCrS3AZ9dKbFAsK9ItA==
   dependencies:
     "@es-joy/jsdoccomment" "~0.22.1"
     comment-parser "1.3.1"

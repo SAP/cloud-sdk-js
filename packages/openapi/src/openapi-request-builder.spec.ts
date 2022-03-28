@@ -256,4 +256,14 @@ describe('openapi-request-builder', () => {
       { fetchCsrfToken: false }
     );
   });
+
+  describe('requestConfig', () => {
+    it('should overwrite default request config with filtered custom request config', () => {
+      const requestBuilder = new OpenApiRequestBuilder('get', '/test');
+      requestBuilder.addCustomRequestConfiguration({
+        method: 'merge'
+      });
+      expect(requestBuilder.requestConfig()['method']).toBe('merge');
+    });
+  });
 });

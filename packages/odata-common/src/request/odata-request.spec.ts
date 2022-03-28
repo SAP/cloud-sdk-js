@@ -119,6 +119,16 @@ describe('OData Request', () => {
       })
     );
   });
+
+  describe('requestConfig', () => {
+    it('should overwrite default request config with filtered custom request config', () => {
+      const request = createRequest(ODataGetAllRequestConfig);
+      request.config.customRequestConfiguration = {
+        method: 'merge'
+      }
+      expect(request.requestConfig()['method']).toBe('merge');
+    });
+  });
 });
 
 function createRequest(

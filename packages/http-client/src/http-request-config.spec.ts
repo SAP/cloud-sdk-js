@@ -24,7 +24,7 @@ describe('filterCustomRequestConfig', () => {
     const filtered = filterCustomRequestConfig(customRequestConfig);
     expect(filtered).toEqual({ responseType: 'arraybuffer' });
     expect(warnSpy).toBeCalledWith(
-      'The following keys are found in the custom request config that will be removed: method, url'
+      'The following keys are found in the custom request config that will be removed: url'
     );
   });
 });

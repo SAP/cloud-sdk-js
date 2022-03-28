@@ -10,6 +10,7 @@ import {
 import {
   Method,
   HttpResponse,
+  HttpRequestConfigWithOrigin,
   executeHttpRequest
 } from '@sap-cloud-sdk/http-client';
 import {
@@ -91,6 +92,28 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
+   * Get http request config 
+   * @returns Promise of http request config with origin
+   */
+  async requestConfig(): Promise<
+    HttpRequestConfigWithOrigin
+  > {
+    const defaultConfig = {
+      method: this.method,
+      url: this.getPath(),
+      headers: this.getHeaders(),
+      params: this.getParameters(),
+      timeout: this._timeout,
+      parameterEncoder: encodeTypedClientRequest,
+      data: this.parameters?.body
+    };
+    return {
+      ...defaultConfig,
+      ...filterCustomRequestConfig(this.customRequestConfiguration)
+    }
+  }
+
+  /**
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
@@ -107,18 +130,10 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     if (isNullish(destination)) {
       throw Error(noDestinationErrorMessage(destination));
     }
+    
     return executeHttpRequest(
       resolvedDestination as Destination,
-      {
-        ...filterCustomRequestConfig(this.customRequestConfiguration),
-        method: this.method,
-        url: this.getPath(),
-        headers: this.getHeaders(),
-        params: this.getParameters(),
-        timeout: this._timeout,
-        parameterEncoder: encodeTypedClientRequest,
-        data: this.parameters?.body
-      },
+      await this.requestConfig(),
       { fetchCsrfToken }
     );
   }

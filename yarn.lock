@@ -1870,9 +1870,9 @@
     fs-extra "9.0.1"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.8.0":
-  version "5.8.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.8.4.tgz#e50544a5948ea7f6c60582309513c7005818a163"
-  integrity sha512-b1qhveVZNSSD8sCstv/NaVubsDdoR5FxRn/nmKhDozZHj8CilV5NaKTHzyMXum66Bvm+IQ1ckMqRN/jXZwG7sA==
+  version "5.9.0"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.0.tgz#1b64c8ae92e683f2163f5ad5765253e8bf82c0c6"
+  integrity sha512-8JAC/iHgETiCQv+Mn95WpkzU1+zepntQT0is81HN4nJZpC2eEav8viWS0cca6cIFsslwgzuPBOYM+bxjZGCx+A==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"

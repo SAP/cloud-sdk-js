@@ -218,7 +218,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   /**
-   * Get http request config .
+   * Get http request config.
    * @returns Promise of http request config with origin.
    */
   async requestConfig(): Promise<HttpRequestConfigWithOrigin> {

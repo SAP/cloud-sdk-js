@@ -221,7 +221,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * Get http request config.
    * @returns Promise of http request config with origin.
    */
-  async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
+  private async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
     const defaultConfig = {
       headers: await this.headers(),
       params: this.queryParameters(),

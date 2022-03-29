@@ -263,7 +263,7 @@ describe('openapi-request-builder', () => {
       requestBuilder.addCustomRequestConfiguration({
         method: 'merge'
       });
-      const reqeustConfig = await requestBuilder.requestConfig();
+      const reqeustConfig = await requestBuilder['requestConfig']();
       expect(reqeustConfig['method']).toBe('merge');
     });
   });

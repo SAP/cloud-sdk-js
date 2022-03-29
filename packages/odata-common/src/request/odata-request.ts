@@ -218,6 +218,23 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   /**
+   * Execute the given request and return the according promise.
+   * @returns Promise resolving to the requested data.
+   */
+  async execute(): Promise<HttpResponse> {
+    const destination = this.destination;
+    if (!destination) {
+      throw Error('The destination cannot be undefined.');
+    }
+
+    return executeHttpRequest(destination, await this.requestConfig(), {
+      fetchCsrfToken: this.config.fetchCsrfToken
+    }).catch(error => {
+      throw constructError(error, this.config.method, this.serviceUrl());
+    });
+  }
+
+  /**
    * Get http request config.
    * @returns Promise of http request config with origin.
    */
@@ -235,23 +252,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       ...defaultConfig,
       ...filterCustomRequestConfig(this.config.customRequestConfiguration)
     };
-  }
-
-  /**
-   * Execute the given request and return the according promise.
-   * @returns Promise resolving to the requested data.
-   */
-  async execute(): Promise<HttpResponse> {
-    const destination = this.destination;
-    if (!destination) {
-      throw Error('The destination cannot be undefined.');
-    }
-
-    return executeHttpRequest(destination, await this.requestConfig(), {
-      fetchCsrfToken: this.config.fetchCsrfToken
-    }).catch(error => {
-      throw constructError(error, this.config.method, this.serviceUrl());
-    });
   }
 
   private getAdditionalHeadersForKeys(...keys: string[]): Record<string, any> {

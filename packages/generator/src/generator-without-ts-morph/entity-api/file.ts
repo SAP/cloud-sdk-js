@@ -18,14 +18,7 @@ export function entityApiFile(
 ): string {
   const imports = serializeImports(getImports(entity, service));
   const content = classContent(entity, service);
-  return [
-    imports,
-    "import { BigNumber } from 'bignumber.js';",
-    `import { ${
-      service.oDataVersion === 'v2' ? 'Moment' : 'Moment, Duration'
-    } } from 'moment';`,
-    content
-  ].join(unixEOL);
+  return [imports, content].join(unixEOL);
 }
 
 // todo Use this function instead the one above, when the todo of "de-serializers.ts" is solved, so that unnecessary external dependencies are not imported.

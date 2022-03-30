@@ -6,8 +6,6 @@ import { BreakfastRequestBuilder } from './BreakfastRequestBuilder';
 import { Brunch } from './Brunch';
 import { BrunchApi } from './BrunchApi';
 import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time, EdmTypeField, OrderableEdmTypeField, OneToOneLink } from '@sap-cloud-sdk/odata-v2';
-import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
 export class BreakfastApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
     EntityApi<
       Breakfast<

@@ -24,6 +24,7 @@
 
 ## Improvements
 
+- [generator] Remove unused imports (`moment` and `bignumber.js`) in API classes (e.g., `BusinessPartnerAPI`) to reduce memory usage.
 - [http-client] Introduce consistent query parameter encoding for all non custom parameters.
 
 ## Fixed Issues

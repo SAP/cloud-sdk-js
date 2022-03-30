@@ -33,7 +33,7 @@ function mockCsrfTokenRequest(path?: string) {
     }
   })
     .head(path ? `${servicePath}/${path}` : servicePath)
-    .query({ $format: 'json' })
+    .query({})
     .reply(200, '', mockedBuildHeaderResponse);
 }
 
@@ -47,7 +47,7 @@ describe('action import request builder', () => {
       }
     })
       .post(`${servicePath}/TestActionImportNoParameterNoReturnType`)
-      .query({ $format: 'json' })
+      .query({})
       .reply(204);
 
     const result = await testActionImportNoParameterNoReturnType({}).execute(
@@ -66,7 +66,7 @@ describe('action import request builder', () => {
       .post(`${servicePath}/TestActionImportUnsupportedEdmTypes`, {
         SimpleParam: 'someUntypedParameter'
       })
-      .query({ $format: 'json' })
+      .query({})
       .reply(200, response);
 
     const result = await testActionImportUnsupportedEdmTypes({
@@ -91,7 +91,7 @@ describe('action import request builder', () => {
         `${servicePath}/TestActionImportMultipleParameterComplexReturnType`,
         httpBody
       )
-      .query({ $format: 'json' })
+      .query({})
       .reply(200, httpResponse);
 
     const result = await testActionImportMultipleParameterComplexReturnType(
@@ -106,7 +106,7 @@ describe('action import request builder', () => {
 
       nock(host)
         .post(`${servicePath}/TestActionImportNoParameterNoReturnType`)
-        .query({ $format: 'json' })
+        .query({})
         .reply(204, {});
 
       const actual = await testActionImportNoParameterNoReturnType(

@@ -84,7 +84,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json`)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -102,7 +102,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json`)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi.requestBuilder().getAll().execute({
@@ -127,7 +127,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json`)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -171,7 +171,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json`)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -195,7 +195,7 @@ describe('Request Builder', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd%3F1234%27)?$format=json`
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd%3F1234%27)`
       )
       .reply(200, response);
 
@@ -216,7 +216,7 @@ describe('Request Builder', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}?$format=json&$select=*,to_SingleLink/*&$expand=to_SingleLink`
+        `${servicePath}/${entityName}?$select=*,to_SingleLink/*&$expand=to_SingleLink`
       )
       .reply(200, getAllResponse);
 
@@ -242,7 +242,7 @@ describe('Request Builder', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)?$format=json&$select=to_SingleLink/*&$expand=to_SingleLink`
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)?$select=to_SingleLink/*&$expand=to_SingleLink`
       )
       .reply(200, response);
 
@@ -491,7 +491,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json`)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -516,7 +516,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json`)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -539,7 +539,6 @@ describe('Request Builder', () => {
     nock(destinationServiceUri)
       .get(`${servicePath}/${entityName}`)
       .query({
-        $format: 'json',
         testParameter: 'customcustom'
       })
       .reply(200, getAllResponse);
@@ -561,7 +560,6 @@ describe('Request Builder', () => {
     nock(destinationServiceUri)
       .get(`${servicePath}/${entityName}`)
       .query({
-        $format: 'json',
         testParameter: 'customcustom',
         additionalParameter: 'additional'
       })
@@ -635,7 +633,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json`)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, {});
 
     const request = testEntityApi.requestBuilder().getAll().execute({

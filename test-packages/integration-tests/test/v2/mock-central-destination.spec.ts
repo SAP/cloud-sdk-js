@@ -29,7 +29,7 @@ describe('mockAllTestDestinations', () => {
         'content-type': 'application/json'
       }
     })
-      .get('/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json')
+      .get('/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity')
       .reply(200, getAllResponse);
 
     const request = testEntityApi

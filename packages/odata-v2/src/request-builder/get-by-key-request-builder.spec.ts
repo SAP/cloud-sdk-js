@@ -21,7 +21,7 @@ describe('GetByKeyRequestBuilder', () => {
         KeyPropertyString: 'DEV?TEST06'
       });
       const expected =
-        /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='DEV%3FTEST06'\)\?\$format=json$/;
+        /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='DEV%3FTEST06'\)$/;
 
       const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: entity.keyPropertyGuid,
@@ -34,7 +34,7 @@ describe('GetByKeyRequestBuilder', () => {
       const entityData = createOriginalTestEntityData1();
       const entity = createTestEntity(entityData);
       const expected =
-        /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='ABCDE'\)\/to_SingleLink\/to_MultiLink\/\?\$format=json$/;
+        /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='ABCDE'\)\/to_SingleLink\/to_MultiLink\/$/;
 
       const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: entity.keyPropertyGuid,

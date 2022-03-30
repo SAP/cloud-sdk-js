@@ -38,9 +38,7 @@ export class ODataActionImportRequestConfig<
 
   queryParameters(): Record<string, any> {
     return {
-      ...this.prependDollarToQueryParameters({
-        format: 'json'
-      })
+      ...this.prependDollarToQueryParameters({})
     };
   }
 

@@ -303,10 +303,11 @@ describe('GetAllRequestBuilder', () => {
             }
           },
           parameterEncoder: encodeTypedClientRequest,
-          params: {},
+          params: {
+            requestConfig: {}
+          },
           url: 'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
           method: 'get',
-
           data: undefined
         },
         { fetchCsrfToken: true }

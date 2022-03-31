@@ -1754,10 +1754,10 @@
   optionalDependencies:
     npmlog "2 || ^3.1.0 || ^4.0.0"
 
-"@sap/cds-compiler@^2.4.4":
-  version "2.7.0"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.7.0.tgz#f7d06c16746a21be37c9d0feab63d233b9d8c68e"
-  integrity sha512-GfifUHd+FePYH2y+BKksUrnHT5VWzVQWublZrxCbB+HpSbb1HSADOd0SlK0+aUObmSxPlPMAOwpmS19dXB1l7A==
+"@sap/cds-compiler@^2.13.0":
+  version "2.13.8"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.13.8.tgz#b1833a114b5bfa138dbde20e7f6cd4f86d6d8152"
+  integrity sha512-sdwPgS718aBEPFsEmE198yUYV35eIxspsahvtAe985+wQl+MimNHCQxItnHklfKnaVMYA5FD2aX9aWg9k+qtgQ==
   dependencies:
     antlr4 "4.8.0"
 
@@ -1806,13 +1806,13 @@
     fs-extra "9.0.1"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.8.0":
-  version "5.9.0"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.0.tgz#1b64c8ae92e683f2163f5ad5765253e8bf82c0c6"
-  integrity sha512-8JAC/iHgETiCQv+Mn95WpkzU1+zepntQT0is81HN4nJZpC2eEav8viWS0cca6cIFsslwgzuPBOYM+bxjZGCx+A==
+  version "5.9.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.1.tgz#de129ec6920d7d5c093882961e8ddfcb80ae8a23"
+  integrity sha512-djlyFe3Aq+OP4yVWkCaZuHdoMF/kGhhc6qRPr7tF1sQ9rrxl6Rvkz/Z+vUa3119pavn+eFSBFXv+fSlAbOyKgQ==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"
-    "@sap/cds-compiler" "^2.4.4"
+    "@sap/cds-compiler" "^2.13.0"
     "@sap/cds-foss" "^3"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":

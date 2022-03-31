@@ -6,8 +6,7 @@ import {
   DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi,
-  EdmTypeField
+  EntityApi
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityEndsWithApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -61,7 +60,7 @@ export declare class TestEntityEndsWithApi<
      * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       TestEntityEndsWith<
         DeSerializers<
           any,

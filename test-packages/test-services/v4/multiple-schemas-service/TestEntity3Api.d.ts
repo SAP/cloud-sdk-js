@@ -8,9 +8,7 @@ import {
   DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi,
-  EdmTypeField,
-  EnumField
+  EntityApi
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntity3Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -64,7 +62,7 @@ export declare class TestEntity3Api<
      * Static representation of the [[keyPropertyString]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    KEY_PROPERTY_STRING: EdmTypeField<
+    KEY_PROPERTY_STRING: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       TestEntity3<
         DeSerializers<
           any,
@@ -97,7 +95,7 @@ export declare class TestEntity3Api<
      * Static representation of the [[enumProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    ENUM_PROPERTY: EnumField<
+    ENUM_PROPERTY: import('@sap-cloud-sdk/odata-v4').EnumField<
       TestEntity3<
         DeSerializers<
           any,

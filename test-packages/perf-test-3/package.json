@@ -1,0 +1,20 @@
+{
+  "name": "@sap-cloud-sdk/e2e-tests",
+  "version": "2.1.0",
+  "description": "End to end tests of the SAP Cloud SDK for JavaScript",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "license": "Apache-2.0",
+  "private": true,
+  "repository": "github:SAP/cloud-sdk-js",
+  "scripts": {
+    "generate-vdm": "npx generate-odata-client -i ../e2e-tests/test-service-spec -o .",
+    "compile": "tsc test.ts",
+    "test": "ts-node test.ts",
+    "test-js": "node test-js.js"
+  },
+  "devDependencies": {
+    "@sap-cloud-sdk/generator": "2.1.1-20220331100720.0",
+    "typescript": "4.6.3",
+    "ts-node": "10.0.0"
+  }
+}

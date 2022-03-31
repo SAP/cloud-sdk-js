@@ -1,0 +1,7 @@
+{
+  "test-service": {
+    "directoryName": "test-service",
+    "servicePath": "/odata/test-service",
+    "npmPackageName": "test-service"
+  }
+}

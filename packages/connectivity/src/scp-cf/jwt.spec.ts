@@ -7,7 +7,7 @@ import {
   signedJwtForVerification,
   xsuaaBindingMock
 } from '../../../../test-resources/test/test-util';
-import { audiences, retrieveJwt, verificationKeyCache, verifyJwt } from './jwt';
+import { audiences, retrieveJwt, verifyJwt } from './jwt';
 
 const jwtPayload = {
   sub: '1234567890',
@@ -82,13 +82,11 @@ describe('jwt', () => {
 
     afterEach(() => {
       nock.cleanAll();
-      verificationKeyCache.clear();
       delete process.env.VCAP_SERVICES;
     });
 
     it('succeeds and decodes for correct key', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
-
       await expect(
         verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).resolves.toEqual(jwtPayload);
@@ -107,13 +105,15 @@ describe('jwt', () => {
     it('fails for no key', async () => {
       nock(jku).get('/').reply(200, { keys: [] });
 
-      await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+      await expect(
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+          cacheVerificationKeys: false
+        })
       ).rejects.toMatchObject({
-        message: 'Failed to verify JWT. Could not retrieve verification key.',
+        message: 'Failed to verify JWT.',
         cause: {
           message:
-            'No verification keys have been returned by the XSUAA service.'
+            'Obtained token keys from UAA, but key with requested keyID "https://my-jku-url.authentication.sap.hana.ondemand.comkey-id-1" still not found in cache.'
         }
       });
     });
@@ -124,11 +124,14 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, response);
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+          cacheVerificationKeys: false
+        })
       ).rejects.toMatchObject({
-        message: 'Failed to verify JWT. Could not retrieve verification key.',
+        message: 'Failed to verify JWT.',
         cause: {
-          message: 'Could not find verification key for the given key ID.'
+          message:
+            'Obtained token keys from UAA, but key with requested keyID "https://my-jku-url.authentication.sap.hana.ondemand.comkey-id-1" still not found in cache.'
         }
       });
     });
@@ -152,19 +155,27 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, responseWithPublicKey('WRONG'));
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
-      ).rejects.toThrowErrorMatchingInlineSnapshot('"Invalid JWT."');
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+          cacheVerificationKeys: false
+        })
+      ).rejects.toThrowErrorMatchingInlineSnapshot('"Failed to verify JWT."');
     });
 
     it('caches the key after fetching it', async () => {
       // We mock only a single HTTP call
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      await verifyJwt(signedJwtForVerification(jwtPayload, jku));
+      await verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+        cacheVerificationKeys: true
+      });
+      // If you execute all tests the cache of xssec is populated already and the nock remains. Hence this extra clear.
+      nock.cleanAll();
 
       // But due to caching multiple calls should not lead to errors
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+          cacheVerificationKeys: true
+        })
       ).resolves.toEqual(jwtPayload);
     });
 
@@ -178,34 +189,33 @@ describe('jwt', () => {
       nock(jku).get('/').reply(500);
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Failed to verify JWT. Could not retrieve verification key."'
-      );
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+          cacheVerificationKeys: false
+        })
+      ).rejects.toThrowErrorMatchingInlineSnapshot('"Failed to verify JWT."');
     });
 
-    it('fetches a new key when a key taken from the cache has been invalidated in the meantime', async () => {
+    it('caches per default', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      const secondXsuaaMock = nock(jku)
-        .get('/')
-        .reply(200, responseWithPublicKey());
+      const jwt = signedJwtForVerification(jwtPayload, jku);
+      await verifyJwt(jwt);
+      nock.cleanAll();
+      // Second call does not fail due to caching.
+      await verifyJwt(jwt);
+    });
 
-      const jwt1 = signedJwtForVerification(jwtPayload, jku);
-      const jwt2 = signedJwtForVerification(
-        {
-          sub: '1234567890',
-          name: 'Jane Doe',
-          iat: 1516239022
-        },
-        jku
-      );
+    it('fetches a new key when a the cache has been disabled', async () => {
+      nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      await verifyJwt(jwt1);
-      verificationKeyCache.clear();
+      const jwt = signedJwtForVerification(jwtPayload, jku);
+      await verifyJwt(jwt);
+      // If you execute all tests the cache of xssec is populated already and the nock remains. Hence this extra clear.
+      nock.cleanAll();
 
-      await verifyJwt(jwt2);
-      expect(secondXsuaaMock.isDone()).toBe(true);
+      const nockAfter = nock(jku).get('/').reply(200, responseWithPublicKey());
+      await verifyJwt(jwt, { cacheVerificationKeys: false });
+      expect(nockAfter.isDone()).toBe(true);
     });
   });
 

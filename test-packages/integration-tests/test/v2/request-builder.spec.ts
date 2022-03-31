@@ -195,13 +195,13 @@ describe('Request Builder', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)?$format=json`
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd%3F1234%27)?$format=json`
       )
       .reply(200, response);
 
     const request = testEntityApi
       .requestBuilder()
-      .getByKey('aaaabbbb-cccc-dddd-eeee-ffff00001111', 'abcd1234')
+      .getByKey('aaaabbbb-cccc-dddd-eeee-ffff00001111', 'abcd?1234')
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();

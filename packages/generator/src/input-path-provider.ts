@@ -2,7 +2,6 @@ import { lstatSync, PathLike, readdirSync, existsSync } from 'fs';
 import { join, extname, parse } from 'path';
 
 const validFileExtensions = ['.edmx', '.xml'];
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

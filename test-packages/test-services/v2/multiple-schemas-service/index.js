@@ -4,12 +4,19 @@ var __createBinding =
   (Object.create
     ? function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
-        Object.defineProperty(o, k2, {
-          enumerable: true,
-          get: function () {
-            return m[k];
-          }
-        });
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (
+          !desc ||
+          ('get' in desc ? !m.__esModule : desc.writable || desc.configurable)
+        ) {
+          desc = {
+            enumerable: true,
+            get: function () {
+              return m[k];
+            }
+          };
+        }
+        Object.defineProperty(o, k2, desc);
       }
     : function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
@@ -29,7 +36,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 __exportStar(require('./MultiSchemaTestEntity'), exports);
-__exportStar(require('./MultiSchemaTestEntityApi'), exports);
 __exportStar(require('./MultiSchemaTestEntityRequestBuilder'), exports);
 __exportStar(require('./BatchRequest'), exports);
 __exportStar(require('./service'), exports);

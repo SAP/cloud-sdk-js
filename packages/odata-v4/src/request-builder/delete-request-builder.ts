@@ -8,7 +8,7 @@ import { createODataUri } from '../uri-conversion';
 
 /**
  * Create OData query to delete an entity.
- * @typeparam EntityT - Type of the entity to be deleted
+ * @typeparam EntityT - Type of the entity to be deleted.
  */
 export class DeleteRequestBuilder<
   EntityT extends Entity,

@@ -13,8 +13,8 @@ export class StringFilterFunction<
 > extends FilterFunction<EntityT, string> {
   /**
    * Creates an instance of StringFilterFunction.
-   * @param functionName - Name of the function that returns a string value
-   * @param parameters - Representation of the parameters passed to the filter function
+   * @param functionName - Name of the function that returns a string value.
+   * @param parameters - Representation of the parameters passed to the filter function.
    */
   constructor(
     functionName: string,

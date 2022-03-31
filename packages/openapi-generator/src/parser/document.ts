@@ -32,7 +32,6 @@ export async function parseOpenApiDocument(
     schemas: parseSchemas(document, refs, options)
   };
 }
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

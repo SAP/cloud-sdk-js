@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/util",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "SAP Cloud SDK for JavaScript general utilities",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -38,6 +38,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "nock": "^13.0.11"
+    "nock": "^13.0.11",
+    "typescript": "~4.6.2"
   }
 }

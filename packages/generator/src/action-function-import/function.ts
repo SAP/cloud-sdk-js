@@ -6,7 +6,6 @@ import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 import { functionImportReturnType } from './return-type';
 
 const parameterName = 'parameters';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

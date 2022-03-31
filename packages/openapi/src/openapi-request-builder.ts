@@ -10,11 +10,13 @@ import {
 import {
   Method,
   HttpResponse,
+  HttpRequestConfigWithOrigin,
   executeHttpRequest
 } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
-  OriginOptions
+  OriginOptions,
+  encodeTypedClientRequest
 } from '@sap-cloud-sdk/http-client/internal';
 
 /**
@@ -29,6 +31,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: Record<string, string> = {};
   private _fetchCsrfToken = true;
+  private _timeout: number | undefined = undefined;
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -57,7 +60,6 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   /**
    * Add custom request configuration to the request. Typically, this is used when specifying response type for downloading files.
    * If the custom request configuration contains keys in this list [[defaultDisallowedKeys]], they will be removed.
-   *
    * @param requestConfiguration - Key-value pairs denoting additional custom request configuration options to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.
    */
@@ -80,6 +82,16 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
+   * Set timeout for requests towards the target system given in the destination.
+   * @param timeout - Value is in milliseconds and default value is 10000 (10 seconds).
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  timeout(timeout: number): this {
+    this._timeout = timeout;
+    return this;
+  }
+
+  /**
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
@@ -96,16 +108,10 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     if (isNullish(destination)) {
       throw Error(noDestinationErrorMessage(destination));
     }
+
     return executeHttpRequest(
       resolvedDestination as Destination,
-      {
-        ...filterCustomRequestConfig(this.customRequestConfiguration),
-        method: this.method,
-        url: this.getPath(),
-        headers: this.getHeaders(),
-        params: this.getParameters(),
-        data: this.parameters?.body
-      },
+      await this.requestConfig(),
       { fetchCsrfToken }
     );
   }
@@ -123,6 +129,26 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     throw new Error(
       'Could not access response data. Response was not an axios response.'
     );
+  }
+
+  /**
+   * Get http request config.
+   * @returns Promise of http request config with origin.
+   */
+  private async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
+    const defaultConfig = {
+      method: this.method,
+      url: this.getPath(),
+      headers: this.getHeaders(),
+      params: this.getParameters(),
+      timeout: this._timeout,
+      parameterEncoder: encodeTypedClientRequest,
+      data: this.parameters?.body
+    };
+    return {
+      ...defaultConfig,
+      ...filterCustomRequestConfig(this.customRequestConfiguration)
+    };
   }
 
   private getHeaders(): OriginOptions {

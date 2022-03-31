@@ -42,8 +42,8 @@ function paths(pathToPackage: string): {
 
 /**
  * Read the compiler options from the root and cwd tsconfig.json.
- * @param pathToPackage - path to the package under investigation
- * @returns the compiler options
+ * @param pathToPackage - Path to the package under investigation.
+ * @returns The compiler options.
  */
 async function getCompilerOptions(
   pathToPackage: string
@@ -61,12 +61,12 @@ async function getCompilerOptions(
 }
 
 /**
-For a detailed explanation what is happening here have a look at `0007-public-api-check.md` in the implementation documentation.
-Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
- @param allExportedIndex - names of the object imported by the index.ts
- @param allExportedTypes - exported object by the .d.ts files
- @param verbose - do a lot of detailed output on the packages
- @returns boolean - true if the two sets export the same objects.
+ * For a detailed explanation what is happening here have a look at `0007-public-api-check.md` in the implementation documentation.
+ * Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
+ * @param allExportedIndex - Names of the object imported by the index.ts.
+ * @param allExportedTypes - Exported object by the .d.ts files.
+ * @param verbose - Do a lot of detailed output on the packages.
+ * @returns True if the two sets export the same objects.
  */
 function compareApisAndLog(
   allExportedIndex: string[],
@@ -107,7 +107,7 @@ function compareApisAndLog(
 
 /**
  * Executes the public API check for a given package.
- * @param pathToPackage -  path to the package.
+ * @param pathToPackage -  Path to the package.
  */
 export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   logger.info(`Check package: ${pathToPackage}`);
@@ -164,9 +164,9 @@ export interface ExportedObject {
 }
 
 /**
- * execute the parseTypeDefinitionFile for all files in the cwd
- * @param pathCompiled - path to the compiled sources containing the .d.ts files
- * @returns Information on the exported objects
+ * Execute the parseTypeDefinitionFile for all files in the cwd.
+ * @param pathCompiled - Path to the compiled sources containing the .d.ts files.
+ * @returns Information on the exported objects.
  */
 export async function parseTypeDefinitionFiles(
   pathCompiled: string
@@ -182,11 +182,11 @@ export async function parseTypeDefinitionFiles(
   return flatten(result);
 }
 
-/*
- For a detailed explanation what is happening here have a look at `0007-public-api-check.md` in the implementation documentation.
- Parses a `d.ts` file for the exported objects  in it.
- @param fileContent - content of the .d.ts file to be processes
- @returns List of exported object.
+/**
+ * For a detailed explanation what is happening here have a look at `0007-public-api-check.md` in the implementation documentation.
+ * Parses a `d.ts` file for the exported objects  in it.
+ * @param fileContent - Content of the .d.ts file to be processes.
+ * @returns List of exported object.
  */
 export function parseTypeDefinitionFile(
   fileContent: string
@@ -214,9 +214,9 @@ export function parseTypeDefinitionFile(
 
 /**
  * Parse a barrel file for the exported objects.
- * It selects all string in \{\} e.g. export \{a,b,c\} from './xyz' will result in [a,b,c]
- * @param fileContent - content of the index file to be parsed.
- * @param regex - regular expression used for matching exports.
+ * It selects all string in \{\} e.g. export \{a,b,c\} from './xyz' will result in [a,b,c].
+ * @param fileContent - Content of the index file to be parsed.
+ * @param regex - Regular expression used for matching exports.
  * @returns List of objects exported by the given index file.
  */
 export function parseBarrelFile(fileContent: string, regex: RegExp): string[] {

@@ -12,6 +12,7 @@ import {
 import { Destination, sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import {
   HttpResponse,
+  HttpRequestConfigWithOrigin,
   mergeOptionsWithPriority,
   executeHttpRequest
 } from '@sap-cloud-sdk/http-client';
@@ -73,7 +74,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Specifies whether the destination needs a specific authentication or not.
-   * @returns A boolean value that specifies whether the destination needs authentication or not
+   * @returns A boolean value that specifies whether the destination needs authentication or not.
    */
   needsAuthentication(): boolean {
     return (
@@ -84,7 +85,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Returns the service URL for a given OData request.
-   * @returns The URL of the service the given entity belongs to
+   * @returns The URL of the service the given entity belongs to.
    */
   serviceUrl(): string {
     if (!this.destination) {
@@ -112,7 +113,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Returns the URL to a specific OData .resource, i.e. the entity collection.
-   * @returns The URL of the resource
+   * @returns The URL of the resource.
    */
   resourceUrl(): string {
     return `${removeTrailingSlashes(
@@ -135,7 +136,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Get query parameters as string. Leads with `?` if  there are parameters to return.
-   * @returns Query parameter string
+   * @returns Query parameter string.
    */
   query(): string {
     const parameters = mergeOptionsWithPriority(this.queryParameters());
@@ -150,7 +151,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Create object containing all headers, including custom headers for the given request.
-   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
+   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value.
    */
   async headers(): Promise<OriginOptions> {
     try {
@@ -177,7 +178,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Get all custom headers.
-   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
+   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value.
    */
   customHeaders(): Record<string, any> {
     return this.config.customHeaders;
@@ -185,7 +186,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Get all default headers. If custom headers are set, those take precedence.
-   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
+   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value.
    */
   defaultHeaders(): Record<string, any> {
     const additionalHeaders = this.getAdditionalHeadersForKeys(
@@ -199,8 +200,8 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   /**
-   * Get the eTag related headers, e. g. `if-match`.
-   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
+   * Get the eTag related headers, e.g. `if-match`.
+   * @returns Key-value pairs where the key is the name of a header property and the value is the respective value.
    */
   eTagHeaders(): Record<string, any> {
     const additionalIfMatchHeader =
@@ -218,7 +219,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Execute the given request and return the according promise.
-   * @returns Promise resolving to the requested data
+   * @returns Promise resolving to the requested data.
    */
   async execute(): Promise<HttpResponse> {
     const destination = this.destination;
@@ -226,20 +227,31 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeHttpRequest(
-      destination,
-      {
-        ...filterCustomRequestConfig(this.config.customRequestConfiguration),
-        headers: await this.headers(),
-        params: this.queryParameters(),
-        url: this.relativeUrl(true, false),
-        method: this.config.method,
-        data: this.config.payload
-      },
-      { fetchCsrfToken: this.config.fetchCsrfToken }
-    ).catch(error => {
+    return executeHttpRequest(destination, await this.requestConfig(), {
+      fetchCsrfToken: this.config.fetchCsrfToken
+    }).catch(error => {
       throw constructError(error, this.config.method, this.serviceUrl());
     });
+  }
+
+  /**
+   * Get http request config.
+   * @returns Promise of http request config with origin.
+   */
+  private async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
+    const defaultConfig = {
+      headers: await this.headers(),
+      params: this.queryParameters(),
+      url: this.relativeUrl(true, false),
+      method: this.config.method,
+      parameterEncoder: this.config.parameterEncoder,
+      timeout: this.config.timeout,
+      data: this.config.payload
+    };
+    return {
+      ...defaultConfig,
+      ...filterCustomRequestConfig(this.config.customRequestConfiguration)
+    };
   }
 
   private getAdditionalHeadersForKeys(...keys: string[]): Record<string, any> {

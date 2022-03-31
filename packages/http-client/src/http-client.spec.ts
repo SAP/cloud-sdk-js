@@ -24,8 +24,11 @@ import {
   addDestinationToRequestConfig,
   buildHttpRequest,
   buildRequestWithMergedHeadersAndQueryParameters,
+  defaultTimeoutTarget,
+  encodeAllParameters,
   executeHttpRequest,
   getDefaultHttpRequestOptions,
+  encodeTypedClientRequest,
   shouldHandleCsrfToken
 } from './http-client';
 
@@ -648,6 +651,36 @@ sap-client:001`);
       requestSpy.mockRestore();
     });
 
+    it('uses the default timeout if not given', async () => {
+      const destination: Destination = {
+        url: 'https://destinationUrl'
+      };
+      const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
+      await expect(
+        executeHttpRequest(destination, { method: 'get' })
+      ).resolves.not.toThrow();
+      expect(requestSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          timeout: defaultTimeoutTarget
+        })
+      );
+    });
+
+    it('uses a custom timeout if given', async () => {
+      const destination: Destination = {
+        url: 'https://destinationUrl'
+      };
+      const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
+      await expect(
+        executeHttpRequest(destination, { method: 'get', timeout: 123 })
+      ).resolves.not.toThrow();
+      expect(requestSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          timeout: 123
+        })
+      );
+    });
+
     it('overwrites the default axios config with destination related request config', async () => {
       const destination: Destination = {
         url: 'https://destinationUrl',
@@ -691,7 +724,7 @@ sap-client:001`);
 
     /* eslint-disable no-console */
     /**
-     * https://github.com/SAP/cloud-sdk-backlog/issues/560.
+     * BLI: https://github.com/SAP/cloud-sdk-backlog/issues/560.
      * Actual: request is successfull.
      * Expected: Axios requests should pass via the proxy and hence result in a redirect loop.
      * */
@@ -720,6 +753,28 @@ sap-client:001`);
   });
 
   describe('buildRequestWithMergedHeadersAndQueryParameters', () => {
+    const requestWithParameters: HttpRequestConfigWithOrigin = {
+      method: 'get',
+      url: '/api/entity',
+      params: {
+        custom: {
+          customParam: 'a/b'
+        },
+        requestConfig: {
+          requestParam: 'a/b'
+        }
+      }
+    };
+    const destinationWithParameters: Destination = {
+      url: 'http://example.com',
+      queryParameters: {
+        destProp: 'a#b'
+      },
+      originalProperties: {
+        'URL.queries.destUrlProp': 'a?b'
+      }
+    };
+
     it('uses authTokens if present on a destination', async () => {
       const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
         method: 'get',
@@ -755,6 +810,106 @@ sap-client:001`);
           'sap-client': '123'
         },
         params: {}
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it("should encode query parameters excluding the 'custom' ones.", async () => {
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        requestWithParameters,
+        destinationWithParameters,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        url: '/api/entity',
+        headers: {},
+        params: {
+          customParam: 'a/b',
+          requestParam: 'a%2Fb',
+          destProp: 'a%23b',
+          destUrlProp: 'a%3Fb'
+        }
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should encode query parameters excluding the custom and request ones if the sdkEncoder is used explicitly.', async () => {
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        {
+          ...requestWithParameters,
+          parameterEncoder: encodeTypedClientRequest
+        },
+        destinationWithParameters,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        url: '/api/entity',
+        headers: {},
+        parameterEncoder: encodeTypedClientRequest,
+        params: {
+          customParam: 'a/b',
+          requestParam: 'a/b',
+          destProp: 'a%23b',
+          destUrlProp: 'a%3Fb'
+        }
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should encode all parameters if the encodeAll function is used', async () => {
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        {
+          ...requestWithParameters,
+          parameterEncoder: encodeAllParameters
+        },
+        destinationWithParameters,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        url: '/api/entity',
+        headers: {},
+        parameterEncoder: encodeAllParameters,
+        params: {
+          customParam: 'a%2Fb',
+          requestParam: 'a%2Fb',
+          destProp: 'a%23b',
+          destUrlProp: 'a%3Fb'
+        }
+      };
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should use custom parameter serializer if given', async () => {
+      function parameterEncoder(
+        params: Record<string, any>
+      ): Record<string, any> {
+        return Object.fromEntries(
+          Object.entries(params).map(([key, value]) => [
+            key,
+            `${value}SomeChange`
+          ])
+        );
+      }
+
+      const actual = await buildRequestWithMergedHeadersAndQueryParameters(
+        { ...requestWithParameters, parameterEncoder },
+        destinationWithParameters,
+        {} as DestinationHttpRequestConfig
+      );
+      const expected = {
+        method: 'get',
+        url: '/api/entity',
+        headers: {},
+        parameterEncoder,
+        params: {
+          customParam: 'a/bSomeChange',
+          requestParam: 'a/bSomeChange',
+          destProp: 'a#bSomeChange',
+          destUrlProp: 'a?bSomeChange'
+        }
       };
       expect(actual).toStrictEqual(expected);
     });

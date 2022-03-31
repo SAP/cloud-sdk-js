@@ -1,5 +1,5 @@
 import { InstructionWithTextAndHeader } from './sdk-metadata-types';
-/* eslint-disable valid-jsdoc */
+
 /**
  * @internal
  */

@@ -1,5 +1,4 @@
 import { VdmProperty } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

@@ -1,6 +1,5 @@
 module.exports = {
   env: { node: true, jest: true },
-  plugins: ['eslint-plugin-tsdoc'],
   extends: ['@sap-cloud-sdk'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -38,10 +37,15 @@ module.exports = {
         'import/no-internal-modules': 'off',
         'no-unused-expressions': 'off'
       }
+    },
+    {
+      files: ['**/index.ts'],
+      rules: {
+        'jsdoc/require-description-complete-sentence': 'off'
+      }
     }
   ],
   rules: {
-    radix: 'off',
-    'tsdoc/syntax': 'error'
+    radix: 'off'
   }
 };

@@ -9,6 +9,10 @@ export interface PackageJsonOptions {
   license?: string;
 }
 
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function packageJsonBase(
   options: PackageJsonOptions
 ): Record<string, any> {

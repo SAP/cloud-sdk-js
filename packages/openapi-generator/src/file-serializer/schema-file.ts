@@ -32,7 +32,6 @@ function getImports(namedSchema: OpenApiPersistedSchema): Import[] {
     }));
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

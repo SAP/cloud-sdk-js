@@ -1,6 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.TestService = exports.testService = void 0;
+exports.testService = void 0;
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -255,5 +255,4 @@ class TestService {
     return BatchRequest_1.changeset;
   }
 }
-exports.TestService = TestService;
 //# sourceMappingURL=service.js.map

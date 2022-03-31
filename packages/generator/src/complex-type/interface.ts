@@ -6,7 +6,6 @@ import {
 import { getPropertyDescription, addLeadingNewline } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

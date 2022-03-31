@@ -171,7 +171,7 @@ function parseObjectSchemaProperties(
 }
 
 /**
- * Parse an enum schema
+ * Parse an enum schema.
  * @param schema - Original schema representing an enum.
  * @param options - Options that were set for service generation.
  * @returns The parsed enum schema.

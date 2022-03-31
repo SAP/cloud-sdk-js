@@ -4,12 +4,19 @@ var __createBinding =
   (Object.create
     ? function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
-        Object.defineProperty(o, k2, {
-          enumerable: true,
-          get: function () {
-            return m[k];
-          }
-        });
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (
+          !desc ||
+          ('get' in desc ? !m.__esModule : desc.writable || desc.configurable)
+        ) {
+          desc = {
+            enumerable: true,
+            get: function () {
+              return m[k];
+            }
+          };
+        }
+        Object.defineProperty(o, k2, desc);
       }
     : function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
@@ -32,10 +39,6 @@ __exportStar(require('./TestEntity1'), exports);
 __exportStar(require('./TestEntity2'), exports);
 __exportStar(require('./TestEntity3'), exports);
 __exportStar(require('./TestEntity4'), exports);
-__exportStar(require('./TestEntity1Api'), exports);
-__exportStar(require('./TestEntity2Api'), exports);
-__exportStar(require('./TestEntity3Api'), exports);
-__exportStar(require('./TestEntity4Api'), exports);
 __exportStar(require('./TestEntity1RequestBuilder'), exports);
 __exportStar(require('./TestEntity2RequestBuilder'), exports);
 __exportStar(require('./TestEntity3RequestBuilder'), exports);

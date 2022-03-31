@@ -61,8 +61,8 @@ export class Field<
   readonly _fieldOptions: Required<FieldOptions<NullableT, SelectableT>>;
   /**
    * Creates an instance of Field.
-   * @param _fieldName - Actual name of the field used in the OData request
-   * @param _entityConstructor - Constructor type of the entity the field belongs to
+   * @param _fieldName - Actual name of the field used in the OData request.
+   * @param _entityConstructor - Constructor type of the entity the field belongs to.
    * @param fieldOptions - Optional settings for this field.
    */
   constructor(

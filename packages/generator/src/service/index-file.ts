@@ -5,7 +5,6 @@ import {
 } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
 import { hasEntities } from '../generator-utils';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal
@@ -15,9 +14,6 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
     kind: StructureKind.SourceFile,
     statements: [
       ...service.entities.map(entity => exportStatement(entity.className)),
-      ...service.entities.map(entity =>
-        exportStatement(`${entity.className}Api`)
-      ),
       ...service.entities.map(entity =>
         exportStatement(`${entity.className}RequestBuilder`)
       ),

@@ -33,14 +33,7 @@ export function filterCustomRequestConfig(
 /**
  * A list of request config keys that are not allowed to be customized by default.
  */
-const defaultDisallowedKeys = [
-  'method',
-  'url',
-  'baseURL',
-  'data',
-  'headers',
-  'params'
-];
+const defaultDisallowedKeys = ['url', 'baseURL', 'data', 'headers', 'params'];
 
 /**
  * Merge options from a given [[OriginOptions]]. When reaching conflicts, values with higher priorities are chosen.

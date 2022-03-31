@@ -1,5 +1,4 @@
 const INTERNAL_PREFIX = '_';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

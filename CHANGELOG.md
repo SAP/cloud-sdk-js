@@ -14,23 +14,46 @@
 
 ## Compatibility Notes
 
--
+- [eslint-config] Since the `valid-jsdoc` rule is deprecated in ESLint, it is replaced by the `eslint-plugin-jsdoc` plugin for checking JSDoc comments. To stop your project from using a specific rule, turn it off by setting the rule ID to `off` under the `rules` key inside your configuration file.
+- [generator] Stop exporting service classes (e.g., `BusinessPartnerService`) from generated clients, use `businessPartnerService()` instead.
+- [generator] Stop exporting API classes (e.g., `BusinessPartnerAPI`) from generated clients, use `businessPartnerService().businessPartnerApi` instead.
 
 ## New Functionality
 
+- [http-client] Introduce the `parameterEncoder` option to the request config of the `http-client` to allow custom parameter encoding.  
+- [http-client] Remove `method` from `defaultDisallowedKeys` to not filter out custom http method when using `filterCustomRequestConfig`.
+- [odata-common] Support adding custom http method in `addCustomRequestConfiguration` to overwrite the default http method.
+- [openapi] Support adding custom http method in `addCustomRequestConfiguration` to overwrite the default http method.
+
+## Improvements
+
+- [generator] Remove unused imports (`moment` and `bignumber.js`) in API classes (e.g., `BusinessPartnerAPI`) to reduce memory usage.
+- [http-client] Introduce consistent query parameter encoding for all non custom parameters.
+
+## Fixed Issues
+
 -
+
+
+# 2.1.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/2.1.0<br>
+Blog: TBD<br>
 
 ## Improvements
 
 - [connectivity] Add details to error message for missing "URL" properties in destinations.
-- [util] Add `sanitizeRecord` function to `cloud-sdk-logger` which replaces potentially sensitive information in a `Record<string, any>` based on a list of sensistive keys.
-- [generator] The new CLI option `licenceInPackageJson` offers the possibility to specify the license property in a generated `package.json`.     
+- [util] Add `sanitizeRecord` function to `cloud-sdk-logger` which replaces potentially sensitive information in a `Record<string, any>` based on a list of sensitive keys.
+- [generator] The new CLI option `licenceInPackageJson` offers the possibility to specify the license property in a generated `package.json`.
+- [connectivity] Use the cache of `xssec` library to cache verification certificates.
 
 ## Fixed Issues
 
 - [openapi-generator] Add `@sap-cloud-sdk/openapi` as a dependency to the OpenAPI generator to fix errors during generation with `--transpile` enabled.
 - [connectivity] Fix an issue when using registering destinations with a JWT but without XSUAA service binding.
 - [connectivity] Fix a missing export `DestinationSelectionStrategies`.
+- [odata-common] Fix URL encoding for `getByKey`
 
 # 2.0.0
 

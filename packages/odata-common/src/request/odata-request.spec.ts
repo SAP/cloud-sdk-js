@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { OriginOptions } from '@sap-cloud-sdk/http-client';
+import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
 import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity, commonEntityApi } from '../../test/common-entity';
 import { DefaultDeSerializers } from '../de-serializers';
@@ -47,6 +48,11 @@ describe('OData Request', () => {
       const request = createRequest(ODataGetAllRequestConfig);
       expect(request.query()).toEqual('?$format=json');
     });
+  });
+
+  it('should be noParamEncoder', async () => {
+    const request = createRequest(ODataGetAllRequestConfig);
+    expect(request.config.parameterEncoder).toBe(encodeTypedClientRequest);
   });
 
   describe('serviceUrl', () => {
@@ -112,6 +118,17 @@ describe('OData Request', () => {
         'if-match': expect.anything()
       })
     );
+  });
+
+  describe('requestConfig', () => {
+    it('should overwrite default request config with filtered custom request config', async () => {
+      const request = createRequest(ODataGetAllRequestConfig);
+      request.config.customRequestConfiguration = {
+        method: 'merge'
+      };
+      const config = await request['requestConfig']();
+      expect(config['method']).toBe('merge');
+    });
   });
 });
 

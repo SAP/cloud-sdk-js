@@ -8,7 +8,6 @@ import {
 } from '../de-serializers-generic-types';
 import { hasEntities } from '../../generator-utils';
 
-/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */
@@ -35,7 +34,7 @@ export function serviceBuilder(
  */
 export function serviceClass(service: VdmServiceMetadata): string {
   const serviceHasEntities = hasEntities(service);
-  return codeBlock`export class ${
+  return codeBlock`class ${
     service.className
   }<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     private apis: Record<string, any> = {};

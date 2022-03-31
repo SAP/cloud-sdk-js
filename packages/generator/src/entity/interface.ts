@@ -11,7 +11,6 @@ import {
 } from '../vdm-types';
 import { getPropertyType } from './class';
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

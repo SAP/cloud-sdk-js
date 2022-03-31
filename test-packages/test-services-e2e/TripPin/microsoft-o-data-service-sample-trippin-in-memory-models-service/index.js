@@ -4,12 +4,19 @@ var __createBinding =
   (Object.create
     ? function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
-        Object.defineProperty(o, k2, {
-          enumerable: true,
-          get: function () {
-            return m[k];
-          }
-        });
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (
+          !desc ||
+          ('get' in desc ? !m.__esModule : desc.writable || desc.configurable)
+        ) {
+          desc = {
+            enumerable: true,
+            get: function () {
+              return m[k];
+            }
+          };
+        }
+        Object.defineProperty(o, k2, desc);
       }
     : function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
@@ -32,10 +39,6 @@ __exportStar(require('./Photos'), exports);
 __exportStar(require('./People'), exports);
 __exportStar(require('./Airlines'), exports);
 __exportStar(require('./Airports'), exports);
-__exportStar(require('./PhotosApi'), exports);
-__exportStar(require('./PeopleApi'), exports);
-__exportStar(require('./AirlinesApi'), exports);
-__exportStar(require('./AirportsApi'), exports);
 __exportStar(require('./PhotosRequestBuilder'), exports);
 __exportStar(require('./PeopleRequestBuilder'), exports);
 __exportStar(require('./AirlinesRequestBuilder'), exports);

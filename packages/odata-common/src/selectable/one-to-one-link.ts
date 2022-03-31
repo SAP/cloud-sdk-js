@@ -34,15 +34,14 @@ export class OneToOneLink<
 
   /**
    * Create order statements for the OData request based on the linked entity. The given statements have descending priority.
-   *
-   * Example:
+   * @example
    * ```
    * Entity.requestBuilder()
    *  .getAll()
    *  .orderBy(Entity.TO_LINKED_ENTITY.orderBy(asc(LinkedEntity.PROPERTY1), desc(LinkedEntity.PROPERTY2)));
    * ```
-   * @param orderBy - Criteria to order by
-   * @returns Newly created order link
+   * @param orderBy - Criteria to order by.
+   * @returns Newly created order link.
    */
   orderBy(
     ...orderBy: Orderable<EntityType<LinkedEntityApiT>>[]

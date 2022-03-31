@@ -105,7 +105,7 @@ export function entitySerializer(
    * @param entity - An instance of an entity.
    * @param entityApi - Entity API to serialize for.
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
-   * @returns A JSON Representation of the non custom fields
+   * @returns A JSON Representation of the non custom fields.
    */
   function serializeEntityNonCustomFields<EntityT extends EntityBase>(
     entity: EntityT,

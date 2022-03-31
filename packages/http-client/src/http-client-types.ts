@@ -1,4 +1,5 @@
 import * as http from 'http';
+
 /**
  * @internal
  */
@@ -47,6 +48,13 @@ export type HttpRequestConfigWithOrigin = HttpRequestConfigBase & {
 };
 
 /**
+ * Type of the parameter encoder.
+ */
+export type ParameterEncoder = (
+  parameter: Record<string, any>
+) => Record<string, any>;
+
+/**
  * @internal
  */
 export interface HttpRequestConfigBase {
@@ -59,6 +67,7 @@ export interface HttpRequestConfigBase {
   proxy?: false;
   httpAgent?: any;
   httpsAgent?: any;
+  parameterEncoder?: ParameterEncoder;
 }
 
 /**

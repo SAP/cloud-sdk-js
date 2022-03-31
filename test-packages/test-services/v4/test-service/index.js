@@ -4,12 +4,19 @@ var __createBinding =
   (Object.create
     ? function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
-        Object.defineProperty(o, k2, {
-          enumerable: true,
-          get: function () {
-            return m[k];
-          }
-        });
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (
+          !desc ||
+          ('get' in desc ? !m.__esModule : desc.writable || desc.configurable)
+        ) {
+          desc = {
+            enumerable: true,
+            get: function () {
+              return m[k];
+            }
+          };
+        }
+        Object.defineProperty(o, k2, desc);
       }
     : function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
@@ -42,20 +49,6 @@ __exportStar(require('./TestEntityCircularLinkParent'), exports);
 __exportStar(require('./TestEntityCircularLinkChild'), exports);
 __exportStar(require('./TestEntityEndsWith'), exports);
 __exportStar(require('./TestEntityEndsWithSomethingElse'), exports);
-__exportStar(require('./TestEntityApi'), exports);
-__exportStar(require('./TestEntityWithEnumKeyApi'), exports);
-__exportStar(require('./TestEntityWithSharedEntityType1Api'), exports);
-__exportStar(require('./TestEntityWithSharedEntityType2Api'), exports);
-__exportStar(require('./TestEntityMultiLinkApi'), exports);
-__exportStar(require('./TestEntityOtherMultiLinkApi'), exports);
-__exportStar(require('./TestEntityLvl2MultiLinkApi'), exports);
-__exportStar(require('./TestEntityLvl3MultiLinkApi'), exports);
-__exportStar(require('./TestEntitySingleLinkApi'), exports);
-__exportStar(require('./TestEntityLvl2SingleLinkApi'), exports);
-__exportStar(require('./TestEntityCircularLinkParentApi'), exports);
-__exportStar(require('./TestEntityCircularLinkChildApi'), exports);
-__exportStar(require('./TestEntityEndsWithApi'), exports);
-__exportStar(require('./TestEntityEndsWithSomethingElseApi'), exports);
 __exportStar(require('./TestEntityRequestBuilder'), exports);
 __exportStar(require('./TestEntityWithEnumKeyRequestBuilder'), exports);
 __exportStar(

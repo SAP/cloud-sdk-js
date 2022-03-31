@@ -1,6 +1,5 @@
 import { StructureKind, TypeAliasDeclarationStructure } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

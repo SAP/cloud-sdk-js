@@ -21,8 +21,8 @@ export class FilterList<
 
   /**
    * Creates an instance of FilterList.
-   * @param andFilters - Filters to be combined by logical conjunction (`and`)
-   * @param orFilters - Filters to be combined by logical disjunction (`or`)
+   * @param andFilters - Filters to be combined by logical conjunction (`and`).
+   * @param orFilters - Filters to be combined by logical disjunction (`or`).
    */
   constructor(
     public andFilters: Filterable<EntityT, DeSerializersT>[] = [],

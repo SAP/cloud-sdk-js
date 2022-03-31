@@ -25,9 +25,8 @@ export class BatchRequestBuilder<
 
   /**
    * Creates an instance of ODataBatchRequestBuilder.
-   * @param defaultServicePath - Service path
-   * @param requests - An array of retrieve requests or change sets
-   * @param entityToConstructorMap - A map that holds the entity type to constructor mapping
+   * @param defaultServicePath - Service path.
+   * @param requests - An array of retrieve requests or change sets.
    */
   constructor(
     readonly defaultServicePath: string,
@@ -64,7 +63,7 @@ export class BatchRequestBuilder<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination or DestinationFetchOptions to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(

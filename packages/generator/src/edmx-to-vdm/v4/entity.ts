@@ -19,7 +19,6 @@ import {
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser';
 import { isCollectionType } from '../edmx-to-vdm-util';
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

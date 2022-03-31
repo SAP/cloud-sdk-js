@@ -4,8 +4,6 @@ import { DeSerializers } from '../de-serializers/de-serializers';
 import { Entity } from '../entity';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
 
-/* eslint-disable valid-jsdoc */
-
 export function transformReturnValueForUndefined<ReturnT>(
   data: any,
   builderFn: (data: any) => ReturnT

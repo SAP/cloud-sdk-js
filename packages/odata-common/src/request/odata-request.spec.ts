@@ -1,6 +1,5 @@
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { OriginOptions } from '@sap-cloud-sdk/http-client';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
 import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity, commonEntityApi } from '../../test/common-entity';
@@ -9,17 +8,6 @@ import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
 import { ODataRequest } from './odata-request';
 
 describe('OData Request', () => {
-  describe('format', () => {
-    function createRequestWithHeaders(
-      configConstructor,
-      destination?
-    ): ODataRequest<any> {
-      const req = createRequest(configConstructor, destination);
-      jest.spyOn(req, 'headers').mockResolvedValue({} as OriginOptions);
-      return req;
-    }
-  });
-
   it('should be noParamEncoder', async () => {
     const request = createRequest(ODataGetAllRequestConfig);
     expect(request.config.parameterEncoder).toBe(encodeTypedClientRequest);

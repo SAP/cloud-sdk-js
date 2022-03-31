@@ -45,6 +45,6 @@ export class ODataFunctionImportRequestConfig<
   }
 
   queryParameters(): Record<string, any> {
-    return this.prependDollarToQueryParameters({});
+    return {};
   }
 }

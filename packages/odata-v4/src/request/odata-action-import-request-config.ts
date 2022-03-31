@@ -37,9 +37,7 @@ export class ODataActionImportRequestConfig<
   }
 
   queryParameters(): Record<string, any> {
-    return {
-      ...this.prependDollarToQueryParameters({})
-    };
+    return {};
   }
 
   private buildHttpPayload(

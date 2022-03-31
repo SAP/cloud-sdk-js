@@ -20,8 +20,6 @@ import {
   EdmTypeField,
   OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v2';
-import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
 export class TestEntityLvl2SingleLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements

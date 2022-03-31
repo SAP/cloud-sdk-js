@@ -26,8 +26,6 @@ import {
   Link,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v2';
-import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
 export class TestEntityMultiLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<TestEntityMultiLink<DeSerializersT>, DeSerializersT>

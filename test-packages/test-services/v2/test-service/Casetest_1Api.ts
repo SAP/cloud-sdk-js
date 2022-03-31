@@ -19,8 +19,6 @@ import {
   Time,
   EdmTypeField
 } from '@sap-cloud-sdk/odata-v2';
-import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
 export class Casetest_1Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<Casetest_1<DeSerializersT>, DeSerializersT>

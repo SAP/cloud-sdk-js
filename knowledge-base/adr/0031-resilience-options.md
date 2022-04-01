@@ -6,9 +6,9 @@ proposed
 
 ## Context
 
-### Which requests are involved
+### Overview on Request Types
 
-Assume a user uses the typed clients or the `execute` method the SDK creates a few requests.
+If a user uses the typed clients or the `executeHttpRequest()` method, the SDK creates a different requests.
 In order to discuss the different resilience options it is good to list these requests first.
 The term `target system` is used for the system defined in the destination. 
 
@@ -17,7 +17,7 @@ The term `target system` is used for the system defined in the destination.
 - CSRF token request to the target system for non read requests
 - actual request to the target system
 
-In the discussion we merge the latter two request to the target system with respect to resilience and the first two.
+In the discussion we group the latter two requests to the target system with respect to resilience and the first two.
 
 ### Status Quo
 
@@ -35,8 +35,8 @@ export interface HttpRequestConfigBase {
 }
 ```
 
-- The timeout in the `ResilienceOptions` is for the circuit breaker. The circuit breaker **only** applies to the calls to BTP services i.e. XSUAA and destination service. 
-- The timeout in the `HttpRequestConfigBase` is for all http calls (BTP services and target system) and passed to axios.
+- The `ResilienceOptions` are applied to the BTP service calls. They contain a circuitBreaker and timeout. 
+- The timeout in the `HttpRequestConfigBase` is for all http calls  to the target system and passed to axios.
 
 The settings are passed in the following way:
 ```js
@@ -59,7 +59,7 @@ We will stick to the more native javascript version.
 
 ## Decision
 
-- Rate limit and bulk limit are hard to acoieve in node processes.
+- Rate limit and bulk limit are hard to achieve in node processes.
 - It is meaningful to protect the BTP services with a circuit breaker.
 - A retry is not meaningful for BTP, but for the target system.
 - The retry should bail on 401 and 403 status codes.
@@ -73,7 +73,7 @@ We will stick to the more native javascript version.
 |rate limit | ❌ | ❌ | n.a. | n.a. | 
 |bulk limit | ❌ | ❌ | n.a. | n.a. |
 
-- For retry we would use [async retry](https://www.npmjs.com/package/async-retry).
+- For retry, we would use [async retry](https://www.npmjs.com/package/async-retry).
 - For circuit breaker we would use [opossum](https://www.npmjs.com/package/opossum)
 
 This more or less determines the options.

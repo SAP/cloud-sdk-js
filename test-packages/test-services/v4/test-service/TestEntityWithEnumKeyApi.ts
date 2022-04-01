@@ -20,8 +20,6 @@ import {
   Time,
   EnumField
 } from '@sap-cloud-sdk/odata-v4';
-import { BigNumber } from 'bignumber.js';
-import { Moment, Duration } from 'moment';
 export class TestEntityWithEnumKeyApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<TestEntityWithEnumKey<DeSerializersT>, DeSerializersT>

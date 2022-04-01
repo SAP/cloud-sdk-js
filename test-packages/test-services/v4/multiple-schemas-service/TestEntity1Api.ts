@@ -23,8 +23,6 @@ import {
   OrderableEdmTypeField,
   EnumField
 } from '@sap-cloud-sdk/odata-v4';
-import { BigNumber } from 'bignumber.js';
-import { Moment, Duration } from 'moment';
 export class TestEntity1Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<TestEntity1<DeSerializersT>, DeSerializersT>

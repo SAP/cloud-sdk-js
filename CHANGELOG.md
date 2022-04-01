@@ -21,9 +21,13 @@
 ## New Functionality
 
 - [http-client] Introduce the `parameterEncoder` option to the request config of the `http-client` to allow custom parameter encoding.  
+- [http-client] Remove `method` from `defaultDisallowedKeys` to not filter out custom http method when using `filterCustomRequestConfig`.
+- [odata-common] Support adding custom http method in `addCustomRequestConfiguration` to overwrite the default http method.
+- [openapi] Support adding custom http method in `addCustomRequestConfiguration` to overwrite the default http method.
 
 ## Improvements
 
+- [generator] Remove unused imports (`moment` and `bignumber.js`) in API classes (e.g., `BusinessPartnerAPI`) to reduce memory usage.
 - [http-client] Introduce consistent query parameter encoding for all non custom parameters.
 
 ## Fixed Issues

@@ -10,6 +10,7 @@ import {
 import {
   Method,
   HttpResponse,
+  HttpRequestConfigWithOrigin,
   executeHttpRequest
 } from '@sap-cloud-sdk/http-client';
 import {
@@ -107,18 +108,10 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     if (isNullish(destination)) {
       throw Error(noDestinationErrorMessage(destination));
     }
+
     return executeHttpRequest(
       resolvedDestination as Destination,
-      {
-        ...filterCustomRequestConfig(this.customRequestConfiguration),
-        method: this.method,
-        url: this.getPath(),
-        headers: this.getHeaders(),
-        params: this.getParameters(),
-        timeout: this._timeout,
-        parameterEncoder: encodeTypedClientRequest,
-        data: this.parameters?.body
-      },
+      await this.requestConfig(),
       { fetchCsrfToken }
     );
   }
@@ -136,6 +129,26 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     throw new Error(
       'Could not access response data. Response was not an axios response.'
     );
+  }
+
+  /**
+   * Get http request config.
+   * @returns Promise of http request config with origin.
+   */
+  private async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
+    const defaultConfig = {
+      method: this.method,
+      url: this.getPath(),
+      headers: this.getHeaders(),
+      params: this.getParameters(),
+      timeout: this._timeout,
+      parameterEncoder: encodeTypedClientRequest,
+      data: this.parameters?.body
+    };
+    return {
+      ...defaultConfig,
+      ...filterCustomRequestConfig(this.customRequestConfiguration)
+    };
   }
 
   private getHeaders(): OriginOptions {

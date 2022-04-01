@@ -22,8 +22,6 @@ import {
   EdmTypeField,
   Link
 } from '@sap-cloud-sdk/odata-v2';
-import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
 export class TestEntityCircularLinkParentApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements

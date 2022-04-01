@@ -20,8 +20,6 @@ import {
   OrderableEdmTypeField,
   EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
-import { BigNumber } from 'bignumber.js';
-import { Moment, Duration } from 'moment';
 export class PhotosApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<Photos<DeSerializersT>, DeSerializersT>

@@ -12,6 +12,7 @@ import {
 import { Destination, sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import {
   HttpResponse,
+  HttpRequestConfigWithOrigin,
   mergeOptionsWithPriority,
   executeHttpRequest
 } from '@sap-cloud-sdk/http-client';
@@ -226,22 +227,31 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeHttpRequest(
-      destination,
-      {
-        ...filterCustomRequestConfig(this.config.customRequestConfiguration),
-        headers: await this.headers(),
-        params: this.queryParameters(),
-        url: this.relativeUrl(true, false),
-        method: this.config.method,
-        parameterEncoder: this.config.parameterEncoder,
-        timeout: this.config.timeout,
-        data: this.config.payload
-      },
-      { fetchCsrfToken: this.config.fetchCsrfToken }
-    ).catch(error => {
+    return executeHttpRequest(destination, await this.requestConfig(), {
+      fetchCsrfToken: this.config.fetchCsrfToken
+    }).catch(error => {
       throw constructError(error, this.config.method, this.serviceUrl());
     });
+  }
+
+  /**
+   * Get http request config.
+   * @returns Promise of http request config with origin.
+   */
+  private async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
+    const defaultConfig = {
+      headers: await this.headers(),
+      params: this.queryParameters(),
+      url: this.relativeUrl(true, false),
+      method: this.config.method,
+      parameterEncoder: this.config.parameterEncoder,
+      timeout: this.config.timeout,
+      data: this.config.payload
+    };
+    return {
+      ...defaultConfig,
+      ...filterCustomRequestConfig(this.config.customRequestConfiguration)
+    };
   }
 
   private getAdditionalHeadersForKeys(...keys: string[]): Record<string, any> {

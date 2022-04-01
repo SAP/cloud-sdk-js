@@ -5,7 +5,6 @@
  */
 import { People } from './People';
 import { PeopleRequestBuilder } from './PeopleRequestBuilder';
-import { Photos } from './Photos';
 import { PhotosApi } from './PhotosApi';
 import { Location } from './Location';
 import { PersonGender } from './PersonGender';
@@ -14,17 +13,11 @@ import {
   defaultDeSerializers,
   DefaultDeSerializers,
   DeSerializers,
-  mergeDefaultDeSerializersWith,
   AllFields,
   entityBuilder,
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  Time,
-  EdmTypeField,
-  CollectionField,
-  EnumField,
-  OrderableEdmTypeField,
   OneToManyLink,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v4';

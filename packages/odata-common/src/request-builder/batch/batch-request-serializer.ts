@@ -57,9 +57,12 @@ export function serializeRequest(
     ([key, value]) => `${voca.titleCase(key)}: ${value}`
   );
 
+  const contentId = Object.entries(headers).filter(header => header[0] === 'content-id');
+
   return [
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
+     ... contentId.length ? [contentId] : [],
     '',
     `${request.requestConfig.method.toUpperCase()} ${getUrl(
       odataRequest,

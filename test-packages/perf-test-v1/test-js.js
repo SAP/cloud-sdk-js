@@ -1,3 +1,4 @@
+var memwatch = require('node-memwatch-new');
 const { TestEntity, TestEntity50Col } = require('./test-service');
 
 const interval = setInterval(() =>
@@ -25,7 +26,9 @@ const sdkCode = async () => {
   const testEntities206 = await TestEntity50Col.requestBuilder().getAll().execute(dest);
   const testEntities207 = await TestEntity50Col.requestBuilder().getAll().execute(dest);
   const testEntities208 = await TestEntity50Col.requestBuilder().getAll().execute(dest);
+  var hd = new memwatch.HeapDiff();
   const testEntities209 = await TestEntity50Col.requestBuilder().getAll().execute(dest);
+  var diff = hd.end();
   const testEntities210 = await TestEntity50Col.requestBuilder().getAll().execute(dest);
   console.log(testEntities210.length);
 };

@@ -5,9 +5,8 @@
  */
 import { TestEntity } from './TestEntity';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
-import { TestEntityLink } from './TestEntityLink';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time, OrderableEdmTypeField, EdmTypeField, OneToManyLink } from '@sap-cloud-sdk/odata-v4';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time, OneToManyLink } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
     EntityApi<
       TestEntity<

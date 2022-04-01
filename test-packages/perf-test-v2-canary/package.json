@@ -13,8 +13,9 @@
     "test-js": "node test-js.js"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator": "2.1.1-20220331100720.0",
+    "@sap-cloud-sdk/generator": "2.1.1-20220401135415.0",
     "typescript": "4.6.3",
-    "ts-node": "10.0.0"
+    "ts-node": "10.0.0",
+    "node-memwatch-new": "0.0.3"
   }
 }

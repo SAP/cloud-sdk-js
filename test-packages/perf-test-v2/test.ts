@@ -1,4 +1,4 @@
-const { testService } = require('./test-service');
+import { testService } from './test-service';
 
 const interval = setInterval(() =>
   console.log(`HEAP used: ${Math.round(process.memoryUsage().heapUsed/1024/1024)} MB`), 1000);

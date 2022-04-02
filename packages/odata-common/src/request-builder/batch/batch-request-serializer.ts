@@ -53,16 +53,30 @@ export function serializeRequest(
     ...odataRequest.eTagHeaders(),
     ...odataRequest.customHeaders()
   };
-  const requestHeaders = Object.entries(headers).map(
+  const requestHeaders = Object.entries(headers)
+  .filter(([key,value]) => {
+    if(key !== 'content-id'){
+      return true;
+    };
+  })
+  .map(
     ([key, value]) => `${voca.titleCase(key)}: ${value}`
   );
 
-  const contentId = Object.entries(headers).filter(header => header[0] === 'content-id');
+  const contentIdHeader = Object.entries(headers)
+  .filter(([key,value])=>{
+    if(key === 'content-id'){
+      return true;
+    };
+  })
+  .map(
+    ([key, value]) => `Content-ID: ${value}`
+  );
 
   return [
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
-     ... contentId.length ? [contentId] : [],
+    ...(contentIdHeader.length ? contentIdHeader : []),
     '',
     `${request.requestConfig.method.toUpperCase()} ${getUrl(
       odataRequest,

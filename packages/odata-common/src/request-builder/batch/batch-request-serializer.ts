@@ -1,5 +1,6 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
+import { v4 as uuid } from 'uuid';
 import { ODataRequest, ODataRequestConfig } from '../../request';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { DeSerializers } from '../../de-serializers';
@@ -9,6 +10,7 @@ import {
   BatchSubRequestPathType
 } from './batch-request-options';
 import type { BatchRequestBuilder } from './batch-request-builder';
+
 /**
  * Serialize change set to string.
  * @param changeSet - Change set containing a collection of write operations.
@@ -53,35 +55,18 @@ export function serializeRequest(
     ...odataRequest.eTagHeaders(),
     ...odataRequest.customHeaders()
   };
-  const requestHeaders = Object.entries(headers)
-  .filter(([key,value]) => {
-    if(key !== 'content-id'){
-      return true;
-    };
-  })
-  .map(
+  const requestHeaders = Object.entries(headers).map(
     ([key, value]) => `${voca.titleCase(key)}: ${value}`
   );
 
-  const contentIdHeader = Object.entries(headers)
-  .filter(([key,value])=>{
-    if(key === 'content-id'){
-      return true;
-    };
-  })
-  .map(
-    ([key, value]) => `Content-ID: ${value}`
-  );
+  const method = request.requestConfig.method.toUpperCase();
 
   return [
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
-    ...(contentIdHeader.length ? contentIdHeader : []),
+    ...(method === 'GET' ? [`Content-Id: ${uuid()}`] : []),
     '',
-    `${request.requestConfig.method.toUpperCase()} ${getUrl(
-      odataRequest,
-      options.subRequestPathType
-    )} HTTP/1.1`,
+    `${method} ${getUrl(odataRequest, options.subRequestPathType)} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),
     '',
     ...getPayload(request),

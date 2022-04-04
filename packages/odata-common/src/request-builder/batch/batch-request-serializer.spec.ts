@@ -33,7 +33,7 @@ const entityKeys = {
   KeyPropertyString: 'test'
 };
 
-export function changeSet(requests: WriteBuilder[]): BatchChangeSet {
+function changeSet(requests: WriteBuilder[]): BatchChangeSet {
   return new BatchChangeSet<any>(requests, 'changeSet_boundary');
 }
 
@@ -161,7 +161,7 @@ describe('batch request serializer', () => {
   });
 
   describe('serializeBatchRequest', () => {
-    it('serializes payload for batch subequests', () => {
+    it('serializes payload for batch subrequests', () => {
       const requests = [
         changeSet([createRequestBuilder({ payload: commonEntity() })]),
         getAllRequestBuilder(),
@@ -188,23 +188,6 @@ describe('batch request serializer', () => {
       ).toThrowErrorMatchingInlineSnapshot(
         '"Cannot serialize batch request. Invalid destination provided for sub request path type \'absolute\'"'
       );
-    });
-  });
-
-  describe('serializeBatchRequestWithContentId', () => {
-    it('serializes payload for batch subequests with Content-ID', () => {
-      const requests = [
-        changeSet([createRequestBuilder({ headers: { 'Content-ID': '1' }, payload: commonEntity() })]),
-        getAllRequestBuilder(),
-        changeSet([
-          updateRequestBuilder({ payload: commonEntity() }),
-          deleteRequestBuilder({ keys: entityKeys })
-        ]),
-        getByKeyRequestBuilder({ keys: entityKeys })
-      ];
-      expect(
-        serializeBatchRequest(batchRequestBuilder(requests))
-      ).toMatchSnapshot();
     });
   });
 });

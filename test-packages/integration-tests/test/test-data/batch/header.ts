@@ -53,7 +53,8 @@ export const retrieveHeader = () => [
 
 export const changesetHeader = () => [
   'Content-Type: application/http',
-  'Content-Transfer-Encoding: binary'
+  'Content-Transfer-Encoding: binary',
+  'Content-Id: .*'
 ];
 
 export const requestHeader = () => [

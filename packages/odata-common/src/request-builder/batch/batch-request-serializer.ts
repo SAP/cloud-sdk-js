@@ -64,7 +64,7 @@ export function serializeRequest(
   return [
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
-    ...(method === 'GET' ? [`Content-Id: ${uuid()}`] : []),
+    ...(method !== 'GET' ? [`Content-Id: ${uuid()}`] : []),
     '',
     `${method} ${getUrl(odataRequest, options.subRequestPathType)} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),

@@ -127,7 +127,7 @@ export function createRequestBuilder(
   options?: Options
 ): CreateRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   if (options?.payload) {
-    const builder = new CommonCreateRequestBuilder(
+    return new CommonCreateRequestBuilder(
       commonEntityApi,
       options.payload as CommonEntity,
       commonODataUri,
@@ -135,10 +135,6 @@ export function createRequestBuilder(
       commonEntityDeserializer,
       responseDataAccessor
     );
-    if (options?.headers) {
-      builder.addCustomHeaders(options?.headers);
-    }
-    return builder;
   }
 
   throw new Error(

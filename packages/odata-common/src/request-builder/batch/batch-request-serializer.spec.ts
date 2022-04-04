@@ -20,6 +20,10 @@ import {
 } from './batch-request-serializer';
 import { BatchChangeSet } from './batch-change-set';
 
+jest.mock('uuid', () => ({
+  v4: jest.fn(() => '<content-id>')
+}));
+
 function commonEntity(): CommonEntity {
   return new CommonEntityApi()
     .entityBuilder()

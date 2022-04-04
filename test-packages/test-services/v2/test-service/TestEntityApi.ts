@@ -29,11 +29,14 @@ import {
   Link,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v2';
+import { TestEntity50Col } from '../../../perf-test-v2/test-service';
 export class TestEntityApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntity<DeSerializersT>, DeSerializersT>
+  > implements EntityApi<TestEntity<DeSerializersT>, DeSerializersT>
 {
   public deSerializers: DeSerializersT;
+
+  private _entityBuilder: any;
 
   constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
@@ -48,7 +51,7 @@ export class TestEntityApi<
       TestEntity<DeSerializersT>,
       DeSerializersT,
       TestEntityMultiLinkApi<DeSerializersT>
-    >;
+      >;
     /**
      * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -57,7 +60,7 @@ export class TestEntityApi<
       TestEntity<DeSerializersT>,
       DeSerializersT,
       TestEntityOtherMultiLinkApi<DeSerializersT>
-    >;
+      >;
     /**
      * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -66,7 +69,7 @@ export class TestEntityApi<
       TestEntity<DeSerializersT>,
       DeSerializersT,
       TestEntitySingleLinkApi<DeSerializersT>
-    >;
+      >;
   };
 
   _addNavigationProperties(
@@ -93,8 +96,18 @@ export class TestEntityApi<
   entityBuilder(): EntityBuilderType<
     TestEntity<DeSerializersT>,
     DeSerializersT
-  > {
+    > {
     return entityBuilder(this);
+  }
+
+  entityBuilderNew(): EntityBuilderType<
+    TestEntity<DeSerializersT>,
+    DeSerializersT
+    > {
+    if (!this._entityBuilder){
+      this._entityBuilder = entityBuilder(this);
+    }
+    return this._entityBuilder;
   }
 
   customField<NullableT extends boolean = false>(

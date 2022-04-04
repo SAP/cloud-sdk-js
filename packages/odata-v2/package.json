@@ -29,7 +29,8 @@
     "prepare": "yarn compile",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "depcheck .",
+    "test-eb-js": "node ./src/test-eb-js.js"
   },
   "dependencies": {
     "@sap-cloud-sdk/connectivity": "^2.1.0",

@@ -39,7 +39,7 @@
     "test:integration": "yarn integration-tests test",
     "test:type": "yarn type-tests test",
     "test:e2e": "yarn e2e-tests test",
-    "generate:test-services:v2": "yarn generate v2 && yarn lint:fix && yarn --frozen-lockfile",
+    "generate:test-services:v2": "yarn generate v2",
     "generate:test-services:v4": "yarn generate v4 && yarn lint:fix && yarn --frozen-lockfile",
     "generate:common": "yarn generate common && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services:openapi": "yarn generate openapi && yarn lint:fix && yarn --frozen-lockfile",

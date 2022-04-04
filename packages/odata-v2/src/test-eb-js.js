@@ -1,29 +1,32 @@
-const { testService } = require('./test-service');
+const { testService } = require('@sap-cloud-sdk/test-services/v2/test-service');
 var memwatch = require('node-memwatch-new');
 
-const interval = setInterval(() =>
-  console.log(`HEAP used: ${Math.round(process.memoryUsage().heapUsed/1024/1024)} MB`), 1000);
-
-const dest = {url: 'http://localhost:4004/' };
 
 const sdkCode = async () => {
   const col = [];
   // var hd1 = new memwatch.HeapDiff();
-  // // entityBuilder => 15 * 1000 EdmTypeField + 36 * 1000 OrderableEdmTypeField
+  // // entityBuilder => 12 * 1000 EdmTypeField + 24 * 1000 OrderableEdmTypeField
   // for(let i=0;i<1000;i++) {
-  //   col[i] = testService().testEntity50ColApi.entityBuilder().keyTestEntity50Col(1);
+  //   col[i] = testService().testEntityApi.entityBuilder();
   // }
   // var diff1 = hd1.end();
   // console.log(diff1);
   // var hd2 = new memwatch.HeapDiff();
-  // // entityBuilder => 15 EdmTypeField + 36 OrderableEdmTypeField
+  // // entityBuilder => 12 EdmTypeField + 24 OrderableEdmTypeField
   // //TODO fix testService singleton
   // //TODO fix testEntity50ColApi singleton
   // //TODO fix entityBuilder singleton
   // //TODO check deserializer, when creating entities => singleton
-  // col[1000] = testService().testEntity50ColApi.entityBuilder().keyTestEntity50Col(1);
+  // col[1000] = testService().testEntityApi.entityBuilder();
   // var diff2 = hd2.end();
   // console.log(diff2);
+  var hd3 = new memwatch.HeapDiff();
+  const api = testService().testEntityApi;
+  for(let i=0;i<1000;i++) {
+    col[i] = api.entityBuilderNew();
+  }
+  var diff3 = hd3.end();
+  console.log(diff3);
   console.log(col.length);
 };
 
@@ -31,10 +34,6 @@ async function main(){
   console.log('***** test starts *****');
 
   await sdkCode();
-
-  // setTimeout(() => {
-  //   clearInterval(interval);
-  // }, 10000);
 
   console.log('***** test ends *****');
 }

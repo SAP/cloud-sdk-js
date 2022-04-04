@@ -6,8 +6,7 @@ import {
   DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi,
-  EdmTypeField
+  EntityApi
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityLvl3MultiLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -65,7 +64,7 @@ export declare class TestEntityLvl3MultiLinkApi<
      * Static representation of the [[stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    STRING_PROPERTY: EdmTypeField<
+    STRING_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       TestEntityLvl3MultiLink<
         DeSerializers<
           any,
@@ -98,7 +97,7 @@ export declare class TestEntityLvl3MultiLinkApi<
      * Static representation of the [[guidProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    GUID_PROPERTY: EdmTypeField<
+    GUID_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       TestEntityLvl3MultiLink<
         DeSerializers<
           any,
@@ -131,7 +130,7 @@ export declare class TestEntityLvl3MultiLinkApi<
      * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       TestEntityLvl3MultiLink<
         DeSerializers<
           any,

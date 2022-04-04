@@ -5,11 +5,8 @@
  */
 import { TestEntity } from './TestEntity';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
-import { TestEntityMultiLink } from './TestEntityMultiLink';
 import { TestEntityMultiLinkApi } from './TestEntityMultiLinkApi';
-import { TestEntityOtherMultiLink } from './TestEntityOtherMultiLink';
 import { TestEntityOtherMultiLinkApi } from './TestEntityOtherMultiLinkApi';
-import { TestEntitySingleLink } from './TestEntitySingleLink';
 import { TestEntitySingleLinkApi } from './TestEntitySingleLinkApi';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import {
@@ -17,15 +14,12 @@ import {
   defaultDeSerializers,
   DefaultDeSerializers,
   DeSerializers,
-  mergeDefaultDeSerializersWith,
   AllFields,
   entityBuilder,
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
   Time,
-  EdmTypeField,
-  OrderableEdmTypeField,
   Link,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v2';

@@ -26,9 +26,33 @@
     "lint:fix": {
       "outputs": []
     },
-    "generate": {
-      "dependsOn": ["@sap-cloud-sdk/generator#compile"],
-      "outputs": ["generated-clients-from-test-packages"]
+    "generate:v2": {
+      "dependsOn": [
+        "@sap-cloud-sdk/generator#compile",
+        "@sap-cloud-sdk/util#compile"
+      ],
+      "outputs": ["v2/**"]
+    },
+    "generate:v4": {
+      "dependsOn": [
+        "@sap-cloud-sdk/generator#compile",
+        "@sap-cloud-sdk/util#compile"
+      ],
+      "outputs": ["v4/**"]
+    },
+    "generate:e2e": {
+      "dependsOn": [
+        "@sap-cloud-sdk/generator#compile",
+        "@sap-cloud-sdk/util#compile"
+      ],
+      "outputs": ["TripPin/**", "v4/**"]
+    },
+    "generate:openapi": {
+      "dependsOn": [
+        "@sap-cloud-sdk/openapi-generator#compile",
+        "@sap-cloud-sdk/util#compile"
+      ],
+      "outputs": ["openapi/**"]
     }
   }
 }

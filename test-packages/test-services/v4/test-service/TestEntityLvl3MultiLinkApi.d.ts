@@ -4,7 +4,6 @@ import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
-  AllFields,
   EntityBuilderType,
   EntityApi
 } from '@sap-cloud-sdk/odata-v4';
@@ -30,135 +29,9 @@ export declare class TestEntityLvl3MultiLinkApi<
     DeSerializersT,
     NullableT
   >;
-  get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      TestEntityLvl3MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the [[stringProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    STRING_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
-      TestEntityLvl3MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.String',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[guidProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    GUID_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
-      TestEntityLvl3MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Guid',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[keyProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
-      TestEntityLvl3MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.String',
-      false,
-      true
-    >;
-  };
+  private _fieldBuilder;
+  get fieldBuilder(): any;
+  private _schema;
+  get schema(): any;
 }
 //# sourceMappingURL=TestEntityLvl3MultiLinkApi.d.ts.map

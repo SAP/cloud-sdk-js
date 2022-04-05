@@ -79,9 +79,20 @@ export class BreakfastApi<DeSerializersT extends DeSerializers = DefaultDeSerial
     ) as any;
   }
 
+  private _fieldBuilder: any;
+  get fieldBuilder() {
+    if(!this._fieldBuilder){
+      this._fieldBuilder = new FieldBuilder(Breakfast, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema: any;
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(Breakfast, this.deSerializers);
-    return { 
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = { 
     /**
  * Static representation of the [[entityName]] property for query construction.
  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -104,6 +115,9 @@ BREAKFAST_TIME: fieldBuilder.buildEdmTypeField('BreakfastTime', 'Edm.DateTime', 
  */
 ALL_FIELDS: new AllFields('*', Breakfast) 
   };
+    }
+  
+    return this._schema;
   }
 }"
 `;

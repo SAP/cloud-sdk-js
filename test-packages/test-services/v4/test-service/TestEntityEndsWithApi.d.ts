@@ -4,7 +4,6 @@ import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
-  AllFields,
   EntityBuilderType,
   EntityApi
 } from '@sap-cloud-sdk/odata-v4';
@@ -26,69 +25,9 @@ export declare class TestEntityEndsWithApi<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<TestEntityEndsWith<DeSerializersT>, DeSerializersT, NullableT>;
-  get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      TestEntityEndsWith<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the [[keyProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
-      TestEntityEndsWith<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.String',
-      false,
-      true
-    >;
-  };
+  private _fieldBuilder;
+  get fieldBuilder(): any;
+  private _schema;
+  get schema(): any;
 }
 //# sourceMappingURL=TestEntityEndsWithApi.d.ts.map

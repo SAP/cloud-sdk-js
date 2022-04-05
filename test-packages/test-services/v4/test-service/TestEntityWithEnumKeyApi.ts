@@ -63,27 +63,41 @@ export class TestEntityWithEnumKeyApi<
     ) as any;
   }
 
+  private _fieldBuilder: any;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(
+        TestEntityWithEnumKey,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema: any;
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(
-      TestEntityWithEnumKey,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[keyPropertyEnum1]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY_ENUM_1: fieldBuilder.buildEnumField(
-        'KeyPropertyEnum1',
-        TestEnumType,
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntityWithEnumKey)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[keyPropertyEnum1]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_PROPERTY_ENUM_1: fieldBuilder.buildEnumField(
+          'KeyPropertyEnum1',
+          TestEnumType,
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntityWithEnumKey)
+      };
+    }
+
+    return this._schema;
   }
 }

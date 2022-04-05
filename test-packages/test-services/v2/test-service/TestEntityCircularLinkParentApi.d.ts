@@ -5,10 +5,8 @@ import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
-  AllFields,
   EntityBuilderType,
-  EntityApi,
-  Link
+  EntityApi
 } from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityCircularLinkParentApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -35,74 +33,9 @@ export declare class TestEntityCircularLinkParentApi<
     DeSerializersT,
     NullableT
   >;
-  get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      TestEntityCircularLinkParent<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the one-to-many navigation property [[toChild]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_CHILD: Link<
-      TestEntityCircularLinkParent<DeSerializersT>,
-      DeSerializersT,
-      TestEntityCircularLinkChildApi<DeSerializersT>
-    >;
-    /**
-     * Static representation of the [[keyProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_PROPERTY: import('@sap-cloud-sdk/odata-v2').EdmTypeField<
-      TestEntityCircularLinkParent<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.String',
-      false,
-      true
-    >;
-  };
+  private _fieldBuilder;
+  get fieldBuilder(): any;
+  private _schema;
+  get schema(): any;
 }
 //# sourceMappingURL=TestEntityCircularLinkParentApi.d.ts.map

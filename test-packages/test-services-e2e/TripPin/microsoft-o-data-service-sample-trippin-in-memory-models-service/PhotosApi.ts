@@ -55,25 +55,39 @@ export class PhotosApi<
     ) as any;
   }
 
+  private _fieldBuilder: any;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(Photos, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema: any;
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(Photos, this.deSerializers);
-    return {
-      /**
-       * Static representation of the [[id]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      ID: fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false),
-      /**
-       * Static representation of the [[name]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', true),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', Photos)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[id]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        ID: fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false),
+        /**
+         * Static representation of the [[name]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', true),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', Photos)
+      };
+    }
+
+    return this._schema;
   }
 }

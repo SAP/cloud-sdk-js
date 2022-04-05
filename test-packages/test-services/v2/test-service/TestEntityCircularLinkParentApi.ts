@@ -79,27 +79,41 @@ export class TestEntityCircularLinkParentApi<
     ) as any;
   }
 
+  private _fieldBuilder: any;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(
+        TestEntityCircularLinkParent,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema: any;
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(
-      TestEntityCircularLinkParent,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntityCircularLinkParent)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[keyProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'KeyProperty',
+          'Edm.String',
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntityCircularLinkParent)
+      };
+    }
+
+    return this._schema;
   }
 }

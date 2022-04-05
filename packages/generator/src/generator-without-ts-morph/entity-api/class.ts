@@ -67,11 +67,25 @@ export function classContent(
     ) as any;
   }
 
+  private _fieldBuilder: any;
+  get fieldBuilder() {
+    if(!this._fieldBuilder){
+      this._fieldBuilder = new FieldBuilder(${
+        entity.className
+      }, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema: any;
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(${
-      entity.className
-    }, this.deSerializers);
-    return ${getSchema(entity)};
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = ${getSchema(entity)};
+    }
+  
+    return this._schema;
   }
 }`;
 }

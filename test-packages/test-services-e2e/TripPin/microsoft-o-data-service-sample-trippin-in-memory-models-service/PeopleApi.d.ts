@@ -10,10 +10,6 @@ import {
   AllFields,
   EntityBuilderType,
   EntityApi,
-  EdmTypeField,
-  CollectionField,
-  EnumField,
-  OrderableEdmTypeField,
   OneToManyLink,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v4';
@@ -86,7 +82,7 @@ export declare class PeopleApi<
      * Static representation of the [[userName]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    USER_NAME: EdmTypeField<
+    USER_NAME: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       People<
         DeSerializers<
           any,
@@ -119,7 +115,7 @@ export declare class PeopleApi<
      * Static representation of the [[firstName]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    FIRST_NAME: EdmTypeField<
+    FIRST_NAME: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       People<
         DeSerializers<
           any,
@@ -152,7 +148,7 @@ export declare class PeopleApi<
      * Static representation of the [[lastName]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    LAST_NAME: EdmTypeField<
+    LAST_NAME: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       People<
         DeSerializers<
           any,
@@ -185,7 +181,7 @@ export declare class PeopleApi<
      * Static representation of the [[emails]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    EMAILS: CollectionField<
+    EMAILS: import('@sap-cloud-sdk/odata-v4').CollectionField<
       People<
         DeSerializers<
           any,
@@ -218,7 +214,7 @@ export declare class PeopleApi<
      * Static representation of the [[addressInfo]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    ADDRESS_INFO: CollectionField<
+    ADDRESS_INFO: import('@sap-cloud-sdk/odata-v4').CollectionField<
       People<
         DeSerializers<
           any,
@@ -251,7 +247,7 @@ export declare class PeopleApi<
      * Static representation of the [[gender]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    GENDER: EnumField<
+    GENDER: import('@sap-cloud-sdk/odata-v4').EnumField<
       People<
         DeSerializers<
           any,
@@ -284,7 +280,7 @@ export declare class PeopleApi<
      * Static representation of the [[concurrency]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    CONCURRENCY: OrderableEdmTypeField<
+    CONCURRENCY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
       People<
         DeSerializers<
           any,

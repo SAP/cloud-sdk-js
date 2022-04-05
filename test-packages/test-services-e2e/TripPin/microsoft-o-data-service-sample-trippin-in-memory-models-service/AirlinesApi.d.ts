@@ -6,8 +6,7 @@ import {
   DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi,
-  EdmTypeField
+  EntityApi
 } from '@sap-cloud-sdk/odata-v4';
 export declare class AirlinesApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -58,7 +57,7 @@ export declare class AirlinesApi<
      * Static representation of the [[airlineCode]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    AIRLINE_CODE: EdmTypeField<
+    AIRLINE_CODE: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       Airlines<
         DeSerializers<
           any,
@@ -91,7 +90,7 @@ export declare class AirlinesApi<
      * Static representation of the [[name]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NAME: EdmTypeField<
+    NAME: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       Airlines<
         DeSerializers<
           any,

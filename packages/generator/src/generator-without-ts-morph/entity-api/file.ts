@@ -3,7 +3,6 @@ import { Import, serializeImports } from '../../generator-common';
 import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import {
   navPropertyFieldTypeImportNames,
-  propertyFieldTypeImportNames,
   propertyTypeImportNames
 } from '../../imports';
 import { odataImport, complexTypeImports, enumTypeImports } from './imports';
@@ -44,7 +43,6 @@ function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
       typeOnly: false
     },
     ...otherEntityApiImports(entity, service),
-    // ...externalImports(entity.properties),
     ...complexTypeImports(entity.properties),
     ...enumTypeImports(entity.properties),
     odataImport(
@@ -53,15 +51,12 @@ function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
         'defaultDeSerializers',
         'DefaultDeSerializers',
         'DeSerializers',
-        'mergeDefaultDeSerializersWith',
         'AllFields',
         'entityBuilder',
         'EntityBuilderType',
         'EntityApi',
         'FieldBuilder',
-        'Time',
         ...propertyTypeImportNames(entity.properties),
-        ...propertyFieldTypeImportNames(entity.properties),
         ...navPropertyFieldTypeImportNames(
           entity.navigationProperties,
           service.oDataVersion
@@ -94,10 +89,6 @@ function otherEntityApiImports(
 
 function otherEntityImports(name: string): Import[] {
   return [
-    {
-      names: [`${name}`],
-      moduleIdentifier: `./${name}`
-    },
     {
       names: [`${name}Api`],
       moduleIdentifier: `./${name}Api`

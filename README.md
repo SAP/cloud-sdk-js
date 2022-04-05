@@ -55,7 +55,7 @@ To install the SAP Cloud SDK http-client in your project, run:
 $ npm install @sap-cloud-sdk/http-client
 ```
 
-### @sap-cloud-sdk/conectivity
+### @sap-cloud-sdk/connectivity
 
 This package contains all Cloud Foundry connectivity service related methods like `getDestination()` and `registerDestination()`.
 

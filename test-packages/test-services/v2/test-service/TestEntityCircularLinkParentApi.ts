@@ -5,21 +5,17 @@
  */
 import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
-import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 import { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
 import {
   CustomField,
   defaultDeSerializers,
   DefaultDeSerializers,
   DeSerializers,
-  mergeDefaultDeSerializersWith,
   AllFields,
   entityBuilder,
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  Time,
-  EdmTypeField,
   Link
 } from '@sap-cloud-sdk/odata-v2';
 export class TestEntityCircularLinkParentApi<

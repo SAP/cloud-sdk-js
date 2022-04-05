@@ -7,7 +7,6 @@ import {
   AllFields,
   EntityBuilderType,
   EntityApi,
-  EdmTypeField,
   Link
 } from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityCircularLinkChildApi<
@@ -76,7 +75,7 @@ export declare class TestEntityCircularLinkChildApi<
      * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: import('@sap-cloud-sdk/odata-v2').EdmTypeField<
       TestEntityCircularLinkChild<
         DeSerializers<
           any,

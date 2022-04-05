@@ -6,9 +6,7 @@ import {
   DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi,
-  OrderableEdmTypeField,
-  EdmTypeField
+  EntityApi
 } from '@sap-cloud-sdk/odata-v4';
 export declare class PhotosApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -59,7 +57,7 @@ export declare class PhotosApi<
      * Static representation of the [[id]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    ID: OrderableEdmTypeField<
+    ID: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
       Photos<
         DeSerializers<
           any,
@@ -92,7 +90,7 @@ export declare class PhotosApi<
      * Static representation of the [[name]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    NAME: EdmTypeField<
+    NAME: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
       Photos<
         DeSerializers<
           any,

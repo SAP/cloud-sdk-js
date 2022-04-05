@@ -10,15 +10,11 @@ import {
   defaultDeSerializers,
   DefaultDeSerializers,
   DeSerializers,
-  mergeDefaultDeSerializersWith,
   AllFields,
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder,
-  Time,
-  EdmTypeField,
-  OrderableEdmTypeField
+  FieldBuilder
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityLvl2SingleLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers

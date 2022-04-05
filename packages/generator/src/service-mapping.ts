@@ -1,9 +1,9 @@
+import { parse } from 'path';
 import { unixEOL, createLogger, readJSON } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './generator-options';
 import { VdmServiceMetadata } from './vdm-types';
 import { servicePathFromSwagger } from './swagger-parser/swagger-util';
 import { ServiceMetadata } from './edmx-parser/edmx-file-reader';
-import { parse } from 'path';
 
 const logger = createLogger({
   package: 'generator',
@@ -71,7 +71,9 @@ export function getServicePath(
     servicePathFromSwagger(metadata.swagger);
   if (!servicePath || servicePath === VALUE_IS_UNDEFINED) {
     logger.error(
-      `[ ${parse(metadata.edmx.path.toString()).name} ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "service-mapping.json".`
+      `[ ${
+        parse(metadata.edmx.path.toString()).name
+      } ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "service-mapping.json".`
     );
     servicePath = VALUE_IS_UNDEFINED;
   }

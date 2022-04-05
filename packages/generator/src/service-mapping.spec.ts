@@ -1,6 +1,6 @@
+import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
 import { getServicePath, serviceMapping, VdmMapping } from './service-mapping';
 import { VdmServiceMetadata } from './vdm-types';
-import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
 
 describe('service-mapping', () => {
   it('generates a valid VdmMapping from service metadata', () => {
@@ -52,8 +52,8 @@ describe('service-mapping', () => {
 
     expect(serviceMapping(serviceMetadata)).toEqual(expectedVdmMapping);
   });
-  
-  it("should log an error if no service path can be determined", () => {
+
+  it('should log an error if no service path can be determined', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx'
@@ -72,7 +72,7 @@ describe('service-mapping', () => {
     );
   });
 
-  it("should log an error if servicePath in service mapping has VALUE_IS_UNDEFINED", () => {
+  it('should log an error if servicePath in service mapping has VALUE_IS_UNDEFINED', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx',
@@ -96,7 +96,7 @@ describe('service-mapping', () => {
     );
   });
 
-  it("should log an error if no service path can be determined and swagger has no service path", () => {
+  it('should log an error if no service path can be determined and swagger has no service path', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx'

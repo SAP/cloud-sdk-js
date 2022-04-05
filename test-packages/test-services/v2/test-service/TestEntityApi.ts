@@ -121,7 +121,8 @@ export class TestEntityApi<
       isNullable
     ) as any;
   }
-
+//todo singleton?
+//todo namespace (js as function, return obj) v.s. schema (js as function, return obj)
   get schema() {
     const fieldBuilder = new FieldBuilder(TestEntity, this.deSerializers);
     return {

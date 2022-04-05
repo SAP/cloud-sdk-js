@@ -91,6 +91,7 @@ export function entityDeserializer<T extends DeSerializers>(
         );
         return entity;
       }, new entityApi.entityConstructor(entityApi.schema))
+    // entityApi.entityBuilder().build();
       .setCustomFields(extractCustomFields(json, entityApi.schema))
       .setVersionIdentifier(etag)
       .setOrInitializeRemoteState();

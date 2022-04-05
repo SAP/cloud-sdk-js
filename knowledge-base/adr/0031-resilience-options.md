@@ -121,7 +121,28 @@ executeHttpRequest({
   }
 );
 ```
-
+```ts
+myApi
+  .getAll()   
+  .middleware(resilience())
+  .execute({ 
+      destinationName: 'my-dest'
+  });
+myApi
+  .getAll()   
+  .middleware(resilience({
+    circuitBreaker: false,
+    timeout: 1
+  }))
+  .execute({ 
+      destinationName: 'my-dest'
+  });  
+  
+  
+interface Foo {
+  middleware: async <T>(fn: Promise<T>, context?: any) => Promise<T>
+}
+```
 The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the default values.
 If you pass `true`,this will enable the resilience option with the default values.
 

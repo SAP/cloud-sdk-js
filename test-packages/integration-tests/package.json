@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/integration-tests",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "SAP Cloud SDK for JavaScript integration tests",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -12,17 +12,17 @@
     "check:dependencies": "depcheck . --ignores=@sap-cloud-sdk/generator,@sap-cloud-sdk/openapi-generator"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^2.1.0",
-    "@sap-cloud-sdk/test-services": "^2.1.0",
-    "@sap-cloud-sdk/test-util": "^2.1.0",
-    "@sap-cloud-sdk/util": "^2.1.0",
+    "@sap-cloud-sdk/connectivity": "^2.2.0",
+    "@sap-cloud-sdk/test-services": "^2.2.0",
+    "@sap-cloud-sdk/test-util": "^2.2.0",
+    "@sap-cloud-sdk/util": "^2.2.0",
     "@sap/xssec": "^3.2.5"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator": "^2.1.0",
-    "@sap-cloud-sdk/odata-common": "^2.1.0",
-    "@sap-cloud-sdk/odata-v2": "^2.1.0",
-    "@sap-cloud-sdk/openapi-generator": "^2.1.0",
+    "@sap-cloud-sdk/generator": "^2.2.0",
+    "@sap-cloud-sdk/odata-common": "^2.2.0",
+    "@sap-cloud-sdk/odata-v2": "^2.2.0",
+    "@sap-cloud-sdk/openapi-generator": "^2.2.0",
     "@sap/cloud-sdk-vdm-business-partner-service": "^2.0.0",
     "bignumber.js": "^9.0.0",
     "execa": "^5.0.0",

@@ -14,6 +14,29 @@
 
 ## Compatibility Notes
 
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 2.2.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/2.2.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - [eslint-config] Since the `valid-jsdoc` rule is deprecated in ESLint, it is replaced by the `eslint-plugin-jsdoc` plugin for checking JSDoc comments. To stop your project from using a specific rule, turn it off by setting the rule ID to `off` under the `rules` key inside your configuration file.
 - [generator] Stop exporting service classes (e.g., `BusinessPartnerService`) from generated clients, use `businessPartnerService()` instead.
 - [generator] Stop exporting API classes (e.g., `BusinessPartnerAPI`) from generated clients, use `businessPartnerService().businessPartnerApi` instead.
@@ -29,11 +52,6 @@
 
 - [generator] Remove unused imports (e.g, `moment`, `bignumber.js` and `EdmTypeField`) in API classes (e.g., `BusinessPartnerAPI`) to reduce memory usage.
 - [http-client] Introduce consistent query parameter encoding for all non custom parameters.
-
-## Fixed Issues
-
--
-
 
 # 2.1.0
 

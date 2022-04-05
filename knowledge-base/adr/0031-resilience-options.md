@@ -53,56 +53,77 @@ So we have something for circuit breaker and timeout.
 
 |     Option      | On target | On BTP | Default target | Default BTP |
 | :-------------: | :-------: | :----: | :------------: | :---------: |
-| circuit breaker |    ❌     |   ✅   |      n.a.      |  disabled   |
+| circuit breaker |    ❌     |   ✅   |      n.a.      |  enabled   |
 |     timeout     |    ✅     |   ✅   |    enabled     |   enabled   |
 |      retry      |    ❌     |   ❌   |      n.a.      |    n.a.     |
 |   rate limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |
 |   bulk limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |
 
-Since we have already some config it would be strange to introduce some `decorator` based approach.
-We will stick to the more native javascript version.
+## Decision
+
+### SDK vs. User
+
+There are two standpoints:
+- User needs to implement it
+- SDK implements it
+
+Arguments in the discussion
+- flexible middle ware approach implemented by the user more flexible
+- You could make mistakes: multi-tenant circuit breaker or retry if breaker is open
+- Configuration on a per request wanted
 
 ## Decision
 
-- Rate limit and bulk limit are hard to achieve in node processes.
-- It is meaningful to protect the BTP services with a circuit breaker.
-- A retry is not meaningful for BTP, but for the target system.
-- The retry should bail on 401 and 403 status codes.
-- The default should be non-breaking
+- Rate limit and bulk limit we will not do since -> no user request.
+- Step 1: Circuit breaker is added and made tenant aware 
+- Step 2: Retry is added and excluded if circuit breaker is open.
+- Default for circuit breaker is on.
+- Defalt for retry is off since this seems a bigger behavior change
 
-|     Option      | On target | On BTP | Default target | Default BTP |
-| :-------------: | :-------: | :----: | :------------: | :---------: |
-| circuit breaker |    ✅     |   ✅   |    disabled    |   enabled   |
-|     timeout     |    ✅     |   ✅   |    enabled     |   enabled   |
-|      retry      |    ✅     |   ❌   |    disabled    |    n.a.     |
-|   rate limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |
-|   bulk limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |
+
+|     Option      | On target | On BTP | Default target | Default BTP | Remarks |
+| :-------------: | :-------: | :----: | :------------: | :---------: | --- |
+| circuit breaker |    ✅     |   ✅   |    enabled     |   enabled   | tenant aware |
+|     timeout     |    ✅     |   ✅   |    enabled     |   enabled   |  |
+|      retry      |    ✅     |   ✅   |    disabled    |   disabled  | no retry: circuit breaker open and 401,403 |
+|   rate limit    |    ❌     |   ❌   |      n.a.      |    n.a.     | |
+|   bulk limit    |    ❌     |   ❌   |      n.a.      |    n.a.     | |
 
 - For retry, we would use [async retry](https://www.npmjs.com/package/async-retry).
 - For circuit breaker we would use [opossum](https://www.npmjs.com/package/opossum)
 
-This more or less determines the options.
-The API could look like:
+This determines the options.
+The API:
 
 ```ts
 myApi
-  .getAll()
-  .timeout(20)
-  .retry(retryOptions) //RetryOptions
-  .circuitBreaker(breakerOptions) //CircuitBreakerOptions
-  .execute({ enableCircuitBreaker: true, timeout: 10 });
-executeHttpRequest(
-  { enableCircuitBreaker: true, timeout: 10 },
+  .getAll()   
+  .timeout(20) //deprecate 
+  .resilienc({
+      timeout: 10,
+      circuitBreaker: true,   // CircuitBreakerOptions | undefined | true
+      retry: true             // RetryOptions | undefined | true
+  })
+  .execute({ 
+      enableCircuitBreaker: true, timeout: 10, //deprecate
+      destinationName: 'my-dest'
+  });
+executeHttpRequest({
+    enableCircuitBreaker: true, timeout: 10, //deprecate
+    destinationName: 'my-dest'
+  },
   {
-    timeout: 20,
-    retryOptions, // RetryOptions | undefined | true
-    breakerOptions // CircuitBreakerOptions | undefined | true
+   resilience: {
+     timeout: 10,
+     circuitBreaker: true,  // CircuitBreakerOptions | undefined | true
+     retry: true            // RetryOptions | undefined | true
+   }
   }
 );
 ```
 
-The `retryOptions` and `circuitBreaker` could be used to overwrite the default values.
-If you pass `true` in the `executeHttpRequest` this will enable the resilience option with the default values.
+The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the default values.
+If you pass `true`,this will enable the resilience option with the default values.
 
 ```ts
 interface CircuitBreakerOptions = {

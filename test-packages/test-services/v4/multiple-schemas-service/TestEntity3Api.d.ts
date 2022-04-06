@@ -1,11 +1,17 @@
 import { TestEntity3 } from './TestEntity3';
 import { TestEntity3RequestBuilder } from './TestEntity3RequestBuilder';
+import { TestComplexType2Field } from './TestComplexType2';
+import { TestEnumType2 } from './TestEnumType2';
 import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
+  AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EdmTypeField,
+  EnumField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntity3Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -25,9 +31,121 @@ export declare class TestEntity3Api<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<TestEntity3<DeSerializersT>, DeSerializersT, NullableT>;
-  private _fieldBuilder;
-  get fieldBuilder(): any;
-  private _schema;
-  get schema(): any;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof TestEntity3, DeSerializersT>;
+  private _schema?;
+  get schema(): {
+    KEY_PROPERTY_STRING: EdmTypeField<
+      TestEntity3<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    ENUM_PROPERTY: EnumField<
+      TestEntity3<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      TestEnumType2,
+      boolean,
+      boolean
+    >;
+    COMPLEX_TYPE_PROPERTY: TestComplexType2Field<
+      TestEntity3<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntity3<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
+    >;
+  };
 }
 //# sourceMappingURL=TestEntity3Api.d.ts.map

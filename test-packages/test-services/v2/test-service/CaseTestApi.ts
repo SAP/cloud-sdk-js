@@ -14,7 +14,8 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v2';
 export class CaseTestApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -55,7 +56,7 @@ export class CaseTestApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<typeof CaseTest, DeSerializersT>;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(CaseTest, this.deSerializers);
@@ -63,7 +64,16 @@ export class CaseTestApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    KEY_PROPERTY_STRING: EdmTypeField<
+      CaseTest<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<CaseTest<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

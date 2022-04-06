@@ -105,6 +105,35 @@ export function createPropertyFieldInitializerForEntity(
 /**
  * @internal
  */
+export function createPropertyFieldType(
+  className: string,
+  prop: VdmProperty
+): string {
+  if (prop.isCollection) {
+    if (prop.isComplex) {
+      return `CollectionField<${className}<DeSerializers>, DeSerializersT, ${prop.jsType}, boolean, boolean>`;
+    }
+    if (prop.isEnum) {
+      return `CollectionField<${className}<DeSerializers>, DeSerializersT, typeof ${prop.jsType}, boolean, boolean>`;
+    }
+    return `CollectionField<${className}<DeSerializers>, DeSerializersT, '${prop.edmType}', boolean, boolean>`;
+  }
+
+  if (prop.isComplex) {
+    return `${prop.fieldType}<${className}<DeSerializers>, DeSerializersT, boolean, boolean>`;
+  }
+
+  if (prop.isEnum) {
+    return `EnumField<${className}<DeSerializers>, DeSerializersT, ${prop.jsType}, boolean, boolean>`;
+  }
+
+  // return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+  return `EdmTypeField<${className}<DeSerializers>, DeSerializersT, '${prop.edmType}', boolean, boolean>`;
+}
+
+/**
+ * @internal
+ */
 export function getPropertyFieldType(
   entity: VdmEntity,
   prop: VdmProperty,

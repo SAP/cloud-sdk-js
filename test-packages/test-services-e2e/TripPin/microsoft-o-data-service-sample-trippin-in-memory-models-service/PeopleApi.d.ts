@@ -1,12 +1,21 @@
 import { People } from './People';
 import { PeopleRequestBuilder } from './PeopleRequestBuilder';
 import { PhotosApi } from './PhotosApi';
+import { Location } from './Location';
+import { PersonGender } from './PersonGender';
 import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
+  AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EdmTypeField,
+  CollectionField,
+  EnumField,
+  OneToManyLink,
+  OneToOneLink
 } from '@sap-cloud-sdk/odata-v4';
 export declare class PeopleApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -25,9 +34,256 @@ export declare class PeopleApi<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<People<DeSerializersT>, DeSerializersT, NullableT>;
-  private _fieldBuilder;
-  get fieldBuilder(): any;
-  private _schema;
-  get schema(): any;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof People, DeSerializersT>;
+  private _schema?;
+  get schema(): {
+    USER_NAME: EdmTypeField<
+      People<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    FIRST_NAME: EdmTypeField<
+      People<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    LAST_NAME: EdmTypeField<
+      People<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    EMAILS: CollectionField<
+      People<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    ADDRESS_INFO: CollectionField<
+      People<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      Location<DefaultDeSerializers>,
+      boolean,
+      boolean
+    >;
+    GENDER: EnumField<
+      People<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      PersonGender,
+      boolean,
+      boolean
+    >;
+    CONCURRENCY: EdmTypeField<
+      People<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Int64',
+      boolean,
+      boolean
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[friends]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    FRIENDS: OneToManyLink<
+      People<DeSerializersT>,
+      DeSerializersT,
+      PeopleApi<DeSerializersT>
+    >;
+    /**
+     * Static representation of the one-to-one navigation property [[photo]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    PHOTO: OneToOneLink<
+      People<DeSerializersT>,
+      DeSerializersT,
+      PhotosApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<
+      People<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
+    >;
+  };
 }
 //# sourceMappingURL=PeopleApi.d.ts.map

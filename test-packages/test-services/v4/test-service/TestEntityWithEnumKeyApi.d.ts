@@ -1,11 +1,15 @@
 import { TestEntityWithEnumKey } from './TestEntityWithEnumKey';
 import { TestEntityWithEnumKeyRequestBuilder } from './TestEntityWithEnumKeyRequestBuilder';
+import { TestEnumType } from './TestEnumType';
 import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
+  AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EnumField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityWithEnumKeyApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -29,9 +33,67 @@ export declare class TestEntityWithEnumKeyApi<
     DeSerializersT,
     NullableT
   >;
-  private _fieldBuilder;
-  get fieldBuilder(): any;
-  private _schema;
-  get schema(): any;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<
+    typeof TestEntityWithEnumKey,
+    DeSerializersT
+  >;
+  private _schema?;
+  get schema(): {
+    KEY_PROPERTY_ENUM_1: EnumField<
+      TestEntityWithEnumKey<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      TestEnumType,
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntityWithEnumKey<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
+    >;
+  };
 }
 //# sourceMappingURL=TestEntityWithEnumKeyApi.d.ts.map

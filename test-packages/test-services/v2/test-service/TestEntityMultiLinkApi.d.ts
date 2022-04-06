@@ -6,8 +6,13 @@ import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
+  AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EdmTypeField,
+  Link,
+  OneToOneLink
 } from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityMultiLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -36,9 +41,186 @@ export declare class TestEntityMultiLinkApi<
     DeSerializersT,
     NullableT
   >;
-  private _fieldBuilder;
-  get fieldBuilder(): any;
-  private _schema;
-  get schema(): any;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof TestEntityMultiLink, DeSerializersT>;
+  private _schema?;
+  get schema(): {
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityMultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    STRING_PROPERTY: EdmTypeField<
+      TestEntityMultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    BOOLEAN_PROPERTY: EdmTypeField<
+      TestEntityMultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Boolean',
+      boolean,
+      boolean
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntityMultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Guid',
+      boolean,
+      boolean
+    >;
+    INT_16_PROPERTY: EdmTypeField<
+      TestEntityMultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Int16',
+      boolean,
+      boolean
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_MULTI_LINK: Link<
+      TestEntityMultiLink<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLvl2MultiLinkApi<DeSerializersT>
+    >;
+    /**
+     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_SINGLE_LINK: OneToOneLink<
+      TestEntityMultiLink<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLvl2SingleLinkApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntityMultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
+    >;
+  };
 }
 //# sourceMappingURL=TestEntityMultiLinkApi.d.ts.map

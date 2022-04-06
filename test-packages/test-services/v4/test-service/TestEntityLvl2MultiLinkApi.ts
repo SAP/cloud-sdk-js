@@ -16,6 +16,8 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
+  EdmTypeField,
+  OrderableEdmTypeField,
   OneToManyLink
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityLvl2MultiLinkApi<
@@ -78,7 +80,10 @@ export class TestEntityLvl2MultiLinkApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<
+    typeof TestEntityLvl2MultiLink,
+    DeSerializersT
+  >;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(
@@ -89,7 +94,53 @@ export class TestEntityLvl2MultiLinkApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    STRING_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    BOOLEAN_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Boolean',
+      boolean,
+      boolean
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      boolean,
+      boolean
+    >;
+    INT_16_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int16',
+      boolean,
+      boolean
+    >;
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toMultiLink2]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_MULTI_LINK_2: OneToManyLink<
+      TestEntityLvl2MultiLink<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLvl3MultiLinkApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<TestEntityLvl2MultiLink<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

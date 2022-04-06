@@ -14,7 +14,9 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  OrderableEdmTypeField,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class PhotosApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -55,7 +57,7 @@ export class PhotosApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<typeof Photos, DeSerializersT>;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(Photos, this.deSerializers);
@@ -63,7 +65,23 @@ export class PhotosApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    ID: EdmTypeField<
+      Photos<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int64',
+      boolean,
+      boolean
+    >;
+    NAME: EdmTypeField<
+      Photos<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<Photos<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

@@ -4,8 +4,11 @@ import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
+  AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityLvl2SingleLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -30,9 +33,171 @@ export declare class TestEntityLvl2SingleLinkApi<
     DeSerializersT,
     NullableT
   >;
-  private _fieldBuilder;
-  get fieldBuilder(): any;
-  private _schema;
-  get schema(): any;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<
+    typeof TestEntityLvl2SingleLink,
+    DeSerializersT
+  >;
+  private _schema?;
+  get schema(): {
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityLvl2SingleLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    STRING_PROPERTY: EdmTypeField<
+      TestEntityLvl2SingleLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    BOOLEAN_PROPERTY: EdmTypeField<
+      TestEntityLvl2SingleLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Boolean',
+      boolean,
+      boolean
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntityLvl2SingleLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Guid',
+      boolean,
+      boolean
+    >;
+    INT_16_PROPERTY: EdmTypeField<
+      TestEntityLvl2SingleLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Int16',
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntityLvl2SingleLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
+    >;
+  };
 }
 //# sourceMappingURL=TestEntityLvl2SingleLinkApi.d.ts.map

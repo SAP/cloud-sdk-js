@@ -15,7 +15,8 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class AirportsApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -56,7 +57,7 @@ export class AirportsApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<typeof Airports, DeSerializersT>;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(Airports, this.deSerializers);
@@ -64,7 +65,36 @@ export class AirportsApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    ICAO_CODE: EdmTypeField<
+      Airports<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    NAME: EdmTypeField<
+      Airports<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    IATA_CODE: EdmTypeField<
+      Airports<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    LOCATION: AirportLocationField<
+      Airports<DeSerializers>,
+      DeSerializersT,
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<Airports<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

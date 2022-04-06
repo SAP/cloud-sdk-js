@@ -5,8 +5,12 @@ import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
+  AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EdmTypeField,
+  OneToManyLink
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityLvl2MultiLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -32,9 +36,192 @@ export declare class TestEntityLvl2MultiLinkApi<
     DeSerializersT,
     NullableT
   >;
-  private _fieldBuilder;
-  get fieldBuilder(): any;
-  private _schema;
-  get schema(): any;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<
+    typeof TestEntityLvl2MultiLink,
+    DeSerializersT
+  >;
+  private _schema?;
+  get schema(): {
+    STRING_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    BOOLEAN_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Boolean',
+      boolean,
+      boolean
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Guid',
+      boolean,
+      boolean
+    >;
+    INT_16_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Int16',
+      boolean,
+      boolean
+    >;
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toMultiLink2]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_MULTI_LINK_2: OneToManyLink<
+      TestEntityLvl2MultiLink<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLvl3MultiLinkApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntityLvl2MultiLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
+    >;
+  };
 }
 //# sourceMappingURL=TestEntityLvl2MultiLinkApi.d.ts.map

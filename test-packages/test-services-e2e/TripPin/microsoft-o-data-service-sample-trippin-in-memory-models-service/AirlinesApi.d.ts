@@ -4,8 +4,11 @@ import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
+  AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class AirlinesApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -22,9 +25,93 @@ export declare class AirlinesApi<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<Airlines<DeSerializersT>, DeSerializersT, NullableT>;
-  private _fieldBuilder;
-  get fieldBuilder(): any;
-  private _schema;
-  get schema(): any;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof Airlines, DeSerializersT>;
+  private _schema?;
+  get schema(): {
+    AIRLINE_CODE: EdmTypeField<
+      Airlines<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    NAME: EdmTypeField<
+      Airlines<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<
+      Airlines<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
+    >;
+  };
 }
 //# sourceMappingURL=AirlinesApi.d.ts.map

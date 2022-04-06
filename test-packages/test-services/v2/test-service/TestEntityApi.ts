@@ -20,6 +20,8 @@ import {
   EntityApi,
   FieldBuilder,
   Time,
+  EdmTypeField,
+  OrderableEdmTypeField,
   Link,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v2';
@@ -103,7 +105,7 @@ export class TestEntityApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<typeof TestEntity, DeSerializersT>;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(TestEntity, this.deSerializers);
@@ -111,7 +113,168 @@ export class TestEntityApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    KEY_PROPERTY_GUID: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      boolean,
+      boolean
+    >;
+    KEY_PROPERTY_STRING: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    STRING_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    BOOLEAN_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Boolean',
+      boolean,
+      boolean
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      boolean,
+      boolean
+    >;
+    INT_16_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int16',
+      boolean,
+      boolean
+    >;
+    INT_32_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int32',
+      boolean,
+      boolean
+    >;
+    INT_64_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int64',
+      boolean,
+      boolean
+    >;
+    DECIMAL_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Decimal',
+      boolean,
+      boolean
+    >;
+    SINGLE_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Single',
+      boolean,
+      boolean
+    >;
+    DOUBLE_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Double',
+      boolean,
+      boolean
+    >;
+    FLOAT_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Float',
+      boolean,
+      boolean
+    >;
+    TIME_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Time',
+      boolean,
+      boolean
+    >;
+    DATE_TIME_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.DateTime',
+      boolean,
+      boolean
+    >;
+    DATE_TIME_OFF_SET_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.DateTimeOffset',
+      boolean,
+      boolean
+    >;
+    BYTE_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Byte',
+      boolean,
+      boolean
+    >;
+    S_BYTE_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.SByte',
+      boolean,
+      boolean
+    >;
+    SOMETHING_THE_SDK_DOES_NOT_SUPPORT: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Any',
+      boolean,
+      boolean
+    >;
+    COMPLEX_TYPE_PROPERTY: TestComplexTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      boolean,
+      boolean
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_MULTI_LINK: Link<
+      TestEntity<DeSerializersT>,
+      DeSerializersT,
+      TestEntityMultiLinkApi<DeSerializersT>
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_OTHER_MULTI_LINK: Link<
+      TestEntity<DeSerializersT>,
+      DeSerializersT,
+      TestEntityOtherMultiLinkApi<DeSerializersT>
+    >;
+    /**
+     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_SINGLE_LINK: OneToOneLink<
+      TestEntity<DeSerializersT>,
+      DeSerializersT,
+      TestEntitySingleLinkApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<TestEntity<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

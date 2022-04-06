@@ -271,7 +271,10 @@ export class CommonEntitySingleLinkApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<
+    typeof CommonEntitySingleLink,
+    DeSerializersT
+  >;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(
@@ -282,7 +285,23 @@ export class CommonEntitySingleLinkApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    KEY_PROPERTY: EdmTypeField<
+      CommonEntitySingleLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    STRING_PROPERTY: EdmTypeField<
+      CommonEntitySingleLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<CommonEntitySingleLink<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {
@@ -400,7 +419,7 @@ export class CommonEntityApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<typeof CommonEntity, DeSerializersT>;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(CommonEntity, this.deSerializers);
@@ -408,7 +427,55 @@ export class CommonEntityApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    KEY_PROPERTY_GUID: EdmTypeField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      boolean,
+      boolean
+    >;
+    KEY_PROPERTY_STRING: EdmTypeField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    STRING_PROPERTY: EdmTypeField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    INT_16_PROPERTY: EdmTypeField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int16',
+      boolean,
+      boolean
+    >;
+    COLLECTION_PROPERTY: CollectionField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    COMPLEX_TYPE_PROPERTY: CommonComplexTypeField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      boolean,
+      boolean
+    >;
+    TO_SINGLE_LINK: OneToOneLink<
+      CommonEntity<DeSerializersT>,
+      DeSerializersT,
+      CommonEntitySingleLinkApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<CommonEntity<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

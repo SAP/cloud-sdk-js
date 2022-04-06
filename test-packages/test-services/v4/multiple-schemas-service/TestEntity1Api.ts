@@ -16,7 +16,10 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  EdmTypeField,
+  OrderableEdmTypeField,
+  EnumField
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntity1Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -60,7 +63,7 @@ export class TestEntity1Api<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<typeof TestEntity1, DeSerializersT>;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(TestEntity1, this.deSerializers);
@@ -68,7 +71,36 @@ export class TestEntity1Api<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    KEY_PROPERTY_STRING: EdmTypeField<
+      TestEntity1<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    INT_16_PROPERTY: EdmTypeField<
+      TestEntity1<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int16',
+      boolean,
+      boolean
+    >;
+    ENUM_PROPERTY: EnumField<
+      TestEntity1<DeSerializers>,
+      DeSerializersT,
+      TestEnumType1,
+      boolean,
+      boolean
+    >;
+    COMPLEX_TYPE_PROPERTY: TestComplexType1Field<
+      TestEntity1<DeSerializers>,
+      DeSerializersT,
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<TestEntity1<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

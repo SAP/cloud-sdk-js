@@ -16,6 +16,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
+  EdmTypeField,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityCircularLinkChildApi<
@@ -79,7 +80,10 @@ export class TestEntityCircularLinkChildApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<
+    typeof TestEntityCircularLinkChild,
+    DeSerializersT
+  >;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(
@@ -90,7 +94,25 @@ export class TestEntityCircularLinkChildApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityCircularLinkChild<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    /**
+     * Static representation of the one-to-one navigation property [[toParent]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_PARENT: OneToOneLink<
+      TestEntityCircularLinkChild<DeSerializersT>,
+      DeSerializersT,
+      TestEntityCircularLinkParentApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<TestEntityCircularLinkChild<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

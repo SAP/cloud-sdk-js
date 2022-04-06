@@ -5,6 +5,7 @@ import {
   navigationPropertyFieldsVariable
 } from './navigation-properties';
 import { getSchema } from './schema';
+import { getSchemaType } from './schema-type';
 
 /**
  * @internal
@@ -67,7 +68,9 @@ export function classContent(
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<typeof ${
+    entity.className
+  }, DeSerializersT>;
   get fieldBuilder() {
     if(!this._fieldBuilder){
       this._fieldBuilder = new FieldBuilder(${
@@ -77,7 +80,7 @@ export function classContent(
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: ${getSchemaType(entity, service)};
 
   get schema() {
     if (!this._schema) {

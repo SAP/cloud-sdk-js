@@ -14,7 +14,9 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  EdmTypeField,
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v2';
 export class TestEntityLvl2MultiLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -62,7 +64,10 @@ export class TestEntityLvl2MultiLinkApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<
+    typeof TestEntityLvl2MultiLink,
+    DeSerializersT
+  >;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(
@@ -73,7 +78,44 @@ export class TestEntityLvl2MultiLinkApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    STRING_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    BOOLEAN_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Boolean',
+      boolean,
+      boolean
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      boolean,
+      boolean
+    >;
+    INT_16_PROPERTY: EdmTypeField<
+      TestEntityLvl2MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int16',
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<TestEntityLvl2MultiLink<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

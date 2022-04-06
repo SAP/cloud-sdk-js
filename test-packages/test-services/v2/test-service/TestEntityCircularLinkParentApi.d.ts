@@ -5,8 +5,12 @@ import {
   CustomField,
   DefaultDeSerializers,
   DeSerializers,
+  AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EdmTypeField,
+  Link
 } from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityCircularLinkParentApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -33,9 +37,72 @@ export declare class TestEntityCircularLinkParentApi<
     DeSerializersT,
     NullableT
   >;
-  private _fieldBuilder;
-  get fieldBuilder(): any;
-  private _schema;
-  get schema(): any;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<
+    typeof TestEntityCircularLinkParent,
+    DeSerializersT
+  >;
+  private _schema?;
+  get schema(): {
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityCircularLinkParent<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toChild]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_CHILD: Link<
+      TestEntityCircularLinkParent<DeSerializersT>,
+      DeSerializersT,
+      TestEntityCircularLinkChildApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntityCircularLinkParent<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
+    >;
+  };
 }
 //# sourceMappingURL=TestEntityCircularLinkParentApi.d.ts.map

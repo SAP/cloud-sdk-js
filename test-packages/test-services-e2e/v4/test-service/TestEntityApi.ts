@@ -17,6 +17,8 @@ import {
   EntityApi,
   FieldBuilder,
   Time,
+  OrderableEdmTypeField,
+  EdmTypeField,
   OneToManyLink
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityApi<
@@ -75,7 +77,7 @@ export class TestEntityApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<typeof TestEntity, DeSerializersT>;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(TestEntity, this.deSerializers);
@@ -83,7 +85,95 @@ export class TestEntityApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    KEY_TEST_ENTITY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int32',
+      boolean,
+      boolean
+    >;
+    STRING_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      boolean,
+      boolean
+    >;
+    BOOLEAN_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Boolean',
+      boolean,
+      boolean
+    >;
+    INT_64_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int64',
+      boolean,
+      boolean
+    >;
+    DOUBLE_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Double',
+      boolean,
+      boolean
+    >;
+    DECIMAL_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Decimal',
+      boolean,
+      boolean
+    >;
+    DATE_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Date',
+      boolean,
+      boolean
+    >;
+    TIME_OF_DAY_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.TimeOfDay',
+      boolean,
+      boolean
+    >;
+    DATA_TIME_OFFSET_DATA_TIME_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.DateTimeOffset',
+      boolean,
+      boolean
+    >;
+    DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: EdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.DateTimeOffset',
+      boolean,
+      boolean
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_MULTI_LINK: OneToManyLink<
+      TestEntity<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLinkApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<TestEntity<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

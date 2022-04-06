@@ -18,6 +18,10 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
+  EdmTypeField,
+  CollectionField,
+  EnumField,
+  OrderableEdmTypeField,
   OneToManyLink,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v4';
@@ -84,7 +88,7 @@ export class PeopleApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<typeof People, DeSerializersT>;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(People, this.deSerializers);
@@ -92,7 +96,76 @@ export class PeopleApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    USER_NAME: EdmTypeField<
+      People<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    FIRST_NAME: EdmTypeField<
+      People<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    LAST_NAME: EdmTypeField<
+      People<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    EMAILS: CollectionField<
+      People<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    ADDRESS_INFO: CollectionField<
+      People<DeSerializers>,
+      DeSerializersT,
+      Location,
+      boolean,
+      boolean
+    >;
+    GENDER: EnumField<
+      People<DeSerializers>,
+      DeSerializersT,
+      PersonGender,
+      boolean,
+      boolean
+    >;
+    CONCURRENCY: EdmTypeField<
+      People<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int64',
+      boolean,
+      boolean
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[friends]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    FRIENDS: OneToManyLink<
+      People<DeSerializersT>,
+      DeSerializersT,
+      PeopleApi<DeSerializersT>
+    >;
+    /**
+     * Static representation of the one-to-one navigation property [[photo]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    PHOTO: OneToOneLink<
+      People<DeSerializersT>,
+      DeSerializersT,
+      PhotosApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<People<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

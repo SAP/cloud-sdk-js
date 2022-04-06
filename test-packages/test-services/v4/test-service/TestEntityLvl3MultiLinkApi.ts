@@ -14,7 +14,8 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityLvl3MultiLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -62,7 +63,10 @@ export class TestEntityLvl3MultiLinkApi<
     ) as any;
   }
 
-  private _fieldBuilder: any;
+  private _fieldBuilder?: FieldBuilder<
+    typeof TestEntityLvl3MultiLink,
+    DeSerializersT
+  >;
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(
@@ -73,7 +77,30 @@ export class TestEntityLvl3MultiLinkApi<
     return this._fieldBuilder;
   }
 
-  private _schema: any;
+  private _schema?: {
+    STRING_PROPERTY: EdmTypeField<
+      TestEntityLvl3MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntityLvl3MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      boolean,
+      boolean
+    >;
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityLvl3MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      boolean,
+      boolean
+    >;
+    ALL_FIELDS: AllFields<TestEntityLvl3MultiLink<DeSerializers>>;
+  };
 
   get schema() {
     if (!this._schema) {

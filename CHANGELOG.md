@@ -31,7 +31,7 @@
 
 # 2.2.0
 
-Release Date: TBD<br>
+Release Date: Apr 06, 2022<br>
 API Docs: https://sap.github.io/cloud-sdk/api/2.2.0<br>
 Blog: TBD<br>
 
@@ -55,7 +55,7 @@ Blog: TBD<br>
 
 # 2.1.0
 
-Release Date: TBD<br>
+Release Date: Feb 17, 2022<br>
 API Docs: https://sap.github.io/cloud-sdk/api/2.1.0<br>
 Blog: TBD<br>
 
@@ -74,6 +74,10 @@ Blog: TBD<br>
 - [odata-common] Fix URL encoding for `getByKey`
 
 # 2.0.0
+
+Release Date: Feb 03, 2022<br>
+API Docs: https://sap.github.io/cloud-sdk/api/2.0.0<br>
+Blog: TBD<br>
 
 ### Function removed
 

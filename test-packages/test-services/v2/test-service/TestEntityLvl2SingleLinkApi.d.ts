@@ -64,8 +64,8 @@ export declare class TestEntityLvl2SingleLinkApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     STRING_PROPERTY: EdmTypeField<
       TestEntityLvl2SingleLink<
@@ -91,8 +91,8 @@ export declare class TestEntityLvl2SingleLinkApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     BOOLEAN_PROPERTY: EdmTypeField<
       TestEntityLvl2SingleLink<
@@ -118,8 +118,8 @@ export declare class TestEntityLvl2SingleLinkApi<
       >,
       DeSerializersT,
       'Edm.Boolean',
-      boolean,
-      boolean
+      true,
+      true
     >;
     GUID_PROPERTY: EdmTypeField<
       TestEntityLvl2SingleLink<
@@ -145,8 +145,8 @@ export declare class TestEntityLvl2SingleLinkApi<
       >,
       DeSerializersT,
       'Edm.Guid',
-      boolean,
-      boolean
+      true,
+      true
     >;
     INT_16_PROPERTY: EdmTypeField<
       TestEntityLvl2SingleLink<
@@ -172,8 +172,8 @@ export declare class TestEntityLvl2SingleLinkApi<
       >,
       DeSerializersT,
       'Edm.Int16',
-      boolean,
-      boolean
+      true,
+      true
     >;
     ALL_FIELDS: AllFields<
       TestEntityLvl2SingleLink<

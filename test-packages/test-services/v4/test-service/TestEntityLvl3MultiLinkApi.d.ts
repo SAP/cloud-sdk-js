@@ -65,8 +65,8 @@ export declare class TestEntityLvl3MultiLinkApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     GUID_PROPERTY: EdmTypeField<
       TestEntityLvl3MultiLink<
@@ -94,8 +94,8 @@ export declare class TestEntityLvl3MultiLinkApi<
       >,
       DeSerializersT,
       'Edm.Guid',
-      boolean,
-      boolean
+      true,
+      true
     >;
     KEY_PROPERTY: EdmTypeField<
       TestEntityLvl3MultiLink<
@@ -123,8 +123,8 @@ export declare class TestEntityLvl3MultiLinkApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<
       TestEntityLvl3MultiLink<

@@ -66,8 +66,8 @@ export declare class TestEntityWithEnumKeyApi<
       >,
       DeSerializersT,
       TestEnumType,
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<
       TestEntityWithEnumKey<

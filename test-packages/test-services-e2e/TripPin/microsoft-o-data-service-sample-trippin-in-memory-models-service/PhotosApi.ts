@@ -70,15 +70,15 @@ export class PhotosApi<
       Photos<DeSerializers>,
       DeSerializersT,
       'Edm.Int64',
-      boolean,
-      boolean
+      false,
+      true
     >;
     NAME: EdmTypeField<
       Photos<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     ALL_FIELDS: AllFields<Photos<DeSerializers>>;
   };

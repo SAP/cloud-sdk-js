@@ -85,8 +85,8 @@ export class TestEntityWithSharedEntityType1Api<
       TestEntityWithSharedEntityType1<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<TestEntityWithSharedEntityType1<DeSerializers>>;
   };

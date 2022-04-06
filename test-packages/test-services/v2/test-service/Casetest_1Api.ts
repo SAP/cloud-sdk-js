@@ -72,8 +72,8 @@ export class Casetest_1Api<
       Casetest_1<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<Casetest_1<DeSerializers>>;
   };

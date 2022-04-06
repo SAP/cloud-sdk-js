@@ -55,8 +55,8 @@ export declare class PhotosApi<
       >,
       DeSerializersT,
       'Edm.Int64',
-      boolean,
-      boolean
+      false,
+      true
     >;
     NAME: EdmTypeField<
       Photos<
@@ -84,8 +84,8 @@ export declare class PhotosApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     ALL_FIELDS: AllFields<
       Photos<

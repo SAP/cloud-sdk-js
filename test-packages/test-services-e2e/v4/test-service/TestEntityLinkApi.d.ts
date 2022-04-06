@@ -58,8 +58,8 @@ export declare class TestEntityLinkApi<
       >,
       DeSerializersT,
       'Edm.Int32',
-      boolean,
-      boolean
+      false,
+      true
     >;
     KEY_TO_TEST_ENTITY: EdmTypeField<
       TestEntityLink<
@@ -87,8 +87,8 @@ export declare class TestEntityLinkApi<
       >,
       DeSerializersT,
       'Edm.Int32',
-      boolean,
-      boolean
+      false,
+      true
     >;
     STRING_PROPERTY: EdmTypeField<
       TestEntityLink<
@@ -116,8 +116,8 @@ export declare class TestEntityLinkApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     ALL_FIELDS: AllFields<
       TestEntityLink<

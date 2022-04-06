@@ -82,8 +82,8 @@ export class MultiSchemaTestEntityApi<
       MultiSchemaTestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<MultiSchemaTestEntity<DeSerializers>>;
   };

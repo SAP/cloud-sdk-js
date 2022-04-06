@@ -290,15 +290,15 @@ export class CommonEntitySingleLinkApi<
       CommonEntitySingleLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     STRING_PROPERTY: EdmTypeField<
       CommonEntitySingleLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     ALL_FIELDS: AllFields<CommonEntitySingleLink<DeSerializers>>;
   };
@@ -432,42 +432,42 @@ export class CommonEntityApi<
       CommonEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',
-      boolean,
-      boolean
+      false,
+      true
     >;
     KEY_PROPERTY_STRING: EdmTypeField<
       CommonEntity<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     STRING_PROPERTY: EdmTypeField<
       CommonEntity<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     INT_16_PROPERTY: EdmTypeField<
       CommonEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Int16',
-      boolean,
-      boolean
+      true,
+      true
     >;
     COLLECTION_PROPERTY: CollectionField<
       CommonEntity<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     COMPLEX_TYPE_PROPERTY: CommonComplexTypeField<
       CommonEntity<DeSerializers>,
       DeSerializersT,
-      boolean,
-      boolean
+      true,
+      true
     >;
     TO_SINGLE_LINK: OneToOneLink<
       CommonEntity<DeSerializersT>,

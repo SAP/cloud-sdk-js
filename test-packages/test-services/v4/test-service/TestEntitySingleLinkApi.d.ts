@@ -71,8 +71,8 @@ export declare class TestEntitySingleLinkApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     BOOLEAN_PROPERTY: EdmTypeField<
       TestEntitySingleLink<
@@ -100,8 +100,8 @@ export declare class TestEntitySingleLinkApi<
       >,
       DeSerializersT,
       'Edm.Boolean',
-      boolean,
-      boolean
+      true,
+      true
     >;
     GUID_PROPERTY: EdmTypeField<
       TestEntitySingleLink<
@@ -129,8 +129,8 @@ export declare class TestEntitySingleLinkApi<
       >,
       DeSerializersT,
       'Edm.Guid',
-      boolean,
-      boolean
+      true,
+      true
     >;
     INT_16_PROPERTY: EdmTypeField<
       TestEntitySingleLink<
@@ -158,8 +158,8 @@ export declare class TestEntitySingleLinkApi<
       >,
       DeSerializersT,
       'Edm.Int16',
-      boolean,
-      boolean
+      true,
+      true
     >;
     KEY_PROPERTY: EdmTypeField<
       TestEntitySingleLink<
@@ -187,8 +187,8 @@ export declare class TestEntitySingleLinkApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.

@@ -101,50 +101,50 @@ export class PeopleApi<
       People<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     FIRST_NAME: EdmTypeField<
       People<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     LAST_NAME: EdmTypeField<
       People<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     EMAILS: CollectionField<
       People<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     ADDRESS_INFO: CollectionField<
       People<DeSerializers>,
       DeSerializersT,
       Location,
-      boolean,
-      boolean
+      true,
+      true
     >;
     GENDER: EnumField<
       People<DeSerializers>,
       DeSerializersT,
       PersonGender,
-      boolean,
-      boolean
+      true,
+      true
     >;
     CONCURRENCY: EdmTypeField<
       People<DeSerializers>,
       DeSerializersT,
       'Edm.Int64',
-      boolean,
-      boolean
+      false,
+      true
     >;
     /**
      * Static representation of the one-to-many navigation property [[friends]] for query construction.

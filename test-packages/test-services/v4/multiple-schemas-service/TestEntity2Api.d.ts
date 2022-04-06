@@ -58,8 +58,8 @@ export declare class TestEntity2Api<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     SINGLE_PROPERTY: EdmTypeField<
       TestEntity2<
@@ -87,8 +87,8 @@ export declare class TestEntity2Api<
       >,
       DeSerializersT,
       'Edm.Single',
-      boolean,
-      boolean
+      true,
+      true
     >;
     ALL_FIELDS: AllFields<
       TestEntity2<

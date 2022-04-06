@@ -74,8 +74,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Guid',
-      boolean,
-      boolean
+      false,
+      true
     >;
     KEY_PROPERTY_STRING: EdmTypeField<
       TestEntity<
@@ -103,8 +103,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     STRING_PROPERTY: EdmTypeField<
       TestEntity<
@@ -132,8 +132,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     BOOLEAN_PROPERTY: EdmTypeField<
       TestEntity<
@@ -161,8 +161,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Boolean',
-      boolean,
-      boolean
+      true,
+      true
     >;
     GUID_PROPERTY: EdmTypeField<
       TestEntity<
@@ -190,8 +190,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Guid',
-      boolean,
-      boolean
+      true,
+      true
     >;
     INT_16_PROPERTY: EdmTypeField<
       TestEntity<
@@ -219,8 +219,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Int16',
-      boolean,
-      boolean
+      true,
+      true
     >;
     INT_32_PROPERTY: EdmTypeField<
       TestEntity<
@@ -248,8 +248,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Int32',
-      boolean,
-      boolean
+      true,
+      true
     >;
     INT_64_PROPERTY: EdmTypeField<
       TestEntity<
@@ -277,8 +277,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Int64',
-      boolean,
-      boolean
+      true,
+      true
     >;
     DECIMAL_PROPERTY: EdmTypeField<
       TestEntity<
@@ -306,8 +306,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Decimal',
-      boolean,
-      boolean
+      true,
+      true
     >;
     SINGLE_PROPERTY: EdmTypeField<
       TestEntity<
@@ -335,8 +335,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Single',
-      boolean,
-      boolean
+      true,
+      true
     >;
     DOUBLE_PROPERTY: EdmTypeField<
       TestEntity<
@@ -364,8 +364,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Double',
-      boolean,
-      boolean
+      true,
+      true
     >;
     FLOAT_PROPERTY: EdmTypeField<
       TestEntity<
@@ -393,8 +393,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Float',
-      boolean,
-      boolean
+      true,
+      true
     >;
     TIME_OF_DAY_PROPERTY: EdmTypeField<
       TestEntity<
@@ -422,8 +422,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.TimeOfDay',
-      boolean,
-      boolean
+      true,
+      true
     >;
     DATE_PROPERTY: EdmTypeField<
       TestEntity<
@@ -451,8 +451,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Date',
-      boolean,
-      boolean
+      true,
+      true
     >;
     DATE_TIME_OFF_SET_PROPERTY: EdmTypeField<
       TestEntity<
@@ -480,8 +480,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.DateTimeOffset',
-      boolean,
-      boolean
+      true,
+      true
     >;
     DURATION_PROPERTY: EdmTypeField<
       TestEntity<
@@ -509,8 +509,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Duration',
-      boolean,
-      boolean
+      true,
+      true
     >;
     BYTE_PROPERTY: EdmTypeField<
       TestEntity<
@@ -538,8 +538,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Byte',
-      boolean,
-      boolean
+      true,
+      true
     >;
     S_BYTE_PROPERTY: EdmTypeField<
       TestEntity<
@@ -567,8 +567,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.SByte',
-      boolean,
-      boolean
+      true,
+      true
     >;
     GEOGRAPHY_POINT_PROPERTY: EdmTypeField<
       TestEntity<
@@ -596,8 +596,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Any',
-      boolean,
-      boolean
+      true,
+      true
     >;
     SOMETHING_THE_SDK_DOES_NOT_SUPPORT: EdmTypeField<
       TestEntity<
@@ -625,8 +625,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Any',
-      boolean,
-      boolean
+      true,
+      true
     >;
     COLLECTION_PROPERTY: CollectionField<
       TestEntity<
@@ -654,8 +654,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     COMPLEX_TYPE_PROPERTY: TestComplexTypeField<
       TestEntity<
@@ -682,8 +682,8 @@ export declare class TestEntityApi<
         >
       >,
       DeSerializersT,
-      boolean,
-      boolean
+      true,
+      true
     >;
     COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<
       TestEntity<
@@ -711,8 +711,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       TestComplexType<DefaultDeSerializers>,
-      boolean,
-      boolean
+      true,
+      true
     >;
     ENUM_PROPERTY: EnumField<
       TestEntity<
@@ -740,8 +740,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       TestEnumType,
-      boolean,
-      boolean
+      true,
+      true
     >;
     ENUM_PROPERTY_INT_64: EnumField<
       TestEntity<
@@ -769,8 +769,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       TestEnumTypeInt64,
-      boolean,
-      boolean
+      true,
+      true
     >;
     ENUM_PROPERTY_WITH_ONE_MEMBER: EnumField<
       TestEntity<
@@ -798,8 +798,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       TestEnumTypeWithOneMember,
-      boolean,
-      boolean
+      true,
+      true
     >;
     ENUM_COLLECTION_PROPERTY: CollectionField<
       TestEntity<
@@ -827,8 +827,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       typeof TestEnumType,
-      boolean,
-      boolean
+      true,
+      true
     >;
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.

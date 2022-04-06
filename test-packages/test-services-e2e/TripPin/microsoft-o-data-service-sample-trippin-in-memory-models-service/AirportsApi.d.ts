@@ -56,8 +56,8 @@ export declare class AirportsApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     NAME: EdmTypeField<
       Airports<
@@ -85,8 +85,8 @@ export declare class AirportsApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     IATA_CODE: EdmTypeField<
       Airports<
@@ -114,8 +114,8 @@ export declare class AirportsApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     LOCATION: AirportLocationField<
       Airports<
@@ -142,8 +142,8 @@ export declare class AirportsApi<
         >
       >,
       DeSerializersT,
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<
       Airports<

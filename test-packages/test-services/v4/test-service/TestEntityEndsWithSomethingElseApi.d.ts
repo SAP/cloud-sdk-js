@@ -66,8 +66,8 @@ export declare class TestEntityEndsWithSomethingElseApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<
       TestEntityEndsWithSomethingElse<

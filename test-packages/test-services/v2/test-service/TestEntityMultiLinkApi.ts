@@ -114,36 +114,36 @@ export class TestEntityMultiLinkApi<
       TestEntityMultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     STRING_PROPERTY: EdmTypeField<
       TestEntityMultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     BOOLEAN_PROPERTY: EdmTypeField<
       TestEntityMultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.Boolean',
-      boolean,
-      boolean
+      true,
+      true
     >;
     GUID_PROPERTY: EdmTypeField<
       TestEntityMultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',
-      boolean,
-      boolean
+      true,
+      true
     >;
     INT_16_PROPERTY: EdmTypeField<
       TestEntityMultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.Int16',
-      boolean,
-      boolean
+      true,
+      true
     >;
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.

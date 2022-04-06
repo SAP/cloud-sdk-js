@@ -62,8 +62,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Int32',
-      boolean,
-      boolean
+      false,
+      true
     >;
     STRING_PROPERTY: EdmTypeField<
       TestEntity<
@@ -91,8 +91,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      true,
+      true
     >;
     GUID_PROPERTY: EdmTypeField<
       TestEntity<
@@ -120,8 +120,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Guid',
-      boolean,
-      boolean
+      true,
+      true
     >;
     BOOLEAN_PROPERTY: EdmTypeField<
       TestEntity<
@@ -149,8 +149,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Boolean',
-      boolean,
-      boolean
+      true,
+      true
     >;
     INT_64_PROPERTY: EdmTypeField<
       TestEntity<
@@ -178,8 +178,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Int64',
-      boolean,
-      boolean
+      true,
+      true
     >;
     DOUBLE_PROPERTY: EdmTypeField<
       TestEntity<
@@ -207,8 +207,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Double',
-      boolean,
-      boolean
+      true,
+      true
     >;
     DECIMAL_PROPERTY: EdmTypeField<
       TestEntity<
@@ -236,8 +236,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Decimal',
-      boolean,
-      boolean
+      true,
+      true
     >;
     DATE_PROPERTY: EdmTypeField<
       TestEntity<
@@ -265,8 +265,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.Date',
-      boolean,
-      boolean
+      true,
+      true
     >;
     TIME_OF_DAY_PROPERTY: EdmTypeField<
       TestEntity<
@@ -294,8 +294,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.TimeOfDay',
-      boolean,
-      boolean
+      true,
+      true
     >;
     DATA_TIME_OFFSET_DATA_TIME_PROPERTY: EdmTypeField<
       TestEntity<
@@ -323,8 +323,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.DateTimeOffset',
-      boolean,
-      boolean
+      true,
+      true
     >;
     DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: EdmTypeField<
       TestEntity<
@@ -352,8 +352,8 @@ export declare class TestEntityApi<
       >,
       DeSerializersT,
       'Edm.DateTimeOffset',
-      boolean,
-      boolean
+      true,
+      true
     >;
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.

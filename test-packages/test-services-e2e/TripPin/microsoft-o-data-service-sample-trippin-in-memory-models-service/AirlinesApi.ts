@@ -69,15 +69,15 @@ export class AirlinesApi<
       Airlines<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     NAME: EdmTypeField<
       Airlines<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<Airlines<DeSerializers>>;
   };

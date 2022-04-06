@@ -70,28 +70,28 @@ export class AirportsApi<
       Airports<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     NAME: EdmTypeField<
       Airports<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     IATA_CODE: EdmTypeField<
       Airports<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     LOCATION: AirportLocationField<
       Airports<DeSerializers>,
       DeSerializersT,
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<Airports<DeSerializers>>;
   };

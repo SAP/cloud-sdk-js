@@ -53,8 +53,8 @@ export declare class CaseTestApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<
       CaseTest<

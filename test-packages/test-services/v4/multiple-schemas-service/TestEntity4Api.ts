@@ -72,15 +72,15 @@ export class TestEntity4Api<
       TestEntity4<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     BOOLEAN_PROPERTY: EdmTypeField<
       TestEntity4<DeSerializers>,
       DeSerializersT,
       'Edm.Boolean',
-      boolean,
-      boolean
+      true,
+      true
     >;
     ALL_FIELDS: AllFields<TestEntity4<DeSerializers>>;
   };

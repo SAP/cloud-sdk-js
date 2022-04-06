@@ -74,8 +74,8 @@ export declare class TestEntityCircularLinkParentApi<
       >,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     /**
      * Static representation of the one-to-one navigation property [[toFirstChild]] for query construction.

@@ -76,28 +76,28 @@ export class TestEntity1Api<
       TestEntity1<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     INT_16_PROPERTY: EdmTypeField<
       TestEntity1<DeSerializers>,
       DeSerializersT,
       'Edm.Int16',
-      boolean,
-      boolean
+      true,
+      true
     >;
     ENUM_PROPERTY: EnumField<
       TestEntity1<DeSerializers>,
       DeSerializersT,
       TestEnumType1,
-      boolean,
-      boolean
+      true,
+      true
     >;
     COMPLEX_TYPE_PROPERTY: TestComplexType1Field<
       TestEntity1<DeSerializers>,
       DeSerializersT,
-      boolean,
-      boolean
+      true,
+      true
     >;
     ALL_FIELDS: AllFields<TestEntity1<DeSerializers>>;
   };

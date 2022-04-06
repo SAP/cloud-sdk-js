@@ -83,8 +83,8 @@ export class TestEntityOtherMultiLinkApi<
       TestEntityOtherMultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
-      boolean,
-      boolean
+      false,
+      true
     >;
     ALL_FIELDS: AllFields<TestEntityOtherMultiLink<DeSerializers>>;
   };

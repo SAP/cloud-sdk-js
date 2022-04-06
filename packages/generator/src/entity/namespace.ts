@@ -111,24 +111,23 @@ export function createPropertyFieldType(
 ): string {
   if (prop.isCollection) {
     if (prop.isComplex) {
-      return `CollectionField<${className}<DeSerializers>, DeSerializersT, ${prop.jsType}, boolean, boolean>`;
+      return `CollectionField<${className}<DeSerializers>, DeSerializersT, ${prop.jsType}, ${prop.nullable}, true>`;
     }
     if (prop.isEnum) {
-      return `CollectionField<${className}<DeSerializers>, DeSerializersT, typeof ${prop.jsType}, boolean, boolean>`;
+      return `CollectionField<${className}<DeSerializers>, DeSerializersT, typeof ${prop.jsType}, ${prop.nullable}, true>`;
     }
-    return `CollectionField<${className}<DeSerializers>, DeSerializersT, '${prop.edmType}', boolean, boolean>`;
+    return `CollectionField<${className}<DeSerializers>, DeSerializersT, '${prop.edmType}', ${prop.nullable}, true>`;
   }
 
   if (prop.isComplex) {
-    return `${prop.fieldType}<${className}<DeSerializers>, DeSerializersT, boolean, boolean>`;
+    return `${prop.fieldType}<${className}<DeSerializers>, DeSerializersT, ${prop.nullable}, true>`;
   }
 
   if (prop.isEnum) {
-    return `EnumField<${className}<DeSerializers>, DeSerializersT, ${prop.jsType}, boolean, boolean>`;
+    return `EnumField<${className}<DeSerializers>, DeSerializersT, ${prop.jsType}, ${prop.nullable}, true>`;
   }
 
-  // return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
-  return `EdmTypeField<${className}<DeSerializers>, DeSerializersT, '${prop.edmType}', boolean, boolean>`;
+  return `EdmTypeField<${className}<DeSerializers>, DeSerializersT, '${prop.edmType}', ${prop.nullable}, true>`;
 }
 
 /**

@@ -33,14 +33,14 @@ describe('GetAllRequestBuilder', () => {
   describe('url', () => {
     it('is built correctly', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json';
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity';
       const actual = await requestBuilder.url(defaultDestination);
       expect(actual).toBe(expected);
     });
 
     it('is built correctly for nested expands', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$expand=to_MultiLink($expand=to_MultiLink1($expand=to_MultiLink2))';
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$expand=to_MultiLink($expand=to_MultiLink1($expand=to_MultiLink2))';
       const actual = await requestBuilder
         .expand(
           testEntityApi.schema.TO_MULTI_LINK.expand(
@@ -56,7 +56,7 @@ describe('GetAllRequestBuilder', () => {
 
   it('is built correctly for selects inside of an expand', async () => {
     const expected =
-      '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$expand=to_SingleLink($select=BooleanProperty)';
+      '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$expand=to_SingleLink($select=BooleanProperty)';
     const actual = await requestBuilder
       .expand(
         testEntityApi.schema.TO_SINGLE_LINK.select(

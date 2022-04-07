@@ -38,9 +38,6 @@ export class ODataFunctionImportRequestConfig<
 
   queryParameters(): Record<string, any> {
     return {
-      ...this.prependDollarToQueryParameters({
-        format: 'json'
-      }),
       ...(Object.values(this.parameters)
         .filter(
           (parameter: FunctionImportParameter<ParametersT>) =>

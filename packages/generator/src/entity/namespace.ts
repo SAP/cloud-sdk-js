@@ -7,6 +7,7 @@ import {
   OptionalKind,
   VariableDeclarationStructure
 } from 'ts-morph';
+import { isOrderableEdmType } from '@sap-cloud-sdk/odata-common';
 import { getGenericParameters, linkClass } from '../generator-utils';
 import { prependPrefix } from '../internal-prefix';
 import {
@@ -100,6 +101,39 @@ export function createPropertyFieldInitializerForEntity(
   }
 
   return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+}
+
+/**
+ * @internal
+ */
+export function createPropertyFieldType(
+  className: string,
+  prop: VdmProperty
+): string {
+  if (prop.isCollection) {
+    if (prop.isComplex) {
+      return `CollectionField<${className}<DeSerializers>, DeSerializersT, ${prop.jsType}, ${prop.nullable}, true>`;
+    }
+    if (prop.isEnum) {
+      return `CollectionField<${className}<DeSerializers>, DeSerializersT, typeof ${prop.jsType}, ${prop.nullable}, true>`;
+    }
+    return `CollectionField<${className}<DeSerializers>, DeSerializersT, '${prop.edmType}', ${prop.nullable}, true>`;
+  }
+
+  if (prop.isComplex) {
+    return `${prop.fieldType}<${className}<DeSerializers>, DeSerializersT, ${prop.nullable}, true>`;
+  }
+
+  if (prop.isEnum) {
+    return `EnumField<${className}<DeSerializers>, DeSerializersT, ${prop.jsType}, ${prop.nullable}, true>`;
+  }
+
+  const isOrderable = isOrderableEdmType(prop.edmType as any);
+  return `${
+    isOrderable ? 'OrderableEdmTypeField' : 'EdmTypeField'
+  }<${className}<DeSerializers>, DeSerializersT, '${prop.edmType}', ${
+    prop.nullable
+  }, true>`;
 }
 
 /**

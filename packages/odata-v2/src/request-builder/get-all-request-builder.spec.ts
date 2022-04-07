@@ -49,14 +49,14 @@ describe('GetAllRequestBuilder', () => {
   describe('url', () => {
     it('is built correctly', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json';
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity';
       const actual = await requestBuilder.url(defaultDestination);
       expect(actual).toBe(expected);
     });
 
     it('is built correctly with URI encoding', async () => {
       const expected =
-        "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$filter=(StringProperty%20eq%20'%C3%A4%20%C3%B6%2B%20''c')";
+        "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$filter=(StringProperty%20eq%20'%C3%A4%20%C3%B6%2B%20''c')";
       const actual = await requestBuilder
         .filter(testEntityApi.schema.STRING_PROPERTY.equals("ä ö+ 'c"))
         .url(defaultDestination);
@@ -65,7 +65,7 @@ describe('GetAllRequestBuilder', () => {
 
     it('adds expand for nested selects', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink';
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink';
       const actual = await requestBuilder
         .select(
           testEntityApi.schema.TO_SINGLE_LINK.select(
@@ -304,13 +304,10 @@ describe('GetAllRequestBuilder', () => {
           },
           parameterEncoder: encodeTypedClientRequest,
           params: {
-            requestConfig: {
-              $format: 'json'
-            }
+            requestConfig: {}
           },
           url: 'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
           method: 'get',
-
           data: undefined
         },
         { fetchCsrfToken: true }

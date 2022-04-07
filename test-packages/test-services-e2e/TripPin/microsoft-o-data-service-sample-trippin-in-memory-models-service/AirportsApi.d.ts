@@ -7,7 +7,9 @@ import {
   DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class AirportsApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -24,41 +26,11 @@ export declare class AirportsApi<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<Airports<DeSerializersT>, DeSerializersT, NullableT>;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof Airports, DeSerializersT>;
+  private _schema?;
   get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      Airports<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the [[icaoCode]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    ICAO_CODE: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    ICAO_CODE: EdmTypeField<
       Airports<
         DeSerializers<
           any,
@@ -87,11 +59,7 @@ export declare class AirportsApi<
       false,
       true
     >;
-    /**
-     * Static representation of the [[name]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    NAME: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    NAME: EdmTypeField<
       Airports<
         DeSerializers<
           any,
@@ -120,11 +88,7 @@ export declare class AirportsApi<
       false,
       true
     >;
-    /**
-     * Static representation of the [[iataCode]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    IATA_CODE: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    IATA_CODE: EdmTypeField<
       Airports<
         DeSerializers<
           any,
@@ -153,10 +117,6 @@ export declare class AirportsApi<
       false,
       true
     >;
-    /**
-     * Static representation of the [[location]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
     LOCATION: AirportLocationField<
       Airports<
         DeSerializers<
@@ -184,6 +144,31 @@ export declare class AirportsApi<
       DeSerializersT,
       false,
       true
+    >;
+    ALL_FIELDS: AllFields<
+      Airports<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
     >;
   };
 }

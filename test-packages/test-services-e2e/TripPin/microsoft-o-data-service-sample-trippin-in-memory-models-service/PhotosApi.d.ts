@@ -6,7 +6,10 @@ import {
   DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  OrderableEdmTypeField,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class PhotosApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -23,41 +26,11 @@ export declare class PhotosApi<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<Photos<DeSerializersT>, DeSerializersT, NullableT>;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof Photos, DeSerializersT>;
+  private _schema?;
   get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      Photos<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the [[id]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    ID: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    ID: OrderableEdmTypeField<
       Photos<
         DeSerializers<
           any,
@@ -86,11 +59,7 @@ export declare class PhotosApi<
       false,
       true
     >;
-    /**
-     * Static representation of the [[name]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    NAME: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    NAME: EdmTypeField<
       Photos<
         DeSerializers<
           any,
@@ -118,6 +87,31 @@ export declare class PhotosApi<
       'Edm.String',
       true,
       true
+    >;
+    ALL_FIELDS: AllFields<
+      Photos<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
     >;
   };
 }

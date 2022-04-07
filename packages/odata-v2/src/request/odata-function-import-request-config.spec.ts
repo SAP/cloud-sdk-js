@@ -47,7 +47,6 @@ describe('ODataFunctionImportRequestConfig', () => {
 
   it('has query parameters', () => {
     expect(config.queryParameters()).toEqual({
-      $format: 'json',
       Test1: "'test'",
       Test2: 'false',
       Test3: '10D'

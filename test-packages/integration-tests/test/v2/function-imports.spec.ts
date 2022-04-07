@@ -50,7 +50,7 @@ describe('Function imports', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/TestFunctionImportEdmReturnType?$format=json`)
+      .get(`${servicePath}/TestFunctionImportEdmReturnType`)
       .reply(200, singleTestEntityResponse());
 
     const request = functionImports
@@ -72,7 +72,7 @@ describe('Function imports', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/TestFunctionImportEdmReturnType?$format=json`)
+      .get(`${servicePath}/TestFunctionImportEdmReturnType`)
       .reply(400, errorResponse());
 
     const request = functionImports

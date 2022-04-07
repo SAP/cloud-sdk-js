@@ -16,7 +16,10 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  EdmTypeField,
+  OrderableEdmTypeField,
+  EnumField
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntity1Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -60,51 +63,94 @@ export class TestEntity1Api<
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<typeof TestEntity1, DeSerializersT>;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(TestEntity1, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    KEY_PROPERTY_STRING: EdmTypeField<
+      TestEntity1<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    INT_16_PROPERTY: OrderableEdmTypeField<
+      TestEntity1<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int16',
+      true,
+      true
+    >;
+    ENUM_PROPERTY: EnumField<
+      TestEntity1<DeSerializers>,
+      DeSerializersT,
+      TestEnumType1,
+      true,
+      true
+    >;
+    COMPLEX_TYPE_PROPERTY: TestComplexType1Field<
+      TestEntity1<DeSerializers>,
+      DeSerializersT,
+      true,
+      true
+    >;
+    ALL_FIELDS: AllFields<TestEntity1<DeSerializers>>;
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(TestEntity1, this.deSerializers);
-    return {
-      /**
-       * Static representation of the [[keyPropertyString]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
-        'KeyPropertyString',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[int16Property]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'Int16Property',
-        'Edm.Int16',
-        true
-      ),
-      /**
-       * Static representation of the [[enumProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      ENUM_PROPERTY: fieldBuilder.buildEnumField(
-        'EnumProperty',
-        TestEnumType1,
-        true
-      ),
-      /**
-       * Static representation of the [[complexTypeProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField(
-        'ComplexTypeProperty',
-        TestComplexType1Field,
-        true
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntity1)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[keyPropertyString]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
+          'KeyPropertyString',
+          'Edm.String',
+          false
+        ),
+        /**
+         * Static representation of the [[int16Property]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'Int16Property',
+          'Edm.Int16',
+          true
+        ),
+        /**
+         * Static representation of the [[enumProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        ENUM_PROPERTY: fieldBuilder.buildEnumField(
+          'EnumProperty',
+          TestEnumType1,
+          true
+        ),
+        /**
+         * Static representation of the [[complexTypeProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField(
+          'ComplexTypeProperty',
+          TestComplexType1Field,
+          true
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntity1)
+      };
+    }
+
+    return this._schema;
   }
 }

@@ -18,10 +18,6 @@ describe('ODataGetAllRequestConfig', () => {
     expect(config.resourcePath()).toBe(CommonEntity._entityName);
   });
 
-  it('has format json', () => {
-    expect(config.queryParameters()['$format']).toBe('json');
-  });
-
   it('has skip if set', () => {
     config.skip = 10;
     expect(config.queryParameters()['$skip']).toBe(config.skip);

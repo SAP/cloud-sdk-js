@@ -50,7 +50,6 @@ export class ODataGetAllRequestConfig<
 
   queryParameters(): Record<string, any> {
     const params: Record<string, any> = {
-      format: 'json',
       ...this.oDataUri.getSelect(this.selects),
       ...this.oDataUri.getExpand(this.selects, this.expands, this.entityApi),
       ...this.oDataUri.getFilter(this.filter, this.entityApi),

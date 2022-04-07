@@ -1,12 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`batch request serializer serializeBatchRequest serializes payload for batch subequests 1`] = `
+exports[`batch request serializer serializeBatchRequest serializes payload for batch subrequests 1`] = `
 "--batch_fixed_boundary_for_testing
 Content-Type: multipart/mixed; boundary=changeSet_boundary
 
 --changeSet_boundary
 Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 POST /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity HTTP/1.1
 Content-Type: application/json
@@ -30,6 +31,7 @@ Content-Type: multipart/mixed; boundary=changeSet_boundary
 --changeSet_boundary
 Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 PATCH /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=guidId,KeyPropertyString='strId') HTTP/1.1
 Content-Type: application/json
@@ -40,6 +42,7 @@ Accept: application/json
 --changeSet_boundary
 Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 DELETE /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=testId,KeyPropertyString='test') HTTP/1.1
 Content-Type: application/json
@@ -67,6 +70,7 @@ exports[`batch request serializer serializeChangeSet serializes change set with 
 --changeSet_boundary
 Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 PATCH /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=guidId,KeyPropertyString='strId') HTTP/1.1
 Content-Type: application/json
@@ -77,6 +81,7 @@ Accept: application/json
 --changeSet_boundary
 Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 POST /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity HTTP/1.1
 Content-Type: application/json
@@ -93,6 +98,7 @@ exports[`batch request serializer serializeChangeSet serializes change set with 
 --changeSet_boundary
 Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 POST /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity HTTP/1.1
 Content-Type: application/json
@@ -106,6 +112,7 @@ Accept: application/json
 exports[`batch request serializer serializeRequest serializes create request 1`] = `
 "Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 POST /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity HTTP/1.1
 Content-Type: application/json
@@ -118,6 +125,7 @@ Accept: application/json
 exports[`batch request serializer serializeRequest serializes delete request with eTag 1`] = `
 "Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 DELETE /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=guidId,KeyPropertyString='strId') HTTP/1.1
 Content-Type: application/json
@@ -131,6 +139,7 @@ Some-Implementation-For-Test: eTag
 exports[`batch request serializer serializeRequest serializes delete request with entity 1`] = `
 "Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 DELETE /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=guidId,KeyPropertyString='strId') HTTP/1.1
 Content-Type: application/json
@@ -143,6 +152,7 @@ Accept: application/json
 exports[`batch request serializer serializeRequest serializes delete request with id 1`] = `
 "Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 DELETE /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=testId,KeyPropertyString='test') HTTP/1.1
 Content-Type: application/json
@@ -222,6 +232,7 @@ Accept: application/json
 exports[`batch request serializer serializeRequest serializes update request 1`] = `
 "Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 PATCH /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=guidId,KeyPropertyString='strId') HTTP/1.1
 Content-Type: application/json
@@ -234,6 +245,7 @@ Accept: application/json
 exports[`batch request serializer serializeRequest serializes update request using put 1`] = `
 "Content-Type: application/http
 Content-Transfer-Encoding: binary
+Content-Id: <content-id>
 
 PUT /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=guidId,KeyPropertyString='strId') HTTP/1.1
 Content-Type: application/json

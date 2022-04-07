@@ -27,10 +27,6 @@ describe('ODataGetByKeyRequestConfig', () => {
     );
   });
 
-  it('has format json', () => {
-    expect(config.queryParameters()['$format']).toBe('json');
-  });
-
   it('has selection', () => {
     config.selects = [
       commonEntityApi.schema.STRING_PROPERTY,

@@ -75,9 +75,34 @@ exports[`entity api class gets proper class content 1`] = `
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<typeof Breakfast, DeSerializersT>;
+  get fieldBuilder() {
+    if(!this._fieldBuilder){
+      this._fieldBuilder = new FieldBuilder(Breakfast, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    ENTITY_NAME: EdmTypeField<Breakfast<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
+NUMBER_OF_EGGS: OrderableEdmTypeField<Breakfast<DeSerializers>, DeSerializersT, 'Edm.Decimal', true, true>,
+BREAKFAST_TIME: OrderableEdmTypeField<Breakfast<DeSerializers>, DeSerializersT, 'Edm.DateTime', false, true>,
+/**
+ * Static representation of the one-to-one navigation property [[toBrunch]] for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+TO_BRUNCH: OneToOneLink<
+      Breakfast<DeSerializersT>,
+      DeSerializersT,
+      BrunchApi<DeSerializersT>
+    >,
+ALL_FIELDS: AllFields<Breakfast<DeSerializers>>
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(Breakfast, this.deSerializers);
-    return { 
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = { 
     /**
  * Static representation of the [[entityName]] property for query construction.
  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -100,6 +125,9 @@ BREAKFAST_TIME: fieldBuilder.buildEdmTypeField('BreakfastTime', 'Edm.DateTime', 
  */
 ALL_FIELDS: new AllFields('*', Breakfast) 
   };
+    }
+  
+    return this._schema;
   }
 }"
 `;

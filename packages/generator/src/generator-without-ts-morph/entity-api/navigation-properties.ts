@@ -62,7 +62,10 @@ function navigationProperty(
   )`;
 }
 
-function navigationPropertyTypes(
+/**
+ * @internal
+ */
+export function navigationPropertyTypes(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): string[] {

@@ -95,7 +95,6 @@ export type OrderableEdmType =
  * Convenience function to check whether a given EDM type is of type [[OrderableEdmType]].
  * @param edmType - Literal EDM type string to check.
  * @returns Whether the given `edmType` is of type [[OrderableEdmType]].
- * @internal
  */
 export function isOrderableEdmType(edmType: EdmTypeShared<'any'>): boolean {
   return [

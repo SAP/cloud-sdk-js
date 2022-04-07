@@ -18,6 +18,10 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
+  EdmTypeField,
+  CollectionField,
+  EnumField,
+  OrderableEdmTypeField,
   OneToManyLink,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v4';
@@ -84,70 +88,153 @@ export class PeopleApi<
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<typeof People, DeSerializersT>;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(People, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    USER_NAME: EdmTypeField<
+      People<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    FIRST_NAME: EdmTypeField<
+      People<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    LAST_NAME: EdmTypeField<
+      People<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    EMAILS: CollectionField<
+      People<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      true,
+      true
+    >;
+    ADDRESS_INFO: CollectionField<
+      People<DeSerializers>,
+      DeSerializersT,
+      Location,
+      true,
+      true
+    >;
+    GENDER: EnumField<
+      People<DeSerializers>,
+      DeSerializersT,
+      PersonGender,
+      true,
+      true
+    >;
+    CONCURRENCY: OrderableEdmTypeField<
+      People<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int64',
+      false,
+      true
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[friends]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    FRIENDS: OneToManyLink<
+      People<DeSerializersT>,
+      DeSerializersT,
+      PeopleApi<DeSerializersT>
+    >;
+    /**
+     * Static representation of the one-to-one navigation property [[photo]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    PHOTO: OneToOneLink<
+      People<DeSerializersT>,
+      DeSerializersT,
+      PhotosApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<People<DeSerializers>>;
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(People, this.deSerializers);
-    return {
-      /**
-       * Static representation of the [[userName]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      USER_NAME: fieldBuilder.buildEdmTypeField(
-        'UserName',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[firstName]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      FIRST_NAME: fieldBuilder.buildEdmTypeField(
-        'FirstName',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[lastName]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      LAST_NAME: fieldBuilder.buildEdmTypeField(
-        'LastName',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[emails]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      EMAILS: fieldBuilder.buildCollectionField('Emails', 'Edm.String', true),
-      /**
-       * Static representation of the [[addressInfo]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      ADDRESS_INFO: fieldBuilder.buildCollectionField(
-        'AddressInfo',
-        Location,
-        true
-      ),
-      /**
-       * Static representation of the [[gender]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      GENDER: fieldBuilder.buildEnumField('Gender', PersonGender, true),
-      /**
-       * Static representation of the [[concurrency]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      CONCURRENCY: fieldBuilder.buildEdmTypeField(
-        'Concurrency',
-        'Edm.Int64',
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', People)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[userName]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        USER_NAME: fieldBuilder.buildEdmTypeField(
+          'UserName',
+          'Edm.String',
+          false
+        ),
+        /**
+         * Static representation of the [[firstName]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        FIRST_NAME: fieldBuilder.buildEdmTypeField(
+          'FirstName',
+          'Edm.String',
+          false
+        ),
+        /**
+         * Static representation of the [[lastName]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        LAST_NAME: fieldBuilder.buildEdmTypeField(
+          'LastName',
+          'Edm.String',
+          false
+        ),
+        /**
+         * Static representation of the [[emails]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        EMAILS: fieldBuilder.buildCollectionField('Emails', 'Edm.String', true),
+        /**
+         * Static representation of the [[addressInfo]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        ADDRESS_INFO: fieldBuilder.buildCollectionField(
+          'AddressInfo',
+          Location,
+          true
+        ),
+        /**
+         * Static representation of the [[gender]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        GENDER: fieldBuilder.buildEnumField('Gender', PersonGender, true),
+        /**
+         * Static representation of the [[concurrency]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        CONCURRENCY: fieldBuilder.buildEdmTypeField(
+          'Concurrency',
+          'Edm.Int64',
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', People)
+      };
+    }
+
+    return this._schema;
   }
 }

@@ -35,31 +35,40 @@ class TestEntityWithEnumKeyApi {
       isNullable
     );
   }
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new odata_v4_1.FieldBuilder(
+        TestEntityWithEnumKey_1.TestEntityWithEnumKey,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
   get schema() {
-    const fieldBuilder = new odata_v4_1.FieldBuilder(
-      TestEntityWithEnumKey_1.TestEntityWithEnumKey,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[keyPropertyEnum1]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY_ENUM_1: fieldBuilder.buildEnumField(
-        'KeyPropertyEnum1',
-        TestEnumType_1.TestEnumType,
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new odata_v4_1.AllFields(
-        '*',
-        TestEntityWithEnumKey_1.TestEntityWithEnumKey
-      )
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[keyPropertyEnum1]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_PROPERTY_ENUM_1: fieldBuilder.buildEnumField(
+          'KeyPropertyEnum1',
+          TestEnumType_1.TestEnumType,
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new odata_v4_1.AllFields(
+          '*',
+          TestEntityWithEnumKey_1.TestEntityWithEnumKey
+        )
+      };
+    }
+    return this._schema;
   }
 }
 exports.TestEntityWithEnumKeyApi = TestEntityWithEnumKeyApi;

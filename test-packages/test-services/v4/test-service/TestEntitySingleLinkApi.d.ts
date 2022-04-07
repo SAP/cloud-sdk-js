@@ -9,6 +9,9 @@ import {
   AllFields,
   EntityBuilderType,
   EntityApi,
+  FieldBuilder,
+  EdmTypeField,
+  OrderableEdmTypeField,
   OneToManyLink,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v4';
@@ -39,59 +42,11 @@ export declare class TestEntitySingleLinkApi<
     DeSerializersT,
     NullableT
   >;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof TestEntitySingleLink, DeSerializersT>;
+  private _schema?;
   get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      TestEntitySingleLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_MULTI_LINK: OneToManyLink<
-      TestEntitySingleLink<DeSerializersT>,
-      DeSerializersT,
-      TestEntityLvl2MultiLinkApi<DeSerializersT>
-    >;
-    /**
-     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_SINGLE_LINK: OneToOneLink<
-      TestEntitySingleLink<DeSerializersT>,
-      DeSerializersT,
-      TestEntityLvl2SingleLinkApi<DeSerializersT>
-    >;
-    /**
-     * Static representation of the [[stringProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    STRING_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    STRING_PROPERTY: EdmTypeField<
       TestEntitySingleLink<
         DeSerializers<
           any,
@@ -120,11 +75,7 @@ export declare class TestEntitySingleLinkApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[booleanProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    BOOLEAN_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    BOOLEAN_PROPERTY: EdmTypeField<
       TestEntitySingleLink<
         DeSerializers<
           any,
@@ -153,11 +104,7 @@ export declare class TestEntitySingleLinkApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[guidProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    GUID_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    GUID_PROPERTY: EdmTypeField<
       TestEntitySingleLink<
         DeSerializers<
           any,
@@ -186,11 +133,7 @@ export declare class TestEntitySingleLinkApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[int16Property]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    INT_16_PROPERTY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    INT_16_PROPERTY: OrderableEdmTypeField<
       TestEntitySingleLink<
         DeSerializers<
           any,
@@ -219,11 +162,7 @@ export declare class TestEntitySingleLinkApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[keyProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    KEY_PROPERTY: EdmTypeField<
       TestEntitySingleLink<
         DeSerializers<
           any,
@@ -251,6 +190,49 @@ export declare class TestEntitySingleLinkApi<
       'Edm.String',
       false,
       true
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_MULTI_LINK: OneToManyLink<
+      TestEntitySingleLink<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLvl2MultiLinkApi<DeSerializersT>
+    >;
+    /**
+     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_SINGLE_LINK: OneToOneLink<
+      TestEntitySingleLink<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLvl2SingleLinkApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntitySingleLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
     >;
   };
 }

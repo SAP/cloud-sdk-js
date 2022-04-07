@@ -9,7 +9,7 @@ describe('FunctionImportRequestBuilder', () => {
 
     const url = await requestBuilder.url(defaultDestination);
     const expected = expect.stringMatching(
-      /TestFunctionImportMultipleParams\(.*StringParam.*\)?\$format=json/
+      /TestFunctionImportMultipleParams\(.*StringParam.*\)/
     );
     expect(url).toEqual(expected);
     expect(url).toContain(`StringParam='${params.stringParam}'`);

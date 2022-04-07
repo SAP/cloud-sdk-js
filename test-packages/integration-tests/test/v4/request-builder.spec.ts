@@ -59,7 +59,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json`)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi

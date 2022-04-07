@@ -39,14 +39,10 @@ export class ODataCountRequestConfig<
 
   queryParameters(): Record<string, any> {
     const parametersAllowedInCount = ['$apply', '$search', '$filter'];
-    const defaultParameters = ['$format'];
     const parameters = this.getAllRequest.requestConfig.queryParameters();
 
     Object.keys(parameters).forEach(key => {
-      if (
-        !parametersAllowedInCount.includes(key) &&
-        !defaultParameters.includes(key)
-      ) {
+      if (!parametersAllowedInCount.includes(key)) {
         logger.warn(
           `The query parameter ${key} must not be used in a count request and has been ignored.`
         );

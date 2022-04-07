@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@sap-cloud-sdk/generator-common": "^2.1.0",
+    "@sap-cloud-sdk/odata-common": "^2.1.0",
     "@sap-cloud-sdk/odata-v2": "^2.1.0",
     "@sap-cloud-sdk/odata-v4": "^2.1.0",
     "@sap-cloud-sdk/util": "^2.1.0",

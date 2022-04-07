@@ -76,7 +76,7 @@ export class TestEntity2Api<
       false,
       true
     >;
-    SINGLE_PROPERTY: EdmTypeField<
+    SINGLE_PROPERTY: OrderableEdmTypeField<
       TestEntity2<DeSerializers>,
       DeSerializersT,
       'Edm.Single',

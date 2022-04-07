@@ -69,14 +69,14 @@ export class TestEntityLinkApi<
   }
 
   private _schema?: {
-    KEY_TEST_ENTITY_LINK: EdmTypeField<
+    KEY_TEST_ENTITY_LINK: OrderableEdmTypeField<
       TestEntityLink<DeSerializers>,
       DeSerializersT,
       'Edm.Int32',
       false,
       true
     >;
-    KEY_TO_TEST_ENTITY: EdmTypeField<
+    KEY_TO_TEST_ENTITY: OrderableEdmTypeField<
       TestEntityLink<DeSerializers>,
       DeSerializersT,
       'Edm.Int32',

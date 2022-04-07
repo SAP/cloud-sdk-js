@@ -86,7 +86,7 @@ export class TestEntityApi<
   }
 
   private _schema?: {
-    KEY_TEST_ENTITY: EdmTypeField<
+    KEY_TEST_ENTITY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Int32',
@@ -114,49 +114,49 @@ export class TestEntityApi<
       true,
       true
     >;
-    INT_64_PROPERTY: EdmTypeField<
+    INT_64_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Int64',
       true,
       true
     >;
-    DOUBLE_PROPERTY: EdmTypeField<
+    DOUBLE_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Double',
       true,
       true
     >;
-    DECIMAL_PROPERTY: EdmTypeField<
+    DECIMAL_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Decimal',
       true,
       true
     >;
-    DATE_PROPERTY: EdmTypeField<
+    DATE_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Date',
       true,
       true
     >;
-    TIME_OF_DAY_PROPERTY: EdmTypeField<
+    TIME_OF_DAY_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.TimeOfDay',
       true,
       true
     >;
-    DATA_TIME_OFFSET_DATA_TIME_PROPERTY: EdmTypeField<
+    DATA_TIME_OFFSET_DATA_TIME_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.DateTimeOffset',
       true,
       true
     >;
-    DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: EdmTypeField<
+    DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.DateTimeOffset',

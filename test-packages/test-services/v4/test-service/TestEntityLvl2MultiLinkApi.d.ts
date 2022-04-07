@@ -10,6 +10,7 @@ import {
   EntityApi,
   FieldBuilder,
   EdmTypeField,
+  OrderableEdmTypeField,
   OneToManyLink
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityLvl2MultiLinkApi<
@@ -130,7 +131,7 @@ export declare class TestEntityLvl2MultiLinkApi<
       true,
       true
     >;
-    INT_16_PROPERTY: EdmTypeField<
+    INT_16_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2MultiLink<
         DeSerializers<
           any,

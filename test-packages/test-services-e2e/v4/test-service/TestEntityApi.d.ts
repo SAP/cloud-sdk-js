@@ -9,6 +9,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
+  OrderableEdmTypeField,
   EdmTypeField,
   OneToManyLink
 } from '@sap-cloud-sdk/odata-v4';
@@ -36,7 +37,7 @@ export declare class TestEntityApi<
   get fieldBuilder(): FieldBuilder<typeof TestEntity, DeSerializersT>;
   private _schema?;
   get schema(): {
-    KEY_TEST_ENTITY: EdmTypeField<
+    KEY_TEST_ENTITY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -152,7 +153,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    INT_64_PROPERTY: EdmTypeField<
+    INT_64_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -181,7 +182,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    DOUBLE_PROPERTY: EdmTypeField<
+    DOUBLE_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -210,7 +211,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    DECIMAL_PROPERTY: EdmTypeField<
+    DECIMAL_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -239,7 +240,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    DATE_PROPERTY: EdmTypeField<
+    DATE_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -268,7 +269,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    TIME_OF_DAY_PROPERTY: EdmTypeField<
+    TIME_OF_DAY_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -297,7 +298,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    DATA_TIME_OFFSET_DATA_TIME_PROPERTY: EdmTypeField<
+    DATA_TIME_OFFSET_DATA_TIME_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -326,7 +327,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: EdmTypeField<
+    DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,

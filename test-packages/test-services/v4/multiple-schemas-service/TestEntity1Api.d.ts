@@ -11,6 +11,7 @@ import {
   EntityApi,
   FieldBuilder,
   EdmTypeField,
+  OrderableEdmTypeField,
   EnumField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntity1Api<
@@ -64,7 +65,7 @@ export declare class TestEntity1Api<
       false,
       true
     >;
-    INT_16_PROPERTY: EdmTypeField<
+    INT_16_PROPERTY: OrderableEdmTypeField<
       TestEntity1<
         DeSerializers<
           any,

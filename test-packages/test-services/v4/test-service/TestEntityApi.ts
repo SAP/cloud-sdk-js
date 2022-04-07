@@ -157,91 +157,91 @@ export class TestEntityApi<
       true,
       true
     >;
-    INT_16_PROPERTY: EdmTypeField<
+    INT_16_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Int16',
       true,
       true
     >;
-    INT_32_PROPERTY: EdmTypeField<
+    INT_32_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Int32',
       true,
       true
     >;
-    INT_64_PROPERTY: EdmTypeField<
+    INT_64_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Int64',
       true,
       true
     >;
-    DECIMAL_PROPERTY: EdmTypeField<
+    DECIMAL_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Decimal',
       true,
       true
     >;
-    SINGLE_PROPERTY: EdmTypeField<
+    SINGLE_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Single',
       true,
       true
     >;
-    DOUBLE_PROPERTY: EdmTypeField<
+    DOUBLE_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Double',
       true,
       true
     >;
-    FLOAT_PROPERTY: EdmTypeField<
+    FLOAT_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Float',
       true,
       true
     >;
-    TIME_OF_DAY_PROPERTY: EdmTypeField<
+    TIME_OF_DAY_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.TimeOfDay',
       true,
       true
     >;
-    DATE_PROPERTY: EdmTypeField<
+    DATE_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Date',
       true,
       true
     >;
-    DATE_TIME_OFF_SET_PROPERTY: EdmTypeField<
+    DATE_TIME_OFF_SET_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.DateTimeOffset',
       true,
       true
     >;
-    DURATION_PROPERTY: EdmTypeField<
+    DURATION_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Duration',
       true,
       true
     >;
-    BYTE_PROPERTY: EdmTypeField<
+    BYTE_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Byte',
       true,
       true
     >;
-    S_BYTE_PROPERTY: EdmTypeField<
+    S_BYTE_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.SByte',

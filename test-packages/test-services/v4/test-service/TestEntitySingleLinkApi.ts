@@ -131,7 +131,7 @@ export class TestEntitySingleLinkApi<
       true,
       true
     >;
-    INT_16_PROPERTY: EdmTypeField<
+    INT_16_PROPERTY: OrderableEdmTypeField<
       TestEntitySingleLink<DeSerializers>,
       DeSerializersT,
       'Edm.Int16',

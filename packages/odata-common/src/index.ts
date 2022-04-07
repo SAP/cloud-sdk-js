@@ -27,3 +27,4 @@ export { DeserializedType } from './de-serializers';
 export { BatchChangeSet, RequestBuilder } from './request-builder';
 export { FunctionImportParameter } from './request';
 export { throwErrorWhenReturnTypeIsUnionType } from './response-transformer';
+export { isOrderableEdmType } from './edm-types';

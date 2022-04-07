@@ -8,6 +8,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
+  OrderableEdmTypeField,
   EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class PhotosApi<
@@ -29,7 +30,7 @@ export declare class PhotosApi<
   get fieldBuilder(): FieldBuilder<typeof Photos, DeSerializersT>;
   private _schema?;
   get schema(): {
-    ID: EdmTypeField<
+    ID: OrderableEdmTypeField<
       Photos<
         DeSerializers<
           any,

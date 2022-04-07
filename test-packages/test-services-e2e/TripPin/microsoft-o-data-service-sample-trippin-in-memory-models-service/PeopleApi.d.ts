@@ -14,6 +14,7 @@ import {
   EdmTypeField,
   CollectionField,
   EnumField,
+  OrderableEdmTypeField,
   OneToManyLink,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v4';
@@ -212,7 +213,7 @@ export declare class PeopleApi<
       true,
       true
     >;
-    CONCURRENCY: EdmTypeField<
+    CONCURRENCY: OrderableEdmTypeField<
       People<
         DeSerializers<
           any,

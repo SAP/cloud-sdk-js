@@ -66,7 +66,7 @@ export class PhotosApi<
   }
 
   private _schema?: {
-    ID: EdmTypeField<
+    ID: OrderableEdmTypeField<
       Photos<DeSerializers>,
       DeSerializersT,
       'Edm.Int64',

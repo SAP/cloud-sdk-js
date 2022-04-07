@@ -79,7 +79,7 @@ export class TestEntity1Api<
       false,
       true
     >;
-    INT_16_PROPERTY: EdmTypeField<
+    INT_16_PROPERTY: OrderableEdmTypeField<
       TestEntity1<DeSerializers>,
       DeSerializersT,
       'Edm.Int16',

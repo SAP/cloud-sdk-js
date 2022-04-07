@@ -139,7 +139,7 @@ export class PeopleApi<
       true,
       true
     >;
-    CONCURRENCY: EdmTypeField<
+    CONCURRENCY: OrderableEdmTypeField<
       People<DeSerializers>,
       DeSerializersT,
       'Edm.Int64',

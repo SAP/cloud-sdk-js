@@ -7,6 +7,7 @@ import {
   OptionalKind,
   VariableDeclarationStructure
 } from 'ts-morph';
+import { isOrderableEdmType } from '@sap-cloud-sdk/odata-common';
 import { getGenericParameters, linkClass } from '../generator-utils';
 import { prependPrefix } from '../internal-prefix';
 import {
@@ -127,7 +128,12 @@ export function createPropertyFieldType(
     return `EnumField<${className}<DeSerializers>, DeSerializersT, ${prop.jsType}, ${prop.nullable}, true>`;
   }
 
-  return `EdmTypeField<${className}<DeSerializers>, DeSerializersT, '${prop.edmType}', ${prop.nullable}, true>`;
+  const isOrderable = isOrderableEdmType(prop.edmType as any);
+  return `${
+    isOrderable ? 'OrderableEdmTypeField' : 'EdmTypeField'
+  }<${className}<DeSerializers>, DeSerializersT, '${prop.edmType}', ${
+    prop.nullable
+  }, true>`;
 }
 
 /**

@@ -449,7 +449,7 @@ export class CommonEntityApi<
       true,
       true
     >;
-    INT_16_PROPERTY: EdmTypeField<
+    INT_16_PROPERTY: OrderableEdmTypeField<
       CommonEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Int16',

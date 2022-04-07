@@ -22,12 +22,12 @@
 
 ## Improvements
 
+- [generator] Change log level from `warn` to `error` if service path cannot be determined from the service spec. undefined (`VALUE_IS_UNDEFINED`).
 - [generator] Reduce memory usage of `schema` in API classes (e.g., `BusinessPartnerAPI`).
 
 ## Fixed Issues
 
 -
-
 
 # 2.2.0
 

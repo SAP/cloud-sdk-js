@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [generator] Improve `get schema()` of API classes (e.g., `BusinessPartnerAPI`) from generated clients by applying singleton pattern, which reduces memory usage. It typically matters, when the function is called in a loop.
 
 ## Fixed Issues
 

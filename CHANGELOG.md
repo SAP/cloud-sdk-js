@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [odata-common] Generate mandatory `Content-Id` headers for changeset parts in batch requests payloads (see [OData Spec](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_MultipartBatchRequestBody)).
 
 ## Improvements
 
@@ -47,7 +47,6 @@ Blog: TBD<br>
 - [http-client] Remove `method` from `defaultDisallowedKeys` to not filter out custom http method when using `filterCustomRequestConfig`.
 - [odata-common] Support adding custom http method in `addCustomRequestConfiguration` to overwrite the default http method.
 - [openapi] Support adding custom http method in `addCustomRequestConfiguration` to overwrite the default http method.
-- [odata-common] Generate mandatory `Content-Id` headers for changeset parts in batch requests payloads (see [OData Spec](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_MultipartBatchRequestBody)).
 
 ## Improvements
 

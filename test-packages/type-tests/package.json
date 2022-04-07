@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/type-tests",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Tests to ensure correct types in the SAP Cloud SDK for JavaScript.",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -12,14 +12,14 @@
     "check:dependencies": "echo Nothing to check here."
   },
   "devDependencies": {
-    "@sap-cloud-sdk/connectivity": "^2.1.0",
-    "@sap-cloud-sdk/generator": "^2.1.0",
-    "@sap-cloud-sdk/http-client": "^2.1.0",
-    "@sap-cloud-sdk/odata-common": "^2.1.0",
-    "@sap-cloud-sdk/odata-v2": "^2.1.0",
-    "@sap-cloud-sdk/odata-v4": "^2.1.0",
-    "@sap-cloud-sdk/temporal-de-serializers": "^2.1.0",
-    "@sap-cloud-sdk/test-services": "^2.1.0",
+    "@sap-cloud-sdk/connectivity": "^2.2.0",
+    "@sap-cloud-sdk/generator": "^2.2.0",
+    "@sap-cloud-sdk/http-client": "^2.2.0",
+    "@sap-cloud-sdk/odata-common": "^2.2.0",
+    "@sap-cloud-sdk/odata-v2": "^2.2.0",
+    "@sap-cloud-sdk/odata-v4": "^2.2.0",
+    "@sap-cloud-sdk/temporal-de-serializers": "^2.2.0",
+    "@sap-cloud-sdk/test-services": "^2.2.0",
     "@types/jsonwebtoken": "^8.3.8",
     "dtslint": "^4.0.0"
   }

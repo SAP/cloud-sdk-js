@@ -45,7 +45,6 @@ export class ODataGetByKeyRequestConfig<
 
   queryParameters(): Record<string, any> {
     return this.prependDollarToQueryParameters({
-      format: 'json',
       ...this.oDataUri.getSelect(this.selects),
       ...this.oDataUri.getExpand(this.selects, this.expands, this.entityApi)
     });

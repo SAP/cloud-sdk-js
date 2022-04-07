@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [odata-common, odata-v2, odata-v4] Remove all `$format=json` query parameters since header `Accept: application/json` is sent by default.
 
 ## New Functionality
 

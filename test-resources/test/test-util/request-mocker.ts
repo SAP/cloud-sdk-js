@@ -154,7 +154,7 @@ export function mockGetRequest<T extends EntityApi<EntityBase, any>>(
     ...params,
     statusCode: params.statusCode || 200,
     method: params.method || 'get',
-    query: { $format: 'json', ...params.query }
+    query: params.query
   });
 }
 

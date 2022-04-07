@@ -156,4 +156,14 @@ describe('entity', () => {
       expect(entity['isConflictingCustomField']('custom')).toBe(false);
     });
   });
+
+  describe('get schema', () => {
+    it('should apply singleton pattern for schema', () => {
+      const schema1 = commonEntityApi.schema;
+      const schema2 = commonEntityApi.schema;
+      // the two schemas should have the same reference
+      /* eslint-disable-next-line eqeqeq */
+      expect(schema1 == schema2).toBeTruthy();
+    });
+  });
 });

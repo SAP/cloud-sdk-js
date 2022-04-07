@@ -11,6 +11,9 @@ import {
   AllFields,
   EntityBuilderType,
   EntityApi,
+  FieldBuilder,
+  EdmTypeField,
+  OrderableEdmTypeField,
   Link,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v2';
@@ -38,12 +41,11 @@ export declare class TestEntityApi<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<TestEntity<DeSerializersT>, DeSerializersT, NullableT>;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof TestEntity, DeSerializersT>;
+  private _schema?;
   get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
+    KEY_PROPERTY_GUID: EdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -64,7 +66,496 @@ export declare class TestEntityApi<
           any,
           any
         >
-      >
+      >,
+      DeSerializersT,
+      'Edm.Guid',
+      false,
+      true
+    >;
+    KEY_PROPERTY_STRING: EdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    STRING_PROPERTY: EdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.String',
+      true,
+      true
+    >;
+    BOOLEAN_PROPERTY: EdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Boolean',
+      true,
+      true
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Guid',
+      true,
+      true
+    >;
+    INT_16_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Int16',
+      true,
+      true
+    >;
+    INT_32_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Int32',
+      true,
+      true
+    >;
+    INT_64_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Int64',
+      true,
+      true
+    >;
+    DECIMAL_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Decimal',
+      true,
+      true
+    >;
+    SINGLE_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Single',
+      true,
+      true
+    >;
+    DOUBLE_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Double',
+      true,
+      true
+    >;
+    FLOAT_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Float',
+      true,
+      true
+    >;
+    TIME_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Time',
+      true,
+      true
+    >;
+    DATE_TIME_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.DateTime',
+      true,
+      true
+    >;
+    DATE_TIME_OFF_SET_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.DateTimeOffset',
+      true,
+      true
+    >;
+    BYTE_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Byte',
+      true,
+      true
+    >;
+    S_BYTE_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.SByte',
+      true,
+      true
+    >;
+    SOMETHING_THE_SDK_DOES_NOT_SUPPORT: EdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.Any',
+      true,
+      true
+    >;
+    COMPLEX_TYPE_PROPERTY: TestComplexTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      true,
+      true
     >;
     /**
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
@@ -93,11 +584,7 @@ export declare class TestEntityApi<
       DeSerializersT,
       TestEntitySingleLinkApi<DeSerializersT>
     >;
-    /**
-     * Static representation of the [[keyPropertyGuid]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_PROPERTY_GUID: import('@sap-cloud-sdk/odata-v2').EdmTypeField<
+    ALL_FIELDS: AllFields<
       TestEntity<
         DeSerializers<
           any,
@@ -118,568 +605,7 @@ export declare class TestEntityApi<
           any,
           any
         >
-      >,
-      DeSerializersT,
-      'Edm.Guid',
-      false,
-      true
-    >;
-    /**
-     * Static representation of the [[keyPropertyString]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_PROPERTY_STRING: import('@sap-cloud-sdk/odata-v2').EdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.String',
-      false,
-      true
-    >;
-    /**
-     * Static representation of the [[stringProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    STRING_PROPERTY: import('@sap-cloud-sdk/odata-v2').EdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.String',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[booleanProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    BOOLEAN_PROPERTY: import('@sap-cloud-sdk/odata-v2').EdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Boolean',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[guidProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    GUID_PROPERTY: import('@sap-cloud-sdk/odata-v2').EdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Guid',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[int16Property]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    INT_16_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Int16',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[int32Property]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    INT_32_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Int32',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[int64Property]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    INT_64_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Int64',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[decimalProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    DECIMAL_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Decimal',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[singleProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    SINGLE_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Single',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[doubleProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    DOUBLE_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Double',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[floatProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    FLOAT_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Float',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[timeProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TIME_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Time',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[dateTimeProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    DATE_TIME_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.DateTime',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    DATE_TIME_OFF_SET_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.DateTimeOffset',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[byteProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    BYTE_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Byte',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[sByteProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    S_BYTE_PROPERTY: import('@sap-cloud-sdk/odata-v2').OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.SByte',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    SOMETHING_THE_SDK_DOES_NOT_SUPPORT: import('@sap-cloud-sdk/odata-v2').EdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      'Edm.Any',
-      true,
-      true
-    >;
-    /**
-     * Static representation of the [[complexTypeProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    COMPLEX_TYPE_PROPERTY: TestComplexTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
-      DeSerializersT,
-      true,
-      true
+      >
     >;
   };
 }

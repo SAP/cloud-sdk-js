@@ -6,7 +6,9 @@ import {
   DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntity4Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -26,41 +28,11 @@ export declare class TestEntity4Api<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<TestEntity4<DeSerializersT>, DeSerializersT, NullableT>;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof TestEntity4, DeSerializersT>;
+  private _schema?;
   get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      TestEntity4<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the [[keyPropertyString]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_PROPERTY_STRING: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    KEY_PROPERTY_STRING: EdmTypeField<
       TestEntity4<
         DeSerializers<
           any,
@@ -89,11 +61,7 @@ export declare class TestEntity4Api<
       false,
       true
     >;
-    /**
-     * Static representation of the [[booleanProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    BOOLEAN_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    BOOLEAN_PROPERTY: EdmTypeField<
       TestEntity4<
         DeSerializers<
           any,
@@ -121,6 +89,31 @@ export declare class TestEntity4Api<
       'Edm.Boolean',
       true,
       true
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntity4<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
     >;
   };
 }

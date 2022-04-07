@@ -33,51 +33,60 @@ class AirportsApi {
       isNullable
     );
   }
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new odata_v4_1.FieldBuilder(
+        Airports_1.Airports,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
   get schema() {
-    const fieldBuilder = new odata_v4_1.FieldBuilder(
-      Airports_1.Airports,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[icaoCode]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      ICAO_CODE: fieldBuilder.buildEdmTypeField(
-        'IcaoCode',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[name]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
-      /**
-       * Static representation of the [[iataCode]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      IATA_CODE: fieldBuilder.buildEdmTypeField(
-        'IataCode',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[location]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      LOCATION: fieldBuilder.buildComplexTypeField(
-        'Location',
-        AirportLocation_1.AirportLocationField,
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new odata_v4_1.AllFields('*', Airports_1.Airports)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[icaoCode]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        ICAO_CODE: fieldBuilder.buildEdmTypeField(
+          'IcaoCode',
+          'Edm.String',
+          false
+        ),
+        /**
+         * Static representation of the [[name]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
+        /**
+         * Static representation of the [[iataCode]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        IATA_CODE: fieldBuilder.buildEdmTypeField(
+          'IataCode',
+          'Edm.String',
+          false
+        ),
+        /**
+         * Static representation of the [[location]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        LOCATION: fieldBuilder.buildComplexTypeField(
+          'Location',
+          AirportLocation_1.AirportLocationField,
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new odata_v4_1.AllFields('*', Airports_1.Airports)
+      };
+    }
+    return this._schema;
   }
 }
 exports.AirportsApi = AirportsApi;

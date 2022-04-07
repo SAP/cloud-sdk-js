@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [generator] Reduce memory usage of `schema` in API classes (e.g., `BusinessPartnerAPI`).
 
 ## Fixed Issues
 

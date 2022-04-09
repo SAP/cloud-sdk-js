@@ -37,12 +37,12 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@sap-cloud-sdk/connectivity@^2.1.1-20220401135415.0+59fcaa39":
-  version "2.1.1-20220401135415.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/connectivity/-/connectivity-2.1.1-20220401135415.0.tgz#c7b09bada4ede4fd875c45c1200fb1cb36f16eaa"
-  integrity sha512-zAe7/e8JdP8GyXfn+LJTRLyWzYLFAmBHbwjZV56V9p6mYu/5alhW4WdoM1iFnRHloNnaW/wPWSbG3x2KfQB4tw==
+"@sap-cloud-sdk/connectivity@^2.2.1-20220407111951.0+e6887f8e":
+  version "2.2.1-20220407111951.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/connectivity/-/connectivity-2.2.1-20220407111951.0.tgz#57dc37601e208b669e3630c936e54fb561937025"
+  integrity sha512-CQtvl8zVJxqioYYOn3Hn85dGKTCL+pF5ApfJdfLlbcBRe3aHEopTlzIX/k/i6TYtEeLH2KHWU8kfAofN1FOWsg==
   dependencies:
-    "@sap-cloud-sdk/util" "^2.1.1-20220401135415.0+59fcaa39"
+    "@sap-cloud-sdk/util" "^2.2.1-20220407111951.0+e6887f8e"
     "@sap/xsenv" "^3.0.0"
     "@sap/xssec" "^3.2.7"
     axios "^0.26.0"
@@ -51,27 +51,28 @@
     jsonwebtoken "^8.5.1"
     opossum "^6.0.0"
 
-"@sap-cloud-sdk/generator-common@^2.1.1-20220401135415.0+59fcaa39":
-  version "2.1.1-20220401135415.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/generator-common/-/generator-common-2.1.1-20220401135415.0.tgz#0db29d9e22f6159c4e9ac6cb4a332c6cd9635a9a"
-  integrity sha512-2/+bD2T65X8yO1UUA+EhUAI9E3R30RYGd6cYmFrxttuLhiqVQxRtzz5zteKkUDRw+GdjueH06nn3OKiXbD8evw==
+"@sap-cloud-sdk/generator-common@^2.2.1-20220407111951.0+e6887f8e":
+  version "2.2.1-20220407111951.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/generator-common/-/generator-common-2.2.1-20220407111951.0.tgz#fb25c43fdbc55466661739db1be691a16f325d76"
+  integrity sha512-/yDdPE/1Gt3OxfZrZs9zutbHPQnc8ldcgTLE0IWTApVpKcwaeSStAVgbtUdwTnSkGPMpszAzso46OeyUwXkSsg==
   dependencies:
-    "@sap-cloud-sdk/util" "^2.1.1-20220401135415.0+59fcaa39"
+    "@sap-cloud-sdk/util" "^2.2.1-20220407111951.0+e6887f8e"
     axios "^0.26.0"
     fast-levenshtein "~3.0.0"
     fs-extra "^10.0.0"
     glob "^7.1.6"
     typescript "~4.6.2"
 
-"@sap-cloud-sdk/generator@2.1.1-20220401135415.0":
-  version "2.1.1-20220401135415.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/generator/-/generator-2.1.1-20220401135415.0.tgz#3afea33b9329592b4e2835e0e30fb041547e008f"
-  integrity sha512-pa+Tn+I4gxkxG2hM1nWP6ge0e7RyKKEFEG9c7eBN7LHF3cptKqm8IPNQubHIv7Epj7C9aZdMPNsbg5/eZu14yw==
+"@sap-cloud-sdk/generator@2.2.1-20220407111951.0":
+  version "2.2.1-20220407111951.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/generator/-/generator-2.2.1-20220407111951.0.tgz#c795f9e71ebd39c7e3c8f9ff057dd1392940130f"
+  integrity sha512-13dv0nJ9knCVmkuugHfjJNXG6C9+oEcC4iWx91PVVwp4Ri5R5349yWZWj6QeYHMMRTETvUDHD3bBYgOzXnFLaA==
   dependencies:
-    "@sap-cloud-sdk/generator-common" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/odata-v2" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/odata-v4" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/util" "^2.1.1-20220401135415.0+59fcaa39"
+    "@sap-cloud-sdk/generator-common" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/odata-common" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/odata-v2" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/odata-v4" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/util" "^2.2.1-20220407111951.0+e6887f8e"
     "@sap/edm-converters" "~1.0.21"
     "@types/fs-extra" "^9.0.1"
     "@types/glob" "^7.1.2"
@@ -83,58 +84,58 @@
     voca "^1.4.0"
     yargs "^17.0.1"
 
-"@sap-cloud-sdk/http-client@^2.1.1-20220401135415.0+59fcaa39":
-  version "2.1.1-20220401135415.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/http-client/-/http-client-2.1.1-20220401135415.0.tgz#4b89cc9d517e5fb1b5faa677e615ccc03c5ac8e7"
-  integrity sha512-fHSRbkP1IZyIRVAYLSuaofSQy4HAV4VkZ32SsA7EmTklzMP0FSE9w2LFeKPkexL8XbKQWc6VYKdCehfPk1LAoA==
+"@sap-cloud-sdk/http-client@^2.2.1-20220407111951.0+e6887f8e":
+  version "2.2.1-20220407111951.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/http-client/-/http-client-2.2.1-20220407111951.0.tgz#c1143f1b12774ff475ea9f5016fc28c5e47c1d39"
+  integrity sha512-u+YKl7VfX9If4cysKxgu1qG5CUFw6XLHounmo2fWh46i37ahOF2xoq2IWa5h1rNBAUrURzv4XDMI5DJC3WADAQ==
   dependencies:
-    "@sap-cloud-sdk/connectivity" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/util" "^2.1.1-20220401135415.0+59fcaa39"
+    "@sap-cloud-sdk/connectivity" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/util" "^2.2.1-20220407111951.0+e6887f8e"
     axios "^0.26.0"
 
-"@sap-cloud-sdk/odata-common@^2.1.1-20220401135415.0+59fcaa39":
-  version "2.1.1-20220401135415.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-common/-/odata-common-2.1.1-20220401135415.0.tgz#6b3f914d3f445024c5abe14dcb6bf4d5347a6ff8"
-  integrity sha512-LoEZe6fd4kCZLrgMCpeuRuCbgkkomejGj2acsXSGsCSoIT6Sd3JH/47Bfq0MgYWGV1QAcMCmlkwrpPAh5fFiDA==
+"@sap-cloud-sdk/odata-common@^2.2.1-20220407111951.0+e6887f8e":
+  version "2.2.1-20220407111951.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-common/-/odata-common-2.2.1-20220407111951.0.tgz#41ffff0fc390ad1da92eefc1a0cbeb37fbd60de1"
+  integrity sha512-Iu29nl7vEev+bAYD2J+39DrbbYJpUSGBk+qXnvb4j7d3ltvwArKzZQ3boJOepUgoO7ltQDO/4VPzpwzxei0EoA==
   dependencies:
-    "@sap-cloud-sdk/connectivity" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/http-client" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/util" "^2.1.1-20220401135415.0+59fcaa39"
+    "@sap-cloud-sdk/connectivity" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/http-client" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/util" "^2.2.1-20220407111951.0+e6887f8e"
     bignumber.js "^9.0.0"
     moment "^2.29.0"
     uuid "^8.2.0"
     voca "^1.4.0"
 
-"@sap-cloud-sdk/odata-v2@^2.1.1-20220401135415.0+59fcaa39":
-  version "2.1.1-20220401135415.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-v2/-/odata-v2-2.1.1-20220401135415.0.tgz#99c2719e87bfe29969e9e7f53f1f8c57f8f3174c"
-  integrity sha512-IQmhEWlQdfL+qHZcKNKiutWfGm/ch7wgbno+/6UxHL0tP6Et8DAt/P9hMByCjMPG+/NZUSfrZLZ5CR1tdgaa2A==
+"@sap-cloud-sdk/odata-v2@^2.2.1-20220407111951.0+e6887f8e":
+  version "2.2.1-20220407111951.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-v2/-/odata-v2-2.2.1-20220407111951.0.tgz#389265c77540bb5d29c5c0aac234120f8713e67e"
+  integrity sha512-6+11kypvRd5CTCGSCUm++580AFfK8sbKQ+ySMocgX+S3NI8uzIhk10LuxwSollOs29EE25CcAnFXlV8NNODwcw==
   dependencies:
-    "@sap-cloud-sdk/connectivity" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/http-client" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/odata-common" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/util" "^2.1.1-20220401135415.0+59fcaa39"
+    "@sap-cloud-sdk/connectivity" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/http-client" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/odata-common" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/util" "^2.2.1-20220407111951.0+e6887f8e"
     bignumber.js "^9.0.0"
     moment "^2.29.0"
     uuid "^8.2.0"
 
-"@sap-cloud-sdk/odata-v4@^2.1.1-20220401135415.0+59fcaa39":
-  version "2.1.1-20220401135415.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-v4/-/odata-v4-2.1.1-20220401135415.0.tgz#ac6e9de90305cdf8d02cbaa43b5f4eae2b251f50"
-  integrity sha512-a5MfsRzyJaetHSWPnrpiIorGOBl8UafZXNDLOkTErUSUI0qiSZwWxBjp6+KHWk+O1aL7zZhR7eyohqG+DirLoQ==
+"@sap-cloud-sdk/odata-v4@^2.2.1-20220407111951.0+e6887f8e":
+  version "2.2.1-20220407111951.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/odata-v4/-/odata-v4-2.2.1-20220407111951.0.tgz#2438a5d35363e5af02c1d9400e412bc748237440"
+  integrity sha512-jwsdkHWJvCnPsFPKm+mJpfrPgac3eT7ufJ5wPTww49QHKmghLMhhE0wiaWiv/98o8OZeMfi05aa7w+8YcNUtLA==
   dependencies:
-    "@sap-cloud-sdk/connectivity" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/http-client" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/odata-common" "^2.1.1-20220401135415.0+59fcaa39"
-    "@sap-cloud-sdk/util" "^2.1.1-20220401135415.0+59fcaa39"
+    "@sap-cloud-sdk/connectivity" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/http-client" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/odata-common" "^2.2.1-20220407111951.0+e6887f8e"
+    "@sap-cloud-sdk/util" "^2.2.1-20220407111951.0+e6887f8e"
     bignumber.js "^9.0.0"
     moment "^2.29.0"
     uuid "^8.2.0"
 
-"@sap-cloud-sdk/util@^2.1.1-20220401135415.0+59fcaa39":
-  version "2.1.1-20220401135415.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-2.1.1-20220401135415.0.tgz#248bd629b971e3a011a0263569acd8fd8806f16f"
-  integrity sha512-4qeauAViFNY6yM3rEIRAeBQqgaR5HukFXjG6Njw9d0QgSlyZhqJCU+UB7U5C/9EKJFJEyBbd73m6+I5QBRyAPw==
+"@sap-cloud-sdk/util@^2.2.1-20220407111951.0+e6887f8e":
+  version "2.2.1-20220407111951.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-2.2.1-20220407111951.0.tgz#63664dd583f32af89a82cf72d7d6b6fa157aa46d"
+  integrity sha512-0wYuzKbNbSsx/CHhTySvDrZvyzbTZElzPvYd38AUEIyX/BXMpp1qxJPot+qO9AuDjF3YKAlv/W8xcQOBmUpLEQ==
   dependencies:
     axios "^0.26.0"
     chalk "^4.1.0"

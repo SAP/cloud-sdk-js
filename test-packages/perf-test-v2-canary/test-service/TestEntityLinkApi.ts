@@ -5,7 +5,7 @@
  */
 import { TestEntityLink } from './TestEntityLink';
 import { TestEntityLinkRequestBuilder } from './TestEntityLinkRequestBuilder';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder } from '@sap-cloud-sdk/odata-v4';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, OrderableEdmTypeField, EdmTypeField } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityLinkApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
     EntityApi<
       TestEntityLink<
@@ -68,9 +68,25 @@ export class TestEntityLinkApi<DeSerializersT extends DeSerializers = DefaultDeS
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<typeof TestEntityLink, DeSerializersT>;
+  get fieldBuilder() {
+    if(!this._fieldBuilder){
+      this._fieldBuilder = new FieldBuilder(TestEntityLink, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    KEY_TEST_ENTITY_LINK: OrderableEdmTypeField<TestEntityLink<DeSerializers>, DeSerializersT, 'Edm.Int32', false, true>,
+KEY_TO_TEST_ENTITY: OrderableEdmTypeField<TestEntityLink<DeSerializers>, DeSerializersT, 'Edm.Int32', false, true>,
+STRING_PROPERTY: EdmTypeField<TestEntityLink<DeSerializers>, DeSerializersT, 'Edm.String', true, true>,
+ALL_FIELDS: AllFields<TestEntityLink<DeSerializers>>
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(TestEntityLink, this.deSerializers);
-    return { 
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = { 
     /**
  * Static representation of the [[keyTestEntityLink]] property for query construction.
  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -93,5 +109,8 @@ STRING_PROPERTY: fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', 
  */
 ALL_FIELDS: new AllFields('*', TestEntityLink) 
   };
+    }
+  
+    return this._schema;
   }
 }

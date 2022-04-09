@@ -7,6 +7,8 @@ const interval = setInterval(() =>
 const dest = {url: 'http://localhost:4004/' };
 
 const sdkCode = async () => {
+  var hd = new memwatch.HeapDiff();
+
   const testEntityApi = testService().testEntityApi;
   const testEntities101 = await testEntityApi.requestBuilder().getAll().execute(dest);
   const testEntities102 = await testEntityApi.requestBuilder().getAll().execute(dest);
@@ -28,10 +30,11 @@ const sdkCode = async () => {
   const testEntities206 = await testEntity50ColApi.requestBuilder().getAll().execute(dest);
   const testEntities207 = await testEntity50ColApi.requestBuilder().getAll().execute(dest);
   const testEntities208 = await testEntity50ColApi.requestBuilder().getAll().execute(dest);
-  var hd = new memwatch.HeapDiff();
   const testEntities209 = await testEntity50ColApi.requestBuilder().getAll().execute(dest);
-  var diff = hd.end();
   const testEntities210 = await testEntity50ColApi.requestBuilder().getAll().execute(dest);
+  var diff = hd.end();
+  // 11.08mb -> 156.22mb (227mb last time)
+  console.log(diff);
   console.log(testEntities210.length);
 };
 
@@ -40,9 +43,9 @@ async function main(){
 
   await sdkCode();
 
-  setTimeout(() => {
-    clearInterval(interval);
-  }, 10000);
+  // setTimeout(() => {
+  //   clearInterval(interval);
+  // }, 10000);
 
   console.log('***** test ends *****');
 }

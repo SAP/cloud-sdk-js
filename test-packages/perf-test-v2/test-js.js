@@ -1,3 +1,4 @@
+var memwatch = require('node-memwatch-new');
 const { testService } = require('./test-service');
 
 const interval = setInterval(() =>
@@ -6,6 +7,8 @@ const interval = setInterval(() =>
 const dest = {url: 'http://localhost:4004/' };
 
 const sdkCode = async () => {
+  var hd = new memwatch.HeapDiff();
+
   const testEntityApi = testService().testEntityApi;
   const testEntities101 = await testEntityApi.requestBuilder().getAll().execute(dest);
   const testEntities102 = await testEntityApi.requestBuilder().getAll().execute(dest);
@@ -29,6 +32,9 @@ const sdkCode = async () => {
   const testEntities208 = await testEntity50ColApi.requestBuilder().getAll().execute(dest);
   const testEntities209 = await testEntity50ColApi.requestBuilder().getAll().execute(dest);
   const testEntities210 = await testEntity50ColApi.requestBuilder().getAll().execute(dest);
+  var diff = hd.end();
+  // 11.08mb -> 215.45mb (227mb last time)
+  console.log(diff);
   console.log(testEntities210.length);
 };
 
@@ -37,9 +43,9 @@ async function main(){
 
   await sdkCode();
 
-  setTimeout(() => {
-    clearInterval(interval);
-  }, 10000);
+  // setTimeout(() => {
+  //   clearInterval(interval);
+  // }, 10000);
 
   console.log('***** test ends *****');
 }

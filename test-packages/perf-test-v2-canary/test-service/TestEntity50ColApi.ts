@@ -5,7 +5,7 @@
  */
 import { TestEntity50Col } from './TestEntity50Col';
 import { TestEntity50ColRequestBuilder } from './TestEntity50ColRequestBuilder';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-v4';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time, OrderableEdmTypeField, EdmTypeField } from '@sap-cloud-sdk/odata-v4';
 export class TestEntity50ColApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
     EntityApi<
       TestEntity50Col<
@@ -68,9 +68,73 @@ export class TestEntity50ColApi<DeSerializersT extends DeSerializers = DefaultDe
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<typeof TestEntity50Col, DeSerializersT>;
+  get fieldBuilder() {
+    if(!this._fieldBuilder){
+      this._fieldBuilder = new FieldBuilder(TestEntity50Col, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    KEY_TEST_ENTITY_50_COL: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Int32', false, true>,
+STRING_PROPERTY_1: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.String', true, true>,
+GUID_PROPERTY_1: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Guid', true, true>,
+BOOLEAN_PROPERTY_1: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Boolean', true, true>,
+INT_64_PROPERTY_1: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Int64', true, true>,
+DOUBLE_PROPERTY_1: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Double', true, true>,
+DECIMAL_PROPERTY_1: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Decimal', true, true>,
+DATE_PROPERTY_1: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Date', true, true>,
+TIME_OF_DAY_PROPERTY_1: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.TimeOfDay', true, true>,
+DATA_TIME_OFFSET_DATA_TIME_PROPERTY_1: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
+DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_1: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
+STRING_PROPERTY_2: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.String', true, true>,
+GUID_PROPERTY_2: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Guid', true, true>,
+BOOLEAN_PROPERTY_2: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Boolean', true, true>,
+INT_64_PROPERTY_2: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Int64', true, true>,
+DOUBLE_PROPERTY_2: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Double', true, true>,
+DECIMAL_PROPERTY_2: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Decimal', true, true>,
+DATE_PROPERTY_2: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Date', true, true>,
+TIME_OF_DAY_PROPERTY_2: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.TimeOfDay', true, true>,
+DATA_TIME_OFFSET_DATA_TIME_PROPERTY_2: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
+DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_2: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
+STRING_PROPERTY_3: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.String', true, true>,
+GUID_PROPERTY_3: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Guid', true, true>,
+BOOLEAN_PROPERTY_3: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Boolean', true, true>,
+INT_64_PROPERTY_3: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Int64', true, true>,
+DOUBLE_PROPERTY_3: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Double', true, true>,
+DECIMAL_PROPERTY_3: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Decimal', true, true>,
+DATE_PROPERTY_3: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Date', true, true>,
+TIME_OF_DAY_PROPERTY_3: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.TimeOfDay', true, true>,
+DATA_TIME_OFFSET_DATA_TIME_PROPERTY_3: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
+DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_3: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
+STRING_PROPERTY_4: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.String', true, true>,
+GUID_PROPERTY_4: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Guid', true, true>,
+BOOLEAN_PROPERTY_4: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Boolean', true, true>,
+INT_64_PROPERTY_4: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Int64', true, true>,
+DOUBLE_PROPERTY_4: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Double', true, true>,
+DECIMAL_PROPERTY_4: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Decimal', true, true>,
+DATE_PROPERTY_4: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Date', true, true>,
+TIME_OF_DAY_PROPERTY_4: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.TimeOfDay', true, true>,
+DATA_TIME_OFFSET_DATA_TIME_PROPERTY_4: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
+DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_4: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
+STRING_PROPERTY_5: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.String', true, true>,
+GUID_PROPERTY_5: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Guid', true, true>,
+BOOLEAN_PROPERTY_5: EdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Boolean', true, true>,
+INT_64_PROPERTY_5: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Int64', true, true>,
+DOUBLE_PROPERTY_5: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Double', true, true>,
+DECIMAL_PROPERTY_5: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Decimal', true, true>,
+DATE_PROPERTY_5: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.Date', true, true>,
+TIME_OF_DAY_PROPERTY_5: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.TimeOfDay', true, true>,
+DATA_TIME_OFFSET_DATA_TIME_PROPERTY_5: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
+DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_5: OrderableEdmTypeField<TestEntity50Col<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
+ALL_FIELDS: AllFields<TestEntity50Col<DeSerializers>>
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(TestEntity50Col, this.deSerializers);
-    return { 
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = { 
     /**
  * Static representation of the [[keyTestEntity50Col]] property for query construction.
  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -333,5 +397,8 @@ DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_5: fieldBuilder.buildEdmTypeField('DataTimeO
  */
 ALL_FIELDS: new AllFields('*', TestEntity50Col) 
   };
+    }
+  
+    return this._schema;
   }
 }

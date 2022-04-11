@@ -193,7 +193,7 @@ myApi
       timeout: 123,
       circuitBreaker: true,  // CircuitBreakerOptions | undefined | true
       retry: true            // RetryOptions | undefined | true
-  }),id)
+  }), id)
   .execute({ 
       destinationName: 'my-dest'
   });

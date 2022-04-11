@@ -154,6 +154,7 @@ myApi
   .execute({ 
       destinationName: 'my-dest'
   });
+
 myApi
   .getAll()   
   .middleware(resilience({

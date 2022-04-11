@@ -12,7 +12,7 @@ const sdkCode = async () => {
   const tasks = [];
   var hd = new memwatch.HeapDiff();
   // 2000 loop
-  const loop = 1;
+  const loop = 100;
   for(let i = 0; i < loop; i++) {
     tasks.push(fetch());
   }
@@ -31,7 +31,10 @@ async function fetch(){
     return {
       strProp: m.stringProperty1,
       numProp: m.doubleProperty1,
-      items: items.filter(i => i.stringProperty1 = m.stringProperty1)
+      //items: items.filter(i => i.stringProperty1 = m.stringProperty1)
+      items: items[0]
+      // 10 loop: 31.69 mb
+      // 100 loop: 301 mb
     }
   });
 }

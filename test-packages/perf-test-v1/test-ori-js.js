@@ -27,7 +27,11 @@ async function fetch(){
     return {
       strProp: m.stringProperty1,
       numProp: m.doubleProperty1,
-      items: items.filter(i => i.stringProperty1 = m.stringProperty1)
+      //items: items.filter(i => i.stringProperty1 = m.stringProperty1)
+      items: items[0]
+      // 10 loop: 31.65 mb
+      // 100 loop: 307.57 mb
+      // 200 loop: 614.94 mb
     }
   });
 }

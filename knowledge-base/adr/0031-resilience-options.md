@@ -231,7 +231,7 @@ globalResilience(middleWare : <T>(fn: Promise<T>, context?: any) => Promise<T>,i
 ### Options
 
 The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the default values.
-If you pass `true`,this will enable the resilience option with the default values.
+If you pass `true` this will enable the resilience option with the default values.
 
 ```ts
 interface CircuitBreakerOptions = {

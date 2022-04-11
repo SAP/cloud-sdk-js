@@ -1,4 +1,5 @@
 const { TestEntity50Col } = require('./test-service');
+var memwatch = require('node-memwatch-new');
 
 const interval = setInterval(() =>
   console.log(`HEAP used: ${Math.round(process.memoryUsage().heapUsed/1024/1024)} MB`), 1000);
@@ -7,9 +8,12 @@ const dest = {url: 'http://localhost:4004/' };
 
 const sdkCode = async () => {
   const col = [];
+  var hd = new memwatch.HeapDiff();
   for(let i=0;i<6000;i++) {
     col[i] = TestEntity50Col.builder().keyTestEntity50Col(1);
   }
+  var diff = hd.end();
+  console.log(diff);
   console.log(col.length);
 };
 
@@ -18,9 +22,9 @@ async function main(){
 
   await sdkCode();
 
-  setTimeout(() => {
-    clearInterval(interval);
-  }, 10000);
+  // setTimeout(() => {
+  //   clearInterval(interval);
+  // }, 10000);
 
   console.log('***** test ends *****');
 }

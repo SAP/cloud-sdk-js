@@ -8,6 +8,7 @@
                 </EntitySet>
                 <EntitySet Name="TestEntityLink" EntityType="TestService.TestEntityLink"/>
                 <EntitySet Name="TestEntity50Col" EntityType="TestService.TestEntity50Col"/>
+                <EntitySet Name="TestEntity100Col" EntityType="TestService.TestEntity100Col"/>
                 <FunctionImport Name="returnSapCloudSdk" Function="TestService.returnSapCloudSdk"/>
                 <FunctionImport Name="concatStrings" Function="TestService.concatStrings"/>
                 <FunctionImport Name="returnInt" Function="TestService.returnInt"/>
@@ -102,6 +103,112 @@
                 <Property Name="TimeOfDayProperty5" Type="Edm.TimeOfDay"/>
                 <Property Name="DataTimeOffsetDataTimeProperty5" Type="Edm.DateTimeOffset"/>
                 <Property Name="DataTimeOffsetTimestampProperty5" Type="Edm.DateTimeOffset" Precision="7"/>
+            </EntityType>
+            <EntityType Name="TestEntity100Col">
+                <Key>
+                    <PropertyRef Name="KeyTestEntity100Col"/>
+                </Key>
+                <Property Name="KeyTestEntity100Col" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="StringProperty1" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty1" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty1" Type="Edm.Boolean"/>
+                <Property Name="Int64Property1" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty1" Type="Edm.Double"/>
+                <Property Name="DecimalProperty1" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty1" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty1" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty1" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty1" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="StringProperty2" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty2" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty2" Type="Edm.Boolean"/>
+                <Property Name="Int64Property2" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty2" Type="Edm.Double"/>
+                <Property Name="DecimalProperty2" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty2" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty2" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty2" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty2" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="StringProperty3" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty3" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty3" Type="Edm.Boolean"/>
+                <Property Name="Int64Property3" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty3" Type="Edm.Double"/>
+                <Property Name="DecimalProperty3" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty3" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty3" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty3" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty3" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="StringProperty4" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty4" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty4" Type="Edm.Boolean"/>
+                <Property Name="Int64Property4" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty4" Type="Edm.Double"/>
+                <Property Name="DecimalProperty4" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty4" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty4" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty4" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty4" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="StringProperty5" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty5" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty5" Type="Edm.Boolean"/>
+                <Property Name="Int64Property5" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty5" Type="Edm.Double"/>
+                <Property Name="DecimalProperty5" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty5" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty5" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty5" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty5" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="StringProperty11" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty11" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty11" Type="Edm.Boolean"/>
+                <Property Name="Int64Property11" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty11" Type="Edm.Double"/>
+                <Property Name="DecimalProperty11" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty11" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty11" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty11" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty11" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="StringProperty12" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty12" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty12" Type="Edm.Boolean"/>
+                <Property Name="Int64Property12" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty12" Type="Edm.Double"/>
+                <Property Name="DecimalProperty12" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty12" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty12" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty12" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty12" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="StringProperty13" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty13" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty13" Type="Edm.Boolean"/>
+                <Property Name="Int64Property13" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty13" Type="Edm.Double"/>
+                <Property Name="DecimalProperty13" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty13" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty13" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty13" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty13" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="StringProperty14" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty14" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty14" Type="Edm.Boolean"/>
+                <Property Name="Int64Property14" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty14" Type="Edm.Double"/>
+                <Property Name="DecimalProperty14" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty14" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty14" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty14" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty14" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="StringProperty15" Type="Edm.String" MaxLength="111"/>
+                <Property Name="GuidProperty15" Type="Edm.Guid"/>
+                <Property Name="BooleanProperty15" Type="Edm.Boolean"/>
+                <Property Name="Int64Property15" Type="Edm.Int64"/>
+                <Property Name="DoubleProperty15" Type="Edm.Double"/>
+                <Property Name="DecimalProperty15" Type="Edm.Decimal" Scale="2" Precision="9"/>
+                <Property Name="DateProperty15" Type="Edm.Date"/>
+                <Property Name="TimeOfDayProperty15" Type="Edm.TimeOfDay"/>
+                <Property Name="DataTimeOffsetDataTimeProperty15" Type="Edm.DateTimeOffset"/>
+                <Property Name="DataTimeOffsetTimestampProperty15" Type="Edm.DateTimeOffset" Precision="7"/>
             </EntityType>
             <Function Name="getStringProperty" IsBound="true" IsComposable="false">
                 <Parameter Name="in" Type="TestService.TestEntity"/>

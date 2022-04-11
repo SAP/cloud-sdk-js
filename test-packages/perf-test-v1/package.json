@@ -11,11 +11,13 @@
     "compile": "tsc test.ts",
     "test": "ts-node test.ts",
     "test-js": "node test-js.js",
+    "test-ori-js": "node test-ori-js.js",
     "test-er": "ts-node test-er.ts",
     "test-eb": "ts-node test-eb.ts",
     "test-eb-js": "node test-eb-js.js"
   },
   "devDependencies": {
+    "@sap-cloud-sdk/core": "1.54.0",
     "@sap-cloud-sdk/generator": "1.54.0",
     "typescript": "4.6.3",
     "ts-node": "10.0.0",

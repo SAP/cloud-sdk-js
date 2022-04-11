@@ -5,7 +5,7 @@
  */
 import { CreateRequestBuilderV4, DeleteRequestBuilderV4, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, ODataBatchChangeSetV4, ODataBatchRequestBuilderV4, UpdateRequestBuilderV4 } from '@sap-cloud-sdk/core';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { TestEntity, TestEntityLink, TestEntity50Col } from './index';
+import { TestEntity, TestEntityLink, TestEntity50Col, TestEntity100Col } from './index';
 
 /**
  * Batch builder for operations supported on the Test Service.
@@ -30,6 +30,6 @@ export function changeset(first: undefined | WriteTestServiceRequestBuilder | Ar
 }
 
 export const defaultTestServicePath = '/odata/test-service';
-const map = { 'TestEntity': TestEntity, 'TestEntityLink': TestEntityLink, 'TestEntity50Col': TestEntity50Col };
-export type ReadTestServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity> | GetAllRequestBuilderV4<TestEntityLink> | GetAllRequestBuilderV4<TestEntity50Col> | GetByKeyRequestBuilderV4<TestEntity> | GetByKeyRequestBuilderV4<TestEntityLink> | GetByKeyRequestBuilderV4<TestEntity50Col>;
-export type WriteTestServiceRequestBuilder = CreateRequestBuilderV4<TestEntity> | UpdateRequestBuilderV4<TestEntity> | DeleteRequestBuilderV4<TestEntity> | CreateRequestBuilderV4<TestEntityLink> | UpdateRequestBuilderV4<TestEntityLink> | DeleteRequestBuilderV4<TestEntityLink> | CreateRequestBuilderV4<TestEntity50Col> | UpdateRequestBuilderV4<TestEntity50Col> | DeleteRequestBuilderV4<TestEntity50Col>;
+const map = { 'TestEntity': TestEntity, 'TestEntityLink': TestEntityLink, 'TestEntity50Col': TestEntity50Col, 'TestEntity100Col': TestEntity100Col };
+export type ReadTestServiceRequestBuilder = GetAllRequestBuilderV4<TestEntity> | GetAllRequestBuilderV4<TestEntityLink> | GetAllRequestBuilderV4<TestEntity50Col> | GetAllRequestBuilderV4<TestEntity100Col> | GetByKeyRequestBuilderV4<TestEntity> | GetByKeyRequestBuilderV4<TestEntityLink> | GetByKeyRequestBuilderV4<TestEntity50Col> | GetByKeyRequestBuilderV4<TestEntity100Col>;
+export type WriteTestServiceRequestBuilder = CreateRequestBuilderV4<TestEntity> | UpdateRequestBuilderV4<TestEntity> | DeleteRequestBuilderV4<TestEntity> | CreateRequestBuilderV4<TestEntityLink> | UpdateRequestBuilderV4<TestEntityLink> | DeleteRequestBuilderV4<TestEntityLink> | CreateRequestBuilderV4<TestEntity50Col> | UpdateRequestBuilderV4<TestEntity50Col> | DeleteRequestBuilderV4<TestEntity50Col> | CreateRequestBuilderV4<TestEntity100Col> | UpdateRequestBuilderV4<TestEntity100Col> | DeleteRequestBuilderV4<TestEntity100Col>;

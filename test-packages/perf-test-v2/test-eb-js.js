@@ -8,6 +8,7 @@ const dest = {url: 'http://localhost:4004/' };
 
 const sdkCode = async () => {
   const col = [];
+  const api = testService().testEntity50ColApi;
   // var hd1 = new memwatch.HeapDiff();
   // // entityBuilder => 15 * 1000 EdmTypeField + 36 * 1000 OrderableEdmTypeField
   // for(let i=0;i<1000;i++) {
@@ -24,6 +25,13 @@ const sdkCode = async () => {
   // col[1000] = testService().testEntity50ColApi.entityBuilder().keyTestEntity50Col(1);
   // var diff2 = hd2.end();
   // console.log(diff2);
+
+  var hd0 = new memwatch.HeapDiff();
+  for(let i=0;i<6000;i++) {
+    col[i] = api.entityBuilder().keyTestEntity50Col(1);
+  }
+  var diff0 = hd0.end();
+  console.log(diff0);
   console.log(col.length);
 };
 

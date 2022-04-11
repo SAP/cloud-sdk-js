@@ -10,9 +10,12 @@
     "generate-vdm": "npx generate-odata-client -i ../e2e-tests/test-service-spec -o .",
     "compile": "tsc test.ts",
     "test": "ts-node test.ts",
-    "test-js": "node test-js.js"
+    "test-js": "node test-js.js",
+    "test-ori-js": "node test-ori-js.js",
+    "test-eb-js": "node test-eb-js.js"
   },
   "devDependencies": {
+    "@sap-cloud-sdk/odata-v4": "2.2.1-20220407111951.0",
     "@sap-cloud-sdk/generator": "2.2.1-20220407111951.0",
     "typescript": "4.6.3",
     "ts-node": "10.0.0",

@@ -9,6 +9,7 @@ exports.TestService = exports.testService = void 0;
 const TestEntityApi_1 = require("./TestEntityApi");
 const TestEntityLinkApi_1 = require("./TestEntityLinkApi");
 const TestEntity50ColApi_1 = require("./TestEntity50ColApi");
+const TestEntity100ColApi_1 = require("./TestEntity100ColApi");
 const function_imports_1 = require("./function-imports");
 const action_imports_1 = require("./action-imports");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
@@ -41,6 +42,9 @@ class TestService {
     }
     get testEntity50ColApi() {
         return this.initApi('testEntity50ColApi', TestEntity50ColApi_1.TestEntity50ColApi);
+    }
+    get testEntity100ColApi() {
+        return this.initApi('testEntity100ColApi', TestEntity100ColApi_1.TestEntity100ColApi);
     }
     get functionImports() {
         return { returnSapCloudSdk: (parameter) => (0, function_imports_1.returnSapCloudSdk)(parameter, this.deSerializers), concatStrings: (parameter) => (0, function_imports_1.concatStrings)(parameter, this.deSerializers), returnInt: (parameter) => (0, function_imports_1.returnInt)(parameter, this.deSerializers), returnCollection: (parameter) => (0, function_imports_1.returnCollection)(parameter, this.deSerializers), getByKey: (parameter) => (0, function_imports_1.getByKey)(parameter, this.deSerializers), getAll: (parameter) => (0, function_imports_1.getAll)(parameter, this.deSerializers) };

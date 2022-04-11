@@ -6,6 +6,7 @@
 import { TestEntityApi } from './TestEntityApi';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
 import { TestEntity50ColApi } from './TestEntity50ColApi';
+import { TestEntity100ColApi } from './TestEntity100ColApi';
 import { returnSapCloudSdk, concatStrings, returnInt, returnCollection, getByKey, getAll, ReturnSapCloudSdkParameters, ConcatStringsParameters, ReturnIntParameters, ReturnCollectionParameters, GetByKeyParameters, GetAllParameters } from './function-imports';
 import { createTestEntityById, createTestEntityByIdReturnId, CreateTestEntityByIdParameters, CreateTestEntityByIdReturnIdParameters } from './action-imports';
 import { BigNumber } from 'bignumber.js';
@@ -100,6 +101,10 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     
     get testEntity50ColApi(): TestEntity50ColApi<DeSerializersT> { 
         return this.initApi('testEntity50ColApi', TestEntity50ColApi)    
+      }
+    
+    get testEntity100ColApi(): TestEntity100ColApi<DeSerializersT> { 
+        return this.initApi('testEntity100ColApi', TestEntity100ColApi)    
       }
     
       get functionImports( ) {

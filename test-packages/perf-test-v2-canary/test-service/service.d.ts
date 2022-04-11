@@ -1,6 +1,7 @@
 import { TestEntityApi } from './TestEntityApi';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
 import { TestEntity50ColApi } from './TestEntity50ColApi';
+import { TestEntity100ColApi } from './TestEntity100ColApi';
 import { ReturnSapCloudSdkParameters, ConcatStringsParameters, ReturnIntParameters, ReturnCollectionParameters, GetByKeyParameters, GetAllParameters } from './function-imports';
 import { CreateTestEntityByIdParameters, CreateTestEntityByIdReturnIdParameters } from './action-imports';
 import { BigNumber } from 'bignumber.js';
@@ -16,6 +17,7 @@ declare class TestService<DeSerializersT extends DeSerializers = DefaultDeSerial
     get testEntityApi(): TestEntityApi<DeSerializersT>;
     get testEntityLinkApi(): TestEntityLinkApi<DeSerializersT>;
     get testEntity50ColApi(): TestEntity50ColApi<DeSerializersT>;
+    get testEntity100ColApi(): TestEntity100ColApi<DeSerializersT>;
     get functionImports(): {
         returnSapCloudSdk: (parameter: ReturnSapCloudSdkParameters<DeSerializersT>) => import("@sap-cloud-sdk/odata-v4").FunctionImportRequestBuilder<DeSerializersT, ReturnSapCloudSdkParameters<DeSerializersT>, string | null>;
         concatStrings: (parameter: ConcatStringsParameters<DeSerializersT>) => import("@sap-cloud-sdk/odata-v4").FunctionImportRequestBuilder<DeSerializersT, ConcatStringsParameters<DeSerializersT>, string | null>;

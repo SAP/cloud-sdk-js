@@ -26,5 +26,5 @@ function changeset(first) {
 }
 exports.changeset = changeset;
 exports.defaultTestServicePath = '/odata/test-service';
-var map = { 'TestEntity': index_1.TestEntity, 'TestEntityLink': index_1.TestEntityLink, 'TestEntity50Col': index_1.TestEntity50Col };
+var map = { 'TestEntity': index_1.TestEntity, 'TestEntityLink': index_1.TestEntityLink, 'TestEntity50Col': index_1.TestEntity50Col, 'TestEntity100Col': index_1.TestEntity100Col };
 //# sourceMappingURL=BatchRequest.js.map

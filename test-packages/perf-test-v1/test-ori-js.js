@@ -8,13 +8,13 @@ const sdkCode = async () => {
   const tasks = [];
   var hd = new memwatch.HeapDiff();
   // 2000 loop
-  const loop = 100;
+  const loop = 10;
   for(let i = 0; i < loop; i++) {
     tasks.push(fetch());
   }
   const allData = [].concat(...await(Promise.all(tasks)));
   var diff = hd.end();
-  console.log(diff);
+  console.log(JSON.stringify(diff.change.details.filter(e => e.size.includes('mb'))));
   // 1 loop: 19.63 MB
   // 10 loop: 193.51 MB
   // 100 loop: 1719.16 MB

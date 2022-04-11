@@ -13,8 +13,8 @@ In order to discuss the different resilience options it is good to list these re
 The term `target system` is used for the system defined in the destination.
 
 - XSUAA (BTP service) to fetch a service token
-- Destiantaion service (BTP service) to fetch the destination
-- CSRF token request to the target system for non read requests
+- destiantaion service (BTP service) to fetch the destination
+- CSRF token request to the target system for non-read requests
 - actual request to the target system
 
 In the discussion we group the latter two requests to the target system with respect to resilience and the first two.
@@ -36,7 +36,7 @@ export interface HttpRequestConfigBase {
 }
 ```
 
-- The `ResilienceOptions` are applied to the BTP service calls. They contain a circuitBreaker and timeout.
+- The `ResilienceOptions` are applied to the BTP service calls. They contain a circuit breaker and timeout.
 - The timeout in the `HttpRequestConfigBase` is for all http calls to the target system and passed to axios.
 
 The settings are passed in the following way:
@@ -68,7 +68,7 @@ There are two standpoints:
 - SDK implements it
 
 Arguments in the discussion
-- flexible middle ware approach implemented by the user more flexible
+- flexible middleware approach implemented by the user more flexible
 - You could make mistakes: multi-tenant circuit breaker or retry if breaker is open
 - Configuration on a per request wanted
 
@@ -105,17 +105,20 @@ The API would look like:
 myApi
   .getAll()   
   .timeout(20) //deprecate 
-  .resiliencec({
+  .resilience({
       timeout: 10,
       circuitBreaker: true,   // CircuitBreakerOptions | undefined | true
       retry: true             // RetryOptions | undefined | true
   })
   .execute({ 
-      enableCircuitBreaker: true, timeout: 10, //deprecate
+      enableCircuitBreaker: true,
+      timeout: 10, //deprecate
       destinationName: 'my-dest'
   });
+
 executeHttpRequest({
-    enableCircuitBreaker: true, timeout: 10, //deprecate
+    enableCircuitBreaker: true,
+    timeout: 10, //deprecate
     destinationName: 'my-dest'
   },
   {

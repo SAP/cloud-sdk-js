@@ -114,6 +114,12 @@ export function parsePathPattern(
   return pathPattern;
 }
 
+/**
+ * @internal
+ * Check if path parameters and path pattern match.
+ * @param pathParameters - Path parameters for path templates
+ * @param pathPattern - Path containing path templates
+ */
 export function validatePathParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
   pathPattern: string

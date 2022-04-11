@@ -91,12 +91,39 @@ Do this on demand or after customer feedback.
 |   bulk limit    |    ❌     |   ❌   |      n.a.      |    n.a.     | |
 
 
+### Options
+
+The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the default values.
+If you pass `true`,this will enable the resilience option with the default values.
+
+```ts
+type RetryOptions = undefined | true | AsynRetryLibOptions
+type CircuitBreakerOptions = undefined | true | OpssumLibOption
+
+interface OpssumLibOption = {
+    timeout?: number | false | undefined; //default 10000
+    errorThresholdPercentage?: number | undefined; //default 50
+    volumeThreshold?: number | undefined; // default 10
+    resetTimeout?: number | undefined; //default 30000
+    isolationStragtegy?: IsolationStrategy //default tenant
+};
+
+interface AsynRetryLibOptions = {
+    retries?: number //default 10
+    factor?: number // default  2.
+    minTimeout?: number  // default 1000 ms.
+    maxTimeout?: number  // default Infinity.
+    randomize?: boolean // default true.
+    onRetry: (e:Error)=>{} // default undefined
+}
+```
 
 ### Variant A - Opinionated
 
 - We pick an implementation and only provide options
 - For retry, we would use [async retry](https://www.npmjs.com/package/async-retry)
 - For circuit breaker we would use [opossum](https://www.npmjs.com/package/opossum)
+
 
 This determines the options.
 The API would look like:
@@ -106,23 +133,25 @@ myApi
   .getAll()   
   .timeout(20) //deprecate 
   .resiliencec({
-      timeout: 10,
-      circuitBreaker: true,   // CircuitBreakerOptions | undefined | true
-      retry: true             // RetryOptions | undefined | true
-  })
+      timeout: 123,          // undefined | number | {BTP:number, target: number }
+      circuitBreaker: true,  // RetryOptions | {BTP: RetryOptions, target: RetryOptions }
+      retry: true            // CircuitBreakerOptions | {BTP: CircuitBreakerOptions, target: CircuitBreakerOptions }
+  })    
   .execute({ 
-      enableCircuitBreaker: true, timeout: 10, //deprecate
+      enableCircuitBreaker: true, //deprecate 
+      timeout: 10, //deprecate
       destinationName: 'my-dest'
   });
 executeHttpRequest({
-    enableCircuitBreaker: true, timeout: 10, //deprecate
+    enableCircuitBreaker: true, //deprecate 
+    timeout: 10, //deprecate
     destinationName: 'my-dest'
   },
   {
    resilience: {
-     timeout: 10,
-     circuitBreaker: true,  // CircuitBreakerOptions | undefined | true
-     retry: true            // RetryOptions | undefined | true
+       timeout: 123,          // undefined | number | {BTP:number, target: number }
+       circuitBreaker: true,  // RetryOptions | {BTP: boolen|RetryOptions, target: RetryOptions }
+       retry: true            // CircuitBreakerOptions | {BTP: CircuitBreakerOptions, target: CircuitBreakerOptions }
    }
   }
 );
@@ -154,15 +183,15 @@ myApi
 myApi
   .getAll()   
   .middleware(resilience({
-      timeout: 123,
-      circuitBreaker: true,  // CircuitBreakerOptions | undefined | true
-      retry: true            // RetryOptions | undefined | true
+      timeout: 123,          // undefined | number | {BTP:number, target: number }
+      circuitBreaker: true,  // RetryOptions | {BTP: RetryOptions, target: RetryOptions }
+      retry: true            // CircuitBreakerOptions | {BTP: CircuitBreakerOptions, target: CircuitBreakerOptions }
   }))
   .execute({ 
       destinationName: 'my-dest'
   });
 
-Parameters<middleware> = [async <T>(fn: Promise<T>, context?: any) => Promise<T>]
+Parameters<middleware> = [async <T>(fn: Promise<T>, context?: 'BTP'|'TARGET') => Promise<T>]
 
 ```
 
@@ -175,27 +204,58 @@ Contra:
 - We have to make assumption on reasonable behavior
 - All resilience off is a behavioral change which could be seen as breaking
 
-### Variant C - Middleware (Named)
+### Variant C - Middleware (wit Name)
 
 - Similar to variant B
-- Assumes that  some resilience is switched on per default and our approach needs to extend this
-- A `id` is passed to the `middleware` method. Discussion basis - could also be some name and priority object. 
-- For our resilience we use a `idDefault=10`.
-- If 10 is used it will replace, if id < 10 is used the method is called before our default and id > 10 means after
+- Assumes that  some resilience is switched on per default and our approach needs to consider this
+- An optional `id` is passed to the `middleware` method.
 
 ```ts
 myApi
   .getAll()   
-  .middleware(resilience({
-      timeout: 123,
-      circuitBreaker: true,  // CircuitBreakerOptions | undefined | true
-      retry: true            // RetryOptions | undefined | true
-  }),id)
+  .middleware(resilience(),id)                                         
   .execute({ 
       destinationName: 'my-dest'
   });
 
-Parameters<middleware> = [async <T>(fn: Promise<T>, context?: any) => Promise<T>,number]
+Parameters<middleware> = [async <T>(fn: Promise<T>, context?: 'BTP'|'target') => Promise<T>,string]
+```
+
+Use Case A:
+- User wants just to switch on resilience and use default (circuit breaker and timeout)
+- Id is omitted and `resilice()` is passed to middleware call
+- Our function object contains a property `resilice().id`  set to `sdkResilience` to indicate it is a SDK resilience middleware and replace default resilience
+
+Use Case B:
+- User wants to switch on resilience and adjust the options
+- Id is omitted and options are passed to middleware call
+- The options are extended - the example below would add retry and set a different timeout  (circuit breaker remains)
+```ts
+resilience({          
+      timeout: 123,
+      retry: {retries: 3}
+  })
+```
+
+Use Case C:
+- User needs to replace the resilience implementation because options do not do the trick
+- A custom method is passed
+- `sdkResilience`  is passed as id in the `.middleware()` method or the custom method needs the property `id` set to be `sdkResilience`
+- If done the implementation of the SDK is omitted and the provided one is used instead
+
+Use Case D:
+- User wants to add non resilience middleware or extend the existing one
+- id is omitted
+- method with custom implementation is passed and executed in order
+```ts
+myApi
+  .getAll()   
+  .middleware(resilience({retry:true})) //switch on retry using default implementation 
+  .middleware(customHanlder1)
+  .middleware(customHanlder2)
+    .execute({ 
+      destinationName: 'my-dest'
+  });
 ```
 
 ### Global Switch
@@ -209,44 +269,16 @@ In practice, it could be desirable to enable resilience globally for all request
 
 ```ts
 //Variant A
-globalResilience(options: {
-    timeout: number,
-    circuitBreaker: CircuitBreakerOptions | undefined | true,
-    retry: RetryOptions | undefined | true 
-})
+globalResilience(options)
 
 //Variant B 
 globalResilience(middleWare : <T>(fn: Promise<T>, context?: any) => Promise<T>)
 
 //Variant C
-globalResilience(middleWare : <T>(fn: Promise<T>, context?: any) => Promise<T>,id:number)
+globalResilience(middleWare : <T>(fn: Promise<T>, context?: any) => Promise<T>,id:string)
 )
 
 
-```
-
-### Options
-
-The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the default values.
-If you pass `true`,this will enable the resilience option with the default values.
-
-```ts
-interface CircuitBreakerOptions = {
-    timeout?: number | false | undefined; //default 10000
-    errorThresholdPercentage?: number | undefined; //default 50
-    volumeThreshold?: number | undefined; // default 10
-    resetTimeout?: number | undefined; //default 30000
-    isolationStragtegy?: IsolationStrategy //default tenant
-};
-
-interface RetryOptions = {
-    retries?: number //default 10
-    factor?: number // default  2.
-    minTimeout?: number  // default 1000 ms.
-    maxTimeout?: number  // default Infinity.
-    randomize?: boolean // default true.
-    onRetry: (e:Error)=>{} // default undefined
-}
 ```
 
 ## Consequences

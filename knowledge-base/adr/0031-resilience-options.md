@@ -13,8 +13,8 @@ In order to discuss the different resilience options it is good to list these re
 The term `target system` is used for the system defined in the destination.
 
 - XSUAA (BTP service) to fetch a service token
-- Destiantaion service (BTP service) to fetch the destination
-- CSRF token request to the target system for non read requests
+- destiantaion service (BTP service) to fetch the destination
+- CSRF token request to the target system for non-read requests
 - actual request to the target system
 
 In the discussion we group the latter two requests to the target system with respect to resilience and the first two.
@@ -36,7 +36,7 @@ export interface HttpRequestConfigBase {
 }
 ```
 
-- The `ResilienceOptions` are applied to the BTP service calls. They contain a circuitBreaker and timeout.
+- The `ResilienceOptions` are applied to the BTP service calls. They contain a circuit breaker and timeout.
 - The timeout in the `HttpRequestConfigBase` is for all http calls to the target system and passed to axios.
 
 The settings are passed in the following way:
@@ -68,7 +68,7 @@ There are two standpoints:
 - SDK implements it
 
 Arguments in the discussion
-- flexible middle ware approach implemented by the user more flexible
+- flexible middleware approach implemented by the user more flexible
 - You could make mistakes: multi-tenant circuit breaker or retry if breaker is open
 - Configuration on a per request wanted
 
@@ -124,7 +124,6 @@ interface AsynRetryLibOptions = {
 - For retry, we would use [async retry](https://www.npmjs.com/package/async-retry)
 - For circuit breaker we would use [opossum](https://www.npmjs.com/package/opossum)
 
-
 This determines the options.
 The API would look like:
 
@@ -132,7 +131,7 @@ The API would look like:
 myApi
   .getAll()   
   .timeout(20) //deprecate 
-  .resiliencec({
+  .resilience({
       timeout: 123,          // undefined | number | {BTP:number, target: number }
       circuitBreaker: true,  // RetryOptions | {BTP: RetryOptions, target: RetryOptions }
       retry: true            // CircuitBreakerOptions | {BTP: CircuitBreakerOptions, target: CircuitBreakerOptions }
@@ -148,7 +147,7 @@ executeHttpRequest({
     destinationName: 'my-dest'
   },
   {
-   resilience: {
+  resilience: {
        timeout: 123,          // undefined | number | {BTP:number, target: number }
        circuitBreaker: true,  // RetryOptions | {BTP: boolen|RetryOptions, target: RetryOptions }
        retry: true            // CircuitBreakerOptions | {BTP: CircuitBreakerOptions, target: CircuitBreakerOptions }
@@ -180,6 +179,7 @@ myApi
   .execute({ 
       destinationName: 'my-dest'
   });
+
 myApi
   .getAll()   
   .middleware(resilience({
@@ -204,7 +204,7 @@ Contra:
 - We have to make assumption on reasonable behavior
 - All resilience off is a behavioral change which could be seen as breaking
 
-### Variant C - Middleware (wit Name)
+### Variant C - Middleware (Named)
 
 - Similar to variant B
 - Assumes that  some resilience is switched on per default and our approach needs to consider this
@@ -223,8 +223,9 @@ Parameters<middleware> = [async <T>(fn: Promise<T>, context?: 'BTP'|'target') =>
 
 Use Case A:
 - User wants just to switch on resilience and use default (circuit breaker and timeout)
-- Id is omitted and `resilice()` is passed to middleware call
+- Id is omitted and `resilice()` default function is passed to middleware call
 - Our function object contains a property `resilice().id`  set to `sdkResilience` to indicate it is a SDK resilience middleware and replace default resilience
+- XXXXXX should this do something different to the default?? XXXX
 
 Use Case B:
 - User wants to switch on resilience and adjust the options

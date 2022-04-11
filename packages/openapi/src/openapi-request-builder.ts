@@ -171,9 +171,15 @@ export class OpenApiRequestBuilder<ResponseT = any> {
           `Cannot execute request, no path parameter '${paramName}' found in the path pattern.`
         );
       }
+      const paramValue = String(pathParameters[paramName]);
+      if (/[\/?#]+/.test(paramValue)) {
+        throw new Error(
+          `Cannot execute request, the value of the path parameter '${paramName}' must not contain '/', '?', or '#'. (RFC3986)`
+        );
+      }
       path = path.replace(
         new RegExp(`{${paramName}}`, 'g'),
-        encodeURIComponent(String(pathParameters[paramName]))
+        encodeURIComponent(paramValue)
       );
     }
 

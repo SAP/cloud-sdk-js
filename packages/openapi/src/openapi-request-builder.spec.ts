@@ -185,14 +185,30 @@ describe('openapi-request-builder', () => {
   });
 
   it('throws an error if the path parameters do not match the path pattern', async () => {
+    const requestBuilder = new OpenApiRequestBuilder(
+      'get',
+      '/test/{test}/{id}',
+      {
+        pathParameters: { test: 'test' }
+      }
+    );
+
+    await expect(() =>
+      requestBuilder.executeRaw(destination)
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Cannot execute request, no path parameter provided for \'{id}\'."'
+    );
+  });
+
+  it('throws an error if the path parameters do not exist the path pattern', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
-      pathParameters: { test: 'test' }
+      pathParameters: { id: '0', test: 'test' }
     });
 
     await expect(() =>
       requestBuilder.executeRaw(destination)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Cannot execute request, no path parameter provided for \'id\'."'
+      '"Cannot execute request, no path parameter \'test\' found in the path pattern."'
     );
   });
 

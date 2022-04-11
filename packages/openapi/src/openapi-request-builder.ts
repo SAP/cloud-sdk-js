@@ -164,23 +164,33 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   private getPath(): string {
     const pathParameters = this.parameters?.pathParameters || {};
+    let path = this.pathPattern;
+    for (const paramName in pathParameters) {
+      if (!path.includes('{' + paramName + '}')) {
+        throw new Error(
+          `Cannot execute request, no path parameter '${paramName}' found in the path pattern.`
+        );
+      }
+      path = path.replace(
+        new RegExp(`{${paramName}}`, 'g'),
+        encodeURIComponent(String(pathParameters[paramName]))
+      );
+    }
 
-    const pathParts = this.pathPattern.split('/');
-    return pathParts
-      .map(part => {
-        if (OpenApiRequestBuilder.isPlaceholder(part)) {
-          const paramName = part.slice(1, -1);
-          const paramValue = pathParameters[paramName];
-          if (!paramValue) {
-            throw new Error(
-              `Cannot execute request, no path parameter provided for '${paramName}'.`
-            );
-          }
-          return encodeURIComponent(paramValue);
-        }
-        return part;
-      })
-      .join('/');
+    // Check if there is still curly bracket in the replaced path pattern
+    const pathParts = path.split('[-/.]+');
+    pathParts.map(part => {
+      const matchedPlaceholders = part.match(/\{.+\}/);
+      if (matchedPlaceholders !== null) {
+        throw new Error(
+          `Cannot execute request, no path parameter provided for '${matchedPlaceholders.join(
+            "', '"
+          )}'.`
+        );
+      }
+    });
+
+    return path;
   }
 }
 

@@ -1,55 +1,13 @@
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { OriginOptions } from '@sap-cloud-sdk/http-client';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
 import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity, commonEntityApi } from '../../test/common-entity';
 import { DefaultDeSerializers } from '../de-serializers';
 import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
-import { ODataCreateRequestConfig } from './odata-create-request-config';
-import { ODataUpdateRequestConfig } from './odata-update-request-config';
-import { ODataDeleteRequestConfig } from './odata-delete-request-config';
 import { ODataRequest } from './odata-request';
 
 describe('OData Request', () => {
-  describe('format', () => {
-    it('should be json for GET', async () => {
-      const request = createRequestWithHeaders(ODataGetAllRequestConfig);
-      expect(request.url()).toContain('$format=json');
-    });
-
-    it('should not be json for POST', async () => {
-      const request = createRequestWithHeaders(ODataCreateRequestConfig);
-      expect(request.url()).not.toContain('$format=json');
-    });
-
-    it('should not be json for PATCH', async () => {
-      const request = createRequestWithHeaders(ODataUpdateRequestConfig);
-      expect(request.url()).not.toContain('$format=json');
-    });
-
-    it('should not be json for DELETE', async () => {
-      const request = createRequestWithHeaders(ODataDeleteRequestConfig);
-      expect(request.url()).not.toContain('$format=json');
-    });
-
-    function createRequestWithHeaders(
-      configConstructor,
-      destination?
-    ): ODataRequest<any> {
-      const req = createRequest(configConstructor, destination);
-      jest.spyOn(req, 'headers').mockResolvedValue({} as OriginOptions);
-      return req;
-    }
-  });
-
-  describe('query', () => {
-    it('should have json parameter by default for get request', () => {
-      const request = createRequest(ODataGetAllRequestConfig);
-      expect(request.query()).toEqual('?$format=json');
-    });
-  });
-
   it('should be noParamEncoder', async () => {
     const request = createRequest(ODataGetAllRequestConfig);
     expect(request.config.parameterEncoder).toBe(encodeTypedClientRequest);
@@ -89,7 +47,7 @@ describe('OData Request', () => {
       >;
       requestConfig.appendPath('/$value');
       expect(request.relativeUrl()).toBe(
-        'sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/$value?$format=json'
+        'sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/$value'
       );
     });
 
@@ -101,7 +59,7 @@ describe('OData Request', () => {
       >;
       requestConfig.appendPath('/');
       expect(request.relativeUrl()).toBe(
-        'sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/?$format=json'
+        'sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/'
       );
     });
   });

@@ -94,7 +94,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "execa": "^5.0.0",
-    "glob": "^7.1.6",
+    "glob": "^8.0.1",
     "jest": "^27.2.3",
     "jest-junit": "^13.0.0",
     "lerna": "^4.0.0",

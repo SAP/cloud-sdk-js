@@ -6,7 +6,10 @@ import {
   DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  EdmTypeField,
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntity2Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -26,41 +29,11 @@ export declare class TestEntity2Api<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<TestEntity2<DeSerializersT>, DeSerializersT, NullableT>;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof TestEntity2, DeSerializersT>;
+  private _schema?;
   get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      TestEntity2<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the [[keyPropertyString]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_PROPERTY_STRING: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    KEY_PROPERTY_STRING: EdmTypeField<
       TestEntity2<
         DeSerializers<
           any,
@@ -89,11 +62,7 @@ export declare class TestEntity2Api<
       false,
       true
     >;
-    /**
-     * Static representation of the [[singleProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    SINGLE_PROPERTY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    SINGLE_PROPERTY: OrderableEdmTypeField<
       TestEntity2<
         DeSerializers<
           any,
@@ -121,6 +90,31 @@ export declare class TestEntity2Api<
       'Edm.Single',
       true,
       true
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntity2<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
     >;
   };
 }

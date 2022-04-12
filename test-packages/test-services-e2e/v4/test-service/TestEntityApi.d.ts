@@ -8,6 +8,9 @@ import {
   AllFields,
   EntityBuilderType,
   EntityApi,
+  FieldBuilder,
+  OrderableEdmTypeField,
+  EdmTypeField,
   OneToManyLink
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityApi<
@@ -30,50 +33,11 @@ export declare class TestEntityApi<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<TestEntity<DeSerializersT>, DeSerializersT, NullableT>;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof TestEntity, DeSerializersT>;
+  private _schema?;
   get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_MULTI_LINK: OneToManyLink<
-      TestEntity<DeSerializersT>,
-      DeSerializersT,
-      TestEntityLinkApi<DeSerializersT>
-    >;
-    /**
-     * Static representation of the [[keyTestEntity]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_TEST_ENTITY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    KEY_TEST_ENTITY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -102,11 +66,7 @@ export declare class TestEntityApi<
       false,
       true
     >;
-    /**
-     * Static representation of the [[stringProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    STRING_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    STRING_PROPERTY: EdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -135,11 +95,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[guidProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    GUID_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    GUID_PROPERTY: EdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -168,11 +124,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[booleanProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    BOOLEAN_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    BOOLEAN_PROPERTY: EdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -201,11 +153,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[int64Property]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    INT_64_PROPERTY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    INT_64_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -234,11 +182,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[doubleProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    DOUBLE_PROPERTY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    DOUBLE_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -267,11 +211,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[decimalProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    DECIMAL_PROPERTY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    DECIMAL_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -300,11 +240,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[dateProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    DATE_PROPERTY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    DATE_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -333,11 +269,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[timeOfDayProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TIME_OF_DAY_PROPERTY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    TIME_OF_DAY_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -366,11 +298,36 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    /**
-     * Static representation of the [[dataTimeOffsetDataTimeProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    DATA_TIME_OFFSET_DATA_TIME_PROPERTY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    DATA_TIME_OFFSET_DATA_TIME_PROPERTY: OrderableEdmTypeField<
+      TestEntity<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      DeSerializersT,
+      'Edm.DateTimeOffset',
+      true,
+      true
+    >;
+    DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,
@@ -400,10 +357,15 @@ export declare class TestEntityApi<
       true
     >;
     /**
-     * Static representation of the [[dataTimeOffsetTimestampProperty]] property for query construction.
+     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    TO_MULTI_LINK: OneToManyLink<
+      TestEntity<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLinkApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<
       TestEntity<
         DeSerializers<
           any,
@@ -426,11 +388,7 @@ export declare class TestEntityApi<
           any,
           any
         >
-      >,
-      DeSerializersT,
-      'Edm.DateTimeOffset',
-      true,
-      true
+      >
     >;
   };
 }

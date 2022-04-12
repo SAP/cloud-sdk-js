@@ -51,7 +51,7 @@ describe('Custom Fields', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json`)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, getAllResponseWithCustomField);
 
     const entities = await testEntityApi
@@ -73,7 +73,7 @@ describe('Custom Fields', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json&$select=MyCustomField`)
+      .get(`${servicePath}/${entityName}?$select=MyCustomField`)
       .reply(200, getAllResponseWithCustomField);
 
     const request = testEntityApi
@@ -97,7 +97,7 @@ describe('Custom Fields', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}?$format=json&$filter=(MyCustomField%20eq%20%27ToMatch%27)`
+        `${servicePath}/${entityName}?$filter=(MyCustomField%20eq%20%27ToMatch%27)`
       )
       .reply(200, getAllResponseWithCustomField);
 
@@ -129,7 +129,7 @@ describe('Custom Fields', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$format=json`)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, getAllResponseWithCustomField);
 
     nock(destination.url, {

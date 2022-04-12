@@ -3,6 +3,7 @@ import { Import, serializeImports } from '../../generator-common';
 import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import {
   navPropertyFieldTypeImportNames,
+  propertyFieldTypeImportNames,
   propertyTypeImportNames
 } from '../../imports';
 import { odataImport, complexTypeImports, enumTypeImports } from './imports';
@@ -57,6 +58,7 @@ function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
         'EntityApi',
         'FieldBuilder',
         ...propertyTypeImportNames(entity.properties),
+        ...propertyFieldTypeImportNames(entity.properties),
         ...navPropertyFieldTypeImportNames(
           entity.navigationProperties,
           service.oDataVersion

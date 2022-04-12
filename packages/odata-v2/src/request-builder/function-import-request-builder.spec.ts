@@ -45,7 +45,7 @@ describe('FunctionImportRequestBuilder', () => {
 
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportGET`)
-      .query({ $format: 'json', SimpleParam: `'${simpleParam}'` })
+      .query({ SimpleParam: `'${simpleParam}'` })
       .reply(200);
 
     await expect(
@@ -59,12 +59,12 @@ describe('FunctionImportRequestBuilder', () => {
 
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportPOST`)
-      .query({ $format: 'json', SimpleParam: `'${simpleParam}'` })
+      .query({ SimpleParam: `'${simpleParam}'` })
       .reply(200, undefined, mockedBuildHeaderResponse);
 
     nock(defaultHost)
       .post(`${serviceUrl}/TestFunctionImportPOST`)
-      .query({ $format: 'json', SimpleParam: `'${simpleParam}'` })
+      .query({ SimpleParam: `'${simpleParam}'` })
       .reply(200);
 
     await expect(
@@ -77,7 +77,7 @@ describe('FunctionImportRequestBuilder', () => {
 
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportEdmReturnType`)
-      .query({ $format: 'json' })
+      .query({})
       .reply(200, { d: { TestFunctionImportEdmReturnType: true } });
 
     const returnValue = await requestBuilder.execute(defaultDestination);
@@ -95,7 +95,7 @@ describe('FunctionImportRequestBuilder', () => {
 
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportUnsupportedEdmTypes`)
-      .query({ $format: 'json', SimpleParam: 'SomeUntypedValue' })
+      .query({ SimpleParam: 'SomeUntypedValue' })
       .reply(200, untypedResponse);
 
     const returnValue = await requestBuilder.execute(defaultDestination);
@@ -107,7 +107,7 @@ describe('FunctionImportRequestBuilder', () => {
 
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportEdmReturnTypeCollection`)
-      .query({ $format: 'json' })
+      .query({})
       .reply(200, { d: { results: [true, false] } });
 
     const returnValue = await requestBuilder.execute(defaultDestination);
@@ -120,7 +120,7 @@ describe('FunctionImportRequestBuilder', () => {
 
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportEntityReturnType`)
-      .query({ $format: 'json' })
+      .query({})
       .reply(200, { d: getTestEntityData(expected) });
 
     const returnValue = await requestBuilder.execute(defaultDestination);
@@ -133,7 +133,7 @@ describe('FunctionImportRequestBuilder', () => {
 
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportEntityReturnTypeCollection`)
-      .query({ $format: 'json' })
+      .query({})
       .reply(200, { d: { results: expected.map(e => getTestEntityData(e)) } });
 
     const returnValue = await requestBuilder.execute(defaultDestination);
@@ -146,7 +146,7 @@ describe('FunctionImportRequestBuilder', () => {
 
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportComplexReturnType`)
-      .query({ $format: 'json' })
+      .query({})
       .reply(200, { d: getTestComplexTypeData(expected) });
 
     const returnValue = await requestBuilder.execute(defaultDestination);
@@ -159,7 +159,7 @@ describe('FunctionImportRequestBuilder', () => {
 
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportEntityReturnTypeCollection`)
-      .query({ $format: 'json' })
+      .query({})
       .reply(200, {
         d: { results: expected.map(e => getTestComplexTypeData(e)) }
       });
@@ -170,11 +170,11 @@ describe('FunctionImportRequestBuilder', () => {
 
   it('return undefined or throw in failure case', async () => {
     nock(defaultHost)
-      .get(`${serviceUrl}/TestFunctionImportNoReturnType?$format=json`)
+      .get(`${serviceUrl}/TestFunctionImportNoReturnType`)
       .reply(200, undefined, mockedBuildHeaderResponse);
 
     nock(defaultHost)
-      .post(`${serviceUrl}/TestFunctionImportNoReturnType?$format=json`)
+      .post(`${serviceUrl}/TestFunctionImportNoReturnType`)
       .reply(200);
 
     const response = await testFunctionImportNoReturnType({}).execute(
@@ -183,7 +183,7 @@ describe('FunctionImportRequestBuilder', () => {
     expect(response).toBe(undefined);
 
     nock(defaultHost)
-      .post(`${serviceUrl}/TestFunctionImportNoReturnType?$format=json`)
+      .post(`${serviceUrl}/TestFunctionImportNoReturnType`)
       .reply(400);
 
     await expect(
@@ -194,7 +194,7 @@ describe('FunctionImportRequestBuilder', () => {
   it('throws an error when shared entity type is used as return type', async () => {
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportSharedEntityReturnType()`)
-      .query({ $format: 'json' })
+      .query({})
       .reply(200, {});
     const requestBuilder = testFunctionImportSharedEntityReturnType({}) as any;
 

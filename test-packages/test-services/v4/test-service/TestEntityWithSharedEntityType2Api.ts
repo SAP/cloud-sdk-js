@@ -14,7 +14,8 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityWithSharedEntityType2Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -65,27 +66,53 @@ export class TestEntityWithSharedEntityType2Api<
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<
+    typeof TestEntityWithSharedEntityType2,
+    DeSerializersT
+  >;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(
+        TestEntityWithSharedEntityType2,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityWithSharedEntityType2<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    ALL_FIELDS: AllFields<TestEntityWithSharedEntityType2<DeSerializers>>;
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(
-      TestEntityWithSharedEntityType2,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntityWithSharedEntityType2)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[keyProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'KeyProperty',
+          'Edm.String',
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntityWithSharedEntityType2)
+      };
+    }
+
+    return this._schema;
   }
 }

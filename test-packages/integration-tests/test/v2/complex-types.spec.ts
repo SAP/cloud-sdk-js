@@ -41,7 +41,7 @@ describe('Complex types', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}?$format=json&$filter=(ComplexTypeProperty/StringProperty%20eq%20%27someComplexTypeProperty%27)`
+        `${servicePath}/${entityName}?$filter=(ComplexTypeProperty/StringProperty%20eq%20%27someComplexTypeProperty%27)`
       )
       .reply(200, getAllResponse);
 
@@ -70,7 +70,7 @@ describe('Complex types', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}?$format=json&$orderby=ComplexTypeProperty/StringProperty%20asc`
+        `${servicePath}/${entityName}?$orderby=ComplexTypeProperty/StringProperty%20asc`
       )
       .reply(200, getAllResponse);
 

@@ -14,7 +14,9 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  OrderableEdmTypeField,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class PhotosApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -55,25 +57,55 @@ export class PhotosApi<
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<typeof Photos, DeSerializersT>;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(Photos, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    ID: OrderableEdmTypeField<
+      Photos<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int64',
+      false,
+      true
+    >;
+    NAME: EdmTypeField<
+      Photos<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      true,
+      true
+    >;
+    ALL_FIELDS: AllFields<Photos<DeSerializers>>;
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(Photos, this.deSerializers);
-    return {
-      /**
-       * Static representation of the [[id]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      ID: fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false),
-      /**
-       * Static representation of the [[name]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', true),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', Photos)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[id]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        ID: fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false),
+        /**
+         * Static representation of the [[name]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', true),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', Photos)
+      };
+    }
+
+    return this._schema;
   }
 }

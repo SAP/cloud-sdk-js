@@ -14,7 +14,8 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntity4Api<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -58,33 +59,63 @@ export class TestEntity4Api<
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<typeof TestEntity4, DeSerializersT>;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(TestEntity4, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    KEY_PROPERTY_STRING: EdmTypeField<
+      TestEntity4<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    BOOLEAN_PROPERTY: EdmTypeField<
+      TestEntity4<DeSerializers>,
+      DeSerializersT,
+      'Edm.Boolean',
+      true,
+      true
+    >;
+    ALL_FIELDS: AllFields<TestEntity4<DeSerializers>>;
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(TestEntity4, this.deSerializers);
-    return {
-      /**
-       * Static representation of the [[keyPropertyString]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
-        'KeyPropertyString',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[booleanProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'BooleanProperty',
-        'Edm.Boolean',
-        true
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntity4)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[keyPropertyString]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
+          'KeyPropertyString',
+          'Edm.String',
+          false
+        ),
+        /**
+         * Static representation of the [[booleanProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'BooleanProperty',
+          'Edm.Boolean',
+          true
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntity4)
+      };
+    }
+
+    return this._schema;
   }
 }

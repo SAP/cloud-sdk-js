@@ -6,7 +6,10 @@ import {
   DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
+  EntityApi,
+  FieldBuilder,
+  OrderableEdmTypeField,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -26,41 +29,11 @@ export declare class TestEntityLinkApi<
     fieldName: string,
     isNullable?: NullableT
   ): CustomField<TestEntityLink<DeSerializersT>, DeSerializersT, NullableT>;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<typeof TestEntityLink, DeSerializersT>;
+  private _schema?;
   get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      TestEntityLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the [[keyTestEntityLink]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_TEST_ENTITY_LINK: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    KEY_TEST_ENTITY_LINK: OrderableEdmTypeField<
       TestEntityLink<
         DeSerializers<
           any,
@@ -89,11 +62,7 @@ export declare class TestEntityLinkApi<
       false,
       true
     >;
-    /**
-     * Static representation of the [[keyToTestEntity]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_TO_TEST_ENTITY: import('@sap-cloud-sdk/odata-v4').OrderableEdmTypeField<
+    KEY_TO_TEST_ENTITY: OrderableEdmTypeField<
       TestEntityLink<
         DeSerializers<
           any,
@@ -122,11 +91,7 @@ export declare class TestEntityLinkApi<
       false,
       true
     >;
-    /**
-     * Static representation of the [[stringProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    STRING_PROPERTY: import('@sap-cloud-sdk/odata-v4').EdmTypeField<
+    STRING_PROPERTY: EdmTypeField<
       TestEntityLink<
         DeSerializers<
           any,
@@ -154,6 +119,31 @@ export declare class TestEntityLinkApi<
       'Edm.String',
       true,
       true
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntityLink<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
     >;
   };
 }

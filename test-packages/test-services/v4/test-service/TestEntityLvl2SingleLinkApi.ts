@@ -14,7 +14,9 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  EdmTypeField,
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityLvl2SingleLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -63,63 +65,117 @@ export class TestEntityLvl2SingleLinkApi<
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<
+    typeof TestEntityLvl2SingleLink,
+    DeSerializersT
+  >;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(
+        TestEntityLvl2SingleLink,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    STRING_PROPERTY: EdmTypeField<
+      TestEntityLvl2SingleLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      true,
+      true
+    >;
+    BOOLEAN_PROPERTY: EdmTypeField<
+      TestEntityLvl2SingleLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Boolean',
+      true,
+      true
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntityLvl2SingleLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      true,
+      true
+    >;
+    INT_16_PROPERTY: OrderableEdmTypeField<
+      TestEntityLvl2SingleLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int16',
+      true,
+      true
+    >;
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityLvl2SingleLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    ALL_FIELDS: AllFields<TestEntityLvl2SingleLink<DeSerializers>>;
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(
-      TestEntityLvl2SingleLink,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[stringProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'StringProperty',
-        'Edm.String',
-        true
-      ),
-      /**
-       * Static representation of the [[booleanProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'BooleanProperty',
-        'Edm.Boolean',
-        true
-      ),
-      /**
-       * Static representation of the [[guidProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'GuidProperty',
-        'Edm.Guid',
-        true
-      ),
-      /**
-       * Static representation of the [[int16Property]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'Int16Property',
-        'Edm.Int16',
-        true
-      ),
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntityLvl2SingleLink)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[stringProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'StringProperty',
+          'Edm.String',
+          true
+        ),
+        /**
+         * Static representation of the [[booleanProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'BooleanProperty',
+          'Edm.Boolean',
+          true
+        ),
+        /**
+         * Static representation of the [[guidProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'GuidProperty',
+          'Edm.Guid',
+          true
+        ),
+        /**
+         * Static representation of the [[int16Property]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'Int16Property',
+          'Edm.Int16',
+          true
+        ),
+        /**
+         * Static representation of the [[keyProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'KeyProperty',
+          'Edm.String',
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntityLvl2SingleLink)
+      };
+    }
+
+    return this._schema;
   }
 }

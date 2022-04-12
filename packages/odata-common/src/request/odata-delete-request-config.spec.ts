@@ -26,8 +26,4 @@ describe('ODataDeleteRequestConfig', () => {
       testEntityResourcePath(keyPropGuid, keyPropString)
     );
   });
-
-  it('has no format', () => {
-    expect(Object.keys(config.queryParameters())).not.toContain('$format');
-  });
 });

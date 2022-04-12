@@ -31,7 +31,7 @@ describe('CountRequestBuilder', () => {
       expect(actual).toBe(expected);
     });
 
-    it('ignores methods which must not affect count like $format, $top, $skip', async () => {
+    it('ignores methods which must not affect count like $top, $skip', async () => {
       const expected =
         '/testination/sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/$count';
       const actual = await requestBuilder

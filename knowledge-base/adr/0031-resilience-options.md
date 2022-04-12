@@ -60,9 +60,9 @@ So we have something for circuit breaker and timeout.
 ## Decision
 
 - Rate limit and bulk limit we will not be done -> no user request.
-- We will implement [extendable middleware approach]('#variant-c')
-- Step 1: Circuit breaker is added and made tenant aware
-- Step 2: Retry is added and excluded if circuit breaker is open.
+- We will implement an [extendable middleware approach]('#variant-c').
+- Step 1: Circuit breaker is in resilience middleware and made tenant aware
+- Step 2: Retry is in resilience middleware and excluded if circuit breaker is open.
 - Step 3 (Optional): Make resilience globally configurable for all requests.
   Do this on demand or after customer feedback.
 - Default for circuit breaker is on.

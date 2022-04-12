@@ -14,7 +14,7 @@ The term `target system` is used for the system defined in the destination.
 
 - BTP service requests:
   - XSUAA (BTP service) to fetch a service token
-  - destination service (BTP service) to fetch the destination
+  - Destination service (BTP service) to fetch the destination
 - Target system requests:
   - CSRF token request to the target system for non-read requests
   - actual request to the target system
@@ -61,12 +61,12 @@ So we have something for circuit breaker and timeout.
 
 - Rate limit and bulk limit we will not be done -> no user request.
 - We will implement an [extendable middleware approach]('#variant-c').
-- Step 1: Circuit breaker is in resilience middleware and made tenant aware
-- Step 2: Retry is in resilience middleware and excluded if circuit breaker is open.
+- Step 1: Circuit breaker will be part of the resilience middleware and will be tenant aware.
+- Step 2:Retry will be part of the resilience middleware and disabled if circuit breaker is open.
 - Step 3 (Optional): Make resilience globally configurable for all requests.
   Do this on demand or after customer feedback.
-- Default for circuit breaker is on.
-- Default for retry is off since this is a bigger behavior change
+- By default the circuit breaker is enabled.
+- By default retry is disabled since this is a bigger change of the previous behavior
 
 |     Option      | On target | On BTP | Default target | Default BTP | Remarks                                    |
 | :-------------: | :-------: | :----: | :------------: | :---------: | ------------------------------------------ |
@@ -79,18 +79,19 @@ So we have something for circuit breaker and timeout.
 ## Consequences
 
 The user has the option to switch-on and adjust resilience.
-If options are not sufficient a custom implementation can be used.
+If options are not sufficient, custom implementations can be used.
 
 ## Implementation Details
 
 ### Options
 
+Defaults:
 - For retry, we will use [async retry](https://www.npmjs.com/package/async-retry)
 - For circuit breaker we will use [opossum](https://www.npmjs.com/package/opossum)
 
 This determines the possible options you can set.
 The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the default values.
-If you pass `true`,this will enable the resilience option with the default values.
+If you pass `true`, this will enable the resilience option with the default values.
 If you pass `false`, this will disable the resilience option.
 
 ```ts
@@ -99,15 +100,15 @@ type CircuitBreakerOptions = undefined | true | false | OpssumLibOption;
 type TimeoutOptions = undefined | number | { service: number; target: number };
 
 interface OpssumLibOption {
-  timeout?: number | false | undefined; //default 10000
-  errorThresholdPercentage?: number | undefined; //default 50
+  timeout?: number | false | undefined; // default 10000
+  errorThresholdPercentage?: number | undefined; // default 50
   volumeThreshold?: number | undefined; // default 10
-  resetTimeout?: number | undefined; //default 30000
-  isolationStragtegy?: IsolationStrategy; //default tenant
+  resetTimeout?: number | undefined; // default 30000
+  isolationStragtegy?: IsolationStrategy; // default tenant
 }
 
 interface AsynRetryLibOptions {
-  retries?: number; //default 10
+  retries?: number; // default 10
   factor?: number; // default  2.
   minTimeout?: number; // default 1000 ms.
   maxTimeout?: number; // default Infinity.
@@ -115,7 +116,7 @@ interface AsynRetryLibOptions {
   onRetry: (e: Error) => {}; // default undefined
 }
 
-//in the resiliece call:
+// in the resiliece call:
 type ResilieceOptions = {
   timeout: undefined | number;
   retry: RetryOptions | { service: RetryOptions; target: RetryOptions };
@@ -129,7 +130,7 @@ The term `service` indicates the calls to the SAP BTP services and the `target` 
 The default situation with 10sec timeout, circuit breaker on and retry switched off would be:
 
 ```ts
-defaultResilieceOptions = {
+defaultResilienceOptions = {
   timeout: 10000,
   retry: false,
   circuitBreaker: true
@@ -144,18 +145,18 @@ The API would look like:
 ```ts
 myApi
   .getAll()
-  .timeout(20) //deprecate
-  .resilience({...}) //ResilieceOptions
+  .timeout(20) // deprecate
+  .resilience({...}) // ResilieceOptions
   .execute({
-      enableCircuitBreaker: true, //deprecate
-      timeout: 10, //deprecate
+      enableCircuitBreaker: true, // deprecate
+      timeout: 10, // deprecate
       destinationName: 'my-dest'
   });
 executeHttpRequest({
       destinationName: 'my-dest'
     },
     {
-      resilience: {...} //ResilieceOptions
+      resilience: {...} // ResilieceOptions
     }
 );
 ```
@@ -270,7 +271,7 @@ Use Case D:
 ```ts
 myApi
   .getAll()
-  .middleware(resilience({ retry: true })) //switch on retry using default implementation
+  .middleware(resilience({ retry: true })) // switch on retry using default implementation
   .middleware(customHanlder1)
   .middleware(customHanlder2)
   .execute({

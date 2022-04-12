@@ -86,6 +86,7 @@ If options are not sufficient, custom implementations can be used.
 ### Options
 
 Defaults:
+
 - For retry, we will use [async retry](https://www.npmjs.com/package/async-retry)
 - For circuit breaker we will use [opossum](https://www.npmjs.com/package/opossum)
 

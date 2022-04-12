@@ -46,6 +46,7 @@ async function getAllStats() {
 }
 
 async function main() {
+  // eslint-disable-next-line no-console
   console.log(await getAllStats());
 }
 

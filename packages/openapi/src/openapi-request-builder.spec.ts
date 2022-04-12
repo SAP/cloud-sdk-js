@@ -220,7 +220,7 @@ describe('openapi-request-builder', () => {
     await expect(() =>
       requestBuilder.executeRaw(destination)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Cannot execute request, the value of the path parameter \'id\' must not contain \'/\', \'?\', or \'#\'. (RFC3986)"'
+      "\"Cannot execute request, the value of the path parameter 'id' must not contain '/', '?', or '#'. (RFC3986)\""
     );
   });
 

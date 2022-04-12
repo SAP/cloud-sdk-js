@@ -96,14 +96,15 @@ export function parsePathPattern(
   }
 
   // Check if there is still curly bracket in the replaced path pattern
-  const matchedPlaceholders = pathPattern.match(/\{[^\/\?#]+\}/)
-    if (matchedPlaceholders !== null) {
-      throw new Error(
-        `Could not find path parameter for placeholder '${matchedPlaceholders.join(
-          "', '"
-        )}'.`
-      );
-    }
+  // This will match the innermost curly bracket pair
+  const matchedPlaceholders = pathPattern.match(/{[^/?#{}]+}/);
+  if (matchedPlaceholders !== null) {
+    throw new Error(
+      `Could not find path parameter for placeholder '${matchedPlaceholders.join(
+        "', '"
+      )}'.`
+    );
+  }
 
   pathPattern = pathPattern.replace(/TEMP_LEFT_CURLY_BRACKET/g, '{');
   pathPattern = pathPattern.replace(/TEMP_RIGHT_CURLY_BRACKET/g, '}');
@@ -137,7 +138,8 @@ export function validatePathParameters(
   }
 
   // Check if there is still curly bracket in the replaced path pattern
-  const matchedPlaceholders = pathPattern.match(/\{[^\/\?#]+\}/)
+  // This will match the innermost curly bracket pair
+  const matchedPlaceholders = pathPattern.match(/{[^/?#{}]+}/);
   if (matchedPlaceholders !== null) {
     throw new Error(
       `Could not find path parameter for placeholder '${matchedPlaceholders.join(

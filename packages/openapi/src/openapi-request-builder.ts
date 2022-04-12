@@ -184,7 +184,8 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     }
 
     // Check if there is still curly bracket in the replaced path pattern
-    const matchedPlaceholders = path.match(/\{[^\/\?#]+\}/)
+    // This will match the innermost curly bracket pair
+    const matchedPlaceholders = path.match(/{[^/?#{}]+}/);
     if (matchedPlaceholders !== null) {
       throw new Error(
         `Cannot execute request, no path parameter provided for '${matchedPlaceholders.join(

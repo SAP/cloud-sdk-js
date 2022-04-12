@@ -172,7 +172,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
         );
       }
       const paramValue = String(pathParameters[paramName]);
-      if (/[\/?#]+/.test(paramValue)) {
+      if (/[/?#]+/.test(paramValue)) {
         throw new Error(
           `Cannot execute request, the value of the path parameter '${paramName}' must not contain '/', '?', or '#'. (RFC3986)`
         );
@@ -184,18 +184,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     }
 
     // Check if there is still curly bracket in the replaced path pattern
-    const pathParts = path.split('[-/.]+');
-    pathParts.map(part => {
-      const matchedPlaceholders = part.match(/\{.+\}/);
-      if (matchedPlaceholders !== null) {
-        throw new Error(
-          `Cannot execute request, no path parameter provided for '${matchedPlaceholders.join(
-            "', '"
-          )}'.`
-        );
-      }
-    });
-
+    const matchedPlaceholders = path.match(/\{[^\/\?#]+\}/)
+    if (matchedPlaceholders !== null) {
+      throw new Error(
+        `Cannot execute request, no path parameter provided for '${matchedPlaceholders.join(
+          "', '"
+        )}'.`
+      );
+    }
     return path;
   }
 }

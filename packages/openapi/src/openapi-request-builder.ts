@@ -164,36 +164,53 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   private getPath(): string {
     const pathParameters = this.parameters?.pathParameters || {};
-    let path = this.pathPattern;
-    for (const paramName in pathParameters) {
-      if (!path.includes('{' + paramName + '}')) {
+    const path = this.pathPattern;
+
+    // Get the innermost curly bracket pairs with non-empty and legal content as placeholders.
+    const placeholders = path.match(/{[^/?#{}]+}/g);
+    if (!placeholders) {
+      // No placeholder or path parameter found.
+      if (pathParameters.length > 0) {
         throw new Error(
-          `Cannot execute request, no path parameter '${paramName}' found in the path pattern.`
+          `Cannot execute request, no placeholder found for path parameter ${pathParameters.join(
+            ', '
+          )}.`
         );
       }
-      const paramValue = String(pathParameters[paramName]);
-      if (/[/?#]+/.test(paramValue)) {
-        throw new Error(
-          `Cannot execute request, the value of the path parameter '${paramName}' must not contain '/', '?', or '#'. (RFC3986)`
-        );
-      }
-      path = path.replace(
-        new RegExp(`{${paramName}}`, 'g'),
-        encodeURIComponent(paramValue)
-      );
+      return path;
     }
 
-    // Check if there is still curly bracket in the replaced path pattern
-    // This will match the innermost curly bracket pair
-    const matchedPlaceholders = path.match(/{[^/?#{}]+}/);
-    if (matchedPlaceholders !== null) {
-      throw new Error(
-        `Cannot execute request, no path parameter provided for '${matchedPlaceholders.join(
-          "', '"
-        )}'.`
-      );
+    const sortedPlaceholders = placeholders.map(placeholder => {
+      const strippedPlaceholder = placeholder.slice(1, -1);
+      const parameterValue = pathParameters[strippedPlaceholder];
+      if (!parameterValue) {
+        throw new Error(
+          `Cannot execute request, no path parameter provided for placeholder '${placeholder}'.`
+        );
+      }
+
+      if (/[/?#]+/.test(parameterValue)) {
+        throw new Error(
+          `Cannot execute request, the value of the path parameter '${strippedPlaceholder}' must not contain '/', '?', or '#'. (RFC3986)`
+        );
+      }
+
+      return encodeURIComponent(parameterValue);
+    });
+
+    const staticParts = path.split(/{[^/?#{}]+}/);
+
+    const newPath: string[] = [];
+    while (staticParts.length > 0 && sortedPlaceholders.length > 0) {
+      newPath.push(staticParts.shift()!, sortedPlaceholders.shift()!);
     }
-    return path;
+    if (staticParts.length > 0) {
+      newPath.concat(staticParts);
+    } else {
+      newPath.concat(sortedPlaceholders);
+    }
+
+    return newPath.join('');
   }
 }
 

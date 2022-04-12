@@ -114,7 +114,7 @@ describe('parseParameters', () => {
 describe('parsePathParameters', () => {
   it('returns empty arrays if there are no parameters', async () => {
     expect(
-      parsePathParameters([], '/test', await createTestRefs(), {
+      parsePathParameters([], await createTestRefs(), {
         strictNaming: false
       })
     ).toEqual([]);
@@ -133,56 +133,13 @@ describe('parsePathParameters', () => {
       schema: { type: 'string' }
     };
     expect(
-      parsePathParameters(
-        [pathParam1, pathParam2],
-        '/test/{param1}:{param2}',
-        refs,
-        {
-          strictNaming: false
-        }
-      )
+      parsePathParameters([pathParam1, pathParam2], refs, {
+        strictNaming: false
+      })
     ).toEqual([
       { ...pathParam1, originalName: 'param1', schemaProperties: {} },
       { ...pathParam2, originalName: 'param2', schemaProperties: {} }
     ]);
-  });
-
-  it('throws an error if any path parameter cannot be found in path pattern', async () => {
-    const refs = await createTestRefs();
-    const pathParam1: OpenAPIV3.ParameterObject = {
-      name: 'param1',
-      in: 'path',
-      schema: { type: 'string' }
-    };
-    const pathParam2: OpenAPIV3.ParameterObject = {
-      name: 'param2',
-      in: 'path',
-      schema: { type: 'string' }
-    };
-
-    expect(() =>
-      parsePathParameters([pathParam1, pathParam2], '/test/{param1}', refs, {
-        strictNaming: false
-      })
-    ).toThrowErrorMatchingSnapshot(
-      "Could not find placeholder for path parameter 'param2'."
-    );
-  });
-
-  it('throws an error if path pattern contains unknown placeholder', async () => {
-    const refs = await createTestRefs();
-    const pathParam1: OpenAPIV3.ParameterObject = {
-      name: 'param1',
-      in: 'path',
-      schema: { type: 'string' }
-    };
-    expect(() =>
-      parsePathParameters([pathParam1], '/test/{param1}/{param2}', refs, {
-        strictNaming: false
-      })
-    ).toThrowErrorMatchingSnapshot(
-      "Could not find path parameter for placeholder '{param2}'."
-    );
   });
 });
 
@@ -191,7 +148,7 @@ describe('parsePathTemplate', () => {
     expect(parsePathPattern('/test', [])).toEqual('/test');
   });
 
-  it('throws an error if the path and parameters do not match', async () => {
+  it('throws an error if the path parameters do not match placeholders', async () => {
     expect(() =>
       parsePathPattern('/test/{id}', [])
     ).toThrowErrorMatchingInlineSnapshot(

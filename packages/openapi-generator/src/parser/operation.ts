@@ -35,12 +35,7 @@ export function parseOperation(
     parameter => parameter.in === 'path'
   );
 
-  const pathParameters = parsePathParameters(
-    pathParams,
-    pathPattern,
-    refs,
-    options
-  );
+  const pathParameters = parsePathParameters(pathParams, refs, options);
 
   return {
     ...operation,
@@ -64,7 +59,7 @@ export function getRelevantParameters(
 ): OpenAPIV3.ParameterObject[] {
   const resolvedParameters = parameters
     .map(param => refs.resolveObject(param))
-    // Filter cookie and header parameters
+    // Filter cookie and header parameters.
     .filter(param => param.in === 'path' || param.in === 'query');
   return filterDuplicatesRight(
     resolvedParameters,
@@ -79,74 +74,47 @@ export function parsePathPattern(
   pathPattern: string,
   pathParameters: OpenApiParameter[]
 ): string {
-  // Replace the old placeholder with the name of the corresponding path parameter
-  for (const pathParameter of pathParameters) {
-    // Check if path contains the provided path parameter
-    if (!pathPattern.includes(pathParameter.originalName)) {
+  // Get the innermost curly bracket pairs with non-empty and legal content as placeholders.
+  const placeholders = pathPattern.match(/{[^/?#{}]+}/g);
+  // Get the non-parameter strings as static parts
+  const staticParts = pathPattern.split(/{[^/?#{}]+}/);
+
+  if (!placeholders) {
+    // No placeholder or path parameter found.
+    if (pathParameters.length > 0) {
       throw new Error(
-        `Could not find placeholder for path parameter '${pathParameter.originalName}'.`
+        `Could not find placeholder for path parameter '${pathParameters
+          .map(pathParameter => pathParameter.originalName)
+          .join("', '")}'.`
       );
     }
-    // Temporarily using TEMP_LEFT_CURLY_BRACKET and TEMP_RIGHT_CURLY_BRACKET to avoid re-substitution
-    // Check test 'parses path template for parameters' for the edge case input
-    pathPattern = pathPattern.replace(
-      new RegExp(`{${pathParameter.originalName}}`, 'g'),
-      `TEMP_LEFT_CURLY_BRACKET${pathParameter.name}TEMP_RIGHT_CURLY_BRACKET`
-    );
+    return pathPattern;
   }
 
-  // Check if there is still curly bracket in the replaced path pattern
-  // This will match the innermost curly bracket pair
-  const matchedPlaceholders = pathPattern.match(/{[^/?#{}]+}/);
-  if (matchedPlaceholders !== null) {
-    throw new Error(
-      `Could not find path parameter for placeholder '${matchedPlaceholders.join(
-        "', '"
-      )}'.`
+  const sortedPlaceholders = placeholders.map(placeholder => {
+    const strippedPlaceholder = placeholder.slice(1, -1);
+    const pathParameter = pathParameters.find(
+      param => param.originalName === strippedPlaceholder
     );
-  }
-
-  pathPattern = pathPattern.replace(/TEMP_LEFT_CURLY_BRACKET/g, '{');
-  pathPattern = pathPattern.replace(/TEMP_RIGHT_CURLY_BRACKET/g, '}');
-
-  return pathPattern;
-}
-
-/**
- * @internal
- * Check if path parameters and path pattern match.
- * @param pathParameters - Path parameters for path templates
- * @param pathPattern - Path containing path templates
- */
-export function validatePathParameters(
-  pathParameters: OpenAPIV3.ParameterObject[],
-  pathPattern: string
-): void {
-  // Replace the old placeholder with the name of the corresponding path parameter
-  for (const pathParameter of pathParameters) {
-    // Check if path contains the provided path parameter
-    if (!pathPattern.includes(pathParameter.name)) {
+    if (!pathParameter) {
       throw new Error(
-        `Could not find placeholder for path parameter '${pathParameter.name}'.`
+        `Could not find path parameter for placeholder '{${strippedPlaceholder}}'.`
       );
     }
-    // Remove the matched path parameter to mark the path parameter
-    pathPattern = pathPattern.replace(
-      new RegExp(`{${pathParameter.name}}`, 'g'),
-      'REMOVED'
-    );
+    return `{${pathParameter.name}}`;
+  });
+
+  const newPathPattern: string[] = [];
+  while (staticParts.length > 0 && sortedPlaceholders.length > 0) {
+    newPathPattern.push(staticParts.shift()!, sortedPlaceholders.shift()!);
+  }
+  if (staticParts.length > 0) {
+    newPathPattern.concat(staticParts);
+  } else {
+    newPathPattern.concat(sortedPlaceholders);
   }
 
-  // Check if there is still curly bracket in the replaced path pattern
-  // This will match the innermost curly bracket pair
-  const matchedPlaceholders = pathPattern.match(/{[^/?#{}]+}/);
-  if (matchedPlaceholders !== null) {
-    throw new Error(
-      `Could not find path parameter for placeholder '${matchedPlaceholders.join(
-        "', '"
-      )}'.`
-    );
-  }
+  return newPathPattern.join('');
 }
 
 /**
@@ -154,11 +122,9 @@ export function validatePathParameters(
  */
 export function parsePathParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
-  pathPattern: string,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiParameter[] {
-  validatePathParameters(pathParameters, pathPattern);
   const parsedParameters = parseParameters(pathParameters, refs, options);
   const uniqueNames = ensureUniqueNames(
     parsedParameters.map(({ originalName }) => originalName),

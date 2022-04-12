@@ -8,16 +8,16 @@ accepted
 
 ### Overview on Request Types
 
-If a user uses the typed clients or the `executeHttpRequest()` method, the SDK creates a various requests.
+If a user uses the typed clients or the `executeHttpRequest()` method, the SDK creates various requests.
 In order to discuss the different resilience options it is good to list these requests first.
 The term `target system` is used for the system defined in the destination.
 
-- XSUAA (BTP service) to fetch a service token
-- destination service (BTP service) to fetch the destination
-- CSRF token request to the target system for non-read requests
-- actual request to the target system
-
-In the discussion we group the latter two requests to the target system with respect to resilience and the first two.
+- BTP service requests:
+  - XSUAA (BTP service) to fetch a service token
+  - destination service (BTP service) to fetch the destination
+- Target system requests:
+  - CSRF token request to the target system for non-read requests
+  - actual request to the target system
 
 ### Status Quo
 

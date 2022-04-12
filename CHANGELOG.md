@@ -27,7 +27,7 @@
 
 ## Fixed Issues
 
--
+- [openapi-generator, openapi] Fix the error if a path part contains multiple path parameters, e.g., `/path/{param}:{param}`.
 
 # 2.2.0
 

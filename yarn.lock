@@ -1841,9 +1841,9 @@
     semver "^7.3.4"
 
 "@sap/xsenv@^3.0.0":
-  version "3.2.1"
-  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.2.1.tgz#18fc1d2a817f72e89f843840fce19326635205e8"
-  integrity sha512-x6fqmYrIStw81o9TiKQIvTyrKRKBkPlwpvX5gyft2jJE+s0ZuKSpmijNTtp8lK4v13Jqvvd8qQr4q6QG0hOZsA==
+  version "3.2.2"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.2.2.tgz#120adcd0571d8825e059bae6e94354058eeb8852"
+  integrity sha512-WG5cpftcRgLe4LtOXJpYYtYODRsVP0FimDnNOLvuFMxz2AG6I8A1ENpGkjPglkDBwKUI3/yDP1v01/JkTe7tBg==
   dependencies:
     debug "4.3.3"
     node-cache "^5.1.0"

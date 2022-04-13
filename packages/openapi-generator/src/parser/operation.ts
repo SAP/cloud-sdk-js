@@ -104,6 +104,19 @@ export function parsePathPattern(
     return `{${pathParameter.name}}`;
   });
 
+  // Check if all path parameters match placeholders
+  for (const pathParameter of pathParameters) {
+    if (
+      !placeholders.find(
+        placeholder => placeholder.slice(1, -1) === pathParameter.originalName
+      )
+    ) {
+      throw new Error(
+        `Could not find placeholder for path parameter '${pathParameter.originalName}'.`
+      );
+    }
+  }
+
   const newPathPattern: string[] = [];
   while (staticParts.length > 0 && sortedPlaceholders.length > 0) {
     newPathPattern.push(staticParts.shift()!, sortedPlaceholders.shift()!);

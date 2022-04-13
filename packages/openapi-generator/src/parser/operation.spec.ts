@@ -156,6 +156,30 @@ describe('parsePathTemplate', () => {
     );
   });
 
+  it('throws an error if placeholders do not match path parameters', async () => {
+    const parameters: OpenApiParameter[] = [
+      {
+        name: 'pathParam1',
+        originalName: 'path-param-1',
+        in: 'path',
+        schema: { type: 'string' },
+        schemaProperties: {}
+      },
+      {
+        name: 'pathParam2',
+        originalName: 'path-param-2',
+        in: 'path',
+        schema: { type: 'string' },
+        schemaProperties: {}
+      }
+    ];
+    expect(() =>
+      parsePathPattern('/test/{path-param-1}', parameters)
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Could not find placeholder for path parameter \'path-param-2\'."'
+    );
+  });
+
   it('parses path template for parameters', async () => {
     const parameters: OpenApiParameter[] = [
       {

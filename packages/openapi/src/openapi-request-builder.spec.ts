@@ -200,6 +200,18 @@ describe('openapi-request-builder', () => {
     );
   });
 
+  it('throws an error if the path parameters do not exist the path pattern', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
+      pathParameters: { id: '0', test: 'test' }
+    });
+
+    await expect(() =>
+      requestBuilder.executeRaw(destination)
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Cannot execute request, no placeholder found for path parameter \'test\'."'
+    );
+  });
+
   it('throws an error if the value of the path parameter contains illegal character', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
       pathParameters: { id: '0/1?2#3' }

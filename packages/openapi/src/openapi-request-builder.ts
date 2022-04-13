@@ -198,6 +198,19 @@ export class OpenApiRequestBuilder<ResponseT = any> {
       return encodeURIComponent(parameterValue);
     });
 
+    // Check if all path parameters match placeholders
+    for (const paramName in pathParameters) {
+      if (
+        !placeholders.find(
+          placeholder => placeholder.slice(1, -1) === paramName
+        )
+      ) {
+        throw new Error(
+          `Cannot execute request, no placeholder found for path parameter '${paramName}'.`
+        );
+      }
+    }
+
     const staticParts = path.split(/{[^/?#{}]+}/);
 
     const newPath: string[] = [];

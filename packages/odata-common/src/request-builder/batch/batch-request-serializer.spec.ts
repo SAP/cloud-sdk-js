@@ -20,6 +20,10 @@ import {
 } from './batch-request-serializer';
 import { BatchChangeSet } from './batch-change-set';
 
+jest.mock('uuid', () => ({
+  v4: jest.fn(() => '<content-id>')
+}));
+
 function commonEntity(): CommonEntity {
   return new CommonEntityApi()
     .entityBuilder()
@@ -33,7 +37,7 @@ const entityKeys = {
   KeyPropertyString: 'test'
 };
 
-export function changeSet(requests: WriteBuilder[]): BatchChangeSet {
+function changeSet(requests: WriteBuilder[]): BatchChangeSet {
   return new BatchChangeSet<any>(requests, 'changeSet_boundary');
 }
 
@@ -161,7 +165,7 @@ describe('batch request serializer', () => {
   });
 
   describe('serializeBatchRequest', () => {
-    it('serializes payload for batch subequests', () => {
+    it('serializes payload for batch subrequests', () => {
       const requests = [
         changeSet([createRequestBuilder({ payload: commonEntity() })]),
         getAllRequestBuilder(),

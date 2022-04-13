@@ -8,6 +8,8 @@ import {
   AllFields,
   EntityBuilderType,
   EntityApi,
+  FieldBuilder,
+  EdmTypeField,
   Link
 } from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityCircularLinkParentApi<
@@ -35,48 +37,14 @@ export declare class TestEntityCircularLinkParentApi<
     DeSerializersT,
     NullableT
   >;
+  private _fieldBuilder?;
+  get fieldBuilder(): FieldBuilder<
+    typeof TestEntityCircularLinkParent,
+    DeSerializersT
+  >;
+  private _schema?;
   get schema(): {
-    /**
-     *
-     * All fields selector.
-     */
-    ALL_FIELDS: AllFields<
-      TestEntityCircularLinkParent<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
-    /**
-     * Static representation of the one-to-many navigation property [[toChild]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_CHILD: Link<
-      TestEntityCircularLinkParent<DeSerializersT>,
-      DeSerializersT,
-      TestEntityCircularLinkChildApi<DeSerializersT>
-    >;
-    /**
-     * Static representation of the [[keyProperty]] property for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    KEY_PROPERTY: import('@sap-cloud-sdk/odata-v2').EdmTypeField<
+    KEY_PROPERTY: EdmTypeField<
       TestEntityCircularLinkParent<
         DeSerializers<
           any,
@@ -102,6 +70,38 @@ export declare class TestEntityCircularLinkParentApi<
       'Edm.String',
       false,
       true
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toChild]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_CHILD: Link<
+      TestEntityCircularLinkParent<DeSerializersT>,
+      DeSerializersT,
+      TestEntityCircularLinkChildApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<
+      TestEntityCircularLinkParent<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
     >;
   };
 }

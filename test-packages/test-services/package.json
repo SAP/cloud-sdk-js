@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-services",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Custom Services for testing",
   "files": [
     "**/*.js",

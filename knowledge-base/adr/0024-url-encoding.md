@@ -108,7 +108,6 @@ Similar to path section, we also discuss OData and OpenAPI separately.
 
 OData allows you to use the following query options:
 
-- `$format=json`
 - `$top=1`
 - `$skip=1`
 - `$orderby=StringProperty`

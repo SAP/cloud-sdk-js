@@ -32,33 +32,42 @@ class AirlinesApi {
       isNullable
     );
   }
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new odata_v4_1.FieldBuilder(
+        Airlines_1.Airlines,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
   get schema() {
-    const fieldBuilder = new odata_v4_1.FieldBuilder(
-      Airlines_1.Airlines,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[airlineCode]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      AIRLINE_CODE: fieldBuilder.buildEdmTypeField(
-        'AirlineCode',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[name]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new odata_v4_1.AllFields('*', Airlines_1.Airlines)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[airlineCode]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        AIRLINE_CODE: fieldBuilder.buildEdmTypeField(
+          'AirlineCode',
+          'Edm.String',
+          false
+        ),
+        /**
+         * Static representation of the [[name]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new odata_v4_1.AllFields('*', Airlines_1.Airlines)
+      };
+    }
+    return this._schema;
   }
 }
 exports.AirlinesApi = AirlinesApi;

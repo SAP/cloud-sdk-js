@@ -14,6 +14,29 @@
 
 ## Compatibility Notes
 
+- [odata-common, odata-v2, odata-v4] Remove all `$format=json` query parameters since header `Accept: application/json` is sent by default.
+
+## New Functionality
+
+- [odata-common] Generate mandatory `Content-Id` headers for changeset parts in batch requests payloads (see [OData Spec](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_MultipartBatchRequestBody)).
+
+## Improvements
+
+- [generator] Change log level from `warn` to `error` if service path cannot be determined from the service spec. undefined (`VALUE_IS_UNDEFINED`).
+- [generator] Reduce memory usage of `schema` in API classes (e.g., `BusinessPartnerAPI`).
+
+## Fixed Issues
+
+-
+
+# 2.2.0
+
+Release Date: Apr 06, 2022<br>
+API Docs: https://sap.github.io/cloud-sdk/api/2.2.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - [eslint-config] Since the `valid-jsdoc` rule is deprecated in ESLint, it is replaced by the `eslint-plugin-jsdoc` plugin for checking JSDoc comments. To stop your project from using a specific rule, turn it off by setting the rule ID to `off` under the `rules` key inside your configuration file.
 - [generator] Stop exporting service classes (e.g., `BusinessPartnerService`) from generated clients, use `businessPartnerService()` instead.
 - [generator] Stop exporting API classes (e.g., `BusinessPartnerAPI`) from generated clients, use `businessPartnerService().businessPartnerApi` instead.
@@ -30,14 +53,9 @@
 - [generator] Remove unused imports (e.g, `moment`, `bignumber.js` and `EdmTypeField`) in API classes (e.g., `BusinessPartnerAPI`) to reduce memory usage.
 - [http-client] Introduce consistent query parameter encoding for all non custom parameters.
 
-## Fixed Issues
-
--
-
-
 # 2.1.0
 
-Release Date: TBD<br>
+Release Date: Feb 17, 2022<br>
 API Docs: https://sap.github.io/cloud-sdk/api/2.1.0<br>
 Blog: TBD<br>
 
@@ -56,6 +74,10 @@ Blog: TBD<br>
 - [odata-common] Fix URL encoding for `getByKey`
 
 # 2.0.0
+
+Release Date: Feb 03, 2022<br>
+API Docs: https://sap.github.io/cloud-sdk/api/2.0.0<br>
+Blog: TBD<br>
 
 ### Function removed
 

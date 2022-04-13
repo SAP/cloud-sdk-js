@@ -1,8 +1,10 @@
+import { parse } from 'path';
 import { unixEOL, createLogger, readJSON } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './generator-options';
 import { VdmServiceMetadata } from './vdm-types';
 import { servicePathFromSwagger } from './swagger-parser/swagger-util';
 import { ServiceMetadata } from './edmx-parser/edmx-file-reader';
+
 const logger = createLogger({
   package: 'generator',
   messageContext: 'service-mapping'
@@ -68,11 +70,10 @@ export function getServicePath(
     servicePathFromSelfLink(metadata.edmx.selfLink) ||
     servicePathFromSwagger(metadata.swagger);
   if (!servicePath || servicePath === VALUE_IS_UNDEFINED) {
-    logger.warn(
-      'No service path could be determined from available metadata! ' +
-        'To avoid this in the future, you can provide the correct value in "service-mapping.json". ' +
-        'By default, the "service-mapping.json" file will be saved to and read from the input directory. ' +
-        'You can supply a custom path using the -s/--serviceMapping flag. '
+    logger.error(
+      `[ ${
+        parse(metadata.edmx.path.toString()).name
+      } ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "service-mapping.json".`
     );
     servicePath = VALUE_IS_UNDEFINED;
   }

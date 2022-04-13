@@ -35,31 +35,40 @@ class TestEntityWithSharedEntityType2Api {
       isNullable
     );
   }
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new odata_v2_1.FieldBuilder(
+        TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
   get schema() {
-    const fieldBuilder = new odata_v2_1.FieldBuilder(
-      TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new odata_v2_1.AllFields(
-        '*',
-        TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2
-      )
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[keyProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'KeyProperty',
+          'Edm.String',
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new odata_v2_1.AllFields(
+          '*',
+          TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2
+        )
+      };
+    }
+    return this._schema;
   }
 }
 exports.TestEntityWithSharedEntityType2Api = TestEntityWithSharedEntityType2Api;

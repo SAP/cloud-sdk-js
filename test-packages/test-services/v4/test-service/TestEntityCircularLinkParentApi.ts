@@ -16,6 +16,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
+  EdmTypeField,
   OneToOneLink,
   OneToManyLink
 } from '@sap-cloud-sdk/odata-v4';
@@ -93,27 +94,71 @@ export class TestEntityCircularLinkParentApi<
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<
+    typeof TestEntityCircularLinkParent,
+    DeSerializersT
+  >;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(
+        TestEntityCircularLinkParent,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityCircularLinkParent<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    /**
+     * Static representation of the one-to-one navigation property [[toFirstChild]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_FIRST_CHILD: OneToOneLink<
+      TestEntityCircularLinkParent<DeSerializersT>,
+      DeSerializersT,
+      TestEntityCircularLinkChildApi<DeSerializersT>
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toChildren]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_CHILDREN: OneToManyLink<
+      TestEntityCircularLinkParent<DeSerializersT>,
+      DeSerializersT,
+      TestEntityCircularLinkChildApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<TestEntityCircularLinkParent<DeSerializers>>;
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(
-      TestEntityCircularLinkParent,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntityCircularLinkParent)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[keyProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'KeyProperty',
+          'Edm.String',
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntityCircularLinkParent)
+      };
+    }
+
+    return this._schema;
   }
 }

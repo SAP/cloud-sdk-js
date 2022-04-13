@@ -14,7 +14,8 @@ import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder
+  FieldBuilder,
+  EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityLvl3MultiLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -62,45 +63,85 @@ export class TestEntityLvl3MultiLinkApi<
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<
+    typeof TestEntityLvl3MultiLink,
+    DeSerializersT
+  >;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(
+        TestEntityLvl3MultiLink,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    STRING_PROPERTY: EdmTypeField<
+      TestEntityLvl3MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      true,
+      true
+    >;
+    GUID_PROPERTY: EdmTypeField<
+      TestEntityLvl3MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      true,
+      true
+    >;
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityLvl3MultiLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    ALL_FIELDS: AllFields<TestEntityLvl3MultiLink<DeSerializers>>;
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(
-      TestEntityLvl3MultiLink,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[stringProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'StringProperty',
-        'Edm.String',
-        true
-      ),
-      /**
-       * Static representation of the [[guidProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'GuidProperty',
-        'Edm.Guid',
-        true
-      ),
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntityLvl3MultiLink)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        /**
+         * Static representation of the [[stringProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'StringProperty',
+          'Edm.String',
+          true
+        ),
+        /**
+         * Static representation of the [[guidProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'GuidProperty',
+          'Edm.Guid',
+          true
+        ),
+        /**
+         * Static representation of the [[keyProperty]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'KeyProperty',
+          'Edm.String',
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntityLvl3MultiLink)
+      };
+    }
+
+    return this._schema;
   }
 }

@@ -271,25 +271,58 @@ export class CommonEntitySingleLinkApi<
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<
+    typeof CommonEntitySingleLink,
+    DeSerializersT
+  >;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(
+        CommonEntitySingleLink,
+        this.deSerializers
+      );
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    KEY_PROPERTY: EdmTypeField<
+      CommonEntitySingleLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    STRING_PROPERTY: EdmTypeField<
+      CommonEntitySingleLink<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      true,
+      true
+    >;
+    ALL_FIELDS: AllFields<CommonEntitySingleLink<DeSerializers>>;
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(
-      CommonEntitySingleLink,
-      this.deSerializers
-    );
-    return {
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'StringProperty',
-        'Edm.String',
-        true
-      ),
-      ...this.navigationPropertyFields,
-      ALL_FIELDS: new AllFields('*', CommonEntitySingleLink)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'KeyProperty',
+          'Edm.String',
+          false
+        ),
+        STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'StringProperty',
+          'Edm.String',
+          true
+        ),
+        ...this.navigationPropertyFields,
+        ALL_FIELDS: new AllFields('*', CommonEntitySingleLink)
+      };
+    }
+
+    return this._schema;
   }
 }
 
@@ -386,42 +419,104 @@ export class CommonEntityApi<
     ) as any;
   }
 
+  private _fieldBuilder?: FieldBuilder<typeof CommonEntity, DeSerializersT>;
+  get fieldBuilder() {
+    if (!this._fieldBuilder) {
+      this._fieldBuilder = new FieldBuilder(CommonEntity, this.deSerializers);
+    }
+    return this._fieldBuilder;
+  }
+
+  private _schema?: {
+    KEY_PROPERTY_GUID: EdmTypeField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      false,
+      true
+    >;
+    KEY_PROPERTY_STRING: EdmTypeField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    STRING_PROPERTY: EdmTypeField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      true,
+      true
+    >;
+    INT_16_PROPERTY: OrderableEdmTypeField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int16',
+      true,
+      true
+    >;
+    COLLECTION_PROPERTY: CollectionField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      true,
+      true
+    >;
+    COMPLEX_TYPE_PROPERTY: CommonComplexTypeField<
+      CommonEntity<DeSerializers>,
+      DeSerializersT,
+      true,
+      true
+    >;
+    TO_SINGLE_LINK: OneToOneLink<
+      CommonEntity<DeSerializersT>,
+      DeSerializersT,
+      CommonEntitySingleLinkApi<DeSerializersT>
+    >;
+    ALL_FIELDS: AllFields<CommonEntity<DeSerializers>>;
+  };
+
   get schema() {
-    const fieldBuilder = new FieldBuilder(CommonEntity, this.deSerializers);
-    return {
-      KEY_PROPERTY_GUID: fieldBuilder.buildEdmTypeField(
-        'KeyPropertyGuid',
-        'Edm.Guid',
-        false
-      ),
-      KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
-        'KeyPropertyString',
-        'Edm.String',
-        false
-      ),
-      STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'StringProperty',
-        'Edm.String',
-        true
-      ),
-      INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'Int16Property',
-        'Edm.Int16',
-        true
-      ),
-      COLLECTION_PROPERTY: fieldBuilder.buildCollectionField(
-        'CollectionProperty',
-        'Edm.String',
-        true
-      ),
-      COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField(
-        'ComplexTypeProperty',
-        CommonComplexTypeField,
-        true
-      ),
-      ...this.navigationPropertyFields,
-      ALL_FIELDS: new AllFields('*', CommonEntity)
-    };
+    if (!this._schema) {
+      const fieldBuilder = this.fieldBuilder;
+      this._schema = {
+        KEY_PROPERTY_GUID: fieldBuilder.buildEdmTypeField(
+          'KeyPropertyGuid',
+          'Edm.Guid',
+          false
+        ),
+        KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
+          'KeyPropertyString',
+          'Edm.String',
+          false
+        ),
+        STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'StringProperty',
+          'Edm.String',
+          true
+        ),
+        INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'Int16Property',
+          'Edm.Int16',
+          true
+        ),
+        COLLECTION_PROPERTY: fieldBuilder.buildCollectionField(
+          'CollectionProperty',
+          'Edm.String',
+          true
+        ),
+        COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField(
+          'ComplexTypeProperty',
+          CommonComplexTypeField,
+          true
+        ),
+        ...this.navigationPropertyFields,
+        ALL_FIELDS: new AllFields('*', CommonEntity)
+      };
+    }
+
+    return this._schema;
   }
 }
 

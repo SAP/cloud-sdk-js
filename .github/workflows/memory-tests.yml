@@ -27,3 +27,12 @@ jobs:
       - run: yarn test
         name: test v1 memory usage
         working-directory: test-packages/mermory-tests/sdk-v1/
+      - run: yarn install
+        name: install test canary
+        working-directory: test-packages/mermory-tests/sdk-canary/
+      - run: yarn generate-vdm
+        name: generate canary test client
+        working-directory: test-packages/mermory-tests/sdk-canary/
+      - run: yarn test
+        name: test canary memory usage
+        working-directory: test-packages/mermory-tests/sdk-canary/

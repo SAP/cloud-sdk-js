@@ -2,11 +2,7 @@ const memwatch = require('node-memwatch-new');
 const { TestEntity, TestEntity50Col } = require('./test-service');
 
 const dest = {url: 'http://localhost:4004/' };
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
+
 const sdkCode = async () => {
   const hd = new memwatch.HeapDiff();
 
@@ -34,7 +30,7 @@ const sdkCode = async () => {
 
   const diff = hd.end();
   console.log("Additional heap memory  used: " + diff.change.size);
-  console.log("Major changes: " + JSON.stringify(diff.change.details.filter(e => e.size.includes('kb' || e.size.includes('mb'))));
+  console.log("Major changes: " + JSON.stringify(diff.change.details.filter(e => e.size.includes('kb') || e.size.includes('mb'))));
 };
 
 async function main(){

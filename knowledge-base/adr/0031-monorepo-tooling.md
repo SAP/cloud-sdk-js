@@ -18,9 +18,9 @@ pnpm supports [similar features](https://pnpm.io/feature-comparison) as npm and 
 
 ## Criteria
 
-Following tasks are currently done by lerna:
+Following tasks are currently done by lerna and need to be replaced if lerna will be removed:
 
-- ~~Hoist dependencies~~ lerna workspaces
+- ~~Hoist dependencies~~ yarn workspaces
 - Run tasks in all / some packages
 - Release new version for packages
 
@@ -50,8 +50,18 @@ This meant that I did not consider Changesets any further.
 
 Caveats:
 
-- If util scripts like `replace-common-readme.ts` are changed, there may be a wrong cache hit. The cache can be ignored with `--force`.
-- By default, Turborepo will run scripts for downstream dependencies (e.g. test packages), but not for upstream dependencies (e.g. odata-common). `--no-deps` ignores downstream and `--include-dependencies` adds upstream dependencies
+- If util scripts like `replace-common-readme.ts` are changed, there may be a wrong cache hit.
+  The cache can be ignored with `--force`.
+- By default, Turborepo will run scripts for downstream dependencies (e.g. test packages), but not for upstream dependencies (e.g. odata-common).
+  `--no-deps` ignores downstream and `--include-dependencies` adds upstream dependencies.
+- Turborepo does not handle releasing in any form. A separate library like Changesets, Lerna, or Changesets is needed.
+
+Benefits:
+
+- Performance of scripts is increased dramatically through parallelization and caching.
+- `turbo.json` makes it possible to understand dependencies of scripts.
+  - There are still improvements possible to the changes in the PR like generating test services before testing (and using the cache to avoid slowing it down).
+- It is easier to run scripts for all packages, simplifying the generate and readme scripts.
 
 ## Consequences
 

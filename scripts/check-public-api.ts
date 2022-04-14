@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import { join, resolve, parse, basename, dirname } from 'path';
 import { promises, existsSync } from 'fs';
 import { GlobSync } from 'glob';
@@ -107,7 +109,7 @@ function compareApisAndLog(
 
 /**
  * Executes the public API check for a given package.
- * @param pathToPackage -  Path to the package.
+ * @param pathToPackage - Path to the package.
  */
 export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   logger.info(`Check package: ${pathToPackage}`);

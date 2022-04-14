@@ -54,7 +54,7 @@
     "check:dependencies": "turbo run check:dependencies",
     "check:license": "ts-node scripts/check-licenses.ts",
     "check:test-service": "yarn generate && yarn ts-node scripts/check-test-service-for-changes.ts",
-    "check:public-api": "ts-node scripts/check-public-api-cli.ts",
+    "check:public-api": "turbo run check:public-api",
     "connectivity": "yarn workspace @sap-cloud-sdk/connectivity",
     "generator": "yarn workspace @sap-cloud-sdk/generator",
     "generator-common": "yarn workspace @sap-cloud-sdk/generator-common",

@@ -38,6 +38,6 @@ jobs:
         name: test canary memory usage
         id: canary-memory-usage
         working-directory: test-packages/mermory-tests/sdk-canary/
-      - run: ts-node scripts/compare-memory-usage.ts $(steps.v1-memory-usage.outputs.value) $(steps.canary-memory-usage.outputs.value)
+      - run: ts-node scripts/compare-memory-usage.ts ${{steps.v1-memory-usage.outputs.value}} ${{steps.canary-memory-usage.outputs.value}}
         name: compare v1 and canary
 

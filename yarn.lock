@@ -801,9 +801,9 @@
     chalk "^4.0.0"
 
 "@js-temporal/polyfill@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.npmjs.org/@js-temporal/polyfill/-/polyfill-0.4.0.tgz#729aeb1a9e9de1d3067cc21565d5a4448c58f70d"
-  integrity sha512-j6DwrVV5e2fj3pdXXx6e4ol9/VWg+hX54xOUJjNx+PekzWdjkVzBLpttPNczFcY1W0SFv2ovxrsz/OB4SzIALA==
+  version "0.4.1"
+  resolved "https://registry.npmjs.org/@js-temporal/polyfill/-/polyfill-0.4.1.tgz#efca927fe7eb92f71bee1486c160ddf7f9c6723c"
+  integrity sha512-q45ecIocpa2TLem2jNOsCrDwP/sgKZdSkt+C1Rx07OkdKsdbvVfHcD1iDiK9scxBZrBQ38uJ8VQISXBS70ql1w==
   dependencies:
     jsbi "^4.1.0"
     tslib "^2.3.1"

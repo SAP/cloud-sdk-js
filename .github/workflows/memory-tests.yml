@@ -24,11 +24,11 @@ jobs:
       - run: yarn generate-vdm
         name: generate v1 test client
         working-directory: test-packages/mermory-tests/sdk-v1/
-      - run: echo "::set-output name=value::$(yarn test)"
+      - run: echo "::set-output name=value::$(node --inspect test-script.js)"
         name: test v1 memory usage
         id: v1-memory-usage
         working-directory: test-packages/mermory-tests/sdk-v1/
       - run: echo '${{ steps.v1-memory-usage.outputs.value }}'
-      - run: ts-node scripts/compare-memory-usage.ts 5 9
+      - run: npx ts-node scripts/compare-memory-usage.ts 5 9
         name: compare v1 and canary
 

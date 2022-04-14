@@ -21,4 +21,6 @@ service TestService {
   action createTestEntityById(id : Integer) returns TestEntity;
   action createTestEntityByIdReturnId(id : Integer) returns Integer;
   action createTestEntityReturnId(param : TestEntity) returns Integer;
+
+  entity TestEntity50Col as projection on cloudsdk.TestEntity50Col;
 }

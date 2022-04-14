@@ -1,0 +1,21 @@
+name: memory-tests
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 21 * * *
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - run: cd test-packages/memory-tests/sdk-v1 && yarn install
+        name: install test v1
+      - run: yarn generate-vdm
+        name: generate v1 test client
+      - run: yarn test
+        name: test v1 memory usage

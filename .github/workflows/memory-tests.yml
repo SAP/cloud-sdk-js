@@ -14,10 +14,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - run: yarn install --frozen-lockfile
-        name: install root
-      - run: yarn e2e-tests pretest
-        name: start e2e tests server
       - run: yarn install
         name: install test v1
         working-directory: test-packages/mermory-tests/sdk-v1/
@@ -28,7 +24,7 @@ jobs:
         name: test v1 memory usage
         id: v1-memory-usage
         working-directory: test-packages/mermory-tests/sdk-v1/
-      - run: echo '${{ steps.v1-memory-usage.outputs.value }}'
+      - run: echo '$v1-memory-usage'
       - run: npx ts-node scripts/compare-memory-usage.ts 5 9
         name: compare v1 and canary
 

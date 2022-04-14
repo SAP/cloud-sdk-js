@@ -10,7 +10,7 @@ function sleep(ms) {
 const sdkCode = async () => {
   const hd = new memwatch.HeapDiff();
 
-  // const testEntities101 = await TestEntity.requestBuilder().getAll().execute(dest);
+  const testEntities101 = await TestEntity.requestBuilder().getAll().execute(dest);
   // const testEntities102 = await TestEntity.requestBuilder().getAll().execute(dest);
   // const testEntities103 = await TestEntity.requestBuilder().getAll().execute(dest);
   // const testEntities104 = await TestEntity.requestBuilder().getAll().execute(dest);

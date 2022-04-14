@@ -14,7 +14,7 @@ There are a number of alternatives with somewhat different functionality as comp
 [Nx](https://nx.dev/getting-started/intro) and [TurboRepo](https://turborepo.org/docs) seem to be the [popular choice](https://2021.stateofjs.com/en-US/libraries/monorepo-tools) at the moment.
 npm 7 (as well as yarn) support [workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces) that cover [dependency hoisting](https://github.com/npm/rfcs/discussions/284#discussioncomment-126991).
 pnpm supports [similar features](https://pnpm.io/feature-comparison) as npm and yarn.
-[Changesets](https://github.com/changesets/changesets), [beachball](https://github.com/microsoft/beachball) and [auto](https://github.com/intuit/auto) are tools to manage versioning in multi-package repositories, which is compatible with the alternatives above.
+[Changesets](https://github.com/changesets/changesets), [beachball](https://github.com/microsoft/beachball), and [auto](https://github.com/intuit/auto) are tools to manage versioning in multi-package repositories, which is compatible with the alternatives above.
 
 ## Criteria
 
@@ -26,27 +26,7 @@ Following tasks are currently done by lerna and need to be replaced if lerna wil
 
 ## Decision
 
-### Changesets
-
-`yarn changeset init` fails with
-
-```
-internal/modules/cjs/loader.js:1102
-      throw new ERR_REQUIRE_ESM(filename, parentPath, packageJsonPath);
-      ^
-
-Error [ERR_REQUIRE_ESM]: Must use import to load ES Module: /cloud-sdk/node_modules/trim-newlines/index.js
-require() of ES modules is not supported.
-require() of /cloud-sdk/node_modules/trim-newlines/index.js from /cloud-sdk/node_modules/@changesets/cli/node_modules/meow/index.js is an ES module file as it is a .js file whose nearest parent package.json contains "type": "module" which defines all .js files in that package scope as ES modules.
-Instead rename /cloud-sdk/node_modules/trim-newlines/index.js to end in .cjs, change the requiring code to use import(), or remove "type": "module" from /cloud-sdk/node_modules/trim-newlines/package.json.
-```
-
-I was unable to find a simple guide to solve this and there were alternatives.
-This meant that I did not consider Changesets any further.
-
-### Nx + ?
-
-### Turborepo + Beachball + ?
+### Turborepo + Changesets
 
 Caveats:
 

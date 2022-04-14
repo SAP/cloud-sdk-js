@@ -2,10 +2,15 @@
   "$schema": "https://unpkg.com/@changesets/config@2.0.0/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "fixed": [],
   "linked": [],
-  "access": "restricted",
+  "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "ignore": [
+    "@sap-cloud-sdk/type-tests",
+    "@sap-cloud-sdk/test-services-e2e",
+    "@sap-cloud-sdk/test-services",
+    "@sap-cloud-sdk/integration-tests",
+    "@sap-cloud-sdk/e2e-tests"
+  ]
 }

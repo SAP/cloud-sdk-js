@@ -33,7 +33,7 @@ describe('class', () => {
     });
     expect(result).toContain('functionImport');
     expect(result).toContain(
-      'myFunction:(parameter:paraName<DeSerializersT>)=>myFunction(parameter,this.deSerializers)'
+      'myFunction: (parameter: paraName<DeSerializersT>) => myFunction(parameter, this.deSerializers, this.dataTransformer)'
     );
   });
 
@@ -46,7 +46,7 @@ describe('class', () => {
     });
     expect(result).toContain('actionImport');
     expect(result).toContain(
-      'myAction:(parameter:paraName<DeSerializersT>)=>myAction(parameter,this.deSerializers)'
+      'myAction: (parameter: paraName<DeSerializersT>) => myAction(parameter, this.deSerializers, this.dataTransformer)'
     );
   });
 

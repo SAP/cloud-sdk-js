@@ -21,10 +21,11 @@ export function serviceBuilder(
   )}<${getGenericTypesWithDefault(oDataVersion)}>(
   deSerializers: Partial<DeSerializers<${getGenericTypes(
     oDataVersion
-  )}>> = defaultDeSerializers as any
+  )}>> = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
   ):${serviceName}<DeSerializers<${getGenericTypes(oDataVersion)}>>  
   {
-  return new ${serviceName}(mergeDefaultDeSerializersWith(deSerializers))
+  return new ${serviceName}(mergeDefaultDeSerializersWith(deSerializers), dataTransformer);
   }
   `;
 }
@@ -39,8 +40,10 @@ export function serviceClass(service: VdmServiceMetadata): string {
   }<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     private apis: Record<string, any> = {};
     private deSerializers: DeSerializersT;
+    private dataTransformer?: (data: any) => any;
 
-    constructor(deSerializers: DeSerializersT) {
+    constructor(deSerializers: DeSerializersT, dataTransformer?: (data: any) => any) {
+      this.dataTransformer = dataTransformer;
       this.deSerializers = deSerializers;
     }
 
@@ -75,11 +78,11 @@ function getActionFunctionImports(
 
   const lines = service[type]!.map(
     f =>
-      `${f.name}:(parameter:${f.parametersTypeName}<DeSerializersT>)=>${f.name}(parameter,this.deSerializers)`
+      `${f.name}: (parameter: ${f.parametersTypeName}<DeSerializersT>) => ${f.name}(parameter, this.deSerializers, this.dataTransformer)`
   );
 
   return codeBlock`
-  get ${type}( ) {
+  get ${type}() {
     return {${lines.join(',')}}
   }
   `;

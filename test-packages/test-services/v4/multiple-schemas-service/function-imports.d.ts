@@ -20,7 +20,8 @@ export declare function testFunctionImportEntityReturnType1<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
@@ -41,7 +42,8 @@ export declare function testFunctionImportEntityReturnType2<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,

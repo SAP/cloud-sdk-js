@@ -54,7 +54,8 @@ export function multipleSchemasService<
       DateTimeT,
       TimeT
     >
-  > = defaultDeSerializers as any
+  > = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): MultipleSchemasService<
   DeSerializers<
     BinaryT,
@@ -77,7 +78,8 @@ export function multipleSchemasService<
   >
 > {
   return new MultipleSchemasService(
-    mergeDefaultDeSerializersWith(deSerializers)
+    mergeDefaultDeSerializersWith(deSerializers),
+    dataTransformer
   );
 }
 class MultipleSchemasService<
@@ -85,8 +87,13 @@ class MultipleSchemasService<
 > {
   private apis: Record<string, any> = {};
   private deSerializers: DeSerializersT;
+  private dataTransformer?: (data: any) => any;
 
-  constructor(deSerializers: DeSerializersT) {
+  constructor(
+    deSerializers: DeSerializersT,
+    dataTransformer?: (data: any) => any
+  ) {
+    this.dataTransformer = dataTransformer;
     this.deSerializers = deSerializers;
   }
 

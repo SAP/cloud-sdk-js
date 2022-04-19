@@ -71,7 +71,8 @@ export function multipleSchemasService<
       DurationT,
       TimeOfDayT
     >
-  > = defaultDeSerializers as any
+  > = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): MultipleSchemasService<
   DeSerializers<
     BinaryT,
@@ -95,7 +96,8 @@ export function multipleSchemasService<
   >
 > {
   return new MultipleSchemasService(
-    mergeDefaultDeSerializersWith(deSerializers)
+    mergeDefaultDeSerializersWith(deSerializers),
+    dataTransformer
   );
 }
 class MultipleSchemasService<
@@ -103,8 +105,13 @@ class MultipleSchemasService<
 > {
   private apis: Record<string, any> = {};
   private deSerializers: DeSerializersT;
+  private dataTransformer?: (data: any) => any;
 
-  constructor(deSerializers: DeSerializersT) {
+  constructor(
+    deSerializers: DeSerializersT,
+    dataTransformer?: (data: any) => any
+  ) {
+    this.dataTransformer = dataTransformer;
     this.deSerializers = deSerializers;
   }
 
@@ -135,10 +142,20 @@ class MultipleSchemasService<
     return {
       testFunctionImportEntityReturnType1: (
         parameter: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>
-      ) => testFunctionImportEntityReturnType1(parameter, this.deSerializers),
+      ) =>
+        testFunctionImportEntityReturnType1(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       testFunctionImportEntityReturnType2: (
         parameter: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>
-      ) => testFunctionImportEntityReturnType2(parameter, this.deSerializers)
+      ) =>
+        testFunctionImportEntityReturnType2(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        )
     };
   }
 
@@ -149,14 +166,16 @@ class MultipleSchemasService<
       ) =>
         testActionImportNoParameterComplexReturnType1(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testActionImportNoParameterComplexReturnType2: (
         parameter: TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>
       ) =>
         testActionImportNoParameterComplexReturnType2(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         )
     };
   }

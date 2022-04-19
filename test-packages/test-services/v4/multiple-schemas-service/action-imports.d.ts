@@ -21,7 +21,8 @@ export declare function testActionImportNoParameterComplexReturnType1<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): ActionImportRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
@@ -43,7 +44,8 @@ export declare function testActionImportNoParameterComplexReturnType2<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): ActionImportRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,

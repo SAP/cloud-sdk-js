@@ -20,18 +20,21 @@ const TestComplexType2_1 = require('./TestComplexType2');
  */
 function testActionImportNoParameterComplexReturnType1(
   parameters,
-  deSerializers = odata_v4_1.defaultDeSerializers
+  deSerializers = odata_v4_1.defaultDeSerializers,
+  dataTransformer
 ) {
   const params = {};
   return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType1',
-    data =>
-      (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
         (0, odata_v4_1.entityDeserializer)(
           deSerializers
         ).deserializeComplexType(data, TestComplexType1_1.TestComplexType1)
-      ),
+      );
+    },
     params,
     deSerializers
   );
@@ -46,18 +49,21 @@ exports.testActionImportNoParameterComplexReturnType1 =
  */
 function testActionImportNoParameterComplexReturnType2(
   parameters,
-  deSerializers = odata_v4_1.defaultDeSerializers
+  deSerializers = odata_v4_1.defaultDeSerializers,
+  dataTransformer
 ) {
   const params = {};
   return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType2',
-    data =>
-      (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
         (0, odata_v4_1.entityDeserializer)(
           deSerializers
         ).deserializeComplexType(data, TestComplexType2_1.TestComplexType2)
-      ),
+      );
+    },
     params,
     deSerializers
   );

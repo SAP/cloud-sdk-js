@@ -99,7 +99,8 @@ export function testService<
       DateTimeT,
       TimeT
     >
-  > = defaultDeSerializers as any
+  > = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): TestService<
   DeSerializers<
     BinaryT,
@@ -121,13 +122,21 @@ export function testService<
     TimeT
   >
 > {
-  return new TestService(mergeDefaultDeSerializersWith(deSerializers));
+  return new TestService(
+    mergeDefaultDeSerializersWith(deSerializers),
+    dataTransformer
+  );
 }
 class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
   private apis: Record<string, any> = {};
   private deSerializers: DeSerializersT;
+  private dataTransformer?: (data: any) => any;
 
-  constructor(deSerializers: DeSerializersT) {
+  constructor(
+    deSerializers: DeSerializersT,
+    dataTransformer?: (data: any) => any
+  ) {
+    this.dataTransformer = dataTransformer;
     this.deSerializers = deSerializers;
   }
 
@@ -260,65 +269,118 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     return {
       testFunctionImportNoReturnType: (
         parameter: TestFunctionImportNoReturnTypeParameters<DeSerializersT>
-      ) => testFunctionImportNoReturnType(parameter, this.deSerializers),
+      ) =>
+        testFunctionImportNoReturnType(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       testFunctionImportEdmReturnType: (
         parameter: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>
-      ) => testFunctionImportEdmReturnType(parameter, this.deSerializers),
+      ) =>
+        testFunctionImportEdmReturnType(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       testFunctionImportEdmReturnTypeCollection: (
         parameter: TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>
       ) =>
         testFunctionImportEdmReturnTypeCollection(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportEntityReturnType: (
         parameter: TestFunctionImportEntityReturnTypeParameters<DeSerializersT>
-      ) => testFunctionImportEntityReturnType(parameter, this.deSerializers),
+      ) =>
+        testFunctionImportEntityReturnType(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       testFunctionImportEntityReturnTypeCollection: (
         parameter: TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>
       ) =>
         testFunctionImportEntityReturnTypeCollection(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportSharedEntityReturnType: (
         parameter: TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>
       ) =>
-        testFunctionImportSharedEntityReturnType(parameter, this.deSerializers),
+        testFunctionImportSharedEntityReturnType(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       testFunctionImportSharedEntityReturnTypeCollection: (
         parameter: TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>
       ) =>
         testFunctionImportSharedEntityReturnTypeCollection(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportComplexReturnType: (
         parameter: TestFunctionImportComplexReturnTypeParameters<DeSerializersT>
-      ) => testFunctionImportComplexReturnType(parameter, this.deSerializers),
+      ) =>
+        testFunctionImportComplexReturnType(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       testFunctionImportUnsupportedEdmTypes: (
         parameter: TestFunctionImportUnsupportedEdmTypesParameters<DeSerializersT>
-      ) => testFunctionImportUnsupportedEdmTypes(parameter, this.deSerializers),
+      ) =>
+        testFunctionImportUnsupportedEdmTypes(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       testFunctionImportComplexReturnTypeCollection: (
         parameter: TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>
       ) =>
         testFunctionImportComplexReturnTypeCollection(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportGet: (
         parameter: TestFunctionImportGetParameters<DeSerializersT>
-      ) => testFunctionImportGet(parameter, this.deSerializers),
+      ) =>
+        testFunctionImportGet(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       testFunctionImportPost: (
         parameter: TestFunctionImportPostParameters<DeSerializersT>
-      ) => testFunctionImportPost(parameter, this.deSerializers),
+      ) =>
+        testFunctionImportPost(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       testFunctionImportMultipleParams: (
         parameter: TestFunctionImportMultipleParamsParameters<DeSerializersT>
-      ) => testFunctionImportMultipleParams(parameter, this.deSerializers),
+      ) =>
+        testFunctionImportMultipleParams(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       createTestComplexType: (
         parameter: CreateTestComplexTypeParameters<DeSerializersT>
-      ) => createTestComplexType(parameter, this.deSerializers),
+      ) =>
+        createTestComplexType(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        ),
       fContinue: (parameter: FContinueParameters<DeSerializersT>) =>
-        fContinue(parameter, this.deSerializers)
+        fContinue(parameter, this.deSerializers, this.dataTransformer)
     };
   }
 

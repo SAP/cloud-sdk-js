@@ -10,16 +10,19 @@ const MultiSchemaTestEntityApi_1 = require('./MultiSchemaTestEntityApi');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const BatchRequest_1 = require('./BatchRequest');
 function multipleSchemasService(
-  deSerializers = odata_v2_1.defaultDeSerializers
+  deSerializers = odata_v2_1.defaultDeSerializers,
+  dataTransformer
 ) {
   return new MultipleSchemasService(
-    (0, odata_v2_1.mergeDefaultDeSerializersWith)(deSerializers)
+    (0, odata_v2_1.mergeDefaultDeSerializersWith)(deSerializers),
+    dataTransformer
   );
 }
 exports.multipleSchemasService = multipleSchemasService;
 class MultipleSchemasService {
-  constructor(deSerializers) {
+  constructor(deSerializers, dataTransformer) {
     this.apis = {};
+    this.dataTransformer = dataTransformer;
     this.deSerializers = deSerializers;
   }
   initApi(key, ctor) {

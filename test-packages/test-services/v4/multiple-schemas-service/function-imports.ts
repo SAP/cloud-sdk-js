@@ -33,7 +33,8 @@ export function testFunctionImportEntityReturnType1<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
@@ -44,11 +45,13 @@ export function testFunctionImportEntityReturnType1<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType1',
-    data =>
-      transformReturnValueForEntity(
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForEntity(
         data,
-        multipleSchemasService(deSerializers).testEntity1Api
-      ),
+        multipleSchemasService(deSerializers, dataTransformer).testEntity1Api
+      );
+    },
     params,
     deSerializers
   );
@@ -70,7 +73,8 @@ export function testFunctionImportEntityReturnType2<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
@@ -81,11 +85,13 @@ export function testFunctionImportEntityReturnType2<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType2',
-    data =>
-      transformReturnValueForEntity(
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForEntity(
         data,
-        multipleSchemasService(deSerializers).testEntity2Api
-      ),
+        multipleSchemasService(deSerializers, dataTransformer).testEntity2Api
+      );
+    },
     params,
     deSerializers
   );

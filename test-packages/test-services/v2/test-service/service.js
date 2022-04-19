@@ -23,15 +23,20 @@ const Casetest_1Api_1 = require('./Casetest_1Api');
 const function_imports_1 = require('./function-imports');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const BatchRequest_1 = require('./BatchRequest');
-function testService(deSerializers = odata_v2_1.defaultDeSerializers) {
+function testService(
+  deSerializers = odata_v2_1.defaultDeSerializers,
+  dataTransformer
+) {
   return new TestService(
-    (0, odata_v2_1.mergeDefaultDeSerializersWith)(deSerializers)
+    (0, odata_v2_1.mergeDefaultDeSerializersWith)(deSerializers),
+    dataTransformer
   );
 }
 exports.testService = testService;
 class TestService {
-  constructor(deSerializers) {
+  constructor(deSerializers, dataTransformer) {
     this.apis = {};
+    this.dataTransformer = dataTransformer;
     this.deSerializers = deSerializers;
   }
   initApi(key, ctor) {
@@ -176,76 +181,94 @@ class TestService {
       testFunctionImportNoReturnType: parameter =>
         (0, function_imports_1.testFunctionImportNoReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportEdmReturnType: parameter =>
         (0, function_imports_1.testFunctionImportEdmReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportEdmReturnTypeCollection: parameter =>
         (0, function_imports_1.testFunctionImportEdmReturnTypeCollection)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportEntityReturnType: parameter =>
         (0, function_imports_1.testFunctionImportEntityReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportEntityReturnTypeCollection: parameter =>
         (0, function_imports_1.testFunctionImportEntityReturnTypeCollection)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportSharedEntityReturnType: parameter =>
         (0, function_imports_1.testFunctionImportSharedEntityReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportSharedEntityReturnTypeCollection: parameter =>
         (0,
         function_imports_1.testFunctionImportSharedEntityReturnTypeCollection)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportComplexReturnType: parameter =>
         (0, function_imports_1.testFunctionImportComplexReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportUnsupportedEdmTypes: parameter =>
         (0, function_imports_1.testFunctionImportUnsupportedEdmTypes)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportComplexReturnTypeCollection: parameter =>
         (0, function_imports_1.testFunctionImportComplexReturnTypeCollection)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportGet: parameter =>
         (0, function_imports_1.testFunctionImportGet)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportPost: parameter =>
         (0, function_imports_1.testFunctionImportPost)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportMultipleParams: parameter =>
         (0, function_imports_1.testFunctionImportMultipleParams)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       createTestComplexType: parameter =>
         (0, function_imports_1.createTestComplexType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       fContinue: parameter =>
-        (0, function_imports_1.fContinue)(parameter, this.deSerializers)
+        (0, function_imports_1.fContinue)(
+          parameter,
+          this.deSerializers,
+          this.dataTransformer
+        )
     };
   }
   get batch() {

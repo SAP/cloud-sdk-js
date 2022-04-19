@@ -30,9 +30,9 @@ function getTransformer(
     return `(data) => throwErrorWhenReturnTypeIsUnionType(data, '${actionFunctionImport.originalName}')`;
   }
   if (actionFunctionImport.returnType.builderFunction) {
-    return `(data) => ${responseTransformerFunctionName(
+    return `(data) => {\n        data = dataTransformer ? { d: dataTransformer(data) } : data;\n        return ${responseTransformerFunctionName(
       actionFunctionImport.returnType
-    )}(data, ${actionFunctionImport.returnType.builderFunction})`;
+    )}(data, ${actionFunctionImport.returnType.builderFunction});\n    }`;
   }
   throw Error(
     `Cannot build function/action import ${actionFunctionImport.originalName} because the builder function: ${actionFunctionImport.returnType.builderFunction} is missing.`

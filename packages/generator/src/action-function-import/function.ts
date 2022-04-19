@@ -28,6 +28,10 @@ export function functionImportFunction(
         name: 'deSerializers',
         type: 'DeSerializersT',
         initializer: 'defaultDeSerializers as any'
+      },
+      {
+        name: 'dataTransformer?',
+        type: '(data: any) => any'
       }
     ],
     returnType,

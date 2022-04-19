@@ -167,7 +167,9 @@ function getEntityReturnType(
         returnType: first(entities)!.className,
         builderFunction: `${voca.decapitalize(
           serviceName
-        )}(deSerializers).${getApiName(first(entities)!.className)}`,
+        )}(deSerializers, dataTransformer).${getApiName(
+          first(entities)!.className
+        )}`,
         isNullable,
         isCollection
       }

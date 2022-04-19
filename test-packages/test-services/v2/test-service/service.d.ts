@@ -76,7 +76,8 @@ export declare function testService<
       DateTimeT,
       TimeT
     >
-  >
+  >,
+  dataTransformer?: (data: any) => any
 ): TestService<
   DeSerializers<
     BinaryT,
@@ -103,7 +104,11 @@ declare class TestService<
 > {
   private apis;
   private deSerializers;
-  constructor(deSerializers: DeSerializersT);
+  private dataTransformer?;
+  constructor(
+    deSerializers: DeSerializersT,
+    dataTransformer?: (data: any) => any
+  );
   private initApi;
   get testEntityApi(): TestEntityApi<DeSerializersT>;
   get testEntityMultiLinkApi(): TestEntityMultiLinkApi<DeSerializersT>;

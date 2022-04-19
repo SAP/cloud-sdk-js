@@ -21,7 +21,8 @@ export declare function testActionImportNoParameterNoReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): ActionImportRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>,
@@ -60,7 +61,8 @@ export declare function testActionImportMultipleParameterComplexReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): ActionImportRequestBuilder<
   DeSerializersT,
   TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>,
@@ -87,7 +89,8 @@ export declare function testActionImportUnsupportedEdmTypes<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): ActionImportRequestBuilder<
   DeSerializersT,
   TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>,
@@ -109,7 +112,8 @@ export declare function testActionImportNoParameterEntityReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): ActionImportRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>,
@@ -131,7 +135,8 @@ export declare function testActionImportSharedEntityReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportSharedEntityReturnTypeParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): Omit<
   ActionImportRequestBuilder<
     DeSerializersT,
@@ -156,7 +161,8 @@ export declare function testActionImportSharedEntityReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): Omit<
   ActionImportRequestBuilder<
     DeSerializersT,
@@ -194,7 +200,8 @@ export declare function testActionImportNullableTest<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportNullableTestParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): ActionImportRequestBuilder<
   DeSerializersT,
   TestActionImportNullableTestParameters<DeSerializersT>,

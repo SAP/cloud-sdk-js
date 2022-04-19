@@ -24,15 +24,20 @@ const function_imports_1 = require('./function-imports');
 const action_imports_1 = require('./action-imports');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const BatchRequest_1 = require('./BatchRequest');
-function testService(deSerializers = odata_v4_1.defaultDeSerializers) {
+function testService(
+  deSerializers = odata_v4_1.defaultDeSerializers,
+  dataTransformer
+) {
   return new TestService(
-    (0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers)
+    (0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers),
+    dataTransformer
   );
 }
 exports.testService = testService;
 class TestService {
-  constructor(deSerializers) {
+  constructor(deSerializers, dataTransformer) {
     this.apis = {};
+    this.dataTransformer = dataTransformer;
     this.deSerializers = deSerializers;
   }
   initApi(key, ctor) {
@@ -195,58 +200,69 @@ class TestService {
       testFunctionImportEdmReturnType: parameter =>
         (0, function_imports_1.testFunctionImportEdmReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportEdmReturnTypeCollection: parameter =>
         (0, function_imports_1.testFunctionImportEdmReturnTypeCollection)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportNullableTest: parameter =>
         (0, function_imports_1.testFunctionImportNullableTest)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportEntityReturnType: parameter =>
         (0, function_imports_1.testFunctionImportEntityReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportEntityReturnTypeCollection: parameter =>
         (0, function_imports_1.testFunctionImportEntityReturnTypeCollection)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportSharedEntityReturnType: parameter =>
         (0, function_imports_1.testFunctionImportSharedEntityReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportSharedEntityReturnTypeCollection: parameter =>
         (0,
         function_imports_1.testFunctionImportSharedEntityReturnTypeCollection)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportComplexReturnType: parameter =>
         (0, function_imports_1.testFunctionImportComplexReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportComplexReturnTypeCollection: parameter =>
         (0, function_imports_1.testFunctionImportComplexReturnTypeCollection)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportMultipleParams: parameter =>
         (0, function_imports_1.testFunctionImportMultipleParams)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testFunctionImportWithDifferentName: parameter =>
         (0, function_imports_1.testFunctionImportWithDifferentName)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         )
     };
   }
@@ -255,38 +271,45 @@ class TestService {
       testActionImportNoParameterNoReturnType: parameter =>
         (0, action_imports_1.testActionImportNoParameterNoReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testActionImportMultipleParameterComplexReturnType: parameter =>
         (0,
         action_imports_1.testActionImportMultipleParameterComplexReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testActionImportUnsupportedEdmTypes: parameter =>
         (0, action_imports_1.testActionImportUnsupportedEdmTypes)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testActionImportNoParameterEntityReturnType: parameter =>
         (0, action_imports_1.testActionImportNoParameterEntityReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testActionImportSharedEntityReturnType: parameter =>
         (0, action_imports_1.testActionImportSharedEntityReturnType)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testActionImportSharedEntityReturnTypeCollection: parameter =>
         (0, action_imports_1.testActionImportSharedEntityReturnTypeCollection)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         ),
       testActionImportNullableTest: parameter =>
         (0, action_imports_1.testActionImportNullableTest)(
           parameter,
-          this.deSerializers
+          this.deSerializers,
+          this.dataTransformer
         )
     };
   }

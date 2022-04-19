@@ -59,7 +59,8 @@ export declare function multipleSchemasService<
       DurationT,
       TimeOfDayT
     >
-  >
+  >,
+  dataTransformer?: (data: any) => any
 ): MultipleSchemasService<
   DeSerializers<
     BinaryT,
@@ -87,7 +88,11 @@ declare class MultipleSchemasService<
 > {
   private apis;
   private deSerializers;
-  constructor(deSerializers: DeSerializersT);
+  private dataTransformer?;
+  constructor(
+    deSerializers: DeSerializersT,
+    dataTransformer?: (data: any) => any
+  );
   private initApi;
   get testEntity1Api(): TestEntity1Api<DeSerializersT>;
   get testEntity2Api(): TestEntity2Api<DeSerializersT>;

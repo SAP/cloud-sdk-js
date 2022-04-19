@@ -20,7 +20,8 @@ export declare function testFunctionImportEdmReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
@@ -41,7 +42,8 @@ export declare function testFunctionImportEdmReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
@@ -75,7 +77,8 @@ export declare function testFunctionImportNullableTest<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportNullableTestParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportNullableTestParameters<DeSerializersT>,
@@ -96,7 +99,8 @@ export declare function testFunctionImportEntityReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
@@ -117,7 +121,8 @@ export declare function testFunctionImportEntityReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
@@ -138,7 +143,8 @@ export declare function testFunctionImportSharedEntityReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): Omit<
   FunctionImportRequestBuilder<
     DeSerializersT,
@@ -162,7 +168,8 @@ export declare function testFunctionImportSharedEntityReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): Omit<
   FunctionImportRequestBuilder<
     DeSerializersT,
@@ -186,7 +193,8 @@ export declare function testFunctionImportComplexReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
@@ -207,7 +215,8 @@ export declare function testFunctionImportComplexReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
@@ -245,7 +254,8 @@ export declare function testFunctionImportMultipleParams<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportMultipleParamsParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportMultipleParamsParameters<DeSerializersT>,
@@ -266,7 +276,8 @@ export declare function testFunctionImportWithDifferentName<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
-  deSerializers?: DeSerializersT
+  deSerializers?: DeSerializersT,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportWithDifferentNameParameters<DeSerializersT>,

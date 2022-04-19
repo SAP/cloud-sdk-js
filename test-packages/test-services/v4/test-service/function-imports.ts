@@ -41,7 +41,8 @@ export function testFunctionImportEdmReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
@@ -52,10 +53,12 @@ export function testFunctionImportEdmReturnType<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnType',
-    data =>
-      transformReturnValueForEdmType(data, val =>
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForEdmType(data, val =>
         edmToTs(val.value, 'Edm.Boolean', deSerializers)
-      ),
+      );
+    },
     params,
     deSerializers
   );
@@ -77,7 +80,8 @@ export function testFunctionImportEdmReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
@@ -88,10 +92,12 @@ export function testFunctionImportEdmReturnTypeCollection<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnTypeCollection',
-    data =>
-      transformReturnValueForEdmTypeList(data, val =>
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForEdmTypeList(data, val =>
         edmToTs(val, 'Edm.String', deSerializers)
-      ),
+      );
+    },
     params,
     deSerializers
   );
@@ -126,7 +132,8 @@ export function testFunctionImportNullableTest<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportNullableTestParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportNullableTestParameters<DeSerializersT>,
@@ -153,10 +160,12 @@ export function testFunctionImportNullableTest<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportNullableTest',
-    data =>
-      transformReturnValueForEdmTypeList(data, val =>
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForEdmTypeList(data, val =>
         edmToTs(val, 'Edm.String', deSerializers)
-      ),
+      );
+    },
     params,
     deSerializers
   );
@@ -178,7 +187,8 @@ export function testFunctionImportEntityReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
@@ -189,11 +199,13 @@ export function testFunctionImportEntityReturnType<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType',
-    data =>
-      transformReturnValueForEntity(
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForEntity(
         data,
-        testService(deSerializers).testEntityApi
-      ),
+        testService(deSerializers, dataTransformer).testEntityApi
+      );
+    },
     params,
     deSerializers
   );
@@ -215,7 +227,8 @@ export function testFunctionImportEntityReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
@@ -226,11 +239,13 @@ export function testFunctionImportEntityReturnTypeCollection<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnTypeCollection',
-    data =>
-      transformReturnValueForEntityList(
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForEntityList(
         data,
-        testService(deSerializers).testEntityApi
-      ),
+        testService(deSerializers, dataTransformer).testEntityApi
+      );
+    },
     params,
     deSerializers
   );
@@ -252,7 +267,8 @@ export function testFunctionImportSharedEntityReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): Omit<
   FunctionImportRequestBuilder<
     DeSerializersT,
@@ -292,7 +308,8 @@ export function testFunctionImportSharedEntityReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): Omit<
   FunctionImportRequestBuilder<
     DeSerializersT,
@@ -332,7 +349,8 @@ export function testFunctionImportComplexReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
@@ -343,13 +361,15 @@ export function testFunctionImportComplexReturnType<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnType',
-    data =>
-      transformReturnValueForComplexType(data, data =>
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForComplexType(data, data =>
         entityDeserializer(deSerializers).deserializeComplexType(
           data,
           TestComplexType
         )
-      ),
+      );
+    },
     params,
     deSerializers
   );
@@ -371,7 +391,8 @@ export function testFunctionImportComplexReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
@@ -382,13 +403,15 @@ export function testFunctionImportComplexReturnTypeCollection<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnTypeCollection',
-    data =>
-      transformReturnValueForComplexTypeList(data, data =>
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForComplexTypeList(data, data =>
         entityDeserializer(deSerializers).deserializeComplexType(
           data,
           TestComplexType
         )
-      ),
+      );
+    },
     params,
     deSerializers
   );
@@ -427,7 +450,8 @@ export function testFunctionImportMultipleParams<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportMultipleParamsParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportMultipleParamsParameters<DeSerializersT>,
@@ -459,10 +483,12 @@ export function testFunctionImportMultipleParams<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportMultipleParams',
-    data =>
-      transformReturnValueForEdmType(data, val =>
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForEdmType(data, val =>
         edmToTs(val.value, 'Edm.Boolean', deSerializers)
-      ),
+      );
+    },
     params,
     deSerializers
   );
@@ -484,7 +510,8 @@ export function testFunctionImportWithDifferentName<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as any,
+  dataTransformer?: (data: any) => any
 ): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
@@ -495,7 +522,10 @@ export function testFunctionImportWithDifferentName<
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportWithDifferentName',
-    data => transformReturnValueForUndefined(data, val => undefined),
+    data => {
+      data = dataTransformer ? { d: dataTransformer(data) } : data;
+      return transformReturnValueForUndefined(data, val => undefined);
+    },
     params,
     deSerializers
   );

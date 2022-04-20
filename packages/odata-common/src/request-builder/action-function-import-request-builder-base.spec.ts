@@ -1,6 +1,6 @@
 import {
   FunctionImportRequestBuilder,
-  defaultDeSerializers,
+  defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v2';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
@@ -14,7 +14,7 @@ describe('execute', () => {
     authTokens: [],
     originalProperties: {}
   };
-  
+
   it('should resolve on the correct response when using data accessor', async () => {
     const requestBuilder = new FunctionImportRequestBuilder(
       'get',

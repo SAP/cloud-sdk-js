@@ -4,7 +4,6 @@ import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { errorResponse } from '../test-data/error-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
-import { singleTestEntityWrappedByFunctionNameResponse } from '../test-data/single-test-entity-wrapped-by-function-name-response';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';

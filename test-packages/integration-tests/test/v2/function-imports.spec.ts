@@ -81,31 +81,4 @@ describe('Function imports', () => {
       .execute(destination);
     await expect(request).rejects.toThrowErrorMatchingSnapshot();
   });
-
-  it('should resolve on non-empty response if wrapped by function name, using `functionImports` import', async () => {
-    mockCsrfTokenRequest(destination.url);
-
-    nock(destination.url, {
-      reqheaders: {
-        authorization: basicHeader(
-          destination.username!,
-          destination.password!
-        ),
-        accept: 'application/json',
-        'content-type': 'application/json'
-      }
-    })
-      .get(`${servicePath}/TestFunctionImportComplexReturnType`)
-      .reply(200, singleTestEntityWrappedByFunctionNameResponse());
-
-    const request = functionImports
-      .testFunctionImportComplexReturnType({})
-      .execute(destination, data => data.d.TestFunctionImportComplexReturnType);
-
-    await expect(request).resolves.toEqual({
-      complexTypeProperty: {
-        stringProperty: 'ctString'
-      }
-    });
-  });
 });

@@ -22,4 +22,4 @@ jobs:
             */*/node_modules
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
-      - run: ts-node scripts/npm-stats.ts
+      - run: yarn ts-node scripts/npm-stats.ts

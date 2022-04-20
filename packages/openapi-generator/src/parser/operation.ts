@@ -59,7 +59,7 @@ export function getRelevantParameters(
 ): OpenAPIV3.ParameterObject[] {
   const resolvedParameters = parameters
     .map(param => refs.resolveObject(param))
-    // Filter cookie and header parameters.
+    // Filter cookie and header parameters
     .filter(param => param.in === 'path' || param.in === 'query');
   return filterDuplicatesRight(
     resolvedParameters,

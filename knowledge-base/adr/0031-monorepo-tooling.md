@@ -20,9 +20,9 @@ pnpm supports [similar features](https://pnpm.io/feature-comparison) to npm and 
 
 Following tasks are currently done by lerna and need to be replaced if lerna will be removed:
 
-- ~~Hoist dependencies~~ yarn workspaces
-- Run tasks in all / some packages
-- Release new version for packages
+- ~~Hoist dependencies~~ ➡️ yarn workspaces
+- Run tasks in all / some packages ➡️ Turborepo
+- Release new version for packages ➡️ Changesets
 
 ## Decision
 
@@ -38,6 +38,7 @@ Caveats:
   The cache can be ignored with `--force` or it can likely be fixed with additional configuration.
 - By default, Turborepo will run scripts for downstream dependencies (e.g. test packages), but not for upstream dependencies (e.g. odata-common).
   `--no-deps` ignores downstream and `--include-dependencies` adds upstream dependencies.
+  - Think of this as "the dependencies didn't change so we don't need to run them, but we need to make sure to not break our downstream dependants"
 - Turborepo does not handle releasing in any form (yet). A separate library like **Changesets**, Lerna, or Beachball is needed.
 - Remote caching needs some complicated setup unless you use Vercel, which is not an option for our purposes. Without it, the CI pipeline can't benefit from the same speeds as local builds.
 
@@ -48,7 +49,7 @@ Benefits:
   - There are still improvements possible to the changes in the PR like generating test services before testing (and using the cache to avoid slowing it down).
 - It is easier to run scripts for all packages, simplifying the generate and readme scripts.
 - Good documentation is available and there is a helpful community.
-- There is active development backed by a committed third party.
+- There is active development backed by a committed third party (Vercel).
 - [Powerful filters](https://turborepo.org/docs/features/filtering) allow us to run commands in all relevant packages.
 
 ### Changesets
@@ -56,11 +57,21 @@ Benefits:
 Caveats:
 
 - Need to maintain changeset files (instead of `CHANGELOG.md`)
+- We need special permission to use the bot and need to verify if we can use the action. We could work around this, but this is extra effort.
+- It maintains one `CHANGELOG.md` per package, but allows custom changelog formatting.
 
 Benefits:
 
-- Documentation is okay and CLI is simple.
+- Documentation is good but contains many TODOs
+- CLI is amazingly simple:
+  - Create a changeset with `yarn changeset`.
+  - Apply changeset with `yarn changeset version`.
+  - Create release with `yarn changeset publish` or `yarn changeset publish --tag beta`.
+- Each release needs to have one or more changesets.
+- Changesets are merged so you could add a changeset every commit if needed.
+- Changesets give space to describe [what, why, and how](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md#i-am-in-a-multi-package-repository-a-mono-repo) for every change.
 - Adopted successfully in several prominent monorepo projects.
+- There is active development backed by a committed third party (Atlassian).
 - Independent versioning is possible.
 
 ## Consequences

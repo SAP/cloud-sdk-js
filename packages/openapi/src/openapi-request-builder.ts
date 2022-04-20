@@ -164,66 +164,26 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   private getPath(): string {
     const pathParameters = this.parameters?.pathParameters || {};
-    const path = this.pathPattern;
+    let path = this.pathPattern;
 
     // Get the innermost curly bracket pairs with non-empty and legal content as placeholders.
     const placeholders = path.match(/{[^/?#{}]+}/g);
     if (!placeholders) {
-      // No placeholder or path parameter found.
-      if (pathParameters.length > 0) {
-        throw new Error(
-          `Cannot execute request, no placeholder found for path parameter ${pathParameters.join(
-            ', '
-          )}.`
-        );
-      }
       return path;
     }
 
-    const sortedPlaceholders = placeholders.map(placeholder => {
+    placeholders.map(placeholder => {
       const strippedPlaceholder = placeholder.slice(1, -1);
       const parameterValue = pathParameters[strippedPlaceholder];
-      if (!parameterValue) {
-        throw new Error(
-          `Cannot execute request, no path parameter provided for placeholder '${placeholder}'.`
-        );
-      }
-
       if (/[/?#]+/.test(parameterValue)) {
         throw new Error(
           `Cannot execute request, the value of the path parameter '${strippedPlaceholder}' must not contain '/', '?', or '#'. (RFC3986)`
         );
       }
-
-      return encodeURIComponent(parameterValue);
+      path = path.replace(placeholder, encodeURIComponent(parameterValue));
     });
 
-    // Check if all path parameters match placeholders
-    for (const paramName in pathParameters) {
-      if (
-        !placeholders.find(
-          placeholder => placeholder.slice(1, -1) === paramName
-        )
-      ) {
-        throw new Error(
-          `Cannot execute request, no placeholder found for path parameter '${paramName}'.`
-        );
-      }
-    }
-
-    const staticParts = path.split(/{[^/?#{}]+}/);
-
-    const newPath: string[] = [];
-    while (staticParts.length > 0 && sortedPlaceholders.length > 0) {
-      newPath.push(staticParts.shift()!, sortedPlaceholders.shift()!);
-    }
-    if (staticParts.length > 0) {
-      newPath.concat(staticParts);
-    } else {
-      newPath.concat(sortedPlaceholders);
-    }
-
-    return newPath.join('');
+    return path;
   }
 }
 

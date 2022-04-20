@@ -3,7 +3,8 @@ import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { errorResponse } from '../test-data/error-response';
-import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
+import { singleTestEntityResponse } from '../test-data/single-test-entity-response'
+import { singleTestEntityWrappedByFunctionNameResponse } from '../test-data/single-test-entity-wrapped-by-function-name-response';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
@@ -79,5 +80,32 @@ describe('Function imports', () => {
       .testFunctionImportEdmReturnType({})
       .execute(destination);
     await expect(request).rejects.toThrowErrorMatchingSnapshot();
+  });
+
+  it('should resolve on non-empty response if wrapped by function name, using `functionImports` import', async () => {
+    mockCsrfTokenRequest(destination.url);
+
+    nock(destination.url, {
+      reqheaders: {
+        authorization: basicHeader(
+          destination.username!,
+          destination.password!
+        ),
+        accept: 'application/json',
+        'content-type': 'application/json'
+      }
+    })
+      .get(`${servicePath}/TestFunctionImportComplexReturnType`)
+      .reply(200, singleTestEntityWrappedByFunctionNameResponse());
+
+    const request = functionImports
+      .testFunctionImportComplexReturnType({})
+      .execute(destination, (data) => data.d.TestFunctionImportComplexReturnType);
+
+    await expect(request).resolves.toEqual({
+      complexTypeProperty: { 
+        stringProperty: 'ctString' 
+      }
+    });
   });
 });

@@ -27,7 +27,7 @@
 
 ## Fixed Issues
 
--
+- [openapi-generator, openapi] Support path parameters that are not separated by '/', e.g., `/path/{param}:{param}`.
 
 # 2.2.0
 

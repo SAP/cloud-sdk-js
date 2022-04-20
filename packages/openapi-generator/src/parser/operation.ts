@@ -35,12 +35,7 @@ export function parseOperation(
     parameter => parameter.in === 'path'
   );
 
-  const pathParameters = parsePathParameters(
-    pathParams,
-    pathPattern,
-    refs,
-    options
-  );
+  const pathParameters = parsePathParameters(pathParams, refs, options);
 
   return {
     ...operation,
@@ -72,58 +67,6 @@ export function getRelevantParameters(
   );
 }
 
-function isPlaceholder(pathPart: string): boolean {
-  return /^\{.+\}$/.test(pathPart);
-}
-
-function isValidPlaceholder(placeholder: string): boolean {
-  // This regex matches the cases:
-  // 1. it starts with `{`
-  // 2. it ends with `}`
-  // 3. it does not contain any other `{` or `}` in the middle
-  return /^\{[^{}]+\}$/.test(placeholder);
-}
-
-// This function checks whether the given path pattern is valid. Typically, it detects the invalid pattern like below
-// 1. `/path/{p1}:{p2}`
-// 2. `/path?{param}`
-function isValidPathPattern(
-  pathPattern: string,
-  placeholders: string[]
-): boolean {
-  return (
-    pathPattern.includes('?') ||
-    placeholders.some(placeholder => !isValidPlaceholder(placeholder))
-  );
-}
-
-function sortPathParameters(
-  pathParameters: OpenAPIV3.ParameterObject[],
-  pathPattern: string
-): OpenAPIV3.ParameterObject[] {
-  const pathParts = pathPattern.split('/');
-  const placeholders = pathParts.filter(part => isPlaceholder(part));
-
-  if (isValidPathPattern(pathPattern, placeholders)) {
-    throw new Error(
-      `Path pattern '${pathPattern}' is invalid or not supported.`
-    );
-  }
-
-  return placeholders.map(placeholder => {
-    const strippedPlaceholder = placeholder.slice(1, -1);
-    const pathParameter = pathParameters.find(
-      param => param.name === strippedPlaceholder
-    );
-    if (!pathParameter) {
-      throw new Error(
-        `Path parameter '${strippedPlaceholder}' provided in path is missing in path parameters.`
-      );
-    }
-
-    return pathParameter;
-  });
-}
 /**
  * @internal
  */
@@ -131,35 +74,57 @@ export function parsePathPattern(
   pathPattern: string,
   pathParameters: OpenApiParameter[]
 ): string {
-  const pathParts = pathPattern.split('/');
-  const parameterNames = pathParameters.map(param => param.name);
+  // Get the innermost curly bracket pairs with non-empty and legal content as placeholders
+  const placeholders = pathPattern.match(/{[^/?#{}]+}/g) || [];
+  // Get the non-parameter strings as static parts
+  const staticParts = pathPattern.split(/{[^/?#{}]+}/);
 
-  return pathParts
-    .map(part => {
-      if (isPlaceholder(part)) {
-        if (!parameterNames.length) {
-          throw new Error(
-            `Could not find parameter for placeholder '${part}'.`
-          );
-        }
-        return `{${parameterNames.shift()}}`;
-      }
-      return part;
+  const sortedPathParameters = placeholders.map(placeholder => {
+    const strippedPlaceholder = placeholder.slice(1, -1);
+    const pathParameter = pathParameters.find(
+      param => param.originalName === strippedPlaceholder
+    );
+    if (!pathParameter) {
+      throw new Error(
+        `Could not find path parameter for placeholder '{${strippedPlaceholder}}'.`
+      );
+    }
+    return `{${pathParameter.name}}`;
+  });
+
+  // Check if all path parameters match placeholders
+  const originalParameterNames = pathParameters.map(
+    pathParameter => pathParameter.originalName
+  );
+  const missingPlaceholders = originalParameterNames.filter(
+    originalParameterName =>
+      !placeholders.includes(`{${originalParameterName}}`)
+  );
+  if (missingPlaceholders.length) {
+    throw new Error(
+      `Could not find placeholder for path parameter(s) ${missingPlaceholders
+        .map(placeholder => `'${placeholder}'`)
+        .join(', ')}.`
+    );
+  }
+
+  return staticParts
+    .flatMap((staticPart, index) => {
+      const paramName = sortedPathParameters[index];
+      return paramName ? [staticPart, paramName] : [staticPart];
     })
-    .join('/');
+    .join('');
 }
+
 /**
  * @internal
  */
 export function parsePathParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
-  pathPattern: string,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiParameter[] {
-  // todo validate
-  const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
-  const parsedParameters = parseParameters(sortedPathParameters, refs, options);
+  const parsedParameters = parseParameters(pathParameters, refs, options);
   const uniqueNames = ensureUniqueNames(
     parsedParameters.map(({ originalName }) => originalName),
     options,

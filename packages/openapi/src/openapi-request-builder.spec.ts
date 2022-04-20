@@ -184,28 +184,16 @@ describe('openapi-request-builder', () => {
     expect(response.data).toBe(dummyResponse);
   });
 
-  it('throws an error if the path parameters do not match the path pattern', async () => {
-    const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
-      pathParameters: { test: 'test' }
-    });
-
-    await expect(() =>
-      requestBuilder.executeRaw(destination)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Cannot execute request, no path parameter provided for \'id\'."'
-    );
-  });
-
   it('encodes path parameters', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
-      pathParameters: { id: '#test' }
+      pathParameters: { id: '^test' }
     });
     const response = await requestBuilder.executeRaw(destination);
     expect(httpSpy).toHaveBeenCalledWith(
       sanitizeDestination(destination),
       {
         method: 'get',
-        url: '/test/%23test',
+        url: '/test/%5Etest',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
         parameterEncoder: encodeTypedClientRequest,

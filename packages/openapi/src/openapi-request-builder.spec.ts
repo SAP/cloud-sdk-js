@@ -184,7 +184,7 @@ describe('openapi-request-builder', () => {
     expect(response.data).toBe(dummyResponse);
   });
 
-  it('throws an error if the value of the path parameter contains illegal character', async () => {
+  it('throws an error if the value of the path parameter contains illegal characters', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
       pathParameters: { id: '0/1?2#3' }
     });

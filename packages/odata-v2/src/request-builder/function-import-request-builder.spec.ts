@@ -191,7 +191,7 @@ describe('FunctionImportRequestBuilder', () => {
     ).rejects.toThrow();
   });
 
-  it('returns sigle complex type when using data accessor', async () => {
+  it('returns single complex type when using data accessor', async () => {
     const requestBuilder = testFunctionImportComplexReturnType({});
     const expected = createTestComplexType();
 

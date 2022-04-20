@@ -171,11 +171,6 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     return placeholders.reduce((path, placeholder) => {
       const strippedPlaceholder = placeholder.slice(1, -1);
       const parameterValue = pathParameters[strippedPlaceholder];
-      if (/[/?#]+/.test(parameterValue)) {
-        throw new Error(
-          `Cannot execute request, the value of the path parameter '${strippedPlaceholder}' must not contain '/', '?', or '#'. (RFC3986)`
-        );
-      }
       return path.replace(placeholder, encodeURIComponent(parameterValue));
     }, this.pathPattern);
   }

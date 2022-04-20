@@ -184,18 +184,6 @@ describe('openapi-request-builder', () => {
     expect(response.data).toBe(dummyResponse);
   });
 
-  it('throws an error if the value of the path parameter contains illegal characters', async () => {
-    const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
-      pathParameters: { id: '0/1?2#3' }
-    });
-
-    await expect(() =>
-      requestBuilder.executeRaw(destination)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      "\"Cannot execute request, the value of the path parameter 'id' must not contain '/', '?', or '#'. (RFC3986)\""
-    );
-  });
-
   it('encodes path parameters', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
       pathParameters: { id: '^test' }

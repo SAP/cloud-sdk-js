@@ -164,15 +164,11 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   private getPath(): string {
     const pathParameters = this.parameters?.pathParameters || {};
-    let path = this.pathPattern;
 
     // Get the innermost curly bracket pairs with non-empty and legal content as placeholders.
-    const placeholders = path.match(/{[^/?#{}]+}/g);
-    if (!placeholders) {
-      return path;
-    }
+    const placeholders = this.pathPattern.match(/{[^/?#{}]+}/g) || [];
 
-    placeholders.map(placeholder => {
+    return placeholders.reduce((path, placeholder) => {
       const strippedPlaceholder = placeholder.slice(1, -1);
       const parameterValue = pathParameters[strippedPlaceholder];
       if (/[/?#]+/.test(parameterValue)) {
@@ -180,10 +176,8 @@ export class OpenApiRequestBuilder<ResponseT = any> {
           `Cannot execute request, the value of the path parameter '${strippedPlaceholder}' must not contain '/', '?', or '#'. (RFC3986)`
         );
       }
-      path = path.replace(placeholder, encodeURIComponent(parameterValue));
-    });
-
-    return path;
+      return path.replace(placeholder, encodeURIComponent(parameterValue));
+    }, this.pathPattern);
   }
 }
 

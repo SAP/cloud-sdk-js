@@ -1,6 +1,13 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "baseBranch": "origin/main",
+  "globalDependencies": [
+    ".prettierrc",
+    ".eslintrc.js",
+    ".prettierignore",
+    ".gitignore",
+    "tsconfig.json"
+  ],
   "pipeline": {
     "compile": {
       "dependsOn": ["^compile", "check:dependencies"]
@@ -53,6 +60,10 @@
         "@sap-cloud-sdk/util#compile"
       ],
       "outputs": ["openapi/**"]
+    },
+    "generate:common": {
+      "dependsOn": ["@sap-cloud-sdk/generator#compile", "compile"],
+      "outputs": ["test/**"]
     }
   }
 }

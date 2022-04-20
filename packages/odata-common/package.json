@@ -28,6 +28,8 @@
     "compile": "tsc -b",
     "prepare": "yarn compile",
     "test": "jest",
+    "generate:common": "ts-node ./test/generate-common-entity",
+    "postgenerate:common": "yarn lint:fix",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
     "lint:fix": "eslint --ext .ts . --fix && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w",

@@ -176,7 +176,7 @@ describe('parsePathTemplate', () => {
     expect(() =>
       parsePathPattern('/test/{path-param-1}', parameters)
     ).toThrowErrorMatchingInlineSnapshot(
-      '"Could not find placeholder for path parameter \'path-param-2\'."'
+      '"Could not find placeholder for path parameter(s) \'path-param-2\'."'
     );
   });
 

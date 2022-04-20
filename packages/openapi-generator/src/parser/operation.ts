@@ -80,18 +80,19 @@ export function parsePathPattern(
   const staticParts = pathPattern.split(/{[^/?#{}]+}/);
 
   if (!placeholders) {
-    // No placeholder or path parameter found.
-    if (pathParameters.length > 0) {
+    // No placeholder found
+    if (pathParameters.length) {
+      // Path parameter found
       throw new Error(
-        `Could not find placeholder for path parameter '${pathParameters
-          .map(pathParameter => pathParameter.originalName)
-          .join("', '")}'.`
+        `Could not find placeholder for path parameter(s) ${pathParameters
+          .map(pathParameter => `'${pathParameter.originalName}'`)
+          .join(', ')}.`
       );
     }
     return pathPattern;
   }
 
-  const sortedPlaceholders = placeholders.map(placeholder => {
+  const sortedPathParameters = placeholders.map(placeholder => {
     const strippedPlaceholder = placeholder.slice(1, -1);
     const pathParameter = pathParameters.find(
       param => param.originalName === strippedPlaceholder
@@ -105,29 +106,27 @@ export function parsePathPattern(
   });
 
   // Check if all path parameters match placeholders
-  for (const pathParameter of pathParameters) {
-    if (
-      !placeholders.find(
-        placeholder => placeholder.slice(1, -1) === pathParameter.originalName
-      )
-    ) {
-      throw new Error(
-        `Could not find placeholder for path parameter '${pathParameter.originalName}'.`
-      );
-    }
+  const originalParameterNames = pathParameters.map(
+    pathParameter => pathParameter.originalName
+  );
+  const missingPlaceholders = originalParameterNames.filter(
+    originalParameterName =>
+      !placeholders.includes(`{${originalParameterName}}`)
+  );
+  if (missingPlaceholders.length) {
+    throw new Error(
+      `Could not find placeholder for path parameter(s) ${missingPlaceholders
+        .map(placeholder => `'${placeholder}'`)
+        .join(', ')}.`
+    );
   }
 
-  const newPathPattern: string[] = [];
-  while (staticParts.length > 0 && sortedPlaceholders.length > 0) {
-    newPathPattern.push(staticParts.shift()!, sortedPlaceholders.shift()!);
-  }
-  if (staticParts.length > 0) {
-    newPathPattern.concat(staticParts);
-  } else {
-    newPathPattern.concat(sortedPlaceholders);
-  }
-
-  return newPathPattern.join('');
+  return staticParts
+    .flatMap((staticPart, index) => {
+      const paramName = sortedPathParameters[index];
+      return paramName ? [staticPart, paramName] : [staticPart];
+    })
+    .join('');
 }
 
 /**

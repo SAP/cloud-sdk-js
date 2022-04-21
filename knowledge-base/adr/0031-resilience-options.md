@@ -181,14 +181,24 @@ Contra:
 - Assumes all resilience is switched off per default
 
 ```ts
+import {executeHttpRequest} from "@sap-cloud-sdk/http-client";
+
 myApi
   .getAll()
-  .middleware(resilience({ retry: 3 }))
-  .execute({ destinationName: 'my-dest' });
+  .middleware(resilience({retry: 3}))
+  .execute({destinationName: 'my-dest'});
+
+executeHttpRequest({
+    destinationName: 'my-dest'
+  },
+  {
+    resilience: resilience({...})
+  }
+);
 
 type Middleware<T> = <T>(
-  fn: () => Promise<T>,
-  context?: 'service' | 'target'
+        fn: () => Promise<T>,
+        context?: 'service' | 'target'
 ) => Promise<T>;
 ```
 

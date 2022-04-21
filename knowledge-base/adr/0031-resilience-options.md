@@ -9,7 +9,7 @@ accepted
 ### Overview on Request Types
 
 If a user uses the typed clients or the `executeHttpRequest()` method, the SDK creates various requests.
-In order to discuss the different resilience options it is good to list these requests first.
+In order to discuss the different resilience options, it is good to list these requests first.
 The term `target system` is used for the system defined in the destination.
 
 - BTP service requests:
@@ -118,7 +118,7 @@ interface AsynRetryLibOptions {
 }
 
 // in the resiliece call:
-type ResilieceOptions = {
+type ResilienceOptions = {
   timeout: undefined | number;
   retry: RetryOptions | { service: RetryOptions; target: RetryOptions };
   circuitBreaker:

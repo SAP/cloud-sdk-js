@@ -60,21 +60,21 @@ So we have something for circuit breaker and timeout.
 ## Decision
 
 - Rate limit and bulk limit we will not be done -> no user request.
-- We will implement an [extendable middleware approach]('#variant-c').
+- We will implement an [extendable middleware approach](#variant-c).
 - Step 1: Circuit breaker will be part of the resilience middleware and will be tenant aware.
-- Step 2:Retry will be part of the resilience middleware and disabled if circuit breaker is open.
+- Step 2: Retry will be part of the resilience middleware and disabled if the circuit breaker is open.
 - Step 3 (Optional): Make resilience globally configurable for all requests.
   Do this on demand or after customer feedback.
 - By default the circuit breaker is enabled.
 - By default retry is disabled since this is a bigger change of the previous behavior
 
-|     Option      | On target | On BTP | Default target | Default BTP | Remarks                                    |
-| :-------------: | :-------: | :----: | :------------: | :---------: | ------------------------------------------ |
-| circuit breaker |    ✅     |   ✅   |    enabled     |   enabled   | tenant aware                               |
-|     timeout     |    ✅     |   ✅   |    enabled     |   enabled   |                                            |
-|      retry      |    ✅     |   ✅   |    disabled    |  disabled   | no retry: circuit breaker open and 401,403 |
-|   rate limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |                                            |
-|   bulk limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |                                            |
+|     Option      | On target | On BTP | Default target | Default BTP | Remarks                                                    |
+| :-------------: | :-------: | :----: | :------------: | :---------: | ---------------------------------------------------------- |
+| circuit breaker |    ✅     |   ✅   |    enabled     |   enabled   | tenant aware                                               |
+|     timeout     |    ✅     |   ✅   |    enabled     |   enabled   |                                                            |
+|      retry      |    ✅     |   ✅   |    disabled    |  disabled   | no retry: circuit breaker open, response status 401 or 403 |
+|   rate limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |                                                            |
+|   bulk limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |                                                            |
 
 ## Consequences
 
@@ -88,7 +88,7 @@ If options are not sufficient, custom implementations can be used.
 Defaults:
 
 - For retry, we will use [async retry](https://www.npmjs.com/package/async-retry)
-- For circuit breaker we will use [opossum](https://www.npmjs.com/package/opossum)
+- For circuit breaker, we will use [opossum](https://www.npmjs.com/package/opossum)
 
 This determines the possible options you can set.
 The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the default values.
@@ -96,11 +96,11 @@ If you pass `true`, this will enable the resilience option with the default valu
 If you pass `false`, this will disable the resilience option.
 
 ```ts
-type RetryOptions = undefined | true | false | AsynRetryLibOptions;
-type CircuitBreakerOptions = undefined | true | false | OpssumLibOption;
+type RetryOptions = undefined | true | false | AsyncRetryLibOptions;
+type CircuitBreakerOptions = undefined | true | false | OpssumLibOptions;
 type TimeoutOptions = undefined | number | { service: number; target: number };
 
-interface OpssumLibOption {
+interface OpssumLibOptions {
   timeout?: number | false | undefined; // default 10000
   errorThresholdPercentage?: number | undefined; // default 50
   volumeThreshold?: number | undefined; // default 10
@@ -108,16 +108,16 @@ interface OpssumLibOption {
   isolationStragtegy?: IsolationStrategy; // default tenant
 }
 
-interface AsynRetryLibOptions {
+interface AsyncRetryLibOptions {
   retries?: number; // default 10
   factor?: number; // default  2.
-  minTimeout?: number; // default 1000 ms.
-  maxTimeout?: number; // default Infinity.
+  minTimeoutInMs?: number; // default 1000 ms.
+  maxTimeoutInMs?: number; // default Infinity.
   randomize?: boolean; // default true.
   onRetry: (e: Error) => {}; // default undefined
 }
 
-// in the resiliece call:
+// in the resilience call:
 type ResilienceOptions = {
   timeout: undefined | number;
   retry: RetryOptions | { service: RetryOptions; target: RetryOptions };
@@ -131,7 +131,7 @@ The term `service` indicates the calls to the SAP BTP services and the `target` 
 The default situation with 10sec timeout, circuit breaker on and retry switched off would be:
 
 ```ts
-defaultResilienceOptions = {
+defaultResilienceOptions: ResilienceOptions = {
   timeout: 10000,
   retry: false,
   circuitBreaker: true
@@ -147,7 +147,7 @@ The API would look like:
 myApi
   .getAll()
   .timeout(20) // deprecate
-  .resilience({...}) // ResilieceOptions
+  .resilience({...}) // ResilienceOptions
   .execute({
       enableCircuitBreaker: true, // deprecate
       timeout: 10, // deprecate
@@ -226,7 +226,7 @@ Use Case A :
 - User wants to adjust options of resilience.
 - `id` is omitted and options are passed to middleware call.
 - The default resilience middleware function contains a `id` property with content `sdkResilience`.
-- This property identifies the middleware as resilience and replace the default with the one with options.
+- This property identifies the middleware as `resilience` and replaces the default with the one with options.
 - The options are extended - the example below would add retry and set a different timeout
 
 ```ts
@@ -256,7 +256,7 @@ Use Case C:
 - The implementation of the SDK is omitted and the provided one is used instead
 
 ```ts
-myApi.getAll().middleware(myCustomRelisience, 'sdkResilience').execute({
+myApi.getAll().middleware(myCustomResilience, 'sdkResilience').execute({
   destinationName: 'my-dest'
 });
 ```
@@ -273,8 +273,8 @@ Use Case D:
 myApi
   .getAll()
   .middleware(resilience({ retry: true })) // switch on retry using default implementation
-  .middleware(customHanlder1)
-  .middleware(customHanlder2)
+  .middleware(customHandler1)
+  .middleware(customHandler2)
   .execute({
     destinationName: 'my-dest'
   });
@@ -291,12 +291,12 @@ Contra:
 
 ### Global Switch
 
-Up to know we discussed configuration on a per-request basis.
+Up to know, we discussed the configuration on a per-request basis.
 In practice, it could be desirable to enable resilience globally for all requests.
 
 - Per request config overrules global config
 - Some global state (list) holds the given option
-- Implementation check is global config is present and uses them in the request
+- Implementation checks if global config is present and uses them in the request
 
 ```ts
 //Variant A

@@ -96,12 +96,13 @@ If you pass `true`, this will enable the resilience option with the default valu
 If you pass `false`, this will disable the resilience option.
 
 ```ts
+import { StringValue } from 'ms';
 type RetryOptions = undefined | true | false | AsyncRetryLibOptions;
 type CircuitBreakerOptions = undefined | true | false | OpssumLibOptions;
 type TimeoutOptions = undefined | number | { service: number; target: number };
 
 interface OpssumLibOptions {
-  timeout?: number | false | undefined; // default 10000
+  timeout?: StringValue | false | undefined; // default 10sec
   errorThresholdPercentage?: number | undefined; // default 50
   volumeThreshold?: number | undefined; // default 10
   resetTimeout?: number | undefined; // default 30000
@@ -111,8 +112,8 @@ interface OpssumLibOptions {
 interface AsyncRetryLibOptions {
   retries?: number; // default 10
   factor?: number; // default  2.
-  minTimeoutInMs?: number; // default 1000 ms.
-  maxTimeoutInMs?: number; // default Infinity.
+  minTimeout?: StringValue; // default 1000 ms. See https://github.com/vercel/ms
+  maxTimeout?: StringValue; // default Infinity. See https://github.com/vercel/ms
   randomize?: boolean; // default true.
   onRetry: (e: Error) => {}; // default undefined
 }

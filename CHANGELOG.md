@@ -19,6 +19,7 @@
 ## New Functionality
 
 - [odata-common] Generate mandatory `Content-Id` headers for changeset parts in batch requests payloads (see [OData Spec](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_MultipartBatchRequestBody)).
+- [odata-common] Support transforming response data for function / action imports before deserialization. [#682](https://github.com/SAP/cloud-sdk-js/issues/682)
 
 ## Improvements
 

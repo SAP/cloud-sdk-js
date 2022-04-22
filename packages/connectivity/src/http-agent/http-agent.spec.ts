@@ -81,14 +81,13 @@ T53TtQm+oQdUNanvJuk9VANEY+5ObG48gp/bhmskgn/RAPzDgknF0ar8QUU=
 
   afterAll(async () => {
     mock.restore();
-
-    // return promisify(server.close)()
-    return new Promise((resolve, reject) => {
+    // TODO promisify did not work, why?
+    return new Promise((res, rej) => {
       server.close(err => {
         if (err) {
-          reject(err);
+          rej(err);
         } else {
-          resolve('server closed');
+          res('server closed');
         }
       });
     });

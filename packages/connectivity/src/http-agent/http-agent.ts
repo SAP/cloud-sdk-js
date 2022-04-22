@@ -78,7 +78,7 @@ function trustStoreOptions(
     }
     const path = resolve(destination.trustStoreLocation);
 
-    //TODO version 3.0 make this async
+    // TODO version 3.0 make this async
     if (!existsSync(path)) {
       logger.warn(
         `The provided truststore ${resolve(

@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import mock from 'mock-fs';
-import { executeHttpRequest } from '../../../http-client';
+import { executeHttpRequest } from '../../../http-client/src/http-client';
 import {
   proxyAgent,
   Protocol,

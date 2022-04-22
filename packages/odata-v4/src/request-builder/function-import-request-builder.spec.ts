@@ -1,4 +1,4 @@
-import { testFunctionImportMultipleParams } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { testFunctionImportMultipleParams } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { defaultDestination } from '../../../../test-resources/test/test-util/request-mocker';
 
 describe('FunctionImportRequestBuilder', () => {

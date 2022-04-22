@@ -1,4 +1,7 @@
-import { CommonComplexTypeField, CommonEntity } from '../../test/common-entity';
+import {
+  CommonComplexTypeField,
+  CommonEntity
+} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { defaultDeSerializers, DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
 import { Filter } from '../filter';

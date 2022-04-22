@@ -60,7 +60,12 @@ Caveats:
 
 - Need to maintain changeset files (instead of `CHANGELOG.md`).
 - We need special permission to use the bot and need to verify if we can use the action. We could work around this, but this is extra effort.
+- Our current versioning strategy means we have fixed versions for all packages.
+  Changesets would support linked versions, which would avoid meaningless version increases for our packages.
+  We should reconsider our versioning policy given this new opportunity.
 - It maintains one `CHANGELOG.md` per package, but allows custom changelog formatting.
+- When creating a changeset, affected packages need to be selected.
+  This adds some extra effort.
   - There is a "changed packages" selection, that makes it easy to select all packages that were touched since the last changeset.
 
 <img width="560" alt="changeset console output" src="https://user-images.githubusercontent.com/26565533/164425056-581e4cd6-6863-4d8c-b78f-c13ceabf3b23.png">
@@ -93,4 +98,3 @@ Release pipeline SHOULD work, but is not tested as of 21st of April and some adj
 
 - Scripts and their dependencies need to be maintained in the `turbo.json` file.
 - Errors in this config may lead to unexpected behavior.
-- There are follow-ups needed to fix implicit dependencies (`test-services` => `generator`) and also to add test service generation as a dependency of tests that use generated code.

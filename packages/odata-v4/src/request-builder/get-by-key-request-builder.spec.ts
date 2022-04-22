@@ -1,11 +1,9 @@
+import { TestEnumType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import {
   defaultDestination,
   mockGetRequest
 } from '../../../../test-resources/test/test-util/request-mocker';
-import {
-  createOriginalTestEntityData1,
-  createOriginalTestEntityWithEnumKeyData
-} from '../../../../test-resources/test/test-util/test-data';
+import { createOriginalTestEntityData1 } from '../../../../test-resources/test/test-util/test-data';
 import {
   testEntityApi,
   testEntityWithEnumKeyApi,
@@ -14,6 +12,12 @@ import {
   createTestEntity
 } from '../../test/test-util';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
+
+function createOriginalTestEntityWithEnumKeyData() {
+  return {
+    KeyPropertyEnum1: TestEnumType.Member1
+  };
+}
 
 describe('GetByKeyRequestBuilder', () => {
   describe('execute', () => {

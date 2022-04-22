@@ -1,4 +1,4 @@
-import { CommonEntityApi } from '../../test/common-entity';
+import { CommonEntityApi } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { asc, desc } from './orderable';
 
 const api = new CommonEntityApi();

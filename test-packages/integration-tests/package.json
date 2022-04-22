@@ -7,7 +7,8 @@
   "private": true,
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "test": "jest",
+    "test": "yarn test:integration",
+    "test:integration": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
     "lint:fix": "eslint --ext .ts . --fix && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w",
@@ -15,7 +16,8 @@
   },
   "dependencies": {
     "@sap-cloud-sdk/connectivity": "^2.3.0",
-    "@sap-cloud-sdk/test-services": "^2.3.0",
+    "@sap-cloud-sdk/test-services-odata-v2": "^2.3.0",
+    "@sap-cloud-sdk/test-services-odata-v4": "^2.3.0",
     "@sap-cloud-sdk/test-util": "^2.3.0",
     "@sap-cloud-sdk/util": "^2.3.0",
     "@sap/xssec": "^3.2.5"

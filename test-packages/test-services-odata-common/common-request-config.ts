@@ -1,6 +1,4 @@
 /* eslint-disable max-classes-per-file */
-/* eslint-disable jsdoc/require-jsdoc */
-
 import {
   and,
   DefaultDeSerializers,
@@ -24,7 +22,7 @@ import {
   createODataUri,
   defaultDeSerializers,
   entityDeserializer
-} from '../src/internal';
+} from '../../packages/odata-common/src/internal';
 import {
   CommonEntity,
   CommonEntityApi,

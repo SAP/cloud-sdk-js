@@ -1,4 +1,4 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import {
   defaultDestination,
   mockCountRequest,

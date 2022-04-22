@@ -1,4 +1,4 @@
-import { CommonEntity } from '../../test/common-entity';
+import { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { ODataBatchRequestConfig } from './odata-batch-request-config';
 
 describe('ODataBatchConfig', () => {

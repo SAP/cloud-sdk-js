@@ -14,7 +14,10 @@
 '@sap-cloud-sdk/util': patch
 '@sap-cloud-sdk/e2e-tests': patch
 '@sap-cloud-sdk/integration-tests': patch
-'@sap-cloud-sdk/test-services': patch
+'@sap-cloud-sdk/test-services-common': patch
+'@sap-cloud-sdk/test-services-openapi': patch
+'@sap-cloud-sdk/test-services-odata-v2': patch
+'@sap-cloud-sdk/test-services-odata-v4': patch
 '@sap-cloud-sdk/test-services-e2e': patch
 '@sap-cloud-sdk/type-tests': patch
 ---

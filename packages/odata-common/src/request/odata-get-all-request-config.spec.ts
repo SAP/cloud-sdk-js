@@ -1,5 +1,8 @@
-import { CommonEntity, commonEntityApi } from '../../test/common-entity';
-import { commonODataUri } from '../../test/common-request-config';
+import {
+  CommonEntity,
+  commonEntityApi
+} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import { commonODataUri } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import { DefaultDeSerializers } from '../de-serializers';
 import { asc } from '../order';
 import { ODataGetAllRequestConfig } from './odata-get-all-request-config';

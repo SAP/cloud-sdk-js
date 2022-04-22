@@ -8,7 +8,8 @@
   "types": "types",
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "test": "dtslint --expectOnly --localTs ../../node_modules/typescript/lib test"
+    "test": "yarn test:type",
+    "test:type": "dtslint --expectOnly --localTs ../../node_modules/typescript/lib test"
   },
   "devDependencies": {
     "@sap-cloud-sdk/connectivity": "^2.3.0",
@@ -18,7 +19,8 @@
     "@sap-cloud-sdk/odata-v2": "^2.3.0",
     "@sap-cloud-sdk/odata-v4": "^2.3.0",
     "@sap-cloud-sdk/temporal-de-serializers": "^2.3.0",
-    "@sap-cloud-sdk/test-services": "^2.3.0",
+    "@sap-cloud-sdk/test-services-odata-v2": "^2.3.0",
+    "@sap-cloud-sdk/test-services-odata-v4": "^2.3.0",
     "@types/jsonwebtoken": "^8.3.8",
     "dtslint": "^4.0.0"
   }

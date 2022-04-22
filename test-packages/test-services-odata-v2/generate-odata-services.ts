@@ -9,7 +9,7 @@ const generatorConfigOData = {
   generateJs: false,
   useSwagger: false,
   writeReadme: false,
-  clearOutputDir: true,
+  clearOutputDir: false,
   generateNpmrc: false,
   generatePackageJson: false,
   generateCSN: false,
@@ -20,21 +20,15 @@ const generatorConfigOData = {
 };
 
 async function generateOdata(): Promise<void> {
-  const arg = process.argv[1];
-
-  if (arg === 'v2' || arg === 'v4') {
-    return await generate({
-      ...generatorConfigOData,
-      inputDir: join('..', '..', 'test-resources', 'odata-service-specs', arg),
-      outputDir: resolve(arg),
-      generateJs: true
-    }).catch(reason => {
-      logger.error(`[${arg}] Unhandled rejection at: ${reason}`);
-      process.exit(1);
-    });
-  }
-
-  logger.warn(`No test service generated!`);
+  return generate({
+    ...generatorConfigOData,
+    inputDir: join('..', '..', 'test-resources', 'odata-service-specs', 'v2'),
+    outputDir: resolve('.'),
+    generateJs: true
+  }).catch(reason => {
+    logger.error(`[v2] Unhandled rejection at: ${reason}`);
+    process.exit(1);
+  });
 }
 
 generateOdata();

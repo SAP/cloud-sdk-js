@@ -13,7 +13,7 @@
       "dependsOn": ["^compile", "check:dependencies"]
     },
     "test": {
-      "dependsOn": ["^compile"]
+      "dependsOn": ["^compile", "^generate"]
     },
     "readme": {
       "dependsOn": ["@sap-cloud-sdk/util#compile"],
@@ -33,37 +33,9 @@
     "lint:fix": {
       "outputs": []
     },
-    "generate:v2": {
-      "dependsOn": [
-        "@sap-cloud-sdk/generator#compile",
-        "@sap-cloud-sdk/util#compile"
-      ],
-      "outputs": ["v2/**"]
-    },
-    "generate:v4": {
-      "dependsOn": [
-        "@sap-cloud-sdk/generator#compile",
-        "@sap-cloud-sdk/util#compile"
-      ],
-      "outputs": ["v4/**"]
-    },
-    "generate:e2e": {
-      "dependsOn": [
-        "@sap-cloud-sdk/generator#compile",
-        "@sap-cloud-sdk/util#compile"
-      ],
-      "outputs": ["TripPin/**", "v4/**"]
-    },
-    "generate:openapi": {
-      "dependsOn": [
-        "@sap-cloud-sdk/openapi-generator#compile",
-        "@sap-cloud-sdk/util#compile"
-      ],
-      "outputs": ["openapi/**"]
-    },
-    "generate:common": {
-      "dependsOn": ["@sap-cloud-sdk/generator#compile", "compile"],
-      "outputs": ["test/**"]
+    "generate": {
+      "dependsOn": ["^compile"],
+      "outputs": ["*-service/**", "**/*-service/**", "**/*-entity.ts"]
     }
   }
 }

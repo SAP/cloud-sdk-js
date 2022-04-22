@@ -2,7 +2,7 @@ import {
   TestEntityApi,
   TestEntitySingleLinkApi,
   testService
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import {
   filterFunctions,
   length,

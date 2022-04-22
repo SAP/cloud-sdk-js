@@ -27,7 +27,8 @@
   "scripts": {
     "compile": "tsc -b",
     "prepare": "yarn compile",
-    "test": "jest",
+    "test": "yarn test:unit",
+    "test:unit": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
     "lint:fix": "eslint --ext .ts . --fix && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w",
@@ -45,7 +46,8 @@
     "uuid": "^8.2.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-services": "^2.3.0",
+    "@sap-cloud-sdk/test-services-odata-v2": "^2.3.0",
+    "@sap-cloud-sdk/test-services-odata-common": "^2.3.0",
     "nock": "^13.0.11",
     "typescript": "~4.6.2"
   }

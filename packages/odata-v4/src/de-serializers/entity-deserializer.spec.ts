@@ -1,5 +1,5 @@
-import { TestComplexType } from '@sap-cloud-sdk/test-services/v4/test-service';
-import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
+import { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import { TestEnumType } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEnumType';
 import { defaultDeSerializers } from '../de-serializers';
 import { testEntityApi } from '../../test/test-util';
 import { entityDeserializer } from './entity-deserializer';

@@ -3,7 +3,7 @@ import {
   CommonEntity,
   commonEntityApi,
   CommonEntityApi
-} from '../../../test/common-entity';
+} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import {
   batchRequestBuilder,
   createRequestBuilder,
@@ -12,7 +12,7 @@ import {
   getByKeyRequestBuilder,
   updateRequestBuilder,
   WriteBuilder
-} from '../../../test/common-request-config';
+} from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import {
   serializeBatchRequest,
   serializeRequest,

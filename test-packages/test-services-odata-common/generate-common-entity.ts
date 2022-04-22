@@ -3,8 +3,8 @@
 import { promises } from 'fs';
 import { join, resolve } from 'path';
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { createOptions } from '../../generator/test/test-util/create-generator-options';
-import { generate } from '../../generator/src/internal';
+import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
+import { generate } from '@sap-cloud-sdk/generator/src/internal';
 
 const outDir = resolve(__dirname, 'common-service');
 
@@ -154,8 +154,8 @@ The idea behind this entity is to use only odata-common imports and use it in th
 const imports = `
   import { Moment } from "moment";
   import { BigNumber } from "bignumber.js";
-  import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time } from '../src/internal';
-  import { customTestDeSerializers } from '../../../test-resources/test/test-util';
+  import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time } from '../../packages/odata-common/src/internal';
+  import { customTestDeSerializers } from '../../test-resources/test/test-util';
   `;
 const disableEslint = '/* eslint-disable */';
 

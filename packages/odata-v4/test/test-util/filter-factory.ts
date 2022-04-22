@@ -2,7 +2,7 @@ import { or } from '@sap-cloud-sdk/odata-common/internal';
 import {
   TestEnumType,
   testService
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+} from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { all, any, filterFunctions } from '../../src';
 import { testEntityApiCustom } from './test-data';
 

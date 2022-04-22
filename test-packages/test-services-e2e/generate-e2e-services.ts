@@ -8,7 +8,7 @@ const generatorConfigOData = {
   generateJs: false,
   useSwagger: false,
   writeReadme: false,
-  clearOutputDir: true,
+  clearOutputDir: false,
   generateNpmrc: false,
   generatePackageJson: false,
   generateCSN: false,

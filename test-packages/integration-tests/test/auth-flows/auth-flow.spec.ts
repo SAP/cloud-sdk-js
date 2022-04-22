@@ -9,8 +9,7 @@ import {
   decodeJwt,
   getDestination,
   getDestinationFromDestinationService,
-  serviceToken,
-  getAgentConfig
+  serviceToken
 } from '../../../../packages/connectivity/src/internal';
 import {
   loadLocalVcap,
@@ -49,7 +48,7 @@ describe('OAuth flows', () => {
     const destination = await getDestination({
       destinationName: systems.destination.providerTrustStore
     });
-   expect(destination?.trustStoreLocation).toBeDefined()
+    expect(destination?.trustStoreLocation).toBeDefined();
   });
 
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {

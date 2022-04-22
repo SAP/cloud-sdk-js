@@ -64,5 +64,6 @@ export interface Systems {
     providerOauth2UserTokenExchange: string;
     providerOauth2UserTokenExchangeCommonTokenURL: string;
     providerBasicPrivateLink: string;
+    providerTrustStore: string;
   };
 }

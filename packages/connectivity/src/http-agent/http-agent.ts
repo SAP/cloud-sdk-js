@@ -1,5 +1,7 @@
 import https from 'https';
 import http from 'http';
+import { existsSync, readFileSync } from 'fs';
+import { resolve } from 'path';
 import { assoc, createLogger, last } from '@sap-cloud-sdk/util';
 import {
   Destination,
@@ -59,6 +61,41 @@ function createProxyAgent(
   return proxyAgent(destination, options);
 }
 
+/*
+ Adds trust store certificate to the list of trusted CA so that https connection can also work with self signed certificates.
+ */
+function trustStoreOptions(
+  options: Record<string, any>,
+  destination: Destination
+): Record<string, any> {
+  if (destination.trustStoreLocation) {
+    const filetype = destination.trustStoreLocation.split('.')[1];
+    if (filetype.toLowerCase() !== 'pem') {
+      logger.warn(
+        `The provided truststore ${destination.trustStoreLocation} is not in 'pem' format which is currently the only supported format. Trustore is ignored.`
+      );
+      return options;
+    }
+    const path = resolve(destination.trustStoreLocation);
+
+    //TODO version 3.0 make this async
+    if (!existsSync(path)) {
+      logger.warn(
+        `The provided truststore ${resolve(
+          destination.trustStoreLocation
+        )} could not be found.`
+      );
+      return options;
+    }
+    const certifiacte = readFileSync(path, { encoding: 'utf-8' });
+    return {
+      ...options,
+      ca: [certifiacte]
+    };
+  }
+  return options;
+}
+
 const trustAllOptions =
   (destination: Destination) =>
   (options: Record<string, any>): Record<string, any> =>
@@ -107,10 +144,14 @@ function getCertificateOption(destination: Destination): Record<string, any> {
     );
   }
 
-  const options = trustAllOptions(destination)({});
+  let options = trustAllOptions(destination)({});
+  options = trustStoreOptions(options, destination);
   return certificateOptions(destination)(options);
 }
 
+/*
+ The node client supports only these store formats https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions.
+ */
 const supportedCertificateFormats = ['p12', 'pfx'];
 
 function hasSupportedFormat(certificate: DestinationCertificate): boolean {

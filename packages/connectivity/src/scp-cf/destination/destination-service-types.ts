@@ -115,6 +115,11 @@ export interface Destination {
   certificates?: DestinationCertificate[];
 
   /**
+   * Location of the trust store.
+   */
+  trustStoreLocation?: string;
+
+  /**
    * Name of the key store/certificate to be used for ClientCertificateAuthentication.
    */
   keyStoreName?: string;

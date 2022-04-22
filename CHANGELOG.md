@@ -14,16 +14,39 @@
 
 ## Compatibility Notes
 
-- [odata-common, odata-v2, odata-v4] Remove all `$format=json` query parameters since header `Accept: application/json` is sent by default.
+-
 
 ## New Functionality
 
-- [odata-common] Generate mandatory `Content-Id` headers for changeset parts in batch requests payloads (see [OData Spec](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_MultipartBatchRequestBody)).
 - [http-agent] Consider `TrustStoreLocation` destination property for self-signed certificate usecase.
 
 ## Improvements
 
-- [generator] Change log level from `warn` to `error` if service path cannot be determined from the service spec. undefined (`VALUE_IS_UNDEFINED`).
+-
+
+## Fixed Issues
+
+-
+
+
+# 2.3.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/2.3.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [odata-common, odata-v2, odata-v4] Remove all `$format=json` query parameters since header `Accept: application/json` is sent by default.
+
+## New Functionality
+
+- [odata-common] Generate mandatory `Content-Id` headers for changeset parts in batch request payloads (see [OData Spec](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_MultipartBatchRequestBody)).
+- [odata-common] Support transforming response data for function and action imports before deserialization. [#682](https://github.com/SAP/cloud-sdk-js/issues/682).
+
+## Improvements
+
+- [generator] Change log level from `warn` to `error` if service path cannot be determined from the service specification (`VALUE_IS_UNDEFINED`).
 - [generator] Reduce memory usage of `schema` in API classes (e.g., `BusinessPartnerAPI`).
 
 ## Fixed Issues
@@ -44,7 +67,7 @@ Blog: TBD<br>
 
 ## New Functionality
 
-- [http-client] Introduce the `parameterEncoder` option to the request config of the `http-client` to allow custom parameter encoding.  
+- [http-client] Introduce the `parameterEncoder` option to the request config of the `http-client` to allow custom parameter encoding.
 - [http-client] Remove `method` from `defaultDisallowedKeys` to not filter out custom http method when using `filterCustomRequestConfig`.
 - [odata-common] Support adding custom http method in `addCustomRequestConfiguration` to overwrite the default http method.
 - [openapi] Support adding custom http method in `addCustomRequestConfiguration` to overwrite the default http method.

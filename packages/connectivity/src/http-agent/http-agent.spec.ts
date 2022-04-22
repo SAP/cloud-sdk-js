@@ -2,7 +2,7 @@ import { createServer, Server } from 'https';
 import { resolve } from 'path';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { HttpProxyAgent } from 'http-proxy-agent';
-import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
+import { executeHttpRequest } from '../../../http-client';
 import mock from 'mock-fs';
 import {
   proxyAgent,

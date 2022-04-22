@@ -27,12 +27,19 @@ export abstract class ActionFunctionImportRequestBuilderBase<
   /**
    * Execute request.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
+   * @param dataAccessor - A function to modify the received response data.
    * @returns A promise resolving to the requested return type.
    */
-  async execute(destination: DestinationOrFetchOptions): Promise<ReturnT> {
-    return this.executeRaw(destination).then(response =>
-      this.responseTransformer(response.data)
-    );
+  async execute(
+    destination: DestinationOrFetchOptions,
+    dataAccessor?: (data: any) => any
+  ): Promise<ReturnT> {
+    return this.executeRaw(destination).then(response => {
+      const data = dataAccessor
+        ? { d: dataAccessor(response.data) }
+        : response.data;
+      return this.responseTransformer(data);
+    });
   }
 
   /**

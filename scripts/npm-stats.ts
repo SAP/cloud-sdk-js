@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { JSDOM } from 'jsdom';
+import { JSDOM, HTMLLIElement } from 'jsdom';
 
 async function getStatsForPackage(packageName) {
   const { data } = await axios.get(
@@ -7,32 +7,25 @@ async function getStatsForPackage(packageName) {
   );
 
   const dom = new JSDOM(data);
+
   const ul = dom.window.document.querySelector(
-    '.a0dff0b1 ~ .c495d29d ~ .a0dff0b1 ~ .c495d29d'
+    '#tabpanel-versions > * > ul:last-child'
   );
-  const versionLines = ul.children;
-  const res: any[] = [];
 
-  for (let i = 1; i < versionLines.length; i++) {
-    const line = versionLines.item(i);
-    const [version, _, downloads] = line.children;
-    res.push({
-      version: version.textContent,
-      downloads: parseInt(downloads.textContent.replace(/,/g, ''))
-    });
-  }
-
-  return res.reduce((majorVersions, { version, downloads }) => {
-    if (version.includes('-')) {
-      return majorVersions;
-    }
-    const [majorVersion] = version.split('.');
-    if (majorVersions[majorVersion] === undefined) {
-      majorVersions[majorVersion] = 0;
-    }
-    majorVersions[majorVersion] += downloads;
-    return majorVersions;
-  }, {});
+  return Array.from(ul.children)
+    .slice(1)
+    .map((line: HTMLLIElement) => ({
+      version: line.children[0].textContent,
+      downloads: parseInt(line.children[2].textContent.replace(/,/g, ''))
+    }))
+    .filter(({ version }) => !version.includes('-'))
+    .reduce((majorVersions, { version, downloads }) => {
+      const [majorVersion] = version.split('.');
+      return {
+        ...majorVersions,
+        [majorVersion]: (majorVersions[majorVersion] ?? 0) + downloads
+      };
+    }, {});
 }
 
 async function getAllStats() {

@@ -3249,9 +3249,9 @@ color-name@^1.0.0, color-name@^1.1.4, color-name@~1.1.4:
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
 color-string@>=1.5.5, color-string@^1.5.2:
-  version "1.9.0"
-  resolved "https://registry.npmjs.org/color-string/-/color-string-1.9.0.tgz#63b6ebd1bec11999d1df3a79a7569451ac2be8aa"
-  integrity sha512-9Mrz2AQLefkH1UvASKj6v6hj/7eWgjnT/cVsR8CumieLoT+g900exWeNogqtweI8dxloXN9BDQTYro1oWu/5CQ==
+  version "1.9.1"
+  resolved "https://registry.npmjs.org/color-string/-/color-string-1.9.1.tgz#4467f9146f036f855b764dfb5bf8582bf342c7a4"
+  integrity sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==
   dependencies:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
@@ -9324,9 +9324,9 @@ sprintf-js@~1.0.2:
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
 sqlite3@^5.0.0, sqlite3@^5.0.2:
-  version "5.0.4"
-  resolved "https://registry.npmjs.org/sqlite3/-/sqlite3-5.0.4.tgz#3ddff8d360dab3f17c596690d8663f353d876187"
-  integrity sha512-ATvAe7JutFv/d+KTbLS58KsKn/t1raL/WGn2qZfZxwsrL/oGSP+0OlbQ2tX5jISvyu6/7JuKze3WkaiP1JAH6A==
+  version "5.0.5"
+  resolved "https://registry.npmjs.org/sqlite3/-/sqlite3-5.0.5.tgz#e8768ffcb4800a72216846898cd6c363ba1d83c9"
+  integrity sha512-ZZFOMW31IOMbUeSiL23TuWSjNyS7Z83EDJ80HJxCe78OZ+5BJT6IhAwAUnQgPsUl5z+Er0DGx7VjuTP7PKPNcg==
   dependencies:
     "@mapbox/node-pre-gyp" "^1.0.0"
     node-addon-api "^4.2.0"

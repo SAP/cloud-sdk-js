@@ -26,7 +26,7 @@
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "compile": "tsc -b",
-    "prepare": "yarn compile",
+    "prepare": "yarn compile readme",
     "test": "yarn test:unit",
     "test:unit": "jest",
     "coverage": "jest --coverage",

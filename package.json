@@ -39,10 +39,10 @@
   ],
   "scripts": {
     "test": "turbo run test",
-    "test:unit": "turbo run test --scope=\"!@sap-cloud-sdk/*test*\" --no-deps",
-    "test:integration": "turbo run test --scope=\"@sap-cloud-sdk/integration-tests\"",
-    "test:type": "turbo run test --scope=\"@sap-cloud-sdk/type-tests\"",
-    "test:e2e": "turbo run test --scope=\"@sap-cloud-sdk/e2e-tests\"",
+    "test:unit": "turbo run test --filter=./packages/*",
+    "test:integration": "turbo run test --filter=integration-tests",
+    "test:type": "turbo run test --filter=type-tests",
+    "test:e2e": "turbo run test --filter=e2e-tests",
     "generate": "turbo run generate",
     "doc": "ts-node scripts/generate-docs.ts",
     "version": "ts-node scripts/after-bump.ts && yarn generate && yarn doc && git add .",
@@ -86,7 +86,7 @@
     "prettier": "^2.0.2",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.0.0",
-    "turbo": "^1.1.6",
+    "turbo": "^1.2.5",
     "typedoc": "^0.22.13",
     "typescript": "~4.6.2"
   },

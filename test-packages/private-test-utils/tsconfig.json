@@ -8,11 +8,5 @@
     "types": ["node", "jest", "jest-extended"]
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"],
-  "references": [
-    { "path": "../../packages/connectivity" },
-    { "path": "../../packages/odata-common" },
-    { "path": "../../packages/odata-v2" },
-    { "path": "../../packages/odata-v4" }
-  ]
+  "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"]
 }

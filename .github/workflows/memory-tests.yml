@@ -28,8 +28,14 @@ jobs:
         id: v1Result
         working-directory: test-packages/mermory-tests/sdk-v1/
       - run: echo '${{ steps.v1Result.outputs.value }}'
-      - run: npm install --no-package-lock --no-save ts-node
-      - run: npm install --no-package-lock --no-save typescript
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
       - run: npx ts-node scripts/compare-memory-usage.ts 5 9
         name: compare v1 and canary
 

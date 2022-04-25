@@ -7,7 +7,7 @@ const main = async () => {
   // The script is written in js (not ts) and executed with --inspect flag because of this lib.
   const hd = new memwatch.HeapDiff();
 
-  // const testEntities101 = await TestEntity.requestBuilder().getAll().execute(dest);
+  const testEntities101 = await TestEntity.requestBuilder().getAll().execute(dest);
   // const testEntities102 = await TestEntity.requestBuilder().getAll().execute(dest);
   // const testEntities103 = await TestEntity.requestBuilder().getAll().execute(dest);
   // const testEntities104 = await TestEntity.requestBuilder().getAll().execute(dest);
@@ -30,7 +30,8 @@ const main = async () => {
   // const testEntities210 = await TestEntity50Col.requestBuilder().getAll().execute(dest);
 
   const diff = hd.end();
-  console.log("Additional heap memory  used: " + diff.change.size);
+  console.log(diff.change.size_bytes);
+  // console.log("Additional heap memory  used: " + diff.change.size);
   // console.log("Major changes: " + JSON.stringify(diff.change.details.filter(e => e.size.includes('kb') || e.size.includes('mb'))));
 };
 

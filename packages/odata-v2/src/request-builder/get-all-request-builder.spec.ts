@@ -2,7 +2,6 @@ import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
 import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
-import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
   mockCountRequest,
@@ -24,6 +23,7 @@ import {
   providerServiceToken,
   createOriginalTestEntityDataWithLinks
 } from '@sap-cloud-sdk/private-test-utils';
+import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import {
   testEntityApi,
@@ -31,7 +31,7 @@ import {
   createTestEntity,
   testEntityApiCustom,
   createTestEntityWithCustomDeSerializers
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../test/test-util';
 import { DefaultDeSerializers } from '../de-serializers';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 

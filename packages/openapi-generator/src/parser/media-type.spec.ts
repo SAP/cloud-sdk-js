@@ -1,7 +1,4 @@
-import {
-  createTestRefs,
-  emptyObjectSchema
-} from '@sap-cloud-sdk/private-test-utils';
+import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { parseApplicationJsonMediaType, parseMediaType } from './media-type';
 
 const defaultOptions = { strictNaming: true };

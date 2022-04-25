@@ -1,5 +1,5 @@
 import { VdmServiceMetadata } from '../vdm-types';
-import { orderBreakfast } from '@sap-cloud-sdk/private-test-utils/data-model';
+import { orderBreakfast } from '../../test/test-util/data-model';
 import { importDeclarationsAction } from './import';
 
 describe('function-import generation', () => {

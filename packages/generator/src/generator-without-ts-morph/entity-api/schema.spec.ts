@@ -1,4 +1,4 @@
-import { breakfastEntity } from '@sap-cloud-sdk/private-test-utils/data-model';
+import { breakfastEntity } from '../../../test/test-util/data-model';
 import { getSchema } from './schema';
 
 describe('entity api schema', () => {

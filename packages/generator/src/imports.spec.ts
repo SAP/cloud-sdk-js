@@ -2,7 +2,7 @@ import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import {
   bigNumberImport,
   momentImport
-} from '@sap-cloud-sdk/private-test-utils/import-declaration-structures';
+} from '../test/test-util/import-declaration-structures';
 import { VdmNavigationProperty, VdmProperty } from './vdm-types';
 import {
   complexTypeImportDeclarations,

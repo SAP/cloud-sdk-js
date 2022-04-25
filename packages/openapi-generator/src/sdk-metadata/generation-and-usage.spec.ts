@@ -1,5 +1,5 @@
 import { getSdkVersion } from '@sap-cloud-sdk/generator-common/internal';
-import { dummyOpenApiDocument } from '@sap-cloud-sdk/private-test-utils';
+import { dummyOpenApiDocument } from '../../test/test-util';
 import { getGenerationAndUsage } from './generation-and-usage';
 
 describe('generation-and-usage', () => {

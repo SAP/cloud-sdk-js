@@ -6,7 +6,7 @@ import {
   foodService,
   numberOfEggs,
   toBrunch
-} from '@sap-cloud-sdk/private-test-utils/data-model';
+} from '../../test/test-util/data-model';
 import { entityNamespace } from './namespace';
 
 describe('entity namespace', () => {

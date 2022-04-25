@@ -5,7 +5,7 @@ import {
   foodService,
   numberOfEggs,
   toBrunch
-} from '@sap-cloud-sdk/private-test-utils/data-model';
+} from '../../test/test-util/data-model';
 import { entityClass } from './class';
 
 describe('entity class generator', () => {

@@ -3,11 +3,8 @@ import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
   mockUpdateRequest
-} from '@sap-cloud-sdk/private-test-utils/request-mocker';
-import {
-  testEntityApi,
-  testEntityResourcePath
 } from '@sap-cloud-sdk/private-test-utils';
+import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { UpdateRequestBuilder } from './update-request-builder';
 
 function createTestEntity() {

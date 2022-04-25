@@ -9,7 +9,7 @@ import {
   testEntityLvl2SingleLinkApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../test/test-util';
 
 describe('entity-serializer', () => {
   describe('with default (de-)serializers', () => {

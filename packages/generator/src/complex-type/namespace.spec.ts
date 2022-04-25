@@ -3,7 +3,7 @@ import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import {
   complexMeal,
   complexMealWithDesert
-} from '@sap-cloud-sdk/private-test-utils/data-model';
+} from '../../test/test-util/data-model';
 import { complexTypeNamespace } from './namespace';
 describe('namespace', () => {
   it('complexTypeSourceFile', () => {

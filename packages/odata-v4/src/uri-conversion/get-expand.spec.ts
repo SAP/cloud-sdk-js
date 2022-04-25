@@ -3,7 +3,7 @@ import {
   testEntityApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../test/test-util';
 import { getExpand } from './get-expand';
 
 describe('get expand', () => {

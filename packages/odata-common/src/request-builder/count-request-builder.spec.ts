@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { getAllRequestBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
-import { defaultDestination } from '@sap-cloud-sdk/private-test-utils/request-mocker';
+import { defaultDestination } from '@sap-cloud-sdk/private-test-utils';
 import { Filter } from '../filter';
 
 describe('CountRequestBuilder', () => {

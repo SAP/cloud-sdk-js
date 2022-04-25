@@ -1,8 +1,5 @@
 import { StructureKind } from 'ts-morph';
-import {
-  breakfastEntity,
-  foodService
-} from '@sap-cloud-sdk/private-test-utils/data-model';
+import { breakfastEntity, foodService } from '../../test/test-util/data-model';
 import { entitySourceFile } from './file';
 
 describe('file', () => {

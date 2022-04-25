@@ -6,7 +6,7 @@ import {
   testEntityLvl2SingleLinkApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../test/test-util';
 
 describe('entity-builder', () => {
   it('should build an entity with non-primitive JS types (moment, BigNumber etc.)', () => {

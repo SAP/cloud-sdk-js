@@ -6,7 +6,7 @@ import {
 import {
   defaultDestination,
   mockHeaderRequest
-} from '@sap-cloud-sdk/private-test-utils/request-mocker';
+} from '@sap-cloud-sdk/private-test-utils';
 import { ODataRequest } from './request';
 import { buildHeaders } from './header-builder';
 

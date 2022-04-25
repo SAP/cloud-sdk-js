@@ -2,8 +2,10 @@ import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
 import axios, { AxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { destinationServiceUri } from '@sap-cloud-sdk/private-test-utils/environment-mocks';
-import { privateKey } from '@sap-cloud-sdk/private-test-utils/keys';
+import {
+  destinationServiceUri,
+  privateKey
+} from '@sap-cloud-sdk/private-test-utils';
 import { defaultResilienceBTPServices } from '../resilience-options';
 import { Destination } from './destination-service-types';
 import {

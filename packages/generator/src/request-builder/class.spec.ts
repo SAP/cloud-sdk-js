@@ -1,6 +1,6 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { VdmProperty } from '../vdm-types';
-import { breakfastEntity } from '@sap-cloud-sdk/private-test-utils/data-model';
+import { breakfastEntity } from '../../test/test-util/data-model';
 import { requestBuilderClass } from './class';
 
 describe('request builder class', () => {

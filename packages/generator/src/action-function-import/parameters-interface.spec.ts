@@ -3,7 +3,7 @@ import { StructureKind } from 'ts-morph';
 import {
   orderBreakfast,
   orderBreakfastNullable
-} from '@sap-cloud-sdk/private-test-utils/data-model';
+} from '../../test/test-util/data-model';
 import { parametersInterface } from './parameters-interface';
 
 describe('parameters-interface', () => {

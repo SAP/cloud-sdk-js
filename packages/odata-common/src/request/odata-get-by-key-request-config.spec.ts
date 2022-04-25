@@ -4,7 +4,7 @@ import {
   commonEntityApi
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { commonODataUri } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
-import { testEntityResourcePath } from '@sap-cloud-sdk/private-test-utils';
+import { testEntityResourcePath } from '../../test/test-util';
 import { DefaultDeSerializers } from '../de-serializers';
 import { ODataGetByKeyRequestConfig } from './odata-get-by-key-request-config';
 

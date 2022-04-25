@@ -1,5 +1,5 @@
 import { StructureKind } from 'ts-morph';
-import { foodService } from '@sap-cloud-sdk/private-test-utils/data-model';
+import { foodService } from '../../test/test-util/data-model';
 import { importBatchDeclarations } from './imports';
 
 describe('batch type imports', () => {

@@ -1,3 +1,4 @@
+import { customTestDeSerializers } from '@sap-cloud-sdk/private-test-utils';
 import {
   testFilterEnum,
   testFilterLambdaExpressionFilterFunctionOnLink,
@@ -10,8 +11,7 @@ import {
   testEntityApiCustom,
   testFilterLambdaExpressionCustom,
   testEntityApi
-} from '@sap-cloud-sdk/private-test-utils';
-import { customTestDeSerializers } from '@sap-cloud-sdk/private-test-utils/custom-de-serializers';
+} from '../../test/test-util';
 import { filterFunctions } from '../filter-functions';
 import { filterFunction } from '../filter-function';
 import {

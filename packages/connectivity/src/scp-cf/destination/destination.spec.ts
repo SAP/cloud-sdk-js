@@ -2,7 +2,7 @@ import {
   basicMultipleResponse,
   certificateMultipleResponse,
   certificateSingleResponse
-} from '@sap-cloud-sdk/private-test-utils/example-destination-service-responses';
+} from '@sap-cloud-sdk/private-test-utils';
 import {
   DestinationConfiguration,
   parseDestination,

@@ -3,7 +3,7 @@ import {
   testEntityApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../test/test-util';
 import { defaultDeSerializers } from './default-de-serializers';
 import { entityDeserializer } from './entity-deserializer';
 

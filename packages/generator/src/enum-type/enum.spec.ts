@@ -1,5 +1,5 @@
 import { StructureKind } from 'ts-morph';
-import { enumMeal } from '@sap-cloud-sdk/private-test-utils/data-model';
+import { enumMeal } from '../../test/test-util/data-model';
 import { enumTypeClass } from './enum';
 
 describe('enum', () => {

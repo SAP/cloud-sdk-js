@@ -98,3 +98,11 @@ Release pipeline SHOULD work, but is not tested as of 21st of April and some adj
 
 - Scripts and their dependencies need to be maintained in the `turbo.json` file.
 - Errors in this config may lead to unexpected behavior.
+
+### Calling scripts in a workspace
+
+- As dependencies between scripts may only be considered when using `turbo run SCRIPT --scope=*/my-package`, we should avoid using `yarn workspace mypackage SCRIPT`.
+
+### Finding errors
+
+- As scripts are executed in parallel, it may be slightly harder to find error logs (though it still should be fairly easy).

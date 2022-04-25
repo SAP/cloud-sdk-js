@@ -5,7 +5,7 @@ import {
   testEntityApiCustom,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../test/test-util';
 import { CustomDeSerializers } from './de-serializers';
 
 describe('remote state', () => {

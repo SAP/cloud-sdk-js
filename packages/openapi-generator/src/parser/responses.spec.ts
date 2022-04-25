@@ -1,4 +1,4 @@
-import { createTestRefs } from '@sap-cloud-sdk/private-test-utils';
+import { createTestRefs } from '../../test/test-util';
 import { parseResponses } from './responses';
 
 const defaultOptions = { strictNaming: true };

@@ -1,9 +1,6 @@
-import { createOriginalTestEntityData1 } from '@sap-cloud-sdk/private-test-utils/test-data';
+import { createOriginalTestEntityData1 } from '@sap-cloud-sdk/private-test-utils';
 import { defaultDeSerializers, edmToTs } from '../de-serializers';
-import {
-  testEntityApi,
-  createTestEntity
-} from '@sap-cloud-sdk/private-test-utils';
+import { testEntityApi, createTestEntity } from '../../test/test-util';
 import {
   transformReturnValueForEdmType,
   transformReturnValueForEntity

@@ -9,7 +9,7 @@ import {
   testEntityApi,
   testEntityMultiLinkApi,
   testEntityResourcePath
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../test/test-util';
 import { UpdateRequestBuilder } from './update-request-builder';
 
 function createTestEntity() {

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { testEntityApi } from '@sap-cloud-sdk/private-test-utils';
+import { testEntityApi } from '../../test/test-util';
 
 describe('oderable', () => {
   describe('DateTime and DateTimeOffset fields', () => {

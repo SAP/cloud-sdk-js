@@ -1,4 +1,4 @@
-import { orderBreakfast } from '@sap-cloud-sdk/private-test-utils/data-model';
+import { orderBreakfast } from '../../test/test-util/data-model';
 import {
   VdmActionFunctionImportReturnType,
   VdmReturnTypeCategory

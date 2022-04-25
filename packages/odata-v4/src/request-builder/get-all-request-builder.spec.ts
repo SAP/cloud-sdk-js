@@ -16,7 +16,7 @@ import {
   testEntityMultiLinkApi,
   testEntitySingleLinkApi,
   createTestEntity
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../test/test-util';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
 describe('GetAllRequestBuilder', () => {

@@ -1,4 +1,4 @@
-import nock = require('nock');
+import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
@@ -11,7 +11,7 @@ import {
   testEntityMultiLinkApi,
   testEntitySingleLinkApi,
   testEntityResourcePath
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../test/test-util';
 import { CreateRequestBuilder } from './create-request-builder';
 
 describe('CreateRequestBuilder', () => {

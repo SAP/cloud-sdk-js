@@ -4,10 +4,7 @@ import {
   defaultDestination,
   mockDeleteRequest
 } from '@sap-cloud-sdk/private-test-utils';
-import {
-  testEntityApi,
-  testEntityResourcePath
-} from '@sap-cloud-sdk/private-test-utils';
+import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { DeleteRequestBuilder } from './delete-request-builder';
 
 describe('DeleteRequestBuilder', () => {

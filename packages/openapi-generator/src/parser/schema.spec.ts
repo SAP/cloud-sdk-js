@@ -1,9 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { createLogger } from '@sap-cloud-sdk/util';
-import {
-  createTestRefs,
-  emptyObjectSchema
-} from '@sap-cloud-sdk/private-test-utils';
+import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { OpenApiObjectSchema } from '../openapi-types';
 import { parseSchema, parseSchemaProperties } from './schema';
 

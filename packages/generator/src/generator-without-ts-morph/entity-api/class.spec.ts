@@ -1,7 +1,7 @@
 import {
   breakfastEntity,
   foodService
-} from '@sap-cloud-sdk/private-test-utils/data-model';
+} from '../../../test/test-util/data-model';
 import { classContent } from './class';
 
 describe('entity api class', () => {

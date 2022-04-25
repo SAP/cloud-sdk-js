@@ -1,14 +1,14 @@
 import { join, resolve } from 'path';
 import { promises } from 'fs';
-import nock = require('nock');
+import nock from 'nock';
 import { FunctionDeclaration, SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
-import { createOptions } from '@sap-cloud-sdk/private-test-utils/create-generator-options';
+import { createOptions } from '../test/test-util/create-generator-options';
 import {
   checkStaticProperties,
   getFunctionImportDeclarations,
   getGeneratedFiles
-} from '@sap-cloud-sdk/private-test-utils/generator';
+} from '../test/test-util/generator';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import {
   generate,

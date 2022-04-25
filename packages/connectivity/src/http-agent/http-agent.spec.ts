@@ -1,6 +1,6 @@
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { connectivityProxyConfigMock } from '@sap-cloud-sdk/private-test-utils/environment-mocks';
+import { connectivityProxyConfigMock } from '@sap-cloud-sdk/private-test-utils';
 import {
   proxyAgent,
   Protocol,

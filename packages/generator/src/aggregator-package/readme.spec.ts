@@ -1,4 +1,4 @@
-import { getExpectedHelpfulLinks } from '@sap-cloud-sdk/private-test-utils/readme-util';
+import { getExpectedHelpfulLinks } from '../../test/test-util/readme-util';
 import { VdmServiceMetadata } from '../vdm-types';
 import { aggregatorReadme } from './readme';
 

@@ -2,7 +2,7 @@ import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
 import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
-import { emptyDocument } from '@sap-cloud-sdk/private-test-utils';
+import { emptyDocument } from '../test/test-util';
 import { generate, getInputFilePaths } from './generator';
 
 jest.mock('../../generator-common/internal', () => {

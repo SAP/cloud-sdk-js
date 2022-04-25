@@ -4,25 +4,19 @@ import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
-  mockVerifyJwt
-} from '@sap-cloud-sdk/private-test-utils/destination-service-mocks';
-import {
+  mockVerifyJwt,
   onlyIssuerServiceToken,
   providerServiceToken,
   subscriberServiceToken,
-  subscriberUserJwt
-} from '@sap-cloud-sdk/private-test-utils/mocked-access-tokens';
-import {
+  subscriberUserJwt,
   mockServiceBindings,
-  onlyIssuerXsuaaUrl
-} from '@sap-cloud-sdk/private-test-utils/environment-mocks';
-import { mockServiceToken } from '@sap-cloud-sdk/private-test-utils/token-accessor-mocks';
-import {
+  onlyIssuerXsuaaUrl,
+  mockServiceToken,
   basicMultipleResponse,
   certificateMultipleResponse,
   certificateSingleResponse,
   destinationName
-} from '@sap-cloud-sdk/private-test-utils/example-destination-service-responses';
+} from '@sap-cloud-sdk/private-test-utils';
 import { wrapJwtInHeader } from '../jwt';
 import * as destinationService from './destination-service';
 import { DestinationConfiguration, parseDestination } from './destination';

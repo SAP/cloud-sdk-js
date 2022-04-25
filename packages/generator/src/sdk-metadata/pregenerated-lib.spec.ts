@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { VdmServiceMetadata } from '../vdm-types';
 import { parseService } from '../service-generator';
-import { createOptions } from '@sap-cloud-sdk/private-test-utils/create-generator-options';
+import { createOptions } from '../../test/test-util/create-generator-options';
 import { GlobalNameFormatter } from '../global-name-formatter';
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
 import { getServiceDescription } from './pregenerated-lib';

@@ -42,6 +42,8 @@ Caveats:
   `--no-deps` ignores downstream and `--include-dependencies` adds upstream dependencies.
   - Think of this as "the dependencies didn't change so we don't need to run them, but we need to make sure to not break our downstream dependants"
 - Turborepo does not handle releasing in any form (yet). A separate library like **Changesets**, Lerna, or Beachball is needed.
+- Turborepo will detect and fail if there are cycles in the package dependency graph.
+  - This is currently the case and needs to be worked around by using peerDeps in our test packages. It would be better if we fix this in the future.
 
 Benefits:
 

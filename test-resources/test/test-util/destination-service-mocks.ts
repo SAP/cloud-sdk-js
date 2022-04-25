@@ -1,8 +1,32 @@
 import nock from 'nock';
 import * as sdkJwt from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt';
+import { DestinationCertificate } from '@sap-cloud-sdk/connectivity/dist/scp-cf';
 import { destinationServiceUri } from './environment-mocks';
 
 type nockFunction = (a: string, b: nock.Options) => nock.Scope;
+
+export function mockSubaccountCertificateCall(
+  nockREf: nockFunction,
+  certificateName: string,
+  token: string
+) {
+  const response: DestinationCertificate = {
+    type: 'CERTIFICATE',
+    name: certificateName,
+    content:
+      'LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNPRENDQWFFQ0ZHMWhzbll2NzV5UTZYVVNXQ1dlckYzaUZMaDRNQTBHQ1NxR1NJYjNEUUVCQ3dVQU1Gc3gKQ3pBSkJnTlZCQVlUQWtSRk1Rc3dDUVlEVlFRSURBSkVSVEVQTUEwR0ExVUVCd3dHUW1WeWJHbHVNUXd3Q2dZRApWUVFLREFOVFFWQXhEREFLQmdOVkJBc01BMU5CVURFU01CQUdBMVVFQXd3SmJHOWpZV3hvYjNOME1CNFhEVEl5Ck1EUXlNakUwTVRreU1sb1hEVEl5TURVeU1qRTBNVGt5TWxvd1d6RUxNQWtHQTFVRUJoTUNSRVV4Q3pBSkJnTlYKQkFnTUFrUkZNUTh3RFFZRFZRUUhEQVpDWlhKc2FXNHhEREFLQmdOVkJBb01BMU5CVURFTU1Bb0dBMVVFQ3d3RApVMEZRTVJJd0VBWURWUVFEREFsc2IyTmhiR2h2YzNRd2daOHdEUVlKS29aSWh2Y05BUUVCQlFBRGdZMEFNSUdKCkFvR0JBTFNhVS9IRU1YbEozSFpsZ3MyNGs5dVdTbnR4clVsZktybXNlaG01ZUM4ZlNHZzFaa1N3ajdOSCtQUGwKNTJleTk1V0N2cVBaU0cyZkFrc0FRamJnUy9qa2RhdUIyMjlmVGV4WVNub00vVHdoN0ZhVVRnQjhJd0JuS0pZTgphY1pUUklnZkZWWENxZEx6d0ZHWWYyWGprOWtETkRCanRTMy9STHlMbVY3b3dXK25BZ01CQUFFd0RRWUpLb1pJCmh2Y05BUUVMQlFBRGdZRUFYK0lUK0JsT2ZvbVc0NGlpb3ZpeXdkelMzeVdGbGdRazh3Q2VCWmltb3BNNEF2ZTEKaUJLbTlOZmpkam03allWcXhKOGU4cWl6SGxONy9qVEY2RzV3bnl3RmUzSGZGVHFoQTVPelY1THlxcngxV2RNcwpUNTNUdFFtK29RZFVOYW52SnVrOVZBTkVZKzVPYkc0OGdwL2JobXNrZ24vUkFQekRna25GMGFyOFFVVT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo='
+  };
+
+  return nock(destinationServiceUri, {
+    reqheaders: {
+      authorization: `Bearer ${token}`
+    }
+  })
+    .get(
+      `/destination-configuration/v1/subaccountCertificates/${certificateName}`
+    )
+    .reply(200, response);
+}
 
 export function mockInstanceDestinationsCall(
   nockRef: nockFunction,

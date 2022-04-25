@@ -127,6 +127,13 @@ describe('OAuth flows', () => {
     expect(destination?.password).toBeDefined();
   }, 60000);
 
+  it('No Auth: trust store certificates are fetched', async () => {
+    const destination = await getDestination({
+      destinationName: systems.destination.providerTrustStore
+    });
+    expect(destination?.trustStoreCertificate).toBeDefined();
+  }, 60000);
+
   xit('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
     const destination = await getDestination({
       destinationName: systems.s4.providerOAuth2SAMLBearerAssertion,

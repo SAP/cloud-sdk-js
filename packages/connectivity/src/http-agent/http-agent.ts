@@ -1,7 +1,5 @@
 import https from 'https';
 import http from 'http';
-import { existsSync, readFileSync } from 'fs';
-import { resolve } from 'path';
 import { assoc, createLogger, last } from '@sap-cloud-sdk/util';
 import {
   Destination,
@@ -68,29 +66,21 @@ function trustStoreOptions(
   options: Record<string, any>,
   destination: Destination
 ): Record<string, any> {
-  if (destination.trustStoreLocation) {
-    const filetype = destination.trustStoreLocation.split('.')[1];
+  if (destination.trustStoreCertificate) {
+    const filetype = destination.trustStoreCertificate.name.split('.')[1];
     if (filetype.toLowerCase() !== 'pem') {
       logger.warn(
-        `The provided truststore ${destination.trustStoreLocation} is not in 'pem' format which is currently the only supported format. Trustore is ignored.`
+        `The provided truststore ${destination.trustStoreCertificate.name} is not in 'pem' format which is currently the only supported format. Trustore is ignored.`
       );
       return options;
     }
-    const path = resolve(destination.trustStoreLocation);
-
-    // TODO version 3.0 make this async
-    if (!existsSync(path)) {
-      logger.warn(
-        `The provided truststore ${resolve(
-          destination.trustStoreLocation
-        )} could not be found.`
-      );
-      return options;
-    }
-    const certifiacte = readFileSync(path, { encoding: 'utf-8' });
+    const decoded = new Buffer(
+      destination.trustStoreCertificate.content,
+      'base64'
+    ).toString('utf8');
     return {
       ...options,
-      ca: [certifiacte]
+      ca: [decoded]
     };
   }
   return options;

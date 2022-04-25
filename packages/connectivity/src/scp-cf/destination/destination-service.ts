@@ -17,7 +17,11 @@ import {
   DestinationJson,
   parseDestination
 } from './destination';
-import { Destination, DestinationType } from './destination-service-types';
+import {
+  Destination,
+  DestinationCertificate,
+  DestinationType
+} from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 import { DestinationFetchOptions } from './destination-accessor-types';
 
@@ -165,6 +169,36 @@ export async function fetchDestination(
   );
 }
 
+export async function fetchSubaccountCertificate(
+  destinationServiceUri: string,
+  token: string,
+  certificateName: string
+): Promise<DestinationCertificate | undefined> {
+  const targetUri = `${destinationServiceUri.replace(
+    /\/$/,
+    ''
+  )}/destination-configuration/v1/subaccountCertificates/${certificateName}`;
+
+  const allUri = `${destinationServiceUri.replace(
+    /\/$/,
+    ''
+  )}/destination-configuration/v1/subaccountCertificates`;
+  try {
+    // const all = await callDestinationService(allUri,wrapJwtInHeader(token))
+
+    const response = await callDestinationService(
+      targetUri,
+      wrapJwtInHeader(token).headers
+    );
+    return response.data as any;
+  } catch (err) {
+    logger.warn(
+      `Failed to fetch truststore certificate ${certificateName} - Continuing without certificate. This may cause failing requests`,
+      err
+    );
+  }
+}
+
 async function fetchDestinationByTokens(
   destinationServiceUri: string,
   tokens: AuthAndExchangeTokens,
@@ -209,7 +243,7 @@ function errorMessageFromResponse(
     : '';
 }
 
-function callDestinationService(
+async function callDestinationService(
   uri: string,
   headers: Record<string, any>,
   options?: ResilienceOptions

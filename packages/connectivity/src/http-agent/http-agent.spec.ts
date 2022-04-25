@@ -1,14 +1,13 @@
 import { createServer, Server } from 'https';
-import { resolve } from 'path';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { HttpProxyAgent } from 'http-proxy-agent';
-import mock from 'mock-fs';
 import { executeHttpRequest } from '../../../http-client/src/http-client';
 import {
   proxyAgent,
   Protocol,
   ProxyConfiguration,
-  Destination
+  Destination,
+  DestinationCertificate
 } from '../scp-cf';
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
 import { getAgentConfig } from './http-agent';
@@ -63,11 +62,13 @@ iBKm9Nfjdjm7jYVqxJ8e8qizHlN7/jTF6G5wnywFe3HfFTqhA5OzV5Lyqrx1WdMs
 T53TtQm+oQdUNanvJuk9VANEY+5ObG48gp/bhmskgn/RAPzDgknF0ar8QUU=
 -----END CERTIFICATE-----`;
 
-  beforeAll(() => {
-    mock({
-      [resolve('server-public-cert.pem')]: publicCert
-    });
+  const destinationCertificate: DestinationCertificate = {
+    name: 'server-public-cert.pem',
+    content: new Buffer(publicCert).toString('base64'),
+    type: 'CERTIFICATE'
+  };
 
+  beforeAll(() => {
     const options = {
       key: privateCert,
       cert: publicCert
@@ -80,7 +81,6 @@ T53TtQm+oQdUNanvJuk9VANEY+5ObG48gp/bhmskgn/RAPzDgknF0ar8QUU=
   });
 
   afterAll(async () => {
-    mock.restore();
     // TODO promisify did not work, why?
     return new Promise((res, rej) => {
       server.close(err => {
@@ -186,7 +186,7 @@ T53TtQm+oQdUNanvJuk9VANEY+5ObG48gp/bhmskgn/RAPzDgknF0ar8QUU=
   it('resolves for a server using self-signed certificate if the trustStore is set.', async () => {
     const destination: Destination = {
       url: `https://localhost:${port}`,
-      trustStoreLocation: 'server-public-cert.pem'
+      trustStoreCertificate: destinationCertificate
     };
 
     const response = await executeHttpRequest(destination, { method: 'get' });
@@ -196,7 +196,7 @@ T53TtQm+oQdUNanvJuk9VANEY+5ObG48gp/bhmskgn/RAPzDgknF0ar8QUU=
   it('returns an agent with ca if trustStoreLocation is present.', async () => {
     const destination: Destination = {
       url: 'https://some.foo.bar',
-      trustStoreLocation: 'server-public-cert.pem'
+      trustStoreCertificate: destinationCertificate
     };
 
     const expectedOptions = {

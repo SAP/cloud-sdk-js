@@ -24,6 +24,7 @@ import {
 import {
   AuthAndExchangeTokens,
   fetchDestination,
+  fetchSubaccountCertificate,
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
@@ -138,6 +139,10 @@ class DestinationFromServiceRetriever {
     }
 
     const withProxySetting = await da.addProxyConfiguration(destination);
+    const withTrustStore = await da.addTrustStoreConfiguration(
+      withProxySetting,
+      destinationResult.origin
+    );
     da.updateDestinationCache(withProxySetting, destinationResult.origin);
     return withProxySetting;
   }
@@ -577,5 +582,22 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       (this.options.useCache && this.getSubscriberDestinationCache()) ||
       this.getSubscriberDestinationService()
     );
+  }
+
+  private async addTrustStoreConfiguration(
+    destination: Destination,
+    origin: DestinationOrigin
+  ) {
+    if (destination.originalProperties?.TrustStoreLocation) {
+      const trustStoreCertificate = await fetchSubaccountCertificate(
+        this.destinationServiceCredentials.uri,
+        origin === 'subscriber'
+          ? this.subscriberToken!.serviceJwt.encoded
+          : this.providerServiceToken.encoded,
+        destination.originalProperties.TrustStoreLocation
+      );
+      destination.trustStoreCertificate = trustStoreCertificate;
+    }
+    return destination;
   }
 }

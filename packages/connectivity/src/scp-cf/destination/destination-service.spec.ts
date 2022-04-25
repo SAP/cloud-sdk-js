@@ -5,9 +5,11 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { defaultResilienceBTPServices } from '../resilience-options';
+import { mockSubaccountCertificateCall } from '../../../../../test-resources/test/test-util';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
+  fetchSubaccountCertificate,
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
@@ -191,6 +193,23 @@ describe('destination service', () => {
           enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
+    });
+  });
+
+  describe('fetchCertificate', () => {
+    it('fetches the subaccount certificate', async () => {
+      mockSubaccountCertificateCall(nock, 'server-public-cert.pem', jwt);
+
+      const actual = await fetchSubaccountCertificate(
+        destinationServiceUri,
+        jwt,
+        'server-public-cert.pem'
+      );
+      expect(actual).toEqual({
+        name: 'server-public-cert.pem',
+        content: expect.any(String),
+        type: 'CERTIFICATE'
+      });
     });
   });
 

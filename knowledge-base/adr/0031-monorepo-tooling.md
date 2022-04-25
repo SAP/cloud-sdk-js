@@ -42,7 +42,8 @@ Caveats:
   `--no-deps` ignores downstream and `--include-dependencies` adds upstream dependencies.
   - Think of this as "the dependencies didn't change so we don't need to run them, but we need to make sure to not break our downstream dependants"
 - Turborepo does not handle releasing in any form (yet). A separate library like **Changesets**, Lerna, or Beachball is needed.
-- Remote caching needs some complicated setup unless you use Vercel, which is not an option for our purposes. Without it, the CI pipeline can't benefit from the same speeds as local builds.
+- Remote caching needs some (complicated) setup, which is not an option for our purposes. Without it, the CI pipeline can't benefit from the same speeds as local builds.
+  - This may be an issue if slow steps (e.g. generating test services) are executed every time.
 
 Benefits:
 
@@ -50,6 +51,7 @@ Benefits:
 - `turbo.json` makes it possible to understand dependencies of scripts.
   - There are still improvements possible to the changes in the PR like generating test services before testing (and using the cache to avoid slowing it down).
 - It is easier to run scripts for all packages, simplifying the generate and readme scripts.
+- Tests will not fail because some other action (`yarn compile` or `yarn generate`) was not run before executing tests
 - Good documentation is available and there is a helpful community.
 - There is active development backed by a committed third party (Vercel).
 - [Powerful filters](https://turborepo.org/docs/features/filtering) allow us to run commands in all relevant packages.

@@ -25,10 +25,10 @@ jobs:
         working-directory: test-packages/mermory-tests/sdk-v1/
       - run: echo "::set-output name=value::$(node --inspect test-script.js)"
         name: test v1 memory usage
-        id: v1-memory-usage
+        id: v1Result
         working-directory: test-packages/mermory-tests/sdk-v1/
-      - run: echo $v1MemoryUsage
+      - run: echo '${{ steps.v1Result.outputs.value }}'
       - run: npm install --no-package-lock --no-save ts-node
-      - run: ts-node scripts/compare-memory-usage.ts 5 9
+      - run: npx ts-node scripts/compare-memory-usage.ts 5 9
         name: compare v1 and canary
 

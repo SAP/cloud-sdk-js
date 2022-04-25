@@ -30,8 +30,7 @@ const main = async () => {
   // const testEntities210 = await TestEntity50Col.requestBuilder().getAll().execute(dest);
 
   const diff = hd.end();
-  process.env.v1MemoryUsage = diff.change.size_bytes;
-  // console.log("Additional heap memory  used: " + diff.change.size);
+  console.log("Additional heap memory  used: " + diff.change.size);
   // console.log("Major changes: " + JSON.stringify(diff.change.details.filter(e => e.size.includes('kb') || e.size.includes('mb'))));
 };
 

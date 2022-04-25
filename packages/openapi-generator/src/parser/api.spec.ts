@@ -1,5 +1,8 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { createTestRefs, emptyDocument } from '../../test/test-util';
+import {
+  createTestRefs,
+  emptyDocument
+} from '@sap-cloud-sdk/private-test-utils';
 import { apiNameExtension } from '../extensions';
 import { parseApis } from './api';
 import { createRefs } from './refs';

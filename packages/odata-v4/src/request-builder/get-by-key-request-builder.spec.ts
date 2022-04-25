@@ -2,15 +2,15 @@ import { TestEnumType } from '@sap-cloud-sdk/test-services-odata-v4/test-service
 import {
   defaultDestination,
   mockGetRequest
-} from '../../../../test-resources/test/test-util/request-mocker';
-import { createOriginalTestEntityData1 } from '../../../../test-resources/test/test-util/test-data';
+} from '@sap-cloud-sdk/private-test-utils/request-mocker';
+import { createOriginalTestEntityData1 } from '@sap-cloud-sdk/private-test-utils/test-data';
 import {
   testEntityApi,
   testEntityWithEnumKeyApi,
   testEntityResourcePath,
   createTestEntityWithEnumKey,
   createTestEntity
-} from '../../test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 function createOriginalTestEntityWithEnumKeyData() {

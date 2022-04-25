@@ -3,7 +3,7 @@ import { StructureKind } from 'ts-morph';
 import {
   complexMeal,
   complexMealWithDesert
-} from '../../test/test-util/data-model';
+} from '@sap-cloud-sdk/private-test-utils/data-model';
 import { complexTypeInterface } from './interface';
 
 describe('interface', () => {

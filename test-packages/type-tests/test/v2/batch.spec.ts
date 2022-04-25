@@ -8,7 +8,7 @@ import {
   testService
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { ReadResponse } from '@sap-cloud-sdk/odata-v2/internal';
-import { customTestDeSerializers } from '../../../../test-resources/test/test-util';
+import { customTestDeSerializers } from '@sap-cloud-sdk/private-test-utils';
 
 const { testEntityApi } = testService();
 const { multiSchemaTestEntityApi } = multipleSchemasService();

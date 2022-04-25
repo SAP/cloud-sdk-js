@@ -6,18 +6,18 @@ import {
   providerXsuaaCertUrl,
   providerXsuaaUrl,
   subscriberXsuaaUrl
-} from '../../../../test-resources/test/test-util/environment-mocks';
-import { signedJwt } from '../../../../test-resources/test/test-util/keys';
+} from '@sap-cloud-sdk/private-test-utils/environment-mocks';
+import { signedJwt } from '@sap-cloud-sdk/private-test-utils/keys';
 import {
   providerServiceToken,
   providerUserJwt,
   subscriberServiceToken,
   subscriberUserJwt
-} from '../../../../test-resources/test/test-util/mocked-access-tokens';
+} from '@sap-cloud-sdk/private-test-utils/mocked-access-tokens';
 import {
   mockClientCredentialsGrantCall,
   mockClientCredentialsGrantWithCertCall
-} from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
+} from '@sap-cloud-sdk/private-test-utils/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { serviceToken } from './token-accessor';
 import { defaultResilienceBTPServices } from './resilience-options';

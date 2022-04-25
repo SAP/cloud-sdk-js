@@ -16,8 +16,8 @@ import {
 import {
   defaultDestination,
   defaultHost
-} from '../../../../test-resources/test/test-util';
-import { testEntityApi } from '../../test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
+import { testEntityApi } from '@sap-cloud-sdk/private-test-utils';
 
 const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
 

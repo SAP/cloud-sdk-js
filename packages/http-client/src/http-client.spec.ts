@@ -12,7 +12,7 @@ import {
 import {
   connectivityProxyConfigMock,
   defaultDestination
-} from '../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,

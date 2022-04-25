@@ -8,16 +8,16 @@ import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall
-} from '../../../../test-resources/test/test-util/destination-service-mocks';
+} from '@sap-cloud-sdk/private-test-utils/destination-service-mocks';
 import {
   destinationServiceUri,
   destinationBindingClientSecretMock,
   mockServiceBindings,
   providerXsuaaUrl
-} from '../../../../test-resources/test/test-util/environment-mocks';
-import { privateKey } from '../../../../test-resources/test/test-util/keys';
-import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
-import { destinationName } from '../../../../test-resources/test/test-util/example-destination-service-responses';
+} from '@sap-cloud-sdk/private-test-utils/environment-mocks';
+import { privateKey } from '@sap-cloud-sdk/private-test-utils/keys';
+import { mockClientCredentialsGrantCall } from '@sap-cloud-sdk/private-test-utils/xsuaa-service-mocks';
+import { destinationName } from '@sap-cloud-sdk/private-test-utils/example-destination-service-responses';
 import { singleTestEntityMultiLinkResponse } from '../test-data/single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';

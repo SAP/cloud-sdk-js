@@ -14,22 +14,19 @@ import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf';
 import {
   mockClientCredentialsGrantCall,
   mockUserTokenGrantCall
-} from '../../../test-resources/test/test-util/xsuaa-service-mocks';
-import {
-  privateKey,
-  publicKey
-} from '../../../test-resources/test/test-util/keys';
+} from '@sap-cloud-sdk/private-test-utils/xsuaa-service-mocks';
+import { privateKey, publicKey } from '@sap-cloud-sdk/private-test-utils/keys';
 import {
   destinationBindingClientSecretMock,
   mockServiceBindings,
   providerXsuaaUrl,
   xsuaaBindingMock
-} from '../../../test-resources/test/test-util/environment-mocks';
+} from '@sap-cloud-sdk/private-test-utils/environment-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall
-} from '../../../test-resources/test/test-util/destination-service-mocks';
+} from '@sap-cloud-sdk/private-test-utils/destination-service-mocks';
 
 describe('CacheDestination & CacheClientCredentialToken', () => {
   const jku = `http://${xsuaaBindingMock.credentials.uaadomain}`;

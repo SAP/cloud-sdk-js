@@ -1,5 +1,5 @@
 import { testFunctionImportMultipleParams } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
-import { defaultDestination } from '../../../../test-resources/test/test-util/request-mocker';
+import { defaultDestination } from '@sap-cloud-sdk/private-test-utils/request-mocker';
 
 describe('FunctionImportRequestBuilder', () => {
   it('builds correct url for multiple parameters', async () => {

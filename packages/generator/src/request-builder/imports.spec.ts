@@ -1,5 +1,5 @@
 import { StructureKind } from 'ts-morph';
-import { breakfastEntity } from '../../test/test-util/data-model';
+import { breakfastEntity } from '@sap-cloud-sdk/private-test-utils/data-model';
 import { requestBuilderImportDeclarations } from './imports';
 
 describe('imports', () => {

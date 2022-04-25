@@ -42,12 +42,10 @@ Caveats:
   `--no-deps` ignores downstream and `--include-dependencies` adds upstream dependencies.
   - Think of this as "the dependencies didn't change so we don't need to run them, but we need to make sure to not break our downstream dependants"
 - Turborepo does not handle releasing in any form (yet). A separate library like **Changesets**, Lerna, or Beachball is needed.
-- Remote caching needs some (complicated) setup, which is not an option for our purposes. Without it, the CI pipeline can't benefit from the same speeds as local builds.
-  - This may be an issue if slow steps (e.g. generating test services) are executed every time.
 
 Benefits:
 
-- Performance of scripts is increased dramatically through parallelization and caching (uncached: PR checks turbo 6min vs lerna 9min, PR tests turbo <2min vs lerna ~5min; even better with cache)
+- Performance of scripts is increased dramatically through parallelization and caching (PR checks turbo 6min vs lerna 9min, PR tests turbo 2-3min vs lerna ~5min)
 - `turbo.json` makes it possible to understand dependencies of scripts.
   - There are still improvements possible to the changes in the PR like generating test services before testing (and using the cache to avoid slowing it down).
 - It is easier to run scripts for all packages, simplifying the generate and readme scripts.

@@ -5,7 +5,7 @@ import {
   testEntityLvl2MultiLinkApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
-} from '../test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 
 describe('entity', () => {
   let entity;

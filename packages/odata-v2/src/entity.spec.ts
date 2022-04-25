@@ -1,11 +1,11 @@
 import { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
-import { customTestDeSerializers } from '../../../test-resources/test/test-util';
+import { customTestDeSerializers } from '@sap-cloud-sdk/private-test-utils';
 import {
   testEntityApi,
   testEntityApiCustom,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
-} from '../test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { CustomDeSerializers } from './de-serializers';
 
 describe('remote state', () => {

@@ -7,7 +7,7 @@ import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   createOriginalTestEntityDataWithLinks
-} from '../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { any } from '../filter';
 import { DefaultDeSerializers } from '../de-serializers';
 import {
@@ -16,7 +16,7 @@ import {
   testEntityMultiLinkApi,
   testEntitySingleLinkApi,
   createTestEntity
-} from '../../test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
 describe('GetAllRequestBuilder', () => {

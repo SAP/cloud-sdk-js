@@ -11,6 +11,7 @@ module.exports = {
         '**/dist/**/*',
         '**/node_modules/**/*',
         'test-packages/test-services*/**/*',
+        'test-packages/private-test-utils',
         'packages/rest-generator/test/test-services/**/*',
         'test-resources/cli/**/*',
         '**/test-output/**',
@@ -28,6 +29,7 @@ module.exports = {
     'test-packages/test-services-odata-common',
     'test-packages/test-services-openapi',
     'test-packages/test-services-e2e',
+    'test-packages/private-test-utils',
     'packages/rest-generator/test/test-services',
     'test-resources/cli/',
     'test-resources/generator/test-output'

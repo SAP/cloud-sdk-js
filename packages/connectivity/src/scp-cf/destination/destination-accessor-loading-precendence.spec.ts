@@ -1,7 +1,7 @@
 import {
   MockServiceBindings,
   mockServiceBindings
-} from '../../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { getDestination, useOrFetchDestination } from './destination-accessor';
 import {
   DestinationWithName,

@@ -1,5 +1,5 @@
 import nock = require('nock');
-import { createOptions } from '../../test/test-util/create-generator-options';
+import { createOptions } from '@sap-cloud-sdk/private-test-utils/create-generator-options';
 import { getTestService } from './pregenerated-lib.spec';
 import { sdkMetadata } from './sdk-metadata';
 

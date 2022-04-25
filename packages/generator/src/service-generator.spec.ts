@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { createOptions } from '../test/test-util/create-generator-options';
+import { createOptions } from '@sap-cloud-sdk/private-test-utils/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import { GlobalNameFormatter } from './global-name-formatter';
 import { ServiceMapping } from './service-mapping';

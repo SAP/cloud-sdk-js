@@ -2,28 +2,28 @@ import nock from 'nock';
 import {
   mockServiceBindings,
   xsuaaBindingMock
-} from '../../../../../test-resources/test/test-util/environment-mocks';
+} from '@sap-cloud-sdk/private-test-utils/environment-mocks';
 import {
   providerServiceToken,
   subscriberServiceToken,
   subscriberServiceTokenWithVerificationURL,
   subscriberUserJwt
-} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
+} from '@sap-cloud-sdk/private-test-utils/mocked-access-tokens';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+} from '@sap-cloud-sdk/private-test-utils/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../../../../../test-resources/test/test-util/destination-service-mocks';
+} from '@sap-cloud-sdk/private-test-utils/destination-service-mocks';
 import {
   basicMultipleResponse,
   destinationName,
   oauthMultipleResponse
-} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
+} from '@sap-cloud-sdk/private-test-utils/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import * as jwt from '../jwt';
 import { getDestination } from './destination-accessor';

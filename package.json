@@ -34,6 +34,7 @@
     "test-packages/test-services-odata-v4",
     "test-packages/test-services-openapi",
     "test-packages/test-services-e2e",
+    "test-packages/private-test-utils",
     "test-packages/type-tests"
   ],
   "scripts": {

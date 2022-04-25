@@ -4,12 +4,12 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import {
   defaultDestination,
   mockUpdateRequest
-} from '../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import {
   testEntityApi,
   testEntityMultiLinkApi,
   testEntityResourcePath
-} from '../../test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { UpdateRequestBuilder } from './update-request-builder';
 
 function createTestEntity() {

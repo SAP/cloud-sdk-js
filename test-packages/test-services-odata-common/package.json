@@ -26,6 +26,7 @@
   },
   "peerDependencies": {
     "@sap-cloud-sdk/generator": "^2.3.0",
-    "@sap-cloud-sdk/util": "^2.3.0"
+    "@sap-cloud-sdk/util": "^2.3.0",
+    "@sap-cloud-sdk/private-test-utils": "^2.3.0"
   }
 }

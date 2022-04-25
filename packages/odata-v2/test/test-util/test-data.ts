@@ -7,7 +7,7 @@ import { defaultDeSerializers, CustomDeSerializers } from '../../src';
 import {
   customStringPropertyValue,
   customTestDeSerializers
-} from '../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 
 export const {
   testEntityApi,

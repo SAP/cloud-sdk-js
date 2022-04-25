@@ -18,7 +18,7 @@ import {
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken
-} from '../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {

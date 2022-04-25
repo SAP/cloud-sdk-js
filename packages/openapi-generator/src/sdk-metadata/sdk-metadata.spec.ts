@@ -1,5 +1,5 @@
 import nock = require('nock');
-import { dummyOpenApiDocument } from '../../test/test-util';
+import { dummyOpenApiDocument } from '@sap-cloud-sdk/private-test-utils';
 import { sdkMetadata } from './sdk-metadata';
 
 describe('sdk-metadata', () => {

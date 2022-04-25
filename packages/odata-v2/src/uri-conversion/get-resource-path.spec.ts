@@ -5,7 +5,10 @@ import {
   createUriConverter
 } from '@sap-cloud-sdk/odata-common/internal';
 import { defaultDeSerializers } from '../de-serializers';
-import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
+import {
+  testEntityApi,
+  testEntityResourcePath
+} from '@sap-cloud-sdk/private-test-utils';
 
 const uriConverter = createUriConverter(defaultDeSerializers);
 const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);

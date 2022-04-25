@@ -17,13 +17,13 @@ import {
   testEntityApiCustom,
   testFilterStringCustom,
   testFilterSingleLinkCustom
-} from '../../test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { filterFunctions } from '../filter-functions';
 import {
   defaultDeSerializers,
   mergeDefaultDeSerializersWith
 } from '../de-serializers';
-import { customTestDeSerializers } from '../../../../test-resources/test/test-util/custom-de-serializers';
+import { customTestDeSerializers } from '@sap-cloud-sdk/private-test-utils/custom-de-serializers';
 import { createODataUri } from './odata-uri';
 
 const oDataUri = createODataUri(defaultDeSerializers);

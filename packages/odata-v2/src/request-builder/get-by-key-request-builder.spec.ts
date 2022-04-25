@@ -5,12 +5,12 @@ import {
   mockGetRequest,
   createOriginalTestEntityData1,
   createOriginalTestEntityDataWithLinks
-} from '../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import {
   testEntityApi,
   createTestEntity,
   testEntityResourcePath
-} from '../../test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 describe('GetByKeyRequestBuilder', () => {

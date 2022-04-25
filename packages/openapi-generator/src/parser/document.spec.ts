@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { emptyDocument } from '../../test/test-util';
+import { emptyDocument } from '@sap-cloud-sdk/private-test-utils';
 import { ServiceOptions } from '../options';
 import { parseOpenApiDocument } from './document';
 import * as api from './api';

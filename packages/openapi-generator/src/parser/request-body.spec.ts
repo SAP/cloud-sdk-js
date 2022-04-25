@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { createTestRefs } from '../../test/test-util';
+import { createTestRefs } from '@sap-cloud-sdk/private-test-utils';
 import { parseRequestBody } from './request-body';
 
 const defaultOptions = { strictNaming: true };

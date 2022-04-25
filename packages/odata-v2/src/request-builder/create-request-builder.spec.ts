@@ -5,13 +5,13 @@ import {
   defaultHost,
   mockCreateRequest,
   testPostRequestOutcome
-} from '../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import {
   testEntityApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi,
   testEntityResourcePath
-} from '../../test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { CreateRequestBuilder } from './create-request-builder';
 
 describe('CreateRequestBuilder', () => {

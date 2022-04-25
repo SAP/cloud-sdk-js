@@ -3,7 +3,7 @@
 import { promises } from 'fs';
 import { join, resolve } from 'path';
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
+import { createOptions } from '@sap-cloud-sdk/private-test-utils/create-generator-options';
 import { generate } from '@sap-cloud-sdk/generator/src/internal';
 
 const outDir = resolve(__dirname, 'common-service');
@@ -155,7 +155,7 @@ const imports = `
   import { Moment } from "moment";
   import { BigNumber } from "bignumber.js";
   import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time } from '../../packages/odata-common/src/internal';
-  import { customTestDeSerializers } from '../../test-resources/test/test-util';
+  import { customTestDeSerializers } from '@sap-cloud-sdk/private-test-utils';
   `;
 const disableEslint = '/* eslint-disable */';
 

@@ -4,7 +4,7 @@ import {
   entityNotDeserializable,
   foodService,
   orderBreakfast
-} from '../../test/test-util/data-model';
+} from '@sap-cloud-sdk/private-test-utils/data-model';
 import { functionImportFunction } from './function';
 
 describe('function', () => {

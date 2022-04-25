@@ -1,4 +1,7 @@
-import { breakfastEntity, foodService } from '../../test/test-util/data-model';
+import {
+  breakfastEntity,
+  foodService
+} from '@sap-cloud-sdk/private-test-utils/data-model';
 import { entityImportDeclarations, otherEntityImports } from './imports';
 
 describe('imports', () => {

@@ -3,7 +3,7 @@ import { complexTypeSourceFile } from '../complex-type';
 import {
   complexMeal,
   complexMealWithDesert
-} from '../../test/test-util/data-model';
+} from '@sap-cloud-sdk/private-test-utils/data-model';
 
 describe('file', () => {
   it('complexTypeSourceFile', () => {

@@ -23,7 +23,7 @@ import {
   providerXsuaaUrl,
   providerServiceToken,
   createOriginalTestEntityDataWithLinks
-} from '../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import {
   testEntityApi,
@@ -31,7 +31,7 @@ import {
   createTestEntity,
   testEntityApiCustom,
   createTestEntityWithCustomDeSerializers
-} from '../../test/test-util';
+} from '@sap-cloud-sdk/private-test-utils';
 import { DefaultDeSerializers } from '../de-serializers';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 

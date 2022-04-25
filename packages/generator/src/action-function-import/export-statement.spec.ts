@@ -1,5 +1,5 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { orderBreakfast } from '../../test/test-util/data-model';
+import { orderBreakfast } from '@sap-cloud-sdk/private-test-utils/data-model';
 import { exportStatement } from './export-statement';
 
 describe('export-statement', () => {

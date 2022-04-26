@@ -760,7 +760,7 @@ describe('destination cache', () => {
     });
 
     it('should return undefined when the destination is not valid', () => {
-      jest.useFakeTimers('modern');
+      jest.useFakeTimers({ doNotFake: ['performance'] } as any); // TODO Version jest v28 api has changed but @types/jest are not there yet hence as any workaround
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
       destinationCache.cacheRetrievedDestination(
         dummyJwt,
@@ -777,10 +777,12 @@ describe('destination cache', () => {
       );
 
       expect(actual).toBeUndefined();
+      jest.useRealTimers();
     });
 
     it('should return undefined when the destination is not valid and has an auth token expiration time', () => {
-      jest.useFakeTimers('modern');
+      jest.useFakeTimers({ doNotFake: ['performance'] } as any); // TODO Version jest v28 api has changed but @types/jest are not there yet hence as any workaround
+
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
       const destination = {
         ...destinationOne,
@@ -804,6 +806,7 @@ describe('destination cache', () => {
       jest.advanceTimersByTime(60000 * minutesToExpire);
 
       expect(retrieveDestination()).toBeUndefined();
+      jest.useRealTimers();
     });
   });
 });

@@ -46,13 +46,14 @@ describe('Cache', () => {
   });
 
   it('retrieving expired item should return undefined', () => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers({ doNotFake: ['performance'] } as any); // TODO Version jest v28 api has changed but @types/jest are not there yet hence as any workaround
     cacheOne.set('one', destinationOne);
 
     const minutesToExpire = 6;
     // Shift time to expire the set item
     jest.advanceTimersByTime(60000 * minutesToExpire);
     expect(cacheOne.get('one')).toBeUndefined();
+    jest.useRealTimers();
   });
 
   it('clear() should remove all entries in cache', () => {

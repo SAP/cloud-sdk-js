@@ -35,7 +35,7 @@ const test = async () => {
   console.log("Additional heap memory  used: " + diff.change.size);
   console.log("Major changes: " + JSON.stringify(diff.change.details.filter(e => e.size.includes('kb') || e.size.includes('mb'))));
   console.log(diff.change.size_bytes);
-  return diff.change.size_bytes;
+  return diff.change.size_bytes.toString();
 };
 
 const main = async () => {

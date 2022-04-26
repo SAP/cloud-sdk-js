@@ -63,7 +63,7 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@types/jest" : "^27.4.1",
+    "@types/jest": "^27.4.1",
     "@types/jsonwebtoken": "^8.3.8",
     "@types/license-checker": "^25.0.1",
     "@types/mock-fs": "^4.13.0",

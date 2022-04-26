@@ -1,18 +1,16 @@
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 const oneHourInSeconds = 60 * 60;
 
-
 describe('ClientCredentialsTokenCache', () => {
-  beforeEach(()=>{
-    jest.useFakeTimers({doNotFake: ['performance']} as any);//Version 28 api has changed but @types are not there yet
-  })
+  beforeEach(() => {
+    jest.useFakeTimers({ doNotFake: ['performance'] } as any); // TODO Version jest v28 api has changed but @types/jest are not there yet hence as any workaround
+  });
 
-  afterEach(()=>{
-    jest.useRealTimers()
-  })
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
   it('should return token if a valid token is cached', () => {
-
     const validToken = {
       access_token: '1234567890',
       token_type: 'UserToken',
@@ -38,7 +36,6 @@ describe('ClientCredentialsTokenCache', () => {
   });
 
   it('should return undefined if expired token is cached', () => {
-
     const expiredToken = {
       access_token: '1234567890',
       token_type: 'UserToken',

@@ -23,11 +23,8 @@ jobs:
       - run: yarn generate-vdm
         name: generate v1 test client
         working-directory: test-packages/mermory-tests/sdk-v1/
-      - run: echo "::set-output name=value::$(node --inspect test-script.js)"
-        name: test v1 memory usage
-        id: v1Result
+      - run: node --inspect test-script.js && ls && cat result.txt
         working-directory: test-packages/mermory-tests/sdk-v1/
-      - run: echo '${{ steps.v1Result.outputs.value }}'
       - uses: actions/cache@v2
         id: cache
         with:

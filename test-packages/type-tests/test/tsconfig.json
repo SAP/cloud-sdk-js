@@ -7,5 +7,5 @@
     "noEmit": true,
     "target": "es2019"
   },
-  "include": ["../../../../test-resources/test/test-util"]
+  "include": ["../../../test-resources/test/test-util"]
 }

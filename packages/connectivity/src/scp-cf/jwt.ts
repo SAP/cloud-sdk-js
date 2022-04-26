@@ -1,5 +1,4 @@
 import { IncomingMessage } from 'http';
-import * as xssec from '@sap/xssec';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { decode } from 'jsonwebtoken';
 import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
@@ -11,6 +10,9 @@ const logger = createLogger({
   package: 'connectivity',
   messageContext: 'jwt'
 });
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires 
+const xssec = require('@sap/xssec');
 
 /**
  * Decode JWT.
@@ -104,7 +106,7 @@ export async function verifyJwt(
     xssec.createSecurityContext(
       token,
       { disableCache, credentials },
-      function (error, securityContext, tokenInfo) {
+      function (error: any, securityContext: any, tokenInfo: any) {
         if (error) {
           return reject(error);
         }

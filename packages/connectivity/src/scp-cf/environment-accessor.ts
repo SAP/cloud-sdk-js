@@ -87,7 +87,7 @@ export function getServiceCredentialsList(service: string): any[] {
  * @internal
  */
 export function getServiceList(service: string): Service[] {
-  return xsenv.filterServices({ label: service });
+  return xsenv.filterCFServices({ label: service });
 }
 
 /**
@@ -97,7 +97,7 @@ export function getServiceList(service: string): Service[] {
  * @internal
  */
 export function getService(service: string): Service | undefined {
-  const services: Service[] = xsenv.filterServices({ label: service });
+  const services: Service[] = xsenv.filterCFServices({ label: service });
 
   if (!services.length) {
     logger.warn(
@@ -150,10 +150,16 @@ export function getVcapService(): Record<string, any> | null {
   try {
     vcapServices = JSON.parse(env);
   } catch (error) {
-    throw new ErrorWithCause(
-      "Failed to parse environment variable 'VCAP_SERVICES'.",
-      error
-    );
+    if (error instanceof Error) {
+      throw new ErrorWithCause(
+        "Failed to parse environment variable 'VCAP_SERVICES'.",
+        error
+      );
+    } else {
+      throw new Error(
+        "Failed to parse environment variable 'VCAP_SERVICES' with unknown error cause."
+      );
+    }
   }
   if (!Object.keys(vcapServices).length) {
     throw new Error(

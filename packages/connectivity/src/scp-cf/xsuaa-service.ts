@@ -1,4 +1,3 @@
-import * as xssec from '@sap/xssec';
 import CircuitBreaker from 'opossum';
 import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
@@ -12,6 +11,9 @@ import {
 } from './resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires 
+const xssec = require('@sap/xssec');
 
 let circuitBreaker: any;
 

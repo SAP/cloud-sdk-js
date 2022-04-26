@@ -2185,6 +2185,11 @@
   resolved "https://registry.npmjs.org/@types/prettier/-/prettier-2.4.1.tgz#e1303048d5389563e130f5bdd89d37a99acb75eb"
   integrity sha512-Fo79ojj3vdEZOHg3wR9ksAMRz4P3S5fDB5e/YWZiFnyFQI1WY2Vftu9XoXVVtJfxB7Bpce/QTqWSSntkz2Znrw==
 
+"@types/sap__xsenv@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/@types/sap__xsenv/-/sap__xsenv-2.0.3.tgz#6b22d0dca3913e23a7a83366a7647538b38943ab"
+  integrity sha512-w7J014voM+DPpz1JttkNj2zyfZiYZ0OORoH5KOHO3oOYD9IEwPCZqugqJPwyw6byvkOWSAujh3wVke0mEVu6kA==
+
 "@types/stack-utils@^2.0.0":
   version "2.0.1"
   resolved "https://registry.npmjs.org/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"

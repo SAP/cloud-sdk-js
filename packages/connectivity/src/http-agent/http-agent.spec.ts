@@ -80,18 +80,19 @@ T53TtQm+oQdUNanvJuk9VANEY+5ObG48gp/bhmskgn/RAPzDgknF0ar8QUU=
     }).listen(port);
   });
 
-  afterAll(async () => {
-    // TODO promisify did not work, why?
-    return new Promise((res, rej) => {
-      server.close(err => {
-        if (err) {
-          rej(err);
-        } else {
-          res('server closed');
-        }
-      });
-    });
-  });
+  afterAll(
+    async () =>
+      // TODO promisify did not work, why?
+      new Promise((res, rej) => {
+        server.close(err => {
+          if (err) {
+            rej(err);
+          } else {
+            res('server closed');
+          }
+        });
+      })
+  );
 
   const trustAllDestination: Destination = {
     ...baseDestination,

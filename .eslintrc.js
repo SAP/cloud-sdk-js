@@ -12,6 +12,8 @@ module.exports = {
         '**/node_modules/**/*',
         'test-packages/test-services/**/*',
         'test-packages/test-services-e2e/**/*',
+        'test-packages/memory-tests/sdk-v1/test-service/*',
+        'test-packages/memory-tests/sdk-canary/test-service/*',
         'packages/rest-generator/test/test-services/**/*',
         'test-resources/cli/**/*',
         '**/test-output/**',
@@ -26,6 +28,8 @@ module.exports = {
     'README.md',
     'test-packages/test-services',
     'test-packages/test-services-e2e',
+    'test-packages/memory-tests/sdk-v1/test-service',
+    'test-packages/memory-tests/sdk-canary/test-service',
     'packages/rest-generator/test/test-services',
     'test-resources/cli/',
     'test-resources/generator/test-output'

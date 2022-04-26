@@ -27,20 +27,19 @@ jobs:
         name: start e2e tests server
       - run: yarn install
         name: install test v1
-        working-directory: test-packages/mermory-tests/sdk-v1/
+        working-directory: test-packages/memory-tests/sdk-v1/
       - run: yarn generate-vdm
         name: generate v1 test client
-        working-directory: test-packages/mermory-tests/sdk-v1/
+        working-directory: test-packages/memory-tests/sdk-v1/
       - run: node --inspect test-script.js && cat result.txt
-        working-directory: test-packages/mermory-tests/sdk-v1/
+        working-directory: test-packages/memory-tests/sdk-v1/
       - run: yarn install
         name: install test canary
-        working-directory: test-packages/mermory-tests/sdk-canary/
+        working-directory: test-packages/memory-tests/sdk-canary/
       - run: yarn generate-vdm
         name: generate canary test client
-        working-directory: test-packages/mermory-tests/sdk-canary/
+        working-directory: test-packages/memory-tests/sdk-canary/
       - run: node --inspect test-script.js && cat result.txt
-        working-directory: test-packages/mermory-tests/sdk-canary/
-      - run: npx ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/mermory-tests/sdk-v1/result.txt) $(cat ./test-packages/mermory-tests/sdk-canary/result.txt)
+        working-directory: test-packages/memory-tests/sdk-canary/
+      - run: npx ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/memory-tests/sdk-v1/result.txt) $(cat ./test-packages/memory-tests/sdk-canary/result.txt)
         name: compare v1 and canary
-

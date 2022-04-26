@@ -35,8 +35,6 @@ jobs:
         working-directory: test-packages/mermory-tests/sdk-v1/
       - run: npx ts-node scripts/compare-memory-usage.ts 100 90
         name: compare v1 and canary
-      - run: npx ts-node scripts/compare-memory-usage.ts 100 100
-        name: compare v1 and canary
       - run: yarn install
         name: install test canary
         working-directory: test-packages/mermory-tests/sdk-canary/
@@ -45,4 +43,6 @@ jobs:
         working-directory: test-packages/mermory-tests/sdk-canary/
       - run: node --inspect test-script.js && ls && cat result.txt
         working-directory: test-packages/mermory-tests/sdk-canary/
+      - run: npx ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/mermory-tests/sdk-v1/result.txt) $(cat ./test-packages/mermory-tests/sdk-v1/result.txt)
+        name: compare v1 and canary
 

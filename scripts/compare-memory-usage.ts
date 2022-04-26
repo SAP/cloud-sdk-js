@@ -5,7 +5,7 @@ const main = () => {
   const canaryMemoryUsage = parseInt(process.argv[3]);
   const percentageBasedOnV1 = canaryMemoryUsage/v1MemoryUsage * 100;
   if(percentageBasedOnV1 > threshold) {
-    throw new Error(`Test failed: v1 memory usage is ${v1MemoryUsage} but canary memory usage is ${canaryMemoryUsage}. Consider change the threshold or fix it.`);
+    throw new Error(`Test failed: v1 memory usage is ${v1MemoryUsage} and canary memory usage is ${canaryMemoryUsage} (${percentageBasedOnV1} %). Consider change the threshold (${threshold}) or fix it.`);
   }
   console.log(`Test passed: v1 memory usage is ${v1MemoryUsage} and canary memory usage is ${canaryMemoryUsage} (${percentageBasedOnV1} %).`)
 }

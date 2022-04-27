@@ -3,14 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  RequestBuilder,
-  GetAllRequestBuilderV2,
-  GetByKeyRequestBuilderV2,
-  CreateRequestBuilderV2,
-  UpdateRequestBuilderV2,
-  DeleteRequestBuilderV2
-} from '@sap-cloud-sdk/core';
+import { RequestBuilder, GetAllRequestBuilderV2, GetByKeyRequestBuilderV2, CreateRequestBuilderV2, UpdateRequestBuilderV2, DeleteRequestBuilderV2 } from '@sap-cloud-sdk/core';
 import { MultiSchemaTestEntity } from './MultiSchemaTestEntity';
 
 /**
@@ -22,12 +15,8 @@ export class MultiSchemaTestEntityRequestBuilder extends RequestBuilder<MultiSch
    * @param keyProperty Key property. See [[MultiSchemaTestEntity.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `MultiSchemaTestEntity` entity based on its keys.
    */
-  getByKey(
-    keyProperty: string
-  ): GetByKeyRequestBuilderV2<MultiSchemaTestEntity> {
-    return new GetByKeyRequestBuilderV2(MultiSchemaTestEntity, {
-      KeyProperty: keyProperty
-    });
+  getByKey(keyProperty: string): GetByKeyRequestBuilderV2<MultiSchemaTestEntity> {
+    return new GetByKeyRequestBuilderV2(MultiSchemaTestEntity, { KeyProperty: keyProperty });
   }
 
   /**
@@ -43,9 +32,7 @@ export class MultiSchemaTestEntityRequestBuilder extends RequestBuilder<MultiSch
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `MultiSchemaTestEntity`.
    */
-  create(
-    entity: MultiSchemaTestEntity
-  ): CreateRequestBuilderV2<MultiSchemaTestEntity> {
+  create(entity: MultiSchemaTestEntity): CreateRequestBuilderV2<MultiSchemaTestEntity> {
     return new CreateRequestBuilderV2(MultiSchemaTestEntity, entity);
   }
 
@@ -54,9 +41,7 @@ export class MultiSchemaTestEntityRequestBuilder extends RequestBuilder<MultiSch
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `MultiSchemaTestEntity`.
    */
-  update(
-    entity: MultiSchemaTestEntity
-  ): UpdateRequestBuilderV2<MultiSchemaTestEntity> {
+  update(entity: MultiSchemaTestEntity): UpdateRequestBuilderV2<MultiSchemaTestEntity> {
     return new UpdateRequestBuilderV2(MultiSchemaTestEntity, entity);
   }
 
@@ -71,17 +56,8 @@ export class MultiSchemaTestEntityRequestBuilder extends RequestBuilder<MultiSch
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `MultiSchemaTestEntity` by taking the entity as a parameter.
    */
-  delete(
-    entity: MultiSchemaTestEntity
-  ): DeleteRequestBuilderV2<MultiSchemaTestEntity>;
-  delete(
-    keyPropertyOrEntity: any
-  ): DeleteRequestBuilderV2<MultiSchemaTestEntity> {
-    return new DeleteRequestBuilderV2(
-      MultiSchemaTestEntity,
-      keyPropertyOrEntity instanceof MultiSchemaTestEntity
-        ? keyPropertyOrEntity
-        : { KeyProperty: keyPropertyOrEntity! }
-    );
+  delete(entity: MultiSchemaTestEntity): DeleteRequestBuilderV2<MultiSchemaTestEntity>;
+  delete(keyPropertyOrEntity: any): DeleteRequestBuilderV2<MultiSchemaTestEntity> {
+    return new DeleteRequestBuilderV2(MultiSchemaTestEntity, keyPropertyOrEntity instanceof MultiSchemaTestEntity ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
   }
 }

@@ -5,16 +5,7 @@
  */
 import { AirportsRequestBuilder } from './AirportsRequestBuilder';
 import { AirportLocation, AirportLocationField } from './AirportLocation';
-import {
-  AllFields,
-  Constructable,
-  CustomFieldV4,
-  EdmTypeField,
-  EntityBuilderType,
-  EntityV4,
-  Field,
-  FieldBuilder
-} from '@sap-cloud-sdk/core';
+import { AllFields, Constructable, CustomFieldV4, EdmTypeField, EntityBuilderType, EntityV4, Field, FieldBuilder } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -27,8 +18,7 @@ export class Airports extends EntityV4 implements AirportsType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath =
-    'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * Icao Code.
    */
@@ -88,52 +78,31 @@ export interface AirportsType {
 }
 
 export namespace Airports {
-  const _fieldBuilder: FieldBuilder<Constructable<Airports>> = new FieldBuilder(
-    Airports
-  );
+  const _fieldBuilder: FieldBuilder<Constructable<Airports>> = new FieldBuilder(Airports);
   /**
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ICAO_CODE = _fieldBuilder.buildEdmTypeField(
-    'IcaoCode',
-    'Edm.String',
-    false
-  );
+  export const ICAO_CODE = _fieldBuilder.buildEdmTypeField('IcaoCode', 'Edm.String', false);
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME = _fieldBuilder.buildEdmTypeField(
-    'Name',
-    'Edm.String',
-    false
-  );
+  export const NAME = _fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * Static representation of the [[iataCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const IATA_CODE = _fieldBuilder.buildEdmTypeField(
-    'IataCode',
-    'Edm.String',
-    false
-  );
+  export const IATA_CODE = _fieldBuilder.buildEdmTypeField('IataCode', 'Edm.String', false);
   /**
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LOCATION = _fieldBuilder.buildComplexTypeField(
-    'Location',
-    AirportLocationField,
-    false
-  );
+  export const LOCATION = _fieldBuilder.buildComplexTypeField('Location', AirportLocationField, false);
   /**
    * All fields of the Airports entity.
    */
-  export const _allFields: Array<
-    | EdmTypeField<Airports, 'Edm.String', false, true>
-    | AirportLocationField<Airports, false, true>
-  > = [
+  export const _allFields: Array<EdmTypeField<Airports, 'Edm.String', false, true> | AirportLocationField<Airports, false, true>> = [
     Airports.ICAO_CODE,
     Airports.NAME,
     Airports.IATA_CODE,
@@ -146,21 +115,12 @@ export namespace Airports {
   /**
    * All key fields of the Airports entity.
    */
-  export const _keyFields: Array<Field<Airports, boolean, boolean>> = [
-    Airports.ICAO_CODE
-  ];
+  export const _keyFields: Array<Field<Airports, boolean, boolean>> = [Airports.ICAO_CODE];
   /**
    * Mapping of all key field names to the respective static field property Airports.
    */
-  export const _keys: { [keys: string]: Field<Airports, boolean, boolean> } =
-    Airports._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<Airports, boolean, boolean> },
-        field: Field<Airports, boolean, boolean>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
-      },
-      {}
-    );
+  export const _keys: { [keys: string]: Field<Airports, boolean, boolean> } = Airports._keyFields.reduce((acc: { [keys: string]: Field<Airports, boolean, boolean> }, field: Field<Airports, boolean, boolean>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

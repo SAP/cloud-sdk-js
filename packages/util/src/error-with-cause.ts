@@ -1,7 +1,12 @@
 import { unixEOL } from './string-formatter';
+import { AxiosError } from 'axios';
 /**
  * Represents an error that was caused by another error.
  */
+
+function isAxiosError(err: Error | AxiosError): err is AxiosError {
+  return err['isAxiosError'] === true;
+}
 
 export class ErrorWithCause extends Error {
   /**
@@ -14,6 +19,11 @@ export class ErrorWithCause extends Error {
     super(message); // 'Error' breaks prototype chain here
     Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
     this.name = 'ErrorWithCause';
+
+    //Axios removed the stack property in version 0.27 which gave no useful information anyway. This adds the http cause.
+    if (isAxiosError(cause)) {
+      this.stack = `${this.stack}${unixEOL}Caused by:${unixEOL}Http Response: ${cause.message} - ${cause?.response?.data}`;
+    }
 
     // Stack is a non-standard property according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Custom_Error_Types
     if (this.stack && cause?.stack) {

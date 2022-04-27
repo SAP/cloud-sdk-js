@@ -1,5 +1,5 @@
-import { unixEOL } from './string-formatter';
 import { AxiosError } from 'axios';
+import { unixEOL } from './string-formatter';
 /**
  * Represents an error that was caused by another error.
  */
@@ -20,7 +20,7 @@ export class ErrorWithCause extends Error {
     Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
     this.name = 'ErrorWithCause';
 
-    //Axios removed the stack property in version 0.27 which gave no useful information anyway. This adds the http cause.
+    // Axios removed the stack property in version 0.27 which gave no useful information anyway. This adds the http cause.
     if (isAxiosError(cause)) {
       this.stack = `${this.stack}${unixEOL}Caused by:${unixEOL}Http Response: ${cause.message} - ${cause?.response?.data}`;
     }

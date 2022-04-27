@@ -3,7 +3,7 @@
   "version": "2.3.0",
   "private": true,
   "sideEffects": false,
-  "packageManager": "yarn@1.22.10",
+  "packageManager": "yarn@1.22.18",
   "description": "SAP Cloud SDK for JavaScript",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
   "license": "Apache-2.0",
@@ -37,7 +37,6 @@
     "test-packages/type-tests"
   ],
   "scripts": {
-    "postinstall": "turbo run compile",
     "test": "turbo run test",
     "test:unit": "turbo run test --filter=./packages/*",
     "test:integration": "turbo run test --filter=integration-tests",

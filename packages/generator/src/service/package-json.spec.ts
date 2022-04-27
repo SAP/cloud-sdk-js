@@ -49,10 +49,6 @@ describe('package-json', () => {
       dependencies: {
         '@sap-cloud-sdk/odata-common': '^1.2.3',
         '@sap-cloud-sdk/odata-v2': '^1.2.3'
-      },
-      peerDependencies: {
-        '@sap-cloud-sdk/odata-common': '^1.2.3',
-        '@sap-cloud-sdk/odata-v2': '^1.2.3'
       }
     });
   });
@@ -85,10 +81,6 @@ describe('package-json', () => {
       description: 'my v4 package description',
       ...packageJsonStatic,
       dependencies: {
-        '@sap-cloud-sdk/odata-common': '^1.2.3',
-        '@sap-cloud-sdk/odata-v4': '^1.2.3'
-      },
-      peerDependencies: {
         '@sap-cloud-sdk/odata-common': '^1.2.3',
         '@sap-cloud-sdk/odata-v4': '^1.2.3'
       }

@@ -25,10 +25,10 @@ export function entityCodeSample(
     instructions: codeBlock`
 import { ${voca.decapitalize(serviceName)} } from '${packageName}';
 
-const { ${getApiName(entityName)} } = ${voca.decapitalize(serviceName)}()
+const { ${getApiName(entityName)} } = ${voca.decapitalize(serviceName)}();
 const resultPromise = ${getApiName(
       entityName
-    )}.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
+    )}.requestBuilder().getAll().top(5).execute({ destinationName: 'myDestinationName' });
 
 `
   };
@@ -81,7 +81,7 @@ import { ${actionFunctionImport.name}${
 ${getParameterCodeSample(actionFunctionImport)}
 const resultPromise = ${actionFunctionImport.name}(${
       actionFunctionImport.parametersTypeName ? 'parameter' : ''
-    }).execute({ destinationName:'myDestinationName' });
+    }).execute({ destinationName: 'myDestinationName' });
 `
   };
 }

@@ -3,7 +3,7 @@ import {
   testService
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { ReadResponse } from '@sap-cloud-sdk/odata-v4/internal';
-import { customTestDeSerializers } from '@sap-cloud-sdk/private-test-utils';
+import { customTestDeSerializers } from '../../../../test-resources/test/test-util';
 
 const { testEntityApi } = testService();
 

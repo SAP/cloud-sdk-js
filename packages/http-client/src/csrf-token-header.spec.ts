@@ -11,7 +11,7 @@ import {
   defaultDestination,
   defaultHost,
   mockHeaderRequest
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../../test-resources/test/test-util';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 import * as csrfHeaders from './csrf-token-header';
 import { executeHttpRequest } from './http-client';

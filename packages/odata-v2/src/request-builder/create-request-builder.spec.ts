@@ -5,7 +5,7 @@ import {
   defaultHost,
   mockCreateRequest,
   testPostRequestOutcome
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../../../test-resources/test/test-util';
 import {
   testEntityApi,
   testEntityMultiLinkApi,

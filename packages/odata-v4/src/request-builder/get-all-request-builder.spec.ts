@@ -7,7 +7,7 @@ import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   createOriginalTestEntityDataWithLinks
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../../../test-resources/test/test-util';
 import { any } from '../filter';
 import { DefaultDeSerializers } from '../de-serializers';
 import {

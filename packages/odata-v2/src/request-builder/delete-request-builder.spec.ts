@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
   mockDeleteRequest
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../../../test-resources/test/test-util';
 import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { DeleteRequestBuilder } from './delete-request-builder';
 

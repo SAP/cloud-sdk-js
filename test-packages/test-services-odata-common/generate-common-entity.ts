@@ -155,7 +155,7 @@ const imports = `
   import { Moment } from "moment";
   import { BigNumber } from "bignumber.js";
   import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time } from '../../packages/odata-common/src/internal';
-  import { customTestDeSerializers } from '@sap-cloud-sdk/private-test-utils';
+  import { customTestDeSerializers } from '../../test-resources/test/test-util';
   `;
 const disableEslint = '/* eslint-disable */';
 

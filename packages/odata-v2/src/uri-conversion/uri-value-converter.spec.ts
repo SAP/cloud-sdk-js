@@ -1,6 +1,6 @@
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
-import moment = require('moment');
+import moment from 'moment';
 import { defaultDeSerializers, edmToTs } from '../de-serializers';
 
 const convertToUriFormat = createUriConverter(defaultDeSerializers);

@@ -2,20 +2,28 @@ import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   connectivityProxyConfigMock,
-  mockServiceBindings,
+  mockServiceBindings
+} from '../../../../../test-resources/test/test-util/environment-mocks';
+import {
   mockJwtBearerToken,
-  mockServiceToken,
+  mockServiceToken
+} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall,
-  mockVerifyJwt,
+  mockVerifyJwt
+} from '../../../../../test-resources/test/test-util/destination-service-mocks';
+import {
   providerServiceToken,
   subscriberServiceToken,
-  subscriberUserJwt,
+  subscriberUserJwt
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
+import {
   basicMultipleResponse,
   destinationName,
   onPremiseMultipleResponse,
   onPremisePrincipalPropagationMultipleResponse
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { Protocol } from '../protocol';
 import { getDestination } from './destination-accessor';
 import { parseDestination } from './destination';

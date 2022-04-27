@@ -43,7 +43,6 @@
     "axios": "^0.26.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/private-test-utils": "^2.3.0",
     "nock": "^13.0.11",
     "typescript": "~4.6.2"
   }

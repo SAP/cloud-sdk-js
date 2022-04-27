@@ -18,7 +18,6 @@
 '@sap-cloud-sdk/test-services-openapi': patch
 '@sap-cloud-sdk/test-services-odata-v2': patch
 '@sap-cloud-sdk/test-services-odata-v4': patch
-'@sap-cloud-sdk/private-test-utils': patch
 '@sap-cloud-sdk/test-services-e2e': patch
 '@sap-cloud-sdk/type-tests': patch
 ---

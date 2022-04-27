@@ -4,7 +4,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import {
   defaultDestination,
   mockUpdateRequest
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../../../test-resources/test/test-util';
 import {
   testEntityApi,
   testEntityMultiLinkApi,

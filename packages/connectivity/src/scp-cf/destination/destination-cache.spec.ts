@@ -6,26 +6,34 @@ import {
   providerUserJwt,
   providerUserPayload,
   subscriberServiceToken,
-  subscriberUserJwt,
+  subscriberUserJwt
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
+import {
   connectivityProxyConfigMock,
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
-  TestTenants,
+  TestTenants
+} from '../../../../../test-resources/test/test-util/environment-mocks';
+import {
   mockJwtBearerToken,
-  mockServiceToken,
+  mockServiceToken
+} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
-  mockVerifyJwt,
+  mockVerifyJwt
+} from '../../../../../test-resources/test/test-util/destination-service-mocks';
+import {
   certificateMultipleResponse,
   certificateSingleResponse,
   destinationName,
   oauthMultipleResponse,
   oauthSingleResponse,
-  onPremisePrincipalPropagationMultipleResponse,
-  signedJwt
-} from '@sap-cloud-sdk/private-test-utils';
+  onPremisePrincipalPropagationMultipleResponse
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
+import { signedJwt } from '../../../../../test-resources/test/test-util';
 import { destinationServiceCache } from './destination-service-cache';
 import { getDestination } from './destination-accessor';
 import {

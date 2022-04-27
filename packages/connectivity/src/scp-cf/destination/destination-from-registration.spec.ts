@@ -7,7 +7,7 @@ import {
   subscriberServiceToken,
   subscriberUserJwt,
   unmockDestinationsEnv
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../../../../test-resources/test/test-util';
 import {
   DestinationWithName,
   registerDestination,

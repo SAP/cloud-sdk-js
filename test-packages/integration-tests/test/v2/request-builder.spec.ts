@@ -7,15 +7,17 @@ import {
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
+  mockSubaccountDestinationsCall
+} from '../../../../test-resources/test/test-util/destination-service-mocks';
+import {
   destinationServiceUri,
   destinationBindingClientSecretMock,
   mockServiceBindings,
-  providerXsuaaUrl,
-  privateKey,
-  mockClientCredentialsGrantCall,
-  destinationName
-} from '@sap-cloud-sdk/private-test-utils';
+  providerXsuaaUrl
+} from '../../../../test-resources/test/test-util/environment-mocks';
+import { privateKey } from '../../../../test-resources/test/test-util/keys';
+import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
+import { destinationName } from '../../../../test-resources/test/test-util/example-destination-service-responses';
 import { singleTestEntityMultiLinkResponse } from '../test-data/single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';

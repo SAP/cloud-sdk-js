@@ -2,21 +2,29 @@ import nock from 'nock';
 import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
-  TestTenants,
+  TestTenants
+} from '../../../../../test-resources/test/test-util/environment-mocks';
+import {
   expectAllMocksUsed,
   mockJwtBearerToken,
-  mockServiceToken,
+  mockServiceToken
+} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
-  mockVerifyJwt,
+  mockVerifyJwt
+} from '../../../../../test-resources/test/test-util/destination-service-mocks';
+import {
   iasToken,
   onlyIssuerServiceToken,
   providerJwtBearerToken,
   providerServiceToken,
   providerUserJwt,
   subscriberServiceToken,
-  subscriberUserJwt,
+  subscriberUserJwt
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
+import {
   basicMultipleResponse,
   certificateMultipleResponse,
   certificateSingleResponse,
@@ -34,7 +42,7 @@ import {
   onPremiseBasicMultipleResponse,
   onPremiseBasicSingleResponse,
   onPremisePrincipalPropagationMultipleResponse
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { wrapJwtInHeader } from '../jwt';
 import * as identityService from '../identity-service';

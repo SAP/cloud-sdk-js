@@ -5,7 +5,7 @@ import {
   mockGetRequest,
   createOriginalTestEntityData1,
   createOriginalTestEntityDataWithLinks
-} from '@sap-cloud-sdk/private-test-utils';
+} from '../../../../test-resources/test/test-util';
 import {
   testEntityApi,
   createTestEntity,

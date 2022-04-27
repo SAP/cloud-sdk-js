@@ -3,11 +3,11 @@ import {
   TestEntity,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { defaultDeSerializers, CustomDeSerializers } from '../../src';
 import {
   customStringPropertyValue,
   customTestDeSerializers
-} from '@sap-cloud-sdk/private-test-utils';
-import { defaultDeSerializers, CustomDeSerializers } from '../../src';
+} from '../../../../test-resources/test/test-util';
 
 export const {
   testEntityApi,

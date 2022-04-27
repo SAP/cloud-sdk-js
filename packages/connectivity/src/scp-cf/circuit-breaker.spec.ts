@@ -3,9 +3,9 @@ import * as jwt123 from 'jsonwebtoken';
 import {
   destinationServiceUri,
   providerXsuaaUrl,
-  xsuaaBindingMock,
-  privateKey
-} from '@sap-cloud-sdk/private-test-utils';
+  xsuaaBindingMock
+} from '../../../../test-resources/test/test-util/environment-mocks';
+import { privateKey } from '../../../../test-resources/test/test-util/keys';
 import { circuitBreakerDefaultOptions } from './resilience-options';
 import { getClientCredentialsToken } from './xsuaa-service';
 import { fetchDestination } from './destination';

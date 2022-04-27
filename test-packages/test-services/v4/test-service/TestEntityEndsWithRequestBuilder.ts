@@ -3,7 +3,14 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, CreateRequestBuilderV4, UpdateRequestBuilderV4, DeleteRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import {
+  RequestBuilder,
+  GetAllRequestBuilderV4,
+  GetByKeyRequestBuilderV4,
+  CreateRequestBuilderV4,
+  UpdateRequestBuilderV4,
+  DeleteRequestBuilderV4
+} from '@sap-cloud-sdk/core';
 import { TestEntityEndsWith } from './TestEntityEndsWith';
 
 /**
@@ -16,7 +23,9 @@ export class TestEntityEndsWithRequestBuilder extends RequestBuilder<TestEntityE
    * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
    */
   getByKey(keyProperty: string): GetByKeyRequestBuilderV4<TestEntityEndsWith> {
-    return new GetByKeyRequestBuilderV4(TestEntityEndsWith, { KeyProperty: keyProperty });
+    return new GetByKeyRequestBuilderV4(TestEntityEndsWith, {
+      KeyProperty: keyProperty
+    });
   }
 
   /**
@@ -32,7 +41,9 @@ export class TestEntityEndsWithRequestBuilder extends RequestBuilder<TestEntityE
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntityEndsWith`.
    */
-  create(entity: TestEntityEndsWith): CreateRequestBuilderV4<TestEntityEndsWith> {
+  create(
+    entity: TestEntityEndsWith
+  ): CreateRequestBuilderV4<TestEntityEndsWith> {
     return new CreateRequestBuilderV4(TestEntityEndsWith, entity);
   }
 
@@ -41,7 +52,9 @@ export class TestEntityEndsWithRequestBuilder extends RequestBuilder<TestEntityE
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntityEndsWith`.
    */
-  update(entity: TestEntityEndsWith): UpdateRequestBuilderV4<TestEntityEndsWith> {
+  update(
+    entity: TestEntityEndsWith
+  ): UpdateRequestBuilderV4<TestEntityEndsWith> {
     return new UpdateRequestBuilderV4(TestEntityEndsWith, entity);
   }
 
@@ -56,8 +69,15 @@ export class TestEntityEndsWithRequestBuilder extends RequestBuilder<TestEntityE
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityEndsWith` by taking the entity as a parameter.
    */
-  delete(entity: TestEntityEndsWith): DeleteRequestBuilderV4<TestEntityEndsWith>;
+  delete(
+    entity: TestEntityEndsWith
+  ): DeleteRequestBuilderV4<TestEntityEndsWith>;
   delete(keyPropertyOrEntity: any): DeleteRequestBuilderV4<TestEntityEndsWith> {
-    return new DeleteRequestBuilderV4(TestEntityEndsWith, keyPropertyOrEntity instanceof TestEntityEndsWith ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
+    return new DeleteRequestBuilderV4(
+      TestEntityEndsWith,
+      keyPropertyOrEntity instanceof TestEntityEndsWith
+        ? keyPropertyOrEntity
+        : { KeyProperty: keyPropertyOrEntity! }
+    );
   }
 }

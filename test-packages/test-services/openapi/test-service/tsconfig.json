@@ -2,9 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": [
-      "esnext"
-    ],
+    "lib": ["esnext"],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -14,11 +12,6 @@
     "inlineSources": false,
     "strict": true
   },
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "dist/**/*",
-    "node_modules/**/*"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["dist/**/*", "node_modules/**/*"]
 }

@@ -3,7 +3,7 @@
   "version": "2.3.0",
   "private": true,
   "sideEffects": false,
-  "packageManager": "yarn@1.22.18",
+  "packageManager": "yarn@1.22.10",
   "description": "SAP Cloud SDK for JavaScript",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
   "license": "Apache-2.0",

@@ -41,7 +41,7 @@ type DestinationServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'destinationName'>;
 
 let circuitBreaker: DestinationCircuitBreaker<
-  DestinationJson | DestinationConfiguration
+  DestinationCertificate | DestinationJson | DestinationJson
 >;
 
 /**
@@ -115,6 +115,11 @@ async function fetchDestinations(
 
   return callDestinationService(targetUri, headers, options)
     .then(response => {
+      if (isCertificateResponse(response.data)) {
+        throw new Error(
+          'Destination service response must be destination type.'
+        );
+      }
       const destinations: Destination[] = response.data.map(d =>
         parseDestination(d)
       );
@@ -168,7 +173,14 @@ export async function fetchDestination(
     options
   );
 }
-
+/**
+ * Fetches a certificate from the subaccount given a name.
+ * @param destinationServiceUri - The URI of the destination service
+ * @param token - The access token for destination service.
+ * @param certificateName - Name of the Certificate to be fetched
+ * @returns A Promise resolving to the destination
+ * @internal
+ */
 export async function fetchSubaccountCertificate(
   destinationServiceUri: string,
   token: string,
@@ -184,13 +196,16 @@ export async function fetchSubaccountCertificate(
     ''
   )}/destination-configuration/v1/subaccountCertificates`;
   try {
-    // const all = await callDestinationService(allUri,wrapJwtInHeader(token))
-
     const response = await callDestinationService(
       targetUri,
       wrapJwtInHeader(token).headers
     );
-    return response.data as any;
+    if (isCertificateResponse(response.data)) {
+      return response.data;
+    }
+    throw new Error(
+      'Destination service response must be certificate response.'
+    );
   } catch (err) {
     logger.warn(
       `Failed to fetch truststore certificate ${certificateName} - Continuing without certificate. This may cause failing requests`,
@@ -220,6 +235,11 @@ async function fetchDestinationByTokens(
 
   return callDestinationService(targetUri, authHeader, options)
     .then(response => {
+      if (isCertificateResponse(response.data)) {
+        throw new Error(
+          'Destination service response must be destination response.'
+        );
+      }
       const destination: Destination = parseDestination(response.data);
       return destination;
     })
@@ -235,6 +255,12 @@ async function fetchDestinationByTokens(
     });
 }
 
+function isCertificateResponse(
+  response: DestinationCertificate | DestinationJson | DestinationConfiguration
+): response is DestinationCertificate {
+  return response.type && response.content && response.name;
+}
+
 function errorMessageFromResponse(
   error: AxiosError<{ ErrorMessage: string }>
 ): string {
@@ -247,7 +273,11 @@ async function callDestinationService(
   uri: string,
   headers: Record<string, any>,
   options?: ResilienceOptions
-): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
+): Promise<
+  AxiosResponse<
+    DestinationCertificate | DestinationConfiguration | DestinationJson
+  >
+> {
   const { enableCircuitBreaker, timeout } = {
     ...defaultResilienceBTPServices,
     ...options
@@ -261,19 +291,22 @@ async function callDestinationService(
   };
 
   if (enableCircuitBreaker) {
-    return getCircuitBreaker().fire(config);
+    return getCircuitBreaker<
+      DestinationCertificate | DestinationJson | DestinationJson
+    >().fire(config);
   }
 
   return axios.request(config);
 }
 
-function getCircuitBreaker(): DestinationCircuitBreaker<
-  DestinationJson | DestinationConfiguration
+function getCircuitBreaker<T>(): DestinationCircuitBreaker<
+  DestinationCertificate | DestinationJson | DestinationJson
 > {
   const request: (
     config: AxiosRequestConfig
-  ) => Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> =
-    axios.request;
+  ) => Promise<
+    AxiosResponse<DestinationCertificate | DestinationJson | DestinationJson>
+  > = axios.request;
   if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(request, circuitBreakerDefaultOptions);
   }

@@ -120,7 +120,7 @@ describe('OAuth flows', () => {
     expect(destination?.password).toBeDefined();
   }, 60000);
 
-  xit('No Auth: trust store certificates are fetched', async () => {
+  it('No Auth: trust store certificates are fetched', async () => {
     const destination = await getDestination({
       destinationName: systems.destination.providerTrustStore
     });

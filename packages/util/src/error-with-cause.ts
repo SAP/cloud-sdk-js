@@ -28,13 +28,9 @@ export class ErrorWithCause extends Error {
     if (this.isAxiosError(cause)) {
       const response = cause.response?.data ? ` - ${cause.response?.data}` : '';
       this.stack = `${this.stack}${unixEOL}Caused by:${unixEOL}HTTP Response: ${cause.message}${response}`;
-      return;
-    }
-
-    // Stack is a non-standard property according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Custom_Error_Types
-    if (this.stack && cause?.stack) {
+    } else if (this.stack && cause?.stack) {
+      // Stack is a non-standard property according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Custom_Error_Types
       this.stack = `${this.stack}${unixEOL}Caused by:${unixEOL}${cause.stack}`;
-      return;
     }
   }
   /**

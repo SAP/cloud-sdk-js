@@ -112,3 +112,7 @@ Release pipeline SHOULD work, but is not tested as of 21st of April and some adj
 ### Caching in CI
 
 - Restoring files from cache can change the file mode (to 100755 instead of the "normal" 100644) which can lead to failures in the compare script for the generated services (rerun should solve this).
+
+## Follow Ups
+
+- Be more strict when importing shared code from outside the package (= `test-resources`) => this hides (cyclic) dependencies and limits potential for caching

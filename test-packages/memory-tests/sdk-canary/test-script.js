@@ -8,7 +8,7 @@ const dest = { url: 'http://localhost:4004/' };
 const test = async () => {
   // The script is written in js (not ts) and executed with --inspect flag because of this lib.
   const hd = new memwatch.HeapDiff();
-
+  // It is intended to call execute multiple times without using a loop, so the deserializer, the entity builder and the schema will still be kept in the memory.
   const testEntityApi = testService().testEntityApi;
   const testEntities101 = await testEntityApi
     .requestBuilder()
@@ -51,44 +51,44 @@ const test = async () => {
     .getAll()
     .execute(dest);
 
-  const testEntity50ColApi = testService().testEntity50ColApi;
-  const testEntities201 = await testEntity50ColApi
+  const testEntity50PropApi = testService().testEntity50PropApi;
+  const testEntities201 = await testEntity50PropApi
     .requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities202 = await testEntity50ColApi
+  const testEntities202 = await testEntity50PropApi
     .requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities203 = await testEntity50ColApi
+  const testEntities203 = await testEntity50PropApi
     .requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities204 = await testEntity50ColApi
+  const testEntities204 = await testEntity50PropApi
     .requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities205 = await testEntity50ColApi
+  const testEntities205 = await testEntity50PropApi
     .requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities206 = await testEntity50ColApi
+  const testEntities206 = await testEntity50PropApi
     .requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities207 = await testEntity50ColApi
+  const testEntities207 = await testEntity50PropApi
     .requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities208 = await testEntity50ColApi
+  const testEntities208 = await testEntity50PropApi
     .requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities209 = await testEntity50ColApi
+  const testEntities209 = await testEntity50PropApi
     .requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities210 = await testEntity50ColApi
+  const testEntities210 = await testEntity50PropApi
     .requestBuilder()
     .getAll()
     .execute(dest);

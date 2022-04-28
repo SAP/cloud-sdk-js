@@ -11,28 +11,28 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 
 /**
- * This class represents the entity "TestEntity50Col" of service "TestService".
+ * This class represents the entity "TestEntity50Prop" of service "TestService".
  */
-export class TestEntity50Col<T extends DeSerializers = DefaultDeSerializers>
+export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
-  implements TestEntity50ColType<T>
+  implements TestEntity50PropType<T>
 {
   /**
-   * Technical entity name for TestEntity50Col.
+   * Technical entity name for TestEntity50Prop.
    */
-  static _entityName = 'TestEntity50Col';
+  static _entityName = 'TestEntity50Prop';
   /**
    * Default url path for the according service.
    */
   static _defaultServicePath = '/odata/test-service';
   /**
-   * All key fields of the TestEntity50Col entity
+   * All key fields of the TestEntity50Prop entity
    */
-  static _keys = ['KeyTestEntity50Col'];
+  static _keys = ['KeyTestEntity50Prop'];
   /**
-   * Key Test Entity 50 Col.
+   * Key Test Entity 50 Prop.
    */
-  keyTestEntity50Col!: DeserializedType<T, 'Edm.Int32'>;
+  keyTestEntity50Prop!: DeserializedType<T, 'Edm.Int32'>;
   /**
    * String Property 1.
    * Maximum length: 111.
@@ -320,10 +320,10 @@ export class TestEntity50Col<T extends DeSerializers = DefaultDeSerializers>
   > | null;
 }
 
-export interface TestEntity50ColType<
+export interface TestEntity50PropType<
   T extends DeSerializers = DefaultDeSerializers
 > {
-  keyTestEntity50Col: DeserializedType<T, 'Edm.Int32'>;
+  keyTestEntity50Prop: DeserializedType<T, 'Edm.Int32'>;
   stringProperty1?: DeserializedType<T, 'Edm.String'> | null;
   guidProperty1?: DeserializedType<T, 'Edm.Guid'> | null;
   booleanProperty1?: DeserializedType<T, 'Edm.Boolean'> | null;

@@ -1,14 +1,14 @@
 const memwatch = require('node-memwatch-new');
 const { writeFileSync } = require('fs');
 const { resolve } = require('path');
-const { TestEntity, TestEntity50Col } = require('./test-service');
+const { TestEntity, TestEntity50Prop } = require('./test-service');
 
 const dest = { url: 'http://localhost:4004' };
 
 const test = async () => {
   // The script is written in js (not ts) and executed with --inspect flag because of this lib.
   const hd = new memwatch.HeapDiff();
-
+  // It is intended to call execute multiple times without using a loop, so the deserializer, the entity builder and the schema will still be kept in the memory.
   const testEntities101 = await TestEntity.requestBuilder()
     .getAll()
     .execute(dest);
@@ -40,34 +40,34 @@ const test = async () => {
     .getAll()
     .execute(dest);
 
-  const testEntities201 = await TestEntity50Col.requestBuilder()
+  const testEntities201 = await TestEntity50Prop.requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities202 = await TestEntity50Col.requestBuilder()
+  const testEntities202 = await TestEntity50Prop.requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities203 = await TestEntity50Col.requestBuilder()
+  const testEntities203 = await TestEntity50Prop.requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities204 = await TestEntity50Col.requestBuilder()
+  const testEntities204 = await TestEntity50Prop.requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities205 = await TestEntity50Col.requestBuilder()
+  const testEntities205 = await TestEntity50Prop.requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities206 = await TestEntity50Col.requestBuilder()
+  const testEntities206 = await TestEntity50Prop.requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities207 = await TestEntity50Col.requestBuilder()
+  const testEntities207 = await TestEntity50Prop.requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities208 = await TestEntity50Col.requestBuilder()
+  const testEntities208 = await TestEntity50Prop.requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities209 = await TestEntity50Col.requestBuilder()
+  const testEntities209 = await TestEntity50Prop.requestBuilder()
     .getAll()
     .execute(dest);
-  const testEntities210 = await TestEntity50Col.requestBuilder()
+  const testEntities210 = await TestEntity50Prop.requestBuilder()
     .getAll()
     .execute(dest);
 

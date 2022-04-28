@@ -5,7 +5,7 @@
  */
 import { TestEntityApi } from './TestEntityApi';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
-import { TestEntity50ColApi } from './TestEntity50ColApi';
+import { TestEntity50PropApi } from './TestEntity50PropApi';
 import {
   concatStrings,
   getAll,
@@ -129,8 +129,8 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     return this.initApi('testEntityLinkApi', TestEntityLinkApi);
   }
 
-  get testEntity50ColApi(): TestEntity50ColApi<DeSerializersT> {
-    return this.initApi('testEntity50ColApi', TestEntity50ColApi);
+  get testEntity50PropApi(): TestEntity50PropApi<DeSerializersT> {
+    return this.initApi('testEntity50PropApi', TestEntity50PropApi);
   }
 
   get functionImports() {

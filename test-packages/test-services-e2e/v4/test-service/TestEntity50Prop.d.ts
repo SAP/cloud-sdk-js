@@ -5,16 +5,16 @@ import {
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 /**
- * This class represents the entity "TestEntity50Col" of service "TestService".
+ * This class represents the entity "TestEntity50Prop" of service "TestService".
  */
-export declare class TestEntity50Col<
+export declare class TestEntity50Prop<
     T extends DeSerializers = DefaultDeSerializers
   >
   extends Entity
-  implements TestEntity50ColType<T>
+  implements TestEntity50PropType<T>
 {
   /**
-   * Technical entity name for TestEntity50Col.
+   * Technical entity name for TestEntity50Prop.
    */
   static _entityName: string;
   /**
@@ -22,13 +22,13 @@ export declare class TestEntity50Col<
    */
   static _defaultServicePath: string;
   /**
-   * All key fields of the TestEntity50Col entity
+   * All key fields of the TestEntity50Prop entity
    */
   static _keys: string[];
   /**
-   * Key Test Entity 50 Col.
+   * Key Test Entity 50 Prop.
    */
-  keyTestEntity50Col: DeserializedType<T, 'Edm.Int32'>;
+  keyTestEntity50Prop: DeserializedType<T, 'Edm.Int32'>;
   /**
    * String Property 1.
    * Maximum length: 111.
@@ -315,10 +315,10 @@ export declare class TestEntity50Col<
     'Edm.DateTimeOffset'
   > | null;
 }
-export interface TestEntity50ColType<
+export interface TestEntity50PropType<
   T extends DeSerializers = DefaultDeSerializers
 > {
-  keyTestEntity50Col: DeserializedType<T, 'Edm.Int32'>;
+  keyTestEntity50Prop: DeserializedType<T, 'Edm.Int32'>;
   stringProperty1?: DeserializedType<T, 'Edm.String'> | null;
   guidProperty1?: DeserializedType<T, 'Edm.Guid'> | null;
   booleanProperty1?: DeserializedType<T, 'Edm.Boolean'> | null;
@@ -400,4 +400,4 @@ export interface TestEntity50ColType<
     'Edm.DateTimeOffset'
   > | null;
 }
-//# sourceMappingURL=TestEntity50Col.d.ts.map
+//# sourceMappingURL=TestEntity50Prop.d.ts.map

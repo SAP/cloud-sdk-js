@@ -1,6 +1,6 @@
 import { TestEntityApi } from './TestEntityApi';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
-import { TestEntity50ColApi } from './TestEntity50ColApi';
+import { TestEntity50PropApi } from './TestEntity50PropApi';
 import {
   ConcatStringsParameters,
   GetAllParameters,
@@ -94,7 +94,7 @@ declare class TestService<
   private initApi;
   get testEntityApi(): TestEntityApi<DeSerializersT>;
   get testEntityLinkApi(): TestEntityLinkApi<DeSerializersT>;
-  get testEntity50ColApi(): TestEntity50ColApi<DeSerializersT>;
+  get testEntity50PropApi(): TestEntity50PropApi<DeSerializersT>;
   get functionImports(): {
     concatStrings: (
       parameter: ConcatStringsParameters<DeSerializersT>

@@ -23,8 +23,8 @@ entity TestEntity {
   ToMultiLink: Composition of many TestEntityLink on KeyTestEntity=ToMultiLink.KeyToTestEntity;
 };
 
-entity TestEntity50Col {
-  key KeyTestEntity50Col: Integer;
+entity TestEntity50Prop {
+  key KeyTestEntity50Prop: Integer;
   StringProperty1: String(111);
   GuidProperty1: UUID;
   BooleanProperty1: Boolean;

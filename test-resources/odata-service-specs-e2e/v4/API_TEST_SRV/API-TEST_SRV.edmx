@@ -7,7 +7,7 @@
                     <NavigationPropertyBinding Path="ToMultiLink" Target="TestEntityLink"/>
                 </EntitySet>
                 <EntitySet Name="TestEntityLink" EntityType="TestService.TestEntityLink"/>
-                <EntitySet Name="TestEntity50Col" EntityType="TestService.TestEntity50Col"/>
+                <EntitySet Name="TestEntity50Prop" EntityType="TestService.TestEntity50Prop"/>
                 <FunctionImport Name="concatStrings" Function="TestService.concatStrings"/>
                 <ActionImport Name="createTestEntityById" Action="TestService.createTestEntityById" EntitySet="TestEntity"/>
                 <ActionImport Name="createTestEntityByIdReturnId" Action="TestService.createTestEntityByIdReturnId"/>
@@ -47,11 +47,11 @@
                 <Property Name="KeyToTestEntity" Type="Edm.Int32" Nullable="false"/>
                 <Property Name="StringProperty" Type="Edm.String" MaxLength="111"/>
             </EntityType>
-            <EntityType Name="TestEntity50Col">
+            <EntityType Name="TestEntity50Prop">
                 <Key>
-                    <PropertyRef Name="KeyTestEntity50Col"/>
+                    <PropertyRef Name="KeyTestEntity50Prop"/>
                 </Key>
-                <Property Name="KeyTestEntity50Col" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="KeyTestEntity50Prop" Type="Edm.Int32" Nullable="false"/>
                 <Property Name="StringProperty1" Type="Edm.String" MaxLength="111"/>
                 <Property Name="GuidProperty1" Type="Edm.Guid"/>
                 <Property Name="BooleanProperty1" Type="Edm.Boolean"/>

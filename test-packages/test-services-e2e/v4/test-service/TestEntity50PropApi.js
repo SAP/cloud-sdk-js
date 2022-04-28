@@ -1,17 +1,17 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.TestEntity50ColApi = void 0;
+exports.TestEntity50PropApi = void 0;
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const TestEntity50Col_1 = require('./TestEntity50Col');
-const TestEntity50ColRequestBuilder_1 = require('./TestEntity50ColRequestBuilder');
+const TestEntity50Prop_1 = require('./TestEntity50Prop');
+const TestEntity50PropRequestBuilder_1 = require('./TestEntity50PropRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-class TestEntity50ColApi {
+class TestEntity50PropApi {
   constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
-    this.entityConstructor = TestEntity50Col_1.TestEntity50Col;
+    this.entityConstructor = TestEntity50Prop_1.TestEntity50Prop;
     this.deSerializers = deSerializers;
   }
   _addNavigationProperties(linkedApis) {
@@ -19,7 +19,7 @@ class TestEntity50ColApi {
     return this;
   }
   requestBuilder() {
-    return new TestEntity50ColRequestBuilder_1.TestEntity50ColRequestBuilder(
+    return new TestEntity50PropRequestBuilder_1.TestEntity50PropRequestBuilder(
       this
     );
   }
@@ -37,7 +37,7 @@ class TestEntity50ColApi {
   get fieldBuilder() {
     if (!this._fieldBuilder) {
       this._fieldBuilder = new odata_v4_1.FieldBuilder(
-        TestEntity50Col_1.TestEntity50Col,
+        TestEntity50Prop_1.TestEntity50Prop,
         this.deSerializers
       );
     }
@@ -48,11 +48,11 @@ class TestEntity50ColApi {
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the [[keyTestEntity50Col]] property for query construction.
+         * Static representation of the [[keyTestEntity50Prop]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
-        KEY_TEST_ENTITY_50_COL: fieldBuilder.buildEdmTypeField(
-          'KeyTestEntity50Col',
+        KEY_TEST_ENTITY_50_PROP: fieldBuilder.buildEdmTypeField(
+          'KeyTestEntity50Prop',
           'Edm.Int32',
           false
         ),
@@ -513,12 +513,12 @@ class TestEntity50ColApi {
          */
         ALL_FIELDS: new odata_v4_1.AllFields(
           '*',
-          TestEntity50Col_1.TestEntity50Col
+          TestEntity50Prop_1.TestEntity50Prop
         )
       };
     }
     return this._schema;
   }
 }
-exports.TestEntity50ColApi = TestEntity50ColApi;
-//# sourceMappingURL=TestEntity50ColApi.js.map
+exports.TestEntity50PropApi = TestEntity50PropApi;
+//# sourceMappingURL=TestEntity50PropApi.js.map

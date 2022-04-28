@@ -1,5 +1,5 @@
-import { TestEntity50Col } from './TestEntity50Col';
-import { TestEntity50ColRequestBuilder } from './TestEntity50ColRequestBuilder';
+import { TestEntity50Prop } from './TestEntity50Prop';
+import { TestEntity50PropRequestBuilder } from './TestEntity50PropRequestBuilder';
 import {
   CustomField,
   DefaultDeSerializers,
@@ -11,30 +11,30 @@ import {
   OrderableEdmTypeField,
   EdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
-export declare class TestEntity50ColApi<
+export declare class TestEntity50PropApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntity50Col<DeSerializersT>, DeSerializersT>
+> implements EntityApi<TestEntity50Prop<DeSerializersT>, DeSerializersT>
 {
   deSerializers: DeSerializersT;
   constructor(deSerializers?: DeSerializersT);
   private navigationPropertyFields;
   _addNavigationProperties(linkedApis: []): this;
-  entityConstructor: typeof TestEntity50Col;
-  requestBuilder(): TestEntity50ColRequestBuilder<DeSerializersT>;
+  entityConstructor: typeof TestEntity50Prop;
+  requestBuilder(): TestEntity50PropRequestBuilder<DeSerializersT>;
   entityBuilder(): EntityBuilderType<
-    TestEntity50Col<DeSerializersT>,
+    TestEntity50Prop<DeSerializersT>,
     DeSerializersT
   >;
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable?: NullableT
-  ): CustomField<TestEntity50Col<DeSerializersT>, DeSerializersT, NullableT>;
+  ): CustomField<TestEntity50Prop<DeSerializersT>, DeSerializersT, NullableT>;
   private _fieldBuilder?;
-  get fieldBuilder(): FieldBuilder<typeof TestEntity50Col, DeSerializersT>;
+  get fieldBuilder(): FieldBuilder<typeof TestEntity50Prop, DeSerializersT>;
   private _schema?;
   get schema(): {
-    KEY_TEST_ENTITY_50_COL: OrderableEdmTypeField<
-      TestEntity50Col<
+    KEY_TEST_ENTITY_50_PROP: OrderableEdmTypeField<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -63,7 +63,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     STRING_PROPERTY_1: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -92,7 +92,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     GUID_PROPERTY_1: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -121,7 +121,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     BOOLEAN_PROPERTY_1: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -150,7 +150,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     INT_64_PROPERTY_1: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -179,7 +179,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DOUBLE_PROPERTY_1: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -208,7 +208,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DECIMAL_PROPERTY_1: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -237,7 +237,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATE_PROPERTY_1: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -266,7 +266,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     TIME_OF_DAY_PROPERTY_1: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -295,7 +295,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATA_TIME_OFFSET_DATA_TIME_PROPERTY_1: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -324,7 +324,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_1: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -353,7 +353,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     STRING_PROPERTY_2: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -382,7 +382,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     GUID_PROPERTY_2: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -411,7 +411,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     BOOLEAN_PROPERTY_2: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -440,7 +440,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     INT_64_PROPERTY_2: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -469,7 +469,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DOUBLE_PROPERTY_2: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -498,7 +498,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DECIMAL_PROPERTY_2: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -527,7 +527,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATE_PROPERTY_2: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -556,7 +556,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     TIME_OF_DAY_PROPERTY_2: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -585,7 +585,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATA_TIME_OFFSET_DATA_TIME_PROPERTY_2: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -614,7 +614,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_2: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -643,7 +643,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     STRING_PROPERTY_3: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -672,7 +672,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     GUID_PROPERTY_3: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -701,7 +701,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     BOOLEAN_PROPERTY_3: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -730,7 +730,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     INT_64_PROPERTY_3: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -759,7 +759,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DOUBLE_PROPERTY_3: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -788,7 +788,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DECIMAL_PROPERTY_3: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -817,7 +817,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATE_PROPERTY_3: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -846,7 +846,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     TIME_OF_DAY_PROPERTY_3: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -875,7 +875,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATA_TIME_OFFSET_DATA_TIME_PROPERTY_3: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -904,7 +904,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_3: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -933,7 +933,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     STRING_PROPERTY_4: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -962,7 +962,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     GUID_PROPERTY_4: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -991,7 +991,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     BOOLEAN_PROPERTY_4: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1020,7 +1020,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     INT_64_PROPERTY_4: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1049,7 +1049,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DOUBLE_PROPERTY_4: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1078,7 +1078,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DECIMAL_PROPERTY_4: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1107,7 +1107,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATE_PROPERTY_4: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1136,7 +1136,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     TIME_OF_DAY_PROPERTY_4: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1165,7 +1165,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATA_TIME_OFFSET_DATA_TIME_PROPERTY_4: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1194,7 +1194,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_4: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1223,7 +1223,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     STRING_PROPERTY_5: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1252,7 +1252,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     GUID_PROPERTY_5: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1281,7 +1281,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     BOOLEAN_PROPERTY_5: EdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1310,7 +1310,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     INT_64_PROPERTY_5: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1339,7 +1339,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DOUBLE_PROPERTY_5: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1368,7 +1368,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DECIMAL_PROPERTY_5: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1397,7 +1397,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATE_PROPERTY_5: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1426,7 +1426,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     TIME_OF_DAY_PROPERTY_5: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1455,7 +1455,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATA_TIME_OFFSET_DATA_TIME_PROPERTY_5: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1484,7 +1484,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_5: OrderableEdmTypeField<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1513,7 +1513,7 @@ export declare class TestEntity50ColApi<
       true
     >;
     ALL_FIELDS: AllFields<
-      TestEntity50Col<
+      TestEntity50Prop<
         DeSerializers<
           any,
           any,
@@ -1539,4 +1539,4 @@ export declare class TestEntity50ColApi<
     >;
   };
 }
-//# sourceMappingURL=TestEntity50ColApi.d.ts.map
+//# sourceMappingURL=TestEntity50PropApi.d.ts.map

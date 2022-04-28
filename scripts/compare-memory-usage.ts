@@ -6,7 +6,7 @@ const main = () => {
   const percentageBasedOnV1 = (canaryMemoryUsage / v1MemoryUsage) * 100;
   if (percentageBasedOnV1 > threshold) {
     throw new Error(
-      `Test failed: v1 memory usage is ${v1MemoryUsage} and canary memory usage is ${canaryMemoryUsage} (${percentageBasedOnV1} %). Consider change the threshold (${threshold} %) or fix it.`
+      `Test failed: v1 memory usage is ${v1MemoryUsage} and canary memory usage is ${canaryMemoryUsage} (${percentageBasedOnV1} %). Consider changing the threshold (${threshold} %) or fix it.`
     );
   }
   /* eslint-disable-next-line no-console */

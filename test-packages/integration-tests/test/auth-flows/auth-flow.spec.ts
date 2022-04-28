@@ -44,13 +44,6 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0].value).toBeDefined();
   }, 60000);
 
-  xit('TrustStore: Fetches Certificates', async () => {
-    const destination = await getDestination({
-      destinationName: systems.destination.providerTrustStore
-    });
-    expect(destination?.trustStoreLocation).toBeDefined();
-  });
-
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {
     const destination = await getDestination({
       destinationName: systems.destination.providerOauth2Password

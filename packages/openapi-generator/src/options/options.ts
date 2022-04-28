@@ -1,4 +1,4 @@
-import { resolve, extname } from 'path';
+import { resolve, extname, posix, sep } from 'path';
 import { existsSync, lstatSync } from 'fs';
 import { GlobSync } from 'glob';
 import yargs from 'yargs';
@@ -53,7 +53,9 @@ export const generatorOptions = {
   include: {
     string: true,
     coerce: (input?: string): string[] | undefined =>
-      typeof input !== 'undefined' ? new GlobSync(input).found : undefined,
+      typeof input !== 'undefined'
+        ? new GlobSync(input.split(sep).join(posix.sep)).found
+        : undefined,
     description:
       'Include files matching the given glob into the root of each generated client directory.'
   },

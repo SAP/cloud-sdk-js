@@ -3,7 +3,7 @@ const { writeFileSync } = require('fs');
 const { resolve } = require('path');
 const { TestEntity, TestEntity50Col } = require('./test-service');
 
-const dest = { url: 'http://localhost:4004/' };
+const dest = { url: 'http://localhost:4004' };
 
 const test = async () => {
   // The script is written in js (not ts) and executed with --inspect flag because of this lib.

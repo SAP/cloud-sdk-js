@@ -41,5 +41,5 @@ jobs:
         working-directory: test-packages/memory-tests/sdk-canary/
       - run: node --inspect test-script.js && cat result.txt
         working-directory: test-packages/memory-tests/sdk-canary/
-      - run: npx ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/memory-tests/sdk-v1/result.txt) $(cat ./test-packages/memory-tests/sdk-canary/result.txt)
+      - run: yarn ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/memory-tests/sdk-v1/result.txt) $(cat ./test-packages/memory-tests/sdk-canary/result.txt)
         name: compare v1 and canary

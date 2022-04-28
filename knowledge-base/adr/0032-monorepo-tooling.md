@@ -28,6 +28,18 @@ Following tasks are currently done by lerna and need to be replaced if lerna wil
 
 ### Nx
 
+Caveats:
+
+- Even stricter cyclic dependecy check (peerDeps considered for cycle) which is a problem for our test setup at the moment.
+- No globbing for packages [yet](https://github.com/nrwl/nx/pull/9701) in the CLI (workaround with nx-tags?)
+- More dependencies (33) than turbo (12)
+- Implemented in JS which can be slower than Go
+
+Benefits:
+
+- Nice graph visualization of the packages `nx graph`
+- Option to configure in `project.json` using executors as alternative to `package.json` + npm scripts
+
 ### Turborepo
 
 Turborepo uses a configuration file called `turbo.json` which describes dependencies between scripts ([pipelines](https://turborepo.org/docs/features/pipelines)).
@@ -44,6 +56,7 @@ Caveats:
 - Turborepo does not handle releasing in any form (yet). A separate library like **Changesets**, Lerna, or Beachball is needed.
 - Turborepo will detect and fail if there are cycles in the package dependency graph.
   - This is currently the case and needs to be worked around by using peerDeps in our test packages. It would be better if we fix this in the future.
+- Significantly less downloads (164k weekly) than `nx` (1.4M weekly)
 
 Benefits:
 

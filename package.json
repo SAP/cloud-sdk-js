@@ -37,7 +37,8 @@
     "test-packages/type-tests"
   ],
   "scripts": {
-    "postinstall": "turbo run compile",
+    "postinstall": "yarn compile",
+    "compile": "turbo run compile",
     "test": "turbo run test",
     "test:unit": "turbo run test --filter=./packages/*",
     "test:integration": "turbo run test --filter=integration-tests",

@@ -32,13 +32,13 @@ Caveats:
 
 - Even stricter cyclic dependecy check (peerDeps considered for cycle) which is a problem for our test setup at the moment.
 - No globbing for packages [yet](https://github.com/nrwl/nx/pull/9701) in the CLI (workaround with nx-tags?)
-- More dependencies (33) than turbo (12)
+- More dependencies (33) than turbo (12) and bigger size (2.2MB vs 36KB)
 - Implemented in JS which can be slower than Go
+- Most benefits only possible when adding `project.json` in addition to `nx.json`
 
 Benefits:
 
 - Nice graph visualization of the packages `nx graph`
-- Option to configure in `project.json` using executors as alternative to `package.json` + npm scripts
 
 ### Turborepo
 

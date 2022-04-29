@@ -12,7 +12,7 @@ import {
   testFunctionImportPost,
   testFunctionImportUnsupportedEdmTypes,
   testFunctionImportSharedEntityReturnType
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import {
   defaultDestination,
   defaultHost
@@ -84,7 +84,7 @@ describe('FunctionImportRequestBuilder', () => {
     expect(returnValue).toBe(true);
   });
 
-  it('return any type for unsupported EDM type in function module', async () => {
+  it('returns any type for unsupported EDM type in function module', async () => {
     const requestBuilder = testFunctionImportUnsupportedEdmTypes({
       simpleParam: 'SomeUntypedValue'
     });
@@ -168,7 +168,7 @@ describe('FunctionImportRequestBuilder', () => {
     expect(returnValue).toEqual(expected);
   });
 
-  it('return undefined or throw in failure case', async () => {
+  it('returns undefined or throw in failure case', async () => {
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportNoReturnType`)
       .reply(200, undefined, mockedBuildHeaderResponse);
@@ -189,6 +189,26 @@ describe('FunctionImportRequestBuilder', () => {
     await expect(
       testFunctionImportNoReturnType({}).execute(defaultDestination)
     ).rejects.toThrow();
+  });
+
+  it('returns single complex type when using data accessor', async () => {
+    const requestBuilder = testFunctionImportComplexReturnType({});
+    const expected = createTestComplexType();
+
+    nock(defaultHost)
+      .get(`${serviceUrl}/TestFunctionImportComplexReturnType`)
+      .query({})
+      .reply(200, {
+        d: {
+          Foo: getTestComplexTypeData(expected)
+        }
+      });
+
+    const returnValue = await requestBuilder.execute(
+      defaultDestination,
+      data => data.d.Foo
+    );
+    expect(returnValue).toEqual(expected);
   });
 
   it('throws an error when shared entity type is used as return type', async () => {

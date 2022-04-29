@@ -14,20 +14,44 @@
 
 ## Compatibility Notes
 
-- [odata-common, odata-v2, odata-v4] Remove all `$format=json` query parameters since header `Accept: application/json` is sent by default.
+-
 
 ## New Functionality
 
-- [odata-common] Generate mandatory `Content-Id` headers for changeset parts in batch requests payloads (see [OData Spec](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_MultipartBatchRequestBody)).
+-
 
 ## Improvements
 
-- [generator] Change log level from `warn` to `error` if service path cannot be determined from the service spec. undefined (`VALUE_IS_UNDEFINED`).
-- [generator] Reduce memory usage of `schema` in API classes (e.g., `BusinessPartnerAPI`).
+-
 
 ## Fixed Issues
 
 -
+
+
+# 2.3.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/2.3.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [odata-common, odata-v2, odata-v4] Remove all `$format=json` query parameters since header `Accept: application/json` is sent by default.
+
+## New Functionality
+
+- [odata-common] Generate mandatory `Content-Id` headers for changeset parts in batch request payloads (see [OData Spec](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_MultipartBatchRequestBody)).
+- [odata-common] Support transforming response data for function and action imports before deserialization. [#682](https://github.com/SAP/cloud-sdk-js/issues/682).
+
+## Improvements
+
+- [generator] Change log level from `warn` to `error` if service path cannot be determined from the service specification (`VALUE_IS_UNDEFINED`).
+- [generator] Reduce memory usage of `schema` in API classes (e.g., `BusinessPartnerAPI`).
+
+## Fixed Issues
+
+- [openapi-generator, openapi] Support path parameters that are not separated by '/', e.g., `/path/{param}:{param}`.
 
 # 2.2.0
 

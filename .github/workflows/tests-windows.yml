@@ -21,8 +21,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --frozen-lockfile
-      - run: yarn test:unit -- -- --no-bail -- -- -- --json --outputFile=unit-test-output.json
-      - run: yarn test:integration --json --outputFile=int-test-output.json
+      - run: yarn test:unit --continue -- -- --json --outputFile=unit-test-output.json
+      - run: yarn test:integration -- -- --json --outputFile=int-test-output.json
         if: always()
       - run: yarn test:type
       - name: Archive results

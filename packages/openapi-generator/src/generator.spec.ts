@@ -72,7 +72,7 @@ describe('generator', () => {
         packageJson: true,
         packageVersion: '1.2.3'
       });
-    }, 20000);
+    }, 80000);
 
     const outputPath = resolve('root', 'outputDir', 'mySpec');
     const inputPath = resolve('root', 'inputDir');

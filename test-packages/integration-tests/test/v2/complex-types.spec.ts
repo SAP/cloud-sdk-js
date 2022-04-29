@@ -1,7 +1,7 @@
 import {
   TestComplexType,
   TestEntity
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import BigNumber from 'bignumber.js';
 import nock from 'nock';
 import { Destination } from '@sap-cloud-sdk/connectivity';

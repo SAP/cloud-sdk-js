@@ -3,7 +3,7 @@ import {
   TestEntity,
   TestEntityWithEnumKey,
   testService
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+} from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { customTestDeSerializers } from '../../../../test-resources/test/test-util';
 import { defaultDeSerializers } from '../../src';
 

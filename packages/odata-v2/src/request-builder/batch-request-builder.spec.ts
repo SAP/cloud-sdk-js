@@ -1,4 +1,4 @@
-import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
 
 describe('batch request', () => {
@@ -15,8 +15,8 @@ Content-Length: 3679
 sap-metadata-last-modified: Wed, 22 Dec 2021 22:29:24 GMT
 cache-control: no-store, no-cache
 dataserviceversion: 2.0
-    
-{"d":{"results":[{"StringProperty":"4711"}]}}    
+
+{"d":{"results":[{"StringProperty":"4711"}]}}
 --${boundary}--
 `;
   const baseUrl = 'https://some.sdk.test.url.com';

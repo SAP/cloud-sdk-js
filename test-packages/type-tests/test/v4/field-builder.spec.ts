@@ -2,7 +2,7 @@ import {
   TestComplexType,
   TestComplexTypeField,
   TestEntity
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+} from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { defaultDeSerializers } from '@sap-cloud-sdk/odata-v4/internal';
 import { FieldBuilder } from '@sap-cloud-sdk/odata-common/internal';
 

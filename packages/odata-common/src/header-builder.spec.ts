@@ -1,12 +1,12 @@
+import { CommonEntityApi } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import {
+  getAllRequestConfig,
+  updateRequestConfig
+} from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import {
   defaultDestination,
   mockHeaderRequest
 } from '../../../test-resources/test/test-util/request-mocker';
-import { CommonEntityApi } from '../test/common-entity';
-import {
-  getAllRequestConfig,
-  updateRequestConfig
-} from '../test/common-request-config';
 import { ODataRequest } from './request';
 import { buildHeaders } from './header-builder';
 

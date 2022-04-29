@@ -3,8 +3,8 @@ import {
   testActionImportNoParameterNoReturnType,
   testActionImportNullableTest,
   testActionImportUnsupportedEdmTypes
-} from '@sap-cloud-sdk/test-services/v4/test-service/action-imports';
-import { testService } from '@sap-cloud-sdk/test-services/v4/test-service';
+} from '@sap-cloud-sdk/test-services-odata-v4/test-service/action-imports';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 
 // $ExpectType ActionImportRequestBuilder<DefaultDeSerializers, TestActionImportNoParameterNoReturnTypeParameters<DefaultDeSerializers>, undefined>
 const noReturnTypeRequestBuilder = testActionImportNoParameterNoReturnType({});

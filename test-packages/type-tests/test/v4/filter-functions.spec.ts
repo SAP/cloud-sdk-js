@@ -1,4 +1,4 @@
-import { testService } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { filterFunction, filterFunctions } from '@sap-cloud-sdk/odata-v4';
 
 const testEntitySchema = testService().testEntityApi.schema;

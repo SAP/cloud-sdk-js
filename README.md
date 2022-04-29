@@ -43,7 +43,7 @@ Check our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api) and [
 
 ## Packages
 
-This project publishes multiple packages and is managed using [lerna](https://github.com/lerna/lerna).
+This project publishes multiple packages and is managed using [turborepo](https://github.com/vercel/turborepo).
 
 ### @sap-cloud-sdk/http-client
 

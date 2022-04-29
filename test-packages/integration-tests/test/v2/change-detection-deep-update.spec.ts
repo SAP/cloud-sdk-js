@@ -1,4 +1,4 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import {

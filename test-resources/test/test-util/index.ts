@@ -1,4 +1,3 @@
-export * from './batch-test-util';
 export * from './custom-de-serializers';
 export * from './destination-service-mocks';
 export * from './environment-mocks';

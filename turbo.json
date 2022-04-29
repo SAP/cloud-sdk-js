@@ -1,0 +1,41 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "baseBranch": "origin/main",
+  "globalDependencies": [
+    ".prettierrc",
+    ".eslintrc.js",
+    ".prettierignore",
+    ".gitignore",
+    "tsconfig.json"
+  ],
+  "pipeline": {
+    "compile": {
+      "dependsOn": ["^compile", "check:dependencies"]
+    },
+    "test": {
+      "dependsOn": ["^compile", "^generate"]
+    },
+    "readme": {
+      "dependsOn": ["@sap-cloud-sdk/util#compile"],
+      "outputs": ["README.md"]
+    },
+    "check:dependencies": {
+      "dependsOn": ["^compile"],
+      "outputs": []
+    },
+    "check:public-api": {
+      "dependsOn": ["@sap-cloud-sdk/util#compile"],
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "lint:fix": {
+      "outputs": []
+    },
+    "generate": {
+      "dependsOn": ["^compile"],
+      "outputs": ["*-service/**", "**/*-service/**", "**/*-entity.ts"]
+    }
+  }
+}

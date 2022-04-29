@@ -7,12 +7,13 @@
   "private": true,
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "pretest": "yarn deploy && yarn start",
-    "posttest": "yarn stop",
+    "pretest:e2e": "yarn deploy && yarn start",
+    "posttest:e2e": "yarn stop",
     "start": "pm2 start server.js || pm2 restart server.js",
     "stop": "pm2 stop server.js",
     "deploy": "cds deploy --to sqlite",
-    "test": "yarn jest",
+    "test": "yarn test:e2e",
+    "test:e2e": "jest",
     "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
   },
   "devDependencies": {
@@ -22,7 +23,7 @@
     "@sap-cloud-sdk/odata-common": "^2.3.0",
     "@sap-cloud-sdk/odata-v4": "^2.3.0",
     "@sap-cloud-sdk/openapi-generator": "^2.3.0",
-    "@sap-cloud-sdk/test-services": "^2.3.0",
+    "@sap-cloud-sdk/test-services-openapi": "^2.3.0",
     "@sap-cloud-sdk/test-services-e2e": "^2.3.0",
     "@sap-cloud-sdk/util": "^2.3.0",
     "@sap/cds": "^5.8.0",

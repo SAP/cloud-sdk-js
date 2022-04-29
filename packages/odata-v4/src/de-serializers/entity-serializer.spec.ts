@@ -1,6 +1,6 @@
 import { entitySerializer } from '@sap-cloud-sdk/odata-common/internal';
-import { TestComplexType } from '@sap-cloud-sdk/test-services/v4/test-service';
-import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
+import { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import { TestEnumType } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEnumType';
 import { defaultDeSerializers } from '../de-serializers';
 import { testEntityApi, testEntitySingleLinkApi } from '../../test/test-util';
 

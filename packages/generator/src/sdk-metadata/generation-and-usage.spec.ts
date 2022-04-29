@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import { writeFile, readFile, removeSync } from 'fs-extra';
-import execa = require('execa');
+import execa from 'execa';
 import { VdmServiceMetadata } from '../vdm-types';
 import { getApiSpecificUsage } from './generation-and-usage';
 import { entityCodeSample, genericEntityCodeSample } from './code-samples';
@@ -86,7 +86,7 @@ describe('generation-and-usage', () => {
     const codeSnippet = entityCodeSample(
       'TestEntity',
       'TestService',
-      '@sap-cloud-sdk/test-services/v2/test-service'
+      '@sap-cloud-sdk/test-services-odata-v2/test-service'
     ).instructions;
     const tsFile = 'generic-get-all-code-sample.ts';
     const jsFile = tsFile.replace('.ts', '.js');

@@ -1,12 +1,12 @@
 import {
   changeset as otherServiceChangeset,
   multipleSchemasService
-} from '@sap-cloud-sdk/test-services/v2/multiple-schemas-service';
+} from '@sap-cloud-sdk/test-services-odata-v2/multiple-schemas-service';
 import {
   batch,
   changeset as testEntityChangeset,
   testService
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { ReadResponse } from '@sap-cloud-sdk/odata-v2/internal';
 import { customTestDeSerializers } from '../../../../test-resources/test/test-util';
 

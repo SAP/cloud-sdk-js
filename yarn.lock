@@ -1830,17 +1830,7 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds@^5.6.0", "@sap/cds@^5.8.0":
-  version "5.9.2"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.2.tgz#0ac79e1bb1e6b7e0fc67fd13ac9713540709cf86"
-  integrity sha512-sttUOJpbGf676JsuvPaDgCsYk4XEp25J3jpMM3DkMkeJGJLwnw4jQXSM8jAfzMTJje3RfYwpiVDLWLtO2XkGIw==
-  dependencies:
-    "@sap-cloud-sdk/core" "^1.41"
-    "@sap-cloud-sdk/util" "^1.41"
-    "@sap/cds-compiler" "^2.13.0"
-    "@sap/cds-foss" "^3"
-
-"@sap/cds@^5.9.2":
+"@sap/cds@^5.6.0", "@sap/cds@^5.8.0", "@sap/cds@^5.9.2":
   version "5.9.3"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.3.tgz#6605fe7f60303fd9378131e7ee33c5483af013a5"
   integrity sha512-ZmB+T5q9c6RTd7RmTHb31OTwGeBVmpBpjOmbHfeST3GL6SRo+ulnxJ11TyXbIw/uZVG8adNi1AGdYsW9sMAHTA==

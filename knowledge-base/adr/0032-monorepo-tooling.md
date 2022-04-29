@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Accepted
 
 ## Context
 
@@ -24,21 +24,20 @@ Following tasks are currently done by lerna and need to be replaced if lerna wil
 - Run tasks in all / some packages ➡️ Turborepo
 - Release new version for packages ➡️ Changesets
 
-## Decision
-
 ### Nx
 
 Caveats:
 
 - Even stricter cyclic dependecy check (peerDeps considered for cycle) which is a problem for our test setup at the moment.
-- No globbing for packages [yet](https://github.com/nrwl/nx/pull/9701) in the CLI (workaround with nx-tags?)
-- More dependencies (33) than turbo (12) and bigger size (2.2MB vs 36KB)
-- Implemented in JS which can be slower than Go
-- Most benefits only possible when adding `project.json` in addition to `nx.json`
+- No globbing for packages [yet](https://github.com/nrwl/nx/pull/9701) in the CLI (there may be a workaround with nx-tags, which you can maintain in the individual `package.json`).
+- More dependencies (33) than turbo (12) and bigger size (2.2MB vs 36KB).
+- Implemented in JS which can be slower than Go (according to nx it's only 40ms startup delay, but execution may also be a few percentage points slower).
+- Most benefits only possible when adding `project.json` in addition to `nx.json`.
 
 Benefits:
 
-- Nice graph visualization of the packages `nx graph`
+- Nice graph visualization of the packages `nx graph`.
+- Allows distributed execution (e.g. run tasks in cloud), but it is questionable if this is allowed for us.
 
 ### Turborepo
 
@@ -101,6 +100,11 @@ Benefits:
 
 Release pipeline SHOULD work, but is not tested as of 21st of April and some adjustments should be expected.
 
+## Decision
+
+Use turborepo and changesets to replace lerna.
+Existance of a new changesets for every PR is not checked by a CI check, but rather part of the PR template checklist.
+
 ## Consequences
 
 ### Changelog
@@ -121,6 +125,7 @@ Release pipeline SHOULD work, but is not tested as of 21st of April and some adj
 ### Finding errors
 
 - As scripts are executed in parallel, it may be slightly harder to find error logs (though it still should be fairly easy).
+  - Run with `--concurrency=1` for a serial/in-band execution
 
 ### Caching in CI
 

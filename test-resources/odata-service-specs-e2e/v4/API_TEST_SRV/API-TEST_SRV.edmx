@@ -47,6 +47,7 @@
                 <Property Name="KeyToTestEntity" Type="Edm.Int32" Nullable="false"/>
                 <Property Name="StringProperty" Type="Edm.String" MaxLength="111"/>
             </EntityType>
+            <!-- This entity has 50 properties to make it bigger enough for the memory tests. -->
             <EntityType Name="TestEntity50Prop">
                 <Key>
                     <PropertyRef Name="KeyTestEntity50Prop"/>

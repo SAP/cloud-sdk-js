@@ -33,4 +33,8 @@ sqlite.db-journal
 test-packages/integration-tests/test/auth-flows/vcap-services.json
 test-packages/integration-tests/test/auth-flows/user-access-token.json
 test-packages/integration-tests/test/auth-flows/systems.json
+
+test-packages/memory-tests/**/test-service
+test-packages/memory-tests/**/yarn.lock
+
 test-packages/e2e-tests/test/generator-test-output

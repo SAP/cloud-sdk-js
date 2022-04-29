@@ -8,6 +8,7 @@ exports.testService = void 0;
  */
 const TestEntityApi_1 = require('./TestEntityApi');
 const TestEntityLinkApi_1 = require('./TestEntityLinkApi');
+const TestEntity50PropApi_1 = require('./TestEntity50PropApi');
 const function_imports_1 = require('./function-imports');
 const action_imports_1 = require('./action-imports');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
@@ -41,6 +42,12 @@ class TestService {
     return this.initApi(
       'testEntityLinkApi',
       TestEntityLinkApi_1.TestEntityLinkApi
+    );
+  }
+  get testEntity50PropApi() {
+    return this.initApi(
+      'testEntity50PropApi',
+      TestEntity50PropApi_1.TestEntity50PropApi
     );
   }
   get functionImports() {

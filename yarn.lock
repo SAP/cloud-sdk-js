@@ -2093,9 +2093,9 @@
   integrity sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==
 
 "@types/opossum@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.npmjs.org/@types/opossum/-/opossum-6.2.0.tgz#1f708d39b6848537f0ef6997759524f150f6efc1"
-  integrity sha512-OyRGQ5oHXasfuaRIWuGr7xaEN5NeK8DQeVttMr2WfO8Pdcn7SOplSfoupWSOpcNH0PDD5+OYAKc1aku2RQ2Pjg==
+  version "6.2.1"
+  resolved "https://registry.npmjs.org/@types/opossum/-/opossum-6.2.1.tgz#6c32da669a0432e29d33aec68c3ccedc1dbc423c"
+  integrity sha512-NAsywS3S9V4zSepfOPNHiw/Pa4xoEscxPis1xCCbmU2I/tokUJ85EPcjFubwtIUsHpMKLZ7i7BU5QHTUYJU2QA==
   dependencies:
     "@types/node" "*"
 

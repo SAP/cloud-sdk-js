@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid';
-import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service';
 
 export function createOriginalTestEntityData1() {
   return {
@@ -34,11 +33,5 @@ export function createOriginalTestEntityDataWithLinks() {
         KeyProperty: 'def'
       }
     ]
-  };
-}
-
-export function createOriginalTestEntityWithEnumKeyData() {
-  return {
-    KeyPropertyEnum1: TestEnumType.Member1
   };
 }

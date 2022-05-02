@@ -1,6 +1,6 @@
 import { join, resolve } from 'path';
 import { promises } from 'fs';
-import nock = require('nock');
+import nock from 'nock';
 import { FunctionDeclaration, SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import { createOptions } from '../test/test-util/create-generator-options';

@@ -1,0 +1,31 @@
+{
+  "name": "@sap-cloud-sdk/test-services-odata-v4",
+  "version": "2.3.0",
+  "description": "Custom Services for testing",
+  "files": [
+    "**/*.js",
+    "**/*.js.map",
+    "**/*.d.ts",
+    "**/d.ts.map",
+    "**/*-csn.json"
+  ],
+  "private": true,
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "scripts": {
+    "generate": "ts-node generate-odata-services.ts",
+    "lint": "prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
+    "lint:fix": "prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w --loglevel error",
+    "postgenerate": "yarn lint:fix"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "moment": "^2.29.0"
+  },
+  "peerDependencies": {
+    "@sap-cloud-sdk/generator": "^2.3.0",
+    "@sap-cloud-sdk/util": "^2.3.0"
+  }
+}

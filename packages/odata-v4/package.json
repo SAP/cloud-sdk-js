@@ -25,11 +25,16 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "compile": "yarn tsc -b",
-    "prepare": "yarn compile",
-    "test": "yarn jest",
-    "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck ."
+    "compile": "tsc -b",
+    "prepublishOnly": "yarn compile && yarn readme",
+    "test": "yarn test:unit",
+    "test:unit": "jest",
+    "coverage": "jest --coverage",
+    "lint": "eslint --ext .ts . && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
+    "lint:fix": "eslint --ext .ts . --fix && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w",
+    "check:dependencies": "depcheck .",
+    "check:public-api": "ts-node ../../scripts/check-public-api-cli.ts",
+    "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
     "@sap-cloud-sdk/connectivity": "^2.3.0",
@@ -41,7 +46,7 @@
     "uuid": "^8.2.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-services": "^2.3.0",
+    "@sap-cloud-sdk/test-services-odata-v4": "^2.3.0",
     "nock": "^13.0.11",
     "typescript": "~4.6.2"
   }

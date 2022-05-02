@@ -1,4 +1,4 @@
-import nock = require('nock');
+import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,

@@ -1,8 +1,11 @@
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
-import { commonODataUri } from '../../test/common-request-config';
-import { CommonEntity, commonEntityApi } from '../../test/common-entity';
+import { commonODataUri } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
+import {
+  CommonEntity,
+  commonEntityApi
+} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { DefaultDeSerializers } from '../de-serializers';
 import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
 import { ODataRequest } from './odata-request';

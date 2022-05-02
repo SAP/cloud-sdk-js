@@ -1,4 +1,4 @@
-import nock = require('nock');
+import nock from 'nock';
 import { createOptions } from '../../test/test-util/create-generator-options';
 import { getTestService } from './pregenerated-lib.spec';
 import { sdkMetadata } from './sdk-metadata';

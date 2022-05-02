@@ -1,4 +1,4 @@
-import { commonEntityApi } from '../test/common-entity';
+import { commonEntityApi } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { isNavigationProperty } from './properties-util';
 
 describe('isNavigationProperty', () => {

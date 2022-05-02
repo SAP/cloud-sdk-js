@@ -1,7 +1,7 @@
 import {
   TestEnumType,
   testService
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+} from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { and } from '@sap-cloud-sdk/odata-common/internal';
 import { any } from '@sap-cloud-sdk/odata-v4';
 

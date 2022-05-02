@@ -1,0 +1,20 @@
+{
+  "name": "@sap-cloud-sdk/memory-tests-v1",
+  "version": "0.0.1",
+  "description": "Memory usage tests of the SAP Cloud SDK for JavaScript",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "license": "Apache-2.0",
+  "private": true,
+  "repository": "github:SAP/cloud-sdk-js",
+  "scripts": {
+    "generate-vdm": "yarn generate-odata-client -i ../../../test-resources/odata-service-specs-e2e/v4 -o .",
+    "test": "node --inspect test-script.js"
+  },
+  "devDependencies": {
+    "@sap-cloud-sdk/core": "1.54.0",
+    "@sap-cloud-sdk/generator": "1.54.0",
+    "typescript": "4.6.3",
+    "ts-node": "10.0.0",
+    "node-memwatch-new": "0.0.3"
+  }
+}

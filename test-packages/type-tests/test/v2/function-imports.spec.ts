@@ -7,7 +7,7 @@ import {
   testFunctionImportEntityReturnTypeCollection,
   testFunctionImportSharedEntityReturnType,
   testService
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 
 // $ExpectType FunctionImportRequestBuilder<DefaultDeSerializers, TestFunctionImportEdmReturnTypeParameters<DefaultDeSerializers>, boolean>
 const edmReturnTypeRequestBuilder = testFunctionImportEdmReturnType({});

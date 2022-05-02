@@ -7,7 +7,7 @@ import {
   writeFileSync
 } from 'fs';
 import { resolve, basename, extname } from 'path';
-import execa = require('execa');
+import execa from 'execa';
 import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
 import compareVersions from 'compare-versions';
 import { transformFile } from './util';
@@ -110,7 +110,7 @@ function insertCopyrightAndTracking() {
   });
 }
 
-const version = JSON.parse(readFileSync('lerna.json', 'utf8')).version;
+const version = JSON.parse(readFileSync('package.json', 'utf8')).version;
 
 function getSortedApiVersions() {
   return readdirSync(apiDocPath)

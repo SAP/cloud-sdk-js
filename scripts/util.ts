@@ -1,10 +1,10 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
-import execa = require('execa');
 
-export const version = JSON.parse(readFileSync('lerna.json', 'utf8')).version;
-export const docsDir = resolve('docs');
-export const apiDocsDir = resolve(docsDir, 'api');
+export const version = JSON.parse(readFileSync('package.json', 'utf8')).version;
+export const apiDocsDir = resolve('docs', 'api');
 
 export function transformFile(
   filePath: string,
@@ -17,24 +17,4 @@ export function transformFile(
 
 export function openFile(filePath: string): string {
   return readFileSync(filePath, { encoding: 'utf8' });
-}
-
-export async function getAllLernaModules(): Promise<LernaModule[]> {
-  const response = await execa('lerna', ['list', '--json', '-a'], {
-    cwd: resolve(__dirname, '../')
-  });
-  return JSON.parse(response.stdout) as LernaModule[];
-}
-
-export async function getProductiveLernaModules(): Promise<LernaModule[]> {
-  return (await getAllLernaModules()).filter(
-    module => !module.location.includes('test-packages')
-  );
-}
-
-interface LernaModule {
-  name: string;
-  version: string;
-  private: boolean;
-  location: string;
 }

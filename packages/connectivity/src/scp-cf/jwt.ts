@@ -104,7 +104,7 @@ export async function verifyJwt(
     xssec.createSecurityContext(
       token,
       { disableCache, credentials },
-      function (error: any, securityContext: any, tokenInfo: any) {
+      function (error, securityContext, tokenInfo) {
         if (error) {
           return reject(error);
         }

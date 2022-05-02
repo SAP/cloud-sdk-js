@@ -68,16 +68,10 @@ export async function serviceToken(
 
     return token.access_token;
   } catch (err) {
-    if (err instanceof Error) {
-      throw new ErrorWithCause(
-        `Could not fetch client credentials token for service of type "${service.label}".`,
-        err
-      );
-    } else {
-      throw new Error(
-        `Could not fetch client credentials token for service of type "${service.label}".`
-      );
-    }
+    throw new ErrorWithCause(
+      `Could not fetch client credentials token for service of type "${service.label}".`,
+      err
+    );
   }
 }
 

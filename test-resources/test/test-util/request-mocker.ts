@@ -7,7 +7,6 @@ import {
   ODataDeleteRequestConfig,
   ODataGetAllRequestConfig,
   ODataRequest,
-  ODataRequestConfig,
   ODataUpdateRequestConfig
 } from '@sap-cloud-sdk/odata-common/internal';
 import { createODataUri as createODataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
@@ -45,7 +44,7 @@ export const defaultDestination: Destination = {
   originalProperties: {}
 };
 
-export function mockDestinationsEnv(...destinations: any[]) {
+export function mockDestinationsEnv(...destinations) {
   process.env.destinations = JSON.stringify([...destinations]);
 }
 
@@ -160,7 +159,7 @@ export function mockGetRequest<T extends EntityApi<EntityBase, any>>(
 }
 
 interface MockHeaderRequestParams {
-  request: any;
+  request;
   host?: string;
   responseHeaders?: Record<string, any>;
   path?: string;
@@ -178,7 +177,7 @@ export function mockHeaderRequest({
 }
 
 export function mockRequest(
-  requestConfig: ODataRequestConfig,
+  requestConfig,
   {
     host = defaultHost,
     destination = defaultDestination,
@@ -199,9 +198,8 @@ export function mockRequest(
   mockHeaderRequest({ request, path });
 
   return nock(host, getRequestHeaders(method, additionalHeaders, headers))
-    .intercept(
+    [method](
       path ? `${request.serviceUrl()}/${path}` : request.resourceUrl(),
-      method,
       body
     )
     .query(query)

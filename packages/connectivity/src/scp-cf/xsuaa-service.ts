@@ -1,3 +1,4 @@
+import * as xssec from '@sap/xssec';
 import CircuitBreaker from 'opossum';
 import * as xssec from '@sap/xssec';
 import { JwtPayload } from './jsonwebtoken-type';

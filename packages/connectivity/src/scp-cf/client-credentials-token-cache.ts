@@ -10,14 +10,11 @@ const logger = createLogger({
 const ClientCredentialsTokenCache = (
   cache: Cache<ClientCredentialsResponse>
 ) => ({
-  getToken: (
-    url: string,
-    clientId: string
-  ): ClientCredentialsResponse | undefined =>
+  getToken: (url, clientId: string): ClientCredentialsResponse | undefined =>
     cache.get(getCacheKey(url, clientId)),
 
   cacheToken: (
-    url: string,
+    url,
     clientId: string,
     token: ClientCredentialsResponse
   ): void => {

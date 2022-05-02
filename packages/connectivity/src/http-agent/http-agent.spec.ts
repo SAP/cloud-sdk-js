@@ -11,6 +11,7 @@ import {
 } from '../scp-cf';
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
 import { getAgentConfig } from './http-agent';
+import { promisify } from 'util';
 
 describe('createAgent', () => {
   const baseDestination: Destination = {
@@ -64,7 +65,7 @@ T53TtQm+oQdUNanvJuk9VANEY+5ObG48gp/bhmskgn/RAPzDgknF0ar8QUU=
 
   const destinationCertificate: DestinationCertificate = {
     name: 'server-public-cert.pem',
-    content: new Buffer(publicCert).toString('base64'),
+    content: Buffer.from(publicCert).toString('base64'),
     type: 'CERTIFICATE'
   };
 
@@ -80,18 +81,10 @@ T53TtQm+oQdUNanvJuk9VANEY+5ObG48gp/bhmskgn/RAPzDgknF0ar8QUU=
     }).listen(port);
   });
 
-  afterAll(
-    async () =>
-      // TODO promisify did not work, why?
-      new Promise((res, rej) => {
-        server.close(err => {
-          if (err) {
-            rej(err);
-          } else {
-            res('server closed');
-          }
-        });
-      })
+  afterAll(async () =>
+    promisify((callBack: (err, val) => void) =>
+      server.close(err => callBack(err, undefined))
+    )()
   );
 
   const trustAllDestination: Destination = {

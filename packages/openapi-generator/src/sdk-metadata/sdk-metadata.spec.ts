@@ -1,4 +1,4 @@
-import nock = require('nock');
+import nock from 'nock';
 import { dummyOpenApiDocument } from '../../test/test-util';
 import { sdkMetadata } from './sdk-metadata';
 

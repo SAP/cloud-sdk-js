@@ -1,4 +1,7 @@
-import { CommonEntity, commonEntityApi } from '../test/common-entity';
+import {
+  CommonEntity,
+  commonEntityApi
+} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 
 describe('entity', () => {
   describe('remote state', () => {

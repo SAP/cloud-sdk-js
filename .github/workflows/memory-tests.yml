@@ -1,0 +1,45 @@
+name: memory-tests
+
+on:
+  pull_request: ~
+  workflow_dispatch:
+  schedule:
+    - cron: 0 21 * * *
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+        name: install root
+      - run: yarn workspace @sap-cloud-sdk/e2e-tests pretest:e2e
+        name: start e2e tests server
+      - run: yarn install
+        name: install test v1
+        working-directory: test-packages/memory-tests/sdk-v1/
+      - run: yarn generate-vdm
+        name: generate v1 test client
+        working-directory: test-packages/memory-tests/sdk-v1/
+      - run: node --inspect test-script.js && cat result.txt
+        working-directory: test-packages/memory-tests/sdk-v1/
+      - run: yarn install
+        name: install test canary
+        working-directory: test-packages/memory-tests/sdk-canary/
+      - run: yarn generate-vdm
+        name: generate canary test client
+        working-directory: test-packages/memory-tests/sdk-canary/
+      - run: node --inspect test-script.js && cat result.txt
+        working-directory: test-packages/memory-tests/sdk-canary/
+      - run: yarn ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/memory-tests/sdk-v1/result.txt) $(cat ./test-packages/memory-tests/sdk-canary/result.txt)
+        name: compare v1 and canary

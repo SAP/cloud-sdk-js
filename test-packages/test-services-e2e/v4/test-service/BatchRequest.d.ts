@@ -8,7 +8,7 @@ import {
   UpdateRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
-import { TestEntity, TestEntityLink } from './index';
+import { TestEntity, TestEntityLink, TestEntity50Prop } from './index';
 /**
  * Batch builder for operations supported on the Test Service.
  * @param requests The requests of the batch
@@ -43,8 +43,10 @@ export declare type ReadTestServiceRequestBuilder<
 > =
   | GetAllRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
   | GetAllRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>;
+  | GetByKeyRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>;
 export declare type WriteTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
@@ -53,5 +55,8 @@ export declare type WriteTestServiceRequestBuilder<
   | DeleteRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
   | CreateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
-  | DeleteRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>;
+  | DeleteRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>;
 //# sourceMappingURL=BatchRequest.d.ts.map

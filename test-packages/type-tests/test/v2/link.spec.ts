@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 
 const custom = {
   'Edm.Binary': {

@@ -23,14 +23,18 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "compile": "yarn tsc -b",
-    "prepare": "yarn compile",
-    "test": "yarn jest",
-    "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck ."
+    "compile": "tsc -b",
+    "prepublishOnly": "yarn compile && yarn readme",
+    "test": "yarn test:unit",
+    "test:unit": "jest",
+    "coverage": "jest --coverage",
+    "lint": "eslint --ext .ts . && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
+    "lint:fix": "eslint --ext .ts . --fix && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w",
+    "check:dependencies": "depcheck .",
+    "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "axios": "^0.26.0",
+    "axios": "^0.27.1",
     "chalk": "^4.1.0",
     "logform": "^2.2.0",
     "promise.allsettled": "^1.0.4",

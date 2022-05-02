@@ -4,7 +4,7 @@ import {
   commonEntityApi,
   commonEntityApiCustom,
   CommonEntitySingleLinkApi
-} from '../test/common-entity';
+} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 
 describe('EntityBuilder', () => {
   it('should build an empty entity when no properties are defined', () => {

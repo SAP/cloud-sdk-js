@@ -1,6 +1,6 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {

@@ -1,17 +1,17 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import { defaultResilienceBTPServices } from '@sap-cloud-sdk/connectivity/internal';
+import { createRequestBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
+import {
+  CommonEntity,
+  commonEntityApi
+} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import {
   defaultBasicCredentials,
   defaultDestination,
   defaultHost,
   mockHeaderRequest
 } from '../../../test-resources/test/test-util';
-import { createRequestBuilder } from '../../odata-common/test/common-request-config';
-import {
-  CommonEntity,
-  commonEntityApi
-} from '../../odata-common/test/common-entity';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 import * as csrfHeaders from './csrf-token-header';
 import { executeHttpRequest } from './http-client';

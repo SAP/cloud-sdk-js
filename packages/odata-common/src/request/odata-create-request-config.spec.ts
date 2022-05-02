@@ -1,5 +1,8 @@
-import { CommonEntity, commonEntityApi } from '../../test/common-entity';
-import { createRequestConfig } from '../../test/common-request-config';
+import {
+  CommonEntity,
+  commonEntityApi
+} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import { createRequestConfig } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 
 describe('ODataCreateRequestConfig', () => {
   const config = createRequestConfig({

@@ -14,8 +14,10 @@
     "access": "restricted"
   },
   "scripts": {
-    "test": "echo Nothing to test here.",
-    "check:dependencies": "echo Nothing to check here."
+    "generate": "ts-node generate-e2e-services.ts",
+    "lint": "prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
+    "lint:fix": "prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w --loglevel error",
+    "postgenerate": "yarn lint:fix"
   },
   "license": "Apache-2.0",
   "dependencies": {

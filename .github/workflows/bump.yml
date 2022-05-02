@@ -2,11 +2,6 @@ name: bump
 
 on:
   workflow_dispatch:
-    inputs:
-      bump:
-        description: Version bump to be used. Can either be 'patch' or 'minor'.
-        required: false
-        default: 'minor'
 
 jobs:
   bump:
@@ -24,9 +19,5 @@ jobs:
         run: |
           git config --global user.email "cloud-sdk-js@github.com"
           git config --global user.name "cloud-sdk-js"
-      - name: Bump minor version
-        if: github.event.inputs.bump == 'minor'
-        run: yarn lerna version minor --force-publish -y
-      - name: Bump patch version
-        if: github.event.inputs.bump == 'patch'
-        run: yarn lerna version patch --force-publish -y
+      - name: Bump version
+        run: yarn changeset version

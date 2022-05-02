@@ -1,5 +1,5 @@
 import { PathLike } from 'fs';
-import { resolve, dirname } from 'path';
+import { resolve, dirname, sep, posix } from 'path';
 import {
   createLogger,
   ErrorWithCause,
@@ -199,7 +199,9 @@ async function generateAdditionalFiles(
     const additionalFilesDir = resolve(
       options.inputDir.toString(),
       options.additionalFiles
-    );
+    )
+      .split(sep)
+      .join(posix.sep);
     const serviceDir = resolvePath(service.directoryName, options);
     const files = new GlobSync(additionalFilesDir).found;
     await copyFiles(files, serviceDir, options.forceOverwrite);

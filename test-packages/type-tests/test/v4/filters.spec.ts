@@ -1,5 +1,4 @@
 import {
-  TestEntity,
   TestEnumType,
   testService
 } from '@sap-cloud-sdk/test-services/v4/test-service';

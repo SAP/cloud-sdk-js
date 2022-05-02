@@ -1,4 +1,4 @@
-import { CommonEntity } from '@sap-cloud-sdk/odata-common/test/common-entity';
+import { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { customTestDeSerializers } from '../../../test-resources/test/test-util';
 import {
   testEntityApi,

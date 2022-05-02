@@ -1,4 +1,7 @@
-import { CommonEntity, CommonEntityApi } from '../../test/common-entity';
+import {
+  CommonEntity,
+  CommonEntityApi
+} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { getEdmType, getEntityConstructor } from './complex-type-field';
 
 describe('complex-type-field', () => {

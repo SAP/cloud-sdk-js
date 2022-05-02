@@ -1118,9 +1118,9 @@
     yaml "1.10.2"
 
 "@sap/cds@^5.6.0", "@sap/cds@^5.8.0", "@sap/cds@^5.9.2":
-  version "5.9.3"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.3.tgz#6605fe7f60303fd9378131e7ee33c5483af013a5"
-  integrity sha512-ZmB+T5q9c6RTd7RmTHb31OTwGeBVmpBpjOmbHfeST3GL6SRo+ulnxJ11TyXbIw/uZVG8adNi1AGdYsW9sMAHTA==
+  version "5.9.4"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.4.tgz#f073b9944a647adcef79d711082319f3743f55c0"
+  integrity sha512-jmU8QtxCrg5EpAZje8tQtEv7YNwCS8wC9pQj/IDV4jmf1T+CC/wY+KljbBouQxme6QDysUz3JqGlje+riHLXvg==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"
@@ -6188,7 +6188,7 @@ mute-stream@~0.0.4:
   resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-nanoid@^3.3.1:
+nanoid@^3.3.3:
   version "3.3.3"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.3.tgz#fd8e8b7aa761fe807dba2d1b98fb7241bb724a25"
   integrity sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==
@@ -6986,11 +6986,11 @@ postcss-values-parser@^5.0.0:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.1.7, postcss@^8.4.6:
-  version "8.4.12"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.12.tgz#1e7de78733b28970fa4743f7da6f3763648b1905"
-  integrity sha512-lg6eITwYe9v6Hr5CncVbK70SoioNQIq81nsaG86ev5hAidQvmOeETBqs7jm43K2F5/Ley3ytDtriImV6TpNiSg==
+  version "8.4.13"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.13.tgz#7c87bc268e79f7f86524235821dfdf9f73e5d575"
+  integrity sha512-jtL6eTBrza5MPzy8oJLFuUscHDXTV5KcLlqAWHl5q5WYRfnNRGSmOZmOZ1T6Gy7A99mOZfqungmZMpMmCVJ8ZA==
   dependencies:
-    nanoid "^3.3.1"
+    nanoid "^3.3.3"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 

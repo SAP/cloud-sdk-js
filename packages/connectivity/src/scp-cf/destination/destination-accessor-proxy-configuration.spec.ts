@@ -10,7 +10,7 @@ import {
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
-  mockSubaccountCertificateCall,
+  mockCertificateCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
@@ -231,7 +231,7 @@ describe('truststore configuration', () => {
       URL: 'some.example',
       TrustStoreLocation: 'my-cert.pem'
     };
-    mockSubaccountCertificateCall(nock, 'my-cert.pem', providerServiceToken);
+    mockCertificateCall(nock, 'my-cert.pem', providerServiceToken,"subaccount");
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();

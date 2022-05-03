@@ -122,6 +122,7 @@ function getTrustStoreOptions(destination: Destination): Record<string, any> {
       'base64'
     ).toString('utf8');
     return {
+      rejectUnauthorized: true,
       ca: [decoded]
     };
   }

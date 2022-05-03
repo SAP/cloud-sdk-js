@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 const logger = createLogger('check-if-type-tests-are-working');
 

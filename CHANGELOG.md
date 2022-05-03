@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- [http-agent] Consider `TrustStoreLocation` destination property for self-signed certificate usecase.
+-
 
 ## Improvements
 

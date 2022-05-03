@@ -24,7 +24,7 @@ import {
 import {
   AuthAndExchangeTokens,
   fetchDestination,
-  fetchSubaccountCertificate,
+  fetchCertificate,
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
@@ -587,9 +587,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async addTrustStoreConfiguration(
     destination: Destination,
     origin: DestinationOrigin
-  ) {
+  ): Promise<Destination> {
     if (destination.originalProperties?.TrustStoreLocation) {
-      const trustStoreCertificate = await fetchSubaccountCertificate(
+      const trustStoreCertificate = await fetchCertificate(
         this.destinationServiceCredentials.uri,
         origin === 'subscriber'
           ? this.subscriberToken!.serviceJwt.encoded

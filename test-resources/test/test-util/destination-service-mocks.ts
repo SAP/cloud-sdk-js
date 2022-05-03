@@ -5,10 +5,11 @@ import { destinationServiceUri } from './environment-mocks';
 
 type nockFunction = (a: string, b: nock.Options) => nock.Scope;
 
-export function mockSubaccountCertificateCall(
+export function mockCertificateCall(
   nockREf: nockFunction,
   certificateName: string,
-  token: string
+  token: string,
+  type: 'subaccount'|'instance'
 ) {
   const response: DestinationCertificate = {
     type: 'CERTIFICATE',
@@ -23,7 +24,7 @@ export function mockSubaccountCertificateCall(
     }
   })
     .get(
-      `/destination-configuration/v1/subaccountCertificates/${certificateName}`
+      `/destination-configuration/v1/${type}Certificates/${certificateName}`
     )
     .reply(200, response);
 }

@@ -41,7 +41,7 @@ type DestinationServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'destinationName'>;
 
 let circuitBreaker: DestinationCircuitBreaker<
-  DestinationCertificate | DestinationJson | DestinationJson
+  DestinationCertificate | DestinationConfiguration | DestinationJson
 >;
 
 /**
@@ -86,15 +86,18 @@ export function fetchSubaccountDestinations(
   );
 }
 
+function removeTrailingSlash(str: string): string {
+  return str.replace(/\/$/, '');
+}
+
 async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
   type: DestinationType,
   options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
-  const targetUri = `${destinationServiceUri.replace(
-    /\/$/,
-    ''
+  const targetUri = `${removeTrailingSlash(
+    destinationServiceUri
   )}/destination-configuration/v1/${type}Destinations`;
 
   if (options?.useCache) {
@@ -113,13 +116,8 @@ async function fetchDestinations(
 
   const headers = wrapJwtInHeader(jwt).headers;
 
-  return callDestinationService(targetUri, headers, options)
+  return callDestinationEndpoint(targetUri, headers, options)
     .then(response => {
-      if (isCertificateResponse(response.data)) {
-        throw new Error(
-          'Destination service response must be destination type.'
-        );
-      }
       const destinations: Destination[] = response.data.map(d =>
         parseDestination(d)
       );
@@ -173,39 +171,41 @@ export async function fetchDestination(
     options
   );
 }
+
 /**
- * Fetches a certificate from the subaccount given a name.
+ * Fetches a certificate from the subaccount and destination instance for a given a name.
+ * Subaccount is tried first.
  * @param destinationServiceUri - The URI of the destination service
  * @param token - The access token for destination service.
  * @param certificateName - Name of the Certificate to be fetched
  * @returns A Promise resolving to the destination
  * @internal
  */
-export async function fetchSubaccountCertificate(
+export async function fetchCertificate(
   destinationServiceUri: string,
   token: string,
   certificateName: string
 ): Promise<DestinationCertificate | undefined> {
-  const targetUri = `${destinationServiceUri.replace(
-    /\/$/,
-    ''
+  const filetype = certificateName.split('.')[1];
+  if (filetype.toLowerCase() !== 'pem') {
+    logger.warn(
+      `The provided truststore ${certificateName} is not in 'pem' format which is currently the only supported format. Trustore is ignored.`
+    );
+    return;
+  }
+  const accountUri = `${removeTrailingSlash(
+    destinationServiceUri
   )}/destination-configuration/v1/subaccountCertificates/${certificateName}`;
+  const instanceUri = `${removeTrailingSlash(
+    destinationServiceUri
+  )}/destination-configuration/v1/instanceCertificates/${certificateName}`;
+  const header = wrapJwtInHeader(token).headers;
 
-  const allUri = `${destinationServiceUri.replace(
-    /\/$/,
-    ''
-  )}/destination-configuration/v1/subaccountCertificates`;
   try {
-    const response = await callDestinationService(
-      targetUri,
-      wrapJwtInHeader(token).headers
+    const response = await callCertificateEndpoint(accountUri, header).catch(
+      () => callCertificateEndpoint(instanceUri, header)
     );
-    if (isCertificateResponse(response.data)) {
-      return response.data;
-    }
-    throw new Error(
-      'Destination service response must be certificate response.'
-    );
+    return response.data;
   } catch (err) {
     logger.warn(
       `Failed to fetch truststore certificate ${certificateName} - Continuing without certificate. This may cause failing requests`,
@@ -219,9 +219,8 @@ async function fetchDestinationByTokens(
   tokens: AuthAndExchangeTokens,
   options: DestinationServiceOptions
 ): Promise<Destination> {
-  const targetUri = `${destinationServiceUri.replace(
-    /\/$/,
-    ''
+  const targetUri = `${removeTrailingSlash(
+    destinationServiceUri
   )}/destination-configuration/v1/destinations/${options.destinationName}`;
 
   let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
@@ -233,13 +232,8 @@ async function fetchDestinationByTokens(
     ? { ...authHeader, 'X-tenant': tokens.exchangeTenant }
     : authHeader;
 
-  return callDestinationService(targetUri, authHeader, options)
+  return callDestinationEndpoint(targetUri, authHeader, options)
     .then(response => {
-      if (isCertificateResponse(response.data)) {
-        throw new Error(
-          'Destination service response must be destination response.'
-        );
-      }
       const destination: Destination = parseDestination(response.data);
       return destination;
     })
@@ -255,18 +249,42 @@ async function fetchDestinationByTokens(
     });
 }
 
-function isCertificateResponse(
-  response: DestinationCertificate | DestinationJson | DestinationConfiguration
-): response is DestinationCertificate {
-  return response.type && response.content && response.name;
-}
-
 function errorMessageFromResponse(
   error: AxiosError<{ ErrorMessage: string }>
 ): string {
   return propertyExists(error, 'response', 'data', 'ErrorMessage')
     ? ` ${error.response!.data.ErrorMessage}`
     : '';
+}
+
+async function callCertificateEndpoint(
+  uri: string,
+  headers: Record<string, any>,
+  options?: ResilienceOptions
+): Promise<AxiosResponse<DestinationCertificate>> {
+  if (!uri.includes('Certificates')) {
+    throw new Error(
+      `callCertificateEndpoint was called with illegal arrgument: ${uri}. URL must be certificate endpoint of destination service.`
+    );
+  }
+  return callDestinationService(uri, headers, options) as Promise<
+    AxiosResponse<DestinationCertificate>
+  >;
+}
+
+async function callDestinationEndpoint(
+  uri: string,
+  headers: Record<string, any>,
+  options?: ResilienceOptions
+): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
+  if (!uri.match(/v1\/.*[d,D]estinations/)) {
+    throw new Error(
+      `callDestinationEndpoint was called with illegal arrgument: ${uri}. URL must be destination(s) endpoint of destination service.`
+    );
+  }
+  return callDestinationService(uri, headers, options) as Promise<
+    AxiosResponse<DestinationConfiguration | DestinationJson>
+  >;
 }
 
 async function callDestinationService(
@@ -300,7 +318,7 @@ async function callDestinationService(
 }
 
 function getCircuitBreaker<T>(): DestinationCircuitBreaker<
-  DestinationCertificate | DestinationJson | DestinationJson
+  DestinationCertificate | DestinationConfiguration | DestinationJson
 > {
   const request: (
     config: AxiosRequestConfig

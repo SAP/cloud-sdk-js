@@ -22,6 +22,8 @@
     "@sap-cloud-sdk/generator-common": "^2.3.0",
     "@sap-cloud-sdk/odata-common": "^2.3.0",
     "@sap-cloud-sdk/odata-v4": "^2.3.0",
+    "@sap-cloud-sdk/connectivity": "^2.3.0",
+    "@sap-cloud-sdk/http-client": "^2.3.0",
     "@sap-cloud-sdk/openapi-generator": "^2.3.0",
     "@sap-cloud-sdk/test-services-openapi": "^2.3.0",
     "@sap-cloud-sdk/test-services-e2e": "^2.3.0",

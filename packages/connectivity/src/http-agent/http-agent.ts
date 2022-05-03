@@ -1,6 +1,6 @@
 import https from 'https';
 import http from 'http';
-import { assoc, createLogger, last } from '@sap-cloud-sdk/util';
+import { createLogger, last } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationCertificate,
@@ -35,7 +35,10 @@ export function getAgentConfig(
     ? AgentType.PROXY
     : AgentType.DEFAULT;
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const certificateOptions = getCertificateOption(destination);
+  const certificateOptions = {
+    ...getTrustStoreOptions(destination),
+    ...getKeyStoreOption(destination)
+  };
   if (agentType === AgentType.PROXY) {
     return createProxyAgent(destination, certificateOptions);
   }
@@ -74,43 +77,57 @@ function trustStoreOptions(
       );
       return options;
     }
-    const decoded = new Buffer(
+    const decodedCertificate = new Buffer(
       destination.trustStoreCertificate.content,
       'base64'
     ).toString('utf8');
     return {
       ...options,
-      ca: [decoded]
+      ca: [decodedCertificate]
     };
   }
   return options;
 }
 
-const trustAllOptions =
-  (destination: Destination) =>
-  (options: Record<string, any>): Record<string, any> =>
-    assoc(
-      'rejectUnauthorized',
-      !destination.isTrustingAllCertificates,
-      options
-    );
-
-const certificateOptions =
-  (destination: Destination) =>
-  (options: Record<string, any>): Record<string, any> => {
-    if (destination.keyStoreName && destination.keyStorePassword) {
-      const certificate = selectCertificate(destination);
-
-      logger.debug(`Certificate with name "${certificate.name}" selected.`);
-
-      return {
-        ...options,
-        pfx: Buffer.from(certificate.content, 'base64'),
-        passphrase: destination.keyStorePassword
-      };
+/**
+ * @internal
+ * The http agents (proxy and default) use node tls for trust handling. This method creates the options with the 'ca' or 'rejectUnauthorized' option.
+ * https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options
+ * @param destination - Destination object
+ * @returns Options, which can be used later the http client.
+ */
+function getTrustStoreOptions(destination: Destination): Record<string, any> {
+  // http case: no certificate needed
+  if (getProtocolOrDefault(destination) === Protocol.HTTP) {
+    if (destination.isTrustingAllCertificates) {
+      logger.warn('"isTrustingAllCertificates" is not available for HTTP.');
     }
-    return options;
-  };
+    if (destination.trustStoreCertificate) {
+      logger.warn('"trustStore" is not available for HTTP.');
+    }
+    return {};
+  }
+
+  // https case
+  if (destination.isTrustingAllCertificates) {
+    logger.warn(
+      '"isTrustingAllCertificates" property in the provided destination is set to "true". This is highly discouraged in production.'
+    );
+    return { rejectUnauthorized: !destination.isTrustingAllCertificates };
+  }
+
+  if (destination.trustStoreCertificate) {
+    const decoded = new Buffer(
+      destination.trustStoreCertificate.content,
+      'base64'
+    ).toString('utf8');
+    return {
+      ca: [decoded]
+    };
+  }
+  return { rejectUnauthorized: true };
+}
+
 /**
  * @internal
  * The http agents (proxy and default) use node tls for the certificate handling. This method creates the options with the pfx and passphrase.
@@ -118,25 +135,18 @@ const certificateOptions =
  * @param destination - Destination object
  * @returns Options, which can be used later by tls.createSecureContext() e.g. pfx and passphrase or an empty object, if the protocol is not 'https:' or no client information are in the definition.
  */
-function getCertificateOption(destination: Destination): Record<string, any> {
-  // http case: no certificate needed
-  if (getProtocolOrDefault(destination) === Protocol.HTTP) {
-    if (destination.isTrustingAllCertificates) {
-      logger.warn('"isTrustingAllCertificates" is not available for HTTP.');
-    }
+function getKeyStoreOption(destination: Destination): Record<string, any> {
+  if (destination.keyStoreName && destination.keyStorePassword) {
+    const certificate = selectCertificate(destination);
 
-    return {};
-  }
-  // https case: get certificate options
-  if (destination.isTrustingAllCertificates) {
-    logger.warn(
-      '"isTrustingAllCertificates" property in the provided destination is set to "true". This is highly discouraged in production.'
-    );
-  }
+    logger.debug(`Certificate with name "${certificate.name}" selected.`);
 
-  let options = trustAllOptions(destination)({});
-  options = trustStoreOptions(options, destination);
-  return certificateOptions(destination)(options);
+    return {
+      pfx: Buffer.from(certificate.content, 'base64'),
+      passphrase: destination.keyStorePassword
+    };
+  }
+  return {};
 }
 
 /*

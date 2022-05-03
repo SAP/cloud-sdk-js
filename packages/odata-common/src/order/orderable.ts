@@ -38,7 +38,6 @@ export type OrderableInput<
  * @typeparam EntityT - Type of the entity to be ordered
  * @param orderBy - Field or link to be ordered by
  * @returns New order
- * @internal
  */
 export function asc<
   EntityT extends EntityBase,
@@ -61,7 +60,6 @@ export function asc<
  * @typeparam EntityT - Type of the entity to be ordered
  * @param orderBy - Field or link to be ordered by
  * @returns New order
- * @internal
  */
 export function desc<
   EntityT extends EntityBase,

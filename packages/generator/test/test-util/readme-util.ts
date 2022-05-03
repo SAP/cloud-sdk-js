@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export function getExpectedHelpfulLinks(): string {
   return `## Helpful Links
 

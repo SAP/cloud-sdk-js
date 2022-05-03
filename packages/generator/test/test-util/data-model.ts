@@ -10,6 +10,9 @@ import {
   VdmUnsupportedReason
 } from '../../src/vdm-types';
 
+/**
+ * @internal
+ */
 export const entityName: VdmProperty = {
   instancePropertyName: 'entityName',
   staticPropertyName: 'ENTITY_NAME',
@@ -23,6 +26,9 @@ export const entityName: VdmProperty = {
   isCollection: false
 };
 
+/**
+ * @internal
+ */
 export const numberOfEggs: VdmProperty = {
   instancePropertyName: 'numberOfEggs',
   staticPropertyName: 'NUMBER_OF_EGGS',
@@ -36,6 +42,9 @@ export const numberOfEggs: VdmProperty = {
   isCollection: false
 };
 
+/**
+ * @internal
+ */
 export const breakfastTime: VdmProperty = {
   instancePropertyName: 'breakfastTime',
   staticPropertyName: 'BREAKFAST_TIME',
@@ -49,6 +58,9 @@ export const breakfastTime: VdmProperty = {
   isCollection: false
 };
 
+/**
+ * @internal
+ */
 export const brunchEntity: VdmEntity = {
   className: 'Brunch',
   description: 'Breakfast took a little longer.',
@@ -63,6 +75,9 @@ export const brunchEntity: VdmEntity = {
   entityTypeNamespace: ''
 };
 
+/**
+ * @internal
+ */
 export const toBrunch: VdmNavigationProperty = {
   from: 'Breakfast',
   to: brunchEntity.entitySetName,
@@ -74,6 +89,9 @@ export const toBrunch: VdmNavigationProperty = {
   toEntityClassName: brunchEntity.className
 };
 
+/**
+ * @internal
+ */
 export const breakfastEntity: VdmEntity = {
   className: 'Breakfast',
   description: 'Breakfast is cool.',
@@ -88,6 +106,9 @@ export const breakfastEntity: VdmEntity = {
   entityTypeNamespace: ''
 };
 
+/**
+ * @internal
+ */
 export const foodService: VdmServiceMetadata = {
   oDataVersion: 'v2',
   directoryName: 'FOOD_SERVICE',
@@ -104,6 +125,9 @@ export const foodService: VdmServiceMetadata = {
   edmxPath: 'some/path/to/food/edmx'
 };
 
+/**
+ * @internal
+ */
 export const enumMeal: VdmEnumType = {
   originalName: 'EnumMealName',
   typeName: 'EnumMealType',
@@ -114,6 +138,9 @@ export const enumMeal: VdmEnumType = {
   underlyingType: 'Edm.Int32'
 };
 
+/**
+ * @internal
+ */
 export const complexMeal: VdmComplexType = {
   originalName: 'ComplexMealName',
   typeName: 'ComplexMealType',
@@ -147,6 +174,9 @@ export const complexMeal: VdmComplexType = {
   namespace: ''
 };
 
+/**
+ * @internal
+ */
 export const complexDesert: VdmComplexType = {
   originalName: 'ComplexDesert',
   typeName: 'ComplexDesert',
@@ -180,6 +210,9 @@ export const complexDesert: VdmComplexType = {
   namespace: ''
 };
 
+/**
+ * @internal
+ */
 export const complexMealWithDesert: VdmComplexType = {
   originalName: 'ComplexMealWithDesertName',
   typeName: 'ComplexMealWithDesertType',
@@ -240,9 +273,17 @@ const orderBreakfastBuilder = (isNullable: boolean): VdmFunctionImport => ({
   }
 });
 
+/**
+ * @internal
+ */
 export const orderBreakfast = orderBreakfastBuilder(false);
+/**
+ * @internal
+ */
 export const orderBreakfastNullable = orderBreakfastBuilder(true);
-
+/**
+ * @internal
+ */
 export const entityNotDeserializable: VdmFunctionImport = {
   description: 'entityNotDeserializable',
   name: 'entityNotDeserializable',

@@ -5,6 +5,9 @@ import { generateProject } from '../../src/generator';
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
 import { createOptions } from './create-generator-options';
 
+/**
+ * @internal
+ */
 export function checkStaticProperties(entityClass: ClassDeclaration): void {
   const properties = entityClass.getProperties();
   const staticProperties = [
@@ -20,6 +23,9 @@ export function checkStaticProperties(entityClass: ClassDeclaration): void {
   ]);
 }
 
+/**
+ * @internal
+ */
 export async function getGeneratedFiles(
   oDataVersion: ODataVersion
 ): Promise<SourceFile[]> {
@@ -32,6 +38,9 @@ export async function getGeneratedFiles(
   return project!.project.getSourceFiles();
 }
 
+/**
+ * @internal
+ */
 export function getFunctionImportDeclarations(
   files: SourceFile[]
 ): FunctionDeclaration[] {

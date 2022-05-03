@@ -23,5 +23,7 @@ export {
   PropertyMetadata,
   RequestBuilder,
   throwErrorWhenReturnTypeIsUnionType,
-  Time
+  Time,
+  asc,
+  desc
 } from '@sap-cloud-sdk/odata-common';

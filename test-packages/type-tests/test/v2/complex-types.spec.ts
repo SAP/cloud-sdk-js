@@ -1,5 +1,5 @@
 import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common/internal';
+import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common';
 
 const { testEntityApi } = testService();
 const testEntitySchema = testEntityApi.schema;

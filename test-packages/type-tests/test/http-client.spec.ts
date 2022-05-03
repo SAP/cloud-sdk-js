@@ -12,8 +12,8 @@ executeHttpRequest(
   { method: 'get' }
 );
 
-// $ExpectError
 executeHttpRequest(
+  // $ExpectError
   { url: 'https://example.com', destinationName: 'myDestinationName' },
   { method: 'get' }
 );

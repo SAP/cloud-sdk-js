@@ -1,6 +1,4 @@
 import {
-  TestEntityApi,
-  TestEntitySingleLinkApi,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import {
@@ -10,8 +8,9 @@ import {
   substringOf
 } from '@sap-cloud-sdk/odata-v2';
 
-const testEntitySchema = testService().testEntityApi.schema;
-const testEntitySingleLinkSchema = testService().testEntitySingleLinkApi.schema;
+const { testEntityApi, testEntitySingleLinkApi } = testService();
+const testEntitySchema = testEntityApi.schema;
+const testEntitySingleLinkSchema = testEntitySingleLinkApi.schema;
 
 /* Backwards compatibility */
 
@@ -29,11 +28,11 @@ const filter = filterFunctions()
   .substring(testEntitySchema.STRING_PROPERTY, testEntitySchema.INT_16_PROPERTY)
   .equals('test');
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DefaultDeSerializers>, DefaultDeSerializers>
-new TestEntityApi().requestBuilder().getAll().filter(filter);
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+testEntityApi.requestBuilder().getAll().filter(filter);
 
 // $ExpectError
-new TestEntitySingleLinkApi().requestBuilder().getAll().filter(filter);
+testEntitySingleLinkApi.requestBuilder().getAll().filter(filter);
 
 filterFunctions().substring(
   testEntitySingleLinkSchema.STRING_PROPERTY,

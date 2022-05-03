@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import nock from 'nock';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { asc } from '@sap-cloud-sdk/odata-common/internal';
+import { asc } from '@sap-cloud-sdk/odata-common';
 import {
   defaultDeSerializers,
   entityDeserializer

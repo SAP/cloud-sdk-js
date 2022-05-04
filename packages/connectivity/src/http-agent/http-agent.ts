@@ -109,6 +109,10 @@ function getTrustStoreOptions(destination: Destination): Record<string, any> {
   }
 
   // https case
+  if(destination.isTrustingAllCertificates && destination.trustStoreCertificate){
+    logger.warn(`Destination ${destination.name} contains the 'trustAll' and 'trustStoreLocation' property which is a redundant setup.`)
+  }
+
   if (destination.isTrustingAllCertificates) {
     logger.warn(
       '"isTrustingAllCertificates" property in the provided destination is set to "true". This is highly discouraged in production.'

@@ -1,7 +1,7 @@
 import {
   createLogger,
   ErrorWithCause,
-  propertyExists
+  propertyExists, removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
 import CircuitBreaker from 'opossum';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
@@ -86,17 +86,13 @@ export function fetchSubaccountDestinations(
   );
 }
 
-function removeTrailingSlash(str: string): string {
-  return str.replace(/\/$/, '');
-}
-
 async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
   type: DestinationType,
   options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
-  const targetUri = `${removeTrailingSlash(
+  const targetUri = `${removeTrailingSlashes(
     destinationServiceUri
   )}/destination-configuration/v1/${type}Destinations`;
 
@@ -193,10 +189,10 @@ export async function fetchCertificate(
     );
     return;
   }
-  const accountUri = `${removeTrailingSlash(
+  const accountUri = `${removeTrailingSlashes(
     destinationServiceUri
   )}/destination-configuration/v1/subaccountCertificates/${certificateName}`;
-  const instanceUri = `${removeTrailingSlash(
+  const instanceUri = `${removeTrailingSlashes(
     destinationServiceUri
   )}/destination-configuration/v1/instanceCertificates/${certificateName}`;
   const header = wrapJwtInHeader(token).headers;
@@ -219,7 +215,7 @@ async function fetchDestinationByTokens(
   tokens: AuthAndExchangeTokens,
   options: DestinationServiceOptions
 ): Promise<Destination> {
-  const targetUri = `${removeTrailingSlash(
+  const targetUri = `${removeTrailingSlashes(
     destinationServiceUri
   )}/destination-configuration/v1/destinations/${options.destinationName}`;
 
@@ -277,7 +273,7 @@ async function callDestinationEndpoint(
   headers: Record<string, any>,
   options?: ResilienceOptions
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
-  if (!uri.match(/v1\/.*[d,D]estinations/)) {
+  if (!uri.match(/[instance|subaccount]Destinations|v1\/destinations/)) {
     throw new Error(
       `callDestinationEndpoint was called with illegal arrgument: ${uri}. URL must be destination(s) endpoint of destination service.`
     );

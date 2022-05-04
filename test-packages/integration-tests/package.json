@@ -10,8 +10,8 @@
     "test": "yarn test:integration",
     "test:integration": "jest",
     "coverage": "jest --coverage",
-    "lint": "eslint --ext .ts . && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
-    "lint:fix": "eslint --ext .ts . --fix && prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w",
+    "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
+    "lint:fix": "eslint --ext .ts . --fix && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w",
     "check:dependencies": "depcheck . --ignores=@sap-cloud-sdk/generator,@sap-cloud-sdk/openapi-generator"
   },
   "dependencies": {

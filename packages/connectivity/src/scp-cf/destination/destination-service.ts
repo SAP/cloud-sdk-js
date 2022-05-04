@@ -1,7 +1,8 @@
 import {
   createLogger,
   ErrorWithCause,
-  propertyExists, removeTrailingSlashes
+  propertyExists,
+  removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
 import CircuitBreaker from 'opossum';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';

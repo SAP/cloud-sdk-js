@@ -128,7 +128,7 @@ jobs:
       - name: Canary Release
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
-          date=`date +%Y%m%d%H%M%S`
+          yarn changeset version --snapshot canary
           yarn changeset publish --tag canary
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

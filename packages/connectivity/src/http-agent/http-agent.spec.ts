@@ -1,12 +1,13 @@
-import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
+import { HttpProxyAgent } from 'http-proxy-agent';
 import {
   proxyAgent,
   Protocol,
   ProxyConfiguration,
-  Destination
+  Destination,
+  DestinationCertificate
 } from '../scp-cf';
+import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
 import { getAgentConfig } from './http-agent';
 
 describe('createAgent', () => {
@@ -102,6 +103,28 @@ describe('createAgent', () => {
     };
     expect(proxyAgent(destHttpsWithProxy)['httpsAgent']).toStrictEqual(
       new HttpsProxyAgent(proxyConfiguration)
+    );
+  });
+
+  it('returns an agent with ca if trustStoreLocation is present.', async () => {
+    const destinationCertificate: DestinationCertificate = {
+      name: 'server-public-cert.pem',
+      content: Buffer.from('myCertContent').toString('base64'),
+      type: 'CERTIFICATE'
+    };
+
+    const destination: Destination = {
+      url: 'https://some.foo.bar',
+      trustStoreCertificate: destinationCertificate
+    };
+
+    const expectedOptions = {
+      rejectUnauthorized: true,
+      ca: ['myCertContent']
+    };
+
+    expect(getAgentConfig(destination)['httpsAgent']['options']).toMatchObject(
+      expectedOptions
     );
   });
 

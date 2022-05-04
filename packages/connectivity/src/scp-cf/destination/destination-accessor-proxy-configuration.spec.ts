@@ -10,11 +10,13 @@ import {
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
+  mockCertificateCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
+  providerUserJwt,
   subscriberServiceToken,
   subscriberUserJwt
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
@@ -28,7 +30,12 @@ import { Protocol } from '../protocol';
 import { getDestination } from './destination-accessor';
 import { parseDestination } from './destination';
 import * as ProxyUtil from './proxy-util';
-import { Destination, destinationCache, destinationServiceCache } from '.';
+import {
+  alwaysProvider,
+  Destination,
+  destinationCache,
+  destinationServiceCache
+} from '.';
 
 describe('proxy configuration', () => {
   afterEach(() => {
@@ -214,5 +221,45 @@ describe('get destination with PrivateLink proxy type', () => {
 
     expect(destinationFromFirstCall?.proxyType).toBe('PrivateLink');
     expect(internetConfig).toHaveBeenCalledWith(receivePrivateLinkDest);
+  });
+});
+
+describe('truststore configuration', () => {
+  it('returns a destination with truststore', async () => {
+    const destinationWithTrustStore = {
+      Name: 'TrustStoreDestination',
+      URL: 'some.example',
+      TrustStoreLocation: 'my-cert.pem'
+    };
+    mockCertificateCall(
+      nock,
+      'my-cert.pem',
+      providerServiceToken,
+      'subaccount'
+    );
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
+    mockJwtBearerToken();
+
+    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+    mockSubaccountDestinationsCall(
+      nock,
+      [destinationWithTrustStore],
+      200,
+      providerServiceToken
+    );
+    const actual = await getDestination({
+      destinationName: 'TrustStoreDestination',
+      jwt: providerUserJwt,
+      selectionStrategy: alwaysProvider,
+      cacheVerificationKeys: false,
+      iasToXsuaaTokenExchange: false
+    });
+    expect(actual?.trustStoreCertificate).toEqual({
+      name: 'my-cert.pem',
+      content: expect.any(String),
+      type: 'CERTIFICATE'
+    });
   });
 });

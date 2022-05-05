@@ -2,6 +2,9 @@ import { PathLike } from 'fs';
 import { resolve } from 'path';
 import { Options } from 'yargs';
 
+/**
+ * @internal
+ */
 export interface GeneratorOptions {
   inputDir: PathLike;
   outputDir: PathLike;

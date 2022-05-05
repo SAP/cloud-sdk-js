@@ -21,7 +21,8 @@ module.exports = {
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         'import/no-internal-modules': 'off',
-        'no-unused-expressions': 'off'
+        'no-unused-expressions': 'off',
+        'jsdoc/require-jsdoc': 'off'
       }
     }
   ],
@@ -196,7 +197,7 @@ module.exports = {
     'jsdoc/require-description': ['error', { exemptedBy: ['experimental'] }],
     'jsdoc/require-hyphen-before-param-description': 'error',
     'jsdoc/require-jsdoc': [
-      'warn',
+      'error',
       {
         publicOnly: true,
         enableFixer: false,

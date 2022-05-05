@@ -202,7 +202,7 @@
         }
       }
     },
-    "value" : 6.620157962604771,
+    "value" : 6.571908446163764,
     "weight" : 1.0,
     "confidence" : 10.0,
     "usedValues" : [ {
@@ -277,7 +277,7 @@
           }
         }
       },
-      "value" : 9.09090909090909,
+      "value" : 8.863636363636363,
       "weight" : 1.0,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -461,7 +461,7 @@
             }
           }
         },
-        "value" : 10.0,
+        "value" : 9.5,
         "weight" : 1.0,
         "confidence" : 10.0,
         "usedValues" : [ {
@@ -470,7 +470,7 @@
             "type" : "LgtmScore",
             "name" : "How a project addresses issues reported by LGTM"
           },
-          "value" : 10.0,
+          "value" : 9.0,
           "weight" : 1.0,
           "confidence" : 10.0,
           "usedValues" : [ {
@@ -479,7 +479,7 @@
               "type" : "LgtmGradeFeature",
               "name" : "The worst LGTM grade of a project"
             },
-            "value" : "A+",
+            "value" : "A",
             "explanation" : [ ]
           }, {
             "type" : "LanguagesValue",
@@ -1117,7 +1117,7 @@
             }
           }
         },
-        "value" : 9.09090909090909,
+        "value" : 8.863636363636363,
         "weight" : 1.0,
         "confidence" : 10.0,
         "usedValues" : [ {
@@ -1301,7 +1301,7 @@
               }
             }
           },
-          "value" : 10.0,
+          "value" : 9.5,
           "weight" : 1.0,
           "confidence" : 10.0,
           "usedValues" : [ {
@@ -1310,7 +1310,7 @@
               "type" : "LgtmScore",
               "name" : "How a project addresses issues reported by LGTM"
             },
-            "value" : 10.0,
+            "value" : 9.0,
             "weight" : 1.0,
             "confidence" : 10.0,
             "usedValues" : [ {
@@ -1319,7 +1319,7 @@
                 "type" : "LgtmGradeFeature",
                 "name" : "The worst LGTM grade of a project"
               },
-              "value" : "A+",
+              "value" : "A",
               "explanation" : [ ]
             }, {
               "type" : "LanguagesValue",
@@ -1804,7 +1804,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 209,
+        "number" : 194,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1812,10 +1812,10 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of contributors in the last three months"
         },
-        "number" : 5,
+        "number" : 4,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "209 commits in the last 3 months results to 10.00 points", "5 contributors increase the score value from 10.00 to 12.00" ],
+      "explanation" : [ "194 commits in the last 3 months results to 10.00 points", "4 contributors increase the score value from 10.00 to 11.00" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
@@ -1828,7 +1828,7 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 0.14766666666666667,
+      "value" : 0.14866666666666667,
       "weight" : 0.5,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -1837,7 +1837,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of stars for a GitHub repository"
         },
-        "number" : 101,
+        "number" : 102,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",

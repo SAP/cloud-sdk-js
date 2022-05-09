@@ -9,7 +9,7 @@ import {
   and,
   EntityBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
+import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
 import {
   DefaultDeSerializers,
@@ -77,7 +77,7 @@ export class GetAllRequestBuilder<
       EntityApi<EntityBase, DeSerializersT>
     >[]
   ): this {
-    this.requestConfig.expands = variadicArgumentToArray(first, rest);
+    this.requestConfig.expands = transformVariadicArgumentToArray(first, rest);
     return this;
   }
 

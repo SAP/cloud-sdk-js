@@ -1,4 +1,7 @@
-import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
+import {
+  ErrorWithCause,
+  transformVariadicArgumentToArray
+} from '@sap-cloud-sdk/util';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
@@ -90,7 +93,7 @@ export abstract class UpdateRequestBuilderBase<
       | Selectable<EntityT, DeSerializersT>[],
     ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
-    this.required = this.toSet(variadicArgumentToArray(first, rest));
+    this.required = this.toSet(transformVariadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
     return this;
   }
@@ -109,7 +112,7 @@ export abstract class UpdateRequestBuilderBase<
       | Selectable<EntityT, DeSerializersT>[],
     ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
-    this.ignored = this.toSet(variadicArgumentToArray(first, rest));
+    this.ignored = this.toSet(transformVariadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
     return this;
   }

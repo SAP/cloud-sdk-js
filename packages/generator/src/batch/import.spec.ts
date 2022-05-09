@@ -23,7 +23,7 @@ describe('batch type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/util',
-        namedImports: ['variadicArgumentToArray']
+        namedImports: ['transformVariadicArgumentToArray']
       },
       {
         kind: StructureKind.ImportDeclaration,

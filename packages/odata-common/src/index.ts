@@ -29,3 +29,4 @@ export { FunctionImportParameter } from './request';
 export { throwErrorWhenReturnTypeIsUnionType } from './response-transformer';
 export { isOrderableEdmType } from './edm-types';
 export { asc, desc } from './order';
+export { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';

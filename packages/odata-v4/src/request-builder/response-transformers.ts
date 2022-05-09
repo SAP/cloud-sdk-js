@@ -7,6 +7,7 @@ import { getSingleResult, getCollectionResult } from './response-data-accessor';
  * Convert the payload of the OData response to undefined.
  * @param data - The OData payload.
  * @param builderFn - The deserialization function for converting the payload.
+ * @returns The converted value.
  */
 export function transformReturnValueForUndefined<ReturnT>(
   data: any,
@@ -19,6 +20,7 @@ export function transformReturnValueForUndefined<ReturnT>(
  * Convert the payload of the OData response to an Entity by using given (De-)serializers.
  * @param data - The OData payload.
  * @param entityApi - Entity API that holds the (De-)serializers.
+ * @returns The converted value.
  */
 export function transformReturnValueForEntity<
   ReturnT extends Entity,
@@ -33,6 +35,7 @@ export function transformReturnValueForEntity<
  * Convert the payload of the OData response to Entity array by using given (De-)serializers.
  * @param data - The OData payload.
  * @param entityApi - Entity API that holds the (De-)serializers.
+ * @returns The converted value.
  */
 export function transformReturnValueForEntityList<
   ReturnT extends Entity,
@@ -55,6 +58,7 @@ export function transformReturnValueForEntityList<
  * Convert the payload of the OData response to complex type by using given deserialization function.
  * @param data - The OData payload.
  * @param builderFn - The deserialization function for converting the payload.
+ * @returns The converted value.
  */
 export function transformReturnValueForComplexType<ReturnT>(
   data: any,
@@ -67,6 +71,7 @@ export function transformReturnValueForComplexType<ReturnT>(
  * Convert the payload of the OData response to complex type array by using given deserialization function.
  * @param data - The OData payload.
  * @param builderFn - The deserialization function for converting the payload.
+ * @returns The converted value.
  */
 export function transformReturnValueForComplexTypeList<ReturnT>(
   data: any,
@@ -79,6 +84,7 @@ export function transformReturnValueForComplexTypeList<ReturnT>(
  * Convert the payload of the OData response to edm type by using given deserialization function.
  * @param data - The OData payload.
  * @param builderFn - The deserialization function for converting the payload.
+ * @returns The converted value.
  */
 export function transformReturnValueForEdmType<ReturnT>(
   data: any,
@@ -91,6 +97,7 @@ export function transformReturnValueForEdmType<ReturnT>(
  * Convert the payload of the OData response to edm type array by using given deserialization function.
  * @param data - The OData payload.
  * @param builderFn - The deserialization function for converting the payload.
+ * @returns The converted value.
  */
 export function transformReturnValueForEdmTypeList<ReturnT>(
   data: any,

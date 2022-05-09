@@ -17,7 +17,8 @@
     "generate": "ts-node generate-odata-services.ts",
     "lint": "prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
     "lint:fix": "prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w --loglevel error",
-    "postgenerate": "yarn lint:fix"
+    "postgenerate": "yarn lint:fix",
+    "check:dependencies": "depcheck ."
   },
   "license": "Apache-2.0",
   "dependencies": {
@@ -26,6 +27,7 @@
   },
   "peerDependencies": {
     "@sap-cloud-sdk/generator": "^2.3.0",
-    "@sap-cloud-sdk/util": "^2.3.0"
+    "@sap-cloud-sdk/util": "^2.3.0",
+    "@sap-cloud-sdk/odata-v4": "^2.3.0"
   }
 }

@@ -3,10 +3,10 @@ import { AxiosResponse } from 'axios';
 import { isNullish } from '@sap-cloud-sdk/util';
 import {
   Destination,
-  noDestinationErrorMessage,
   useOrFetchDestination,
   DestinationOrFetchOptions
 } from '@sap-cloud-sdk/connectivity';
+import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
 import {
   Method,
   HttpResponse,

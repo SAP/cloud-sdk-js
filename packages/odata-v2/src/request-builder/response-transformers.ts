@@ -5,7 +5,6 @@ import { Entity } from '../entity';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
 
 /**
- * @internal
  * Convert the payload of the OData response to undefined
  * @param data - the OData payload
  * @param builderFn - the deserialization function for converting the payload
@@ -18,7 +17,6 @@ export function transformReturnValueForUndefined<ReturnT>(
 }
 
 /**
- * @internal
  * Convert the payload of the OData response to an Entity by using given (De-)serializers.
  * @param data - the OData payload
  * @param entityApi - Entity API that holds the (De-)serializers
@@ -33,7 +31,6 @@ export function transformReturnValueForEntity<
 }
 
 /**
- * @internal
  * Convert the payload of the OData response to Entity array by using given (De-)serializers.
  * @param data - the OData payload
  * @param entityApi - Entity API that holds the (De-)serializers
@@ -56,7 +53,6 @@ export function transformReturnValueForEntityList<
 }
 
 /**
- * @internal
  * Convert the payload of the OData response to complex type by using given deserialization function
  * @param data - the OData payload
  * @param builderFn - the deserialization function for converting the payload
@@ -69,7 +65,6 @@ export function transformReturnValueForComplexType<ReturnT>(
 }
 
 /**
- * @internal
  * Convert the payload of the OData response to complex type array by using given deserialization function
  * @param data - the OData payload
  * @param builderFn - the deserialization function for converting the payload
@@ -82,7 +77,6 @@ export function transformReturnValueForComplexTypeList<ReturnT>(
 }
 
 /**
- * @internal
  * Convert the payload of the OData response to edm type by using given deserialization function
  * @param data - the OData payload
  * @param builderFn - the deserialization function for converting the payload
@@ -95,7 +89,6 @@ export function transformReturnValueForEdmType<ReturnT>(
 }
 
 /**
- * @internal
  * Convert the payload of the OData response to edm type array by using given deserialization function
  * @param data - the OData payload
  * @param builderFn - the deserialization function for converting the payload

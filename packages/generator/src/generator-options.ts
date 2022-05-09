@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import { Options } from 'yargs';
 
 /**
- * @internal
+ * Options that can be used to configure the generation when using the generator programmatically.
  */
 export interface GeneratorOptions {
   inputDir: PathLike;

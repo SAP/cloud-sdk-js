@@ -21,6 +21,3 @@ export type Expandable<
       | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>
       | OneToOneLink<EntityT, DeSerializersT, LinkedEntityApiT>
       | AllFields<EntityT>;
-
-
-

@@ -1145,9 +1145,9 @@
     yaml "1.10.2"
 
 "@sap/cds@^5.6.0", "@sap/cds@^5.8.0", "@sap/cds@^5.9.2":
-  version "5.9.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.4.tgz#f073b9944a647adcef79d711082319f3743f55c0"
-  integrity sha512-jmU8QtxCrg5EpAZje8tQtEv7YNwCS8wC9pQj/IDV4jmf1T+CC/wY+KljbBouQxme6QDysUz3JqGlje+riHLXvg==
+  version "5.9.5"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.5.tgz#99c676e81e3ee9aa13d47f53bfd9f07c86e7dd2d"
+  integrity sha512-H/LIB7WnJ3JKzywnfYd9fOLDKVQokO6/JMUUXbCx+VllYuIQFwClwZ+uYQDgWYSrHePRpuOP5TxLFuMXvhdaag==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"

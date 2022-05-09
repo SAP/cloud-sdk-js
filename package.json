@@ -48,7 +48,7 @@
     "doc": "ts-node scripts/generate-docs.ts",
     "version": "ts-node scripts/after-bump.ts && yarn generate && yarn doc && git add .",
     "lint": "turbo run lint",
-    "lint:fix": "turbo run lint:fix --force",
+    "lint:fix": "turbo run lint:fix",
     "check:circular": "madge --extensions ts --circular ./packages --exclude 'environment-accessor'",
     "check:dependencies": "turbo run check:dependencies",
     "check:license": "ts-node scripts/check-licenses.ts",

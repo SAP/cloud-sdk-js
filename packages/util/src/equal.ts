@@ -1,5 +1,11 @@
 import { isNullish } from './nullish';
 
+/**
+ * Checks whether the key/value of the two objects are the same.
+ * @param obj1 - The first object.
+ * @param obj2 - The second object.
+ * @returns A boolean, indicating all the key/value equal to each other.
+ */
 export function equalObjects(
   obj1: Record<string, any>,
   obj2: Record<string, any>
@@ -11,6 +17,12 @@ export function equalObjects(
   );
 }
 
+/**
+ * Checks whether the two items contain the same content.
+ * @param item1 - The first item.
+ * @param item2 - The second item.
+ * @returns A boolean, indicating all the items equal to each other.
+ */
 export function equal<T>(item1: T, item2: T): boolean {
   if (Array.isArray(item1) && Array.isArray(item2)) {
     return equalArrays(item1 as any[], item2 as any[]);
@@ -26,6 +38,12 @@ export function equal<T>(item1: T, item2: T): boolean {
   return item1 === item2;
 }
 
+/**
+ * Checks whether the elements of two arrays are the same with the same order.
+ * @param arr1 - The first array.
+ * @param arr2 - The second array.
+ * @returns A boolean, indicating all the elements equal to each other in the same order.
+ */
 export function equalArrays<T>(arr1: T[], arr2: T[]): boolean {
   return (
     arr1.length === arr2.length &&

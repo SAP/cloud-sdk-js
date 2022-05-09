@@ -1,3 +1,6 @@
+/**
+ * Interface, representing a service, e.g., XSUAA service and connectivity service on Cloud Foundry.
+ */
 export interface Service {
   [other: string]: any;
   name: string;

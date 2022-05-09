@@ -377,6 +377,9 @@ const configMapping: Record<string, keyof Destination> = {
   SystemUser: 'systemUser'
 };
 
+/**
+ * @internal
+ */
 export function noDestinationErrorMessage(
   destination: DestinationOrFetchOptions
 ): string {
@@ -385,6 +388,9 @@ export function noDestinationErrorMessage(
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
 
+/**
+ * Type that is either a [[Destination]] or ("exclusive or", or shorten "XOR") [[DestinationFetchOptions]].
+ */
 export type DestinationOrFetchOptions = Xor<
   Destination,
   DestinationFetchOptions

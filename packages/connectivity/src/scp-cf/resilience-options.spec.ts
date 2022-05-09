@@ -11,6 +11,7 @@ describe('resilience-options', () => {
     let a: keysOpossum = '' as any;
     const b: keysSDK = '' as any;
     // is assignment works they are compatible
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     a = b;
   });
 });

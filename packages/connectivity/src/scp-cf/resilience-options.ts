@@ -1,3 +1,6 @@
+/**
+ * Options to use while fetching destinations in terms of resilience.
+ */
 export interface ResilienceOptions {
   /**
    * A boolean value that indicates whether to execute request to SCP-CF services using circuit breaker.

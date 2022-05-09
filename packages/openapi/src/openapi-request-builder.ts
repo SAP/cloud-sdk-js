@@ -177,6 +177,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 }
 
 // TODO: Tighten types
+/**
+ * Type of the request parameters to be passed to [[OpenApiRequestBuilder]].
+ */
 export interface OpenApiRequestParameters {
   pathParameters?: Record<string, any>;
   queryParameters?: Record<string, any>;

@@ -19,6 +19,9 @@ export interface CacheEntry<T> {
   entry: T;
 }
 
+/**
+ * Options to use while fetching destinations in terms of cache.
+ */
 export interface CachingOptions {
   /**
    * A boolean value that indicates whether to read destinations from cache.

@@ -1,4 +1,8 @@
 /* eslint-disable  import/export */
+
+/**
+ * Enum that represents the supported web protocols on Cloud Foundry.
+ */
 export enum Protocol {
   HTTP = 'http',
   HTTPS = 'https'

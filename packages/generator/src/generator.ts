@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import { PathLike } from 'fs';
 import { resolve, dirname, sep, posix } from 'path';
 import {

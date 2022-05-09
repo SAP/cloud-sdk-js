@@ -6,11 +6,17 @@ import {
 import { getAuthHeaders } from './authorization-header';
 import { Destination } from './destination';
 
+/**
+ * Build a request header map, that contains authentication headers and SAP specific headers like 'sap-client', from a given destination.
+ * @param destination - The given destination that contains e.g., authentication and SAP client information.
+ * @returns A request header map, built from destination.
+ */
 export async function buildHeadersForDestination(
   destination: Destination
 ): Promise<Record<string, string>> {
+  // eslint-disable-next-line jsdoc/require-jsdoc
   const authHeaders = await getAuthHeaders(destination);
-
+  // eslint-disable-next-line jsdoc/require-jsdoc
   const sapHeaders = getSapHeaders(destination);
 
   return mergeIgnoreCase(destination.headers, {

@@ -177,6 +177,10 @@ export function setGlobalLogLevel(level: LogLevel): void {
   });
 }
 
+/**
+ * Get the global log level of the container.
+ * @returns The global log level, or `undefined` when not defined.
+ */
 export function getGlobalLogLevel(): string | undefined {
   return container.options.level;
 }

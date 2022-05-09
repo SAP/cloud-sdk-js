@@ -47,7 +47,7 @@ export class UpdateRequestBuilder<
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
     }
-
+    // eslint-disable-next-line jsdoc/require-jsdoc
     const request = await this.build(destination);
     return super.executeRequest(request);
   }
@@ -63,7 +63,7 @@ export class UpdateRequestBuilder<
     if (this.isEmptyObject(this.requestConfig.payload)) {
       throw new Error('Cannot execute an update request with empty payload.');
     }
-
+    // eslint-disable-next-line jsdoc/require-jsdoc
     const request = await this.build(destination);
     return super.executeRequestRaw(request);
   }

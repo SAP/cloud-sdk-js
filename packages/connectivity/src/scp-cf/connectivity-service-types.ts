@@ -30,13 +30,16 @@ export interface ProxyConfiguration {
 
   /**
    * HTTP headers to be added to a request if tunneled through the proxy.
-   * If the request is going to an OnPremise system via the connectivity proxy, the header contains the 'Proxy-Authorization' and
-   * the 'SAP-Connectivity-Authentication' header if a JWT is present on the current request.
-   * For web proxies only the 'Proxy-Authorization' enter the header fields if provided.
    */
   headers?: ProxyConfigurationHeaders;
 }
 
+/**
+ * An interface, representing the request headers, used when going through the proxy.
+ * If the request is going to an OnPremise system via the connectivity proxy, the header contains the 'Proxy-Authorization' and
+ * the 'SAP-Connectivity-Authentication' header if a JWT is present on the current request.
+ * For web proxies only the 'Proxy-Authorization' enter the header fields if provided.
+ */
 export interface ProxyConfigurationHeaders {
   [header: string]: string | undefined;
   'Proxy-Authorization': string;

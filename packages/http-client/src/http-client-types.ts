@@ -88,10 +88,16 @@ interface KnownHttpResponseFields {
   request: any;
 }
 
+/**
+ * This interface is compatible with AxiosResponse.
+ */
 export interface HttpResponse extends KnownHttpResponseFields {
   [otherKey: string]: any;
 }
 
+/**
+ * Type of options used for e.g., [[executeHttpRequest]].
+ */
 export interface HttpRequestOptions {
   /**
    * A boolean value that indicates whether to fetch the csrf token for a non-get request.

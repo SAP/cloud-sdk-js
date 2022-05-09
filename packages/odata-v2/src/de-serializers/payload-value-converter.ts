@@ -1,6 +1,9 @@
 import { EdmTypeShared } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from './de-serializers';
 
+/**
+ * @internal
+ */
 export function edmToTs(
   value: any,
   edmType: EdmTypeShared<'v2'>,

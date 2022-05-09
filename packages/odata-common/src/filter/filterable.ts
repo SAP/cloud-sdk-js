@@ -31,6 +31,20 @@ export type Filterable<
   | BooleanFilterFunction<EntityT>
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;
 
+export function and<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  expressions: Filterable<EntityT, DeSerializersT>[]
+): FilterList<EntityT, DeSerializersT>;
+
+export function and<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  ...expressions: Filterable<EntityT, DeSerializersT>[]
+): FilterList<EntityT, DeSerializersT>;
+
 /**
  * Combine [[Filterable]]s with logical `and` to create a [[FilterList]].
  * @example
@@ -47,21 +61,10 @@ export type Filterable<
  *  .filter(filterExp1, filterExp2);
  * ```
  * @typeparam EntityT - Type of the entity filter on.
- * @param expressions - Filterables to be combined with logical `and`.
+ * @param first - The first [[Filterable]]s to be combined with.
+ * @param rest - The rest of the [[Filterable]]s to be combined with.
  * @returns The newly created FilterList.
  */
-export function and<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
->(
-  expressions: Filterable<EntityT, DeSerializersT>[]
-): FilterList<EntityT, DeSerializersT>;
-export function and<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
->(
-  ...expressions: Filterable<EntityT, DeSerializersT>[]
-): FilterList<EntityT, DeSerializersT>;
 export function and<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
@@ -75,6 +78,20 @@ export function and<
   return new FilterList(variadicArgumentToArray(first, rest));
 }
 
+export function or<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  expressions: Filterable<EntityT, DeSerializersT>[]
+): FilterList<EntityT, DeSerializersT>;
+
+export function or<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  ...expressions: Filterable<EntityT, DeSerializersT>[]
+): FilterList<EntityT, DeSerializersT>;
+
 /**
  * Combine [[Filterable]]s with logical `or` to create a [[FilterList]].
  * @example
@@ -84,21 +101,10 @@ export function and<
  *  .filter(or(filterExp1, filterExp2));
  * ```
  * @typeparam EntityT - Type of the entity filter on.
- * @param expressions - Filterables to be combined with logical `or`.
+ * @param first - The first [[Filterable]]s to be combined with.
+ * @param rest - The rest of the [[Filterable]]s to be combined with.
  * @returns The newly created FilterList.
  */
-export function or<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
->(
-  expressions: Filterable<EntityT, DeSerializersT>[]
-): FilterList<EntityT, DeSerializersT>;
-export function or<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
->(
-  ...expressions: Filterable<EntityT, DeSerializersT>[]
-): FilterList<EntityT, DeSerializersT>;
 export function or<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers

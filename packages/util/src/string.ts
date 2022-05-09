@@ -14,9 +14,12 @@ export function encodeBase64(str: string): string {
  * @returns String without whitespace on the left side.
  */
 export function trimLeft(string: string): string {
-  let subStrings = string.split(unixEOL);
-  if (!subStrings[0].trim()) {
-    subStrings = subStrings.slice(1);
+  const subStrings = string.split(unixEOL);
+  const leftTrimmed = subStrings[0].trimStart();
+  if (!leftTrimmed) {
+    subStrings.shift();
+  } else {
+    subStrings[0] = leftTrimmed;
   }
   return subStrings.join(unixEOL);
 }
@@ -27,15 +30,18 @@ export function trimLeft(string: string): string {
  * @returns String without whitespace on the right side.
  */
 export function trimRight(string: string): string {
-  let subStrings = string.split(unixEOL);
-  if (!subStrings[subStrings.length - 1].trim()) {
-    subStrings = subStrings.slice(0, -1);
+  const subStrings = string.split(unixEOL);
+  const rightTrimmed = subStrings[subStrings.length - 1].trimEnd();
+  if (!rightTrimmed) {
+    subStrings.pop();
+  } else {
+    subStrings[subStrings.length - 1] = rightTrimmed;
   }
   return subStrings.join(unixEOL);
 }
 
 /**
- * Remove whitespace from the left side of a string.
+ * Remove whitespace from the left and right side of a string.
  * @param string - String to trim.
  * @returns String without outer whitespace.
  */

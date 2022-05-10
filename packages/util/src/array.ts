@@ -64,8 +64,31 @@ export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {
  * @param firstOrArray - Either an array, the first element of the var args or `undefined`, if no argument was given.
  * @param rest - Second to last element, if var args were used, empty array, if the first argument is an array.
  * @returns Array from the input or empty array if no input was given.
+ * @deprecated This method should be replaced by `transformVariadicArgumentToArray`.
  */
 export function variadicArgumentToArray<T>(
+  firstOrArray: undefined | T | T[],
+  rest: T[]
+): T[] {
+  return transformVariadicArgumentToArray(firstOrArray, rest);
+}
+
+/**
+ * We want to provide methods which accept a variable single number of elements and arrays.
+ * The overloaded signature to achieve this is:
+ * ```
+ * function doSomething(array: T[])
+ * function doSomething(...varArgs: T[])
+ * function doSomething(first: undefined | T | T[], ...rest: T[]) {
+ *   //implementation
+ * }
+ * ```
+ * This wrapper methods makes it easy build an array from the input.
+ * @param firstOrArray - Either an array, the first element of the var args or `undefined`, if no argument was given.
+ * @param rest - Second to last element, if var args were used, empty array, if the first argument is an array.
+ * @returns Array from the input or empty array if no input was given.
+ */
+export function transformVariadicArgumentToArray<T>(
   firstOrArray: undefined | T | T[],
   rest: T[]
 ): T[] {

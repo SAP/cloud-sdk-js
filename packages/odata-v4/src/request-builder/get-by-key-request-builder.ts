@@ -1,4 +1,4 @@
-import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
+import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   EntityIdentifiable,
   Expandable,
@@ -82,7 +82,7 @@ export class GetByKeyRequestBuilder<
       EntityApi<EntityBase, DeSerializersT>
     >[]
   ): this {
-    this.requestConfig.expands = variadicArgumentToArray(first, rest);
+    this.requestConfig.expands = transformVariadicArgumentToArray(first, rest);
     return this;
   }
 }

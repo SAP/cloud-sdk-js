@@ -16,6 +16,7 @@ import { urlAndAgent } from '../../http-agent';
 import {
   DestinationConfiguration,
   DestinationJson,
+  parseCertificate,
   parseDestination
 } from './destination';
 import {
@@ -42,7 +43,7 @@ type DestinationServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'destinationName'>;
 
 let circuitBreaker: DestinationCircuitBreaker<
-  DestinationCertificate | DestinationConfiguration | DestinationJson
+  DestinationCertificateJson | DestinationConfiguration | DestinationJson
 >;
 
 /**
@@ -202,7 +203,7 @@ export async function fetchCertificate(
     const response = await callCertificateEndpoint(accountUri, header).catch(
       () => callCertificateEndpoint(instanceUri, header)
     );
-    return response.data;
+    return parseCertificate(response.data);
   } catch (err) {
     logger.warn(
       `Failed to fetch truststore certificate ${certificateName} - Continuing without certificate. This may cause failing requests`,
@@ -254,18 +255,24 @@ function errorMessageFromResponse(
     : '';
 }
 
+interface DestinationCertificateJson {
+  Type: string;
+  Name: string;
+  Content: string;
+}
+
 async function callCertificateEndpoint(
   uri: string,
   headers: Record<string, any>,
   options?: ResilienceOptions
-): Promise<AxiosResponse<DestinationCertificate>> {
+): Promise<AxiosResponse<DestinationCertificateJson>> {
   if (!uri.includes('Certificates')) {
     throw new Error(
       `callCertificateEndpoint was called with illegal arrgument: ${uri}. URL must be certificate endpoint of destination service.`
     );
   }
   return callDestinationService(uri, headers, options) as Promise<
-    AxiosResponse<DestinationCertificate>
+    AxiosResponse<DestinationCertificateJson>
   >;
 }
 
@@ -290,7 +297,7 @@ async function callDestinationService(
   options?: ResilienceOptions
 ): Promise<
   AxiosResponse<
-    DestinationCertificate | DestinationConfiguration | DestinationJson
+    DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
   const { enableCircuitBreaker, timeout } = {
@@ -307,7 +314,7 @@ async function callDestinationService(
 
   if (enableCircuitBreaker) {
     return getCircuitBreaker<
-      DestinationCertificate | DestinationJson | DestinationJson
+      DestinationCertificateJson | DestinationJson | DestinationJson
     >().fire(config);
   }
 
@@ -315,12 +322,14 @@ async function callDestinationService(
 }
 
 function getCircuitBreaker<T>(): DestinationCircuitBreaker<
-  DestinationCertificate | DestinationConfiguration | DestinationJson
+  DestinationCertificateJson | DestinationConfiguration | DestinationJson
 > {
   const request: (
     config: AxiosRequestConfig
   ) => Promise<
-    AxiosResponse<DestinationCertificate | DestinationJson | DestinationJson>
+    AxiosResponse<
+      DestinationCertificateJson | DestinationJson | DestinationJson
+    >
   > = axios.request;
   if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(request, circuitBreakerDefaultOptions);

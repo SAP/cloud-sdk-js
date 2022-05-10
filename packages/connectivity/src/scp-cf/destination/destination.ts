@@ -240,7 +240,13 @@ function setDefaultAuthenticationFallback(
     : assoc('authentication', getAuthenticationType(destination), destination);
 }
 
-function parseCertificate(
+/**
+ * Transforms the lower case variables of the destination reposne to lower case.
+ * @internal
+ * @param certificate
+ * @returns The parsed Destination Certificate
+ */
+export function parseCertificate(
   certificate: Record<string, any>
 ): DestinationCertificate {
   return {

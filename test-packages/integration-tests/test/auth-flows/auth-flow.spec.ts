@@ -1,6 +1,6 @@
 import { businessPartnerService } from '@sap/cloud-sdk-vdm-business-partner-service';
 import * as xssec from '@sap/xssec';
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { Destination, getAgentConfig } from '@sap-cloud-sdk/connectivity';
 import { executeHttpRequest } from '../../../../packages/http-client/src';
 import {
   getService,
@@ -120,11 +120,14 @@ describe('OAuth flows', () => {
     expect(destination?.password).toBeDefined();
   }, 60000);
 
-  xit('No Auth: trust store certificates are fetched', async () => {
+  it('No Auth: trust store certificates are fetched', async () => {
     const destination = await getDestination({
       destinationName: systems.destination.providerTrustStore
     });
     expect(destination?.trustStoreCertificate).toBeDefined();
+    expect(destination?.trustStoreCertificate?.content).toBeDefined();
+    const agent = getAgentConfig(destination!);
+    expect(agent['httpsAgent'].options.ca[0]).toMatch(/BEGIN CERTIFICATE/);
   }, 60000);
 
   xit('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {

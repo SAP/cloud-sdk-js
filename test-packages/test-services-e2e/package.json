@@ -15,10 +15,10 @@
   },
   "scripts": {
     "generate": "ts-node generate-e2e-services.ts",
-    "lint": "prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -c",
-    "lint:fix": "prettier . --config='../../.prettierrc' --ignore-path='../../.prettierignore' -w --loglevel error",
-    "postgenerate": "yarn lint:fix",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "depcheck .",
+    "lint": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
+    "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
+    "postgenerate": "yarn lint:fix"
   },
   "license": "Apache-2.0",
   "dependencies": {

@@ -115,6 +115,11 @@ export interface Destination {
   certificates?: DestinationCertificate[];
 
   /**
+   * Trusted certificate for https requests used by the destination. Only relevant for self-signed certificates where trust needs to be enabled in the client.
+   */
+  trustStoreCertificate?: DestinationCertificate;
+
+  /**
    * Name of the key store/certificate to be used for ClientCertificateAuthentication.
    */
   keyStoreName?: string;

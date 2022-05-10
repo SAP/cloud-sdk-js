@@ -5,11 +5,13 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { defaultResilienceBTPServices } from '../resilience-options';
+import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
   fetchInstanceDestinations,
-  fetchSubaccountDestinations
+  fetchSubaccountDestinations,
+  fetchCertificate
 } from './destination-service';
 
 const jwt = jwt123.sign(
@@ -191,6 +193,79 @@ describe('destination service', () => {
           enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
+    });
+  });
+
+  describe('fetchCertificate', () => {
+    it('fetches the subaccount certificate', async () => {
+      mockCertificateCall(nock, 'server-public-cert.pem', jwt, 'subaccount');
+
+      const actual = await fetchCertificate(
+        destinationServiceUri,
+        jwt,
+        'server-public-cert.pem'
+      );
+      expect(actual).toEqual({
+        name: 'server-public-cert.pem',
+        content: expect.any(String),
+        type: 'CERTIFICATE'
+      });
+    });
+
+    it('fetches the instance certificate', async () => {
+      mockCertificateCall(nock, 'server-public-cert.pem', jwt, 'instance');
+
+      const actual = await fetchCertificate(
+        destinationServiceUri,
+        jwt,
+        'server-public-cert.pem'
+      );
+      expect(actual).toEqual({
+        name: 'server-public-cert.pem',
+        content: expect.any(String),
+        type: 'CERTIFICATE'
+      });
+    });
+
+    it('fetches the subaccount first', async () => {
+      mockCertificateCall(nock, 'server-public-cert.pem', jwt, 'subaccount');
+      const mockInstance = mockCertificateCall(
+        nock,
+        'server-public-cert.pem',
+        jwt,
+        'instance'
+      );
+
+      await fetchCertificate(
+        destinationServiceUri,
+        jwt,
+        'server-public-cert.pem'
+      );
+      expect(mockInstance.isDone()).toBe(false);
+    });
+
+    it('returns undefined for non pem files', async () => {
+      mockCertificateCall(nock, 'server-public-cert.jks', jwt, 'subaccount');
+
+      const actual = await fetchCertificate(
+        destinationServiceUri,
+        jwt,
+        'server-public-cert.jks'
+      );
+      expect(actual).toBeUndefined();
+    });
+
+    it('returns undefined for failing service call', async () => {
+      return nock(destinationServiceUri)
+        .get('/destination-configuration/v1/subaccountCertificates/*')
+        .reply(500);
+
+      const actual = await fetchCertificate(
+        destinationServiceUri,
+        jwt,
+        'server-public-cert.jks'
+      );
+      expect(actual).toBeUndefined();
     });
   });
 

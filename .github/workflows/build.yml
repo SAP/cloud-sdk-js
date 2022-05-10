@@ -129,6 +129,11 @@ jobs:
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           date=`date +%Y%m%d%H%M%S`
+          rm .changeset/*.md
+          cp canary-release-changeset.md .changeset
+          yarn changeset pre enter ${date}
+          yarn changeset version
+          yarn changeset pre exit
           yarn changeset publish --tag canary
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

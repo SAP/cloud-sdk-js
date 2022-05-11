@@ -22,6 +22,13 @@ describe('trim', () => {
     expect(trim(` ${unixEOL} `)).toEqual('');
   });
 
+  it('trims two whitespace lines 2', () => {
+    expect(
+      trim(` 
+     `)
+    ).toEqual('');
+  });
+
   it('trims left and right', () => {
     expect(trim(' text ')).toEqual('text');
     expect(trim('text ')).toEqual('text');

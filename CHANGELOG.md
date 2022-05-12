@@ -14,14 +14,7 @@
 
 ## Compatibility Notes
 
-- [eslint-config] Switch the following `jsdoc` related levels from `warn` to `error`: 
-  - `jsdoc/check-param-names`
-  - `jsdoc/require-description-complete-sentence`
-  - `jsdoc/require-jsdoc`
-  - `jsdoc/require-param`
-  - `jsdoc/require-returns`
-- [connectivity] Mark the function `noDestinationErrorMessage` as internal API.
-- [odata-v4] Mark the function `uriConverter` as internal API.
+-
 
 ## New Functionality
 

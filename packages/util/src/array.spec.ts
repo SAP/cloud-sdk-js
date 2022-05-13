@@ -5,7 +5,7 @@ import {
   last,
   first,
   splitInChunks,
-  variadicArgumentToArray,
+  transformVariadicArgumentToArray,
   zip,
   partition,
   filterDuplicates,
@@ -45,7 +45,7 @@ describe('array', () => {
       firstOrArray: undefined | string | string[],
       ...rest: string[]
     ): string[] {
-      return variadicArgumentToArray(firstOrArray, rest);
+      return transformVariadicArgumentToArray(firstOrArray, rest);
     }
 
     it('returns empty array if nothing is given', () => {

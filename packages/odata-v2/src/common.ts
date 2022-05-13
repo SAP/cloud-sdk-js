@@ -23,5 +23,6 @@ export {
   throwErrorWhenReturnTypeIsUnionType,
   Time,
   asc,
-  desc
+  desc,
+  transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/odata-common';

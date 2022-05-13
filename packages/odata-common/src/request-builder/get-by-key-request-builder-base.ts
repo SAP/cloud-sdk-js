@@ -1,4 +1,7 @@
-import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
+import {
+  ErrorWithCause,
+  transformVariadicArgumentToArray
+} from '@sap-cloud-sdk/util';
 import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { EntityBase } from '../entity-base';
 import { EntityDeserializer } from '../entity-deserializer';
@@ -55,7 +58,7 @@ export abstract class GetByKeyRequestBuilderBase<
       | Selectable<EntityT, DeSerializersT>[],
     ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
-    this.requestConfig.selects = variadicArgumentToArray(first, rest);
+    this.requestConfig.selects = transformVariadicArgumentToArray(first, rest);
     return this;
   }
 

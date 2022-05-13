@@ -22,7 +22,7 @@ export interface DestinationsByType {
 }
 
 /**
- * An interface that configures the behaviour of the destination accessor.
+ * Options to configure the behavior of the destination accessor.
  * @see [[DestinationFetchOptions]]
  */
 export interface DestinationAccessorOptions {

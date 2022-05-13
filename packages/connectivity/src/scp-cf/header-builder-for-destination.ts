@@ -9,7 +9,7 @@ import { Destination } from './destination';
 /**
  * Build a request header map, that contains authentication headers and SAP specific headers like 'sap-client', from a given destination.
  * @param destination - The given destination that contains e.g., authentication and SAP client information.
- * @returns A request header map, built from destination.
+ * @returns A request header map, built from the given destination.
  */
 export async function buildHeadersForDestination(
   destination: Destination

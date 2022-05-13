@@ -14,9 +14,7 @@ import { Destination } from './destination';
 export async function buildHeadersForDestination(
   destination: Destination
 ): Promise<Record<string, string>> {
-  // eslint-disable-next-line jsdoc/require-jsdoc
   const authHeaders = await getAuthHeaders(destination);
-  // eslint-disable-next-line jsdoc/require-jsdoc
   const sapHeaders = getSapHeaders(destination);
 
   return mergeIgnoreCase(destination.headers, {

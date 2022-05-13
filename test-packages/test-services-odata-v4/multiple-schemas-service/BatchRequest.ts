@@ -13,7 +13,7 @@ import {
   UpdateRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
-import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
+import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { TestEntity1, TestEntity2, TestEntity3, TestEntity4 } from './index';
 
 /**
@@ -49,7 +49,7 @@ export function batch<DeSerializersT extends DeSerializers>(
 ): ODataBatchRequestBuilder<DeSerializersT> {
   return new ODataBatchRequestBuilder(
     defaultMultipleSchemasServicePath,
-    transformVariadicArgumentToArray(first, rest)
+    variadicArgumentToArray(first, rest)
   );
 }
 
@@ -71,7 +71,7 @@ export function changeset<DeSerializersT extends DeSerializers>(
     | Array<WriteMultipleSchemasServiceRequestBuilder<DeSerializersT>>,
   ...rest: Array<WriteMultipleSchemasServiceRequestBuilder<DeSerializersT>>
 ): BatchChangeSet<DeSerializersT> {
-  return new BatchChangeSet(transformVariadicArgumentToArray(first, rest));
+  return new BatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
 export const defaultMultipleSchemasServicePath =

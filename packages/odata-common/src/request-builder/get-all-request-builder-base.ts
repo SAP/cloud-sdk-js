@@ -1,4 +1,4 @@
-import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
+import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
@@ -53,7 +53,7 @@ export abstract class GetAllRequestBuilderBase<
       | Selectable<EntityT, DeSerializersT>[],
     ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
-    this.requestConfig.selects = variadicArgumentToArray(first, rest);
+    this.requestConfig.selects = transformVariadicArgumentToArray(first, rest);
     return this;
   }
 
@@ -68,7 +68,7 @@ export abstract class GetAllRequestBuilderBase<
     first: undefined | Orderable<EntityT> | Orderable<EntityT>[],
     ...rest: Orderable<EntityT>[]
   ): this {
-    this.requestConfig.orderBy = variadicArgumentToArray(first, rest);
+    this.requestConfig.orderBy = transformVariadicArgumentToArray(first, rest);
     return this;
   }
 

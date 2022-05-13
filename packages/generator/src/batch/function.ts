@@ -60,7 +60,7 @@ export function batchFunction(
     returnType: 'ODataBatchRequestBuilder<DeSerializersT>',
     statements: `return new ODataBatchRequestBuilder(
       default${service.className}Path,
-      variadicArgumentToArray(first,rest)
+      transformVariadicArgumentToArray(first,rest)
     );`,
     overloads
   };
@@ -118,7 +118,7 @@ export function changesetFunction(
     ],
     returnType: 'BatchChangeSet<DeSerializersT>',
     statements:
-      'return new BatchChangeSet(variadicArgumentToArray(first,rest));',
+      'return new BatchChangeSet(transformVariadicArgumentToArray(first,rest));',
     overloads
   };
 }

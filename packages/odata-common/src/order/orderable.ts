@@ -36,8 +36,8 @@ export type OrderableInput<
 /**
  * Create new Order by `orderBy._fieldName` in ascending order.
  * @typeparam EntityT - Type of the entity to be ordered
- * @param orderBy - Field or link to be ordered by
- * @returns New order
+ * @param orderBy - Field or link to be ordered by.
+ * @returns New order.
  */
 export function asc<
   EntityT extends EntityBase,
@@ -58,8 +58,8 @@ export function asc<
 /**
  * Create new Order by `orderBy._fieldName` in descending order.
  * @typeparam EntityT - Type of the entity to be ordered
- * @param orderBy - Field or link to be ordered by
- * @returns New order
+ * @param orderBy - Field or link to be ordered by.
+ * @returns New order.
  */
 export function desc<
   EntityT extends EntityBase,

@@ -15,6 +15,7 @@
   },
   "scripts": {
     "generate": "ts-node generate-openapi-services.ts",
+    "check:dependencies": "depcheck .",
     "lint": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
     "postgenerate": "yarn lint:fix"

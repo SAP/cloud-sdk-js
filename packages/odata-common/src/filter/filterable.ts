@@ -1,4 +1,4 @@
-import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
+import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
 import type { OneToManyLink } from '../selectable';
 import { DeSerializers } from '../de-serializers';
@@ -72,7 +72,7 @@ export function and<
     | Filterable<EntityT, DeSerializersT>[],
   ...rest: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT> {
-  return new FilterList(variadicArgumentToArray(first, rest));
+  return new FilterList(transformVariadicArgumentToArray(first, rest));
 }
 
 /**
@@ -108,7 +108,7 @@ export function or<
     | Filterable<EntityT, DeSerializersT>[],
   ...rest: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT> {
-  return new FilterList([], variadicArgumentToArray(first, rest));
+  return new FilterList([], transformVariadicArgumentToArray(first, rest));
 }
 
 /**

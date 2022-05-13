@@ -14,13 +14,13 @@ const util_1 = require('@sap-cloud-sdk/util');
 function batch(first, ...rest) {
   return new odata_v4_1.ODataBatchRequestBuilder(
     exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath,
-    (0, util_1.variadicArgumentToArray)(first, rest)
+    (0, util_1.transformVariadicArgumentToArray)(first, rest)
   );
 }
 exports.batch = batch;
 function changeset(first, ...rest) {
   return new odata_v4_1.BatchChangeSet(
-    (0, util_1.variadicArgumentToArray)(first, rest)
+    (0, util_1.transformVariadicArgumentToArray)(first, rest)
   );
 }
 exports.changeset = changeset;

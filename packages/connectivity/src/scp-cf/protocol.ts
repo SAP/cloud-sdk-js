@@ -1,7 +1,7 @@
 /* eslint-disable  import/export */
 
 /**
- * Enum that represents the supported web protocols on Cloud Foundry.
+ * Supported web protocols for requests made by the SAP Cloud SDK.
  */
 export enum Protocol {
   HTTP = 'http',

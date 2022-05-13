@@ -15,7 +15,6 @@ module.exports = {
         'test-packages/memory-tests/sdk-v1/test-service/*',
         'test-packages/memory-tests/sdk-canary/test-service/*',
         'packages/rest-generator/test/test-services/**/*',
-        'packages/generator/test/**/*',
         'test-resources/cli/**/*',
         '**/test-output/**',
         '**/README.md'
@@ -35,7 +34,6 @@ module.exports = {
     'test-packages/memory-tests/sdk-v1/test-service',
     'test-packages/memory-tests/sdk-canary/test-service',
     'packages/rest-generator/test/test-services',
-    'packages/generator/test',
     'test-resources/cli/',
     'test-resources/generator/test-output'
   ],
@@ -44,7 +42,8 @@ module.exports = {
       files: ['**/test/**/*'],
       rules: {
         'import/no-internal-modules': 'off',
-        'no-unused-expressions': 'off'
+        'no-unused-expressions': 'off',
+        'jsdoc/require-jsdoc': 'off'
       }
     },
     {

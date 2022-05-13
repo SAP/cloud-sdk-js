@@ -89,6 +89,7 @@ interface KnownHttpResponseFields {
 }
 
 /**
+ * Represents an HTTP response, that contains response code, headers, payload and the original request.
  * This interface is compatible with AxiosResponse.
  */
 export interface HttpResponse extends KnownHttpResponseFields {
@@ -96,7 +97,8 @@ export interface HttpResponse extends KnownHttpResponseFields {
 }
 
 /**
- * Type of options used for e.g., [[executeHttpRequest]].
+ * Options to configure the behavior when sending HTTP requests.
+ * For example, whether the csrf token is fetched automatically.
  */
 export interface HttpRequestOptions {
   /**

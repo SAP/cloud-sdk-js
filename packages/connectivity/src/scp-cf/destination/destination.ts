@@ -389,7 +389,7 @@ export function noDestinationErrorMessage(
 }
 
 /**
- * Type that is either a [[Destination]] or ("exclusive or", or shorten "XOR") [[DestinationFetchOptions]].
+ * Type that is either a [[Destination]] or (XOR) [[DestinationFetchOptions]].
  */
 export type DestinationOrFetchOptions = Xor<
   Destination,

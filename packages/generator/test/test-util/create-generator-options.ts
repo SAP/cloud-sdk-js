@@ -1,8 +1,5 @@
 import { GeneratorOptions } from '../../src/generator-options';
 
-/**
- * @internal
- */
 export function createOptions(
   options?: Partial<GeneratorOptions>
 ): GeneratorOptions {

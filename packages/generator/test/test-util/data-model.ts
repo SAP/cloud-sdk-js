@@ -10,9 +10,6 @@ import {
   VdmUnsupportedReason
 } from '../../src/vdm-types';
 
-/**
- * @internal
- */
 export const entityName: VdmProperty = {
   instancePropertyName: 'entityName',
   staticPropertyName: 'ENTITY_NAME',

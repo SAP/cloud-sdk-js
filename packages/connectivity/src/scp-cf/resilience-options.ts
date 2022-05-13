@@ -1,5 +1,5 @@
 /**
- * Options to use while fetching destinations in terms of resilience.
+ * Options to configure resilience when fetching destinations.
  */
 export interface ResilienceOptions {
   /**

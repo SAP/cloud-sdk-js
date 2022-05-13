@@ -18,7 +18,7 @@ export function transformReturnValueForUndefined<ReturnT>(
 }
 
 /**
- * Convert the payload of the OData response to an Entity by using given (De-)serializers.
+ * Transform the payload of an OData response to an entity by using the given (de-)serializers.
  * @param data - The OData payload.
  * @param entityApi - Entity API that holds the (de-)serializers.
  * @returns The converted value.

@@ -139,83 +139,8 @@ defaultResilienceOptions: ResilienceOptions = {
 };
 ```
 
-### Variant A - Opinionated
+### API
 
-We pick an implementation and only provide options.
-The API would look like:
-
-```ts
-myApi
-  .getAll()
-  .timeout(20) // deprecate
-  .resilience({...}) // ResilienceOptions
-  .execute({
-      enableCircuitBreaker: true, // deprecate
-      timeout: 10, // deprecate
-      destinationName: 'my-dest'
-  });
-executeHttpRequest({
-      destinationName: 'my-dest'
-    },
-    {
-      resilience: {...} // ResilieceOptions
-    }
-);
-```
-
-Pro:
-
-- Easy to use
-- Defaults non-breaking
-- TypeScript shows options
-
-Contra:
-
-- No custom implementation
-- We have to make assumption on reasonable behavior
-
-### Variant B - Middleware (Default off)
-
-- Users can pass a function taking a function with arguments and returning a `Promise<T>`.
-- For example the input could be the `http-request` function with arguments and the return the promise of `http-client`
-- We provide a sample implementation `resilience()` for easy consumption
-- Assumes all resilience is switched off per default
-
-```ts
-import {executeHttpRequest} from "@sap-cloud-sdk/http-client";
-
-myApi
-  .getAll()
-  .middleware(resilience({retry: 3}))
-  .execute({destinationName: 'my-dest'});
-
-executeHttpRequest({
-    destinationName: 'my-dest'
-  },
-  {
-    resilience: resilience({...})
-  }
-);
-
-type Middleware<T> = <T>(
-        fn: () => Promise<T>,
-        context?: 'service' | 'target'
-) => Promise<T>;
-```
-
-Pro:
-
-- Easy to use
-- Flexible
-- TypeScript shows options
-
-Contra:
-
-- Extension of existing resilience not possible
-
-### Variant C - Middleware (Named)<a name="variant-c" />
-
-- Similar to variant B
 - Assumes that some resilience is switched on per default and our approach considers this.
 - An optional `id` is passed to the `middleware` method.
 - The `id` will give us the flexibility to add and manage additional middlewares in the future.
@@ -300,7 +225,7 @@ Contra:
 
 - Most implementation effort
 
-### Global Switch
+### Setting Resilience Globally
 
 Up to know, we discussed the configuration on a per-request basis.
 In practice, it could be desirable to enable resilience globally for all requests.
@@ -321,3 +246,79 @@ function globalResilience(middleWare: Middleware, id: string) {}
 
 function clearGlobalResilience(id?: string) {}
 ```
+
+### Rejected API Alternatives
+
+#### API A - Opinionated
+
+We pick an implementation and only provide options.
+The API would look like:
+
+```ts
+myApi
+  .getAll()
+  .timeout(20) // deprecate
+  .resilience({...}) // ResilienceOptions
+  .execute({
+      enableCircuitBreaker: true, // deprecate
+      timeout: 10, // deprecate
+      destinationName: 'my-dest'
+  });
+executeHttpRequest({
+      destinationName: 'my-dest'
+    },
+    {
+      resilience: {...} // ResilieceOptions
+    }
+);
+```
+
+Pro:
+
+- Easy to use
+- Defaults non-breaking
+- TypeScript shows options
+
+Contra:
+
+- No custom implementation
+- We have to make assumption on reasonable behavior
+
+#### API B - Middleware (Default off)
+
+- Users can pass a function taking a function with arguments and returning a `Promise<T>`.
+- For example the input could be the `http-request` function with arguments and the return the promise of `http-client`
+- We provide a sample implementation `resilience()` for easy consumption
+- Assumes all resilience is switched off per default
+
+```ts
+import {executeHttpRequest} from "@sap-cloud-sdk/http-client";
+
+myApi
+  .getAll()
+  .middleware(resilience({retry: 3}))
+  .execute({destinationName: 'my-dest'});
+
+executeHttpRequest({
+    destinationName: 'my-dest'
+  },
+  {
+    resilience: resilience({...})
+  }
+);
+
+type Middleware<T> = <T>(
+        fn: () => Promise<T>,
+        context?: 'service' | 'target'
+) => Promise<T>;
+```
+
+Pro:
+
+- Easy to use
+- Flexible
+- TypeScript shows options
+
+Contra:
+
+- Extension of existing resilience not possible

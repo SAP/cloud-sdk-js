@@ -20,7 +20,7 @@ export interface CacheEntry<T> {
 }
 
 /**
- * Options to use while fetching destinations in terms of cache.
+ * Options to enable caching when fetching destinations.
  */
 export interface CachingOptions {
   /**

@@ -241,10 +241,10 @@ function setDefaultAuthenticationFallback(
 }
 
 /**
- * Transforms the lower case variables of the destination reposne to lower case.
+ * Transforms the upper case properties of the destination service response to lower case.
  * @internal
- * @param certificate
- * @returns The parsed Destination Certificate
+ * @param certificate - Response from the certificate endpoint of the destination service.
+ * @returns The parsed Destination Certificate with lower case properties.
  */
 export function parseCertificate(
   certificate: Record<string, any>

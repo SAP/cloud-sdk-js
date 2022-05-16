@@ -98,7 +98,7 @@ export interface HttpResponse extends KnownHttpResponseFields {
 
 /**
  * Options to configure the behavior when sending HTTP requests.
- * For example, whether the csrf token is fetched automatically.
+ * For example, whether the CSRF token is fetched automatically.
  */
 export interface HttpRequestOptions {
   /**

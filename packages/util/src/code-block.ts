@@ -1,6 +1,6 @@
 import { unixEOL } from './string-formatter';
 import { zip } from './array';
-import { trim, trimRight } from './string';
+import { trim } from './string';
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Transform strings and arguments to a string formatted as a code block, keeping the indentation of sub code blocks.
@@ -17,7 +17,7 @@ export function codeBlock(
   ...args: any[]
 ): string {
   const pre = strings.slice(0, -1).map(string => {
-    const trimmed = trimRight(string);
+    const trimmed = trimRightNewlines(string);
     return trimmed.length === string.length ? string : trimmed + unixEOL;
   });
   pre.push(strings[strings.length - 1]);
@@ -35,4 +35,12 @@ export function codeBlock(
 
   const zipped = zip(pre, post);
   return trim(zipped.join(''));
+}
+
+function trimRightNewlines(string: string): string {
+  let subStrings = string.split(unixEOL);
+  if (!subStrings[subStrings.length - 1].trim()) {
+    subStrings = subStrings.slice(0, -1);
+  }
+  return subStrings.join(unixEOL);
 }

@@ -1,5 +1,11 @@
 import { unixEOL } from './string-formatter';
-import { trim, encodeBase64, removeFileExtension } from './string';
+import {
+  trim,
+  encodeBase64,
+  removeFileExtension,
+  trimRight,
+  trimLeft
+} from './string';
 
 describe('encodeBase64', () => {
   it('encodes a string', () => {
@@ -14,6 +20,43 @@ describe('trim', () => {
 
   it('trims two whitespace lines', () => {
     expect(trim(` ${unixEOL} `)).toEqual('');
+  });
+
+  it('trims two whitespace lines 2', () => {
+    expect(
+      trim(` 
+     `)
+    ).toEqual('');
+  });
+
+  it('trims left and right', () => {
+    expect(trim(' text ')).toEqual('text');
+    expect(trim('text ')).toEqual('text');
+    expect(trim(' text')).toEqual('text');
+  });
+
+  it('trims right whitespace', () => {
+    expect(trimRight(' text ')).toEqual(' text');
+  });
+
+  it('trims right whitespace with new line', () => {
+    expect(trimRight(` line1 ${unixEOL} line2 `)).toEqual(
+      ` line1 ${unixEOL} line2`
+    );
+  });
+
+  it('trims right whitespace and new line', () => {
+    expect(trimRight(' text ')).toEqual(' text');
+  });
+
+  it('trims left whitespace', () => {
+    expect(trimLeft(' text ')).toEqual('text ');
+  });
+
+  it('trims left whitespace with new line', () => {
+    expect(trimLeft(` line1 ${unixEOL} line2 `)).toEqual(
+      `line1 ${unixEOL} line2 `
+    );
   });
 
   it('removes file extension', () => {

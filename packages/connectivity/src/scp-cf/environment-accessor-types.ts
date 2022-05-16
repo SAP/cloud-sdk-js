@@ -1,5 +1,5 @@
 /**
- * Interface, representing a service, e.g., XSUAA service and connectivity service on Cloud Foundry.
+ * Unspecific representation of a service as read from VCAP_SERVICES (for Cloud Foundry) or mounted secrets (for K8S).
  */
 export interface Service {
   [other: string]: any;

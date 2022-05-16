@@ -45,7 +45,7 @@ export function equal<T>(item1: T, item2: T): boolean {
  * Checks whether the elements of two arrays are the same with the same order.
  * @param arr1 - The first array.
  * @param arr2 - The second array.
- * @returns A boolean, indicating all the elements equal to each other in the same order.
+ * @returns A boolean, indicating both arrays have the same contents.
  */
 export function equalArrays<T>(arr1: T[], arr2: T[]): boolean {
   return (

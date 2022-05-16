@@ -35,7 +35,7 @@ export function transformReturnValueForEntity<
 /**
  * Transform the payload of the OData response to array of entities by using given (de-)serializers.
  * @param data - The OData payload.
- * @param entityApi - Entity API that holds the (De-)serializers.
+ * @param entityApi - Entity API that holds the (de-)serializers.
  * @returns The transformed value.
  */
 export function transformReturnValueForEntityList<

@@ -241,7 +241,7 @@ function setDefaultAuthenticationFallback(
 }
 
 /**
- * Transforms the lower case variables of the destination reposne to lower case.
+ * Transforms the lower case variables of the destination response to lower case.
  * @internal
  * @param certificate
  * @returns The parsed Destination Certificate

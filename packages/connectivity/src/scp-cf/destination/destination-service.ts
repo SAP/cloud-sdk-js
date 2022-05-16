@@ -255,11 +255,11 @@ function errorMessageFromResponse(
     : '';
 }
 
-interface DestinationCertificateJson {
-  Type: string;
-  Name: string;
-  Content: string;
-}
+type DestinationCertificateJson = {
+  [Property in keyof DestinationCertificate as `${Capitalize<
+    string & Property
+  >}`]: DestinationCertificate[Property];
+};
 
 async function callCertificateEndpoint(
   uri: string,
@@ -314,7 +314,7 @@ async function callDestinationService(
 
   if (enableCircuitBreaker) {
     return getCircuitBreaker<
-      DestinationCertificateJson | DestinationJson | DestinationJson
+      DestinationCertificateJson | DestinationConfiguration | DestinationJson
     >().fire(config);
   }
 
@@ -328,7 +328,7 @@ function getCircuitBreaker<T>(): DestinationCircuitBreaker<
     config: AxiosRequestConfig
   ) => Promise<
     AxiosResponse<
-      DestinationCertificateJson | DestinationJson | DestinationJson
+      DestinationCertificateJson | DestinationConfiguration | DestinationJson
     >
   > = axios.request;
   if (!circuitBreaker) {

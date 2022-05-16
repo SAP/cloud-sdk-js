@@ -1,10 +1,10 @@
 import { isNullish } from './nullish';
 
 /**
- * Checks whether the key/value of the two objects are the same.
+ * Checks whether the keys and values of two objects are equal.
  * @param obj1 - The first object.
  * @param obj2 - The second object.
- * @returns A boolean, indicating all the key/value equal to each other.
+ * @returns A boolean, indicating whether the two objects are equal to each other.
  */
 export function equalObjects(
   obj1: Record<string, any>,

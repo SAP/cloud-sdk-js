@@ -48,7 +48,7 @@ function parseContent(
   version: string,
   packageName: string
 ): Message[] {
-  // I'm sorry... explaination: https://regex101.com/r/9UhEwo/2
+  // I'm sorry... Explaination: https://regex101.com/r/9UhEwo/2
   const contentRegex =
     /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<message>[^]*?)(?=(\n- |\n### |$))|- Updated dependencies \[(?<depsCommit>.*)\](?<deps>[^]*?)\n*(?=(\n- |\n### |$))/g;
   const results: Message[] = [];
@@ -107,7 +107,10 @@ ${messages
 function mergeMessages(parsedMessages: Message[]): Message[] {
   return parsedMessages.reduce((prev, curr) => {
     const sameMessage = prev.find(
-      msg => msg.message === curr.message && msg.version === curr.version
+      msg =>
+        msg.message === curr.message &&
+        msg.version === curr.version &&
+        msg.type === curr.type
     );
     if (sameMessage) {
       sameMessage.packageNames.push(curr.packageNames[0]);
@@ -115,6 +118,39 @@ function mergeMessages(parsedMessages: Message[]): Message[] {
     }
     return [...prev, curr];
   }, [] as Message[]);
+}
+
+function createNewSection(version: string, messages: Message[]): string {
+  return `
+# ${version}
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/${version}<br>
+Blog: TBD<br>
+
+${writeMessagesOfType(messages, 'Compatibility Note')}
+
+${writeMessagesOfType(messages, 'New Functionality')}
+
+${writeMessagesOfType(messages, 'Improvement')}
+
+${writeMessagesOfType(messages, 'Fixed Issue')}
+
+${
+  messages.filter(msg => msg.type === 'Updated Dependencies')
+    ? '## Updated Dependencies\n'
+    : ''
+}
+${messages
+  .filter(msg => msg.type === 'Updated Dependencies')
+  .map(
+    msg =>
+      `- [${msg.packageNames.join(', ')}] Updated Dependencies (${
+        msg.commit
+      })\n  ${msg.message}`
+  )
+  .join('\n')}
+`;
 }
 
 async function formatChangelog(parsedChangelog: Message[]): Promise<string> {
@@ -125,46 +161,10 @@ async function formatChangelog(parsedChangelog: Message[]): Promise<string> {
   const versions = [...new Set(relevantMessages.map(msg => msg.version))];
 
   for (const version of versions) {
-    const newContent = `
-# ${version}
-
-Release Date: TBD<br>
-API Docs: https://sap.github.io/cloud-sdk/api/2.3.0<br>
-Blog: TBD<br>
-${writeMessagesOfType(
-  relevantMessages.filter(msg => msg.version === version),
-  'Compatibility Note'
-)}
-${writeMessagesOfType(
-  relevantMessages.filter(msg => msg.version === version),
-  'New Functionality'
-)}
-${writeMessagesOfType(
-  relevantMessages.filter(msg => msg.version === version),
-  'Improvement'
-)}
-${writeMessagesOfType(
-  relevantMessages.filter(msg => msg.version === version),
-  'Fixed Issue'
-)}
-
-${
-  relevantMessages.filter(
-    msg => msg.version === version && msg.type === 'Updated Dependencies'
-  )
-    ? '## Updated Dependencies\n'
-    : ''
-}
-${relevantMessages
-  .filter(msg => msg.version === version && msg.type === 'Updated Dependencies')
-  .map(
-    msg =>
-      `- [${msg.packageNames.join(', ')}] Updated Dependencies (${
-        msg.commit
-      })\n  ${msg.message}`
-  )
-  .join('\n')}
-`;
+    const newContent = createNewSection(
+      version,
+      relevantMessages.filter(msg => msg.version === version)
+    );
     unifiedChangelog =
       unifiedChangelog.split('\n').slice(0, 30).join('\n') +
       newContent +

@@ -77,7 +77,7 @@ function trustStoreOptions(
       );
       return options;
     }
-    const decodedCertificate = new Buffer(
+    const decodedCertificate = Buffer.from(
       destination.trustStoreCertificate.content,
       'base64'
     ).toString('utf8');
@@ -126,7 +126,7 @@ function getTrustStoreOptions(destination: Destination): Record<string, any> {
   }
 
   if (destination.trustStoreCertificate) {
-    const decoded = new Buffer(
+    const decoded = Buffer.from(
       destination.trustStoreCertificate.content,
       'base64'
     ).toString('utf8');

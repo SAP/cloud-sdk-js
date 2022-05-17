@@ -20,4 +20,6 @@ jobs:
           git config --global user.email "cloud-sdk-js@github.com"
           git config --global user.name "cloud-sdk-js"
       - name: Bump version
-        run: yarn changeset version
+        run: |
+          yarn changeset version
+          yarn changelog

@@ -4,11 +4,11 @@ import {
   LoggerOptions as WinstonLoggerOptions,
   transports
 } from 'winston';
-import { kibana, local } from './format';
 import cds from '@sap/cds';
+import { kibana, local } from './format';
 
-const format = process.env.NODE_ENV == 'production' ? kibana : local;
-(cds.env as any).features?.kibana_formatter == true ? kibana : local;
+let format = process.env.NODE_ENV === 'production' ? kibana : local;
+format = (cds.env as any).features?.kibana_formatter === true ? kibana : local;
 
 const loggerReference = 'sap-cloud-sdk-logger';
 const exceptionLoggerId = 'sap-cloud-sdk-exception-logger';

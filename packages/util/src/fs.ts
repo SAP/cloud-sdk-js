@@ -7,6 +7,9 @@ const logger = createLogger({
   messageContext: 'fs'
 });
 
+/**
+ * @internal
+ */
 export function findProjectRoot(path: string, lastPath: string = path): string {
   if (!path) {
     return lastPath;

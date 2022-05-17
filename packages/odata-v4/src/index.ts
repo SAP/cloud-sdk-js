@@ -44,7 +44,6 @@ export { ActionImportParameter } from './request';
 
 export { Entity } from './entity';
 export { CustomField } from './selectable';
-export { uriConverter } from './uri-conversion';
 export { all, any } from './filter';
 
 export {

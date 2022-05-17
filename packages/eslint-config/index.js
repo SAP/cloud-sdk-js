@@ -21,7 +21,8 @@ module.exports = {
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         'import/no-internal-modules': 'off',
-        'no-unused-expressions': 'off'
+        'no-unused-expressions': 'off',
+        'jsdoc/require-jsdoc': 'off'
       }
     }
   ],
@@ -181,7 +182,7 @@ module.exports = {
     'spaced-comment': 'error',
     'jsdoc/check-alignment': 'error',
     'jsdoc/check-indentation': 'error',
-    'jsdoc/check-param-names': 'warn',
+    'jsdoc/check-param-names': 'error',
     'jsdoc/check-syntax': 'error',
     'jsdoc/multiline-blocks': 'error',
     'jsdoc/newline-after-description': ['error', 'never'],
@@ -190,13 +191,13 @@ module.exports = {
     'jsdoc/no-types': 'error',
     'jsdoc/require-asterisk-prefix': 'error',
     'jsdoc/require-description-complete-sentence': [
-      'warn',
+      'error',
       { abbreviations: ['e.g.', 'i.e.', 'aka.', 'etc.'] }
     ],
     'jsdoc/require-description': ['error', { exemptedBy: ['experimental'] }],
     'jsdoc/require-hyphen-before-param-description': 'error',
     'jsdoc/require-jsdoc': [
-      'warn',
+      'error',
       {
         publicOnly: true,
         enableFixer: false,
@@ -210,10 +211,10 @@ module.exports = {
     ],
     'jsdoc/require-param-description': 'error',
     'jsdoc/require-param-name': 'error',
-    'jsdoc/require-param': ['warn', { enableFixer: false }],
+    'jsdoc/require-param': ['error', { enableFixer: false }],
     'jsdoc/require-returns-check': 'error',
     'jsdoc/require-returns-description': 'error',
-    'jsdoc/require-returns': 'warn',
+    'jsdoc/require-returns': 'error',
     'jsdoc/tag-lines': ['error', 'never']
   },
   settings: {

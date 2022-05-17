@@ -11,6 +11,9 @@ const logger = createLogger({
 const SYSTEMS_FILE = 'systems.json';
 const CREDENTIALS_FILE = 'credentials.json';
 
+/**
+ * An interface to define `systems.json` and `credentials.json` for loading destinations.
+ */
 export interface GetTestDestinationOptions {
   systemsFilePath?: string;
   credentialsFilePath?: string;

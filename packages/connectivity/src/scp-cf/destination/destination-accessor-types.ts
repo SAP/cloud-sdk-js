@@ -21,6 +21,10 @@ export interface DestinationsByType {
   subaccount: Destination[];
 }
 
+/**
+ * Options to configure the behavior of the destination accessor.
+ * @see [[DestinationFetchOptions]]
+ */
 export interface DestinationAccessorOptions {
   /**
    * Method that implements the selection strategy of the retrieved destination. Uses [[subscriberFirst]] per default. Use the selector helper [[DestinationSelectionStrategies]] to select the appropriate selection strategy.
@@ -48,6 +52,9 @@ export interface DestinationAccessorOptions {
   iss?: string;
 }
 
+/**
+ * Options used when fetching destinations. Encompasses [[DestinationAccessorOptions]], [[DestinationRetrievalOptions]] and [[VerifyJwtOptions]].
+ */
 export type DestinationOptions = DestinationAccessorOptions &
   DestinationRetrievalOptions &
   VerifyJwtOptions;

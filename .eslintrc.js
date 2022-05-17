@@ -42,7 +42,8 @@ module.exports = {
       files: ['**/test/**/*'],
       rules: {
         'import/no-internal-modules': 'off',
-        'no-unused-expressions': 'off'
+        'no-unused-expressions': 'off',
+        'jsdoc/require-jsdoc': 'off'
       }
     },
     {

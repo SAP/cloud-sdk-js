@@ -18,14 +18,6 @@ interface Message {
   message: string;
 }
 
-async function getChangelog(): Promise<void> {
-  const files = new GlobSync('packages/*/CHANGELOG.md').found;
-  for (const file of files) {
-    const text = await readFile(file, { encoding: 'utf8' });
-    console.log(parseChangelog(text));
-  }
-}
-
 function getPackageName(changelog: string): string {
   const packageNameRegex = /^# @sap-cloud-sdk\/(.+)$/m;
   const title = changelog.match(packageNameRegex);
@@ -56,9 +48,9 @@ function parseContent(
   version: string,
   packageName: string
 ): Message[] {
-  // I'm sorry... explaination: https://regex101.com/r/9UhEwo/1
+  // I'm sorry... explaination: https://regex101.com/r/9UhEwo/2
   const contentRegex =
-    /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<message>[^]*?)(?=(\n- |\n### |$))|- Updated dependencies \[(?<depsCommit>.*)\]\n(?<deps>[^]*?)\n*(?=(\n- |\n### |$))/g;
+    /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<message>[^]*?)(?=(\n- |\n### |$))|- Updated dependencies \[(?<depsCommit>.*)\](?<deps>[^]*?)\n*(?=(\n- |\n### |$))/g;
   const results: Message[] = [];
   for (const message of content.matchAll(contentRegex)) {
     if (!message.groups?.commit && !message.groups?.depsCommit) {
@@ -74,23 +66,108 @@ function parseContent(
         `Change set has an incorrect or missing type for change set in ${packageName} for version ${version}!`
       );
     }
-    results.push({
-      packageName,
-      version,
-      commit: message.groups?.commit || message.groups?.depsCommit,
-      type: (message.groups?.type as any) || 'Updated Dependencies',
-      message: message.groups?.message || message.groups?.deps
-    });
+    if (message.groups?.message?.trim() || message.groups?.deps?.trim()) {
+      results.push({
+        packageName,
+        version,
+        commit: message.groups?.commit || message.groups?.depsCommit,
+        type: (message.groups?.type as any) || 'Updated Dependencies',
+        message: message.groups?.message?.trim() || message.groups?.deps?.trim()
+      });
+    }
   }
   return results;
 }
 
-function parseChangelog(changelog: string): any[] {
+function parseChangelog(changelog: string): Message[] {
   const packageName = getPackageName(changelog);
   const versions = splitByVersion(changelog);
   return versions
     .map(({ version, content }) => parseContent(content, version, packageName))
     .flat();
+}
+
+function writeMessagesOfType(
+  messages: Message[],
+  type: typeof validMessageTypes[number]
+): string {
+  return messages
+    .filter(msg => msg.type === type)
+    .map(msg => `- [${msg.packageName}] ${msg.message} (${msg.commit})`)
+    .join('\n');
+}
+
+async function writeChangelog(parsedChangelog: Message[]): Promise<string> {
+  let unifiedChangelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
+  const relevantMessages = parsedChangelog.filter(
+    message => !unifiedChangelog.includes(`# ${message.version}`)
+  );
+  const versions = [...new Set(relevantMessages.map(msg => msg.version))];
+  for (const version of versions) {
+    const newContent = `
+# ${version}
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/2.3.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+${writeMessagesOfType(
+  relevantMessages.filter(msg => msg.version === version),
+  'Compatibility Note'
+)}
+
+## New Functionality
+
+${writeMessagesOfType(
+  relevantMessages.filter(msg => msg.version === version),
+  'New Functionality'
+)}
+
+## Improvements
+
+${writeMessagesOfType(
+  relevantMessages.filter(msg => msg.version === version),
+  'Improvement'
+)}
+
+## Fixed Issues
+
+${writeMessagesOfType(
+  relevantMessages.filter(msg => msg.version === version),
+  'Fixed Issue'
+)}
+
+## Updated Dependencies
+
+${relevantMessages
+  .filter(msg => msg.version === version && msg.type === 'Updated Dependencies')
+  .map(
+    msg =>
+      `- [${msg.packageName}] Updated Dependencies (${msg.commit})\n  ${msg.message}`
+  )
+  .join('\n')}
+`;
+    unifiedChangelog =
+      unifiedChangelog.split('\n').slice(0, 30).join('\n') +
+      newContent +
+      unifiedChangelog.split('\n').slice(30).join('\n');
+  }
+  return unifiedChangelog;
+}
+
+async function getChangelog(): Promise<void> {
+  const files = new GlobSync('packages/*/CHANGELOG.md').found;
+  const parsedLogs = (
+    await Promise.all(
+      files.map(async file => {
+        const text = await readFile(file, { encoding: 'utf8' });
+        return parseChangelog(text);
+      })
+    )
+  ).flat();
+  console.log(await writeChangelog(parsedLogs));
 }
 
 getChangelog();

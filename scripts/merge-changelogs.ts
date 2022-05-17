@@ -1,4 +1,4 @@
-import { readFile } from 'fs/promises';
+import { writeFile, readFile } from 'fs/promises';
 import { GlobSync } from 'glob';
 
 const validMessageTypes = [
@@ -11,7 +11,7 @@ const validMessageTypes = [
 ] as const;
 
 interface Message {
-  packageName: string;
+  packageNames: string[];
   commit: string;
   type: typeof validMessageTypes[number];
   version: string;
@@ -52,27 +52,28 @@ function parseContent(
   const contentRegex =
     /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<message>[^]*?)(?=(\n- |\n### |$))|- Updated dependencies \[(?<depsCommit>.*)\](?<deps>[^]*?)\n*(?=(\n- |\n### |$))/g;
   const results: Message[] = [];
-  for (const message of content.matchAll(contentRegex)) {
-    if (!message.groups?.commit && !message.groups?.depsCommit) {
+  for (const match of content.matchAll(contentRegex)) {
+    if (!match.groups?.commit && !match.groups?.depsCommit) {
       throw new Error(
         `No commit hash found for change set in ${packageName} for version ${version}!`
       );
     }
     if (
-      !validMessageTypes.includes(message.groups?.type as any) &&
-      !message[0].includes('Updated dependencies')
+      !validMessageTypes.includes(match.groups?.type as any) &&
+      !match[0].includes('Updated dependencies')
     ) {
       throw new Error(
         `Change set has an incorrect or missing type for change set in ${packageName} for version ${version}!`
       );
     }
-    if (message.groups?.message?.trim() || message.groups?.deps?.trim()) {
+    const message = match.groups?.message?.trim() || match.groups?.deps?.trim();
+    if (message) {
       results.push({
-        packageName,
+        packageNames: [packageName],
         version,
-        commit: message.groups?.commit || message.groups?.depsCommit,
-        type: (message.groups?.type as any) || 'Updated Dependencies',
-        message: message.groups?.message?.trim() || message.groups?.deps?.trim()
+        commit: match.groups?.commit || match.groups?.depsCommit,
+        type: (match.groups?.type as any) || 'Updated Dependencies',
+        message: match.groups?.message?.trim() || match.groups?.deps?.trim()
       });
     }
   }
@@ -91,18 +92,38 @@ function writeMessagesOfType(
   messages: Message[],
   type: typeof validMessageTypes[number]
 ): string {
-  return messages
-    .filter(msg => msg.type === type)
-    .map(msg => `- [${msg.packageName}] ${msg.message} (${msg.commit})`)
-    .join('\n');
+  return messages.some(msg => msg.type === type)
+    ? `## ${type}
+
+${messages
+  .filter(msg => msg.type === type)
+  .map(
+    msg => `- [${msg.packageNames.join(', ')}] ${msg.message} (${msg.commit})`
+  )
+  .join('\n')}`
+    : '';
 }
 
-async function writeChangelog(parsedChangelog: Message[]): Promise<string> {
+function mergeMessages(parsedMessages: Message[]): Message[] {
+  return parsedMessages.reduce((prev, curr) => {
+    const sameMessage = prev.find(
+      msg => msg.message === curr.message && msg.version === curr.version
+    );
+    if (sameMessage) {
+      sameMessage.packageNames.push(curr.packageNames[0]);
+      return prev;
+    }
+    return [...prev, curr];
+  }, [] as Message[]);
+}
+
+async function formatChangelog(parsedChangelog: Message[]): Promise<string> {
   let unifiedChangelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
   const relevantMessages = parsedChangelog.filter(
     message => !unifiedChangelog.includes(`# ${message.version}`)
   );
   const versions = [...new Set(relevantMessages.map(msg => msg.version))];
+
   for (const version of versions) {
     const newContent = `
 # ${version}
@@ -110,42 +131,37 @@ async function writeChangelog(parsedChangelog: Message[]): Promise<string> {
 Release Date: TBD<br>
 API Docs: https://sap.github.io/cloud-sdk/api/2.3.0<br>
 Blog: TBD<br>
-
-## Compatibility Notes
-
 ${writeMessagesOfType(
   relevantMessages.filter(msg => msg.version === version),
   'Compatibility Note'
 )}
-
-## New Functionality
-
 ${writeMessagesOfType(
   relevantMessages.filter(msg => msg.version === version),
   'New Functionality'
 )}
-
-## Improvements
-
 ${writeMessagesOfType(
   relevantMessages.filter(msg => msg.version === version),
   'Improvement'
 )}
-
-## Fixed Issues
-
 ${writeMessagesOfType(
   relevantMessages.filter(msg => msg.version === version),
   'Fixed Issue'
 )}
 
-## Updated Dependencies
-
+${
+  relevantMessages.filter(
+    msg => msg.version === version && msg.type === 'Updated Dependencies'
+  )
+    ? '## Updated Dependencies\n'
+    : ''
+}
 ${relevantMessages
   .filter(msg => msg.version === version && msg.type === 'Updated Dependencies')
   .map(
     msg =>
-      `- [${msg.packageName}] Updated Dependencies (${msg.commit})\n  ${msg.message}`
+      `- [${msg.packageNames.join(', ')}] Updated Dependencies (${
+        msg.commit
+      })\n  ${msg.message}`
   )
   .join('\n')}
 `;
@@ -154,6 +170,7 @@ ${relevantMessages
       newContent +
       unifiedChangelog.split('\n').slice(30).join('\n');
   }
+
   return unifiedChangelog;
 }
 
@@ -167,7 +184,8 @@ async function getChangelog(): Promise<void> {
       })
     )
   ).flat();
-  console.log(await writeChangelog(parsedLogs));
+  const newChangelog = await formatChangelog(mergeMessages(parsedLogs));
+  await writeFile('CHANGELOG.md', newChangelog);
 }
 
 getChangelog();

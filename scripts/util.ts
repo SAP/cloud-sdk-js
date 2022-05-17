@@ -3,7 +3,9 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 
-export const version = JSON.parse(readFileSync('package.json', 'utf8')).version;
+export const currentSdkVersion = JSON.parse(
+  readFileSync('package.json', 'utf8')
+).version;
 export const apiDocsDir = resolve('docs', 'api');
 
 export function transformFile(

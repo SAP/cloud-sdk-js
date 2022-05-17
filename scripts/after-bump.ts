@@ -1,12 +1,12 @@
 import { resolve, relative } from 'path';
 import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
-import { apiDocsDir, transformFile, version } from './util';
+import { apiDocsDir, transformFile, currentSdkVersion } from './util';
 
 function updateRootPackageJson() {
   transformFile(resolve('package.json'), packageJson =>
     formatJson({
       ...JSON.parse(packageJson),
-      version: `${version}`
+      version: `${currentSdkVersion}`
     })
   );
 }
@@ -16,7 +16,9 @@ function updateDocumentationMd() {
     documentation
       .split(unixEOL)
       .map(line =>
-        line.startsWith('## Version:') ? `## Version: ${version}` : line
+        line.startsWith('## Version:')
+          ? `## Version: ${currentSdkVersion}`
+          : line
       )
       .join(unixEOL)
   );
@@ -29,7 +31,7 @@ function updateTypeDocConfig() {
       ...parsedConfig,
       typedocOptions: {
         ...parsedConfig.typedocOptions,
-        out: `${relative(resolve(), apiDocsDir)}/${version}`
+        out: `${relative(resolve(), apiDocsDir)}/${currentSdkVersion}`
       }
     });
   });
@@ -38,9 +40,9 @@ function updateTypeDocConfig() {
 function updateDocsVersions() {
   transformFile(resolve('docs', 'api', 'versions.json'), versionsJson => {
     const versions = JSON.parse(versionsJson);
-    return versions.includes(version)
+    return versions.includes(currentSdkVersion)
       ? versionsJson
-      : formatJson([version, ...versions]);
+      : formatJson([currentSdkVersion, ...versions]);
   });
 }
 
@@ -77,10 +79,10 @@ function transformChangeLog(changelog) {
   return [
     comments,
     nextChangelogTemplate,
-    `# ${version}`,
+    `# ${currentSdkVersion}`,
     '',
     'Release Date: TBD<br>',
-    `API Docs: https://sap.github.io/cloud-sdk/api/${version}<br>`,
+    `API Docs: https://sap.github.io/cloud-sdk/api/${currentSdkVersion}<br>`,
     'Blog: TBD<br>',
     '',
     ...usedCategories,

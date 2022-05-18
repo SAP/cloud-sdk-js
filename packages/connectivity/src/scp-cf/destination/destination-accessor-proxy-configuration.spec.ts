@@ -193,7 +193,7 @@ describe('get destination with PrivateLink proxy type', () => {
       package: 'connectivity',
       messageContext: 'proxy-util'
     });
-    const info = jest.spyOn(logger, 'debug');
+    const debug = jest.spyOn(logger, 'debug');
 
     await getDestination({
       destinationName: 'PrivateLinkDest',
@@ -201,7 +201,7 @@ describe('get destination with PrivateLink proxy type', () => {
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });
-    expect(info).toBeCalledWith(
+    expect(debug).toBeCalledWith(
       'PrivateLink destination proxy settings will be used. This is not supported in local/CI/CD environments.'
     );
   });

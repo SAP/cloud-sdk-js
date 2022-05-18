@@ -18,26 +18,34 @@ interface Message {
   message: string;
 }
 
-function getPackageName(changelog: string): string {
-  const packageNameRegex = /^# @sap-cloud-sdk\/(.+)$/m;
-  const title = changelog.match(packageNameRegex);
+interface ContentByVersion {
+  version: string;
+  content: string;
+}
 
-  if (!changelog.startsWith('# @sap-cloud-sdk/') || !title || !title[1]) {
+function getPackageName(changelog: string): string {
+  // Get package name without the @sap-cloud-sdk scope
+  const packageNameRegex = /^# @sap-cloud-sdk\/(?<packageName>.+)$/m;
+  const firstLine = changelog.split('\n')[0];
+  const packageNameMatch = firstLine.match(packageNameRegex);
+
+  if (!packageNameMatch?.groups?.packageName) {
     throw new Error('Changelog should have package name on first line');
   }
 
-  return title[1];
+  return packageNameMatch.groups.packageName;
 }
 
-function splitByVersion(changelog: string): any[] {
-  // Explaination: https://regex101.com/r/wCKs2A/2
-  const versionRegex = /## ([0-9]+\.[0-9]+\..+)([^]*?)(?=(\n## |$))/g;
+function splitByVersion(changelog: string): ContentByVersion[] {
+  // Explanation: https://regex101.com/r/wCKs2A/3
+  const versionRegex =
+    /## (?<version>[0-9]+\.[0-9]+\..+)(?<content>[^]*?)(?=(\n## |$))/g;
   const matches = changelog.matchAll(versionRegex);
   const results: any[] = [];
   for (const match of matches) {
     results.push({
-      version: match[1],
-      content: match[2].trim()
+      version: match.groups?.version,
+      content: match.groups?.content.trim()
     });
   }
   return results;
@@ -48,7 +56,7 @@ function parseContent(
   version: string,
   packageName: string
 ): Message[] {
-  // I'm sorry... Explaination: https://regex101.com/r/9UhEwo/2
+  // I'm sorry... Explanation: https://regex101.com/r/9UhEwo/2
   const contentRegex =
     /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<message>[^]*?)(?=(\n- |\n### |$))|- Updated dependencies \[(?<depsCommit>.*)\](?<deps>[^]*?)\n*(?=(\n- |\n### |$))/g;
   const results: Message[] = [];
@@ -69,11 +77,11 @@ function parseContent(
     const message = match.groups?.message?.trim() || match.groups?.deps?.trim();
     if (message) {
       results.push({
-        packageNames: [packageName],
         version,
+        message,
+        packageNames: [packageName],
         commit: match.groups?.commit || match.groups?.depsCommit,
-        type: (match.groups?.type as any) || 'Updated Dependencies',
-        message: match.groups?.message?.trim() || match.groups?.deps?.trim()
+        type: (match.groups?.type as any) || 'Updated Dependencies'
       });
     }
   }

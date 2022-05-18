@@ -261,7 +261,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         package: 'connectivity',
         messageContext: 'destination-accessor-service'
       });
-      const infoSpy = jest.spyOn(logger, 'debug');
+      const debugSpy = jest.spyOn(logger, 'debug');
       const expected = parseDestination(certificateSingleResponse);
       const actual = await getDestinationFromDestinationService({
         destinationName: 'ERNIE-UND-CERT',
@@ -269,7 +269,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         cacheVerificationKeys: false
       });
       expect(actual).toMatchObject(expected);
-      expect(infoSpy).toHaveBeenCalledWith(
+      expect(debugSpy).toHaveBeenCalledWith(
         'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
       );
     });

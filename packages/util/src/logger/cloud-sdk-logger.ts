@@ -7,10 +7,9 @@ import {
 import cds from '@sap/cds';
 import { kibana, local } from './format';
 
-let format = process.env.NODE_ENV === 'production' ? kibana : local;
 const cdsKibana = (cds.env as any).features?.kibana_formatter;
-format =
-  cdsKibana === undefined ? format : `${cdsKibana}` === 'true' ? kibana : local;
+const format =
+  cdsKibana ?? process.env.NODE_ENV === 'production' ? kibana : local;
 
 const loggerReference = 'sap-cloud-sdk-logger';
 const exceptionLoggerId = 'sap-cloud-sdk-exception-logger';

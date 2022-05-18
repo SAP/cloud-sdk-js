@@ -96,20 +96,57 @@ function parseChangelog(changelog: string): Message[] {
     .flat();
 }
 
+function writeHeader(version: string) {
+  return `
+# ${version}
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/${version}<br>
+Blog: TBD<br>`;
+}
+
 function writeMessagesOfType(
   messages: Message[],
   type: typeof validMessageTypes[number]
 ): string {
-  return messages.some(msg => msg.type === type)
-    ? `## ${type}
-
-${messages
-  .filter(msg => msg.type === type)
-  .map(
-    msg => `- [${msg.packageNames.join(', ')}] ${msg.message} (${msg.commit})`
-  )
-  .join('\n')}`
+  const foo = messages.some(msg => msg.type === type)
+    ? `\n\n## ${type}\n\n` +
+      messages
+        .filter(msg => msg.type === type)
+        .map(
+          msg =>
+            `- [${msg.packageNames.join(', ')}] ${msg.message} (${msg.commit})`
+        )
+        .join('\n')
     : '';
+  return foo;
+}
+
+function writeDependencyMessages(messages: Message[]) {
+  return messages.some(msg => msg.type === 'Updated Dependencies')
+    ? '\n\n## Updated Dependencies\n\n' +
+        messages
+          .filter(msg => msg.type === 'Updated Dependencies')
+          .map(
+            msg =>
+              `- [${msg.packageNames.join(', ')}] Updated Dependencies (${
+                msg.commit
+              })\n  ${msg.message}`
+          )
+          .join('\n')
+    : '';
+}
+
+function createNewSection(version: string, messages: Message[]): string {
+  return (
+    writeHeader(version) +
+    writeMessagesOfType(messages, 'Compatibility Note') +
+    writeMessagesOfType(messages, 'New Functionality') +
+    writeMessagesOfType(messages, 'Improvement') +
+    writeMessagesOfType(messages, 'Fixed Issue') +
+    writeDependencyMessages(messages) +
+    '\n'
+  );
 }
 
 function mergeMessages(parsedMessages: Message[]): Message[] {
@@ -126,39 +163,6 @@ function mergeMessages(parsedMessages: Message[]): Message[] {
     }
     return [...prev, curr];
   }, [] as Message[]);
-}
-
-function createNewSection(version: string, messages: Message[]): string {
-  return `
-# ${version}
-
-Release Date: TBD<br>
-API Docs: https://sap.github.io/cloud-sdk/api/${version}<br>
-Blog: TBD<br>
-
-${writeMessagesOfType(messages, 'Compatibility Note')}
-
-${writeMessagesOfType(messages, 'New Functionality')}
-
-${writeMessagesOfType(messages, 'Improvement')}
-
-${writeMessagesOfType(messages, 'Fixed Issue')}
-
-${
-  messages.filter(msg => msg.type === 'Updated Dependencies')
-    ? '## Updated Dependencies\n'
-    : ''
-}
-${messages
-  .filter(msg => msg.type === 'Updated Dependencies')
-  .map(
-    msg =>
-      `- [${msg.packageNames.join(', ')}] Updated Dependencies (${
-        msg.commit
-      })\n  ${msg.message}`
-  )
-  .join('\n')}
-`;
 }
 
 async function formatChangelog(parsedChangelog: Message[]): Promise<string> {

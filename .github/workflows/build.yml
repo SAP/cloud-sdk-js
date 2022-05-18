@@ -133,7 +133,6 @@ jobs:
           cp canary-release-changeset.md .changeset
           yarn changeset pre enter ${date}
           yarn changeset version
-          yarn changelog
           yarn changeset pre exit
           yarn changeset publish --tag canary
         env:

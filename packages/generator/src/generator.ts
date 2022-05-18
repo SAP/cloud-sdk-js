@@ -60,6 +60,11 @@ const logger = createLogger({
   messageContext: 'generator'
 });
 
+/**
+ * Main entry point for the OData client generation.
+ * Generates models and API files.
+ * @param options - Options to configure generation.
+ */
 export async function generate(options: GeneratorOptions): Promise<void> {
   const projectAndServices = await generateProject(options);
   if (!projectAndServices) {

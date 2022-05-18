@@ -240,7 +240,13 @@ function setDefaultAuthenticationFallback(
     : assoc('authentication', getAuthenticationType(destination), destination);
 }
 
-function parseCertificate(
+/**
+ * Transforms the upper case properties of the destination service response to lower case.
+ * @internal
+ * @param certificate - Response from the certificate endpoint of the destination service.
+ * @returns The parsed Destination Certificate with lower case properties.
+ */
+export function parseCertificate(
   certificate: Record<string, any>
 ): DestinationCertificate {
   return {
@@ -377,6 +383,9 @@ const configMapping: Record<string, keyof Destination> = {
   SystemUser: 'systemUser'
 };
 
+/**
+ * @internal
+ */
 export function noDestinationErrorMessage(
   destination: DestinationOrFetchOptions
 ): string {
@@ -385,6 +394,9 @@ export function noDestinationErrorMessage(
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
 
+/**
+ * Type that is either a [[Destination]] or (XOR) [[DestinationFetchOptions]].
+ */
 export type DestinationOrFetchOptions = Xor<
   Destination,
   DestinationFetchOptions

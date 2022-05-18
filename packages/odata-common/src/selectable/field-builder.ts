@@ -65,6 +65,7 @@ export class FieldBuilder<
   /**
    * Creates an instance of `FieldBuilder`.
    * @param fieldOf - Entity or complex type field, for which the field builder shall create fields.
+   * @param deSerializers - (De-)serializers used for transformation.
    */
   constructor(
     public fieldOf: FieldOfT,

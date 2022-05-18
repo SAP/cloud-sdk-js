@@ -1,9 +1,9 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   DestinationOrFetchOptions,
-  noDestinationErrorMessage,
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
+import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
 import { ODataRequest, ODataRequestConfig } from '../request';
 
 /**

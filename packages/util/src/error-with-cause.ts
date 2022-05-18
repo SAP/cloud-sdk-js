@@ -37,6 +37,7 @@ export class ErrorWithCause extends Error {
    * Root cause of the error.
    * If there are multiple errors caused one by another, the root cause is the first error that occurred.
    * In case there is no root cause.
+   * @returns The root cause.
    */
   get rootCause(): Error {
     return isErrorWithCause(this.cause) ? this.cause.rootCause : this.cause;
@@ -47,7 +48,6 @@ export class ErrorWithCause extends Error {
  * @param err - An error.
  * @returns Whether the given error is of type ErrorWithCause.
  */
-
 export function isErrorWithCause(err: Error): err is ErrorWithCause {
   return err?.name === 'ErrorWithCause';
 }

@@ -88,10 +88,18 @@ interface KnownHttpResponseFields {
   request: any;
 }
 
+/**
+ * Represents an HTTP response, that contains response code, headers, payload and the original request.
+ * This interface is compatible with AxiosResponse.
+ */
 export interface HttpResponse extends KnownHttpResponseFields {
   [otherKey: string]: any;
 }
 
+/**
+ * Options to configure the behavior when sending HTTP requests.
+ * For example, whether the CSRF token is fetched automatically.
+ */
 export interface HttpRequestOptions {
   /**
    * A boolean value that indicates whether to fetch the csrf token for a non-get request.

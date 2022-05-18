@@ -2,6 +2,9 @@ import { PathLike } from 'fs';
 import { resolve } from 'path';
 import { Options } from 'yargs';
 
+/**
+ * Options that can be used to configure the generation when using the generator programmatically.
+ */
 export interface GeneratorOptions {
   inputDir: PathLike;
   outputDir: PathLike;

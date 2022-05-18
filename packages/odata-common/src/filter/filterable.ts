@@ -62,6 +62,7 @@ export function and<
 >(
   ...expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
+// eslint-disable-next-line jsdoc/require-jsdoc
 export function and<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
@@ -99,6 +100,7 @@ export function or<
 >(
   ...expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
+// eslint-disable-next-line jsdoc/require-jsdoc
 export function or<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers

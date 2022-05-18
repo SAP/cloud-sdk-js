@@ -3,10 +3,10 @@ import { AxiosResponse } from 'axios';
 import { isNullish } from '@sap-cloud-sdk/util';
 import {
   Destination,
-  noDestinationErrorMessage,
   useOrFetchDestination,
   DestinationOrFetchOptions
 } from '@sap-cloud-sdk/connectivity';
+import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
 import {
   Method,
   HttpResponse,
@@ -177,6 +177,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 }
 
 // TODO: Tighten types
+/**
+ * Type of the request parameters to be passed to [[OpenApiRequestBuilder]].
+ */
 export interface OpenApiRequestParameters {
   pathParameters?: Record<string, any>;
   queryParameters?: Record<string, any>;

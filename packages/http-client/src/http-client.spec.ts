@@ -303,7 +303,7 @@ sap-client:001`);
         package: 'http-client',
         messageContext: 'http-client'
       });
-      const infoSpy = jest.spyOn(logger, 'info');
+      const infoSpy = jest.spyOn(logger, 'warn');
 
       await executeHttpRequest(httpsDestination, config);
 

@@ -133,7 +133,7 @@ function destinationAuthToken(
 ): [DestinationAuthToken] | undefined {
   if (token) {
     const decoded = decodeJwt(token);
-    logger.info(
+    logger.debug(
       "Option 'forwardAuthToken' enabled on destination. Using the initial token for the destination."
     );
     return [

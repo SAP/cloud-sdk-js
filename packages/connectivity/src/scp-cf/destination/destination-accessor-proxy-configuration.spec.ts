@@ -193,7 +193,7 @@ describe('get destination with PrivateLink proxy type', () => {
       package: 'connectivity',
       messageContext: 'proxy-util'
     });
-    const info = jest.spyOn(logger, 'info');
+    const info = jest.spyOn(logger, 'debug');
 
     await getDestination({
       destinationName: 'PrivateLinkDest',

@@ -261,7 +261,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         package: 'connectivity',
         messageContext: 'destination-accessor-service'
       });
-      const infoSpy = jest.spyOn(logger, 'info');
+      const infoSpy = jest.spyOn(logger, 'debug');
       const expected = parseDestination(certificateSingleResponse);
       const actual = await getDestinationFromDestinationService({
         destinationName: 'ERNIE-UND-CERT',

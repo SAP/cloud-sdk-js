@@ -3,22 +3,12 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers,
-  DeserializedType
-} from '@sap-cloud-sdk/odata-v2';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType } from '@sap-cloud-sdk/odata-v2';
 
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityOtherMultiLink<
-    T extends DeSerializers = DefaultDeSerializers
-  >
-  extends Entity
-  implements TestEntityOtherMultiLinkType<T>
-{
+export class TestEntityOtherMultiLink<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityOtherMultiLinkType<T> {
   /**
    * Technical entity name for TestEntityOtherMultiLink.
    */
@@ -37,8 +27,6 @@ export class TestEntityOtherMultiLink<
   keyProperty!: DeserializedType<T, 'Edm.String'>;
 }
 
-export interface TestEntityOtherMultiLinkType<
-  T extends DeSerializers = DefaultDeSerializers
-> {
+export interface TestEntityOtherMultiLinkType<T extends DeSerializers = DefaultDeSerializers> {
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }

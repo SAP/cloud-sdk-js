@@ -3,20 +3,12 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers,
-  DeserializedType
-} from '@sap-cloud-sdk/odata-v2';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType } from '@sap-cloud-sdk/odata-v2';
 
 /**
  * This class represents the entity "A_CaseTest" of service "API_TEST_SRV".
  */
-export class CaseTest<T extends DeSerializers = DefaultDeSerializers>
-  extends Entity
-  implements CaseTestType<T>
-{
+export class CaseTest<T extends DeSerializers = DefaultDeSerializers> extends Entity implements CaseTestType<T> {
   /**
    * Technical entity name for CaseTest.
    */

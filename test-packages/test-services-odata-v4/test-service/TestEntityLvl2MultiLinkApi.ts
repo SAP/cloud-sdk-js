@@ -6,59 +6,59 @@
 import { TestEntityLvl2MultiLink } from './TestEntityLvl2MultiLink';
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
 import { TestEntityLvl3MultiLinkApi } from './TestEntityLvl3MultiLinkApi';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  EdmTypeField,
-  OrderableEdmTypeField,
-  OneToManyLink
-} from '@sap-cloud-sdk/odata-v4';
-export class TestEntityLvl2MultiLinkApi<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntityLvl2MultiLink<DeSerializersT>, DeSerializersT>
-{
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, EdmTypeField, OrderableEdmTypeField, OneToManyLink } from '@sap-cloud-sdk/odata-v4';
+export class TestEntityLvl2MultiLinkApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      TestEntityLvl2MultiLink<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
   private navigationPropertyFields!: {
-    /**
-     * Static representation of the one-to-many navigation property [[toMultiLink2]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_MULTI_LINK_2: OneToManyLink<
-      TestEntityLvl2MultiLink<DeSerializersT>,
-      DeSerializersT,
-      TestEntityLvl3MultiLinkApi<DeSerializersT>
-    >;
-  };
+      /**
+       * Static representation of the one-to-many navigation property [[toMultiLink2]] for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      TO_MULTI_LINK_2: OneToManyLink<
+            TestEntityLvl2MultiLink<DeSerializersT>,
+            DeSerializersT,
+            TestEntityLvl3MultiLinkApi<DeSerializersT>
+          >
+    };
 
   _addNavigationProperties(
-    linkedApis: [TestEntityLvl3MultiLinkApi<DeSerializersT>]
-  ): this {
-    this.navigationPropertyFields = {
-      TO_MULTI_LINK_2: new OneToManyLink('to_MultiLink2', this, linkedApis[0])
-    };
-    return this;
-  }
-
+      linkedApis: [
+        TestEntityLvl3MultiLinkApi<DeSerializersT>
+      ]): this {
+        this.navigationPropertyFields = {
+          TO_MULTI_LINK_2: new OneToManyLink(
+              'to_MultiLink2',
+              this,
+              linkedApis[0]
+            )
+        };
+        return this;
+      }
+  
   entityConstructor = TestEntityLvl2MultiLink;
-
-  requestBuilder(): TestEntityLvl2MultiLinkRequestBuilder<DeSerializersT> {
+  
+  requestBuilder(): TestEntityLvl2MultiLinkRequestBuilder<
+    DeSerializersT
+  > {
     return new TestEntityLvl2MultiLinkRequestBuilder<DeSerializersT>(this);
   }
-
+  
   entityBuilder(): EntityBuilderType<
-    TestEntityLvl2MultiLink<DeSerializersT>,
+    TestEntityLvl2MultiLink<
+      DeSerializersT
+    >,
     DeSerializersT
   > {
     return entityBuilder(this);
@@ -68,7 +68,8 @@ export class TestEntityLvl2MultiLinkApi<
     fieldName: string,
     isNullable: NullableT = false as NullableT
   ): CustomField<
-    TestEntityLvl2MultiLink<DeSerializersT>,
+  TestEntityLvl2MultiLink<
+      DeSerializersT>,
     DeSerializersT,
     NullableT
   > {
@@ -80,126 +81,70 @@ export class TestEntityLvl2MultiLinkApi<
     ) as any;
   }
 
-  private _fieldBuilder?: FieldBuilder<
-    typeof TestEntityLvl2MultiLink,
-    DeSerializersT
-  >;
+  private _fieldBuilder?: FieldBuilder<typeof TestEntityLvl2MultiLink, DeSerializersT>;
   get fieldBuilder() {
-    if (!this._fieldBuilder) {
-      this._fieldBuilder = new FieldBuilder(
-        TestEntityLvl2MultiLink,
-        this.deSerializers
-      );
+    if(!this._fieldBuilder){
+      this._fieldBuilder = new FieldBuilder(TestEntityLvl2MultiLink, this.deSerializers);
     }
     return this._fieldBuilder;
   }
 
   private _schema?: {
-    STRING_PROPERTY: EdmTypeField<
-      TestEntityLvl2MultiLink<DeSerializers>,
-      DeSerializersT,
-      'Edm.String',
-      true,
-      true
-    >;
-    BOOLEAN_PROPERTY: EdmTypeField<
-      TestEntityLvl2MultiLink<DeSerializers>,
-      DeSerializersT,
-      'Edm.Boolean',
-      true,
-      true
-    >;
-    GUID_PROPERTY: EdmTypeField<
-      TestEntityLvl2MultiLink<DeSerializers>,
-      DeSerializersT,
-      'Edm.Guid',
-      true,
-      true
-    >;
-    INT_16_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2MultiLink<DeSerializers>,
-      DeSerializersT,
-      'Edm.Int16',
-      true,
-      true
-    >;
-    KEY_PROPERTY: EdmTypeField<
-      TestEntityLvl2MultiLink<DeSerializers>,
-      DeSerializersT,
-      'Edm.String',
-      false,
-      true
-    >;
-    /**
-     * Static representation of the one-to-many navigation property [[toMultiLink2]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_MULTI_LINK_2: OneToManyLink<
+    STRING_PROPERTY: EdmTypeField<TestEntityLvl2MultiLink<DeSerializers>, DeSerializersT, 'Edm.String', true, true>,
+BOOLEAN_PROPERTY: EdmTypeField<TestEntityLvl2MultiLink<DeSerializers>, DeSerializersT, 'Edm.Boolean', true, true>,
+GUID_PROPERTY: EdmTypeField<TestEntityLvl2MultiLink<DeSerializers>, DeSerializersT, 'Edm.Guid', true, true>,
+INT_16_PROPERTY: OrderableEdmTypeField<TestEntityLvl2MultiLink<DeSerializers>, DeSerializersT, 'Edm.Int16', true, true>,
+KEY_PROPERTY: EdmTypeField<TestEntityLvl2MultiLink<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
+/**
+ * Static representation of the one-to-many navigation property [[toMultiLink2]] for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+TO_MULTI_LINK_2: OneToManyLink<
       TestEntityLvl2MultiLink<DeSerializersT>,
       DeSerializersT,
       TestEntityLvl3MultiLinkApi<DeSerializersT>
-    >;
-    ALL_FIELDS: AllFields<TestEntityLvl2MultiLink<DeSerializers>>;
+    >,
+ALL_FIELDS: AllFields<TestEntityLvl2MultiLink<DeSerializers>>
   };
 
   get schema() {
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
-      this._schema = {
-        /**
-         * Static representation of the [[stringProperty]] property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
-          'StringProperty',
-          'Edm.String',
-          true
-        ),
-        /**
-         * Static representation of the [[booleanProperty]] property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
-          'BooleanProperty',
-          'Edm.Boolean',
-          true
-        ),
-        /**
-         * Static representation of the [[guidProperty]] property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
-          'GuidProperty',
-          'Edm.Guid',
-          true
-        ),
-        /**
-         * Static representation of the [[int16Property]] property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
-          'Int16Property',
-          'Edm.Int16',
-          true
-        ),
-        /**
-         * Static representation of the [[keyProperty]] property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-          'KeyProperty',
-          'Edm.String',
-          false
-        ),
-        ...this.navigationPropertyFields,
-        /**
-         *
-         * All fields selector.
-         */
-        ALL_FIELDS: new AllFields('*', TestEntityLvl2MultiLink)
-      };
+      this._schema = { 
+    /**
+ * Static representation of the [[stringProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+STRING_PROPERTY: fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true),
+/**
+ * Static representation of the [[booleanProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField('BooleanProperty', 'Edm.Boolean', true),
+/**
+ * Static representation of the [[guidProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+GUID_PROPERTY: fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true),
+/**
+ * Static representation of the [[int16Property]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+INT_16_PROPERTY: fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true),
+/**
+ * Static representation of the [[keyProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', TestEntityLvl2MultiLink) 
+  };
     }
-
+  
     return this._schema;
   }
 }

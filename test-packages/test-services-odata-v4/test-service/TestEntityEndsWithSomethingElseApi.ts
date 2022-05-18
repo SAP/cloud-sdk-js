@@ -5,46 +5,47 @@
  */
 import { TestEntityEndsWithSomethingElse } from './TestEntityEndsWithSomethingElse';
 import { TestEntityEndsWithSomethingElseRequestBuilder } from './TestEntityEndsWithSomethingElseRequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  EdmTypeField
-} from '@sap-cloud-sdk/odata-v4';
-export class TestEntityEndsWithSomethingElseApi<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements
-    EntityApi<TestEntityEndsWithSomethingElse<DeSerializersT>, DeSerializersT>
-{
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, EdmTypeField } from '@sap-cloud-sdk/odata-v4';
+export class TestEntityEndsWithSomethingElseApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      TestEntityEndsWithSomethingElse<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {};
+  private navigationPropertyFields!: {
+      
+    };
 
-  _addNavigationProperties(linkedApis: []): this {
-    this.navigationPropertyFields = {};
-    return this;
-  }
-
+  _addNavigationProperties(
+      linkedApis: [
+        
+      ]): this {
+        this.navigationPropertyFields = {
+          
+        };
+        return this;
+      }
+  
   entityConstructor = TestEntityEndsWithSomethingElse;
-
-  requestBuilder(): TestEntityEndsWithSomethingElseRequestBuilder<DeSerializersT> {
-    return new TestEntityEndsWithSomethingElseRequestBuilder<DeSerializersT>(
-      this
-    );
+  
+  requestBuilder(): TestEntityEndsWithSomethingElseRequestBuilder<
+    DeSerializersT
+  > {
+    return new TestEntityEndsWithSomethingElseRequestBuilder<DeSerializersT>(this);
   }
-
+  
   entityBuilder(): EntityBuilderType<
-    TestEntityEndsWithSomethingElse<DeSerializersT>,
+    TestEntityEndsWithSomethingElse<
+      DeSerializersT
+    >,
     DeSerializersT
   > {
     return entityBuilder(this);
@@ -54,7 +55,8 @@ export class TestEntityEndsWithSomethingElseApi<
     fieldName: string,
     isNullable: NullableT = false as NullableT
   ): CustomField<
-    TestEntityEndsWithSomethingElse<DeSerializersT>,
+  TestEntityEndsWithSomethingElse<
+      DeSerializersT>,
     DeSerializersT,
     NullableT
   > {
@@ -66,53 +68,37 @@ export class TestEntityEndsWithSomethingElseApi<
     ) as any;
   }
 
-  private _fieldBuilder?: FieldBuilder<
-    typeof TestEntityEndsWithSomethingElse,
-    DeSerializersT
-  >;
+  private _fieldBuilder?: FieldBuilder<typeof TestEntityEndsWithSomethingElse, DeSerializersT>;
   get fieldBuilder() {
-    if (!this._fieldBuilder) {
-      this._fieldBuilder = new FieldBuilder(
-        TestEntityEndsWithSomethingElse,
-        this.deSerializers
-      );
+    if(!this._fieldBuilder){
+      this._fieldBuilder = new FieldBuilder(TestEntityEndsWithSomethingElse, this.deSerializers);
     }
     return this._fieldBuilder;
   }
 
   private _schema?: {
-    KEY_PROPERTY: EdmTypeField<
-      TestEntityEndsWithSomethingElse<DeSerializers>,
-      DeSerializersT,
-      'Edm.String',
-      false,
-      true
-    >;
-    ALL_FIELDS: AllFields<TestEntityEndsWithSomethingElse<DeSerializers>>;
+    KEY_PROPERTY: EdmTypeField<TestEntityEndsWithSomethingElse<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
+ALL_FIELDS: AllFields<TestEntityEndsWithSomethingElse<DeSerializers>>
   };
 
   get schema() {
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
-      this._schema = {
-        /**
-         * Static representation of the [[keyProperty]] property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-          'KeyProperty',
-          'Edm.String',
-          false
-        ),
-        ...this.navigationPropertyFields,
-        /**
-         *
-         * All fields selector.
-         */
-        ALL_FIELDS: new AllFields('*', TestEntityEndsWithSomethingElse)
-      };
+      this._schema = { 
+    /**
+ * Static representation of the [[keyProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', TestEntityEndsWithSomethingElse) 
+  };
     }
-
+  
     return this._schema;
   }
 }

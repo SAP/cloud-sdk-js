@@ -5,49 +5,61 @@
  */
 import { CaseTest } from './CaseTest';
 import { CaseTestRequestBuilder } from './CaseTestRequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  EdmTypeField
-} from '@sap-cloud-sdk/odata-v2';
-export class CaseTestApi<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<CaseTest<DeSerializersT>, DeSerializersT>
-{
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, EdmTypeField } from '@sap-cloud-sdk/odata-v2';
+export class CaseTestApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      CaseTest<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {};
+  private navigationPropertyFields!: {
+      
+    };
 
-  _addNavigationProperties(linkedApis: []): this {
-    this.navigationPropertyFields = {};
-    return this;
-  }
-
+  _addNavigationProperties(
+      linkedApis: [
+        
+      ]): this {
+        this.navigationPropertyFields = {
+          
+        };
+        return this;
+      }
+  
   entityConstructor = CaseTest;
-
-  requestBuilder(): CaseTestRequestBuilder<DeSerializersT> {
+  
+  requestBuilder(): CaseTestRequestBuilder<
+    DeSerializersT
+  > {
     return new CaseTestRequestBuilder<DeSerializersT>(this);
   }
-
-  entityBuilder(): EntityBuilderType<CaseTest<DeSerializersT>, DeSerializersT> {
+  
+  entityBuilder(): EntityBuilderType<
+    CaseTest<
+      DeSerializersT
+    >,
+    DeSerializersT
+  > {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<CaseTest<DeSerializersT>, DeSerializersT, NullableT> {
+  ): CustomField<
+  CaseTest<
+      DeSerializersT>,
+    DeSerializersT,
+    NullableT
+  > {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -58,45 +70,35 @@ export class CaseTestApi<
 
   private _fieldBuilder?: FieldBuilder<typeof CaseTest, DeSerializersT>;
   get fieldBuilder() {
-    if (!this._fieldBuilder) {
+    if(!this._fieldBuilder){
       this._fieldBuilder = new FieldBuilder(CaseTest, this.deSerializers);
     }
     return this._fieldBuilder;
   }
 
   private _schema?: {
-    KEY_PROPERTY_STRING: EdmTypeField<
-      CaseTest<DeSerializers>,
-      DeSerializersT,
-      'Edm.String',
-      false,
-      true
-    >;
-    ALL_FIELDS: AllFields<CaseTest<DeSerializers>>;
+    KEY_PROPERTY_STRING: EdmTypeField<CaseTest<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
+ALL_FIELDS: AllFields<CaseTest<DeSerializers>>
   };
 
   get schema() {
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
-      this._schema = {
-        /**
-         * Static representation of the [[keyPropertyString]] property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
-          'KeyPropertyString',
-          'Edm.String',
-          false
-        ),
-        ...this.navigationPropertyFields,
-        /**
-         *
-         * All fields selector.
-         */
-        ALL_FIELDS: new AllFields('*', CaseTest)
-      };
+      this._schema = { 
+    /**
+ * Static representation of the [[keyPropertyString]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', CaseTest) 
+  };
     }
-
+  
     return this._schema;
   }
 }

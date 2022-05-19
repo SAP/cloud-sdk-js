@@ -173,18 +173,16 @@ async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
   }, unifiedChangelog);
 }
 
-async function getChangelog(): Promise<void> {
+async function mergeChangelogs(): Promise<void> {
   const files = new GlobSync('packages/*/CHANGELOG.md').found;
-  const parsedLogs = (
-    await Promise.all(
-      files.map(async file => {
-        const text = await readFile(file, { encoding: 'utf8' });
-        return parseChangelog(text);
-      })
-    )
-  ).flat();
-  const newChangelog = await formatChangelog(mergeMessages(parsedLogs));
+  const parsedLogs = await Promise.all(
+    files.map(async file => {
+      const text = await readFile(file, { encoding: 'utf8' });
+      return parseChangelog(text);
+    })
+  );
+  const newChangelog = await formatChangelog(mergeMessages(parsedLogs.flat()));
   await writeFile('CHANGELOG.md', newChangelog);
 }
 
-getChangelog();
+mergeChangelogs();

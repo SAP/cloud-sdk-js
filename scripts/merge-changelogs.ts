@@ -10,12 +10,12 @@ const validMessageTypes = [
   'Updated Dependencies'
 ] as const;
 
-interface Message {
+interface Change {
   packageNames: string[];
   commit: string;
   type: typeof validMessageTypes[number];
   version: string;
-  message: string;
+  summary: string;
   dependencies?: string;
 }
 
@@ -26,7 +26,7 @@ interface ContentByVersion {
 
 function getPackageName(changelog: string): string {
   // Get package name without the @sap-cloud-sdk scope
-  const packageNameRegex = /^# @sap-cloud-sdk\/(?<packageName>.+)$/m;
+  const packageNameRegex = /^# @sap-cloud-sdk\/(?<packageName>.+)$/;
   const firstLine = changelog.split('\n')[0];
   const packageNameMatch = firstLine.match(packageNameRegex);
 
@@ -38,79 +38,58 @@ function getPackageName(changelog: string): string {
 }
 
 function splitByVersion(changelog: string): ContentByVersion[] {
-  // Explanation: https://regex101.com/r/wCKs2A/3
-  const versionRegex =
-    /## (?<version>[0-9]+\.[0-9]+\..+)(?<content>[^]*?)(?=(\n## |$))/g;
-  const matches = changelog.matchAll(versionRegex);
-  const results: any[] = [];
-  for (const match of matches) {
-    results.push({
-      version: match.groups?.version,
-      content: match.groups?.content.trim()
-    });
+  return changelog.split('\n## ').map(h2 => {
+    const [version, ...content] = h2.split('\n');
+    return {
+      version,
+      content: content.join('\n').trim()
+    };
+  });
+}
+
+function assertGroups(
+  groups: RegExpMatchArray['groups'] | undefined,
+  packageName: string,
+  version: string
+): asserts groups is {
+  summary: string;
+  commit?: string;
+  type: typeof validMessageTypes[number];
+} {
+  if (!validMessageTypes.includes(groups?.type as any)) {
+    throw new Error(
+      `Incorrect or missing type in CHANGELOG.md in ${packageName} for v${version}!`
+    );
   }
-  return results;
+  if (typeof groups?.summary !== 'string' || groups?.summary.trim() === '') {
+    throw new Error(
+      `Empty or missing summary in CHANGELOG.md in ${packageName} for v${version}!`
+    );
+  }
 }
 
 function parseContent(
   content: string,
   version: string,
   packageName: string
-): Message[] {
-  const results: Message[] = [];
-
+): Change[] {
   // Explanation: https://regex101.com/r/9UhEwo/3
   const contentRegex =
-    /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<message>[^]*?)(?=(\n- |\n### |$))/g;
-  for (const match of content.matchAll(contentRegex)) {
-    if (!match.groups?.commit) {
-      throw new Error(
-        `No commit matched for change set in ${packageName} for v${version}!`
-      );
-    }
-    if (!validMessageTypes.includes(match.groups?.type as any)) {
-      throw new Error(
-        `Change set has an incorrect or missing type for change set in ${packageName} for v${version}!`
-      );
-    }
+    /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<summary>[^]*?)(?=(\n- |\n### |$))/g;
 
-    const message = match.groups?.message?.trim();
-    if (message) {
-      results.push({
-        version,
-        message,
-        packageNames: [packageName],
-        commit: match.groups?.commit,
-        type: match.groups?.type as any
-      });
-    }
-  }
-
-  // Explanation: https://regex101.com/r/aOBH7G/2
-  const dependenciesRegex =
-    /- Updated dependencies \[(?<commit>.*)\](?<deps>[^]*?)\n*(?=(\n- |\n### |$))/g;
-  for (const match of content.matchAll(dependenciesRegex)) {
-    if (!match.groups?.commit) {
-      throw new Error(
-        `No commit matched for change set in ${packageName} for v${version}!`
-      );
-    }
-    if (match.groups?.deps) {
-      results.push({
-        version,
-        message: 'Updated Dependencies',
-        packageNames: [packageName],
-        commit: match.groups?.commit,
-        type: 'Updated Dependencies',
-        dependencies: match.groups?.deps
-      });
-    }
-  }
-
-  return results;
+  return [...content.matchAll(contentRegex)].map(({ groups }) => {
+    assertGroups(groups, packageName, version);
+    return {
+      version,
+      summary: groups.summary.trim(),
+      packageNames: [packageName],
+      commit: groups.commit ? `(${groups.commit})` : '',
+      type: groups.type
+    };
+  });
 }
 
-function parseChangelog(changelog: string): Message[] {
+function parseChangelog(changelog: string): Change[] {
   const packageName = getPackageName(changelog);
   const versions = splitByVersion(changelog);
   return versions
@@ -126,7 +105,7 @@ API Docs: https://sap.github.io/cloud-sdk/api/${version}`;
 }
 
 function writeMessagesOfType(
-  messages: Message[],
+  messages: Change[],
   type: typeof validMessageTypes[number]
 ): string {
   if (!messages.some(msg => msg.type === type)) {
@@ -136,7 +115,7 @@ function writeMessagesOfType(
     .filter(msg => msg.type === type)
     .map(
       msg =>
-        `- [${msg.packageNames.join(', ')}] ${msg.message} (${msg.commit})${
+        `- [${msg.packageNames.join(', ')}] ${msg.summary} ${msg.commit}${
           msg.dependencies || ''
         }`
     )
@@ -144,7 +123,7 @@ function writeMessagesOfType(
   return `\n\n## ${type}\n\n${formatted}`;
 }
 
-function createNewSection(version: string, messages: Message[]): string {
+function createNewSection(version: string, messages: Change[]): string {
   return (
     writeHeader(version) +
     writeMessagesOfType(messages, 'Compatibility Note') +
@@ -156,11 +135,11 @@ function createNewSection(version: string, messages: Message[]): string {
   );
 }
 
-function mergeMessages(parsedMessages: Message[]): Message[] {
+function mergeMessages(parsedMessages: Change[]): Change[] {
   return parsedMessages.reduce((prev, curr) => {
     const sameMessage = prev.find(
       msg =>
-        msg.message === curr.message &&
+        msg.summary === curr.summary &&
         msg.dependencies === curr.dependencies &&
         msg.version === curr.version &&
         msg.type === curr.type
@@ -170,13 +149,13 @@ function mergeMessages(parsedMessages: Message[]): Message[] {
       return prev;
     }
     return [...prev, curr];
-  }, [] as Message[]);
+  }, [] as Change[]);
 }
 
-async function formatChangelog(parsedChangelog: Message[]): Promise<string> {
+async function formatChangelog(parsedChangelog: Change[]): Promise<string> {
   let unifiedChangelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
   const relevantMessages = parsedChangelog.filter(
-    message => !unifiedChangelog.includes(`# ${message.version}`)
+    summary => !unifiedChangelog.includes(`# ${summary.version}`)
   );
   const versions = [...new Set(relevantMessages.map(msg => msg.version))];
 

@@ -18,7 +18,11 @@
     "deploy": "cds deploy --to sqlite",
     "test": "yarn test:e2e",
     "test:e2e": "jest",
-    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
+    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'",
+    "service": "node server.js",
+    "proxy": "node test/on-prem/proxy-server.js",
+    "mail": "node test/mail/mail-server.js",
+    "test-mail": "ts-node test/mail/test.ts"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^10.0.2",
@@ -56,7 +60,9 @@
     "requires": {
       "db": {
         "kind": "sqlite",
-        "model": "*"
+        "credentials": {
+          "database": "sqlite.db"
+        }
       }
     }
   }

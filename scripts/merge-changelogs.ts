@@ -16,6 +16,7 @@ interface Message {
   type: typeof validMessageTypes[number];
   version: string;
   message: string;
+  dependencies?: string;
 }
 
 interface ContentByVersion {
@@ -56,35 +57,56 @@ function parseContent(
   version: string,
   packageName: string
 ): Message[] {
-  // I'm sorry... Explanation: https://regex101.com/r/9UhEwo/2
-  const contentRegex =
-    /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<message>[^]*?)(?=(\n- |\n### |$))|- Updated dependencies \[(?<depsCommit>.*)\](?<deps>[^]*?)\n*(?=(\n- |\n### |$))/g;
   const results: Message[] = [];
+
+  // Explanation: https://regex101.com/r/9UhEwo/3
+  const contentRegex =
+    /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<message>[^]*?)(?=(\n- |\n### |$))/g;
   for (const match of content.matchAll(contentRegex)) {
-    if (!match.groups?.commit && !match.groups?.depsCommit) {
+    if (!match.groups?.depsCommit && !match.groups?.commit) {
       throw new Error(
-        `No commit hash found for change set in ${packageName} for version ${version}!`
+        `No commit matched for change set in ${packageName} for v${version}!`
       );
     }
-    if (
-      !validMessageTypes.includes(match.groups?.type as any) &&
-      !match[0].includes('Updated dependencies')
-    ) {
+    if (!validMessageTypes.includes(match.groups?.type as any)) {
       throw new Error(
-        `Change set has an incorrect or missing type for change set in ${packageName} for version ${version}!`
+        `Change set has an incorrect or missing type for change set in ${packageName} for v${version}!`
       );
     }
-    const message = match.groups?.message?.trim() || match.groups?.deps?.trim();
+
+    const message = match.groups?.message?.trim();
     if (message) {
       results.push({
         version,
         message,
         packageNames: [packageName],
-        commit: match.groups?.commit || match.groups?.depsCommit,
-        type: (match.groups?.type as any) || 'Updated Dependencies'
+        commit: match.groups?.commit,
+        type: match.groups?.type as any
       });
     }
   }
+
+  // Explanation: https://regex101.com/r/aOBH7G/2
+  const dependenciesRegex =
+    /- Updated dependencies \[(?<commit>.*)\](?<deps>[^]*?)\n*(?=(\n- |\n### |$))/g;
+  for (const match of content.matchAll(dependenciesRegex)) {
+    if (!match.groups?.commit) {
+      throw new Error(
+        `No commit matched for change set in ${packageName} for v${version}!`
+      );
+    }
+    if (match.groups?.deps) {
+      results.push({
+        version,
+        message: 'Updated Dependencies',
+        packageNames: [packageName],
+        commit: match.groups?.commit,
+        type: 'Updated Dependencies',
+        dependencies: match.groups?.deps
+      });
+    }
+  }
+
   return results;
 }
 
@@ -109,32 +131,19 @@ function writeMessagesOfType(
   messages: Message[],
   type: typeof validMessageTypes[number]
 ): string {
-  const foo = messages.some(msg => msg.type === type)
-    ? `\n\n## ${type}\n\n` +
-      messages
-        .filter(msg => msg.type === type)
-        .map(
-          msg =>
-            `- [${msg.packageNames.join(', ')}] ${msg.message} (${msg.commit})`
-        )
-        .join('\n')
-    : '';
-  return foo;
-}
-
-function writeDependencyMessages(messages: Message[]) {
-  return messages.some(msg => msg.type === 'Updated Dependencies')
-    ? '\n\n## Updated Dependencies\n\n' +
-        messages
-          .filter(msg => msg.type === 'Updated Dependencies')
-          .map(
-            msg =>
-              `- [${msg.packageNames.join(', ')}] Updated Dependencies (${
-                msg.commit
-              })\n  ${msg.message}`
-          )
-          .join('\n')
-    : '';
+  if (!messages.some(msg => msg.type === type)) {
+    return '';
+  }
+  const formatted = messages
+    .filter(msg => msg.type === type)
+    .map(
+      msg =>
+        `- [${msg.packageNames.join(', ')}] ${msg.message} (${msg.commit})${
+          msg.dependencies || ''
+        }`
+    )
+    .join('\n');
+  return `\n\n## ${type}\n\n${formatted}`;
 }
 
 function createNewSection(version: string, messages: Message[]): string {
@@ -144,7 +153,7 @@ function createNewSection(version: string, messages: Message[]): string {
     writeMessagesOfType(messages, 'New Functionality') +
     writeMessagesOfType(messages, 'Improvement') +
     writeMessagesOfType(messages, 'Fixed Issue') +
-    writeDependencyMessages(messages) +
+    writeMessagesOfType(messages, 'Updated Dependencies') +
     '\n'
   );
 }
@@ -154,6 +163,7 @@ function mergeMessages(parsedMessages: Message[]): Message[] {
     const sameMessage = prev.find(
       msg =>
         msg.message === curr.message &&
+        msg.dependencies === curr.dependencies &&
         msg.version === curr.version &&
         msg.type === curr.type
     );

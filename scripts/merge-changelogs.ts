@@ -63,7 +63,7 @@ function parseContent(
   const contentRegex =
     /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<message>[^]*?)(?=(\n- |\n### |$))/g;
   for (const match of content.matchAll(contentRegex)) {
-    if (!match.groups?.depsCommit && !match.groups?.commit) {
+    if (!match.groups?.commit) {
       throw new Error(
         `No commit matched for change set in ${packageName} for v${version}!`
       );
@@ -122,9 +122,7 @@ function writeHeader(version: string) {
   return `
 # ${version}
 
-Release Date: TBD<br>
-API Docs: https://sap.github.io/cloud-sdk/api/${version}<br>
-Blog: TBD<br>`;
+API Docs: https://sap.github.io/cloud-sdk/api/${version}`;
 }
 
 function writeMessagesOfType(

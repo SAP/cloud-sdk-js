@@ -152,25 +152,25 @@ function mergeMessages(parsedMessages: Change[]): Change[] {
   }, [] as Change[]);
 }
 
-async function formatChangelog(parsedChangelog: Change[]): Promise<string> {
-  let unifiedChangelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
-  const relevantMessages = parsedChangelog.filter(
+async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
+  const unifiedChangelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
+  const missingFromUnifiedChangelog = parsedChangelogs.filter(
     summary => !unifiedChangelog.includes(`# ${summary.version}`)
   );
-  const versions = [...new Set(relevantMessages.map(msg => msg.version))];
-
-  for (const version of versions) {
-    const newContent = createNewSection(
+  const versions = [
+    ...new Set(missingFromUnifiedChangelog.map(msg => msg.version))
+  ];
+  return versions.reduce((changelog, version) => {
+    const newSection = createNewSection(
       version,
-      relevantMessages.filter(msg => msg.version === version)
+      missingFromUnifiedChangelog.filter(msg => msg.version === version)
     );
-    unifiedChangelog =
-      unifiedChangelog.split('\n').slice(0, 30).join('\n') +
-      newContent +
-      unifiedChangelog.split('\n').slice(30).join('\n');
-  }
-
-  return unifiedChangelog;
+    return (
+      changelog.split('\n').slice(0, 30).join('\n') +
+      newSection +
+      changelog.split('\n').slice(30).join('\n')
+    );
+  }, unifiedChangelog);
 }
 
 async function getChangelog(): Promise<void> {

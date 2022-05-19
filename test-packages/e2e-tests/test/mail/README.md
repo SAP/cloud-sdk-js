@@ -1,0 +1,38 @@
+## Mail Tests
+This is a test package related to sending emails.
+
+### Steps for local tests
+1. install dependencies via `yarn install`
+1. go to `e2e-tests` directory by running e.g., `cd test-packages/e2e-tests`.
+1. start the mail server by executing `yarn run start:mail-server`
+1. run tests `yarn jest mail.spec.ts`
+1. stop the mail server by running `yarn run stop:mail-server`
+
+### About the mail server
+A node module `smtp-server` is used for building the mail server, where you can configure:
+- TLS (certificates, private keys)
+- authentication (basic + OAuth)
+- validating client connection (e.g., having an allow-list)
+- validating sender address (e.g., having a block-list)
+- validating recipient address (e.g., only local domain is possible)
+- processing incoming messages (e.g., DB operation/file system operation/console output)
+- server port
+
+Find more docs [here](https://nodemailer.com/extras/smtp-server/).
+
+### Online mail service -- Ethereal
+[Ethereal](https://ethereal.email) is a fake SMTP online service, for testing purposes.
+
+#### Pros
+- free service
+- support sending/receiving emails via APIs
+- support reading emails via UI
+- support creating users on the fly
+- test data is deleted automatically (hours?)
+
+### Cons
+- no server side configuration
+  - use TLS configurations as it is
+  - no OAuth support 
+  - no server side validation
+

@@ -66,4 +66,8 @@ export interface Systems {
     providerBasicPrivateLink: string;
     providerTrustStore: string;
   };
+  email: {
+    providerCloudBasic: string;
+    providerOnPremBasic: string;
+  }
 }

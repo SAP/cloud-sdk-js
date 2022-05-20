@@ -38,6 +38,7 @@
     "@sap-cloud-sdk/util": "^2.3.0",
     "@sap/cds": "^5.8.0",
     "@sap/cds-dk": "4.9.5",
+    "@types/nodemailer": "^6.4.4",
     "axios": "^0.27.1",
     "execa": "^5.0.0",
     "express": "^4.17.1",

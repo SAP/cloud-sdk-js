@@ -1,5 +1,22 @@
 ## Mail Tests
-This is a test package related to sending emails.
+This documentation contains the following topics:
+- overview
+- why we need the mail tests
+- how to prepare and run the tests
+- the potential capability of the mail server
+- alternatives - use online mail service
+
+### Overview
+This test scenario consists of the following components:
+- A mail server, that receives incoming mail requests then write the mail info to the local file system
+- Some jest tests that send mails to the mail server, then verify the file written by the mail server. 
+In real life, IMAP/POP3 protocol should be used for receiving mails, but make it simple for now.
+Currently, sending emails are done without SDK, which should be updated once the mail functions are implemented.
+
+### Value of the mail tests
+- local e2e tests without deployment on the cloud
+- using a real SMTP server as e2e test infrastructure makes it more reliable than unit tests
+- the mail server is configurable to fit more complicated requirements (e.g., TLS/authentication)
 
 ### Steps for local tests
 1. install dependencies via `yarn install`
@@ -30,7 +47,7 @@ Find more docs [here](https://nodemailer.com/extras/smtp-server/).
 - support creating users on the fly
 - test data is deleted automatically (hours?)
 
-### Cons
+#### Cons
 - no server side configuration
   - use TLS configurations as it is
   - no OAuth support 

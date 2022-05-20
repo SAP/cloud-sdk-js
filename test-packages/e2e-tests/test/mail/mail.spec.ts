@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import fs from 'fs';
 import {join, resolve} from "path";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 describe('Mail', () => {
   it('should send a mail', async () => {
@@ -13,7 +14,7 @@ describe('Mail', () => {
   });
 });
 
-async function sendTestMail(){
+async function sendTestMail(): Promise<SMTPTransport.SentMessageInfo>{
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: "localhost",

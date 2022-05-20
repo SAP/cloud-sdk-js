@@ -196,5 +196,3 @@ export async function mergeChangelogs(): Promise<void> {
   );
   await writeFile('CHANGELOG.md', newChangelog);
 }
-
-// mergeChangelogs();

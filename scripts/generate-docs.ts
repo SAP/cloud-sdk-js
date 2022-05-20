@@ -159,5 +159,3 @@ export async function generateDocs() {
   insertCopyrightAndTracking();
   writeVersions();
 }
-
-// generateDocs();

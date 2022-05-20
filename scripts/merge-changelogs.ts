@@ -173,7 +173,7 @@ async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
   }, unifiedChangelog);
 }
 
-async function mergeChangelogs(): Promise<void> {
+export async function mergeChangelogs(): Promise<void> {
   const workspaces: string[] = JSON.parse(
     await readFile('package.json', { encoding: 'utf8' })
   ).workspaces;
@@ -196,5 +196,3 @@ async function mergeChangelogs(): Promise<void> {
   );
   await writeFile('CHANGELOG.md', newChangelog);
 }
-
-mergeChangelogs();

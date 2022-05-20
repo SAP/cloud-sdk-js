@@ -47,7 +47,7 @@
     "generate": "turbo run generate",
     "preversion": "ts-node scripts/before-bump.ts",
     "version": "changeset version",
-    "postversion": "yarn generate && ts-node scripts/after-bump.ts",
+    "postversion": "yarn generate --force && ts-node scripts/after-bump.ts",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "check:circular": "madge --extensions ts --circular ./packages --exclude 'environment-accessor'",

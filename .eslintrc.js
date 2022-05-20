@@ -34,6 +34,7 @@ module.exports = {
     'test-packages/memory-tests/sdk-v1/test-service',
     'test-packages/memory-tests/sdk-canary/test-service',
     'packages/rest-generator/test/test-services',
+    'scripts/',
     'test-resources/cli/',
     'test-resources/generator/test-output'
   ],

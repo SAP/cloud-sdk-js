@@ -120,15 +120,12 @@ function getSortedApiVersions() {
 }
 
 function writeVersions() {
-  console.log('a');
   const apiVersions = getSortedApiVersions();
-  console.log('b');
   writeFileSync(
     resolve('docs', 'api', 'versions.js'),
     `export default ${formatJson(apiVersions)}`,
     'utf8'
   );
-  console.log('c');
   writeFileSync(
     resolve('docs', 'api', 'versions.json'),
     `${formatJson(apiVersions)}`,

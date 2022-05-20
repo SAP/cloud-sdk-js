@@ -193,7 +193,7 @@ describe('proxy-util', () => {
 describe('parseProxyEnv', () => {
   it('parses URL with "https:" protocol and hostname', () => {
     const logger = createLogger('proxy-util');
-    const logSpy = jest.spyOn(logger, 'info');
+    const logSpy = jest.spyOn(logger, 'debug');
     expect(parseProxyEnv('https://some.proxy')).toEqual({
       protocol: 'https',
       host: 'some.proxy',

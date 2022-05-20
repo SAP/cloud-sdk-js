@@ -111,7 +111,7 @@ function validateDestinations(destinations: any[]) {
 export function searchEnvVariablesForDestination(
   options: DestinationFetchOptions
 ): Destination | undefined {
-  logger.info('Attempting to retrieve destination from environment variable.');
+  logger.debug('Attempting to retrieve destination from environment variable.');
 
   if (getDestinationsEnvVariable()) {
     try {
@@ -129,7 +129,7 @@ export function searchEnvVariablesForDestination(
     }
   }
 
-  logger.info('No environment variable set.');
+  logger.debug('No environment variable set.');
 }
 
 /**

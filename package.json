@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "private": true,
   "sideEffects": false,
   "packageManager": "yarn@1.22.18",
@@ -46,7 +46,9 @@
     "test:e2e": "turbo run test --filter=e2e-tests",
     "generate": "turbo run generate",
     "doc": "ts-node scripts/generate-docs.ts",
-    "version": "ts-node scripts/after-bump.ts && yarn generate && yarn doc && git add .",
+    "preversion": "ts-node scripts/before-bump.ts",
+    "version": "changeset version",
+    "postversion": "yarn generate --force && yarn doc && ts-node scripts/after-bump.ts",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "check:circular": "madge --extensions ts --circular ./packages --exclude 'environment-accessor'",

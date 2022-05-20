@@ -74,7 +74,7 @@ const emptyDestinationByType: DestinationsByType = {
 export async function getDestinationFromDestinationService(
   options: DestinationFetchOptions
 ): Promise<Destination | null> {
-  logger.info('Attempting to retrieve destination from destination service.');
+  logger.debug('Attempting to retrieve destination from destination service.');
   return DestinationFromServiceRetriever.getDestinationFromDestinationService(
     options
   );
@@ -169,7 +169,7 @@ class DestinationFromServiceRetriever {
     }
 
     if (options.iss) {
-      logger.info(
+      logger.debug(
         'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
       );
       const payload = { iss: options.iss };
@@ -237,7 +237,7 @@ class DestinationFromServiceRetriever {
       );
     }
     if (!destinationSearchResult) {
-      logger.info('Could not retrieve destination from destination service.');
+      logger.debug('Could not retrieve destination from destination service.');
     }
 
     return destinationSearchResult;
@@ -273,7 +273,7 @@ class DestinationFromServiceRetriever {
       );
     }
     if (credentials.length > 1) {
-      logger.info(
+      logger.debug(
         'Found more than one destination service instance. Using the first one.'
       );
     }

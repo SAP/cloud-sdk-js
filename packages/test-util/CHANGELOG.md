@@ -1,3 +1,12 @@
-# Changelog
+# @sap-cloud-sdk/test-util
 
-All notable changes to this module will be documented centrally in the [SAP Cloud SDK changelog](https://github.com/sap/cloud-sdk-js/CHANGELOG.md).
+## 2.4.0
+
+### Patch Changes
+
+- Updated dependencies [04726a35]
+- Updated dependencies [0a008674]
+- Updated dependencies [0a008674]
+- Updated dependencies [0a008674]
+  - @sap-cloud-sdk/connectivity@2.4.0
+  - @sap-cloud-sdk/util@2.4.0

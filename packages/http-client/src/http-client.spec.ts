@@ -303,11 +303,11 @@ sap-client:001`);
         package: 'http-client',
         messageContext: 'http-client'
       });
-      const infoSpy = jest.spyOn(logger, 'info');
+      const warnSpy = jest.spyOn(logger, 'warn');
 
       await executeHttpRequest(httpsDestination, config);
 
-      expect(infoSpy).toBeCalledWith(
+      expect(warnSpy).toBeCalledWith(
         `The following custom headers will overwrite headers created by the SDK:
   - "authorization"
   - "sap-client"

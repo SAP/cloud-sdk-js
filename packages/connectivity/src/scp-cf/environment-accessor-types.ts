@@ -1,3 +1,6 @@
+/**
+ * Unspecific representation of a service as read from VCAP_SERVICES (for Cloud Foundry) or mounted secrets (for K8S).
+ */
 export interface Service {
   [other: string]: any;
   name: string;

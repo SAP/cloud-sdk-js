@@ -196,8 +196,8 @@ export function setGlobalLogLevel(level: LogLevel): void {
 }
 
 /**
- * Get global log level.
- * @returns - The global log level.
+ * Get the global log level of the container.
+ * @returns The global log level, or `undefined` when not defined.
  */
 export function getGlobalLogLevel(): string | undefined {
   return container.options.level;
@@ -247,8 +247,8 @@ export function setGlobalLogFormat(format: Format): void {
 }
 
 /**
- * Get global log format.
- * @returns - The global log format.
+ * Get the global log format of the container.
+ * @returns The global log format, or `undefined` when not defined.
  */
 export function getGlobalLogFormat(): Format | undefined {
   return container.options.format;

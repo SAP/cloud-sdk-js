@@ -138,7 +138,7 @@ export function getDestinationService(): Service {
  * This function returns the VCAP_SERVICES as object or `null`, if it is not defined (i.e. no services are bound to the application).
  *
  * @returns 'VCAP_SERVICES' found in environment variables or `null`, if not defined. The key denotes the name ov the service and the value is the definition.
- *  @internal
+ * @internal
  */
 export function getVcapService(): Record<string, any> | null {
   const env = getEnvironmentVariable('VCAP_SERVICES');
@@ -167,9 +167,8 @@ export function getVcapService(): Record<string, any> | null {
 /**
  * Environment variables accessor.
  * @param name - Environment variable name.
- * @returns Env variable value if defined.
- *           null: If not defined.
- *             @internal
+ * @returns Env variable value if defined or `null`, if not defined.
+ * @internal
  */
 export function getEnvironmentVariable(
   name: string
@@ -177,7 +176,7 @@ export function getEnvironmentVariable(
   if (process.env[name]) {
     return process.env[name];
   }
-  logger.info('Environment variable ' + name + ' is not defined.');
+  logger.warn(`The environment variable "${name}" is not defined.`);
   return null;
 }
 
@@ -187,7 +186,7 @@ export function getEnvironmentVariable(
  * returns the first entry.
  *
  * @returns The first existing uri in destination or `null`, if not found.
- *   @internal
+ * @internal
  */
 export function getDestinationServiceUri(): string | null {
   const destinationServiceCredentials = getDestinationServiceCredentialsList();
@@ -196,7 +195,7 @@ export function getDestinationServiceUri(): string | null {
     if ('uri' in credential) {
       uris.push(credential['uri']);
     } else {
-      logger.info(
+      logger.debug(
         "Skipping credentials in 'destination'. 'uri' property not defined"
       );
     }
@@ -210,7 +209,7 @@ export function getDestinationServiceUri(): string | null {
  * If no decoded JWT is specified, then returns the first existing XSUAA credential service plan "application".
  * @param token - Either an encoded or decoded JWT.
  * @returns The credentials for a match, otherwise `null`.
- *   @internal
+ * @internal
  */
 export function getXsuaaServiceCredentials(
   token?: JwtPayload | string
@@ -227,7 +226,7 @@ export function getXsuaaServiceCredentials(
  * Throws an error when no service can be found for the given type.
  * @param service - A string representing the service type or a [[Service]] instance.
  * @returns A [[Service]] instance.
- *   @internal
+ * @internal
  */
 export function resolveService(service: string | Service): Service {
   if (typeof service === 'string') {

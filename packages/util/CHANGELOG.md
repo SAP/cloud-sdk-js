@@ -1,3 +1,7 @@
-# Changelog
+# @sap-cloud-sdk/util
 
-All notable changes to this module will be documented centrally in the [SAP Cloud SDK changelog](https://github.com/sap/cloud-sdk-js/CHANGELOG.md).
+## 2.4.0
+
+### Patch Changes
+
+- 0a008674: [Fixed Issue] Fix a bug in the implementation of the trim method.

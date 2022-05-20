@@ -24,14 +24,14 @@ const logger = createLogger({
  */
 export function proxyStrategy(destination: Destination): ProxyStrategy {
   if (destination.proxyType === 'OnPremise') {
-    logger.info(
+    logger.debug(
       'OnPrem destination proxy settings from connectivity service will be used.'
     );
     return ProxyStrategy.ON_PREMISE_PROXY;
   }
 
   if (destination.proxyType === 'PrivateLink') {
-    logger.info(
+    logger.debug(
       'PrivateLink destination proxy settings will be used. This is not supported in local/CI/CD environments.'
     );
     return ProxyStrategy.PRIVATELINK_PROXY;
@@ -39,14 +39,14 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
 
   const destinationProtocol = getProtocolOrDefault(destination);
   if (!getProxyEnvValue(destinationProtocol)) {
-    logger.info(
+    logger.debug(
       `No Proxy settings for ${destinationProtocol} are found in environment variables - no proxy used`
     );
     return ProxyStrategy.NO_PROXY;
   }
 
   if (getNoProxyEnvValue().includes(destination.url)) {
-    logger.info(
+    logger.debug(
       `Destination URL ${
         destination.url
       } is in no_proxy list: ${getNoProxyEnvValue()} - no proxy used`
@@ -55,7 +55,7 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
   }
 
   if (getProxyEnvValue(destinationProtocol)) {
-    logger.info(
+    logger.debug(
       `Proxy settings for ${destinationProtocol} are found in environment variables.`
     );
     return ProxyStrategy.INTERNET_PROXY;
@@ -69,7 +69,7 @@ function getProxyEnvValue(protocol: Protocol): string | undefined {
   const proxyEnvValue =
     process.env[proxyEnvKey.toLowerCase()] ||
     process.env[proxyEnvKey.toUpperCase()];
-  logger.info(
+  logger.debug(
     `Try to fetch ${proxyEnvKey.toLowerCase()} or ${proxyEnvKey.toUpperCase()} from the process env. Found value is ${proxyEnvValue}`
   );
 
@@ -124,7 +124,7 @@ function validateUrl(url: URL): void {
   }
 
   if (url.protocol === 'https:') {
-    logger.info(
+    logger.debug(
       'Using protocol "https:" to connect to a proxy. This is unusual but possible.'
     );
   }

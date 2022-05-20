@@ -16,6 +16,7 @@ export abstract class ODataFunctionImportRequestConfig<
    * @param defaultServicePath - Default path of the service.
    * @param functionImportName - The name of the function import.
    * @param parameters - Object containing the parameters with a value and additional meta information.
+   * @param oDataUri - URI conversion functions.
    */
   constructor(
     method: RequestMethodType,

@@ -6,7 +6,6 @@
 
 export {
   parseDestination,
-  noDestinationErrorMessage,
   toDestinationNameUrl,
   sanitizeDestination,
   CachingOptions,

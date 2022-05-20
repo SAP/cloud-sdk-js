@@ -1,4 +1,8 @@
 /* eslint-disable  import/export */
+
+/**
+ * Supported web protocols for requests made by the SAP Cloud SDK.
+ */
 export enum Protocol {
   HTTP = 'http',
   HTTPS = 'https'

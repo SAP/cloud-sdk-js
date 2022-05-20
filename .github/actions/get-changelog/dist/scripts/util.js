@@ -1,4 +1,5 @@
 "use strict";
+/* eslint-disable jsdoc/require-jsdoc */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,52 +36,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
-exports.getProductiveLernaModules = exports.getAllLernaModules = exports.openFile = exports.jsonStringify = exports.transformFile = exports.apiDocsDir = exports.docsDir = exports.version = void 0;
+exports.nextSdkVersion = exports.transformFile = exports.apiDocsDir = void 0;
 var fs_1 = require("fs");
 var path_1 = require("path");
-var execa = require("execa");
-exports.version = JSON.parse(fs_1.readFileSync('lerna.json', 'utf8')).version;
-exports.docsDir = path_1.resolve('docs');
-exports.apiDocsDir = path_1.resolve(exports.docsDir, 'api');
-function transformFile(filePath, tranformFn) {
-    var file = fs_1.readFileSync(filePath, { encoding: 'utf8' });
-    var transformedFile = tranformFn(file);
-    fs_1.writeFileSync(filePath, transformedFile, { encoding: 'utf8' });
+var get_release_plan_1 = __importDefault(require("@changesets/get-release-plan"));
+var current_sdk_version_1 = require("./current-sdk-version");
+exports.apiDocsDir = (0, path_1.resolve)('docs', 'api');
+function transformFile(filePath, transformFn) {
+    var file = (0, fs_1.readFileSync)(filePath, { encoding: 'utf8' });
+    var transformedFile = transformFn(file);
+    (0, fs_1.writeFileSync)(filePath, transformedFile, { encoding: 'utf8' });
 }
 exports.transformFile = transformFile;
-function jsonStringify(json) {
-    return JSON.stringify(json, null, 2) + '\n';
-}
-exports.jsonStringify = jsonStringify;
-function openFile(filePath) {
-    return fs_1.readFileSync(filePath, { encoding: 'utf8' });
-}
-exports.openFile = openFile;
-function getAllLernaModules() {
+var versionOrder = ['major', 'minor', 'patch'];
+function nextSdkVersion() {
     return __awaiter(this, void 0, void 0, function () {
-        var response;
+        var currentVersion, releasePlan, versionIncrease;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, execa('lerna', ['list', '--json', '-a'], {
-                    cwd: path_1.resolve(__dirname, '../')
-                })];
+                case 0:
+                    currentVersion = current_sdk_version_1.currentSdkVersion
+                        .split('.')
+                        .map(function (num) { return parseInt(num, 10); });
+                    return [4 /*yield*/, (0, get_release_plan_1["default"])(process.cwd())];
                 case 1:
-                    response = _a.sent();
-                    return [2 /*return*/, JSON.parse(response.stdout)];
+                    releasePlan = _a.sent();
+                    versionIncrease = releasePlan.releases
+                        .map(function (_a) {
+                        var type = _a.type;
+                        return versionOrder.indexOf(type);
+                    })
+                        .sort(function (a, b) { return b - a; });
+                    currentVersion[Math.min.apply(Math, versionIncrease)] += 1;
+                    return [2 /*return*/, currentVersion.join('.')];
             }
         });
     });
 }
-exports.getAllLernaModules = getAllLernaModules;
-function getProductiveLernaModules() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, getAllLernaModules()];
-                case 1: return [2 /*return*/, (_a.sent()).filter(function (module) { return !module.location.includes('test-packages'); })];
-            }
-        });
-    });
-}
-exports.getProductiveLernaModules = getProductiveLernaModules;
+exports.nextSdkVersion = nextSdkVersion;

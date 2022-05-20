@@ -5,7 +5,7 @@
 ### Minor Changes
 
 - 04726a35: [Improvement] Reduce default log output on the `info` level significantly.
-  [Compatibility Note] Only log the successful retrieval of destinations on the`info` log level, log everything else is on the `debug` or `warn` level.
+- 04726a35: [Compatibility Note] Only log the successful retrieval of destinations on the`info` log level, log everything else is on the `debug` or `warn` level.
 - 0a008674: [Compatibility Note] Mark the function `noDestinationErrorMessage` as internal API.
 - 0a008674: [New Functionality] Support self-signed certificate using the `trustStore` property of the destination object.
 

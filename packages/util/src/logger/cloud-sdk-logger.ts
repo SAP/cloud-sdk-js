@@ -195,6 +195,10 @@ export function setGlobalLogLevel(level: LogLevel): void {
   });
 }
 
+/**
+ * Get global log level.
+ * @returns - The global log level.
+ */
 export function getGlobalLogLevel(): string | undefined {
   return container.options.level;
 }
@@ -242,13 +246,14 @@ export function setGlobalLogFormat(format: Format): void {
   });
 }
 
+/**
+ * Get global log format.
+ * @returns - The global log format.
+ */
 export function getGlobalLogFormat(): Format | undefined {
   return container.options.format;
 }
 
-/**
- * Default sensitive keys.
- */
 const defaultSensitiveKeys = [
   'access_token',
   'authentication',

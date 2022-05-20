@@ -3,5 +3,5 @@
 '@sap-cloud-sdk/http-client': minor
 ---
 
-[Improvement] Default log output on the `info` level has been significantly reduced.
-[Compatibility Note] Only the successful retrieval of destinations is now logged on the `info` log level, everything else is either now on `debug` or `warn` level.
+[Improvement] Reduce default log output on the `info` level significantly.
+[Compatibility Note] Only log the successful retrieval of destinations on the`info` log level, log everything else is on the `debug` or `warn` level.

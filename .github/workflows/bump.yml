@@ -22,4 +22,4 @@ jobs:
       - name: Bump version
         run: yarn run version
       - name: Push
-        run: git push --tags
+        run: git push --follow-tags

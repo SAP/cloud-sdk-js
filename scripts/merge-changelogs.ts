@@ -1,5 +1,5 @@
 import { writeFile, readFile } from 'fs/promises';
-import { GlobSync } from 'glob';
+import { resolve } from 'path';
 
 const validMessageTypes = [
   'Known Issue',
@@ -174,14 +174,26 @@ async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
 }
 
 async function mergeChangelogs(): Promise<void> {
-  const files = new GlobSync('packages/*/CHANGELOG.md').found;
-  const parsedLogs = await Promise.all(
-    files.map(async file => {
-      const text = await readFile(file, { encoding: 'utf8' });
-      return parseChangelog(text);
+  const workspaces: string[] = JSON.parse(
+    await readFile('package.json', { encoding: 'utf8' })
+  ).workspaces;
+  const workspacesWithVisibility = await Promise.all(
+    workspaces.map(async workspace => {
+      const packageJson = await readFile(resolve(workspace, 'package.json'), {
+        encoding: 'utf8'
+      });
+      return [!JSON.parse(packageJson).private, workspace] as const;
     })
   );
-  const newChangelog = await formatChangelog(mergeMessages(parsedLogs.flat()));
+  const pathsToPublicLogs = workspacesWithVisibility
+    .filter(([isPublic]) => isPublic)
+    .map(([, workspace]) => resolve(workspace, 'CHANGELOG.md'));
+  const changelogs = await Promise.all(
+    pathsToPublicLogs.map(async file => readFile(file, { encoding: 'utf8' }))
+  );
+  const newChangelog = await formatChangelog(
+    mergeMessages(changelogs.map(log => parseChangelog(log)).flat())
+  );
   await writeFile('CHANGELOG.md', newChangelog);
 }
 

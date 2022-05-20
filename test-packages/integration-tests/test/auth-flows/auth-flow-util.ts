@@ -69,5 +69,5 @@ export interface Systems {
   email: {
     providerCloudBasic: string;
     providerOnPremBasic: string;
-  }
+  };
 }

@@ -430,6 +430,7 @@ describe('OAuth flows', () => {
       destinationName: systems.email.providerCloudBasic
     });
     expect(destination?.type).toEqual('MAIL');
+    expect(destination?.proxyType).toEqual('Internet');
     // TODO: username and password need a new mapping as they are come from the keys `mail.user` and `mail.password`
     // expect(destination?.username).toBeTruthy();
     // expect(destination?.password).toBeTruthy();
@@ -440,6 +441,7 @@ describe('OAuth flows', () => {
       destinationName: systems.email.providerOnPremBasic
     });
 
+    expect(destination?.proxyType).toEqual('OnPremise');
     // TODO: use the key `onpremise_socks5_proxy_port` for the proxy type of the email destination instead of `onpremise_proxy_port` (normal OnPrem HTTP destination)
     // The test below should pass now, as the port is anyway a number.
     // Please double check the value, before enabling.

@@ -1,6 +1,5 @@
 import { add, commit, tag } from '@changesets/git';
 import { mergeChangelogs } from './merge-changelogs';
-import { generateDocs } from './generate-docs';
 import { currentSdkVersion } from './util';
 
 async function commitAndTag() {
@@ -14,7 +13,6 @@ async function commitAndTag() {
 
 async function afterBump() {
   await mergeChangelogs();
-  await generateDocs();
   await commitAndTag();
 }
 

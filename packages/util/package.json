@@ -39,8 +39,7 @@
     "logform": "^2.2.0",
     "promise.allsettled": "^1.0.4",
     "voca": "^1.4.0",
-    "winston": "^3.3.3",
-    "@sap/cds": "^5.9.5"
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "nock": "^13.0.11",

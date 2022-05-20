@@ -1,22 +1,29 @@
+import { Format } from 'logform';
 import {
   Container,
   Logger,
   LoggerOptions as WinstonLoggerOptions,
   transports
 } from 'winston';
-import cds from '@sap/cds';
 import { kibana, local } from './format';
-
-const cdsKibana = (cds.env as any).features?.kibana_formatter;
-const format =
-  cdsKibana ?? process.env.NODE_ENV === 'production' ? kibana : local;
 
 const loggerReference = 'sap-cloud-sdk-logger';
 const exceptionLoggerId = 'sap-cloud-sdk-exception-logger';
 
 const container = new Container();
+
+export const logFormat = {
+  kibana,
+  local
+};
+
+// Set default format based on NODE_ENV
+container.options.format =
+  process.env.NODE_ENV === 'production' ? logFormat.kibana : logFormat.local;
+
 const exceptionTransport = new transports.Console();
 const customLogLevels = {};
+const customLogFormats = {};
 const DEFAULT_LOGGER__MESSAGE_CONTEXT = '__DEFAULT_LOGGER__MESSAGE_CONTEXT';
 let silent = false;
 
@@ -53,7 +60,7 @@ export function unmuteLoggers(): void {
  */
 export const cloudSdkExceptionLogger = container.get(exceptionLoggerId, {
   defaultMeta: { logger: loggerReference, test: 'exception' },
-  format,
+  format: container.options.format,
   exceptionHandlers: [exceptionTransport]
 });
 
@@ -116,7 +123,11 @@ export function createLogger(
       }),
       logger: customFields.logger || loggerReference
     },
-    format,
+    format:
+      customLogFormats[customFields.messageContext] ||
+      customFields.format ||
+      container.options.format ||
+      logFormat.local,
     transports: [new transports.Console()]
   });
 
@@ -183,6 +194,53 @@ export function setGlobalLogLevel(level: LogLevel): void {
 
 export function getGlobalLogLevel(): string | undefined {
   return container.options.level;
+}
+
+/**
+ * Change the log format of a logger based on its message context.
+ * e.g., to set the log format for the destination accessor module of the SDK to `local`, simply call `setLogFormat(logFormat.local, 'destination-accessor')`.
+ * @param format - Format to set the logger to. Use `logFormat` to get the pre-defined log formats or use a custom log format.
+ * @param messageContextOrLogger - Message context of the logger to change the log level for or the logger itself.
+ */
+export function setLogFormat(
+  format: Format,
+  messageContextOrLogger: string | Logger = DEFAULT_LOGGER__MESSAGE_CONTEXT
+): void {
+  const messageContext =
+    typeof messageContextOrLogger === 'string'
+      ? messageContextOrLogger
+      : getMessageContext(messageContextOrLogger);
+
+  if (messageContext) {
+    customLogFormats[messageContext] = format;
+
+    if (container.has(messageContext)) {
+      const logger = container.get(messageContext);
+      logger.format = format;
+    }
+  } else if (typeof messageContextOrLogger !== 'string') {
+    moduleLogger.warn(
+      'Setting log format for logger with unknown message context'
+    );
+    messageContextOrLogger.format = format;
+  }
+}
+
+/**
+ * Change the global log format of the container which will set default format for all active loggers.
+ * e.g., to set the global log format to `local` call `setGlobalLogLevel(logFormat.local)` or use a custom log format.
+ * @param format - The log format to set the global log format to.
+ */
+export function setGlobalLogFormat(format: Format): void {
+  container.options.format = format;
+  // Update existing loggers' log level with global level.
+  container.loggers.forEach(logger => {
+    logger.format = format;
+  });
+}
+
+export function getGlobalLogFormat(): Format | undefined {
+  return container.options.format;
 }
 
 const defaultSensitiveKeys = [
@@ -255,6 +313,14 @@ function getMessageContext(logger: Logger): string | undefined {
   ) {
     return loggerOptions.defaultMeta.custom_fields.messageContext;
   }
+}
+
+export function resetCustomLogLevels(): void {
+  Object.keys(customLogLevels).forEach(key => delete customLogLevels[key]);
+}
+
+export function resetCustomLogFormats(): void {
+  Object.keys(customLogFormats).forEach(key => delete customLogFormats[key]);
 }
 
 /**

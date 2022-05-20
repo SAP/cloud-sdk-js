@@ -120,12 +120,15 @@ function getSortedApiVersions() {
 }
 
 function writeVersions() {
+  console.log('a');
   const apiVersions = getSortedApiVersions();
+  console.log('b');
   writeFileSync(
     resolve('docs', 'api', 'versions.js'),
     `export default ${formatJson(apiVersions)}`,
     'utf8'
   );
+  console.log('c');
   writeFileSync(
     resolve('docs', 'api', 'versions.json'),
     `${formatJson(apiVersions)}`,
@@ -147,7 +150,6 @@ export async function generateDocs() {
     console.error(`Unhandled rejection at: ${reason}`);
     process.exit(1);
   });
-  console.log('  typedoc');
   const generationLogs = await execa.command(
     'typedoc --tsconfig tsconfig.typedoc.json',
     {
@@ -155,13 +157,9 @@ export async function generateDocs() {
       encoding: 'utf8'
     }
   );
-  console.log('  validate');
   validateLogs(generationLogs.stdout);
-  console.log('  adjust for GH');
   adjustForGitHubPages();
-  console.log('  copyright');
   insertCopyrightAndTracking();
-  console.log('  versions');
   writeVersions();
 }
 

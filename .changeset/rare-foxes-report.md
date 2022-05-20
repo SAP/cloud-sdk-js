@@ -4,4 +4,4 @@
 '@sap-cloud-sdk/integration-tests': minor
 ---
 
-[connectivity] Support self-signed certificate using the `trustStore` property of the destination object.
+[New Functionality] Support self-signed certificate using the `trustStore` property of the destination object.

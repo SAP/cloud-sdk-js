@@ -46,6 +46,7 @@
     "test:e2e": "turbo run test --filter=e2e-tests",
     "generate": "turbo run generate",
     "doc": "ts-node scripts/generate-docs.ts",
+    "changelog": "ts-node scripts/merge-changelogs.ts",
     "version": "ts-node scripts/after-bump.ts && yarn generate && yarn doc && git add .",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",

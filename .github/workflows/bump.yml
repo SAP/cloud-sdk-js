@@ -21,5 +21,8 @@ jobs:
           git config --global user.name "cloud-sdk-js"
       - name: Bump version
         run: |
-          yarn changeset version
-          yarn changelog
+          yarn run version
+      - name: Commit and push
+        run: |
+          git commit -am "Increase version"
+          git push

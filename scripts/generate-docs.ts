@@ -147,7 +147,7 @@ export async function generateDocs() {
     console.error(`Unhandled rejection at: ${reason}`);
     process.exit(1);
   });
-
+  console.log('  typedoc');
   const generationLogs = await execa.command(
     'typedoc --tsconfig tsconfig.typedoc.json',
     {
@@ -155,10 +155,13 @@ export async function generateDocs() {
       encoding: 'utf8'
     }
   );
-
+  console.log('  validate');
   validateLogs(generationLogs.stdout);
+  console.log('  adjust for GH');
   adjustForGitHubPages();
+  console.log('  copyright');
   insertCopyrightAndTracking();
+  console.log('  versions');
   writeVersions();
 }
 

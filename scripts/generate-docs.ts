@@ -142,7 +142,7 @@ function validateLogs(generationLogs: string) {
   }
 }
 
-async function generateDocs() {
+export async function generateDocs() {
   process.on('unhandledRejection', reason => {
     console.error(`Unhandled rejection at: ${reason}`);
     process.exit(1);
@@ -162,4 +162,4 @@ async function generateDocs() {
   writeVersions();
 }
 
-generateDocs();
+// generateDocs();

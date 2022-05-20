@@ -6,15 +6,15 @@ All SAP Cloud SDK modules will be published with the same version regardless whe
 
 - Make sure the internal e2e tests are green based on the latest version of the SDK core.
 - Make sure there is no unchecked [dependabot findings](https://github.com/SAP/cloud-sdk-js/security/dependabot)
-- Ensure that the changelog is up to date and correct.
+- Ensure that the changelog is up-to-date and correct.
   - Move up high priority changes, so that they are easier to spot.
 
 ## How to bump a version
 
 The release process can only be triggered by owners of the repository.
-If you are not in the owner list you will not be able to proceed.
+If you are not in the owner list, you will not be able to proceed.
 
-Releases are triggered by bumping the version using `lerna`.
+Releases are triggered by bumping the version using `yarn run version` (NOT `yarn version`!).
 We have a github [workflow](https://github.com/SAP/cloud-sdk-js/actions/workflows/bump.yml?query=workflow%3Abump) to do this.
 
 Depending on the version you want to release, you have to choose:
@@ -22,7 +22,8 @@ Depending on the version you want to release, you have to choose:
 - `main`, as default value, for version 2 release
 - `1.0-main`, for version 1 release
 
-To trigger it, press "Run workflow" and enter "patch" or "minor" depending which version increase you want to have.
+To trigger it, press "Run workflow".
+
 This will create a version tag (e. g. `v1.18.0`), which in turn triggers the build workflow.
 If the build is successful a Github release will be drafted.
 The name of the release will be the name of the tag.

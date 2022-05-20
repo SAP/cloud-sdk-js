@@ -3,10 +3,8 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import getReleasePlan from '@changesets/get-release-plan';
+import { currentSdkVersion } from './current-sdk-version';
 
-export const currentSdkVersion = JSON.parse(
-  readFileSync('package.json', 'utf8')
-).version as string;
 export const apiDocsDir = resolve('docs', 'api');
 
 export function transformFile(
@@ -16,10 +14,6 @@ export function transformFile(
   const file = readFileSync(filePath, { encoding: 'utf8' });
   const transformedFile = transformFn(file);
   writeFileSync(filePath, transformedFile, { encoding: 'utf8' });
-}
-
-export function openFile(filePath: string): string {
-  return readFileSync(filePath, { encoding: 'utf8' });
 }
 
 const versionOrder = ['major', 'minor', 'patch'];

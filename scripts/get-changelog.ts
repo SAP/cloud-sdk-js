@@ -1,5 +1,11 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
-import { openFile, currentSdkVersion } from './util';
+import { readFileSync } from 'fs';
+import { currentSdkVersion } from './current-sdk-version';
+
+const unixEOL = '\n';
+
+function openFile(filePath: string): string {
+  return readFileSync(filePath, { encoding: 'utf8' });
+}
 
 export function getChangelog(v = currentSdkVersion): string {
   const changelog = openFile('CHANGELOG.md');

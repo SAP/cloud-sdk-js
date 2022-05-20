@@ -1,6 +1,6 @@
 import { add, commit, tag } from '@changesets/git';
+import { currentSdkVersion } from './current-sdk-version';
 import { mergeChangelogs } from './merge-changelogs';
-import { currentSdkVersion } from './util';
 
 async function commitAndTag() {
   const version = currentSdkVersion;

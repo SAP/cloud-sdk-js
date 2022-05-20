@@ -13,7 +13,7 @@ const exceptionLoggerId = 'sap-cloud-sdk-exception-logger';
 const container = new Container();
 
 /**
- * Log formats provided by the util package
+ * Log formats provided by the util package.
  */
 export const logFormat = {
   kibana,
@@ -246,6 +246,9 @@ export function getGlobalLogFormat(): Format | undefined {
   return container.options.format;
 }
 
+/**
+ * Default sensitive keys.
+ */
 const defaultSensitiveKeys = [
   'access_token',
   'authentication',
@@ -319,14 +322,14 @@ function getMessageContext(logger: Logger): string | undefined {
 }
 
 /**
- * Reset all the custom log levels for loggers and message context
+ * Reset all the custom log levels for loggers and message context.
  */
 export function resetCustomLogLevels(): void {
   Object.keys(customLogLevels).forEach(key => delete customLogLevels[key]);
 }
 
 /**
- * Reset all the custom log formats for loggers and message context
+ * Reset all the custom log formats for loggers and message context.
  */
 export function resetCustomLogFormats(): void {
   Object.keys(customLogFormats).forEach(key => delete customLogFormats[key]);

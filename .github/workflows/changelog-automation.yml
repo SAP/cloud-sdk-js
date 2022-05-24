@@ -44,8 +44,8 @@ jobs:
       - name: Open PR
         run: |
           cd cloud-sdk
-          git config --local user.email "cloud-sdk-js@github.com"
-          git config --local user.name "cloud-sdk-js"
+          git config --local user.email "${{ secrets.GH_DOCS_EMAIL }}"
+          git config --local user.name "${{ secrets.GH_DOCS_USER }}"
           git checkout -b "update-release-notes"
           git commit -m "update release notes" -a
           git push -u origin update-release-notes

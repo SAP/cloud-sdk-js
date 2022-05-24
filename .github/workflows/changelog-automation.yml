@@ -9,7 +9,7 @@ on:
       - 'docs/**'
 
 jobs:
-  bump:
+  changelog-automation:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout SAP Cloud SDK
@@ -30,13 +30,18 @@ jobs:
           node-version: '14.x'
       - name: Install Typescript
         run: |
+          echo "HERE IS LS"
           ls
+          echo "HERE IS LS .."
           ls ..
+          echo "HERE IS PWD"
           pwd
           cd main
+          ls 
+          echo "HERE IS LS INSIDE MAIN"
           yarn install --frozen-lockfile
       - name: Update release notes
-        run: ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"
+        run: npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"
       - name: Open PR
         run: |
           cd cloud-sdk

@@ -5,10 +5,10 @@ import { Destination } from '@sap-cloud-sdk/connectivity';
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 
 describe('createAgent', () => {
-    let server: Server = undefined as any;
-    const port = 8088;
-    // Certificate creation guide: https://nodejs.org/en/knowledge/cryptography/how-to-use-the-tls-module/
-    const privateCert = `-----BEGIN RSA PRIVATE KEY-----
+  let server: Server = undefined as any;
+  const port = 8088;
+  // Certificate creation guide: https://nodejs.org/en/knowledge/cryptography/how-to-use-the-tls-module/
+  const privateCert = `-----BEGIN RSA PRIVATE KEY-----
 MIICXQIBAAKBgQCdd0L1YNtatBq4Ao/anmlAGg0rWkoSVSvPbyAicDWZpr/QIS+n
 PARLtbcJ/bCb2AGEu4hj3zDCmAjQsBWGNKHhlndE83vTfvDZid+dawxMglIeKJSx
 n/4002eF+5uTjDlaBM18kYoQMv3LoEvl8hButp3oMNB7Ta50Y9tmcCkYdQIDAQAB
@@ -24,7 +24,7 @@ H+JR3AgYbP39Aht/bblpAkAaa/ZIobip8wgeYrxULg13fwd71OgsSCikEEe/GvRD
 FT3f9HN2Gniih0CBDRpgKp9b5/+jYaLeaHmpHphw8MsV
 -----END RSA PRIVATE KEY-----`;
 
-    const publicCert = `-----BEGIN CERTIFICATE-----
+  const publicCert = `-----BEGIN CERTIFICATE-----
 MIICODCCAaECFDqIoh9oXU6qvv5PoPSF1deHgMndMA0GCSqGSIb3DQEBCwUAMFsx
 CzAJBgNVBAYTAkRFMQswCQYDVQQIDAJERTEPMA0GA1UEBwwGQmVybGluMQwwCgYD
 VQQKDANTQVAxDDAKBgNVBAsMA1NBUDESMBAGA1UEAwwJbG9jYWxob3N0MB4XDTIy
@@ -39,60 +39,59 @@ hvcNAQELBQADgYEAKFpWYi56QQcXKdabOE7PgoL9K1vAGjT89waTG1hdldkr49e+
 bEFG/f9jejXRaxLDTP2MhEL/2ZapjgfchCs/nR8qbHeNGUhXIJeV/UZlCp0=
 -----END CERTIFICATE-----`;
 
-    const destinationCertificate: DestinationCertificate = {
-        name: 'server-public-cert.pem',
-        content: Buffer.from(publicCert).toString('base64'),
-        type: 'CERTIFICATE'
+  const destinationCertificate: DestinationCertificate = {
+    name: 'server-public-cert.pem',
+    content: Buffer.from(publicCert).toString('base64'),
+    type: 'CERTIFICATE'
+  };
+
+  beforeAll(() => {
+    const options = {
+      key: privateCert,
+      cert: publicCert
     };
 
-    beforeAll(() => {
-        const options = {
-            key: privateCert,
-            cert: publicCert
-        };
+    server = createServer(options, function (req, res) {
+      res.writeHead(200);
+      res.end('Hello World.');
+    }).listen(port);
+  });
 
-        server = createServer(options, function (req, res) {
-            res.writeHead(200);
-            res.end('Hello World.');
-        }).listen(port);
+  afterAll(async () =>
+    promisify((callBack: (err, val) => void) =>
+      server.close(err => callBack(err, undefined))
+    )()
+  );
+
+  describe('trust', () => {
+    it('fails for a server using self-signed certificate if the trustStore is not set.', async () => {
+      const destination: Destination = {
+        url: `https://localhost:${port}`
+      };
+
+      await expect(
+        executeHttpRequest(destination, { method: 'get' })
+      ).rejects.toThrow('self signed certificate');
     });
 
-    afterAll(async () =>
-        promisify((callBack: (err, val) => void) =>
-            server.close(err => callBack(err, undefined))
-        )()
-    );
+    it('resolves for a server using self-signed certificate if trustAll is set.', async () => {
+      const destination: Destination = {
+        url: `https://localhost:${port}`,
+        isTrustingAllCertificates: true
+      };
 
-    describe('trust',()=> {
-        it('fails for a server using self-signed certificate if the trustStore is not set.', async () => {
-            const destination: Destination = {
-                url: `https://localhost:${port}`
-            };
-
-            await expect(
-                executeHttpRequest(destination, {method: 'get'})
-            ).rejects.toThrow('self signed certificate');
-        });
-
-        it('resolves for a server using self-signed certificate if trustAll is set.',async ()=>{
-            const destination: Destination = {
-                url: `https://localhost:${port}`,
-                isTrustingAllCertificates:true
-            };
-
-            const response = await executeHttpRequest(destination, {method: 'get'});
-            expect(response.data).toBe('Hello World.');
-        })
-
-        it('resolves for a server using self-signed certificate if the trustStore is set.', async () => {
-            const destination: Destination = {
-                url: `https://localhost:${port}`,
-                trustStoreCertificate: destinationCertificate
-            };
-
-            const response = await executeHttpRequest(destination, {method: 'get'});
-            expect(response.data).toBe('Hello World.');
-        });
+      const response = await executeHttpRequest(destination, { method: 'get' });
+      expect(response.data).toBe('Hello World.');
     });
+
+    it('resolves for a server using self-signed certificate if the trustStore is set.', async () => {
+      const destination: Destination = {
+        url: `https://localhost:${port}`,
+        trustStoreCertificate: destinationCertificate
+      };
+
+      const response = await executeHttpRequest(destination, { method: 'get' });
+      expect(response.data).toBe('Hello World.');
+    });
+  });
 });
-

@@ -1,0 +1,48 @@
+name: bump
+
+on:
+  workflow_dispatch:
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout SAP Cloud SDK
+      - uses: actions/checkout@v3
+        with:
+          path: main
+      - name: Checkout Docs
+      - uses: actions/checkout@v3
+        with:
+          repository: SAP/cloud-sdk
+          token: ${{ secrets.GH_CLOUD_SDK_WRITE_KEY }}
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.  
+          path: main/cloud-sdk
+      - name: Setup Node Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14.x'
+      - name: Install Typescript
+        run: |
+          ls
+          ls ..
+          pwd
+          cd main
+          yarn install --frozen-lockfile
+      - name: Update release notes
+        run: ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"
+      - name: Open PR
+        run: |
+          cd cloud-sdk
+          git config --local user.email "cloud-sdk-js@github.com"
+          git config --local user.name "cloud-sdk-js"
+          git checkout -b "update-release-notes"
+          git commit -m "update release notes" -a
+          git push -u origin update-release-notes
+
+          gh config set prompt disabled
+          echo ${{ secrets.GH_CLOUD_SDK_WRITE_KEY }} | gh auth login --hostname github.tools.sap --with-token
+          PR_BODY="Auto-created by update release notes workflow."
+          PR_TITLE="Update JS Release Notes"
+          gh pr create --head "update-release-notes" --title "${PR_TITLE}" --body "${PR_BODY}"

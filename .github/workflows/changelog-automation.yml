@@ -34,12 +34,13 @@ jobs:
           ls ..
           echo "HERE IS PWD"
           pwd
-          cd main
-          ls 
-          echo "HERE IS LS INSIDE MAIN"
           yarn install --frozen-lockfile
       - name: Update release notes
-        run: npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"
+        run: |
+          echo "I AM HERE:"
+          pwd
+          ls
+          npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"
       - name: Open PR
         run: |
           cd cloud-sdk

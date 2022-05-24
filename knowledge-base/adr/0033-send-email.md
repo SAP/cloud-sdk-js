@@ -3,7 +3,7 @@ Send email by using destination service on BTP
 
 ## Status
 
-proposed
+approved
 
 ## Context
 
@@ -17,8 +17,15 @@ The scope of this documentation covers the following proxy type:
 - `OnPremise`
 
 ## Decision
+### Package management
+We assume, the mail function will not be used by everybody.
+Therefore, we'll create a new package called `mail-client`, which has the following dependencies:
+- `@sap-cloud-sdk/connectivity`
+- `nodemailer`: 473 KB
+- `socks`: 320 KB
+
 ### API
-#### public API
+#### Public API
 As no Node native mail interface was found, we can bind our implementation to a common lib like `nodemailer` for the initial version.
 ```ts
 export function sendMail<T extends MailOptions>(
@@ -27,13 +34,18 @@ export function sendMail<T extends MailOptions>(
 ): Promise<MailResponse>
 ```
 
-#### types
+#### Types
+As a rule, the SDK will not use interfaces from the lib directly.
+Instead, we create new interfaces by picking some keys of interfaces, because:
+-  This makes our public API stable, and the potential breaking changes of a lib can be handled by us instead of the users.
+-  To make our interface simple, we don't need the whole interface of the original lib.
+
 ```ts
 // make it compatible with the `Mail.Options` of `nodemailer`
 interface MailOptions {
-        from?: string | Address | undefined;
+        from: string | Address | undefined;
         sender?: string | Address | undefined;
-        to?: string | Address | Array<string | Address> | undefined;
+        to: string | Address | Array<string | Address> | undefined;
         cc?: string | Address | Array<string | Address> | undefined;
         bcc?: string | Address | Array<string | Address> | undefined;
         replyTo?: string | Address | undefined;
@@ -50,29 +62,42 @@ interface MailOptions {
 ```ts
 // make it comatible with the `SMTPTransport.SentMessageInfo` of `nodemailer`
 interface MailResponse {
-        envelope?: MimeNode.Envelope;
-        accepted?: Array<string | Mail.Address>;
-        rejected?: Array<string | Mail.Address>;
-        pending?: Array<string | Mail.Address>;
+        envelope?: MainEnvelop;
+        accepted?: Array<string | MailAddress>;
+        rejected?: Array<string | MailAddress>;
+        pending?: Array<string | MailAddress>;
         response?: string;
     }
+interface MainEnvelop{
+    from: string;
+    to: string[];
+}
+interface MailAddress {
+    name: string;
+    address: string;
+}
 ```
 
 ### Implementation
-#### Proxy type: Internet and OnPremise
+#### Proxy type: Internet
 - The [auth-flow.spec.ts](test-packages/integration-tests/test/auth-flows/auth-flow.spec.ts) contains a test, that detects missing `username` and `password` from the destination object, which needs to be fixed.
 - The [mail.spec.ts](test-packages/e2e-tests/test/mail/mail.spec.ts) is a PoC for sending emails in general, which can be used for the aligned API.
 #### Proxy type: OnPremise
 - The [auth-flow.spec.ts](test-packages/integration-tests/test/auth-flows/auth-flow.spec.ts) contains a test, that is related to the wrong port for sending emails, which should be fixed.
+#### Protocol of the Proxy
+- When proxy type is `OnPremise`, use `http` protocol, being the same as `http-client`.
+- When proxy type is `Internet` and `http_proxy` is set in the environment, use `http` protocol, being the same as `http-client`.
 
 ### Test strategy
 The following tests should be added:
 - unit tests
+  - `executeHttpRequest` should fail, when the [`type`]((https://github.com/SAP/cloud-sdk-js/blob/main/packages/connectivity/src/scp-cf/destination/destination-service-types.ts#L95)) of a destination is not `HTTP`.
+  - `sendMail` should fail, when the [`type`]((https://github.com/SAP/cloud-sdk-js/blob/main/packages/connectivity/src/scp-cf/destination/destination-service-types.ts#L95)) of a destination is not `MAIL`.
 - nightly internal e2e tests (like our vdm e2e tests)
-- OS e2e tests (like our cap e2e tests)
+- OS (Open Source) e2e tests (like our cap e2e tests)
 
 #### OS e2e tests
-Once the implementation is done, the os e2e tests should contain:
+Once the implementation is done, the OS e2e tests should contain:
 - the [mail.spec.ts](test-packages/e2e-tests/test/mail/mail.spec.ts) should be adjusted to use SDK code.
 - add a similar test like [odata.spec.ts](test-packages/e2e-tests/test/on-prem/odata.spec.ts) for OnPrem coverage
 
@@ -81,8 +106,13 @@ Check more details about these two tests via the links below:
 - [proxy tests README](test-packages/e2e-tests/test/on-prem/README.md)
 
 ## Consequences
-
 Applications on BTP can send mails with `MAIL` destinations to cloud/On-Prem mail servers.
 
-## Other topics
-`Private link` proxy type?
+## Appendix
+### Extensions in the future
+- `location id` (can be configured for OnPrem destinations)
+- `Private link` (destination proxy type)
+- `socket_proxy` (like `http_proxy` in the environment)
+
+### Useful links
+- [Using socks proxy with nodemailer](https://nodemailer.com/smtp/proxies/#2-using-socks-proxy)

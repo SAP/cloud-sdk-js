@@ -52,4 +52,5 @@ Find more docs [here](https://nodemailer.com/extras/smtp-server/).
   - use TLS configurations as it is
   - no OAuth support 
   - no server side validation
+- 3rd party service can be flaky
 

@@ -49,6 +49,7 @@ jobs:
           git commit -m "update release notes" -a
           git push -u origin update-release-notes
 
+          echo ${{ secrets.GH_DOCS_TOKEN }} | gh auth login --hostname github.com --with-token
           gh config set prompt disabled
           PR_BODY="Auto-created by update release notes workflow."
           PR_TITLE="Update JS Release Notes"

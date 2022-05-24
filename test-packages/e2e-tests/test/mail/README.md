@@ -9,7 +9,7 @@ This documentation contains the following topics:
 ### Overview
 This test scenario consists of the following components:
 - A mail server, that receives incoming mail requests then write the mail info to the local file system
-- Some jest tests that send mails to the mail server, then verify the file written by the mail server. 
+- Some jest tests that send mails to the mail server and verify the messages are correctly processed. 
 In real life, IMAP/POP3 protocol should be used for receiving mails, but make it simple for now.
 Currently, sending emails are done without SDK, which should be updated once the mail functions are implemented.
 

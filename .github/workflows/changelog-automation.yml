@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout SAP Cloud SDK
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           path: main
       - name: Checkout Docs
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           repository: SAP/cloud-sdk
           token: ${{ secrets.GH_CLOUD_SDK_WRITE_KEY }}

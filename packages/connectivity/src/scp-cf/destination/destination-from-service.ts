@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { JwtPayload } from '../jsonwebtoken-type';
-import { decodeJwt, isUserToken, JwtPair, verifyJwt } from '../jwt';
+import { decodeJwt, decodeJwtComplete, isUserToken, JwtPair, verifyJwt } from '../jwt';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
@@ -37,6 +37,7 @@ import {
   ProxyStrategy,
   proxyStrategy
 } from './proxy-util';
+import { JwtHeader } from 'jsonwebtoken';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -115,6 +116,12 @@ class DestinationFromServiceRetriever {
 
     let { destination } = destinationResult;
 
+    if (options.jwt && !this.isXsuaa(decodeJwtComplete(options.jwt).header)) {
+      if (!destination.originalProperties?.['x_user_token.jwks'] && !destination.originalProperties?.['x_user_token.jwks_uri']) {
+        throw new Error("Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.");
+      }
+    }
+
     if (
       destination.authentication === 'OAuth2UserTokenExchange' ||
       destination.authentication === 'OAuth2JWTBearer' ||
@@ -159,9 +166,15 @@ class DestinationFromServiceRetriever {
       const encoded = await serviceToken('destination', {
         ...options
       });
+      
+      const { payload, header } = decodeJwtComplete(options.jwt);
+      if (this.isXsuaa(header)) {
+        await verifyJwt(options.jwt, options);
+      }
+
       return {
         userJwt: {
-          decoded: await verifyJwt(options.jwt, options),
+          decoded: payload,
           encoded: options.jwt
         },
         serviceJwt: { encoded, decoded: decodeJwt(encoded) }
@@ -180,6 +193,10 @@ class DestinationFromServiceRetriever {
       const clientCertJwt = { encoded, decoded: decodeJwt(encoded) };
       return { serviceJwt: clientCertJwt };
     }
+  }
+
+  private static isXsuaa(decodedUserJwt: JwtHeader): boolean {
+    return !!decodedUserJwt.jku;
   }
 
   private static async getProviderServiceToken(

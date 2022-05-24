@@ -120,12 +120,12 @@ describe('OAuth flows', () => {
     expect(destination?.password).toBeDefined();
   }, 60000);
 
-
-  it('Works with bring your own JWT ', async () => {
+  // TODO: Change this test and add some more
+  it('Oauth2ClientCredentials: JWT with no JKU should be accepted if destination has jwks or jwks_uri property', async () => {
     const destination = await getDestination({
-      destinationName: 'DummyOAuth2ClientCredentialsDestination'
+      destinationName: systems.destination.providerOauth2ClientCredentialsWithoutJKU
     });
-    expect(destination?.password).toBeDefined();
+    //expect(destination?.password).toBeDefined();
   }, 60000);
 
 

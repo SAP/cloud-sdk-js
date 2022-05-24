@@ -150,6 +150,18 @@ export interface Destination {
    * If set to true the auth token provided to the request execution is forwarded to the destination target.
    */
   forwardAuthToken?: boolean;
+
+  /**
+   * Base64-encoded JSON web key set, containing the signing keys which are used to validate the JWT provided in the X-User-Token header.
+   * This field is used to authenticate the destination using a JWT without JKU.
+   */
+  jwks?: string;
+
+  /**
+   * URI of the JSON web key set, containing the signing keys which are used to validate the JWT provided in the X-User-Token header.
+   * This field is used to authenticate the destination using a JWT without JKU. 
+   */
+  jwksUri?: string;
 }
 
 /**

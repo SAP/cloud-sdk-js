@@ -380,7 +380,9 @@ const configMapping: Record<string, keyof Destination> = {
   certificates: 'certificates',
   KeyStoreLocation: 'keyStoreName',
   KeyStorePassword: 'keyStorePassword',
-  SystemUser: 'systemUser'
+  SystemUser: 'systemUser',
+  'x_user_token.jwks': 'jwks',
+  'x_user_token.jwks_uri': 'jwksUri'
 };
 
 /**

@@ -117,7 +117,7 @@ class DestinationFromServiceRetriever {
     let { destination } = destinationResult;
 
     if (options.jwt && !this.isXsuaa(decodeJwtComplete(options.jwt).header)) {
-      if (!destination.originalProperties?.['x_user_token.jwks'] && !destination.originalProperties?.['x_user_token.jwks_uri']) {
+      if (!destination.jwks && !destination.jwksUri) {
         throw new Error("Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.");
       }
     }

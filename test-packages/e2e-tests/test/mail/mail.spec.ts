@@ -6,11 +6,16 @@ import SMTPTransport from "nodemailer/lib/smtp-transport";
 describe('Mail', () => {
   it('should send a mail', async () => {
     await sendTestMail();
-    const mail = fs.readFileSync(join(resolve('test'), 'mail', 'test-output', 'mail.txt'),
-      { encoding: 'utf8'});
-    expect(mail).toContain('To: TO1@example.com, TO2@example.com');
-    expect(mail).toContain('Subject: SUBJECT');
-    expect(mail).toContain('TEXT');
+    const mails = fs.readdirSync(join(resolve('test'), 'mail', 'test-output'));
+    expect(mails.some(
+      mail => {
+        const mailDetails = fs.readFileSync(join(resolve('test'), 'mail', 'test-output', mail),
+          { encoding: 'utf8'});
+        return mailDetails.includes('To: TO1@example.com, TO2@example.com')
+          && mailDetails.includes('Subject: SUBJECT')
+          && mailDetails.includes('TEXT');
+      }
+    )).toBe(true);
   });
 });
 

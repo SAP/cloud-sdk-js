@@ -120,6 +120,15 @@ describe('OAuth flows', () => {
     expect(destination?.password).toBeDefined();
   }, 60000);
 
+
+  it('Works with bring your own JWT ', async () => {
+    const destination = await getDestination({
+      destinationName: 'DummyOAuth2ClientCredentialsDestination'
+    });
+    expect(destination?.password).toBeDefined();
+  }, 60000);
+
+
   xit('No Auth: trust store certificates are fetched', async () => {
     const destination = await getDestination({
       destinationName: systems.destination.providerTrustStore

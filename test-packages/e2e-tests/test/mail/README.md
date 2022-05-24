@@ -26,7 +26,7 @@ Currently, sending emails are done without SDK, which should be updated once the
 1. stop the mail server by running `yarn run stop:mail-server`
 
 ### About the mail server
-A node module `smtp-server` is used for building the mail server, where you can configure:
+The node module [smtp-server](https://www.npmjs.com/package/smtp-server) is used for building the mail server, where you can configure:
 - TLS (certificates, private keys)
 - authentication (basic + OAuth)
 - validating client connection (e.g., having an allow-list)

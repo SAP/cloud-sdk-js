@@ -27,18 +27,9 @@ jobs:
           node-version: '14.x'
       - name: Install Typescript
         run: |
-          echo "HERE IS LS"
-          ls
-          echo "HERE IS LS .."
-          ls ..
-          echo "HERE IS PWD"
-          pwd
-          yarn install --frozen-lockfile
+          yarn install typescript
       - name: Update release notes
         run: |
-          echo "I AM HERE:"
-          pwd
-          ls
           npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"
       - name: Open PR
         run: |

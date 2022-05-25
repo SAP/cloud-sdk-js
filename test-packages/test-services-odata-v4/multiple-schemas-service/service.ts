@@ -48,7 +48,8 @@ export function multipleSchemasService<
   DateTimeOffsetT = Moment,
   DateT = Moment,
   DurationT = Duration,
-  TimeOfDayT = Time
+  TimeOfDayT = Time,
+  EnumT = any
 >(
   deSerializers: Partial<
     DeSerializers<
@@ -69,7 +70,8 @@ export function multipleSchemasService<
       DateTimeOffsetT,
       DateT,
       DurationT,
-      TimeOfDayT
+      TimeOfDayT,
+      EnumT
     >
   > = defaultDeSerializers as any
 ): MultipleSchemasService<
@@ -91,7 +93,8 @@ export function multipleSchemasService<
     DateTimeOffsetT,
     DateT,
     DurationT,
-    TimeOfDayT
+    TimeOfDayT,
+    EnumT
   >
 > {
   return new MultipleSchemasService(

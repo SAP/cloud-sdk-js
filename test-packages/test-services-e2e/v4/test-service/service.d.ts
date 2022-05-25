@@ -39,7 +39,8 @@ export declare function testService<
   DateTimeOffsetT = Moment,
   DateT = Moment,
   DurationT = Duration,
-  TimeOfDayT = Time
+  TimeOfDayT = Time,
+  EnumT = any
 >(
   deSerializers?: Partial<
     DeSerializers<
@@ -60,7 +61,8 @@ export declare function testService<
       DateTimeOffsetT,
       DateT,
       DurationT,
-      TimeOfDayT
+      TimeOfDayT,
+      EnumT
     >
   >
 ): TestService<
@@ -82,7 +84,8 @@ export declare function testService<
     DateTimeOffsetT,
     DateT,
     DurationT,
-    TimeOfDayT
+    TimeOfDayT,
+    EnumT
   >
 >;
 declare class TestService<

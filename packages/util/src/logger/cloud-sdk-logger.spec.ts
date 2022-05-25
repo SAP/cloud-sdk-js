@@ -3,11 +3,17 @@ import {
   createLogger,
   disableExceptionLogger,
   enableExceptionLogger,
+  getGlobalLogFormat,
   getGlobalLogLevel,
   getLogger,
+  logFormat,
   muteLoggers,
+  resetCustomLogFormats,
+  resetCustomLogLevels,
   sanitizeRecord,
+  setGlobalLogFormat,
   setGlobalLogLevel,
+  setLogFormat,
   setLogLevel,
   unmuteLoggers
 } from './cloud-sdk-logger';
@@ -19,8 +25,13 @@ describe('Cloud SDK Logger', () => {
   let logger;
 
   afterEach(() => {
-    logger.close();
+    if (logger) {
+      logger.close();
+    }
     setLogLevel('', messageContext);
+    setGlobalLogFormat(logFormat.local);
+    resetCustomLogLevels();
+    resetCustomLogFormats();
   });
 
   describe('createLogger', () => {
@@ -183,41 +194,34 @@ describe('Cloud SDK Logger', () => {
   describe('set log level', () => {
     const level = 'silly';
 
-    it('before creating a logger, should set the log level on creation', () => {
+    it('should set the log level on creation before creating a logger', () => {
       setLogLevel(level, messageContext);
       logger = createLogger(messageContext);
       expect(logger.level).toEqual(level);
     });
 
-    it('after creating a logger, should set the log level on creation', () => {
+    it('should set the log level with messageContext after creating a logger', () => {
       logger = createLogger(messageContext);
       setLogLevel(level, messageContext);
       expect(logger.level).toEqual(level);
     });
 
-    it('on a logger should set the log level', () => {
+    it('should set the log level with logger after creating a logger', () => {
       logger = createLogger(messageContext);
       setLogLevel(level, logger);
       expect(logger.level).toEqual(level);
-    });
-
-    it('set global log level after logger creation should override the log level', () => {
-      logger = createLogger({ messageContext, level });
-      setGlobalLogLevel('error');
-
-      expect(getGlobalLogLevel()).toEqual(logger.level);
     });
   });
 
   describe('set global log level', () => {
     const level = 'error';
 
-    beforeAll(() => {
+    beforeEach(() => {
       setGlobalLogLevel(level);
     });
 
     it('global log level getter and setter work', () => {
-      expect(level).toEqual(getGlobalLogLevel());
+      expect(getGlobalLogLevel()).toEqual(level);
     });
 
     it('should have the global log level, if not applied a more specific level', () => {
@@ -238,6 +242,56 @@ describe('Cloud SDK Logger', () => {
       logger = createLogger(messageContext);
 
       expect(logger.level).toEqual('warn');
+    });
+  });
+
+  describe('set log format', () => {
+    it('should set the log format on creation before creating a logger', () => {
+      setLogFormat(logFormat.kibana, messageContext);
+      logger = createLogger(messageContext);
+      expect(logger.format).toEqual(logFormat.kibana);
+    });
+
+    it('should set the log format with messageContext after creating a logger', () => {
+      logger = createLogger(messageContext);
+      setLogFormat(logFormat.kibana, messageContext);
+      expect(logger.format).toEqual(logFormat.kibana);
+    });
+
+    it('should set the log format with logger after creating a logger', () => {
+      logger = createLogger(messageContext);
+      setLogFormat(logFormat.kibana, logger);
+      expect(logger.format).toEqual(logFormat.kibana);
+    });
+  });
+
+  describe('set global log format', () => {
+    beforeEach(() => {
+      setGlobalLogFormat(logFormat.kibana);
+    });
+
+    it('global log format getter and setter work', () => {
+      expect(getGlobalLogFormat()).toEqual(logFormat.kibana);
+    });
+
+    it('should have the global log format, if not applied a more specific format', () => {
+      logger = createLogger(messageContext);
+
+      expect(logger.format).toEqual(logFormat.kibana);
+    });
+
+    it('should have the log format, if applied a more specific format after creation', () => {
+      logger = createLogger(messageContext);
+      setLogFormat(logFormat.kibana, messageContext);
+
+      expect(logger.format).toEqual(logFormat.kibana);
+    });
+
+    it('should have the log format, if applied a more specific format before creation', () => {
+      setLogFormat(logFormat.kibana, messageContext);
+      logger = createLogger(messageContext);
+
+      expect(logger.format).toEqual(logFormat.kibana);
     });
   });
 

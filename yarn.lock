@@ -1149,10 +1149,10 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds@^5.6.0", "@sap/cds@^5.8.0", "@sap/cds@^5.9.2":
-  version "5.9.5"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.5.tgz#99c676e81e3ee9aa13d47f53bfd9f07c86e7dd2d"
-  integrity sha512-H/LIB7WnJ3JKzywnfYd9fOLDKVQokO6/JMUUXbCx+VllYuIQFwClwZ+uYQDgWYSrHePRpuOP5TxLFuMXvhdaag==
+"@sap/cds@^5.6.0", "@sap/cds@^5.9.2", "@sap/cds@^5.9.6":
+  version "5.9.6"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.6.tgz#89a44aea226c1d44f885d695cf076a561f835645"
+  integrity sha512-zzDoRrgAbRXUQ2n+BrDErtAyylMgcJxgWhsiJvjiZVMxAucJMPp9V+WlRsaGwSm8O6STC6NHcv9PWQ7500y9EQ==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"
@@ -6152,10 +6152,10 @@ mute-stream@~0.0.4:
   resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-nanoid@^3.3.3:
-  version "3.3.3"
-  resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.3.tgz#fd8e8b7aa761fe807dba2d1b98fb7241bb724a25"
-  integrity sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==
+nanoid@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
+  integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -6950,11 +6950,11 @@ postcss-values-parser@^5.0.0:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.1.7, postcss@^8.4.6:
-  version "8.4.13"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.13.tgz#7c87bc268e79f7f86524235821dfdf9f73e5d575"
-  integrity sha512-jtL6eTBrza5MPzy8oJLFuUscHDXTV5KcLlqAWHl5q5WYRfnNRGSmOZmOZ1T6Gy7A99mOZfqungmZMpMmCVJ8ZA==
+  version "8.4.14"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.14.tgz#ee9274d5622b4858c1007a74d76e42e56fd21caf"
+  integrity sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig==
   dependencies:
-    nanoid "^3.3.3"
+    nanoid "^3.3.4"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 

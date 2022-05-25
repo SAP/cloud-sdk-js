@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 module.exports = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest'

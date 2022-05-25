@@ -4,7 +4,6 @@ Closes SAP/cloud-sdk-backlog#ISSUENUMBER.
 
 <!-- Check List:
 * Tests created/adjusted for your changes.
-* Release notes updated.
 * PR title adheres to [conventional commit guidelines](https://www.conventionalcommits.org).
 * Created a changeset `yarn changeset`
 * If applicable:

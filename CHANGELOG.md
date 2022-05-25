@@ -28,6 +28,33 @@
 
 -
 
+# 2.4.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.4.0
+
+## Compatibility Note
+
+- [connectivity] Mark the function `noDestinationErrorMessage` as internal API. (0a008674)
+- [odata-v4] Mark the function `uriConverter` as internal API. (0a008674)
+- [eslint-config] Switch the following `jsdoc` related levels from `warn` to `error`:
+  - `jsdoc/check-param-names`
+  - `jsdoc/require-description-complete-sentence`
+  - `jsdoc/require-jsdoc`
+  - `jsdoc/require-param`
+  - `jsdoc/require-returns` (0a008674)
+- [connectivity, http-client] Only log the successful retrieval of destinations on the`info` log level, log everything else is on the `debug` or `warn` level. (04726a35)
+
+## New Functionality
+
+- [connectivity] Support self-signed certificate using the `trustStore` property of the destination object. (0a008674)
+
+## Improvement
+
+- [connectivity, http-client] Reduce default log output on the `info` level significantly. (04726a35)
+
+## Fixed Issue
+
+- [util] Fix a bug in the implementation of the trim method. (0a008674)
 
 # 2.3.0
 

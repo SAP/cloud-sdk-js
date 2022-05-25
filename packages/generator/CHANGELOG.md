@@ -1,3 +1,13 @@
-# Changelog
+# @sap-cloud-sdk/generator
 
-All notable changes to this module will be documented centrally in the [SAP Cloud SDK changelog](https://github.com/sap/cloud-sdk-js/CHANGELOG.md).
+## 2.4.0
+
+### Patch Changes
+
+- Updated dependencies [0a008674]
+- Updated dependencies [0a008674]
+  - @sap-cloud-sdk/odata-v4@2.4.0
+  - @sap-cloud-sdk/util@2.4.0
+  - @sap-cloud-sdk/generator-common@2.4.0
+  - @sap-cloud-sdk/odata-common@2.4.0
+  - @sap-cloud-sdk/odata-v2@2.4.0

@@ -176,7 +176,7 @@ export function getEnvironmentVariable(
   if (process.env[name]) {
     return process.env[name];
   }
-  logger.info('Environment variable ' + name + ' is not defined.');
+  logger.warn(`The environment variable "${name}" is not defined.`);
   return null;
 }
 
@@ -195,7 +195,7 @@ export function getDestinationServiceUri(): string | null {
     if ('uri' in credential) {
       uris.push(credential['uri']);
     } else {
-      logger.info(
+      logger.debug(
         "Skipping credentials in 'destination'. 'uri' property not defined"
       );
     }

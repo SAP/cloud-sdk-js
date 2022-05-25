@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [core] Remove the `postinstall` script.
 
 ## Fixed Issues
 

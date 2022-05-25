@@ -27,7 +27,6 @@
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
-    "postinstall": "node postinstall.js",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck ."

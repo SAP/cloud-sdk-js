@@ -120,12 +120,17 @@ describe('OAuth flows', () => {
     expect(destination?.password).toBeDefined();
   }, 60000);
 
-  // TODO: Change this test and add some more
+  // TODO: Add some more tests to check when jwks or jwksUri exists (or not)
   it('Oauth2ClientCredentials: JWT with no JKU should be accepted if destination has jwks or jwks_uri property', async () => {
+    const jwt = accessToken.subscriber;
+    // TODO: Decode, remove jku in the header, and then encode.
+    //       Or simply add some dummy jwt token without jku.
     const destination = await getDestination({
-      destinationName: systems.destination.providerOauth2ClientCredentialsWithoutJKU
+      destinationName: systems.destination.providerOauth2ClientCredentialsWithoutJKU,
+      jwt
     });
-    //expect(destination?.password).toBeDefined();
+    expect(accessToken.subscriber);
+    expect(destination?.jwks || destination?.jwksUri).toBeDefined();
   }, 60000);
 
 

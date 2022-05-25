@@ -27,7 +27,7 @@ jobs:
           node-version: '14.x'
       - name: Install Typescript
         run: |
-          yarn install typescript
+          yarn add typescript
       - name: Update release notes
         run: |
           npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"

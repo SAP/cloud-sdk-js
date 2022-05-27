@@ -1,10 +1,10 @@
-const express =  require('express');
+const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const { proxyAuth, proxyHost, proxyPort } = require('./proxy-server-config')
+const { proxyAuth, proxyHost, proxyPort } = require('./proxy-server-config');
 
 const app = express();
 
-const odataBaseUrl = "http://localhost:4004";
+const odataBaseUrl = 'http://localhost:4004';
 // [define authorization] check the value of the "proxy-authorization" in the headers
 app.use((req, res, next) => {
   if (req.headers['proxy-authorization'] === proxyAuth) {
@@ -14,13 +14,16 @@ app.use((req, res, next) => {
   }
 });
 // [define proxy behaviour] use the "url" value from the original request
-app.use('/', createProxyMiddleware({
-  target: odataBaseUrl,
-  changeOrigin: true,
-  pathRewrite: (path, req) => {
-    return req.url;
-  }
-}));
+app.use(
+  '/',
+  createProxyMiddleware({
+    target: odataBaseUrl,
+    changeOrigin: true,
+    pathRewrite: (path, req) => {
+      return req.url;
+    }
+  })
+);
 
 app.listen(proxyPort, proxyHost, () => {
   console.log(`Starting Proxy at ${proxyHost}:${proxyPort}`);

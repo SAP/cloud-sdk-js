@@ -3,6 +3,7 @@ import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
 import { destination as e2eDestination } from '../test-util';
 import { testEntityApi } from '../test-utils/test-entity-operations';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { proxyAuth, proxyHost, proxyPort } = require('./proxy-server-config');
 
 const destination: Destination = {

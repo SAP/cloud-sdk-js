@@ -120,18 +120,13 @@ describe('OAuth flows', () => {
     expect(destination?.password).toBeDefined();
   }, 60000);
 
-  // TODO: Add some more tests to check when jwks or jwksUri exists (or not)
-  it('Oauth2ClientCredentials: JWT with no JKU should be accepted if destination has jwks or jwks_uri property', async () => {
-    const jwt = accessToken.subscriber;
-    // TODO: Decode, remove jku in the header, and then encode.
-    //       Or simply add some dummy jwt token without jku.
+  xit('Oauth2ClientCredentials: JWT with no JKU should be accepted if destination has jwks or jwks_uri property', async () => {
     const destination = await getDestination({
       destinationName:
-        systems.destination.providerOauth2ClientCredentialsWithoutJKU,
-      jwt
+        systems.destination.providerOauth2ClientCredentialsWithoutJKU
     });
-    expect(accessToken.subscriber);
-    expect(destination?.jwks || destination?.jwksUri).toBeDefined();
+    expect(destination?.jwksUri).toBeDefined();
+    expect(destination?.jwks).toBeDefined();
   }, 60000);
 
   xit('No Auth: trust store certificates are fetched', async () => {

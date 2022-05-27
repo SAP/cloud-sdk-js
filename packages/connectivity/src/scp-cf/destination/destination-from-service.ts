@@ -168,7 +168,7 @@ class DestinationFromServiceRetriever {
       });
 
       const { payload, header } = decodeJwtComplete(options.jwt);
-      if (this.isXsuaa(header)) {
+      if (this.hasJku(header)) {
         await verifyJwt(options.jwt, options);
       }
 
@@ -195,7 +195,7 @@ class DestinationFromServiceRetriever {
     }
   }
 
-  private static isXsuaa(decodedUserJwt: JwtHeader): boolean {
+  private static hasJku(decodedUserJwt: JwtHeader): boolean {
     return !!decodedUserJwt.jku;
   }
 
@@ -373,7 +373,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
     // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as wll. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
     if (
-      !DestinationFromServiceRetriever.isXsuaa(
+      !DestinationFromServiceRetriever.hasJku(
         decodeJwtComplete(this.subscriberToken.userJwt.encoded).header
       )
     ) {

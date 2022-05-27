@@ -27,7 +27,7 @@ export type ServiceCredentials = {
 
 /**
  * Credentials for the Destination service.
- *  @internal
+ * @internal
  */
 export type DestinationServiceCredentials = ServiceCredentials & {
   identityzone: string;

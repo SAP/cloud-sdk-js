@@ -1,0 +1,134 @@
+import nock from 'nock';
+import {
+  destinationName,
+  destinationSingleResponse,
+  mockInstanceDestinationsCall,
+  mockServiceBindings,
+  mockServiceToken,
+  mockSingleDestinationCall,
+  mockSubaccountDestinationsCall,
+  mockVerifyJwt,
+  oauthMultipleResponse,
+  signedJwt,
+  signedJwtForVerification,
+  subscriberServiceTokenPayload,
+  subscriberUserPayload
+} from '../../../../../test-resources/test/test-util';
+import * as jwt from '../jwt';
+import { responseWithPublicKey } from '../jwt.spec';
+import { DestinationFetchOptions } from './destination-accessor-types';
+import { alwaysSubscriber } from './destination-selection-strategies';
+import { getDestination } from './destination-accessor';
+import { DestinationConfiguration } from './destination';
+
+describe('custom jwt via jwks property on destination', () => {
+  beforeEach(() => {
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
+  });
+
+  afterEach(() => {
+    nock.cleanAll();
+    jest.clearAllMocks();
+  });
+
+  const destFetchOption: DestinationFetchOptions = {
+    destinationName: 'FINAL-DESTINATION',
+    iasToXsuaaTokenExchange: false,
+    selectionStrategy: alwaysSubscriber
+  };
+
+  function mockOneDestination(
+    destination: DestinationConfiguration,
+    serviceToken: string,
+    userJwt: string
+  ) {
+    mockInstanceDestinationsCall(nock, [], 200, serviceToken);
+
+    mockSubaccountDestinationsCall(nock, [destination], 200, serviceToken);
+
+    mockSingleDestinationCall(
+      nock,
+      destinationSingleResponse([destination]),
+      200,
+      destinationName,
+      { authorization: `Bearer ${serviceToken}`, 'x-user-token': userJwt },
+      { badheaders: [] }
+    );
+  }
+
+  it('verifies JWT with JKU property', async () => {
+    const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
+    nock(jku).get('/').reply(200, responseWithPublicKey());
+    const userJwt = signedJwtForVerification(subscriberUserPayload, jku);
+    const serviceJwt = signedJwt(subscriberServiceTokenPayload);
+
+    mockOneDestination({ ...oauthMultipleResponse[0] }, serviceJwt, userJwt);
+
+    const spy = jest.spyOn(jwt, 'verifyJwt');
+    const actual = await getDestination({ ...destFetchOption, jwt: userJwt });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(actual).toBeDefined();
+  });
+
+  it('does not verify JWT without JKU property', async () => {
+    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
+    const serviceJwt = signedJwt(subscriberServiceTokenPayload);
+
+    mockOneDestination(
+      { ...oauthMultipleResponse[0], 'x_user_token.jwks': 'someDummyValue' },
+      serviceJwt,
+      userJwt
+    );
+
+    const spy = jest.spyOn(jwt, 'verifyJwt');
+    const actual = await getDestination({ ...destFetchOption, jwt: userJwt });
+    expect(spy).toHaveBeenCalledTimes(0);
+    expect(actual).toBeDefined();
+  });
+
+  it('throws an error if no jwks properties are not given for JWT without JKU', async () => {
+    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
+    const serviceJwt = signedJwt(subscriberServiceTokenPayload);
+
+    mockOneDestination(oauthMultipleResponse[0], serviceJwt, userJwt);
+
+    await expect(
+      getDestination({ ...destFetchOption, jwt: userJwt })
+    ).rejects.toThrowError(
+      'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
+    );
+  });
+
+  it('resolves if jwks is present', async () => {
+    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
+    const serviceJwt = signedJwt(subscriberServiceTokenPayload);
+
+    mockOneDestination(
+      { ...oauthMultipleResponse[0], 'x_user_token.jwks': 'someDummyValue' },
+      serviceJwt,
+      userJwt
+    );
+
+    const actual = await getDestination({ ...destFetchOption, jwt: userJwt });
+    expect(actual).toBeDefined();
+  });
+
+  it('resolves if jwks_uri is present', async () => {
+    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
+    const serviceJwt = signedJwt(subscriberServiceTokenPayload);
+
+    mockOneDestination(
+      {
+        ...oauthMultipleResponse[0],
+        'x_user_token.jwks_uri': 'someDummyValue'
+      },
+      serviceJwt,
+      userJwt
+    );
+
+    const actual = await getDestination({ ...destFetchOption, jwt: userJwt });
+    expect(actual).toBeDefined();
+  });
+});

@@ -18,7 +18,7 @@ const jwtPayload = {
   zid: 'my-zone'
 };
 
-function responseWithPublicKey(key = publicKey) {
+export function responseWithPublicKey(key = publicKey) {
   return {
     keys: [
       {

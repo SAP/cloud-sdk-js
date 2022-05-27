@@ -1,6 +1,13 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { JwtHeader } from 'jsonwebtoken';
 import { JwtPayload } from '../jsonwebtoken-type';
-import { decodeJwt, decodeJwtComplete, isUserToken, JwtPair, verifyJwt } from '../jwt';
+import {
+  decodeJwt,
+  decodeJwtComplete,
+  isUserToken,
+  JwtPair,
+  verifyJwt
+} from '../jwt';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
@@ -37,7 +44,6 @@ import {
   ProxyStrategy,
   proxyStrategy
 } from './proxy-util';
-import { JwtHeader } from 'jsonwebtoken';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -116,12 +122,6 @@ class DestinationFromServiceRetriever {
 
     let { destination } = destinationResult;
 
-    if (options.jwt && !this.isXsuaa(decodeJwtComplete(options.jwt).header)) {
-      if (!destination.jwks && !destination.jwksUri) {
-        throw new Error("Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.");
-      }
-    }
-
     if (
       destination.authentication === 'OAuth2UserTokenExchange' ||
       destination.authentication === 'OAuth2JWTBearer' ||
@@ -166,7 +166,7 @@ class DestinationFromServiceRetriever {
       const encoded = await serviceToken('destination', {
         ...options
       });
-      
+
       const { payload, header } = decodeJwtComplete(options.jwt);
       if (this.isXsuaa(header)) {
         await verifyJwt(options.jwt, options);
@@ -370,6 +370,19 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
     // This covers OAuth to user dependend auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     // Which is the same for: OAuth2UserTokenExchange, OAuth2JWTBearer and OAuth2SAMLBearerAssertion
+
+    // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as wll. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
+    if (
+      !DestinationFromServiceRetriever.isXsuaa(
+        decodeJwtComplete(this.subscriberToken.userJwt.encoded).header
+      )
+    ) {
+      if (!destination.jwks && !destination.jwksUri) {
+        throw new Error(
+          'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
+        );
+      }
+    }
 
     // Case 1 Destination in provider and jwt issued for provider account -> not extra x-user-token header needed
     if (this.isProviderAndSubscriberSameTenant()) {

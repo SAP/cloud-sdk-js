@@ -16,7 +16,7 @@ const providerServiceTokenPayload = {
 
 export const providerServiceToken = signedJwt(providerServiceTokenPayload);
 
-const subscriberServiceTokenPayload = {
+export const subscriberServiceTokenPayload = {
   iat,
   iss: subscriberXsuaaUrl,
   zid: TestTenants.SUBSCRIBER
@@ -72,7 +72,7 @@ export const providerUserPayload = {
 
 export const providerUserJwt = signedJwt(providerUserPayload);
 
-const subscriberUserPayload = {
+export const subscriberUserPayload = {
   iat,
   iss: subscriberXsuaaUrl,
   zid: TestTenants.SUBSCRIBER,

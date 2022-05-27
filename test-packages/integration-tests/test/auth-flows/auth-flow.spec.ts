@@ -126,13 +126,13 @@ describe('OAuth flows', () => {
     // TODO: Decode, remove jku in the header, and then encode.
     //       Or simply add some dummy jwt token without jku.
     const destination = await getDestination({
-      destinationName: systems.destination.providerOauth2ClientCredentialsWithoutJKU,
+      destinationName:
+        systems.destination.providerOauth2ClientCredentialsWithoutJKU,
       jwt
     });
     expect(accessToken.subscriber);
     expect(destination?.jwks || destination?.jwksUri).toBeDefined();
   }, 60000);
-
 
   xit('No Auth: trust store certificates are fetched', async () => {
     const destination = await getDestination({

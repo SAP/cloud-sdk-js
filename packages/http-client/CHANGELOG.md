@@ -13,5 +13,5 @@
 - Updated dependencies [0a008674]
 - Updated dependencies [0a008674]
 - Updated dependencies [0a008674]
-    - @sap-cloud-sdk/connectivity@2.4.0
-    - @sap-cloud-sdk/util@2.4.0
+  - @sap-cloud-sdk/connectivity@2.4.0
+  - @sap-cloud-sdk/util@2.4.0

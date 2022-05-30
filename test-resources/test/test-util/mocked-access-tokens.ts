@@ -4,7 +4,7 @@ import {
   subscriberXsuaaUrl,
   TestTenants
 } from './environment-mocks';
-import { signedJwt, signedJwtForVerification } from './keys';
+import { signedJwtForVerification } from './keys';
 
 const iat = Math.floor(Date.now() / 1000);
 

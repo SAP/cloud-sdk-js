@@ -9,7 +9,6 @@ import {
   mockSubaccountDestinationsCall,
   mockVerifyJwt,
   oauthMultipleResponse,
-  signedJwt,
   signedJwtForVerification,
   subscriberServiceTokenPayload,
   subscriberUserPayload
@@ -20,6 +19,8 @@ import { DestinationFetchOptions } from './destination-accessor-types';
 import { alwaysSubscriber } from './destination-selection-strategies';
 import { getDestination } from './destination-accessor';
 import { DestinationConfiguration } from './destination';
+
+const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
 
 describe('custom jwt via jwks property on destination', () => {
   beforeEach(() => {
@@ -59,10 +60,12 @@ describe('custom jwt via jwks property on destination', () => {
   }
 
   it('verifies JWT with JKU property', async () => {
-    const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
     nock(jku).get('/').reply(200, responseWithPublicKey());
     const userJwt = signedJwtForVerification(subscriberUserPayload, jku);
-    const serviceJwt = signedJwt(subscriberServiceTokenPayload);
+    const serviceJwt = signedJwtForVerification(
+      subscriberServiceTokenPayload,
+      jku
+    );
 
     mockOneDestination({ ...oauthMultipleResponse[0] }, serviceJwt, userJwt);
 
@@ -74,7 +77,10 @@ describe('custom jwt via jwks property on destination', () => {
 
   it('does not verify JWT without JKU property', async () => {
     const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
-    const serviceJwt = signedJwt(subscriberServiceTokenPayload);
+    const serviceJwt = signedJwtForVerification(
+      subscriberServiceTokenPayload,
+      jku
+    );
 
     mockOneDestination(
       { ...oauthMultipleResponse[0], 'x_user_token.jwks': 'someDummyValue' },
@@ -90,7 +96,10 @@ describe('custom jwt via jwks property on destination', () => {
 
   it('throws an error if no jwks properties are not given for JWT without JKU', async () => {
     const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
-    const serviceJwt = signedJwt(subscriberServiceTokenPayload);
+    const serviceJwt = signedJwtForVerification(
+      subscriberServiceTokenPayload,
+      jku
+    );
 
     mockOneDestination(oauthMultipleResponse[0], serviceJwt, userJwt);
 
@@ -103,7 +112,10 @@ describe('custom jwt via jwks property on destination', () => {
 
   it('resolves if jwks is present', async () => {
     const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
-    const serviceJwt = signedJwt(subscriberServiceTokenPayload);
+    const serviceJwt = signedJwtForVerification(
+      subscriberServiceTokenPayload,
+      jku
+    );
 
     mockOneDestination(
       { ...oauthMultipleResponse[0], 'x_user_token.jwks': 'someDummyValue' },
@@ -117,7 +129,10 @@ describe('custom jwt via jwks property on destination', () => {
 
   it('resolves if jwks_uri is present', async () => {
     const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
-    const serviceJwt = signedJwt(subscriberServiceTokenPayload);
+    const serviceJwt = signedJwtForVerification(
+      subscriberServiceTokenPayload,
+      jku
+    );
 
     mockOneDestination(
       {

@@ -8,13 +8,15 @@ import { signedJwt, signedJwtForVerification } from './keys';
 
 const iat = Math.floor(Date.now() / 1000);
 
+const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
+
 const providerServiceTokenPayload = {
   iat,
   iss: providerXsuaaUrl,
   zid: TestTenants.PROVIDER
 };
 
-export const providerServiceToken = signedJwt(providerServiceTokenPayload);
+export const providerServiceToken = signedJwtForVerification(providerServiceTokenPayload, jku);
 
 export const subscriberServiceTokenPayload = {
   iat,
@@ -22,7 +24,7 @@ export const subscriberServiceTokenPayload = {
   zid: TestTenants.SUBSCRIBER
 };
 
-export const subscriberServiceToken = signedJwt(subscriberServiceTokenPayload);
+export const subscriberServiceToken = signedJwtForVerification(subscriberServiceTokenPayload, jku);
 
 /**
  * These tokens are used to test cases when the provided user JWT only contains `{ iss: someXSUAAurl }`.
@@ -33,12 +35,12 @@ export const onlyIssuerServiceTokenPayload = {
   zid: TestTenants.SUBSCRIBER_ONLY_ISS
 };
 
-export const onlyIssuerServiceToken = signedJwt(onlyIssuerServiceTokenPayload);
+export const onlyIssuerServiceToken = signedJwtForVerification(onlyIssuerServiceTokenPayload, jku);
 
 export const subscriberServiceTokenWithVerificationURL =
   signedJwtForVerification(
     subscriberServiceTokenPayload,
-    'https://my-jku-url.authentication.sap.hana.ondemand.com'
+    jku
   );
 
 const userApprovedProviderTokenPayload = {
@@ -48,8 +50,9 @@ const userApprovedProviderTokenPayload = {
   user_id: 'service-prov-approved'
 };
 
-export const userApprovedProviderServiceToken = signedJwt(
-  userApprovedProviderTokenPayload
+export const userApprovedProviderServiceToken = signedJwtForVerification(
+  userApprovedProviderTokenPayload,
+  jku
 );
 
 const userApprovedSubscriberTokenPayload = {
@@ -59,8 +62,9 @@ const userApprovedSubscriberTokenPayload = {
   user_id: 'service-sub-approved'
 };
 
-export const userApprovedSubscriberServiceToken = signedJwt(
-  userApprovedSubscriberTokenPayload
+export const userApprovedSubscriberServiceToken = signedJwtForVerification(
+  userApprovedSubscriberTokenPayload,
+  jku
 );
 
 export const providerUserPayload = {
@@ -70,7 +74,7 @@ export const providerUserPayload = {
   user_id: 'user-prov'
 };
 
-export const providerUserJwt = signedJwt(providerUserPayload);
+export const providerUserJwt = signedJwtForVerification(providerUserPayload, jku);
 
 export const subscriberUserPayload = {
   iat,
@@ -79,7 +83,7 @@ export const subscriberUserPayload = {
   user_id: 'user-sub'
 };
 
-export const subscriberUserJwt = signedJwt(subscriberUserPayload);
+export const subscriberUserJwt = signedJwtForVerification(subscriberUserPayload, jku);
 
 const subscriberJwtTokenPayload = {
   iat,
@@ -95,8 +99,8 @@ const providerJwtTokenPayload = {
   user_id: 'jwt-prov'
 };
 
-export const providerJwtBearerToken = signedJwt(providerJwtTokenPayload);
+export const providerJwtBearerToken = signedJwtForVerification(providerJwtTokenPayload, jku);
 
-export const subscriberJwtBearerToken = signedJwt(subscriberJwtTokenPayload);
+export const subscriberJwtBearerToken = signedJwtForVerification(subscriberJwtTokenPayload, jku);
 
-export const iasToken = signedJwt(providerJwtTokenPayload);
+export const iasToken = signedJwtForVerification(providerJwtTokenPayload, jku);

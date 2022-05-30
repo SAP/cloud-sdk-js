@@ -1,15 +1,33 @@
 import execa from "execa";
-import semver from "semver";
-const retry =  require("async-retry");
 
 interface DeprecateOptions {
   deprecateMessage: string;
   packageNamesToBeDeprecated: string[];
-  versionsToBeDeprecated: string;
+  versionsToBeDeprecated: RegExp;
+  isProduction?: boolean;
 }
 
+/**
+ * Options for deprecating npm packages by using this script
+ * `npm deprecate` (https://docs.npmjs.com/cli/v8/commands/npm-deprecate) supports using semver for specifying versions.
+ *  However, canary version cannot be deprecated easily.
+ *  e.g., `~1.0.0-0` will match:
+ *  - `1.0.0-xyz` (canary version)
+ *  - `1.0.x` (stable version)
+ *  but NOT 1.0.1-xyz (canary version)
+ *  Therefore, to match both versions below and you need a union version (~1.0.0-0 || ~1.0.1-0) or multiple commands:
+ *  - `1.0.0-xyz`
+ *  - `1.0.1-xyz`
+ *  We should not use multiple commands, as the server has certain limit.
+ */
 const deprecateOptions: DeprecateOptions = {
+  /**
+   * Deprecate message for all packages/versions to be deprecated.
+   */
   deprecateMessage: "1.x is no longer maintained.",
+  /**
+   * Package names to be deprecated
+   */
   packageNamesToBeDeprecated: [
     "@sap-cloud-sdk/analytics",
     "@sap-cloud-sdk/core",
@@ -20,111 +38,59 @@ const deprecateOptions: DeprecateOptions = {
     "@sap-cloud-sdk/test-util",
     "@sap-cloud-sdk/util"
   ],
-  // todo ^1.17.4-0 for all alpha versions
-  versionsToBeDeprecated: `<1.54.0`,
-  // versionTobeTested: '1.54.0'
+  /**
+   * Regex used as a filter, indicating which versions should be deprecated.
+   * The group is crucial for picking the stable version prefix, which cannot be removed.
+   * Check the doc of the `deprecateOptions` object for more details.
+   */
+  versionsToBeDeprecated: /(1\.\d+\.\d+).*/,
+  /**
+   * When setting to `false`, it only shows the npm command for review.
+   * When setting to `true`, it will EXECUTE the npm deprecate command.
+   * Please do keep `false` for the remote branch, so it's used as default value.
+   */
+  isProduction: false
 }
-// deprecate command with semver - npm deprecate @sap-cloud-sdk/openapi-generator@"< 1.54.3" "1.x is no longer maintained."
-// check whether a package/version is deprecated - npm view @sap-cloud-sdk/openapi-generator@"< 1.54.2"
-// check all the versions - `npm view @sap-cloud-sdk/util versions`
+
+/**
+ * Main entry point for deprecating the SDK packages.
+ * Here are some npm command examples, that are related to the deprecation.
+ * [deprecate command with semver] - npm deprecate @sap-cloud-sdk/openapi-generator@"< 1.54.3" "1.x is no longer maintained."
+ * [check whether a package/version is deprecated] - npm view @sap-cloud-sdk/openapi-generator@"< 1.54.2"
+ * [check all existing versions of a package] - `npm view @sap-cloud-sdk/util versions`
+ */
 async function deprecateNmpPackage(){
   const responses = await Promise.all(deprecateOptions.packageNamesToBeDeprecated.map(
     async packageName => {
       const resVersions = await execa('npm', ['view', packageName, 'versions']);
       const allVersions = resVersions.stdout.replace(/'|\s|\[|]/g, '').split(',');
       const uniqueVersionPrefixes = Array.from(new Set(allVersions.map(version => {
-          // Pick prefix of a version. e.g., 1.34.1-20201230083713.13 will be 1.34.1
-          const prefix = version.match(/(1\.\d+\.\d+).*/)
-          let ret = prefix? prefix[1] : undefined;
-          // ret = (ret && semver.gt(ret, '1.36.2')) ? ret : undefined;
-          return ret;
+          // Pick the prefix of a version. e.g., 1.34.1-20201230083713.13 will be 1.34.1
+          const prefix = version.match(deprecateOptions.versionsToBeDeprecated)
+          return prefix? prefix[1] : undefined;
         }
       ).filter(e => !!e))) as string[];
-
+      // Build a command like `npm deprecate @sap-cloud-sdk/generator@~1.17.4-0 || ~1.18.0-0 || ~1.18.1-0 || ~1.18.2-0`
+      // With `-0` as suffix, it should match all our canary versions for A specific stable version.
       const deprecateVersion = uniqueVersionPrefixes.map(prefix => `~${prefix}-0`).join(' || ');
       console.log(`[Deprecating]: ${packageName}@${deprecateVersion}`);
-      try {
-        await execa('npm', ['deprecate', `${packageName}@${deprecateVersion}`, deprecateOptions.deprecateMessage]);
-      } catch (e) {
-        // 422 means this version was deprecated before
-        if(!e?.message?.includes('422 Unprocessable Entity')){
-          throw new Error(e);
+      if(deprecateOptions.isProduction) {
+        try {
+          await execa('npm', ['deprecate', `${packageName}@${deprecateVersion}`, deprecateOptions.deprecateMessage]);
+        } catch (e) {
+          // 422 means this version was deprecated before
+          if (!e?.message?.includes('422 Unprocessable Entity')) {
+            throw new Error(e);
+          }
         }
+        console.log(`[Done]: ${packageName}@${deprecateVersion}`)
       }
-
-      /**
-        `~1.0.0-0` will match:
-        - `1.0.0-xyz` (canary version)
-        - `1.0.x` (stable version)
-        but NOT 1.0.1-xyz.
-        So there is no way to match both versions below and you need multiple commands:
-        - `1.0.0-xyz`
-        - `1.0.1-xyz`
-      */
-      // await blockAsync(uniqueVersionPrefixes, 0, deprecateCanaryVersion, {packageName, deprecateMessage: deprecateOptions.deprecateMessage});
-      // await Promise.all(Array.from(uniqueVersionPrefixes).map(
-      //   async prefix => {
-      //     const deprecateVersion = `~${prefix}-0`;
-      //     console.log(`Deprecating: ${packageName}@${deprecateVersion}`);
-      //     return execa('npm', ['deprecate', `${packageName}@${deprecateVersion}`, deprecateOptions.deprecateMessage]);
-      //   }
-      // ));
-
-      // const res1 =
-
-        // await execa('npm', ['deprecate', `@sap-cloud-sdk/openapi-generator@1.54.0`, '1.x is no longer maintained.'])
-        // await spawn('npm', ['deprecate', `${packageName}@${deprecateOptions.versionsToBeDeprecated}`, deprecateOptions.deprecateMessage])
-        // await execa('npm', ['deprecate', `${packageName}@${deprecateOptions.versionsToBeDeprecated}`, deprecateOptions.deprecateMessage])
-        // await execa.commandSync(`npm deprecate ${packageName}@${deprecateOptions.versionsToBeDeprecated} ${deprecateOptions.deprecateMessage}`, {shell: true});
-        // execa('npm', ['deprecate', `${packageName}@${deprecateOptions.versionsToBeDeprecated}`, deprecateOptions.deprecateMessage])
-
-      // console.log(res1.stdout);
-      // const res2 = await execa('npm', ['view', `${packageName}@${deprecateOptions.versionTobeTested}`])
-      // console.log(res2);
-      // return res2.stdout;
+      else {
+        console.log(`[Test]: will execute the following command:\n`);
+        console.log(`npm deprecate ${packageName}@"${deprecateVersion}" "${deprecateOptions.deprecateMessage}"`);
+      }
     }
   ));
-  // responses.map(res => {
-  //   if(!res.includes('DEPRECATED')){
-  //     throw new Error(`Deprecation failed: ${res}`);
-  //   }
-  // })
-}
-
-/**
- * Execute promise one by one in a loop, which is needed when remote service has limits.
- * @param taskIDs - An array that contains the IDs of all the tasks.
- * @param index - The index of the current task.
- * @param taskFn - A task function to be executed for this loop.
- * @param taskParams - An object that contains all other task parameters.
- */
-async function blockAsync(taskIDs: any[], index: number, taskFn: (taskID, taskParam?) => Promise<any>, taskParams? ): Promise<any> {
-  const taskID = taskIDs[index];
-  await retry(
-    () => taskFn(taskID, taskParams),
-    {
-      retries: 5,
-    }
-  )
-  // await taskFn(taskID, taskParams);
-  index++;
-  if(index < taskIDs.length){
-    return await blockAsync(taskIDs, index, taskFn, taskParams);
-  }
-}
-
-async function deprecateCanaryVersion(versionPrefix: string, { packageName, deprecateMessage }: { packageName: string, deprecateMessage: string}){
-    const deprecateVersion = `~${versionPrefix}-0`;
-    console.log(`[Deprecating]: ${packageName}@${deprecateVersion}`);
-    try {
-      await execa('npm', ['deprecate', `${packageName}@${deprecateVersion}`, deprecateMessage]);
-    } catch (e) {
-      // 422 means this version was deprecated before
-      if(!e?.message?.includes('422 Unprocessable Entity')){
-        throw new Error(e);
-      }
-    }
-    console.log(`[Done]: ${packageName}@${deprecateVersion}`)
 }
 
 deprecateNmpPackage()

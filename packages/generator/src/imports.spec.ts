@@ -28,7 +28,7 @@ const bigNumberProperty = {
 const stringProperty = {
   jsType: 'string',
   edmType: 'Edm.String',
-  fieldType: 'EdmTypeField'
+  fieldType: 'OrderableEdmTypeField'
 } as VdmProperty;
 
 const numberProperty = {

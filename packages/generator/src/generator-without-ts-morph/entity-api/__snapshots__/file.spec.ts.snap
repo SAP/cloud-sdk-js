@@ -88,7 +88,7 @@ export class BreakfastApi<DeSerializersT extends DeSerializers = DefaultDeSerial
   }
 
   private _schema?: {
-    ENTITY_NAME: EdmTypeField<Breakfast<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
+    ENTITY_NAME: OrderableEdmTypeField<Breakfast<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
 NUMBER_OF_EGGS: OrderableEdmTypeField<Breakfast<DeSerializers>, DeSerializersT, 'Edm.Decimal', true, true>,
 BREAKFAST_TIME: OrderableEdmTypeField<Breakfast<DeSerializers>, DeSerializersT, 'Edm.DateTime', false, true>,
 /**

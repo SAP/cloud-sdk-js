@@ -113,7 +113,7 @@ describe('imports', () => {
           momentProperty,
           timeProperty
         ])
-      ).toEqual(['EdmTypeField', 'OrderableEdmTypeField']);
+      ).toEqual(['OrderableEdmTypeField']);
     });
 
     it('contains unique one-to-many link import', () => {

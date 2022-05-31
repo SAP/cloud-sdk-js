@@ -8,7 +8,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityEndsWithApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -32,7 +32,7 @@ export declare class TestEntityEndsWithApi<
   get fieldBuilder(): FieldBuilder<typeof TestEntityEndsWith, DeSerializersT>;
   private _schema?;
   get schema(): {
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: OrderableEdmTypeField<
       TestEntityEndsWith<
         DeSerializers<
           any,

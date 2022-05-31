@@ -15,7 +15,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityLvl3MultiLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -78,21 +78,21 @@ export class TestEntityLvl3MultiLinkApi<
   }
 
   private _schema?: {
-    STRING_PROPERTY: EdmTypeField<
+    STRING_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl3MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
-    GUID_PROPERTY: EdmTypeField<
+    GUID_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl3MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',
       true,
       true
     >;
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl3MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',

@@ -17,3 +17,16 @@ executeHttpRequest(
   { url: 'https://example.com', destinationName: 'myDestinationName' },
   { method: 'get' }
 );
+
+// $ExpectType Promise<HttpResponse>
+executeHttpRequest(
+  { destinationName: 'dest'},
+  { method: 'get', headers: {'authorization', 'customAuth'}, params: {'myParam', 'customParam'} }
+);
+
+// $ExpectType Promise<HttpResponse>
+executeHttpRequest(
+  { destinationName: 'dest'},
+  { method: 'get', headers: { requestConfig: {'authorization', 'defaultAuth'} },
+    params: { requestConfig: {'myParam', 'defaultParam'}}}
+);

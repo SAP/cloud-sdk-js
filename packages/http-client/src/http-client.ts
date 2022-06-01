@@ -32,6 +32,7 @@ import {
   HttpRequestConfigWithOrigin,
   HttpRequestOptions,
   HttpResponse,
+  isHttpRequestConfigWithOrigin,
   OriginOptions,
   OriginOptionsInternal,
   ParameterEncoder
@@ -122,6 +123,30 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
     logRequestInformation(request);
     return executeFn(request);
   };
+}
+
+/**
+ * Build an [[HttpRequestConfigWithOrigin]] from a given [[HttpRequestConfigWithOrigin]] or [[HttpRequestConfig]]
+ * @param requestConfig - The given [[HttpRequestConfigWithOrigin]] or [[HttpRequestConfig]]
+ * @returns The resulting [[HttpRequestConfigWithOrigin]]
+ * @internal
+ */
+export function buildHttpRequestConfigWithOrigin(
+  requestConfig: HttpRequestConfigWithOrigin | HttpRequestConfig
+): HttpRequestConfigWithOrigin {
+  if (isHttpRequestConfigWithOrigin(requestConfig)) {
+    return requestConfig;
+  }
+  let ret: HttpRequestConfigWithOrigin = {
+    ...(requestConfig as HttpRequestConfigBase)
+  };
+  ret = requestConfig.headers
+    ? { ...ret, headers: { requestConfig: {}, custom: requestConfig.headers } }
+    : ret;
+  ret = requestConfig.params
+    ? { ...ret, params: { requestConfig: {}, custom: requestConfig.params } }
+    : ret;
+  return ret;
 }
 
 /**
@@ -301,6 +326,46 @@ function logRequestInformation(request: HttpRequestConfig) {
 }
 
 /**
+ * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
+ * and executes it (using Axios).
+ * One overloading, that accepts [[HttpRequestConfigWithOrigin]] as a parameter, is deprecated and replaced the function [[executeHttpRequestWithOrigin]].
+ * @param destination - A destination or a destination name and a JWT.
+ * @param requestConfig - Any object representing an HTTP request.
+ * @param options - An [[HttpRequestOptions]] of the http request for configuring e.g., csrf token delegation. By default, the SDK will not fetch the csrf token.
+ * @returns A promise resolving to an [[HttpResponse]].
+ */
+export function executeHttpRequest<T extends HttpRequestConfig>(
+  destination: DestinationOrFetchOptions,
+  requestConfig: T,
+  options?: HttpRequestOptions
+): Promise<HttpResponse>;
+/**
+ * @deprecated This overloading is replaced by the function [[executeHttpRequestWithOrigin]].
+ */
+export function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
+  destination: DestinationOrFetchOptions,
+  requestConfig: T,
+  options?: HttpRequestOptions
+): Promise<HttpResponse>;
+// eslint-disable-next-line jsdoc/require-jsdoc
+export function executeHttpRequest<
+  T extends HttpRequestConfig | HttpRequestConfigWithOrigin
+>(
+  destination: DestinationOrFetchOptions,
+  requestConfig: T,
+  options?: HttpRequestOptions
+): Promise<HttpResponse> {
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  const requestConfigWithOrigin =
+    buildHttpRequestConfigWithOrigin(requestConfig);
+  return execute(executeWithAxios)(
+    destination,
+    requestConfigWithOrigin,
+    options
+  );
+}
+
+/**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given [[HttpRequestConfigWithOrigin]]
  * and executes it (using Axios).
  * The [[HttpRequestConfigWithOrigin]] supports defining header options and query parameter options with origins.
@@ -311,7 +376,9 @@ function logRequestInformation(request: HttpRequestConfig) {
  * @param options - An [[HttpRequestOptions]] of the http request for configuring e.g., CSRF token delegation. By default, the SDK will not fetch the CSRF token.
  * @returns A promise resolving to an [[HttpResponse]].
  */
-export function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
+export function executeHttpRequestWithOrigin<
+  T extends HttpRequestConfigWithOrigin
+>(
   destination: DestinationOrFetchOptions,
   requestConfig: T,
   options?: HttpRequestOptions

@@ -286,12 +286,6 @@ function logCustomHeadersWarning(customHeaders?: Record<string, string>) {
   }
 }
 
-/*
-Custom parameters
-Destination parameters
-Internal parameters
-*/
-
 function logRequestInformation(request: HttpRequestConfig) {
   const basicRequestInfo = `Execute '${request.method}' request with target: ${request.url}.`;
   if (request.headers) {

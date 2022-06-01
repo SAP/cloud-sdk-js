@@ -281,7 +281,7 @@ function logCustomHeadersWarning(customHeaders?: Record<string, string>) {
       )
         .map(key => `  - "${key}"`)
         .join('\n')}`
-        + 'If the parameters from multiple origins use the same key, the priority is 1. Custom, 2. Destination, 3. Internal. \n'
+        + 'If the parameters from multiple origins use the same key, the priority is 1. Custom, 2. Destination, 3. Internal.'
     );
   }
 }

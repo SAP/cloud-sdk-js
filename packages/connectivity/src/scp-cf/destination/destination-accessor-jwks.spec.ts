@@ -94,7 +94,7 @@ describe('custom jwt via jwks property on destination', () => {
     expect(actual).toBeDefined();
   });
 
-  it('throws an error if no jwks properties are not given for JWT without JKU', async () => {
+  it('throws an error if jwks properties are not given for JWT without JKU', async () => {
     const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
     const serviceJwt = signedJwtForVerification(
       subscriberServiceTokenPayload,

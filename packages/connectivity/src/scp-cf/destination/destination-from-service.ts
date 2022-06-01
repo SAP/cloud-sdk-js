@@ -273,7 +273,7 @@ class DestinationFromServiceRetriever {
       );
     }
     if (credentials.length > 1) {
-      logger.debug(
+      logger.warn(
         'Found more than one destination service instance. Using the first one.'
       );
     }

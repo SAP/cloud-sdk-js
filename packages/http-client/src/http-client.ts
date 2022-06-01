@@ -276,7 +276,7 @@ function splitRequestConfig(requestConfig: HttpRequestConfigWithOrigin): {
 function logCustomHeadersWarning(customHeaders?: Record<string, string>) {
   if (customHeaders) {
     logger.debug(
-      `The following custom headers will overwrite headers created by the SDK, if they have the same key:\n${Object.keys(
+      `The following custom headers will overwrite headers created by the SDK, if they use the same key:\n${Object.keys(
         customHeaders
       )
         .map(key => `  - "${key}"`)

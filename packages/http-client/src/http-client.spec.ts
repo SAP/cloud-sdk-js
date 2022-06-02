@@ -307,7 +307,8 @@ sap-client:001`);
 
       await executeHttpRequest(httpsDestination, config);
 
-      expect(debugSpy).nthCalledWith(1,
+      expect(debugSpy).nthCalledWith(
+        1,
         `The following custom headers will overwrite headers created by the SDK, if they use the same key:
   - "authorization"
   - "sap-client"

@@ -8606,10 +8606,10 @@ typedarray@^0.0.6:
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typedoc@^0.22.16:
-  version "0.22.16"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.22.16.tgz#41e0ff099274ce13c5c3ea49cc5ad615d2f3119e"
-  integrity sha512-0Qf0/CsQe6JZTXoYwBM3Iql8gLAWLjQP7O/j9YzfkJp3G/WVGmIMRajKnldJuA/zVvhr+ifsHTgctQh5g2t4iw==
+typedoc@^0.22.17:
+  version "0.22.17"
+  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.22.17.tgz#bc51cc95f569040112504300831cdac4f8089b7b"
+  integrity sha512-h6+uXHVVCPDaANzjwzdsj9aePBjZiBTpiMpBBeyh1zcN2odVsDCNajz8zyKnixF93HJeGpl34j/70yoEE5BfNg==
   dependencies:
     glob "^8.0.3"
     lunr "^2.3.9"

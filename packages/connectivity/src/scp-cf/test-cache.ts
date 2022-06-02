@@ -21,8 +21,6 @@ export class TestCache implements DestinationInterface {
 
   clear(): void {
     this.cache = {};
-    // eslint-disable-next-line no-console
-    console.log('');
   }
 
   /**

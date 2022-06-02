@@ -3,7 +3,6 @@ import { JwtPayload } from '../jsonwebtoken-type';
 import {
   decodeJwt,
   decodeJwtComplete,
-  isUserToken,
   isXsuaaToken,
   JwtPair,
   verifyJwt
@@ -60,10 +59,32 @@ interface DestinationSearchResult {
   fromCache: boolean;
   origin: DestinationOrigin;
 }
-interface SubscriberTokens {
-  userJwt?: JwtPair; // is undefined when iss is passed ad token
+
+type SubscriberTokens = IssToken | XsuaaToken | CustomToken;
+
+interface IssToken {
+  type: 'iss';
+  userJwt: undefined;
   serviceJwt: JwtPair;
 }
+
+interface XsuaaToken {
+  type: 'xsuaa';
+  userJwt: JwtPair; // is undefined when iss is passed ad token
+  serviceJwt: JwtPair;
+}
+
+interface CustomToken {
+  type: 'custom';
+  userJwt: JwtPair;
+  serviceJwt: undefined;
+}
+//
+// const foo:SubscriberTokens = {
+//   type:"custom",
+//   serviceJwt: {} as JwtPair,
+//   userJwt: {} as JwtPair
+// }
 
 const emptyDestinationByType: DestinationsByType = {
   instance: [],
@@ -163,22 +184,29 @@ class DestinationFromServiceRetriever {
           'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
         );
       }
+
       const decoded = decodeJwtComplete(options.jwt);
-      // Allow multi tenancy only for XSUAA JWT with issuer property set to tenant. External JWT can not have the tenant information
-      const serviceJwt = isXsuaaToken(decoded)
-        ? await serviceToken('destination', options)
-        : await serviceToken('destination', { ...options, jwt: undefined });
+      const userJwt = {
+        decoded: decoded.payload,
+        encoded: options.jwt
+      };
 
       if (isXsuaaToken(decoded)) {
         await verifyJwt(options.jwt, options);
+        const encoded = await serviceToken('destination', {
+          ...options,
+          jwt: undefined
+        });
+        return {
+          type: 'xsuaa',
+          userJwt,
+          serviceJwt: { encoded, decoded: decodeJwt(encoded) }
+        };
       }
-
       return {
-        userJwt: {
-          decoded: decoded.payload,
-          encoded: options.jwt
-        },
-        serviceJwt: { encoded: serviceJwt, decoded: decodeJwt(serviceJwt) }
+        type: 'custom',
+        userJwt,
+        serviceJwt: undefined
       };
     }
 
@@ -192,7 +220,7 @@ class DestinationFromServiceRetriever {
         jwt: payload
       });
       const clientCertJwt = { encoded, decoded: decodeJwt(encoded) };
-      return { serviceJwt: clientCertJwt };
+      return { serviceJwt: clientCertJwt, type: 'iss', userJwt: undefined };
     }
   }
 
@@ -329,7 +357,7 @@ class DestinationFromServiceRetriever {
     const exchangeTenant = this.getExchangeTenant(destination);
     const clientGrant = await serviceToken('destination', {
       jwt:
-        origin === 'subscriber'
+        origin === 'subscriber' && this.subscriberToken?.type !== 'custom'
           ? this.subscriberToken!.serviceJwt.decoded
           : this.providerServiceToken.decoded
     });
@@ -360,7 +388,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   ): Promise<AuthAndExchangeTokens> {
     const { destination, origin } = destinationResult;
     const { destinationName } = this.options;
-    if (!this.subscriberToken || !isUserToken(this.subscriberToken.userJwt)) {
+    if (!this.subscriberToken || this.subscriberToken.type === 'iss') {
       throw Error(
         `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
       );
@@ -368,11 +396,8 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     // This covers OAuth to user dependend auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     // Which is the same for: OAuth2UserTokenExchange, OAuth2JWTBearer and OAuth2SAMLBearerAssertion
 
-    const isCustomJwt = !isXsuaaToken(
-      decodeJwtComplete(this.subscriberToken.userJwt.encoded)
-    );
     // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as wll. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
-    if (isCustomJwt) {
+    if (this.subscriberToken.type === 'custom') {
       if (!destination.jwks && !destination.jwksUri) {
         throw new Error(
           'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
@@ -380,9 +405,14 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       }
     }
 
-    // Case 1 Destination in provider and jwt issued for provider account -> not extra x-user-token header needed
-    if (this.isProviderAndSubscriberSameTenant() && !isCustomJwt) {
-      // note that for a custom jwt the provider and subscriber service token are the same
+    // Case 1 Destination in provider and jwt issued for provider account But not custom JWT given-> not extra x-user-token header needed
+    if (
+      this.subscriberToken.type !== 'custom' &&
+      isIdenticalTenant(
+        this.subscriberToken.userJwt.decoded,
+        this.providerServiceToken.decoded
+      )
+    ) {
       logger.debug(
         `UserExchange flow started without user exchange token for destination ${destinationName} of the provider account.`
       );
@@ -394,9 +424,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         )
       };
     }
-    // Case 2 Subscriber and provider account not the same -> x-user-token  header passed to determine user and tenant in token service URL and service token to get the destination
+    // Case 2 Subscriber and provider account not the same OR custom jwt -> x-user-token  header passed to determine user and tenant in token service URL and service token to get the destination
     const serviceJwt =
-      origin === 'subscriber'
+      this.subscriberToken.type === 'xsuaa'
         ? this.subscriberToken.serviceJwt
         : this.providerServiceToken;
     logger.debug(
@@ -461,10 +491,14 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     if (!this.subscriberToken) {
       throw new Error('Try to get subscriber token but value is undefined.');
     }
-    return (
-      this.subscriberToken.userJwt?.decoded ||
-      this.subscriberToken.serviceJwt.decoded
-    );
+    switch (this.subscriberToken.type) {
+      case 'custom':
+        return this.subscriberToken.userJwt;
+      case 'iss':
+        return this.subscriberToken.serviceJwt;
+      case 'xsuaa':
+        return this.subscriberToken.userJwt;
+    }
   }
 
   private updateDestinationCache(
@@ -520,7 +554,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async getSubscriberDestinationService(): Promise<
     DestinationSearchResult | undefined
   > {
-    if (!this.subscriberToken) {
+    if (!this.subscriberToken || this.subscriberToken.type === 'custom') {
       throw new Error(
         'Try to get destinations from subscriber account but user JWT was not set.'
       );
@@ -554,16 +588,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
   }
 
-  private isProviderAndSubscriberSameTenant() {
-    return (
-      this.subscriberToken &&
-      isIdenticalTenant(
-        this.subscriberToken.serviceJwt.decoded,
-        this.providerServiceToken.decoded
-      )
-    );
-  }
-
   private isProviderNeeded(
     resultFromSubscriber: DestinationSearchResult | undefined
   ): boolean {
@@ -583,6 +607,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
   private isSubscriberNeeded(): boolean {
     if (!this.subscriberToken) {
+      return false;
+    }
+
+    if (this.subscriberToken.type === 'custom') {
       return false;
     }
 
@@ -618,7 +646,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     if (destination.originalProperties?.TrustStoreLocation) {
       const trustStoreCertificate = await fetchCertificate(
         this.destinationServiceCredentials.uri,
-        origin === 'subscriber'
+        origin === 'subscriber' && this.subscriberToken?.type !== 'custom'
           ? this.subscriberToken!.serviceJwt.encoded
           : this.providerServiceToken.encoded,
         destination.originalProperties.TrustStoreLocation

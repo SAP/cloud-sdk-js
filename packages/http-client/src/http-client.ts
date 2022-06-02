@@ -331,7 +331,7 @@ function logRequestInformation(request: HttpRequestConfig) {
  * The overload, that accepts [[HttpRequestConfigWithOrigin]] as a parameter, is deprecated and replaced the function [[executeHttpRequestWithOrigin]].
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
- * @param options - An [[HttpRequestOptions]] of the http request for configuring e.g., csrf token delegation. By default, the SDK will not fetch the csrf token.
+ * @param options - An [[HttpRequestOptions]] of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will not fetch the CSRF token.
  * @returns A promise resolving to an [[HttpResponse]].
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(

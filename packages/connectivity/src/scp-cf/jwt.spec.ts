@@ -11,7 +11,7 @@ import {
 import {
   audiences,
   decodeJwtComplete,
-  isXSUAAToken,
+  isXsuaaToken,
   retrieveJwt,
   verifyJwt
 } from './jwt';
@@ -51,13 +51,13 @@ describe('jwt', () => {
         )
       );
       mockServiceBindings();
-      expect(isXSUAAToken(jwt)).toBe(true);
+      expect(isXsuaaToken(jwt)).toBe(true);
     });
 
     it('returns false if jku is missing', () => {
       const jwt = decodeJwtComplete(signedJwtForVerification({}, undefined));
       mockServiceBindings();
-      expect(isXSUAAToken(jwt)).toBe(false);
+      expect(isXsuaaToken(jwt)).toBe(false);
     });
 
     it('returns false if jku and uaa are from same domain', () => {
@@ -68,7 +68,7 @@ describe('jwt', () => {
         )
       );
       mockServiceBindings();
-      expect(isXSUAAToken(jwt)).toBe(false);
+      expect(isXsuaaToken(jwt)).toBe(false);
     });
   });
   describe('retrieveJwt', () => {

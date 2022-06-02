@@ -10,7 +10,7 @@ const iat = Math.floor(Date.now() / 1000);
 
 const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
 
-const providerServiceTokenPayload = {
+export const providerServiceTokenPayload = {
   iat,
   iss: providerXsuaaUrl,
   zid: TestTenants.PROVIDER

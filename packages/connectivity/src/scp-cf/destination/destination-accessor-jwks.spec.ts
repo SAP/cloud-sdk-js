@@ -9,6 +9,7 @@ import {
   mockSubaccountDestinationsCall,
   mockVerifyJwt,
   oauthMultipleResponse,
+  providerServiceTokenPayload,
   signedJwtForVerification,
   subscriberServiceTokenPayload,
   subscriberUserPayload
@@ -16,7 +17,10 @@ import {
 import * as jwt from '../jwt';
 import { responseWithPublicKey } from '../jwt.spec';
 import { DestinationFetchOptions } from './destination-accessor-types';
-import { alwaysSubscriber } from './destination-selection-strategies';
+import {
+  alwaysProvider,
+  alwaysSubscriber
+} from './destination-selection-strategies';
 import { getDestination } from './destination-accessor';
 import { DestinationConfiguration } from './destination';
 
@@ -36,8 +40,7 @@ describe('custom jwt via jwks property on destination', () => {
 
   const destFetchOption: DestinationFetchOptions = {
     destinationName: 'FINAL-DESTINATION',
-    iasToXsuaaTokenExchange: false,
-    selectionStrategy: alwaysSubscriber
+    iasToXsuaaTokenExchange: false
   };
 
   function mockOneDestination(
@@ -70,7 +73,11 @@ describe('custom jwt via jwks property on destination', () => {
     mockOneDestination({ ...oauthMultipleResponse[0] }, serviceJwt, userJwt);
 
     const spy = jest.spyOn(jwt, 'verifyJwt');
-    const actual = await getDestination({ ...destFetchOption, jwt: userJwt });
+    const actual = await getDestination({
+      ...destFetchOption,
+      jwt: userJwt,
+      selectionStrategy: alwaysSubscriber
+    });
     expect(spy).toHaveBeenCalledTimes(1);
     expect(actual).toBeDefined();
   });
@@ -78,7 +85,7 @@ describe('custom jwt via jwks property on destination', () => {
   it('does not verify JWT without JKU property', async () => {
     const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
     const serviceJwt = signedJwtForVerification(
-      subscriberServiceTokenPayload,
+      providerServiceTokenPayload,
       jku
     );
 
@@ -89,7 +96,11 @@ describe('custom jwt via jwks property on destination', () => {
     );
 
     const spy = jest.spyOn(jwt, 'verifyJwt');
-    const actual = await getDestination({ ...destFetchOption, jwt: userJwt });
+    const actual = await getDestination({
+      ...destFetchOption,
+      jwt: userJwt,
+      selectionStrategy: alwaysProvider
+    });
     expect(spy).toHaveBeenCalledTimes(0);
     expect(actual).toBeDefined();
   });
@@ -100,7 +111,7 @@ describe('custom jwt via jwks property on destination', () => {
       'http://not-uaa-domain.com'
     );
     const serviceJwt = signedJwtForVerification(
-      subscriberServiceTokenPayload,
+      providerServiceTokenPayload,
       jku
     );
 
@@ -111,7 +122,11 @@ describe('custom jwt via jwks property on destination', () => {
     );
 
     const spy = jest.spyOn(jwt, 'verifyJwt');
-    const actual = await getDestination({ ...destFetchOption, jwt: userJwt });
+    const actual = await getDestination({
+      ...destFetchOption,
+      jwt: userJwt,
+      selectionStrategy: alwaysProvider
+    });
     expect(spy).toHaveBeenCalledTimes(0);
     expect(actual).toBeDefined();
   });
@@ -119,14 +134,18 @@ describe('custom jwt via jwks property on destination', () => {
   it('throws an error if jwks properties are not given for JWT without JKU', async () => {
     const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
     const serviceJwt = signedJwtForVerification(
-      subscriberServiceTokenPayload,
+      providerServiceTokenPayload,
       jku
     );
 
     mockOneDestination(oauthMultipleResponse[0], serviceJwt, userJwt);
 
     await expect(
-      getDestination({ ...destFetchOption, jwt: userJwt })
+      getDestination({
+        ...destFetchOption,
+        jwt: userJwt,
+        selectionStrategy: alwaysProvider
+      })
     ).rejects.toThrowError(
       'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
     );
@@ -135,7 +154,7 @@ describe('custom jwt via jwks property on destination', () => {
   it('resolves if jwks is present', async () => {
     const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
     const serviceJwt = signedJwtForVerification(
-      subscriberServiceTokenPayload,
+      providerServiceTokenPayload, // for custom JWT provider account is used
       jku
     );
 
@@ -145,14 +164,18 @@ describe('custom jwt via jwks property on destination', () => {
       userJwt
     );
 
-    const actual = await getDestination({ ...destFetchOption, jwt: userJwt });
+    const actual = await getDestination({
+      ...destFetchOption,
+      jwt: userJwt,
+      selectionStrategy: alwaysProvider
+    });
     expect(actual).toBeDefined();
   });
 
   it('resolves if jwks_uri is present', async () => {
     const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
     const serviceJwt = signedJwtForVerification(
-      subscriberServiceTokenPayload,
+      providerServiceTokenPayload, // for custom JWT provider account is used
       jku
     );
 
@@ -165,7 +188,11 @@ describe('custom jwt via jwks property on destination', () => {
       userJwt
     );
 
-    const actual = await getDestination({ ...destFetchOption, jwt: userJwt });
+    const actual = await getDestination({
+      ...destFetchOption,
+      jwt: userJwt,
+      selectionStrategy: alwaysProvider
+    });
     expect(actual).toBeDefined();
   });
 });

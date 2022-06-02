@@ -55,7 +55,7 @@ export function retrieveJwt(req: IncomingMessage): string | undefined {
  * @returns True if JWT is issued by XSUAA
  * @internal
  */
-export function isXSUAAToken(decodedUserJwt: JwtWithPayloadObject): boolean {
+export function isXsuaaToken(decodedUserJwt: JwtWithPayloadObject): boolean {
   if (!decodedUserJwt.header.jku) {
     return false;
   }

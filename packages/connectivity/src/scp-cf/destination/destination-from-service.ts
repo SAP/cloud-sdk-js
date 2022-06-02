@@ -4,7 +4,7 @@ import {
   decodeJwt,
   decodeJwtComplete,
   isUserToken,
-  isXSUAAToken,
+  isXsuaaToken,
   JwtPair,
   verifyJwt
 } from '../jwt';
@@ -165,11 +165,11 @@ class DestinationFromServiceRetriever {
       }
       const decoded = decodeJwtComplete(options.jwt);
       // Allow multi tenancy only for XSUAA JWT with issuer property set to tenant. External JWT can not have the tenant information
-      const serviceJwt = isXSUAAToken(decoded)
+      const serviceJwt = isXsuaaToken(decoded)
         ? await serviceToken('destination', options)
         : await serviceToken('destination', { ...options, jwt: undefined });
 
-      if (isXSUAAToken(decoded)) {
+      if (isXsuaaToken(decoded)) {
         await verifyJwt(options.jwt, options);
       }
 
@@ -368,10 +368,11 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     // This covers OAuth to user dependend auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     // Which is the same for: OAuth2UserTokenExchange, OAuth2JWTBearer and OAuth2SAMLBearerAssertion
 
+    const isCustomJwt = !isXsuaaToken(
+      decodeJwtComplete(this.subscriberToken.userJwt.encoded)
+    );
     // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as wll. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
-    if (
-      !isXSUAAToken(decodeJwtComplete(this.subscriberToken.userJwt.encoded))
-    ) {
+    if (isCustomJwt) {
       if (!destination.jwks && !destination.jwksUri) {
         throw new Error(
           'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
@@ -380,7 +381,8 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
 
     // Case 1 Destination in provider and jwt issued for provider account -> not extra x-user-token header needed
-    if (this.isProviderAndSubscriberSameTenant()) {
+    if (this.isProviderAndSubscriberSameTenant() && !isCustomJwt) {
+      // note that for a custom jwt the provider and subscriber service token are the same
       logger.debug(
         `UserExchange flow started without user exchange token for destination ${destinationName} of the provider account.`
       );

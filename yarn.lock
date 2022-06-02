@@ -1413,10 +1413,10 @@
   resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
   integrity sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==
 
-"@types/opossum@^6.2.0":
-  version "6.2.1"
-  resolved "https://registry.npmjs.org/@types/opossum/-/opossum-6.2.1.tgz#6c32da669a0432e29d33aec68c3ccedc1dbc423c"
-  integrity sha512-NAsywS3S9V4zSepfOPNHiw/Pa4xoEscxPis1xCCbmU2I/tokUJ85EPcjFubwtIUsHpMKLZ7i7BU5QHTUYJU2QA==
+"@types/opossum@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.npmjs.org/@types/opossum/-/opossum-6.2.2.tgz#f3526a6c7966dbe28b5722e59513feedb2616c8d"
+  integrity sha512-VYrqkucrT4nbQZpPxk522+HnhAC5f0EEZNMZATCRQeJwchNwx/GqBscZrHCQvNRx7mlhbgMvZ0DG4NE6BgiVAw==
   dependencies:
     "@types/node" "*"
 
@@ -8606,10 +8606,10 @@ typedarray@^0.0.6:
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typedoc@^0.22.16:
-  version "0.22.16"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.22.16.tgz#41e0ff099274ce13c5c3ea49cc5ad615d2f3119e"
-  integrity sha512-0Qf0/CsQe6JZTXoYwBM3Iql8gLAWLjQP7O/j9YzfkJp3G/WVGmIMRajKnldJuA/zVvhr+ifsHTgctQh5g2t4iw==
+typedoc@^0.22.17:
+  version "0.22.17"
+  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.22.17.tgz#bc51cc95f569040112504300831cdac4f8089b7b"
+  integrity sha512-h6+uXHVVCPDaANzjwzdsj9aePBjZiBTpiMpBBeyh1zcN2odVsDCNajz8zyKnixF93HJeGpl34j/70yoEE5BfNg==
   dependencies:
     glob "^8.0.3"
     lunr "^2.3.9"

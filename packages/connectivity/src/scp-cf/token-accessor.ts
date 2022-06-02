@@ -1,4 +1,4 @@
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { JwtPayload } from './jsonwebtoken-type';
 import { decodeJwt } from './jwt';
 import { CachingOptions } from './cache';
@@ -11,6 +11,8 @@ import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
 import { ResilienceOptions } from './resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
+
+const logger = createLogger('token-accessor');
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -115,10 +117,12 @@ function multiTenantXsuaaCredentials(
       typeof options.jwt === 'string' ? decodeJwt(options.jwt) : options.jwt;
 
     if (!decodedJwt.iss) {
-      throw Error('Property `iss` is missing in the provided user token.');
+      logger.debug(
+        'Property `iss` is missing in the provided user token. The XSUAA url from the VCAP_SERVICE is used.'
+      );
+    } else {
+      xsuaa.url = replaceSubdomain(decodedJwt.iss, xsuaa.url);
     }
-
-    xsuaa.url = replaceSubdomain(decodedJwt.iss, xsuaa.url);
   }
 
   return xsuaa;

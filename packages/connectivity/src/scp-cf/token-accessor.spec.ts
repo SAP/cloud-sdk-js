@@ -114,6 +114,22 @@ describe('token accessor', () => {
       expect(actual).toBe(expected);
     });
 
+    it('gets token for non XSUAA jwt using provider tenant', async () => {
+      const expected = signedJwt({ dummy: 'content' });
+
+      mockClientCredentialsGrantCall(
+        providerXsuaaUrl,
+        { access_token: expected },
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+
+      const token = await serviceToken('destination', {
+        jwt: signedJwt({ user: 'MrX' })
+      });
+      expect(token).toBe(expected);
+    });
+
     it('authenticates with certificate', async () => {
       mockServiceBindings({ mockDestinationBindingWithCert: true });
       const expected = signedJwt({ dummy: 'content' });

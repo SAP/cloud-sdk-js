@@ -340,7 +340,7 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
   options?: HttpRequestOptions
 ): Promise<HttpResponse>;
 /**
- * @deprecated This overloading is replaced by the function [[executeHttpRequestWithOrigin]].
+ * @deprecated This overload is replaced by the function [[executeHttpRequestWithOrigin]].
  */
 export function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
   destination: DestinationOrFetchOptions,

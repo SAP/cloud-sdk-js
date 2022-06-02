@@ -326,7 +326,7 @@ function logRequestInformation(request: HttpRequestConfig) {
 }
 
 /**
- * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
+ * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given `requestConfig`
  * and executes it (using Axios).
  * One overloading, that accepts [[HttpRequestConfigWithOrigin]] as a parameter, is deprecated and replaced the function [[executeHttpRequestWithOrigin]].
  * @param destination - A destination or a destination name and a JWT.

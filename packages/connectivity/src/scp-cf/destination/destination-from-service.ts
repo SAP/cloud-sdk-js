@@ -70,7 +70,7 @@ interface IssToken {
 
 interface XsuaaToken {
   type: 'xsuaa';
-  userJwt: JwtPair; // is undefined when iss is passed ad token
+  userJwt: JwtPair;
   serviceJwt: JwtPair;
 }
 
@@ -79,12 +79,6 @@ interface CustomToken {
   userJwt: JwtPair;
   serviceJwt: undefined;
 }
-//
-// const foo:SubscriberTokens = {
-//   type:"custom",
-//   serviceJwt: {} as JwtPair,
-//   userJwt: {} as JwtPair
-// }
 
 const emptyDestinationByType: DestinationsByType = {
   instance: [],
@@ -195,7 +189,7 @@ class DestinationFromServiceRetriever {
         await verifyJwt(options.jwt, options);
         const encoded = await serviceToken('destination', {
           ...options,
-          jwt: undefined
+          jwt: options.jwt
         });
         return {
           type: 'xsuaa',
@@ -426,7 +420,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
     // Case 2 Subscriber and provider account not the same OR custom jwt -> x-user-token  header passed to determine user and tenant in token service URL and service token to get the destination
     const serviceJwt =
-      this.subscriberToken.type === 'xsuaa'
+      this.subscriberToken.type !== 'custom' && origin === 'subscriber'
         ? this.subscriberToken.serviceJwt
         : this.providerServiceToken;
     logger.debug(
@@ -493,11 +487,11 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
     switch (this.subscriberToken.type) {
       case 'custom':
-        return this.subscriberToken.userJwt;
+        return this.subscriberToken.userJwt.decoded;
       case 'iss':
-        return this.subscriberToken.serviceJwt;
+        return this.subscriberToken.serviceJwt.decoded;
       case 'xsuaa':
-        return this.subscriberToken.userJwt;
+        return this.subscriberToken.userJwt.decoded;
     }
   }
 
@@ -610,7 +604,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       return false;
     }
 
-    if (this.subscriberToken.type === 'custom') {
+    if (!this.subscriberToken.serviceJwt) {
       return false;
     }
 

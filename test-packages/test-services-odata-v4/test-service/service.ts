@@ -86,7 +86,8 @@ export function testService<
   DateTimeOffsetT = Moment,
   DateT = Moment,
   DurationT = Duration,
-  TimeOfDayT = Time
+  TimeOfDayT = Time,
+  EnumT = any
 >(
   deSerializers: Partial<
     DeSerializers<
@@ -107,7 +108,8 @@ export function testService<
       DateTimeOffsetT,
       DateT,
       DurationT,
-      TimeOfDayT
+      TimeOfDayT,
+      EnumT
     >
   > = defaultDeSerializers as any
 ): TestService<
@@ -129,7 +131,8 @@ export function testService<
     DateTimeOffsetT,
     DateT,
     DurationT,
-    TimeOfDayT
+    TimeOfDayT,
+    EnumT
   >
 > {
   return new TestService(mergeDefaultDeSerializersWith(deSerializers));

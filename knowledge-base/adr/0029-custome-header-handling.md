@@ -56,45 +56,50 @@ This header should consider as SdkHeader from an origin.
 We have the same problem in both the `HttpRequestConfig` and `DestinationHttpRequestConfig`.
 Both contain a single `header` property typed `Record<string,any>` or `Record<string,string>` which contains two sources of headers.
 
-#### Option A
-Keep the single property but use a `HttpRequestConfigWithOrigin` containing the value but also information on the origin.
-#### Option B
-Add a property `headerSDK` and `headerProperties` to hold different headers.
+- **Option A**: Keep the single property but use a `HeaderValueObject` containing the value but also information on the origin.
+- **Option B**: Add a property `headerSDK` and `headerProperties` to hold different headers.
 
-#### Decision
-Use option A and have two different APIs for external users and SDK (also CAP) developers.
+We would like to keep the SDK internals in option A from the user:
 
 ```ts
-// Parameters and headers use a new type `OriginOptions` that contains the origin information.
-export type HttpRequestConfigWithOrigin = HttpRequestConfigBase & {
-  params?: OriginOptions;
-  headers?: OriginOptions;
-};
-export interface OriginOptions {
-  requestConfig: Record<string, any>;
-  custom?: Record<string, any>;
+interface HeaderValueObject {
+    value:string
+    origin:'Custom'|'DestinationProperty'|'Destination'|'SDK'
 }
 
-// This is the request config type for "normal" users, and it is compatible with the v1 SDK.
-export type HttpRequestConfig = HttpRequestConfigBase & {
-  params?: Record<string, any>;
-  headers?: Record<string, any>;
-};
+//Parameters are handled analogously and are skipped in the methods to be shorted.
+interface ParameterValueObject {
+    value:string
+    origin:'Custom'|'DestinationProperty'|'SDK'
+}
+
+interface ConfigPublic{
+    headers:Record<string,string>
+    parameters:Record<string,string>
+}
 
 /**
- * We (also CAP) use this method so the origin of headers is clear.
  * @internal
  */
-export function executeHttpRequestWithOrigin(config: HttpRequestConfigWithOrigin) {
+interface ConfigInternal{
+    headers:Record<string,HeaderValueObject>
+    parameters:Record<string,ParameterValueObject>
+}
+
+/**
+ * We use this method so the origin of headers is clear. Will be exported but not on root level.
+ * @internal
+ */
+export function executeHttpRequestInternal(config:ConfigInternal){
     ...
 }
 
 /**
  * This method is for direct customer use -> provided headers are custom and have high prio.
  */
-export function executeHttpRequest(config: HttpRequestConfig){
-    const withOrigin = buildHttpRequestConfigWithOrigin(config)
-    executeHttpRequestWithOrigin(withOrigin)
+export function executeHttpRequest(config:ConfigPublic){
+    const withObject = headerObjectWithOriginCustom(config)
+    executeHttpRequestInternal(withObject)
 }
 ```
 
@@ -115,5 +120,4 @@ We investigate the risk of breaking changes:
 
 ## Consequences
 
-- [Direct users] There are no breaking changes, so upgrading to version 2 should be smooth.
-- [SDK/CAP developers] A new "internal" API is created, so headers with different origins can be defined.
+The header and parameter handling is clear and the merging of the headers is done shortly before request execution.

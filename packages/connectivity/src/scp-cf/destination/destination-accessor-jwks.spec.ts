@@ -94,6 +94,28 @@ describe('custom jwt via jwks property on destination', () => {
     expect(actual).toBeDefined();
   });
 
+  it('does not verify JWT if JKU property does not match uaa domain', async () => {
+    const userJwt = signedJwtForVerification(
+      subscriberUserPayload,
+      'http://not-uaa-domain.com'
+    );
+    const serviceJwt = signedJwtForVerification(
+      subscriberServiceTokenPayload,
+      jku
+    );
+
+    mockOneDestination(
+      { ...oauthMultipleResponse[0], 'x_user_token.jwks': 'someDummyValue' },
+      serviceJwt,
+      userJwt
+    );
+
+    const spy = jest.spyOn(jwt, 'verifyJwt');
+    const actual = await getDestination({ ...destFetchOption, jwt: userJwt });
+    expect(spy).toHaveBeenCalledTimes(0);
+    expect(actual).toBeDefined();
+  });
+
   it('throws an error if jwks properties are not given for JWT without JKU', async () => {
     const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
     const serviceJwt = signedJwtForVerification(

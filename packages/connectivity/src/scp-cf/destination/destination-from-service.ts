@@ -1,6 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { JwtHeader } from 'jsonwebtoken';
-import { JwtPayload } from '../jsonwebtoken-type';
+import { JwtPayload, JwtWithPayloadObject } from '../jsonwebtoken-type';
 import {
   decodeJwt,
   decodeJwtComplete,
@@ -12,7 +11,8 @@ import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
   getDestinationService,
-  getDestinationServiceCredentialsList
+  getDestinationServiceCredentialsList,
+  getXsuaaServiceCredentials
 } from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
 import { DestinationServiceCredentials } from '../environment-accessor-types';
@@ -167,14 +167,14 @@ class DestinationFromServiceRetriever {
         ...options
       });
 
-      const { payload, header } = decodeJwtComplete(options.jwt);
-      if (this.hasJku(header)) {
+      const decoded = decodeJwtComplete(options.jwt);
+      if (this.isXSUAAToken(decoded)) {
         await verifyJwt(options.jwt, options);
       }
 
       return {
         userJwt: {
-          decoded: payload,
+          decoded: decoded.payload,
           encoded: options.jwt
         },
         serviceJwt: { encoded, decoded: decodeJwt(encoded) }
@@ -195,8 +195,16 @@ class DestinationFromServiceRetriever {
     }
   }
 
-  private static hasJku(decodedUserJwt: JwtHeader): boolean {
-    return !!decodedUserJwt.jku;
+  private static isXSUAAToken(decodedUserJwt: JwtWithPayloadObject): boolean {
+    if (!decodedUserJwt.header.jku) {
+      return false;
+    }
+    const jkuDomain = new URL(decodedUserJwt.header.jku).hostname;
+    const uaaDomain = getXsuaaServiceCredentials(
+      decodedUserJwt.payload
+    ).uaadomain;
+
+    return jkuDomain.endsWith(uaaDomain);
   }
 
   private static async getProviderServiceToken(
@@ -373,8 +381,8 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
     // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as wll. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
     if (
-      !DestinationFromServiceRetriever.hasJku(
-        decodeJwtComplete(this.subscriberToken.userJwt.encoded).header
+      !DestinationFromServiceRetriever.isXSUAAToken(
+        decodeJwtComplete(this.subscriberToken.userJwt.encoded)
       )
     ) {
       if (!destination.jwks && !destination.jwksUri) {

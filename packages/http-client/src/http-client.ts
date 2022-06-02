@@ -275,12 +275,13 @@ function splitRequestConfig(requestConfig: HttpRequestConfigWithOrigin): {
 
 function logCustomHeadersWarning(customHeaders?: Record<string, string>) {
   if (customHeaders) {
-    logger.warn(
-      `The following custom headers will overwrite headers created by the SDK:\n${Object.keys(
+    logger.debug(
+      `The following custom headers will overwrite headers created by the SDK, if they use the same key:\n${Object.keys(
         customHeaders
       )
         .map(key => `  - "${key}"`)
-        .join('\n')}`
+        .join('\n')}
+If the parameters from multiple origins use the same key, the priority is 1. Custom, 2. Destination, 3. Internal.`
     );
   }
 }

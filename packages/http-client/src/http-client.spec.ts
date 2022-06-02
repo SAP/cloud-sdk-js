@@ -303,15 +303,17 @@ sap-client:001`);
         package: 'http-client',
         messageContext: 'http-client'
       });
-      const warnSpy = jest.spyOn(logger, 'warn');
+      const debugSpy = jest.spyOn(logger, 'debug');
 
       await executeHttpRequest(httpsDestination, config);
 
-      expect(warnSpy).toBeCalledWith(
-        `The following custom headers will overwrite headers created by the SDK:
+      expect(debugSpy).nthCalledWith(
+        1,
+        `The following custom headers will overwrite headers created by the SDK, if they use the same key:
   - "authorization"
   - "sap-client"
-  - "SAP-Connectivity-SCC-Location_ID"`
+  - "SAP-Connectivity-SCC-Location_ID"
+If the parameters from multiple origins use the same key, the priority is 1. Custom, 2. Destination, 3. Internal.`
       );
     });
 

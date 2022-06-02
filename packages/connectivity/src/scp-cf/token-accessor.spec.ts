@@ -1,4 +1,5 @@
 import nock from 'nock';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   destinationBindingClientSecretMock,
   destinationBindingCertMock,
@@ -323,13 +324,21 @@ describe('token accessor', () => {
       );
     });
 
-    it('throws an error if the issuer is missing in the JWT', async () => {
+    it('logs if the issuer is missing in the JWT', async () => {
       const jwt = signedJwt({ NOiss: 'https://testeroni.example.com' });
 
-      await expect(
-        serviceToken('destination', { jwt })
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Property `iss` is missing in the provided user token."'
+      mockClientCredentialsGrantCall(
+        providerXsuaaUrl,
+        { access_token: '' },
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+
+      const logger = createLogger('token-accessor');
+      const loggerSpy = jest.spyOn(logger, 'debug');
+      await expect(serviceToken('destination', { jwt }));
+      expect(loggerSpy).toHaveBeenCalledWith(
+        'Property `iss` is missing in the provided user token. The XSUAA url from the VCAP_SERVICE is used.'
       );
     });
   });

@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache } from '../cache';
+import { Cache, CacheInterface } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { JwtPayload } from '../jsonwebtoken-type';
@@ -10,6 +10,8 @@ const logger = createLogger({
   package: 'connectivity',
   messageContext: 'destination-cache'
 });
+
+const _destinationcache: CacheInterface<Destination> = new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 });
 
 /**
  * Enumerator that selects the isolation type of destination in cache.
@@ -23,7 +25,7 @@ export enum IsolationStrategy {
 /**
  * @internal
  */
-export interface DestinationCacheType {
+export interface DestinationCacheType<T extends CacheInterface<Destination>> {
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,
@@ -40,7 +42,7 @@ export interface DestinationCacheType {
     isolation: IsolationStrategy
   ) => void;
   clear: () => void;
-  getCacheInstance: () => Cache<Destination>;
+  getCacheInstance: () => T;
 }
 
 /**
@@ -49,9 +51,9 @@ export interface DestinationCacheType {
  * @returns A destination cache object.
  * @internal
  */
-export const DestinationCache = (
-  cache: Cache<Destination>
-): DestinationCacheType => ({
+export const DestinationCache = <T extends CacheInterface<Destination>>(
+  cache: T
+): DestinationCacheType<T> => ({
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,
@@ -125,11 +127,11 @@ export function getDestinationCacheKey(
   }
 }
 
-function cacheRetrievedDestination(
+function cacheRetrievedDestination<T extends CacheInterface<Destination>>(
   decodedJwt: Record<string, any>,
   destination: Destination,
   isolation: IsolationStrategy,
-  cache: Cache<Destination>
+  cache: T
 ): void {
   if (!destination.name) {
     throw new Error('The destination name is undefined.');
@@ -140,16 +142,20 @@ function cacheRetrievedDestination(
   const expirationTime = expiresIn
     ? Date.now() + parseInt(expiresIn) * 1000
     : undefined;
-  cache.set(key, destination, expirationTime);
+  cache.set(key, { entry: destination, expires: expirationTime });
 }
 
 /**
  * @internal
  */
-export const destinationCache = DestinationCache(
-  new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 })
-);
+export function setDestinationCache<T extends CacheInterface<Destination>>(cache: T): void {
+  destinationCache = DestinationCache(cache);
+}
 
+/**
+ * @internal
+ */
+  export let destinationCache = DestinationCache(_destinationcache);
 /**
  * Determin the default Isolation strategy if not given as option.
  * @param jwt - JWT to determine the default isolation strategy

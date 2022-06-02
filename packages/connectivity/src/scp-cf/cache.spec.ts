@@ -40,14 +40,14 @@ describe('Cache', () => {
   });
 
   it('item should be retrieved correctly', () => {
-    cacheOne.set('one', destinationOne);
+    cacheOne.set('one', { entry: destinationOne });
     const actual = cacheOne.get('one');
     expect(actual).toEqual(destinationOne);
   });
 
   it('retrieving expired item should return undefined', () => {
     jest.useFakeTimers('modern');
-    cacheOne.set('one', destinationOne);
+    cacheOne.set('one', { entry: destinationOne });
 
     const minutesToExpire = 6;
     // Shift time to expire the set item
@@ -56,7 +56,7 @@ describe('Cache', () => {
   });
 
   it('clear() should remove all entries in cache', () => {
-    cacheOne.set('one', destinationOne);
+    cacheOne.set('one', { entry: destinationOne });
     cacheOne.clear();
     expect(cacheOne.hasKey('one')).toBeFalsy();
   });
@@ -69,7 +69,7 @@ describe('Cache', () => {
       jti: '',
       scope: ''
     };
-    cacheTwo.set('someToken', dummyToken);
+    cacheTwo.set('someToken', { entry: dummyToken });
     expect(cacheTwo.get('someToken')).toEqual(dummyToken);
   });
 
@@ -81,14 +81,14 @@ describe('Cache', () => {
       jti: '',
       scope: ''
     };
-    cacheTwo.set('expiredToken', dummyToken, 10);
-    cacheTwo.set('validToken', dummyToken, Date.now() + 5000);
+    cacheTwo.set('expiredToken', { entry: dummyToken, expires: 10 });
+    cacheTwo.set('validToken', { entry: dummyToken, expires: Date.now() + 5000 });
     expect(cacheTwo.get('expiredToken')).toBeUndefined();
     expect(cacheTwo.get('validToken')).toBe(dummyToken);
   });
 
   it('should not hit cache for undefined key', () => {
-    cacheOne.set(undefined, {} as Destination);
+    cacheOne.set(undefined, { entry: {} as Destination });
     const actual = cacheOne.get(undefined);
     expect(actual).toBeUndefined();
   });

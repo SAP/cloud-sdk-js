@@ -20,8 +20,7 @@ const ClientCredentialsTokenCache = (
   ): void => {
     cache.set(
       getCacheKey(url, clientId),
-      token,
-      token.expires_in ? Date.now() + token.expires_in * 1000 : undefined
+      { entry: token, expires: token.expires_in ? Date.now() + token.expires_in * 1000 : undefined }
     );
   },
   clear: (): void => {

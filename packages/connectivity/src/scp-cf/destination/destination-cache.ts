@@ -146,7 +146,8 @@ function cacheRetrievedDestination<T extends CacheInterface<Destination>>(
 }
 
 /**
- * @internal
+ * Set the custom cache instance.
+ * @param cache - Cache instance.
  */
 export function setDestinationCache<T extends CacheInterface<Destination>>(cache: T): void {
   destinationCache = DestinationCache(cache);

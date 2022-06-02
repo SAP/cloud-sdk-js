@@ -1,5 +1,4 @@
 import nock from 'nock';
-import { createLogger } from '@sap-cloud-sdk/util';
 import {
   destinationBindingClientSecretMock,
   destinationBindingCertMock,
@@ -113,22 +112,6 @@ describe('token accessor', () => {
 
       const actual = await serviceToken('destination', { jwt });
       expect(actual).toBe(expected);
-    });
-
-    it('gets token for non XSUAA jwt using provider tenant', async () => {
-      const expected = signedJwt({ dummy: 'content' });
-
-      mockClientCredentialsGrantCall(
-        providerXsuaaUrl,
-        { access_token: expected },
-        200,
-        destinationBindingClientSecretMock.credentials
-      );
-
-      const token = await serviceToken('destination', {
-        jwt: signedJwt({ user: 'MrX' })
-      });
-      expect(token).toBe(expected);
     });
 
     it('authenticates with certificate', async () => {
@@ -324,21 +307,13 @@ describe('token accessor', () => {
       );
     });
 
-    it('logs if the issuer is missing in the JWT', async () => {
+    it('throws an error if the issuer is missing in the JWT', async () => {
       const jwt = signedJwt({ NOiss: 'https://testeroni.example.com' });
 
-      mockClientCredentialsGrantCall(
-        providerXsuaaUrl,
-        { access_token: '' },
-        200,
-        destinationBindingClientSecretMock.credentials
-      );
-
-      const logger = createLogger('token-accessor');
-      const loggerSpy = jest.spyOn(logger, 'debug');
-      await expect(serviceToken('destination', { jwt }));
-      expect(loggerSpy).toHaveBeenCalledWith(
-        'Property `iss` is missing in the provided user token. The XSUAA url from the VCAP_SERVICE is used.'
+      await expect(
+        serviceToken('destination', { jwt })
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Property `iss` is missing in the provided user token."'
       );
     });
   });

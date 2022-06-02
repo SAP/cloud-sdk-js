@@ -1,9 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { JwtPayload, JwtWithPayloadObject } from '../jsonwebtoken-type';
+import { JwtPayload } from '../jsonwebtoken-type';
 import {
   decodeJwt,
   decodeJwtComplete,
   isUserToken,
+  isXSUAAToken,
   JwtPair,
   verifyJwt
 } from '../jwt';
@@ -11,8 +12,7 @@ import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
   getDestinationService,
-  getDestinationServiceCredentialsList,
-  getXsuaaServiceCredentials
+  getDestinationServiceCredentialsList
 } from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
 import { DestinationServiceCredentials } from '../environment-accessor-types';
@@ -163,12 +163,13 @@ class DestinationFromServiceRetriever {
           'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
         );
       }
-      const encoded = await serviceToken('destination', {
-        ...options
-      });
-
       const decoded = decodeJwtComplete(options.jwt);
-      if (this.isXSUAAToken(decoded)) {
+      // Allow multi tenancy only for XSUAA JWT with issuer property set to tenant. External JWT can not have the tenant information
+      const serviceJwt = isXSUAAToken(decoded)
+        ? await serviceToken('destination', options)
+        : await serviceToken('destination', { ...options, jwt: undefined });
+
+      if (isXSUAAToken(decoded)) {
         await verifyJwt(options.jwt, options);
       }
 
@@ -177,7 +178,7 @@ class DestinationFromServiceRetriever {
           decoded: decoded.payload,
           encoded: options.jwt
         },
-        serviceJwt: { encoded, decoded: decodeJwt(encoded) }
+        serviceJwt: { encoded: serviceJwt, decoded: decodeJwt(serviceJwt) }
       };
     }
 
@@ -193,18 +194,6 @@ class DestinationFromServiceRetriever {
       const clientCertJwt = { encoded, decoded: decodeJwt(encoded) };
       return { serviceJwt: clientCertJwt };
     }
-  }
-
-  private static isXSUAAToken(decodedUserJwt: JwtWithPayloadObject): boolean {
-    if (!decodedUserJwt.header.jku) {
-      return false;
-    }
-    const jkuDomain = new URL(decodedUserJwt.header.jku).hostname;
-    const uaaDomain = getXsuaaServiceCredentials(
-      decodedUserJwt.payload
-    ).uaadomain;
-
-    return jkuDomain.endsWith(uaaDomain);
   }
 
   private static async getProviderServiceToken(
@@ -381,9 +370,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
     // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as wll. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
     if (
-      !DestinationFromServiceRetriever.isXSUAAToken(
-        decodeJwtComplete(this.subscriberToken.userJwt.encoded)
-      )
+      !isXSUAAToken(decodeJwtComplete(this.subscriberToken.userJwt.encoded))
     ) {
       if (!destination.jwks && !destination.jwksUri) {
         throw new Error(

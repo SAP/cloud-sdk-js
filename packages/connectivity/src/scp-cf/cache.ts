@@ -14,7 +14,7 @@ export interface CacheInterface<T> {
  * Interface to implement custom caching.
  */
 export interface DestinationInterface extends CacheInterface<Destination> {
-  set(key:  string | undefined, item: CacheEntry<Destination>): void;
+  set(key: string | undefined, item: CacheEntry<Destination>): void;
 }
 
 /**
@@ -101,7 +101,8 @@ export class Cache<T> implements CacheInterface<T> {
    */
   set(key: string | undefined, item: CacheEntry<T>): void {
     if (key) {
-      const expires = item.expires ?? inferExpirationTime(this.defaultValidityTime);
+      const expires =
+        item.expires ?? inferExpirationTime(this.defaultValidityTime);
       this.cache[key] = { entry: item.entry, expires };
     }
   }

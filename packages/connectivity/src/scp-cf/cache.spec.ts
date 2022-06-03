@@ -82,7 +82,10 @@ describe('Cache', () => {
       scope: ''
     };
     cacheTwo.set('expiredToken', { entry: dummyToken, expires: 10 });
-    cacheTwo.set('validToken', { entry: dummyToken, expires: Date.now() + 5000 });
+    cacheTwo.set('validToken', {
+      entry: dummyToken,
+      expires: Date.now() + 5000
+    });
     expect(cacheTwo.get('expiredToken')).toBeUndefined();
     expect(cacheTwo.get('validToken')).toBe(dummyToken);
   });

@@ -16,7 +16,11 @@ export class TestCache implements DestinationInterface {
   constructor(validityTime?: number) {
     this.cache = {};
     const currentDate = new Date();
-    this.defaultValidityTime = validityTime ? currentDate.setMilliseconds(currentDate.getMilliseconds() + validityTime * 1000).valueOf() : undefined;
+    this.defaultValidityTime = validityTime
+      ? currentDate
+          .setMilliseconds(currentDate.getMilliseconds() + validityTime * 1000)
+          .valueOf()
+      : undefined;
   }
 
   clear(): void {

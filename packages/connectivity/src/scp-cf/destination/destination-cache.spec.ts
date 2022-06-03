@@ -340,10 +340,9 @@ describe('destination cache', () => {
     it('uses cache with isolation strategy Tenant and iss ', async () => {
       destinationCache
         .getCacheInstance()
-        .set(
-          `${TestTenants.SUBSCRIBER_ONLY_ISS}::${destinationOne.name}`,
-          { entry: destinationOne }
-        );
+        .set(`${TestTenants.SUBSCRIBER_ONLY_ISS}::${destinationOne.name}`, {
+          entry: destinationOne
+        });
 
       const actual = await getDestination({
         destinationName: destName,

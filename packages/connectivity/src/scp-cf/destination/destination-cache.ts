@@ -11,7 +11,11 @@ const logger = createLogger({
   messageContext: 'destination-cache'
 });
 
-const _destinationcache: CacheInterface<Destination> = new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 });
+const _destinationcache: CacheInterface<Destination> = new Cache<Destination>({
+  hours: 0,
+  minutes: 5,
+  seconds: 0
+});
 
 /**
  * Enumerator that selects the isolation type of destination in cache.
@@ -149,14 +153,16 @@ function cacheRetrievedDestination<T extends CacheInterface<Destination>>(
  * Set the custom cache instance.
  * @param cache - Cache instance.
  */
-export function setDestinationCache<T extends CacheInterface<Destination>>(cache: T): void {
+export function setDestinationCache<T extends CacheInterface<Destination>>(
+  cache: T
+): void {
   destinationCache = DestinationCache(cache);
 }
 
 /**
  * @internal
  */
-  export let destinationCache = DestinationCache(_destinationcache);
+export let destinationCache = DestinationCache(_destinationcache);
 /**
  * Determin the default Isolation strategy if not given as option.
  * @param jwt - JWT to determine the default isolation strategy

@@ -47,6 +47,6 @@
   "devDependencies": {
     "jest-extended": "^2.0.0",
     "mock-fs": "^5.0.0",
-    "nock": "^13.0.11"
+    "nock": "^13.2.6"
   }
 }

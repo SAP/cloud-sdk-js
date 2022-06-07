@@ -28,7 +28,7 @@ const bigNumberProperty = {
 const stringProperty = {
   jsType: 'string',
   edmType: 'Edm.String',
-  fieldType: 'EdmTypeField'
+  fieldType: 'OrderableEdmTypeField'
 } as VdmProperty;
 
 const numberProperty = {
@@ -113,7 +113,7 @@ describe('imports', () => {
           momentProperty,
           timeProperty
         ])
-      ).toEqual(['EdmTypeField', 'OrderableEdmTypeField']);
+      ).toEqual(['OrderableEdmTypeField']);
     });
 
     it('contains unique one-to-many link import', () => {

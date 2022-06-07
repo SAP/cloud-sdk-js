@@ -79,7 +79,7 @@ describe('custom jwt via jwks property on destination', () => {
       selectionStrategy: alwaysSubscriber
     });
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(actual).toBeDefined();
+    expect(actual).not.toBeNull();
   });
 
   it('does not verify JWT without JKU property', async () => {
@@ -102,7 +102,7 @@ describe('custom jwt via jwks property on destination', () => {
       selectionStrategy: alwaysProvider
     });
     expect(spy).toHaveBeenCalledTimes(0);
-    expect(actual).toBeDefined();
+    expect(actual).not.toBeNull();
   });
 
   it('does not verify JWT if JKU property does not match uaa domain', async () => {
@@ -128,7 +128,7 @@ describe('custom jwt via jwks property on destination', () => {
       selectionStrategy: alwaysProvider
     });
     expect(spy).toHaveBeenCalledTimes(0);
-    expect(actual).toBeDefined();
+    expect(actual).not.toBeNull();
   });
 
   it('throws an error if jwks properties are not given for JWT without JKU', async () => {
@@ -169,7 +169,7 @@ describe('custom jwt via jwks property on destination', () => {
       jwt: userJwt,
       selectionStrategy: alwaysProvider
     });
-    expect(actual).toBeDefined();
+    expect(actual).not.toBeNull();
   });
 
   it('resolves if jwks_uri is present', async () => {
@@ -193,6 +193,6 @@ describe('custom jwt via jwks property on destination', () => {
       jwt: userJwt,
       selectionStrategy: alwaysProvider
     });
-    expect(actual).toBeDefined();
+    expect(actual).not.toBeNull();
   });
 });

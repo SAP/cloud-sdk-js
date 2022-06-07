@@ -37,7 +37,8 @@ export {
   buildHeadersForDestination,
   getClientCredentialsToken,
   getUserToken,
-  registerDestination
+  registerDestination,
+  setDestinationCache
 } from './scp-cf';
 
 export type {

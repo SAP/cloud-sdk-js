@@ -144,7 +144,7 @@ function cacheRetrievedDestination<T extends DestinationInterface>(
 }
 
 /**
- * Set the custom cache instance.
+ * Set the destination cache instance.
  * @param cache - Cache instance.
  */
 export function setDestinationCache<T extends DestinationInterface>(

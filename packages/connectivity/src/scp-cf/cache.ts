@@ -1,9 +1,6 @@
 import { Destination } from './destination';
 
-/**
- * @internal
- */
-export interface CacheInterface<T> {
+interface CacheInterface<T> {
   hasKey(key: string): boolean;
   get(key: string | undefined): T | undefined;
   set(key: string | undefined, item: CacheEntry<T>): void;
@@ -11,7 +8,7 @@ export interface CacheInterface<T> {
 }
 
 /**
- * Interface to implement custom caching.
+ * Interface to implement custom destination caching.
  */
 export interface DestinationInterface extends CacheInterface<Destination> {
   set(key: string | undefined, item: CacheEntry<Destination>): void;
@@ -28,7 +25,7 @@ export interface DateInputObject {
 }
 
 /**
- * @internal
+ * Respresentation of a cached object.
  */
 export interface CacheEntry<T> {
   expires?: number;
@@ -108,10 +105,7 @@ export class Cache<T> implements CacheInterface<T> {
   }
 }
 
-/**
- * @internal
- */
-export function isExpired<T>(item: CacheEntry<T>): boolean {
+function isExpired<T>(item: CacheEntry<T>): boolean {
   if (item.expires === undefined) {
     return false;
   }

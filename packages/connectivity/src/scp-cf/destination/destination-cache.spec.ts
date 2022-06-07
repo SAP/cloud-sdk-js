@@ -34,7 +34,7 @@ import {
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { signedJwt } from '../../../../../test-resources/test/test-util';
-import { TestCache } from '../test-cache';
+import { TestCache } from '../../../../../test-resources/test/test-util/test-cache';
 import { destinationServiceCache } from './destination-service-cache';
 import { getDestination } from './destination-accessor';
 import {
@@ -68,12 +68,6 @@ const destinationOne: Destination = {
   originalProperties: {},
   isTrustingAllCertificates: false
 };
-
-// Cache with expiration time
-const testCacheOne = new TestCache(30);
-
-// Setting the destinationCache with custom class instance
-setDestinationCache(testCacheOne);
 
 function getSubscriberCache(
   isolationStrategy: IsolationStrategy,
@@ -810,6 +804,41 @@ describe('destination cache', () => {
       const minutesToExpire = 2;
       jest.advanceTimersByTime(60000 * minutesToExpire);
 
+      expect(retrieveDestination()).toBeUndefined();
+    });
+  });
+
+  describe('custom destination cache', () => {
+    // Cache with expiration time
+    const testCacheOne = new TestCache();
+    // Setting the destinationCache with custom class instance
+    it('custom cache overrides the default implementation', () => {
+      setDestinationCache(testCacheOne);
+
+      const setSpy = jest.spyOn(testCacheOne, 'set');
+      const getSpy = jest.spyOn(testCacheOne, 'get');
+      const clearSpy = jest.spyOn(testCacheOne, 'clear');
+
+      destinationCache.cacheRetrievedDestination(
+        { user_id: 'user', zid: 'tenant' },
+        destinationOne,
+        IsolationStrategy.Tenant_User
+      );
+
+      expect(setSpy).toHaveBeenCalled();
+
+      const retrieveDestination = () =>
+        destinationCache.retrieveDestinationFromCache(
+          { user_id: 'user', zid: 'tenant' },
+          'destToCache1',
+          IsolationStrategy.Tenant_User
+        );
+
+      expect(retrieveDestination()).toEqual(destinationOne);
+      expect(getSpy).toHaveBeenCalled();
+
+      destinationCache.clear();
+      expect(clearSpy).toHaveBeenCalled();
       expect(retrieveDestination()).toBeUndefined();
     });
   });

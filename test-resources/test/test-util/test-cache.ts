@@ -1,9 +1,7 @@
-import { DestinationInterface, CacheEntry, isExpired } from './cache';
-import { Destination } from './destination';
+import { Destination, DestinationInterface, CacheEntry } from '@sap-cloud-sdk/connectivity';
 
 /**
  * Representation of a custom cache.
- * @internal
  */
 export class TestCache implements DestinationInterface {
   /**
@@ -42,7 +40,7 @@ export class TestCache implements DestinationInterface {
    * @returns The corresponding entry to the provided key if it is still valid, returns `undefined` otherwise.
    */
   get(key: string | undefined): Destination | undefined {
-    return key && this.hasKey(key) && !isExpired(this.cache[key])
+    return key && this.hasKey(key) && !(this.cache[key].expires ? false : this.cache[key].expires < Date.now())
       ? this.cache[key].entry
       : undefined;
   }

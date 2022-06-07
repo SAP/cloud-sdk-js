@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache, CacheInterface } from '../cache';
+import { Cache, DestinationInterface } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { JwtPayload } from '../jsonwebtoken-type';
@@ -9,12 +9,6 @@ import { DestinationsByType } from './destination-accessor-types';
 const logger = createLogger({
   package: 'connectivity',
   messageContext: 'destination-cache'
-});
-
-const _destinationcache: CacheInterface<Destination> = new Cache<Destination>({
-  hours: 0,
-  minutes: 5,
-  seconds: 0
 });
 
 /**
@@ -29,7 +23,7 @@ export enum IsolationStrategy {
 /**
  * @internal
  */
-export interface DestinationCacheType<T extends CacheInterface<Destination>> {
+export interface DestinationCacheType<T extends DestinationInterface> {
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,
@@ -55,8 +49,8 @@ export interface DestinationCacheType<T extends CacheInterface<Destination>> {
  * @returns A destination cache object.
  * @internal
  */
-export const DestinationCache = <T extends CacheInterface<Destination>>(
-  cache: T
+export const DestinationCache = <T extends DestinationInterface>(
+  cache: T = new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 }) as any
 ): DestinationCacheType<T> => ({
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
@@ -131,7 +125,7 @@ export function getDestinationCacheKey(
   }
 }
 
-function cacheRetrievedDestination<T extends CacheInterface<Destination>>(
+function cacheRetrievedDestination<T extends DestinationInterface>(
   decodedJwt: Record<string, any>,
   destination: Destination,
   isolation: IsolationStrategy,
@@ -153,7 +147,7 @@ function cacheRetrievedDestination<T extends CacheInterface<Destination>>(
  * Set the custom cache instance.
  * @param cache - Cache instance.
  */
-export function setDestinationCache<T extends CacheInterface<Destination>>(
+export function setDestinationCache<T extends DestinationInterface>(
   cache: T
 ): void {
   destinationCache = DestinationCache(cache);
@@ -162,7 +156,7 @@ export function setDestinationCache<T extends CacheInterface<Destination>>(
 /**
  * @internal
  */
-export let destinationCache = DestinationCache(_destinationcache);
+export let destinationCache = DestinationCache();
 /**
  * Determin the default Isolation strategy if not given as option.
  * @param jwt - JWT to determine the default isolation strategy

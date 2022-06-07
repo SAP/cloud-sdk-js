@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 
 async function getVersionsDownloads(page, packageName) {
   await page.goto(`https://www.npmjs.com/package/${packageName}`);
+  // window as a global variable is not recognized by TypeScript, therefore ignore checks for this line
   // @ts-ignore
   return page.evaluate(() => window.__context__.context.versionsDownloads);
 }

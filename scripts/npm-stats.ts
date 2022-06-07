@@ -1,25 +1,15 @@
-import axios from 'axios';
-import { JSDOM, HTMLLIElement } from 'jsdom';
+import puppeteer from 'puppeteer';
 
-async function getStatsForPackage(packageName) {
-  const { data } = await axios.get(
-    `https://www.npmjs.com/package/${packageName}?activeTab=versions`
-  );
+async function getVersionsDownloads(page, packageName) {
+  await page.goto(`https://www.npmjs.com/package/${packageName}`);
+  // @ts-ignore
+  return page.evaluate(() => window.__context__.context.versionsDownloads);
+}
 
-  const dom = new JSDOM(data);
-
-  const ul = dom.window.document.querySelector(
-    '#tabpanel-versions > * > ul:last-child'
-  );
-
-  return Array.from(ul.children)
-    .slice(1)
-    .map((line: HTMLLIElement) => ({
-      version: line.children[0].textContent,
-      downloads: parseInt(line.children[2].textContent.replace(/,/g, ''))
-    }))
-    .filter(({ version }) => !version.includes('-'))
-    .reduce((majorVersions, { version, downloads }) => {
+async function aggregateStats(versionsDownloads) {
+  return Object.entries(versionsDownloads)
+    .filter(([version]) => !version.includes('-'))
+    .reduce((majorVersions, [version, downloads]) => {
       const [majorVersion] = version.split('.');
       return {
         ...majorVersions,
@@ -28,19 +18,28 @@ async function getStatsForPackage(packageName) {
     }, {});
 }
 
-async function getAllStats() {
+async function getStatsForPackage(page, packageName) {
+  const versionsDownloads = await getVersionsDownloads(page, packageName);
+  return aggregateStats(versionsDownloads);
+}
+
+async function getAllStats(page) {
   return ['@sap-cloud-sdk/util', '@sap/cds'].reduce(
     async (stats, packageName) => ({
       ...(await stats),
-      [packageName]: await getStatsForPackage(packageName)
+      [packageName]: await getStatsForPackage(page, packageName)
     }),
     {}
   );
 }
 
 async function main() {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
   // eslint-disable-next-line no-console
-  console.log(await getAllStats());
+  console.log(await getAllStats(page));
+
+  await browser.close();
 }
 
 main();

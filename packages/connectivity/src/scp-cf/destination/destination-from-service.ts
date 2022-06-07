@@ -3,6 +3,7 @@ import { JwtPayload } from '../jsonwebtoken-type';
 import {
   decodeJwt,
   decodeJwtComplete,
+  getJwtPair,
   isXsuaaToken,
   JwtPair,
   verifyJwt
@@ -179,27 +180,21 @@ class DestinationFromServiceRetriever {
         );
       }
 
-      const decoded = decodeJwtComplete(options.jwt);
-      const userJwt = {
-        decoded: decoded.payload,
-        encoded: options.jwt
-      };
-
-      if (isXsuaaToken(decoded)) {
+      if (isXsuaaToken(decodeJwtComplete(options.jwt))) {
         await verifyJwt(options.jwt, options);
-        const encoded = await serviceToken('destination', {
+        const serviceJwtEncoded = await serviceToken('destination', {
           ...options,
           jwt: options.jwt
         });
         return {
           type: 'xsuaa',
-          userJwt,
-          serviceJwt: { encoded, decoded: decodeJwt(encoded) }
+          userJwt: getJwtPair(options.jwt),
+          serviceJwt: getJwtPair(serviceJwtEncoded)
         };
       }
       return {
         type: 'custom',
-        userJwt,
+        userJwt: getJwtPair(options.jwt),
         serviceJwt: undefined
       };
     }
@@ -208,13 +203,15 @@ class DestinationFromServiceRetriever {
       logger.debug(
         'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
       );
-      const payload = { iss: options.iss };
-      const encoded = await serviceToken('destination', {
+      const serviceJwtEncoded = await serviceToken('destination', {
         ...options,
-        jwt: payload
+        jwt: { iss: options.iss }
       });
-      const clientCertJwt = { encoded, decoded: decodeJwt(encoded) };
-      return { serviceJwt: clientCertJwt, type: 'iss', userJwt: undefined };
+      return {
+        serviceJwt: getJwtPair(serviceJwtEncoded),
+        type: 'iss',
+        userJwt: undefined
+      };
     }
   }
 
@@ -480,7 +477,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
   }
 
-  // For iss token the userJwt may be undefined.
   private selectSubscriberJwt(): JwtPayload {
     if (!this.subscriberToken) {
       throw new Error('Try to get subscriber token but value is undefined.');

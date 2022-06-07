@@ -281,6 +281,14 @@ export interface JwtPair {
 }
 
 /**
+ * Build JwtPair from a encoded JWT.
+ * @internal
+ */
+export function getJwtPair(encodedJwt: string): JwtPair {
+  return { encoded: encodedJwt, decoded: decodeJwt(encodedJwt) };
+}
+
+/**
  * The user JWT can be a full JWT containing user information but also a reduced one setting only the iss value
  * This method divides the two cases.
  * @param token - Token to be investigated

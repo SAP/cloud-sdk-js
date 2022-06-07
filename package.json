@@ -68,8 +68,7 @@
     "temporal-de-serializers": "yarn workspace @sap-cloud-sdk/temporal-de-serializers",
     "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
     "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
-    "type-tests": "yarn workspace @sap-cloud-sdk/type-tests",
-    "deprecate-npm-packages": "ts-node scripts/deprecate-npm-package.ts"
+    "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
     "@changesets/cli": "^2.22.0",

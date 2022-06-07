@@ -43,7 +43,7 @@ const deprecateOptions: DeprecateOptions = {
    * The group is crucial for picking the stable version prefix, which cannot be removed.
    * Check the doc of the `deprecateOptions` object for more details.
    */
-  versionsToBeDeprecated: /(1\.\d+\.\d+).*/,
+  versionsToBeDeprecated: /^(1\.\d+\.\d+)/,
   /**
    * When setting to `false`, it only shows the npm command for review.
    * When setting to `true`, it will EXECUTE the npm deprecate command.
@@ -59,7 +59,7 @@ const deprecateOptions: DeprecateOptions = {
  * [check whether a package/version is deprecated] - npm view @sap-cloud-sdk/openapi-generator@"< 1.54.2"
  * [check all existing versions of a package] - `npm view @sap-cloud-sdk/util versions`
  */
-async function deprecateNmpPackage(){
+async function deprecateNpmPackage(){
   const responses = await Promise.all(deprecateOptions.packageNamesToBeDeprecated.map(
     async packageName => {
       const resVersions = await execa('npm', ['view', packageName, 'versions']);
@@ -93,4 +93,4 @@ async function deprecateNmpPackage(){
   ));
 }
 
-deprecateNmpPackage()
+deprecateNpmPackage()

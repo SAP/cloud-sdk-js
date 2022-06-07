@@ -42,7 +42,7 @@ export function responseWithPublicKey(key = publicKey) {
 }
 
 describe('jwt', () => {
-  describe('isXsuss', () => {
+  describe('isXsuaa', () => {
     it('returns true if jku and uaa are from same domain', () => {
       const jwt = decodeJwtComplete(
         signedJwtForVerification(

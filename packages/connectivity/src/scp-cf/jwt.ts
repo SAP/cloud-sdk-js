@@ -50,7 +50,7 @@ export function retrieveJwt(req: IncomingMessage): string | undefined {
 }
 
 /**
- * Checks if the given JWT is from the XSUAA or from a alternative issuer based on the iss property and the uua domain of the XSUAA.
+ * Checks if the given JWT is from the XSUAA or from an alternative issuer based on the iss property and the uaa domain of the XSUAA.
  * @param decodedUserJwt - JWT to be checked.
  * @returns True if JWT is issued by XSUAA
  * @internal

@@ -13,8 +13,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
+      fail-fast: false
       matrix:
-        fail-fast: false
         os: [ubuntu-latest]
         node-version: [12, 14, 16, 18]
     steps:

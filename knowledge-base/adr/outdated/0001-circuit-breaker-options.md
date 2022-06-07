@@ -1,5 +1,8 @@
 # Circuit Breaker Options
 
+
+status: **superseded** [we will add resilience via middleware approac](../0031-resilience-options.md)
+
 _Date_: 2019-07-29
 
 ## Context: What Triggered this Discussion?

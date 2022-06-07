@@ -1,3 +1,5 @@
+status **superseded** The turborepo takes care of recompilation and the content is not really a ADR.
+
 # Test Strategy
 
 ## General

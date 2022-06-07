@@ -5,8 +5,6 @@
  */
 import { TestEntitySingleLink } from './TestEntitySingleLink';
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';
-import { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
 import {
   CustomField,
   defaultDeSerializers,
@@ -17,9 +15,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  OrderableEdmTypeField,
-  OneToManyLink,
-  OneToOneLink
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntitySingleLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -31,37 +27,10 @@ export class TestEntitySingleLinkApi<
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {
-    /**
-     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_MULTI_LINK: OneToManyLink<
-      TestEntitySingleLink<DeSerializersT>,
-      DeSerializersT,
-      TestEntityLvl2MultiLinkApi<DeSerializersT>
-    >;
-    /**
-     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_SINGLE_LINK: OneToOneLink<
-      TestEntitySingleLink<DeSerializersT>,
-      DeSerializersT,
-      TestEntityLvl2SingleLinkApi<DeSerializersT>
-    >;
-  };
+  private navigationPropertyFields!: {};
 
-  _addNavigationProperties(
-    linkedApis: [
-      TestEntityLvl2MultiLinkApi<DeSerializersT>,
-      TestEntityLvl2SingleLinkApi<DeSerializersT>
-    ]
-  ): this {
-    this.navigationPropertyFields = {
-      TO_MULTI_LINK: new OneToManyLink('to_MultiLink', this, linkedApis[0]),
-      TO_SINGLE_LINK: new OneToOneLink('to_SingleLink', this, linkedApis[1])
-    };
+  _addNavigationProperties(linkedApis: []): this {
+    this.navigationPropertyFields = {};
     return this;
   }
 
@@ -143,24 +112,6 @@ export class TestEntitySingleLinkApi<
       'Edm.String',
       false,
       true
-    >;
-    /**
-     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_MULTI_LINK: OneToManyLink<
-      TestEntitySingleLink<DeSerializersT>,
-      DeSerializersT,
-      TestEntityLvl2MultiLinkApi<DeSerializersT>
-    >;
-    /**
-     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_SINGLE_LINK: OneToOneLink<
-      TestEntitySingleLink<DeSerializersT>,
-      DeSerializersT,
-      TestEntityLvl2SingleLinkApi<DeSerializersT>
     >;
     ALL_FIELDS: AllFields<TestEntitySingleLink<DeSerializers>>;
   };

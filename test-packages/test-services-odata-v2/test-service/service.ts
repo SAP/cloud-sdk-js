@@ -5,50 +5,7 @@
  */
 import { TestEntityApi } from './TestEntityApi';
 import { TestEntityMultiLinkApi } from './TestEntityMultiLinkApi';
-import { TestEntityOtherMultiLinkApi } from './TestEntityOtherMultiLinkApi';
-import { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';
 import { TestEntitySingleLinkApi } from './TestEntitySingleLinkApi';
-import { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
-import { TestEntityWithSharedEntityType1Api } from './TestEntityWithSharedEntityType1Api';
-import { TestEntityWithSharedEntityType2Api } from './TestEntityWithSharedEntityType2Api';
-import { TestEntityCircularLinkParentApi } from './TestEntityCircularLinkParentApi';
-import { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
-import { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
-import { TestEntityEndsWithSomethingElseApi } from './TestEntityEndsWithSomethingElseApi';
-import { CaseTestApi } from './CaseTestApi';
-import { Casetest_1Api } from './Casetest_1Api';
-import {
-  testFunctionImportNoReturnType,
-  testFunctionImportEdmReturnType,
-  testFunctionImportEdmReturnTypeCollection,
-  testFunctionImportEntityReturnType,
-  testFunctionImportEntityReturnTypeCollection,
-  testFunctionImportSharedEntityReturnType,
-  testFunctionImportSharedEntityReturnTypeCollection,
-  testFunctionImportComplexReturnType,
-  testFunctionImportUnsupportedEdmTypes,
-  testFunctionImportComplexReturnTypeCollection,
-  testFunctionImportGet,
-  testFunctionImportPost,
-  testFunctionImportMultipleParams,
-  createTestComplexType,
-  fContinue,
-  TestFunctionImportNoReturnTypeParameters,
-  TestFunctionImportEdmReturnTypeParameters,
-  TestFunctionImportEdmReturnTypeCollectionParameters,
-  TestFunctionImportEntityReturnTypeParameters,
-  TestFunctionImportEntityReturnTypeCollectionParameters,
-  TestFunctionImportSharedEntityReturnTypeParameters,
-  TestFunctionImportSharedEntityReturnTypeCollectionParameters,
-  TestFunctionImportComplexReturnTypeParameters,
-  TestFunctionImportUnsupportedEdmTypesParameters,
-  TestFunctionImportComplexReturnTypeCollectionParameters,
-  TestFunctionImportGetParameters,
-  TestFunctionImportPostParameters,
-  TestFunctionImportMultipleParamsParameters,
-  CreateTestComplexTypeParameters,
-  FContinueParameters
-} from './function-imports';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
 import {
@@ -142,7 +99,6 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     const api = this.initApi('testEntityApi', TestEntityApi);
     const linkedApis = [
       this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi),
-      this.initApi('testEntityOtherMultiLinkApi', TestEntityOtherMultiLinkApi),
       this.initApi('testEntitySingleLinkApi', TestEntitySingleLinkApi)
     ];
     api._addNavigationProperties(linkedApis);
@@ -150,176 +106,11 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
   }
 
   get testEntityMultiLinkApi(): TestEntityMultiLinkApi<DeSerializersT> {
-    const api = this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi);
-    const linkedApis = [
-      this.initApi('testEntityLvl2MultiLinkApi', TestEntityLvl2MultiLinkApi),
-      this.initApi('testEntityLvl2SingleLinkApi', TestEntityLvl2SingleLinkApi)
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
-  }
-
-  get testEntityOtherMultiLinkApi(): TestEntityOtherMultiLinkApi<DeSerializersT> {
-    return this.initApi(
-      'testEntityOtherMultiLinkApi',
-      TestEntityOtherMultiLinkApi
-    );
-  }
-
-  get testEntityLvl2MultiLinkApi(): TestEntityLvl2MultiLinkApi<DeSerializersT> {
-    return this.initApi(
-      'testEntityLvl2MultiLinkApi',
-      TestEntityLvl2MultiLinkApi
-    );
+    return this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi);
   }
 
   get testEntitySingleLinkApi(): TestEntitySingleLinkApi<DeSerializersT> {
-    const api = this.initApi(
-      'testEntitySingleLinkApi',
-      TestEntitySingleLinkApi
-    );
-    const linkedApis = [
-      this.initApi('testEntityLvl2MultiLinkApi', TestEntityLvl2MultiLinkApi),
-      this.initApi('testEntityLvl2SingleLinkApi', TestEntityLvl2SingleLinkApi)
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
-  }
-
-  get testEntityLvl2SingleLinkApi(): TestEntityLvl2SingleLinkApi<DeSerializersT> {
-    return this.initApi(
-      'testEntityLvl2SingleLinkApi',
-      TestEntityLvl2SingleLinkApi
-    );
-  }
-
-  get testEntityWithSharedEntityType1Api(): TestEntityWithSharedEntityType1Api<DeSerializersT> {
-    return this.initApi(
-      'testEntityWithSharedEntityType1Api',
-      TestEntityWithSharedEntityType1Api
-    );
-  }
-
-  get testEntityWithSharedEntityType2Api(): TestEntityWithSharedEntityType2Api<DeSerializersT> {
-    return this.initApi(
-      'testEntityWithSharedEntityType2Api',
-      TestEntityWithSharedEntityType2Api
-    );
-  }
-
-  get testEntityCircularLinkParentApi(): TestEntityCircularLinkParentApi<DeSerializersT> {
-    const api = this.initApi(
-      'testEntityCircularLinkParentApi',
-      TestEntityCircularLinkParentApi
-    );
-    const linkedApis = [
-      this.initApi(
-        'testEntityCircularLinkChildApi',
-        TestEntityCircularLinkChildApi
-      )
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
-  }
-
-  get testEntityCircularLinkChildApi(): TestEntityCircularLinkChildApi<DeSerializersT> {
-    const api = this.initApi(
-      'testEntityCircularLinkChildApi',
-      TestEntityCircularLinkChildApi
-    );
-    const linkedApis = [
-      this.initApi(
-        'testEntityCircularLinkChildApi',
-        TestEntityCircularLinkChildApi
-      )
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
-  }
-
-  get testEntityEndsWithApi(): TestEntityEndsWithApi<DeSerializersT> {
-    return this.initApi('testEntityEndsWithApi', TestEntityEndsWithApi);
-  }
-
-  get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<DeSerializersT> {
-    return this.initApi(
-      'testEntityEndsWithSomethingElseApi',
-      TestEntityEndsWithSomethingElseApi
-    );
-  }
-
-  get caseTestApi(): CaseTestApi<DeSerializersT> {
-    return this.initApi('caseTestApi', CaseTestApi);
-  }
-
-  get casetest_1Api(): Casetest_1Api<DeSerializersT> {
-    return this.initApi('casetest_1Api', Casetest_1Api);
-  }
-
-  get functionImports() {
-    return {
-      testFunctionImportNoReturnType: (
-        parameter: TestFunctionImportNoReturnTypeParameters<DeSerializersT>
-      ) => testFunctionImportNoReturnType(parameter, this.deSerializers),
-      testFunctionImportEdmReturnType: (
-        parameter: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>
-      ) => testFunctionImportEdmReturnType(parameter, this.deSerializers),
-      testFunctionImportEdmReturnTypeCollection: (
-        parameter: TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>
-      ) =>
-        testFunctionImportEdmReturnTypeCollection(
-          parameter,
-          this.deSerializers
-        ),
-      testFunctionImportEntityReturnType: (
-        parameter: TestFunctionImportEntityReturnTypeParameters<DeSerializersT>
-      ) => testFunctionImportEntityReturnType(parameter, this.deSerializers),
-      testFunctionImportEntityReturnTypeCollection: (
-        parameter: TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>
-      ) =>
-        testFunctionImportEntityReturnTypeCollection(
-          parameter,
-          this.deSerializers
-        ),
-      testFunctionImportSharedEntityReturnType: (
-        parameter: TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>
-      ) =>
-        testFunctionImportSharedEntityReturnType(parameter, this.deSerializers),
-      testFunctionImportSharedEntityReturnTypeCollection: (
-        parameter: TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>
-      ) =>
-        testFunctionImportSharedEntityReturnTypeCollection(
-          parameter,
-          this.deSerializers
-        ),
-      testFunctionImportComplexReturnType: (
-        parameter: TestFunctionImportComplexReturnTypeParameters<DeSerializersT>
-      ) => testFunctionImportComplexReturnType(parameter, this.deSerializers),
-      testFunctionImportUnsupportedEdmTypes: (
-        parameter: TestFunctionImportUnsupportedEdmTypesParameters<DeSerializersT>
-      ) => testFunctionImportUnsupportedEdmTypes(parameter, this.deSerializers),
-      testFunctionImportComplexReturnTypeCollection: (
-        parameter: TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>
-      ) =>
-        testFunctionImportComplexReturnTypeCollection(
-          parameter,
-          this.deSerializers
-        ),
-      testFunctionImportGet: (
-        parameter: TestFunctionImportGetParameters<DeSerializersT>
-      ) => testFunctionImportGet(parameter, this.deSerializers),
-      testFunctionImportPost: (
-        parameter: TestFunctionImportPostParameters<DeSerializersT>
-      ) => testFunctionImportPost(parameter, this.deSerializers),
-      testFunctionImportMultipleParams: (
-        parameter: TestFunctionImportMultipleParamsParameters<DeSerializersT>
-      ) => testFunctionImportMultipleParams(parameter, this.deSerializers),
-      createTestComplexType: (
-        parameter: CreateTestComplexTypeParameters<DeSerializersT>
-      ) => createTestComplexType(parameter, this.deSerializers),
-      fContinue: (parameter: FContinueParameters<DeSerializersT>) =>
-        fContinue(parameter, this.deSerializers)
-    };
+    return this.initApi('testEntitySingleLinkApi', TestEntitySingleLinkApi);
   }
 
   get batch(): typeof batch {

@@ -1,7 +1,5 @@
 import { TestEntityMultiLink } from './TestEntityMultiLink';
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
-import { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';
-import { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
 import {
   CustomField,
   DefaultDeSerializers,
@@ -10,9 +8,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  OrderableEdmTypeField,
-  Link,
-  OneToOneLink
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityMultiLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -21,12 +17,7 @@ export declare class TestEntityMultiLinkApi<
   deSerializers: DeSerializersT;
   constructor(deSerializers?: DeSerializersT);
   private navigationPropertyFields;
-  _addNavigationProperties(
-    linkedApis: [
-      TestEntityLvl2MultiLinkApi<DeSerializersT>,
-      TestEntityLvl2SingleLinkApi<DeSerializersT>
-    ]
-  ): this;
+  _addNavigationProperties(linkedApis: []): this;
   entityConstructor: typeof TestEntityMultiLink;
   requestBuilder(): TestEntityMultiLinkRequestBuilder<DeSerializersT>;
   entityBuilder(): EntityBuilderType<
@@ -179,24 +170,6 @@ export declare class TestEntityMultiLinkApi<
       'Edm.Int16',
       true,
       true
-    >;
-    /**
-     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_MULTI_LINK: Link<
-      TestEntityMultiLink<DeSerializersT>,
-      DeSerializersT,
-      TestEntityLvl2MultiLinkApi<DeSerializersT>
-    >;
-    /**
-     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
-     * Use to reference this property in query operations such as 'select' in the fluent request API.
-     */
-    TO_SINGLE_LINK: OneToOneLink<
-      TestEntityMultiLink<DeSerializersT>,
-      DeSerializersT,
-      TestEntityLvl2SingleLinkApi<DeSerializersT>
     >;
     ALL_FIELDS: AllFields<
       TestEntityMultiLink<

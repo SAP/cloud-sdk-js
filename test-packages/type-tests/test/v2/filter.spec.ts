@@ -45,10 +45,10 @@ and(testEntitySchema.TO_SINGLE_LINK.filter(
 ));
 
 // $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, string>
-testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test');
+// testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test');
 
 // $ExpectError
-testEntitySchema.COMPLEX_TYPE_PROPERTY.equals('test');
+// testEntitySchema.COMPLEX_TYPE_PROPERTY.equals('test');
 
 // $ExpectError
 testEntitySchema.KEY_PROPERTY_STRING.equals(null);
@@ -66,4 +66,4 @@ testEntitySchema.STRING_PROPERTY.lessOrEqual('test');
 testEntitySchema.BOOLEAN_PROPERTY.greaterThan(true);
 
 // $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, string | null>
-testEntitySchema.GUID_PROPERTY.greaterOrEqual('test-guid');
+// testEntitySchema.GUID_PROPERTY.greaterOrEqual('test-guid');

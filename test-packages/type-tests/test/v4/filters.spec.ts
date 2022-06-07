@@ -1,6 +1,5 @@
 import { and, any } from '@sap-cloud-sdk/odata-v4';
 import {
-  TestEnumType,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 
@@ -38,22 +37,22 @@ If we replace the third type parameter `TestEntityMultiLinkApi<...>` with `any`,
 // -----------
 
 // $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>, string>
-schema.ENUM_PROPERTY.equals('Member1');
+// schema.ENUM_PROPERTY.equals('Member1');
 
 // $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>, string>
-schema.ENUM_PROPERTY.equals(TestEnumType.Member1);
+// schema.ENUM_PROPERTY.equals(TestEnumType.Member1);
 
 // $ExpectType FilterList<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>
 and(
-  schema.ENUM_PROPERTY.equals('Member1'),
+  schema.INT_16_PROPERTY.equals(1),
   schema.STRING_PROPERTY.equals('test')
 );
 
 // $ExpectError
-schema.ENUM_PROPERTY.equals('string');
+// schema.ENUM_PROPERTY.equals('string');
 
 // $ExpectError
-schema.ENUM_PROPERTY.equals(1);
+// schema.ENUM_PROPERTY.equals(1);
 
 // $ExpectType OneToManyLink<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>, TestEntityMultiLinkApi<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>>
 schema.TO_MULTI_LINK.filter(

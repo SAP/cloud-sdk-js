@@ -15,18 +15,7 @@ class TestEntitySingleLinkApi {
     this.deSerializers = deSerializers;
   }
   _addNavigationProperties(linkedApis) {
-    this.navigationPropertyFields = {
-      TO_MULTI_LINK: new odata_v4_1.OneToManyLink(
-        'to_MultiLink',
-        this,
-        linkedApis[0]
-      ),
-      TO_SINGLE_LINK: new odata_v4_1.OneToOneLink(
-        'to_SingleLink',
-        this,
-        linkedApis[1]
-      )
-    };
+    this.navigationPropertyFields = {};
     return this;
   }
   requestBuilder() {

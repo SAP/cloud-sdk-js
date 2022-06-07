@@ -9,14 +9,6 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
-import {
-  TestEntityLvl2MultiLink,
-  TestEntityLvl2MultiLinkType
-} from './TestEntityLvl2MultiLink';
-import {
-  TestEntityLvl2SingleLink,
-  TestEntityLvl2SingleLinkType
-} from './TestEntityLvl2SingleLink';
 
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
@@ -65,14 +57,6 @@ export class TestEntitySingleLink<
    * Maximum length: 10.
    */
   keyProperty!: DeserializedType<T, 'Edm.String'>;
-  /**
-   * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
-   */
-  toMultiLink!: TestEntityLvl2MultiLink<T>[];
-  /**
-   * One-to-one navigation property to the [[TestEntityLvl2SingleLink]] entity.
-   */
-  toSingleLink?: TestEntityLvl2SingleLink<T> | null;
 }
 
 export interface TestEntitySingleLinkType<
@@ -83,6 +67,4 @@ export interface TestEntitySingleLinkType<
   guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   keyProperty: DeserializedType<T, 'Edm.String'>;
-  toMultiLink: TestEntityLvl2MultiLinkType<T>[];
-  toSingleLink?: TestEntityLvl2SingleLinkType<T> | null;
 }

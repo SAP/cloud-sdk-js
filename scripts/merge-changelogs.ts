@@ -134,7 +134,7 @@ function createNewSection(version: string, messages: Change[]): string {
     writeMessagesOfType(messages, 'Improvement') +
     writeMessagesOfType(messages, 'Fixed Issue') +
     writeMessagesOfType(messages, 'Updated Dependencies') +
-    '\n'
+    '\n\n'
   );
 }
 

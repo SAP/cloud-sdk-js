@@ -1,4 +1,4 @@
-status **outdated** The CLI is deprecated and not continued
+status **outdated** The CLI is deprecated. Use the [sample projects](https://github.com/SAP-samples/cloud-sdk-js) instead.
 
 
 # SAP Cloud SDK CLI - Scaffolding

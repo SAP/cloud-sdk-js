@@ -8,7 +8,7 @@ In each ADR file, write these sections:
 
 ## Status
 
-What is the status, such as active, outdated -> one sentence reason, superseded->link to followup ADR.
+What is the status, such as active, outdated -> one sentence reason, superseded -> link to followup ADR.
 
 ## Context
 

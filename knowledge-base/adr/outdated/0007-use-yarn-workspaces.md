@@ -2,7 +2,7 @@
 
 ## Status
 
-superseded by [0032](../0032-monorepo-tooling.md)
+**superseded** by [ADR#0032](../0032-monorepo-tooling.md)
 
 ## Context
 

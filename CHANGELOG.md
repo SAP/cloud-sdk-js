@@ -16,7 +16,7 @@
 
 -
 
-## New Functionality
+## New Functionalities
 
 -
 

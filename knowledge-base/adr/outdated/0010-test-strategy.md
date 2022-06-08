@@ -1,6 +1,10 @@
-status **superseded** The turborepo takes care of recompilation and the content is not really a ADR.
-
 # Test Strategy
+
+## Status
+
+**outdated**
+
+turborepo takes care of recompilation [ADR#0032](../0032-monorepo-tooling.md) and the content is not really a ADR.
 
 ## General
 

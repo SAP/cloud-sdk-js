@@ -2,7 +2,9 @@
 
 ## Status
 
-**superseded** by [ADR#0032](../0032-monorepo-tooling.md)
+**superseded**
+
+We introduced turbo repo to handle the packages [ADR#0032](../0032-monorepo-tooling.md)
 
 ## Context
 

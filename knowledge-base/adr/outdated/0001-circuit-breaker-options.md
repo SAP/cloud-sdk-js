@@ -1,11 +1,10 @@
 # Circuit Breaker Options
 
+## Status
 
-Status: **superseded** 
+**superseded** 
 
 We will add resilience via middleware approach ([ADR#0031](../0031-resilience-options.md)).
-
-_Date_: 2019-07-29
 
 ## Context: What Triggered this Discussion?
 

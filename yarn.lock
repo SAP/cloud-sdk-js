@@ -1185,10 +1185,10 @@
     "@sap/cds" "^5.6.0"
     semver "^7.3.4"
 
-"@sap/xsenv@^3.0.0", "@sap/xsenv@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.3.0.tgz#3b521b38db0228f00a31700802978da368675d02"
-  integrity sha512-5loDCd0eIV2nDfSwRbr4V/734VLDWLwg0TEL9GC+46xZmGho1Mm98HTt1py0eHnRP29Kjx0MgigoKdvOMDnrCA==
+"@sap/xsenv@^3.0.0", "@sap/xsenv@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.3.1.tgz#28ac6a0f16f37fa1fed488a302971e0327d3178f"
+  integrity sha512-ESsfrlGBRZ7AF1ud+ZZ3CVfGgifPx2lo0djOpqHgzPzSkjv3h3hIGXF5ErW6gKcrwSKCPNA6j3STfbdSK5zqwA==
   dependencies:
     debug "4.3.3"
     node-cache "^5.1.0"

@@ -181,7 +181,7 @@ function xfS4hanaCloudBindingToDestination(
  * @internal
  */
 export function searchServiceBindingForDestination(
-  options: DestinationFetchOptions & DestinationForServiceBindingsOptions
+  options: DestinationFetchOptions
 ): Destination | null {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {

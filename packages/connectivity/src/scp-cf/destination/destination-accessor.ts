@@ -41,7 +41,7 @@ export async function useOrFetchDestination(
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestination(
-  options: DestinationFetchOptions & DestinationForServiceBindingsOptions
+  options: DestinationFetchOptions
 ): Promise<Destination | null> {
   return (
     searchEnvVariablesForDestination(options) ||

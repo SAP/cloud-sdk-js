@@ -1,5 +1,5 @@
 import { getDestination } from './destination-accessor';
-import { destinationForServiceBinding, searchServiceBindingForDestination } from './destination-from-vcap';
+import { destinationForServiceBinding } from './destination-from-vcap';
 
 describe('vcap-service-destination', () => {
   beforeEach(() => {
@@ -68,7 +68,7 @@ describe('vcap-service-destination', () => {
       destinationName: 'my-custom-service',
       transformationFn
     });
-    
+
     expect(actual).toEqual({
       url: 'https://custom-service.my.system.com'
     });

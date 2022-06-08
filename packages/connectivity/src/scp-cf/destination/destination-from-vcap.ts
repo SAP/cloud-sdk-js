@@ -185,7 +185,9 @@ export function searchServiceBindingForDestination(
 ): Destination | null {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
-    const destination = destinationForServiceBinding(options.destinationName, { transformationFn: options.transformationFn });
+    const destination = destinationForServiceBinding(options.destinationName, {
+      transformationFn: options.transformationFn
+    });
     logger.info('Successfully retrieved destination from service binding.');
     return destination;
   } catch (error) {

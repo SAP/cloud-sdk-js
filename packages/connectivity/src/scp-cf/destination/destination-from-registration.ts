@@ -70,13 +70,14 @@ export type DestinationWithName = Destination & { name: string };
 export function searchRegisteredDestination(
   options: DestinationFetchOptions
 ): Destination | null {
-
   let decodedJwt;
   // An error could be thrown if no jwt and no xsuaa service exist.
   try {
-    decodedJwt = decodedJwtOrZid(options)
-  } catch(e) {
-    logger.warn('Failed to decode jwt or create a dummy jwt with `zid` property.');
+    decodedJwt = decodedJwtOrZid(options);
+  } catch (e) {
+    logger.warn(
+      'Failed to decode jwt or create a dummy jwt with `zid` property.'
+    );
     logger.warn(e);
   }
 

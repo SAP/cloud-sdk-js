@@ -70,7 +70,9 @@ export type DestinationOptions = DestinationAccessorOptions &
  * Additionally, you can set [[DestinationOptions]] for objects of this interface.
  * For more information check out our documentation: https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination.
  */
-export interface DestinationFetchOptions extends DestinationOptions, DestinationForServiceBindingsOptions {
+export interface DestinationFetchOptions
+  extends DestinationOptions,
+    DestinationForServiceBindingsOptions {
   /**
    * Name of the destination to retrieve, mandatory.
    */

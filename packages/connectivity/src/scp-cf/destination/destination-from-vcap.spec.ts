@@ -1,4 +1,6 @@
-import { destinationForServiceBinding } from './destination-from-vcap';
+import { xsuaaBindingMock } from '../../../../../test-resources/test/test-util';
+import { getDestination } from './destination-accessor';
+import { destinationForServiceBinding, searchServiceBindingForDestination } from './destination-from-vcap';
 
 describe('vcap-service-destination', () => {
   beforeAll(() => {
@@ -56,6 +58,21 @@ describe('vcap-service-destination', () => {
     expect(() =>
       destinationForServiceBinding('my-custom-service')
     ).toThrowErrorMatchingSnapshot();
+  });
+
+  it('finds the service bindings when getting destination', async () => {
+    const transformationFn = serviceBinding => ({
+      url: serviceBinding.credentials.sys
+    });
+
+    const actual = await getDestination({
+      destinationName: 'my-custom-service',
+      transformationFn
+    });
+    
+    expect(actual).toEqual({
+      url: 'https://custom-service.my.system.com'
+    });
   });
 });
 

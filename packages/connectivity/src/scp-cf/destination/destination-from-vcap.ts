@@ -1,5 +1,6 @@
 import { flatten, createLogger } from '@sap-cloud-sdk/util';
 import { getVcapService } from '../environment-accessor';
+import { DestinationFetchOptions } from './destination-accessor-types';
 import { Destination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,
@@ -180,11 +181,11 @@ function xfS4hanaCloudBindingToDestination(
  * @internal
  */
 export function searchServiceBindingForDestination(
-  name: string
+  options: DestinationFetchOptions & DestinationForServiceBindingsOptions
 ): Destination | undefined {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
-    const destination = destinationForServiceBinding(name);
+    const destination = destinationForServiceBinding(options.destinationName, { transformationFn: options.transformationFn });
     logger.info('Successfully retrieved destination from service binding.');
     return destination;
   } catch (error) {

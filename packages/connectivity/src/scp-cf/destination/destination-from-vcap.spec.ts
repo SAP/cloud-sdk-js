@@ -1,13 +1,12 @@
-import { xsuaaBindingMock } from '../../../../../test-resources/test/test-util';
 import { getDestination } from './destination-accessor';
 import { destinationForServiceBinding, searchServiceBindingForDestination } from './destination-from-vcap';
 
 describe('vcap-service-destination', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     mockServiceBindings();
   });
 
-  afterAll(() => {
+  afterEach(() => {
     delete process.env.VCAP_SERVICES;
   });
 
@@ -60,7 +59,7 @@ describe('vcap-service-destination', () => {
     ).toThrowErrorMatchingSnapshot();
   });
 
-  it('finds the service bindings when getting destination', async () => {
+  it('finds the destination when searching for service bindings', async () => {
     const transformationFn = serviceBinding => ({
       url: serviceBinding.credentials.sys
     });

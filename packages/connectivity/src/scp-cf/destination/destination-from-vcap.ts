@@ -182,7 +182,7 @@ function xfS4hanaCloudBindingToDestination(
  */
 export function searchServiceBindingForDestination(
   options: DestinationFetchOptions & DestinationForServiceBindingsOptions
-): Destination | undefined {
+): Destination | null {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
     const destination = destinationForServiceBinding(options.destinationName, { transformationFn: options.transformationFn });
@@ -193,4 +193,5 @@ export function searchServiceBindingForDestination(
       `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${error.message}`
     );
   }
+  return null;
 }

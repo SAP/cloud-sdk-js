@@ -13,7 +13,7 @@
     "test:self-test": "yarn ts-node self-test/check-if-type-tests-are-working.ts"
   },
   "devDependencies": {
-    "@definitelytyped/dtslint": "^0.0.112",
+    "@definitelytyped/dtslint": "^0.0.115",
     "@sap-cloud-sdk/connectivity": "^2.4.0",
     "@sap-cloud-sdk/generator": "^2.4.0",
     "@sap-cloud-sdk/http-client": "^2.4.0",

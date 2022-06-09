@@ -373,11 +373,13 @@ export function executeHttpRequest<
  * The [[HttpRequestConfigWithOrigin]] supports defining header options and query parameter options with origins.
  * Equally named headers and query parameters are prioritized in the following order:
  * 1. `custom`
- * 2. `requestConfig`.
+ * 2. Destination related headers/query parameters
+ * 3. `requestConfig`.
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
  * @param options - An [[HttpRequestOptions]] of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.
  * @returns A promise resolving to an [[HttpResponse]].
+ * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/query-parameters
  */
 export function executeHttpRequestWithOrigin<
   T extends HttpRequestConfigWithOrigin

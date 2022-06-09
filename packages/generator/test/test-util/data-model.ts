@@ -15,7 +15,7 @@ export const entityName: VdmProperty = {
   staticPropertyName: 'ENTITY_NAME',
   propertyNameAsParam: 'entityName',
   jsType: 'string',
-  fieldType: 'EdmTypeField',
+  fieldType: 'OrderableEdmTypeField',
   originalName: 'EntityName',
   edmType: 'Edm.String',
   description: 'The name of the entity.',
@@ -123,7 +123,7 @@ export const complexMeal: VdmComplexType = {
       originalName: 'Complexity',
       description: 'something something very good',
       edmType: 'Edm.String',
-      fieldType: 'EdmTypeField',
+      fieldType: 'OrderableEdmTypeField',
       nullable: false,
       instancePropertyName: 'complexity',
       propertyNameAsParam: 'complexity',
@@ -168,7 +168,7 @@ export const complexDesert: VdmComplexType = {
       originalName: 'Name',
       description: 'name of the desert',
       edmType: 'Edm.String',
-      fieldType: 'EdmTypeField',
+      fieldType: 'OrderableEdmTypeField',
       nullable: false,
       instancePropertyName: 'name',
       propertyNameAsParam: 'name',
@@ -227,7 +227,7 @@ const orderBreakfastBuilder = (isNullable: boolean): VdmFunctionImport => ({
       description: 'Breakfast includes a honey toast',
       edmType: 'Edm.Boolean',
       jsType: 'boolean',
-      fieldType: 'EdmTypeField'
+      fieldType: 'OrderableEdmTypeField'
     }
   ],
   parametersTypeName: 'Params',

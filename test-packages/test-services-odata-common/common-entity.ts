@@ -65,7 +65,7 @@ export class CommonComplexTypeField<
     this,
     this.deSerializers
   );
-  stringProperty: EdmTypeField<
+  stringProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',
@@ -76,7 +76,7 @@ export class CommonComplexTypeField<
     'Edm.String',
     false
   );
-  booleanProperty: EdmTypeField<
+  booleanProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.Boolean',
@@ -159,7 +159,7 @@ export class NestedComplexTypeField<
     this,
     this.deSerializers
   );
-  stringProperty: EdmTypeField<
+  stringProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',
@@ -286,14 +286,14 @@ export class CommonEntitySingleLinkApi<
   }
 
   private _schema?: {
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: OrderableEdmTypeField<
       CommonEntitySingleLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    STRING_PROPERTY: EdmTypeField<
+    STRING_PROPERTY: OrderableEdmTypeField<
       CommonEntitySingleLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
@@ -428,21 +428,21 @@ export class CommonEntityApi<
   }
 
   private _schema?: {
-    KEY_PROPERTY_GUID: EdmTypeField<
+    KEY_PROPERTY_GUID: OrderableEdmTypeField<
       CommonEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',
       false,
       true
     >;
-    KEY_PROPERTY_STRING: EdmTypeField<
+    KEY_PROPERTY_STRING: OrderableEdmTypeField<
       CommonEntity<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    STRING_PROPERTY: EdmTypeField<
+    STRING_PROPERTY: OrderableEdmTypeField<
       CommonEntity<DeSerializers>,
       DeSerializersT,
       'Edm.String',

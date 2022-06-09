@@ -63,7 +63,7 @@ export class CityField<
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: EdmTypeField<
+  countryRegion: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',
@@ -78,14 +78,24 @@ export class CityField<
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false> =
-    this._fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
+  name: OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    false,
+    false
+  > = this._fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false> =
-    this._fieldBuilder.buildEdmTypeField('Region', 'Edm.String', false);
+  region: OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    false,
+    false
+  > = this._fieldBuilder.buildEdmTypeField('Region', 'Edm.String', false);
 
   /**
    * Creates an instance of CityField.

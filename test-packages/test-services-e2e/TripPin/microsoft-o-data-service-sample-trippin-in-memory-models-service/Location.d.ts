@@ -5,9 +5,9 @@ import {
   DeSerializers,
   DefaultDeSerializers,
   DeserializedType,
-  EdmTypeField,
   Entity,
   FieldOptions,
+  OrderableEdmTypeField,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-v4';
 /**
@@ -49,7 +49,13 @@ export declare class LocationField<
    * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false>;
+  address: OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    false,
+    false
+  >;
   /**
    * Representation of the [[Location.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

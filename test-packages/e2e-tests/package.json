@@ -15,7 +15,7 @@
     "test": "yarn test:e2e",
     "test:e2e": "jest",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
-    "lint:fix": "TIMING=1 eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
+    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
     "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "@sap-cloud-sdk/test-services-e2e": "^2.4.0",
     "@sap-cloud-sdk/util": "^2.4.0",
     "@sap/cds": "^5.9.6",
-    "@sap/cds-dk": "4.9.5",
+    "@sap/cds-dk": "4.9.7",
     "execa": "^5.0.0",
     "express": "^4.17.1",
     "fs-extra": "^10.0.0",

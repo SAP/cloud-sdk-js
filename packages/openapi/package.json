@@ -31,7 +31,7 @@
     "test:unit": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
-    "lint:fix": "TIMING=1 eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
+    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
     "check:dependencies": "depcheck .",
     "check:public-api": "ts-node ../../scripts/check-public-api-cli.ts",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
@@ -43,7 +43,7 @@
     "axios": "^0.27.1"
   },
   "devDependencies": {
-    "nock": "^13.0.11",
+    "nock": "^13.2.6",
     "typescript": "~4.6.2"
   }
 }

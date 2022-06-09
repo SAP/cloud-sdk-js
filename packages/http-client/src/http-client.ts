@@ -137,22 +137,17 @@ export function buildHttpRequestConfigWithOrigin(
   if (isHttpRequestConfigWithOrigin(requestConfig)) {
     return requestConfig;
   }
-  let newConfig: HttpRequestConfigWithOrigin = {
-    ...(requestConfig as HttpRequestConfigBase)
+  return {
+    ...requestConfig,
+    headers: {
+      requestConfig: {},
+      ...(requestConfig.headers && { custom: requestConfig.headers })
+    },
+    params: {
+      requestConfig: {},
+      ...(requestConfig.params && { custom: requestConfig.params })
+    }
   };
-  newConfig = requestConfig.headers
-    ? {
-        ...newConfig,
-        headers: { requestConfig: {}, custom: requestConfig.headers }
-      }
-    : newConfig;
-  newConfig = requestConfig.params
-    ? {
-        ...newConfig,
-        params: { requestConfig: {}, custom: requestConfig.params }
-      }
-    : newConfig;
-  return newConfig;
 }
 
 /**
@@ -376,10 +371,9 @@ export function executeHttpRequest<
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given [[HttpRequestConfigWithOrigin]]
  * and executes it (using Axios).
  * The [[HttpRequestConfigWithOrigin]] supports defining header options and query parameter options with origins.
- * When reaching conflicts, values are picked in the order of:
+ * Equally named headers and query parameters are prioritized in the following order:
  * 1. `custom`
- * 2. `destination`
- * 3. `requestConfig`.
+ * 2. `requestConfig`.
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
  * @param options - An [[HttpRequestOptions]] of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.

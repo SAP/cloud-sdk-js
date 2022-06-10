@@ -110,13 +110,13 @@ function mockDestinationsWithSameName() {
 describe('destination cache', () => {
   afterAll(async () => {
     await destinationCache.clear();
-    await destinationServiceCache.clear();
+    destinationServiceCache.clear();
     nock.cleanAll();
   });
 
   beforeEach(async () => {
     await destinationCache.clear();
-    await destinationServiceCache.clear();
+    destinationServiceCache.clear();
     nock.cleanAll();
   });
 

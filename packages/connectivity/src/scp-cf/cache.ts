@@ -8,6 +8,7 @@ interface CacheInterface<T> {
 
 /**
  * Interface to implement custom destination caching.
+ * To set a custom implementation, call method [[setDestinationCache]] and pass the cache instance.
  */
 export interface DestinationCacheInterface {
   get(key: string | undefined): Promise<Destination | undefined>;
@@ -15,10 +16,7 @@ export interface DestinationCacheInterface {
   clear(): Promise<void>;
 }
 
-/**
- * @internal
- */
-export interface DateInputObject {
+interface DateInputObject {
   hours?: number;
   minutes?: number;
   seconds?: number;

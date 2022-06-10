@@ -8,7 +8,7 @@ export {
   parseDestination,
   toDestinationNameUrl,
   sanitizeDestination,
-  DestinationInterface,
+  DestinationCacheInterface,
   CacheEntry,
   CachingOptions,
   getDestination,

@@ -1,9 +1,9 @@
-import { Destination, DestinationInterface, CacheEntry } from '@sap-cloud-sdk/connectivity';
+import { Destination, DestinationCacheInterface, CacheEntry } from '@sap-cloud-sdk/connectivity';
 
 /**
  * Representation of a custom cache.
  */
-export class TestCache implements DestinationInterface {
+export class TestCache implements DestinationCacheInterface {
   /**
    * Object that stores all cached entries.
    */

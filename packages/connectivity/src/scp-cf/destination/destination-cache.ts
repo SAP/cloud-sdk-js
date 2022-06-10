@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache, DestinationInterface } from '../cache';
+import { Cache, DestinationCacheInterface } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { JwtPayload } from '../jsonwebtoken-type';
@@ -23,7 +23,7 @@ export enum IsolationStrategy {
 /**
  * @internal
  */
-export interface DestinationCacheType<T extends DestinationInterface> {
+export interface DestinationCacheType<T extends DestinationCacheInterface> {
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,
@@ -49,7 +49,7 @@ export interface DestinationCacheType<T extends DestinationInterface> {
  * @returns A destination cache object.
  * @internal
  */
-export const DestinationCache = <T extends DestinationInterface>(
+export const DestinationCache = <T extends DestinationCacheInterface>(
   cache: T = new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 }) as any
 ): DestinationCacheType<T> => ({
   retrieveDestinationFromCache: async (
@@ -125,7 +125,7 @@ export function getDestinationCacheKey(
   }
 }
 
-function cacheRetrievedDestination<T extends DestinationInterface>(
+function cacheRetrievedDestination<T extends DestinationCacheInterface>(
   decodedJwt: Record<string, any>,
   destination: Destination,
   isolation: IsolationStrategy,
@@ -147,7 +147,7 @@ function cacheRetrievedDestination<T extends DestinationInterface>(
  * Set the destination cache instance.
  * @param cache - Cache instance.
  */
-export function setDestinationCache<T extends DestinationInterface>(
+export function setDestinationCache<T extends DestinationCacheInterface>(
   cache: T
 ): void {
   destinationCache = DestinationCache(cache);

@@ -71,11 +71,11 @@ export async function searchRegisteredDestination(
   options: DestinationFetchOptions
 ): Promise<Destination | null> {
   const destination =
-    (await registerDestinationCache.retrieveDestinationFromCache(
+    await registerDestinationCache.retrieveDestinationFromCache(
       decodedJwtOrZid(options),
       options.destinationName,
       isolationStrategy(options)
-    )) || null;
+    ) || null;
 
   if (destination?.forwardAuthToken) {
     destination.authTokens = destinationAuthToken(options.jwt);

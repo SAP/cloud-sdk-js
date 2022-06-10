@@ -9,7 +9,7 @@ interface CacheInterface<T> {
 /**
  * Interface to implement custom destination caching.
  */
-export interface DestinationInterface extends CacheInterface<Destination> {
+export interface DestinationCacheInterface extends CacheInterface<Destination> {
   set(key: string | undefined, item: CacheEntry<Destination>): Promise<void>;
 }
 

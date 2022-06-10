@@ -10,14 +10,17 @@ const logger = createLogger({
 const ClientCredentialsTokenCache = (
   cache: Cache<ClientCredentialsResponse>
 ) => ({
-  getToken: (url, clientId: string): ClientCredentialsResponse | undefined =>
+  getToken: async (
+    url,
+    clientId: string
+  ): Promise<ClientCredentialsResponse | undefined> =>
     cache.get(getCacheKey(url, clientId)),
 
-  cacheToken: (
+  cacheToken: async (
     url,
     clientId: string,
     token: ClientCredentialsResponse
-  ): void => {
+  ): Promise<void> => {
     cache.set(getCacheKey(url, clientId), {
       entry: token,
       expires: token.expires_in
@@ -25,7 +28,7 @@ const ClientCredentialsTokenCache = (
         : undefined
     });
   },
-  clear: (): void => {
+  clear: async (): Promise<void> => {
     cache.clear();
   },
   getCacheInstance: () => cache

@@ -21,7 +21,7 @@ export class TestCache implements DestinationInterface {
       : undefined;
   }
 
-  clear(): void {
+  async clear(): Promise<void> {
     this.cache = {};
   }
 
@@ -39,7 +39,7 @@ export class TestCache implements DestinationInterface {
    * @param key - The key of the entry to retrieve.
    * @returns The corresponding entry to the provided key if it is still valid, returns `undefined` otherwise.
    */
-  get(key: string | undefined): Destination | undefined {
+  async get(key: string | undefined): Promise<Destination | undefined> {
     return key && this.hasKey(key) && !(this.cache[key].expires ? false : this.cache[key].expires < Date.now())
       ? this.cache[key].entry
       : undefined;
@@ -50,7 +50,7 @@ export class TestCache implements DestinationInterface {
    * @param key - The entry's key.
    * @param item - The entry to cache.
    */
-  set(key: string | undefined, item: CacheEntry<Destination>): void {
+  async set(key: string | undefined, item: CacheEntry<Destination>): Promise<void> {
     if (key) {
       const expires = item.expires ?? this.defaultValidityTime;
       this.cache[key] = { entry: item.entry, expires };

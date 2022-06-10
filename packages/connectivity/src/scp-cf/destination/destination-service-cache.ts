@@ -4,18 +4,18 @@ import { Destination } from './destination-service-types';
 import { getDestinationCacheKey, IsolationStrategy } from './destination-cache';
 
 const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
-  retrieveDestinationsFromCache: (
+  retrieveDestinationsFromCache: async (
     targetUrl: string,
     decodedJwt: JwtPayload
-  ): Destination[] | undefined =>
+  ): Promise<Destination[] | undefined> =>
     cache.get(
       getDestinationCacheKey(decodedJwt, targetUrl, IsolationStrategy.Tenant)
     ),
-  cacheRetrievedDestinations: (
+  cacheRetrievedDestinations: async (
     destinationServiceUri: string,
     decodedJwt: JwtPayload,
     destinations: Destination[]
-  ): void => {
+  ): Promise<void> => {
     const key = getDestinationCacheKey(
       decodedJwt,
       destinationServiceUri,
@@ -23,7 +23,7 @@ const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
     );
     cache.set(key, { entry: destinations });
   },
-  clear: () => {
+  clear: async (): Promise<void> => {
     cache.clear();
   },
   getCacheInstance: () => cache

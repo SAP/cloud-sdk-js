@@ -27,41 +27,40 @@ const cacheOne = new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 });
 const cacheTwo = new Cache<ClientCredentialsResponse>();
 
 describe('Cache', () => {
-  afterEach(() => {
-    cacheOne.clear();
-    cacheTwo.clear();
-    destinationCache.clear();
-    clientCredentialsTokenCache.clear();
+  afterEach(async () => {
+    await cacheOne.clear();
+    await cacheTwo.clear();
+    await destinationCache.clear();
+    await clientCredentialsTokenCache.clear();
   });
 
-  it('non-existing item in cache should return undefined', () => {
-    const actual = cacheOne.get('notExistingDest');
-    expect(actual).toBeUndefined();
+  it('non-existing item in cache should return undefined', async () => {
+    await expect(cacheOne.get('notExistingDest')).resolves.toBeUndefined();
   });
 
-  it('item should be retrieved correctly', () => {
+  it('item should be retrieved correctly', async () => {
     cacheOne.set('one', { entry: destinationOne });
-    const actual = cacheOne.get('one');
+    const actual = await cacheOne.get('one');
     expect(actual).toEqual(destinationOne);
   });
 
-  it('retrieving expired item should return undefined', () => {
+  it('retrieving expired item should return undefined', async () => {
     jest.useFakeTimers('modern');
-    cacheOne.set('one', { entry: destinationOne });
+    await cacheOne.set('one', { entry: destinationOne });
 
     const minutesToExpire = 6;
     // Shift time to expire the set item
     jest.advanceTimersByTime(60000 * minutesToExpire);
-    expect(cacheOne.get('one')).toBeUndefined();
+    expect(await cacheOne.get('one')).toBeUndefined();
   });
 
-  it('clear() should remove all entries in cache', () => {
-    cacheOne.set('one', { entry: destinationOne });
-    cacheOne.clear();
+  it('clear() should remove all entries in cache', async () => {
+    await cacheOne.set('one', { entry: destinationOne });
+    await cacheOne.clear();
     expect(cacheOne.hasKey('one')).toBeFalsy();
   });
 
-  it('should return the item when its expiration time is undefined', () => {
+  it('should return the item when its expiration time is undefined', async () => {
     const dummyToken = {
       access_token: '1234567890',
       token_type: 'UserToken',
@@ -69,11 +68,11 @@ describe('Cache', () => {
       jti: '',
       scope: ''
     };
-    cacheTwo.set('someToken', { entry: dummyToken });
-    expect(cacheTwo.get('someToken')).toEqual(dummyToken);
+    await cacheTwo.set('someToken', { entry: dummyToken });
+    await expect(cacheTwo.get('someToken')).resolves.toEqual(dummyToken);
   });
 
-  it('custom expiration time should be set correctly', () => {
+  it('custom expiration time should be set correctly', async () => {
     const dummyToken = {
       access_token: '1234567890',
       token_type: 'UserToken',
@@ -81,18 +80,18 @@ describe('Cache', () => {
       jti: '',
       scope: ''
     };
-    cacheTwo.set('expiredToken', { entry: dummyToken, expires: 10 });
-    cacheTwo.set('validToken', {
+    await cacheTwo.set('expiredToken', { entry: dummyToken, expires: 10 });
+    await cacheTwo.set('validToken', {
       entry: dummyToken,
       expires: Date.now() + 5000
     });
-    expect(cacheTwo.get('expiredToken')).toBeUndefined();
-    expect(cacheTwo.get('validToken')).toBe(dummyToken);
+    await expect(cacheTwo.get('expiredToken')).resolves.toBeUndefined();
+    await expect(cacheTwo.get('validToken')).resolves.toBe(dummyToken);
   });
 
-  it('should not hit cache for undefined key', () => {
-    cacheOne.set(undefined, { entry: {} as Destination });
-    const actual = cacheOne.get(undefined);
+  it('should not hit cache for undefined key', async () => {
+    await cacheOne.set(undefined, { entry: {} as Destination });
+    const actual = await cacheOne.get(undefined);
     expect(actual).toBeUndefined();
   });
 });

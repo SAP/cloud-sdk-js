@@ -40,17 +40,17 @@ type RegisterDestinationOptions = Pick<
  * @param destination - A destination to add to the `destinations` cache.
  * @param options - Options how to cache the destination.
  */
-export function registerDestination(
+export async function registerDestination(
   destination: DestinationWithName,
   options?: RegisterDestinationOptions
-): void {
+): Promise<void> {
   if (!destination.name || !destination.url) {
     throw Error(
       'Registering destinations requires a destination name and url.'
     );
   }
 
-  registerDestinationCache.cacheRetrievedDestination(
+  await registerDestinationCache.cacheRetrievedDestination(
     decodedJwtOrZid(options),
     destination,
     isolationStrategy(options)
@@ -67,15 +67,15 @@ export type DestinationWithName = Destination & { name: string };
  * @param options - The options for searching the cahce
  * @returns Destination - the destination from cache
  */
-export function searchRegisteredDestination(
+export async function searchRegisteredDestination(
   options: DestinationFetchOptions
-): Destination | null {
+): Promise<Destination | null> {
   const destination =
-    registerDestinationCache.retrieveDestinationFromCache(
+    (await registerDestinationCache.retrieveDestinationFromCache(
       decodedJwtOrZid(options),
       options.destinationName,
       isolationStrategy(options)
-    ) || null;
+    )) || null;
 
   if (destination?.forwardAuthToken) {
     destination.authTokens = destinationAuthToken(options.jwt);

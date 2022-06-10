@@ -64,8 +64,8 @@ describe('DestinationServiceCache', () => {
       destinationServiceUrl
     );
   });
-  afterEach(() => {
-    destinationServiceCache.clear();
+  afterEach(async () => {
+    await destinationServiceCache.clear();
     nock.cleanAll();
   });
 
@@ -79,15 +79,19 @@ describe('DestinationServiceCache', () => {
       providerServiceToken
     );
 
-    const cacheSubscriber = getDestinationsFromCache(subscriberServiceToken);
+    const cacheSubscriber = await getDestinationsFromCache(
+      subscriberServiceToken
+    );
     expect(cacheSubscriber).toEqual(directCallSubscriber);
 
-    const cacheProvider = getDestinationsFromCache(providerServiceToken);
+    const cacheProvider = await getDestinationsFromCache(providerServiceToken);
     expect(cacheProvider).toEqual(directCallProvider);
   });
 });
 
-function getDestinationsFromCache(token: string): Destination[] | undefined {
+async function getDestinationsFromCache(
+  token: string
+): Promise<Destination[] | undefined> {
   return destinationServiceCache.retrieveDestinationsFromCache(
     `${destinationServiceUrl}/destination-configuration/v1/${DestinationType.Subaccount}Destinations`,
     decodeJwt(token)

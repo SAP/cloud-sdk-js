@@ -4,7 +4,7 @@ import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 const oneHourInSeconds = 60 * 60;
 
 describe('ClientCredentialsTokenCache', () => {
-  it('should return token if a valid token is cached', () => {
+  it('should return token if a valid token is cached', async () => {
     jest.useFakeTimers('modern');
 
     const validToken = {
@@ -15,7 +15,7 @@ describe('ClientCredentialsTokenCache', () => {
       scope: ''
     };
 
-    clientCredentialsTokenCache.cacheToken(
+    await clientCredentialsTokenCache.cacheToken(
       'https://url_valid',
       'clientid',
       validToken
@@ -28,10 +28,10 @@ describe('ClientCredentialsTokenCache', () => {
       'clientid'
     );
 
-    expect(valid).toEqual(validToken);
+    await expect(valid).resolves.toEqual(validToken);
   });
 
-  it('should return undefined if expired token is cached', () => {
+  it('should return undefined if expired token is cached', async () => {
     jest.useFakeTimers('modern');
 
     const expiredToken = {
@@ -42,7 +42,7 @@ describe('ClientCredentialsTokenCache', () => {
       scope: ''
     };
 
-    clientCredentialsTokenCache.cacheToken(
+    await clientCredentialsTokenCache.cacheToken(
       'https://url_expired',
       'clientid',
       expiredToken
@@ -54,10 +54,10 @@ describe('ClientCredentialsTokenCache', () => {
       'clientid'
     );
 
-    expect(expired).toBeUndefined();
+    await expect(expired).resolves.toBeUndefined();
   });
 
-  it('should return undefined if the cache key is at least partly undefined', () => {
+  it('should return undefined if the cache key is at least partly undefined', async () => {
     const logger = createLogger('client-credentials-token-cache');
     const warn = jest.spyOn(logger, 'warn');
 
@@ -69,7 +69,7 @@ describe('ClientCredentialsTokenCache', () => {
       scope: ''
     };
 
-    clientCredentialsTokenCache.cacheToken(
+    await clientCredentialsTokenCache.cacheToken(
       'https://url_valid',
       'clientid',
       validToken
@@ -82,7 +82,7 @@ describe('ClientCredentialsTokenCache', () => {
       undefined as any
     );
 
-    expect(invalid).toBeUndefined();
+    await expect(invalid).resolves.toBeUndefined();
     expect(warn).toBeCalledWith(
       'Cannot get cache key. The ClientId was undefined.'
     );

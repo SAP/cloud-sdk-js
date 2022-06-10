@@ -28,18 +28,18 @@ export interface DestinationCacheType<T extends DestinationInterface> {
     decodedJwt: Record<string, any>,
     name: string,
     isolation: IsolationStrategy
-  ) => Destination | undefined;
+  ) => Promise<Destination | undefined>;
   cacheRetrievedDestination: (
     decodedJwt: Record<string, any>,
     destination: Destination,
     isolation: IsolationStrategy
-  ) => void;
+  ) => Promise<void>;
   cacheRetrievedDestinations: (
     decodedJwt: Record<string, any>,
     retrievedDestinations: DestinationsByType,
     isolation: IsolationStrategy
-  ) => void;
-  clear: () => void;
+  ) => Promise<void>;
+  clear: () => Promise<void>;
   getCacheInstance: () => T;
 }
 
@@ -52,24 +52,24 @@ export interface DestinationCacheType<T extends DestinationInterface> {
 export const DestinationCache = <T extends DestinationInterface>(
   cache: T = new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 }) as any
 ): DestinationCacheType<T> => ({
-  retrieveDestinationFromCache: (
+  retrieveDestinationFromCache: async (
     decodedJwt: Record<string, any>,
     name: string,
     isolation: IsolationStrategy
-  ): Destination | undefined =>
+  ): Promise<Destination | undefined> =>
     cache.get(getDestinationCacheKey(decodedJwt, name, isolation)),
-  cacheRetrievedDestination: (
+  cacheRetrievedDestination: async (
     decodedJwt: Record<string, any>,
     destination: Destination,
     isolation: IsolationStrategy
-  ): void => {
+  ): Promise<void> => {
     cacheRetrievedDestination(decodedJwt, destination, isolation, cache);
   },
-  cacheRetrievedDestinations: (
+  cacheRetrievedDestinations: async (
     decodedJwt: Record<string, any>,
     retrievedDestinations: DestinationsByType,
     isolation: IsolationStrategy
-  ): void => {
+  ): Promise<void> => {
     retrievedDestinations.subaccount.forEach(dest =>
       cacheRetrievedDestination(decodedJwt, dest, isolation, cache)
     );
@@ -77,7 +77,7 @@ export const DestinationCache = <T extends DestinationInterface>(
       cacheRetrievedDestination(decodedJwt, dest, isolation, cache)
     );
   },
-  clear: (): void => {
+  clear: async (): Promise<void> => {
     cache.clear();
   },
   getCacheInstance: () => cache

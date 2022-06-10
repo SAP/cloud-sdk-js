@@ -100,7 +100,7 @@ async function fetchDestinations(
 
   if (options?.useCache) {
     const destinationsFromCache =
-      destinationServiceCache.retrieveDestinationsFromCache(
+      await destinationServiceCache.retrieveDestinationsFromCache(
         targetUri,
         decodeJwt(jwt)
       );
@@ -115,12 +115,12 @@ async function fetchDestinations(
   const headers = wrapJwtInHeader(jwt).headers;
 
   return callDestinationEndpoint(targetUri, headers, options)
-    .then(response => {
+    .then(async response => {
       const destinations: Destination[] = response.data.map(d =>
         parseDestination(d)
       );
       if (options?.useCache) {
-        destinationServiceCache.cacheRetrievedDestinations(
+        await destinationServiceCache.cacheRetrievedDestinations(
           targetUri,
           decodeJwt(jwt),
           destinations

@@ -1,17 +1,16 @@
 import { Destination } from './destination';
 
 interface CacheInterface<T> {
-  hasKey(key: string): boolean;
-  get(key: string | undefined): T | undefined;
-  set(key: string | undefined, item: CacheEntry<T>): void;
-  clear(): void;
+  get(key: string | undefined): Promise<T | undefined>;
+  set(key: string | undefined, item: CacheEntry<T>): Promise<void>;
+  clear(): Promise<void>;
 }
 
 /**
  * Interface to implement custom destination caching.
  */
 export interface DestinationInterface extends CacheInterface<Destination> {
-  set(key: string | undefined, item: CacheEntry<Destination>): void;
+  set(key: string | undefined, item: CacheEntry<Destination>): Promise<void>;
 }
 
 /**
@@ -67,7 +66,7 @@ export class Cache<T> implements CacheInterface<T> {
   /**
    * Clear all cached items.
    */
-  clear(): void {
+  async clear(): Promise<void> {
     this.cache = {};
   }
 
@@ -85,7 +84,7 @@ export class Cache<T> implements CacheInterface<T> {
    * @param key - The key of the entry to retrieve.
    * @returns The corresponding entry to the provided key if it is still valid, returns `undefined` otherwise.
    */
-  get(key: string | undefined): T | undefined {
+  async get(key: string | undefined): Promise<T | undefined> {
     return key && this.hasKey(key) && !isExpired(this.cache[key])
       ? this.cache[key].entry
       : undefined;
@@ -96,7 +95,7 @@ export class Cache<T> implements CacheInterface<T> {
    * @param key - The entry's key.
    * @param item - The entry to cache.
    */
-  set(key: string | undefined, item: CacheEntry<T>): void {
+  async set(key: string | undefined, item: CacheEntry<T>): Promise<void> {
     if (key) {
       const expires =
         item.expires ?? inferExpirationTime(this.defaultValidityTime);

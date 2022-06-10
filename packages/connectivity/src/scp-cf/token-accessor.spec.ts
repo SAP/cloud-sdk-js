@@ -149,10 +149,9 @@ describe('token accessor', () => {
       expect(first).toBe(expected);
       expect(second).toBe(first);
       expect(retrieveFromCacheSpy).toHaveBeenCalledTimes(2);
-      expect(retrieveFromCacheSpy).toHaveNthReturnedWith(
-        2,
-        Promise.resolve({ access_token: expected })
-      );
+      expect(retrieveFromCacheSpy).toHaveNthReturnedWith(2, {
+        access_token: expected
+      });
     });
 
     it('caches tokens for certificate authentication', async () => {
@@ -176,10 +175,9 @@ describe('token accessor', () => {
       expect(first).toBe(expected);
       expect(second).toBe(first);
       expect(retrieveFromCacheSpy).toHaveBeenCalledTimes(2);
-      expect(retrieveFromCacheSpy).toHaveNthReturnedWith(
-        2,
-        Promise.resolve({ access_token: expected })
-      );
+      expect(retrieveFromCacheSpy).toHaveNthReturnedWith(2, {
+        access_token: expected
+      });
     });
 
     it('cached tokens are isolated by tenant and by service credentials', async () => {
@@ -204,40 +202,39 @@ describe('token accessor', () => {
         jwt: subscriberUserJwt
       });
 
-      const providerTokenFromCache = await clientCredentialsTokenCache.getToken(
+      const providerTokenFromCache = clientCredentialsTokenCache.getToken(
         providerXsuaaUrl,
         destinationBindingClientSecretMock.credentials.clientid
       );
-      const subscriberTokenFromCache =
-        await clientCredentialsTokenCache.getToken(
-          subscriberXsuaaUrl,
-          destinationBindingClientSecretMock.credentials.clientid
-        );
+      const subscriberTokenFromCache = clientCredentialsTokenCache.getToken(
+        subscriberXsuaaUrl,
+        destinationBindingClientSecretMock.credentials.clientid
+      );
 
       expect(providerTokenFromCache?.access_token).toEqual(providerToken);
       expect(subscriberTokenFromCache?.access_token).toEqual(subscriberToken);
 
-      await expect(
+      expect(
         clientCredentialsTokenCache.getToken(
           'https://doesnotexist.example.com',
           destinationBindingClientSecretMock.credentials.clientid
         )
-      ).resolves.toBeUndefined();
+      ).toBeUndefined();
 
-      await expect(
+      expect(
         clientCredentialsTokenCache.getToken(
           'https://doesnotexist.example.com',
           'schmusername'
         )
-      ).resolves.toBeUndefined();
+      ).toBeUndefined();
 
-      await expect(
+      expect(
         clientCredentialsTokenCache.getToken(providerXsuaaUrl, 'schmusername')
-      ).resolves.toBeUndefined();
+      ).toBeUndefined();
 
-      await expect(
+      expect(
         clientCredentialsTokenCache.getToken(subscriberXsuaaUrl, 'schmusername')
-      ).resolves.toBeUndefined();
+      ).toBeUndefined();
     });
 
     it('ignores the cache if it is disabled', async () => {

@@ -125,12 +125,12 @@ export function getDestinationCacheKey(
   }
 }
 
-function cacheRetrievedDestination<T extends DestinationCacheInterface>(
+async function cacheRetrievedDestination<T extends DestinationCacheInterface>(
   decodedJwt: Record<string, any>,
   destination: Destination,
   isolation: IsolationStrategy,
   cache: T
-): void {
+): Promise<void> {
   if (!destination.name) {
     throw new Error('The destination name is undefined.');
   }

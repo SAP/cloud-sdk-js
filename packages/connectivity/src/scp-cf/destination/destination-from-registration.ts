@@ -25,7 +25,7 @@ const logger = createLogger({
  * @internal
  */
 export const registerDestinationCache = DestinationCache(
-  new Cache<Destination>(undefined)
+  new Cache<Destination>(undefined) as any
 );
 
 type RegisterDestinationOptions = Pick<

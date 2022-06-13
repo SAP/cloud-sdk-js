@@ -1,19 +1,7 @@
-import { Destination } from './destination';
-
 interface CacheInterface<T> {
   get(key: string | undefined): T | undefined;
   set(key: string | undefined, item: CacheEntry<T>): void;
   clear(): void;
-}
-
-/**
- * Interface to implement custom destination caching.
- * To set a custom implementation, call method [[setDestinationCache]] and pass the cache instance.
- */
-export interface DestinationCacheInterface {
-  get(key: string | undefined): Promise<Destination | undefined>;
-  set(key: string | undefined, item: CacheEntry<Destination>): Promise<void>;
-  clear(): Promise<void>;
 }
 
 interface DateInputObject {

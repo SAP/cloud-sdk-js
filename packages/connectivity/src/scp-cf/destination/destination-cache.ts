@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache, DestinationCacheInterface } from '../cache';
+import { Cache, CacheEntry } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { JwtPayload } from '../jsonwebtoken-type';
@@ -18,6 +18,16 @@ const logger = createLogger({
 export enum IsolationStrategy {
   Tenant = 'Tenant',
   Tenant_User = 'TenantUser'
+}
+
+/**
+ * Interface to implement custom destination caching.
+ * To set a custom implementation, call method [[setDestinationCache]] and pass the cache instance.
+ */
+export interface DestinationCacheInterface {
+  get(key: string | undefined): Promise<Destination | undefined>;
+  set(key: string | undefined, item: CacheEntry<Destination>): Promise<void>;
+  clear(): Promise<void>;
 }
 
 /**
@@ -144,8 +154,11 @@ async function cacheRetrievedDestination<T extends DestinationCacheInterface>(
 }
 
 /**
- * Set the destination cache instance.
- * @param cache - Cache instance.
+ * Sets the custom destination cache instance.
+ * Call this method with an instance of [[DestinationCacheInterface]] to override the default cache instance set by the SDK.
+ *
+ * NOTE: This function should be called at the beginning before any calls to either [[getDestination]] or [[executeHttpRequest]].
+ * @param cache - An instance of [[DestinationCacheInterface]].
  */
 export function setDestinationCache<T extends DestinationCacheInterface>(
   cache: T

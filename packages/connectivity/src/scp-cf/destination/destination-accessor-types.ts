@@ -4,7 +4,6 @@ import type {
   DestinationRetrievalOptions
 } from './destination-service-types';
 import type { DestinationSelectionStrategy } from './destination-selection-strategies';
-import { DestinationForServiceBindingsOptions } from './destination-from-vcap';
 
 /**
  * @internal
@@ -70,13 +69,11 @@ export type DestinationOptions = DestinationAccessorOptions &
  * Additionally, you can set [[DestinationOptions]] for objects of this interface.
  * For more information check out our documentation: https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination.
  */
-export interface DestinationFetchOptions
-  extends DestinationOptions {
+export interface DestinationFetchOptions extends DestinationOptions {
   /**
    * Name of the destination to retrieve, mandatory.
    */
   destinationName: string;
-
 }
 
 /**

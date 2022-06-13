@@ -64,29 +64,29 @@ describe('register-destination', () => {
 
   it('caches with tenant-isolation if no JWT is given', async () => {
     await registerDestination(testDestination);
-    expect(
+    await expect(
       registerDestinationCache
         .getCacheInstance()
         .hasKey('provider::RegisteredDestination')
-    ).toBe(true);
+    ).resolves.toBe(true);
   });
 
   it('caches with tenant isolation if JWT does not contain user-id', async () => {
     await registerDestination(testDestination, { jwt: subscriberServiceToken });
-    expect(
+    await expect(
       registerDestinationCache
         .getCacheInstance()
         .hasKey('subscriber::RegisteredDestination')
-    ).toBe(true);
+    ).resolves.toBe(true);
   });
 
   it('caches with tenant-user-isolation if JWT is given', async () => {
     await registerDestination(testDestination, { jwt: subscriberUserJwt });
-    expect(
+    await expect(
       registerDestinationCache
         .getCacheInstance()
         .hasKey('user-sub:subscriber:RegisteredDestination')
-    ).toBe(true);
+    ).resolves.toBe(true);
   });
 
   it('cache if tenant if you want', async () => {
@@ -94,11 +94,11 @@ describe('register-destination', () => {
       jwt: subscriberUserJwt,
       isolationStrategy: IsolationStrategy.Tenant
     });
-    expect(
+    await expect(
       registerDestinationCache
         .getCacheInstance()
         .hasKey('subscriber::RegisteredDestination')
-    ).toBe(true);
+    ).resolves.toBe(true);
   });
 
   it('caches with unlimited time', async () => {

@@ -1,10 +1,14 @@
 interface CacheInterface<T> {
+  hasKey(key: string): boolean;
   get(key: string | undefined): T | undefined;
   set(key: string | undefined, item: CacheEntry<T>): void;
   clear(): void;
 }
 
-interface DateInputObject {
+/**
+ * @internal
+ */
+export interface DateInputObject {
   hours?: number;
   minutes?: number;
   seconds?: number;

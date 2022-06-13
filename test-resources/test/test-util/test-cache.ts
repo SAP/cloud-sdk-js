@@ -30,7 +30,7 @@ export class TestCache implements DestinationCacheInterface {
    * @param key - The entry's key.
    * @returns A boolean value that indicates whether the entry exists in cache.
    */
-  hasKey(key: string): boolean {
+  hasKey(key: string): Promise<boolean> {
     return this.cache.hasOwnProperty(key);
   }
 

@@ -1,11 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Cache } from '../cache';
 import { decodeJwt } from '../jwt';
 import { getXsuaaServiceCredentials } from '../environment-accessor';
 import { parseSubdomain } from '../subdomain-replacer';
 import { Destination, DestinationAuthToken } from './destination-service-types';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
+  DefaultDestinationCache,
   DestinationCache,
   getDefaultIsolationStrategy,
   IsolationStrategy
@@ -25,7 +25,7 @@ const logger = createLogger({
  * @internal
  */
 export const registerDestinationCache = DestinationCache(
-  new Cache<Destination>(undefined) as any
+  new DefaultDestinationCache(undefined)
 );
 
 type RegisterDestinationOptions = Pick<

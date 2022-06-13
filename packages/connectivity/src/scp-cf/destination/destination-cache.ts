@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache, CacheEntry } from '../cache';
+import { Cache, CacheEntry, DateInputObject } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { JwtPayload } from '../jsonwebtoken-type';
@@ -25,9 +25,59 @@ export enum IsolationStrategy {
  * To set a custom implementation, call method [[setDestinationCache]] and pass the cache instance.
  */
 export interface DestinationCacheInterface {
+  hasKey(key: string): Promise<boolean>;
   get(key: string | undefined): Promise<Destination | undefined>;
   set(key: string | undefined, item: CacheEntry<Destination>): Promise<void>;
   clear(): Promise<void>;
+}
+
+/**
+ * @internal
+ * This wrapper class wraps methods of [[Cache]] class as asynchronous methods.
+ */
+export class DefaultDestinationCache implements DestinationCacheInterface {
+  cache: Cache<Destination>;
+
+  constructor(validityTime?: DateInputObject) {
+    this.cache = new Cache<Destination>(validityTime);
+  }
+
+  /**
+   * Specifies whether an entry with a given key is defined in cache.
+   * @param key - The entry's key.
+   * @returns A boolean value that indicates whether the entry exists in cache.
+   */
+  async hasKey(key: string): Promise<boolean> {
+    return this.cache.hasKey(key);
+  }
+
+  /**
+   * Getter of cached entries.
+   * @param key - The key of the entry to retrieve.
+   * @returns The corresponding entry to the provided key if it is still valid, returns `undefined` otherwise.
+   */
+  async get(key: string | undefined): Promise<Destination | undefined> {
+    return this.cache.get(key);
+  }
+
+  /**
+   * Setter of entries in cache.
+   * @param key - The entry's key.
+   * @param item - The entry to cache.
+   */
+  async set(
+    key: string | undefined,
+    item: CacheEntry<Destination>
+  ): Promise<void> {
+    return this.cache.set(key, item);
+  }
+
+  /**
+   * Clear all cached items.
+   */
+  async clear(): Promise<void> {
+    return this.cache.clear();
+  }
 }
 
 /**
@@ -60,7 +110,11 @@ export interface DestinationCacheType<T extends DestinationCacheInterface> {
  * @internal
  */
 export const DestinationCache = <T extends DestinationCacheInterface>(
-  cache: T = new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 }) as any
+  cache: T = new DefaultDestinationCache({
+    hours: 0,
+    minutes: 5,
+    seconds: 0
+  }) as any
 ): DestinationCacheType<T> => ({
   retrieveDestinationFromCache: async (
     decodedJwt: Record<string, any>,

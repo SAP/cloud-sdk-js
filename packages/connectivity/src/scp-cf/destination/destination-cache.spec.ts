@@ -170,7 +170,7 @@ describe('destination cache', () => {
         iasToXsuaaTokenExchange: false
       });
       const cacheKeys = Object.keys(
-        (destinationCache.getCacheInstance() as any).cache
+        await (destinationCache.getCacheInstance() as any).cache.cache
       );
       expect(cacheKeys[0]).toBe(
         getDestinationCacheKey(

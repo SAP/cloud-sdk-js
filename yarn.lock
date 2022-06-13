@@ -1150,10 +1150,10 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds@^5.6.0", "@sap/cds@^5.9.2", "@sap/cds@^5.9.6":
-  version "5.9.6"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.6.tgz#89a44aea226c1d44f885d695cf076a561f835645"
-  integrity sha512-zzDoRrgAbRXUQ2n+BrDErtAyylMgcJxgWhsiJvjiZVMxAucJMPp9V+WlRsaGwSm8O6STC6NHcv9PWQ7500y9EQ==
+"@sap/cds@^5.6.0", "@sap/cds@^5.9.2", "@sap/cds@^5.9.7":
+  version "5.9.7"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.7.tgz#3a0aab43402fd9471dc11ab23aa05823bcb7f5ce"
+  integrity sha512-PUN7a6AvaagRzOmE6hb5F9YhuP8uDedCrM3LuFJQOD4pHed4fpfIOUwkHqu7eyRbvi+cPKbO4Z9a6fUqteRCBQ==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"

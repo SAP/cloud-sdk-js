@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --ignore-engines
       - run: yarn test:unit --continue -- -- -- --json --outputFile=unit-test-output.json
       - run: yarn test:integration -- -- -- --json --outputFile=int-test-output.json
         if: always()

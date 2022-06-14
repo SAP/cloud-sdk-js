@@ -52,7 +52,7 @@
     }
   ],
   "typedocOptions": {
-    "out": "docs/api/2.4.0",
+    "out": "docs/api/2.5.0",
     "entryPoints": [
       "packages/util/src/index.ts",
       "packages/connectivity/src/index.ts",

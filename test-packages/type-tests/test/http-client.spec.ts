@@ -1,4 +1,7 @@
-import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
+import {
+  executeHttpRequest,
+  executeHttpRequestWithOrigin
+} from '@sap-cloud-sdk/http-client';
 
 // $ExpectType Promise<HttpResponse>
 executeHttpRequest(
@@ -26,4 +29,24 @@ executeHttpRequest(
   // $ExpectError
   { url: 'https://example.com', destinationName: 'myDestinationName' },
   { method: 'get' }
+);
+
+// $ExpectType Promise<HttpResponse>
+executeHttpRequest(
+  { destinationName: 'dest' },
+  {
+    method: 'get',
+    headers: { authorization: 'customAuth' },
+    params: { myParam: 'customParam' }
+  }
+);
+
+// $ExpectType Promise<HttpResponse>
+executeHttpRequestWithOrigin(
+  { destinationName: 'dest' },
+  {
+    method: 'get',
+    headers: { requestConfig: { authorization: 'defaultAuth' } },
+    params: { requestConfig: { myParam: 'defaultParam' } }
+  }
 );

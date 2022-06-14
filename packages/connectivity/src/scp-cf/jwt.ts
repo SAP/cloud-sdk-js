@@ -281,7 +281,7 @@ export interface JwtPair {
 }
 
 /**
- * Build JwtPair from a encoded JWT.
+ * Build JwtPair from an encoded JWT.
  * @internal
  */
 export function getJwtPair(encodedJwt: string): JwtPair {

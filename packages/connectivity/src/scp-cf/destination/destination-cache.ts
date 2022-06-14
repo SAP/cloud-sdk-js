@@ -83,7 +83,7 @@ export class DefaultDestinationCache implements DestinationCacheInterface {
 /**
  * @internal
  */
-export interface DestinationCacheType<T extends DestinationCacheInterface> {
+export interface DestinationCacheType {
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,
@@ -100,7 +100,7 @@ export interface DestinationCacheType<T extends DestinationCacheInterface> {
     isolation: IsolationStrategy
   ) => Promise<void>;
   clear: () => Promise<void>;
-  getCacheInstance: () => T;
+  getCacheInstance: () => DestinationCacheInterface;
 }
 
 /**
@@ -109,13 +109,13 @@ export interface DestinationCacheType<T extends DestinationCacheInterface> {
  * @returns A destination cache object.
  * @internal
  */
-export const DestinationCache = <T extends DestinationCacheInterface>(
-  cache: T = new DefaultDestinationCache({
+export const DestinationCache = (
+  cache: DestinationCacheInterface = new DefaultDestinationCache({
     hours: 0,
     minutes: 5,
     seconds: 0
-  }) as any
-): DestinationCacheType<T> => ({
+  })
+): DestinationCacheType => ({
   retrieveDestinationFromCache: async (
     decodedJwt: Record<string, any>,
     name: string,
@@ -214,16 +214,14 @@ async function cacheRetrievedDestination<T extends DestinationCacheInterface>(
  * NOTE: This function should be called at the beginning before any calls to either [[getDestination]] or [[executeHttpRequest]].
  * @param cache - An instance of [[DestinationCacheInterface]].
  */
-export function setDestinationCache<T extends DestinationCacheInterface>(
-  cache: T
-): void {
+export function setDestinationCache(cache: DestinationCacheInterface): void {
   destinationCache = DestinationCache(cache);
 }
 
 /**
  * @internal
  */
-export let destinationCache = DestinationCache();
+export let destinationCache: DestinationCacheType = DestinationCache();
 /**
  * Determin the default Isolation strategy if not given as option.
  * @param jwt - JWT to determine the default isolation strategy

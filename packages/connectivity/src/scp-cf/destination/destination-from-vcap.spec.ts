@@ -1,5 +1,8 @@
 import { getDestination } from './destination-accessor';
-import { destinationForServiceBinding } from './destination-from-vcap';
+import {
+  destinationForServiceBinding,
+  ServiceBinding
+} from './destination-from-vcap';
 
 describe('vcap-service-destination', () => {
   beforeEach(() => {
@@ -11,7 +14,9 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination for the business logging service', () => {
-    expect(destinationForServiceBinding('my-business-logging')).toEqual({
+    expect(
+      destinationForServiceBinding('my-business-logging')
+    ).resolves.toEqual({
       url: 'https://business-logging.my.system.com',
       authentication: 'OAuth2ClientCredentials',
       username: 'CLIENT_!_|_!_ID',
@@ -20,7 +25,7 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination for the XF s4 hana cloud service', () => {
-    expect(destinationForServiceBinding('S4_SYSTEM')).toEqual({
+    expect(destinationForServiceBinding('S4_SYSTEM')).resolves.toEqual({
       url: 'https://my.system.com',
       authentication: 'BasicAuthentication',
       username: 'USER_NAME',
@@ -29,13 +34,17 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination using a custom transformation function', () => {
-    const serviceBindingTransformFn = serviceBinding => ({
+    const serviceBindingTransformFn = async (
+      serviceBinding: ServiceBinding
+    ) => ({
       url: serviceBinding.credentials.sys
     });
 
     expect(
-      destinationForServiceBinding('my-custom-service', { serviceBindingTransformFn })
-    ).toEqual({
+      destinationForServiceBinding('my-custom-service', {
+        serviceBindingTransformFn
+      })
+    ).resolves.toEqual({
       url: 'https://custom-service.my.system.com'
     });
   });
@@ -43,33 +52,35 @@ describe('vcap-service-destination', () => {
   it('throws an error if the service type is not supported', () => {
     expect(() =>
       destinationForServiceBinding('my-custom-service')
-    ).toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingSnapshot();
   });
 
   it('throws an error if no service binding can be found for the given name', () => {
     expect(() =>
       destinationForServiceBinding('non-existent-service')
-    ).toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingSnapshot();
   });
 
   it('throws an error if there are no service bindings at all', () => {
     delete process.env.VCAP_SERVICES;
     expect(() =>
       destinationForServiceBinding('my-custom-service')
-    ).toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingSnapshot();
   });
 
   it('finds the destination when searching for service bindings', async () => {
-    const serviceBindingTransformFn = serviceBinding => ({
+    const serviceBindingTransformFn = async (
+      serviceBinding: ServiceBinding
+    ) => ({
       url: serviceBinding.credentials.sys
     });
 
-    const actual = await getDestination({
-      destinationName: 'my-custom-service',
-      serviceBindingTransformFn
-    });
-
-    expect(actual).toEqual({
+    expect(
+      getDestination({
+        destinationName: 'my-custom-service',
+        serviceBindingTransformFn
+      })
+    ).resolves.toEqual({
       url: 'https://custom-service.my.system.com'
     });
   });

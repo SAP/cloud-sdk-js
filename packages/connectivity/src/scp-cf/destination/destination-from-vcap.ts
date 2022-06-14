@@ -22,14 +22,14 @@ const logger = createLogger({
  * @returns A destination.
  * @internal
  */
-export function destinationForServiceBinding(
+export async function destinationForServiceBinding(
   serviceInstanceName: string,
   options: DestinationForServiceBindingsOptions = {}
-): Destination {
+): Promise<Destination> {
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
   const destination = options.serviceBindingTransformFn
-    ? options.serviceBindingTransformFn(selected)
+    ? await options.serviceBindingTransformFn(selected)
     : transform(selected);
 
   return destination &&
@@ -47,7 +47,9 @@ export interface DestinationForServiceBindingsOptions {
   /**
    * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
    */
-  serviceBindingTransformFn?: (serviceBinding: ServiceBinding) => Destination;
+  serviceBindingTransformFn?: (
+    serviceBinding: ServiceBinding
+  ) => Promise<Destination>;
 }
 
 /**
@@ -180,14 +182,17 @@ function xfS4hanaCloudBindingToDestination(
 /**
  * @internal
  */
-export function searchServiceBindingForDestination(
+export async function searchServiceBindingForDestination(
   options: DestinationFetchOptions & DestinationForServiceBindingsOptions
-): Destination | null {
+): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
-    const destination = destinationForServiceBinding(options.destinationName, {
-      serviceBindingTransformFn: options.serviceBindingTransformFn
-    });
+    const destination = await destinationForServiceBinding(
+      options.destinationName,
+      {
+        serviceBindingTransformFn: options.serviceBindingTransformFn
+      }
+    );
     logger.info('Successfully retrieved destination from service binding.');
     return destination;
   } catch (error) {

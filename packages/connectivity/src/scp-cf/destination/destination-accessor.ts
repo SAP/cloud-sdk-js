@@ -46,10 +46,10 @@ export async function useOrFetchDestination(
 export async function getDestination(
   options: DestinationFetchOptions & DestinationForServiceBindingsOptions
 ): Promise<Destination | null> {
-  return (
+  const destination =
     searchEnvVariablesForDestination(options) ||
     searchRegisteredDestination(options) ||
-    searchServiceBindingForDestination(options) ||
-    getDestinationFromDestinationService(options)
-  );
+    (await searchServiceBindingForDestination(options)) ||
+    (await getDestinationFromDestinationService(options));
+  return destination;
 }

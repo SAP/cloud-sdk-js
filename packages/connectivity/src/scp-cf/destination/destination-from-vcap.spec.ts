@@ -29,12 +29,12 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination using a custom transformation function', () => {
-    const transformationFn = serviceBinding => ({
+    const serviceBindingTransformFn = serviceBinding => ({
       url: serviceBinding.credentials.sys
     });
 
     expect(
-      destinationForServiceBinding('my-custom-service', { transformationFn })
+      destinationForServiceBinding('my-custom-service', { serviceBindingTransformFn })
     ).toEqual({
       url: 'https://custom-service.my.system.com'
     });
@@ -60,13 +60,13 @@ describe('vcap-service-destination', () => {
   });
 
   it('finds the destination when searching for service bindings', async () => {
-    const transformationFn = serviceBinding => ({
+    const serviceBindingTransformFn = serviceBinding => ({
       url: serviceBinding.credentials.sys
     });
 
     const actual = await getDestination({
       destinationName: 'my-custom-service',
-      transformationFn
+      serviceBindingTransformFn
     });
 
     expect(actual).toEqual({

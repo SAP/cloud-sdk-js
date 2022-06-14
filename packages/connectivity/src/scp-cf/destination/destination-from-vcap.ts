@@ -28,8 +28,8 @@ export function destinationForServiceBinding(
 ): Destination {
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
-  const destination = options.transformationFn
-    ? options.transformationFn(selected)
+  const destination = options.serviceBindingTransformFn
+    ? options.serviceBindingTransformFn(selected)
     : transform(selected);
 
   return destination &&
@@ -47,7 +47,7 @@ export interface DestinationForServiceBindingsOptions {
   /**
    * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
    */
-  transformationFn?: (serviceBinding: ServiceBinding) => Destination;
+  serviceBindingTransformFn?: (serviceBinding: ServiceBinding) => Destination;
 }
 
 /**
@@ -186,7 +186,7 @@ export function searchServiceBindingForDestination(
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
     const destination = destinationForServiceBinding(options.destinationName, {
-      transformationFn: options.transformationFn
+      serviceBindingTransformFn: options.serviceBindingTransformFn
     });
     logger.info('Successfully retrieved destination from service binding.');
     return destination;

@@ -75,15 +75,16 @@ export function searchRegisteredDestination(
   try {
     decodedJwt = decodedJwtOrZid(options);
   } catch (e) {
-    logger.warn(
-      'Failed to decode jwt or create a dummy jwt with `zid` property.'
+    logger.debug(
+      'Could not retrieve destination from registered destination. Failed to decode jwt or create a dummy jwt with `zid` property.'
     );
-    logger.warn(e);
+    logger.debug(e);
+    return null;
   }
 
   const destination =
     registerDestinationCache.retrieveDestinationFromCache(
-      decodedJwt ?? {},
+      decodedJwt,
       options.destinationName,
       isolationStrategy(options)
     ) || null;

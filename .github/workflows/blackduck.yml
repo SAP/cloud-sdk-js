@@ -7,11 +7,8 @@ on:
 
 jobs:
   tests:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     timeout-minutes: 15
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
@@ -24,8 +21,8 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-          key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
+          key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile --ignore-engines
       - run: sudo apt-get install jq
       - run: echo "project_version=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
       - name: Blackduck Scan

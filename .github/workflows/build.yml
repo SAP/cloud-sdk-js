@@ -10,12 +10,11 @@ on:
 
 jobs:
   tests:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
         node-version: [12, 14, 16, 18]
     steps:
       - uses: actions/checkout@v3
@@ -29,7 +28,7 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-          key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
+          key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --ignore-engines --frozen-lockfile
       - run: yarn test:unit
         env:
@@ -125,7 +124,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --ignore-engines
       - name: Canary Release
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc

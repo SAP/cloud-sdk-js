@@ -1,6 +1,4 @@
-import {
-  testService
-} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import {
   filterFunctions,
   length,

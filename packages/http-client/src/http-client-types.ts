@@ -121,6 +121,25 @@ export interface OriginOptions {
 /**
  * @internal
  */
+export function isOriginOptions(obj: any): obj is OriginOptions {
+  return !!obj && typeof obj['requestConfig'] === 'object';
+}
+
+/**
+ * @internal
+ */
+export function isHttpRequestConfigWithOrigin(
+  requestConfig: HttpRequestConfig | HttpRequestConfigWithOrigin
+): requestConfig is HttpRequestConfigWithOrigin {
+  return (
+    isOriginOptions(requestConfig.headers) ||
+    isOriginOptions(requestConfig.params)
+  );
+}
+
+/**
+ * @internal
+ */
 export interface OriginOptionsInternal {
   requestConfig?: Record<string, any>;
   destination?: Record<string, any>;

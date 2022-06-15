@@ -16,7 +16,7 @@
 
 -
 
-## New Functionality
+## New Functionalities
 
 -
 
@@ -27,6 +27,21 @@
 ## Fixed Issues
 
 -
+
+# 2.5.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.5.0
+
+## Compatibility Notes
+
+- [odata-common, generator] Change `Edm.String`, `Edm.Boolean` and `Edm.Guid` to be orderable to support `lt`/`lessThan()`, `le`/`lessOrEqual()`, `gt`/`greaterThan()`, and `ge`/`greaterOrEqual` operators. Re-generate odata services to adopt the changes. (c3166ff6)
+- [util] Stop using `VCAP_SERVICES` to determine the log format. Use `setLogFormat` and `setGlobalLogFormat` to specify the log format. By default, the log format is set to `kibana` for `NODE_ENV=production` and `local` otherwise. (89f1c423)
+
+## Fixed Issues
+
+- [http-client] Fix the `executeHttpRequest` function, so it accepts the same parameters as in version 1.
+  [Compatibility Note] Deprecate one overload of the `executeHttpRequest` function, that accepts `HttpRequestConfigWithOrigin` as a parameter. Use the new function `executeHttpRequestWithOrigin` as replacement.
+  [New Functionality] Support defining header options and query parameter options with origins. (9481ec69)
 
 # 2.4.0
 

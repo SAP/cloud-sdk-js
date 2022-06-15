@@ -381,7 +381,13 @@ const configMapping: Record<string, keyof Destination> = {
   KeyStoreLocation: 'keyStoreName',
   KeyStorePassword: 'keyStorePassword',
   SystemUser: 'systemUser',
+  /**
+   * Base64-encoded JSON web key set, containing the signing keys which are used to validate the JWT provided in the X-User-Token header.
+   */
   'x_user_token.jwks': 'jwks',
+  /**
+   * URI of the JSON web key set, containing the signing keys which are used to validate the JWT provided in the X-User-Token header.
+   */
   'x_user_token.jwks_uri': 'jwksUri'
 };
 

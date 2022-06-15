@@ -61,20 +61,42 @@ interface DestinationSearchResult {
   origin: DestinationOrigin;
 }
 
+/**
+ * Different types of tokens handed in from by the caller.
+ * We name these tokens `subscriber token`, because they are related to the subscriber account in contrast to the account the application is running in (provider account).
+ * Potentially tenant defined in the subscriber token can be the same as the provider tenant for single tenant application.
+ */
 type SubscriberTokens = IssToken | XsuaaToken | CustomToken;
 
+/**
+ * User provided a dummy token with the `iss` property.
+ * This is used if a different tenant than the provider ones should be accessed but no user related login (JWT) for this tenant is available.
+ * Therefore, the userJwt is undefined and only a destination service token has been issued.
+ */
 interface IssToken {
   type: 'iss';
   userJwt: undefined;
   serviceJwt: JwtPair;
 }
 
+/**
+ * User provided a token issued form the XSUAA.
+ * This token has the JKU properties to be verified by the SDK.
+ * The provided token is the userJwt containing the `zid` and `user_id` properties.
+ * The service token was derived from this token and is for the same tenant.
+ */
 interface XsuaaToken {
   type: 'xsuaa';
   userJwt: JwtPair;
   serviceJwt: JwtPair;
 }
 
+/**
+ * User provided a token from a custom issuer (not XSUAA).
+ * Such a token can not be converted to a service token by the XSUAA.
+ * Therefore, the serviceJwt is undefined and the SDK does not do a token validation - the destination service does this based on jwks properties on the destination.
+ * For service calls the provider service token is used so this types works only for single tenant application.
+ */
 interface CustomToken {
   type: 'custom';
   userJwt: JwtPair;
@@ -168,6 +190,20 @@ class DestinationFromServiceRetriever {
     );
     da.updateDestinationCache(withProxySetting, destinationResult.origin);
     return withProxySetting;
+  }
+
+  private static checkDestinationForCustomJwt(destination: Destination): void {
+    if (!destination.jwks && !destination.jwksUri) {
+      throw new Error(
+        'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
+      );
+    }
+  }
+
+  private static isUserJwt(
+    token: SubscriberTokens | undefined
+  ): token is CustomToken | XsuaaToken {
+    return !!token && token.type !== 'iss';
   }
 
   private static async getSubscriberToken(
@@ -348,9 +384,9 @@ class DestinationFromServiceRetriever {
     const exchangeTenant = this.getExchangeTenant(destination);
     const clientGrant = await serviceToken('destination', {
       jwt:
-        origin === 'subscriber' && this.subscriberToken?.type !== 'custom'
-          ? this.subscriberToken!.serviceJwt.decoded
-          : this.providerServiceToken.decoded
+        origin === 'provider'
+          ? this.providerServiceToken.decoded
+          : this.subscriberToken!.serviceJwt!.decoded
     });
     return { authHeaderJwt: clientGrant, exchangeTenant };
   }
@@ -379,7 +415,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   ): Promise<AuthAndExchangeTokens> {
     const { destination, origin } = destinationResult;
     const { destinationName } = this.options;
-    if (!this.subscriberToken || this.subscriberToken.type === 'iss') {
+    if (!DestinationFromServiceRetriever.isUserJwt(this.subscriberToken)) {
       throw Error(
         `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
       );
@@ -389,11 +425,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
     // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as wll. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
     if (this.subscriberToken.type === 'custom') {
-      if (!destination.jwks && !destination.jwksUri) {
-        throw new Error(
-          'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
-        );
-      }
+      DestinationFromServiceRetriever.checkDestinationForCustomJwt(destination);
     }
 
     // Case 1 Destination in provider and jwt issued for provider account But not custom JWT given-> not extra x-user-token header needed
@@ -417,9 +449,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
     // Case 2 Subscriber and provider account not the same OR custom jwt -> x-user-token  header passed to determine user and tenant in token service URL and service token to get the destination
     const serviceJwt =
-      this.subscriberToken.type !== 'custom' && origin === 'subscriber'
-        ? this.subscriberToken.serviceJwt
-        : this.providerServiceToken;
+      origin === 'provider'
+        ? this.providerServiceToken
+        : this.subscriberToken.serviceJwt!;
     logger.debug(
       `UserExchange flow started for destination ${destinationName} of the ${origin} account.`
     );
@@ -636,9 +668,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     if (destination.originalProperties?.TrustStoreLocation) {
       const trustStoreCertificate = await fetchCertificate(
         this.destinationServiceCredentials.uri,
-        origin === 'subscriber' && this.subscriberToken?.type !== 'custom'
-          ? this.subscriberToken!.serviceJwt.encoded
-          : this.providerServiceToken.encoded,
+        origin === 'provider'
+          ? this.providerServiceToken.encoded
+          : this.subscriberToken!.serviceJwt!.encoded,
         destination.originalProperties.TrustStoreLocation
       );
       destination.trustStoreCertificate = trustStoreCertificate;

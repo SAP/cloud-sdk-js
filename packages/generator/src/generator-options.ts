@@ -1,6 +1,9 @@
 import { PathLike } from 'fs';
 import { resolve } from 'path';
 import { Options } from 'yargs';
+import { createLogger } from '@sap-cloud-sdk/util';
+
+const logger = createLogger('generator-options');
 
 /**
  * Options that can be used to configure the generation when using the generator programmatically.
@@ -118,7 +121,15 @@ export const generatorOptionsCli: KeysToOptions = {
   versionInPackageJson: {
     describe:
       'By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version.',
-    type: 'string'
+    type: 'string',
+    deprecated:
+      "Since v2.6.0. Use the 'include' option to add your own package.json file instead.",
+    coerce: (input: string): string => {
+      logger.warn(
+        "The option 'versionInPackageJson' is deprecated since v2.6.0. Use the 'include' option to add your own package.json file instead."
+      );
+      return input;
+    }
   },
   licenseInPackageJson: {
     describe:

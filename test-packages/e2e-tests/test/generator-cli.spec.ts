@@ -62,7 +62,7 @@ describe('generator-cli', () => {
   }, 60000);
 
   it('should set version when versionInPackageJson parameter is used', async () => {
-    await execa('npx', [
+    const process = await execa('npx', [
       'ts-node',
       pathToGenerator,
       '-c',
@@ -74,5 +74,9 @@ describe('generator-cli', () => {
       fs.readFileSync(`${outputDir}/test-service/package.json`).toString()
     );
     expect(actualPackageJson.version).toEqual('42.23');
+
+    expect(process.stdout).toMatch(
+      /The option 'versionInPackageJson' is deprecated since v2.6.0./
+    );
   }, 60000);
 });

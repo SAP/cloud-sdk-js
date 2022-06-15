@@ -60,7 +60,7 @@ describe('jwt', () => {
       expect(isXsuaaToken(jwt)).toBe(false);
     });
 
-    it('returns false if jku and uaa are from same domain', () => {
+    it('returns false if jku and uaa are from different domain', () => {
       const jwt = decodeJwtComplete(
         signedJwtForVerification(
           {},

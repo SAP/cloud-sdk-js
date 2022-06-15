@@ -14,7 +14,7 @@ export interface GeneratorOptions {
   serviceMapping?: PathLike;
   useSwagger: boolean;
   writeReadme: boolean;
-  additionalFiles?: string;
+  include?: string;
   forceOverwrite: boolean;
   clearOutputDir: boolean;
   generateNpmrc: boolean;
@@ -27,6 +27,7 @@ export interface GeneratorOptions {
   sdkAfterVersionScript: boolean;
   s4hanaCloud: boolean;
   generateCSN: boolean;
+  packageVersion: string;
 }
 /**
  * @internal
@@ -86,13 +87,12 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false,
     hidden: true
   },
-  additionalFiles: {
+  include: {
     describe:
       'Glob describing additional files to be added to the each generated service directory - relative to the inputDir.',
     type: 'string',
     coerce: coercePathArg,
-    normalize: true,
-    hidden: true
+    normalize: true
   },
   forceOverwrite: {
     describe:
@@ -160,6 +160,12 @@ export const generatorOptionsCli: KeysToOptions = {
     describe: 'When set to true, SDK metadata for the API hub is generated.',
     type: 'boolean',
     default: false,
+    hidden: true
+  },
+  packageVersion: {
+    describe: 'Version of the generated package.',
+    type: 'string',
+    default: '1.0.0',
     hidden: true
   },
   s4hanaCloud: {

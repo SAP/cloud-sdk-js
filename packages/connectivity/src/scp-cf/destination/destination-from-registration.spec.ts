@@ -39,7 +39,7 @@ describe('register-destination', () => {
   });
 
   it('registers destination and retrieves it', async () => {
-    registerDestination(testDestination);
+    await registerDestination(testDestination);
     const actual = await getDestination({
       destinationName: testDestination.name
     });
@@ -47,7 +47,7 @@ describe('register-destination', () => {
   });
 
   it('registers destination and retrieves it with JWT', async () => {
-    registerDestination(testDestination, { jwt: providerServiceToken });
+    await registerDestination(testDestination, { jwt: providerServiceToken });
     const actual = await getDestination({
       destinationName: testDestination.name,
       jwt: providerServiceToken
@@ -56,52 +56,53 @@ describe('register-destination', () => {
   });
 
   it('returns undefined if destination key is not found', async () => {
-    const actual = searchRegisteredDestination({
+    const actual = await searchRegisteredDestination({
       destinationName: 'Non-existing-destination'
     });
     expect(actual).toBeNull();
   });
 
-  it('caches with tenant-isolation if no JWT is given', () => {
-    registerDestination(testDestination);
-    expect(
+  it('caches with tenant-isolation if no JWT is given', async () => {
+    await registerDestination(testDestination);
+    await expect(
       registerDestinationCache
         .getCacheInstance()
         .hasKey('provider::RegisteredDestination')
-    ).toBe(true);
+    ).resolves.toBe(true);
   });
 
-  it('caches with tenant isolation if JWT does not contain user-id', () => {
-    registerDestination(testDestination, { jwt: subscriberServiceToken });
-    expect(
+  it('caches with tenant isolation if JWT does not contain user-id', async () => {
+    await registerDestination(testDestination, { jwt: subscriberServiceToken });
+    await expect(
       registerDestinationCache
         .getCacheInstance()
         .hasKey('subscriber::RegisteredDestination')
-    ).toBe(true);
+    ).resolves.toBe(true);
   });
 
-  it('caches with tenant-user-isolation if JWT is given', () => {
-    registerDestination(testDestination, { jwt: subscriberUserJwt });
-    expect(
+  it('caches with tenant-user-isolation if JWT is given', async () => {
+    await registerDestination(testDestination, { jwt: subscriberUserJwt });
+    await expect(
       registerDestinationCache
         .getCacheInstance()
         .hasKey('user-sub:subscriber:RegisteredDestination')
-    ).toBe(true);
+    ).resolves.toBe(true);
   });
 
   it('cache if tenant if you want', async () => {
-    registerDestination(testDestination, {
+    await registerDestination(testDestination, {
       jwt: subscriberUserJwt,
       isolationStrategy: IsolationStrategy.Tenant
     });
-    expect(
+    await expect(
       registerDestinationCache
         .getCacheInstance()
         .hasKey('subscriber::RegisteredDestination')
-    ).toBe(true);
+    ).resolves.toBe(true);
   });
 
   it('caches with unlimited time', async () => {
+    jest.useFakeTimers('modern');
     registerDestination(testDestination);
     const minutesToExpire = 9999;
     // Shift time to expire the set item
@@ -175,13 +176,13 @@ describe('register-destination without xsuaa binding', () => {
     mockServiceBindings(undefined, false);
   });
 
-  afterEach(() => {
-    registerDestinationCache.clear();
+  afterEach(async () => {
+    await registerDestinationCache.clear();
     unmockDestinationsEnv();
   });
 
   it('registers destination and retrieves it with JWT', async () => {
-    registerDestination(testDestination, { jwt: providerServiceToken });
+    await registerDestination(testDestination, { jwt: providerServiceToken });
     const actual = await getDestination({
       destinationName: testDestination.name,
       jwt: providerServiceToken
@@ -190,8 +191,8 @@ describe('register-destination without xsuaa binding', () => {
   });
 
   it('throws an error when no JWT is provided', async () => {
-    expect(() =>
+    await expect(() =>
       registerDestination(testDestination)
-    ).toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingSnapshot();
   });
 });

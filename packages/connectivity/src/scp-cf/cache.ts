@@ -1,10 +1,14 @@
 interface CacheInterface<T> {
   hasKey(key: string): boolean;
-  get(key: string): T | undefined;
-  set(key: string, item: T, expirationTime?: number): void;
+  get(key: string | undefined): T | undefined;
+  set(key: string | undefined, item: CacheEntry<T>): void;
+  clear(): void;
 }
 
-interface DateInputObject {
+/**
+ * @internal
+ */
+export interface DateInputObject {
   hours?: number;
   minutes?: number;
   seconds?: number;
@@ -12,7 +16,7 @@ interface DateInputObject {
 }
 
 /**
- * @internal
+ * Respresentation of a cached object.
  */
 export interface CacheEntry<T> {
   expires?: number;
@@ -81,15 +85,13 @@ export class Cache<T> implements CacheInterface<T> {
   /**
    * Setter of entries in cache.
    * @param key - The entry's key.
-   * @param entry - The entry to cache.
-   * @param expirationTime - The time expressed in UTC in which the given entry expires.
+   * @param item - The entry to cache.
    */
-  set(key: string | undefined, entry: T, expirationTime?: number): void {
+  set(key: string | undefined, item: CacheEntry<T>): void {
     if (key) {
-      const expires = expirationTime
-        ? expirationTime
-        : inferExpirationTime(this.defaultValidityTime);
-      this.cache[key] = { entry, expires };
+      const expires =
+        item.expires ?? inferExpirationTime(this.defaultValidityTime);
+      this.cache[key] = { entry: item.entry, expires };
     }
   }
 }

@@ -27,7 +27,7 @@ describe('field-type-class', () => {
         {
           kind: StructureKind.Property,
           name: 'complexity',
-          type: "EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false>",
+          type: "OrderableEdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false>",
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Complexity', 'Edm.String', false)",
           docs: [

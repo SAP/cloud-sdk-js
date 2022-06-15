@@ -21,9 +21,9 @@ const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
       destinationServiceUri,
       IsolationStrategy.Tenant
     );
-    cache.set(key, destinations);
+    cache.set(key, { entry: destinations });
   },
-  clear: () => {
+  clear: (): void => {
     cache.clear();
   },
   getCacheInstance: () => cache

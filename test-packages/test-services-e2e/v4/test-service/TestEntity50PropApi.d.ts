@@ -8,8 +8,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  OrderableEdmTypeField,
-  EdmTypeField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntity50PropApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -62,7 +61,7 @@ export declare class TestEntity50PropApi<
       false,
       true
     >;
-    STRING_PROPERTY_1: EdmTypeField<
+    STRING_PROPERTY_1: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -91,7 +90,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    GUID_PROPERTY_1: EdmTypeField<
+    GUID_PROPERTY_1: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -120,7 +119,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    BOOLEAN_PROPERTY_1: EdmTypeField<
+    BOOLEAN_PROPERTY_1: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -352,7 +351,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    STRING_PROPERTY_2: EdmTypeField<
+    STRING_PROPERTY_2: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -381,7 +380,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    GUID_PROPERTY_2: EdmTypeField<
+    GUID_PROPERTY_2: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -410,7 +409,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    BOOLEAN_PROPERTY_2: EdmTypeField<
+    BOOLEAN_PROPERTY_2: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -642,7 +641,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    STRING_PROPERTY_3: EdmTypeField<
+    STRING_PROPERTY_3: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -671,7 +670,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    GUID_PROPERTY_3: EdmTypeField<
+    GUID_PROPERTY_3: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -700,7 +699,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    BOOLEAN_PROPERTY_3: EdmTypeField<
+    BOOLEAN_PROPERTY_3: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -932,7 +931,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    STRING_PROPERTY_4: EdmTypeField<
+    STRING_PROPERTY_4: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -961,7 +960,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    GUID_PROPERTY_4: EdmTypeField<
+    GUID_PROPERTY_4: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -990,7 +989,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    BOOLEAN_PROPERTY_4: EdmTypeField<
+    BOOLEAN_PROPERTY_4: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -1222,7 +1221,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    STRING_PROPERTY_5: EdmTypeField<
+    STRING_PROPERTY_5: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -1251,7 +1250,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    GUID_PROPERTY_5: EdmTypeField<
+    GUID_PROPERTY_5: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,
@@ -1280,7 +1279,7 @@ export declare class TestEntity50PropApi<
       true,
       true
     >;
-    BOOLEAN_PROPERTY_5: EdmTypeField<
+    BOOLEAN_PROPERTY_5: OrderableEdmTypeField<
       TestEntity50Prop<
         DeSerializers<
           any,

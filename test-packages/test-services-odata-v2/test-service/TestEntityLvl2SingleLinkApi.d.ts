@@ -8,7 +8,6 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField,
   OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityLvl2SingleLinkApi<
@@ -41,7 +40,7 @@ export declare class TestEntityLvl2SingleLinkApi<
   >;
   private _schema?;
   get schema(): {
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2SingleLink<
         DeSerializers<
           any,
@@ -68,7 +67,7 @@ export declare class TestEntityLvl2SingleLinkApi<
       false,
       true
     >;
-    STRING_PROPERTY: EdmTypeField<
+    STRING_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2SingleLink<
         DeSerializers<
           any,
@@ -95,7 +94,7 @@ export declare class TestEntityLvl2SingleLinkApi<
       true,
       true
     >;
-    BOOLEAN_PROPERTY: EdmTypeField<
+    BOOLEAN_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2SingleLink<
         DeSerializers<
           any,
@@ -122,7 +121,7 @@ export declare class TestEntityLvl2SingleLinkApi<
       true,
       true
     >;
-    GUID_PROPERTY: EdmTypeField<
+    GUID_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2SingleLink<
         DeSerializers<
           any,

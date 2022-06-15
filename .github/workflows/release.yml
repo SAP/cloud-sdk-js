@@ -8,12 +8,12 @@ jobs:
   stable-release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: 'main'
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: 14
       - run: yarn install --frozen-lockfile
       - name: Version 1 Stable Release
         if: startsWith(github.ref, 'refs/tags/v1')
@@ -29,3 +29,27 @@ jobs:
           yarn changeset publish
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
+      - name: Checkout Docs
+        uses: actions/checkout@v3
+        with:
+          repository: SAP/cloud-sdk
+          token: ${{ secrets.GH_DOCS_TOKEN }}
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+          path: ./cloud-sdk
+      - name: Update release notes
+        run: |
+          npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"
+      - name: Open PR
+        run: |
+          cd cloud-sdk
+          git config --local user.email "${{ secrets.GH_DOCS_EMAIL }}"
+          git config --local user.name "${{ secrets.GH_DOCS_USER }}"
+          git checkout -b "update-release-notes"
+          git commit -m "update release notes" -a
+          git push -u origin update-release-notes
+
+          echo ${{ secrets.GH_DOCS_TOKEN }} | gh auth login --hostname github.com --with-token
+          gh config set prompt disabled
+          PR_BODY="Auto-created by update release notes workflow."
+          PR_TITLE="Update JS Release Notes"
+          gh pr create --head "update-release-notes" --title "${PR_TITLE}" --body "${PR_BODY}"

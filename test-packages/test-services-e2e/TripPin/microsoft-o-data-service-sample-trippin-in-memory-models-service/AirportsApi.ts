@@ -16,7 +16,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class AirportsApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -66,21 +66,21 @@ export class AirportsApi<
   }
 
   private _schema?: {
-    ICAO_CODE: EdmTypeField<
+    ICAO_CODE: OrderableEdmTypeField<
       Airports<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    NAME: EdmTypeField<
+    NAME: OrderableEdmTypeField<
       Airports<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    IATA_CODE: EdmTypeField<
+    IATA_CODE: OrderableEdmTypeField<
       Airports<DeSerializers>,
       DeSerializersT,
       'Edm.String',

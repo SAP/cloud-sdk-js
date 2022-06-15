@@ -40,7 +40,7 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
   const destinationProtocol = getProtocolOrDefault(destination);
   if (!getProxyEnvValue(destinationProtocol)) {
     logger.debug(
-      `No Proxy settings for ${destinationProtocol} are found in environment variables - no proxy used`
+      `Could not find proxy settings for ${destinationProtocol} in the environment variables - no proxy used.`
     );
     return ProxyStrategy.NO_PROXY;
   }
@@ -49,7 +49,7 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
     logger.debug(
       `Destination URL ${
         destination.url
-      } is in no_proxy list: ${getNoProxyEnvValue()} - no proxy used`
+      } is in no_proxy list: ${getNoProxyEnvValue()} - no proxy used.`
     );
     return ProxyStrategy.NO_PROXY;
   }
@@ -70,7 +70,7 @@ function getProxyEnvValue(protocol: Protocol): string | undefined {
     process.env[proxyEnvKey.toLowerCase()] ||
     process.env[proxyEnvKey.toUpperCase()];
   logger.debug(
-    `Try to fetch ${proxyEnvKey.toLowerCase()} or ${proxyEnvKey.toUpperCase()} from the process env. Found value is ${proxyEnvValue}`
+    `Tried to read ${proxyEnvKey.toLowerCase()} or ${proxyEnvKey.toUpperCase()} from the environment variables. Found value is ${proxyEnvValue}.`
   );
 
   if (!proxyEnvValue) {

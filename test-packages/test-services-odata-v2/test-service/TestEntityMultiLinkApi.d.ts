@@ -10,7 +10,6 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField,
   OrderableEdmTypeField,
   Link,
   OneToOneLink
@@ -46,7 +45,7 @@ export declare class TestEntityMultiLinkApi<
   get fieldBuilder(): FieldBuilder<typeof TestEntityMultiLink, DeSerializersT>;
   private _schema?;
   get schema(): {
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: OrderableEdmTypeField<
       TestEntityMultiLink<
         DeSerializers<
           any,
@@ -73,7 +72,7 @@ export declare class TestEntityMultiLinkApi<
       false,
       true
     >;
-    STRING_PROPERTY: EdmTypeField<
+    STRING_PROPERTY: OrderableEdmTypeField<
       TestEntityMultiLink<
         DeSerializers<
           any,
@@ -100,7 +99,7 @@ export declare class TestEntityMultiLinkApi<
       true,
       true
     >;
-    BOOLEAN_PROPERTY: EdmTypeField<
+    BOOLEAN_PROPERTY: OrderableEdmTypeField<
       TestEntityMultiLink<
         DeSerializers<
           any,
@@ -127,7 +126,7 @@ export declare class TestEntityMultiLinkApi<
       true,
       true
     >;
-    GUID_PROPERTY: EdmTypeField<
+    GUID_PROPERTY: OrderableEdmTypeField<
       TestEntityMultiLink<
         DeSerializers<
           any,

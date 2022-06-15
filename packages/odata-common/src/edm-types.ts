@@ -89,7 +89,10 @@ export type OrderableEdmType =
   | 'Edm.Time'
   | 'Edm.Date'
   | 'Edm.Duration'
-  | 'Edm.TimeOfDay';
+  | 'Edm.TimeOfDay'
+  | 'Edm.String'
+  | 'Edm.Boolean'
+  | 'Edm.Guid';
 
 /**
  * Convenience function to check whether a given EDM type is of type [[OrderableEdmType]].
@@ -112,6 +115,9 @@ export function isOrderableEdmType(edmType: EdmTypeShared<'any'>): boolean {
     'Edm.Time',
     'Edm.Date',
     'Edm.Duration',
-    'Edm.TimeOfDay'
+    'Edm.TimeOfDay',
+    'Edm.String',
+    'Edm.Boolean',
+    'Edm.Guid'
   ].includes(edmType);
 }

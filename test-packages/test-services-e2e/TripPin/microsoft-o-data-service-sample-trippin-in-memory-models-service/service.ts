@@ -41,7 +41,8 @@ export function microsoftODataServiceSampleTrippinInMemoryModelsService<
   DateTimeOffsetT = Moment,
   DateT = Moment,
   DurationT = Duration,
-  TimeOfDayT = Time
+  TimeOfDayT = Time,
+  EnumT = any
 >(
   deSerializers: Partial<
     DeSerializers<
@@ -62,7 +63,8 @@ export function microsoftODataServiceSampleTrippinInMemoryModelsService<
       DateTimeOffsetT,
       DateT,
       DurationT,
-      TimeOfDayT
+      TimeOfDayT,
+      EnumT
     >
   > = defaultDeSerializers as any
 ): MicrosoftODataServiceSampleTrippinInMemoryModelsService<
@@ -84,7 +86,8 @@ export function microsoftODataServiceSampleTrippinInMemoryModelsService<
     DateTimeOffsetT,
     DateT,
     DurationT,
-    TimeOfDayT
+    TimeOfDayT,
+    EnumT
   >
 > {
   return new MicrosoftODataServiceSampleTrippinInMemoryModelsService(

@@ -70,7 +70,9 @@ describe('generator-cli', () => {
       '--versionInPackageJson=42.23'
     ]);
 
-    const actualPackageJson = JSON.parse(fs.readFileSync(`${outputDir}/test-service/package.json`).toString())
-    expect(actualPackageJson.version).toEqual('42.23')
+    const actualPackageJson = JSON.parse(
+      fs.readFileSync(`${outputDir}/test-service/package.json`).toString()
+    );
+    expect(actualPackageJson.version).toEqual('42.23');
   }, 60000);
 });

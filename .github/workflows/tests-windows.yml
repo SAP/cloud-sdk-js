@@ -8,25 +8,21 @@ on:
 
 jobs:
   tests:
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
     timeout-minutes: 15
-    strategy:
-      matrix:
-        os: [windows-latest]
-        node-version: [14.x]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: git fetch --depth=1
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14
       - run: yarn install --frozen-lockfile
       - run: yarn test:unit --continue -- -- -- --json --outputFile=unit-test-output.json
       - run: yarn test:integration -- -- -- --json --outputFile=int-test-output.json
         if: always()
       - run: yarn test:type
       - name: Archive results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: windows-test-results

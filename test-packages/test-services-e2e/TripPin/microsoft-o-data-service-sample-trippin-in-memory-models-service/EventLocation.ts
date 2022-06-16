@@ -68,7 +68,7 @@ export class EventLocationField<
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo: EdmTypeField<
+  buildingInfo: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',
@@ -79,8 +79,13 @@ export class EventLocationField<
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false> =
-    this._fieldBuilder.buildEdmTypeField('Address', 'Edm.String', false);
+  address: OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    false,
+    false
+  > = this._fieldBuilder.buildEdmTypeField('Address', 'Edm.String', false);
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

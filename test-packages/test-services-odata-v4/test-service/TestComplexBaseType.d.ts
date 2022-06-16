@@ -4,9 +4,9 @@ import {
   DeSerializers,
   DefaultDeSerializers,
   DeserializedType,
-  EdmTypeField,
   Entity,
   FieldOptions,
+  OrderableEdmTypeField,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-v4';
 /**
@@ -42,7 +42,7 @@ export declare class TestComplexBaseTypeField<
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: EdmTypeField<
+  baseStringProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',

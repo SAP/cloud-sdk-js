@@ -62,33 +62,6 @@ function createProxyAgent(
   return proxyAgent(destination, options);
 }
 
-/*
- Adds trust store certificate to the list of trusted CA so that https connection can also work with self signed certificates.
- */
-function trustStoreOptions(
-  options: Record<string, any>,
-  destination: Destination
-): Record<string, any> {
-  if (destination.trustStoreCertificate) {
-    const filetype = destination.trustStoreCertificate.name.split('.')[1];
-    if (filetype.toLowerCase() !== 'pem') {
-      logger.warn(
-        `The provided truststore ${destination.trustStoreCertificate.name} is not in 'pem' format which is currently the only supported format. Trustore is ignored.`
-      );
-      return options;
-    }
-    const decodedCertificate = Buffer.from(
-      destination.trustStoreCertificate.content,
-      'base64'
-    ).toString('utf8');
-    return {
-      ...options,
-      ca: [decodedCertificate]
-    };
-  }
-  return options;
-}
-
 /**
  * @internal
  * The http agents (proxy and default) use node tls for trust handling. This method creates the options with the 'ca' or 'rejectUnauthorized' option.

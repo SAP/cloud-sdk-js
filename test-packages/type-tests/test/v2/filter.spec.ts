@@ -40,9 +40,11 @@ testEntitySchema.TO_SINGLE_LINK.filter(
 );
 
 // $ExpectType FilterList<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
-and(testEntitySchema.TO_SINGLE_LINK.filter(
- testEntitySingleLinkSchema.STRING_PROPERTY.equals('test')
-));
+and(
+  testEntitySchema.TO_SINGLE_LINK.filter(
+    testEntitySingleLinkSchema.STRING_PROPERTY.equals('test')
+  )
+);
 
 // $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, string>
 testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test');
@@ -55,3 +57,15 @@ testEntitySchema.KEY_PROPERTY_STRING.equals(null);
 
 // $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, string | null>
 testEntitySchema.STRING_PROPERTY.equals(null);
+
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, number | null>
+testEntitySchema.INT_16_PROPERTY.lessThan(123);
+
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, string | null>
+testEntitySchema.STRING_PROPERTY.lessOrEqual('test');
+
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, boolean | null>
+testEntitySchema.BOOLEAN_PROPERTY.greaterThan(true);
+
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, string | null>
+testEntitySchema.GUID_PROPERTY.greaterOrEqual('test-guid');

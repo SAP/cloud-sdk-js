@@ -4,7 +4,8 @@ import {
   testService
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 
-const { testEntityApi, testEntitySingleLinkApi, testEntityMultiLinkApi } = testService();
+const { testEntityApi, testEntitySingleLinkApi, testEntityMultiLinkApi } =
+  testService();
 
 const schema = testEntityApi.schema;
 const singleLinkSchema = testEntitySingleLinkApi.schema;

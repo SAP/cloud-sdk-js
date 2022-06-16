@@ -54,7 +54,7 @@ export class TestLvl2NestedComplexTypeField<
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<
+  stringProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',

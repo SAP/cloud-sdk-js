@@ -122,9 +122,9 @@ const edmToTsTypeMapping: EdmTypeMappingWithoutEnum = {
 };
 
 const edmToFieldTypeMapping: EdmTypeMapping = {
-  'Edm.String': 'EdmTypeField',
-  'Edm.Boolean': 'EdmTypeField',
-  'Edm.Guid': 'EdmTypeField',
+  'Edm.String': 'OrderableEdmTypeField',
+  'Edm.Boolean': 'OrderableEdmTypeField',
+  'Edm.Guid': 'OrderableEdmTypeField',
   'Edm.Decimal': 'OrderableEdmTypeField',
   'Edm.Int16': 'OrderableEdmTypeField',
   'Edm.Int32': 'OrderableEdmTypeField',

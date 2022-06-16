@@ -4,7 +4,7 @@ import { EntityBase, EntityIdentifiable, ODataVersionOf } from '../entity-base';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 
-type FilterOperatorString = 'eq' | 'ne';
+type FilterOperatorString = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
 type FilterOperatorBoolean = 'eq' | 'ne';
 type FilterOperatorNumber = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
 /**

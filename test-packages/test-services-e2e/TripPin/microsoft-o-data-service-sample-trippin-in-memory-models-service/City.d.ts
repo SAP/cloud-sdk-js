@@ -4,9 +4,9 @@ import {
   DeSerializers,
   DefaultDeSerializers,
   DeserializedType,
-  EdmTypeField,
   Entity,
   FieldOptions,
+  OrderableEdmTypeField,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-v4';
 /**
@@ -49,7 +49,7 @@ export declare class CityField<
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: EdmTypeField<
+  countryRegion: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',
@@ -60,12 +60,24 @@ export declare class CityField<
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false>;
+  name: OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    false,
+    false
+  >;
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false>;
+  region: OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    false,
+    false
+  >;
   /**
    * Creates an instance of CityField.
    * @param fieldName - Actual name of the field as used in the OData request.

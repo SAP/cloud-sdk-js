@@ -36,7 +36,7 @@ type RegisterDestinationOptions = Pick<
 /**
  * Registers a destination in a cache for later usage.
  *
- * If a destination with the same key is already in the cache it is replaced.
+ * If a destination with the same key is already in the cache, it is replaced.
  * The key is build using the `getDestinationCacheKey` method.
  * @param destination - A destination to add to the `destinations` cache.
  * @param options - Options how to cache the destination.

@@ -143,8 +143,8 @@ class DestinationFromServiceRetriever {
       withProxySetting,
       destinationResult.origin
     );
-    await da.updateDestinationCache(withProxySetting, destinationResult.origin);
-    return withProxySetting;
+    await da.updateDestinationCache(withTrustStore, destinationResult.origin);
+    return withTrustStore;
   }
 
   private static async getSubscriberToken(

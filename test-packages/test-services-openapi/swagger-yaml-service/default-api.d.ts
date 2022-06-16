@@ -13,11 +13,9 @@ export declare const DefaultApi: {
    */
   postEntity: (
     pathParam: string,
-    queryParameters?:
-      | {
-          queryParam?: string | undefined;
-        }
-      | undefined
+    queryParameters?: {
+      queryParam?: string;
+    }
   ) => OpenApiRequestBuilder<TestEntity[]>;
   /**
    * Create a request builder for execution of patch requests to the '/entities/{pathParam}' endpoint.

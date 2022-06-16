@@ -10,24 +10,16 @@ export declare const EntityApi: {
    * @param queryParameters - Object containing the following keys: stringParameter, integerParameter, $dollarParameter, dot.parameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
-  getAllEntities: (
-    queryParameters?:
-      | {
-          stringParameter?: string | undefined;
-          integerParameter?: number | undefined;
-          $dollarParameter?: string | undefined;
-          'dot.parameter'?: string | undefined;
-          enumStringParameter?:
-            | 'value1'
-            | 'value2'
-            | "valueWith'Quote"
-            | undefined;
-          enumInt32Parameter?: 2 | 1 | undefined;
-          enumDoubleParameter?: 2 | 1 | undefined;
-          enumBooleanParameter?: boolean | undefined;
-        }
-      | undefined
-  ) => OpenApiRequestBuilder<TestEntity[]>;
+  getAllEntities: (queryParameters?: {
+    stringParameter?: string;
+    integerParameter?: number;
+    $dollarParameter?: string;
+    'dot.parameter'?: string;
+    enumStringParameter?: 'value1' | 'value2' | "valueWith'Quote";
+    enumInt32Parameter?: 1 | 2;
+    enumDoubleParameter?: 1 | 2;
+    enumBooleanParameter?: true | false;
+  }) => OpenApiRequestBuilder<TestEntity[]>;
   /**
    * Create a request builder for execution of put requests to the '/entities' endpoint.
    * @param body - Request body.

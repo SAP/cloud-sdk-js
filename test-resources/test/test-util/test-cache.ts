@@ -1,4 +1,8 @@
-import { Destination, DestinationCacheInterface, CacheEntry } from '@sap-cloud-sdk/connectivity';
+import {
+  Destination,
+  DestinationCacheInterface,
+  CacheEntry
+} from '@sap-cloud-sdk/connectivity';
 
 /**
  * Representation of a custom cache.
@@ -40,7 +44,9 @@ export class TestCache implements DestinationCacheInterface {
    * @returns The corresponding entry to the provided key if it is still valid, returns `undefined` otherwise.
    */
   async get(key: string | undefined): Promise<Destination | undefined> {
-    return key && this.hasKey(key) && !(this.cache[key].expires ? false : this.cache[key].expires < Date.now())
+    return key &&
+      (await this.hasKey(key)) &&
+      !(this.cache[key].expires ? false : this.cache[key].expires < Date.now())
       ? this.cache[key].entry
       : undefined;
   }
@@ -50,7 +56,10 @@ export class TestCache implements DestinationCacheInterface {
    * @param key - The entry's key.
    * @param item - The entry to cache.
    */
-  async set(key: string | undefined, item: CacheEntry<Destination>): Promise<void> {
+  async set(
+    key: string | undefined,
+    item: CacheEntry<Destination>
+  ): Promise<void> {
     if (key) {
       const expires = item.expires ?? this.defaultValidityTime;
       this.cache[key] = { entry: item.entry, expires };

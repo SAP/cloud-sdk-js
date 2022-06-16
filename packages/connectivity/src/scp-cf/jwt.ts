@@ -248,7 +248,9 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT>(
   const value = mapping[key].extractorFunction(jwtPayload);
   if (!value) {
     throw new Error(
-      `Property '${mapping[key].keyInJwt}' is missing in JWT payload.`
+      `Property '${mapping[
+        key
+      ].keyInJwt.toString()}' is missing in JWT payload.`
     );
   }
 }

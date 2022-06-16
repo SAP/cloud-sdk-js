@@ -12,10 +12,10 @@ import {
   ModuleResolutionKind,
   Project,
   ProjectOptions,
+  ModuleKind,
   QuoteKind,
   ScriptTarget
 } from 'ts-morph';
-import { ModuleKind } from 'typescript';
 import { GlobSync } from 'glob';
 import {
   getSdkMetadataFileNames,

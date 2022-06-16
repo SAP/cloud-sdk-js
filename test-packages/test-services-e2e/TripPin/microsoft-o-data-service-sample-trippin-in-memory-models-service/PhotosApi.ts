@@ -15,8 +15,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  OrderableEdmTypeField,
-  EdmTypeField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export class PhotosApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -73,7 +72,7 @@ export class PhotosApi<
       false,
       true
     >;
-    NAME: EdmTypeField<
+    NAME: OrderableEdmTypeField<
       Photos<DeSerializers>,
       DeSerializersT,
       'Edm.String',

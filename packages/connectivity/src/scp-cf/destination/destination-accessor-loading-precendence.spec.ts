@@ -83,7 +83,7 @@ describe('destination loading precedence', () => {
 
   it('retrieves service binding destinations third', async () => {
     delete process.env['destinations'];
-    registerDestinationCache.clear();
+    await registerDestinationCache.clear();
     const actual = await getDestination({
       destinationName
     });
@@ -92,7 +92,7 @@ describe('destination loading precedence', () => {
 
   it('retrieves destinations from destination-service last', async () => {
     delete process.env['destinations'];
-    registerDestinationCache.clear();
+    await registerDestinationCache.clear();
     mockServiceBindings();
 
     await expect(

@@ -29,7 +29,9 @@ import {
   executeHttpRequest,
   getDefaultHttpRequestOptions,
   encodeTypedClientRequest,
-  shouldHandleCsrfToken
+  shouldHandleCsrfToken,
+  executeHttpRequestWithOrigin,
+  buildHttpRequestConfigWithOrigin
 } from './http-client';
 
 describe('generic http client', () => {
@@ -232,14 +234,12 @@ describe('generic http client', () => {
         .reply(200, { res: 'ult' }, { sharp: 'header' });
 
       jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
-      const config: HttpRequestConfigWithOrigin = {
+      const config: HttpRequestConfig = {
         method: 'GET',
         url: '/api/entity',
         params: {
-          requestConfig: {
-            a: 'a',
-            b: 'b'
-          }
+          a: 'a',
+          b: 'b'
         }
       };
 
@@ -260,7 +260,7 @@ describe('generic http client', () => {
         .get('/api/entity')
         .reply(200, { res: 'ult' }, { sharp: 'header' });
 
-      const config: HttpRequestConfigWithOrigin = {
+      const config: HttpRequestConfig = {
         method: 'GET',
         url: '/api/entity'
       };
@@ -275,88 +275,6 @@ describe('generic http client', () => {
 The headers of the request are:
 authorization:<DATA NOT LOGGED TO PREVENT LEAKING SENSITIVE DATA>
 sap-client:001`);
-    });
-
-    it('logs when custom headers are used', async () => {
-      nock('https://example.com', {
-        reqheaders: {
-          authorization: 'abc',
-          'sap-client': '001',
-          'SAP-Connectivity-SCC-Location_ID': 'efg'
-        }
-      })
-        .get('/api/entity')
-        .reply(200, { res: 'ult' }, { sharp: 'header' });
-      const config: HttpRequestConfigWithOrigin = {
-        method: 'get',
-        url: '/api/entity',
-        headers: {
-          custom: {
-            authorization: 'abc',
-            'sap-client': '001',
-            'SAP-Connectivity-SCC-Location_ID': 'efg'
-          },
-          requestConfig: {}
-        }
-      };
-      const logger = createLogger({
-        package: 'http-client',
-        messageContext: 'http-client'
-      });
-      const debugSpy = jest.spyOn(logger, 'debug');
-
-      await executeHttpRequest(httpsDestination, config);
-
-      expect(debugSpy).nthCalledWith(
-        1,
-        `The following custom headers will overwrite headers created by the SDK, if they use the same key:
-  - "authorization"
-  - "sap-client"
-  - "SAP-Connectivity-SCC-Location_ID"
-If the parameters from multiple origins use the same key, the priority is 1. Custom, 2. Destination, 3. Internal.`
-      );
-    });
-
-    it('also works also in more complex cases', async () => {
-      nock('https://custom.example.com', {
-        reqheaders: {
-          'content-type': 'application/json',
-          accept: 'application/json',
-          'x-csrf-token': 'Fetch',
-          authorization: 'custom-auth-header',
-          'sap-client': '001'
-        }
-      })
-        .post('/api/entity', {
-          a: 1,
-          b: 2,
-          c: 3
-        })
-        .reply(200);
-
-      const config: HttpRequestConfigWithOrigin = {
-        baseURL: 'https://custom.example.com',
-        method: 'POST',
-        url: '/api/entity',
-        headers: {
-          custom: {
-            'content-type': 'application/json',
-            accept: 'application/json',
-            'x-csrf-token': 'Fetch',
-            authorization: 'custom-auth-header'
-          },
-          requestConfig: {}
-        },
-        data: {
-          a: 1,
-          b: 2,
-          c: 3
-        }
-      };
-
-      await expect(
-        executeHttpRequest(httpsDestination, config)
-      ).resolves.not.toThrow();
     });
 
     it('propagates errors to the caller', async () => {
@@ -378,10 +296,8 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           method: 'get',
           url: '/api/entity',
           params: {
-            requestConfig: {
-              a: 'a',
-              b: 'b'
-            }
+            a: 'a',
+            b: 'b'
           }
         })
       ).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -417,17 +333,14 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         })
         .reply(200);
 
-      const config: HttpRequestConfigWithOrigin = {
+      const config: HttpRequestConfig = {
         baseURL: 'https://example.com',
         method: 'POST',
         url: '/api/entity',
         headers: {
-          custom: {
-            authorization: 'custom-auth-header',
-            'content-type': 'application/json',
-            accept: 'application/json'
-          },
-          requestConfig: {}
+          authorization: 'custom-auth-header',
+          'content-type': 'application/json',
+          accept: 'application/json'
         },
         data: {
           a: 1
@@ -468,17 +381,14 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         })
         .reply(200);
 
-      const config: HttpRequestConfigWithOrigin = {
+      const config: HttpRequestConfig = {
         baseURL: 'https://example.com',
         method: 'POST',
         url: '/api/entity',
         headers: {
-          custom: {
-            authorization: 'custom-auth-header',
-            'content-type': 'application/json',
-            accept: 'application/json'
-          },
-          requestConfig: {}
+          authorization: 'custom-auth-header',
+          'content-type': 'application/json',
+          accept: 'application/json'
         },
         data: {
           a: 1
@@ -507,18 +417,15 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         })
         .reply(200);
 
-      const config: HttpRequestConfigWithOrigin = {
+      const config: HttpRequestConfig = {
         baseURL: 'https://example.com',
         method: 'POST',
         url: '/api/entity',
         headers: {
-          custom: {
-            authorization: 'custom-auth-header',
-            'content-type': 'application/json',
-            accept: 'application/json',
-            'x-csrf-token': csrfToken
-          },
-          requestConfig: {}
+          authorization: 'custom-auth-header',
+          'content-type': 'application/json',
+          accept: 'application/json',
+          'x-csrf-token': csrfToken
         },
         data: {
           a: 1
@@ -542,11 +449,10 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         .mockImplementationOnce(async () => 'post response');
 
       const httpsAgentOption = { ca: 'CA' };
-      const config: HttpRequestConfigWithOrigin = {
+      const config: HttpRequestConfig = {
         baseURL: 'https://www.example.com',
         url: 'api',
         method: 'post',
-        headers: { requestConfig: {} },
         httpsAgent: new https.Agent(httpsAgentOption)
       };
 
@@ -558,71 +464,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
             options: expect.objectContaining(httpsAgentOption)
           })
         })
-      );
-    });
-
-    it('rejectUnauthorized property of HttpsAgent should be set to true when isTrustingAllCertificates is false', async () => {
-      jest.spyOn(axios, 'request').mockResolvedValue({});
-      const destination: Destination = {
-        url: 'https://example.com',
-        isTrustingAllCertificates: true
-      };
-
-      await executeHttpRequest(destination, { method: 'get' });
-      const expectedJsonHttpsAgent = {
-        httpsAgent: expect.objectContaining({
-          options: expect.objectContaining({ rejectUnauthorized: false })
-        })
-      };
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining(expectedJsonHttpsAgent)
-      );
-    });
-
-    it('rejectUnauthorized property of HttpsAgent should be set to false when isTrustingAllCertificates is true', async () => {
-      jest.spyOn(axios, 'request').mockResolvedValue({});
-      const destination: Destination = {
-        url: 'https://example.com',
-        isTrustingAllCertificates: false
-      };
-      await executeHttpRequest(destination, { method: 'get' });
-      const expectedJsonHttpsAgent = {
-        httpsAgent: expect.objectContaining({
-          options: expect.objectContaining({ rejectUnauthorized: true })
-        })
-      };
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining(expectedJsonHttpsAgent)
-      );
-    });
-
-    it('request config contains httpAgent when destination URL uses "http" as protocol', async () => {
-      jest.spyOn(axios, 'request').mockResolvedValue({});
-
-      const expectedConfigEntry = { httpAgent: expect.anything() };
-      const destination: Destination = {
-        url: 'http://example.com',
-        authentication: 'NoAuthentication'
-      };
-
-      await executeHttpRequest(destination, { method: 'get' });
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining(expectedConfigEntry)
-      );
-    });
-
-    it('request config contains httpsAgent when destination URL uses "https" as protocol', async () => {
-      jest.spyOn(axios, 'request').mockResolvedValue({});
-      const expectedConfigEntry = { httpsAgent: expect.anything() };
-      const destination: Destination = {
-        url: 'https://example.com',
-        authentication: 'NoAuthentication'
-      };
-
-      await executeHttpRequest(destination, { method: 'get' });
-
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining(expectedConfigEntry)
       );
     });
 
@@ -724,6 +565,71 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       );
     });
 
+    it('rejectUnauthorized property of HttpsAgent should be set to true when isTrustingAllCertificates is false', async () => {
+      jest.spyOn(axios, 'request').mockResolvedValue({});
+      const destination: Destination = {
+        url: 'https://example.com',
+        isTrustingAllCertificates: true
+      };
+
+      await executeHttpRequest(destination, { method: 'get' });
+      const expectedJsonHttpsAgent = {
+        httpsAgent: expect.objectContaining({
+          options: expect.objectContaining({ rejectUnauthorized: false })
+        })
+      };
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedJsonHttpsAgent)
+      );
+    });
+
+    it('rejectUnauthorized property of HttpsAgent should be set to false when isTrustingAllCertificates is true', async () => {
+      jest.spyOn(axios, 'request').mockResolvedValue({});
+      const destination: Destination = {
+        url: 'https://example.com',
+        isTrustingAllCertificates: false
+      };
+      await executeHttpRequest(destination, { method: 'get' });
+      const expectedJsonHttpsAgent = {
+        httpsAgent: expect.objectContaining({
+          options: expect.objectContaining({ rejectUnauthorized: true })
+        })
+      };
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedJsonHttpsAgent)
+      );
+    });
+
+    it('request config contains httpAgent when destination URL uses "http" as protocol', async () => {
+      jest.spyOn(axios, 'request').mockResolvedValue({});
+
+      const expectedConfigEntry = { httpAgent: expect.anything() };
+      const destination: Destination = {
+        url: 'http://example.com',
+        authentication: 'NoAuthentication'
+      };
+
+      await executeHttpRequest(destination, { method: 'get' });
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfigEntry)
+      );
+    });
+
+    it('request config contains httpsAgent when destination URL uses "https" as protocol', async () => {
+      jest.spyOn(axios, 'request').mockResolvedValue({});
+      const expectedConfigEntry = { httpsAgent: expect.anything() };
+      const destination: Destination = {
+        url: 'https://example.com',
+        authentication: 'NoAuthentication'
+      };
+
+      await executeHttpRequest(destination, { method: 'get' });
+
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfigEntry)
+      );
+    });
+
     /* eslint-disable no-console */
     /**
      * BLI: https://github.com/SAP/cloud-sdk-backlog/issues/560.
@@ -751,6 +657,94 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       })
         .then(r => console.log(r))
         .catch(console.error);
+    });
+  });
+
+  describe('executeHttpRequestWithOrigin', () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('logs when custom headers are used', async () => {
+      nock('https://example.com', {
+        reqheaders: {
+          authorization: 'abc',
+          'sap-client': '001',
+          'SAP-Connectivity-SCC-Location_ID': 'efg'
+        }
+      })
+        .get('/api/entity')
+        .reply(200, { res: 'ult' }, { sharp: 'header' });
+      const config: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        url: '/api/entity',
+        headers: {
+          custom: {
+            authorization: 'abc',
+            'sap-client': '001',
+            'SAP-Connectivity-SCC-Location_ID': 'efg'
+          },
+          requestConfig: {
+            authorization: 'def'
+          }
+        }
+      };
+      const logger = createLogger({
+        package: 'http-client',
+        messageContext: 'http-client'
+      });
+      const debugSpy = jest.spyOn(logger, 'debug');
+
+      await executeHttpRequest(httpsDestination, config);
+
+      expect(debugSpy).nthCalledWith(
+        1,
+        `The following custom headers will overwrite headers created by the SDK, if they use the same key:
+  - "authorization"
+If the parameters from multiple origins use the same key, the priority is 1. Custom, 2. Destination, 3. Internal.`
+      );
+    });
+
+    it('also works also in more complex cases', async () => {
+      nock('https://custom.example.com', {
+        reqheaders: {
+          'content-type': 'application/json',
+          accept: 'application/json',
+          'x-csrf-token': 'Fetch',
+          authorization: 'custom-auth-header',
+          'sap-client': '001'
+        }
+      })
+        .post('/api/entity', {
+          a: 1,
+          b: 2,
+          c: 3
+        })
+        .reply(200);
+
+      const config: HttpRequestConfigWithOrigin = {
+        baseURL: 'https://custom.example.com',
+        method: 'POST',
+        url: '/api/entity',
+        headers: {
+          custom: {
+            'content-type': 'application/json',
+            accept: 'application/json',
+            'x-csrf-token': 'Fetch',
+            authorization: 'custom-auth-header'
+          },
+          requestConfig: {}
+        },
+        data: {
+          a: 1,
+          b: 2,
+          c: 3
+        }
+      };
+
+      await expect(
+        executeHttpRequestWithOrigin(httpsDestination, config)
+      ).resolves.not.toThrow();
     });
   });
 
@@ -1037,6 +1031,63 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       const request = { method: 'patch' } as HttpRequestConfig;
       const options = getDefaultHttpRequestOptions();
       expect(shouldHandleCsrfToken(request, options)).toEqual(true);
+    });
+  });
+
+  describe('buildHttpRequestConfigWithOrigin', () => {
+    it('should return the original object, when the parameter is typed as HttpRequestConfigWithOrigin', () => {
+      const requestConfig: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        headers: {
+          requestConfig: {
+            k1: 'v1'
+          },
+          custom: {
+            k2: 'v2'
+          }
+        },
+        params: {
+          requestConfig: {
+            k3: 'v3'
+          },
+          custom: {
+            k4: 'v4'
+          }
+        }
+      };
+      expect(buildHttpRequestConfigWithOrigin(requestConfig)).toStrictEqual(
+        requestConfig
+      );
+    });
+
+    it('should build an object typed as HttpRequestConfigWithOrigin, when the parameter is typed as HttpRequestConfig', () => {
+      const requestConfig: HttpRequestConfig = {
+        method: 'get',
+        headers: {
+          k1: 'v1'
+        },
+        params: {
+          k2: 'v2'
+        }
+      };
+      const expected: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        headers: {
+          requestConfig: {},
+          custom: {
+            k1: 'v1'
+          }
+        },
+        params: {
+          requestConfig: {},
+          custom: {
+            k2: 'v2'
+          }
+        }
+      };
+      expect(buildHttpRequestConfigWithOrigin(requestConfig)).toStrictEqual(
+        expected
+      );
     });
   });
 });

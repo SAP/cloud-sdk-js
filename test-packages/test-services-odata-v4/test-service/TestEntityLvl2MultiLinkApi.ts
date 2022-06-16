@@ -16,7 +16,6 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField,
   OrderableEdmTypeField,
   OneToManyLink
 } from '@sap-cloud-sdk/odata-v4';
@@ -95,21 +94,21 @@ export class TestEntityLvl2MultiLinkApi<
   }
 
   private _schema?: {
-    STRING_PROPERTY: EdmTypeField<
+    STRING_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
-    BOOLEAN_PROPERTY: EdmTypeField<
+    BOOLEAN_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.Boolean',
       true,
       true
     >;
-    GUID_PROPERTY: EdmTypeField<
+    GUID_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',
@@ -123,7 +122,7 @@ export class TestEntityLvl2MultiLinkApi<
       true,
       true
     >;
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',

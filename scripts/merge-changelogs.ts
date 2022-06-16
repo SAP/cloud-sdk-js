@@ -120,18 +120,21 @@ function writeMessagesOfType(
         }`
     )
     .join('\n');
-  return `\n\n## ${type}\n\n${formatted}`;
+  
+  const pluralizedType = type.slice(-1) === 'y' ? type.slice(0, -1) + 'ies' : type + 's';
+  return `\n\n## ${pluralizedType}\n\n${formatted}`;
 }
 
 function createNewSection(version: string, messages: Change[]): string {
   return (
     writeHeader(version) +
+    writeMessagesOfType(messages, 'Known Issue') +
     writeMessagesOfType(messages, 'Compatibility Note') +
     writeMessagesOfType(messages, 'New Functionality') +
     writeMessagesOfType(messages, 'Improvement') +
     writeMessagesOfType(messages, 'Fixed Issue') +
     writeMessagesOfType(messages, 'Updated Dependencies') +
-    '\n'
+    '\n\n'
   );
 }
 

@@ -112,7 +112,7 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
     const destinationRequestConfig = await buildHttpRequest(
       resolvedDestination
     );
-    logCustomHeadersWarning(requestConfig.headers?.custom);
+    logCustomHeadersWarning(requestConfig.headers);
     const request = await buildRequestWithMergedHeadersAndQueryParameters(
       requestConfig,
       resolvedDestination,
@@ -299,16 +299,25 @@ function splitRequestConfig(requestConfig: HttpRequestConfigWithOrigin): {
   };
 }
 
-function logCustomHeadersWarning(customHeaders?: Record<string, string>) {
-  if (customHeaders) {
-    logger.debug(
-      `The following custom headers will overwrite headers created by the SDK, if they use the same key:\n${Object.keys(
-        customHeaders
-      )
-        .map(key => `  - "${key}"`)
-        .join('\n')}
-If the parameters from multiple origins use the same key, the priority is 1. Custom, 2. Destination, 3. Internal.`
+function logCustomHeadersWarning(headers?: OriginOptions) {
+  if (!headers) {
+    return;
+  }
+  const customHeaders = headers.custom;
+  const requestConfigHeaders = headers.requestConfig;
+  if (customHeaders && requestConfigHeaders) {
+    const headerKeysToBeOverwritten = Object.keys(customHeaders).filter(
+      customHeaderKey =>
+        Object.keys(requestConfigHeaders).includes(customHeaderKey)
     );
+    if (headerKeysToBeOverwritten.length) {
+      logger.debug(
+        `The following custom headers will overwrite headers created by the SDK, if they use the same key:\n${headerKeysToBeOverwritten
+          .map(key => `  - "${key}"`)
+          .join('\n')}
+If the parameters from multiple origins use the same key, the priority is 1. Custom, 2. Destination, 3. Internal.`
+      );
+    }
   }
 }
 

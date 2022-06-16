@@ -1,5 +1,13 @@
 # SAP Cloud SDK CLI - Scaffolding
 
+## Status 
+
+**outdated**
+
+The CLI is deprecated. Use the [sample projects](https://github.com/SAP-samples/cloud-sdk-js) instead.
+
+## Context
+
 We want to provide users of the CLI a way to generate a functioning app scaffold that helps teams get started, highlight best practices and help when building a demo app.
 
 The CLI can add all the necessary files to use the SDK and deploy to CF to any node.js based application with few to no manual adjustments.

@@ -684,7 +684,9 @@ sap-client:001`);
             'sap-client': '001',
             'SAP-Connectivity-SCC-Location_ID': 'efg'
           },
-          requestConfig: {}
+          requestConfig: {
+            authorization: 'def'
+          }
         }
       };
       const logger = createLogger({
@@ -699,8 +701,6 @@ sap-client:001`);
         1,
         `The following custom headers will overwrite headers created by the SDK, if they use the same key:
   - "authorization"
-  - "sap-client"
-  - "SAP-Connectivity-SCC-Location_ID"
 If the parameters from multiple origins use the same key, the priority is 1. Custom, 2. Destination, 3. Internal.`
       );
     });

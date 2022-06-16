@@ -76,7 +76,7 @@ export function searchRegisteredDestination(
     decodedJwt = decodedJwtOrZid(options);
   } catch (e) {
     logger.debug(
-      'Could not retrieve destination from registered destination. Failed to decode jwt or create a dummy jwt with `zid` property.'
+      'Failed to retrieve registered destination, because it was neither possible to decode jwt nor create a dummy jwt with `zid` property.'
     );
     logger.debug(e);
     return null;

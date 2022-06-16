@@ -34,6 +34,7 @@ import {
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { signedJwt } from '../../../../../test-resources/test/test-util';
+import { TestCache } from '../../../../../test-resources/test/test-util/test-cache';
 import { destinationServiceCache } from './destination-service-cache';
 import { getDestination } from './destination-accessor';
 import {
@@ -43,6 +44,7 @@ import {
 } from './destination-selection-strategies';
 import {
   destinationCache,
+  setDestinationCache,
   getDestinationCacheKey,
   IsolationStrategy
 } from './destination-cache';
@@ -67,7 +69,7 @@ const destinationOne: Destination = {
   isTrustingAllCertificates: false
 };
 
-function getSubscriberCache(
+async function getSubscriberCache(
   isolationStrategy: IsolationStrategy,
   destName = 'SubscriberDest'
 ) {
@@ -78,7 +80,7 @@ function getSubscriberCache(
     isolationStrategy
   );
 }
-function getProviderCache(isolationStrategy: IsolationStrategy) {
+async function getProviderCache(isolationStrategy: IsolationStrategy) {
   const decodedProviderJwt = decodeJwt(providerUserJwt);
   return destinationCache.retrieveDestinationFromCache(
     decodedProviderJwt,
@@ -106,14 +108,14 @@ function mockDestinationsWithSameName() {
 }
 
 describe('destination cache', () => {
-  afterAll(() => {
-    destinationCache.clear();
+  afterAll(async () => {
+    await destinationCache.clear();
     destinationServiceCache.clear();
     nock.cleanAll();
   });
 
-  beforeEach(() => {
-    destinationCache.clear();
+  beforeEach(async () => {
+    await destinationCache.clear();
     destinationServiceCache.clear();
     nock.cleanAll();
   });
@@ -168,7 +170,7 @@ describe('destination cache', () => {
         iasToXsuaaTokenExchange: false
       });
       const cacheKeys = Object.keys(
-        (destinationCache.getCacheInstance() as any).cache
+        await (destinationCache.getCacheInstance() as any).cache.cache
       );
       expect(cacheKeys[0]).toBe(
         getDestinationCacheKey(
@@ -188,10 +190,10 @@ describe('destination cache', () => {
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = getProviderCache(IsolationStrategy.Tenant);
-      const c5 = getSubscriberCache(IsolationStrategy.Tenant_User);
-      const c6 = getProviderCache(IsolationStrategy.Tenant_User);
+      const c1 = await getSubscriberCache(IsolationStrategy.Tenant);
+      const c2 = await getProviderCache(IsolationStrategy.Tenant);
+      const c5 = await getSubscriberCache(IsolationStrategy.Tenant_User);
+      const c6 = await getProviderCache(IsolationStrategy.Tenant_User);
 
       expect(c1).toBeUndefined();
       expect(c2).toBeUndefined();
@@ -210,8 +212,8 @@ describe('destination cache', () => {
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = getProviderCache(IsolationStrategy.Tenant);
+      const c1 = await getSubscriberCache(IsolationStrategy.Tenant);
+      const c2 = await getProviderCache(IsolationStrategy.Tenant);
 
       expect(c1!.url).toBe('https://subscriber.example');
       expect(c2).toBeUndefined();
@@ -228,8 +230,8 @@ describe('destination cache', () => {
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = getProviderCache(IsolationStrategy.Tenant);
+      const c1 = await getSubscriberCache(IsolationStrategy.Tenant);
+      const c2 = await getProviderCache(IsolationStrategy.Tenant);
 
       expect(c1).toBeUndefined();
       expect(c2!.url).toBe('https://provider.example');
@@ -247,8 +249,8 @@ describe('destination cache', () => {
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = getProviderCache(IsolationStrategy.Tenant);
+      const c1 = await getSubscriberCache(IsolationStrategy.Tenant);
+      const c2 = await getProviderCache(IsolationStrategy.Tenant);
 
       expect(c1!.url).toBe('https://subscriber.example');
       expect(c2).toBeUndefined();
@@ -266,8 +268,8 @@ describe('destination cache', () => {
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = getProviderCache(IsolationStrategy.Tenant);
+      const c1 = await getSubscriberCache(IsolationStrategy.Tenant);
+      const c2 = await getProviderCache(IsolationStrategy.Tenant);
 
       expect(c1).toBeUndefined();
       expect(c2).toBeUndefined();
@@ -285,8 +287,11 @@ describe('destination cache', () => {
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = getSubscriberCache(IsolationStrategy.Tenant, 'SubscriberDest');
-      const c2 = getSubscriberCache(
+      const c1 = await getSubscriberCache(
+        IsolationStrategy.Tenant,
+        'SubscriberDest'
+      );
+      const c2 = await getSubscriberCache(
         IsolationStrategy.Tenant,
         'SubscriberDest2'
       );
@@ -306,7 +311,7 @@ describe('destination cache', () => {
     const destName = destinationOne.name!;
 
     it('disables the cache by default', async () => {
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         { user_id: 'user', zid: 'tenant' },
         destinationOne,
         IsolationStrategy.Tenant
@@ -317,7 +322,7 @@ describe('destination cache', () => {
     });
 
     it('uses cache with isolation strategy Tenant if no JWT is provided', async () => {
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         destinationOne,
         IsolationStrategy.Tenant
@@ -330,12 +335,11 @@ describe('destination cache', () => {
     });
 
     it('uses cache with isolation strategy Tenant and iss ', async () => {
-      destinationCache
+      await destinationCache
         .getCacheInstance()
-        .set(
-          `${TestTenants.SUBSCRIBER_ONLY_ISS}::${destinationOne.name}`,
-          destinationOne
-        );
+        .set(`${TestTenants.SUBSCRIBER_ONLY_ISS}::${destinationOne.name}`, {
+          entry: destinationOne
+        });
 
       const actual = await getDestination({
         destinationName: destName,
@@ -346,7 +350,7 @@ describe('destination cache', () => {
     });
 
     it('uses cache with isolation strategy TenantUser if JWT is provided', async () => {
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),
         destinationOne,
         IsolationStrategy.Tenant_User
@@ -361,7 +365,7 @@ describe('destination cache', () => {
     });
 
     it('enables cache if isolation strategy Tenant is provided', async () => {
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         destinationOne,
         IsolationStrategy.Tenant
@@ -375,7 +379,7 @@ describe('destination cache', () => {
     });
 
     it('enables cache if isolation strategy TenantUser is provided', async () => {
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),
         destinationOne,
         IsolationStrategy.Tenant_User
@@ -472,7 +476,9 @@ describe('destination cache', () => {
         parseDestination(certificateSingleResponse)
       );
       expect(destinationFromCache).toEqual(destinationFromService);
-      expect(retrieveFromCacheSpy).toHaveReturnedWith(destinationFromCache);
+      expect(retrieveFromCacheSpy).toHaveReturnedWith(
+        Promise.resolve(destinationFromCache)
+      );
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
 
@@ -524,7 +530,9 @@ describe('destination cache', () => {
         parseDestination(oauthSingleResponse)
       );
       expect(destinationFromCache).toEqual(destinationFromService);
-      expect(retrieveFromCacheSpy).toHaveReturnedWith(destinationFromCache);
+      expect(retrieveFromCacheSpy).toHaveReturnedWith(
+        Promise.resolve(destinationFromCache)
+      );
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
 
@@ -581,7 +589,9 @@ describe('destination cache', () => {
 
       expect(destinationFromFirstCall).toEqual(expected);
       expect(destinationFromCache).toEqual(destinationFromFirstCall);
-      expect(retrieveFromCacheSpy).toHaveReturnedWith(destinationFromCache);
+      expect(retrieveFromCacheSpy).toHaveReturnedWith(
+        Promise.resolve(destinationFromCache)
+      );
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
 
@@ -598,7 +608,7 @@ describe('destination cache', () => {
       };
       const parsedDestination = parseDestination(subscriberDest);
       // Cache destination to retrieve
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),
         parsedDestination,
         IsolationStrategy.Tenant_User
@@ -629,7 +639,7 @@ describe('destination cache', () => {
         Authentication: authType
       };
       const parsedDestination = parseDestination(providerDest);
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         parsedDestination,
         IsolationStrategy.Tenant
@@ -661,7 +671,7 @@ describe('destination cache', () => {
         Authentication: authType
       };
       const parsedDestination = parseDestination(providerDest);
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerUserJwt),
         parsedDestination,
         IsolationStrategy.Tenant
@@ -688,20 +698,20 @@ describe('destination cache', () => {
   });
 
   describe('caching without mocs', () => {
-    it('should cache the destination correctly', () => {
+    it('should cache the destination correctly', async () => {
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destinationOne,
         IsolationStrategy.Tenant_User
       );
 
-      const actual1 = destinationCache.retrieveDestinationFromCache(
+      const actual1 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant_User
       );
-      const actual2 = destinationCache.retrieveDestinationFromCache(
+      const actual2 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant
@@ -712,20 +722,20 @@ describe('destination cache', () => {
       expect([actual1, actual2]).toEqual(expected);
     });
 
-    it('should not hit cache when Tenant_User is chosen but user id is missing', () => {
+    it('should not hit cache when Tenant_User is chosen but user id is missing', async () => {
       const dummyJwt = { zid: 'tenant' };
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destinationOne,
         IsolationStrategy.Tenant_User
       );
 
-      const actual1 = destinationCache.retrieveDestinationFromCache(
+      const actual1 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant
       );
-      const actual2 = destinationCache.retrieveDestinationFromCache(
+      const actual2 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant_User
@@ -736,19 +746,19 @@ describe('destination cache', () => {
       expect([actual1, actual2]).toEqual(expected);
     });
 
-    it('should not hit cache when Tenant is chosen but tenant id is missing', () => {
+    it('should not hit cache when Tenant is chosen but tenant id is missing', async () => {
       const dummyJwt = { user_id: 'user' };
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destinationOne,
         IsolationStrategy.Tenant
       );
-      const actual1 = destinationCache.retrieveDestinationFromCache(
+      const actual1 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant
       );
-      const actual2 = destinationCache.retrieveDestinationFromCache(
+      const actual2 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant_User
@@ -759,10 +769,10 @@ describe('destination cache', () => {
       expect([actual1, actual2]).toEqual(expected);
     });
 
-    it('should return undefined when the destination is not valid', () => {
+    it('should return undefined when the destination is not valid', async () => {
       jest.useFakeTimers('modern');
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destinationOne,
         IsolationStrategy.Tenant_User
@@ -770,7 +780,7 @@ describe('destination cache', () => {
       const minutesToExpire = 6;
       jest.advanceTimersByTime(60000 * minutesToExpire);
 
-      const actual = destinationCache.retrieveDestinationFromCache(
+      const actual = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant_User
@@ -779,14 +789,14 @@ describe('destination cache', () => {
       expect(actual).toBeUndefined();
     });
 
-    it('should return undefined when the destination is not valid and has an auth token expiration time', () => {
+    it('should return undefined when the destination is not valid and has an auth token expiration time', async () => {
       jest.useFakeTimers('modern');
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
       const destination = {
         ...destinationOne,
         authTokens: [{ expiresIn: '60' } as DestinationAuthToken]
       };
-      destinationCache.cacheRetrievedDestination(
+      await destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destination,
         IsolationStrategy.Tenant_User
@@ -798,12 +808,47 @@ describe('destination cache', () => {
           IsolationStrategy.Tenant_User
         );
 
-      expect(retrieveDestination()).toEqual(destination);
+      await expect(retrieveDestination()).resolves.toEqual(destination);
 
       const minutesToExpire = 2;
       jest.advanceTimersByTime(60000 * minutesToExpire);
 
-      expect(retrieveDestination()).toBeUndefined();
+      await expect(retrieveDestination()).resolves.toBeUndefined();
+    });
+  });
+
+  describe('custom destination cache', () => {
+    // Cache with expiration time
+    const testCacheOne = new TestCache();
+    // Setting the destinationCache with custom class instance
+    it('custom cache overrides the default implementation', async () => {
+      setDestinationCache(testCacheOne);
+
+      const setSpy = jest.spyOn(testCacheOne, 'set');
+      const getSpy = jest.spyOn(testCacheOne, 'get');
+      const clearSpy = jest.spyOn(testCacheOne, 'clear');
+
+      await destinationCache.cacheRetrievedDestination(
+        { user_id: 'user', zid: 'tenant' },
+        destinationOne,
+        IsolationStrategy.Tenant_User
+      );
+
+      expect(setSpy).toHaveBeenCalled();
+
+      const retrieveDestination = () =>
+        destinationCache.retrieveDestinationFromCache(
+          { user_id: 'user', zid: 'tenant' },
+          'destToCache1',
+          IsolationStrategy.Tenant_User
+        );
+
+      await expect(retrieveDestination()).resolves.toEqual(destinationOne);
+      expect(getSpy).toHaveBeenCalled();
+
+      await destinationCache.clear();
+      expect(clearSpy).toHaveBeenCalled();
+      await expect(retrieveDestination()).resolves.toBeUndefined();
     });
   });
 });

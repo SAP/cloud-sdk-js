@@ -101,10 +101,7 @@ describe('generation-and-usage', () => {
         'es2019',
         '--module',
         'commonjs'
-      ],
-      {
-        cwd: __dirname
-      }
+      ]
     );
     await expect(readFile(resolve(__dirname, jsFile))).resolves.toBeDefined();
     [tsFile, jsFile].map(file => removeSync(resolve(__dirname, file)));

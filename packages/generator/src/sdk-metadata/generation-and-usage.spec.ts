@@ -95,7 +95,7 @@ describe('generation-and-usage', () => {
       'npx',
       [
         'tsc',
-        tsFile,
+        resolve(__dirname, tsFile),
         '--esModuleInterop',
         '--target',
         'es2019',

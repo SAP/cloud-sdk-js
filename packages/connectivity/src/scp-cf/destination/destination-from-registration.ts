@@ -71,7 +71,7 @@ export function searchRegisteredDestination(
   options: DestinationFetchOptions
 ): Destination | null {
   let decodedJwt;
-  // An error could be thrown if no jwt and no xsuaa service exist.
+  // An error will be thrown if no jwt and no xsuaa service exist.
   try {
     decodedJwt = decodedJwtOrZid(options);
   } catch (e) {

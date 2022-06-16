@@ -15,7 +15,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField,
+  OrderableEdmTypeField,
   Link
 } from '@sap-cloud-sdk/odata-v2';
 export class TestEntityCircularLinkChildApi<
@@ -94,7 +94,7 @@ export class TestEntityCircularLinkChildApi<
   }
 
   private _schema?: {
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: OrderableEdmTypeField<
       TestEntityCircularLinkChild<DeSerializers>,
       DeSerializersT,
       'Edm.String',

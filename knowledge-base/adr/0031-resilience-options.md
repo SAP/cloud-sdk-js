@@ -144,6 +144,8 @@ defaultResilienceOptions: ResilienceOptions = {
 - Assumes that some resilience is switched on per default and our approach considers this.
 - An optional `id` is passed to the `middleware` method.
 - The `id` will give us the flexibility to add and manage additional middlewares in the future.
+- You can find some rough PoC examples [here](0031-resilience.js)
+- The context will most likely be the request configuration
 
 ```ts
 myApi

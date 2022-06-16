@@ -7,7 +7,8 @@
 export {
   buildHttpRequest,
   encodeAllParameters,
-  executeHttpRequest
+  executeHttpRequest,
+  executeHttpRequestWithOrigin
 } from './http-client';
 export {
   HttpRequestOptions,

@@ -143,8 +143,8 @@ class DestinationFromServiceRetriever {
       withProxySetting,
       destinationResult.origin
     );
-    da.updateDestinationCache(withProxySetting, destinationResult.origin);
-    return withProxySetting;
+    await da.updateDestinationCache(withTrustStore, destinationResult.origin);
+    return withTrustStore;
   }
 
   private static async getSubscriberToken(
@@ -273,7 +273,7 @@ class DestinationFromServiceRetriever {
       );
     }
     if (credentials.length > 1) {
-      logger.debug(
+      logger.warn(
         'Found more than one destination service instance. Using the first one.'
       );
     }
@@ -440,14 +440,14 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     );
   }
 
-  private updateDestinationCache(
+  private async updateDestinationCache(
     destination: Destination,
     destinationOrigin: DestinationOrigin
   ) {
     if (!this.options.useCache) {
       return destination;
     }
-    destinationCache.cacheRetrievedDestination(
+    await destinationCache.cacheRetrievedDestination(
       destinationOrigin === 'subscriber'
         ? this.selectSubscriberJwt()
         : this.providerServiceToken.decoded,
@@ -478,8 +478,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
   }
 
-  private getProviderDestinationCache(): DestinationSearchResult | undefined {
-    const destination = destinationCache.retrieveDestinationFromCache(
+  private async getProviderDestinationCache(): Promise<
+    DestinationSearchResult | undefined
+  > {
+    const destination = await destinationCache.retrieveDestinationFromCache(
       this.providerServiceToken.decoded,
       this.options.destinationName,
       this.options.isolationStrategy
@@ -515,8 +517,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
   }
 
-  private getSubscriberDestinationCache(): DestinationSearchResult | undefined {
-    const destination = destinationCache.retrieveDestinationFromCache(
+  private async getSubscriberDestinationCache(): Promise<
+    DestinationSearchResult | undefined
+  > {
+    const destination = await destinationCache.retrieveDestinationFromCache(
       this.selectSubscriberJwt(),
       this.options.destinationName,
       this.options.isolationStrategy
@@ -570,7 +574,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     DestinationSearchResult | undefined
   > {
     return (
-      (this.options.useCache && this.getProviderDestinationCache()) ||
+      (this.options.useCache && (await this.getProviderDestinationCache())) ||
       this.getProviderDestinationService()
     );
   }
@@ -579,7 +583,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     DestinationSearchResult | undefined
   > {
     return (
-      (this.options.useCache && this.getSubscriberDestinationCache()) ||
+      (this.options.useCache && (await this.getSubscriberDestinationCache())) ||
       this.getSubscriberDestinationService()
     );
   }

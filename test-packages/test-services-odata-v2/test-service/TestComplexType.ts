@@ -143,7 +143,7 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<
+  stringProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',
@@ -158,7 +158,7 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  booleanProperty: EdmTypeField<
+  booleanProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.Boolean',
@@ -173,8 +173,13 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: EdmTypeField<EntityT, DeSerializersT, 'Edm.Guid', true, false> =
-    this._fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true);
+  guidProperty: OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Guid',
+    true,
+    false
+  > = this._fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true);
   /**
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

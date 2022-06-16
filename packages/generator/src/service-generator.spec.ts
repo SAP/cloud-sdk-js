@@ -111,7 +111,7 @@ describe('service-generator', () => {
           propertyNameAsParam: 'stringProperty',
           edmType: 'Edm.String',
           jsType: 'string',
-          fieldType: 'EdmTypeField',
+          fieldType: 'OrderableEdmTypeField',
           description: '',
           nullable: true,
           maxLength: '10',

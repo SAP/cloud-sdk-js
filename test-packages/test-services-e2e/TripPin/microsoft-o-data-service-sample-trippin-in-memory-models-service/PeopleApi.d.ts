@@ -11,10 +11,9 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField,
+  OrderableEdmTypeField,
   CollectionField,
   EnumField,
-  OrderableEdmTypeField,
   OneToManyLink,
   OneToOneLink
 } from '@sap-cloud-sdk/odata-v4';
@@ -39,7 +38,7 @@ export declare class PeopleApi<
   get fieldBuilder(): FieldBuilder<typeof People, DeSerializersT>;
   private _schema?;
   get schema(): {
-    USER_NAME: EdmTypeField<
+    USER_NAME: OrderableEdmTypeField<
       People<
         DeSerializers<
           any,
@@ -68,7 +67,7 @@ export declare class PeopleApi<
       false,
       true
     >;
-    FIRST_NAME: EdmTypeField<
+    FIRST_NAME: OrderableEdmTypeField<
       People<
         DeSerializers<
           any,
@@ -97,7 +96,7 @@ export declare class PeopleApi<
       false,
       true
     >;
-    LAST_NAME: EdmTypeField<
+    LAST_NAME: OrderableEdmTypeField<
       People<
         DeSerializers<
           any,

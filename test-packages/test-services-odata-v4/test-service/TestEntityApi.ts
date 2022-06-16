@@ -22,8 +22,8 @@ import {
   EntityApi,
   FieldBuilder,
   Time,
-  EdmTypeField,
   OrderableEdmTypeField,
+  EdmTypeField,
   CollectionField,
   EnumField,
   OneToManyLink,
@@ -122,35 +122,35 @@ export class TestEntityApi<
   }
 
   private _schema?: {
-    KEY_PROPERTY_GUID: EdmTypeField<
+    KEY_PROPERTY_GUID: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',
       false,
       true
     >;
-    KEY_PROPERTY_STRING: EdmTypeField<
+    KEY_PROPERTY_STRING: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    STRING_PROPERTY: EdmTypeField<
+    STRING_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
-    BOOLEAN_PROPERTY: EdmTypeField<
+    BOOLEAN_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Boolean',
       true,
       true
     >;
-    GUID_PROPERTY: EdmTypeField<
+    GUID_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',

@@ -55,7 +55,7 @@ export class TestComplexType2Field<
    * Representation of the [[TestComplexType2.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<
+  stringProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',

@@ -8,6 +8,8 @@ export {
   parseDestination,
   toDestinationNameUrl,
   sanitizeDestination,
+  DestinationCacheInterface,
+  CacheEntry,
   CachingOptions,
   getDestination,
   useOrFetchDestination,
@@ -35,7 +37,8 @@ export {
   buildHeadersForDestination,
   getClientCredentialsToken,
   getUserToken,
-  registerDestination
+  registerDestination,
+  setDestinationCache
 } from './scp-cf';
 
 export type {

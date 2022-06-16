@@ -43,7 +43,7 @@ describe('Number Field', () => {
       checkFilter(filter, fieldName, 'ne', filterValue);
     });
 
-    it('should create filter for "lessThen"', () => {
+    it('should create filter for "lessThan"', () => {
       const filter = field.lessThan(filterValue);
       checkFilter(filter, fieldName, 'lt', filterValue);
     });
@@ -90,7 +90,7 @@ describe('Number Field', () => {
       checkFilter(filter, `${parentFieldName}/${fieldName}`, 'ne', filterValue);
     });
 
-    it('should create filter for "lessThen"', () => {
+    it('should create filter for "lessThan"', () => {
       const filter = field.lessThan(filterValue);
       expect(field._fieldName).toBe(fieldName);
       checkFilter(filter, `${parentFieldName}/${fieldName}`, 'lt', filterValue);

@@ -313,15 +313,13 @@ async function callDestinationService(
   };
 
   if (enableCircuitBreaker) {
-    return getCircuitBreaker<
-      DestinationCertificateJson | DestinationConfiguration | DestinationJson
-    >().fire(config);
+    return getCircuitBreaker().fire(config);
   }
 
   return axios.request(config);
 }
 
-function getCircuitBreaker<T>(): DestinationCircuitBreaker<
+function getCircuitBreaker(): DestinationCircuitBreaker<
   DestinationCertificateJson | DestinationConfiguration | DestinationJson
 > {
   const request: (

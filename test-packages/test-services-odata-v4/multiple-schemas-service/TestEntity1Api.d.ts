@@ -10,7 +10,6 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField,
   OrderableEdmTypeField,
   EnumField
 } from '@sap-cloud-sdk/odata-v4';
@@ -36,7 +35,7 @@ export declare class TestEntity1Api<
   get fieldBuilder(): FieldBuilder<typeof TestEntity1, DeSerializersT>;
   private _schema?;
   get schema(): {
-    KEY_PROPERTY_STRING: EdmTypeField<
+    KEY_PROPERTY_STRING: OrderableEdmTypeField<
       TestEntity1<
         DeSerializers<
           any,

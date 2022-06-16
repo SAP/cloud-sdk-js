@@ -12,22 +12,24 @@ describe('exception logger', () => {
     }
   });
 
-  it('should log exception with stack if they fly locally', async () => {
+  it('should log exception with local format if they fly in development mode', async () => {
+    process.env.NODE_ENV = 'development';
     await expect(
       execa('ts-node', [
         resolve(__dirname, 'throw-exception-with-logger-script.ts')
       ])
     ).rejects.toThrowError(/Test Exception Logger\n\s*at Object/);
+    delete process.env.NODE_ENV;
   }, 15000);
 
-  it('should log exception with stack if they fly on CF', async () => {
-    process.env.VCAP_SERVICES = 'exists';
+  it('should log exception with kibana format if they fly in production mode', async () => {
+    process.env.NODE_ENV = 'production';
     await expect(
       execa('ts-node', [
         resolve(__dirname, 'throw-exception-with-logger-script.ts')
       ])
     ).rejects.toThrowError(/Test Exception Logger\\n\s*at Object/);
-    delete process.env.VCAP_SERVICES;
+    delete process.env.NODE_ENV;
   }, 15000);
 
   it('should not log the stack multiple times', async () => {

@@ -201,10 +201,7 @@ async function generateIncludes(
   options: GeneratorOptions
 ): Promise<void> {
   if (options.include) {
-    const includeDir = resolve(
-      options.inputDir.toString(),
-      options.include
-    )
+    const includeDir = resolve(options.inputDir.toString(), options.include)
       .split(sep)
       .join(posix.sep);
     const serviceDir = resolvePath(service.directoryName, options);

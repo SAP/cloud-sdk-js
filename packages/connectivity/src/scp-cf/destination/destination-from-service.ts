@@ -636,7 +636,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       return false;
     }
 
-    if (!this.subscriberToken.serviceJwt) {
+    if (this.subscriberToken.type === 'custom') {
       return false;
     }
 

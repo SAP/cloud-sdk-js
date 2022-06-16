@@ -57,7 +57,7 @@ API Docs: https://sap.github.io/cloud-sdk/api/2.4.0
   - `jsdoc/require-jsdoc`
   - `jsdoc/require-param`
   - `jsdoc/require-returns` (0a008674)
-- [connectivity, http-client] Only log the successful retrieval of destinations on the`info` log level, log everything else is on the `debug` or `warn` level. (04726a35)
+- [connectivity, http-client] Only log the successful retrieval of destinations on the `info` log level, log everything else as `debug` or `warn`. (04726a35)
 
 ## New Functionality
 

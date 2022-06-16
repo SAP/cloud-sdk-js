@@ -14,8 +14,7 @@
 
 ## Compatibility Notes
 
-- [generator] The generator command line argument `versionInPackageJson` has been deprecated. If you need to set the version, use the `include` option to add your own `package.json` file instead.
-  - The hidden command line argument `additionalFiles` has been renamed to `include` and is now not hidden anymore.
+-
 
 ## New Functionalities
 

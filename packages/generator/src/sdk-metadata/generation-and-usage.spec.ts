@@ -91,18 +91,15 @@ describe('generation-and-usage', () => {
     const tsFile = 'generic-get-all-code-sample.ts';
     const jsFile = tsFile.replace('.ts', '.js');
     await writeFile(resolve(__dirname, tsFile), codeSnippet);
-    await execa(
-      'npx',
-      [
-        'tsc',
-        resolve(__dirname, tsFile),
-        '--esModuleInterop',
-        '--target',
-        'es2019',
-        '--module',
-        'commonjs'
-      ]
-    );
+    await execa('npx', [
+      'tsc',
+      resolve(__dirname, tsFile),
+      '--esModuleInterop',
+      '--target',
+      'es2019',
+      '--module',
+      'commonjs'
+    ]);
     await expect(readFile(resolve(__dirname, jsFile))).resolves.toBeDefined();
     [tsFile, jsFile].map(file => removeSync(resolve(__dirname, file)));
   }, 60000);

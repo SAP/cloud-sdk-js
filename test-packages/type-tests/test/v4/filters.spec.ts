@@ -30,11 +30,11 @@ If we replace the third type parameter `TestEntityMultiLinkApi<...>` with `any`,
 // const multiLinkSchema = testEntityMultiLinkApi.schema;
 
 // // $ExpectType FilterList<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>
-// and(
-//   schema.TO_MULTI_LINK.filter(
-//     any(multiLinkSchema.STRING_PROPERTY.equals('test'))
-//   )
-// );
+and(
+  schema.TO_MULTI_LINK.filter(
+    any(multiLinkSchema.STRING_PROPERTY.equals('test'))
+  )
+);
 
 // -----------
 

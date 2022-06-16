@@ -27,7 +27,7 @@ export interface GeneratorOptions {
   sdkAfterVersionScript: boolean;
   s4hanaCloud: boolean;
   generateCSN: boolean;
-  packageVersion: string;
+  packageVersion?: string;
 }
 /**
  * @internal

@@ -52,7 +52,7 @@ describe('generator', () => {
       mock({
         root: {
           inputDir: { 'mySpec.json': serviceSpec },
-          additionalFiles: {
+          include: {
             'CHANGELOG.md': 'some content',
             'OtherFile.txt': 'some content'
           },

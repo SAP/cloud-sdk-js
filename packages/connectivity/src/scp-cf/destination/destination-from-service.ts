@@ -65,15 +65,15 @@ interface DestinationSearchResult {
  * When a destination is fetched from the SDK the user can pass different tokens.
  * The token determines from which tenant the destination is obtained (provider or subscriber) and if it contains user information so that user propagation flows are possible.
  * Possible types are: A user specific JWT issued by the XSUAA, a JWT from a custom IdP or only the `iss` property to get destinations from a different tenant.
- * We name these tokens `subscriber token`, because they are related to the subscriber account in contrast to the account the application is running in (provider account).
- * Potentially tenant defined in the subscriber token can be the same as the provider tenant for single tenant application.
+ * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the"provider account", where the application is running.
+ * The tenant defined in the subscriber token is the provider tenant for single tenant applications.
  */
 type SubscriberToken = IssToken | XsuaaToken | CustomToken;
 
 /**
  * User provided a dummy token with the `iss` property.
- * This is used if a different tenant than the provider ones should be accessed but no user related login (JWT) for this tenant is available.
- * Therefore, the userJwt is undefined and only a destination service token has been issued.
+ * This is used if a tenant other than the provider tenant should be accessed but no user related login (JWT) is available for this tenant.
+ * Therefore, the `userJwt` is undefined and only a destination service token has been issued.
  */
 interface IssToken {
   type: 'iss';
@@ -205,7 +205,7 @@ class DestinationFromServiceRetriever {
   private static isUserJwt(
     token: SubscriberToken | undefined
   ): token is CustomToken | XsuaaToken {
-    return !!token && token.type !== 'iss';
+    return token?.type !== 'iss';
   }
 
   private static async getSubscriberToken(
@@ -246,9 +246,9 @@ class DestinationFromServiceRetriever {
         jwt: { iss: options.iss }
       });
       return {
-        serviceJwt: getJwtPair(serviceJwtEncoded),
         type: 'iss',
-        userJwt: undefined
+        userJwt: undefined,
+        serviceJwt: getJwtPair(serviceJwtEncoded)
       };
     }
   }
@@ -271,7 +271,7 @@ class DestinationFromServiceRetriever {
 
   private constructor(
     options: DestinationFetchOptions,
-    readonly subscriberToken: SubscriberToken | undefined,
+    readonly subscriberToken: SubscriberTokens | undefined,
     readonly providerServiceToken: JwtPair
   ) {
     const defaultOptions = {

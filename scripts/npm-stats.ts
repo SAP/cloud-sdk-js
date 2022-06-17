@@ -32,6 +32,10 @@ async function getAllStats(page) {
     '@sap-cloud-sdk/odata-v2',
     '@sap-cloud-sdk/odata-v4',
     '@sap-cloud-sdk/generator',
+    '@sap-cloud-sdk/openapi',
+    '@sap-cloud-sdk/openapi-generator',
+    '@sap-cloud-sdk/test-util',
+    '@sap-cloud-sdk/eslint-config',
     '@sap/cds'].reduce(
     async (stats, packageName) => ({
       ...(await stats),

@@ -205,7 +205,7 @@ class DestinationFromServiceRetriever {
   private static isUserJwt(
     token: SubscriberToken | undefined
   ): token is CustomToken | XsuaaToken {
-    return token?.type !== 'iss';
+    return !!token && token.type !== 'iss';
   }
 
   private static async getSubscriberToken(

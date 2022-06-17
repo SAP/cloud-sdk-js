@@ -27,6 +27,11 @@ async function getStatsForPackage(page, packageName) {
 async function getAllStats(page) {
   return [
     '@sap-cloud-sdk/util',
+    '@sap-cloud-sdk/connectivity',
+    '@sap-cloud-sdk/http-client',
+    '@sap-cloud-sdk/odata-v2',
+    '@sap-cloud-sdk/odata-v4',
+    '@sap-cloud-sdk/generator',
     '@sap/cds'].reduce(
     async (stats, packageName) => ({
       ...(await stats),

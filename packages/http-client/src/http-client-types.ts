@@ -114,15 +114,30 @@ export interface HttpRequestOptions {
  * The priorities are defined in the [[origins]].
  */
 export interface OriginOptions {
-  requestConfig: Record<string, any>;
+  requestConfig?: Record<string, any>;
   custom?: Record<string, any>;
 }
 
 /**
+ * Type guard to check whether an object is of type `OriginOptions`.
+ * Warn: there can be an edge case that one can define a normal header like the example:
+ * {
+ *   custom: {
+ *     key: 'value'
+ *   }
+ * }
+ * However, this will be treated as `OriginOptions`, as it contains `custom` as a key and an object as the value of the key.
+ * This known issue can be handled by switching from `executeHttpClient` to `executeHttpClientWithOrigin`.
+ * @param obj - Object to check.
+ * @returns `true` if the object is a `OriginOptions` object, `false` otherwise.
  * @internal
  */
 export function isOriginOptions(obj: any): obj is OriginOptions {
-  return !!obj && typeof obj['requestConfig'] === 'object';
+  return (
+    !!obj &&
+    (typeof obj['requestConfig'] === 'object' ||
+      typeof obj['custom'] === 'object')
+  );
 }
 
 /**

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+  <edmx:DataServices m:DataServiceVersion="2.0">
+    <Schema Namespace="API_MINIMAl_TEST_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityType Name="A_TestEntityType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyPropertyString"/>
+        </Key>
+        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
+        <NavigationProperty Name="to_SingleLink" Type="API_MINIMAl_TEST_SRV.A_TestEntitySingleLinkType"/>
+      </EntityType>
+
+      <EntityType Name="A_TestEntitySingleLinkType" sap:content-version="1">
+       <Key>
+                <PropertyRef Name="KeyPropertyString"/>
+              </Key>
+              <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
+      </EntityType>
+
+
+
+      <EntityContainer Name="API_MINIMAl_TEST_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+        <EntitySet Name="A_TestEntity" EntityType="API_MINIMAl_TEST_SRV.A_TestEntityType" sap:content-version="1">
+          <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntitySingleLink"/>
+        </EntitySet>
+
+        <EntitySet Name="A_TestEntitySingleLink" EntityType="API_MINIMAl_TEST_SRV.A_TestEntitySingleLinkType" sap:content-version="1">
+                </EntitySet>
+
+      </EntityContainer>
+      <atom:link rel="self" href="https://host:port/sap/opu/odata/sap/API_MINIMAl_TEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+      <atom:link rel="latest-version" href="https://host:port/sap/opu/odata/sap/API_MINIMAl_TEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

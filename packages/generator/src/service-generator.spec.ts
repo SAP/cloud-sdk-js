@@ -16,7 +16,7 @@ describe('service-generator', () => {
               oDataServiceSpecs,
               'v2',
               'API_TEST_SRV',
-              'API_TEST_SRV.edmx'
+              'API_MINIMAL_TEST_SRV.edmx'
             )
           },
           createOptions(),
@@ -39,7 +39,7 @@ describe('service-generator', () => {
               oDataServiceSpecs,
               'v2',
               'API_TEST_SRV',
-              'API_TEST_SRV.edmx'
+              'API_MINIMAL_TEST_SRV.edmx'
             )
           },
           createOptions(),

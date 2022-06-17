@@ -87,7 +87,7 @@ describe('generator', () => {
         oDataServiceSpecs,
         'v2',
         'API_TEST_SRV',
-        'API_TEST_SRV.edmx'
+        'API_MINIMAL_TEST_SRV.edmx'
       ),
       outputDir: 'foo',
       generateCSN: true

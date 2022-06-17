@@ -1,4 +1,9 @@
 {
+  "API_MINIMAL_TEST_SRV": {
+    "directoryName": "test-service-minimal",
+    "servicePath": "/sap/opu/odata/sap/API_TEST_SRV",
+    "npmPackageName": "test-service-minimal"
+  },
   "API_MULTIPLE_SCHEMAS_SRV": {
     "directoryName": "multiple-schemas-service",
     "servicePath": "/sap/opu/odata/sap/API_TEST_SRV",

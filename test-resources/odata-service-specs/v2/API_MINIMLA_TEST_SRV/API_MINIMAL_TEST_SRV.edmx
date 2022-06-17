@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+  <edmx:DataServices m:DataServiceVersion="2.0">
+    <Schema Namespace="API_MINIMAl_TEST_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityType Name="A_TestEntityType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyPropertyString"/>
+        </Key>
+        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
+        <NavigationProperty Name="to_SingleLink" Relationship="API_MINIMAl_TEST_SRV.assoc_TestEntityToSingleLink" FromRole="FromRole_assoc_TestEntityToSingleLink" ToRole="ToRole_assoc_TestEntityToSingleLink"/>
+      </EntityType>
+
+      <EntityType Name="A_TestEntityTypeToBeShared">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
+      </EntityType>
+
+      <EntityType Name="A_TestEntitySingleLinkType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
+
+        <NavigationProperty Name="to_SingleLink" Relationship="API_TEST_SRV.assoc_TestEntityToSingleLink" FromRole="FromRole_assoc_TestEntityToSingleLink" ToRole="ToRole_assoc_TestEntityToSingleLink"/>
+      </EntityType>
+
+     <!-- collection_suffix -->
+      <EntityType Name="Unrelated" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false"/>
+      </EntityType>
+
+
+
+      <Association Name="assoc_TestEntityToSingleLink" sap:content-version="1">
+        <End Type="API_MINIMAl_TEST_SRV.A_TestEntityType" Multiplicity="1" Role="FromRole_assoc_TestEntityToSingleLink"/>
+        <End Type="API_MINIMAl_TEST_SRV.A_TestEntitySingleLinkType" Multiplicity="0..1" Role="ToRole_assoc_TestEntityToSingleLink"/>
+      </Association>
+
+      <EntityContainer Name="API_MINIMAl_TEST_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+        <EntitySet Name="A_TestEntity" EntityType="API_MINIMAl_TEST_SRV.A_TestEntityType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntitySingleLink" EntityType="API_MINIMAl_TEST_SRV.A_TestEntitySingleLinkType" sap:content-version="1"/>
+
+   <AssociationSet Name="assoc_TestEntityToSingleLink" Association="API_TEST_SRV.assoc_TestEntityToSingleLink" sap:content-version="1">
+          <End EntitySet="A_TestEntity" Role="FromRole_assoc_TestEntityToSingleLink"/>
+          <End EntitySet="A_TestEntitySingleLink" Role="ToRole_assoc_TestEntityToSingleLink"/>
+        </AssociationSet>
+
+
+      </EntityContainer>
+      <Annotations Target="API_MINIMAl_TEST_SRV.API_MINIMAl_TEST_SRV_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Aggregation.ApplySupported">
+          <Record>
+            <PropertyValue Property="Transformations">
+              <Collection>
+                <String>aggregate</String>
+                <String>groupby</String>
+                <String>filter</String>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="Rollup" EnumMember="None"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <atom:link rel="self" href="https://host:port/sap/opu/odata/sap/API_MINIMAl_TEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+      <atom:link rel="latest-version" href="https://host:port/sap/opu/odata/sap/API_MINIMAl_TEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

@@ -20,7 +20,7 @@ export function getTestService(npmPackageName?: string): VdmServiceMetadata {
       edmxPath: resolve(
         oDataServiceSpecs,
         'v2',
-        'API_TEST_SRV/API_TEST_SRV.edmx'
+        'API_TEST_SRV/API_MINIMAL_TEST_SRV.edmx'
       )
     },
     createOptions(),

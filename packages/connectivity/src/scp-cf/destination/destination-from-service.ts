@@ -63,15 +63,15 @@ interface DestinationSearchResult {
 
 /**
  * Different types of tokens handed in from by the caller.
- * We name these tokens `subscriber token`, because they are related to the subscriber account in contrast to the account the application is running in (provider account).
- * Potentially tenant defined in the subscriber token can be the same as the provider tenant for single tenant application.
+ * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the"provider account", where the application is running.
+ * The tenant defined in the subscriber token is the provider tenant for single tenant applications.
  */
 type SubscriberTokens = IssToken | XsuaaToken | CustomToken;
 
 /**
  * User provided a dummy token with the `iss` property.
- * This is used if a different tenant than the provider ones should be accessed but no user related login (JWT) for this tenant is available.
- * Therefore, the userJwt is undefined and only a destination service token has been issued.
+ * This is used if a tenant other than the provider tenant should be accessed but no user related login (JWT) is available for this tenant.
+ * Therefore, the `userJwt` is undefined and only a destination service token has been issued.
  */
 interface IssToken {
   type: 'iss';

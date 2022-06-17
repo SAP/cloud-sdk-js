@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/connectivity': minor
 ---
 
-[New Functionality] Support for JWTs without a `JKU` property.
+[New Functionality] Support JWTs without a `JKU` property.

@@ -61,7 +61,7 @@ describe('generator-cli', () => {
     expect(entities).toContain('package.json');
   }, 60000);
 
-  it('should set version when versionInPackageJson parameter is used', async () => {
+  it('should set version when versionInPackageJson option is used', async () => {
     const process = await execa('npx', [
       'ts-node',
       pathToGenerator,

@@ -59,8 +59,6 @@ export declare class TestEntityOtherMultiLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -72,8 +70,6 @@ export declare class TestEntityOtherMultiLinkApi<
     ALL_FIELDS: AllFields<
       TestEntityOtherMultiLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

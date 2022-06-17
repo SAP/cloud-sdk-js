@@ -23,9 +23,9 @@ function getGenericTypeAndDefault(oDataVersion: ODataVersion): string[][] {
     oDataVersion === 'v4'
       ? [
           ['DateT', 'Moment'],
-          ['DurationT', 'Duration'],
-          ['TimeOfDayT', 'Time'],
-          ['EnumT', 'any']
+          // ['DurationT', 'Duration'],
+          ['TimeOfDayT', 'Time']
+          // ['EnumT', 'any']
         ]
       : [
           ['DateTimeT', 'Moment'],

@@ -54,8 +54,6 @@ export declare class TestEntity1Api<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -67,8 +65,6 @@ export declare class TestEntity1Api<
     INT_16_PROPERTY: OrderableEdmTypeField<
       TestEntity1<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -112,8 +108,6 @@ export declare class TestEntity1Api<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -141,8 +135,6 @@ export declare class TestEntity1Api<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -153,8 +145,6 @@ export declare class TestEntity1Api<
     ALL_FIELDS: AllFields<
       TestEntity1<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

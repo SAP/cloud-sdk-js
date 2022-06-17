@@ -58,8 +58,6 @@ export declare class TestEntityLvl3MultiLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -71,8 +69,6 @@ export declare class TestEntityLvl3MultiLinkApi<
     GUID_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl3MultiLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -116,8 +112,6 @@ export declare class TestEntityLvl3MultiLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -129,8 +123,6 @@ export declare class TestEntityLvl3MultiLinkApi<
     ALL_FIELDS: AllFields<
       TestEntityLvl3MultiLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

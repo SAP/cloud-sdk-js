@@ -5,7 +5,7 @@ import { AirportsApi } from './AirportsApi';
 import { GetNearestAirportParameters } from './function-imports';
 import { ResetDataSourceParameters } from './action-imports';
 import { BigNumber } from 'bignumber.js';
-import { Moment, Duration } from 'moment';
+import { Moment } from 'moment';
 import {
   DeSerializers,
   DefaultDeSerializers,
@@ -29,9 +29,7 @@ export declare function microsoftODataServiceSampleTrippinInMemoryModelsService<
   AnyT = any,
   DateTimeOffsetT = Moment,
   DateT = Moment,
-  DurationT = Duration,
-  TimeOfDayT = Time,
-  EnumT = any
+  TimeOfDayT = Time
 >(
   deSerializers?: Partial<
     DeSerializers<
@@ -51,9 +49,7 @@ export declare function microsoftODataServiceSampleTrippinInMemoryModelsService<
       AnyT,
       DateTimeOffsetT,
       DateT,
-      DurationT,
-      TimeOfDayT,
-      EnumT
+      TimeOfDayT
     >
   >
 ): MicrosoftODataServiceSampleTrippinInMemoryModelsService<
@@ -74,9 +70,7 @@ export declare function microsoftODataServiceSampleTrippinInMemoryModelsService<
     AnyT,
     DateTimeOffsetT,
     DateT,
-    DurationT,
-    TimeOfDayT,
-    EnumT
+    TimeOfDayT
   >
 >;
 declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<

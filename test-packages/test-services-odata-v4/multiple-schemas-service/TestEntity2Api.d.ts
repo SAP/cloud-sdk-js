@@ -51,8 +51,6 @@ export declare class TestEntity2Api<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -80,8 +78,6 @@ export declare class TestEntity2Api<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -93,8 +89,6 @@ export declare class TestEntity2Api<
     ALL_FIELDS: AllFields<
       TestEntity2<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

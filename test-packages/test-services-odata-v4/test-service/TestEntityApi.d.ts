@@ -68,8 +68,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -81,8 +79,6 @@ export declare class TestEntityApi<
     KEY_PROPERTY_STRING: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -126,8 +122,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -139,8 +133,6 @@ export declare class TestEntityApi<
     BOOLEAN_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -184,8 +176,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -197,8 +187,6 @@ export declare class TestEntityApi<
     INT_16_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -242,8 +230,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -255,8 +241,6 @@ export declare class TestEntityApi<
     INT_64_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -300,8 +284,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -313,8 +295,6 @@ export declare class TestEntityApi<
     SINGLE_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -358,8 +338,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -371,8 +349,6 @@ export declare class TestEntityApi<
     FLOAT_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -416,8 +392,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -429,8 +403,6 @@ export declare class TestEntityApi<
     DATE_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -474,8 +446,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -487,8 +457,6 @@ export declare class TestEntityApi<
     DURATION_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -532,8 +500,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -545,8 +511,6 @@ export declare class TestEntityApi<
     S_BYTE_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -590,8 +554,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -603,8 +565,6 @@ export declare class TestEntityApi<
     SOMETHING_THE_SDK_DOES_NOT_SUPPORT: EdmTypeField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -648,8 +608,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -677,8 +635,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -689,8 +645,6 @@ export declare class TestEntityApi<
     COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -734,8 +688,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -747,8 +699,6 @@ export declare class TestEntityApi<
     ENUM_PROPERTY_INT_64: EnumField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -792,8 +742,6 @@ export declare class TestEntityApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -805,8 +753,6 @@ export declare class TestEntityApi<
     ENUM_COLLECTION_PROPERTY: CollectionField<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -861,8 +807,6 @@ export declare class TestEntityApi<
     ALL_FIELDS: AllFields<
       TestEntity<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

@@ -59,8 +59,6 @@ export declare class TestEntityEndsWithSomethingElseApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -72,8 +70,6 @@ export declare class TestEntityEndsWithSomethingElseApi<
     ALL_FIELDS: AllFields<
       TestEntityEndsWithSomethingElse<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

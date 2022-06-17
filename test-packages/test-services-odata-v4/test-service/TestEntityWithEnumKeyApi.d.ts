@@ -59,8 +59,6 @@ export declare class TestEntityWithEnumKeyApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -72,8 +70,6 @@ export declare class TestEntityWithEnumKeyApi<
     ALL_FIELDS: AllFields<
       TestEntityWithEnumKey<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

@@ -54,8 +54,6 @@ export declare class TestEntity3Api<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -67,8 +65,6 @@ export declare class TestEntity3Api<
     ENUM_PROPERTY: EnumField<
       TestEntity3<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -112,8 +108,6 @@ export declare class TestEntity3Api<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -124,8 +118,6 @@ export declare class TestEntity3Api<
     ALL_FIELDS: AllFields<
       TestEntity3<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

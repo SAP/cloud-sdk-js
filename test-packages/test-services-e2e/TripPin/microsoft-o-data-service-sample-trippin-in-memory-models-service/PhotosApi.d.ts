@@ -48,8 +48,6 @@ export declare class PhotosApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -77,8 +75,6 @@ export declare class PhotosApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -90,8 +86,6 @@ export declare class PhotosApi<
     ALL_FIELDS: AllFields<
       Photos<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

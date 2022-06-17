@@ -59,8 +59,6 @@ export declare class TestEntityWithSharedEntityType2Api<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -72,8 +70,6 @@ export declare class TestEntityWithSharedEntityType2Api<
     ALL_FIELDS: AllFields<
       TestEntityWithSharedEntityType2<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

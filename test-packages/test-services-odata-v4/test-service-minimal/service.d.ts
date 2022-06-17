@@ -1,7 +1,7 @@
 import { TestEntityApi } from './TestEntityApi';
 import { TestEntitySingleLinkApi } from './TestEntitySingleLinkApi';
 import { BigNumber } from 'bignumber.js';
-import { Moment, Duration } from 'moment';
+import { Moment } from 'moment';
 import {
   DeSerializers,
   DefaultDeSerializers,
@@ -25,9 +25,7 @@ export declare function testServiceMinimal<
   AnyT = any,
   DateTimeOffsetT = Moment,
   DateT = Moment,
-  DurationT = Duration,
-  TimeOfDayT = Time,
-  EnumT = any
+  TimeOfDayT = Time
 >(
   deSerializers?: Partial<
     DeSerializers<
@@ -47,9 +45,7 @@ export declare function testServiceMinimal<
       AnyT,
       DateTimeOffsetT,
       DateT,
-      DurationT,
-      TimeOfDayT,
-      EnumT
+      TimeOfDayT
     >
   >
 ): TestServiceMinimal<
@@ -70,9 +66,7 @@ export declare function testServiceMinimal<
     AnyT,
     DateTimeOffsetT,
     DateT,
-    DurationT,
-    TimeOfDayT,
-    EnumT
+    TimeOfDayT
   >
 >;
 declare class TestServiceMinimal<

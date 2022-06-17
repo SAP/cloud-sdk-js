@@ -67,8 +67,6 @@ export declare class TestEntityCircularLinkParentApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -98,8 +96,6 @@ export declare class TestEntityCircularLinkParentApi<
     ALL_FIELDS: AllFields<
       TestEntityCircularLinkParent<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

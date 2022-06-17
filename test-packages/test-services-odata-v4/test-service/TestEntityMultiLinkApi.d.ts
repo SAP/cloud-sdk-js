@@ -64,8 +64,6 @@ export declare class TestEntityMultiLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -77,8 +75,6 @@ export declare class TestEntityMultiLinkApi<
     BOOLEAN_PROPERTY: OrderableEdmTypeField<
       TestEntityMultiLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -122,8 +118,6 @@ export declare class TestEntityMultiLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -151,8 +145,6 @@ export declare class TestEntityMultiLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -164,8 +156,6 @@ export declare class TestEntityMultiLinkApi<
     KEY_PROPERTY: OrderableEdmTypeField<
       TestEntityMultiLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -211,8 +201,6 @@ export declare class TestEntityMultiLinkApi<
     ALL_FIELDS: AllFields<
       TestEntityMultiLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

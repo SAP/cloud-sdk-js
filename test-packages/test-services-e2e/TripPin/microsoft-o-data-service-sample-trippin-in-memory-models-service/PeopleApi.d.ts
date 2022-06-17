@@ -57,8 +57,6 @@ export declare class PeopleApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -70,8 +68,6 @@ export declare class PeopleApi<
     FIRST_NAME: OrderableEdmTypeField<
       People<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -115,8 +111,6 @@ export declare class PeopleApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -128,8 +122,6 @@ export declare class PeopleApi<
     EMAILS: CollectionField<
       People<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -173,8 +165,6 @@ export declare class PeopleApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -202,8 +192,6 @@ export declare class PeopleApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -215,8 +203,6 @@ export declare class PeopleApi<
     CONCURRENCY: OrderableEdmTypeField<
       People<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -262,8 +248,6 @@ export declare class PeopleApi<
     ALL_FIELDS: AllFields<
       People<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

@@ -49,8 +49,6 @@ export declare class AirportsApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -62,8 +60,6 @@ export declare class AirportsApi<
     NAME: OrderableEdmTypeField<
       Airports<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -107,8 +103,6 @@ export declare class AirportsApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -136,8 +130,6 @@ export declare class AirportsApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -148,8 +140,6 @@ export declare class AirportsApi<
     ALL_FIELDS: AllFields<
       Airports<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

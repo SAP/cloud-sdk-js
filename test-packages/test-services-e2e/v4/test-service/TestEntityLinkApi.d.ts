@@ -51,8 +51,6 @@ export declare class TestEntityLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -64,8 +62,6 @@ export declare class TestEntityLinkApi<
     KEY_TO_TEST_ENTITY: OrderableEdmTypeField<
       TestEntityLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -109,8 +105,6 @@ export declare class TestEntityLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -122,8 +116,6 @@ export declare class TestEntityLinkApi<
     ALL_FIELDS: AllFields<
       TestEntityLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

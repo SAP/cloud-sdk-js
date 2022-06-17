@@ -55,8 +55,6 @@ export declare class TestEntitySingleLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -68,8 +66,6 @@ export declare class TestEntitySingleLinkApi<
     ALL_FIELDS: AllFields<
       TestEntitySingleLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

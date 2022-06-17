@@ -59,8 +59,6 @@ export declare class TestEntityLvl2SingleLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -72,8 +70,6 @@ export declare class TestEntityLvl2SingleLinkApi<
     BOOLEAN_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2SingleLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -117,8 +113,6 @@ export declare class TestEntityLvl2SingleLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -130,8 +124,6 @@ export declare class TestEntityLvl2SingleLinkApi<
     INT_16_PROPERTY: OrderableEdmTypeField<
       TestEntityLvl2SingleLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,
@@ -175,8 +167,6 @@ export declare class TestEntityLvl2SingleLinkApi<
           any,
           any,
           any,
-          any,
-          any,
           any
         >
       >,
@@ -188,8 +178,6 @@ export declare class TestEntityLvl2SingleLinkApi<
     ALL_FIELDS: AllFields<
       TestEntityLvl2SingleLink<
         DeSerializers<
-          any,
-          any,
           any,
           any,
           any,

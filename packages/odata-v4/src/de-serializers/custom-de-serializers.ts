@@ -1,9 +1,8 @@
 import {
-  Time,
-  CustomOrDefaultType as CustomOrDefaultTypeCommon
+  CustomOrDefaultType as CustomOrDefaultTypeCommon,
+  Time
 } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
-import moment from 'moment';
 import { DeSerializers } from './de-serializers';
 import {
   DefaultDeSerializers,
@@ -17,49 +16,45 @@ import {
  * @returns A full set of (de-)serialization functions, that combines custom and default (de-)serializers.
  */
 export function mergeDefaultDeSerializersWith<
-  BinaryT = string,
-  BooleanT = boolean,
-  ByteT = number,
-  DecimalT = BigNumber,
-  DoubleT = number,
-  FloatT = number,
-  Int16T = number,
-  Int32T = number,
-  Int64T = BigNumber,
-  GuidT = string,
-  SByteT = number,
-  SingleT = number,
-  StringT = string,
-  AnyT = any,
-  DateT = moment.Moment,
-  DateTimeOffsetT = moment.Moment,
-  DurationT = moment.Duration,
-  TimeOfDayT = Time,
-  EnumT = any
->(
-  customDeSerializers: Partial<
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateT,
-      DateTimeOffsetT,
-      DurationT,
-      TimeOfDayT,
-      EnumT
-    >
-  >
+    BinaryT = string,
+    BooleanT = boolean,
+    ByteT = number,
+    DecimalT = BigNumber,
+    DoubleT = number,
+    FloatT = number,
+    Int16T = number,
+    Int32T = number,
+    Int64T = BigNumber,
+    GuidT = string,
+    SByteT = number,
+    SingleT = number,
+    StringT = string,
+    AnyT = any,
+    DateTimeT = moment.Moment,
+    DateTimeOffsetT = moment.Moment,
+    TimeT = Time
+    >(
+    customDeSerializers: Partial<
+        DeSerializers<
+            BinaryT,
+            BooleanT,
+            ByteT,
+            DecimalT,
+            DoubleT,
+            FloatT,
+            Int16T,
+            Int32T,
+            Int64T,
+            GuidT,
+            SByteT,
+            SingleT,
+            StringT,
+            AnyT,
+            DateTimeT,
+            DateTimeOffsetT,
+            TimeT
+            >
+        >
 ): CustomDeSerializers<typeof customDeSerializers> {
   return {
     ...(defaultDeSerializers as any),
@@ -68,30 +63,30 @@ export function mergeDefaultDeSerializersWith<
 }
 
 type CustomOrDefaultType<CustomDeSerializerT, EdmT> = CustomOrDefaultTypeCommon<
-  CustomDeSerializerT,
-  EdmT,
-  DefaultDeSerializers
->;
+    CustomDeSerializerT,
+    EdmT,
+    DefaultDeSerializers
+    >;
 
 /**
  * Type of the full set of (de-)serialization functions, that include custom (de-)serializers (aka. default (de-)serializers type merged with custom (de-)serializers type).
  */
 export type CustomDeSerializers<T> = DeSerializers<
-  CustomOrDefaultType<T, 'Edm.Binary'>,
-  CustomOrDefaultType<T, 'Edm.Boolean'>,
-  CustomOrDefaultType<T, 'Edm.Byte'>,
-  CustomOrDefaultType<T, 'Edm.Decimal'>,
-  CustomOrDefaultType<T, 'Edm.Double'>,
-  CustomOrDefaultType<T, 'Edm.Float'>,
-  CustomOrDefaultType<T, 'Edm.Int16'>,
-  CustomOrDefaultType<T, 'Edm.Int32'>,
-  CustomOrDefaultType<T, 'Edm.Int64'>,
-  CustomOrDefaultType<T, 'Edm.Guid'>,
-  CustomOrDefaultType<T, 'Edm.SByte'>,
-  CustomOrDefaultType<T, 'Edm.Single'>,
-  CustomOrDefaultType<T, 'Edm.String'>,
-  CustomOrDefaultType<T, 'Edm.Any'>,
-  CustomOrDefaultType<T, 'Edm.DateTime'>,
-  CustomOrDefaultType<T, 'Edm.DateTimeOffset'>,
-  CustomOrDefaultType<T, 'Edm.Time'>
->;
+    CustomOrDefaultType<T, 'Edm.Binary'>,
+    CustomOrDefaultType<T, 'Edm.Boolean'>,
+    CustomOrDefaultType<T, 'Edm.Byte'>,
+    CustomOrDefaultType<T, 'Edm.Decimal'>,
+    CustomOrDefaultType<T, 'Edm.Double'>,
+    CustomOrDefaultType<T, 'Edm.Float'>,
+    CustomOrDefaultType<T, 'Edm.Int16'>,
+    CustomOrDefaultType<T, 'Edm.Int32'>,
+    CustomOrDefaultType<T, 'Edm.Int64'>,
+    CustomOrDefaultType<T, 'Edm.Guid'>,
+    CustomOrDefaultType<T, 'Edm.SByte'>,
+    CustomOrDefaultType<T, 'Edm.Single'>,
+    CustomOrDefaultType<T, 'Edm.String'>,
+    CustomOrDefaultType<T, 'Edm.Any'>,
+    CustomOrDefaultType<T, 'Edm.DateTime'>,
+    CustomOrDefaultType<T, 'Edm.DateTimeOffset'>,
+    CustomOrDefaultType<T, 'Edm.Time'>
+    >;

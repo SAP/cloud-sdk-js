@@ -1,20 +1,14 @@
 import {
-  convertToUriForEdmString,
   defaultDeSerializersRaw as defaultDeSerializersCommon,
   Time,
   wrapDefaultDeSerializers
 } from '@sap-cloud-sdk/odata-common/internal';
-import { identity } from '@sap-cloud-sdk/util';
 import BigNumber from 'bignumber.js';
 import {
-  serializeToDate,
-  deserializeDateTimeOffsetToMoment,
-  serializeToDateTimeOffset,
-  deserializeDurationToMoment,
-  serializeToDuration,
+  deserializeToMoment,
   deserializeToTime,
-  serializeToTime,
-  deserializeDateToMoment
+  serializeFromMoment,
+  serializeFromTime
 } from './converters';
 import { DeSerializers } from './de-serializers';
 
@@ -22,66 +16,54 @@ import { DeSerializers } from './de-serializers';
  * Type of the default (de-)serializers.
  */
 export type DefaultDeSerializers = DeSerializers<
-  string,
-  boolean,
-  number,
-  BigNumber,
-  number,
-  number,
-  number,
-  number,
-  BigNumber,
-  string,
-  number,
-  number,
-  string,
-  any,
-  moment.Moment,
-  moment.Moment,
-  moment.Duration,
-  Time,
-  any
->;
+    string,
+    boolean,
+    number,
+    BigNumber,
+    number,
+    number,
+    number,
+    number,
+    BigNumber,
+    string,
+    number,
+    number,
+    string,
+    any,
+    moment.Moment,
+    moment.Moment,
+    Time
+    >;
 
 /**
  * Default (de-)serializers without `null` and `undefined` handling.
  */
 const defaultDeSerializersRaw: DefaultDeSerializers = {
   ...defaultDeSerializersCommon,
-  'Edm.Date': {
-    deserialize: deserializeDateToMoment,
-    serialize: serializeToDate,
-    serializeToUri: (value, serialize) => serialize(value)
+  'Edm.DateTime': {
+    deserialize: deserializeToMoment,
+    serialize: serializeFromMoment,
+    serializeToUri: value =>
+        `datetime'${value.toISOString().replace(/Z$/, '')}'`
   },
   'Edm.DateTimeOffset': {
-    deserialize: deserializeDateTimeOffsetToMoment,
-    serialize: serializeToDateTimeOffset,
-    serializeToUri: (value, serialize) => serialize(value)
+    deserialize: deserializeToMoment,
+    serialize: serializeFromMoment,
+    serializeToUri: value => `datetimeoffset'${value.toISOString()}'`
   },
-  'Edm.Duration': {
-    deserialize: deserializeDurationToMoment,
-    serialize: serializeToDuration,
-    serializeToUri: (value, serialize) => `duration'${serialize(value)}'`
-  },
-  'Edm.TimeOfDay': {
+  'Edm.Time': {
     deserialize: deserializeToTime,
-    serialize: serializeToTime,
-    serializeToUri: (value, serialize) => serialize(value)
+    serialize: serializeFromTime,
+    serializeToUri: (value, serialize) => `time'${serialize(value)}'`
   },
-  'Edm.Enum': {
-    deserialize: identity,
-    serialize: identity,
-    serializeToUri: (value, serialize) =>
-      convertToUriForEdmString(serialize(value))
-  },
-  /* DeSerializers with v4 specific URI serializer defaults. */
+  /* DeSerializers with v2 specific URI serializer defaults. */
   'Edm.Decimal': {
     ...defaultDeSerializersCommon['Edm.Decimal'],
-    serializeToUri: (value, serialize) => String(serialize(value))
+    serializeToUri: (value, serialize) => `${serialize(value)}M`
   },
   'Edm.Guid': {
     ...defaultDeSerializersCommon['Edm.Guid'],
-    serializeToUri: (value, serialize) => serialize(value)
+    serializeToUri: (value, serialize) => `guid'${serialize(value)}'`
   }
 };
 
@@ -89,5 +71,5 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
  * The default (de-)serializers.
  */
 export const defaultDeSerializers = wrapDefaultDeSerializers(
-  defaultDeSerializersRaw
+    defaultDeSerializersRaw
 );

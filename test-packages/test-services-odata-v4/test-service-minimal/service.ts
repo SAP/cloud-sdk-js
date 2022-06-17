@@ -33,9 +33,7 @@ export function testServiceMinimal<
   AnyT = any,
   DateTimeOffsetT = Moment,
   DateT = Moment,
-  DurationT = Duration,
-  TimeOfDayT = Time,
-  EnumT = any
+  TimeOfDayT = Time
 >(
   deSerializers: Partial<
     DeSerializers<
@@ -55,9 +53,7 @@ export function testServiceMinimal<
       AnyT,
       DateTimeOffsetT,
       DateT,
-      DurationT,
-      TimeOfDayT,
-      EnumT
+      TimeOfDayT
     >
   > = defaultDeSerializers as any
 ): TestServiceMinimal<
@@ -78,9 +74,7 @@ export function testServiceMinimal<
     AnyT,
     DateTimeOffsetT,
     DateT,
-    DurationT,
-    TimeOfDayT,
-    EnumT
+    TimeOfDayT
   >
 > {
   return new TestServiceMinimal(mergeDefaultDeSerializersWith(deSerializers));

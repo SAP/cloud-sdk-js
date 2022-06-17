@@ -11,7 +11,7 @@ import {
   TestActionImportNoParameterComplexReturnType2Parameters
 } from './action-imports';
 import { BigNumber } from 'bignumber.js';
-import { Moment, Duration } from 'moment';
+import { Moment } from 'moment';
 import {
   DeSerializers,
   DefaultDeSerializers,
@@ -35,9 +35,7 @@ export declare function multipleSchemasService<
   AnyT = any,
   DateTimeOffsetT = Moment,
   DateT = Moment,
-  DurationT = Duration,
-  TimeOfDayT = Time,
-  EnumT = any
+  TimeOfDayT = Time
 >(
   deSerializers?: Partial<
     DeSerializers<
@@ -57,9 +55,7 @@ export declare function multipleSchemasService<
       AnyT,
       DateTimeOffsetT,
       DateT,
-      DurationT,
-      TimeOfDayT,
-      EnumT
+      TimeOfDayT
     >
   >
 ): MultipleSchemasService<
@@ -80,9 +76,7 @@ export declare function multipleSchemasService<
     AnyT,
     DateTimeOffsetT,
     DateT,
-    DurationT,
-    TimeOfDayT,
-    EnumT
+    TimeOfDayT
   >
 >;
 declare class MultipleSchemasService<

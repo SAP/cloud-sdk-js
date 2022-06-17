@@ -1,5 +1,5 @@
 ---
-'@sap-cloud-sdk/generator': patch
+'@sap-cloud-sdk/generator': minor
 ---
 
-[Compatibility Note] The hidden command line argument `additionalFiles` has been renamed to `include` and is now not hidden anymore.
+[Compatibility Note] The hidden generator option `additionalFiles` is renamed to `include`.

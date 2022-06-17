@@ -20,7 +20,7 @@ export type Filterable<
   DeSerializersT extends DeSerializers,
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT> = EntityApi<
     EntityBase,
-    DeSerializersT
+    any
   >
 > =
   | Filter<EntityT, DeSerializersT, any>

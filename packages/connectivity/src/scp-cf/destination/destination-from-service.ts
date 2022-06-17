@@ -271,7 +271,7 @@ class DestinationFromServiceRetriever {
 
   private constructor(
     options: DestinationFetchOptions,
-    readonly subscriberToken: SubscriberTokens | undefined,
+    readonly subscriberToken: SubscriberToken | undefined,
     readonly providerServiceToken: JwtPair
   ) {
     const defaultOptions = {

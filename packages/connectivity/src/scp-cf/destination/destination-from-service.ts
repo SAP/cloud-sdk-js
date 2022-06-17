@@ -203,7 +203,7 @@ class DestinationFromServiceRetriever {
   private static isUserJwt(
     token: SubscriberTokens | undefined
   ): token is CustomToken | XsuaaToken {
-    return !!token && token.type !== 'iss';
+    return token?.type !== 'iss';
   }
 
   private static async getSubscriberToken(
@@ -244,9 +244,9 @@ class DestinationFromServiceRetriever {
         jwt: { iss: options.iss }
       });
       return {
-        serviceJwt: getJwtPair(serviceJwtEncoded),
         type: 'iss',
-        userJwt: undefined
+        userJwt: undefined,
+        serviceJwt: getJwtPair(serviceJwtEncoded)
       };
     }
   }

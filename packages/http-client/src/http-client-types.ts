@@ -129,7 +129,7 @@ export interface OriginOptions {
  * However, this will be treated as `OriginOptions`, as it contains `custom` as a key and an object as the value of the key.
  * This known issue can be handled by switching from `executeHttpClient` to `executeHttpClientWithOrigin`.
  * @param obj - Object to check.
- * @returns `true` if the object is a OriginOptions object, `false` otherwise.
+ * @returns `true` if the object is a `OriginOptions` object, `false` otherwise.
  * @internal
  */
 export function isOriginOptions(obj: any): obj is OriginOptions {

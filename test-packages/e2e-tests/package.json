@@ -24,7 +24,6 @@
     "service": "node server.js",
     "proxy": "node test/on-prem/proxy-server.js",
     "mail": "node test/mail/mail-server.js",
-    "mail-socket": "node test/mail/mail-socket-server.js",
     "test-mail": "ts-node test/mail/test.ts"
   },
   "devDependencies": {
@@ -54,10 +53,7 @@
     "openapi-backend": "^5.0.0",
     "pm2": "^5.1.2",
     "smtp-server": "3.11.0",
-    "sqlite3": "^5.0.2",
-    "ws": "^8.8.0",
-    "https-proxy-agent": "^5.0.1",
-    "socks-proxy-agent": "^7.0.0"
+    "sqlite3": "^5.0.2"
   },
   "cds": {
     "cdsc": {

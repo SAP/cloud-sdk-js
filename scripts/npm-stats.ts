@@ -35,7 +35,7 @@ async function getAllStats(page) {
     '@sap-cloud-sdk/openapi',
     '@sap-cloud-sdk/openapi-generator',
     '@sap-cloud-sdk/test-util',
-    '@sap-cloud-sdk/eslint-confg',
+    '@sap-cloud-sdk/eslint-config',
     '@sap-cloud-sdk/temporal-de-serializers',
     '@sap-cloud-sdk/odata-common',
     '@sap/cds'].reduce(

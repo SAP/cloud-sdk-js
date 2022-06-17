@@ -65,5 +65,6 @@ export interface Systems {
     providerOauth2UserTokenExchangeCommonTokenURL: string;
     providerBasicPrivateLink: string;
     providerTrustStore: string;
+    providerOauth2ClientCredentialsWithoutJKU: string;
   };
 }

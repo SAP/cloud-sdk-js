@@ -44,6 +44,22 @@ describe('parseDestination', () => {
     expect(actual.isTrustingAllCertificates).toBe(false);
   });
 
+  it("'jwks' is correctly parsed", () => {
+    const actual = parseDestination({
+      ...basicMultipleResponse[0],
+      'x_user_token.jwks': 'someDummyValue'
+    });
+    expect(actual.jwks).toBe('someDummyValue');
+  });
+
+  it("'jwks_uri' is correctly parsed", () => {
+    const actual = parseDestination({
+      ...basicMultipleResponse[0],
+      'x_user_token.jwks_uri': 'someDummyValue'
+    });
+    expect(actual.jwksUri).toBe('someDummyValue');
+  });
+
   it('parses certificates', () => {
     const actual = parseDestination(certificateSingleResponse);
     expect(actual.authentication).toBe('ClientCertificateAuthentication');

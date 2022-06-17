@@ -11,6 +11,7 @@ import {
   getDestinationFromDestinationService,
   serviceToken
 } from '../../../../packages/connectivity/src/internal';
+import { signedJwt } from '../../../../test-resources/test/test-util';
 import {
   loadLocalVcap,
   readSystems,
@@ -98,6 +99,15 @@ describe('OAuth flows', () => {
     expect(result.lastName).toBe('name');
   }, 60000);
 
+  xit('Service Token: Gets token for non XSUAA jwt', async () => {
+    const token = await serviceToken('destination', {
+      jwt: signedJwt({ user: 'MrX' })
+    });
+    expect(decodeJwt(token).iss).toBe(
+      'http://s4sdk.localhost:8080/uaa/oauth/token'
+    );
+  });
+
   xit('BasicAuth: Subscriber Destination & Subscriber Token', async () => {
     const destination = await getDestination({
       destinationName: systems.s4.subscriberBasic,
@@ -118,6 +128,15 @@ describe('OAuth flows', () => {
       iss: 'http://s4sdk.localhost:8080/uaa/oauth/token'
     });
     expect(destination?.password).toBeDefined();
+  }, 60000);
+
+  xit('Oauth2ClientCredentials: JWT with no JKU should be accepted if destination has jwks or jwks_uri property', async () => {
+    const destination = await getDestination({
+      destinationName:
+        systems.destination.providerOauth2ClientCredentialsWithoutJKU
+    });
+    expect(destination?.jwksUri).toBeDefined();
+    expect(destination?.jwks).toBeDefined();
   }, 60000);
 
   xit('No Auth: trust store certificates are fetched', async () => {

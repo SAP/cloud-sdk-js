@@ -18,6 +18,11 @@ and(
   )
 );
 
+// $ExpectType FilterList<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>
+and(
+  schema?.TO_SINGLE_LINK.filter(singleLinkSchema.STRING_PROPERTY.equals('test'))
+);
+
 // $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>, string>
 schema.ENUM_PROPERTY.equals('Member1');
 

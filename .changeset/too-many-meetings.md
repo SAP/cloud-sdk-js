@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/http-client': minor
 ---
 
-[Improvements] Allow users to provide `OriginOptions` without `requestConfig`.
+[Improvement] Make `requestConfig` of `OriginOptions` optional.

@@ -176,7 +176,7 @@ export function getEnvironmentVariable(
   if (process.env[name]) {
     return process.env[name];
   }
-  logger.warn(`The environment variable "${name}" is not defined.`);
+  logger.debug(`The environment variable "${name}" is not defined.`);
   return null;
 }
 

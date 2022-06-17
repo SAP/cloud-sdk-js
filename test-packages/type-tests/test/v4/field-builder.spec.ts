@@ -9,7 +9,7 @@ import { FieldBuilder } from '@sap-cloud-sdk/odata-common/internal';
 // $ExpectType FieldBuilder<typeof TestEntity, DefaultDeSerializers>
 const entityFieldBuilder = new FieldBuilder(TestEntity, defaultDeSerializers);
 
-// $ExpectType EdmTypeField<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DefaultDeSerializers, "Edm.String", true, true>
+// $ExpectType OrderableEdmTypeField<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DefaultDeSerializers, "Edm.String", true, true>
 entityFieldBuilder.buildEdmTypeField('fieldName', 'Edm.String', true);
 
 // $ExpectType OrderableEdmTypeField<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DefaultDeSerializers, "Edm.Int16", false, true>
@@ -34,7 +34,7 @@ const complexTypeFieldBuilder = new FieldBuilder(
   defaultDeSerializers
 );
 
-// $ExpectType EdmTypeField<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DefaultDeSerializers, "Edm.String", true, false>
+// $ExpectType OrderableEdmTypeField<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DefaultDeSerializers, "Edm.String", true, false>
 complexTypeFieldBuilder.buildEdmTypeField('fieldName', 'Edm.String', true);
 
 // $ExpectType OrderableEdmTypeField<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DefaultDeSerializers, "Edm.Int16", false, false>

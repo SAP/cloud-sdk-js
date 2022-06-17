@@ -9,7 +9,7 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
 export declare class AirportsApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -30,7 +30,7 @@ export declare class AirportsApi<
   get fieldBuilder(): FieldBuilder<typeof Airports, DeSerializersT>;
   private _schema?;
   get schema(): {
-    ICAO_CODE: EdmTypeField<
+    ICAO_CODE: OrderableEdmTypeField<
       Airports<
         DeSerializers<
           any,
@@ -59,7 +59,7 @@ export declare class AirportsApi<
       false,
       true
     >;
-    NAME: EdmTypeField<
+    NAME: OrderableEdmTypeField<
       Airports<
         DeSerializers<
           any,
@@ -88,7 +88,7 @@ export declare class AirportsApi<
       false,
       true
     >;
-    IATA_CODE: EdmTypeField<
+    IATA_CODE: OrderableEdmTypeField<
       Airports<
         DeSerializers<
           any,

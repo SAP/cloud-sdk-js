@@ -1,8 +1,6 @@
 import { EntityBase } from '../entity-base';
-import {
-  FilterFunction,
-  FilterFunctionParameterType
-} from './filter-function-base';
+import { FilterFunctionParameterType } from './filter-function-base';
+import { OrderableFilterFunction } from './orderable-filter-function';
 
 /**
  * Representation of a filter function, that returns a value of type string.
@@ -10,7 +8,7 @@ import {
  */
 export class StringFilterFunction<
   EntityT extends EntityBase
-> extends FilterFunction<EntityT, string> {
+> extends OrderableFilterFunction<EntityT, string> {
   /**
    * Creates an instance of StringFilterFunction.
    * @param functionName - Name of the function that returns a string value.

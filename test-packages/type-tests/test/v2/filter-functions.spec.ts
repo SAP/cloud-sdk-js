@@ -1,6 +1,4 @@
-import {
-  testService
-} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import {
   filterFunctions,
   length,
@@ -41,6 +39,9 @@ filterFunctions().substring(
 
 // $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, any, number>
 filterFunctions().length(testEntitySchema.STRING_PROPERTY).greaterThan(1);
+
+// $ExpectType Filter<EntityBase, any, string>
+filterFunctions().substring('abcde', 1).greaterOrEqual('bcde');
 
 // $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, any, number>
 filterFunctions().round(testEntitySchema.STRING_PROPERTY).greaterThan(1);

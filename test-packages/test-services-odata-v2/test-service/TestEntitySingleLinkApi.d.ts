@@ -10,7 +10,6 @@ import {
   EntityBuilderType,
   EntityApi,
   FieldBuilder,
-  EdmTypeField,
   OrderableEdmTypeField,
   Link,
   OneToOneLink
@@ -46,7 +45,7 @@ export declare class TestEntitySingleLinkApi<
   get fieldBuilder(): FieldBuilder<typeof TestEntitySingleLink, DeSerializersT>;
   private _schema?;
   get schema(): {
-    KEY_PROPERTY: EdmTypeField<
+    KEY_PROPERTY: OrderableEdmTypeField<
       TestEntitySingleLink<
         DeSerializers<
           any,
@@ -73,7 +72,7 @@ export declare class TestEntitySingleLinkApi<
       false,
       true
     >;
-    STRING_PROPERTY: EdmTypeField<
+    STRING_PROPERTY: OrderableEdmTypeField<
       TestEntitySingleLink<
         DeSerializers<
           any,
@@ -100,7 +99,7 @@ export declare class TestEntitySingleLinkApi<
       true,
       true
     >;
-    BOOLEAN_PROPERTY: EdmTypeField<
+    BOOLEAN_PROPERTY: OrderableEdmTypeField<
       TestEntitySingleLink<
         DeSerializers<
           any,
@@ -127,7 +126,7 @@ export declare class TestEntitySingleLinkApi<
       true,
       true
     >;
-    GUID_PROPERTY: EdmTypeField<
+    GUID_PROPERTY: OrderableEdmTypeField<
       TestEntitySingleLink<
         DeSerializers<
           any,

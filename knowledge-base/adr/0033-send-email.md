@@ -30,7 +30,8 @@ As no Node native mail interface was found, we can bind our implementation to a 
 ```ts
 export function sendMail<T extends MailOptions>(
   destination: DestinationOrFetchOptions,
-  mailOptions: T
+  // as initial implemenation for handling multiple emails
+  ...mailOptions: T[]
 ): Promise<MailResponse>
 ```
 
@@ -83,6 +84,7 @@ interface MailAddress {
 - The [auth-flow.spec.ts](test-packages/integration-tests/test/auth-flows/auth-flow.spec.ts) contains a test, that detects missing `username` and `password` from the destination object, which needs to be fixed.
 - The [mail.spec.ts](test-packages/e2e-tests/test/mail/mail.spec.ts) is a PoC for sending emails in general, which can be used for the aligned API.
 #### Proxy type: OnPremise
+- We only support using "socket" as the proxy protocol and do "http" proxy later as both of them need cumbersome deep layer (e.g., Ox08) implementation. 
 - The [auth-flow.spec.ts](test-packages/integration-tests/test/auth-flows/auth-flow.spec.ts) contains a test, that is related to the wrong port for sending emails, which should be fixed.
 #### Protocol of the Proxy
 - When proxy type is `OnPremise`, use `http` protocol, being the same as `http-client`.
@@ -112,7 +114,7 @@ Applications on BTP can send mails with `MAIL` destinations to cloud/On-Prem mai
 ### Extensions in the future
 - `location id` (can be configured for OnPrem destinations)
 - `Private link` (destination proxy type)
-- `socket_proxy` (like `http_proxy` in the environment)
+- `http_proxy` (like `socket_proxy` in the environment)
 
 ### Useful links
 - [Using socks proxy with nodemailer](https://nodemailer.com/smtp/proxies/#2-using-socks-proxy)

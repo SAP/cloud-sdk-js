@@ -32,17 +32,23 @@ describe('Mail', () => {
   });
 
   it('should send 100 mails', async () => {
-    const mailOptions = buildArrayWithNatualNums(100).map(mailIndex => ({
-        ...defaultMailOptions,
-        subject: `mail ${mailIndex}`
-      } as Mail.Options));
+    const mailOptions = buildArrayWithNatualNums(100).map(
+      mailIndex =>
+        ({
+          ...defaultMailOptions,
+          subject: `mail ${mailIndex}`
+        } as Mail.Options)
+    );
     await sendTestMail(undefined, ...mailOptions);
     const mails = fs.readdirSync(join(resolve('test'), 'mail', 'test-output'));
     expect(mails.length).toBeGreaterThan(99);
   }, 60000);
 });
 
-async function sendTestMail(connection?: net.Socket, ...mailOptions: Mail.Options[]): Promise<void> {
+async function sendTestMail(
+  connection?: net.Socket,
+  ...mailOptions: Mail.Options[]
+): Promise<void> {
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     connection,
@@ -63,9 +69,7 @@ async function sendTestMail(connection?: net.Socket, ...mailOptions: Mail.Option
   for (const mailOptionIndex in mailOptions) {
     // eslint-disable-next-line no-console
     console.log(`Sending email ${mailOptionIndex}/${mailOptions.length}...`);
-    const response = await transporter.sendMail(
-      mailOptions[mailOptionIndex]
-    );
+    const response = await transporter.sendMail(mailOptions[mailOptionIndex]);
     // eslint-disable-next-line no-console
     console.log(
       `...email ${mailOptionIndex}/${mailOptions.length} for subject "${mailOptions[mailOptionIndex].subject}" was sent successfully.`
@@ -76,7 +80,7 @@ async function sendTestMail(connection?: net.Socket, ...mailOptions: Mail.Option
   console.log('SMTP transport connection closed.');
 }
 
-function buildArrayWithNatualNums(length): number[]{
+function buildArrayWithNatualNums(length): number[] {
   return Array.from({ length }, (_, i) => i + 1);
 }
 

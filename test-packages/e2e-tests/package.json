@@ -24,6 +24,7 @@
     "service": "node server.js",
     "proxy": "node test/on-prem/proxy-server.js",
     "mail": "node test/mail/mail-server.js",
+    "mail-socket": "node test/mail/mail-socket-server.js",
     "test-mail": "ts-node test/mail/test.ts"
   },
   "devDependencies": {
@@ -41,6 +42,7 @@
     "@sap/cds": "^5.9.6",
     "@sap/cds-dk": "4.9.5",
     "@types/nodemailer": "^6.4.4",
+    "@types/ws": "^8.5.3",
     "axios": "^0.27.1",
     "execa": "^5.0.0",
     "express": "^4.17.1",
@@ -52,7 +54,10 @@
     "openapi-backend": "^5.0.0",
     "pm2": "^5.1.2",
     "smtp-server": "3.11.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "ws": "^8.8.0",
+    "https-proxy-agent": "^5.0.1",
+    "socks-proxy-agent": "^7.0.0"
   },
   "cds": {
     "cdsc": {

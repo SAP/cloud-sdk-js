@@ -23,6 +23,7 @@ const server = new SMTPServer({
           resolve('test'),
           'mail',
           'test-output',
+          'http-server',
           `${session.user}-${session.id}.txt`
         )
       )

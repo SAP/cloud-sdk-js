@@ -62,11 +62,13 @@ interface DestinationSearchResult {
 }
 
 /**
- * Different types of tokens handed in from by the caller.
+ * When a destination is fetched from the SDK the user can pass different tokens.
+ * The token determines from which tenant the destination is obtained (provider or subscriber) and if it contains user information so that user propagation flows are possible.
+ * Possible types are: A user specific JWT issued by the XSUAA, a JWT from a custom IdP or only the `iss` property to get destinations from a different tenant.
  * We name these tokens `subscriber token`, because they are related to the subscriber account in contrast to the account the application is running in (provider account).
  * Potentially tenant defined in the subscriber token can be the same as the provider tenant for single tenant application.
  */
-type SubscriberTokens = IssToken | XsuaaToken | CustomToken;
+type SubscriberToken = IssToken | XsuaaToken | CustomToken;
 
 /**
  * User provided a dummy token with the `iss` property.
@@ -201,14 +203,14 @@ class DestinationFromServiceRetriever {
   }
 
   private static isUserJwt(
-    token: SubscriberTokens | undefined
+    token: SubscriberToken | undefined
   ): token is CustomToken | XsuaaToken {
     return !!token && token.type !== 'iss';
   }
 
   private static async getSubscriberToken(
     options: DestinationFetchOptions
-  ): Promise<SubscriberTokens | undefined> {
+  ): Promise<SubscriberToken | undefined> {
     if (options.jwt) {
       if (options.iss) {
         logger.warn(
@@ -269,7 +271,7 @@ class DestinationFromServiceRetriever {
 
   private constructor(
     options: DestinationFetchOptions,
-    readonly subscriberToken: SubscriberTokens | undefined,
+    readonly subscriberToken: SubscriberToken | undefined,
     readonly providerServiceToken: JwtPair
   ) {
     const defaultOptions = {

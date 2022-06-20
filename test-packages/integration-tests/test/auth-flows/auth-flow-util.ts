@@ -67,4 +67,8 @@ export interface Systems {
     providerTrustStore: string;
     providerOauth2ClientCredentialsWithoutJKU: string;
   };
+  email: {
+    providerCloudBasic: string;
+    providerOnPremBasic: string;
+  };
 }

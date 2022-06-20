@@ -56,50 +56,45 @@ This header should consider as SdkHeader from an origin.
 We have the same problem in both the `HttpRequestConfig` and `DestinationHttpRequestConfig`.
 Both contain a single `header` property typed `Record<string,any>` or `Record<string,string>` which contains two sources of headers.
 
-- **Option A**: Keep the single property but use a `HeaderValueObject` containing the value but also information on the origin.
-- **Option B**: Add a property `headerSDK` and `headerProperties` to hold different headers.
+#### Option A
+Keep the single property but use a `HttpRequestConfigWithOrigin` containing the value but also information on the origin.
+#### Option B
+Add a property `headerSDK` and `headerProperties` to hold different headers.
 
-We would like to keep the SDK internals in option A from the user:
+#### Decision
+Use option A and have two different APIs for external users and SDK (also CAP) developers.
 
 ```ts
-interface HeaderValueObject {
-    value:string
-    origin:'Custom'|'DestinationProperty'|'Destination'|'SDK'
+// Parameters and headers use a new type `OriginOptions` that contains the origin information.
+export type HttpRequestConfigWithOrigin = HttpRequestConfigBase & {
+  params?: OriginOptions;
+  headers?: OriginOptions;
+};
+export interface OriginOptions {
+  requestConfig?: Record<string, any>;
+  custom?: Record<string, any>;
 }
 
-//Parameters are handled analogously and are skipped in the methods to be shorted.
-interface ParameterValueObject {
-    value:string
-    origin:'Custom'|'DestinationProperty'|'SDK'
-}
-
-interface ConfigPublic{
-    headers:Record<string,string>
-    parameters:Record<string,string>
-}
-
-/**
- * @internal
- */
-interface ConfigInternal{
-    headers:Record<string,HeaderValueObject>
-    parameters:Record<string,ParameterValueObject>
-}
+// This is the request config type for "normal" users, and it is compatible with the v1 SDK.
+export type HttpRequestConfig = HttpRequestConfigBase & {
+  params?: Record<string, any>;
+  headers?: Record<string, any>;
+};
 
 /**
- * We use this method so the origin of headers is clear. Will be exported but not on root level.
+ * The SDK developers and CAP use this method so the origin of headers is clear.
  * @internal
  */
-export function executeHttpRequestInternal(config:ConfigInternal){
+export function executeHttpRequestWithOrigin(config: HttpRequestConfigWithOrigin) {
     ...
 }
 
 /**
- * This method is for direct customer use -> provided headers are custom and have high prio.
+ * This method is for direct customer use, where provided headers are custom and have high prio.
  */
-export function executeHttpRequest(config:ConfigPublic){
-    const withObject = headerObjectWithOriginCustom(config)
-    executeHttpRequestInternal(withObject)
+export function executeHttpRequest(config: HttpRequestConfig){
+    const withOrigin = buildHttpRequestConfigWithOrigin(config)
+    executeHttpRequestWithOrigin(withOrigin)
 }
 ```
 
@@ -114,10 +109,11 @@ We investigate the risk of breaking changes:
 
 ## Decision
 
-- We see this as a version 2 feature or even technincal debt after version 2.0 release.
+- We see this as a version 2 feature.
 - If [bug reporter](https://answers.sap.com/questions/13500887/on-premise-connectivity-to-rest-service-with-api-k.html) response we can do a small hotfix if needed.
 - We decide to implement the option **B** including a public and internal function.
 
 ## Consequences
 
-The header and parameter handling is clear and the merging of the headers is done shortly before request execution.
+- [Direct users] There are no breaking changes, so upgrading to version 2 should be smooth.
+- [SDK/CAP developers] A new API `executeHttpRequestWithOrigin` is created, so headers with different origins can be defined.

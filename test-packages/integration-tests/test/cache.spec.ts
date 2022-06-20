@@ -122,14 +122,14 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       useCache: true,
       isolationStrategy: IsolationStrategy.Tenant_User
     });
-    expect(destinationRequestTenantUser).toBeDefined();
+    expect(destinationRequestTenantUser).not.toBeNull();
 
     const destinationRequestTenant = await getDestination({
       destinationName: 'FINAL-DESTINATION',
       useCache: true,
       isolationStrategy: IsolationStrategy.Tenant
     });
-    expect(destinationRequestTenant).toBeDefined();
+    expect(destinationRequestTenant).not.toBeNull();
   });
 
   it('caches the destination retrieval for relevant auth flow', async () => {
@@ -149,7 +149,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       jwt: providerUserToken,
       isolationStrategy: IsolationStrategy.Tenant_User
     });
-    expect(cache).toBeDefined();
+    expect(cache).not.toBeNull();
     expect(cache).toEqual(directCall);
 
     await expect(

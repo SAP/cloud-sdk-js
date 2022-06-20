@@ -1,6 +1,13 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { JwtPayload } from '../jsonwebtoken-type';
-import { decodeJwt, isUserToken, JwtPair, verifyJwt } from '../jwt';
+import {
+  decodeJwt,
+  decodeJwtComplete,
+  getJwtPair,
+  isXsuaaToken,
+  JwtPair,
+  verifyJwt
+} from '../jwt';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
@@ -53,9 +60,49 @@ interface DestinationSearchResult {
   fromCache: boolean;
   origin: DestinationOrigin;
 }
-interface SubscriberTokens {
-  userJwt?: JwtPair; // is undefined when iss is passed ad token
+
+/**
+ * When a destination is fetched from the SDK the user can pass different tokens.
+ * The token determines from which tenant the destination is obtained (provider or subscriber) and if it contains user information so that user propagation flows are possible.
+ * Possible types are: A user specific JWT issued by the XSUAA, a JWT from a custom IdP or only the `iss` property to get destinations from a different tenant.
+ * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the"provider account", where the application is running.
+ * The tenant defined in the subscriber token is the provider tenant for single tenant applications.
+ */
+type SubscriberToken = IssToken | XsuaaToken | CustomToken;
+
+/**
+ * User provided a dummy token with the `iss` property.
+ * This is used if a tenant other than the provider tenant should be accessed but no user related login (JWT) is available for this tenant.
+ * Therefore, the `userJwt` is undefined and only a destination service token has been issued.
+ */
+interface IssToken {
+  type: 'iss';
+  userJwt: undefined;
   serviceJwt: JwtPair;
+}
+
+/**
+ * User provided a token issued form the XSUAA.
+ * This token has the JKU properties to be verified by the SDK.
+ * The provided token is the userJwt containing the `zid` and `user_id` properties.
+ * The service token was derived from this token and is for the same tenant.
+ */
+interface XsuaaToken {
+  type: 'xsuaa';
+  userJwt: JwtPair;
+  serviceJwt: JwtPair;
+}
+
+/**
+ * User provided a token from a custom issuer (not XSUAA).
+ * Such a token can not be converted to a service token by the XSUAA.
+ * Therefore, the serviceJwt is undefined and the SDK does not do a token validation - the destination service does this based on jwks properties on the destination.
+ * For service calls the provider service token is used so this types works only for single tenant application.
+ */
+interface CustomToken {
+  type: 'custom';
+  userJwt: JwtPair;
+  serviceJwt: undefined;
 }
 
 const emptyDestinationByType: DestinationsByType = {
@@ -147,24 +194,46 @@ class DestinationFromServiceRetriever {
     return withTrustStore;
   }
 
+  private static checkDestinationForCustomJwt(destination: Destination): void {
+    if (!destination.jwks && !destination.jwksUri) {
+      throw new Error(
+        'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
+      );
+    }
+  }
+
+  private static isUserJwt(
+    token: SubscriberToken | undefined
+  ): token is CustomToken | XsuaaToken {
+    return !!token && token.type !== 'iss';
+  }
+
   private static async getSubscriberToken(
     options: DestinationFetchOptions
-  ): Promise<SubscriberTokens | undefined> {
+  ): Promise<SubscriberToken | undefined> {
     if (options.jwt) {
       if (options.iss) {
         logger.warn(
           'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
         );
       }
-      const encoded = await serviceToken('destination', {
-        ...options
-      });
+
+      if (isXsuaaToken(decodeJwtComplete(options.jwt))) {
+        await verifyJwt(options.jwt, options);
+        const serviceJwtEncoded = await serviceToken('destination', {
+          ...options,
+          jwt: options.jwt
+        });
+        return {
+          type: 'xsuaa',
+          userJwt: getJwtPair(options.jwt),
+          serviceJwt: getJwtPair(serviceJwtEncoded)
+        };
+      }
       return {
-        userJwt: {
-          decoded: await verifyJwt(options.jwt, options),
-          encoded: options.jwt
-        },
-        serviceJwt: { encoded, decoded: decodeJwt(encoded) }
+        type: 'custom',
+        userJwt: getJwtPair(options.jwt),
+        serviceJwt: undefined
       };
     }
 
@@ -172,13 +241,15 @@ class DestinationFromServiceRetriever {
       logger.debug(
         'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
       );
-      const payload = { iss: options.iss };
-      const encoded = await serviceToken('destination', {
+      const serviceJwtEncoded = await serviceToken('destination', {
         ...options,
-        jwt: payload
+        jwt: { iss: options.iss }
       });
-      const clientCertJwt = { encoded, decoded: decodeJwt(encoded) };
-      return { serviceJwt: clientCertJwt };
+      return {
+        type: 'iss',
+        userJwt: undefined,
+        serviceJwt: getJwtPair(serviceJwtEncoded)
+      };
     }
   }
 
@@ -200,7 +271,7 @@ class DestinationFromServiceRetriever {
 
   private constructor(
     options: DestinationFetchOptions,
-    readonly subscriberToken: SubscriberTokens | undefined,
+    readonly subscriberToken: SubscriberToken | undefined,
     readonly providerServiceToken: JwtPair
   ) {
     const defaultOptions = {
@@ -315,9 +386,9 @@ class DestinationFromServiceRetriever {
     const exchangeTenant = this.getExchangeTenant(destination);
     const clientGrant = await serviceToken('destination', {
       jwt:
-        origin === 'subscriber'
-          ? this.subscriberToken!.serviceJwt.decoded
-          : this.providerServiceToken.decoded
+        origin === 'provider'
+          ? this.providerServiceToken.decoded
+          : this.subscriberToken!.serviceJwt!.decoded
     });
     return { authHeaderJwt: clientGrant, exchangeTenant };
   }
@@ -346,7 +417,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   ): Promise<AuthAndExchangeTokens> {
     const { destination, origin } = destinationResult;
     const { destinationName } = this.options;
-    if (!this.subscriberToken || !isUserToken(this.subscriberToken.userJwt)) {
+    if (!DestinationFromServiceRetriever.isUserJwt(this.subscriberToken)) {
       throw Error(
         `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
       );
@@ -354,8 +425,19 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     // This covers OAuth to user dependend auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     // Which is the same for: OAuth2UserTokenExchange, OAuth2JWTBearer and OAuth2SAMLBearerAssertion
 
-    // Case 1 Destination in provider and jwt issued for provider account -> not extra x-user-token header needed
-    if (this.isProviderAndSubscriberSameTenant()) {
+    // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as wll. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
+    if (this.subscriberToken.type === 'custom') {
+      DestinationFromServiceRetriever.checkDestinationForCustomJwt(destination);
+    }
+
+    // Case 1 Destination in provider and jwt issued for provider account But not custom JWT given-> not extra x-user-token header needed
+    if (
+      this.subscriberToken.type !== 'custom' &&
+      isIdenticalTenant(
+        this.subscriberToken.userJwt.decoded,
+        this.providerServiceToken.decoded
+      )
+    ) {
       logger.debug(
         `UserExchange flow started without user exchange token for destination ${destinationName} of the provider account.`
       );
@@ -367,11 +449,11 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         )
       };
     }
-    // Case 2 Subscriber and provider account not the same -> x-user-token  header passed to determine user and tenant in token service URL and service token to get the destination
+    // Case 2 Subscriber and provider account not the same OR custom jwt -> x-user-token  header passed to determine user and tenant in token service URL and service token to get the destination
     const serviceJwt =
-      origin === 'subscriber'
-        ? this.subscriberToken.serviceJwt
-        : this.providerServiceToken;
+      origin === 'provider'
+        ? this.providerServiceToken
+        : this.subscriberToken.serviceJwt!;
     logger.debug(
       `UserExchange flow started for destination ${destinationName} of the ${origin} account.`
     );
@@ -429,15 +511,18 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
   }
 
-  // For iss token the userJwt may be undefined.
   private selectSubscriberJwt(): JwtPayload {
     if (!this.subscriberToken) {
       throw new Error('Try to get subscriber token but value is undefined.');
     }
-    return (
-      this.subscriberToken.userJwt?.decoded ||
-      this.subscriberToken.serviceJwt.decoded
-    );
+    switch (this.subscriberToken.type) {
+      case 'custom':
+        return this.subscriberToken.userJwt.decoded;
+      case 'iss':
+        return this.subscriberToken.serviceJwt.decoded;
+      case 'xsuaa':
+        return this.subscriberToken.userJwt.decoded;
+    }
   }
 
   private async updateDestinationCache(
@@ -495,7 +580,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async getSubscriberDestinationService(): Promise<
     DestinationSearchResult | undefined
   > {
-    if (!this.subscriberToken) {
+    if (!this.subscriberToken || this.subscriberToken.type === 'custom') {
       throw new Error(
         'Try to get destinations from subscriber account but user JWT was not set.'
       );
@@ -531,16 +616,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
   }
 
-  private isProviderAndSubscriberSameTenant() {
-    return (
-      this.subscriberToken &&
-      isIdenticalTenant(
-        this.subscriberToken.serviceJwt.decoded,
-        this.providerServiceToken.decoded
-      )
-    );
-  }
-
   private isProviderNeeded(
     resultFromSubscriber: DestinationSearchResult | undefined
   ): boolean {
@@ -560,6 +635,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
   private isSubscriberNeeded(): boolean {
     if (!this.subscriberToken) {
+      return false;
+    }
+
+    if (this.subscriberToken.type === 'custom') {
       return false;
     }
 
@@ -595,9 +674,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     if (destination.originalProperties?.TrustStoreLocation) {
       const trustStoreCertificate = await fetchCertificate(
         this.destinationServiceCredentials.uri,
-        origin === 'subscriber'
-          ? this.subscriberToken!.serviceJwt.encoded
-          : this.providerServiceToken.encoded,
+        origin === 'provider'
+          ? this.providerServiceToken.encoded
+          : this.subscriberToken!.serviceJwt!.encoded,
         destination.originalProperties.TrustStoreLocation
       );
       destination.trustStoreCertificate = trustStoreCertificate;

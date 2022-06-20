@@ -51,7 +51,7 @@ function destinationWithAuthType(
   };
 }
 
-function destinationSingleResponse(
+export function destinationSingleResponse(
   multipleResponse: DestinationConfiguration[],
   type: 'Bearer' | 'SAML2.0' = 'Bearer'
 ): DestinationJson {

@@ -40,7 +40,7 @@ describe('generator', () => {
           inputDir: pathTestService,
           outputDir: outPutPath,
           forceOverwrite: true,
-          additionalFiles: '../../../*.md'
+          include: '../../../*.md'
         })
       );
 
@@ -202,7 +202,7 @@ describe('generator', () => {
         outputDir: outPutPath,
         forceOverwrite: true,
         generateJs: true,
-        additionalFiles: '../../../*.md'
+        include: '../../../*.md'
       })
     );
 

@@ -3,11 +3,18 @@ import { Socket } from 'net';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import {
+  mockServiceBindings,
   publicKey,
   signedJwtForVerification,
   xsuaaBindingMock
 } from '../../../../test-resources/test/test-util';
-import { audiences, retrieveJwt, verifyJwt } from './jwt';
+import {
+  audiences,
+  decodeJwtComplete,
+  isXsuaaToken,
+  retrieveJwt,
+  verifyJwt
+} from './jwt';
 
 const jwtPayload = {
   sub: '1234567890',
@@ -18,7 +25,7 @@ const jwtPayload = {
   zid: 'my-zone'
 };
 
-function responseWithPublicKey(key = publicKey) {
+export function responseWithPublicKey(key = publicKey) {
   return {
     keys: [
       {
@@ -35,6 +42,35 @@ function responseWithPublicKey(key = publicKey) {
 }
 
 describe('jwt', () => {
+  describe('isXsuaa', () => {
+    it('returns true if jku and uaa are from same domain', () => {
+      const jwt = decodeJwtComplete(
+        signedJwtForVerification(
+          {},
+          'https://myTenant.authentication.sap.hana.ondemand.com/token_keys'
+        )
+      );
+      mockServiceBindings();
+      expect(isXsuaaToken(jwt)).toBe(true);
+    });
+
+    it('returns false if jku is missing', () => {
+      const jwt = decodeJwtComplete(signedJwtForVerification({}, undefined));
+      mockServiceBindings();
+      expect(isXsuaaToken(jwt)).toBe(false);
+    });
+
+    it('returns false if jku and uaa are from different domain', () => {
+      const jwt = decodeJwtComplete(
+        signedJwtForVerification(
+          {},
+          'https://myTenant.some.non.xsuaa.domain.com/token_keys'
+        )
+      );
+      mockServiceBindings();
+      expect(isXsuaaToken(jwt)).toBe(false);
+    });
+  });
   describe('retrieveJwt', () => {
     it('returns undefined when incoming message has no auth header', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT())).toBeUndefined();

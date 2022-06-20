@@ -89,15 +89,14 @@ function buildArrayWithNatualNums(length): number[] {
 //
 // 1. sending mail
 // 1.1 using SMTP protocol
-//   [colleague tested] [our PoC] chosen lib `nodemailer`
+//   [colleague tested] [our PoC] lib `nodemailer` + basic auth
 // 1.2 using socket protocol
 //   [blocked] tried WS.WebSocket
 //     auth ('auth' header) + email properties (from/to...) cannot config
 //
 // 2. on prem
 // 2.1 http proxy (later)
-//   [assume working] 'proxy-auth' header
-//   [not tested][complicated implementation]
+//   [not tested][cumbersome implementation]
 //   https://github.com/TooTallNate/node-http-proxy-agent/blob/master/src/agent.ts#L83
 // 2.2 socket proxy (our first implementation)
 //   [colleagues tested] '0x08' OAuth with JWT

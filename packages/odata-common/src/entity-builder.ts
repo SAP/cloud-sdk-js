@@ -44,11 +44,11 @@ export class EntityBuilder<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 > {
-  protected entity: EntityT;
+  protected _entity: EntityT;
 
   constructor(private _entityApi: EntityApi<EntityT, DeSerializersT>) {
-    if (!this.entity) {
-      this.entity = new _entityApi.entityConstructor(_entityApi.schema);
+    if (!this._entity) {
+      this._entity = new _entityApi.entityConstructor(_entityApi.schema);
     }
   }
 
@@ -59,7 +59,7 @@ export class EntityBuilder<
    */
   public withCustomFields(customFields: Record<string, any>): this {
     const validCustomFields = this.filterCustomFields(customFields);
-    this.entity = this.entity.setCustomFields(validCustomFields);
+    this._entity = this._entity.setCustomFields(validCustomFields);
     return this;
   }
 
@@ -68,8 +68,10 @@ export class EntityBuilder<
    * @returns The entity.
    */
   public build(): EntityT {
-    const entity = this.entity;
-    this.entity = new this._entityApi.entityConstructor(this._entityApi.schema);
+    const entity = this._entity;
+    this._entity = new this._entityApi.entityConstructor(
+      this._entityApi.schema
+    );
     return entity;
   }
 

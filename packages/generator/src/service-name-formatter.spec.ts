@@ -123,17 +123,14 @@ describe('name-formatter', () => {
         formatter.originalToInstancePropertyName('A_SomeEntity', 'someProperty')
       ).toBe('someProperty_1');
       expect(
-        formatter.originalToInstancePropertyName('A_SomeEntity', 'Entity')
-      ).toBe('entity_1');
+        formatter.originalToInstancePropertyName('A_SomeEntity', '_entity')
+      ).toBe('entity');
       expect(
         formatter.originalToStaticPropertyName('A_SomeEntity', 'SomeProperty')
       ).toBe('SOME_PROPERTY');
       expect(
         formatter.originalToStaticPropertyName('A_SomeEntity', 'someProperty')
       ).toBe('SOME_PROPERTY_1');
-      expect(
-        formatter.originalToStaticPropertyName('A_SomeEntity', 'Entity')
-      ).toBe('ENTITY_1');
     });
 
     it('nav properties', () => {

@@ -26,8 +26,7 @@ export const reservedServiceKeywords = [
  */
 export const reservedVdmKeywords = [
   'builder',
-  'entity',
-  'ENTITY',
+  '_entity',
   'entityBuilder',
   'requestBuilder'
 ] as const;

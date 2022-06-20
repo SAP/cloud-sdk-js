@@ -20,11 +20,7 @@
     "test:e2e": "jest",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
-    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'",
-    "service": "node server.js",
-    "proxy": "node test/on-prem/proxy-server.js",
-    "mail": "node test/mail/mail-server.js",
-    "test-mail": "ts-node test/mail/test.ts"
+    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^10.0.2",
@@ -41,7 +37,6 @@
     "@sap/cds": "^5.9.7",
     "@sap/cds-dk": "4.9.7",
     "@types/nodemailer": "^6.4.4",
-    "@types/ws": "^8.5.3",
     "axios": "^0.27.1",
     "execa": "^5.0.0",
     "express": "^4.17.1",
@@ -62,9 +57,7 @@
     "requires": {
       "db": {
         "kind": "sqlite",
-        "credentials": {
-          "database": "sqlite.db"
-        }
+        "model": "*"
       }
     }
   }

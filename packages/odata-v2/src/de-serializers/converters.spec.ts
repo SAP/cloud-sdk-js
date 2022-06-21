@@ -18,6 +18,11 @@ describe('EDM to moment and back', () => {
       const aMoment = deserializeToMoment('/Date(1556630382000+0030)/');
       expect(aMoment.utcOffset()).toBe(30);
     });
+
+    it('handles negative epoch timestamp i.e. times before 01-01-1970', () => {
+      const aMoment = deserializeToMoment('/Date(-220924800000+0000)/');
+      expect(aMoment.format('YYYY-MM-DD HH:mm')).toBe('1963-01-01 00:00');
+    });
   });
 
   describe('moment to EDM', () => {
@@ -38,6 +43,11 @@ describe('EDM to moment and back', () => {
         moment(1556630382000).utc().utcOffset(-120)
       );
       expect(edmDateTime).toBe('/Date(1556630382000-0120)/');
+    });
+
+    it('handles negative epoch timestamps', () => {
+      const edmDateTime = serializeFromMoment(moment(-6847804800000));
+      expect(edmDateTime).toBe('/Date(-6847804800000)/');
     });
 
     it('handles two digit offsets', () => {

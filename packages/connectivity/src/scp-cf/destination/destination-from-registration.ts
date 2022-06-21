@@ -1,11 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Cache } from '../cache';
 import { decodeJwt } from '../jwt';
 import { getXsuaaServiceCredentials } from '../environment-accessor';
 import { parseSubdomain } from '../subdomain-replacer';
 import { Destination, DestinationAuthToken } from './destination-service-types';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
+  DefaultDestinationCache,
   DestinationCache,
   getDefaultIsolationStrategy,
   IsolationStrategy
@@ -25,7 +25,7 @@ const logger = createLogger({
  * @internal
  */
 export const registerDestinationCache = DestinationCache(
-  new Cache<Destination>(undefined)
+  new DefaultDestinationCache(undefined)
 );
 
 type RegisterDestinationOptions = Pick<
@@ -36,21 +36,22 @@ type RegisterDestinationOptions = Pick<
 /**
  * Registers a destination in a cache for later usage.
  *
- * Throws an error if a destination with the same name as the given test destination already exists.
+ * If a destination with the same key is already in the cache, it is replaced.
+ * The key is built using the `getDestinationCacheKey` method.
  * @param destination - A destination to add to the `destinations` cache.
  * @param options - Options how to cache the destination.
  */
-export function registerDestination(
+export async function registerDestination(
   destination: DestinationWithName,
   options?: RegisterDestinationOptions
-): void {
+): Promise<void> {
   if (!destination.name || !destination.url) {
     throw Error(
       'Registering destinations requires a destination name and url.'
     );
   }
 
-  registerDestinationCache.cacheRetrievedDestination(
+  await registerDestinationCache.cacheRetrievedDestination(
     decodedJwtOrZid(options),
     destination,
     isolationStrategy(options)
@@ -67,10 +68,10 @@ export type DestinationWithName = Destination & { name: string };
  * @param options - The options for searching the cahce
  * @returns Destination - the destination from cache
  */
-export function searchRegisteredDestination(
+export async function searchRegisteredDestination(
   options: DestinationFetchOptions
-): Destination | null {
-  let decodedJwt;
+): Promise<Destination | null> {
+  let decodedJwt: Record<string, any>;
   // An error will be thrown if no jwt and no xsuaa service exist.
   try {
     decodedJwt = decodedJwtOrZid(options);
@@ -83,11 +84,11 @@ export function searchRegisteredDestination(
   }
 
   const destination =
-    registerDestinationCache.retrieveDestinationFromCache(
+    (await registerDestinationCache.retrieveDestinationFromCache(
       decodedJwt,
       options.destinationName,
       isolationStrategy(options)
-    ) || null;
+    )) || null;
 
   if (destination?.forwardAuthToken) {
     destination.authTokens = destinationAuthToken(options.jwt);

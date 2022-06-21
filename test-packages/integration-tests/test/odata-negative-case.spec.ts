@@ -58,7 +58,7 @@ describe('odata negative tests', () => {
           ),
           '-o',
           join(testDir, 'faulty-typescript'),
-          '--additionalFiles',
+          '--include',
           resolve(
             testResourcesDir,
             'faulty-typescript',

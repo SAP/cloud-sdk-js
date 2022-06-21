@@ -39,18 +39,22 @@ export function serializeFromTime(value: Time): string {
  */
 export function deserializeToMoment(edmDateTime: string): moment.Moment {
   const dateTimeOffsetComponents =
-    /^\/Date\((?<ticks>\d+)((?<sign>[+-])(?<offset>\d{4}))?\)\/$/.exec(
+    /^\/Date\((?<signedticks>-{0,1}\d+)((?<offsetsign>[+-])(?<unsignedoffset>\d{4}))?\)\/$/.exec(
       edmDateTime
     )?.groups;
   if (!dateTimeOffsetComponents) {
     throw new Error(`Failed to parse edmDateTime: ${edmDateTime} to moment.`);
   }
 
-  const timestamp = moment(parseInt(dateTimeOffsetComponents.ticks));
+  const timestamp = moment(parseInt(dateTimeOffsetComponents.signedticks));
 
-  if (dateTimeOffsetComponents.sign && dateTimeOffsetComponents.offset) {
-    const offsetMultiplier = dateTimeOffsetComponents.sign === '+' ? 1 : -1;
-    const offsetInMinutes = parseInt(dateTimeOffsetComponents.offset);
+  if (
+    dateTimeOffsetComponents.offsetsign &&
+    dateTimeOffsetComponents.unsignedoffset
+  ) {
+    const offsetMultiplier =
+      dateTimeOffsetComponents.offsetsign === '+' ? 1 : -1;
+    const offsetInMinutes = parseInt(dateTimeOffsetComponents.unsignedoffset);
     return timestamp.utc().utcOffset(offsetMultiplier * offsetInMinutes);
   }
 

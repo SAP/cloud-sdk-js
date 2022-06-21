@@ -11,6 +11,7 @@ import {
   getDestinationFromDestinationService,
   serviceToken
 } from '../../../../packages/connectivity/src/internal';
+import { signedJwt } from '../../../../test-resources/test/test-util';
 import {
   loadLocalVcap,
   readSystems,
@@ -98,6 +99,15 @@ describe('OAuth flows', () => {
     expect(result.lastName).toBe('name');
   }, 60000);
 
+  xit('Service Token: Gets token for non XSUAA jwt', async () => {
+    const token = await serviceToken('destination', {
+      jwt: signedJwt({ user: 'MrX' })
+    });
+    expect(decodeJwt(token).iss).toBe(
+      'http://s4sdk.localhost:8080/uaa/oauth/token'
+    );
+  });
+
   xit('BasicAuth: Subscriber Destination & Subscriber Token', async () => {
     const destination = await getDestination({
       destinationName: systems.s4.subscriberBasic,
@@ -118,6 +128,15 @@ describe('OAuth flows', () => {
       iss: 'http://s4sdk.localhost:8080/uaa/oauth/token'
     });
     expect(destination?.password).toBeDefined();
+  }, 60000);
+
+  xit('Oauth2ClientCredentials: JWT with no JKU should be accepted if destination has jwks or jwks_uri property', async () => {
+    const destination = await getDestination({
+      destinationName:
+        systems.destination.providerOauth2ClientCredentialsWithoutJKU
+    });
+    expect(destination?.jwksUri).toBeDefined();
+    expect(destination?.jwks).toBeDefined();
   }, 60000);
 
   xit('No Auth: trust store certificates are fetched', async () => {
@@ -406,6 +425,52 @@ describe('OAuth flows', () => {
     });
     expect(myDestination?.proxyType).toEqual('PrivateLink');
   });
+
+  xit('Mail: Provider cloud basic auth', async () => {
+    // {
+    //   "originalProperties": {
+    //   "Name": "dummy-mail-destination-cloud",
+    //     "Type": "MAIL",
+    //     "Authentication": "BasicAuthentication",
+    //     "ProxyType": "Internet",
+    //     "mail.password": "***",
+    //     "mail.description": "***",
+    //     "mail.user": "***"
+    // },
+    //   "authTokens": [],
+    //   "certificates": [],
+    //   "name": "dummy-mail-destination-cloud",
+    //   "type": "MAIL",
+    //   "authentication": "BasicAuthentication",
+    //   "proxyType": "Internet",
+    //   "isTrustingAllCertificates": false
+    // }
+    const destination = await getDestinationFromDestinationService({
+      destinationName: systems.email.providerCloudBasic
+    });
+    expect(destination?.type).toEqual('MAIL');
+    expect(destination?.proxyType).toEqual('Internet');
+    // TODO: username and password need a new mapping as they are come from the keys `mail.user` and `mail.password`
+    // expect(destination?.username).toBeTruthy();
+    // expect(destination?.password).toBeTruthy();
+  }, 60000);
+
+  xit('Mail: Provider op basic auth', async () => {
+    const destination = await getDestinationFromDestinationService({
+      destinationName: systems.email.providerOnPremBasic
+    });
+
+    expect(destination?.proxyType).toEqual('OnPremise');
+    // TODO: use the key `onpremise_socks5_proxy_port` for the proxy type of the email destination instead of `onpremise_proxy_port` (normal OnPrem HTTP destination)
+    // The test below should pass now, as the port is anyway a number.
+    // Please double check the value, before enabling.
+    // expect(destination!.proxyConfiguration).toMatchObject({
+    //   headers: { 'Proxy-Authorization': expect.stringMatching(/Bearer.*/) },
+    //   host: expect.stringMatching(/.*sap\.hana\.ondemand\.com/),
+    //   port: expect.stringMatching(/\d+/),
+    //   protocol: 'http'
+    // });
+  }, 60000);
 
   xit('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const iasToken = accessToken.iasProvider;

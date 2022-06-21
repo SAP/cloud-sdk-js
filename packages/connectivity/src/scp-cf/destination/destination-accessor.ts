@@ -48,7 +48,7 @@ export async function getDestination(
 ): Promise<Destination | null> {
   const destination =
     searchEnvVariablesForDestination(options) ||
-    searchRegisteredDestination(options) ||
+    (await searchRegisteredDestination(options)) ||
     (await searchServiceBindingForDestination(options)) ||
     (await getDestinationFromDestinationService(options));
   return destination;

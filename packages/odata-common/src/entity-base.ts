@@ -351,7 +351,7 @@ export function entityBuilder<
   Object.values(entityApi.schema).forEach((field: any) => {
     const fieldName = `${camelCase(field._fieldName)}`;
     builder[fieldName] = function (value) {
-      this.entity[fieldName] = value;
+      this._entity[fieldName] = value;
       return this;
     };
   });

@@ -8,3 +8,6 @@ updates:
       time: '01:00'
       timezone: 'Europe/Berlin'
     open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]

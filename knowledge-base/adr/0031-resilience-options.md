@@ -155,7 +155,7 @@ myApi
 
 type Middleware<T> = <T>(
   fn: () => Promise<T>,
-  context?: 'service' | 'target'
+  context?: RequestConfig
 ) => Promise<T>;
 ```
 

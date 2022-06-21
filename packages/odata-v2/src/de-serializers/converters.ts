@@ -39,7 +39,7 @@ export function serializeFromTime(value: Time): string {
  */
 export function deserializeToMoment(edmDateTime: string): moment.Moment {
   const dateTimeOffsetComponents =
-    /^\/Date\((?<ticks>-{0,1}\d+)((?<sign>[+-])(?<offset>\d{4}))?\)\/$/.exec(
+    /^\/Date\((?<signedticks>-{0,1}\d+)((?<offsetsign>[+-])(?<unsignedoffset>\d{4}))?\)\/$/.exec(
       edmDateTime
     )?.groups;
   if (!dateTimeOffsetComponents) {

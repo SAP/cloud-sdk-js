@@ -1060,6 +1060,25 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       );
     });
 
+    it('should return the original object, when the parameter contains requestConfig or custom', () => {
+      const requestConfig: HttpRequestConfigWithOrigin = {
+        method: 'get',
+        headers: {
+          requestConfig: {
+            k1: 'v1'
+          }
+        },
+        params: {
+          custom: {
+            k2: 'v2'
+          }
+        }
+      };
+      expect(buildHttpRequestConfigWithOrigin(requestConfig)).toStrictEqual(
+        requestConfig
+      );
+    });
+
     it('should build an object typed as HttpRequestConfigWithOrigin, when the parameter is typed as HttpRequestConfig', () => {
       const requestConfig: HttpRequestConfig = {
         method: 'get',

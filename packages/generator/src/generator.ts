@@ -191,24 +191,21 @@ async function generateFilesWithoutTsMorph(
   const promises = services.flatMap(service => [
     generateEntityApis(service, options),
     generateServiceFile(service, options),
-    generateAdditionalFiles(service, options)
+    generateIncludes(service, options)
   ]);
   await Promise.all(promises);
 }
 
-async function generateAdditionalFiles(
+async function generateIncludes(
   service: VdmServiceMetadata,
   options: GeneratorOptions
 ): Promise<void> {
-  if (options.additionalFiles) {
-    const additionalFilesDir = resolve(
-      options.inputDir.toString(),
-      options.additionalFiles
-    )
+  if (options.include) {
+    const includeDir = resolve(options.inputDir.toString(), options.include)
       .split(sep)
       .join(posix.sep);
     const serviceDir = resolvePath(service.directoryName, options);
-    const files = new GlobSync(additionalFilesDir).found;
+    const files = new GlobSync(includeDir).found;
     await copyFiles(files, serviceDir, options.forceOverwrite);
   }
 }

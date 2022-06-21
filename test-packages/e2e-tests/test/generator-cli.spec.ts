@@ -60,4 +60,23 @@ describe('generator-cli', () => {
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('package.json');
   }, 60000);
+
+  it('should set version when versionInPackageJson option is used', async () => {
+    const process = await execa('npx', [
+      'ts-node',
+      pathToGenerator,
+      '-c',
+      path.resolve(__dirname, 'generator.config.json'),
+      '--versionInPackageJson=42.23'
+    ]);
+
+    const actualPackageJson = JSON.parse(
+      fs.readFileSync(`${outputDir}/test-service/package.json`).toString()
+    );
+    expect(actualPackageJson.version).toEqual('42.23');
+
+    expect(process.stdout).toMatch(
+      /The option 'versionInPackageJson' is deprecated since v2.6.0./
+    );
+  }, 60000);
 });

@@ -25,7 +25,20 @@ async function getStatsForPackage(page, packageName) {
 }
 
 async function getAllStats(page) {
-  return ['@sap-cloud-sdk/util', '@sap/cds'].reduce(
+  return [
+    '@sap-cloud-sdk/util',
+    '@sap-cloud-sdk/connectivity',
+    '@sap-cloud-sdk/http-client',
+    '@sap-cloud-sdk/odata-v2',
+    '@sap-cloud-sdk/odata-v4',
+    '@sap-cloud-sdk/generator',
+    '@sap-cloud-sdk/openapi',
+    '@sap-cloud-sdk/openapi-generator',
+    '@sap-cloud-sdk/test-util',
+    '@sap-cloud-sdk/eslint-config',
+    '@sap-cloud-sdk/temporal-de-serializers',
+    '@sap-cloud-sdk/odata-common',
+    '@sap/cds'].reduce(
     async (stats, packageName) => ({
       ...(await stats),
       [packageName]: await getStatsForPackage(page, packageName)

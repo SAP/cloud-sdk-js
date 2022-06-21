@@ -46,11 +46,15 @@ export function deserializeToMoment(edmDateTime: string): moment.Moment {
     throw new Error(`Failed to parse edmDateTime: ${edmDateTime} to moment.`);
   }
 
-  const timestamp = moment(parseInt(dateTimeOffsetComponents.ticks));
+  const timestamp = moment(parseInt(dateTimeOffsetComponents.signedticks));
 
-  if (dateTimeOffsetComponents.sign && dateTimeOffsetComponents.offset) {
-    const offsetMultiplier = dateTimeOffsetComponents.sign === '+' ? 1 : -1;
-    const offsetInMinutes = parseInt(dateTimeOffsetComponents.offset);
+  if (
+    dateTimeOffsetComponents.offsetsign &&
+    dateTimeOffsetComponents.unsignedoffset
+  ) {
+    const offsetMultiplier =
+      dateTimeOffsetComponents.offsetsign === '+' ? 1 : -1;
+    const offsetInMinutes = parseInt(dateTimeOffsetComponents.unsignedoffset);
     return timestamp.utc().utcOffset(offsetMultiplier * offsetInMinutes);
   }
 

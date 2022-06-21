@@ -17,7 +17,7 @@ describe('vcap-service-destination', () => {
     expect(
       destinationForServiceBinding('my-business-logging')
     ).resolves.toEqual({
-      url: 'https://business-logging.my.system.com',
+      url: 'https://business-logging.my.example.com',
       authentication: 'OAuth2ClientCredentials',
       username: 'CLIENT_!_|_!_ID',
       password: 'PASSWORD'
@@ -26,7 +26,7 @@ describe('vcap-service-destination', () => {
 
   it('creates a destination for the XF s4 hana cloud service', () => {
     expect(destinationForServiceBinding('S4_SYSTEM')).resolves.toEqual({
-      url: 'https://my.system.com',
+      url: 'https://my.example.com',
       authentication: 'BasicAuthentication',
       username: 'USER_NAME',
       password: 'PASSWORD'
@@ -34,19 +34,20 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination using a custom transformation function', () => {
-    const serviceBindingTransformFn = async (
+    const serviceBindingTransformFn = jest.fn(async (
       serviceBinding: ServiceBinding
     ) => ({
       url: serviceBinding.credentials.sys
-    });
+    }));
 
     expect(
       destinationForServiceBinding('my-custom-service', {
         serviceBindingTransformFn
       })
     ).resolves.toEqual({
-      url: 'https://custom-service.my.system.com'
+      url: 'https://custom-service.my.example.com'
     });
+    expect(serviceBindingTransformFn).toBeCalledTimes(1);
   });
 
   it('throws an error if the service type is not supported', () => {
@@ -69,11 +70,11 @@ describe('vcap-service-destination', () => {
   });
 
   it('finds the destination when searching for service bindings', async () => {
-    const serviceBindingTransformFn = async (
+    const serviceBindingTransformFn = jest.fn(async (
       serviceBinding: ServiceBinding
     ) => ({
       url: serviceBinding.credentials.sys
-    });
+    }));
 
     expect(
       getDestination({
@@ -81,8 +82,9 @@ describe('vcap-service-destination', () => {
         serviceBindingTransformFn
       })
     ).resolves.toEqual({
-      url: 'https://custom-service.my.system.com'
+      url: 'https://custom-service.my.example.com'
     });
+    expect(serviceBindingTransformFn).toBeCalledTimes(1);
   });
 });
 
@@ -95,7 +97,7 @@ const serviceBindings = {
     {
       name: 'my-business-logging',
       credentials: {
-        writeUrl: 'https://business-logging.my.system.com',
+        writeUrl: 'https://business-logging.my.example.com',
         uaa: {
           clientid: 'CLIENT_!_|_!_ID',
           clientsecret: 'PASSWORD'
@@ -106,7 +108,7 @@ const serviceBindings = {
   'custom-service': [
     {
       credentials: {
-        sys: 'https://custom-service.my.system.com'
+        sys: 'https://custom-service.my.example.com'
       },
       name: 'my-custom-service'
     }
@@ -116,7 +118,7 @@ const serviceBindings = {
       name: 'S4_SYSTEM',
       credentials: {
         Password: 'PASSWORD',
-        URL: 'https://my.system.com',
+        URL: 'https://my.example.com',
         User: 'USER_NAME'
       }
     }

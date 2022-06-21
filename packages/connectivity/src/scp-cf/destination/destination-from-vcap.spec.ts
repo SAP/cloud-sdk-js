@@ -13,8 +13,8 @@ describe('vcap-service-destination', () => {
     delete process.env.VCAP_SERVICES;
   });
 
-  it('creates a destination for the business logging service', () => {
-    expect(
+  it('creates a destination for the business logging service', async () => {
+    await expect(
       destinationForServiceBinding('my-business-logging')
     ).resolves.toEqual({
       url: 'https://business-logging.my.example.com',
@@ -24,8 +24,8 @@ describe('vcap-service-destination', () => {
     });
   });
 
-  it('creates a destination for the XF s4 hana cloud service', () => {
-    expect(destinationForServiceBinding('S4_SYSTEM')).resolves.toEqual({
+  it('creates a destination for the XF s4 hana cloud service', async () => {
+    await expect(destinationForServiceBinding('S4_SYSTEM')).resolves.toEqual({
       url: 'https://my.example.com',
       authentication: 'BasicAuthentication',
       username: 'USER_NAME',
@@ -33,14 +33,14 @@ describe('vcap-service-destination', () => {
     });
   });
 
-  it('creates a destination using a custom transformation function', () => {
-    const serviceBindingTransformFn = jest.fn(async (
-      serviceBinding: ServiceBinding
-    ) => ({
-      url: serviceBinding.credentials.sys
-    }));
+  it('creates a destination using a custom transformation function', async () => {
+    const serviceBindingTransformFn = jest.fn(
+      async (serviceBinding: ServiceBinding) => ({
+        url: serviceBinding.credentials.sys
+      })
+    );
 
-    expect(
+    await expect(
       destinationForServiceBinding('my-custom-service', {
         serviceBindingTransformFn
       })
@@ -50,33 +50,33 @@ describe('vcap-service-destination', () => {
     expect(serviceBindingTransformFn).toBeCalledTimes(1);
   });
 
-  it('throws an error if the service type is not supported', () => {
-    expect(() =>
+  it('throws an error if the service type is not supported', async () => {
+    await expect(() =>
       destinationForServiceBinding('my-custom-service')
     ).rejects.toThrowErrorMatchingSnapshot();
   });
 
-  it('throws an error if no service binding can be found for the given name', () => {
-    expect(() =>
+  it('throws an error if no service binding can be found for the given name', async () => {
+    await expect(() =>
       destinationForServiceBinding('non-existent-service')
     ).rejects.toThrowErrorMatchingSnapshot();
   });
 
-  it('throws an error if there are no service bindings at all', () => {
+  it('throws an error if there are no service bindings at all', async () => {
     delete process.env.VCAP_SERVICES;
-    expect(() =>
+    await expect(() =>
       destinationForServiceBinding('my-custom-service')
     ).rejects.toThrowErrorMatchingSnapshot();
   });
 
   it('finds the destination when searching for service bindings', async () => {
-    const serviceBindingTransformFn = jest.fn(async (
-      serviceBinding: ServiceBinding
-    ) => ({
-      url: serviceBinding.credentials.sys
-    }));
+    const serviceBindingTransformFn = jest.fn(
+      async (serviceBinding: ServiceBinding) => ({
+        url: serviceBinding.credentials.sys
+      })
+    );
 
-    expect(
+    await expect(
       getDestination({
         destinationName: 'my-custom-service',
         serviceBindingTransformFn

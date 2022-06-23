@@ -44,7 +44,7 @@
     "http-proxy-agent": "^5.0.0",
     "https-proxy-agent": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
-    "opossum": "^6.0.0"
+    "opossum": "^6.4.0"
   },
   "devDependencies": {
     "@types/opossum": "^6.2.2",

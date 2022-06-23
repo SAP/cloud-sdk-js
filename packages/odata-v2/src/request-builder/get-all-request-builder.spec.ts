@@ -28,6 +28,7 @@ import { parseDestination } from '../../../connectivity/src/scp-cf/destination/d
 import {
   testEntityApi,
   testEntitySingleLinkApi,
+  testEntityLvl2MultiLinkApi,
   createTestEntity,
   testEntityApiCustom,
   createTestEntityWithCustomDeSerializers
@@ -140,6 +141,27 @@ describe('GetAllRequestBuilder', () => {
       );
       const actual = await requestBuilder.skip(1).execute(defaultDestination);
       expect(actual).toEqual([createTestEntity(entityData2)]);
+    });
+
+    it('test #2606', async () => {
+      mockGetRequest(
+        {
+          responseBody: { d: { results: [
+                {
+                  to_MultiLink: {
+                    results: [{
+                      to_MultiLink: {
+                        results: [{
+                          StringProperty: 'string'
+                        }]}
+                    }]}
+                }
+            ] } }
+        },
+        testEntityApi
+      );
+      const actual = await requestBuilder.execute(defaultDestination);
+      expect(actual[0].toMultiLink[0].toMultiLink[0].stringProperty).toEqual('string');
     });
 
     it('throws an error when the destination cannot be found', async () => {

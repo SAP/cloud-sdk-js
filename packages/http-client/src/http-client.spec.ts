@@ -228,7 +228,7 @@ describe('generic http client', () => {
       })
         .get('/api/entity')
         .query({
-          a: 'a',
+          '$a': 'a',
           b: 'b'
         })
         .reply(200, { res: 'ult' }, { sharp: 'header' });
@@ -238,7 +238,7 @@ describe('generic http client', () => {
         method: 'GET',
         url: '/api/entity',
         params: {
-          a: 'a',
+          '$a': 'a',
           b: 'b'
         }
       };

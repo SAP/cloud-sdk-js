@@ -32,6 +32,6 @@
     "execa": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "nock": "^13.2.7",
-    "winston": "^3.3.3"
+    "winston": "^3.8.0"
   }
 }

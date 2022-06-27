@@ -3,16 +3,19 @@ import { EntityBase } from './entity-base';
 import {
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
-  PropertyMetadata,
-  EdmTypeField,
-  OneToOneLink,
-  Link,
-  ComplexTypeField,
-  CollectionField,
-  EnumField
-} from './selectable';
+  PropertyMetadata
+} from './selectable/complex-type-namespace';
+import { EdmTypeField } from './selectable/edm-type-field';
+import { OneToOneLink } from './selectable/one-to-one-link';
+import { Link } from './selectable/link';
+import { ComplexTypeField } from './selectable/complex-type-field';
+import { CollectionField } from './selectable/collection-field';
+import { EnumField } from './selectable/enum-field';
 import { EdmTypeShared, isEdmType } from './edm-types';
-import { createValueSerializer, DeSerializers } from './de-serializers';
+import {
+  createValueSerializer,
+  DeSerializers
+} from './de-serializers/de-serializers';
 import { EntityApi } from './entity-api';
 
 const logger = createLogger({

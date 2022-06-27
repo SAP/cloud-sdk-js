@@ -3,10 +3,8 @@ import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, EntityIdentifiable, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
-import {
-  ODataGetAllRequestConfig
-} from '../request/odata-get-all-request-config';
-import {ODataGetByKeyRequestConfig} from '../request/odata-get-by-key-request-config';
+import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
+import { ODataGetByKeyRequestConfig } from '../request/odata-get-by-key-request-config';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';

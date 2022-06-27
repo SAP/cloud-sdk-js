@@ -1,10 +1,8 @@
 import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
-import {
-  ComplexTypePropertyFields
-} from '../selectable/complex-type-property-fields';
-import {  SimpleTypeFields} from '../selectable/simple-type-fields';
-import {Link} from '../selectable/link';
+import { ComplexTypePropertyFields } from '../selectable/complex-type-property-fields';
+import { SimpleTypeFields } from '../selectable/simple-type-fields';
+import { Link } from '../selectable/link';
 import { EntityApi } from '../entity-api';
 import { Order } from './order';
 import { OrderLink } from './order-link';

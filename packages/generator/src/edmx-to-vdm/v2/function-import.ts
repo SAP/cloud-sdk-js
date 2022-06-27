@@ -1,10 +1,6 @@
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
-  transformFunctionImportBase
-} from '../common/function-import';
-import {
-  parseFunctionImportReturnTypes
-} from '../common/action-function-return-types';
+import { transformFunctionImportBase } from '../common/function-import';
+import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
 import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
 import { parseFunctionImportsV2 } from '../../edmx-parser/v2/edmx-parser';

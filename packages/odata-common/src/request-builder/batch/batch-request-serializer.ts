@@ -2,7 +2,7 @@ import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { v4 as uuid } from 'uuid';
 import { ODataRequest } from '../../request/odata-request';
-import {ODataRequestConfig} from '../../request/odata-request-config';
+import { ODataRequestConfig } from '../../request/odata-request-config';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { DeSerializers } from '../../de-serializers';
 import { BatchChangeSet } from './batch-change-set';

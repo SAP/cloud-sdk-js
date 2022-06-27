@@ -2,7 +2,7 @@ import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { first } from '@sap-cloud-sdk/util';
 import { MethodRequestBuilder } from '../request-builder-base';
-import {ODataRequest} from '../../request/odata-request';
+import { ODataRequest } from '../../request/odata-request';
 import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
 import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
 import { EntityBase } from '../../entity-base';

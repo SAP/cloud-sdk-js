@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
 import { ODataRequest } from '../request/odata-request';
-import {ODataRequestConfig} from '../request/odata-request-config';
+import { ODataRequestConfig } from '../request/odata-request-config';
 
 /**
  * Base class for all request builders.

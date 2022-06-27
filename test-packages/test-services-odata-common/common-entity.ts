@@ -599,9 +599,7 @@ class CommonService<
 
   get commonEntityApi(): CommonEntityApi<DeSerializersT> {
     const api = this.initApi('commonEntityApi', CommonEntityApi);
-    const linkedApis = [
-      this.initApi('commonEntitySingleLinkApi', CommonEntitySingleLinkApi)
-    ];
+    const linkedApis = [this.commonEntitySingleLinkApi];
     api._addNavigationProperties(linkedApis);
     return api;
   }

@@ -32,9 +32,7 @@ class TestService {
   }
   get testEntityApi() {
     const api = this.initApi('testEntityApi', TestEntityApi_1.TestEntityApi);
-    const linkedApis = [
-      this.initApi('testEntityLinkApi', TestEntityLinkApi_1.TestEntityLinkApi)
-    ];
+    const linkedApis = [this.testEntityLinkApi];
     api._addNavigationProperties(linkedApis);
     return api;
   }

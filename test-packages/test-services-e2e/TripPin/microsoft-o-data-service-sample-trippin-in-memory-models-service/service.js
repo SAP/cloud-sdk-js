@@ -39,10 +39,7 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService {
   }
   get peopleApi() {
     const api = this.initApi('peopleApi', PeopleApi_1.PeopleApi);
-    const linkedApis = [
-      this.initApi('peopleApi', PeopleApi_1.PeopleApi),
-      this.initApi('photosApi', PhotosApi_1.PhotosApi)
-    ];
+    const linkedApis = [this.peopleApi, this.photosApi];
     api._addNavigationProperties(linkedApis);
     return api;
   }

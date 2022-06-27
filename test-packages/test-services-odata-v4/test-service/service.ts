@@ -155,9 +155,9 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
   get testEntityApi(): TestEntityApi<DeSerializersT> {
     const api = this.initApi('testEntityApi', TestEntityApi);
     const linkedApis = [
-      this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi),
-      this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi),
-      this.initApi('testEntitySingleLinkApi', TestEntitySingleLinkApi)
+      this.testEntityMultiLinkApi,
+      this.testEntityMultiLinkApi,
+      this.testEntitySingleLinkApi
     ];
     api._addNavigationProperties(linkedApis);
     return api;
@@ -184,8 +184,8 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
   get testEntityMultiLinkApi(): TestEntityMultiLinkApi<DeSerializersT> {
     const api = this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi);
     const linkedApis = [
-      this.initApi('testEntityLvl2MultiLinkApi', TestEntityLvl2MultiLinkApi),
-      this.initApi('testEntityLvl2SingleLinkApi', TestEntityLvl2SingleLinkApi)
+      this.testEntityLvl2MultiLinkApi,
+      this.testEntityLvl2SingleLinkApi
     ];
     api._addNavigationProperties(linkedApis);
     return api;
@@ -203,9 +203,7 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
       'testEntityLvl2MultiLinkApi',
       TestEntityLvl2MultiLinkApi
     );
-    const linkedApis = [
-      this.initApi('testEntityLvl3MultiLinkApi', TestEntityLvl3MultiLinkApi)
-    ];
+    const linkedApis = [this.testEntityLvl3MultiLinkApi];
     api._addNavigationProperties(linkedApis);
     return api;
   }
@@ -223,8 +221,8 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
       TestEntitySingleLinkApi
     );
     const linkedApis = [
-      this.initApi('testEntityLvl2MultiLinkApi', TestEntityLvl2MultiLinkApi),
-      this.initApi('testEntityLvl2SingleLinkApi', TestEntityLvl2SingleLinkApi)
+      this.testEntityLvl2MultiLinkApi,
+      this.testEntityLvl2SingleLinkApi
     ];
     api._addNavigationProperties(linkedApis);
     return api;
@@ -243,14 +241,8 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
       TestEntityCircularLinkParentApi
     );
     const linkedApis = [
-      this.initApi(
-        'testEntityCircularLinkChildApi',
-        TestEntityCircularLinkChildApi
-      ),
-      this.initApi(
-        'testEntityCircularLinkChildApi',
-        TestEntityCircularLinkChildApi
-      )
+      this.testEntityCircularLinkChildApi,
+      this.testEntityCircularLinkChildApi
     ];
     api._addNavigationProperties(linkedApis);
     return api;
@@ -261,12 +253,7 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
       'testEntityCircularLinkChildApi',
       TestEntityCircularLinkChildApi
     );
-    const linkedApis = [
-      this.initApi(
-        'testEntityCircularLinkParentApi',
-        TestEntityCircularLinkParentApi
-      )
-    ];
+    const linkedApis = [this.testEntityCircularLinkParentApi];
     api._addNavigationProperties(linkedApis);
     return api;
   }

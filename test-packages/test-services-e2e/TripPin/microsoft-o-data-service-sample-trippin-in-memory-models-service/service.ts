@@ -117,10 +117,7 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
 
   get peopleApi(): PeopleApi<DeSerializersT> {
     const api = this.initApi('peopleApi', PeopleApi);
-    const linkedApis = [
-      this.initApi('peopleApi', PeopleApi),
-      this.initApi('photosApi', PhotosApi)
-    ];
+    const linkedApis = [this.peopleApi, this.photosApi];
     api._addNavigationProperties(linkedApis);
     return api;
   }

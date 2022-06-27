@@ -43,18 +43,9 @@ class TestService {
   get testEntityApi() {
     const api = this.initApi('testEntityApi', TestEntityApi_1.TestEntityApi);
     const linkedApis = [
-      this.initApi(
-        'testEntityMultiLinkApi',
-        TestEntityMultiLinkApi_1.TestEntityMultiLinkApi
-      ),
-      this.initApi(
-        'testEntityOtherMultiLinkApi',
-        TestEntityOtherMultiLinkApi_1.TestEntityOtherMultiLinkApi
-      ),
-      this.initApi(
-        'testEntitySingleLinkApi',
-        TestEntitySingleLinkApi_1.TestEntitySingleLinkApi
-      )
+      this.testEntityMultiLinkApi,
+      this.testEntityOtherMultiLinkApi,
+      this.testEntitySingleLinkApi
     ];
     api._addNavigationProperties(linkedApis);
     return api;
@@ -65,14 +56,8 @@ class TestService {
       TestEntityMultiLinkApi_1.TestEntityMultiLinkApi
     );
     const linkedApis = [
-      this.initApi(
-        'testEntityLvl2MultiLinkApi',
-        TestEntityLvl2MultiLinkApi_1.TestEntityLvl2MultiLinkApi
-      ),
-      this.initApi(
-        'testEntityLvl2SingleLinkApi',
-        TestEntityLvl2SingleLinkApi_1.TestEntityLvl2SingleLinkApi
-      )
+      this.testEntityLvl2MultiLinkApi,
+      this.testEntityLvl2SingleLinkApi
     ];
     api._addNavigationProperties(linkedApis);
     return api;
@@ -95,14 +80,8 @@ class TestService {
       TestEntitySingleLinkApi_1.TestEntitySingleLinkApi
     );
     const linkedApis = [
-      this.initApi(
-        'testEntityLvl2MultiLinkApi',
-        TestEntityLvl2MultiLinkApi_1.TestEntityLvl2MultiLinkApi
-      ),
-      this.initApi(
-        'testEntityLvl2SingleLinkApi',
-        TestEntityLvl2SingleLinkApi_1.TestEntityLvl2SingleLinkApi
-      )
+      this.testEntityLvl2MultiLinkApi,
+      this.testEntityLvl2SingleLinkApi
     ];
     api._addNavigationProperties(linkedApis);
     return api;
@@ -130,12 +109,7 @@ class TestService {
       'testEntityCircularLinkParentApi',
       TestEntityCircularLinkParentApi_1.TestEntityCircularLinkParentApi
     );
-    const linkedApis = [
-      this.initApi(
-        'testEntityCircularLinkChildApi',
-        TestEntityCircularLinkChildApi_1.TestEntityCircularLinkChildApi
-      )
-    ];
+    const linkedApis = [this.testEntityCircularLinkChildApi];
     api._addNavigationProperties(linkedApis);
     return api;
   }
@@ -144,12 +118,7 @@ class TestService {
       'testEntityCircularLinkChildApi',
       TestEntityCircularLinkChildApi_1.TestEntityCircularLinkChildApi
     );
-    const linkedApis = [
-      this.initApi(
-        'testEntityCircularLinkChildApi',
-        TestEntityCircularLinkChildApi_1.TestEntityCircularLinkChildApi
-      )
-    ];
+    const linkedApis = [this.testEntityCircularLinkChildApi];
     api._addNavigationProperties(linkedApis);
     return api;
   }

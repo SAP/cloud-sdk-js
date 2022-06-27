@@ -123,7 +123,7 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
 
   get testEntityApi(): TestEntityApi<DeSerializersT> {
     const api = this.initApi('testEntityApi', TestEntityApi);
-    const linkedApis = [this.initApi('testEntityLinkApi', TestEntityLinkApi)];
+    const linkedApis = [this.testEntityLinkApi];
     api._addNavigationProperties(linkedApis);
     return api;
   }

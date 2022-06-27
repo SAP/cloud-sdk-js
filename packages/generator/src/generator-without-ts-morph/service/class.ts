@@ -125,7 +125,7 @@ function withLinks(entity: VdmEntity, service: VdmServiceMetadata): string {
   const linkedApis = [
     ${entity.navigationProperties
       .map(navProp =>
-        getApiInitializer(matchEntity(navProp, service).className)
+        `this.${getApiName(matchEntity(navProp, service).className)}`
       )
       .join(',\n')}
   ];

@@ -1,4 +1,7 @@
-import { FuncB } from '.';
-export function FuncA(): void {
-    FuncB();
+import { funcB } from '.';
+/**
+ * FuncA.
+ */
+export function funcA(): void {
+  funcB();
 }

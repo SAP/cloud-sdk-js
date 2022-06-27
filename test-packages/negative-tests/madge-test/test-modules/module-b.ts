@@ -1,3 +1,7 @@
-export function FuncB(): void {
-    console.log('test');
+/**
+ * FuncB.
+ * @returns True.
+ */
+export function funcB(): boolean {
+  return true;
 }

@@ -16,29 +16,30 @@ import {
   transpileDirectory,
   copyFiles
 } from '@sap-cloud-sdk/generator-common/internal';
+import { apiFile } from './file-serializer/api-file';
 import {
-  apiFile,
   packageJson,
-  genericDescription,
-  readme,
-  apiIndexFile,
-  schemaIndexFile,
-  schemaFile
-} from './file-serializer';
+  genericDescription
+} from './file-serializer/package-json';
+import { readme } from './file-serializer/readme';
+import { schemaFile } from './file-serializer/schema-file';
+import { apiIndexFile, schemaIndexFile } from './file-serializer/index-file';
 import { OpenApiDocument } from './openapi-types';
-import { parseOpenApiDocument } from './parser';
+import { parseOpenApiDocument } from './parser/document';
 import { convertOpenApiSpec } from './document-converter';
 import { createFile } from './file-writer';
 import {
   parseGeneratorOptions,
-  tsconfigJson,
+  ParsedGeneratorOptions,
+  GeneratorOptions
+} from './options/generator-options';
+import {
   ServiceOptions,
   OptionsPerService,
   getOptionsPerService,
-  getOriginalOptionsPerService,
-  ParsedGeneratorOptions,
-  GeneratorOptions
-} from './options';
+  getOriginalOptionsPerService
+} from './options/options-per-service';
+import { tsconfigJson } from './options/tsconfig-json';
 import { sdkMetadata } from './sdk-metadata';
 
 const { readdir, rmdir, mkdir, lstat } = promisesFs;

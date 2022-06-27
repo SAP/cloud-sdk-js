@@ -25,26 +25,6 @@ import { isCollectionType } from '../edmx-to-vdm-util';
 /**
  * @internal
  */
-export function joinEntityTypes<T extends EdmxEntityTypeV4>(
-  entityType: T,
-  baseType: T
-): T {
-  // TODO: only join properties / nav properties of the respective type
-  return {
-    ...entityType,
-    Key: {
-      PropertyRef: [...entityType.Key.PropertyRef, ...baseType.Key.PropertyRef]
-    },
-    Property: [...entityType.Property, ...baseType.Property],
-    NavigationProperty: [
-      ...entityType.NavigationProperty,
-      ...baseType.NavigationProperty
-    ]
-  };
-}
-/**
- * @internal
- */
 export function generateEntitiesV4(
   serviceMetadata: ServiceMetadata,
   complexTypes: VdmComplexType[],

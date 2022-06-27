@@ -53,7 +53,7 @@
     "postversion": "yarn generate --force && yarn doc && ts-node scripts/after-bump.ts",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix --force",
-    "check:circular": "madge --extensions ts --ts-config=./tsconfig.json --circular --exclude 'dist' --exclude 'environment-accessor' ./packages",
+    "check:circular": "madge --extensions ts --ts-config=./tsconfig.json --circular --exclude 'dist' ./packages",
     "check:dependencies": "turbo run check:dependencies",
     "check:license": "ts-node scripts/check-licenses.ts",
     "check:test-service": "yarn generate --force && yarn ts-node scripts/check-test-service-for-changes.ts",

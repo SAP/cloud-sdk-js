@@ -10,12 +10,12 @@ import {
 } from '../../../../test-resources/test/test-util';
 
 export const {
-   testEntityApi,
-   testEntityMultiLinkApi,
-   testEntitySingleLinkApi,
-   testEntityLvl2MultiLinkApi,
-   testEntityLvl2SingleLinkApi
- } = testService();
+  testEntityApi,
+  testEntityMultiLinkApi,
+  testEntitySingleLinkApi,
+  testEntityLvl2MultiLinkApi,
+  testEntityLvl2SingleLinkApi
+} = testService();
 
 export const { testEntityApi: testEntityApiCustom } = testService(
   customTestDeSerializers

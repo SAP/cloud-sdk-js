@@ -1,20 +1,20 @@
 import { createLogger, last } from '@sap-cloud-sdk/util';
-import { EdmxMetadata } from '../edmx-parser';
-import { EdmxProperty } from '../edmx-parser/common';
+import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
+import { EdmxProperty } from '../edmx-parser/common/edmx-types';
 import {
   edmToFieldType,
   edmToTsType,
   getFallbackEdmTypeIfNeeded
 } from '../generator-utils';
 import { VdmComplexType, VdmEnumType, VdmMappedEdmType } from '../vdm-types';
-import { EdmxAction, EdmxFunction } from '../edmx-parser/v4';
-import { EdmxFunctionImportV2 } from '../edmx-parser/v2';
+import { EdmxAction, EdmxFunction } from '../edmx-parser/v4/edm-types';
+import { EdmxFunctionImportV2 } from '../edmx-parser/v2/edm-types';
 import {
   complexTypeForName,
   enumTypeForName,
   findComplexType,
   findEnumType
-} from './common';
+} from './common/entity';
 
 const logger = createLogger({
   package: 'generator',

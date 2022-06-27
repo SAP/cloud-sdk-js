@@ -6,8 +6,8 @@ import {
   parseEntityTypesBase
 } from '../common/edmx-parser';
 import { forceArray } from '../../generator-utils';
-import { joinEntityTypes } from '../../edmx-to-vdm/v4';
-import { stripNamespace } from '../../edmx-to-vdm';
+import { joinEntityTypes } from '../../edmx-to-vdm/v4/entity';
+import { stripNamespace } from '../../edmx-to-vdm/edmx-to-vdm-util';
 import {
   EdmxAction,
   EdmxActionImport,

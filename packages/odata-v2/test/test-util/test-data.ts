@@ -11,11 +11,11 @@ import {
 
 const testService = testService();
 
-export testEntityApi = testService.testEntityApi;
-export testEntityMultiLinkApi = testService.testEntityMultiLinkApi;
-export testEntitySingleLinkApi = testService.testEntitySingleLinkApi;
-export testEntityLvl2MultiLinkApi = testService.testEntityLvl2MultiLinkApi;
-export testEntityLvl2SingleLinkApi = testService.testEntityLvl2SingleLinkApi;
+export const testEntityApi = testService.testEntityApi;
+export const testEntityMultiLinkApi = testService.testEntityMultiLinkApi;
+export const testEntitySingleLinkApi = testService.testEntitySingleLinkApi;
+export const testEntityLvl2MultiLinkApi = testService.testEntityLvl2MultiLinkApi;
+export const testEntityLvl2SingleLinkApi = testService.testEntityLvl2SingleLinkApi;
 
 export const { testEntityApi: testEntityApiCustom } = testService(
   customTestDeSerializers

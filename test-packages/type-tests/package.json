@@ -8,9 +8,8 @@
   "types": "test",
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "test": "yarn test:self-test && yarn test:type",
+    "test": "yarn test:type",
     "test:type": "dtslint --expectOnly --localTs ../../node_modules/typescript/lib test",
-    "test:self-test": "yarn ts-node self-test/check-if-type-tests-are-working.ts",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
   },
   "devDependencies": {

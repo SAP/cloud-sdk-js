@@ -1,0 +1,20 @@
+{
+  "name": "@sap-cloud-sdk/negative-tests",
+  "version": "2.5.0",
+  "description": "Self tests to ensure test tools are working in the SAP Cloud SDK for JavaScript.",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "license": "Apache-2.0",
+  "private": true,
+  "types": "test",
+  "repository": "github:SAP/cloud-sdk-js",
+  "scripts": {
+    "test": "yarn test:dtslint-test && yarn test:madge-test",
+    "test:dtslint-test": "yarn ts-node dtslint-test/check-if-dtslint-is-working.ts",
+    "test:madge-test": "yarn ts-node madge-test/check-if-madge-is-working.ts",
+    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
+  },
+  "devDependencies": {
+    "@definitelytyped/dtslint": "^0.0.115",
+    "madge": "^5.0.0"
+  }
+}

@@ -4,6 +4,8 @@ import {
   createLogger,
   ErrorWithCause,
   pickIgnoreCase,
+  pickNonNullish,
+  pickValueIgnoreCase,
   sanitizeRecord,
   unixEOL
 } from '@sap-cloud-sdk/util';
@@ -38,7 +40,15 @@ import {
   ParameterEncoder
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
-import { buildCsrfHeaders } from './csrf-token-header';
+import {
+  appendSlash,
+  buildCookieHeaderValue,
+  buildCsrfFetchHeaders,
+  getResponseHeadersFromError,
+  hasCsrfToken,
+  removeSlash,
+  validateCsrfTokenResponse
+} from './csrf-token-header';
 
 const logger = createLogger({
   package: 'http-client',
@@ -518,6 +528,81 @@ export function shouldHandleCsrfToken(
     requestConfig.method !== 'get' &&
     requestConfig.method !== 'GET'
   );
+}
+
+/**
+ * Get CSRF token and cookies for a destination and request configuration. The CSRF token and cookies will be retrieved based on the URL of the destination and the custom configuration given by the `requestConfig`.
+ * If there is a relative url in the `requestConfig` it will be appended to the destination's URL, an absolute URL overwrites the destination related URL.
+ * @param destination - The destination to get the headers from.
+ * @param requestConfig - An http request configuration containing additional information about the request, like URL or headers.
+ * @returns A promise to an object containing the CSRF related headers.
+ * @internal
+ */
+export async function buildCsrfHeaders<T extends HttpRequestConfig>(
+  destination: DestinationOrFetchOptions,
+  requestConfig: Partial<T>
+): Promise<Record<string, any>> {
+  const csrfHeaders = await makeCsrfRequest(destination, requestConfig);
+  validateCsrfTokenResponse(csrfHeaders);
+  return pickNonNullish({
+    ...pickIgnoreCase(csrfHeaders, 'x-csrf-token'),
+    cookie: buildCookieHeaderValue(
+      pickValueIgnoreCase(csrfHeaders, 'set-cookie')
+    )
+  });
+}
+
+function makeCsrfRequest<T extends HttpRequestConfig>(
+  destination: DestinationOrFetchOptions,
+  requestConfig: Partial<T>
+): Promise<Record<string, any>> {
+  const axiosConfig: HttpRequestConfigWithOrigin = {
+    method: 'head',
+    ...requestConfig,
+    params: {
+      custom: requestConfig.params || {},
+      requestConfig: {}
+    },
+    headers: {
+      custom: buildCsrfFetchHeaders(requestConfig.headers),
+      requestConfig: {}
+    }
+  };
+
+  // The S/4 does a redirect if the CSRF token is fetched in case the '/' is not in the URL.
+  // TODO: remove once https://github.com/axios/axios/issues/3369 is really fixed. Issue is closed but problem stays.
+  const requestConfigWithTrailingSlash = appendSlash(axiosConfig);
+  return executeHttpRequest(destination, requestConfigWithTrailingSlash)
+    .then(response => response.headers)
+    .catch(error1 => {
+      const headers1 = getResponseHeadersFromError(error1);
+      if (hasCsrfToken(headers1)) {
+        return headers1;
+      }
+      logger.warn(
+        new ErrorWithCause(
+          `First attempt to fetch CSRF token failed with the URL: ${requestConfigWithTrailingSlash.url}. Retrying without trailing slash.`,
+          error1
+        )
+      );
+      const requestConfigWithOutTrailingSlash = removeSlash(axiosConfig);
+      return executeHttpRequest(destination, requestConfigWithOutTrailingSlash)
+        .then(response => response.headers)
+        .catch(error2 => {
+          const headers2 = getResponseHeadersFromError(error2);
+          if (hasCsrfToken(headers2)) {
+            return headers2;
+          }
+          logger.warn(
+            new ErrorWithCause(
+              `Second attempt to fetch CSRF token failed with the URL: ${requestConfigWithOutTrailingSlash.url}. No CSRF token fetched.`,
+              error2
+            )
+          );
+          // todo suggest to disable csrf token handling when the API is implemented
+          return {};
+        });
+    });
 }
 
 async function getCsrfHeaders(

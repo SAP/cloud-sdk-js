@@ -35,6 +35,9 @@ import {
 } from '../../test/test-util';
 import { DefaultDeSerializers } from '../de-serializers';
 import { GetAllRequestBuilder } from './get-all-request-builder';
+import {
+  testService
+} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 
 describe('GetAllRequestBuilder', () => {
   let requestBuilder: GetAllRequestBuilder<TestEntity, DefaultDeSerializers>;
@@ -144,6 +147,8 @@ describe('GetAllRequestBuilder', () => {
     });
 
     it('test #2606', async () => {
+      const api = testService().testEntityApi;
+      const rB = new GetAllRequestBuilder(api);
       mockGetRequest(
         {
           responseBody: { d: { results: [
@@ -158,9 +163,9 @@ describe('GetAllRequestBuilder', () => {
                 }
             ] } }
         },
-        testEntityApi
+        api
       );
-      const actual = await requestBuilder.execute(defaultDestination);
+      const actual = await rB.execute(defaultDestination);
       expect(actual[0].toMultiLink[0].toMultiLink[0].stringProperty).toEqual('string');
     });
 

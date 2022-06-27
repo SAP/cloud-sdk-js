@@ -9,13 +9,13 @@ import {
   customTestDeSerializers
 } from '../../../../test-resources/test/test-util';
 
-const service = testService();
-
-export const testEntityApi = service.testEntityApi;
-export const testEntityMultiLinkApi = service.testEntityMultiLinkApi;
-export const testEntitySingleLinkApi = service.testEntitySingleLinkApi;
-export const testEntityLvl2MultiLinkApi = service.testEntityLvl2MultiLinkApi;
-export const testEntityLvl2SingleLinkApi = service.testEntityLvl2SingleLinkApi;
+export const {
+   testEntityApi,
+   testEntityMultiLinkApi,
+   testEntitySingleLinkApi,
+   testEntityLvl2MultiLinkApi,
+   testEntityLvl2SingleLinkApi
+ } = testService();
 
 export const { testEntityApi: testEntityApiCustom } = testService(
   customTestDeSerializers

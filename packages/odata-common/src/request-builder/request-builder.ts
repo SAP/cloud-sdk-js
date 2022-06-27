@@ -1,4 +1,4 @@
-import { DeSerializers } from '../de-serializers';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { EntityApi } from '../entity-api';
 

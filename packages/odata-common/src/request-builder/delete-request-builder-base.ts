@@ -3,8 +3,8 @@ import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
-import { ODataDeleteRequestConfig } from '../request';
-import { DeSerializers } from '../de-serializers';
+import { ODataDeleteRequestConfig } from '../request/odata-delete-request-config';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
 /**

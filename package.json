@@ -108,7 +108,7 @@
     "typescript": "~4.7.4"
   },
   "dependencies": {
-    "puppeteer": "^15.0.0"
+    "puppeteer": "^15.1.1"
   },
   "resolutions": {
     "agent-base": ">=6.0.2",

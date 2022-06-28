@@ -71,8 +71,10 @@
     "theme": "default",
     "includeVersion": true,
     "hideGenerator": true,
-    "invalidLink": true,
     "excludePrivate": true,
-    "includes": "packages"
+    "includes": "packages",
+    "validation": {
+      "invalidLink": true
+    }
   }
 }

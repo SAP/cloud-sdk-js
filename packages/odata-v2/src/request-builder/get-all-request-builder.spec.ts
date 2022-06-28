@@ -38,6 +38,17 @@ import { GetAllRequestBuilder } from './get-all-request-builder';
 import {
   testService
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { testService as testServiceV4 } from '../../../../test-packages/test-services-odata-v2/test-service/service'
+
+describe('OData Client Service', () =>{
+  it('should contain schemas in nested apis', ()=>{
+    const {
+      testEntityCircularLinkParentApi,
+      testEntityCircularLinkChildApi
+    } = testServiceV4();
+    expect(testEntityCircularLinkParentApi.schema.TO_CHILD._linkedEntityApi.schema.TO_PARENT._linkedEntityApi.schema.TO_CHILD._linkedEntityApi.schema).toBeTruthy();
+  });
+});
 
 describe('GetAllRequestBuilder', () => {
   let requestBuilder: GetAllRequestBuilder<TestEntity, DefaultDeSerializers>;

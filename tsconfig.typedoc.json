@@ -71,7 +71,7 @@
     "theme": "default",
     "includeVersion": true,
     "hideGenerator": true,
-    "listInvalidSymbolLinks": true,
+    "invalidLink": true,
     "excludePrivate": true,
     "includes": "packages"
   }

@@ -35,7 +35,7 @@
     "test-packages/test-services-openapi",
     "test-packages/test-services-e2e",
     "test-packages/type-tests",
-    "test-packages/negative-tests"
+    "test-packages/self-tests"
   ],
   "scripts": {
     "postinstall": "yarn compile",
@@ -45,7 +45,7 @@
     "test:integration": "turbo run test --filter=integration-tests",
     "test:type": "turbo run test --filter=type-tests",
     "test:e2e": "turbo run test --filter=e2e-tests",
-    "test:self": "turbo run test --filter=negative-tests",
+    "test:self": "turbo run test --filter=self-tests",
     "generate": "turbo run generate",
     "doc": "ts-node scripts/generate-docs.ts",
     "preversion": "ts-node scripts/before-bump.ts",

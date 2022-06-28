@@ -118,7 +118,7 @@ function getDirectoryNamesByPaths(
  * @returns The relative path
  * @internal
  */
- export function getRelPathWithPosixSeparator(absolutePath: string): string {
+export function getRelPathWithPosixSeparator(absolutePath: string): string {
   return relative(process.cwd(), absolutePath).split(sep).join(posix.sep);
 }
 

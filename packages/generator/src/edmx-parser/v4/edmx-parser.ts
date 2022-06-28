@@ -23,7 +23,7 @@ import {
 /**
  * @internal
  */
- export function joinEntityTypes<T extends EdmxEntityTypeV4>(
+export function joinEntityTypes<T extends EdmxEntityTypeV4>(
   entityType: T,
   baseType: T
 ): T {

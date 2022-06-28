@@ -20,7 +20,7 @@ import {
 } from '../edmx-to-vdm-util';
 import { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
-import { enumTypeForName } from './entity';
+import { enumTypeForName } from '../edmx-to-vdm-util';
 
 /**
  * @internal

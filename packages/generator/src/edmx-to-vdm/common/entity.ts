@@ -1,4 +1,4 @@
-import { createLogger, last } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   edmToFieldType,
   edmToTsType,
@@ -27,7 +27,9 @@ import {
 } from '../../edmx-parser/common';
 import {
   checkCollectionKind,
-  complexTypeFieldType,
+  complexTypeFieldForName,
+  complexTypeForName,
+  enumTypeForName,
   isCollectionType,
   isComplexType,
   isEdmType,
@@ -246,68 +248,4 @@ function getTypeMappingEntityProperties(
     };
   }
   throw new Error(`No types found for ${typeName}`);
-}
-
-function complexTypeFieldForName(
-  name: string,
-  complexTypes: VdmComplexType[]
-): string {
-  const complexType = findComplexType(name, complexTypes);
-  if (complexType) {
-    return complexTypeFieldType(complexType.typeName);
-  }
-  logger.warn(
-    `No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
-  );
-  return 'any';
-}
-
-const getPostfix = (type: string) => last(type.split('.'));
-/**
- * @internal
- */
-export const findComplexType = (
-  name: string,
-  complexTypes: VdmComplexType[]
-): VdmComplexType | undefined =>
-  complexTypes.find(c => c.originalName === getPostfix(name));
-/**
- * @internal
- */
-export const findEnumType = (
-  name: string,
-  enumTypes: VdmEnumType[]
-): VdmEnumType | undefined =>
-  enumTypes.find(e => e.originalName === getPostfix(name));
-/**
- * @internal
- */
-export function complexTypeForName(
-  name: string,
-  complexTypes: VdmComplexType[]
-): string {
-  const complexType = findComplexType(name, complexTypes);
-  if (complexType) {
-    return complexType.typeName;
-  }
-  logger.warn(
-    `No complex type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
-  );
-  return 'any';
-}
-/**
- * @internal
- */
-export function enumTypeForName(
-  name: string,
-  enumTypes: VdmEnumType[]
-): string {
-  const enumType = findEnumType(name, enumTypes);
-  if (enumType) {
-    return enumType.typeName;
-  }
-  logger.warn(
-    `No enum type mapping found for ${name}! Using "any" instead. This will most likely result in errors.`
-  );
-  return 'any';
 }

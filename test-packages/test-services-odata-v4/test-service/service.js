@@ -18,6 +18,7 @@ const TestEntitySingleLinkApi_1 = require('./TestEntitySingleLinkApi');
 const TestEntityLvl2SingleLinkApi_1 = require('./TestEntityLvl2SingleLinkApi');
 const TestEntityCircularLinkParentApi_1 = require('./TestEntityCircularLinkParentApi');
 const TestEntityCircularLinkChildApi_1 = require('./TestEntityCircularLinkChildApi');
+const TestEntityCircularLinkSelfApi_1 = require('./TestEntityCircularLinkSelfApi');
 const TestEntityEndsWithApi_1 = require('./TestEntityEndsWithApi');
 const TestEntityEndsWithSomethingElseApi_1 = require('./TestEntityEndsWithSomethingElseApi');
 const function_imports_1 = require('./function-imports');
@@ -33,6 +34,21 @@ exports.testService = testService;
 class TestService {
   constructor(deSerializers) {
     this.apis = {};
+    this._testEntityApi = undefined;
+    this._testEntityWithEnumKeyApi = undefined;
+    this._testEntityWithSharedEntityType1Api = undefined;
+    this._testEntityWithSharedEntityType2Api = undefined;
+    this._testEntityMultiLinkApi = undefined;
+    this._testEntityOtherMultiLinkApi = undefined;
+    this._testEntityLvl2MultiLinkApi = undefined;
+    this._testEntityLvl3MultiLinkApi = undefined;
+    this._testEntitySingleLinkApi = undefined;
+    this._testEntityLvl2SingleLinkApi = undefined;
+    this._testEntityCircularLinkParentApi = undefined;
+    this._testEntityCircularLinkChildApi = undefined;
+    this._testEntityCircularLinkSelfApi = undefined;
+    this._testEntityEndsWithApi = undefined;
+    this._testEntityEndsWithSomethingElseApi = undefined;
     this.deSerializers = deSerializers;
   }
   initApi(key, ctor) {
@@ -42,116 +58,170 @@ class TestService {
     return this.apis[key];
   }
   get testEntityApi() {
-    const api = this.initApi('testEntityApi', TestEntityApi_1.TestEntityApi);
-    const linkedApis = [
-      this.testEntityMultiLinkApi,
-      this.testEntityMultiLinkApi,
-      this.testEntitySingleLinkApi
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntityApi) {
+      const api = this.initApi('testEntityApi', TestEntityApi_1.TestEntityApi);
+      const linkedApis = [
+        this.testEntityMultiLinkApi,
+        this.testEntityMultiLinkApi,
+        this.testEntitySingleLinkApi
+      ];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityApi = api;
+    }
+    return this._testEntityApi;
   }
   get testEntityWithEnumKeyApi() {
-    return this.initApi(
-      'testEntityWithEnumKeyApi',
-      TestEntityWithEnumKeyApi_1.TestEntityWithEnumKeyApi
-    );
+    if (!this._testEntityWithEnumKeyApi) {
+      this._testEntityWithEnumKeyApi = this.initApi(
+        'testEntityWithEnumKeyApi',
+        TestEntityWithEnumKeyApi_1.TestEntityWithEnumKeyApi
+      );
+    }
+    return this._testEntityWithEnumKeyApi;
   }
   get testEntityWithSharedEntityType1Api() {
-    return this.initApi(
-      'testEntityWithSharedEntityType1Api',
-      TestEntityWithSharedEntityType1Api_1.TestEntityWithSharedEntityType1Api
-    );
+    if (!this._testEntityWithSharedEntityType1Api) {
+      this._testEntityWithSharedEntityType1Api = this.initApi(
+        'testEntityWithSharedEntityType1Api',
+        TestEntityWithSharedEntityType1Api_1.TestEntityWithSharedEntityType1Api
+      );
+    }
+    return this._testEntityWithSharedEntityType1Api;
   }
   get testEntityWithSharedEntityType2Api() {
-    return this.initApi(
-      'testEntityWithSharedEntityType2Api',
-      TestEntityWithSharedEntityType2Api_1.TestEntityWithSharedEntityType2Api
-    );
+    if (!this._testEntityWithSharedEntityType2Api) {
+      this._testEntityWithSharedEntityType2Api = this.initApi(
+        'testEntityWithSharedEntityType2Api',
+        TestEntityWithSharedEntityType2Api_1.TestEntityWithSharedEntityType2Api
+      );
+    }
+    return this._testEntityWithSharedEntityType2Api;
   }
   get testEntityMultiLinkApi() {
-    const api = this.initApi(
-      'testEntityMultiLinkApi',
-      TestEntityMultiLinkApi_1.TestEntityMultiLinkApi
-    );
-    const linkedApis = [
-      this.testEntityLvl2MultiLinkApi,
-      this.testEntityLvl2SingleLinkApi
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntityMultiLinkApi) {
+      const api = this.initApi(
+        'testEntityMultiLinkApi',
+        TestEntityMultiLinkApi_1.TestEntityMultiLinkApi
+      );
+      const linkedApis = [
+        this.testEntityLvl2MultiLinkApi,
+        this.testEntityLvl2SingleLinkApi
+      ];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityMultiLinkApi = api;
+    }
+    return this._testEntityMultiLinkApi;
   }
   get testEntityOtherMultiLinkApi() {
-    return this.initApi(
-      'testEntityOtherMultiLinkApi',
-      TestEntityOtherMultiLinkApi_1.TestEntityOtherMultiLinkApi
-    );
+    if (!this._testEntityOtherMultiLinkApi) {
+      this._testEntityOtherMultiLinkApi = this.initApi(
+        'testEntityOtherMultiLinkApi',
+        TestEntityOtherMultiLinkApi_1.TestEntityOtherMultiLinkApi
+      );
+    }
+    return this._testEntityOtherMultiLinkApi;
   }
   get testEntityLvl2MultiLinkApi() {
-    const api = this.initApi(
-      'testEntityLvl2MultiLinkApi',
-      TestEntityLvl2MultiLinkApi_1.TestEntityLvl2MultiLinkApi
-    );
-    const linkedApis = [this.testEntityLvl3MultiLinkApi];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntityLvl2MultiLinkApi) {
+      const api = this.initApi(
+        'testEntityLvl2MultiLinkApi',
+        TestEntityLvl2MultiLinkApi_1.TestEntityLvl2MultiLinkApi
+      );
+      const linkedApis = [this.testEntityLvl3MultiLinkApi];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityLvl2MultiLinkApi = api;
+    }
+    return this._testEntityLvl2MultiLinkApi;
   }
   get testEntityLvl3MultiLinkApi() {
-    return this.initApi(
-      'testEntityLvl3MultiLinkApi',
-      TestEntityLvl3MultiLinkApi_1.TestEntityLvl3MultiLinkApi
-    );
+    if (!this._testEntityLvl3MultiLinkApi) {
+      this._testEntityLvl3MultiLinkApi = this.initApi(
+        'testEntityLvl3MultiLinkApi',
+        TestEntityLvl3MultiLinkApi_1.TestEntityLvl3MultiLinkApi
+      );
+    }
+    return this._testEntityLvl3MultiLinkApi;
   }
   get testEntitySingleLinkApi() {
-    const api = this.initApi(
-      'testEntitySingleLinkApi',
-      TestEntitySingleLinkApi_1.TestEntitySingleLinkApi
-    );
-    const linkedApis = [
-      this.testEntityLvl2MultiLinkApi,
-      this.testEntityLvl2SingleLinkApi
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntitySingleLinkApi) {
+      const api = this.initApi(
+        'testEntitySingleLinkApi',
+        TestEntitySingleLinkApi_1.TestEntitySingleLinkApi
+      );
+      const linkedApis = [
+        this.testEntityLvl2MultiLinkApi,
+        this.testEntityLvl2SingleLinkApi
+      ];
+      api._addNavigationProperties(linkedApis);
+      this._testEntitySingleLinkApi = api;
+    }
+    return this._testEntitySingleLinkApi;
   }
   get testEntityLvl2SingleLinkApi() {
-    return this.initApi(
-      'testEntityLvl2SingleLinkApi',
-      TestEntityLvl2SingleLinkApi_1.TestEntityLvl2SingleLinkApi
-    );
+    if (!this._testEntityLvl2SingleLinkApi) {
+      this._testEntityLvl2SingleLinkApi = this.initApi(
+        'testEntityLvl2SingleLinkApi',
+        TestEntityLvl2SingleLinkApi_1.TestEntityLvl2SingleLinkApi
+      );
+    }
+    return this._testEntityLvl2SingleLinkApi;
   }
   get testEntityCircularLinkParentApi() {
-    const api = this.initApi(
-      'testEntityCircularLinkParentApi',
-      TestEntityCircularLinkParentApi_1.TestEntityCircularLinkParentApi
-    );
-    const linkedApis = [
-      this.testEntityCircularLinkChildApi,
-      this.testEntityCircularLinkChildApi
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntityCircularLinkParentApi) {
+      const api = this.initApi(
+        'testEntityCircularLinkParentApi',
+        TestEntityCircularLinkParentApi_1.TestEntityCircularLinkParentApi
+      );
+      const linkedApis = [
+        this.testEntityCircularLinkChildApi,
+        this.testEntityCircularLinkChildApi
+      ];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityCircularLinkParentApi = api;
+    }
+    return this._testEntityCircularLinkParentApi;
   }
   get testEntityCircularLinkChildApi() {
-    const api = this.initApi(
-      'testEntityCircularLinkChildApi',
-      TestEntityCircularLinkChildApi_1.TestEntityCircularLinkChildApi
-    );
-    const linkedApis = [this.testEntityCircularLinkParentApi];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntityCircularLinkChildApi) {
+      const api = this.initApi(
+        'testEntityCircularLinkChildApi',
+        TestEntityCircularLinkChildApi_1.TestEntityCircularLinkChildApi
+      );
+      const linkedApis = [this.testEntityCircularLinkParentApi];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityCircularLinkChildApi = api;
+    }
+    return this._testEntityCircularLinkChildApi;
+  }
+  get testEntityCircularLinkSelfApi() {
+    if (!this._testEntityCircularLinkSelfApi) {
+      const api = this.initApi(
+        'testEntityCircularLinkSelfApi',
+        TestEntityCircularLinkSelfApi_1.TestEntityCircularLinkSelfApi
+      );
+      const linkedApis = [this.testEntityCircularLinkSelfApi];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityCircularLinkSelfApi = api;
+    }
+    return this._testEntityCircularLinkSelfApi;
   }
   get testEntityEndsWithApi() {
-    return this.initApi(
-      'testEntityEndsWithApi',
-      TestEntityEndsWithApi_1.TestEntityEndsWithApi
-    );
+    if (!this._testEntityEndsWithApi) {
+      this._testEntityEndsWithApi = this.initApi(
+        'testEntityEndsWithApi',
+        TestEntityEndsWithApi_1.TestEntityEndsWithApi
+      );
+    }
+    return this._testEntityEndsWithApi;
   }
   get testEntityEndsWithSomethingElseApi() {
-    return this.initApi(
-      'testEntityEndsWithSomethingElseApi',
-      TestEntityEndsWithSomethingElseApi_1.TestEntityEndsWithSomethingElseApi
-    );
+    if (!this._testEntityEndsWithSomethingElseApi) {
+      this._testEntityEndsWithSomethingElseApi = this.initApi(
+        'testEntityEndsWithSomethingElseApi',
+        TestEntityEndsWithSomethingElseApi_1.TestEntityEndsWithSomethingElseApi
+      );
+    }
+    return this._testEntityEndsWithSomethingElseApi;
   }
   get functionImports() {
     return {

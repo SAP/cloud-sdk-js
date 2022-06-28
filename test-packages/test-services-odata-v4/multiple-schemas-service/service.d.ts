@@ -90,6 +90,10 @@ declare class MultipleSchemasService<
 > {
   private apis;
   private deSerializers;
+  private _testEntity1Api?;
+  private _testEntity2Api?;
+  private _testEntity3Api?;
+  private _testEntity4Api?;
   constructor(deSerializers: DeSerializersT);
   private initApi;
   get testEntity1Api(): TestEntity1Api<DeSerializersT>;

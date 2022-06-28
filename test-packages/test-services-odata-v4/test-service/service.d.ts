@@ -10,6 +10,7 @@ import { TestEntitySingleLinkApi } from './TestEntitySingleLinkApi';
 import { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
 import { TestEntityCircularLinkParentApi } from './TestEntityCircularLinkParentApi';
 import { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
+import { TestEntityCircularLinkSelfApi } from './TestEntityCircularLinkSelfApi';
 import { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
 import { TestEntityEndsWithSomethingElseApi } from './TestEntityEndsWithSomethingElseApi';
 import {
@@ -114,6 +115,21 @@ declare class TestService<
 > {
   private apis;
   private deSerializers;
+  private _testEntityApi?;
+  private _testEntityWithEnumKeyApi?;
+  private _testEntityWithSharedEntityType1Api?;
+  private _testEntityWithSharedEntityType2Api?;
+  private _testEntityMultiLinkApi?;
+  private _testEntityOtherMultiLinkApi?;
+  private _testEntityLvl2MultiLinkApi?;
+  private _testEntityLvl3MultiLinkApi?;
+  private _testEntitySingleLinkApi?;
+  private _testEntityLvl2SingleLinkApi?;
+  private _testEntityCircularLinkParentApi?;
+  private _testEntityCircularLinkChildApi?;
+  private _testEntityCircularLinkSelfApi?;
+  private _testEntityEndsWithApi?;
+  private _testEntityEndsWithSomethingElseApi?;
   constructor(deSerializers: DeSerializersT);
   private initApi;
   get testEntityApi(): TestEntityApi<DeSerializersT>;
@@ -128,6 +144,7 @@ declare class TestService<
   get testEntityLvl2SingleLinkApi(): TestEntityLvl2SingleLinkApi<DeSerializersT>;
   get testEntityCircularLinkParentApi(): TestEntityCircularLinkParentApi<DeSerializersT>;
   get testEntityCircularLinkChildApi(): TestEntityCircularLinkChildApi<DeSerializersT>;
+  get testEntityCircularLinkSelfApi(): TestEntityCircularLinkSelfApi<DeSerializersT>;
   get testEntityEndsWithApi(): TestEntityEndsWithApi<DeSerializersT>;
   get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<DeSerializersT>;
   get functionImports(): {

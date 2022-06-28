@@ -39,6 +39,10 @@ export function serviceClass(service: VdmServiceMetadata): string {
   }<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     private apis: Record<string, any> = {};
     private deSerializers: DeSerializersT;
+    
+    ${service.entities
+    .map(entity => getEntityApiInstance(entity))
+    .join('\n')}
 
     constructor(deSerializers: DeSerializersT) {
       this.deSerializers = deSerializers;
@@ -101,6 +105,12 @@ function getChangeset() {
   `;
 }
 
+function getEntityApiInstance(
+  entity: VdmEntity
+): string {
+  return codeBlock`private _${getApiName(entity.className)}?: ${entity.className}Api<DeSerializersT> = undefined;`;
+}
+
 function getEntityApiFunction(
   entity: VdmEntity,
   service: VdmServiceMetadata
@@ -117,20 +127,27 @@ function getEntityApiFunction(
 }
 
 function withoutLinks(entity: VdmEntity) {
-  return `return ${getApiInitializer(entity.className)}`;
+  return ` if(!this._${getApiName(entity.className)}){
+    this._${getApiName(entity.className)} = ${getApiInitializer(entity.className)};
+  }
+  return this._${getApiName(entity.className)}!
+  `;
 }
 
 function withLinks(entity: VdmEntity, service: VdmServiceMetadata): string {
-  return `const api = ${getApiInitializer(entity.className)};
+  return ` if(!this._${getApiName(entity.className)}){
+    const api = ${getApiInitializer(entity.className)};
   const linkedApis = [
     ${entity.navigationProperties
-      .map(navProp =>
-        `this.${getApiName(matchEntity(navProp, service).className)}`
-      )
-      .join(',\n')}
+    .map(navProp =>
+      `this.${getApiName(matchEntity(navProp, service).className)}`
+    )
+    .join(',\n')}
   ];
   api._addNavigationProperties(linkedApis);
-  return api`;
+    this._${getApiName(entity.className)} = api;
+  }
+  return this._${getApiName(entity.className)}!`;
 }
 
 function getApiInitializer(entityClassName: string): string {

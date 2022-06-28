@@ -21,6 +21,7 @@ import {
   TestEntityLvl2SingleLink,
   TestEntityCircularLinkParent,
   TestEntityCircularLinkChild,
+  TestEntityCircularLinkSelf,
   TestEntityEndsWith,
   TestEntityEndsWithSomethingElse
 } from './index';
@@ -92,6 +93,10 @@ export declare type ReadTestServiceRequestBuilder<
       TestEntityCircularLinkChild<DeSerializersT>,
       DeSerializersT
     >
+  | GetAllRequestBuilder<
+      TestEntityCircularLinkSelf<DeSerializersT>,
+      DeSerializersT
+    >
   | GetAllRequestBuilder<TestEntityEndsWith<DeSerializersT>, DeSerializersT>
   | GetAllRequestBuilder<
       TestEntityEndsWithSomethingElse<DeSerializersT>,
@@ -134,6 +139,10 @@ export declare type ReadTestServiceRequestBuilder<
     >
   | GetByKeyRequestBuilder<
       TestEntityCircularLinkChild<DeSerializersT>,
+      DeSerializersT
+    >
+  | GetByKeyRequestBuilder<
+      TestEntityCircularLinkSelf<DeSerializersT>,
       DeSerializersT
     >
   | GetByKeyRequestBuilder<TestEntityEndsWith<DeSerializersT>, DeSerializersT>
@@ -250,6 +259,18 @@ export declare type WriteTestServiceRequestBuilder<
     >
   | DeleteRequestBuilder<
       TestEntityCircularLinkChild<DeSerializersT>,
+      DeSerializersT
+    >
+  | CreateRequestBuilder<
+      TestEntityCircularLinkSelf<DeSerializersT>,
+      DeSerializersT
+    >
+  | UpdateRequestBuilder<
+      TestEntityCircularLinkSelf<DeSerializersT>,
+      DeSerializersT
+    >
+  | DeleteRequestBuilder<
+      TestEntityCircularLinkSelf<DeSerializersT>,
       DeSerializersT
     >
   | CreateRequestBuilder<TestEntityEndsWith<DeSerializersT>, DeSerializersT>

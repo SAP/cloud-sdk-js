@@ -25,6 +25,10 @@ exports.multipleSchemasService = multipleSchemasService;
 class MultipleSchemasService {
   constructor(deSerializers) {
     this.apis = {};
+    this._testEntity1Api = undefined;
+    this._testEntity2Api = undefined;
+    this._testEntity3Api = undefined;
+    this._testEntity4Api = undefined;
     this.deSerializers = deSerializers;
   }
   initApi(key, ctor) {
@@ -34,16 +38,40 @@ class MultipleSchemasService {
     return this.apis[key];
   }
   get testEntity1Api() {
-    return this.initApi('testEntity1Api', TestEntity1Api_1.TestEntity1Api);
+    if (!this._testEntity1Api) {
+      this._testEntity1Api = this.initApi(
+        'testEntity1Api',
+        TestEntity1Api_1.TestEntity1Api
+      );
+    }
+    return this._testEntity1Api;
   }
   get testEntity2Api() {
-    return this.initApi('testEntity2Api', TestEntity2Api_1.TestEntity2Api);
+    if (!this._testEntity2Api) {
+      this._testEntity2Api = this.initApi(
+        'testEntity2Api',
+        TestEntity2Api_1.TestEntity2Api
+      );
+    }
+    return this._testEntity2Api;
   }
   get testEntity3Api() {
-    return this.initApi('testEntity3Api', TestEntity3Api_1.TestEntity3Api);
+    if (!this._testEntity3Api) {
+      this._testEntity3Api = this.initApi(
+        'testEntity3Api',
+        TestEntity3Api_1.TestEntity3Api
+      );
+    }
+    return this._testEntity3Api;
   }
   get testEntity4Api() {
-    return this.initApi('testEntity4Api', TestEntity4Api_1.TestEntity4Api);
+    if (!this._testEntity4Api) {
+      this._testEntity4Api = this.initApi(
+        'testEntity4Api',
+        TestEntity4Api_1.TestEntity4Api
+      );
+    }
+    return this._testEntity4Api;
   }
   get functionImports() {
     return {

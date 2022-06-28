@@ -47,6 +47,7 @@ __exportStar(require('./TestEntitySingleLink'), exports);
 __exportStar(require('./TestEntityLvl2SingleLink'), exports);
 __exportStar(require('./TestEntityCircularLinkParent'), exports);
 __exportStar(require('./TestEntityCircularLinkChild'), exports);
+__exportStar(require('./TestEntityCircularLinkSelf'), exports);
 __exportStar(require('./TestEntityEndsWith'), exports);
 __exportStar(require('./TestEntityEndsWithSomethingElse'), exports);
 __exportStar(require('./TestEntityRequestBuilder'), exports);
@@ -67,6 +68,7 @@ __exportStar(require('./TestEntitySingleLinkRequestBuilder'), exports);
 __exportStar(require('./TestEntityLvl2SingleLinkRequestBuilder'), exports);
 __exportStar(require('./TestEntityCircularLinkParentRequestBuilder'), exports);
 __exportStar(require('./TestEntityCircularLinkChildRequestBuilder'), exports);
+__exportStar(require('./TestEntityCircularLinkSelfRequestBuilder'), exports);
 __exportStar(require('./TestEntityEndsWithRequestBuilder'), exports);
 __exportStar(
   require('./TestEntityEndsWithSomethingElseRequestBuilder'),

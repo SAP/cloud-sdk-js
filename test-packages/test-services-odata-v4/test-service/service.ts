@@ -15,6 +15,7 @@ import { TestEntitySingleLinkApi } from './TestEntitySingleLinkApi';
 import { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
 import { TestEntityCircularLinkParentApi } from './TestEntityCircularLinkParentApi';
 import { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
+import { TestEntityCircularLinkSelfApi } from './TestEntityCircularLinkSelfApi';
 import { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
 import { TestEntityEndsWithSomethingElseApi } from './TestEntityEndsWithSomethingElseApi';
 import {
@@ -141,6 +142,36 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
   private apis: Record<string, any> = {};
   private deSerializers: DeSerializersT;
 
+  private _testEntityApi?: TestEntityApi<DeSerializersT> = undefined;
+  private _testEntityWithEnumKeyApi?: TestEntityWithEnumKeyApi<DeSerializersT> =
+    undefined;
+  private _testEntityWithSharedEntityType1Api?: TestEntityWithSharedEntityType1Api<DeSerializersT> =
+    undefined;
+  private _testEntityWithSharedEntityType2Api?: TestEntityWithSharedEntityType2Api<DeSerializersT> =
+    undefined;
+  private _testEntityMultiLinkApi?: TestEntityMultiLinkApi<DeSerializersT> =
+    undefined;
+  private _testEntityOtherMultiLinkApi?: TestEntityOtherMultiLinkApi<DeSerializersT> =
+    undefined;
+  private _testEntityLvl2MultiLinkApi?: TestEntityLvl2MultiLinkApi<DeSerializersT> =
+    undefined;
+  private _testEntityLvl3MultiLinkApi?: TestEntityLvl3MultiLinkApi<DeSerializersT> =
+    undefined;
+  private _testEntitySingleLinkApi?: TestEntitySingleLinkApi<DeSerializersT> =
+    undefined;
+  private _testEntityLvl2SingleLinkApi?: TestEntityLvl2SingleLinkApi<DeSerializersT> =
+    undefined;
+  private _testEntityCircularLinkParentApi?: TestEntityCircularLinkParentApi<DeSerializersT> =
+    undefined;
+  private _testEntityCircularLinkChildApi?: TestEntityCircularLinkChildApi<DeSerializersT> =
+    undefined;
+  private _testEntityCircularLinkSelfApi?: TestEntityCircularLinkSelfApi<DeSerializersT> =
+    undefined;
+  private _testEntityEndsWithApi?: TestEntityEndsWithApi<DeSerializersT> =
+    undefined;
+  private _testEntityEndsWithSomethingElseApi?: TestEntityEndsWithSomethingElseApi<DeSerializersT> =
+    undefined;
+
   constructor(deSerializers: DeSerializersT) {
     this.deSerializers = deSerializers;
   }
@@ -153,120 +184,184 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
   }
 
   get testEntityApi(): TestEntityApi<DeSerializersT> {
-    const api = this.initApi('testEntityApi', TestEntityApi);
-    const linkedApis = [
-      this.testEntityMultiLinkApi,
-      this.testEntityMultiLinkApi,
-      this.testEntitySingleLinkApi
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntityApi) {
+      const api = this.initApi('testEntityApi', TestEntityApi);
+      const linkedApis = [
+        this.testEntityMultiLinkApi,
+        this.testEntityMultiLinkApi,
+        this.testEntitySingleLinkApi
+      ];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityApi = api;
+    }
+    return this._testEntityApi!;
   }
 
   get testEntityWithEnumKeyApi(): TestEntityWithEnumKeyApi<DeSerializersT> {
-    return this.initApi('testEntityWithEnumKeyApi', TestEntityWithEnumKeyApi);
+    if (!this._testEntityWithEnumKeyApi) {
+      this._testEntityWithEnumKeyApi = this.initApi(
+        'testEntityWithEnumKeyApi',
+        TestEntityWithEnumKeyApi
+      );
+    }
+    return this._testEntityWithEnumKeyApi!;
   }
 
   get testEntityWithSharedEntityType1Api(): TestEntityWithSharedEntityType1Api<DeSerializersT> {
-    return this.initApi(
-      'testEntityWithSharedEntityType1Api',
-      TestEntityWithSharedEntityType1Api
-    );
+    if (!this._testEntityWithSharedEntityType1Api) {
+      this._testEntityWithSharedEntityType1Api = this.initApi(
+        'testEntityWithSharedEntityType1Api',
+        TestEntityWithSharedEntityType1Api
+      );
+    }
+    return this._testEntityWithSharedEntityType1Api!;
   }
 
   get testEntityWithSharedEntityType2Api(): TestEntityWithSharedEntityType2Api<DeSerializersT> {
-    return this.initApi(
-      'testEntityWithSharedEntityType2Api',
-      TestEntityWithSharedEntityType2Api
-    );
+    if (!this._testEntityWithSharedEntityType2Api) {
+      this._testEntityWithSharedEntityType2Api = this.initApi(
+        'testEntityWithSharedEntityType2Api',
+        TestEntityWithSharedEntityType2Api
+      );
+    }
+    return this._testEntityWithSharedEntityType2Api!;
   }
 
   get testEntityMultiLinkApi(): TestEntityMultiLinkApi<DeSerializersT> {
-    const api = this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi);
-    const linkedApis = [
-      this.testEntityLvl2MultiLinkApi,
-      this.testEntityLvl2SingleLinkApi
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntityMultiLinkApi) {
+      const api = this.initApi(
+        'testEntityMultiLinkApi',
+        TestEntityMultiLinkApi
+      );
+      const linkedApis = [
+        this.testEntityLvl2MultiLinkApi,
+        this.testEntityLvl2SingleLinkApi
+      ];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityMultiLinkApi = api;
+    }
+    return this._testEntityMultiLinkApi!;
   }
 
   get testEntityOtherMultiLinkApi(): TestEntityOtherMultiLinkApi<DeSerializersT> {
-    return this.initApi(
-      'testEntityOtherMultiLinkApi',
-      TestEntityOtherMultiLinkApi
-    );
+    if (!this._testEntityOtherMultiLinkApi) {
+      this._testEntityOtherMultiLinkApi = this.initApi(
+        'testEntityOtherMultiLinkApi',
+        TestEntityOtherMultiLinkApi
+      );
+    }
+    return this._testEntityOtherMultiLinkApi!;
   }
 
   get testEntityLvl2MultiLinkApi(): TestEntityLvl2MultiLinkApi<DeSerializersT> {
-    const api = this.initApi(
-      'testEntityLvl2MultiLinkApi',
-      TestEntityLvl2MultiLinkApi
-    );
-    const linkedApis = [this.testEntityLvl3MultiLinkApi];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntityLvl2MultiLinkApi) {
+      const api = this.initApi(
+        'testEntityLvl2MultiLinkApi',
+        TestEntityLvl2MultiLinkApi
+      );
+      const linkedApis = [this.testEntityLvl3MultiLinkApi];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityLvl2MultiLinkApi = api;
+    }
+    return this._testEntityLvl2MultiLinkApi!;
   }
 
   get testEntityLvl3MultiLinkApi(): TestEntityLvl3MultiLinkApi<DeSerializersT> {
-    return this.initApi(
-      'testEntityLvl3MultiLinkApi',
-      TestEntityLvl3MultiLinkApi
-    );
+    if (!this._testEntityLvl3MultiLinkApi) {
+      this._testEntityLvl3MultiLinkApi = this.initApi(
+        'testEntityLvl3MultiLinkApi',
+        TestEntityLvl3MultiLinkApi
+      );
+    }
+    return this._testEntityLvl3MultiLinkApi!;
   }
 
   get testEntitySingleLinkApi(): TestEntitySingleLinkApi<DeSerializersT> {
-    const api = this.initApi(
-      'testEntitySingleLinkApi',
-      TestEntitySingleLinkApi
-    );
-    const linkedApis = [
-      this.testEntityLvl2MultiLinkApi,
-      this.testEntityLvl2SingleLinkApi
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntitySingleLinkApi) {
+      const api = this.initApi(
+        'testEntitySingleLinkApi',
+        TestEntitySingleLinkApi
+      );
+      const linkedApis = [
+        this.testEntityLvl2MultiLinkApi,
+        this.testEntityLvl2SingleLinkApi
+      ];
+      api._addNavigationProperties(linkedApis);
+      this._testEntitySingleLinkApi = api;
+    }
+    return this._testEntitySingleLinkApi!;
   }
 
   get testEntityLvl2SingleLinkApi(): TestEntityLvl2SingleLinkApi<DeSerializersT> {
-    return this.initApi(
-      'testEntityLvl2SingleLinkApi',
-      TestEntityLvl2SingleLinkApi
-    );
+    if (!this._testEntityLvl2SingleLinkApi) {
+      this._testEntityLvl2SingleLinkApi = this.initApi(
+        'testEntityLvl2SingleLinkApi',
+        TestEntityLvl2SingleLinkApi
+      );
+    }
+    return this._testEntityLvl2SingleLinkApi!;
   }
 
   get testEntityCircularLinkParentApi(): TestEntityCircularLinkParentApi<DeSerializersT> {
-    const api = this.initApi(
-      'testEntityCircularLinkParentApi',
-      TestEntityCircularLinkParentApi
-    );
-    const linkedApis = [
-      this.testEntityCircularLinkChildApi,
-      this.testEntityCircularLinkChildApi
-    ];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntityCircularLinkParentApi) {
+      const api = this.initApi(
+        'testEntityCircularLinkParentApi',
+        TestEntityCircularLinkParentApi
+      );
+      const linkedApis = [
+        this.testEntityCircularLinkChildApi,
+        this.testEntityCircularLinkChildApi
+      ];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityCircularLinkParentApi = api;
+    }
+    return this._testEntityCircularLinkParentApi!;
   }
 
   get testEntityCircularLinkChildApi(): TestEntityCircularLinkChildApi<DeSerializersT> {
-    const api = this.initApi(
-      'testEntityCircularLinkChildApi',
-      TestEntityCircularLinkChildApi
-    );
-    const linkedApis = [this.testEntityCircularLinkParentApi];
-    api._addNavigationProperties(linkedApis);
-    return api;
+    if (!this._testEntityCircularLinkChildApi) {
+      const api = this.initApi(
+        'testEntityCircularLinkChildApi',
+        TestEntityCircularLinkChildApi
+      );
+      const linkedApis = [this.testEntityCircularLinkParentApi];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityCircularLinkChildApi = api;
+    }
+    return this._testEntityCircularLinkChildApi!;
+  }
+
+  get testEntityCircularLinkSelfApi(): TestEntityCircularLinkSelfApi<DeSerializersT> {
+    if (!this._testEntityCircularLinkSelfApi) {
+      const api = this.initApi(
+        'testEntityCircularLinkSelfApi',
+        TestEntityCircularLinkSelfApi
+      );
+      const linkedApis = [this.testEntityCircularLinkSelfApi];
+      api._addNavigationProperties(linkedApis);
+      this._testEntityCircularLinkSelfApi = api;
+    }
+    return this._testEntityCircularLinkSelfApi!;
   }
 
   get testEntityEndsWithApi(): TestEntityEndsWithApi<DeSerializersT> {
-    return this.initApi('testEntityEndsWithApi', TestEntityEndsWithApi);
+    if (!this._testEntityEndsWithApi) {
+      this._testEntityEndsWithApi = this.initApi(
+        'testEntityEndsWithApi',
+        TestEntityEndsWithApi
+      );
+    }
+    return this._testEntityEndsWithApi!;
   }
 
   get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<DeSerializersT> {
-    return this.initApi(
-      'testEntityEndsWithSomethingElseApi',
-      TestEntityEndsWithSomethingElseApi
-    );
+    if (!this._testEntityEndsWithSomethingElseApi) {
+      this._testEntityEndsWithSomethingElseApi = this.initApi(
+        'testEntityEndsWithSomethingElseApi',
+        TestEntityEndsWithSomethingElseApi
+      );
+    }
+    return this._testEntityEndsWithSomethingElseApi!;
   }
 
   get functionImports() {

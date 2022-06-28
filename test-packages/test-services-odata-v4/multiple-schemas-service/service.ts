@@ -107,6 +107,11 @@ class MultipleSchemasService<
   private apis: Record<string, any> = {};
   private deSerializers: DeSerializersT;
 
+  private _testEntity1Api?: TestEntity1Api<DeSerializersT> = undefined;
+  private _testEntity2Api?: TestEntity2Api<DeSerializersT> = undefined;
+  private _testEntity3Api?: TestEntity3Api<DeSerializersT> = undefined;
+  private _testEntity4Api?: TestEntity4Api<DeSerializersT> = undefined;
+
   constructor(deSerializers: DeSerializersT) {
     this.deSerializers = deSerializers;
   }
@@ -119,19 +124,31 @@ class MultipleSchemasService<
   }
 
   get testEntity1Api(): TestEntity1Api<DeSerializersT> {
-    return this.initApi('testEntity1Api', TestEntity1Api);
+    if (!this._testEntity1Api) {
+      this._testEntity1Api = this.initApi('testEntity1Api', TestEntity1Api);
+    }
+    return this._testEntity1Api!;
   }
 
   get testEntity2Api(): TestEntity2Api<DeSerializersT> {
-    return this.initApi('testEntity2Api', TestEntity2Api);
+    if (!this._testEntity2Api) {
+      this._testEntity2Api = this.initApi('testEntity2Api', TestEntity2Api);
+    }
+    return this._testEntity2Api!;
   }
 
   get testEntity3Api(): TestEntity3Api<DeSerializersT> {
-    return this.initApi('testEntity3Api', TestEntity3Api);
+    if (!this._testEntity3Api) {
+      this._testEntity3Api = this.initApi('testEntity3Api', TestEntity3Api);
+    }
+    return this._testEntity3Api!;
   }
 
   get testEntity4Api(): TestEntity4Api<DeSerializersT> {
-    return this.initApi('testEntity4Api', TestEntity4Api);
+    if (!this._testEntity4Api) {
+      this._testEntity4Api = this.initApi('testEntity4Api', TestEntity4Api);
+    }
+    return this._testEntity4Api!;
   }
 
   get functionImports() {

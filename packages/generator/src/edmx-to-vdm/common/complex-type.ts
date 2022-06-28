@@ -16,11 +16,11 @@ import {
   isEdmType,
   isEnumType,
   parseCollectionTypeName,
-  typesForCollection
+  typesForCollection,
+  enumTypeForName
 } from '../edmx-to-vdm-util';
 import { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
-import { enumTypeForName } from '../edmx-to-vdm-util';
 
 /**
  * @internal

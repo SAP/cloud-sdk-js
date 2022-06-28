@@ -76,7 +76,9 @@ export async function buildHttpRequest(
  * @returns The given request config merged with the config built for the given destination.
  * @internal
  */
-export async function addDestinationToRequestConfig<T extends HttpRequestConfig>(
+export async function addDestinationToRequestConfig<
+  T extends HttpRequestConfig
+>(
   destination: DestinationOrFetchOptions,
   requestConfig: T
 ): Promise<T & DestinationHttpRequestConfig> {

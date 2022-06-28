@@ -254,7 +254,7 @@ export function complexTypeForName(
 /**
  * @internal
  */
- export function complexTypeFieldForName(
+export function complexTypeFieldForName(
   name: string,
   complexTypes: VdmComplexType[]
 ): string {

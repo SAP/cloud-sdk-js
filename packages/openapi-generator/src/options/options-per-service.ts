@@ -1,7 +1,6 @@
 import { existsSync, promises } from 'fs';
-import { parse } from 'path';
+import { parse, posix, relative, sep } from 'path';
 import { unique, UniqueNameGenerator } from '@sap-cloud-sdk/util';
-import { getRelPathWithPosixSeparator } from '../generator';
 import { ParsedGeneratorOptions } from './generator-options';
 
 const { readFile } = promises;
@@ -111,6 +110,16 @@ function getDirectoryNamesByPaths(
     directoryNamesByPaths[inputPath] = directoryName;
     return directoryNamesByPaths;
   }, {});
+}
+
+/**
+ * Gives the relative path with respect to process.cwd() using posix file separator '/'.
+ * @param absolutePath - The absolute path
+ * @returns The relative path
+ * @internal
+ */
+ export function getRelPathWithPosixSeparator(absolutePath: string): string {
+  return relative(process.cwd(), absolutePath).split(sep).join(posix.sep);
 }
 
 function getPathsByDirName(

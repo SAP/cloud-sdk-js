@@ -1,5 +1,5 @@
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, dirname, relative, posix, sep } from 'path';
+import { resolve, parse, basename, dirname } from 'path';
 import {
   createLogger,
   kebabCase,
@@ -37,7 +37,8 @@ import {
   ServiceOptions,
   OptionsPerService,
   getOptionsPerService,
-  getOriginalOptionsPerService
+  getOriginalOptionsPerService,
+  getRelPathWithPosixSeparator
 } from './options/options-per-service';
 import { tsconfigJson } from './options/tsconfig-json';
 import { sdkMetadata } from './sdk-metadata';
@@ -252,16 +253,6 @@ async function generateService(
     options
   );
   logger.info(`Successfully generated client for '${inputFilePath}'`);
-}
-
-/**
- * Gives the relative path with respect to process.cwd() using posix file separator '/'.
- * @param absolutePath - The absolute path
- * @returns The relative path
- * @internal
- */
-export function getRelPathWithPosixSeparator(absolutePath: string): string {
-  return relative(process.cwd(), absolutePath).split(sep).join(posix.sep);
 }
 
 /**

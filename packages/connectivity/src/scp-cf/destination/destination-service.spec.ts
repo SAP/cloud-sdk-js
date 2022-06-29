@@ -9,6 +9,7 @@ import { mockCertificateCall } from '../../../../../test-resources/test/test-uti
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
+  fetchDestinationByName,
   fetchInstanceDestinations,
   fetchSubaccountDestinations,
   fetchCertificate
@@ -340,6 +341,82 @@ describe('destination service', () => {
       const actual = await fetchDestination(
         destinationServiceUri,
         jwt,
+
+        { destinationName, enableCircuitBreaker: false }
+      );
+      expect(actual).toMatchObject(expected);
+    });
+
+  it('fetches a destination by name', async () => {
+      const destinationName = 'HTTP-OAUTH';
+      const response = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: null
+        },
+        destinationConfiguration: oauth2SamlBearerDestination,
+        authTokens: [
+          {
+            type: 'Bearer',
+            value: 'token',
+            expires_in: '3600',
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer token'
+            }
+          }
+        ]
+      };
+
+      const expected: Destination = {
+        name: 'HTTP-OAUTH',
+        url: 'https://my.system.com/',
+        authentication: 'OAuth2SAMLBearerAssertion',
+        proxyType: 'Internet',
+        isTrustingAllCertificates: false,
+        originalProperties: {
+          owner: {
+            SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+            InstanceId: null
+          },
+          destinationConfiguration: oauth2SamlBearerDestination,
+          authTokens: [
+            {
+              type: 'Bearer',
+              value: 'token',
+              expires_in: '3600',
+              http_header: {
+                key: 'Authorization',
+                value: 'Bearer token'
+              }
+            }
+          ]
+        },
+        authTokens: [
+          {
+            type: 'Bearer',
+            value: 'token',
+            expiresIn: '3600',
+            error: null,
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer token'
+            }
+          }
+        ]
+      };
+
+      nock(destinationServiceUri, {
+        reqheaders: {
+          authorization: `Bearer ${jwt}`
+        }
+      })
+        .get('/destination-configuration/v1/destinations/HTTP-OAUTH$skipCredentials=true')
+        .reply(200, response);
+
+      const actual = await fetchDestinationByName(
+        destinationServiceUri,
+        typeof jwt === 'string' ? { authHeaderJwt: jwt } : jwt,
 
         { destinationName, enableCircuitBreaker: false }
       );

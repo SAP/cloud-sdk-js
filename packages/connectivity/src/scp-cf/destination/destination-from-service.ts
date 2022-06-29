@@ -31,6 +31,7 @@ import {
 import {
   AuthAndExchangeTokens,
   fetchDestination,
+  fetchDestinationByName,
   fetchCertificate,
   fetchInstanceDestinations,
   fetchSubaccountDestinations
@@ -150,8 +151,13 @@ class DestinationFromServiceRetriever {
       providerToken
     );
 
-    const destinationResult =
-      await da.searchDestinationWithSelectionStrategyAndCache();
+    let destinationResult
+
+    if (options.jwt) {
+      destinationResult = da.fetchDestination(options.jwt);
+
+    }
+
     if (!destinationResult) {
       return null;
     }
@@ -350,6 +356,16 @@ class DestinationFromServiceRetriever {
     }
 
     return credentials[0];
+  }
+
+  private async fetchDestination(
+    jwt: string | AuthAndExchangeTokens
+  ): Promise<Destination> {
+    return fetchDestinationByName(
+      this.destinationServiceCredentials.uri,
+      typeof jwt === 'string' ? { authHeaderJwt: jwt } : jwt,
+      this.options
+    );
   }
 
   private async fetchDestinationByToken(

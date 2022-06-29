@@ -212,6 +212,37 @@ export async function fetchCertificate(
   }
 }
 
+/**
+ * @internal
+ */
+export async function fetchDestinationByName(
+  destinationServiceUri: string,
+  tokens: AuthAndExchangeTokens,
+  options: DestinationServiceOptions
+): Promise<Destination> {
+  const targetUri = `${removeTrailingSlashes(
+    destinationServiceUri
+  )}/destination-configuration/v1/destinations/${options.destinationName}$skipCredentials=true`;
+
+  const authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
+
+  return callDestinationEndpoint(targetUri, authHeader, options)
+    .then(response => {
+      const destination: Destination = parseDestination(response.data);
+      return destination;
+    })
+    .catch(error => {
+      {
+        throw new ErrorWithCause(
+          `Failed to fetch destination ${
+            options.destinationName
+          }.${errorMessageFromResponse(error)}`,
+          error
+        );
+      }
+    });
+}
+
 async function fetchDestinationByTokens(
   destinationServiceUri: string,
   tokens: AuthAndExchangeTokens,

@@ -213,6 +213,7 @@ export async function fetchCertificate(
 }
 
 /**
+ * Fetch a single destination by name without credentials.
  * @internal
  */
 export async function fetchDestinationByName(
@@ -343,9 +344,9 @@ async function callDestinationService(
     headers
   };
 
-  if (enableCircuitBreaker) {
-    return getCircuitBreaker().fire(config);
-  }
+  // if (enableCircuitBreaker) {
+  //   return getCircuitBreaker().fire(config);
+  // }
 
   return axios.request(config);
 }

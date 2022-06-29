@@ -154,7 +154,7 @@ class DestinationFromServiceRetriever {
     let destinationResult
 
     if (options.jwt) {
-      destinationResult = da.fetchDestination(options.jwt);
+      destinationResult = await da.fetchDestination(options.jwt);
 
     }
 

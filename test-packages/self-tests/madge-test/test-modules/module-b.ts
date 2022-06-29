@@ -1,7 +1,7 @@
+import { funcA } from './module-a';
 /**
  * FuncB.
- * @returns True.
  */
-export function funcB(): boolean {
-  return true;
+export function funcB(): void {
+  funcA();
 }

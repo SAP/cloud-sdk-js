@@ -155,8 +155,8 @@ module.exports = {
     'no-restricted-imports': [
       'error',
       {
-        paths: ['../', '../../', './'],
-        patterns: ['*/index']
+        paths: ['..', '../..', '.'],
+        patterns: ['**/index']
       }
     ],
     'no-return-await': 'error',

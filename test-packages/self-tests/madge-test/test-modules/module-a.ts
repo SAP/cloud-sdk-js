@@ -1,4 +1,4 @@
-import { funcB } from '.';
+import { funcB } from './module-b';
 /**
  * FuncA.
  */

@@ -1,5 +1,6 @@
 import { flatten, createLogger } from '@sap-cloud-sdk/util';
 import { getVcapService } from '../environment-accessor';
+import { DestinationFetchOptions } from './destination-accessor-types';
 import { Destination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,
@@ -21,14 +22,14 @@ const logger = createLogger({
  * @returns A destination.
  * @internal
  */
-export function destinationForServiceBinding(
+export async function destinationForServiceBinding(
   serviceInstanceName: string,
   options: DestinationForServiceBindingsOptions = {}
-): Destination {
+): Promise<Destination> {
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
-  const destination = options.transformationFn
-    ? options.transformationFn(selected)
+  const destination = options.serviceBindingTransformFn
+    ? await options.serviceBindingTransformFn(selected)
     : transform(selected);
 
   return destination &&
@@ -46,7 +47,9 @@ export interface DestinationForServiceBindingsOptions {
   /**
    * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
    */
-  transformationFn?: (serviceBinding: ServiceBinding) => Destination;
+  serviceBindingTransformFn?: (
+    serviceBinding: ServiceBinding
+  ) => Promise<Destination>;
 }
 
 /**
@@ -179,12 +182,17 @@ function xfS4hanaCloudBindingToDestination(
 /**
  * @internal
  */
-export function searchServiceBindingForDestination(
-  name: string
-): Destination | undefined {
+export async function searchServiceBindingForDestination(
+  options: DestinationFetchOptions & DestinationForServiceBindingsOptions
+): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
-    const destination = destinationForServiceBinding(name);
+    const destination = await destinationForServiceBinding(
+      options.destinationName,
+      {
+        serviceBindingTransformFn: options.serviceBindingTransformFn
+      }
+    );
     logger.info('Successfully retrieved destination from service binding.');
     return destination;
   } catch (error) {
@@ -192,4 +200,5 @@ export function searchServiceBindingForDestination(
       `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${error.message}`
     );
   }
+  return null;
 }

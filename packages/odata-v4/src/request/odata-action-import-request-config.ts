@@ -9,7 +9,7 @@ import {
 } from './action-import-parameter';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export class ODataActionImportRequestConfig<
   DeSerializersT extends DeSerializers,

@@ -19,22 +19,24 @@ interface BatchResponseTypeGuards<DeSerializersT extends DeSerializers> {
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface WriteResponses<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
   responses: WriteResponse<DeSerializersT>[];
 }
+
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface ErrorResponse extends BatchResponseTypeGuards<any> {
   responseType: 'ErrorResponse'; // to make ErrorResponse structurally different and make typeguards work as expected
   httpCode: number;
   body: Record<string, any>;
 }
+
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface ReadResponse<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
@@ -48,7 +50,7 @@ export interface ReadResponse<DeSerializersT extends DeSerializers>
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface WriteResponse<DeSerializersT extends DeSerializers> {
   responseType: 'WriteResponse'; // to make WriteResponse structurally different and make typeguards work as expected

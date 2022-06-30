@@ -394,7 +394,7 @@ export function filterFunctions<
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface FilterFunctionsType {
   endsWith: typeof endsWith;
@@ -419,7 +419,7 @@ export interface FilterFunctionsType {
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export type FilterFunctionTypes =
   | typeof endsWith

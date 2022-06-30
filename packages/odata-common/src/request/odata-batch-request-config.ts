@@ -3,7 +3,7 @@ import { BatchSubRequestPathType } from '../request-builder';
 import { ODataRequestConfig } from './odata-request-config';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export class ODataBatchRequestConfig extends ODataRequestConfig {
   subRequestPathType: BatchSubRequestPathType = 'relativeToService';

@@ -19,7 +19,7 @@ const logger = createLogger({
 });
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export abstract class ODataRequestConfig {
   payload: Record<string, any> | string;

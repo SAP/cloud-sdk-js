@@ -6,14 +6,14 @@ import { DeSerializers } from '../de-serializers';
 import { EntityApi } from '../entity-api';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface WithKeys {
   keys: Record<string, any>;
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface WithSelection<
   EntityT extends EntityBase,
@@ -23,7 +23,7 @@ export interface WithSelection<
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface WithGetAllRestrictions<
   EntityT extends EntityBase,
@@ -36,7 +36,7 @@ export interface WithGetAllRestrictions<
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface WithETag {
   eTag: string;

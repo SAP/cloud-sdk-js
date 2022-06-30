@@ -121,7 +121,7 @@ export function filterFunctions<
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export type FilterFunctionsType = FilterFunctionsCommonType & {
   substringOf: typeof substringOf;

@@ -42,7 +42,12 @@ export {
   DestinationAuthToken,
   DestinationCertificate,
   DestinationForServiceBindingsOptions,
-  ClientCredentialsResponse
+  ClientCredentialsResponse,
+  AllDestinations,
+  DestinationConfiguration,
+  DestinationJson,
+  DestinationsByType,
+  ServiceBinding
 } from './scp-cf';
 
 export type {
@@ -52,7 +57,9 @@ export type {
   DestinationOptions,
   ServiceCredentials,
   DestinationProxyType,
-  AuthenticationType
+  AuthenticationType,
+  DestinationWithName,
+  RegisterDestinationOptions
 } from './scp-cf';
 
 export {

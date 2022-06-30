@@ -6,7 +6,7 @@ import type {
 import type { DestinationSelectionStrategy } from './destination-selection-strategies';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface AllDestinations {
   subscriber: DestinationsByType;
@@ -14,7 +14,7 @@ export interface AllDestinations {
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface DestinationsByType {
   instance: Destination[];

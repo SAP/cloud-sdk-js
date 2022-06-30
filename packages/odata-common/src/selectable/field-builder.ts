@@ -15,7 +15,10 @@ import { ConstructorOrField } from './constructor-or-field';
 import { FieldOptions } from './field';
 import { EnumField } from './enum-field';
 
-type ComplexTypeFieldConstructor<
+/**
+ * PLEASE REVIEW.
+ */
+export type ComplexTypeFieldConstructor<
   ComplexTypeFieldT extends ComplexTypeField<
     EntityT,
     DeSerializersT,
@@ -50,7 +53,10 @@ export type IsSelectableField<FieldOfT extends ConstructorOrField<any>> =
 export type IsOrderableField<EdmT extends EdmTypeShared<'any'>> =
   EdmT extends OrderableEdmType ? true : false;
 
-type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
+/**
+ * PLEASE REVIEW.
+ */
+export type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
   FieldOfT extends ConstructorOrField<infer EntityT> ? EntityT : never;
 
 /**

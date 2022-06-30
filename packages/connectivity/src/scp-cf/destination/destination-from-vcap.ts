@@ -69,7 +69,6 @@ export interface DestinationForServiceBindingsOptions {
  * }
  * ```
  * In this example, the key "s4-hana-cloud" refers to an array of service bindings.
- * @internal
  */
 export interface ServiceBinding {
   [key: string]: any;

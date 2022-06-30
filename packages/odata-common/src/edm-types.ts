@@ -72,7 +72,6 @@ export function isEdmType(val: any): val is EdmTypeShared<'any'> {
 
 /**
  * EDM types that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.
- * @internal
  */
 export type OrderableEdmType =
   | 'Edm.Decimal'

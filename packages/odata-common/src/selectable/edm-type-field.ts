@@ -11,7 +11,7 @@ import { Field, FieldOptions } from './field';
  * @typeparam FieldT - Field type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  */
-type NullableFieldType<
+export type NullableFieldType<
   FieldT,
   NullableT extends boolean
 > = NullableT extends true ? FieldT | null : FieldT;

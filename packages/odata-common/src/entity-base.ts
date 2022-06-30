@@ -8,7 +8,7 @@ import { DeSerializers } from './de-serializers';
 import { EntityApi } from './entity-api';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 

@@ -12,6 +12,8 @@ export {
   length
 } from './filter-functions';
 
+export type { FilterFunctionsType } from './filter-functions';
+
 export {
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList,
@@ -48,5 +50,10 @@ export type {
   DefaultDeSerializers,
   CustomOrDefaultType
 } from './de-serializers';
+
+export { ODataFunctionImportRequestConfig } from './request';
+export type {
+  BatchResponse
+} from './batch-response';
 
 export * from './common';

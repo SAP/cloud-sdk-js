@@ -3,10 +3,11 @@ import {
   ReadResponse as ReadResponseCommon,
   WriteResponse as WriteResponseCommon,
   ErrorResponse
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-common';
 import { DefaultDeSerializers, DeSerializers } from './de-serializers';
+
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export type BatchResponse<
   DeSerializersT extends DeSerializers = DefaultDeSerializers

@@ -6,7 +6,7 @@ import { FieldBuilder } from './field-builder';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export class CustomField<
   EntityT extends EntityBase,

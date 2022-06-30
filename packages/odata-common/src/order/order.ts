@@ -1,11 +1,13 @@
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
 
-type OrderType = 'asc' | 'desc';
+/**
+ * Is either ascending or descending.
+ */
+export type OrderType = 'asc' | 'desc';
 
 /**
  * OData queries take this to determine the order of results.
  * @typeparam EntityT -
- * @internal
  */
 export class Order<EntityT extends EntityBase>
   implements EntityIdentifiable<EntityT, any>

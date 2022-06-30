@@ -6,7 +6,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DefaultDeSerializers, DeSerializers } from './de-serializers';
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export type BatchResponse<
   DeSerializersT extends DeSerializers = DefaultDeSerializers

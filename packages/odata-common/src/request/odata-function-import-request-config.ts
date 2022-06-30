@@ -4,7 +4,7 @@ import { FunctionImportParameters } from './function-import-parameter';
 import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export abstract class ODataFunctionImportRequestConfig<
   DeSerializersT extends DeSerializers,

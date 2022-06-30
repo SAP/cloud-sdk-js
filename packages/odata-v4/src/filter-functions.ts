@@ -216,7 +216,7 @@ export function filterFunctions<
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export type FilterFunctionTypes = FilterFunctionsCommonType & {
   contains: typeof contains;

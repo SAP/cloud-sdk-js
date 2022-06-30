@@ -4,7 +4,6 @@ import { OrderableFilterFunction } from './orderable-filter-function';
 
 /**
  * Representation of a filter function, that returns a value of type string.
- * @internal
  */
 export class StringFilterFunction<
   EntityT extends EntityBase

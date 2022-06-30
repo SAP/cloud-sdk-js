@@ -8,7 +8,7 @@ import {
 import { DeSerializers } from '../de-serializers';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export class ODataFunctionImportRequestConfig<
   DeSerializersT extends DeSerializers,

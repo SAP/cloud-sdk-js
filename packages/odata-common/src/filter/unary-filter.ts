@@ -5,7 +5,7 @@ import type { Filterable } from './filterable';
 type UnaryFilterOperator = 'not';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export class UnaryFilter<
   EntityT extends EntityBase,

@@ -310,7 +310,6 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
 
 /**
  * Destination configuration alongside authtokens and certificates.
- * @internal
  */
 export interface DestinationJson {
   [key: string]: any;
@@ -321,7 +320,6 @@ export interface DestinationJson {
 
 /**
  * Configuration of a destination as it is available through the destination service.
- * @internal
  */
 export interface DestinationConfiguration {
   [key: string]: any;

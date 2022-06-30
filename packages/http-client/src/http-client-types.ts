@@ -153,7 +153,7 @@ export function isHttpRequestConfigWithOrigin(
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface OriginOptionsInternal {
   requestConfig?: Record<string, any>;

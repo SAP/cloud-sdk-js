@@ -4,12 +4,12 @@ import { FilterList } from './filter-list';
 import type { Filterable } from './filterable';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export type FilterLambdaOperator = 'any' | 'all';
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export class FilterLambdaExpression<
   EntityT extends EntityBase,

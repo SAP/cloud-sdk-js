@@ -38,7 +38,8 @@ async function getAllStats(page) {
     '@sap-cloud-sdk/eslint-config',
     '@sap-cloud-sdk/temporal-de-serializers',
     '@sap-cloud-sdk/odata-common',
-    '@sap/cds'].reduce(
+    '@sap/cds'
+  ].reduce(
     async (stats, packageName) => ({
       ...(await stats),
       [packageName]: await getStatsForPackage(page, packageName)

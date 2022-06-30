@@ -1,6 +1,6 @@
 # SAP Cloud SDK CLI - Scaffolding
 
-## Status 
+## Status
 
 **outdated**
 

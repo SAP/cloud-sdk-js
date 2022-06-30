@@ -13,7 +13,7 @@ import { EntityApi } from './entity-api';
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 
 /**
- * @internal
+ * Describes the static api of an entity.
  */
 export interface Constructable<EntityT extends EntityBase> {
   _entityName: string;
@@ -36,7 +36,6 @@ export type EntityBuilderType<
 
 /**
  * Super class for all representations of OData entity types.
- * @internal
  */
 export abstract class EntityBase {
   static _serviceName: string;
@@ -293,7 +292,7 @@ export abstract class EntityBase {
   }
 }
 /**
- * @internal
+ * Defines how to indentify different types through their structure.
  */
 export interface EntityIdentifiable<
   T extends EntityBase,

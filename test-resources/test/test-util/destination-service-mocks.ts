@@ -1,6 +1,5 @@
 import nock from 'nock';
 import * as sdkJwt from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt';
-import { DestinationCertificate } from '@sap-cloud-sdk/connectivity/dist/scp-cf';
 import { destinationServiceUri } from './environment-mocks';
 
 type nockFunction = (a: string, b: nock.Options) => nock.Scope;
@@ -9,7 +8,7 @@ export function mockCertificateCall(
   nockREf: nockFunction,
   certificateName: string,
   token: string,
-  type: 'subaccount'|'instance'
+  type: 'subaccount' | 'instance'
 ) {
   const response = {
     Type: 'CERTIFICATE',
@@ -23,9 +22,7 @@ export function mockCertificateCall(
       authorization: `Bearer ${token}`
     }
   })
-    .get(
-      `/destination-configuration/v1/${type}Certificates/${certificateName}`
-    )
+    .get(`/destination-configuration/v1/${type}Certificates/${certificateName}`)
     .reply(200, response);
 }
 

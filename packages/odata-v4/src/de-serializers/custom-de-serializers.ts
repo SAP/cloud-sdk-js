@@ -1,7 +1,5 @@
-import {
-  Time,
-  CustomOrDefaultType as CustomOrDefaultTypeCommon
-} from '@sap-cloud-sdk/odata-common/internal';
+import { Time } from '@sap-cloud-sdk/odata-common/internal';
+import { CustomOrDefaultType as CustomOrDefaultTypeCommon } from '@sap-cloud-sdk/odata-common';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { DeSerializers } from './de-serializers';
@@ -67,11 +65,11 @@ export function mergeDefaultDeSerializersWith<
   };
 }
 
-type CustomOrDefaultType<CustomDeSerializerT, EdmT> = CustomOrDefaultTypeCommon<
-  CustomDeSerializerT,
-  EdmT,
-  DefaultDeSerializers
->;
+/**
+ * Generic type that can be either custom or default.
+ */
+export type CustomOrDefaultType<CustomDeSerializerT, EdmT> =
+  CustomOrDefaultTypeCommon<CustomDeSerializerT, EdmT, DefaultDeSerializers>;
 
 /**
  * Type of the full set of (de-)serialization functions, that include custom (de-)serializers (aka. default (de-)serializers type merged with custom (de-)serializers type).

@@ -32,7 +32,7 @@ export interface EntityApi<
 }
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export type EntityType<forExtraction> = forExtraction extends EntityApi<
   infer EntityT,

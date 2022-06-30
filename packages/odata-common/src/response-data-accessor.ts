@@ -1,5 +1,5 @@
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export interface ResponseDataAccessor {
   getCollectionResult: (data) => any[];

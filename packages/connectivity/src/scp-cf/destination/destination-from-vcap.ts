@@ -41,7 +41,6 @@ export async function destinationForServiceBinding(
 
 /**
  * Options to customize the behavior of [[destinationForServiceBinding]].
- * @internal
  */
 export interface DestinationForServiceBindingsOptions {
   /**

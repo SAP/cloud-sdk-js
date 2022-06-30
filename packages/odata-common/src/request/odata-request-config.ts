@@ -9,7 +9,7 @@ import {
 } from '@sap-cloud-sdk/http-client/internal';
 
 /**
- * @internal
+ * Set of possible request methods.
  */
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
 

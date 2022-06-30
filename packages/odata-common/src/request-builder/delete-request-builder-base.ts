@@ -8,9 +8,8 @@ import { DeSerializers } from '../de-serializers';
 import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
- * Abstract class to delete an entity holding the shared parts between OData v2 and v4
+ * Abstract class to delete an entity holding the shared parts between OData v2 and v4.
  * @typeparam EntityT - Type of the entity to be deleted
- * @internal
  */
 export abstract class DeleteRequestBuilderBase<
     EntityT extends EntityBase,

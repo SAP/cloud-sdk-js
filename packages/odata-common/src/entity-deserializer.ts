@@ -30,8 +30,7 @@ const logger = createLogger({
 });
 
 /**
- * Interface representing the return type of the builder function [[entityDeserializer]]
- * @internal
+ * Interface representing the return type of the builder function [[entityDeserializer]].
  */
 export interface EntityDeserializer {
   deserializeEntity: <EntityT extends EntityBase = EntityBase>(

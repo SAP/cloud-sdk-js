@@ -1,10 +1,11 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 /**
- * @internal
+ * Contains all edm types which are shared between different odata versions.
  */
 export type EdmTypeCommon = EdmTypeSameConverters | EdmTypeDifferentConverters;
+
 /**
- * @internal
+ * PLEASER REVIEW.
  */
 export type EdmTypeSameConverters =
   | 'Edm.String'
@@ -23,18 +24,17 @@ export type EdmTypeSameConverters =
   | 'Edm.Any'; // Represents currently unsupported EDM types like Edm.Geography.
 
 /**
- * @internal
+ * PLEASE REVIEW.
  */
 export type EdmTypeDifferentConverters = 'Edm.DateTimeOffset';
 
-// Exclusive types for ODataVersions
 /**
- * @internal
+ * Exclusive types for OData v2.
  */
 export type ExclusiveEdmTypeV2 = 'Edm.DateTime' | 'Edm.Time';
 
 /**
- * @internal
+ * Exclusive types for OData v4.
  */
 export type ExclusiveEdmTypeV4 =
   | 'Edm.Date'
@@ -45,7 +45,7 @@ export type ExclusiveEdmTypeV4 =
 // The generic parameter is currently unused. We still have to revise whether we can use it in a later version of TypeScript.
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 /**
- * @internal
+ * A shared edm type of [[EdmTypeCommon]], [[ExclusiveEdmTypeV2]] and [[ExclusiveEdmTypeV4]].
  */
 export type EdmTypeShared<VersionT extends ODataVersion | 'any'> =
   // Pretend to use parameter to avoid TS bug in versions > 4.2 (https://github.com/microsoft/TypeScript/issues/44727)

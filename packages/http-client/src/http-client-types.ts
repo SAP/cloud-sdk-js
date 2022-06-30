@@ -55,7 +55,7 @@ export type ParameterEncoder = (
 ) => Record<string, any>;
 
 /**
- * This interface describes the basic http request configuration.
+ * Describes the basic http request configuration.
  */
 export interface HttpRequestConfigBase {
   [key: string]: any;

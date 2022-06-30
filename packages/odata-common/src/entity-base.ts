@@ -292,7 +292,7 @@ export abstract class EntityBase {
   }
 }
 /**
- * Defines how to indentify different types through their structure.
+ * Defines how to identify different types through their structure.
  */
 export interface EntityIdentifiable<
   T extends EntityBase,

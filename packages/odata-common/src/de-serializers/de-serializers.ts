@@ -1,5 +1,4 @@
 /**
- * @internal
  * Represents a set of functions that determine (de-)serialization per EDM type.
  */
 export interface DeSerializers<
@@ -40,7 +39,6 @@ export interface DeSerializers<
 }
 
 /**
- * @internal
  * Represents a set of functions for serialization, deserialization and optionally serialization for URIs.
  * The return type of the `deserialize` function is the type of the input to the `serialize` and `serializeToUri` functions.
  * @typeparam DeserializedT - The return type of `deserialize` and input of `serialize` and `serilizeToUri`.

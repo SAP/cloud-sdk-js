@@ -1,7 +1,7 @@
 import {
   DeSerializer,
   DeSerializers as DeSerializersCommon
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * Represents a set of functions that determine (de-)serialization per EDM type.

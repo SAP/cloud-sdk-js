@@ -59,6 +59,7 @@ export function mergeDefaultDeSerializersWith<
     ...(customDeSerializers || {})
   };
 }
+
 /**
  * Generic type that can be either custom or default.
  */

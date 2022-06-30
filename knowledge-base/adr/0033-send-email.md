@@ -113,8 +113,8 @@ interface MailAddress {
 The following tests should be added:
 
 - unit tests
-  - `executeHttpRequest` should fail, when the [`type`](<(https://github.com/SAP/cloud-sdk-js/blob/main/packages/connectivity/src/scp-cf/destination/destination-service-types.ts#L95)>) of a destination is not `HTTP`.
-  - `sendMail` should fail, when the [`type`](<(https://github.com/SAP/cloud-sdk-js/blob/main/packages/connectivity/src/scp-cf/destination/destination-service-types.ts#L95)>) of a destination is not `MAIL`.
+  - `executeHttpRequest` should fail, when the [`type`](https://github.com/SAP/cloud-sdk-js/blob/main/packages/connectivity/src/scp-cf/destination/destination-service-types.ts#L95) of a destination is not `HTTP`.
+  - `sendMail` should fail, when the [`type`](https://github.com/SAP/cloud-sdk-js/blob/main/packages/connectivity/src/scp-cf/destination/destination-service-types.ts#L95) of a destination is not `MAIL`.
 - nightly internal e2e tests (like our vdm e2e tests)
 - OS (Open Source) e2e tests (like our cap e2e tests)
 

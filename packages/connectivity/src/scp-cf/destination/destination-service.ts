@@ -315,7 +315,7 @@ async function callDestinationEndpoint(
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
   if (!uri.match(/[instance|subaccount]Destinations|v1\/destinations/)) {
     throw new Error(
-      `callDestinationEndpoint was called with illegal arrgument: ${uri}. URL must be destination(s) endpoint of destination service.`
+      `callDestinationEndpoint was called with illegal argument: ${uri}. URL must be destination(s) endpoint of destination service.`
     );
   }
   return callDestinationService(uri, headers, options) as Promise<

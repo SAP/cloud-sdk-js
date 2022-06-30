@@ -46,7 +46,7 @@ import {
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { wrapJwtInHeader } from '../jwt';
 import * as identityService from '../identity-service';
-import { parseDestination } from './destination';
+import { DestinationJson, parseDestination } from './destination';
 import { getDestination } from './destination-accessor';
 import { destinationCache } from './destination-cache';
 import {
@@ -61,6 +61,36 @@ describe('authentication types', () => {
   });
 
   describe('authentication type OAuth2SAMLBearerFlow', () => {
+
+    it('single dest',async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockJwtBearerToken();
+
+      const expected = parseDestination({
+        destinationConfiguration: {
+          URL: "http://my.example.com"
+        }
+      } as DestinationJson);
+
+      const httpMocks = [
+        nock("https://provider.example.com").post("/oauth/token").reply(200, {}),
+        nock("https://destination.example.com").get("/destination-configuration/v1/destinations/FINAL-DESTINATION$skipCredentials=true").reply(200, expected)
+      ]
+
+
+      const actual = await getDestination({
+        destinationName,
+        jwt: iasToken,
+        iasToXsuaaTokenExchange: false
+      });
+      
+      expect(actual).toMatchObject(expected);
+      expectAllMocksUsed(httpMocks);
+    })
+
+
     it('returns a destination with authTokens if its authenticationType is OAuth2SAMLBearerFlow, subscriber tenant', async () => {
       mockServiceBindings();
       mockVerifyJwt();

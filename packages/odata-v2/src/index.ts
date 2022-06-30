@@ -52,8 +52,6 @@ export type {
 } from './de-serializers';
 
 export { ODataFunctionImportRequestConfig } from './request';
-export type {
-  BatchResponse
-} from './batch-response';
+export type { BatchResponse } from './batch-response';
 
 export * from './common';

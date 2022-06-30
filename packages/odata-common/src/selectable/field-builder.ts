@@ -41,7 +41,6 @@ export type ComplexTypeFieldConstructor<
 /**
  * Convenience type to determine whether a field should be selectable. If the given `FieldOfT` is the type of an entity, it is selectable.
  * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
- * @internal
  */
 export type IsSelectableField<FieldOfT extends ConstructorOrField<any>> =
   FieldOfT extends Constructable<any> ? true : false;

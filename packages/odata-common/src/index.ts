@@ -56,6 +56,7 @@ export type {
   SimpleTypeFields,
   NullableFieldType,
   EntityTypeFromFieldOf,
+  IsSelectableField,
   ComplexTypePropertyFields,
   ComplexTypeFieldConstructor
 } from './selectable';

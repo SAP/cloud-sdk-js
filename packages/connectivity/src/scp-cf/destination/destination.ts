@@ -184,6 +184,10 @@ function validateDestinationConfig(
     isHttpDestination(destinationConfig) &&
     typeof destinationConfig.URL === 'undefined'
   ) {
+    console.log(JSON.stringify(destinationConfig))
+    console.log(typeof destinationConfig.URL)
+    console.log(typeof destinationConfig.url)
+    console.log(destinationConfig.url)
     const detailedMessage = destinationConfig.Name
       ? `, but destination with name "${destinationConfig.Name}" has no property 'URL'`
       : '';

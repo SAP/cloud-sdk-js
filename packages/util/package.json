@@ -39,7 +39,7 @@
     "logform": "^2.4.1",
     "promise.allsettled": "^1.0.4",
     "voca": "^1.4.0",
-    "winston": "^3.8.0"
+    "winston": "^3.8.1"
   },
   "devDependencies": {
     "nock": "^13.2.8",

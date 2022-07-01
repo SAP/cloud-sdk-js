@@ -68,11 +68,20 @@ describe('authentication types', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      const expected = parseDestination({
-        destinationConfiguration: {
-          URL: "http://my.example.com"
-        }
-      } as DestinationJson);
+
+      const expected: DestinationJson = {
+          "owner": {
+              "SubaccountId": "AF4E906A-2A16-4EB6-BD1E-4C420AC4C8EC",
+              "InstanceId": "467971F0-F4E5-4E6E-9436-2E705EEA5CA3"
+          },
+          "destinationConfiguration": {
+              "Name": "FINAL-DESTINATION",
+              "Type": "HTTP",
+              "URL": "http://example.com/foobar",
+              "Authentication": "NoAuthentication",
+              "ProxyType": "Internet"
+          }
+      };
 
       const httpMocks = [
         nock("https://provider.example.com").post("/oauth/token").reply(200, {}),
@@ -86,7 +95,7 @@ describe('authentication types', () => {
         iasToXsuaaTokenExchange: false
       });
       
-      expect(actual).toMatchObject(expected);
+      expect(actual).toMatchObject(parseDestination(expected));
       expectAllMocksUsed(httpMocks);
     })
 

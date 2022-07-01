@@ -151,10 +151,10 @@ class DestinationFromServiceRetriever {
       providerToken
     );
 
-    let destinationResult
+    let destinationResult: DestinationSearchResult | undefined
 
     if (options.jwt) {
-      destinationResult = await da.fetchDestination(options.jwt);
+      destinationResult = {destination: await da.fetchDestination(options.jwt), fromCache: false, origin: "provider"}; //todo: provider/subscriber
 
     }
 

@@ -35,7 +35,7 @@ describe('OAuth flows', () => {
     destinationService = getService('destination');
   });
 
-  it('creates a destination from service binding and gets a client credentials grant', async () => {
+  xit('creates a destination from service binding and gets a client credentials grant', async () => {
     let destination = await getDestination({
       destinationName: 'destination-js-sdk'
     });

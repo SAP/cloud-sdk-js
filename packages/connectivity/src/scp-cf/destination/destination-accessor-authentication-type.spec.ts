@@ -62,12 +62,11 @@ describe('authentication types', () => {
 
   describe('authentication type OAuth2SAMLBearerFlow', () => {
 
-    it('single dest',async () => {
+    it('returns a single destination',async () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
-
 
       const expected: DestinationJson = {
           "owner": {
@@ -84,10 +83,9 @@ describe('authentication types', () => {
       };
 
       const httpMocks = [
-        nock("https://provider.example.com").post("/oauth/token").reply(200, {}),
+        // nock("https://provider.example.com").post("/oauth/token").reply(200, {}), //todo: unclear if needed
         nock("https://destination.example.com").get("/destination-configuration/v1/destinations/FINAL-DESTINATION$skipCredentials=true").reply(200, expected)
       ]
-
 
       const actual = await getDestination({
         destinationName,

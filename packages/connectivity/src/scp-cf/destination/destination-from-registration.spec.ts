@@ -6,7 +6,8 @@ import {
   providerServiceToken,
   subscriberServiceToken,
   subscriberUserJwt,
-  unmockDestinationsEnv
+  unmockDestinationsEnv,
+  xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util';
 import {
   DestinationWithName,
@@ -67,7 +68,9 @@ describe('register-destination', () => {
     await expect(
       registerDestinationCache
         .getCacheInstance()
-        .hasKey('provider::RegisteredDestination')
+        .hasKey(
+          `${xsuaaBindingMock.credentials.subaccountid}::RegisteredDestination`
+        )
     ).resolves.toBe(true);
   });
 
@@ -125,7 +128,10 @@ describe('register-destination', () => {
 
   it('adds the auth token if forwardAuthToken is enabled', async () => {
     registerDestination(destinationWithForwarding);
-    const jwtPayload: JwtPayload = { exp: 1234, zid: 'provider' };
+    const jwtPayload: JwtPayload = {
+      exp: 1234,
+      zid: xsuaaBindingMock.credentials.subaccountid
+    };
     const jwtHeader: JwtHeader = { alg: 'HS256' };
 
     const payloadEncoded = base64url(JSON.stringify(jwtPayload));

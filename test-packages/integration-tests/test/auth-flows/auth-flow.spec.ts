@@ -35,6 +35,36 @@ describe('OAuth flows', () => {
     destinationService = getService('destination');
   });
 
+  it('creates a destination from service binding and gets a client credentials grant', async () => {
+    let destination = await getDestination({
+      destinationName: 'destination-js-sdk'
+    });
+    expect(destination?.authTokens![0].value).toBeDefined();
+    expect(destination?.url).toBeDefined();
+
+    destination = await getDestination({
+      destinationName: 'business-logging-js-sdk'
+    });
+    expect(destination?.authTokens![0].value).toBeDefined();
+    expect(destination?.url).toBeDefined();
+
+    destination = await getDestination({
+      destinationName: 's4-hana-cloud-js-sdk'
+    });
+    expect(destination?.username).toBeDefined();
+    expect(destination?.url).toBeDefined();
+
+    destination = await getDestination({
+      destinationName: 'saas-registry-js-sdk'
+    });
+    expect(destination?.authTokens![0].value).toBeDefined();
+    expect(destination?.url).toBeDefined();
+
+    destination = await getDestination({ destinationName: 'workflow-js-sdk' });
+    expect(destination?.authTokens![0].value).toBeDefined();
+    expect(destination?.url).toBeDefined();
+  }, 60000);
+
   xit('get assertion test', async () => {
     const destination = await getDestination({
       destinationName: systems.s4.providerSamlAssertion,

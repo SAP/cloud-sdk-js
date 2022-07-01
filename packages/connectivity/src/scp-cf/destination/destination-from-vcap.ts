@@ -1,12 +1,18 @@
-import { flatten, createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, flatten } from '@sap-cloud-sdk/util';
 import { getVcapService } from '../environment-accessor';
-import { DestinationFetchOptions } from './destination-accessor-types';
-import { Destination } from './destination-service-types';
+import { JwtPayload } from '../jsonwebtoken-type';
+import { serviceToken } from '../token-accessor';
+import { Service } from '../environment-accessor-types';
+import { decodeJwt } from '../jwt';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
 } from './proxy-util';
+import { Destination } from './destination-service-types';
+import { DestinationFetchOptions } from './destination-accessor-types';
+import { destinationCache, IsolationStrategy } from './destination-cache';
+import { decodedJwtOrZid } from './destination-from-registration';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -24,19 +30,45 @@ const logger = createLogger({
  */
 export async function destinationForServiceBinding(
   serviceInstanceName: string,
-  options: DestinationForServiceBindingsOptions = {}
+  options: DestinationForServiceBindingsOptions & {
+    jwt?: JwtPayload;
+    useCache?: boolean;
+  } = {}
 ): Promise<Destination> {
+  if (options.useCache) {
+    const fromCache = await destinationCache.retrieveDestinationFromCache(
+      options.jwt || decodedJwtOrZid().subaccountid,
+      serviceInstanceName,
+      IsolationStrategy.Tenant
+    );
+    if (fromCache) {
+      return fromCache;
+    }
+  }
+
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
   const destination = options.serviceBindingTransformFn
-    ? await options.serviceBindingTransformFn(selected)
-    : transform(selected);
+    ? await options.serviceBindingTransformFn(selected, options.jwt)
+    : await transform(selected, options.jwt);
 
-  return destination &&
+  const destWithProxy =
+    destination &&
     (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
       proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
-    ? addProxyConfigurationInternet(destination)
-    : destination;
+      ? addProxyConfigurationInternet(destination)
+      : destination;
+
+  if (options.useCache) {
+    // use the provider tenant if no jwt is given. Since the grant type is clientCredential isolation strategy is tenant.
+    await destinationCache.cacheRetrievedDestination(
+      options.jwt || decodedJwtOrZid().subaccountid,
+      destWithProxy,
+      IsolationStrategy.Tenant
+    );
+  }
+
+  return destWithProxy;
 }
 
 /**
@@ -47,10 +79,16 @@ export interface DestinationForServiceBindingsOptions {
   /**
    * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
    */
-  serviceBindingTransformFn?: (
-    serviceBinding: ServiceBinding
-  ) => Promise<Destination>;
+  serviceBindingTransformFn?: ServiceBindingTransformFunction;
 }
+
+/**
+ * Type of the function to transform the service binding.
+ */
+export type ServiceBindingTransformFunction = (
+  serviceBinding: ServiceBinding,
+  jwt?: JwtPayload
+) => Promise<Destination>;
 
 /**
  * Represents the JSON object for a given service binding as obtained from the VCAP_SERVICE environment variable.
@@ -121,17 +159,29 @@ function findServiceByName(
   return found;
 }
 
-const serviceToDestinationTransformers = {
+const serviceToDestinationTransformers: Record<
+  string,
+  ServiceBindingTransformFunction
+> = {
   'business-logging': businessLoggingBindingToDestination,
-  's4-hana-cloud': xfS4hanaCloudBindingToDestination
+  's4-hana-cloud': xfS4hanaCloudBindingToDestination,
+  destination: destinationBindingToDestination,
+  'saas-registry': saasRegistryBindingToDestination,
+  workflow: workflowBindingToDestination
 };
 
-function transform(serviceBinding: Record<string, any>): Destination {
+async function transform(
+  serviceBinding: ServiceBinding,
+  jwt?: JwtPayload
+): Promise<Destination> {
   if (!serviceToDestinationTransformers[serviceBinding.type]) {
     throw serviceTypeNotSupportedError(serviceBinding.type);
   }
 
-  return serviceToDestinationTransformers[serviceBinding.type](serviceBinding);
+  return serviceToDestinationTransformers[serviceBinding.type](
+    serviceBinding,
+    jwt
+  );
 }
 
 function noVcapServicesError(): Error {
@@ -157,20 +207,105 @@ function noServiceBindingFoundError(
   );
 }
 
-function businessLoggingBindingToDestination(
-  serviceBinding: ServiceBinding
+async function destinationBindingToDestination(
+  serviceBinding: ServiceBinding,
+  jwt?: JwtPayload
+): Promise<Destination> {
+  const service: Service = {
+    ...serviceBinding,
+    tags: serviceBinding.tags,
+    label: 'destination',
+    credentials: { ...serviceBinding.credentials }
+  };
+  const token = await serviceToken(service, { jwt });
+  return buildClientCredentialsDesntiona(
+    token,
+    serviceBinding.credentials.uri,
+    serviceBinding.name
+  );
+}
+
+async function saasRegistryBindingToDestination(
+  serviceBinding: ServiceBinding,
+  jwt?: JwtPayload
+) {
+  const service: Service = {
+    ...serviceBinding,
+    tags: serviceBinding.tags,
+    label: 'saas-registry',
+    credentials: { ...serviceBinding.credentials }
+  };
+  const token = await serviceToken(service, { jwt });
+  return buildClientCredentialsDesntiona(
+    token,
+    serviceBinding.credentials['saas_registry_url'],
+    serviceBinding.name
+  );
+}
+
+async function businessLoggingBindingToDestination(
+  serviceBinding: ServiceBinding,
+  jwt?: JwtPayload
+): Promise<Destination> {
+  const service: Service = {
+    ...serviceBinding,
+    tags: serviceBinding.tags,
+    label: 'business-logging',
+    credentials: { ...serviceBinding.credentials.uaa }
+  };
+  const token = await serviceToken(service, { jwt });
+  return buildClientCredentialsDesntiona(
+    token,
+    serviceBinding.credentials.writeUrl,
+    serviceBinding.name
+  );
+}
+
+async function workflowBindingToDestination(
+  serviceBinding: ServiceBinding,
+  jwt: JwtPayload
+) {
+  const service: Service = {
+    ...serviceBinding,
+    tags: serviceBinding.tags,
+    label: 'workflow',
+    credentials: { ...serviceBinding.credentials.uaa }
+  };
+  const token = await serviceToken(service, { jwt });
+  return buildClientCredentialsDesntiona(
+    token,
+    serviceBinding.credentials.endpoints.workflow_odata_url,
+    serviceBinding.name
+  );
+}
+
+function buildClientCredentialsDesntiona(
+  token: string,
+  url: string,
+  name
 ): Destination {
+  const expiresIn = Math.floor(
+    (decodeJwt(token).exp! * 1000 - Date.now()) / 1000
+  ).toString(10);
   return {
-    url: serviceBinding.credentials.writeUrl,
+    url,
+    name,
     authentication: 'OAuth2ClientCredentials',
-    username: serviceBinding.credentials.uaa.clientid,
-    password: serviceBinding.credentials.uaa.clientsecret
+    authTokens: [
+      {
+        value: token,
+        type: 'bearer',
+        expiresIn,
+        http_header: { key: 'Authorization', value: `Bearer ${token}` },
+        error: null
+      }
+    ]
   };
 }
 
-function xfS4hanaCloudBindingToDestination(
+async function xfS4hanaCloudBindingToDestination(
   serviceBinding: ServiceBinding
-): Destination {
+): Promise<Destination> {
   return {
     url: serviceBinding.credentials.URL,
     authentication: 'BasicAuthentication',
@@ -187,10 +322,17 @@ export async function searchServiceBindingForDestination(
 ): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
+    const jwt = options.iss
+      ? { iss: options.iss }
+      : options.jwt
+      ? decodeJwt(options.jwt)
+      : undefined;
     const destination = await destinationForServiceBinding(
       options.destinationName,
       {
-        serviceBindingTransformFn: options.serviceBindingTransformFn
+        serviceBindingTransformFn: options.serviceBindingTransformFn,
+        jwt,
+        useCache: options.useCache
       }
     );
     logger.info('Successfully retrieved destination from service binding.');

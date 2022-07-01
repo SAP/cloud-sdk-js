@@ -125,6 +125,7 @@ function isolationStrategy(
  * This is then passed on to build the cache key.
  * @param options - Options passed to register the destination containing the jwt.
  * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid).
+ * @internal
  */
 export function decodedJwtOrZid(
   options?: RegisterDestinationOptions

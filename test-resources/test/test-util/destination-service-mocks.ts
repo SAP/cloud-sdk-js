@@ -77,6 +77,22 @@ export function mockSingleDestinationCall(
     .reply(responseCode, response);
 }
 
+export function mockSingleDestinationCallSkipCredentials(
+  nockRef: nockFunction,
+  response: any,
+  responseCode: number,
+  destName: string,
+  headers: Record<string, any>,
+  options?: { uri?: string; badheaders?: string[] }
+) {
+  return nockRef(options?.uri || destinationServiceUri, {
+    reqheaders: headers,
+    badheaders: options?.badheaders || ['X-tenant', 'X-user-token'] // X-tenant only allowed for OAuth2ClientCredentials flow
+  })
+    .get(`/destination-configuration/v1/destinations/${destName}?$skipCredentials=true`)
+    .reply(responseCode, response);
+}
+
 export function mockVerifyJwt() {
   return jest
     .spyOn(sdkJwt, 'verifyJwt')

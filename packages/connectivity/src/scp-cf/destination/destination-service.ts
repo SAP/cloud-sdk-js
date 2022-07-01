@@ -223,7 +223,7 @@ export async function fetchDestinationByName(
 ): Promise<Destination> {
   const targetUri = `${removeTrailingSlashes(
     destinationServiceUri
-  )}/destination-configuration/v1/destinations/${options.destinationName}$skipCredentials=true`;
+  )}/destination-configuration/v1/destinations/${options.destinationName}?$skipCredentials=true`;
 
   const authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
 
@@ -344,6 +344,7 @@ async function callDestinationService(
     headers
   };
 
+  // fixme: enable before merge
   // if (enableCircuitBreaker) {
   //   return getCircuitBreaker().fire(config);
   // }

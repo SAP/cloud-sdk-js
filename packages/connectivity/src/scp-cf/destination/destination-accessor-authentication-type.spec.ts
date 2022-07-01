@@ -12,6 +12,7 @@ import {
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
+  mockSingleDestinationCallSkipCredentials,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
@@ -84,7 +85,7 @@ describe('authentication types', () => {
 
       const httpMocks = [
         // nock("https://provider.example.com").post("/oauth/token").reply(200, {}), //todo: unclear if needed
-        nock("https://destination.example.com").get("/destination-configuration/v1/destinations/FINAL-DESTINATION$skipCredentials=true").reply(200, expected)
+        nock("https://destination.example.com").get("/destination-configuration/v1/destinations/FINAL-DESTINATION?$skipCredentials=true").reply(200, expected)
       ]
 
       const actual = await getDestination({
@@ -108,26 +109,36 @@ describe('authentication types', () => {
         .spyOn(identityService, 'exchangeToken')
         .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
+      // const httpMocks = [
+      //   mockSingleDestinationCall(
+      //     nock,
+      //     oauthSingleResponse,
+      //     200,
+      //     destinationName,
+      //     {
+      //       ...wrapJwtInHeader(subscriberServiceToken).headers,
+      //       'X-user-token': subscriberUserJwt
+      //     },
+      //     { badheaders: [] }
+      //   ),
+      //   mockSingleDestinationCallSkipCredentials(
+      //     nock,
+      //     oauthSingleResponse,
+      //     200,
+      //     destinationName,
+      //     {
+      //       ...wrapJwtInHeader(subscriberServiceToken).headers,
+      //       'X-user-token': subscriberUserJwt
+      //     },
+      //     { badheaders: [] }
+      //   )
+      // ];
+
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthMultipleResponse,
-          200,
-          subscriberServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthSingleResponse,
-          200,
-          destinationName,
-          {
-            ...wrapJwtInHeader(subscriberServiceToken).headers,
-            'X-user-token': subscriberUserJwt
-          },
-          { badheaders: [] }
-        )
-      ];
+        // nock("https://provider.example.com").post("/oauth/token").reply(200, {}), //todo: unclear if needed
+        nock("https://destination.example.com").get("/destination-configuration/v1/destinations/FINAL-DESTINATION").reply(200, oauthSingleResponse),
+        nock("https://destination.example.com").get("/destination-configuration/v1/destinations/FINAL-DESTINATION?$skipCredentials=true").reply(200, oauthSingleResponse)
+      ]
 
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination({

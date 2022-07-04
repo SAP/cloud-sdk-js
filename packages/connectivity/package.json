@@ -44,12 +44,12 @@
     "http-proxy-agent": "^5.0.0",
     "https-proxy-agent": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
-    "opossum": "^6.0.0"
+    "opossum": "^6.4.0"
   },
   "devDependencies": {
     "@types/opossum": "^6.2.2",
     "base64url": "^3.0.1",
-    "nock": "^13.2.7",
+    "nock": "^13.2.8",
     "typescript": "~4.7.4"
   }
 }

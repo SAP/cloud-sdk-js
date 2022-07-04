@@ -1,61 +1,90 @@
-import { destinationForServiceBinding } from './destination-from-vcap';
+import { getDestination } from './destination-accessor';
+import {
+  destinationForServiceBinding,
+  ServiceBinding
+} from './destination-from-vcap';
 
 describe('vcap-service-destination', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     mockServiceBindings();
   });
 
-  afterAll(() => {
+  afterEach(() => {
     delete process.env.VCAP_SERVICES;
   });
 
-  it('creates a destination for the business logging service', () => {
-    expect(destinationForServiceBinding('my-business-logging')).toEqual({
-      url: 'https://business-logging.my.system.com',
+  it('creates a destination for the business logging service', async () => {
+    await expect(
+      destinationForServiceBinding('my-business-logging')
+    ).resolves.toEqual({
+      url: 'https://business-logging.my.example.com',
       authentication: 'OAuth2ClientCredentials',
       username: 'CLIENT_!_|_!_ID',
       password: 'PASSWORD'
     });
   });
 
-  it('creates a destination for the XF s4 hana cloud service', () => {
-    expect(destinationForServiceBinding('S4_SYSTEM')).toEqual({
-      url: 'https://my.system.com',
+  it('creates a destination for the XF s4 hana cloud service', async () => {
+    await expect(destinationForServiceBinding('S4_SYSTEM')).resolves.toEqual({
+      url: 'https://my.example.com',
       authentication: 'BasicAuthentication',
       username: 'USER_NAME',
       password: 'PASSWORD'
     });
   });
 
-  it('creates a destination using a custom transformation function', () => {
-    const transformationFn = serviceBinding => ({
-      url: serviceBinding.credentials.sys
-    });
+  it('creates a destination using a custom transformation function', async () => {
+    const serviceBindingTransformFn = jest.fn(
+      async (serviceBinding: ServiceBinding) => ({
+        url: serviceBinding.credentials.sys
+      })
+    );
 
-    expect(
-      destinationForServiceBinding('my-custom-service', { transformationFn })
-    ).toEqual({
-      url: 'https://custom-service.my.system.com'
+    await expect(
+      destinationForServiceBinding('my-custom-service', {
+        serviceBindingTransformFn
+      })
+    ).resolves.toEqual({
+      url: 'https://custom-service.my.example.com'
     });
+    expect(serviceBindingTransformFn).toBeCalledTimes(1);
   });
 
-  it('throws an error if the service type is not supported', () => {
-    expect(() =>
+  it('throws an error if the service type is not supported', async () => {
+    await expect(() =>
       destinationForServiceBinding('my-custom-service')
-    ).toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingSnapshot();
   });
 
-  it('throws an error if no service binding can be found for the given name', () => {
-    expect(() =>
+  it('throws an error if no service binding can be found for the given name', async () => {
+    await expect(() =>
       destinationForServiceBinding('non-existent-service')
-    ).toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingSnapshot();
   });
 
-  it('throws an error if there are no service bindings at all', () => {
+  it('throws an error if there are no service bindings at all', async () => {
     delete process.env.VCAP_SERVICES;
-    expect(() =>
+    await expect(() =>
       destinationForServiceBinding('my-custom-service')
-    ).toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingSnapshot();
+  });
+
+  it('finds the destination when searching for service bindings', async () => {
+    const serviceBindingTransformFn = jest.fn(
+      async (serviceBinding: ServiceBinding) => ({
+        url: serviceBinding.credentials.sys
+      })
+    );
+
+    await expect(
+      getDestination({
+        destinationName: 'my-custom-service',
+        serviceBindingTransformFn
+      })
+    ).resolves.toEqual({
+      url: 'https://custom-service.my.example.com'
+    });
+    expect(serviceBindingTransformFn).toBeCalledTimes(1);
   });
 });
 
@@ -68,7 +97,7 @@ const serviceBindings = {
     {
       name: 'my-business-logging',
       credentials: {
-        writeUrl: 'https://business-logging.my.system.com',
+        writeUrl: 'https://business-logging.my.example.com',
         uaa: {
           clientid: 'CLIENT_!_|_!_ID',
           clientsecret: 'PASSWORD'
@@ -79,7 +108,7 @@ const serviceBindings = {
   'custom-service': [
     {
       credentials: {
-        sys: 'https://custom-service.my.system.com'
+        sys: 'https://custom-service.my.example.com'
       },
       name: 'my-custom-service'
     }
@@ -89,7 +118,7 @@ const serviceBindings = {
       name: 'S4_SYSTEM',
       credentials: {
         Password: 'PASSWORD',
-        URL: 'https://my.system.com',
+        URL: 'https://my.example.com',
         User: 'USER_NAME'
       }
     }

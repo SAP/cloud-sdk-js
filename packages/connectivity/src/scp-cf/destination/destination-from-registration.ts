@@ -71,9 +71,21 @@ export type DestinationWithName = Destination & { name: string };
 export async function searchRegisteredDestination(
   options: DestinationFetchOptions
 ): Promise<Destination | null> {
+  let decodedJwt: Record<string, any>;
+  // An error will be thrown if no jwt and no xsuaa service exist.
+  try {
+    decodedJwt = decodedJwtOrZid(options);
+  } catch (e) {
+    logger.debug(
+      'Failed to retrieve registered destination, because it was neither possible to decode jwt nor create a dummy jwt with `zid` property.'
+    );
+    logger.debug(e);
+    return null;
+  }
+
   const destination =
     (await registerDestinationCache.retrieveDestinationFromCache(
-      decodedJwtOrZid(options),
+      decodedJwt,
       options.destinationName,
       isolationStrategy(options)
     )) || null;

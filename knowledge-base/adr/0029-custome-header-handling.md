@@ -57,11 +57,15 @@ We have the same problem in both the `HttpRequestConfig` and `DestinationHttpReq
 Both contain a single `header` property typed `Record<string,any>` or `Record<string,string>` which contains two sources of headers.
 
 #### Option A
+
 Keep the single property but use a `HttpRequestConfigWithOrigin` containing the value but also information on the origin.
+
 #### Option B
+
 Add a property `headerSDK` and `headerProperties` to hold different headers.
 
 #### Decision
+
 Use option A and have two different APIs for external users and SDK (also CAP) developers.
 
 ```ts

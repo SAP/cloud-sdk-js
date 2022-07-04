@@ -1,7 +1,9 @@
 import { createServer, Server } from 'https';
 import { promisify } from 'util';
-import { DestinationCertificate } from '@sap-cloud-sdk/connectivity/dist/scp-cf';
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import {
+  Destination,
+  DestinationCertificate
+} from '@sap-cloud-sdk/connectivity';
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 
 describe('createAgent', () => {

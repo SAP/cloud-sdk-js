@@ -38,7 +38,9 @@ export {
   getClientCredentialsToken,
   getUserToken,
   registerDestination,
-  setDestinationCache
+  setDestinationCache,
+  DestinationAuthToken,
+  DestinationCertificate
 } from './scp-cf';
 
 export type {
@@ -46,7 +48,14 @@ export type {
   DestinationSelectionStrategy,
   DestinationOrFetchOptions,
   DestinationOptions,
-  ServiceCredentials
+  ServiceCredentials,
+  DestinationProxyType,
+  AuthenticationType,
+  ClientCredentialsResponse
 } from './scp-cf';
 
-export { getAgentConfig } from './http-agent';
+export {
+  getAgentConfig,
+  HttpAgentConfig,
+  HttpsAgentConfig
+} from './http-agent';

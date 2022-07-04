@@ -1,9 +1,10 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
 import {
+  Destination,
   parseDestination,
   sanitizeDestination
-} from '@sap-cloud-sdk/connectivity';
+} from "@sap-cloud-sdk/connectivity";
 import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import {
@@ -21,8 +22,9 @@ import {
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
-const destination = {
-  url: 'http://example.com'
+const destination: Destination = {
+  url: 'http://example.com',
+  type: 'HTTP'
 };
 
 const httpSpy = jest.spyOn(httpClient, 'executeHttpRequest');

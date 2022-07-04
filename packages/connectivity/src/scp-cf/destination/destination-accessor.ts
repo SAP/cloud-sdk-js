@@ -59,7 +59,7 @@ export async function resolveDestinationWithType(destination: DestinationOrFetch
     throw Error(
       `The type of the destination '${toDestinationNameUrl(
         destination
-      )}' has to be 'MAIL', but is '${destination.type}'.`
+      )}' has to be '${type}', but is '${destination.type}'.`
     );
   }
   return resolvedDestination;

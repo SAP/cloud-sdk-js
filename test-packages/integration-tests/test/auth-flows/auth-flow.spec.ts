@@ -19,6 +19,7 @@ import {
   Systems,
   UserAccessTokens
 } from './auth-flow-util';
+import { sendMail } from "@sap-cloud-sdk/mail-client";
 
 /* Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests. */
 
@@ -448,11 +449,14 @@ describe('OAuth flows', () => {
     const destination = await getDestinationFromDestinationService({
       destinationName: systems.email.providerCloudBasic
     });
-    expect(destination?.type).toEqual('MAIL');
-    expect(destination?.proxyType).toEqual('Internet');
-    // TODO: username and password need a new mapping as they are come from the keys `mail.user` and `mail.password`
-    // expect(destination?.username).toBeTruthy();
-    // expect(destination?.password).toBeTruthy();
+    expect(destination!.type).toEqual('MAIL');
+    expect(destination!.proxyType).toEqual('Internet');
+    expect(destination!.originalProperties!['mail.user']).toBeTruthy();
+    expect(destination!.originalProperties!['mail.smtp.host']).toBeTruthy();
+
+    const myEmailAddress = destination!.originalProperties!['mail.user'];
+    const res = await sendMail(destination!, {from: myEmailAddress, to: myEmailAddress, subject: 'sub', text: 'txt'});
+    expect(res).toBeTruthy();
   }, 60000);
 
   xit('Mail: Provider op basic auth', async () => {

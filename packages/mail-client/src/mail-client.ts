@@ -100,6 +100,14 @@ async function sendMailWithNodemailer<T extends MailOptions>(destination: Destin
   return response;
 }
 
+/**
+ * Builds a `Transport` between the application and the mail server, sends mails by using the `Transport`, then close it.
+ * This function also does the destination look up, when passing [[DestinationFetchOptions]] instead of [[Destination]].
+ * @param destination - A destination or a destination name and a JWT.
+ * @param mailOptions - Any object representing [[MailOptions]].
+ * @returns A promise resolving to an array of [[MailResponse]].
+ * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination#referencing-destinations-by-name
+ */
 export async function sendMail<T extends MailOptions>(
   destination: DestinationOrFetchOptions,
   ...mailOptions: T[]

@@ -23,8 +23,7 @@ import {
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination: Destination = {
-  url: 'http://example.com',
-  type: 'HTTP'
+  url: 'http://example.com'
 };
 
 const httpSpy = jest.spyOn(httpClient, 'executeHttpRequest');

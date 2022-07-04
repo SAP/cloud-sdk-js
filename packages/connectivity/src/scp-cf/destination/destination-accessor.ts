@@ -55,7 +55,7 @@ export async function resolveDestinationWithType(destination: DestinationOrFetch
       )}'.`
     );
   }
-  if (resolvedDestination.type !== type) {
+  if (!!resolvedDestination.type && resolvedDestination.type !== type) {
     throw Error(
       `The type of the destination '${toDestinationNameUrl(
         destination

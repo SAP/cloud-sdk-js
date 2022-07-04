@@ -5,22 +5,23 @@ import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 
 /**
- * PLEASE REVIEW.
+ * Union type representing all filter operations for string properties like `eq` or `ne`.
  */
 export type FilterOperatorString = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
 
 /**
- * PLEASE REVIEW.
+ * Union type representing all filter operations for boolean properties.
+ * Possible values are `eq` and `ne`.
  */
 export type FilterOperatorBoolean = 'eq' | 'ne';
 
 /**
- * PLEASE REVIEW.
+ * Union type representing all filter operations for number properties like `le` or `gt`.
  */
 export type FilterOperatorNumber = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
 
 /**
- * PLEASE REVIEW.
+ * Union type of the filter operators for string, boolean and number types.
  */
 export type FilterOperator =
   | FilterOperatorString

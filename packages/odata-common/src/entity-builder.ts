@@ -14,17 +14,17 @@ const logger = createLogger({
 });
 
 /**
- * PLEASE REVIEW.
+ * Union type of `null` and `undefiend`.
  */
 export type NullishTypes = null | undefined;
 
 /**
- * PLEASE REVIEW.
+ * Exclude all nullish types from the given type so NonNullishType<TypeA | TypeB | undefined> is TypeA | TypeB.
  */
 export type NonNullishType<T> = Exclude<T, NullishTypes>;
 
 /**
- * PLEASE REVIEW.
+ * Omits all nullish properties as well as all properties of the [[EntityBase]] from a given type.
  */
 export type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
 

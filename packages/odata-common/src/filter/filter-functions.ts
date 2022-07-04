@@ -394,7 +394,7 @@ export function filterFunctions<
 }
 
 /**
- * PLEASE REVIEW.
+ * Interface containing all filter functions like `startsWith`, `toUpper` or `floor`.
  */
 export interface FilterFunctionsType {
   endsWith: typeof endsWith;
@@ -419,7 +419,7 @@ export interface FilterFunctionsType {
 }
 
 /**
- * PLEASE REVIEW.
+ * Union type of all the possible filter functions contained in [[FilterFunctionsType]].
  */
 export type FilterFunctionTypes =
   | typeof endsWith

@@ -16,7 +16,7 @@ import { FieldOptions } from './field';
 import { EnumField } from './enum-field';
 
 /**
- * PLEASE REVIEW.
+ * Constructor function creating a [[ComplexTypeField]].
  */
 export type ComplexTypeFieldConstructor<
   ComplexTypeFieldT extends ComplexTypeField<
@@ -53,7 +53,7 @@ export type IsOrderableField<EdmT extends EdmTypeShared<'any'>> =
   EdmT extends OrderableEdmType ? true : false;
 
 /**
- * PLEASE REVIEW.
+ * Helper type to extract the entity from a field so EntityTypeFromFieldOf<EdmTypeField<MyEntity>> is `MyEntity`.
  */
 export type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
   FieldOfT extends ConstructorOrField<infer EntityT> ? EntityT : never;

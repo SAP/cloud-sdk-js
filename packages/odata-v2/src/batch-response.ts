@@ -7,7 +7,7 @@ import {
 import { DefaultDeSerializers, DeSerializers } from './de-serializers';
 
 /**
- * PLEASE REVIEW.
+ * Union of the possible batch responses: [[ReadResponseCommon]], [[WriteResponsesCommon]] and [[ErrorResponse]].
  */
 export type BatchResponse<
   DeSerializersT extends DeSerializers = DefaultDeSerializers

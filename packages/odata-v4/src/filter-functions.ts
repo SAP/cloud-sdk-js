@@ -216,7 +216,7 @@ export function filterFunctions<
 }
 
 /**
- * PLEASE REVIEW.
+ * Extending the common filter function by the OData v4 specification for example `contains` or `matchesPattern`.
  */
 export type FilterFunctionTypes = FilterFunctionsCommonType & {
   contains: typeof contains;

@@ -4,12 +4,13 @@ import { FilterList } from './filter-list';
 import type { Filterable } from './filterable';
 
 /**
- * PLEASE REVIEW.
+ * Possible operators used to filter one to many relations in OData v4.
+ * Values are `any` or `all`.
  */
 export type FilterLambdaOperator = 'any' | 'all';
 
 /**
- * PLEASE REVIEW.
+ * Class representing a filter expression based on a [[FilterLambdaOperator]].
  */
 export class FilterLambdaExpression<
   EntityT extends EntityBase,

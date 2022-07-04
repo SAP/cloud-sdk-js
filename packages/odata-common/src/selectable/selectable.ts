@@ -9,7 +9,7 @@ import type { Link } from './link';
 import type { SimpleTypeFields } from './simple-type-fields';
 
 /**
- * PLEASE REVIEW.
+ * Union type of all selectable fields.
  */
 export type Selectable<
   EntityT extends EntityBase,

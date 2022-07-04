@@ -3,7 +3,7 @@ import { EdmTypeField } from './edm-type-field';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 /**
- * PLEASE REVIEW.
+ * Helper type to unite the [[EdmTypeField]] and [[OrderableEdmTypeField]] which are appearing often together.
  */
 export type SimpleTypeFields<EntityT extends EntityBase> =
   | EdmTypeField<EntityT, any, any, boolean, true>

@@ -46,7 +46,7 @@ export type ExclusiveEdmTypeV4 =
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 /**
  * Represents all valid EDM types for one OData version (either v2 or v4).
- * Currently, due to an issue in TypeScript, this includes all valid types for OData v2 **and** v4
+ * Currently, due to an issue in TypeScript, this includes all valid types for OData v2 **and** v4.
  */
 export type EdmTypeShared<VersionT extends ODataVersion | 'any'> =
   // Pretend to use parameter to avoid TS bug in versions > 4.2 (https://github.com/microsoft/TypeScript/issues/44727)

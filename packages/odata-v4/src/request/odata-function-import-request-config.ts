@@ -8,7 +8,9 @@ import {
 import { DeSerializers } from '../de-serializers';
 
 /**
- * PLEASE REVIEW.
+ * Function import request configuration for an entity type.
+ * @typeparam DeSerializersT - Type of the deserializer use on the request
+ * @typeparam ParametersT - Type of the parameter to setup a request with
  */
 export class ODataFunctionImportRequestConfig<
   DeSerializersT extends DeSerializers,

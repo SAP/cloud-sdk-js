@@ -6,7 +6,8 @@ import type {
 import type { DestinationSelectionStrategy } from './destination-selection-strategies';
 
 /**
- * PLEASE REVIEW.
+ * Collection of all destinations from the provider and subscriber account.
+ * The used [[DestinationSelectionStrategy]] will decide which destination is selected in the end.
  */
 export interface AllDestinations {
   subscriber: DestinationsByType;
@@ -14,7 +15,8 @@ export interface AllDestinations {
 }
 
 /**
- * PLEASE REVIEW.
+ * Collection of all destinations from an account.
+ * For a given account a destination can originate from the destination service instance or subaccount.
  */
 export interface DestinationsByType {
   instance: Destination[];

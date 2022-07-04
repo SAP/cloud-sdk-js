@@ -19,7 +19,7 @@ const logger = createLogger({
 });
 
 /**
- * PLEASE REVIEW.
+ * Parent class for all OData request configs like `getAll`, `delete` or `count`.
  */
 export abstract class ODataRequestConfig {
   payload: Record<string, any> | string;

@@ -1,6 +1,7 @@
 import { DeSerializers } from './de-serializers';
 import { EntityBase } from './entity-base';
 import { EntityApi } from './entity-api';
+
 /**
  * @internal
  */
@@ -21,7 +22,6 @@ interface BatchResponseTypeGuards<DeSerializersT extends DeSerializers> {
 /**
  * Represents the list of responses for a change set in a batch request.
  * @typeparam  DeSerializersT - Type of the (de-)serializers.
-
  */
 export interface WriteResponses<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {

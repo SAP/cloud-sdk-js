@@ -8,7 +8,7 @@ import { DeSerializers } from './de-serializers';
 import { EntityApi } from './entity-api';
 
 /**
- * PLEASE REVIEW.
+ * Helper type to extract the [[ODataVersion] from a given entity so ODataVersionOf<MyVersion2Entity> is `v2`.
  */
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 

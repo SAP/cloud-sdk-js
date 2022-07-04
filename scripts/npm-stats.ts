@@ -1,10 +1,13 @@
 import puppeteer from 'puppeteer';
 
-async function getVersionsDownloads(page, packageName) {
+async function getVersionsDownloads(browser, packageName) {
+  const page = await browser.newPage();
   await page.goto(`https://www.npmjs.com/package/${packageName}`);
   // window as a global variable is not recognized by TypeScript, therefore ignore checks for this line
-  // @ts-ignore
-  return page.evaluate(() => window.__context__.context.versionsDownloads);
+  return await page.evaluate(
+    // @ts-ignore
+    () => window.__context__.context.versionsDownloads
+  );
 }
 
 async function aggregateStats(versionsDownloads) {
@@ -21,10 +24,13 @@ async function aggregateStats(versionsDownloads) {
 
 async function getStatsForPackage(page, packageName) {
   const versionsDownloads = await getVersionsDownloads(page, packageName);
-  return aggregateStats(versionsDownloads);
+  return {
+    name: packageName,
+    downloads: await aggregateStats(versionsDownloads)
+  };
 }
 
-async function getAllStats(page) {
+function getAllStats(browser) {
   return [
     '@sap-cloud-sdk/util',
     '@sap-cloud-sdk/connectivity',
@@ -39,21 +45,28 @@ async function getAllStats(page) {
     '@sap-cloud-sdk/temporal-de-serializers',
     '@sap-cloud-sdk/odata-common',
     '@sap/cds'
-  ].reduce(
-    async (stats, packageName) => ({
-      ...(await stats),
-      [packageName]: await getStatsForPackage(page, packageName)
-    }),
-    {}
-  );
+  ].map(packageName => {
+    return getStatsForPackage(browser, packageName);
+  });
 }
 
 async function main() {
   const browser = await puppeteer.launch();
-  const page = await browser.newPage();
   // eslint-disable-next-line no-console
-  console.log(await getAllStats(page));
-
+  const stats = await Promise.all(getAllStats(browser));
+  console.log(
+    stats
+      .map(
+        ({ name, downloads }) =>
+          name +
+          ':\n' +
+          Object.entries(downloads)
+            .map(([version, dls]) => `- v${version}: ${dls} downloads`)
+            .join('\n'),
+        ''
+      )
+      .join('\n\n')
+  );
   await browser.close();
 }
 

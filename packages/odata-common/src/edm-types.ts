@@ -1,6 +1,6 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 /**
- * Contains all edm types which are shared between different odata versions.
+ * Includes all EDM types which are shared between OData version 2 and 4.
  */
 export type EdmTypeCommon = EdmTypeSameConverters | EdmTypeDifferentConverters;
 
@@ -45,7 +45,8 @@ export type ExclusiveEdmTypeV4 =
 // The generic parameter is currently unused. We still have to revise whether we can use it in a later version of TypeScript.
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 /**
- * A shared edm type of [[EdmTypeCommon]], [[ExclusiveEdmTypeV2]] and [[ExclusiveEdmTypeV4]].
+ * Represents all valid EDM types for one OData version (either v2 or v4).
+ * Currently, due to an issue in TypeScript, this includes all valid types for OData v2 **and** v4
  */
 export type EdmTypeShared<VersionT extends ODataVersion | 'any'> =
   // Pretend to use parameter to avoid TS bug in versions > 4.2 (https://github.com/microsoft/TypeScript/issues/44727)

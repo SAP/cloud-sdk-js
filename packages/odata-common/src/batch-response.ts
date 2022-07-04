@@ -19,7 +19,9 @@ interface BatchResponseTypeGuards<DeSerializersT extends DeSerializers> {
 }
 
 /**
- * PLEASE REVIEW.
+ * Represents the list of responses for a change set in a batch request.
+ * @typeparam  DeSerializersT - Type of the (de-)serializers.
+
  */
 export interface WriteResponses<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
@@ -27,7 +29,7 @@ export interface WriteResponses<DeSerializersT extends DeSerializers>
 }
 
 /**
- * PLEASE REVIEW.
+ * Represents an erroneous response to a retrieve or change set request within a batch request.
  */
 export interface ErrorResponse extends BatchResponseTypeGuards<any> {
   responseType: 'ErrorResponse'; // to make ErrorResponse structurally different and make typeguards work as expected
@@ -36,7 +38,8 @@ export interface ErrorResponse extends BatchResponseTypeGuards<any> {
 }
 
 /**
- * PLEASE REVIEW.
+ * Represents a response to a retrieve request within a batch request.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
  */
 export interface ReadResponse<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
@@ -50,7 +53,8 @@ export interface ReadResponse<DeSerializersT extends DeSerializers>
 }
 
 /**
- * PLEASE REVIEW.
+ * Represents a single subresponse to a changeset request within a batch request.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
  */
 export interface WriteResponse<DeSerializersT extends DeSerializers> {
   responseType: 'WriteResponse'; // to make WriteResponse structurally different and make typeguards work as expected

@@ -29,7 +29,7 @@ export const registerDestinationCache = DestinationCache(
 );
 
 /**
- * PLEASE REVIEW.
+ * Represents options to configure how a destination should be registered.
  */
 export type RegisterDestinationOptions = Pick<
   DestinationFetchOptions,
@@ -62,7 +62,7 @@ export async function registerDestination(
 }
 
 /**
- * A destination which contains a name property.
+ * Represents a destination with a `name` property.
  */
 export type DestinationWithName = Destination & { name: string };
 

@@ -16,6 +16,7 @@
   "workspaces": [
     "packages/connectivity",
     "packages/http-client",
+    "packages/mail-client",
     "packages/openapi",
     "packages/odata-common",
     "packages/odata-v2",

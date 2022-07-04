@@ -20,6 +20,7 @@
     "@sap-cloud-sdk/test-services-odata-v4": "^2.5.0",
     "@sap-cloud-sdk/test-util": "^2.5.0",
     "@sap-cloud-sdk/util": "^2.5.0",
+    "@sap-cloud-sdk/mail-client": "^2.5.0",
     "@sap/xssec": "^3.2.5"
   },
   "devDependencies": {

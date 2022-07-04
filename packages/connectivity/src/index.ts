@@ -40,7 +40,8 @@ export {
   registerDestination,
   setDestinationCache,
   DestinationAuthToken,
-  DestinationCertificate
+  DestinationCertificate,
+  resolveDestinationWithType
 } from './scp-cf';
 
 export type {

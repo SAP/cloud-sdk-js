@@ -90,7 +90,7 @@ export interface Destination {
   tokenServicePassword?: string;
 
   /**
-   * The type of the destination, defaults to 'HTTP'. The SAP Cloud SDK only understands destinations of type 'HTTP'.
+   * The type of the destination, defaults to 'HTTP'. The SAP Cloud SDK only understands destinations of type 'HTTP' and 'MAIL'.
    */
   type?: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC';
 

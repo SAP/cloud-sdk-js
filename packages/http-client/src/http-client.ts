@@ -12,10 +12,10 @@ import {
   buildHeadersForDestination,
   Destination,
   DestinationOrFetchOptions,
-  getAgentConfig,
+  getAgentConfig, resolveDestinationWithType,
   toDestinationNameUrl,
   useOrFetchDestination
-} from '@sap-cloud-sdk/connectivity';
+} from "@sap-cloud-sdk/connectivity";
 import {
   defaultResilienceBTPServices,
   DestinationConfiguration,
@@ -54,14 +54,7 @@ const logger = createLogger({
 export async function buildHttpRequest(
   destination: DestinationOrFetchOptions
 ): Promise<DestinationHttpRequestConfig> {
-  const resolvedDestination = await resolveDestination(destination);
-  if (!resolvedDestination) {
-    throw Error(
-      `Failed to resolve the destination '${toDestinationNameUrl(
-        destination
-      )}'.`
-    );
-  }
+  const resolvedDestination = await resolveDestinationWithType(destination, 'HTTP');
   const headers = await buildHeaders(resolvedDestination);
 
   return buildDestinationHttpRequestConfig(resolvedDestination, headers);
@@ -101,14 +94,7 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
     requestConfig: T,
     options?: HttpRequestOptions
   ): Promise<ReturnT> {
-    const resolvedDestination = await resolveDestination(destination);
-    if (!resolvedDestination) {
-      throw Error(
-        `Failed to resolve the destination '${toDestinationNameUrl(
-          destination
-        )}'.`
-      );
-    }
+    const resolvedDestination = await resolveDestinationWithType(destination, 'HTTP');
     const destinationRequestConfig = await buildHttpRequest(
       resolvedDestination
     );
@@ -417,14 +403,6 @@ function buildHeaders(
 ): Promise<Record<string, string>> {
   return buildHeadersForDestination(destination).catch(error => {
     throw new ErrorWithCause('Failed to build headers.', error);
-  });
-}
-
-function resolveDestination(
-  destination: DestinationOrFetchOptions
-): Promise<Destination | null> {
-  return useOrFetchDestination(destination).catch(error => {
-    throw new ErrorWithCause('Failed to load destination.', error);
   });
 }
 

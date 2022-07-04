@@ -1,11 +1,11 @@
 import fs from 'fs';
 import { join, resolve } from 'path';
 import net from 'net';
-import nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
+import { MailOptions, MailResponse, sendMail } from "@sap-cloud-sdk/mail-client";
 
 describe('Mail', () => {
-  const defaultMailOptions: Mail.Options = {
+  const defaultMailOptions: MailOptions = {
     from: '"FROM" <from@example.com>', // sender address
     to: 'TO1@example.com, TO2@example.com', // list of receivers
     subject: 'SUBJECT',
@@ -29,7 +29,7 @@ describe('Mail', () => {
         );
       })
     ).toBe(true);
-  });
+  }, 60000);
 
   it('should send 100 mails', async () => {
     const mailOptions = buildArrayWithNatualNums(100).map(
@@ -37,7 +37,7 @@ describe('Mail', () => {
         ({
           ...defaultMailOptions,
           subject: `mail ${mailIndex}`
-        } as Mail.Options)
+        } as MailOptions)
     );
     await sendTestMail(undefined, ...mailOptions);
     const mails = fs.readdirSync(join(resolve('test'), 'mail', 'test-output'));
@@ -47,37 +47,47 @@ describe('Mail', () => {
 
 async function sendTestMail(
   connection?: net.Socket,
-  ...mailOptions: Mail.Options[]
-): Promise<void> {
-  // create reusable transporter object using the default SMTP transport
-  const transporter = nodemailer.createTransport({
-    connection,
-    host: 'localhost',
-    port: 5566,
-    // true for 465, false for other ports
-    secure: false,
-    auth: {
-      user: 'user',
-      pass: 'pd'
-    },
-    tls: {
-      // disable tls config to fix the self signed certificate error
-      rejectUnauthorized: false
-    }
-  });
-
-  for (const mailOptionIndex in mailOptions) {
-    // eslint-disable-next-line no-console
-    console.log(`Sending email ${mailOptionIndex}/${mailOptions.length}...`);
-    const response = await transporter.sendMail(mailOptions[mailOptionIndex]);
-    // eslint-disable-next-line no-console
-    console.log(
-      `...email ${mailOptionIndex}/${mailOptions.length} for subject "${mailOptions[mailOptionIndex].subject}" was sent successfully.`
-    );
+  ...mailOptions: MailOptions[]
+): Promise<MailResponse[]> {
+  const originalProperties = {
+    'mail.smtp.host': 'localhost',
+    'mail.smtp.port': '5566',
+    'mail.user': 'user',
+    'mail.password': 'pd'
   }
-  transporter.close();
-  // eslint-disable-next-line no-console
-  console.log('SMTP transport connection closed.');
+  const destination: any = {
+    originalProperties
+  };
+  return sendMail(destination, ...mailOptions);
+  // // create reusable transporter object using the default SMTP transport
+  // const transporter = nodemailer.createTransport({
+  //   connection,
+  //   host: 'localhost',
+  //   port: 5566,
+  //   // true for 465, false for other ports
+  //   secure: false,
+  //   auth: {
+  //     user: 'user',
+  //     pass: 'pd'
+  //   },
+  //   tls: {
+  //     // disable tls config to fix the self signed certificate error
+  //     rejectUnauthorized: false
+  //   }
+  // });
+  //
+  // for (const mailOptionIndex in mailOptions) {
+  //   // eslint-disable-next-line no-console
+  //   console.log(`Sending email ${mailOptionIndex}/${mailOptions.length}...`);
+  //   const response = await transporter.sendMail(mailOptions[mailOptionIndex]);
+  //   // eslint-disable-next-line no-console
+  //   console.log(
+  //     `...email ${mailOptionIndex}/${mailOptions.length} for subject "${mailOptions[mailOptionIndex].subject}" was sent successfully.`
+  //   );
+  // }
+  // transporter.close();
+  // // eslint-disable-next-line no-console
+  // console.log('SMTP transport connection closed.');
 }
 
 function buildArrayWithNatualNums(length): number[] {

@@ -1,6 +1,5 @@
-import { Readable } from "stream";
-import { Url } from "url";
-import SMTPTransport from "nodemailer/lib/smtp-transport";
+import { Readable } from 'stream';
+import { Url } from 'url';
 /**
  * This interface is compatible with `Mail.Address` of `nodemailer`.
  */
@@ -12,7 +11,9 @@ export interface Address {
 /**
  * This type is compatible with `Headers` of `nodemailer`.
  */
-export type Headers = { [key: string]: string | string[] | { prepared: boolean, value: string } } | Array<{ key: string, value: string }>;
+export type Headers =
+  | { [key: string]: string | string[] | { prepared: boolean; value: string } }
+  | { key: string; value: string }[];
 
 /**
  * This interface is compatible with `AttachmentLike` of `nodemailer`.
@@ -29,7 +30,12 @@ export interface Attachment extends AttachmentLike {
   cid?: string | undefined;
   encoding?: string | undefined;
   contentType?: string | undefined;
-  contentTransferEncoding?: '7bit' | 'base64' | 'quoted-printable' | false | undefined;
+  contentTransferEncoding?:
+    | '7bit'
+    | 'base64'
+    | 'quoted-printable'
+    | false
+    | undefined;
   contentDisposition?: 'attachment' | 'inline' | undefined;
   headers?: Headers | undefined;
   raw?: string | Buffer | Readable | AttachmentLike | undefined;
@@ -40,18 +46,16 @@ export interface Attachment extends AttachmentLike {
 export interface MailOptions {
   from: string | Address | undefined;
   sender?: string | Address | undefined;
-  to: string | Address | Array<string | Address> | undefined;
-  cc?: string | Address | Array<string | Address> | undefined;
-  bcc?: string | Address | Array<string | Address> | undefined;
+  to: string | Address | (string | Address)[] | undefined;
+  cc?: string | Address | (string | Address)[] | undefined;
+  bcc?: string | Address | (string | Address)[] | undefined;
   replyTo?: string | Address | undefined;
   subject?: string | undefined;
   text?: string | Buffer | Readable | AttachmentLike | undefined;
   headers?: Headers | undefined;
   attachments?: Attachment[] | undefined;
   date?: Date | string | undefined;
-  encoding?:
-    | string
-    | undefined;
+  encoding?: string | undefined;
   priority?: 'high' | 'normal' | 'low' | undefined;
 }
 /**
@@ -66,8 +70,8 @@ export interface Envelope {
  */
 export interface MailResponse {
   envelope?: Envelope;
-  accepted?: Array<string | Address>;
-  rejected?: Array<string | Address>;
-  pending?: Array<string | Address>;
+  accepted?: (string | Address)[];
+  rejected?: (string | Address)[];
+  pending?: (string | Address)[];
   response?: string;
 }

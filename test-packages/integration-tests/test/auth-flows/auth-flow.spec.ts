@@ -1,6 +1,7 @@
 import { businessPartnerService } from '@sap/cloud-sdk-vdm-business-partner-service';
 import * as xssec from '@sap/xssec';
 import { Destination, getAgentConfig } from '@sap-cloud-sdk/connectivity';
+import { sendMail } from '@sap-cloud-sdk/mail-client';
 import { executeHttpRequest } from '../../../../packages/http-client/src';
 import {
   getService,
@@ -19,7 +20,6 @@ import {
   Systems,
   UserAccessTokens
 } from './auth-flow-util';
-import { sendMail } from "@sap-cloud-sdk/mail-client";
 
 /* Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests. */
 
@@ -455,7 +455,12 @@ describe('OAuth flows', () => {
     expect(destination!.originalProperties!['mail.smtp.host']).toBeTruthy();
 
     const myEmailAddress = destination!.originalProperties!['mail.user'];
-    const res = await sendMail(destination!, {from: myEmailAddress, to: myEmailAddress, subject: 'sub', text: 'txt'});
+    const res = await sendMail(destination!, {
+      from: myEmailAddress,
+      to: myEmailAddress,
+      subject: 'sub',
+      text: 'txt'
+    });
     expect(res).toBeTruthy();
   }, 60000);
 

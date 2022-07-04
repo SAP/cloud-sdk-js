@@ -12,10 +12,9 @@ import {
   buildHeadersForDestination,
   Destination,
   DestinationOrFetchOptions,
-  getAgentConfig, resolveDestinationWithType,
-  toDestinationNameUrl,
-  useOrFetchDestination
-} from "@sap-cloud-sdk/connectivity";
+  getAgentConfig,
+  resolveDestinationWithType
+} from '@sap-cloud-sdk/connectivity';
 import {
   defaultResilienceBTPServices,
   DestinationConfiguration,
@@ -54,7 +53,10 @@ const logger = createLogger({
 export async function buildHttpRequest(
   destination: DestinationOrFetchOptions
 ): Promise<DestinationHttpRequestConfig> {
-  const resolvedDestination = await resolveDestinationWithType(destination, 'HTTP');
+  const resolvedDestination = await resolveDestinationWithType(
+    destination,
+    'HTTP'
+  );
   const headers = await buildHeaders(resolvedDestination);
 
   return buildDestinationHttpRequestConfig(resolvedDestination, headers);
@@ -94,7 +96,10 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
     requestConfig: T,
     options?: HttpRequestOptions
   ): Promise<ReturnT> {
-    const resolvedDestination = await resolveDestinationWithType(destination, 'HTTP');
+    const resolvedDestination = await resolveDestinationWithType(
+      destination,
+      'HTTP'
+    );
     const destinationRequestConfig = await buildHttpRequest(
       resolvedDestination
     );

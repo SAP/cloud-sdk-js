@@ -4,7 +4,7 @@ import {
   Destination,
   parseDestination,
   sanitizeDestination
-} from "@sap-cloud-sdk/connectivity";
+} from '@sap-cloud-sdk/connectivity';
 import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import {

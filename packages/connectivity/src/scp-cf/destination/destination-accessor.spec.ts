@@ -1,6 +1,6 @@
-import { resolveDestinationWithType } from "./destination-accessor";
-import { Destination } from "./destination-service-types";
-import { pick } from "@sap-cloud-sdk/util";
+import { pick } from '@sap-cloud-sdk/util';
+import { resolveDestinationWithType } from './destination-accessor';
+import { Destination } from './destination-service-types';
 
 describe('destination accessor', () => {
   const destination: Destination = {
@@ -17,9 +17,11 @@ describe('destination accessor', () => {
     const resolved = await resolveDestinationWithType(destination, 'HTTP');
     const keys = ['url', 'authentication', 'username', 'password'];
     expect(pick(keys, resolved)).toStrictEqual(pick(keys, destination));
-  })
+  });
 
   it('throws an error, when destination type does not match', async () => {
-    await expect(resolveDestinationWithType(destination, 'MAIL')).rejects.toThrowErrorMatchingSnapshot();
-  })
-})
+    await expect(
+      resolveDestinationWithType(destination, 'MAIL')
+    ).rejects.toThrowErrorMatchingSnapshot();
+  });
+});

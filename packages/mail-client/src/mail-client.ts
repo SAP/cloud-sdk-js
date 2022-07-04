@@ -1,18 +1,21 @@
-import { MailOptions, MailResponse } from "./mail-cleint-types";
 import {
   Destination,
-  DestinationOrFetchOptions, resolveDestinationWithType,
-  toDestinationNameUrl,
-} from "@sap-cloud-sdk/connectivity";
-import { createLogger } from "@sap-cloud-sdk/util";
-import nodemailer, { SentMessageInfo, Transporter } from "nodemailer";
+  DestinationOrFetchOptions,
+  resolveDestinationWithType,
+  toDestinationNameUrl
+} from '@sap-cloud-sdk/connectivity';
+import { createLogger } from '@sap-cloud-sdk/util';
+import nodemailer, { SentMessageInfo, Transporter } from 'nodemailer';
+import { MailOptions, MailResponse } from './mail-cleint-types';
 
 const logger = createLogger({
   package: 'mail-client',
   messageContext: 'mail-client'
 });
 
-function getMailDestinationOriginalProperties(destination: Destination): Record<string, any> {
+function getMailDestinationOriginalProperties(
+  destination: Destination
+): Record<string, any> {
   const originalProperties = destination.originalProperties;
   if (!originalProperties) {
     throw Error(
@@ -24,75 +27,97 @@ function getMailDestinationOriginalProperties(destination: Destination): Record<
   return originalProperties;
 }
 
-function getHostAndPort(destination: Destination, originalProperties: Record<string, any>): {host: string, port: number}{
+function getHostAndPort(
+  destination: Destination,
+  originalProperties: Record<string, any>
+): { host: string; port: number } {
   const host = originalProperties['mail.smtp.host'];
   const port = originalProperties['mail.smtp.port'];
 
-  if(!(host && port)){
+  if (!(host && port)) {
     throw Error(
       `The destination '${toDestinationNameUrl(
         destination
       )}' does not contain host or port information as properties.`
     );
   }
-  return { host, port: parseInt(port) }
+  return { host, port: parseInt(port) };
 }
 
-function getCredentials(destination: Destination, originalProperties: Record<string, any>): {user: string, password: string}{
+function getCredentials(
+  destination: Destination,
+  originalProperties: Record<string, any>
+): { user: string; password: string } {
   const user = originalProperties['mail.user'];
   const password = originalProperties['mail.password'];
 
-  if(!(user && password)){
+  if (!(user && password)) {
     throw Error(
       `The destination '${toDestinationNameUrl(
         destination
       )}' does not contain user or password information as properties.`
     );
   }
-  return { user, password }
+  return { user, password };
 }
 
-function createTransport(destination: Destination, originalProperties: Record<string, any>): Transporter<SentMessageInfo>{
-  const {host, port} = getHostAndPort(destination, originalProperties);
-  const {user, password} = getCredentials(destination, originalProperties);
+function createTransport(
+  destination: Destination,
+  originalProperties: Record<string, any>
+): Transporter<SentMessageInfo> {
+  const { host, port } = getHostAndPort(destination, originalProperties);
+  const { user, password } = getCredentials(destination, originalProperties);
 
-  return  nodemailer.createTransport({
+  return nodemailer.createTransport({
     host,
     port,
-    /** defines if the connection should use SSL (if true) or not (if false) */
+    // Defines if the connection should use SSL (if true) or not (if false).
     secure: false,
     auth: {
       user,
-      pass: password,
+      pass: password
     },
-    tls:{
-      /** If true the server will reject any connection which is not
-      * authorized with the list of supplied CAs. This option only has an
-        * effect if requestCert is true. */
+    tls: {
+      /**
+       * If true the server will reject any connection which is not
+       * authorized with the list of supplied CAs. This option only has an
+       * effect if requestCert is true.
+       */
       /** Disable tls config to fix the self signed certificate error. */
       rejectUnauthorized: false
     }
   });
 }
 
-function buildMailOptionsFromDestination(originalProperties: Record<string, any>): Partial<MailOptions>{
-  const from  = originalProperties['mail.from'];
+function buildMailOptionsFromDestination(
+  originalProperties: Record<string, any>
+): Partial<MailOptions> {
+  const from = originalProperties['mail.from'];
   return { from };
 }
 
-async function sendMailWithNodemailer<T extends MailOptions>(destination: Destination, originalProperties: Record<string, any>, ...mailOptions: T[]): Promise<MailResponse[]>{
+async function sendMailWithNodemailer<T extends MailOptions>(
+  destination: Destination,
+  originalProperties: Record<string, any>,
+  ...mailOptions: T[]
+): Promise<MailResponse[]> {
   const transporter = createTransport(destination, originalProperties);
-  const mailOptionsFromDestination = buildMailOptionsFromDestination(originalProperties);
+  const mailOptionsFromDestination =
+    buildMailOptionsFromDestination(originalProperties);
 
   const response: MailResponse[] = [];
   for (const mailOptionIndex in mailOptions) {
-    logger.debug(`Sending email ${mailOptionIndex + 1}/${mailOptions.length}...`);
+    logger.debug(
+      `Sending email ${mailOptionIndex + 1}/${mailOptions.length}...`
+    );
     response[mailOptionIndex] = await transporter.sendMail({
       ...mailOptionsFromDestination,
       ...mailOptions[mailOptionIndex]
     });
     logger.debug(
-      `...email ${mailOptionIndex + 1}/${mailOptions.length} for subject "${mailOptions[mailOptionIndex].subject}" was sent successfully.`
+      `...email ${mailOptionIndex + 1}/${mailOptions.length} for subject "${
+        mailOptions[mailOptionIndex].subject
+      }" was sent successfully.`
     );
   }
 
@@ -112,8 +137,16 @@ export async function sendMail<T extends MailOptions>(
   destination: DestinationOrFetchOptions,
   ...mailOptions: T[]
 ): Promise<MailResponse[]> {
-  const resolvedDestination = await resolveDestinationWithType(destination, 'MAIL');
-  const originalProperties = getMailDestinationOriginalProperties(resolvedDestination);
+  const resolvedDestination = await resolveDestinationWithType(
+    destination,
+    'MAIL'
+  );
+  const originalProperties =
+    getMailDestinationOriginalProperties(resolvedDestination);
 
-  return sendMailWithNodemailer(resolvedDestination, originalProperties, ...mailOptions);
+  return sendMailWithNodemailer(
+    resolvedDestination,
+    originalProperties,
+    ...mailOptions
+  );
 }

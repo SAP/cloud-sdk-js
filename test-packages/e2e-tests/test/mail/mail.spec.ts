@@ -1,8 +1,11 @@
 import fs from 'fs';
 import { join, resolve } from 'path';
 import net from 'net';
-import Mail from 'nodemailer/lib/mailer';
-import { MailOptions, MailResponse, sendMail } from "@sap-cloud-sdk/mail-client";
+import {
+  MailOptions,
+  MailResponse,
+  sendMail
+} from '@sap-cloud-sdk/mail-client';
 
 describe('Mail', () => {
   const defaultMailOptions: MailOptions = {
@@ -54,7 +57,7 @@ async function sendTestMail(
     'mail.smtp.port': '5566',
     'mail.user': 'user',
     'mail.password': 'pd'
-  }
+  };
   const destination: any = {
     type: 'MAIL',
     originalProperties

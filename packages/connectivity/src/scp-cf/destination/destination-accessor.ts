@@ -1,4 +1,9 @@
-import { DestinationOrFetchOptions, sanitizeDestination, toDestinationNameUrl } from "./destination";
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import {
+  DestinationOrFetchOptions,
+  sanitizeDestination,
+  toDestinationNameUrl
+} from './destination';
 import { Destination } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
 import {
@@ -11,7 +16,6 @@ import {
   isDestinationFetchOptions
 } from './destination-accessor-types';
 import { searchRegisteredDestination } from './destination-from-registration';
-import { ErrorWithCause } from "@sap-cloud-sdk/util";
 
 /**
  * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination
@@ -35,19 +39,23 @@ export async function useOrFetchDestination(
 
 /**
  * Resolve a destination by the following steps:
- * 1. call [[useOrFetchDestination]]
- * 2. throw an error, when the resulting destination from the previous step is falsy
- * 3. throw an error, if the resulting destination does not meet the type parameter
- * 4. return the checked destination
- *
+ * 1. Call [[useOrFetchDestination]]
+ * 2. Throw an error, when the resulting destination from the previous step is falsy
+ * 3. Throw an error, if the resulting destination does not meet the type parameter
+ * 4. Return the checked destination.
  * @param destination - A destination or the necessary parameters to fetch one.
  * @param type - A destination type to be expected.
  * @returns A promise resolving to the requested destination on success.
  */
-export async function resolveDestinationWithType(destination: DestinationOrFetchOptions, type: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC'): Promise<Destination>{
-  const resolvedDestination =  await useOrFetchDestination(destination).catch(error => {
-    throw new ErrorWithCause('Failed to load destination.', error);
-  });
+export async function resolveDestinationWithType(
+  destination: DestinationOrFetchOptions,
+  type: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC'
+): Promise<Destination> {
+  const resolvedDestination = await useOrFetchDestination(destination).catch(
+    error => {
+      throw new ErrorWithCause('Failed to load destination.', error);
+    }
+  );
   if (!resolvedDestination) {
     throw Error(
       `Failed to resolve the destination '${toDestinationNameUrl(

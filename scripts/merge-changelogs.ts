@@ -120,8 +120,9 @@ function writeMessagesOfType(
         }`
     )
     .join('\n');
-  
-  const pluralizedType = type.slice(-1) === 'y' ? type.slice(0, -1) + 'ies' : type + 's';
+
+  const pluralizedType =
+    type.slice(-1) === 'y' ? type.slice(0, -1) + 'ies' : type + 's';
   return `\n\n## ${pluralizedType}\n\n${formatted}`;
 }
 

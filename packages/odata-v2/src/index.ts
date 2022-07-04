@@ -39,13 +39,14 @@ export {
   defaultDeSerializers,
   edmToTs,
   entityDeserializer,
-  mergeDefaultDeSerializersWith
+  mergeDefaultDeSerializersWith,
+  DeSerializers
 } from './de-serializers';
 
 export type {
   CustomDeSerializers,
   DefaultDeSerializers,
-  DeSerializers
+  CustomOrDefaultType
 } from './de-serializers';
 
 export * from './common';

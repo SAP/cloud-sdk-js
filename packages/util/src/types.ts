@@ -12,8 +12,14 @@ export function caps(oDataVersion: any): 'V2' | 'V4' {
   return oDataVersion ? oDataVersion.toUpperCase() : 'V2';
 }
 
-type Without<T> = { [P in keyof T]?: never };
+/**
+ * A type which sets all properties of a generic type to `never`.
+ * Used in the exclusive or type [[Xor]].
+ */
+export type Without<T> = { [P in keyof T]?: never };
+
 /**
  * XOR of two types containing keys with different names.
+ * If the two types show an overlap the type is `never`.
  */
 export type Xor<T, U> = (Without<T> & U) | (Without<U> & T);

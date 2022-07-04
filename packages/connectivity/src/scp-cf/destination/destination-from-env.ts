@@ -110,7 +110,7 @@ function validateDestinations(destinations: any[]) {
  */
 export function searchEnvVariablesForDestination(
   options: DestinationFetchOptions
-): Destination | undefined {
+): Destination | null {
   logger.debug('Attempting to retrieve destination from environment variable.');
 
   if (getDestinationsEnvVariable()) {
@@ -130,6 +130,7 @@ export function searchEnvVariablesForDestination(
   }
 
   logger.debug('No environment variable set.');
+  return null;
 }
 
 /**

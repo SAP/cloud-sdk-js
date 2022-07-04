@@ -1,5 +1,5 @@
 /**
- * @internal
+ * Defines how a client credential response should look like.
  */
 export interface ClientCredentialsResponse {
   access_token: string;

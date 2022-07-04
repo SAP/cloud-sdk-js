@@ -15,6 +15,16 @@ executeHttpRequest(
   { method: 'get' }
 );
 
+const serviceBindingTransformFn = async serviceBinding => ({
+  url: serviceBinding.credentials.sys
+});
+
+// $ExpectType Promise<HttpResponse>
+executeHttpRequest(
+  { destinationName: 'myDestination', serviceBindingTransformFn },
+  { method: 'get' }
+);
+
 executeHttpRequest(
   // $ExpectError
   { url: 'https://example.com', destinationName: 'myDestinationName' },

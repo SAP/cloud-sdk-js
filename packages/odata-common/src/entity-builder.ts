@@ -38,7 +38,7 @@ type FromJsonType<JsonT> = {
 };
 
 /**
- * @internal
+ * Contains the methods to build an entity.
  */
 export class EntityBuilder<
   EntityT extends EntityBase,

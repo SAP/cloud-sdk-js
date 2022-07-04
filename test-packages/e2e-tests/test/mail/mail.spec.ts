@@ -56,6 +56,7 @@ async function sendTestMail(
     'mail.password': 'pd'
   }
   const destination: any = {
+    type: 'MAIL',
     originalProperties
   };
   return sendMail(destination, ...mailOptions);

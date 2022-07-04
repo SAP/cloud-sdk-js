@@ -1,7 +1,7 @@
 import * as http from 'http';
 
 /**
- * Defines the neccessary parameters to create a destination http request.
+ * Represents the request configuration, that was inferred from a destination.
  */
 export interface DestinationHttpRequestConfig {
   baseURL: string;
@@ -55,7 +55,7 @@ export type ParameterEncoder = (
 ) => Record<string, any>;
 
 /**
- * Describes the basic http request configuration.
+ * Represents an HTTP request config. This is the basis for actual request configurations and request configurations with origins.
  */
 export interface HttpRequestConfigBase {
   [key: string]: any;

@@ -179,7 +179,7 @@ export interface DestinationAuthToken {
 }
 
 /**
- * Defines possible proxy values.
+ * Represents the proxy type on a destination.
  */
 export type DestinationProxyType =
   | 'OnPremise'
@@ -230,7 +230,7 @@ export function isDestination(destination: any): destination is Destination {
 }
 
 /**
- * Defines all supported authentication types.
+ * Represents the authentication type of a destination.
  */
 export type AuthenticationType =
   | 'PrincipalPropagation'

@@ -13,7 +13,7 @@ import { EntityApi } from './entity-api';
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 
 /**
- * Describes the static api of an entity.
+ * Represents the static API of an entity.
  */
 export interface Constructable<EntityT extends EntityBase> {
   _entityName: string;
@@ -292,7 +292,9 @@ export abstract class EntityBase {
   }
 }
 /**
- * Defines how to identify different types through their structure.
+ * Represents an object that is related to an entity.
+ * Objects that have the same structure would be represented by the same type in TypeScript.
+ * This interface allows to identify equal structures as different structures if they are related to different entities.
  */
 export interface EntityIdentifiable<
   T extends EntityBase,

@@ -6,7 +6,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { createLogger } from '@sap-cloud-sdk/util';
 import nodemailer, { SentMessageInfo, Transporter } from 'nodemailer';
-import { MailOptions, MailResponse } from './mail-cleint-types';
+import { MailOptions, MailResponse } from './mail-client-types';
 
 const logger = createLogger({
   package: 'mail-client',

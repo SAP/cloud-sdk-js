@@ -7,4 +7,4 @@ export type {
   Headers,
   Envelope,
   MailResponse
-} from './mail-cleint-types';
+} from './mail-client-types';

@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import { sendMail } from './mail-client';
-import { MailOptions } from './mail-cleint-types';
+import { MailOptions } from './mail-client-types';
 
 describe('mail client', () => {
   class MockMailer {

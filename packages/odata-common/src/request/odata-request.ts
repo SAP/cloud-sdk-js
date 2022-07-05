@@ -13,12 +13,12 @@ import { Destination, sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import {
   HttpResponse,
   HttpRequestConfigWithOrigin,
-  mergeOptionsWithPriority,
   executeHttpRequest
 } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
-  OriginOptions
+  OriginOptions,
+  mergeOptionsWithPriority
 } from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';

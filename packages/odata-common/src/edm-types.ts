@@ -24,17 +24,17 @@ export type EdmTypeSameConverters =
   | 'Edm.Any'; // Represents currently unsupported EDM types like Edm.Geography.
 
 /**
- * PLEASE REVIEW.
+ * Includes all EDM types that have different converters for OData version 2 and 4.
  */
 export type EdmTypeDifferentConverters = 'Edm.DateTimeOffset';
 
 /**
- * Exclusive types for OData v2.
+ * Exclusive EDM types for OData v2.
  */
 export type ExclusiveEdmTypeV2 = 'Edm.DateTime' | 'Edm.Time';
 
 /**
- * Exclusive types for OData v4.
+ * Exclusive EDM types for OData v4.
  */
 export type ExclusiveEdmTypeV4 =
   | 'Edm.Date'

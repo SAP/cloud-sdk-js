@@ -15,8 +15,7 @@ export {
   HttpResponse,
   OriginOptions,
   HttpRequestConfigBase,
-  DestinationHttpRequestConfig,
-  OriginOptionsInternal
+  DestinationHttpRequestConfig
 } from './http-client-types';
 export type {
   HttpRequestConfig,
@@ -24,4 +23,3 @@ export type {
   Method,
   ParameterEncoder
 } from './http-client-types';
-export { mergeOptionsWithPriority } from './http-request-config';

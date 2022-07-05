@@ -1160,13 +1160,13 @@
     "@sap/cds-compiler" "^2.13.0"
     "@sap/cds-foss" "^3"
 
-"@sap/cloud-sdk-vdm-business-partner-service@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-2.0.0.tgz#a79f0decd34ec015c51d75a3eb85dd1f3b6d7fa7"
-  integrity sha512-UuBf12slBxX/hWSmk3IIMbLM9G+frjPRV6RjZJhzQg5wbtGnKY2mBGkFKMBnmlemuo7HcXOhufrqyUNzmixoHQ==
+"@sap/cloud-sdk-vdm-business-partner-service@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-2.1.0.tgz#1e632b827778609a49410cf2545f47723db36b0c"
+  integrity sha512-XQqY8FXEgpC6l3NOlEIPYj44bH+I0jaM7tzHADxLz/VT/4TQ3d32gTzRHQjcYCarBXlyNglB5TYW9PmZniULQQ==
   dependencies:
-    "@sap-cloud-sdk/odata-common" "^2.0.0"
-    "@sap-cloud-sdk/odata-v2" "^2.0.0"
+    "@sap-cloud-sdk/odata-common" "^2.1.0"
+    "@sap-cloud-sdk/odata-v2" "^2.1.0"
 
 "@sap/edm-converters@~1.0.21":
   version "1.0.41"

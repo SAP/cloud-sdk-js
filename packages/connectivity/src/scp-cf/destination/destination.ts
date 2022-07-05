@@ -3,7 +3,7 @@ import {
   DestinationFetchOptions,
   isDestinationFetchOptions
 } from './destination-accessor-types';
-import { DestinationForServiceBindingsOptions } from './destination-from-vcap';
+import { DestinationForServiceBindingOptions } from './destination-from-vcap';
 import {
   AuthenticationType,
   Destination,
@@ -408,5 +408,5 @@ export function noDestinationErrorMessage(
  */
 export type DestinationOrFetchOptions = Xor<
   Destination,
-  DestinationFetchOptions & DestinationForServiceBindingsOptions
+  DestinationFetchOptions & DestinationForServiceBindingOptions
 >;

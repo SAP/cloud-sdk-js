@@ -24,7 +24,7 @@ const logger = createLogger({
  */
 export async function destinationForServiceBinding(
   serviceInstanceName: string,
-  options: DestinationForServiceBindingsOptions = {}
+  options: DestinationForServiceBindingOptions = {}
 ): Promise<Destination> {
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
@@ -43,7 +43,7 @@ export async function destinationForServiceBinding(
  * Options to customize the behavior of [[destinationForServiceBinding]].
  * @internal
  */
-export interface DestinationForServiceBindingsOptions {
+export interface DestinationForServiceBindingOptions {
   /**
    * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
    */
@@ -183,7 +183,7 @@ function xfS4hanaCloudBindingToDestination(
  * @internal
  */
 export async function searchServiceBindingForDestination(
-  options: DestinationFetchOptions & DestinationForServiceBindingsOptions
+  options: DestinationFetchOptions & DestinationForServiceBindingOptions
 ): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {

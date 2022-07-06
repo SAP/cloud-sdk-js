@@ -167,7 +167,6 @@ function xfS4hanaCloudBindingToDestination(
 
 /**
  * Options to customize the behavior of [[destinationForServiceBinding]].
- * @internal
  */
 export interface DestinationForServiceBindingOptions {
   /**

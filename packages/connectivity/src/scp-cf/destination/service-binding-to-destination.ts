@@ -19,8 +19,27 @@ export const serviceToDestinationTransformers: Record<
   's4-hana-cloud': xfS4hanaCloudBindingToDestination,
   destination: destinationBindingToDestination,
   'saas-registry': saasRegistryBindingToDestination,
-  workflow: workflowBindingToDestination
+  workflow: workflowBindingToDestination,
+  'service-manager': serviceManagerBindingToDestination
 };
+
+async function serviceManagerBindingToDestination(
+  serviceBinding: ServiceBinding,
+  jwt?: JwtPayload
+): Promise<Destination> {
+  const service: Service = {
+    ...serviceBinding,
+    tags: serviceBinding.tags,
+    label: 'service-manager',
+    credentials: { ...serviceBinding.credentials }
+  };
+  const token = await serviceToken(service, { jwt });
+  return buildClientCredentialsDestination(
+    token,
+    serviceBinding.credentials.sm_url,
+    serviceBinding.name
+  );
+}
 
 async function destinationBindingToDestination(
   serviceBinding: ServiceBinding,

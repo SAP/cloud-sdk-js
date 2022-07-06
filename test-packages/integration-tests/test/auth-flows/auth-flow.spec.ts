@@ -60,6 +60,12 @@ describe('OAuth flows', () => {
     expect(destination?.authTokens![0].value).toBeDefined();
     expect(destination?.url).toBeDefined();
 
+    destination = await getDestination({
+      destinationName: 'service-manager-js-sdk'
+    });
+    expect(destination?.authTokens![0].value).toBeDefined();
+    expect(destination?.url).toBeDefined();
+
     destination = await getDestination({ destinationName: 'workflow-js-sdk' });
     expect(destination?.authTokens![0].value).toBeDefined();
     expect(destination?.url).toBeDefined();

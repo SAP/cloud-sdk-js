@@ -47,6 +47,21 @@ describe('vcap-service-destination', () => {
     expect(getActualClientId(spy)).toBe('clientIdBusinessLogging');
   });
 
+  it('creates a destination for the service manager service', async () => {
+    await expect(
+      destinationForServiceBinding('my-service-manager', {
+        jwt: providerUserPayload
+      })
+    ).resolves.toEqual({
+      url: 'https://service-manager.cfapps.sap.hana.ondemand.com',
+      authentication: 'OAuth2ClientCredentials',
+      name: 'my-service-manager',
+      authTokens: [expect.objectContaining({ value: expect.any(String) })]
+    });
+
+    expect(getActualClientId(spy)).toBe('clientIdServiceManager');
+  });
+
   it('creates a destination for the destination service', async () => {
     await expect(
       destinationForServiceBinding('my-destination-service', {
@@ -257,6 +272,17 @@ const serviceBindings = {
         clientid: 'clientIdSaasRegistry',
         clientsecret: 'PASSWORD',
         saas_registry_url: 'https://saas-manager.mesh.cf.sap.hana.ondemand.com'
+      }
+    }
+  ],
+  'service-manager': [
+    {
+      label: 'service-manager',
+      name: 'my-service-manager',
+      credentials: {
+        sm_url: 'https://service-manager.cfapps.sap.hana.ondemand.com',
+        clientid: 'clientIdServiceManager',
+        clientsecret: 'PASSWORD'
       }
     }
   ]

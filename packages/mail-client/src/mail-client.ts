@@ -4,7 +4,10 @@ import {
   resolveDestinationWithType,
   toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
-import { createLogger } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  transformVariadicArgumentToArray
+} from '@sap-cloud-sdk/util';
 import nodemailer, { SentMessageInfo, Transporter } from 'nodemailer';
 import { MailOptions, MailResponse } from './mail-client-types';
 
@@ -38,7 +41,7 @@ function getHostAndPort(
     throw Error(
       `The destination '${toDestinationNameUrl(
         destination
-      )}' does not contain host or port information as properties.`
+      )}' does not contain host or port information as properties. Please configure in the "Additional Properties" of the destination.`
     );
   }
   return { host, port: parseInt(port) };
@@ -55,7 +58,7 @@ function getCredentials(
     throw Error(
       `The destination '${toDestinationNameUrl(
         destination
-      )}' does not contain user or password information as properties.`
+      )}' does not contain user or password information as properties. The mail-client only supports basic authentication, so "user" and "password" are required.`
     );
   }
   return { user, password };
@@ -129,14 +132,25 @@ async function sendMailWithNodemailer<T extends MailOptions>(
  * Builds a `Transport` between the application and the mail server, sends mails by using the `Transport`, then close it.
  * This function also does the destination look up, when passing [[DestinationFetchOptions]] instead of [[Destination]].
  * @param destination - A destination or a destination name and a JWT.
- * @param mailOptions - Any object representing [[MailOptions]].
+ * @param mailOptions - Any objects representing [[MailOptions]]. Both array and varargs are supported.
  * @returns A promise resolving to an array of [[MailResponse]].
  * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination#referencing-destinations-by-name
  */
 export async function sendMail<T extends MailOptions>(
   destination: DestinationOrFetchOptions,
   ...mailOptions: T[]
+): Promise<MailResponse[]>;
+export async function sendMail<T extends MailOptions>(
+  destination: DestinationOrFetchOptions,
+  mailOptions: T[]
+): Promise<MailResponse[]>;
+/* eslint-disable jsdoc/require-jsdoc */
+export async function sendMail<T extends MailOptions>(
+  destination: DestinationOrFetchOptions,
+  first: T | T[],
+  ...rest: T[]
 ): Promise<MailResponse[]> {
+  const mailOptions = transformVariadicArgumentToArray(first, rest);
   const resolvedDestination = await resolveDestinationWithType(
     destination,
     'MAIL'
@@ -150,3 +164,4 @@ export async function sendMail<T extends MailOptions>(
     ...mailOptions
   );
 }
+/* eslint-enable jsdoc/require-jsdoc */

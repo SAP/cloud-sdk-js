@@ -5,6 +5,8 @@
 
 # @sap-cloud-sdk/mail-client
 
+## This package is released for test purposes. We might introduce breaking changes.
+
 This package contains the mail client functionality of the SAP Cloud SDK.
 
 With the help of the mail client, sending emails from the application on SAP BTP is simplified as the client handles connectivity related issues such as destination lookup, connections to SAP S/4HANA On-premise and web proxies.

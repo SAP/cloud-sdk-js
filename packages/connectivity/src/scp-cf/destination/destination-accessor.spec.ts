@@ -13,8 +13,17 @@ describe('destination accessor', () => {
     type: 'HTTP'
   };
 
-  it('resolves destination when the destination type matches', async () => {
+  it('resolves destination when the destination type matches HTTP', async () => {
     const resolved = await resolveDestinationWithType(destination, 'HTTP');
+    const keys = ['url', 'authentication', 'username', 'password'];
+    expect(pick(keys, resolved)).toStrictEqual(pick(keys, destination));
+  });
+
+  it('resolves destination when the destination type matches MAIL', async () => {
+    const resolved = await resolveDestinationWithType(
+      { ...destination, type: 'MAIL' },
+      'MAIL'
+    );
     const keys = ['url', 'authentication', 'username', 'password'];
     expect(pick(keys, resolved)).toStrictEqual(pick(keys, destination));
   });

@@ -1,8 +1,6 @@
 import { createLogger, flatten } from '@sap-cloud-sdk/util';
 import { getVcapService } from '../environment-accessor';
 import { JwtPayload } from '../jsonwebtoken-type';
-import { serviceToken } from '../token-accessor';
-import { Service } from '../environment-accessor-types';
 import { decodeJwt } from '../jwt';
 import {
   addProxyConfigurationInternet,
@@ -13,11 +11,20 @@ import { Destination } from './destination-service-types';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import { destinationCache, IsolationStrategy } from './destination-cache';
 import { decodedJwtOrZid } from './destination-from-registration';
+import { serviceToDestinationTransformers } from './service-binding-to-destination';
 
 const logger = createLogger({
   package: 'connectivity',
   messageContext: 'destination-accessor-vcap'
 });
+
+/**
+ * @internal
+ */
+export interface PartialDestinationFetchOptions {
+  useCache?: boolean;
+  jwt?: JwtPayload;
+}
 
 /**
  * Tries to build a destination from a service binding with the given name.
@@ -30,10 +37,8 @@ const logger = createLogger({
  */
 export async function destinationForServiceBinding(
   serviceInstanceName: string,
-  options: DestinationForServiceBindingsOptions & {
-    jwt?: JwtPayload;
-    useCache?: boolean;
-  } = {}
+  options: DestinationForServiceBindingsOptions &
+    PartialDestinationFetchOptions = {}
 ): Promise<Destination> {
   if (options.useCache) {
     const fromCache = await destinationCache.retrieveDestinationFromCache(
@@ -159,17 +164,6 @@ function findServiceByName(
   return found;
 }
 
-const serviceToDestinationTransformers: Record<
-  string,
-  ServiceBindingTransformFunction
-> = {
-  'business-logging': businessLoggingBindingToDestination,
-  's4-hana-cloud': xfS4hanaCloudBindingToDestination,
-  destination: destinationBindingToDestination,
-  'saas-registry': saasRegistryBindingToDestination,
-  workflow: workflowBindingToDestination
-};
-
 async function transform(
   serviceBinding: ServiceBinding,
   jwt?: JwtPayload
@@ -207,134 +201,25 @@ function noServiceBindingFoundError(
   );
 }
 
-async function destinationBindingToDestination(
-  serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
-): Promise<Destination> {
-  const service: Service = {
-    ...serviceBinding,
-    tags: serviceBinding.tags,
-    label: 'destination',
-    credentials: { ...serviceBinding.credentials }
-  };
-  const token = await serviceToken(service, { jwt });
-  return buildClientCredentialsDesntiona(
-    token,
-    serviceBinding.credentials.uri,
-    serviceBinding.name
-  );
-}
-
-async function saasRegistryBindingToDestination(
-  serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
-) {
-  const service: Service = {
-    ...serviceBinding,
-    tags: serviceBinding.tags,
-    label: 'saas-registry',
-    credentials: { ...serviceBinding.credentials }
-  };
-  const token = await serviceToken(service, { jwt });
-  return buildClientCredentialsDesntiona(
-    token,
-    serviceBinding.credentials['saas_registry_url'],
-    serviceBinding.name
-  );
-}
-
-async function businessLoggingBindingToDestination(
-  serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
-): Promise<Destination> {
-  const service: Service = {
-    ...serviceBinding,
-    tags: serviceBinding.tags,
-    label: 'business-logging',
-    credentials: { ...serviceBinding.credentials.uaa }
-  };
-  const token = await serviceToken(service, { jwt });
-  return buildClientCredentialsDesntiona(
-    token,
-    serviceBinding.credentials.writeUrl,
-    serviceBinding.name
-  );
-}
-
-async function workflowBindingToDestination(
-  serviceBinding: ServiceBinding,
-  jwt: JwtPayload
-) {
-  const service: Service = {
-    ...serviceBinding,
-    tags: serviceBinding.tags,
-    label: 'workflow',
-    credentials: { ...serviceBinding.credentials.uaa }
-  };
-  const token = await serviceToken(service, { jwt });
-  return buildClientCredentialsDesntiona(
-    token,
-    serviceBinding.credentials.endpoints.workflow_odata_url,
-    serviceBinding.name
-  );
-}
-
-function buildClientCredentialsDesntiona(
-  token: string,
-  url: string,
-  name
-): Destination {
-  const expiresIn = Math.floor(
-    (decodeJwt(token).exp! * 1000 - Date.now()) / 1000
-  ).toString(10);
-  return {
-    url,
-    name,
-    authentication: 'OAuth2ClientCredentials',
-    authTokens: [
-      {
-        value: token,
-        type: 'bearer',
-        expiresIn,
-        http_header: { key: 'Authorization', value: `Bearer ${token}` },
-        error: null
-      }
-    ]
-  };
-}
-
-async function xfS4hanaCloudBindingToDestination(
-  serviceBinding: ServiceBinding
-): Promise<Destination> {
-  return {
-    url: serviceBinding.credentials.URL,
-    authentication: 'BasicAuthentication',
-    username: serviceBinding.credentials.User,
-    password: serviceBinding.credentials.Password
-  };
-}
-
 /**
  * @internal
  */
-export async function searchServiceBindingForDestination(
-  options: DestinationFetchOptions & DestinationForServiceBindingsOptions
-): Promise<Destination | null> {
+export async function searchServiceBindingForDestination({
+  iss,
+  jwt,
+  serviceBindingTransformFn,
+  destinationName,
+  useCache
+}: DestinationFetchOptions &
+  DestinationForServiceBindingsOptions): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
-    const jwt = options.iss
-      ? { iss: options.iss }
-      : options.jwt
-      ? decodeJwt(options.jwt)
-      : undefined;
-    const destination = await destinationForServiceBinding(
-      options.destinationName,
-      {
-        serviceBindingTransformFn: options.serviceBindingTransformFn,
-        jwt,
-        useCache: options.useCache
-      }
-    );
+    const jwtFromOptions = iss ? { iss } : jwt ? decodeJwt(jwt) : undefined;
+    const destination = await destinationForServiceBinding(destinationName, {
+      serviceBindingTransformFn,
+      jwt: jwtFromOptions,
+      useCache
+    });
     logger.info('Successfully retrieved destination from service binding.');
     return destination;
   } catch (error) {

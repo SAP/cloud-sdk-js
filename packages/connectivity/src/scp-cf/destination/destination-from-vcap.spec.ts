@@ -10,6 +10,7 @@ import {
   ServiceBinding
 } from './destination-from-vcap';
 import { destinationCache } from './destination-cache';
+import SpyInstance = jest.SpyInstance;
 
 describe('vcap-service-destination', () => {
   const spy = jest.spyOn(tokenAccessor, 'serviceToken');
@@ -27,6 +28,10 @@ describe('vcap-service-destination', () => {
     jest.clearAllMocks();
   });
 
+  function getActualClientId(spyInstance: SpyInstance): string {
+    return spyInstance.mock.calls[0][0]['credentials']['clientid'];
+  }
+
   it('creates a destination for the business logging service', async () => {
     await expect(
       destinationForServiceBinding('my-business-logging', {
@@ -38,9 +43,8 @@ describe('vcap-service-destination', () => {
       name: 'my-business-logging',
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
-    expect(spy.mock.calls[0][0]['credentials']['clientid']).toBe(
-      'clientIdBusinessLogging'
-    );
+
+    expect(getActualClientId(spy)).toBe('clientIdBusinessLogging');
   });
 
   it('creates a destination for the destination service', async () => {
@@ -54,9 +58,7 @@ describe('vcap-service-destination', () => {
       name: 'my-destination-service',
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
-    expect(spy.mock.calls[0][0]['credentials']['clientid']).toBe(
-      'clientIdDestination'
-    );
+    expect(getActualClientId(spy)).toBe('clientIdDestination');
   });
 
   it('creates a destination for the saas registry', async () => {
@@ -70,9 +72,7 @@ describe('vcap-service-destination', () => {
       name: 'my-saas-registry',
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
-    expect(spy.mock.calls[0][0]['credentials']['clientid']).toBe(
-      'clientIdSaasRegistry'
-    );
+    expect(getActualClientId(spy)).toBe('clientIdSaasRegistry');
   });
 
   it('creates a destination for the workflow', async () => {
@@ -86,9 +86,7 @@ describe('vcap-service-destination', () => {
       name: 'my-workflow',
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
-    expect(spy.mock.calls[0][0]['credentials']['clientid']).toBe(
-      'clientIdWorkFlow'
-    );
+    expect(getActualClientId(spy)).toBe('clientIdWorkFlow');
   });
 
   it('creates a destination for the XF s4 hana cloud service', async () => {

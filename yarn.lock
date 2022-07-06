@@ -1168,7 +1168,7 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds@^5.6.0", "@sap/cds@^5.9.8":
+"@sap/cds@^5.6.0":
   version "5.9.8"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.8.tgz#4ba06e6441fd4226faf1045d804188e0d36def5b"
   integrity sha512-qRlhxOt51iz04uvtLTdyMOLp7n9ph1FW9B7Cv/k/e89jNJ3RxMA6BPigw/opw9Qd8uod2j4g/oMXg1XSN3m1vA==

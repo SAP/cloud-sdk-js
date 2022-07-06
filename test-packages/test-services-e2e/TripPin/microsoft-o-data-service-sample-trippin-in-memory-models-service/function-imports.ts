@@ -16,7 +16,7 @@ import { Airports } from './Airports';
 import { AirportsApi } from './AirportsApi';
 
 /**
- * Type of the parameters to be passed to [[getNearestAirport]].
+ * Type of the parameters to be passed to {@link getNearestAirport}.
  */
 export interface GetNearestAirportParameters<
   DeSerializersT extends DeSerializers

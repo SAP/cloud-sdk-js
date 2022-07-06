@@ -11,14 +11,14 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 import { CaseTest } from './CaseTest';
 /**
- * Request builder class for operations supported on the [[CaseTest]] entity.
+ * Request builder class for operations supported on the {@link CaseTest} entity.
  */
 export declare class CaseTestRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<CaseTest<T>, T> {
   /**
    * Returns a request builder for retrieving one `CaseTest` entity based on its keys.
-   * @param keyPropertyString Key property. See [[CaseTest.keyPropertyString]].
+   * @param keyPropertyString Key property. See {@link CaseTest.keyPropertyString}.
    * @returns A request builder for creating requests to retrieve one `CaseTest` entity based on its keys.
    */
   getByKey(
@@ -43,7 +43,7 @@ export declare class CaseTestRequestBuilder<
   update(entity: CaseTest<T>): UpdateRequestBuilder<CaseTest<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `CaseTest`.
-   * @param keyPropertyString Key property. See [[CaseTest.keyPropertyString]].
+   * @param keyPropertyString Key property. See {@link CaseTest.keyPropertyString}.
    * @returns A request builder for creating requests that delete an entity of type `CaseTest`.
    */
   delete(keyPropertyString: string): DeleteRequestBuilder<CaseTest<T>, T>;

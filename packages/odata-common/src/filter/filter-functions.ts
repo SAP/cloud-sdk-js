@@ -419,7 +419,7 @@ export interface FilterFunctionsType {
 }
 
 /**
- * Union type of all the possible filter functions contained in [[FilterFunctionsType]].
+ * Union type of all the possible filter functions contained in {@link FilterFunctionsType}.
  */
 export type FilterFunctionTypes =
   | typeof endsWith

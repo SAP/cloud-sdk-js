@@ -15,11 +15,11 @@ import {
 describe('array', () => {
   describe('flat', () => {
     it('flattens a nested array of numbers', () => {
-      expect(flat([[1], [2], [3]])).toStrictEqual([1, 2, 3]);
+      expect(flat({@link 1], [2], [3})).toStrictEqual([1, 2, 3]);
     });
 
     it('flattens a nested array of strings', () => {
-      expect(flat([['1'], ['2'], ['3']])).toStrictEqual(['1', '2', '3']);
+      expect(flat({@link '1'], ['2'], ['3'})).toStrictEqual(['1', '2', '3']);
     });
 
     it('returns an empty array for empty arrays', () => {
@@ -112,7 +112,7 @@ describe('array', () => {
     });
 
     it('should split if chunk size is greater than the array', () => {
-      expect(splitInChunks([1, 2, 3], 4)).toEqual([[1, 2, 3]]);
+      expect(splitInChunks([1, 2, 3], 4)).toEqual({@link 1, 2, 3});
     });
 
     it('should split the array in chunks', () => {
@@ -154,7 +154,7 @@ describe('zip', () => {
 
 describe('partition', () => {
   it('partitions empty array', () => {
-    expect(partition([], () => false)).toStrictEqual([[], []]);
+    expect(partition([], () => false)).toStrictEqual({@link ], [});
   });
 
   it('partitions array based on value', () => {

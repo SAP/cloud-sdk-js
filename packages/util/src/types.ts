@@ -14,7 +14,7 @@ export function caps(oDataVersion: any): 'V2' | 'V4' {
 
 /**
  * A type which sets all properties of a generic type to `never`.
- * Used in the exclusive or type [[Xor]].
+ * Used in the exclusive or type {@link Xor}.
  */
 export type Without<T> = { [P in keyof T]?: never };
 

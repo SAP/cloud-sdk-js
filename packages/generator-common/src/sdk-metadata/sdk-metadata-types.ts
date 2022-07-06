@@ -43,7 +43,7 @@ export interface Client {
  */
 export interface PregeneratedLibrary {
   /**
-   * Version of the published client library e.g. "1.23.0". It uses the [[getVersionForClient]] function to get it.
+   * Version of the published client library e.g. "1.23.0". It uses the {@link getVersionForClient} function to get it.
    */
   version: string;
   generatedAt: DateTimeString;

@@ -88,7 +88,7 @@ describe('entity', () => {
         createEntityType(
           'TestEntityType',
           [],
-          [['SingleNavProperty', 'TestEntityType']]
+          {@link 'SingleNavProperty', 'TestEntityType'}
         )
       ],
       [
@@ -113,7 +113,7 @@ describe('entity', () => {
         createEntityType(
           'TestEntityType',
           [],
-          [['CollectionNavProperty', 'Collection(TestEntityType)']]
+          {@link 'CollectionNavProperty', 'Collection(TestEntityType)'}
         )
       ],
       [

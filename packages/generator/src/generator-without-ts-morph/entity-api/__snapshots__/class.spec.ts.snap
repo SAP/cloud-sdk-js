@@ -17,7 +17,7 @@ exports[`entity api class gets proper class content 1`] = `
 
   private navigationPropertyFields!: {
       /**
-       * Static representation of the one-to-one navigation property [[toBrunch]] for query construction.
+       * Static representation of the one-to-one navigation property {@link toBrunch} for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
       TO_BRUNCH: OneToOneLink<
@@ -88,7 +88,7 @@ exports[`entity api class gets proper class content 1`] = `
 NUMBER_OF_EGGS: OrderableEdmTypeField<Breakfast<DeSerializers>, DeSerializersT, 'Edm.Decimal', true, true>,
 BREAKFAST_TIME: OrderableEdmTypeField<Breakfast<DeSerializers>, DeSerializersT, 'Edm.DateTime', false, true>,
 /**
- * Static representation of the one-to-one navigation property [[toBrunch]] for query construction.
+ * Static representation of the one-to-one navigation property {@link toBrunch} for query construction.
  * Use to reference this property in query operations such as 'select' in the fluent request API.
  */
 TO_BRUNCH: OneToOneLink<
@@ -104,17 +104,17 @@ ALL_FIELDS: AllFields<Breakfast<DeSerializers>>
       const fieldBuilder = this.fieldBuilder;
       this._schema = { 
     /**
- * Static representation of the [[entityName]] property for query construction.
+ * Static representation of the {@link entityName} property for query construction.
  * Use to reference this property in query operations such as 'select' in the fluent request API.
  */
 ENTITY_NAME: fieldBuilder.buildEdmTypeField('EntityName', 'Edm.String', false),
 /**
- * Static representation of the [[numberOfEggs]] property for query construction.
+ * Static representation of the {@link numberOfEggs} property for query construction.
  * Use to reference this property in query operations such as 'select' in the fluent request API.
  */
 NUMBER_OF_EGGS: fieldBuilder.buildEdmTypeField('A_noEggs', 'Edm.Decimal', true),
 /**
- * Static representation of the [[breakfastTime]] property for query construction.
+ * Static representation of the {@link breakfastTime} property for query construction.
  * Use to reference this property in query operations such as 'select' in the fluent request API.
  */
 BREAKFAST_TIME: fieldBuilder.buildEdmTypeField('BreakfastTime', 'Edm.DateTime', false),

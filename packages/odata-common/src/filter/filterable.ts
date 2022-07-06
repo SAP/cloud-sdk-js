@@ -31,7 +31,7 @@ export type Filterable<
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;
 
 /**
- * Combine [[Filterable]]s with logical `and` to create a [[FilterList]].
+ * Combine {@link Filterable}s with logical `and` to create a {@link FilterList}.
  * @example
  * ```ts
  * Entity.requestBuilder()
@@ -39,7 +39,7 @@ export type Filterable<
  *  .filter(and(filterExp1, filterExp2));
  * ```
  *
- * Note that the [[GetAllRequestBuilder.filter | GetAllRequestBuilderV2.filter]]  and [[GetAllRequestBuilderV4.filter]] method take a rest parameter and thereby an array of filter expressions that are then combined conjunctively. As a consequence following is equivalent to the example above:
+ * Note that the {@link GetAllRequestBuilder.filter | GetAllRequestBuilderV2.filter}  and {@link GetAllRequestBuilderV4.filter} method take a rest parameter and thereby an array of filter expressions that are then combined conjunctively. As a consequence following is equivalent to the example above:
  * ```ts
  * Entity.requestBuilder()
  *  .getAll()
@@ -76,7 +76,7 @@ export function and<
 }
 
 /**
- * Combine [[Filterable]]s with logical `or` to create a [[FilterList]].
+ * Combine {@link Filterable}s with logical `or` to create a {@link FilterList}.
  * @example
  * ```ts
  * Entity.requestBuilder()

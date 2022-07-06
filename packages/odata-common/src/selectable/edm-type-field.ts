@@ -7,7 +7,7 @@ import { ConstructorOrField } from './constructor-or-field';
 import { Field, FieldOptions } from './field';
 
 /**
- * Convenience type that maps the given [[FieldType]] to a new type that is either nullable or not, depending on the given `NullableT`.
+ * Convenience type that maps the given {@link FieldType} to a new type that is either nullable or not, depending on the given `NullableT`.
  * @typeparam FieldT - Field type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  */
@@ -17,7 +17,7 @@ export type NullableFieldType<
 > = NullableT extends true ? FieldT | null : FieldT;
 
 /**
- * Convenience type that maps the given EDM type to a [[FieldType]]. It also considers whether the field is nullable.
+ * Convenience type that maps the given EDM type to a {@link FieldType}. It also considers whether the field is nullable.
  * @typeparam EdmT - EDM type of the field. Deprecated: Field type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @internal
@@ -37,7 +37,7 @@ export type FieldTypeByEdmType<
  * For example, when constructing a query on the BusinessPartner entity, an instance of `EdmTypeField<BusinessPartner, string>`
  * can be supplied as argument to the select function, e.g. `BusinessPartner.FIRST_NAME`.
  *
- * See also: [[Selectable]].
+ * See also: {@link Selectable}.
  * @typeparam EntityT - Type of the entity the field belongs to.
  * @typeparam DeSerializersT - Type of the (de-)serializers.
  * @typeparam EdmT - EDM type of the field.

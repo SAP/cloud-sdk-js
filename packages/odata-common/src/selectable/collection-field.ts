@@ -51,7 +51,7 @@ export class CollectionField<
 
 /**
  * Convenience type to reflect the type of the instances of a collection field.
- * The actual type of the elements for complex type collections is [[ComplexTypeNamespace]].
+ * The actual type of the elements for complex type collections is {@link ComplexTypeNamespace}.
  * @typeparam CollectionFieldT - Type of of elements of the collection. This can either be an EDM type or complex type.
  */
 export type CollectionFieldType<

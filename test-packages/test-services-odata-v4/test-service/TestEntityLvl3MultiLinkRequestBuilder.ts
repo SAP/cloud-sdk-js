@@ -17,14 +17,14 @@ import {
 import { TestEntityLvl3MultiLink } from './TestEntityLvl3MultiLink';
 
 /**
- * Request builder class for operations supported on the [[TestEntityLvl3MultiLink]] entity.
+ * Request builder class for operations supported on the {@link TestEntityLvl3MultiLink} entity.
  */
 export class TestEntityLvl3MultiLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityLvl3MultiLink<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityLvl3MultiLink` entity based on its keys.
-   * @param keyProperty Key property. See [[TestEntityLvl3MultiLink.keyProperty]].
+   * @param keyProperty Key property. See {@link TestEntityLvl3MultiLink.keyProperty}.
    * @returns A request builder for creating requests to retrieve one `TestEntityLvl3MultiLink` entity based on its keys.
    */
   getByKey(
@@ -76,7 +76,7 @@ export class TestEntityLvl3MultiLinkRequestBuilder<
 
   /**
    * Returns a request builder for deleting an entity of type `TestEntityLvl3MultiLink`.
-   * @param keyProperty Key property. See [[TestEntityLvl3MultiLink.keyProperty]].
+   * @param keyProperty Key property. See {@link TestEntityLvl3MultiLink.keyProperty}.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityLvl3MultiLink`.
    */
   delete(

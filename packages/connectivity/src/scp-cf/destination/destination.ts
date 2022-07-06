@@ -13,7 +13,7 @@ import {
 
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.
- * @param destination - An object that adheres to the [[Destination]] interface.
+ * @param destination - An object that adheres to the {@link Destination} interface.
  * @returns An SDK compatible destination object.
  */
 export function sanitizeDestination(
@@ -403,7 +403,7 @@ export function noDestinationErrorMessage(
 }
 
 /**
- * Type that is either a [[Destination]] or (XOR) [[DestinationFetchOptions & DestinationForServiceBindingOptions]].
+ * Type that is either a {@link Destination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
  */
 export type DestinationOrFetchOptions = Xor<
   Destination,

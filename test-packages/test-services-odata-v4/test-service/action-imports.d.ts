@@ -6,7 +6,7 @@ import {
 import { TestComplexType } from './TestComplexType';
 import { TestEntity } from './TestEntity';
 /**
- * Type of the parameters to be passed to [[testActionImportNoParameterNoReturnType]].
+ * Type of the parameters to be passed to {@link testActionImportNoParameterNoReturnType}.
  */
 export interface TestActionImportNoParameterNoReturnTypeParameters<
   DeSerializersT extends DeSerializers
@@ -28,7 +28,7 @@ export declare function testActionImportNoParameterNoReturnType<
   undefined
 >;
 /**
- * Type of the parameters to be passed to [[testActionImportMultipleParameterComplexReturnType]].
+ * Type of the parameters to be passed to {@link testActionImportMultipleParameterComplexReturnType}.
  */
 export interface TestActionImportMultipleParameterComplexReturnTypeParameters<
   DeSerializersT extends DeSerializers
@@ -67,7 +67,7 @@ export declare function testActionImportMultipleParameterComplexReturnType<
   TestComplexType
 >;
 /**
- * Type of the parameters to be passed to [[testActionImportUnsupportedEdmTypes]].
+ * Type of the parameters to be passed to {@link testActionImportUnsupportedEdmTypes}.
  */
 export interface TestActionImportUnsupportedEdmTypesParameters<
   DeSerializersT extends DeSerializers
@@ -94,7 +94,7 @@ export declare function testActionImportUnsupportedEdmTypes<
   any
 >;
 /**
- * Type of the parameters to be passed to [[testActionImportNoParameterEntityReturnType]].
+ * Type of the parameters to be passed to {@link testActionImportNoParameterEntityReturnType}.
  */
 export interface TestActionImportNoParameterEntityReturnTypeParameters<
   DeSerializersT extends DeSerializers
@@ -116,7 +116,7 @@ export declare function testActionImportNoParameterEntityReturnType<
   TestEntity
 >;
 /**
- * Type of the parameters to be passed to [[testActionImportSharedEntityReturnType]].
+ * Type of the parameters to be passed to {@link testActionImportSharedEntityReturnType}.
  */
 export interface TestActionImportSharedEntityReturnTypeParameters<
   DeSerializersT extends DeSerializers
@@ -141,7 +141,7 @@ export declare function testActionImportSharedEntityReturnType<
   'execute'
 >;
 /**
- * Type of the parameters to be passed to [[testActionImportSharedEntityReturnTypeCollection]].
+ * Type of the parameters to be passed to {@link testActionImportSharedEntityReturnTypeCollection}.
  */
 export interface TestActionImportSharedEntityReturnTypeCollectionParameters<
   DeSerializersT extends DeSerializers
@@ -166,7 +166,7 @@ export declare function testActionImportSharedEntityReturnTypeCollection<
   'execute'
 >;
 /**
- * Type of the parameters to be passed to [[testActionImportNullableTest]].
+ * Type of the parameters to be passed to {@link testActionImportNullableTest}.
  */
 export interface TestActionImportNullableTestParameters<
   DeSerializersT extends DeSerializers

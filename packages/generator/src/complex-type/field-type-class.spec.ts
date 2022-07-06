@@ -31,7 +31,7 @@ describe('field-type-class', () => {
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Complexity', 'Edm.String', false)",
           docs: [
-            `Representation of the [[ComplexMealType.complexity]] property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
+            `Representation of the {@link ComplexMealType.complexity} property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
           ]
         },
         {
@@ -41,7 +41,7 @@ describe('field-type-class', () => {
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Amount', 'Edm.Int16', false)",
           docs: [
-            `Representation of the [[ComplexMealType.amount]] property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
+            `Representation of the {@link ComplexMealType.amount} property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
           ]
         }
       ],
@@ -130,7 +130,7 @@ describe('field-type-class', () => {
         },
         {
           docs: [
-            "Representation of the [[ComplexMealWithDesertType.complexDesert]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+            "Representation of the {@link ComplexMealWithDesertType.complexDesert} property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ],
           initializer:
             "this._fieldBuilder.buildComplexTypeField('ComplexDesert', ComplexDesertField, false)",
@@ -140,7 +140,7 @@ describe('field-type-class', () => {
         },
         {
           docs: [
-            "Representation of the [[ComplexMealWithDesertType.amount]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+            "Representation of the {@link ComplexMealWithDesertType.amount} property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ],
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Amount', 'Edm.Int16', false)",

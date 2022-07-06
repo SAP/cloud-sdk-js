@@ -165,7 +165,7 @@ export declare class TestComplexTypeField<
 > {
   private _fieldBuilder;
   /**
-   * Representation of the [[TestComplexType.stringProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.stringProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   stringProperty: OrderableEdmTypeField<
@@ -176,7 +176,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.booleanProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   booleanProperty: OrderableEdmTypeField<
@@ -187,7 +187,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.guidProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.guidProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   guidProperty: OrderableEdmTypeField<
@@ -198,7 +198,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.int16Property]] property for query construction.
+   * Representation of the {@link TestComplexType.int16Property} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   int16Property: OrderableEdmTypeField<
@@ -209,7 +209,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.int32Property]] property for query construction.
+   * Representation of the {@link TestComplexType.int32Property} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   int32Property: OrderableEdmTypeField<
@@ -220,7 +220,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.int64Property]] property for query construction.
+   * Representation of the {@link TestComplexType.int64Property} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   int64Property: OrderableEdmTypeField<
@@ -231,7 +231,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.decimalProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   decimalProperty: OrderableEdmTypeField<
@@ -242,7 +242,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.singleProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.singleProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   singleProperty: OrderableEdmTypeField<
@@ -253,7 +253,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.doubleProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   doubleProperty: OrderableEdmTypeField<
@@ -264,7 +264,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.floatProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.floatProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   floatProperty: OrderableEdmTypeField<
@@ -275,7 +275,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.timeOfDayProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.timeOfDayProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   timeOfDayProperty: OrderableEdmTypeField<
@@ -286,7 +286,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.dateProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.dateProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   dateProperty: OrderableEdmTypeField<
@@ -297,7 +297,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.dateTimeOffSetProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   dateTimeOffSetProperty: OrderableEdmTypeField<
@@ -308,7 +308,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.byteProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.byteProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   byteProperty: OrderableEdmTypeField<
@@ -319,7 +319,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.sByteProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   sByteProperty: OrderableEdmTypeField<
@@ -330,7 +330,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.geographyPointProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.geographyPointProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   geographyPointProperty: EdmTypeField<
@@ -341,12 +341,12 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.enumProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.enumProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   enumProperty: EnumField<EntityT, DeSerializersT, TestEnumType, true, false>;
   /**
-   * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
+   * Representation of the {@link TestComplexType.somethingTheSdkDoesNotSupport} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   somethingTheSdkDoesNotSupport: EdmTypeField<
@@ -357,7 +357,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.complexTypeProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   complexTypeProperty: TestNestedComplexTypeField<
@@ -367,7 +367,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.collectionStringProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   collectionStringProperty: CollectionField<
@@ -378,7 +378,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.collectionEnumProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.collectionEnumProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   collectionEnumProperty: CollectionField<
@@ -389,7 +389,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.collectionComplexTypeProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   collectionComplexTypeProperty: CollectionField<
@@ -400,7 +400,7 @@ export declare class TestComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
+   * Representation of the {@link TestComplexType.baseStringProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   baseStringProperty: OrderableEdmTypeField<

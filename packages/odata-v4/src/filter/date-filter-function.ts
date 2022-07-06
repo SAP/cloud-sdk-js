@@ -7,7 +7,6 @@ import {
 
 /**
  * Representation of a filter function, that returns a value of type date. This supports DateTimeOffset values.
- * @internal
  */
 export class DateFilterFunction<
   EntityT extends EntityBase

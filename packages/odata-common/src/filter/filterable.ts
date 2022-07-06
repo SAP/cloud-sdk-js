@@ -13,7 +13,6 @@ import { FilterLink } from './filter-link';
 /**
  * A union of all types that can be used for filtering.
  * @typeparam EntityT - Type of the entity to be filtered on.
- * @internal
  */
 export type Filterable<
   EntityT extends EntityBase,

@@ -28,7 +28,10 @@ export const registerDestinationCache = DestinationCache(
   new DefaultDestinationCache(undefined)
 );
 
-type RegisterDestinationOptions = Pick<
+/**
+ * Represents options to configure how a destination should be registered.
+ */
+export type RegisterDestinationOptions = Pick<
   DestinationFetchOptions,
   'jwt' | 'isolationStrategy'
 >;
@@ -59,7 +62,7 @@ export async function registerDestination(
 }
 
 /**
- * @internal
+ * Represents a destination with a `name` property.
  */
 export type DestinationWithName = Destination & { name: string };
 

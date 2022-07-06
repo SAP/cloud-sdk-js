@@ -15,7 +15,10 @@ import { ConstructorOrField } from './constructor-or-field';
 import { FieldOptions } from './field';
 import { EnumField } from './enum-field';
 
-type ComplexTypeFieldConstructor<
+/**
+ * Constructor function creating a [[ComplexTypeField]].
+ */
+export type ComplexTypeFieldConstructor<
   ComplexTypeFieldT extends ComplexTypeField<
     EntityT,
     DeSerializersT,
@@ -38,7 +41,6 @@ type ComplexTypeFieldConstructor<
 /**
  * Convenience type to determine whether a field should be selectable. If the given `FieldOfT` is the type of an entity, it is selectable.
  * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
- * @internal
  */
 export type IsSelectableField<FieldOfT extends ConstructorOrField<any>> =
   FieldOfT extends Constructable<any> ? true : false;
@@ -50,7 +52,10 @@ export type IsSelectableField<FieldOfT extends ConstructorOrField<any>> =
 export type IsOrderableField<EdmT extends EdmTypeShared<'any'>> =
   EdmT extends OrderableEdmType ? true : false;
 
-type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
+/**
+ * Helper type to extract the entity from a field so EntityTypeFromFieldOf<EdmTypeField<MyEntity>> is `MyEntity`.
+ */
+export type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
   FieldOfT extends ConstructorOrField<infer EntityT> ? EntityT : never;
 
 /**

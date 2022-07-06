@@ -33,6 +33,7 @@ export function sanitizeDestination(
 /**
  * Takes a JSON object returned by any of the calls to the destination service and returns an SDK compatible destination object.
  * This function only accepts destination configurations of type 'HTTP' and will error if no 'URL' is given.
+ * TODO: Remove from public api in version 3. (Check if related types can also be removed from public api).
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
  */
@@ -310,7 +311,6 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
 
 /**
  * Destination configuration alongside authtokens and certificates.
- * @internal
  */
 export interface DestinationJson {
   [key: string]: any;
@@ -321,7 +321,6 @@ export interface DestinationJson {
 
 /**
  * Configuration of a destination as it is available through the destination service.
- * @internal
  */
 export interface DestinationConfiguration {
   [key: string]: any;

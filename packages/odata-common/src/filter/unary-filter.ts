@@ -5,7 +5,7 @@ import type { Filterable } from './filterable';
 type UnaryFilterOperator = 'not';
 
 /**
- * @internal
+ * Class representing a unary filter which is a filter containing just a single argument e.g. not.
  */
 export class UnaryFilter<
   EntityT extends EntityBase,

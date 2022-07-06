@@ -57,7 +57,6 @@ export async function destinationForServiceBinding(
  * }
  * ```
  * In this example, the key "s4-hana-cloud" refers to an array of service bindings.
- * @internal
  */
 export interface ServiceBinding {
   [key: string]: any;
@@ -168,7 +167,6 @@ function xfS4hanaCloudBindingToDestination(
 
 /**
  * Options to customize the behavior of [[destinationForServiceBinding]].
- * @internal
  */
 export interface DestinationForServiceBindingOptions {
   /**

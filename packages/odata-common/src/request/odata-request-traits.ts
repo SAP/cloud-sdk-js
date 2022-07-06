@@ -6,14 +6,14 @@ import { DeSerializers } from '../de-serializers';
 import { EntityApi } from '../entity-api';
 
 /**
- * @internal
+ * Interface implemented by OData requests needing keys to identify an entity like `getByKey`, `delete` or `update.
  */
 export interface WithKeys {
   keys: Record<string, any>;
 }
 
 /**
- * @internal
+ * Interface implemented by OData requests returning data like getAll or getByKey.
  */
 export interface WithSelection<
   EntityT extends EntityBase,
@@ -23,7 +23,7 @@ export interface WithSelection<
 }
 
 /**
- * @internal
+ * Interface representing options on a getAll request like top or orderBy.
  */
 export interface WithGetAllRestrictions<
   EntityT extends EntityBase,
@@ -36,7 +36,7 @@ export interface WithGetAllRestrictions<
 }
 
 /**
- * @internal
+ * Interface implemented by OData requests needing `ETags`to avoid conflicts in the persisted data like `update` or `delete`.
  */
 export interface WithETag {
   eTag: string;

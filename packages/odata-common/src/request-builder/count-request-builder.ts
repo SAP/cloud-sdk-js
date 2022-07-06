@@ -11,7 +11,6 @@ import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
  * A `CountRequestBuilder` allows only for execution of the request.
  * If you want to apply query parameters like filter, skip or top do it on the [[GetAllRequestBuilder]] the count is created from.
  * @typeparam EntityT - Type of the entity to be requested
- * @internal
  */
 export class CountRequestBuilder<
   EntityT extends EntityBase,

@@ -9,7 +9,9 @@ import {
 } from './action-import-parameter';
 
 /**
- * @internal
+ * Action import request configuration for an entity type.
+ * @typeparam DeSerializersT - Type of the deserializer use on the request
+ * @typeparam ParametersT - Type of the parameter to setup a request with
  */
 export class ODataActionImportRequestConfig<
   DeSerializersT extends DeSerializers,

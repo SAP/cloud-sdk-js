@@ -5,13 +5,13 @@ import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';
 import {
   isCircuitBreakerOptionsServiceTarget,
-  ResilienceOptions,
   addTimeOut,
   formalizeResilienceOptions
-} from './resilience';
+} from './resilience/resilience';
+import { ResilienceOptions } from './resilience/resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
-import { getCircuitBreaker } from './circuit-breaker';
+import { getCircuitBreaker } from './resilience/circuit-breaker';
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {

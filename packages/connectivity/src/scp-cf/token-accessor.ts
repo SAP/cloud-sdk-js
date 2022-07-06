@@ -8,7 +8,7 @@ import {
   resolveService
 } from './environment-accessor';
 import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
-import { ResilienceOptions } from './resilience';
+import { ResilienceOptions } from './resilience/resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 

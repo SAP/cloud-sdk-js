@@ -5,8 +5,8 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
-import * as resilience from '../resilience';
-import { defaultResilienceOptions } from '../resilience';
+import * as resilience from '../resilience/resilience';
+import { defaultResilienceOptions } from '../resilience/resilience-options';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,

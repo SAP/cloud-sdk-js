@@ -5,14 +5,14 @@ import {
   destinationServiceUri,
   providerXsuaaUrl,
   xsuaaBindingMock
-} from '../../../../test-resources/test/test-util/environment-mocks';
-import { privateKey } from '../../../../test-resources/test/test-util/keys';
+} from '../../../../../test-resources/test/test-util/environment-mocks';
+import { privateKey } from '../../../../../test-resources/test/test-util/keys';
+import { getClientCredentialsToken } from '../xsuaa-service';
+import { fetchDestination } from '../destination/destination-service';
 import {
   defaultCircuitBreakerOptions,
   OpossumLibOptions
-} from './circuit-breaker';
-import { getClientCredentialsToken } from './xsuaa-service';
-import { fetchDestination } from './destination';
+} from './circuit-breaker-options';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),

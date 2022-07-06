@@ -4,16 +4,15 @@ import {
   propertyExists,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import CircuitBreaker from 'opossum';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import { getCircuitBreaker } from '../circuit-breaker';
+import { getCircuitBreaker } from '../resilience/circuit-breaker';
 import {
   addTimeOut,
   formalizeResilienceOptions,
-  isCircuitBreakerOptionsServiceTarget,
-  ResilienceOptions
-} from '../resilience';
+  isCircuitBreakerOptionsServiceTarget
+} from '../resilience/resilience';
+import { ResilienceOptions } from '../resilience/resilience-options';
 import { urlAndAgent } from '../../http-agent';
 import {
   DestinationConfiguration,
@@ -33,11 +32,6 @@ const logger = createLogger({
   package: 'connectivity',
   messageContext: 'destination-service'
 });
-
-type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
-  [requestConfig: AxiosRequestConfig],
-  AxiosResponse<ResponseType>
->;
 
 type DestinationsServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'useCache'>;

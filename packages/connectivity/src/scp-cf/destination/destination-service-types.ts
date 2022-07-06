@@ -1,6 +1,6 @@
 import type { CachingOptions } from '../cache';
 import type { ProxyConfiguration } from '../connectivity-service-types';
-import type { ResilienceOptions } from '../resilience';
+import type { ResilienceOptions } from '../resilience/resilience-options';
 import type { IsolationStrategy } from './destination-cache';
 
 /**

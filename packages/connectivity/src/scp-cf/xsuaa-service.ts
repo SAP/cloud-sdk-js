@@ -1,55 +1,17 @@
 import * as xssec from '@sap/xssec';
-import CircuitBreaker from 'opossum';
 import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';
 import {
-  circuitBreakerDefaultOptions,
-  defaultResilienceBTPServices,
+  isCircuitBreakerOptionsServiceTarget,
   ResilienceOptions,
-  timeoutPromise
-} from './resilience-options';
+  addTimeOut,
+  formalizeResilienceOptions
+} from './resilience';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
-
-let circuitBreaker: any;
-
-async function wrapInTimeout<T>(
-  promise: Promise<T>,
-  timeout: number
-): Promise<T> {
-  return Promise.race([promise, timeoutPromise<T>(timeout)]);
-}
-
-function executeFunction<T extends (...args: any[]) => any>(
-  fn: T,
-  ...parameters: Parameters<T>
-): ReturnType<T> {
-  return fn(...parameters);
-}
-
-function getCircuitBreaker() {
-  if (!circuitBreaker) {
-    circuitBreaker = new CircuitBreaker(
-      executeFunction,
-      circuitBreakerDefaultOptions
-    );
-  }
-  return circuitBreaker;
-}
-
-/**
- * Wrap a function in a circuit breaker. Important if you trigger this recursively you have to adjust the parameters to avoid an infinite stack.
- * @param fn - Function to wrap.
- * @returns A function to be called with the original parameters.
- */
-function wrapInCircuitBreaker<T extends (...args: any[]) => any>(
-  fn: T
-): (...parameters: Parameters<T>) => ReturnType<T> {
-  return (...parameters: Parameters<T>) =>
-    getCircuitBreaker().fire(fn, ...parameters);
-}
+import { getCircuitBreaker } from './circuit-breaker';
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
@@ -95,16 +57,23 @@ export async function getClientCredentialsToken(
   userJwt?: string | JwtPayload,
   options?: ResilienceOptions
 ): Promise<ClientCredentialsResponse> {
-  const { enableCircuitBreaker, timeout } = {
-    ...defaultResilienceBTPServices,
-    ...options
-  };
-  if (enableCircuitBreaker) {
-    return wrapInCircuitBreaker(getClientCredentialsToken)(service, userJwt, {
-      enableCircuitBreaker: false,
-      timeout
+  const { circuitBreaker, timeout } = formalizeResilienceOptions(options);
+  const circuitBreakerOptions = isCircuitBreakerOptionsServiceTarget(
+    circuitBreaker
+  )
+    ? circuitBreaker.service
+    : circuitBreaker;
+
+  if (circuitBreakerOptions) {
+    return getCircuitBreaker(
+      getClientCredentialsToken,
+      circuitBreakerOptions
+    ).fire(service, userJwt, {
+      circuitBreaker: false,
+      timeout: 0
     });
   }
+
   const serviceCredentials = resolveService(service).credentials;
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
@@ -121,7 +90,7 @@ export async function getClientCredentialsToken(
     }
   );
 
-  return wrapInTimeout(xssecPromise, timeout);
+  return addTimeOut(xssecPromise, timeout);
 }
 
 /**
@@ -136,16 +105,24 @@ export function getUserToken(
   userJwt: string,
   options?: ResilienceOptions
 ): Promise<string> {
-  const { enableCircuitBreaker, timeout } = {
-    ...defaultResilienceBTPServices,
-    ...options
-  };
-  if (enableCircuitBreaker) {
-    return wrapInCircuitBreaker(getUserToken)(service, userJwt, {
-      enableCircuitBreaker: false,
-      timeout
-    });
+  const { circuitBreaker, timeout } = formalizeResilienceOptions(options);
+  const circuitBreakerOptions = isCircuitBreakerOptionsServiceTarget(
+    circuitBreaker
+  )
+    ? circuitBreaker.service
+    : circuitBreaker;
+
+  if (circuitBreakerOptions) {
+    return getCircuitBreaker(getUserToken, circuitBreakerOptions).fire(
+      service,
+      userJwt,
+      {
+        circuitBreaker: false,
+        timeout: 0
+      }
+    );
   }
+
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
   const xssecPromise = new Promise((resolve: (token: string) => void, reject) =>
@@ -159,5 +136,5 @@ export function getUserToken(
       (err: Error, token: string) => (err ? reject(err) : resolve(token))
     )
   );
-  return wrapInTimeout(xssecPromise, timeout);
+  return addTimeOut(xssecPromise, timeout);
 }

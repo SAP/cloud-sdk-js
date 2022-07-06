@@ -1,12 +1,16 @@
 import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
+import CircuitBreaker from 'opossum';
 import {
   destinationServiceUri,
   providerXsuaaUrl,
   xsuaaBindingMock
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../test-resources/test/test-util/keys';
-import { circuitBreakerDefaultOptions } from './resilience-options';
+import {
+  defaultCircuitBreakerOptions,
+  OpossumLibOptions
+} from './circuit-breaker';
 import { getClientCredentialsToken } from './xsuaa-service';
 import { fetchDestination } from './destination';
 
@@ -18,7 +22,7 @@ const jwt = jwt123.sign(
   }
 );
 
-const attempts = circuitBreakerDefaultOptions.volumeThreshold!;
+const attempts = defaultCircuitBreakerOptions.volumeThreshold;
 
 describe('circuit breaker', () => {
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for destination service', async () => {
@@ -76,6 +80,19 @@ describe('circuit breaker', () => {
       request,
       ({ message }) => message === 'Breaker is open'
     );
+  });
+
+  // when compiling a generated client the compiler fails, because the CircuitBreaker.Options from @types/opossum are not present (long import chain)
+  // since these types contain the @types/node they are 1.8MB in size and we do not want to include this as a prod dependency of the connectivity module.
+  // Hence we copied the CircuitBreaker options and added this test to ensure type compatibility.
+  it('ensure type compatibility to opossum', () => {
+    type keysOpossum = keyof CircuitBreaker.Options;
+    type keysSDK = keyof OpossumLibOptions;
+    let a: keysOpossum = '' as any;
+    const b: keysSDK = '' as any;
+    // is assignment works they are compatible
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    a = b;
   });
 });
 

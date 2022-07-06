@@ -7,11 +7,13 @@ import {
 import CircuitBreaker from 'opossum';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
+import { getCircuitBreaker } from '../circuit-breaker';
 import {
-  circuitBreakerDefaultOptions,
-  defaultResilienceBTPServices,
+  addTimeOut,
+  formalizeResilienceOptions,
+  isCircuitBreakerOptionsServiceTarget,
   ResilienceOptions
-} from '../resilience-options';
+} from '../resilience';
 import { urlAndAgent } from '../../http-agent';
 import {
   DestinationConfiguration,
@@ -41,10 +43,6 @@ type DestinationsServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'useCache'>;
 type DestinationServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'destinationName'>;
-
-let circuitBreaker: DestinationCircuitBreaker<
-  DestinationCertificateJson | DestinationConfiguration | DestinationJson
->;
 
 /**
  * Fetches all instance destinations from the given URI.
@@ -300,37 +298,29 @@ async function callDestinationService(
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
-  const { enableCircuitBreaker, timeout } = {
-    ...defaultResilienceBTPServices,
-    ...options
-  };
+  const { circuitBreaker, timeout } = formalizeResilienceOptions(options);
+  const circuitBreakerOptions = isCircuitBreakerOptionsServiceTarget(
+    circuitBreaker
+  )
+    ? circuitBreaker.service
+    : circuitBreaker;
+
+  if (circuitBreakerOptions) {
+    return getCircuitBreaker(
+      callDestinationService,
+      circuitBreakerOptions
+    ).fire(uri, headers, {
+      circuitBreaker: false,
+      timeout: 0
+    });
+  }
+
   const config: AxiosRequestConfig = {
     ...urlAndAgent(uri),
     proxy: false,
     method: 'get',
-    timeout,
     headers
   };
 
-  if (enableCircuitBreaker) {
-    return getCircuitBreaker().fire(config);
-  }
-
-  return axios.request(config);
-}
-
-function getCircuitBreaker(): DestinationCircuitBreaker<
-  DestinationCertificateJson | DestinationConfiguration | DestinationJson
-> {
-  const request: (
-    config: AxiosRequestConfig
-  ) => Promise<
-    AxiosResponse<
-      DestinationCertificateJson | DestinationConfiguration | DestinationJson
-    >
-  > = axios.request;
-  if (!circuitBreaker) {
-    circuitBreaker = new CircuitBreaker(request, circuitBreakerDefaultOptions);
-  }
-  return circuitBreaker;
+  return addTimeOut(axios.request(config), timeout);
 }

@@ -100,7 +100,7 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberServiceToken,
-        enableCircuitBreaker: false,
+        circuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });
@@ -145,7 +145,7 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberUserJwt,
-        enableCircuitBreaker: false,
+        circuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });

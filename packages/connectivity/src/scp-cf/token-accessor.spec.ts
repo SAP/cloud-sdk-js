@@ -20,8 +20,8 @@ import {
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { serviceToken } from './token-accessor';
-import { defaultResilienceBTPServices } from './resilience-options';
-import * as resilience from './resilience-options';
+import * as resilience from './resilience';
+import { defaultResilienceOptions } from './resilience';
 
 describe('token accessor', () => {
   describe('serviceToken', () => {
@@ -53,7 +53,7 @@ describe('token accessor', () => {
       const jwt = signedJwt({
         iss: 'https://testeroni.example.com'
       });
-      async function doDelayTest(enableCircuitBreaker: boolean) {
+      async function doDelayTest(circuitBreaker: boolean) {
         mockClientCredentialsGrantCall(
           'https://testeroni.example.com',
           { access_token: '' },
@@ -65,12 +65,10 @@ describe('token accessor', () => {
           serviceToken('destination', {
             jwt,
             timeout: 10,
-            enableCircuitBreaker
+            circuitBreaker
           })
         ).rejects.toMatchObject({
-          cause: {
-            message: 'Token retrieval ran into timeout.'
-          }
+          cause: new Error('Timed out after 10ms')
         });
       }
       await doDelayTest(false);
@@ -78,7 +76,7 @@ describe('token accessor', () => {
     });
 
     it('considers default timeout for client credentials token', async () => {
-      jest.spyOn(resilience, 'timeoutPromise');
+      const addTimeOutSpy = jest.spyOn(resilience, 'addTimeOut');
 
       const jwt = signedJwt({
         iss: 'https://testeroni.example.com'
@@ -90,10 +88,11 @@ describe('token accessor', () => {
         destinationBindingClientSecretMock.credentials
       );
 
-      await serviceToken('destination', { jwt });
+      await serviceToken('destination', { jwt, circuitBreaker: false });
 
-      expect(resilience.timeoutPromise).toHaveBeenCalledWith(
-        defaultResilienceBTPServices.timeout
+      expect(addTimeOutSpy).toHaveBeenCalledWith(
+        expect.anything(),
+        defaultResilienceOptions.timeout
       );
     });
 

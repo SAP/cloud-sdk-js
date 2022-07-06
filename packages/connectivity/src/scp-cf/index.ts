@@ -12,7 +12,7 @@ export * from './identity-service';
 export * from './jsonwebtoken-type';
 export * from './jwt';
 export * from './protocol';
-export * from './resilience-options';
+export * from './resilience';
 export * from './subdomain-replacer';
 export * from './tenant';
 export * from './token-accessor';

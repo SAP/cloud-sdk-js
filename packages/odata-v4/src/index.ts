@@ -19,7 +19,7 @@ export {
   contains
 } from './filter-functions';
 
-export { FilterFunctionTypes } from './filter-functions';
+export type { FilterFunctionTypes } from './filter-functions';
 
 export {
   transformReturnValueForComplexType,

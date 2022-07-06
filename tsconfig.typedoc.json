@@ -71,7 +71,7 @@
     "hideGenerator": true,
     "excludePrivate": true,
     "includes": "packages",
-    "treatWarningsAsErrors": true,
+    "treatWarningsAsErrors": false,
     "validation": {
       "invalidLink": true
     }

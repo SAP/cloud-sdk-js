@@ -6,10 +6,11 @@ import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { EntitySerializer } from '../entity-serializer';
-import { ODataUpdateRequestConfig, ODataRequest } from '../request';
+import { ODataRequest } from '../request/odata-request';
+import { ODataUpdateRequestConfig } from '../request/odata-update-request-config';
 import { ODataUri } from '../uri-conversion';
 import { Selectable } from '../selectable';
-import { DeSerializers } from '../de-serializers';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
 

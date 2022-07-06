@@ -41,7 +41,6 @@ export {
   setDestinationCache,
   DestinationAuthToken,
   DestinationCertificate,
-  DestinationForServiceBindingsOptions,
   ClientCredentialsResponse,
   AllDestinations,
   DestinationConfiguration,

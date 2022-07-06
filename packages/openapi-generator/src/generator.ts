@@ -1,5 +1,5 @@
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, dirname, relative, posix, sep } from 'path';
+import { resolve, parse, basename, dirname } from 'path';
 import {
   createLogger,
   kebabCase,
@@ -16,29 +16,31 @@ import {
   transpileDirectory,
   copyFiles
 } from '@sap-cloud-sdk/generator-common/internal';
+import { apiFile } from './file-serializer/api-file';
 import {
-  apiFile,
   packageJson,
-  genericDescription,
-  readme,
-  apiIndexFile,
-  schemaIndexFile,
-  schemaFile
-} from './file-serializer';
+  genericDescription
+} from './file-serializer/package-json';
+import { readme } from './file-serializer/readme';
+import { schemaFile } from './file-serializer/schema-file';
+import { apiIndexFile, schemaIndexFile } from './file-serializer/index-file';
 import { OpenApiDocument } from './openapi-types';
-import { parseOpenApiDocument } from './parser';
+import { parseOpenApiDocument } from './parser/document';
 import { convertOpenApiSpec } from './document-converter';
 import { createFile } from './file-writer';
 import {
   parseGeneratorOptions,
-  tsconfigJson,
+  ParsedGeneratorOptions,
+  GeneratorOptions
+} from './options/generator-options';
+import {
   ServiceOptions,
   OptionsPerService,
   getOptionsPerService,
   getOriginalOptionsPerService,
-  ParsedGeneratorOptions,
-  GeneratorOptions
-} from './options';
+  getRelPathWithPosixSeparator
+} from './options/options-per-service';
+import { tsconfigJson } from './options/tsconfig-json';
 import { sdkMetadata } from './sdk-metadata';
 
 const { readdir, rmdir, mkdir, lstat } = promisesFs;
@@ -251,16 +253,6 @@ async function generateService(
     options
   );
   logger.info(`Successfully generated client for '${inputFilePath}'`);
-}
-
-/**
- * Gives the relative path with respect to process.cwd() using posix file separator '/'.
- * @param absolutePath - The absolute path
- * @returns The relative path
- * @internal
- */
-export function getRelPathWithPosixSeparator(absolutePath: string): string {
-  return relative(process.cwd(), absolutePath).split(sep).join(posix.sep);
 }
 
 /**

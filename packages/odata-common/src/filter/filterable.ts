@@ -1,6 +1,6 @@
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
-import type { OneToManyLink } from '../selectable';
+import type { OneToManyLink } from '../selectable/one-to-many-link';
 import { DeSerializers } from '../de-serializers';
 import { EntityApi } from '../entity-api';
 import type { BooleanFilterFunction } from './boolean-filter-function';

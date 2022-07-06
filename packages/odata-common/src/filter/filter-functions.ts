@@ -2,7 +2,7 @@ import moment from 'moment';
 import BigNumber from 'bignumber.js';
 import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
-import { Field } from '../selectable';
+import { Field } from '../selectable/field';
 import { StringFilterFunction } from './string-filter-function';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { filterFunction } from './filter-function';

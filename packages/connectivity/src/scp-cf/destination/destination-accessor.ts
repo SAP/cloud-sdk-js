@@ -2,7 +2,7 @@ import { DestinationOrFetchOptions, sanitizeDestination } from './destination';
 import { Destination } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
 import {
-  DestinationForServiceBindingsOptions,
+  DestinationForServiceBindingOptions,
   searchServiceBindingForDestination
 } from './destination-from-vcap';
 import { getDestinationFromDestinationService } from './destination-from-service';
@@ -44,7 +44,7 @@ export async function useOrFetchDestination(
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestination(
-  options: DestinationFetchOptions & DestinationForServiceBindingsOptions
+  options: DestinationFetchOptions & DestinationForServiceBindingOptions
 ): Promise<Destination | null> {
   const destination =
     searchEnvVariablesForDestination(options) ||

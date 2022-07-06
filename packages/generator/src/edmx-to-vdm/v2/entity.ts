@@ -3,7 +3,7 @@ import {
   joinEntityMetadata,
   navigationPropertyBase,
   transformEntityBase
-} from '../common';
+} from '../common/entity';
 import {
   VdmComplexType,
   VdmEntity,
@@ -13,19 +13,21 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   EdmxEntitySetBase,
   JoinedEntityMetadata
-} from '../../edmx-parser/common';
+} from '../../edmx-parser/common/edmx-types';
 import {
   EdmxAssociation,
   EdmxAssociationSet,
   EdmxEntityTypeV2,
   End,
-  JoinedAssociationMetadata,
+  JoinedAssociationMetadata
+} from '../../edmx-parser/v2/edm-types';
+import {
   parseAssociation,
   parseAssociationSets,
   parseEntitySetsV2,
   parseEntityTypes
-} from '../../edmx-parser/v2';
-import { ServiceMetadata } from '../../edmx-parser';
+} from '../../edmx-parser/v2/edmx-parser';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { stripNamespace } from '../edmx-to-vdm-util';
 
 /**

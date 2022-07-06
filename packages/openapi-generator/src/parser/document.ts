@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
-import { ServiceOptions } from '../options';
+import { ServiceOptions } from '../options/options-per-service';
 import { parseSchema, parseSchemaProperties } from './schema';
 import { parseApis } from './api';
 import { createRefs, OpenApiDocumentRefs } from './refs';

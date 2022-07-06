@@ -30,12 +30,10 @@ import { Protocol } from '../protocol';
 import { getDestination } from './destination-accessor';
 import { parseDestination } from './destination';
 import * as ProxyUtil from './proxy-util';
-import {
-  alwaysProvider,
-  Destination,
-  destinationCache,
-  destinationServiceCache
-} from '.';
+import { alwaysProvider } from './destination-selection-strategies';
+import { Destination } from './destination-service-types';
+import { destinationCache } from './destination-cache';
+import { destinationServiceCache } from './destination-service-cache';
 
 describe('proxy configuration', () => {
   afterEach(() => {

@@ -71,13 +71,14 @@ export async function buildHttpRequest(
  * @returns The given request config merged with the config built for the given destination.
  * @internal
  */
-export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
+export async function addDestinationToRequestConfig<
+  T extends HttpRequestConfig
+>(
   destination: DestinationOrFetchOptions,
   requestConfig: T
 ): Promise<T & DestinationHttpRequestConfig> {
-  return buildHttpRequest(destination).then(destinationConfig =>
-    merge(destinationConfig, requestConfig)
-  );
+  const destinationConfig = await buildHttpRequest(destination);
+  return merge(destinationConfig, requestConfig);
 }
 
 /**
@@ -403,12 +404,14 @@ function buildDestinationHttpRequestConfig(
   };
 }
 
-function buildHeaders(
+async function buildHeaders(
   destination: Destination
 ): Promise<Record<string, string>> {
-  return buildHeadersForDestination(destination).catch(error => {
+  try {
+    return await buildHeadersForDestination(destination);
+  } catch (error) {
     throw new ErrorWithCause('Failed to build headers.', error);
-  });
+  }
 }
 
 function merge<T extends HttpRequestConfig>(

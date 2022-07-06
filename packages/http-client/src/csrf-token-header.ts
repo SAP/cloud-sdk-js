@@ -13,7 +13,7 @@ import {
   HttpRequestConfigBase,
   HttpRequestConfigWithOrigin
 } from './http-client-types';
-import { executeHttpRequest } from '.';
+import { executeHttpRequest } from './http-client';
 
 const logger = createLogger({
   package: 'http-client',

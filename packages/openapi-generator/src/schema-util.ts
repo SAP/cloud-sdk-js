@@ -13,7 +13,7 @@ import {
   OpenApiSchemaProperties,
   SchemaNaming
 } from './openapi-types';
-import { SchemaRefMapping } from './parser';
+import { SchemaRefMapping } from './parser/parsing-info';
 
 /**
  * Collect all unique reference schemas within the given schemas.

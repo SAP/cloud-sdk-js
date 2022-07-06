@@ -2,7 +2,7 @@ import moment from 'moment';
 import BigNumber from 'bignumber.js';
 import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
-import { Field } from '../selectable';
+import { Field } from '../selectable/field';
 import { StringFilterFunction } from './string-filter-function';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { filterFunction } from './filter-function';
@@ -394,7 +394,7 @@ export function filterFunctions<
 }
 
 /**
- * @internal
+ * Interface containing all filter functions like `startsWith`, `toUpper` or `floor`.
  */
 export interface FilterFunctionsType {
   endsWith: typeof endsWith;
@@ -419,7 +419,7 @@ export interface FilterFunctionsType {
 }
 
 /**
- * @internal
+ * Union type of all the possible filter functions contained in [[FilterFunctionsType]].
  */
 export type FilterFunctionTypes =
   | typeof endsWith

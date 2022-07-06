@@ -1,10 +1,8 @@
 import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
-import {
-  ComplexTypePropertyFields,
-  SimpleTypeFields,
-  Link
-} from '../selectable';
+import { ComplexTypePropertyFields } from '../selectable/complex-type-property-fields';
+import { SimpleTypeFields } from '../selectable/simple-type-fields';
+import { Link } from '../selectable/link';
 import { EntityApi } from '../entity-api';
 import { Order } from './order';
 import { OrderLink } from './order-link';
@@ -12,7 +10,6 @@ import { OrderLink } from './order-link';
 /**
  * A union of all types that can be used for ordering.
  * @typeparam EntityT - Type of the entity to be ordered
- * @internal
  */
 export type Orderable<
   EntityT extends EntityBase,
@@ -22,7 +19,6 @@ export type Orderable<
 /**
  * A union of all types that can be used as input for ordering.
  * @typeparam EntityT - Type of the entity to be ordered
- * @internal
  */
 export type OrderableInput<
   EntityT extends EntityBase,

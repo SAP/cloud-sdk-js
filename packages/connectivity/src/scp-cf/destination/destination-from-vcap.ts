@@ -8,7 +8,7 @@ import {
   proxyStrategy
 } from './proxy-util';
 import { Destination } from './destination-service-types';
-import { DestinationFetchOptions } from './destination-accessor-types';
+import type { DestinationFetchOptions } from './destination-accessor-types';
 import { destinationCache, IsolationStrategy } from './destination-cache';
 import { decodedJwtOrZid } from './destination-from-registration';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
@@ -36,15 +36,15 @@ export interface PartialDestinationFetchOptions {
  * @internal
  */
 export async function destinationForServiceBinding(
-  serviceInstanceName: string,
-  options: DestinationForServiceBindingsOptions &
-    PartialDestinationFetchOptions = {}
+    serviceInstanceName: string,
+    options: DestinationForServiceBindingsOptions &
+        PartialDestinationFetchOptions = {}
 ): Promise<Destination> {
   if (options.useCache) {
     const fromCache = await destinationCache.retrieveDestinationFromCache(
-      options.jwt || decodedJwtOrZid().subaccountid,
-      serviceInstanceName,
-      IsolationStrategy.Tenant
+        options.jwt || decodedJwtOrZid().subaccountid,
+        serviceInstanceName,
+        IsolationStrategy.Tenant
     );
     if (fromCache) {
       return fromCache;
@@ -54,22 +54,22 @@ export async function destinationForServiceBinding(
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
   const destination = options.serviceBindingTransformFn
-    ? await options.serviceBindingTransformFn(selected, options.jwt)
-    : await transform(selected, options.jwt);
+      ? await options.serviceBindingTransformFn(selected, options.jwt)
+      : await transform(selected, options.jwt);
 
   const destWithProxy =
-    destination &&
-    (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
-      proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
-      ? addProxyConfigurationInternet(destination)
-      : destination;
+      destination &&
+      (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
+          proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
+          ? addProxyConfigurationInternet(destination)
+          : destination;
 
   if (options.useCache) {
     // use the provider tenant if no jwt is given. Since the grant type is clientCredential isolation strategy is tenant.
     await destinationCache.cacheRetrievedDestination(
-      options.jwt || decodedJwtOrZid().subaccountid,
-      destWithProxy,
-      IsolationStrategy.Tenant
+        options.jwt || decodedJwtOrZid().subaccountid,
+        destWithProxy,
+        IsolationStrategy.Tenant
     );
   }
 
@@ -91,8 +91,8 @@ export interface DestinationForServiceBindingsOptions {
  * Type of the function to transform the service binding.
  */
 export type ServiceBindingTransformFunction = (
-  serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
+    serviceBinding: ServiceBinding,
+    jwt?: JwtPayload
 ) => Promise<Destination>;
 
 /**
@@ -136,26 +136,26 @@ const transformServiceBindings = (vcapService: Record<string, any>) => {
 };
 
 function flattenServiceBindings(
-  vcapServices: Record<string, any>
+    vcapServices: Record<string, any>
 ): Record<string, any>[] {
   return flatten(Object.values(vcapServices));
 }
 
 function inlineServiceTypes(
-  vcapServices: Record<string, any>
+    vcapServices: Record<string, any>
 ): Record<string, any> {
   return Object.entries(vcapServices).reduce(
-    (vcap, [serviceType, bindings]) => ({
-      ...vcap,
-      [serviceType]: bindings.map(b => ({ ...b, type: serviceType }))
-    }),
-    {}
+      (vcap, [serviceType, bindings]) => ({
+        ...vcap,
+        [serviceType]: bindings.map(b => ({ ...b, type: serviceType }))
+      }),
+      {}
   );
 }
 
 function findServiceByName(
-  serviceBindings: ServiceBinding[],
-  serviceInstanceName: string
+    serviceBindings: ServiceBinding[],
+    serviceInstanceName: string
 ): ServiceBinding {
   const found = serviceBindings.find(s => s.name === serviceInstanceName);
   if (!found) {
@@ -165,22 +165,22 @@ function findServiceByName(
 }
 
 async function transform(
-  serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
+    serviceBinding: ServiceBinding,
+    jwt?: JwtPayload
 ): Promise<Destination> {
   if (!serviceToDestinationTransformers[serviceBinding.type]) {
     throw serviceTypeNotSupportedError(serviceBinding.type);
   }
 
   return serviceToDestinationTransformers[serviceBinding.type](
-    serviceBinding,
-    jwt
+      serviceBinding,
+      jwt
   );
 }
 
 function noVcapServicesError(): Error {
   return Error(
-    'No services are bound to the application (environment variable VCAP_SERVICES is not defined)!'
+      'No services are bound to the application (environment variable VCAP_SERVICES is not defined)!'
   );
 }
 
@@ -190,28 +190,40 @@ function serviceTypeNotSupportedError(serviceType: string): Error {
 }
 
 function noServiceBindingFoundError(
-  serviceBindings: Record<string, any>[],
-  serviceInstanceName: string
+    serviceBindings: Record<string, any>[],
+    serviceInstanceName: string
 ): Error {
   return Error(
-    `Unable to find a service binding for given name "${serviceInstanceName}"! Found the following bindings: ${serviceBindings
-      .map(s => s.name)
-      .join(', ')}.
+      `Unable to find a service binding for given name "${serviceInstanceName}"! Found the following bindings: ${serviceBindings
+          .map(s => s.name)
+          .join(', ')}.
       `
   );
+}
+
+/**
+ * Options to customize the behavior of [[destinationForServiceBinding]].
+ */
+export interface DestinationForServiceBindingOptions {
+  /**
+   * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
+   */
+  serviceBindingTransformFn?: (
+      serviceBinding: ServiceBinding
+  ) => Promise<Destination>;
 }
 
 /**
  * @internal
  */
 export async function searchServiceBindingForDestination({
-  iss,
-  jwt,
-  serviceBindingTransformFn,
-  destinationName,
-  useCache
-}: DestinationFetchOptions &
-  DestinationForServiceBindingsOptions): Promise<Destination | null> {
+                                                           iss,
+                                                           jwt,
+                                                           serviceBindingTransformFn,
+                                                           destinationName,
+                                                           useCache
+                                                         }: DestinationFetchOptions &
+    DestinationForServiceBindingsOptions): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
     const jwtFromOptions = iss ? { iss } : jwt ? decodeJwt(jwt) : undefined;
@@ -220,11 +232,13 @@ export async function searchServiceBindingForDestination({
       jwt: jwtFromOptions,
       useCache
     });
+import type { DestinationFetchOptions } from './destination-accessor-types';
+import { Destination } from './destination-service-types';
     logger.info('Successfully retrieved destination from service binding.');
     return destination;
   } catch (error) {
     logger.debug(
-      `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${error.message}`
+        `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${error.message}`
     );
   }
   return null;

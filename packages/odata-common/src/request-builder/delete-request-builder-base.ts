@@ -3,14 +3,13 @@ import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
-import { ODataDeleteRequestConfig } from '../request';
-import { DeSerializers } from '../de-serializers';
+import { ODataDeleteRequestConfig } from '../request/odata-delete-request-config';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
- * Abstract class to delete an entity holding the shared parts between OData v2 and v4
+ * Abstract class to delete an entity holding the shared parts between OData v2 and v4.
  * @typeparam EntityT - Type of the entity to be deleted
- * @internal
  */
 export abstract class DeleteRequestBuilderBase<
     EntityT extends EntityBase,

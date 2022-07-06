@@ -4,7 +4,7 @@ import {
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty
 } from '../openapi-types';
-import { getType } from '../parser';
+import { getType } from '../parser/type-mapping';
 import {
   isReferenceObject,
   isArraySchema,

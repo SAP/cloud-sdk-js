@@ -1,4 +1,4 @@
-import { ServiceMetadata } from '../../edmx-parser';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmServiceEntities } from '../../vdm-types';
 import { generateFunctionImportsV4 } from './function-import';

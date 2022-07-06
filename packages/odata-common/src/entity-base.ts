@@ -8,12 +8,12 @@ import { DeSerializers } from './de-serializers';
 import { EntityApi } from './entity-api';
 
 /**
- * @internal
+ * Helper type to extract the [[ODataVersion] from a given entity so ODataVersionOf<MyVersion2Entity> is `v2`.
  */
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 
 /**
- * @internal
+ * Represents the static API of an entity.
  */
 export interface Constructable<EntityT extends EntityBase> {
   _entityName: string;
@@ -36,7 +36,6 @@ export type EntityBuilderType<
 
 /**
  * Super class for all representations of OData entity types.
- * @internal
  */
 export abstract class EntityBase {
   static _serviceName: string;
@@ -293,7 +292,9 @@ export abstract class EntityBase {
   }
 }
 /**
- * @internal
+ * Represents an object that is related to an entity.
+ * Objects that have the same structure would be represented by the same type in TypeScript.
+ * This interface allows to identify equal structures as different structures if they are related to different entities.
  */
 export interface EntityIdentifiable<
   T extends EntityBase,

@@ -5,10 +5,12 @@ import {
   RequestMethodType,
   ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '..';
+import { DeSerializers } from '../de-serializers';
 
 /**
- * @internal
+ * Function import request configuration for an entity type.
+ * @typeparam DeSerializersT - Type of the deserializer use on the request
+ * @typeparam ParametersT - Type of the parameter to setup a request with
  */
 export class ODataFunctionImportRequestConfig<
   DeSerializersT extends DeSerializers,

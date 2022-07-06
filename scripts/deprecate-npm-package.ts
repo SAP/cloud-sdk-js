@@ -1,4 +1,4 @@
-import execa from "execa";
+import execa from 'execa';
 
 interface DeprecateOptions {
   deprecateMessage: string;
@@ -24,19 +24,19 @@ const deprecateOptions: DeprecateOptions = {
   /**
    * Deprecate message for all packages/versions to be deprecated.
    */
-  deprecateMessage: "1.x is no longer maintained.",
+  deprecateMessage: '1.x is no longer maintained.',
   /**
    * Package names to be deprecated
    */
   packageNamesToBeDeprecated: [
-    "@sap-cloud-sdk/analytics",
-    "@sap-cloud-sdk/core",
-    "@sap-cloud-sdk/eslint-config",
-    "@sap-cloud-sdk/generator",
-    "@sap-cloud-sdk/generator-common",
-    "@sap-cloud-sdk/openapi-generator",
-    "@sap-cloud-sdk/test-util",
-    "@sap-cloud-sdk/util"
+    '@sap-cloud-sdk/analytics',
+    '@sap-cloud-sdk/core',
+    '@sap-cloud-sdk/eslint-config',
+    '@sap-cloud-sdk/generator',
+    '@sap-cloud-sdk/generator-common',
+    '@sap-cloud-sdk/openapi-generator',
+    '@sap-cloud-sdk/test-util',
+    '@sap-cloud-sdk/util'
   ],
   /**
    * Regex used as a filter, indicating which versions should be deprecated.
@@ -50,7 +50,7 @@ const deprecateOptions: DeprecateOptions = {
    * Please do keep `false` for the remote branch, so it's used as default value.
    */
   isProduction: false
-}
+};
 
 /**
  * Main entry point for deprecating the SDK packages.
@@ -59,38 +59,54 @@ const deprecateOptions: DeprecateOptions = {
  * [check whether a package/version is deprecated] - npm view @sap-cloud-sdk/openapi-generator@"< 1.54.2"
  * [check all existing versions of a package] - `npm view @sap-cloud-sdk/util versions`
  */
-async function deprecateNpmPackage(){
-  const responses = await Promise.all(deprecateOptions.packageNamesToBeDeprecated.map(
-    async packageName => {
+async function deprecateNpmPackage() {
+  const responses = await Promise.all(
+    deprecateOptions.packageNamesToBeDeprecated.map(async packageName => {
       const resVersions = await execa('npm', ['view', packageName, 'versions']);
-      const allVersions = resVersions.stdout.replace(/'|\s|\[|]/g, '').split(',');
-      const uniqueVersionPrefixes = Array.from(new Set(allVersions.map(version => {
-          // Pick the prefix of a version. e.g., 1.34.1-20201230083713.13 will be 1.34.1
-          const prefix = version.match(deprecateOptions.versionsToBeDeprecated)
-          return prefix? prefix[1] : undefined;
-        }
-      ).filter(e => !!e))) as string[];
+      const allVersions = resVersions.stdout
+        .replace(/'|\s|\[|]/g, '')
+        .split(',');
+      const uniqueVersionPrefixes = Array.from(
+        new Set(
+          allVersions
+            .map(version => {
+              // Pick the prefix of a version. e.g., 1.34.1-20201230083713.13 will be 1.34.1
+              const prefix = version.match(
+                deprecateOptions.versionsToBeDeprecated
+              );
+              return prefix ? prefix[1] : undefined;
+            })
+            .filter(e => !!e)
+        )
+      ) as string[];
       // Build a command like `npm deprecate @sap-cloud-sdk/generator@~1.17.4-0 || ~1.18.0-0 || ~1.18.1-0 || ~1.18.2-0`
       // With `-0` as suffix, it should match all our canary versions for A specific stable version.
-      const deprecateVersion = uniqueVersionPrefixes.map(prefix => `~${prefix}-0`).join(' || ');
+      const deprecateVersion = uniqueVersionPrefixes
+        .map(prefix => `~${prefix}-0`)
+        .join(' || ');
       console.log(`[Deprecating]: ${packageName}@${deprecateVersion}`);
-      if(deprecateOptions.isProduction) {
+      if (deprecateOptions.isProduction) {
         try {
-          await execa('npm', ['deprecate', `${packageName}@${deprecateVersion}`, deprecateOptions.deprecateMessage]);
+          await execa('npm', [
+            'deprecate',
+            `${packageName}@${deprecateVersion}`,
+            deprecateOptions.deprecateMessage
+          ]);
         } catch (e) {
           // 422 means this version was deprecated before
           if (!e?.message?.includes('422 Unprocessable Entity')) {
             throw new Error(e);
           }
         }
-        console.log(`[Done]: ${packageName}@${deprecateVersion}`)
-      }
-      else {
+        console.log(`[Done]: ${packageName}@${deprecateVersion}`);
+      } else {
         console.log(`[Test]: will execute the following command:\n`);
-        console.log(`npm deprecate ${packageName}@"${deprecateVersion}" "${deprecateOptions.deprecateMessage}"`);
+        console.log(
+          `npm deprecate ${packageName}@"${deprecateVersion}" "${deprecateOptions.deprecateMessage}"`
+        );
       }
-    }
-  ));
+    })
+  );
 }
 
-deprecateNpmPackage()
+deprecateNpmPackage();

@@ -13,12 +13,13 @@ export {
 export {
   HttpRequestOptions,
   HttpResponse,
-  Method,
   OriginOptions,
-  ParameterEncoder
+  HttpRequestConfigBase,
+  DestinationHttpRequestConfig
 } from './http-client-types';
 export type {
   HttpRequestConfig,
-  HttpRequestConfigWithOrigin
+  HttpRequestConfigWithOrigin,
+  Method,
+  ParameterEncoder
 } from './http-client-types';
-export { mergeOptionsWithPriority } from './http-request-config';

@@ -3,18 +3,17 @@ import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
 import { Orderable } from '../order';
-import { ODataGetAllRequestConfig } from '../request';
+import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
-import { DeSerializers } from '../de-serializers';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
 import { CountRequestBuilder } from './count-request-builder';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 
 /**
- * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
+ * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]].
  * @typeparam EntityT - Type of the entity to be requested
- * @internal
  */
 export abstract class GetAllRequestBuilderBase<
   EntityT extends EntityBase,

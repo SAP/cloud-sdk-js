@@ -1,5 +1,5 @@
 import { EntityBase, EntityIdentifiable } from '../entity-base';
-import { Filter } from '../filter';
+import { Filter } from '../filter/filter';
 import { EdmTypeShared } from '../edm-types';
 import { DeSerializers, DeserializedType } from '../de-serializers';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
@@ -11,7 +11,7 @@ import { Field, FieldOptions } from './field';
  * @typeparam FieldT - Field type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  */
-type NullableFieldType<
+export type NullableFieldType<
   FieldT,
   NullableT extends boolean
 > = NullableT extends true ? FieldT | null : FieldT;

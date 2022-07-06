@@ -13,10 +13,20 @@ const logger = createLogger({
   messageContext: 'entity-builder'
 });
 
-type NullishTypes = null | undefined;
-type NonNullishType<T> = Exclude<T, NullishTypes>;
+/**
+ * Union type of `null` and `undefiend`.
+ */
+export type NullishTypes = null | undefined;
 
-type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
+/**
+ * Exclude all nullish types from the given type so NonNullishType<TypeA | TypeB | undefined> is TypeA | TypeB.
+ */
+export type NonNullishType<T> = Exclude<T, NullishTypes>;
+
+/**
+ * Omits all nullish properties as well as all properties of the [[EntityBase]] from a given type.
+ */
+export type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
 
 /**
  * Type to describe possible inputs for `.fromJson`.
@@ -25,7 +35,7 @@ type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
  * @typeparam JsonT - JSON type of the entity.
  */
 // prettier-ignore
-type FromJsonType<JsonT> = {
+export type FromJsonType<JsonT> = {
   [key: string]: any; // custom properties
 } & {
   [P in keyof PureEntityType<JsonT>]?: PureEntityType<JsonT>[P] extends (infer U)[]
@@ -38,7 +48,7 @@ type FromJsonType<JsonT> = {
 };
 
 /**
- * @internal
+ * Contains the methods to build an entity.
  */
 export class EntityBuilder<
   EntityT extends EntityBase,

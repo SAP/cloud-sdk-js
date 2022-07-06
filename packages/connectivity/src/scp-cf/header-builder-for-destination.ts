@@ -4,7 +4,7 @@ import {
   pickNonNullish
 } from '@sap-cloud-sdk/util';
 import { getAuthHeaders } from './authorization-header';
-import { Destination } from './destination';
+import { Destination } from './destination/destination-service-types';
 
 /**
  * Build a request header object, that contains authentication headers and SAP specific headers like 'sap-client', from a given destination.

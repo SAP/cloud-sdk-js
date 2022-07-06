@@ -1,8 +1,8 @@
 import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityBase } from '../entity-base';
-import { ODataCountRequestConfig } from '../request';
-import { DeSerializers } from '../de-serializers';
+import { ODataCountRequestConfig } from '../request/odata-count-request-config';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
 
@@ -11,7 +11,6 @@ import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
  * A `CountRequestBuilder` allows only for execution of the request.
  * If you want to apply query parameters like filter, skip or top do it on the [[GetAllRequestBuilder]] the count is created from.
  * @typeparam EntityT - Type of the entity to be requested
- * @internal
  */
 export class CountRequestBuilder<
   EntityT extends EntityBase,

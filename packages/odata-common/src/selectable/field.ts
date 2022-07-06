@@ -47,11 +47,10 @@ const defaultFieldOptions: Required<FieldOptions> = {
  * an OData entity, there exists one static instance of `Field` (or rather one of its subclasses) in the corresponding generated class file.
  * Fields are used to represent the domain of values that can be used in select, filter and order by functions.
  *
- * See also: [[Selectable]], [[EdmTypeField]], [[ComplexTypeField]]
+ * See also: [[Selectable]], [[EdmTypeField]], [[ComplexTypeField]].
  * @typeparam EntityT - Type of the entity the field belongs to.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
- * @internal
  */
 export class Field<
   EntityT extends EntityBase,

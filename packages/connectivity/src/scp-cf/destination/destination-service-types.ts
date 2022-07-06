@@ -166,7 +166,6 @@ export interface Destination {
 
 /**
  * Represents authentication token returned from destination service.
- * @internal
  */
 export interface DestinationAuthToken {
   type: string;
@@ -180,7 +179,7 @@ export interface DestinationAuthToken {
 }
 
 /**
- * @internal
+ * Represents the proxy type on a destination.
  */
 export type DestinationProxyType =
   | 'OnPremise'
@@ -190,7 +189,6 @@ export type DestinationProxyType =
 
 /**
  * Represents a certificate attached to a destination.
- * @internal
  */
 export interface DestinationCertificate {
   /**
@@ -232,7 +230,7 @@ export function isDestination(destination: any): destination is Destination {
 }
 
 /**
- * @internal
+ * Represents the authentication type of a destination.
  */
 export type AuthenticationType =
   | 'PrincipalPropagation'

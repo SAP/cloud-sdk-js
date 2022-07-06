@@ -4,7 +4,10 @@ import {
   ProxyConfiguration,
   ProxyConfigurationHeaders
 } from './connectivity-service-types';
-import { AuthenticationType, Destination } from './destination';
+import {
+  AuthenticationType,
+  Destination
+} from './destination/destination-service-types';
 import { getServiceList } from './environment-accessor';
 import { Service } from './environment-accessor-types';
 import { serviceToken } from './token-accessor';

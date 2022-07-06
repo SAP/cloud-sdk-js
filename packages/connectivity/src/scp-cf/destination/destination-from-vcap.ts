@@ -1,8 +1,6 @@
 import { flatten, createLogger } from '@sap-cloud-sdk/util';
 import { getVcapService } from '../environment-accessor';
-import type {
-  DestinationFetchOptions
-} from './destination-accessor-types';
+import type { DestinationFetchOptions } from './destination-accessor-types';
 import { Destination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,
@@ -172,7 +170,7 @@ function xfS4hanaCloudBindingToDestination(
  * Options to customize the behavior of [[destinationForServiceBinding]].
  * @internal
  */
- export interface DestinationForServiceBindingOptions {
+export interface DestinationForServiceBindingOptions {
   /**
    * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
    */

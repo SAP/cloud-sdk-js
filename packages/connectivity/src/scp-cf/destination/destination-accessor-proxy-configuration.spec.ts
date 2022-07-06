@@ -27,15 +27,13 @@ import {
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { Protocol } from '../protocol';
-import {
-  alwaysProvider,
-  Destination,
-  destinationCache,
-  destinationServiceCache
-} from '../destination';
 import { getDestination } from './destination-accessor';
 import { parseDestination } from './destination';
 import * as ProxyUtil from './proxy-util';
+import { alwaysProvider } from './destination-selection-strategies';
+import { Destination } from './destination-service-types';
+import { destinationCache } from './destination-cache';
+import { destinationServiceCache } from './destination-service-cache';
 
 describe('proxy configuration', () => {
   afterEach(() => {

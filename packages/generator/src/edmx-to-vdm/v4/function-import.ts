@@ -1,17 +1,14 @@
 import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
-  transformFunctionImportBase,
-  parseFunctionImportReturnTypes
-} from '../common';
-import { swaggerDefinitionForFunctionImport } from '../../swagger-parser';
+import { transformFunctionImportBase } from '../common/function-import';
+import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
 import {
   EdmxFunction,
-  EdmxFunctionImportV4,
-  parseFunctionImportsV4,
-  parseFunctions
-} from '../../edmx-parser/v4';
-import { ServiceMetadata } from '../../edmx-parser';
+  EdmxFunctionImportV4
+} from '../../edmx-parser/v4/edm-types';
+import { parseFunctionImportsV4, parseFunctions } from '../../edmx-parser';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 import { findActionFunctionByImportName } from './action-function-util';

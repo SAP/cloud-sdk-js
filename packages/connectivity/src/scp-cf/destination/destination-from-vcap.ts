@@ -1,6 +1,6 @@
 import { flatten, createLogger } from '@sap-cloud-sdk/util';
 import { getVcapService } from '../environment-accessor';
-import { DestinationFetchOptions } from './destination-accessor-types';
+import type { DestinationFetchOptions } from './destination-accessor-types';
 import { Destination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,
@@ -24,7 +24,7 @@ const logger = createLogger({
  */
 export async function destinationForServiceBinding(
   serviceInstanceName: string,
-  options: DestinationForServiceBindingsOptions = {}
+  options: DestinationForServiceBindingOptions = {}
 ): Promise<Destination> {
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
@@ -37,19 +37,6 @@ export async function destinationForServiceBinding(
       proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
     ? addProxyConfigurationInternet(destination)
     : destination;
-}
-
-/**
- * Options to customize the behavior of [[destinationForServiceBinding]].
- * @internal
- */
-export interface DestinationForServiceBindingsOptions {
-  /**
-   * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
-   */
-  serviceBindingTransformFn?: (
-    serviceBinding: ServiceBinding
-  ) => Promise<Destination>;
 }
 
 /**
@@ -180,10 +167,23 @@ function xfS4hanaCloudBindingToDestination(
 }
 
 /**
+ * Options to customize the behavior of [[destinationForServiceBinding]].
+ * @internal
+ */
+export interface DestinationForServiceBindingOptions {
+  /**
+   * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
+   */
+  serviceBindingTransformFn?: (
+    serviceBinding: ServiceBinding
+  ) => Promise<Destination>;
+}
+
+/**
  * @internal
  */
 export async function searchServiceBindingForDestination(
-  options: DestinationFetchOptions & DestinationForServiceBindingsOptions
+  options: DestinationFetchOptions & DestinationForServiceBindingOptions
 ): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {

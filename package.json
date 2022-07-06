@@ -34,7 +34,8 @@
     "test-packages/test-services-odata-v4",
     "test-packages/test-services-openapi",
     "test-packages/test-services-e2e",
-    "test-packages/type-tests"
+    "test-packages/type-tests",
+    "test-packages/self-tests"
   ],
   "scripts": {
     "postinstall": "yarn compile",
@@ -44,6 +45,7 @@
     "test:integration": "turbo run test --filter=integration-tests",
     "test:type": "turbo run test --filter=type-tests",
     "test:e2e": "turbo run test --filter=e2e-tests",
+    "test:self": "turbo run test --filter=self-tests",
     "generate": "turbo run generate",
     "doc": "ts-node scripts/generate-docs.ts",
     "preversion": "ts-node scripts/before-bump.ts",
@@ -51,7 +53,7 @@
     "postversion": "yarn generate --force && yarn doc && ts-node scripts/after-bump.ts",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix --force",
-    "check:circular": "madge --extensions ts --circular ./packages --exclude 'environment-accessor'",
+    "check:circular": "madge --extensions ts --ts-config=./tsconfig.json --circular --exclude 'dist|test-packages|connectivity/src/scp-cf/environment-accessor.ts|http-client/src/csrf-token-header.ts' ./packages",
     "check:dependencies": "turbo run check:dependencies",
     "check:license": "ts-node scripts/check-licenses.ts",
     "check:test-service": "yarn generate --force && yarn ts-node scripts/check-test-service-for-changes.ts",
@@ -108,7 +110,7 @@
     "typescript": "~4.7.4"
   },
   "dependencies": {
-    "puppeteer": "^15.3.0"
+    "puppeteer": "^15.3.1"
   },
   "resolutions": {
     "agent-base": ">=6.0.2",

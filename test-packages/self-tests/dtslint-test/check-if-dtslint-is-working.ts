@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import { createLogger } from '@sap-cloud-sdk/util';
 
-const logger = createLogger('check-if-type-tests-are-working');
+const logger = createLogger('check-if-dtslint-are-working');
 
 try {
   execSync(
@@ -9,7 +9,7 @@ try {
     { stdio: 'ignore' }
   );
 } catch (error) {
-  logger.info("Faulty type tests 'error-test.spec.ts' fails as expected.");
+  logger.info("Faulty type test 'error-test.spec.ts' fails as expected.");
   process.exit(0);
 }
 

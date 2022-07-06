@@ -1,4 +1,4 @@
-import { EdmxAction, EdmxFunction } from '../../edmx-parser/v4';
+import { EdmxAction, EdmxFunction } from '../../edmx-parser/v4/edm-types';
 import { stripNamespace } from '../edmx-to-vdm-util';
 
 /**

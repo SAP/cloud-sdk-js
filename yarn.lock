@@ -1108,6 +1108,13 @@
     voca "^1.4.0"
     winston "^3.3.3"
 
+"@sap/cds-compiler@>=2.13.0":
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-3.0.2.tgz#7419bdd86460fe39376ef0863f5c74ff7795183c"
+  integrity sha512-EI+cTYCNSGNEYJVnvHiQm+5WaxbR98TtQMgiH2q3EEMJG1w0ZHXL7Wgla8STHdlO1fSNETouNmyl9CVLPO1psQ==
+  dependencies:
+    antlr4 "4.9.3"
+
 "@sap/cds-compiler@^2.13.0":
   version "2.13.8"
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.13.8.tgz#b1833a114b5bfa138dbde20e7f6cd4f86d6d8152"
@@ -1115,19 +1122,19 @@
   dependencies:
     antlr4 "4.8.0"
 
-"@sap/cds-dk@4.9.7":
-  version "4.9.7"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.9.7.tgz#3caa77303dcf94a866124a98b683c8dd810fe748"
-  integrity sha512-o44qREvZYiNPJRey2dCFdQPqcc0S/S8Sh4Zde9u9Ehyf4WF844oYZjiIgeCXDK6JxzksCDCfcXnpUp51eG1fSg==
+"@sap/cds-dk@6.0.1":
+  version "6.0.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.0.1.tgz#2718f4ac76fa6e8a1218ceedfffec5fe0806612f"
+  integrity sha512-D7dvk/K/Ddll7nhqPjLTNMcb8ee6Gqi4fWBDlXkI38iaUaWjxWahxsdkKIfBgOV68Bt9ylqE32Gs8R+C5LQ80Q==
   dependencies:
-    "@sap/cds" "^5.9.2"
-    "@sap/cds-foss" "^3"
+    "@sap/cds" "^6.0.1"
+    "@sap/cds-foss" "^4"
     "@sap/eslint-plugin-cds" "^2.3.3"
     axios ">=0.21"
     connect-livereload "^0.6.1"
     eslint "^8"
     express "^4.17.1"
-    htmlparser2 "^7.2.0"
+    htmlparser2 "^8.0.0"
     livereload-js "^3.3.1"
     md5 "^2.3.0"
     mustache "^4.0.1"
@@ -1136,7 +1143,18 @@
     ws "^8.4.2"
     xml-js "^1.6.11"
   optionalDependencies:
-    sqlite3 "npm:@mendix/sqlite3@^5.0.2"
+    sqlite3 "^5.0.4"
+
+"@sap/cds-foss@>=3", "@sap/cds-foss@^4":
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-4.0.0.tgz#f4734af9a4abcf6c6b8e8b0e48352442d7ed6a3f"
+  integrity sha512-66enuhyx+SdcIgdYstLGk31GFWDyK+Ch5+bWFRYJJ8340izZJlgyCYtHjZI1m9j4tNxWg9ZhkbFkXG5d80xWdw==
+  dependencies:
+    big.js "^6.1.1"
+    generic-pool "^3.8.2"
+    uuid "^8.3.2"
+    xmlbuilder "^15.1.1"
+    yaml "^2.1.1"
 
 "@sap/cds-foss@^3":
   version "3.1.1"
@@ -1150,7 +1168,7 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds@^5.6.0", "@sap/cds@^5.9.2", "@sap/cds@^5.9.8":
+"@sap/cds@^5.6.0", "@sap/cds@^5.9.8":
   version "5.9.8"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.8.tgz#4ba06e6441fd4226faf1045d804188e0d36def5b"
   integrity sha512-qRlhxOt51iz04uvtLTdyMOLp7n9ph1FW9B7Cv/k/e89jNJ3RxMA6BPigw/opw9Qd8uod2j4g/oMXg1XSN3m1vA==
@@ -1159,6 +1177,14 @@
     "@sap-cloud-sdk/util" "^1.41"
     "@sap/cds-compiler" "^2.13.0"
     "@sap/cds-foss" "^3"
+
+"@sap/cds@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.0.1.tgz#002cd52e6a30f6dc72ddc9204658a4f17fd332f7"
+  integrity sha512-ScWJmGLi0lqjowh9riZbU1T3IcCj4Ewm8dyy0umGJb25YDTC25504H4/fCWRpWQb60p+Z8TKYMhz6rqYfvV2KQ==
+  dependencies:
+    "@sap/cds-compiler" ">=2.13.0"
+    "@sap/cds-foss" ">=3"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^2.1.0":
   version "2.1.0"
@@ -1835,6 +1861,11 @@ antlr4@4.8.0:
   resolved "https://registry.npmjs.org/antlr4/-/antlr4-4.8.0.tgz#f938ec171be7fc2855cd3a533e87647185b32b6a"
   integrity sha512-en/MxQ4OkPgGJQ3wD/muzj1uDnFSzdFIhc2+c6bHZokWkuBb6RRvFjpWhPxWLbgQvaEzldJZ0GSQpfSAaE3hqg==
 
+antlr4@4.9.3:
+  version "4.9.3"
+  resolved "https://registry.npmjs.org/antlr4/-/antlr4-4.9.3.tgz#268b844ff8ce97d022399a05d4b37aa6ab4047b2"
+  integrity sha512-qNy2odgsa0skmNMCuxzXhM4M8J1YDaPv3TI+vCdnOAanu0N982wBrSqziDKRDctEZLZy9VffqIZXc0UGjjSP/g==
+
 anymatch@^3.0.3, anymatch@~3.1.2:
   version "3.1.2"
   resolved "https://registry.npmjs.org/anymatch/-/anymatch-3.1.2.tgz#c0557c096af32f106198f4f4e2a383537e378716"
@@ -2165,6 +2196,11 @@ big.js@6.1.1:
   version "6.1.1"
   resolved "https://registry.npmjs.org/big.js/-/big.js-6.1.1.tgz#63b35b19dc9775c94991ee5db7694880655d5537"
   integrity sha512-1vObw81a8ylZO5ePrtMay0n018TcftpTA5HFKDaSuiUDBo8biRBtjIobw60OpwuvrGk+FsxKamqN4cnmj/eXdg==
+
+big.js@^6.1.1:
+  version "6.2.0"
+  resolved "https://registry.npmjs.org/big.js/-/big.js-6.2.0.tgz#39c60822aecb0f34a1d79a90fe9908a0ddf45e1d"
+  integrity sha512-paIKvJiAaOYdLt6MfnvxkDo64lTOV257XYJyX3oJnJQocIclUn+48k6ZerH/c5FxWE6DGJu1TKDYis7tqHg9kg==
 
 bignumber.js@^9.0.0, bignumber.js@^9.0.1:
   version "9.0.2"
@@ -3175,16 +3211,16 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dom-serializer@^1.0.1:
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/dom-serializer/-/dom-serializer-1.4.1.tgz#de5d41b1aea290215dc45a6dae8adcf1d32e2d30"
-  integrity sha512-VHwB3KfrcOOkelEG2ZOfxqLZdfkil8PtJi4P8N2MMXucZq2yLp75ClViUlOVwyoHEDjYU433Aq+5zWP61+RGag==
+dom-serializer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/dom-serializer/-/dom-serializer-2.0.0.tgz#e41b802e1eedf9f6cae183ce5e622d789d7d8e53"
+  integrity sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==
   dependencies:
-    domelementtype "^2.0.1"
-    domhandler "^4.2.0"
-    entities "^2.0.0"
+    domelementtype "^2.3.0"
+    domhandler "^5.0.2"
+    entities "^4.2.0"
 
-domelementtype@^2.0.1, domelementtype@^2.2.0:
+domelementtype@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/domelementtype/-/domelementtype-2.3.0.tgz#5c45e8e869952626331d7aab326d01daf65d589d"
   integrity sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==
@@ -3196,21 +3232,21 @@ domexception@^2.0.1:
   dependencies:
     webidl-conversions "^5.0.0"
 
-domhandler@^4.2.0, domhandler@^4.2.2:
-  version "4.3.1"
-  resolved "https://registry.npmjs.org/domhandler/-/domhandler-4.3.1.tgz#8d792033416f59d68bc03a5aa7b018c1ca89279c"
-  integrity sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==
+domhandler@^5.0.1, domhandler@^5.0.2:
+  version "5.0.3"
+  resolved "https://registry.npmjs.org/domhandler/-/domhandler-5.0.3.tgz#cc385f7f751f1d1fc650c21374804254538c7d31"
+  integrity sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==
   dependencies:
-    domelementtype "^2.2.0"
+    domelementtype "^2.3.0"
 
-domutils@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.npmjs.org/domutils/-/domutils-2.8.0.tgz#4437def5db6e2d1f5d6ee859bd95ca7d02048135"
-  integrity sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A==
+domutils@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/domutils/-/domutils-3.0.1.tgz#696b3875238338cb186b6c0612bd4901c89a4f1c"
+  integrity sha512-z08c1l761iKhDFtfXO04C7kTdPBLi41zwOZl00WS8b5eiaebNpY00HKbztwBq+e3vyqWNwWF3mP9YLUeqIrF+Q==
   dependencies:
-    dom-serializer "^1.0.1"
-    domelementtype "^2.2.0"
-    domhandler "^4.2.0"
+    dom-serializer "^2.0.0"
+    domelementtype "^2.3.0"
+    domhandler "^5.0.1"
 
 dot-prop@^6.0.1:
   version "6.0.1"
@@ -3300,15 +3336,10 @@ enquirer@2.3.6, enquirer@^2.3.0:
   dependencies:
     ansi-colors "^4.1.1"
 
-entities@^2.0.0:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/entities/-/entities-2.2.0.tgz#098dc90ebb83d8dffa089d55256b351d34c4da55"
-  integrity sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==
-
-entities@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/entities/-/entities-3.0.1.tgz#2b887ca62585e96db3903482d336c1006c3001d4"
-  integrity sha512-WiyBqoomrwMdFG1e0kqvASYfnlb0lp8M5o5Fw2OFq1hNZxxcNk8Ik0Xm7LxzBhuidnZB/UtBqVCgUz3kBOP51Q==
+entities@^4.2.0, entities@^4.3.0:
+  version "4.3.1"
+  resolved "https://registry.npmjs.org/entities/-/entities-4.3.1.tgz#c34062a94c865c322f9d67b4384e4169bcede6a4"
+  integrity sha512-o4q/dYJlmyjP2zfnaWDUC6A3BQFmVTX+tZPezK7k0GLSU9QYCauscf5Y+qcEPzKL+EixVouYDgLQK5H9GrLpkg==
 
 env-paths@^2.2.0:
   version "2.2.1"
@@ -4170,7 +4201,7 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-generic-pool@3.8.2:
+generic-pool@3.8.2, generic-pool@^3.8.2:
   version "3.8.2"
   resolved "https://registry.npmjs.org/generic-pool/-/generic-pool-3.8.2.tgz#aab4f280adb522fdfbdc5e5b64d718d3683f04e9"
   integrity sha512-nGToKy6p3PAbYQ7p1UlWl6vSPwfwU6TMSWK7TTu+WUY4ZjyZQGniGGt2oNVvyNSpyZYSB43zMXVLcBm08MTMkg==
@@ -4329,7 +4360,7 @@ gonzales-pe@^4.2.3, gonzales-pe@^4.3.0:
   dependencies:
     minimist "^1.2.5"
 
-graceful-fs@^4.1.2, graceful-fs@^4.1.5, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.3, graceful-fs@^4.2.4, graceful-fs@^4.2.6, graceful-fs@^4.2.9:
+graceful-fs@^4.1.2, graceful-fs@^4.1.5, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4, graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.10"
   resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
@@ -4441,15 +4472,15 @@ html-escaper@^2.0.0:
   resolved "https://registry.npmjs.org/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
-htmlparser2@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.npmjs.org/htmlparser2/-/htmlparser2-7.2.0.tgz#8817cdea38bbc324392a90b1990908e81a65f5a5"
-  integrity sha512-H7MImA4MS6cw7nbyURtLPO1Tms7C5H602LRETv95z1MxO/7CP7rDVROehUYeYBUYEON94NXXDEPmZuq+hX4sog==
+htmlparser2@^8.0.0:
+  version "8.0.1"
+  resolved "https://registry.npmjs.org/htmlparser2/-/htmlparser2-8.0.1.tgz#abaa985474fcefe269bc761a779b544d7196d010"
+  integrity sha512-4lVbmc1diZC7GUJQtRQ5yBAeUCL1exyMwmForWkRLnwyzWBFxN633SALPMGYaWZvKe9j1pRZJpauvmxENSp/EA==
   dependencies:
-    domelementtype "^2.0.1"
-    domhandler "^4.2.2"
-    domutils "^2.8.0"
-    entities "^3.0.1"
+    domelementtype "^2.3.0"
+    domhandler "^5.0.2"
+    domutils "^3.0.1"
+    entities "^4.3.0"
 
 http-cache-semantics@^4.1.0:
   version "4.1.0"
@@ -6279,22 +6310,6 @@ node-fetch@2.6.7, node-fetch@^2.6.1, node-fetch@^2.6.7:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-gyp@7.x:
-  version "7.1.2"
-  resolved "https://registry.npmjs.org/node-gyp/-/node-gyp-7.1.2.tgz#21a810aebb187120251c3bcec979af1587b188ae"
-  integrity sha512-CbpcIo7C3eMu3dL1c3d0xw449fHIGALIJsRP4DDPHpyiW8vcriNY7ubh9TE4zEKfSxscY7PjeFnshE7h75ynjQ==
-  dependencies:
-    env-paths "^2.2.0"
-    glob "^7.1.4"
-    graceful-fs "^4.2.3"
-    nopt "^5.0.0"
-    npmlog "^4.1.2"
-    request "^2.88.2"
-    rimraf "^3.0.2"
-    semver "^7.3.2"
-    tar "^6.0.2"
-    which "^2.0.2"
-
 node-gyp@8.x:
   version "8.4.1"
   resolved "https://registry.npmjs.org/node-gyp/-/node-gyp-8.4.1.tgz#3d49308fc31f768180957d6b5746845fbd429937"
@@ -6418,7 +6433,7 @@ npm-run-path@^4.0.1:
   dependencies:
     path-key "^3.0.0"
 
-"npmlog@2 || ^3.1.0 || ^4.0.0", npmlog@^4.1.2:
+"npmlog@2 || ^3.1.0 || ^4.0.0":
   version "4.1.2"
   resolved "https://registry.npmjs.org/npmlog/-/npmlog-4.1.2.tgz#08a7f2a8bf734604779a9efa4ad5cc717abb954b"
   integrity sha512-2uUqazuKlTaSI/dC8AzicUck7+IrEaOnN/e0jd3Xtt1KcGpwx30v50mL7oPyr/h9bL3E4aZccVwpwP+5W9Vjkg==
@@ -8009,7 +8024,7 @@ sprintf-js@~1.0.2:
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-sqlite3@^5.0.2:
+sqlite3@^5.0.2, sqlite3@^5.0.4:
   version "5.0.8"
   resolved "https://registry.npmjs.org/sqlite3/-/sqlite3-5.0.8.tgz#b4b7eab7156debec80866ef492e01165b4688272"
   integrity sha512-f2ACsbSyb2D1qFFcqIXPfFscLtPVOWJr5GmUzYxf4W+0qelu5MWrR+FAQE1d5IUArEltBrzSDxDORG8P/IkqyQ==
@@ -8019,16 +8034,6 @@ sqlite3@^5.0.2:
     tar "^6.1.11"
   optionalDependencies:
     node-gyp "8.x"
-
-"sqlite3@npm:@mendix/sqlite3@^5.0.2":
-  version "5.0.3"
-  resolved "https://registry.npmjs.org/@mendix/sqlite3/-/sqlite3-5.0.3.tgz#9b337388438749adc6731aaf0c6d9b8d75c504de"
-  integrity sha512-GqQy6UZsr6pYZZjShmwy51VsPVROC88wDluQTCkWz9Cq/Y76ci2CJ4q2fjqEfiP2dQTAn4WxB1Ui2IZ5Z7/+Ow==
-  dependencies:
-    "@mapbox/node-pre-gyp" "^1.0.0"
-    node-addon-api "^4.2.0"
-  optionalDependencies:
-    node-gyp "7.x"
 
 sshpk@^1.7.0:
   version "1.17.0"
@@ -9153,7 +9158,7 @@ xml@^1.0.1:
   resolved "https://registry.npmjs.org/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
   integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
 
-xmlbuilder@15.1.1:
+xmlbuilder@15.1.1, xmlbuilder@^15.1.1:
   version "15.1.1"
   resolved "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-15.1.1.tgz#9dcdce49eea66d8d10b42cae94a79c3c8d0c2ec5"
   integrity sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==
@@ -9197,6 +9202,11 @@ yaml@1.10.2, yaml@^1.10.0:
   version "1.10.2"
   resolved "https://registry.npmjs.org/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
+
+yaml@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/yaml/-/yaml-2.1.1.tgz#1e06fb4ca46e60d9da07e4f786ea370ed3c3cfec"
+  integrity sha512-o96x3OPo8GjWeSLF+wOAbrPfhFOGY0W00GNaxCDv+9hkcDJEnev1yh8S7pgHF0ik6zc8sQLuL8hjHjJULZp8bw==
 
 yamljs@0.3.0:
   version "0.3.0"

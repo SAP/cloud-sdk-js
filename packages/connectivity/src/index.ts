@@ -26,6 +26,7 @@ export {
   serviceToken,
   Destination,
   DestinationFetchOptions,
+  ServiceBindingTransformFunction,
   DestinationAccessorOptions,
   DestinationSelectionStrategies,
   JwtPayload,

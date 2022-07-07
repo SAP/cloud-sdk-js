@@ -1,7 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { decodeJwt } from '../jwt';
 import { getXsuaaServiceCredentials } from '../environment-accessor';
-import { parseSubdomain } from '../subdomain-replacer';
 import { Destination, DestinationAuthToken } from './destination-service-types';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
@@ -129,17 +128,18 @@ function isolationStrategy(
  * This is then passed on to build the cache key.
  * @param options - Options passed to register the destination containing the jwt.
  * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid).
+ * @internal
  */
-function decodedJwtOrZid(
+export function decodedJwtOrZid(
   options?: RegisterDestinationOptions
 ): Record<string, any> {
   if (options?.jwt) {
     return decodeJwt(options.jwt);
   }
 
-  const providerTenantId = parseSubdomain(
-    getXsuaaServiceCredentials(options?.jwt).url
-  );
+  const providerTenantId = getXsuaaServiceCredentials(
+    options?.jwt
+  ).subaccountid;
 
   return { zid: providerTenantId };
 }

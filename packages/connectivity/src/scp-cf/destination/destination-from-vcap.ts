@@ -166,11 +166,11 @@ function xfS4hanaCloudBindingToDestination(
 }
 
 /**
- * Options to customize the behavior of [[destinationForServiceBinding]].
+ * Options to customize the behavior of {@link destinationForServiceBinding}.
  */
 export interface DestinationForServiceBindingOptions {
   /**
-   * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
+   * Custom transformation function to control how a {@link Destination} is built from the given {@link ServiceBinding}.
    */
   serviceBindingTransformFn?: (
     serviceBinding: ServiceBinding

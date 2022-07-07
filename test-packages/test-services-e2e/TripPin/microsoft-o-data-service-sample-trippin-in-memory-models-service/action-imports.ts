@@ -14,7 +14,7 @@ import {
 import { microsoftODataServiceSampleTrippinInMemoryModelsService } from './service';
 
 /**
- * Type of the parameters to be passed to [[resetDataSource]].
+ * Type of the parameters to be passed to {@link resetDataSource}.
  */
 export interface ResetDataSourceParameters<
   DeSerializersT extends DeSerializers

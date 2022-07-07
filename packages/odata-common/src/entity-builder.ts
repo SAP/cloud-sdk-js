@@ -24,7 +24,7 @@ export type NullishTypes = null | undefined;
 export type NonNullishType<T> = Exclude<T, NullishTypes>;
 
 /**
- * Omits all nullish properties as well as all properties of the [[EntityBase]] from a given type.
+ * Omits all nullish properties as well as all properties of the {@link EntityBase} from a given type.
  */
 export type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
 
@@ -87,7 +87,7 @@ export class EntityBuilder<
 
   /**
    * Builds an entity from JSON representation.
-   * If you have obtained the JSON as a request payload use the [[deserializeEntity]] methods.
+   * If you have obtained the JSON as a request payload use the {@link deserializeEntity} methods.
    * Note that fields not mappable to a field in the target entity are silently ignored.
    * @param json - Representation of the entity in JSON format.
    * @returns EntityBase constructed from JSON representation.

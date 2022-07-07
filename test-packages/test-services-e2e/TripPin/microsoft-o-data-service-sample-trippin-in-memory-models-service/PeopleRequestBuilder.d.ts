@@ -11,14 +11,14 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { People } from './People';
 /**
- * Request builder class for operations supported on the [[People]] entity.
+ * Request builder class for operations supported on the {@link People} entity.
  */
 export declare class PeopleRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<People<T>, T> {
   /**
    * Returns a request builder for retrieving one `People` entity based on its keys.
-   * @param userName Key property. See [[People.userName]].
+   * @param userName Key property. See {@link People.userName}.
    * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
    */
   getByKey(
@@ -43,7 +43,7 @@ export declare class PeopleRequestBuilder<
   update(entity: People<T>): UpdateRequestBuilder<People<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `People`.
-   * @param userName Key property. See [[People.userName]].
+   * @param userName Key property. See {@link People.userName}.
    * @returns A request builder for creating requests that delete an entity of type `People`.
    */
   delete(userName: string): DeleteRequestBuilder<People<T>, T>;

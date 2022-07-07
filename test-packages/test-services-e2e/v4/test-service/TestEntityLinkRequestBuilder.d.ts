@@ -11,15 +11,15 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityLink } from './TestEntityLink';
 /**
- * Request builder class for operations supported on the [[TestEntityLink]] entity.
+ * Request builder class for operations supported on the {@link TestEntityLink} entity.
  */
 export declare class TestEntityLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityLink<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityLink` entity based on its keys.
-   * @param keyTestEntityLink Key property. See [[TestEntityLink.keyTestEntityLink]].
-   * @param keyToTestEntity Key property. See [[TestEntityLink.keyToTestEntity]].
+   * @param keyTestEntityLink Key property. See {@link TestEntityLink.keyTestEntityLink}.
+   * @param keyToTestEntity Key property. See {@link TestEntityLink.keyToTestEntity}.
    * @returns A request builder for creating requests to retrieve one `TestEntityLink` entity based on its keys.
    */
   getByKey(
@@ -45,8 +45,8 @@ export declare class TestEntityLinkRequestBuilder<
   update(entity: TestEntityLink<T>): UpdateRequestBuilder<TestEntityLink<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityLink`.
-   * @param keyTestEntityLink Key property. See [[TestEntityLink.keyTestEntityLink]].
-   * @param keyToTestEntity Key property. See [[TestEntityLink.keyToTestEntity]].
+   * @param keyTestEntityLink Key property. See {@link TestEntityLink.keyTestEntityLink}.
+   * @param keyToTestEntity Key property. See {@link TestEntityLink.keyToTestEntity}.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityLink`.
    */
   delete(

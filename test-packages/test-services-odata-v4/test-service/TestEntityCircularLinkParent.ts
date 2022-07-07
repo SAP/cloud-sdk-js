@@ -41,11 +41,11 @@ export class TestEntityCircularLinkParent<
    */
   keyProperty!: DeserializedType<T, 'Edm.String'>;
   /**
-   * One-to-one navigation property to the [[TestEntityCircularLinkChild]] entity.
+   * One-to-one navigation property to the {@link TestEntityCircularLinkChild} entity.
    */
   toFirstChild?: TestEntityCircularLinkChild<T> | null;
   /**
-   * One-to-many navigation property to the [[TestEntityCircularLinkChild]] entity.
+   * One-to-many navigation property to the {@link TestEntityCircularLinkChild} entity.
    */
   toChildren!: TestEntityCircularLinkChild<T>[];
 }

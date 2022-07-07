@@ -34,7 +34,7 @@ export const subscriberServiceToken = signedJwtForVerification(
 
 /**
  * These tokens are used to test cases when the provided user JWT only contains `{ iss: someXSUAAurl }`.
- * See docs on [[DestinationAccessorOptions]] for more details.
+ * See docs on {@link DestinationAccessorOptions} for more details.
  */
 export const onlyIssuerServiceTokenPayload = {
   iss: onlyIssuerXsuaaUrl,

@@ -14,7 +14,7 @@ import { BatchSubRequestPathType } from './batch-request-options';
 import { serializeBatchRequest } from './batch-request-serializer';
 
 /**
- * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
+ * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. {@link GetAllRequestBuilder | getAll} and {@link GetByKeyRequestBuilder | getByKey} requests and change sets, which in turn can contain {@link CreateRequestBuilder | create}, {@link UpdateRequestBuilder | update} or {@link DeleteRequestBuilder | delete} requests.
  * The retrieve and change sets will be executed in order, while the order within a change set can vary.
  * @internal
  */
@@ -63,9 +63,9 @@ export class BatchRequestBuilder<
   }
 
   /**
-   * Execute request and return an [[HttpResponse]].
+   * Execute request and return an {@link HttpResponse}.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an [[HttpResponse]].
+   * @returns A promise resolving to an {@link HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

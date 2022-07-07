@@ -72,9 +72,9 @@ export abstract class DeleteRequestBuilderBase<
   }
 
   /**
-   * Execute request and return an [[HttpResponse]].
+   * Execute request and return an {@link HttpResponse}.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an [[HttpResponse]].
+   * @returns A promise resolving to an {@link HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

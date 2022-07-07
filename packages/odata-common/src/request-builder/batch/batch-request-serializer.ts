@@ -38,7 +38,7 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
 
 /**
  * Serialize a multipart request to string.
- * @param request - One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
+ * @param request - One of {@link GetAllRequestBuilder | getAll}, {@link GetByKeyRequestBuilder | getByKey}, {@link CreateRequestBuilder | create}, {@link UpdateRequestBuilder | update} or {@link DeleteRequestBuilder | delete} request builder.
  * @param options - Request serialization options.
  * @returns The serialized string representation of a multipart request, including the multipart headers.
  * @internal

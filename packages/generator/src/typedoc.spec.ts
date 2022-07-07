@@ -53,7 +53,7 @@ describe('typedoc', () => {
     };
 
     expect(getNavPropertyDescription(navProp)).toBe(
-      'One-to-many navigation property to the [[OtherEntity]] entity.'
+      'One-to-many navigation property to the {@link OtherEntity} entity.'
     );
   });
 

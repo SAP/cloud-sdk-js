@@ -8,7 +8,7 @@ import { DeSerializers } from './de-serializers';
 
 /**
  * Entity deserializer instance for v2 entities.
- * See [[EntityDeserializer]] for the provided methods.
+ * See {@link EntityDeserializer} for the provided methods.
  * @param deSerializers - DeSerializer.
  * @returns EntityDeserializer.
  */

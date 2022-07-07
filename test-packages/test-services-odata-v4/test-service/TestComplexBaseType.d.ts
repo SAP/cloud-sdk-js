@@ -39,7 +39,7 @@ export declare class TestComplexBaseTypeField<
 > {
   private _fieldBuilder;
   /**
-   * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
+   * Representation of the {@link TestComplexBaseType.baseStringProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   baseStringProperty: OrderableEdmTypeField<

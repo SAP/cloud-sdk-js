@@ -18,10 +18,10 @@
 <section class="tsd-panel tsd-comment">
 <div class="tsd-comment tsd-typography"><p>Declaration of a destination to be retrieved from an environment variable or from the destination service on SAP Business Technology Platform, including all DestinationOptions.</p>
 <p>Use an object of this interface to specify which destination shall be used when executing a request.
-The destination will be retrieved via its <a href="connectivitysrc.DestinationFetchOptions#destinationName">DestinationFetchOptions.destinationName</a> according to the following algorithm:</p>
+The destination will be retrieved via its <a href="connectivitysrc.DestinationFetchOptions#destinationName">destinationName</a> according to the following algorithm:</p>
 <ol>
-<li>If a destination of this <a href="connectivitysrc.DestinationFetchOptions#destinationName">DestinationFetchOptions.destinationName</a> is defined in the environment variable <code>destinations</code> (if available), it will be converted into a <a href="connectivitysrc.Destination">Destination</a> and used for the request.</li>
-<li>Otherwise, the destination service on SAP Business Technology Platform is queried for a destination with the given <a href="connectivitysrc.DestinationFetchOptions#destinationName">DestinationFetchOptions.destinationName</a>, using the access token provided as value of property <a href="connectivitysrc.DestinationFetchOptions#jwt">jwt</a>.
+<li>If a destination of this <a href="connectivitysrc.DestinationFetchOptions#destinationName">destinationName</a> is defined in the environment variable <code>destinations</code> (if available), it will be converted into a <a href="connectivitysrc.Destination">Destination</a> and used for the request.</li>
+<li>Otherwise, the destination service on SAP Business Technology Platform is queried for a destination with the given <a href="connectivitysrc.DestinationFetchOptions#destinationName">destinationName</a>, using the access token provided as value of property <a href="connectivitysrc.DestinationFetchOptions#jwt">jwt</a>.
 Additionally, you can set <a href="../types/connectivitysrc.DestinationOptions">DestinationOptions</a> for objects of this interface.
 For more information check out our documentation: <a href="https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination">https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination</a>.</li>
 </ol>

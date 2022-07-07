@@ -48,7 +48,7 @@ export declare class TestNestedComplexTypeField<
 > {
   private _fieldBuilder;
   /**
-   * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
+   * Representation of the {@link TestNestedComplexType.stringProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   stringProperty: OrderableEdmTypeField<
@@ -59,7 +59,7 @@ export declare class TestNestedComplexTypeField<
     false
   >;
   /**
-   * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
+   * Representation of the {@link TestNestedComplexType.complexTypeProperty} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   complexTypeProperty: TestLvl2NestedComplexTypeField<

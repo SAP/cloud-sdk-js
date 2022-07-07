@@ -10,7 +10,7 @@ import type { Filterable } from './filterable';
 export type FilterLambdaOperator = 'any' | 'all';
 
 /**
- * Class representing a filter expression based on a [[FilterLambdaOperator]].
+ * Class representing a filter expression based on a {@link FilterLambdaOperator}.
  */
 export class FilterLambdaExpression<
   EntityT extends EntityBase,

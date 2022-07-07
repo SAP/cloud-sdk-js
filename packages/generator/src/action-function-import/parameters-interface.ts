@@ -22,7 +22,7 @@ export function parametersInterface(
     })),
     docs: [
       addLeadingNewline(
-        `Type of the parameters to be passed to [[${actionFunctionImport.name}]].`
+        `Type of the parameters to be passed to {@link ${actionFunctionImport.name}}.`
       )
     ]
   };

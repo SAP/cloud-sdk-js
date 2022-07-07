@@ -64,7 +64,7 @@ export type EdmTypeSameConvertersUri = Exclude<
 /**
  * Check whether a value is an EdmType. This will yield positive results for every string starting with `Edm.`.
  * @param val - Value to test.
- * @returns Whether the given value is of type [[EdmTypeShared]]
+ * @returns Whether the given value is of type {@link EdmTypeShared}
  * @internal
  */
 export function isEdmType(val: any): val is EdmTypeShared<'any'> {
@@ -95,9 +95,9 @@ export type OrderableEdmType =
   | 'Edm.Guid';
 
 /**
- * Convenience function to check whether a given EDM type is of type [[OrderableEdmType]].
+ * Convenience function to check whether a given EDM type is of type {@link OrderableEdmType}.
  * @param edmType - Literal EDM type string to check.
- * @returns Whether the given `edmType` is of type [[OrderableEdmType]].
+ * @returns Whether the given `edmType` is of type {@link OrderableEdmType}.
  */
 export function isOrderableEdmType(edmType: EdmTypeShared<'any'>): boolean {
   return [

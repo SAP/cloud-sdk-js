@@ -102,8 +102,8 @@ export function enableExceptionLogger(): void {
  * ```
  * You will find these information under the _custom_fields_ key in your Cloud Foundry logs.
  *
- * To retrieve a logger after its creation use [[getLogger]].
- * If you want to change the log level of a logger use [[setLogLevel]].
+ * To retrieve a logger after its creation use {@link getLogger}.
+ * If you want to change the log level of a logger use {@link setLogLevel}.
  * @param messageContext - Either a key for the message context of all messages produced by the logger or an object with additional keys to set in the message.
  * @returns A newly created or an already existing logger for the given context.
  */

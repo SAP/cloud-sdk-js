@@ -16,7 +16,7 @@ import { FieldOptions } from './field';
 import { EnumField } from './enum-field';
 
 /**
- * Constructor function creating a [[ComplexTypeField]].
+ * Constructor function creating a {@link ComplexTypeField}.
  */
 export type ComplexTypeFieldConstructor<
   ComplexTypeFieldT extends ComplexTypeField<
@@ -104,7 +104,7 @@ export class FieldBuilder<
   >;
   /**
    * Build a field for a property with an EDM type.
-   * For `[[OrderableEdmType]]` fields, the returned fields are of type `OrderableEdmTypeField`.
+   * For `{@link OrderableEdmType}` fields, the returned fields are of type `OrderableEdmTypeField`.
    * All other EDM types yield `EdmTypeField`s.
    * Fields of entities are selectable; fields of complex types are not selectable.
    * @param fieldName - Name of the field.

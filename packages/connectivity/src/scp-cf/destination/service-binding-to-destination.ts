@@ -2,7 +2,7 @@ import { JwtPayload } from '../jsonwebtoken-type';
 import { Service } from '../environment-accessor-types';
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
-import {
+import type {
   ServiceBinding,
   ServiceBindingTransformFunction
 } from './destination-from-vcap';

@@ -3,16 +3,19 @@ import { EntityBase } from './entity-base';
 import {
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
-  PropertyMetadata,
-  EdmTypeField,
-  OneToOneLink,
-  Link,
-  ComplexTypeField,
-  CollectionField,
-  EnumField
-} from './selectable';
+  PropertyMetadata
+} from './selectable/complex-type-namespace';
+import { EdmTypeField } from './selectable/edm-type-field';
+import { OneToOneLink } from './selectable/one-to-one-link';
+import { Link } from './selectable/link';
+import { ComplexTypeField } from './selectable/complex-type-field';
+import { CollectionField } from './selectable/collection-field';
+import { EnumField } from './selectable/enum-field';
 import { EdmTypeShared, isEdmType } from './edm-types';
-import { createValueSerializer, DeSerializers } from './de-serializers';
+import {
+  createValueSerializer,
+  DeSerializers
+} from './de-serializers/de-serializers';
 import { EntityApi } from './entity-api';
 
 const logger = createLogger({
@@ -21,8 +24,7 @@ const logger = createLogger({
 });
 
 /**
- * Interface representing the return type of the builder function [[entitySerializer]].
- * @internal
+ * Interface representing the return type of the builder function {@link entitySerializer}.
  */
 export interface EntitySerializer {
   serializeEntity: <EntityT extends EntityBase>(
@@ -46,7 +48,7 @@ export interface EntitySerializer {
  * Constructs an entitySerializer given the OData v2 or v4 specific tsToEdm method.
  * The concrete serializers are created in odata/v2/entity-serializer.ts and odata/v4/entity-serializer.ts
  * @param deSerializers - (De-)serializers used for transformation.
- * @returns a entity serializer as defined by [[EntitySerializer]]
+ * @returns a entity serializer as defined by {@link EntitySerializer}
  * @internal
  */
 export function entitySerializer(

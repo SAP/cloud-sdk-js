@@ -16,7 +16,10 @@ export const providerServiceTokenPayload = {
   zid: TestTenants.PROVIDER
 };
 
-export const providerServiceToken = signedJwtForVerification(providerServiceTokenPayload, jku);
+export const providerServiceToken = signedJwtForVerification(
+  providerServiceTokenPayload,
+  jku
+);
 
 export const subscriberServiceTokenPayload = {
   iat,
@@ -24,24 +27,27 @@ export const subscriberServiceTokenPayload = {
   zid: TestTenants.SUBSCRIBER
 };
 
-export const subscriberServiceToken = signedJwtForVerification(subscriberServiceTokenPayload, jku);
+export const subscriberServiceToken = signedJwtForVerification(
+  subscriberServiceTokenPayload,
+  jku
+);
 
 /**
  * These tokens are used to test cases when the provided user JWT only contains `{ iss: someXSUAAurl }`.
- * See docs on [[DestinationAccessorOptions]] for more details.
+ * See docs on {@link DestinationAccessorOptions} for more details.
  */
 export const onlyIssuerServiceTokenPayload = {
   iss: onlyIssuerXsuaaUrl,
   zid: TestTenants.SUBSCRIBER_ONLY_ISS
 };
 
-export const onlyIssuerServiceToken = signedJwtForVerification(onlyIssuerServiceTokenPayload, jku);
+export const onlyIssuerServiceToken = signedJwtForVerification(
+  onlyIssuerServiceTokenPayload,
+  jku
+);
 
 export const subscriberServiceTokenWithVerificationURL =
-  signedJwtForVerification(
-    subscriberServiceTokenPayload,
-    jku
-  );
+  signedJwtForVerification(subscriberServiceTokenPayload, jku);
 
 const userApprovedProviderTokenPayload = {
   iat,
@@ -74,7 +80,10 @@ export const providerUserPayload = {
   user_id: 'user-prov'
 };
 
-export const providerUserJwt = signedJwtForVerification(providerUserPayload, jku);
+export const providerUserJwt = signedJwtForVerification(
+  providerUserPayload,
+  jku
+);
 
 export const subscriberUserPayload = {
   iat,
@@ -83,7 +92,10 @@ export const subscriberUserPayload = {
   user_id: 'user-sub'
 };
 
-export const subscriberUserJwt = signedJwtForVerification(subscriberUserPayload, jku);
+export const subscriberUserJwt = signedJwtForVerification(
+  subscriberUserPayload,
+  jku
+);
 
 const subscriberJwtTokenPayload = {
   iat,
@@ -99,8 +111,14 @@ const providerJwtTokenPayload = {
   user_id: 'jwt-prov'
 };
 
-export const providerJwtBearerToken = signedJwtForVerification(providerJwtTokenPayload, jku);
+export const providerJwtBearerToken = signedJwtForVerification(
+  providerJwtTokenPayload,
+  jku
+);
 
-export const subscriberJwtBearerToken = signedJwtForVerification(subscriberJwtTokenPayload, jku);
+export const subscriberJwtBearerToken = signedJwtForVerification(
+  subscriberJwtTokenPayload,
+  jku
+);
 
 export const iasToken = signedJwtForVerification(providerJwtTokenPayload, jku);

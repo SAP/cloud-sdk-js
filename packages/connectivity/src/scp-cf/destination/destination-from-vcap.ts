@@ -1,16 +1,30 @@
-import { flatten, createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, flatten } from '@sap-cloud-sdk/util';
 import { getVcapService } from '../environment-accessor';
-import { Destination } from './destination-service-types';
+import { JwtPayload } from '../jsonwebtoken-type';
+import { decodeJwt } from '../jwt';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
 } from './proxy-util';
+import { Destination } from './destination-service-types';
+import type { DestinationFetchOptions } from './destination-accessor-types';
+import { destinationCache, IsolationStrategy } from './destination-cache';
+import { decodedJwtOrZid } from './destination-from-registration';
+import { serviceToDestinationTransformers } from './service-binding-to-destination';
 
 const logger = createLogger({
   package: 'connectivity',
   messageContext: 'destination-accessor-vcap'
 });
+
+/**
+ * @internal
+ */
+export interface PartialDestinationFetchOptions {
+  useCache?: boolean;
+  jwt?: JwtPayload;
+}
 
 /**
  * Tries to build a destination from a service binding with the given name.
@@ -21,21 +35,45 @@ const logger = createLogger({
  * @returns A destination.
  * @internal
  */
-export function destinationForServiceBinding(
+export async function destinationForServiceBinding(
   serviceInstanceName: string,
-  options: DestinationForServiceBindingsOptions = {}
-): Destination {
+  options: DestinationForServiceBindingsOptions &
+    PartialDestinationFetchOptions = {}
+): Promise<Destination> {
+  if (options.useCache) {
+    const fromCache = await destinationCache.retrieveDestinationFromCache(
+      options.jwt || decodedJwtOrZid().subaccountid,
+      serviceInstanceName,
+      IsolationStrategy.Tenant
+    );
+    if (fromCache) {
+      return fromCache;
+    }
+  }
+
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
-  const destination = options.transformationFn
-    ? options.transformationFn(selected)
-    : transform(selected);
+  const destination = options.serviceBindingTransformFn
+    ? await options.serviceBindingTransformFn(selected, options.jwt)
+    : await transform(selected, options.jwt);
 
-  return destination &&
+  const destWithProxy =
+    destination &&
     (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
       proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
-    ? addProxyConfigurationInternet(destination)
-    : destination;
+      ? addProxyConfigurationInternet(destination)
+      : destination;
+
+  if (options.useCache) {
+    // use the provider tenant if no jwt is given. Since the grant type is clientCredential isolation strategy is tenant.
+    await destinationCache.cacheRetrievedDestination(
+      options.jwt || decodedJwtOrZid().subaccountid,
+      destWithProxy,
+      IsolationStrategy.Tenant
+    );
+  }
+
+  return destWithProxy;
 }
 
 /**
@@ -46,8 +84,16 @@ export interface DestinationForServiceBindingsOptions {
   /**
    * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
    */
-  transformationFn?: (serviceBinding: ServiceBinding) => Destination;
+  serviceBindingTransformFn?: ServiceBindingTransformFunction;
 }
+
+/**
+ * Type of the function to transform the service binding.
+ */
+export type ServiceBindingTransformFunction = (
+  serviceBinding: ServiceBinding,
+  jwt?: JwtPayload
+) => Promise<Destination>;
 
 /**
  * Represents the JSON object for a given service binding as obtained from the VCAP_SERVICE environment variable.
@@ -67,7 +113,6 @@ export interface DestinationForServiceBindingsOptions {
  * }
  * ```
  * In this example, the key "s4-hana-cloud" refers to an array of service bindings.
- * @internal
  */
 export interface ServiceBinding {
   [key: string]: any;
@@ -118,17 +163,18 @@ function findServiceByName(
   return found;
 }
 
-const serviceToDestinationTransformers = {
-  'business-logging': businessLoggingBindingToDestination,
-  's4-hana-cloud': xfS4hanaCloudBindingToDestination
-};
-
-function transform(serviceBinding: Record<string, any>): Destination {
+async function transform(
+  serviceBinding: ServiceBinding,
+  jwt?: JwtPayload
+): Promise<Destination> {
   if (!serviceToDestinationTransformers[serviceBinding.type]) {
     throw serviceTypeNotSupportedError(serviceBinding.type);
   }
 
-  return serviceToDestinationTransformers[serviceBinding.type](serviceBinding);
+  return serviceToDestinationTransformers[serviceBinding.type](
+    serviceBinding,
+    jwt
+  );
 }
 
 function noVcapServicesError(): Error {
@@ -154,37 +200,37 @@ function noServiceBindingFoundError(
   );
 }
 
-function businessLoggingBindingToDestination(
-  serviceBinding: ServiceBinding
-): Destination {
-  return {
-    url: serviceBinding.credentials.writeUrl,
-    authentication: 'OAuth2ClientCredentials',
-    username: serviceBinding.credentials.uaa.clientid,
-    password: serviceBinding.credentials.uaa.clientsecret
-  };
-}
-
-function xfS4hanaCloudBindingToDestination(
-  serviceBinding: ServiceBinding
-): Destination {
-  return {
-    url: serviceBinding.credentials.URL,
-    authentication: 'BasicAuthentication',
-    username: serviceBinding.credentials.User,
-    password: serviceBinding.credentials.Password
-  };
+/**
+ * Options to customize the behavior of {@link destinationForServiceBinding}.
+ */
+export interface DestinationForServiceBindingOptions {
+  /**
+   * Custom transformation function to control how a {@link Destination} is built from the given {@link ServiceBinding}.
+   */
+  serviceBindingTransformFn?: (
+    serviceBinding: ServiceBinding
+  ) => Promise<Destination>;
 }
 
 /**
  * @internal
  */
-export function searchServiceBindingForDestination(
-  name: string
-): Destination | undefined {
+export async function searchServiceBindingForDestination({
+  iss,
+  jwt,
+  serviceBindingTransformFn,
+  destinationName,
+  useCache
+}: DestinationFetchOptions &
+  DestinationForServiceBindingsOptions): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
-    const destination = destinationForServiceBinding(name);
+    const jwtFromOptions = iss ? { iss } : jwt ? decodeJwt(jwt) : undefined;
+    const destination = await destinationForServiceBinding(destinationName, {
+      serviceBindingTransformFn,
+      jwt: jwtFromOptions,
+      useCache
+    });
     logger.info('Successfully retrieved destination from service binding.');
     return destination;
   } catch (error) {
@@ -192,4 +238,5 @@ export function searchServiceBindingForDestination(
       `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${error.message}`
     );
   }
+  return null;
 }

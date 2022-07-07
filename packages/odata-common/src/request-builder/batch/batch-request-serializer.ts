@@ -1,7 +1,8 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { v4 as uuid } from 'uuid';
-import { ODataRequest, ODataRequestConfig } from '../../request';
+import { ODataRequest } from '../../request/odata-request';
+import { ODataRequestConfig } from '../../request/odata-request-config';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { DeSerializers } from '../../de-serializers';
 import { BatchChangeSet } from './batch-change-set';
@@ -37,7 +38,7 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
 
 /**
  * Serialize a multipart request to string.
- * @param request - One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
+ * @param request - One of {@link GetAllRequestBuilder | getAll}, {@link GetByKeyRequestBuilder | getByKey}, {@link CreateRequestBuilder | create}, {@link UpdateRequestBuilder | update} or {@link DeleteRequestBuilder | delete} request builder.
  * @param options - Request serialization options.
  * @returns The serialized string representation of a multipart request, including the multipart headers.
  * @internal

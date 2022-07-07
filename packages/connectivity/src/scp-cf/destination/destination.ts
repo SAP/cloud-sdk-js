@@ -3,6 +3,7 @@ import {
   DestinationFetchOptions,
   isDestinationFetchOptions
 } from './destination-accessor-types';
+import type { DestinationForServiceBindingOptions } from './destination-from-vcap';
 import {
   AuthenticationType,
   Destination,
@@ -12,7 +13,7 @@ import {
 
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.
- * @param destination - An object that adheres to the [[Destination]] interface.
+ * @param destination - An object that adheres to the {@link Destination} interface.
  * @returns An SDK compatible destination object.
  */
 export function sanitizeDestination(
@@ -32,6 +33,7 @@ export function sanitizeDestination(
 /**
  * Takes a JSON object returned by any of the calls to the destination service and returns an SDK compatible destination object.
  * This function only accepts destination configurations of type 'HTTP' and will error if no 'URL' is given.
+ * TODO: Remove from public api in version 3. (Check if related types can also be removed from public api).
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
  */
@@ -309,7 +311,6 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
 
 /**
  * Destination configuration alongside authtokens and certificates.
- * @internal
  */
 export interface DestinationJson {
   [key: string]: any;
@@ -320,7 +321,6 @@ export interface DestinationJson {
 
 /**
  * Configuration of a destination as it is available through the destination service.
- * @internal
  */
 export interface DestinationConfiguration {
   [key: string]: any;
@@ -403,9 +403,9 @@ export function noDestinationErrorMessage(
 }
 
 /**
- * Type that is either a [[Destination]] or (XOR) [[DestinationFetchOptions]].
+ * Type that is either a {@link Destination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
  */
 export type DestinationOrFetchOptions = Xor<
   Destination,
-  DestinationFetchOptions
+  DestinationFetchOptions & DestinationForServiceBindingOptions
 >;

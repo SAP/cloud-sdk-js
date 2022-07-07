@@ -2,7 +2,8 @@ import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { first } from '@sap-cloud-sdk/util';
 import { MethodRequestBuilder } from '../request-builder-base';
-import { ODataBatchRequestConfig, ODataRequest } from '../../request';
+import { ODataRequest } from '../../request/odata-request';
+import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
 import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
 import { EntityBase } from '../../entity-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
@@ -13,7 +14,7 @@ import { BatchSubRequestPathType } from './batch-request-options';
 import { serializeBatchRequest } from './batch-request-serializer';
 
 /**
- * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
+ * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. {@link GetAllRequestBuilder | getAll} and {@link GetByKeyRequestBuilder | getByKey} requests and change sets, which in turn can contain {@link CreateRequestBuilder | create}, {@link UpdateRequestBuilder | update} or {@link DeleteRequestBuilder | delete} requests.
  * The retrieve and change sets will be executed in order, while the order within a change set can vary.
  * @internal
  */
@@ -62,9 +63,9 @@ export class BatchRequestBuilder<
   }
 
   /**
-   * Execute request and return an [[HttpResponse]].
+   * Execute request and return an {@link HttpResponse}.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an [[HttpResponse]].
+   * @returns A promise resolving to an {@link HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

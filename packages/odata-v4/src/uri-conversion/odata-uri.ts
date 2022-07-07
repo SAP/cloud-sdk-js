@@ -12,7 +12,7 @@ import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
 
 /**
- * Instance of the [[ODataUri]] conversion interface for OData v4.
+ * Instance of the {@link ODataUri} conversion interface for OData v4.
  * @param deSerializers - DeSerializer instance used for conversions
  * @returns ODataUri
  * @internal

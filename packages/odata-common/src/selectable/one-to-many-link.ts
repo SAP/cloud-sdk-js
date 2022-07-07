@@ -1,8 +1,8 @@
 import type { EntityBase } from '../entity-base';
-import { FilterLink } from '../filter';
-import { Orderable } from '../order';
+import { FilterLink } from '../filter/filter-link';
+import { Orderable } from '../order/orderable';
 import type { Filterable } from '../filter';
-import { DeSerializers } from '../de-serializers';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi, EntityType } from '../entity-api';
 import { Link } from './link';
 
@@ -23,8 +23,8 @@ export function toFilterableList<
 
 /**
  * Represents a one to many relation for OData v4 entities.
- * For OData v2 entities the [[Link]] is used to represent one to many relation.
- * See [[Link]] for more information.
+ * For OData v2 entities the {@link Link} is used to represent one to many relation.
+ * See {@link Link} for more information.
  */
 export class OneToManyLink<
   EntityT extends EntityBase,

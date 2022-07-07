@@ -1,5 +1,5 @@
 /**
- * Extractor for the ETag for OData v2 responses used in [[entityDeserializer]].
+ * Extractor for the ETag for OData v2 responses used in {@link entityDeserializer}.
  * @param json - Response data from which the ETag is extracted.
  * @returns The ETag.
  * @internal

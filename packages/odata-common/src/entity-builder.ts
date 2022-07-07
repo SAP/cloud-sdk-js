@@ -13,10 +13,20 @@ const logger = createLogger({
   messageContext: 'entity-builder'
 });
 
-type NullishTypes = null | undefined;
-type NonNullishType<T> = Exclude<T, NullishTypes>;
+/**
+ * Union type of `null` and `undefiend`.
+ */
+export type NullishTypes = null | undefined;
 
-type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
+/**
+ * Exclude all nullish types from the given type so NonNullishType<TypeA | TypeB | undefined> is TypeA | TypeB.
+ */
+export type NonNullishType<T> = Exclude<T, NullishTypes>;
+
+/**
+ * Omits all nullish properties as well as all properties of the {@link EntityBase} from a given type.
+ */
+export type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
 
 /**
  * Type to describe possible inputs for `.fromJson`.
@@ -25,7 +35,7 @@ type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
  * @typeparam JsonT - JSON type of the entity.
  */
 // prettier-ignore
-type FromJsonType<JsonT> = {
+export type FromJsonType<JsonT> = {
   [key: string]: any; // custom properties
 } & {
   [P in keyof PureEntityType<JsonT>]?: PureEntityType<JsonT>[P] extends (infer U)[]
@@ -38,7 +48,7 @@ type FromJsonType<JsonT> = {
 };
 
 /**
- * @internal
+ * Contains the methods to build an entity.
  */
 export class EntityBuilder<
   EntityT extends EntityBase,
@@ -77,7 +87,7 @@ export class EntityBuilder<
 
   /**
    * Builds an entity from JSON representation.
-   * If you have obtained the JSON as a request payload use the [[deserializeEntity]] methods.
+   * If you have obtained the JSON as a request payload use the {@link deserializeEntity} methods.
    * Note that fields not mappable to a field in the target entity are silently ignored.
    * @param json - Representation of the entity in JSON format.
    * @returns EntityBase constructed from JSON representation.

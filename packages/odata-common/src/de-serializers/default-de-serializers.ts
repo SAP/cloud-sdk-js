@@ -11,7 +11,6 @@ import {
 import { convertToUriForEdmString, isInfOrNan } from './uri-value-converter';
 
 /**
- * @internal
  * Type of the default (de-)serializers.
  */
 export type DefaultDeSerializers = DeSerializers<

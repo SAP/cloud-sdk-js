@@ -3,11 +3,9 @@ import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, EntityIdentifiable, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
-import {
-  ODataGetAllRequestConfig,
-  ODataGetByKeyRequestConfig
-} from '../request';
-import { DeSerializers } from '../de-serializers';
+import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
+import { ODataGetByKeyRequestConfig } from '../request/odata-get-by-key-request-config';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
 
@@ -58,9 +56,9 @@ export abstract class GetRequestBuilderBase<
   }
 
   /**
-   * Execute request and return an [[HttpResponse]].
+   * Execute request and return an {@link HttpResponse}.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an [[HttpResponse]].
+   * @returns A promise resolving to an {@link HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

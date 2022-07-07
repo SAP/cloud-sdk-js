@@ -6,16 +6,15 @@ import type { ODataUri } from '../uri-conversion';
 import type { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
-import { ODataCreateRequestConfig } from '../request';
+import { ODataCreateRequestConfig } from '../request/odata-create-request-config';
 import { Link } from '../selectable';
-import { DeSerializers } from '../de-serializers';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.
  * @typeparam EntityT - Type of the entity to be created
- * @internal
  */
 export abstract class CreateRequestBuilderBase<
     EntityT extends EntityBase,
@@ -94,9 +93,9 @@ export abstract class CreateRequestBuilderBase<
   }
 
   /**
-   * Execute request and return an [[HttpResponse]].
+   * Execute request and return an {@link HttpResponse}.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an [[HttpResponse]].
+   * @returns A promise resolving to an {@link HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

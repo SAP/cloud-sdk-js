@@ -62,7 +62,7 @@ export class TestEntityLvl2MultiLink<
    */
   keyProperty!: DeserializedType<T, 'Edm.String'>;
   /**
-   * One-to-many navigation property to the [[TestEntityLvl3MultiLink]] entity.
+   * One-to-many navigation property to the {@link TestEntityLvl3MultiLink} entity.
    */
   toMultiLink2!: TestEntityLvl3MultiLink<T>[];
 }

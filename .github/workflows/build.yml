@@ -34,6 +34,7 @@ jobs:
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - run: yarn test:integration
+      - run: yarn test:self
       - run: yarn test:type
   checks:
     runs-on: ubuntu-latest
@@ -61,6 +62,8 @@ jobs:
         name: Undeclared dependency Check
       - run: yarn check:public-api
         name: Check public api
+      - run: yarn test:self
+        name: Self tests for tools
       - run: yarn check:circular
         name: Circular dependency Check
       - run: yarn doc

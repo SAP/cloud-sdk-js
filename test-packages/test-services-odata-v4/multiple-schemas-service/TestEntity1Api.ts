@@ -106,7 +106,7 @@ export class TestEntity1Api<
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the [[keyPropertyString]] property for query construction.
+         * Static representation of the {@link keyPropertyString} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
@@ -115,7 +115,7 @@ export class TestEntity1Api<
           false
         ),
         /**
-         * Static representation of the [[int16Property]] property for query construction.
+         * Static representation of the {@link int16Property} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -124,7 +124,7 @@ export class TestEntity1Api<
           true
         ),
         /**
-         * Static representation of the [[enumProperty]] property for query construction.
+         * Static representation of the {@link enumProperty} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         ENUM_PROPERTY: fieldBuilder.buildEnumField(
@@ -133,7 +133,7 @@ export class TestEntity1Api<
           true
         ),
         /**
-         * Static representation of the [[complexTypeProperty]] property for query construction.
+         * Static representation of the {@link complexTypeProperty} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField(

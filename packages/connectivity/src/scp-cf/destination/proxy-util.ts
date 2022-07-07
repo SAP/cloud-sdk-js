@@ -6,7 +6,10 @@ import { createLogger, sanitizeRecord } from '@sap-cloud-sdk/util';
 import { Protocol } from '../protocol';
 import { ProxyConfiguration } from '../connectivity-service-types';
 import { basicHeader } from '../authorization-header';
-import { HttpAgentConfig, HttpsAgentConfig } from '../../http-agent';
+import {
+  HttpAgentConfig,
+  HttpsAgentConfig
+} from '../../http-agent/agent-config';
 import { getProtocolOrDefault } from '../get-protocol';
 import { Destination } from './destination-service-types';
 
@@ -17,7 +20,7 @@ const logger = createLogger({
 
 /**
  * Determines the proxy strategy. If noProxy is set the ProxyConfiguration in the destination is omitted.
- * For onPremProxy or internetProxy the connectivity service or environment variables are checked to fill the [[ProxyConfiguration]].
+ * For onPremProxy or internetProxy the connectivity service or environment variables are checked to fill the {@link ProxyConfiguration}.
  * @param destination - from which the proxy strategy is derived.
  * @returns ProxyStrategy possible values are noProxy, internetProxy or onPremProxy.
  * @internal
@@ -188,7 +191,7 @@ export function parseProxyEnv(
 }
 
 /**
- * Adds the proxy configuration to a destination based on web proxies defined in environment variables. See [[ProxyConfiguration]] and [[proxyStrategy]] for details.
+ * Adds the proxy configuration to a destination based on web proxies defined in environment variables. See {@link ProxyConfiguration} and {@link proxyStrategy} for details.
  * @param destination - to which the proxy configuration is added.
  * @returns Destination containing the configuration for web proxy.
  * @internal
@@ -261,7 +264,7 @@ export function proxyAgent(
 
 /**
  * Enum representing the different strategies for proxies on requests. Possible situations are "NO_PROXY", use the connectivity service proxy for On-Premise connection or a usual web proxy.
- * See also [[ProxyConfiguration]] for more details.
+ * See also {@link ProxyConfiguration} for more details.
  * @internal
  */
 export enum ProxyStrategy {

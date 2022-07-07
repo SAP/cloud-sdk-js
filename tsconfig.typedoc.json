@@ -13,9 +13,7 @@
     "./packages/test-util/**/*",
     "./packages/temporal-de-serializers/**/*"
   ],
-  "exclude": [
-    "**/*.spec.ts"
-  ],
+  "exclude": ["**/*.spec.ts"],
   "references": [
     {
       "path": "./packages/util"
@@ -71,8 +69,11 @@
     "theme": "default",
     "includeVersion": true,
     "hideGenerator": true,
-    "listInvalidSymbolLinks": true,
     "excludePrivate": true,
-    "includes": "packages"
+    "includes": "packages",
+    "treatWarningsAsErrors": false,
+    "validation": {
+      "invalidLink": true
+    }
   }
 }

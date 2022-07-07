@@ -20,7 +20,7 @@ import { TestEntity } from './TestEntity';
 import { TestEntityApi } from './TestEntityApi';
 
 /**
- * Type of the parameters to be passed to [[concatStrings]].
+ * Type of the parameters to be passed to {@link concatStrings}.
  */
 export interface ConcatStringsParameters<DeSerializersT extends DeSerializers> {
   /**
@@ -66,7 +66,7 @@ export function concatStrings<
 }
 
 /**
- * Type of the parameters to be passed to [[getAll]].
+ * Type of the parameters to be passed to {@link getAll}.
  */
 export interface GetAllParameters<DeSerializersT extends DeSerializers> {}
 
@@ -101,7 +101,7 @@ export function getAll<
 }
 
 /**
- * Type of the parameters to be passed to [[getByKey]].
+ * Type of the parameters to be passed to {@link getByKey}.
  */
 export interface GetByKeyParameters<DeSerializersT extends DeSerializers> {
   /**
@@ -143,7 +143,7 @@ export function getByKey<
 }
 
 /**
- * Type of the parameters to be passed to [[returnCollection]].
+ * Type of the parameters to be passed to {@link returnCollection}.
  */
 export interface ReturnCollectionParameters<
   DeSerializersT extends DeSerializers
@@ -186,7 +186,7 @@ export function returnCollection<
 }
 
 /**
- * Type of the parameters to be passed to [[returnInt]].
+ * Type of the parameters to be passed to {@link returnInt}.
  */
 export interface ReturnIntParameters<DeSerializersT extends DeSerializers> {
   /**
@@ -227,7 +227,7 @@ export function returnInt<
 }
 
 /**
- * Type of the parameters to be passed to [[returnSapCloudSdk]].
+ * Type of the parameters to be passed to {@link returnSapCloudSdk}.
  */
 export interface ReturnSapCloudSdkParameters<
   DeSerializersT extends DeSerializers

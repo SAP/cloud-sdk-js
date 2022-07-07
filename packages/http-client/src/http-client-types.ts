@@ -1,7 +1,7 @@
 import * as http from 'http';
 
 /**
- * @internal
+ * Represents the request configuration, that was inferred from a destination.
  */
 export interface DestinationHttpRequestConfig {
   baseURL: string;
@@ -39,8 +39,8 @@ export type HttpRequestConfig = HttpRequestConfigBase & {
 };
 
 /**
- * This interface is similar to [[HttpRequestConfig]]. In addition, the `headers` and `params` can be defined with "origin" information.
- * @see [[OriginOptions]]
+ * This interface is similar to {@link HttpRequestConfig}. In addition, the `headers` and `params` can be defined with "origin" information.
+ * @see {@link OriginOptions}
  */
 export type HttpRequestConfigWithOrigin = HttpRequestConfigBase & {
   params?: OriginOptions;
@@ -55,7 +55,7 @@ export type ParameterEncoder = (
 ) => Record<string, any>;
 
 /**
- * @internal
+ * Represents an HTTP request config. This is the basis for actual request configurations and request configurations with origins.
  */
 export interface HttpRequestConfigBase {
   [key: string]: any;
@@ -111,7 +111,7 @@ export interface HttpRequestOptions {
 
 /**
  * This interface is used for defining e.g., headers and query parameters with origin information.
- * The priorities are defined in the [[origins]].
+ * The priorities are defined in the {@link origins}.
  */
 export interface OriginOptions {
   requestConfig?: Record<string, any>;

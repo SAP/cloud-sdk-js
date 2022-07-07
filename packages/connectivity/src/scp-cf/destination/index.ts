@@ -11,3 +11,4 @@ export * from './destination-service-types';
 export * from './destination-service';
 export * from './destination';
 export * from './proxy-util';
+export * from './service-binding-to-destination';

@@ -4,7 +4,8 @@ import {
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
 import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
-import { ODataRequest, ODataRequestConfig } from '../request';
+import { ODataRequest } from '../request/odata-request';
+import { ODataRequestConfig } from '../request/odata-request-config';
 
 /**
  * Base class for all request builders.
@@ -81,7 +82,7 @@ export abstract class MethodRequestBuilder<
 
   /**
    * Add a custom request configuration to the request. Typically, this is used when specifying a response type for downloading files.
-   * If the custom request configuration contains [[defaultDisallowedKeys | disallowed keys]], those will be ignored.
+   * If the custom request configuration contains {@link defaultDisallowedKeys | disallowed keys}, those will be ignored.
    * @param requestConfiguration - Key-value pairs denoting additional custom request configuration options to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.
    */

@@ -2,7 +2,7 @@
 
 ## Status
 
-**superseded** 
+**superseded**
 
 We will add resilience via middleware approach ([ADR#0031](../0031-resilience-options.md)).
 

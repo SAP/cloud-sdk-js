@@ -60,7 +60,7 @@ export class LocationField<
     this.deSerializers
   );
   /**
-   * Representation of the [[Location.address]] property for query construction.
+   * Representation of the {@link Location.address} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   address: OrderableEdmTypeField<
@@ -71,7 +71,7 @@ export class LocationField<
     false
   > = this._fieldBuilder.buildEdmTypeField('Address', 'Edm.String', false);
   /**
-   * Representation of the [[Location.city]] property for query construction.
+   * Representation of the {@link Location.city} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   city: CityField<EntityT, DeSerializersT, false, false> =

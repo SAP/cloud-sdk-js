@@ -1,8 +1,8 @@
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { parseEnumTypes } from '../../edmx-parser/v4';
-import { ServiceMetadata } from '../../edmx-parser';
+import { parseEnumTypes } from '../../edmx-parser/v4/edmx-parser';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { VdmEnumType } from '../../vdm-types';
-import { transformEnumTypesBase } from '../common';
+import { transformEnumTypesBase } from '../common/enum-type';
 
 /**
  * @internal

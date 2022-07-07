@@ -9,12 +9,12 @@ exports.AirlinesRequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const Airlines_1 = require('./Airlines');
 /**
- * Request builder class for operations supported on the [[Airlines]] entity.
+ * Request builder class for operations supported on the {@link Airlines} entity.
  */
 class AirlinesRequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `Airlines` entity based on its keys.
-   * @param airlineCode Key property. See [[Airlines.airlineCode]].
+   * @param airlineCode Key property. See {@link Airlines.airlineCode}.
    * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
    */
   getByKey(airlineCode) {

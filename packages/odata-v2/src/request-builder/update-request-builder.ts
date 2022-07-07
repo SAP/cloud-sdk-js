@@ -68,9 +68,9 @@ export class UpdateRequestBuilder<
   }
 
   /**
-   * Execute request and return an [[HttpResponse]]. The request is only executed if some properties of the entity are modified.
+   * Execute request and return an {@link HttpResponse}. The request is only executed if some properties of the entity are modified.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an [[HttpResponse]] when the request is executed or `undefined` otherwise.
+   * @returns A promise resolving to an {@link HttpResponse} when the request is executed or `undefined` otherwise.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

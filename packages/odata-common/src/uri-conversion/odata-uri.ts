@@ -12,7 +12,6 @@ import { createGetFilter } from './get-filter';
 import { createGetResourcePathForKeys } from './get-resource-path';
 
 /**
- * @internal
  * Union of necessary methods for the OData URI conversion.
  * In v2/uri-conversion/odata-uri.ts and v4/uri-conversion/odata-uri.ts the instance for v2 and v4 are created.
  */

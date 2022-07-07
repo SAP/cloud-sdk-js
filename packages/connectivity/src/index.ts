@@ -26,6 +26,7 @@ export {
   serviceToken,
   Destination,
   DestinationFetchOptions,
+  ServiceBindingTransformFunction,
   DestinationAccessorOptions,
   DestinationSelectionStrategies,
   JwtPayload,
@@ -38,7 +39,16 @@ export {
   getClientCredentialsToken,
   getUserToken,
   registerDestination,
-  setDestinationCache
+  setDestinationCache,
+  DestinationAuthToken,
+  DestinationCertificate,
+  ClientCredentialsResponse,
+  AllDestinations,
+  DestinationConfiguration,
+  DestinationJson,
+  DestinationsByType,
+  ServiceBinding,
+  DestinationForServiceBindingOptions
 } from './scp-cf';
 
 export type {
@@ -46,7 +56,15 @@ export type {
   DestinationSelectionStrategy,
   DestinationOrFetchOptions,
   DestinationOptions,
-  ServiceCredentials
+  ServiceCredentials,
+  DestinationProxyType,
+  AuthenticationType,
+  DestinationWithName,
+  RegisterDestinationOptions
 } from './scp-cf';
 
-export { getAgentConfig } from './http-agent';
+export {
+  getAgentConfig,
+  HttpAgentConfig,
+  HttpsAgentConfig
+} from './http-agent';

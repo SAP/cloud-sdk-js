@@ -1,8 +1,8 @@
-import { transformComplexTypesBase } from '../common';
+import { transformComplexTypesBase } from '../common/complex-type';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType, VdmEnumType } from '../../vdm-types';
-import { parseComplexTypesV4 } from '../../edmx-parser/v4';
-import { ServiceMetadata } from '../../edmx-parser';
+import { parseComplexTypesV4 } from '../../edmx-parser/v4/edmx-parser';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 
 /**
  * @internal

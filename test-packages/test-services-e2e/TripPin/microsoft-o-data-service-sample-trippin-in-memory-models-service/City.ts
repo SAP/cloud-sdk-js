@@ -60,7 +60,7 @@ export class CityField<
     this.deSerializers
   );
   /**
-   * Representation of the [[City.countryRegion]] property for query construction.
+   * Representation of the {@link City.countryRegion} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   countryRegion: OrderableEdmTypeField<
@@ -75,7 +75,7 @@ export class CityField<
     false
   );
   /**
-   * Representation of the [[City.name]] property for query construction.
+   * Representation of the {@link City.name} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   name: OrderableEdmTypeField<
@@ -86,7 +86,7 @@ export class CityField<
     false
   > = this._fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
   /**
-   * Representation of the [[City.region]] property for query construction.
+   * Representation of the {@link City.region} property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   region: OrderableEdmTypeField<

@@ -1,11 +1,11 @@
 import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
-import { Filter } from '../filter';
-import { DeSerializers } from '../de-serializers';
+import { Filter } from '../filter/filter';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
 
 /**
- * [[EdmTypeField]], that represents a property with an EDM type, that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.
+ * {@link EdmTypeField}, that represents a property with an EDM type, that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.
  * @typeparam EntityT - Type of the entity the field belongs to.
  * @typeparam EdmT - EDM type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.

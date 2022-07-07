@@ -1,7 +1,10 @@
 import { DestinationOrFetchOptions, sanitizeDestination } from './destination';
 import { Destination } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
-import { searchServiceBindingForDestination } from './destination-from-vcap';
+import {
+  DestinationForServiceBindingOptions,
+  searchServiceBindingForDestination
+} from './destination-from-vcap';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import {
   DestinationFetchOptions,
@@ -10,7 +13,7 @@ import {
 import { searchRegisteredDestination } from './destination-from-registration';
 
 /**
- * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination
+ * Returns the parameter if it is a destination, calls {@link getDestination} otherwise (which will try to fetch the destination
  * from the Cloud Foundry destination service).
  *
  * Fetching a destination requires:
@@ -41,12 +44,12 @@ export async function useOrFetchDestination(
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestination(
-  options: DestinationFetchOptions
+  options: DestinationFetchOptions & DestinationForServiceBindingOptions
 ): Promise<Destination | null> {
-  return (
+  const destination =
     searchEnvVariablesForDestination(options) ||
     (await searchRegisteredDestination(options)) ||
-    searchServiceBindingForDestination(options.destinationName) ||
-    getDestinationFromDestinationService(options)
-  );
+    (await searchServiceBindingForDestination(options)) ||
+    (await getDestinationFromDestinationService(options));
+  return destination;
 }

@@ -1,6 +1,6 @@
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
-import type { OneToManyLink } from '../selectable';
+import type { OneToManyLink } from '../selectable/one-to-many-link';
 import { DeSerializers } from '../de-serializers';
 import { EntityApi } from '../entity-api';
 import type { BooleanFilterFunction } from './boolean-filter-function';
@@ -13,7 +13,6 @@ import { FilterLink } from './filter-link';
 /**
  * A union of all types that can be used for filtering.
  * @typeparam EntityT - Type of the entity to be filtered on.
- * @internal
  */
 export type Filterable<
   EntityT extends EntityBase,
@@ -32,7 +31,7 @@ export type Filterable<
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;
 
 /**
- * Combine [[Filterable]]s with logical `and` to create a [[FilterList]].
+ * Combine {@link Filterable}s with logical `and` to create a {@link FilterList}.
  * @example
  * ```ts
  * Entity.requestBuilder()
@@ -40,7 +39,7 @@ export type Filterable<
  *  .filter(and(filterExp1, filterExp2));
  * ```
  *
- * Note that the [[GetAllRequestBuilder.filter | GetAllRequestBuilderV2.filter]]  and [[GetAllRequestBuilderV4.filter]] method take a rest parameter and thereby an array of filter expressions that are then combined conjunctively. As a consequence following is equivalent to the example above:
+ * Note that the {@link GetAllRequestBuilder.filter | GetAllRequestBuilderV2.filter}  and {@link GetAllRequestBuilderV4.filter} method take a rest parameter and thereby an array of filter expressions that are then combined conjunctively. As a consequence following is equivalent to the example above:
  * ```ts
  * Entity.requestBuilder()
  *  .getAll()
@@ -77,7 +76,7 @@ export function and<
 }
 
 /**
- * Combine [[Filterable]]s with logical `or` to create a [[FilterList]].
+ * Combine {@link Filterable}s with logical `or` to create a {@link FilterList}.
  * @example
  * ```ts
  * Entity.requestBuilder()

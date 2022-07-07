@@ -121,7 +121,7 @@ export function filterFunctions<
 }
 
 /**
- * @internal
+ * Extending the common filter function by the OData v2 specific ones`substringOf` and `replace`.
  */
 export type FilterFunctionsType = FilterFunctionsCommonType & {
   substringOf: typeof substringOf;

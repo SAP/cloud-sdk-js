@@ -73,7 +73,7 @@ function getByKeyRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
             params: entity.keys.map(key => ({
               name: key.propertyNameAsParam,
               type: key.jsType,
-              description: `Key property. See [[${entity.className}.${key.instancePropertyName}]].`
+              description: `Key property. See {@link ${entity.className}.${key.instancePropertyName}}.`
             }))
           }
         )
@@ -238,7 +238,7 @@ function deleteRequestBuilderOverload(
               params: entity.keys.map(key => ({
                 name: key.propertyNameAsParam,
                 type: key.jsType,
-                description: `Key property. See [[${entity.className}.${key.instancePropertyName}]].`
+                description: `Key property. See {@link ${entity.className}.${key.instancePropertyName}}.`
               }))
             }
           )

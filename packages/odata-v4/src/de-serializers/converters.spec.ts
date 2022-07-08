@@ -2,8 +2,10 @@ import moment from 'moment';
 import {
   deserializeDateTimeOffsetToMoment,
   deserializeDateToMoment,
+  deserializeDurationToMoment,
   serializeToDate,
-  serializeToDateTimeOffset
+  serializeToDateTimeOffset,
+  serializeToDuration
 } from './converters';
 
 describe('EDM to moment and back', () => {
@@ -177,6 +179,84 @@ describe('EDM to moment and back', () => {
       expect(serializeToDateTimeOffset(dtoDeserialized)).toBe(
         '2000-02-01T11:12:12.012Z'
       );
+    });
+  });
+
+  describe('Deserialize Duration', () => {
+    it('handles duration with hours, minutes, and seconds', () => {
+      const aMoment = deserializeDurationToMoment('+PT05H30M59S');
+      // 5*60*60 + 30*60 + 59 = 19859
+      expect(aMoment.asSeconds()).toBe(19859);
+    });
+
+    it('handles negative duration with hours, minutes, and seconds', () => {
+      const aMoment = deserializeDurationToMoment('-PT05H30M59S');
+      // 5*60*60 + 30*60 + 59 = 19859
+      expect(aMoment.asSeconds()).toBe(-19859);
+    });
+
+    it('handles  duration without sign with hours, minutes, and seconds', () => {
+      const aMoment = deserializeDurationToMoment('PT05H30M59S');
+      // 5*60*60 + 30*60 + 59 = 19859
+      expect(aMoment.asSeconds()).toBe(19859);
+    });
+
+    it('handles duration with many, many seconds', () => {
+      const aMoment = deserializeDurationToMoment('+PT421337S');
+      expect(aMoment.asSeconds()).toBe(421337);
+    });
+
+    it('handles duration with days', () => {
+      const aMoment = deserializeDurationToMoment('+P1D');
+      // 24*60*60 = 86400
+      expect(aMoment.asSeconds()).toBe(86400);
+    });
+
+    it('handles duration with days and seconds', () => {
+      const aMoment = deserializeDurationToMoment('+P1DT50S');
+      // 24*60*60 = 86450
+      expect(aMoment.asSeconds()).toBe(86450);
+    });
+
+    it('handles duration with high precision', () => {
+      const aMoment = deserializeDurationToMoment('+PT59.987654321012345S');
+      // Durations are truncated after 14 digits
+      // expect(aMoment.asSeconds()).toBe(59.987654321012345);
+      expect(aMoment.asSeconds()).toBe(59.98765432101234);
+    });
+  });
+
+  describe('Serialize Duration', () => {
+    it('handles duration with hours, minutes, and seconds', () => {
+      const isoDuration = 'PT5H30M59S';
+      const aDuration = deserializeDurationToMoment(isoDuration);
+      expect(serializeToDuration(aDuration)).toBe(isoDuration);
+    });
+
+    it('handles negative durations', () => {
+      const isoDuration = '-PT5H30M59S';
+      const aDuration = deserializeDurationToMoment(isoDuration);
+      expect(serializeToDuration(aDuration)).toBe(isoDuration);
+    });
+
+    it('handles duration with many seconds', () => {
+      const isoDuration = 'PT19859S';
+      const aDuration = deserializeDurationToMoment(isoDuration);
+      expect(serializeToDuration(aDuration)).toBe('PT5H30M59S');
+    });
+
+    it('handles duration with days and seconds', () => {
+      const isoDuration = 'P365DT23H59M59.999S';
+      const aDuration = deserializeDurationToMoment('+' + isoDuration);
+      expect(serializeToDuration(aDuration)).toBe(isoDuration);
+    });
+
+    it('handles duration with high precision', () => {
+      const isoDuration = 'PT59.98765432101234S';
+      const aDuration = deserializeDurationToMoment(isoDuration);
+      // Fractional seconds in durations are rounded to 3 digits
+      // expect(serializeToDuration(aDuration)).toBe(isoDuration);
+      expect(serializeToDuration(aDuration)).toBe('PT59.988S');
     });
   });
 });

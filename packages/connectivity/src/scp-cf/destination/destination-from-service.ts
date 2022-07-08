@@ -31,10 +31,8 @@ import {
 import {
   AuthAndExchangeTokens,
   fetchDestination,
-  fetchDestinationByName,
-  fetchCertificate,
-  fetchInstanceDestinations,
-  fetchSubaccountDestinations
+  fetchDestinationByNameWithoutTokens,
+  fetchCertificate
 } from './destination-service';
 import {
   destinationCache,
@@ -151,12 +149,8 @@ class DestinationFromServiceRetriever {
       providerToken
     );
 
-    let destinationResult: DestinationSearchResult | undefined
-
-    if (options.jwt) {
-      destinationResult = {destination: await da.fetchDestination(options.jwt), fromCache: false, origin: "provider"}; //todo: provider/subscriber
-
-    }
+    const destinationResult =
+      await da.searchDestinationWithSelectionStrategyAndCache();
 
     if (!destinationResult) {
       return null;
@@ -320,28 +314,6 @@ class DestinationFromServiceRetriever {
     return destinationSearchResult;
   }
 
-  private async getInstanceAndSubaccountDestinations(
-    accessToken: string
-  ): Promise<DestinationsByType> {
-    const [instance, subaccount] = await Promise.all([
-      fetchInstanceDestinations(
-        this.destinationServiceCredentials.uri,
-        accessToken,
-        this.options
-      ),
-      fetchSubaccountDestinations(
-        this.destinationServiceCredentials.uri,
-        accessToken,
-        this.options
-      )
-    ]);
-
-    return {
-      instance,
-      subaccount
-    };
-  }
-
   private get destinationServiceCredentials(): DestinationServiceCredentials {
     const credentials = getDestinationServiceCredentialsList();
     if (!credentials || credentials.length === 0) {
@@ -358,12 +330,12 @@ class DestinationFromServiceRetriever {
     return credentials[0];
   }
 
-  private async fetchDestination(
-    jwt: string | AuthAndExchangeTokens
-  ): Promise<Destination> {
-    return fetchDestinationByName(
+  private async fetchDestinationWithoutToken(
+    jwt: string
+  ): Promise<Destination | undefined> {
+    return fetchDestinationByNameWithoutTokens(
       this.destinationServiceCredentials.uri,
-      typeof jwt === 'string' ? { authHeaderJwt: jwt } : jwt,
+      jwt,
       this.options
     );
   }
@@ -560,16 +532,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async getProviderDestinationService(): Promise<
     DestinationSearchResult | undefined
   > {
-    const provider = await this.getInstanceAndSubaccountDestinations(
+    const destination = await this.fetchDestinationWithoutToken(
       this.providerServiceToken.encoded
     );
-    const destination = this.options.selectionStrategy(
-      {
-        subscriber: emptyDestinationByType,
-        provider
-      },
-      this.options.destinationName
-    );
+
     if (destination) {
       return {
         destination,
@@ -602,15 +568,8 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       );
     }
 
-    const subscriber = await this.getInstanceAndSubaccountDestinations(
+    const destination = await this.fetchDestinationWithoutToken(
       this.subscriberToken.serviceJwt.encoded
-    );
-    const destination = this.options.selectionStrategy(
-      {
-        subscriber,
-        provider: emptyDestinationByType
-      },
-      this.options.destinationName
     );
 
     if (destination) {
@@ -687,13 +646,16 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destination: Destination,
     origin: DestinationOrigin
   ): Promise<Destination> {
-    if (destination.originalProperties?.TrustStoreLocation) {
+    const trustStoreLocation =
+      destination.originalProperties?.destinationConfiguration
+        ?.TrustStoreLocation;
+    if (trustStoreLocation) {
       const trustStoreCertificate = await fetchCertificate(
         this.destinationServiceCredentials.uri,
         origin === 'provider'
           ? this.providerServiceToken.encoded
           : this.subscriberToken!.serviceJwt!.encoded,
-        destination.originalProperties.TrustStoreLocation
+        trustStoreLocation
       );
       destination.trustStoreCertificate = trustStoreCertificate;
     }

@@ -1,9 +1,8 @@
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
-  mockInstanceDestinationsCall,
   mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
+  mockSingleDestinationCallSkipCredentials,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
@@ -18,8 +17,7 @@ import {
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
-  basicMultipleResponse,
-  certificateMultipleResponse,
+  basicSingleResponse,
   certificateSingleResponse,
   destinationName
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
@@ -58,25 +56,45 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
   };
 
   function mockProvider(returnEmpty: boolean): nock.Scope[] {
+    if (returnEmpty) {
+      return [
+        mockSingleDestinationCallSkipCredentials(
+          nock,
+          undefined,
+          providerDestination.Name!,
+          { ...wrapJwtInHeader(providerServiceToken), responseCode: 404 }
+        )
+      ];
+    }
+
     return [
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-      mockSubaccountDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        returnEmpty ? [] : [providerDestination],
-        200,
-        providerServiceToken
+        providerDestination,
+        providerDestination.Name!,
+        wrapJwtInHeader(providerServiceToken)
       )
     ];
   }
 
   function mockSubscriber(returnEmpty: boolean): nock.Scope[] {
+    if (returnEmpty) {
+      return [
+        mockSingleDestinationCallSkipCredentials(
+          nock,
+          undefined,
+          subscriberDestination.Name!,
+          { ...wrapJwtInHeader(subscriberServiceToken), responseCode: 404 }
+        )
+      ];
+    }
+
     return [
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-      mockSubaccountDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        returnEmpty ? [] : [subscriberDestination],
-        200,
-        subscriberServiceToken
+        subscriberDestination,
+        subscriberDestination.Name!,
+        wrapJwtInHeader(subscriberServiceToken)
       )
     ];
   }
@@ -156,7 +174,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
       const requestSpy = jest.spyOn(
         destinationService,
-        'fetchSubaccountDestinations'
+        'fetchDestinationByNameWithoutTokens'
       );
       const actual = await fetchDestination(subscriberUserJwt, subscriberFirst);
       expect(requestSpy).toHaveBeenCalledTimes(1);
@@ -174,7 +192,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
       const requestSpy = jest.spyOn(
         destinationService,
-        'fetchSubaccountDestinations'
+        'fetchDestinationByNameWithoutTokens'
       );
       const actual = await fetchDestination(subscriberUserJwt, subscriberFirst);
       expect(requestSpy).toHaveBeenCalledTimes(2);
@@ -199,19 +217,18 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        basicMultipleResponse,
-        200,
-        providerServiceToken
+        basicSingleResponse,
+        destinationName,
+        wrapJwtInHeader(providerServiceToken)
       );
 
       const actual = await getDestination({
         destinationName,
         cacheVerificationKeys: false
       });
-      const expected = parseDestination(basicMultipleResponse[0]);
+      const expected = parseDestination(basicSingleResponse);
       expect(actual).toMatchObject(expected);
     });
 
@@ -241,14 +258,12 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
-      mockSubaccountDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        certificateMultipleResponse,
-        200,
-        onlyIssuerServiceToken
+        certificateSingleResponse,
+        'ERNIE-UND-CERT',
+        wrapJwtInHeader(onlyIssuerServiceToken)
       );
-
       mockSingleDestinationCall(
         nock,
         certificateSingleResponse,

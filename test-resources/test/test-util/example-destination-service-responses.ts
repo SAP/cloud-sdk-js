@@ -109,9 +109,11 @@ export const oauthClientCredentialsMultipleResponse: DestinationConfiguration[] 
 export const oauthClientCredentialsSingleResponse: DestinationJson =
   destinationSingleResponse(oauthClientCredentialsMultipleResponse);
 
-export const onPremiseMultipleResponse: DestinationConfiguration[] = [
+export const onPremiseNoAuthMultipleResponse: DestinationConfiguration[] = [
   getOnPremDestination('NoAuthentication')
 ];
+export const onPremiseNoAuthSingleResponse: DestinationJson =
+    {...destinationSingleResponse(onPremiseNoAuthMultipleResponse),authTokens:[]}
 
 export const basicMultipleResponse: DestinationConfiguration[] = [
   {
@@ -126,16 +128,19 @@ export const basicMultipleResponse: DestinationConfiguration[] = [
   }
 ];
 
+export const basicSingleResponse: DestinationJson =
+    {...destinationSingleResponse(basicMultipleResponse),authTokens:[]}
+
 export const onPremiseBasicMultipleResponse: DestinationConfiguration[] = [
   getOnPremDestination('BasicAuthentication')
 ];
 export const onPremiseBasicSingleResponse: DestinationJson =
-  destinationSingleResponse(oauthMultipleResponse);
+  destinationSingleResponse(onPremiseBasicMultipleResponse);
 
 export const onPremisePrincipalPropagationMultipleResponse: DestinationConfiguration[] =
   [getOnPremDestination('PrincipalPropagation')];
 export const onPremisePrincipalPropagationSingleResponse: DestinationJson =
-  destinationSingleResponse(onPremisePrincipalPropagationMultipleResponse);
+    {...destinationSingleResponse(onPremisePrincipalPropagationMultipleResponse),authTokens:[]}
 
 function getOnPremDestination(authType: AuthenticationType) {
   return {

@@ -40,7 +40,7 @@ type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
 type DestinationsServiceOptions = ResilienceOptions &
   Pick<DestinationFetchOptions, 'useCache'>;
 type DestinationServiceOptions = ResilienceOptions &
-  Pick<DestinationFetchOptions, 'destinationName'>;
+  Pick<DestinationFetchOptions, 'destinationName' | 'useCache'>;
 
 let circuitBreaker: DestinationCircuitBreaker<
   DestinationCertificateJson | DestinationConfiguration | DestinationJson
@@ -216,31 +216,55 @@ export async function fetchCertificate(
  * Fetch a single destination by name without credentials.
  * @internal
  */
-export async function fetchDestinationByName(
+export async function fetchDestinationByNameWithoutTokens(
   destinationServiceUri: string,
-  tokens: AuthAndExchangeTokens,
+  serviceToken: string,
   options: DestinationServiceOptions
-): Promise<Destination> {
+): Promise<Omit<Destination, 'AuthAndExchangeTokens'> | undefined> {
   const targetUri = `${removeTrailingSlashes(
     destinationServiceUri
-  )}/destination-configuration/v1/destinations/${options.destinationName}?$skipCredentials=true`;
+  )}/destination-configuration/v1/destinations/${
+    options.destinationName
+  }?$skipCredentials=true`;
 
-  const authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
+  const authHeader = wrapJwtInHeader(serviceToken).headers;
+
+  if (options?.useCache) {
+    const destinationsFromCache =
+      destinationServiceCache.retrieveDestinationsFromCache(
+        targetUri,
+        decodeJwt(serviceToken)
+      );
+    if (destinationsFromCache && destinationsFromCache.length > 0) {
+      logger.debug(
+        `Destinations retrieved from cache. There were ${destinationsFromCache.length} destinations returned from the cache.`
+      );
+      return destinationsFromCache[0];
+    }
+  }
 
   return callDestinationEndpoint(targetUri, authHeader, options)
     .then(response => {
       const destination: Destination = parseDestination(response.data);
-      return destination;
-    })
-    .catch(error => {
-      {
-        throw new ErrorWithCause(
-          `Failed to fetch destination ${
-            options.destinationName
-          }.${errorMessageFromResponse(error)}`,
-          error
+      if (options.useCache) {
+        destinationServiceCache.cacheRetrievedDestinations(
+          targetUri,
+          decodeJwt(serviceToken),
+          [destination]
         );
       }
+      return destination;
+    })
+    .catch((error: AxiosError<any>) => {
+      if (error.response?.status === 404) {
+        return undefined;
+      }
+      throw new ErrorWithCause(
+        `Failed to fetch destination ${
+          options.destinationName
+        }.${errorMessageFromResponse(error)}`,
+        error
+      );
     });
 }
 

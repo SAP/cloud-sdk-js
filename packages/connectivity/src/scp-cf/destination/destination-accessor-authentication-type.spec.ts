@@ -10,10 +10,8 @@ import {
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
-  mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSingleDestinationCallSkipCredentials,
-  mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
@@ -27,22 +25,16 @@ import {
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
-  certificateMultipleResponse,
   certificateSingleResponse,
   destinationName,
-  oauthClientCredentialsMultipleResponse,
   oauthClientCredentialsSingleResponse,
-  oauthJwtBearerResponse,
   oauthJwtBearerSingleResponse,
   oauthMultipleResponse,
-  oauthPasswordMultipleResponse,
   oauthPasswordSingleResponse,
   oauthSingleResponse,
-  oauthUserTokenExchangeMultipleResponse,
   oauthUserTokenExchangeSingleResponse,
-  onPremiseBasicMultipleResponse,
   onPremiseBasicSingleResponse,
-  onPremisePrincipalPropagationMultipleResponse
+  onPremisePrincipalPropagationSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { wrapJwtInHeader } from '../jwt';
@@ -62,42 +54,43 @@ describe('authentication types', () => {
   });
 
   describe('authentication type OAuth2SAMLBearerFlow', () => {
-
-    it('returns a single destination',async () => {
+    it('returns a single destination', async () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
 
       const expected: DestinationJson = {
-          "owner": {
-              "SubaccountId": "AF4E906A-2A16-4EB6-BD1E-4C420AC4C8EC",
-              "InstanceId": "467971F0-F4E5-4E6E-9436-2E705EEA5CA3"
-          },
-          "destinationConfiguration": {
-              "Name": "FINAL-DESTINATION",
-              "Type": "HTTP",
-              "URL": "http://example.com/foobar",
-              "Authentication": "NoAuthentication",
-              "ProxyType": "Internet"
-          }
+        owner: {
+          SubaccountId: 'AF4E906A-2A16-4EB6-BD1E-4C420AC4C8EC',
+          InstanceId: '467971F0-F4E5-4E6E-9436-2E705EEA5CA3'
+        },
+        destinationConfiguration: {
+          Name: 'FINAL-DESTINATION',
+          Type: 'HTTP',
+          URL: 'http://example.com/foobar',
+          Authentication: 'NoAuthentication',
+          ProxyType: 'Internet'
+        }
       };
 
       const httpMocks = [
-        // nock("https://provider.example.com").post("/oauth/token").reply(200, {}), //todo: unclear if needed
-        nock("https://destination.example.com").get("/destination-configuration/v1/destinations/FINAL-DESTINATION?$skipCredentials=true").reply(200, expected)
-      ]
+        mockSingleDestinationCallSkipCredentials(
+          nock,
+          expected,
+          'FINAL-DESTINATION'
+        )
+      ];
 
       const actual = await getDestination({
         destinationName,
         jwt: iasToken,
         iasToXsuaaTokenExchange: false
       });
-      
+
       expect(actual).toMatchObject(parseDestination(expected));
       expectAllMocksUsed(httpMocks);
-    })
-
+    });
 
     it('returns a destination with authTokens if its authenticationType is OAuth2SAMLBearerFlow, subscriber tenant', async () => {
       mockServiceBindings();
@@ -109,36 +102,24 @@ describe('authentication types', () => {
         .spyOn(identityService, 'exchangeToken')
         .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
-      // const httpMocks = [
-      //   mockSingleDestinationCall(
-      //     nock,
-      //     oauthSingleResponse,
-      //     200,
-      //     destinationName,
-      //     {
-      //       ...wrapJwtInHeader(subscriberServiceToken).headers,
-      //       'X-user-token': subscriberUserJwt
-      //     },
-      //     { badheaders: [] }
-      //   ),
-      //   mockSingleDestinationCallSkipCredentials(
-      //     nock,
-      //     oauthSingleResponse,
-      //     200,
-      //     destinationName,
-      //     {
-      //       ...wrapJwtInHeader(subscriberServiceToken).headers,
-      //       'X-user-token': subscriberUserJwt
-      //     },
-      //     { badheaders: [] }
-      //   )
-      // ];
-
       const httpMocks = [
-        // nock("https://provider.example.com").post("/oauth/token").reply(200, {}), //todo: unclear if needed
-        nock("https://destination.example.com").get("/destination-configuration/v1/destinations/FINAL-DESTINATION").reply(200, oauthSingleResponse),
-        nock("https://destination.example.com").get("/destination-configuration/v1/destinations/FINAL-DESTINATION?$skipCredentials=true").reply(200, oauthSingleResponse)
-      ]
+        mockSingleDestinationCall(
+          nock,
+          oauthSingleResponse,
+          200,
+          destinationName,
+          {
+            ...wrapJwtInHeader(subscriberServiceToken).headers,
+            'X-user-token': subscriberUserJwt
+          },
+          { badheaders: [] }
+        ),
+        mockSingleDestinationCallSkipCredentials(
+          nock,
+          oauthSingleResponse,
+          destinationName
+        )
+      ];
 
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination({
@@ -160,13 +141,11 @@ describe('authentication types', () => {
         .mockImplementationOnce(() => Promise.resolve(providerUserJwt));
 
       const httpMocks = [
-        mockInstanceDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          oauthMultipleResponse,
-          200,
-          providerServiceToken
+          oauthSingleResponse,
+          destinationName
         ),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         mockSingleDestinationCall(
           nock,
           oauthSingleResponse,
@@ -197,13 +176,11 @@ describe('authentication types', () => {
       samlDestinationsWithSystemUser['SystemUser'] = 'defined';
 
       const httpMocks = [
-        mockInstanceDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          [samlDestinationsWithSystemUser],
-          200,
-          providerServiceToken
+          samlDestinationsWithSystemUser,
+          'FINAL-DESTINATION'
         ),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         // This single destination call is the one triggered by the OAuth2SAMLBearerAssertion flow
         mockSingleDestinationCall(
           nock,
@@ -237,13 +214,11 @@ describe('authentication types', () => {
       samlDestinationsWithSystemUser['SystemUser'] = 'defined';
 
       const httpMocks = [
-        mockInstanceDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          [samlDestinationsWithSystemUser],
-          200,
-          subscriberServiceToken
+          samlDestinationsWithSystemUser,
+          destinationName
         ),
-        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
         // This single destination call is the one triggered by the OAuth2SAMLBearerAssertion flow
         mockSingleDestinationCall(
           nock,
@@ -277,12 +252,11 @@ describe('authentication types', () => {
         .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          oauthClientCredentialsMultipleResponse,
-          200,
-          subscriberServiceToken
+          oauthClientCredentialsSingleResponse,
+          destinationName,
+          wrapJwtInHeader(subscriberServiceToken)
         ),
         mockSingleDestinationCall(
           nock,
@@ -309,12 +283,11 @@ describe('authentication types', () => {
       mockJwtBearerToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          oauthClientCredentialsMultipleResponse,
-          200,
-          providerServiceToken
+          oauthClientCredentialsSingleResponse,
+          destinationName,
+          wrapJwtInHeader(providerServiceToken)
         ),
         mockSingleDestinationCall(
           nock,
@@ -342,15 +315,18 @@ describe('authentication types', () => {
       };
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          [withTokenServiceType],
-          200,
-          providerServiceToken
+          undefined,
+          destinationName,
+          { ...wrapJwtInHeader(subscriberServiceToken), responseCode: 404 }
         ),
-        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSingleDestinationCallSkipCredentials(
+          nock,
+          withTokenServiceType,
+          destinationName,
+          wrapJwtInHeader(providerServiceToken)
+        ),
         mockSingleDestinationCall(
           nock,
           withTokenServiceType,
@@ -383,14 +359,15 @@ describe('authentication types', () => {
       mockJwtBearerToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(nock, {}, destinationName, {
+          ...wrapJwtInHeader(subscriberServiceToken),
+          responseCode: 404
+        }),
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          oauthJwtBearerResponse,
-          200,
-          providerServiceToken
+          oauthJwtBearerSingleResponse,
+          destinationName,
+          wrapJwtInHeader(providerServiceToken)
         ),
         mockSingleDestinationCall(
           nock,
@@ -428,12 +405,11 @@ describe('authentication types', () => {
         .mockImplementationOnce(() => Promise.resolve(providerUserJwt));
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          oauthUserTokenExchangeMultipleResponse,
-          200,
-          providerServiceToken
+          oauthUserTokenExchangeSingleResponse,
+          destinationName,
+          wrapJwtInHeader(providerServiceToken)
         ),
         mockSingleDestinationCall(
           nock,
@@ -464,12 +440,11 @@ describe('authentication types', () => {
         .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          oauthUserTokenExchangeMultipleResponse,
-          200,
-          providerServiceToken
+          oauthUserTokenExchangeSingleResponse,
+          destinationName,
+          wrapJwtInHeader(providerServiceToken)
         ),
         mockSingleDestinationCall(
           nock,
@@ -505,12 +480,11 @@ describe('authentication types', () => {
         .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          oauthUserTokenExchangeMultipleResponse,
-          200,
-          subscriberServiceToken
+          oauthUserTokenExchangeSingleResponse,
+          destinationName,
+          wrapJwtInHeader(subscriberServiceToken)
         ),
         mockSingleDestinationCall(
           nock,
@@ -548,12 +522,11 @@ describe('authentication types', () => {
         .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          certificateMultipleResponse,
-          200,
-          subscriberServiceToken
+          certificateSingleResponse,
+          'ERNIE-UND-CERT',
+          wrapJwtInHeader(subscriberServiceToken)
         ),
         mockSingleDestinationCall(
           nock,
@@ -582,12 +555,11 @@ describe('authentication types', () => {
       mockJwtBearerToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          certificateMultipleResponse,
-          200,
-          providerServiceToken
+          certificateSingleResponse,
+          'ERNIE-UND-CERT',
+          wrapJwtInHeader(providerServiceToken)
         ),
         mockSingleDestinationCall(
           nock,
@@ -623,20 +595,14 @@ describe('authentication types', () => {
         .spyOn(identityService, 'exchangeToken')
         .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        onPremiseBasicMultipleResponse,
-        200,
-        subscriberServiceToken
-      );
-      mockSingleDestinationCall(
-        nock,
-        onPremiseBasicSingleResponse,
-        200,
-        destinationName,
-        wrapJwtInHeader(subscriberServiceToken).headers
-      );
+      const httpMocks = [
+        mockSingleDestinationCallSkipCredentials(
+          nock,
+          onPremiseBasicSingleResponse,
+          'OnPremise',
+          wrapJwtInHeader(subscriberServiceToken)
+        )
+      ];
 
       const actual = await getDestination({
         destinationName: 'OnPremise',
@@ -650,6 +616,7 @@ describe('authentication types', () => {
         protocol: 'http',
         headers: { 'Proxy-Authorization': expect.stringMatching(/Bearer.*/) }
       });
+      expectAllMocksUsed(httpMocks);
     });
 
     it('returns a destination without authTokens if its authenticationType is Basic', async () => {
@@ -662,12 +629,17 @@ describe('authentication types', () => {
         .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          basicMultipleResponse,
-          200,
-          subscriberServiceToken
+          basicMultipleResponse[0],
+          destinationName,
+          { ...wrapJwtInHeader(subscriberServiceToken), responseCode: 404 }
+        ),
+        mockSingleDestinationCallSkipCredentials(
+          nock,
+          basicMultipleResponse[0],
+          destinationName,
+          wrapJwtInHeader(providerServiceToken)
         )
       ];
 
@@ -694,12 +666,11 @@ describe('authentication types', () => {
         .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          onPremisePrincipalPropagationMultipleResponse,
-          200,
-          subscriberServiceToken
+          onPremisePrincipalPropagationSingleResponse,
+          'OnPremise',
+          wrapJwtInHeader(subscriberServiceToken)
         )
       ];
 
@@ -727,12 +698,11 @@ describe('authentication types', () => {
       mockServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          onPremisePrincipalPropagationMultipleResponse,
-          200,
-          providerServiceToken
+          onPremisePrincipalPropagationSingleResponse,
+          'OnPremise',
+          wrapJwtInHeader(providerServiceToken)
         )
       ];
 
@@ -748,12 +718,11 @@ describe('authentication types', () => {
       mockServiceToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          onPremisePrincipalPropagationMultipleResponse,
-          200,
-          onlyIssuerServiceToken
+          onPremisePrincipalPropagationSingleResponse,
+          'OnPremise',
+          wrapJwtInHeader(onlyIssuerServiceToken)
         )
       ];
 
@@ -770,12 +739,11 @@ describe('authentication types', () => {
   describe('autehntication type SamlAssertion', () => {
     it('receives the saml assertion in the destination', async () => {
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          oauthPasswordMultipleResponse,
-          200,
-          providerServiceToken
+          oauthPasswordSingleResponse,
+          destinationName,
+          wrapJwtInHeader(providerServiceToken)
         ),
         mockSingleDestinationCall(
           nock,
@@ -805,12 +773,11 @@ describe('authentication types', () => {
       mockJwtBearerToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          oauthPasswordMultipleResponse,
-          200,
-          providerServiceToken
+          oauthPasswordSingleResponse,
+          destinationName,
+          wrapJwtInHeader(providerServiceToken)
         ),
         mockSingleDestinationCall(
           nock,

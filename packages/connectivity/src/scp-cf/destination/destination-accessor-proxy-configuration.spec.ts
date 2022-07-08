@@ -1,5 +1,6 @@
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings
@@ -9,10 +10,9 @@ import {
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
-  mockInstanceDestinationsCall,
   mockCertificateCall,
-  mockSubaccountDestinationsCall,
-  mockVerifyJwt
+  mockVerifyJwt,
+  mockSingleDestinationCallSkipCredentials
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
@@ -21,17 +21,17 @@ import {
   subscriberUserJwt
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
-  basicMultipleResponse,
+  basicSingleResponse,
   destinationName,
-  onPremiseMultipleResponse,
-  onPremisePrincipalPropagationMultipleResponse
+  destinationSingleResponse,
+  onPremiseNoAuthSingleResponse,
+  onPremisePrincipalPropagationSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { Protocol } from '../protocol';
 import { getDestination } from './destination-accessor';
-import { parseDestination } from './destination';
 import * as ProxyUtil from './proxy-util';
 import { alwaysProvider } from './destination-selection-strategies';
-import { Destination } from './destination-service-types';
+import { AuthenticationType, Destination } from './destination-service-types';
 import { destinationCache } from './destination-cache';
 import { destinationServiceCache } from './destination-service-cache';
 
@@ -47,12 +47,11 @@ describe('proxy configuration', () => {
     mockJwtBearerToken();
 
     const httpMocks = [
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-      mockSubaccountDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        basicMultipleResponse,
-        200,
-        subscriberServiceToken
+        basicSingleResponse,
+        destinationName,
+        wrapJwtInHeader(subscriberServiceToken)
       )
     ];
     process.env['https_proxy'] = 'some.proxy.com:1234';
@@ -78,13 +77,12 @@ describe('proxy configuration', () => {
     mockJwtBearerToken();
 
     const httpMocks = [
-      mockInstanceDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        onPremisePrincipalPropagationMultipleResponse,
-        200,
-        subscriberServiceToken
-      ),
-      mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken)
+        onPremisePrincipalPropagationSingleResponse,
+        'OnPremise',
+        wrapJwtInHeader(subscriberServiceToken)
+      )
     ];
 
     process.env['https_proxy'] = 'some.proxy.com:1234';
@@ -112,31 +110,29 @@ describe('proxy configuration', () => {
     mockServiceToken();
 
     const httpMocks = [
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-      mockSubaccountDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        onPremiseMultipleResponse,
-        200,
-        providerServiceToken
+        onPremiseNoAuthSingleResponse,
+        'OnPremise',
+        wrapJwtInHeader(providerServiceToken)
       )
     ];
 
-    const expected = {
-      ...parseDestination({
-        Name: 'OnPremise',
-        URL: 'my.on.premise.system:54321',
-        ProxyType: 'OnPremise',
-        Authentication: 'NoAuthentication'
-      }),
-      proxyConfiguration: {
-        ...connectivityProxyConfigMock,
-        headers: {
-          'Proxy-Authorization': `Bearer ${providerServiceToken}`
-        }
-      }
-    };
     const actual = await getDestination({ destinationName: 'OnPremise' });
-    expect(actual).toEqual(expected);
+    expect(actual).toEqual(
+      expect.objectContaining({
+        name: 'OnPremise',
+        url: 'my.on.premise.system:54321',
+        proxyType: 'OnPremise',
+        authentication: 'NoAuthentication'
+      })
+    );
+    expect(actual?.proxyConfiguration).toEqual({
+      ...connectivityProxyConfigMock,
+      headers: {
+        'Proxy-Authorization': `Bearer ${providerServiceToken}`
+      }
+    });
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });
 });
@@ -147,13 +143,15 @@ describe('get destination with PrivateLink proxy type', () => {
     mockVerifyJwt();
     mockServiceToken();
     mockJwtBearerToken();
-
-    mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-    mockSubaccountDestinationsCall(
+    const singleDestResponse = {
+      ...destinationSingleResponse([privateLinkDest]),
+      authTokens: []
+    };
+    mockSingleDestinationCallSkipCredentials(
       nock,
-      [privateLinkDest],
-      200,
-      subscriberServiceToken
+      singleDestResponse,
+      privateLinkDest.Name,
+      wrapJwtInHeader(subscriberServiceToken)
     );
   });
 
@@ -167,7 +165,7 @@ describe('get destination with PrivateLink proxy type', () => {
     URL: 'https://subscriber.example',
     Name: 'PrivateLinkDest',
     ProxyType: 'PrivateLink',
-    Authentication: 'NoAuthentication'
+    Authentication: 'NoAuthentication' as AuthenticationType
   };
 
   const receivePrivateLinkDest: Destination = {
@@ -218,7 +216,9 @@ describe('get destination with PrivateLink proxy type', () => {
     });
 
     expect(destinationFromFirstCall?.proxyType).toBe('PrivateLink');
-    expect(internetConfig).toHaveBeenCalledWith(receivePrivateLinkDest);
+    expect(internetConfig).toHaveBeenCalledWith(
+      expect.objectContaining({ name: 'PrivateLinkDest' })
+    );
   });
 });
 
@@ -239,13 +239,11 @@ describe('truststore configuration', () => {
     mockVerifyJwt();
     mockServiceToken();
     mockJwtBearerToken();
-
-    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-    mockSubaccountDestinationsCall(
+    mockSingleDestinationCallSkipCredentials(
       nock,
-      [destinationWithTrustStore],
-      200,
-      providerServiceToken
+      destinationSingleResponse([destinationWithTrustStore]),
+      destinationWithTrustStore.Name,
+      wrapJwtInHeader(providerServiceToken)
     );
     const actual = await getDestination({
       destinationName: 'TrustStoreDestination',

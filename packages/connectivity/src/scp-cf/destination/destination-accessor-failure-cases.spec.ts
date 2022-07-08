@@ -14,15 +14,13 @@ import {
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
-  mockInstanceDestinationsCall,
   mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
+  mockSingleDestinationCallSkipCredentials,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
-  basicMultipleResponse,
   destinationName,
-  oauthMultipleResponse
+  oauthSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import * as jwt from '../jwt';
@@ -80,19 +78,13 @@ describe('Failure cases', () => {
     mockServiceToken();
 
     const httpMocks = [
-      mockInstanceDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
         {
           ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
         },
-        400,
-        subscriberServiceToken
-      ),
-      mockSubaccountDestinationsCall(
-        nock,
-        basicMultipleResponse,
-        200,
-        subscriberServiceToken
+        destinationName,
+        { ...wrapJwtInHeader(subscriberServiceToken), responseCode: 400 }
       )
     ];
 
@@ -106,7 +98,9 @@ describe('Failure cases', () => {
       });
       fail();
     } catch (error) {
-      expect(error.message).toContain('Failed to fetch instance destinations');
+      expect(error.message).toContain(
+        'Failed to fetch destination FINAL-DESTINATION.'
+      );
       expect(error.stack).toContain('status code 400');
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     }
@@ -119,12 +113,11 @@ describe('Failure cases', () => {
     mockJwtBearerToken();
 
     const httpMocks = [
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-      mockSubaccountDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        oauthMultipleResponse,
-        200,
-        subscriberServiceToken
+        oauthSingleResponse,
+        destinationName,
+        wrapJwtInHeader(subscriberServiceToken)
       ),
       mockSingleDestinationCall(
         nock,
@@ -166,10 +159,18 @@ describe('Failure cases', () => {
     mockServiceToken();
 
     const httpMocks = [
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-      mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken)
+      mockSingleDestinationCallSkipCredentials(
+        nock,
+        undefined,
+        destinationName,
+        { ...wrapJwtInHeader(subscriberServiceToken), responseCode: 404 }
+      ),
+      mockSingleDestinationCallSkipCredentials(
+        nock,
+        undefined,
+        destinationName,
+        { ...wrapJwtInHeader(providerServiceToken), responseCode: 404 }
+      )
     ];
 
     const expected = null;
@@ -188,17 +189,11 @@ describe('Failure cases', () => {
     mockVerifyJwt();
     mockServiceToken();
 
-    const instanceDestinationCallMock = mockInstanceDestinationsCall(
+    const withoutTokenCallMock = mockSingleDestinationCallSkipCredentials(
       nock,
-      oauthMultipleResponse,
-      200,
-      providerServiceToken
-    );
-    const subaccountDestinationCallMock = mockSubaccountDestinationsCall(
-      nock,
-      [],
-      200,
-      providerServiceToken
+      oauthSingleResponse,
+      destinationName,
+      wrapJwtInHeader(providerServiceToken)
     );
 
     await expect(
@@ -210,7 +205,6 @@ describe('Failure cases', () => {
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"No user token (JWT) has been provided. This is strictly necessary for \'OAuth2SAMLBearerAssertion\'."'
     );
-    expect(instanceDestinationCallMock.isDone()).toBe(true);
-    expect(subaccountDestinationCallMock.isDone()).toBe(true);
+    expect(withoutTokenCallMock.isDone()).toBe(true);
   });
 });

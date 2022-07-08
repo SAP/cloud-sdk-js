@@ -2,11 +2,10 @@ import nock from 'nock';
 import {
   destinationName,
   destinationSingleResponse,
-  mockInstanceDestinationsCall,
   mockServiceBindings,
   mockServiceToken,
   mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
+  mockSingleDestinationCallSkipCredentials,
   mockVerifyJwt,
   oauthMultipleResponse,
   providerServiceTokenPayload,
@@ -16,6 +15,7 @@ import {
 } from '../../../../../test-resources/test/test-util';
 import * as jwt from '../jwt';
 import { responseWithPublicKey } from '../jwt.spec';
+import { wrapJwtInHeader } from '../jwt';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
   alwaysProvider,
@@ -48,10 +48,12 @@ describe('custom jwt via jwks property on destination', () => {
     serviceToken: string,
     userJwt: string
   ) {
-    mockInstanceDestinationsCall(nock, [], 200, serviceToken);
-
-    mockSubaccountDestinationsCall(nock, [destination], 200, serviceToken);
-
+    mockSingleDestinationCallSkipCredentials(
+      nock,
+      destination,
+      destinationName,
+      wrapJwtInHeader(serviceToken)
+    );
     mockSingleDestinationCall(
       nock,
       destinationSingleResponse([destination]),

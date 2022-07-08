@@ -77,17 +77,14 @@ export function mockSingleDestinationCall(
 export function mockSingleDestinationCallSkipCredentials(
   nockRef: nockFunction,
   response: any,
-  responseCode: number,
   destName: string,
-  headers: Record<string, any>,
-  options?: { uri?: string; badheaders?: string[] }
+  options?: {headers?:Record<string, any>,responseCode?:number,uri?:string}
 ) {
   return nockRef(options?.uri || destinationServiceUri, {
-    reqheaders: headers,
-    badheaders: options?.badheaders || ['X-tenant', 'X-user-token'] // X-tenant only allowed for OAuth2ClientCredentials flow
+    reqheaders: options?.headers || {},
   })
     .get(`/destination-configuration/v1/destinations/${destName}?$skipCredentials=true`)
-    .reply(responseCode, response);
+    .reply(options?.responseCode || 200, response);
 }
 
 export function mockVerifyJwt() {

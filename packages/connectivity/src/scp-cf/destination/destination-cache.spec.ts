@@ -19,18 +19,15 @@ import {
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
-  mockInstanceDestinationsCall,
   mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
+  mockSingleDestinationCallSkipCredentials,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
-  certificateMultipleResponse,
   certificateSingleResponse,
   destinationName,
-  oauthMultipleResponse,
   oauthSingleResponse,
-  onPremisePrincipalPropagationMultipleResponse
+  onPremisePrincipalPropagationSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { signedJwt } from '../../../../../test-resources/test/test-util';
@@ -101,10 +98,18 @@ function mockDestinationsWithSameName() {
     ProxyType: 'any',
     Authentication: 'NoAuthentication'
   };
-  mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-  mockSubaccountDestinationsCall(nock, [dest], 200, subscriberServiceToken);
-  mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-  mockSubaccountDestinationsCall(nock, [dest], 200, providerServiceToken);
+  mockSingleDestinationCallSkipCredentials(
+    nock,
+    dest,
+    'ProviderDest',
+    wrapJwtInHeader(providerServiceToken)
+  );
+  mockSingleDestinationCallSkipCredentials(
+    nock,
+    dest,
+    'SubscriberDest',
+    wrapJwtInHeader(subscriberServiceToken)
+  );
 }
 
 describe('destination cache', () => {
@@ -145,20 +150,28 @@ describe('destination cache', () => {
         Authentication: 'NoAuthentication'
       };
 
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        [subscriberDest, subscriberDest2],
-        200,
-        subscriberServiceToken
+        subscriberDest,
+        subscriberDest.Name,
+        wrapJwtInHeader(subscriberServiceToken)
       );
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        [providerDest],
-        200,
-        providerServiceToken
+        subscriberDest2,
+        subscriberDest2.Name,
+        wrapJwtInHeader(subscriberServiceToken)
       );
+      mockSingleDestinationCallSkipCredentials(
+        nock,
+        providerDest,
+        providerDest.Name,
+        wrapJwtInHeader(providerServiceToken)
+      );
+    });
+
+    afterEach(() => {
+      nock.cleanAll();
     });
 
     it('cache key contains user also for provider tokens', async () => {
@@ -258,6 +271,10 @@ describe('destination cache', () => {
 
     it('caches nothing if the destination is not found', async () => {
       mockVerifyJwt();
+      mockSingleDestinationCallSkipCredentials(nock, undefined, 'ANY', {
+        ...wrapJwtInHeader(subscriberServiceToken),
+        responseCode: 404
+      });
       await getDestination({
         destinationName: 'ANY',
         jwt: subscriberUserJwt,
@@ -318,7 +335,7 @@ describe('destination cache', () => {
       );
       await expect(
         getDestination({ destinationName: destName })
-      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
+      ).rejects.toThrowError(/Failed to fetch destination \w+./);
     });
 
     it('uses cache with isolation strategy Tenant if no JWT is provided', async () => {
@@ -404,7 +421,7 @@ describe('destination cache', () => {
           jwt: signedJwt({ user_id: 'onlyUserInJwt' }),
           iasToXsuaaTokenExchange: false
         })
-      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
+      ).rejects.toThrowError(/Failed to fetch destination \w+./);
       expect(warn).toBeCalledWith(
         'Cannot get cache key. Isolation strategy Tenant is used, but tenant id is undefined.'
       );
@@ -421,7 +438,7 @@ describe('destination cache', () => {
           jwt: subscriberServiceToken,
           iasToXsuaaTokenExchange: false
         })
-      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
+      ).rejects.toThrowError(/Failed to fetch destination \w+./);
       expect(warn).toBeCalledWith(
         'Cannot get cache key. Isolation strategy TenantUser is used, but tenant id or user id is undefined.'
       );
@@ -436,12 +453,11 @@ describe('destination cache', () => {
       mockJwtBearerToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          certificateMultipleResponse,
-          200,
-          providerServiceToken
+          certificateSingleResponse,
+          'ERNIE-UND-CERT',
+          wrapJwtInHeader(providerServiceToken)
         ),
         mockSingleDestinationCall(
           nock,
@@ -489,13 +505,12 @@ describe('destination cache', () => {
       mockJwtBearerToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          oauthMultipleResponse,
-          200,
-          providerServiceToken
+          oauthSingleResponse,
+          destinationName,
+          wrapJwtInHeader(providerServiceToken)
         ),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
         mockSingleDestinationCall(
           nock,
           oauthSingleResponse,
@@ -541,14 +556,14 @@ describe('destination cache', () => {
       mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
+      const forMock = onPremisePrincipalPropagationSingleResponse;
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
+        mockSingleDestinationCallSkipCredentials(
           nock,
-          onPremisePrincipalPropagationMultipleResponse,
-          200,
-          providerServiceToken
+          forMock,
+          'OnPremise',
+          wrapJwtInHeader(providerServiceToken)
         )
       ];
 
@@ -571,23 +586,22 @@ describe('destination cache', () => {
         iasToXsuaaTokenExchange: false
       });
 
-      const expected = {
-        ...parseDestination({
-          Name: 'OnPremise',
-          URL: 'my.on.premise.system:54321',
-          ProxyType: 'OnPremise',
-          Authentication: 'PrincipalPropagation'
-        }),
-        proxyConfiguration: {
-          ...connectivityProxyConfigMock,
-          headers: {
-            'Proxy-Authorization': `Bearer ${providerServiceToken}`,
-            'SAP-Connectivity-Authentication': `Bearer ${providerUserJwt}`
-          }
+      expect(destinationFromFirstCall?.proxyConfiguration).toEqual({
+        ...connectivityProxyConfigMock,
+        headers: {
+          'Proxy-Authorization': `Bearer ${providerServiceToken}`,
+          'SAP-Connectivity-Authentication': `Bearer ${providerUserJwt}`
         }
-      };
+      });
+      expect(destinationFromFirstCall).toMatchObject(
+        expect.objectContaining({
+          name: 'OnPremise',
+          url: 'my.on.premise.system:54321',
+          proxyType: 'OnPremise',
+          authentication: 'PrincipalPropagation'
+        })
+      );
 
-      expect(destinationFromFirstCall).toEqual(expected);
       expect(destinationFromCache).toEqual(destinationFromFirstCall);
       expect(retrieveFromCacheSpy).toHaveReturnedWith(
         Promise.resolve(destinationFromCache)
@@ -678,8 +692,12 @@ describe('destination cache', () => {
       );
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken)
+        mockSingleDestinationCallSkipCredentials(
+          nock,
+          undefined,
+          'ProviderDest',
+          { ...wrapJwtInHeader(subscriberServiceToken), responseCode: 404 }
+        )
       ];
 
       const actual = await getDestination({

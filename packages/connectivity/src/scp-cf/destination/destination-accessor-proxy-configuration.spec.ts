@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf';
+import { wrapJwtInHeader } from '../jwt';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings

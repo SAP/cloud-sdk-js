@@ -69,7 +69,8 @@ export function serializeToDuration(value: moment.Duration): string {
  * @internal
  */
 export function deserializeToTime(value: string): Time {
-  const timeComponents = /(\d\d):(\d\d):(\d\d(\.\d{1,12})?)?/.exec(value);
+  const timeComponents =
+    /([01]\d|2[0-3]):([0-5][0-9]):([0-5][0-9](\.[0-9]+)?)/.exec(value);
   if (!timeComponents) {
     throw new Error(
       `Provided time value ${value} does not follow the Edm.TimeOfDay pattern: HH:MM:SS(.S)`

@@ -3,9 +3,11 @@ import {
   deserializeDateTimeOffsetToMoment,
   deserializeDateToMoment,
   deserializeDurationToMoment,
+  deserializeToTime,
   serializeToDate,
   serializeToDateTimeOffset,
-  serializeToDuration
+  serializeToDuration,
+  serializeToTime
 } from './converters';
 
 describe('EDM to moment and back', () => {
@@ -257,6 +259,176 @@ describe('EDM to moment and back', () => {
       // Fractional seconds in durations are rounded to 3 digits
       // expect(serializeToDuration(aDuration)).toBe(isoDuration);
       expect(serializeToDuration(aDuration)).toBe('PT59.988S');
+    });
+  });
+
+  describe('Deserialize Time', () => {
+    it('handles times without fractional seconds', () => {
+      expect(deserializeToTime('12:34:00')).toEqual({
+        hours: 12,
+        minutes: 34,
+        seconds: 0
+      });
+    });
+
+    it('handles times in 24 hour notation', () => {
+      expect(deserializeToTime('23:45:01')).toEqual({
+        hours: 23,
+        minutes: 45,
+        seconds: 1
+      });
+    });
+
+    it('handles midnight', () => {
+      // The spec says this is allowed
+      // https://www.w3.org/TR/xmlschema11-2/#time
+      // expect(deserializeToTime('24:00:00')).toEqual({
+      //   hours: 0, // or 24?
+      //   minutes: 0,
+      //   seconds: 0
+      // });
+      expect(deserializeToTime('00:00:00')).toEqual({
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      });
+    });
+
+    xit('handles time with timezones', () => {
+      // TODO The spec says this is allowed
+      // https://www.w3.org/TR/xmlschema11-2/#time
+
+      expect(deserializeToTime('24:00:00Z')).toEqual({
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+        offset: 0
+      });
+
+      expect(deserializeToTime('06:00:00Z')).toEqual({
+        hours: 6,
+        minutes: 0,
+        seconds: 0,
+        offset: 0
+      });
+
+      expect(deserializeToTime('06:00:00+01:00')).toEqual({
+        hours: 6,
+        minutes: 0,
+        seconds: 0,
+        offset: 60
+      });
+
+      expect(deserializeToTime('06:00:00-14:00')).toEqual({
+        hours: 6,
+        minutes: 0,
+        seconds: 0,
+        offset: -840
+      });
+
+      expect(deserializeToTime('06:00:00-03:45')).toEqual({
+        hours: 6,
+        minutes: 0,
+        seconds: 0,
+        offset: -225
+      });
+    });
+
+    it('handles times with fractional seconds', () => {
+      expect(deserializeToTime('12:34:56.789')).toEqual({
+        hours: 12,
+        minutes: 34,
+        seconds: 56.789
+      });
+    });
+
+    it('handles times with high-precision fractional seconds', () => {
+      expect(deserializeToTime('12:34:56.7890123456789012345')).toEqual({
+        hours: 12,
+        minutes: 34,
+        // parseFloat truncates after a certain number of digits
+        // seconds: 56.7890123456789012345
+        seconds: 56.7890123456789
+      });
+    });
+
+    it('throws on invalid times', () => {
+      expect(() => deserializeToTime('25:00:00')).toThrow();
+      expect(() => deserializeToTime('01:62:00')).toThrow();
+      expect(() => deserializeToTime('23;00;00')).toThrow();
+      expect(() => deserializeToTime('6:00:89')).toThrow();
+    });
+  });
+
+  describe('Serialize Time', () => {
+    it('handles times without fractional seconds', () => {
+      expect(
+        serializeToTime({
+          hours: 12,
+          minutes: 34,
+          seconds: 56
+        })
+      ).toBe('12:34:56');
+      expect(
+        serializeToTime({
+          hours: 23,
+          minutes: 34,
+          seconds: 56
+        })
+      ).toBe('23:34:56');
+      expect(
+        serializeToTime({
+          hours: 2,
+          minutes: 34,
+          seconds: 56
+        })
+      ).toBe('02:34:56');
+    });
+
+    it('handles times with fractional seconds', () => {
+      expect(
+        serializeToTime({
+          hours: 12,
+          minutes: 34,
+          seconds: 56.789
+        })
+      ).toBe('12:34:56.789');
+    });
+    xit('handles times with timezones', () => {
+      // Currently not supported by us
+    });
+    xit('handles times with high-precision fractional seconds', () => {
+      // Currently not supported by us
+    });
+    xit('should throw on invalid times', () => {
+      expect(() =>
+        serializeToTime({
+          hours: 25,
+          minutes: 0,
+          seconds: 0
+        })
+      ).toThrow();
+      expect(() =>
+        serializeToTime({
+          hours: 12,
+          minutes: 61,
+          seconds: 0
+        })
+      ).toThrow();
+      expect(() =>
+        serializeToTime({
+          hours: 12,
+          minutes: 34,
+          seconds: -5
+        })
+      ).toThrow();
+      expect(() =>
+        serializeToTime({
+          hours: 12,
+          minutes: 34,
+          seconds: 90
+        })
+      ).toThrow();
     });
   });
 });

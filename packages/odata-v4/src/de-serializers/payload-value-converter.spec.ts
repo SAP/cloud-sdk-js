@@ -60,14 +60,6 @@ describe('edmToTs()', () => {
 
     expect(() =>
       edmToTs(
-        '2020-05-13T16:14:23.1Z',
-        'Edm.DateTimeOffset',
-        defaultDeSerializers
-      )
-    ).toThrow(/ does not follow the Edm.DateTimeOffset pattern/);
-
-    expect(() =>
-      edmToTs(
         '2020-05-13T16:14:23:57.97+5:00',
         'Edm.DateTimeOffset',
         defaultDeSerializers

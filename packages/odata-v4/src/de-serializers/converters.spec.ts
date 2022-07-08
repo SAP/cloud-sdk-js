@@ -54,7 +54,7 @@ describe('EDM to moment and back', () => {
       expect(edm).toBe('-0500-02-01');
     });
 
-    it('deserializes a >4 digit year correctly', () => {
+    it('serializes a >4 digit year correctly', () => {
       const edm = serializeToDate(moment().date(1).month(1).year(20000));
       expect(edm).toBe('20000-02-01');
     });

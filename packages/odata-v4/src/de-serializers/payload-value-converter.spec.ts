@@ -110,10 +110,6 @@ describe('edmToTs()', () => {
       edmToTs('+P4DT23H13m50S', 'Edm.Duration', defaultDeSerializers)
     ).toThrow(/ does not follow the Edm.Duration pattern/);
 
-    expect(() =>
-      edmToTs('PT501S', 'Edm.Duration', defaultDeSerializers)
-    ).toThrow(/ does not follow the Edm.Duration pattern/);
-
     expect(() => edmToTs('P23H', 'Edm.Duration', defaultDeSerializers)).toThrow(
       / does not follow the Edm.Duration pattern/
     );

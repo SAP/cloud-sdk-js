@@ -4,7 +4,7 @@ import moment from 'moment';
  * @internal
  */
 export function deserializeDateToMoment(date: string): moment.Moment {
-  const parsed = moment.utc(date, 'YYYY-MM-DD', true);
+  const parsed = moment.utc(date, 'Y-MM-DD', true);
   if (!parsed.isValid()) {
     throw new Error(
       `Provided date value ${date} does not follow the Edm.Date pattern: YYYY-MM-DD`
@@ -26,9 +26,9 @@ export function serializeToDate(value: moment.Moment): string {
 export function deserializeDateTimeOffsetToMoment(
   dateTime: string
 ): moment.Moment {
-  const prefix = 'YYYY-MM-DDTHH:mm';
-  // In moment the Z is either Offset from UTC as +-HH:mm, +-HHmm, or Z
-  const validFormats = [`${prefix}Z`, `${prefix}:ssZ`, `${prefix}:ss.SSSZ`];
+  const prefix = 'Y-MM-DDTHH:mm';
+  // In moment the ZZ is either Offset from UTC as +-HH:mm, +-HHmm, or Z
+  const validFormats = [`${prefix}ZZ`, `${prefix}:ssZZ`, `${prefix}:ss.SSSZZ`];
   const parsed = moment(dateTime, validFormats, true);
   if (!parsed.isValid()) {
     throw new Error(

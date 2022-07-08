@@ -1,7 +1,6 @@
 import {
   mockServiceToken,
-  providerUserPayload,
-  xsuaaBindingMock
+  providerUserPayload
 } from '../../../../../test-resources/test/test-util';
 import * as tokenAccessor from '../token-accessor';
 import { getDestination } from './destination-accessor';
@@ -195,7 +194,6 @@ function mockServiceBindings() {
 }
 
 const serviceBindings = {
-  xsuaa: [xsuaaBindingMock],
   'business-logging': [
     {
       name: 'my-business-logging',

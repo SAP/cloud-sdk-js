@@ -226,10 +226,12 @@ export async function searchServiceBindingForDestination({
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
     const jwtFromOptions = iss ? { iss } : jwt ? decodeJwt(jwt) : undefined;
+    const useCacheIgnoringUndefined =
+      typeof useCache !== 'undefined' ? { useCache } : {};
     const destination = await destinationForServiceBinding(destinationName, {
       serviceBindingTransformFn,
       jwt: jwtFromOptions,
-      useCache: !!useCache
+      ...useCacheIgnoringUndefined
     });
     logger.info('Successfully retrieved destination from service binding.');
     return destination;

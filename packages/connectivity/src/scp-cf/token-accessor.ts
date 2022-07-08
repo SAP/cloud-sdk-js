@@ -60,6 +60,8 @@ export async function serviceToken(
     );
 
     if (opts.useCache) {
+      const xsuaa = multiTenantXsuaaCredentials(options);
+
       clientCredentialsTokenCache.cacheToken(
         xsuaa.url,
         serviceCredentials.clientid,

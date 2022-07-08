@@ -38,10 +38,11 @@ export async function serviceToken(
 
   service = resolveService(service);
   const serviceCredentials = service.credentials;
-  // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
-  const xsuaa = multiTenantXsuaaCredentials(options);
 
+  // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
   if (opts.useCache) {
+    const xsuaa = multiTenantXsuaaCredentials(options);
+
     const cachedToken = clientCredentialsTokenCache.getToken(
       xsuaa.url,
       serviceCredentials.clientid
@@ -59,6 +60,8 @@ export async function serviceToken(
     );
 
     if (opts.useCache) {
+      const xsuaa = multiTenantXsuaaCredentials(options);
+
       clientCredentialsTokenCache.cacheToken(
         xsuaa.url,
         serviceCredentials.clientid,

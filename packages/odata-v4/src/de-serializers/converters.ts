@@ -28,11 +28,11 @@ export function deserializeDateTimeOffsetToMoment(
 ): moment.Moment {
   const prefix = 'Y-MM-DDTHH:mm';
   // In moment the ZZ is either Offset from UTC as +-HH:mm, +-HHmm, or Z
-  const validFormats = [`${prefix}ZZ`, `${prefix}:ssZZ`, `${prefix}:ss.SSSZZ`];
+  const validFormats = [`${prefix}ZZ`, `${prefix}:ssZZ`, `${prefix}:ss.SSSSZZ`];
   const parsed = moment(dateTime, validFormats, true);
   if (!parsed.isValid()) {
     throw new Error(
-      `Provided date-time value ${dateTime} does not follow the Edm.DateTimeOffset pattern: YYYY-MM-DDTHH:mm(:ss(.SSS))Z`
+      `Provided date-time value ${dateTime} does not follow the Edm.DateTimeOffset pattern: YYYY-MM-DDTHH:mm(:ss(.SSSS))ZZ`
     );
   }
   return parsed;

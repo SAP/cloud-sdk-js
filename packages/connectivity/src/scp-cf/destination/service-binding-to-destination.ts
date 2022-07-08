@@ -1,8 +1,8 @@
-import { JwtPayload } from '../jsonwebtoken-type';
 import { Service } from '../environment-accessor-types';
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
 import type {
+  PartialDestinationFetchOptions,
   ServiceBinding,
   ServiceBindingTransformFunction
 } from './destination-from-vcap';
@@ -25,7 +25,7 @@ export const serviceToDestinationTransformers: Record<
 
 async function serviceManagerBindingToDestination(
   serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
+  options: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const service: Service = {
     ...serviceBinding,
@@ -33,7 +33,7 @@ async function serviceManagerBindingToDestination(
     label: 'service-manager',
     credentials: { ...serviceBinding.credentials }
   };
-  const token = await serviceToken(service, { jwt });
+  const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
     token,
     serviceBinding.credentials.sm_url,
@@ -43,7 +43,7 @@ async function serviceManagerBindingToDestination(
 
 async function destinationBindingToDestination(
   serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
+  options: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const service: Service = {
     ...serviceBinding,
@@ -51,7 +51,7 @@ async function destinationBindingToDestination(
     label: 'destination',
     credentials: { ...serviceBinding.credentials }
   };
-  const token = await serviceToken(service, { jwt });
+  const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
     token,
     serviceBinding.credentials.uri,
@@ -61,7 +61,7 @@ async function destinationBindingToDestination(
 
 async function saasRegistryBindingToDestination(
   serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
+  options: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const service: Service = {
     ...serviceBinding,
@@ -69,7 +69,7 @@ async function saasRegistryBindingToDestination(
     label: 'saas-registry',
     credentials: { ...serviceBinding.credentials }
   };
-  const token = await serviceToken(service, { jwt });
+  const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
     token,
     serviceBinding.credentials['saas_registry_url'],
@@ -79,7 +79,7 @@ async function saasRegistryBindingToDestination(
 
 async function businessLoggingBindingToDestination(
   serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
+  options: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const service: Service = {
     ...serviceBinding,
@@ -87,7 +87,7 @@ async function businessLoggingBindingToDestination(
     label: 'business-logging',
     credentials: { ...serviceBinding.credentials.uaa }
   };
-  const token = await serviceToken(service, { jwt });
+  const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
     token,
     serviceBinding.credentials.writeUrl,
@@ -97,7 +97,7 @@ async function businessLoggingBindingToDestination(
 
 async function workflowBindingToDestination(
   serviceBinding: ServiceBinding,
-  jwt: JwtPayload
+  options: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const service: Service = {
     ...serviceBinding,
@@ -105,7 +105,7 @@ async function workflowBindingToDestination(
     label: 'workflow',
     credentials: { ...serviceBinding.credentials.uaa }
   };
-  const token = await serviceToken(service, { jwt });
+  const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
     token,
     serviceBinding.credentials.endpoints.workflow_odata_url,

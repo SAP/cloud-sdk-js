@@ -54,8 +54,8 @@ export async function destinationForServiceBinding(
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
   const destination = options.serviceBindingTransformFn
-    ? await options.serviceBindingTransformFn(selected, options.jwt)
-    : await transform(selected, options.jwt);
+    ? await options.serviceBindingTransformFn(selected, options)
+    : await transform(selected, options);
 
   const destWithProxy =
     destination &&
@@ -92,7 +92,7 @@ export interface DestinationForServiceBindingsOptions {
  */
 export type ServiceBindingTransformFunction = (
   serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
+  options?: PartialDestinationFetchOptions
 ) => Promise<Destination>;
 
 /**
@@ -165,7 +165,7 @@ function findServiceByName(
 
 async function transform(
   serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
+  options?: PartialDestinationFetchOptions
 ): Promise<Destination> {
   if (!serviceToDestinationTransformers[serviceBinding.type]) {
     throw serviceTypeNotSupportedError(serviceBinding.type);
@@ -173,7 +173,7 @@ async function transform(
 
   return serviceToDestinationTransformers[serviceBinding.type](
     serviceBinding,
-    jwt
+    options
   );
 }
 
@@ -229,7 +229,7 @@ export async function searchServiceBindingForDestination({
     const destination = await destinationForServiceBinding(destinationName, {
       serviceBindingTransformFn,
       jwt: jwtFromOptions,
-      useCache
+      useCache: !!useCache
     });
     logger.info('Successfully retrieved destination from service binding.');
     return destination;

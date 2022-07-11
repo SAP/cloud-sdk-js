@@ -177,15 +177,15 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   enumCollectionProperty?: TestEnumType[] | null;
   /**
-   * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
+   * One-to-many navigation property to the {@link TestEntityMultiLink} entity.
    */
   toMultiLink!: TestEntityMultiLink<T>[];
   /**
-   * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
+   * One-to-many navigation property to the {@link TestEntityMultiLink} entity.
    */
   toOtherMultiLink!: TestEntityMultiLink<T>[];
   /**
-   * One-to-one navigation property to the [[TestEntitySingleLink]] entity.
+   * One-to-one navigation property to the {@link TestEntitySingleLink} entity.
    */
   toSingleLink?: TestEntitySingleLink<T> | null;
 }

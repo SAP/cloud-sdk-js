@@ -9,12 +9,12 @@ exports.TestEntityEndsWithSomethingElseRequestBuilder = void 0;
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const TestEntityEndsWithSomethingElse_1 = require('./TestEntityEndsWithSomethingElse');
 /**
- * Request builder class for operations supported on the [[TestEntityEndsWithSomethingElse]] entity.
+ * Request builder class for operations supported on the {@link TestEntityEndsWithSomethingElse} entity.
  */
 class TestEntityEndsWithSomethingElseRequestBuilder extends odata_v2_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityEndsWithSomethingElse` entity based on its keys.
-   * @param keyProperty Key property. See [[TestEntityEndsWithSomethingElse.keyProperty]].
+   * @param keyProperty Key property. See {@link TestEntityEndsWithSomethingElse.keyProperty}.
    * @returns A request builder for creating requests to retrieve one `TestEntityEndsWithSomethingElse` entity based on its keys.
    */
   getByKey(keyProperty) {

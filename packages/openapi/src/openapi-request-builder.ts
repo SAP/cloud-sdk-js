@@ -92,10 +92,10 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Execute request and get a raw HttpResponse, including all information about the HTTP response.
+   * Execute request and get a raw {@link HttpResponse}, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an HttpResponse.
+   * @returns A promise resolving to an {@link HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

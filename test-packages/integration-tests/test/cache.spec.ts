@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import {
   Destination,
+  DestinationConfiguration,
   getDestination,
   IsolationStrategy
 } from '@sap-cloud-sdk/connectivity';
@@ -28,8 +29,9 @@ import {
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
-  mockSubaccountDestinationsCall
+  mockSingleDestinationCallSkipCredentials
 } from '../../../test-resources/test/test-util/destination-service-mocks';
+import { destinationSingleResponse } from '../../../test-resources/test/test-util';
 
 describe('CacheDestination & CacheClientCredentialToken', () => {
   const jku = `http://${xsuaaBindingMock.credentials.uaadomain}`;
@@ -62,7 +64,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
 
   beforeEach(() => {
     mockServiceBindings();
-    const destination = {
+    const destination: DestinationConfiguration = {
       Name: 'FINAL-DESTINATION',
       Authentication: 'BasicAuthentication',
       Password: 'password',
@@ -72,7 +74,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       URL: 'https://example.com',
       authTokens: []
     };
-    const destinationAuthFlow = {
+    const destinationAuthFlow: DestinationConfiguration = {
       Name: 'FINAL-DESTINATION-AUTH-FLOW',
       Authentication: 'OAuth2JWTBearer',
       Password: 'password',
@@ -90,18 +92,30 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       200,
       destinationBindingClientSecretMock.credentials
     );
+
+    mockSingleDestinationCallSkipCredentials(
+      nock,
+      destinationSingleResponse([destination]),
+      'FINAL-DESTINATION',
+      wrapJwtInHeader(providerServiceToken)
+    );
+    mockSingleDestinationCallSkipCredentials(
+      nock,
+      destinationSingleResponse([destinationAuthFlow]),
+      'FINAL-DESTINATION-AUTH-FLOW',
+      wrapJwtInHeader(providerServiceToken)
+    );
     mockInstanceDestinationsCall(
       nock,
       [destination, destinationAuthFlow],
       200,
       providerServiceToken
     );
-    mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
     mockSingleDestinationCall(
       nock,
       destinationAuthFlow,
       200,
-      destinationAuthFlow.Name,
+      destinationAuthFlow.Name!,
       wrapJwtInHeader(providerUserToken).headers
     );
   });

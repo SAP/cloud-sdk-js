@@ -5,9 +5,8 @@ import {
   wrapJwtInHeader
 } from '@sap-cloud-sdk/connectivity/internal';
 import {
-  mockInstanceDestinationsCall,
   mockSingleDestinationCall,
-  mockSubaccountDestinationsCall
+  mockSingleDestinationCallSkipCredentials
 } from '../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
@@ -17,7 +16,10 @@ import {
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../test-resources/test/test-util/keys';
 import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
-import { destinationName } from '../../../../test-resources/test/test-util/example-destination-service-responses';
+import {
+  destinationName,
+  destinationSingleResponse
+} from '../../../../test-resources/test/test-util/example-destination-service-responses';
 import { singleTestEntityMultiLinkResponse } from '../test-data/single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
@@ -161,8 +163,12 @@ describe('Request Builder', () => {
       destinationBindingClientSecretMock.credentials
     );
 
-    mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
-    mockSubaccountDestinationsCall(nock, [], 200, providerToken);
+    mockSingleDestinationCallSkipCredentials(
+      nock,
+      destinationSingleResponse([destination]),
+      'FINAL-DESTINATION',
+      wrapJwtInHeader(providerToken)
+    );
 
     nock(destination.URL, {
       reqheaders: {
@@ -182,7 +188,8 @@ describe('Request Builder', () => {
         destinationName: 'FINAL-DESTINATION'
       });
 
-    await expect(request).resolves.not.toThrow();
+    await request;
+    // await expect(request).resolves.not.toThrow();
   });
 
   it('should resolve for getByKey request', async () => {
@@ -615,8 +622,12 @@ describe('Request Builder', () => {
       destinationBindingClientSecretMock.credentials
     );
 
-    mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
-    mockSubaccountDestinationsCall(nock, [], 200, providerToken);
+    mockSingleDestinationCallSkipCredentials(
+      nock,
+      destinationSingleResponse([destination]),
+      'FINAL-DESTINATION',
+      wrapJwtInHeader(providerToken)
+    );
 
     mockSingleDestinationCall(
       nock,

@@ -33,7 +33,7 @@ export function timeToSeconds(time: Time): number {
 }
 
 /**
- * Converts from seconds to time as [[Time]].
+ * Converts from seconds to time as {@link Time}.
  * @param n - Number of seconds to convert (should be positive).
  * @returns Time The converted time from the given number of seconds
  * @internal

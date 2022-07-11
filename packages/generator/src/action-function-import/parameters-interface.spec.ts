@@ -21,7 +21,7 @@ describe('parameters-interface', () => {
         }
       ],
       docs: [
-        `${unixEOL}Type of the parameters to be passed to [[orderBreakfast]].`
+        `${unixEOL}Type of the parameters to be passed to {@link orderBreakfast}.`
       ]
     });
   });
@@ -40,7 +40,7 @@ describe('parameters-interface', () => {
         }
       ],
       docs: [
-        `${unixEOL}Type of the parameters to be passed to [[orderBreakfast]].`
+        `${unixEOL}Type of the parameters to be passed to {@link orderBreakfast}.`
       ]
     });
   });

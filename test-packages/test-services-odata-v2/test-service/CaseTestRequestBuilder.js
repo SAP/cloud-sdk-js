@@ -9,12 +9,12 @@ exports.CaseTestRequestBuilder = void 0;
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const CaseTest_1 = require('./CaseTest');
 /**
- * Request builder class for operations supported on the [[CaseTest]] entity.
+ * Request builder class for operations supported on the {@link CaseTest} entity.
  */
 class CaseTestRequestBuilder extends odata_v2_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `CaseTest` entity based on its keys.
-   * @param keyPropertyString Key property. See [[CaseTest.keyPropertyString]].
+   * @param keyPropertyString Key property. See {@link CaseTest.keyPropertyString}.
    * @returns A request builder for creating requests to retrieve one `CaseTest` entity based on its keys.
    */
   getByKey(keyPropertyString) {

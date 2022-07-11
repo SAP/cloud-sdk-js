@@ -36,7 +36,7 @@ export function filterCustomRequestConfig(
 const defaultDisallowedKeys = ['url', 'baseURL', 'data', 'headers', 'params'];
 
 /**
- * Merge options from a given [[OriginOptions]]. When reaching conflicts, values with higher priorities are chosen.
+ * Merge options from a given {@link OriginOptions}. When reaching conflicts, values with higher priorities are chosen.
  * @param headersOrParams - Given options with origin information.
  * @returns The resulting merged options.
  * @internal

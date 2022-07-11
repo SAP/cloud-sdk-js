@@ -50,7 +50,7 @@ export function setTestDestination(destination: Destination): void {
 
 /**
  * Removes a destination with the given name from the destinations environment variable. If the given destination name is not found calling this function has no effect.
- * This function should be called to invert the behavior of [[mockTestDestination]]() and [[setTestDestination]]().
+ * This function should be called to invert the behavior of {@link mockTestDestination}() and {@link setTestDestination}().
  * @param name - Name of the mocked destination to remove.
  */
 export function unmockTestDestination(name: string): void {
@@ -93,9 +93,9 @@ export function mockAllTestDestinations(
 }
 
 /**
- * Removes all test destinations stored in `systems.json` and `credentials.json` files or added through [[setTestDestination]]() from the `destinations` environment variable.
+ * Removes all test destinations stored in `systems.json` and `credentials.json` files or added through {@link setTestDestination}() from the `destinations` environment variable.
  *
- * This function should be called to invert the behavior of [[mockAllTestDestinations]]() and other add single mocked destination functions.
+ * This function should be called to invert the behavior of {@link mockAllTestDestinations}() and other add single mocked destination functions.
  */
 export function unmockAllTestDestinations(): void {
   const currentDestinations = getDestinationsFromEnv();

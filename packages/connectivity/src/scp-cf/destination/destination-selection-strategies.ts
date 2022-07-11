@@ -12,7 +12,7 @@ const logger = createLogger({
 
 /**
  * Function to implement the selection strategy of the retrieved destination.
- * Use the built in strategies defined in [[DestinationSelectionStrategies]] or make your own function.
+ * Use the built in strategies defined in {@link DestinationSelectionStrategies} or make your own function.
  */
 export type DestinationSelectionStrategy = (
   allDestinations: AllDestinations,
@@ -63,7 +63,7 @@ export function subscriberFirst(
 }
 
 /**
- * Selector of destination selection strategies. See [[alwaysProvider]], [[alwaysSubscriber]] and [[subscriberFirst]] for more information available selection strategies.
+ * Selector of destination selection strategies. See {@link alwaysProvider}, {@link alwaysSubscriber} and {@link subscriberFirst} for more information available selection strategies.
  */
 export const DestinationSelectionStrategies = {
   alwaysProvider,

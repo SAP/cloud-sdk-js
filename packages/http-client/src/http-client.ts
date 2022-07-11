@@ -46,10 +46,10 @@ const logger = createLogger({
 });
 
 /**
- * Builds a [[DestinationHttpRequestConfig]] for the given destination.
+ * Builds a {@link DestinationHttpRequestConfig} for the given destination.
  * If a destination name (and a JWT) are provided, it will try to resolve the destination.
  * @param destination - A destination or a destination name and a JWT.
- * @returns A [[DestinationHttpRequestConfig]].
+ * @returns A {@link DestinationHttpRequestConfig}.
  */
 export async function buildHttpRequest(
   destination: DestinationOrFetchOptions
@@ -68,7 +68,7 @@ export async function buildHttpRequest(
 }
 
 /**
- * Builds a [[DestinationHttpRequestConfig]] for the given destination
+ * Builds a {@link DestinationHttpRequestConfig} for the given destination
  * and then merges it into the given request configuration.
  * Setting of the given request configuration take precedence over any destination related configuration.
  * @param destination - A destination or a destination name and a JWT.
@@ -87,12 +87,12 @@ export async function addDestinationToRequestConfig<
 }
 
 /**
- * Takes as parameter a function that expects an [[HttpRequest]] and returns a Promise of [[HttpResponse]].
- * Returns a function that takes a destination and a request-config (extends [[HttpRequestConfig]]), builds an [[HttpRequest]] from them, and calls
+ * Takes as parameter a function that expects an {@link HttpRequest} and returns a Promise of {@link HttpResponse}.
+ * Returns a function that takes a destination and a request-config (extends {@link HttpRequestConfig}), builds an {@link HttpRequest} from them, and calls
  * the provided execute function.
  *
- * NOTE: If you simply want to execute a request without passing your own execute function, use [[executeHttpRequest]] instead.
- * @param executeFn - A function that can execute an [[HttpRequestConfig]].
+ * NOTE: If you simply want to execute a request without passing your own execute function, use {@link executeHttpRequest} instead.
+ * @param executeFn - A function that can execute an {@link HttpRequestConfig}.
  * @returns A function expecting destination and a request.
  * @internal
  */
@@ -127,9 +127,9 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
 }
 
 /**
- * Build an [[HttpRequestConfigWithOrigin]] from a given [[HttpRequestConfigWithOrigin]] or [[HttpRequestConfig]]
- * @param requestConfig - The given [[HttpRequestConfigWithOrigin]] or [[HttpRequestConfig]]
- * @returns The resulting [[HttpRequestConfigWithOrigin]]
+ * Build an {@link HttpRequestConfigWithOrigin} from a given {@link HttpRequestConfigWithOrigin} or {@link HttpRequestConfig}
+ * @param requestConfig - The given {@link HttpRequestConfigWithOrigin} or {@link HttpRequestConfig}
+ * @returns The resulting {@link HttpRequestConfigWithOrigin}
  * @internal
  */
 export function buildHttpRequestConfigWithOrigin(
@@ -218,9 +218,9 @@ function getEncodedParameters(
  * Build a request config from a given request config and a destination.
  * In addition to merging the information from the request config and the destination, it also picks values with higher priority for headers and query parameters.
  * @param requestConfig - Any object representing an HTTP request.
- * @param destination - A resolved [[Destination]] object.
- * @param destinationRequestConfig - A [[DestinationHttpRequestConfig]] object, that is built from a [[Destination]].
- * @see [[mergeOptionsWithPriority]]
+ * @param destination - A resolved {@link Destination} object.
+ * @param destinationRequestConfig - A {@link DestinationHttpRequestConfig} object, that is built from a {@link Destination}.
+ * @see {@link mergeOptionsWithPriority}
  * @returns A resulting request config.
  */
 export async function buildRequestWithMergedHeadersAndQueryParameters(
@@ -338,13 +338,13 @@ function logRequestInformation(request: HttpRequestConfig) {
 }
 
 /**
- * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given `requestConfig`
+ * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given `requestConfig`
  * and executes it (using Axios).
- * The overload, that accepts [[HttpRequestConfigWithOrigin]] as a parameter, is deprecated and replaced the function [[executeHttpRequestWithOrigin]].
+ * The overload, that accepts {@link HttpRequestConfigWithOrigin} as a parameter, is deprecated and replaced the function {@link executeHttpRequestWithOrigin}.
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
- * @param options - An [[HttpRequestOptions]] of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.
- * @returns A promise resolving to an [[HttpResponse]].
+ * @param options - An {@link HttpRequestOptions} of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.
+ * @returns A promise resolving to an {@link HttpResponse}.
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(
   destination: DestinationOrFetchOptions,
@@ -352,7 +352,7 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
   options?: HttpRequestOptions
 ): Promise<HttpResponse>;
 /**
- * @deprecated This overload is replaced by the function [[executeHttpRequestWithOrigin]].
+ * @deprecated This overload is replaced by the function {@link executeHttpRequestWithOrigin}.
  */
 export function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
   destination: DestinationOrFetchOptions,
@@ -378,17 +378,17 @@ export function executeHttpRequest<
 }
 
 /**
- * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given [[HttpRequestConfigWithOrigin]]
+ * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given {@link HttpRequestConfigWithOrigin}
  * and executes it (using Axios).
- * The [[HttpRequestConfigWithOrigin]] supports defining header options and query parameter options with origins.
+ * The {@link HttpRequestConfigWithOrigin} supports defining header options and query parameter options with origins.
  * Equally named headers and query parameters are prioritized in the following order:
  * 1. `custom`
  * 2. Destination related headers/query parameters
  * 3. `requestConfig`.
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
- * @param options - An [[HttpRequestOptions]] of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.
- * @returns A promise resolving to an [[HttpResponse]].
+ * @param options - An {@link HttpRequestOptions} of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.
+ * @returns A promise resolving to an {@link HttpResponse}.
  * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/query-parameters
  */
 export function executeHttpRequestWithOrigin<

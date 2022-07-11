@@ -7,7 +7,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.PersonGender = void 0;
 /**
- * This enum represents the enum type "[[PersonGender]]".
+ * This enum represents the enum type "{@link PersonGender}".
  * The members represent values of EDM type Edm.Int32.
  */
 var PersonGender;

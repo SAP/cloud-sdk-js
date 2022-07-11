@@ -22,7 +22,7 @@ describe('enum', () => {
       ],
       name: 'EnumMealType',
       docs: [
-        'This enum represents the enum type "[[EnumMealName]]".\nThe members represent values of EDM type Edm.Int32.'
+        'This enum represents the enum type "{@link EnumMealName}".\nThe members represent values of EDM type Edm.Int32.'
       ]
     });
   });

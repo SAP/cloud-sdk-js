@@ -6,8 +6,8 @@ import type { IsolationStrategy } from './destination-cache';
 /**
  * A resolved destination containing information needed to execute requests, such as the system URL.
  *
- * You can create a destination as a local object when supplying all necessary information, or it could be retrieved from the destination service on SAP Business Technology Platform (via [[DestinationFetchOptions]]).
- * When creating a local object representing a destination, you need to supply at least the [[url]] and, if required by the target system, valid credentials with [[username]] and [[password]].
+ * You can create a destination as a local object when supplying all necessary information, or it could be retrieved from the destination service on SAP Business Technology Platform (via {@link DestinationFetchOptions}).
+ * When creating a local object representing a destination, you need to supply at least the {@link url} and, if required by the target system, valid credentials with {@link username} and {@link password}.
  */
 export interface Destination {
   /**
@@ -25,7 +25,7 @@ export interface Destination {
   /**
    * Type of authentication to use.
    *
-   * Defaults to `NoAuthentication`, unless [[username]] and [[password]] are provided, in which case the default is `BasicAuthentication`.
+   * Defaults to `NoAuthentication`, unless {@link username} and {@link password} are provided, in which case the default is `BasicAuthentication`.
    */
   authentication?: AuthenticationType;
 
@@ -60,7 +60,7 @@ export interface Destination {
   isTrustingAllCertificates?: boolean;
 
   /**
-   * ProxyConfiguration for on-premise connectivity and http(s) web proxies. Is present if proxyType of the destination equals "OnPremise" or environment variables [http_proxy] or [https_proxy] are set See [[ProxyConfiguration]].
+   * ProxyConfiguration for on-premise connectivity and http(s) web proxies. Is present if proxyType of the destination equals "OnPremise" or environment variables [http_proxy] or [https_proxy] are set See {@link ProxyConfiguration}.
    */
   proxyConfiguration?: ProxyConfiguration;
 
@@ -208,12 +208,12 @@ export interface DestinationCertificate {
 }
 
 /**
- * Options to use while fetching destinations. Encompasses both [[DestinationCachingOptions]] and [[ResilienceOptions]] interfaces.
+ * Options to use while fetching destinations. Encompasses both {@link DestinationCachingOptions} and {@link ResilienceOptions} interfaces.
  */
 export type DestinationRetrievalOptions = CachingOptions &
   ResilienceOptions & {
     /**
-     * The isolation strategy used for caching destinations. For the available options, see [[IsolationStrategy]].
+     * The isolation strategy used for caching destinations. For the available options, see {@link IsolationStrategy}.
      * By default, IsolationStrategy.Tenant_User is set.
      */
     isolationStrategy?: IsolationStrategy;
@@ -246,7 +246,7 @@ export type AuthenticationType =
 
 /**
  * The destinations endpoint distinguished between destinations maintained on service level (instance) and account level (subaccount).
- * This enum is used as a switch in the [[fetchInstanceDestinations]], [[fetchSubaccountDestinations]]  and [[destinationServiceCache]]
+ * This enum is used as a switch in the {@link fetchInstanceDestinations}, {@link fetchSubaccountDestinations}  and {@link destinationServiceCache}
  * @internal
  */
 export enum DestinationType {

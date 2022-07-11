@@ -52,7 +52,7 @@ export class OneToOneLink<
   /**
    * Create filter statements to be applied to the OData request based on the linked entity values.
    * @param filters - Filters based on the linked entity.
-   * @returns Newly created [[FilterLink]].
+   * @returns Newly created {@link FilterLink}.
    */
   filter(
     ...filters: Filterable<EntityType<LinkedEntityApiT>, DeSerializersT>[]

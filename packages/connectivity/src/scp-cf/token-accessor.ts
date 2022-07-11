@@ -19,8 +19,8 @@ import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
  * When no JWT is passed, the grant will be performed using the provider tenant.
  *
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
- * @param service - The type of the service or an instance of [[Service]].
- * @param options - Options to influence caching and resilience behavior (see [[CachingOptions]] and [[ResilienceOptions]], respectively) and a JWT. By default, caching and usage of a circuit breaker are enabled.
+ * @param service - The type of the service or an instance of {@link Service}.
+ * @param options - Options to influence caching and resilience behavior (see {@link CachingOptions} and {@link ResilienceOptions}, respectively) and a JWT. By default, caching and usage of a circuit breaker are enabled.
  * @returns Access token.
  */
 export async function serviceToken(
@@ -38,10 +38,11 @@ export async function serviceToken(
 
   service = resolveService(service);
   const serviceCredentials = service.credentials;
-  // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
-  const xsuaa = multiTenantXsuaaCredentials(options);
 
+  // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
   if (opts.useCache) {
+    const xsuaa = multiTenantXsuaaCredentials(options);
+
     const cachedToken = clientCredentialsTokenCache.getToken(
       xsuaa.url,
       serviceCredentials.clientid
@@ -59,6 +60,8 @@ export async function serviceToken(
     );
 
     if (opts.useCache) {
+      const xsuaa = multiTenantXsuaaCredentials(options);
+
       clientCredentialsTokenCache.cacheToken(
         xsuaa.url,
         serviceCredentials.clientid,
@@ -81,8 +84,8 @@ export async function serviceToken(
  *
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
  * @param jwt - The JWT of the user for whom the access token should be fetched.
- * @param service - The type of the service or an instance of [[Service]].
- * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
+ * @param service - The type of the service or an instance of {@link Service}.
+ * @param options - Options to influence resilience behavior (see {@link ResilienceOptions}). By default, usage of a circuit breaker is enabled.
  * @returns A jwt bearer token.
  */
 export async function jwtBearerToken(

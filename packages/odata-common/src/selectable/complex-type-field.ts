@@ -16,7 +16,7 @@ import type { ConstructorOrField } from './constructor-or-field';
  * can be supplied as argument to the select function, e.g. `TimeSheetEntry.TIME_SHEET_DATA_FIELDS`.
  * Moreover, classes implementing this abstract class will provide property fields, that can be used for filtering and ordering.
  *
- * See also: [[Selectable]].
+ * See also: {@link Selectable}.
  * @typeparam EntityT - Type of the entity the field belongs to.
  * @typeparam DeSerializersT - Type of the (de-)serializers.
  * @typeparam ComplexT - Type of complex type represented by this field.
@@ -81,7 +81,7 @@ export function getEntityConstructor<EntityT extends EntityBase, ComplexT>(
 }
 
 /**
- * Convenience method to get the [[EdmTypeShared]] from the overloaded constructor.
+ * Convenience method to get the {@link EdmTypeShared} from the overloaded constructor.
  * The two scenarios are:
  * - `complexTypeNameOrEdmType` is of type `EdmTypeShared` and `edmTypeOrUndefined` is `undefined`
  * - `complexTypeNameOrEdmType` is of type `string` and `edmTypeOrUndefined` is of type `EdmTypeShared`

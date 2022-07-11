@@ -9,12 +9,12 @@ exports.TestEntityWithEnumKeyRequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntityWithEnumKey_1 = require('./TestEntityWithEnumKey');
 /**
- * Request builder class for operations supported on the [[TestEntityWithEnumKey]] entity.
+ * Request builder class for operations supported on the {@link TestEntityWithEnumKey} entity.
  */
 class TestEntityWithEnumKeyRequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityWithEnumKey` entity based on its keys.
-   * @param keyPropertyEnum1 Key property. See [[TestEntityWithEnumKey.keyPropertyEnum1]].
+   * @param keyPropertyEnum1 Key property. See {@link TestEntityWithEnumKey.keyPropertyEnum1}.
    * @returns A request builder for creating requests to retrieve one `TestEntityWithEnumKey` entity based on its keys.
    */
   getByKey(keyPropertyEnum1) {

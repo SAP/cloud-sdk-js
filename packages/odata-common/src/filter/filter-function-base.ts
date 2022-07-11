@@ -6,7 +6,7 @@ import { Filter } from './filter';
 
 /**
  * Data structure to represent OData filter functions.
- * Use the factory function [[filterFunction]] to create instances of `FilterFunction`.
+ * Use the factory function {@link filterFunction} to create instances of `FilterFunction`.
  */
 export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
   /**

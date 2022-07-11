@@ -19,8 +19,8 @@ export function equalObjects(
 
 /**
  * Checks whether the two items contain the same content.
- * When both of them are arrays, the elements and the order are checked, see [[equalArrays]].
- * When both of them are objects, the key/value pairs are checked, see [[equalObjects]].
+ * When both of them are arrays, the elements and the order are checked, see {@link equalArrays}.
+ * When both of them are objects, the key/value pairs are checked, see {@link equalObjects}.
  * In other cases, triple equals is used.
  * @param item1 - The first item.
  * @param item2 - The second item.

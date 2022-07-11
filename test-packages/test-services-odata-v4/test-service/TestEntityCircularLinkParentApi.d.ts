@@ -78,7 +78,7 @@ export declare class TestEntityCircularLinkParentApi<
       true
     >;
     /**
-     * Static representation of the one-to-one navigation property {@link toFirstChild} for query construction.
+     * Static representation of the one-to-one navigation property [[toFirstChild]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_FIRST_CHILD: OneToOneLink<
@@ -87,7 +87,7 @@ export declare class TestEntityCircularLinkParentApi<
       TestEntityCircularLinkChildApi<DeSerializersT>
     >;
     /**
-     * Static representation of the one-to-many navigation property {@link toChildren} for query construction.
+     * Static representation of the one-to-many navigation property [[toChildren]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_CHILDREN: OneToManyLink<

@@ -9,12 +9,12 @@ exports.MultiSchemaTestEntityRequestBuilder = void 0;
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const MultiSchemaTestEntity_1 = require('./MultiSchemaTestEntity');
 /**
- * Request builder class for operations supported on the {@link MultiSchemaTestEntity} entity.
+ * Request builder class for operations supported on the [[MultiSchemaTestEntity]] entity.
  */
 class MultiSchemaTestEntityRequestBuilder extends odata_v2_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `MultiSchemaTestEntity` entity based on its keys.
-   * @param keyProperty Key property. See {@link MultiSchemaTestEntity.keyProperty}.
+   * @param keyProperty Key property. See [[MultiSchemaTestEntity.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `MultiSchemaTestEntity` entity based on its keys.
    */
   getByKey(keyProperty) {

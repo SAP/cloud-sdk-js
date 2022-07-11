@@ -9,12 +9,12 @@ exports.TestEntityCircularLinkChildRequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntityCircularLinkChild_1 = require('./TestEntityCircularLinkChild');
 /**
- * Request builder class for operations supported on the {@link TestEntityCircularLinkChild} entity.
+ * Request builder class for operations supported on the [[TestEntityCircularLinkChild]] entity.
  */
 class TestEntityCircularLinkChildRequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityCircularLinkChild` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityCircularLinkChild.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityCircularLinkChild.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkChild` entity based on its keys.
    */
   getByKey(keyProperty) {

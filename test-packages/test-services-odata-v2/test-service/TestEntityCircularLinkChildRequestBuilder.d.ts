@@ -11,14 +11,14 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 /**
- * Request builder class for operations supported on the {@link TestEntityCircularLinkChild} entity.
+ * Request builder class for operations supported on the [[TestEntityCircularLinkChild]] entity.
  */
 export declare class TestEntityCircularLinkChildRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityCircularLinkChild<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityCircularLinkChild` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityCircularLinkChild.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityCircularLinkChild.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkChild` entity based on its keys.
    */
   getByKey(
@@ -47,7 +47,7 @@ export declare class TestEntityCircularLinkChildRequestBuilder<
   ): UpdateRequestBuilder<TestEntityCircularLinkChild<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityCircularLinkChild`.
-   * @param keyProperty Key property. See {@link TestEntityCircularLinkChild.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityCircularLinkChild.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityCircularLinkChild`.
    */
   delete(

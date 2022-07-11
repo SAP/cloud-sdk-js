@@ -41,7 +41,7 @@ export class TestEntityApi<
 
   private navigationPropertyFields!: {
     /**
-     * Static representation of the one-to-many navigation property {@link toMultiLink} for query construction.
+     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_MULTI_LINK: OneToManyLink<
@@ -50,7 +50,7 @@ export class TestEntityApi<
       TestEntityMultiLinkApi<DeSerializersT>
     >;
     /**
-     * Static representation of the one-to-many navigation property {@link toOtherMultiLink} for query construction.
+     * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_OTHER_MULTI_LINK: OneToManyLink<
@@ -59,7 +59,7 @@ export class TestEntityApi<
       TestEntityMultiLinkApi<DeSerializersT>
     >;
     /**
-     * Static representation of the one-to-one navigation property {@link toSingleLink} for query construction.
+     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_SINGLE_LINK: OneToOneLink<
@@ -311,7 +311,7 @@ export class TestEntityApi<
       true
     >;
     /**
-     * Static representation of the one-to-many navigation property {@link toMultiLink} for query construction.
+     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_MULTI_LINK: OneToManyLink<
@@ -320,7 +320,7 @@ export class TestEntityApi<
       TestEntityMultiLinkApi<DeSerializersT>
     >;
     /**
-     * Static representation of the one-to-many navigation property {@link toOtherMultiLink} for query construction.
+     * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_OTHER_MULTI_LINK: OneToManyLink<
@@ -329,7 +329,7 @@ export class TestEntityApi<
       TestEntityMultiLinkApi<DeSerializersT>
     >;
     /**
-     * Static representation of the one-to-one navigation property {@link toSingleLink} for query construction.
+     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_SINGLE_LINK: OneToOneLink<
@@ -345,7 +345,7 @@ export class TestEntityApi<
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the {@link keyPropertyGuid} property for query construction.
+         * Static representation of the [[keyPropertyGuid]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         KEY_PROPERTY_GUID: fieldBuilder.buildEdmTypeField(
@@ -354,7 +354,7 @@ export class TestEntityApi<
           false
         ),
         /**
-         * Static representation of the {@link keyPropertyString} property for query construction.
+         * Static representation of the [[keyPropertyString]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
@@ -363,7 +363,7 @@ export class TestEntityApi<
           false
         ),
         /**
-         * Static representation of the {@link stringProperty} property for query construction.
+         * Static representation of the [[stringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -372,7 +372,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link booleanProperty} property for query construction.
+         * Static representation of the [[booleanProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -381,7 +381,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link guidProperty} property for query construction.
+         * Static representation of the [[guidProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -390,7 +390,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link int16Property} property for query construction.
+         * Static representation of the [[int16Property]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -399,7 +399,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link int32Property} property for query construction.
+         * Static representation of the [[int32Property]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         INT_32_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -408,7 +408,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link int64Property} property for query construction.
+         * Static representation of the [[int64Property]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         INT_64_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -417,7 +417,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link decimalProperty} property for query construction.
+         * Static representation of the [[decimalProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -426,7 +426,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link singleProperty} property for query construction.
+         * Static representation of the [[singleProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         SINGLE_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -435,7 +435,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link doubleProperty} property for query construction.
+         * Static representation of the [[doubleProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DOUBLE_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -444,7 +444,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link floatProperty} property for query construction.
+         * Static representation of the [[floatProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         FLOAT_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -453,7 +453,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link timeOfDayProperty} property for query construction.
+         * Static representation of the [[timeOfDayProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         TIME_OF_DAY_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -462,7 +462,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link dateProperty} property for query construction.
+         * Static representation of the [[dateProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATE_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -471,7 +471,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link dateTimeOffSetProperty} property for query construction.
+         * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATE_TIME_OFF_SET_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -480,7 +480,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link durationProperty} property for query construction.
+         * Static representation of the [[durationProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DURATION_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -489,7 +489,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link byteProperty} property for query construction.
+         * Static representation of the [[byteProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         BYTE_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -498,7 +498,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link sByteProperty} property for query construction.
+         * Static representation of the [[sByteProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         S_BYTE_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -507,7 +507,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link geographyPointProperty} property for query construction.
+         * Static representation of the [[geographyPointProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         GEOGRAPHY_POINT_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -516,7 +516,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link somethingTheSdkDoesNotSupport} property for query construction.
+         * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         SOMETHING_THE_SDK_DOES_NOT_SUPPORT: fieldBuilder.buildEdmTypeField(
@@ -525,7 +525,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link collectionProperty} property for query construction.
+         * Static representation of the [[collectionProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         COLLECTION_PROPERTY: fieldBuilder.buildCollectionField(
@@ -534,7 +534,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link complexTypeProperty} property for query construction.
+         * Static representation of the [[complexTypeProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField(
@@ -543,7 +543,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link complexTypeCollectionProperty} property for query construction.
+         * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         COMPLEX_TYPE_COLLECTION_PROPERTY: fieldBuilder.buildCollectionField(
@@ -552,7 +552,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link enumProperty} property for query construction.
+         * Static representation of the [[enumProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         ENUM_PROPERTY: fieldBuilder.buildEnumField(
@@ -561,7 +561,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link enumPropertyInt64} property for query construction.
+         * Static representation of the [[enumPropertyInt64]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         ENUM_PROPERTY_INT_64: fieldBuilder.buildEnumField(
@@ -570,7 +570,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link enumPropertyWithOneMember} property for query construction.
+         * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         ENUM_PROPERTY_WITH_ONE_MEMBER: fieldBuilder.buildEnumField(
@@ -579,7 +579,7 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link enumCollectionProperty} property for query construction.
+         * Static representation of the [[enumCollectionProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         ENUM_COLLECTION_PROPERTY: fieldBuilder.buildCollectionField(

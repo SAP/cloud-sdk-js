@@ -52,7 +52,7 @@ export class TestComplexType2Field<
     this.deSerializers
   );
   /**
-   * Representation of the {@link TestComplexType2.stringProperty} property for query construction.
+   * Representation of the [[TestComplexType2.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   stringProperty: OrderableEdmTypeField<

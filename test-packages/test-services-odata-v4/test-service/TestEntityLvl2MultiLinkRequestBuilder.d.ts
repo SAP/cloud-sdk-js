@@ -11,14 +11,14 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityLvl2MultiLink } from './TestEntityLvl2MultiLink';
 /**
- * Request builder class for operations supported on the {@link TestEntityLvl2MultiLink} entity.
+ * Request builder class for operations supported on the [[TestEntityLvl2MultiLink]] entity.
  */
 export declare class TestEntityLvl2MultiLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityLvl2MultiLink<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityLvl2MultiLink` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityLvl2MultiLink.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityLvl2MultiLink.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityLvl2MultiLink` entity based on its keys.
    */
   getByKey(
@@ -47,7 +47,7 @@ export declare class TestEntityLvl2MultiLinkRequestBuilder<
   ): UpdateRequestBuilder<TestEntityLvl2MultiLink<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityLvl2MultiLink`.
-   * @param keyProperty Key property. See {@link TestEntityLvl2MultiLink.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityLvl2MultiLink.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityLvl2MultiLink`.
    */
   delete(

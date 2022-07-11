@@ -17,14 +17,14 @@ import {
 import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 
 /**
- * Request builder class for operations supported on the {@link TestEntityCircularLinkParent} entity.
+ * Request builder class for operations supported on the [[TestEntityCircularLinkParent]] entity.
  */
 export class TestEntityCircularLinkParentRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityCircularLinkParent<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityCircularLinkParent` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityCircularLinkParent.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityCircularLinkParent.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkParent` entity based on its keys.
    */
   getByKey(
@@ -76,7 +76,7 @@ export class TestEntityCircularLinkParentRequestBuilder<
 
   /**
    * Returns a request builder for deleting an entity of type `TestEntityCircularLinkParent`.
-   * @param keyProperty Key property. See {@link TestEntityCircularLinkParent.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityCircularLinkParent.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityCircularLinkParent`.
    */
   delete(

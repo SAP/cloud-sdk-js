@@ -60,11 +60,11 @@ export declare class TestEntitySingleLink<
    */
   int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   /**
-   * One-to-many navigation property to the {@link TestEntityLvl2MultiLink} entity.
+   * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
    */
   toMultiLink: TestEntityLvl2MultiLink<T>[];
   /**
-   * One-to-one navigation property to the {@link TestEntityLvl2SingleLink} entity.
+   * One-to-one navigation property to the [[TestEntityLvl2SingleLink]] entity.
    */
   toSingleLink?: TestEntityLvl2SingleLink<T> | null;
 }

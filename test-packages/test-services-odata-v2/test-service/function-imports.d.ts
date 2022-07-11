@@ -6,7 +6,7 @@ import {
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 /**
- * Type of the parameters to be passed to {@link testFunctionImportNoReturnType}.
+ * Type of the parameters to be passed to [[testFunctionImportNoReturnType]].
  */
 export interface TestFunctionImportNoReturnTypeParameters<
   DeSerializersT extends DeSerializers
@@ -27,7 +27,7 @@ export declare function testFunctionImportNoReturnType<
   undefined
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportEdmReturnType}.
+ * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
  */
 export interface TestFunctionImportEdmReturnTypeParameters<
   DeSerializersT extends DeSerializers
@@ -48,7 +48,7 @@ export declare function testFunctionImportEdmReturnType<
   boolean
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportEdmReturnTypeCollection}.
+ * Type of the parameters to be passed to [[testFunctionImportEdmReturnTypeCollection]].
  */
 export interface TestFunctionImportEdmReturnTypeCollectionParameters<
   DeSerializersT extends DeSerializers
@@ -69,7 +69,7 @@ export declare function testFunctionImportEdmReturnTypeCollection<
   string[]
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportEntityReturnType}.
+ * Type of the parameters to be passed to [[testFunctionImportEntityReturnType]].
  */
 export interface TestFunctionImportEntityReturnTypeParameters<
   DeSerializersT extends DeSerializers
@@ -90,7 +90,7 @@ export declare function testFunctionImportEntityReturnType<
   TestEntity
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportEntityReturnTypeCollection}.
+ * Type of the parameters to be passed to [[testFunctionImportEntityReturnTypeCollection]].
  */
 export interface TestFunctionImportEntityReturnTypeCollectionParameters<
   DeSerializersT extends DeSerializers
@@ -111,7 +111,7 @@ export declare function testFunctionImportEntityReturnTypeCollection<
   TestEntity[]
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportSharedEntityReturnType}.
+ * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnType]].
  */
 export interface TestFunctionImportSharedEntityReturnTypeParameters<
   DeSerializersT extends DeSerializers
@@ -135,7 +135,7 @@ export declare function testFunctionImportSharedEntityReturnType<
   'execute'
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportSharedEntityReturnTypeCollection}.
+ * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnTypeCollection]].
  */
 export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters<
   DeSerializersT extends DeSerializers
@@ -159,7 +159,7 @@ export declare function testFunctionImportSharedEntityReturnTypeCollection<
   'execute'
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportComplexReturnType}.
+ * Type of the parameters to be passed to [[testFunctionImportComplexReturnType]].
  */
 export interface TestFunctionImportComplexReturnTypeParameters<
   DeSerializersT extends DeSerializers
@@ -180,7 +180,7 @@ export declare function testFunctionImportComplexReturnType<
   TestComplexType
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportUnsupportedEdmTypes}.
+ * Type of the parameters to be passed to [[testFunctionImportUnsupportedEdmTypes]].
  */
 export interface TestFunctionImportUnsupportedEdmTypesParameters<
   DeSerializersT extends DeSerializers
@@ -206,7 +206,7 @@ export declare function testFunctionImportUnsupportedEdmTypes<
   any
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportComplexReturnTypeCollection}.
+ * Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]].
  */
 export interface TestFunctionImportComplexReturnTypeCollectionParameters<
   DeSerializersT extends DeSerializers
@@ -227,7 +227,7 @@ export declare function testFunctionImportComplexReturnTypeCollection<
   TestComplexType[]
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportGet}.
+ * Type of the parameters to be passed to [[testFunctionImportGet]].
  */
 export interface TestFunctionImportGetParameters<
   DeSerializersT extends DeSerializers
@@ -253,7 +253,7 @@ export declare function testFunctionImportGet<
   boolean
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportPost}.
+ * Type of the parameters to be passed to [[testFunctionImportPost]].
  */
 export interface TestFunctionImportPostParameters<
   DeSerializersT extends DeSerializers
@@ -279,7 +279,7 @@ export declare function testFunctionImportPost<
   boolean
 >;
 /**
- * Type of the parameters to be passed to {@link testFunctionImportMultipleParams}.
+ * Type of the parameters to be passed to [[testFunctionImportMultipleParams]].
  */
 export interface TestFunctionImportMultipleParamsParameters<
   DeSerializersT extends DeSerializers
@@ -309,7 +309,7 @@ export declare function testFunctionImportMultipleParams<
   boolean
 >;
 /**
- * Type of the parameters to be passed to {@link createTestComplexType}.
+ * Type of the parameters to be passed to [[createTestComplexType]].
  */
 export interface CreateTestComplexTypeParameters<
   DeSerializersT extends DeSerializers
@@ -330,7 +330,7 @@ export declare function createTestComplexType<
   TestComplexType
 >;
 /**
- * Type of the parameters to be passed to {@link fContinue}.
+ * Type of the parameters to be passed to [[fContinue]].
  */
 export interface FContinueParameters<DeSerializersT extends DeSerializers> {}
 /**

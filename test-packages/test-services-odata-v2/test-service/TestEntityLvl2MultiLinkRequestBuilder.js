@@ -9,12 +9,12 @@ exports.TestEntityLvl2MultiLinkRequestBuilder = void 0;
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const TestEntityLvl2MultiLink_1 = require('./TestEntityLvl2MultiLink');
 /**
- * Request builder class for operations supported on the [[TestEntityLvl2MultiLink]] entity.
+ * Request builder class for operations supported on the {@link TestEntityLvl2MultiLink} entity.
  */
 class TestEntityLvl2MultiLinkRequestBuilder extends odata_v2_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityLvl2MultiLink` entity based on its keys.
-   * @param keyProperty Key property. See [[TestEntityLvl2MultiLink.keyProperty]].
+   * @param keyProperty Key property. See {@link TestEntityLvl2MultiLink.keyProperty}.
    * @returns A request builder for creating requests to retrieve one `TestEntityLvl2MultiLink` entity based on its keys.
    */
   getByKey(keyProperty) {

@@ -17,14 +17,14 @@ import {
 import { Casetest_1 } from './Casetest_1';
 
 /**
- * Request builder class for operations supported on the [[Casetest_1]] entity.
+ * Request builder class for operations supported on the {@link Casetest_1} entity.
  */
 export class Casetest_1RequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Casetest_1<T>, T> {
   /**
    * Returns a request builder for retrieving one `Casetest_1` entity based on its keys.
-   * @param keyPropertyString Key property. See [[Casetest_1.keyPropertyString]].
+   * @param keyPropertyString Key property. See {@link Casetest_1.keyPropertyString}.
    * @returns A request builder for creating requests to retrieve one `Casetest_1` entity based on its keys.
    */
   getByKey(
@@ -63,7 +63,7 @@ export class Casetest_1RequestBuilder<
 
   /**
    * Returns a request builder for deleting an entity of type `Casetest_1`.
-   * @param keyPropertyString Key property. See [[Casetest_1.keyPropertyString]].
+   * @param keyPropertyString Key property. See {@link Casetest_1.keyPropertyString}.
    * @returns A request builder for creating requests that delete an entity of type `Casetest_1`.
    */
   delete(keyPropertyString: string): DeleteRequestBuilder<Casetest_1<T>, T>;

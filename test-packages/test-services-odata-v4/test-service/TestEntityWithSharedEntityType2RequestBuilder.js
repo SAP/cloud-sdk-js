@@ -9,12 +9,12 @@ exports.TestEntityWithSharedEntityType2RequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntityWithSharedEntityType2_1 = require('./TestEntityWithSharedEntityType2');
 /**
- * Request builder class for operations supported on the [[TestEntityWithSharedEntityType2]] entity.
+ * Request builder class for operations supported on the {@link TestEntityWithSharedEntityType2} entity.
  */
 class TestEntityWithSharedEntityType2RequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityWithSharedEntityType2` entity based on its keys.
-   * @param keyProperty Key property. See [[TestEntityWithSharedEntityType2.keyProperty]].
+   * @param keyProperty Key property. See {@link TestEntityWithSharedEntityType2.keyProperty}.
    * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType2` entity based on its keys.
    */
   getByKey(keyProperty) {

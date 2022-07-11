@@ -69,8 +69,10 @@ export function serializeToDuration(value: moment.Duration): string {
  * @internal
  */
 export function deserializeToTime(value: string): Time {
+  // Matches a time with HH:mm:ss.SSSS like 15:05:06
+  // See more: https://regex101.com/r/A5DHee/1
   const timeComponents =
-    /([01]\d|2[0-3]):([0-5][0-9]):([0-5][0-9](\.[0-9]+)?)/.exec(value);
+    /^([01]\d|2[0-3]):([0-5][0-9]):([0-5][0-9](\.[0-9]+)?)$/.exec(value);
   if (!timeComponents) {
     throw new Error(
       `Provided time value ${value} does not follow the Edm.TimeOfDay pattern: HH:MM:SS(.S)`

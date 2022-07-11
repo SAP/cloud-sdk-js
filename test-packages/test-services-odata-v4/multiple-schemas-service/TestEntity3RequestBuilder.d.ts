@@ -11,14 +11,14 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity3 } from './TestEntity3';
 /**
- * Request builder class for operations supported on the {@link TestEntity3} entity.
+ * Request builder class for operations supported on the [[TestEntity3]] entity.
  */
 export declare class TestEntity3RequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity3<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntity3` entity based on its keys.
-   * @param keyPropertyString Key property. See {@link TestEntity3.keyPropertyString}.
+   * @param keyPropertyString Key property. See [[TestEntity3.keyPropertyString]].
    * @returns A request builder for creating requests to retrieve one `TestEntity3` entity based on its keys.
    */
   getByKey(
@@ -43,7 +43,7 @@ export declare class TestEntity3RequestBuilder<
   update(entity: TestEntity3<T>): UpdateRequestBuilder<TestEntity3<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntity3`.
-   * @param keyPropertyString Key property. See {@link TestEntity3.keyPropertyString}.
+   * @param keyPropertyString Key property. See [[TestEntity3.keyPropertyString]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntity3`.
    */
   delete(keyPropertyString: string): DeleteRequestBuilder<TestEntity3<T>, T>;

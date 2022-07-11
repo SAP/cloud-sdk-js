@@ -17,7 +17,7 @@ import { TestComplexType1 } from './TestComplexType1';
 import { TestComplexType2 } from './TestComplexType2';
 
 /**
- * Type of the parameters to be passed to {@link testActionImportNoParameterComplexReturnType1}.
+ * Type of the parameters to be passed to [[testActionImportNoParameterComplexReturnType1]].
  */
 export interface TestActionImportNoParameterComplexReturnType1Parameters<
   DeSerializersT extends DeSerializers
@@ -57,7 +57,7 @@ export function testActionImportNoParameterComplexReturnType1<
 }
 
 /**
- * Type of the parameters to be passed to {@link testActionImportNoParameterComplexReturnType2}.
+ * Type of the parameters to be passed to [[testActionImportNoParameterComplexReturnType2]].
  */
 export interface TestActionImportNoParameterComplexReturnType2Parameters<
   DeSerializersT extends DeSerializers

@@ -23,7 +23,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
     super(fieldName, fieldOf, deSerializers, TestComplexType, fieldOptions);
     this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
     /**
-     * Representation of the {@link TestComplexType.stringProperty} property for query construction.
+     * Representation of the [[TestComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.stringProperty = this._fieldBuilder.buildEdmTypeField(
@@ -32,7 +32,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       false
     );
     /**
-     * Representation of the {@link TestComplexType.booleanProperty} property for query construction.
+     * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.booleanProperty = this._fieldBuilder.buildEdmTypeField(
@@ -41,7 +41,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.guidProperty} property for query construction.
+     * Representation of the [[TestComplexType.guidProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.guidProperty = this._fieldBuilder.buildEdmTypeField(
@@ -50,7 +50,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.int16Property} property for query construction.
+     * Representation of the [[TestComplexType.int16Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.int16Property = this._fieldBuilder.buildEdmTypeField(
@@ -59,7 +59,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.int32Property} property for query construction.
+     * Representation of the [[TestComplexType.int32Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.int32Property = this._fieldBuilder.buildEdmTypeField(
@@ -68,7 +68,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.int64Property} property for query construction.
+     * Representation of the [[TestComplexType.int64Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.int64Property = this._fieldBuilder.buildEdmTypeField(
@@ -77,7 +77,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.decimalProperty} property for query construction.
+     * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.decimalProperty = this._fieldBuilder.buildEdmTypeField(
@@ -86,7 +86,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.singleProperty} property for query construction.
+     * Representation of the [[TestComplexType.singleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.singleProperty = this._fieldBuilder.buildEdmTypeField(
@@ -95,7 +95,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.doubleProperty} property for query construction.
+     * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.doubleProperty = this._fieldBuilder.buildEdmTypeField(
@@ -104,7 +104,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.floatProperty} property for query construction.
+     * Representation of the [[TestComplexType.floatProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.floatProperty = this._fieldBuilder.buildEdmTypeField(
@@ -113,7 +113,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.timeOfDayProperty} property for query construction.
+     * Representation of the [[TestComplexType.timeOfDayProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.timeOfDayProperty = this._fieldBuilder.buildEdmTypeField(
@@ -122,7 +122,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.dateProperty} property for query construction.
+     * Representation of the [[TestComplexType.dateProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.dateProperty = this._fieldBuilder.buildEdmTypeField(
@@ -131,7 +131,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.dateTimeOffSetProperty} property for query construction.
+     * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.dateTimeOffSetProperty = this._fieldBuilder.buildEdmTypeField(
@@ -140,7 +140,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.byteProperty} property for query construction.
+     * Representation of the [[TestComplexType.byteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.byteProperty = this._fieldBuilder.buildEdmTypeField(
@@ -149,7 +149,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.sByteProperty} property for query construction.
+     * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.sByteProperty = this._fieldBuilder.buildEdmTypeField(
@@ -158,7 +158,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.geographyPointProperty} property for query construction.
+     * Representation of the [[TestComplexType.geographyPointProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.geographyPointProperty = this._fieldBuilder.buildEdmTypeField(
@@ -167,7 +167,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.enumProperty} property for query construction.
+     * Representation of the [[TestComplexType.enumProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.enumProperty = this._fieldBuilder.buildEnumField(
@@ -176,7 +176,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.somethingTheSdkDoesNotSupport} property for query construction.
+     * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.somethingTheSdkDoesNotSupport = this._fieldBuilder.buildEdmTypeField(
@@ -185,7 +185,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.complexTypeProperty} property for query construction.
+     * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.complexTypeProperty = this._fieldBuilder.buildComplexTypeField(
@@ -194,7 +194,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.collectionStringProperty} property for query construction.
+     * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.collectionStringProperty = this._fieldBuilder.buildCollectionField(
@@ -203,7 +203,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.collectionEnumProperty} property for query construction.
+     * Representation of the [[TestComplexType.collectionEnumProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.collectionEnumProperty = this._fieldBuilder.buildCollectionField(
@@ -212,7 +212,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestComplexType.collectionComplexTypeProperty} property for query construction.
+     * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.collectionComplexTypeProperty =
@@ -222,7 +222,7 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
         true
       );
     /**
-     * Representation of the {@link TestComplexType.baseStringProperty} property for query construction.
+     * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.baseStringProperty = this._fieldBuilder.buildEdmTypeField(

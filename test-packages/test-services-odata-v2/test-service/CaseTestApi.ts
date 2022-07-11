@@ -80,7 +80,7 @@ export class CaseTestApi<
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the {@link keyPropertyString} property for query construction.
+         * Static representation of the [[keyPropertyString]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(

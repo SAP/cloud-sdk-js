@@ -17,14 +17,14 @@ import {
 import { TestEntityEndsWithSomethingElse } from './TestEntityEndsWithSomethingElse';
 
 /**
- * Request builder class for operations supported on the {@link TestEntityEndsWithSomethingElse} entity.
+ * Request builder class for operations supported on the [[TestEntityEndsWithSomethingElse]] entity.
  */
 export class TestEntityEndsWithSomethingElseRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityEndsWithSomethingElse<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityEndsWithSomethingElse` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityEndsWithSomethingElse.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityEndsWithSomethingElse.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityEndsWithSomethingElse` entity based on its keys.
    */
   getByKey(
@@ -76,7 +76,7 @@ export class TestEntityEndsWithSomethingElseRequestBuilder<
 
   /**
    * Returns a request builder for deleting an entity of type `TestEntityEndsWithSomethingElse`.
-   * @param keyProperty Key property. See {@link TestEntityEndsWithSomethingElse.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityEndsWithSomethingElse.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityEndsWithSomethingElse`.
    */
   delete(

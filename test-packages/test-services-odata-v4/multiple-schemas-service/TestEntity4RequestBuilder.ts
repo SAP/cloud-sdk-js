@@ -17,14 +17,14 @@ import {
 import { TestEntity4 } from './TestEntity4';
 
 /**
- * Request builder class for operations supported on the {@link TestEntity4} entity.
+ * Request builder class for operations supported on the [[TestEntity4]] entity.
  */
 export class TestEntity4RequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity4<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntity4` entity based on its keys.
-   * @param keyPropertyString Key property. See {@link TestEntity4.keyPropertyString}.
+   * @param keyPropertyString Key property. See [[TestEntity4.keyPropertyString]].
    * @returns A request builder for creating requests to retrieve one `TestEntity4` entity based on its keys.
    */
   getByKey(
@@ -63,7 +63,7 @@ export class TestEntity4RequestBuilder<
 
   /**
    * Returns a request builder for deleting an entity of type `TestEntity4`.
-   * @param keyPropertyString Key property. See {@link TestEntity4.keyPropertyString}.
+   * @param keyPropertyString Key property. See [[TestEntity4.keyPropertyString]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntity4`.
    */
   delete(keyPropertyString: string): DeleteRequestBuilder<TestEntity4<T>, T>;

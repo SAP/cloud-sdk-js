@@ -21,7 +21,7 @@ class TestComplexBaseTypeField extends odata_v4_1.ComplexTypeField {
     super(fieldName, fieldOf, deSerializers, TestComplexBaseType, fieldOptions);
     this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
     /**
-     * Representation of the {@link TestComplexBaseType.baseStringProperty} property for query construction.
+     * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.baseStringProperty = this._fieldBuilder.buildEdmTypeField(

@@ -28,7 +28,7 @@ class TestNestedComplexTypeField extends odata_v2_1.ComplexTypeField {
     );
     this._fieldBuilder = new odata_v2_1.FieldBuilder(this, this.deSerializers);
     /**
-     * Representation of the {@link TestNestedComplexType.stringProperty} property for query construction.
+     * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.stringProperty = this._fieldBuilder.buildEdmTypeField(
@@ -37,7 +37,7 @@ class TestNestedComplexTypeField extends odata_v2_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link TestNestedComplexType.complexTypeProperty} property for query construction.
+     * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.complexTypeProperty = this._fieldBuilder.buildComplexTypeField(

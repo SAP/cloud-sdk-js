@@ -18,7 +18,7 @@ import { TestEntity2 } from './TestEntity2';
 import { TestEntity2Api } from './TestEntity2Api';
 
 /**
- * Type of the parameters to be passed to {@link testFunctionImportEntityReturnType1}.
+ * Type of the parameters to be passed to [[testFunctionImportEntityReturnType1]].
  */
 export interface TestFunctionImportEntityReturnType1Parameters<
   DeSerializersT extends DeSerializers
@@ -55,7 +55,7 @@ export function testFunctionImportEntityReturnType1<
 }
 
 /**
- * Type of the parameters to be passed to {@link testFunctionImportEntityReturnType2}.
+ * Type of the parameters to be passed to [[testFunctionImportEntityReturnType2]].
  */
 export interface TestFunctionImportEntityReturnType2Parameters<
   DeSerializersT extends DeSerializers

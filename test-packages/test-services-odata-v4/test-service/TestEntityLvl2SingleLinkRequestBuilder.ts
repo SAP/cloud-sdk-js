@@ -17,14 +17,14 @@ import {
 import { TestEntityLvl2SingleLink } from './TestEntityLvl2SingleLink';
 
 /**
- * Request builder class for operations supported on the {@link TestEntityLvl2SingleLink} entity.
+ * Request builder class for operations supported on the [[TestEntityLvl2SingleLink]] entity.
  */
 export class TestEntityLvl2SingleLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityLvl2SingleLink<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityLvl2SingleLink` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityLvl2SingleLink.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityLvl2SingleLink.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityLvl2SingleLink` entity based on its keys.
    */
   getByKey(
@@ -76,7 +76,7 @@ export class TestEntityLvl2SingleLinkRequestBuilder<
 
   /**
    * Returns a request builder for deleting an entity of type `TestEntityLvl2SingleLink`.
-   * @param keyProperty Key property. See {@link TestEntityLvl2SingleLink.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityLvl2SingleLink.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityLvl2SingleLink`.
    */
   delete(

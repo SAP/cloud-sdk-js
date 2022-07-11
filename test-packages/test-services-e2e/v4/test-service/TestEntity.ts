@@ -92,7 +92,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     'Edm.DateTimeOffset'
   > | null;
   /**
-   * One-to-many navigation property to the [[TestEntityLink]] entity.
+   * One-to-many navigation property to the {@link TestEntityLink} entity.
    */
   toMultiLink!: TestEntityLink<T>[];
 }

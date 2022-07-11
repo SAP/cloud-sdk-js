@@ -11,14 +11,14 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { Airports } from './Airports';
 /**
- * Request builder class for operations supported on the [[Airports]] entity.
+ * Request builder class for operations supported on the {@link Airports} entity.
  */
 export declare class AirportsRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Airports<T>, T> {
   /**
    * Returns a request builder for retrieving one `Airports` entity based on its keys.
-   * @param icaoCode Key property. See [[Airports.icaoCode]].
+   * @param icaoCode Key property. See {@link Airports.icaoCode}.
    * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
    */
   getByKey(
@@ -43,7 +43,7 @@ export declare class AirportsRequestBuilder<
   update(entity: Airports<T>): UpdateRequestBuilder<Airports<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `Airports`.
-   * @param icaoCode Key property. See [[Airports.icaoCode]].
+   * @param icaoCode Key property. See {@link Airports.icaoCode}.
    * @returns A request builder for creating requests that delete an entity of type `Airports`.
    */
   delete(icaoCode: string): DeleteRequestBuilder<Airports<T>, T>;

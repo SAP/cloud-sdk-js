@@ -38,7 +38,7 @@ export declare class TestComplexType1Field<
 > {
   private _fieldBuilder;
   /**
-   * Representation of the {@link TestComplexType1.stringProperty} property for query construction.
+   * Representation of the [[TestComplexType1.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   stringProperty: OrderableEdmTypeField<

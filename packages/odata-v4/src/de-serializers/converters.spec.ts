@@ -401,6 +401,7 @@ describe('EDM to moment and back', () => {
       // Currently not supported by us
     });
     xit('should throw on invalid times', () => {
+      // Currently not supported by us
       expect(() =>
         serializeToTime({
           hours: 25,

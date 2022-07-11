@@ -65,7 +65,7 @@ export class TestNestedComplexTypeField<
     this.deSerializers
   );
   /**
-   * Representation of the {@link TestNestedComplexType.stringProperty} property for query construction.
+   * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   stringProperty: OrderableEdmTypeField<
@@ -80,7 +80,7 @@ export class TestNestedComplexTypeField<
     true
   );
   /**
-   * Representation of the {@link TestNestedComplexType.complexTypeProperty} property for query construction.
+   * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   complexTypeProperty: TestLvl2NestedComplexTypeField<

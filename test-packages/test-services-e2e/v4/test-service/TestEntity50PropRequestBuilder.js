@@ -9,12 +9,12 @@ exports.TestEntity50PropRequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntity50Prop_1 = require('./TestEntity50Prop');
 /**
- * Request builder class for operations supported on the [[TestEntity50Prop]] entity.
+ * Request builder class for operations supported on the {@link TestEntity50Prop} entity.
  */
 class TestEntity50PropRequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntity50Prop` entity based on its keys.
-   * @param keyTestEntity50Prop Key property. See [[TestEntity50Prop.keyTestEntity50Prop]].
+   * @param keyTestEntity50Prop Key property. See {@link TestEntity50Prop.keyTestEntity50Prop}.
    * @returns A request builder for creating requests to retrieve one `TestEntity50Prop` entity based on its keys.
    */
   getByKey(keyTestEntity50Prop) {

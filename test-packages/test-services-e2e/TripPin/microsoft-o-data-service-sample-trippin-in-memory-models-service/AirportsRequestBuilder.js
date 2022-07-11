@@ -9,12 +9,12 @@ exports.AirportsRequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const Airports_1 = require('./Airports');
 /**
- * Request builder class for operations supported on the [[Airports]] entity.
+ * Request builder class for operations supported on the {@link Airports} entity.
  */
 class AirportsRequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `Airports` entity based on its keys.
-   * @param icaoCode Key property. See [[Airports.icaoCode]].
+   * @param icaoCode Key property. See {@link Airports.icaoCode}.
    * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
    */
   getByKey(icaoCode) {

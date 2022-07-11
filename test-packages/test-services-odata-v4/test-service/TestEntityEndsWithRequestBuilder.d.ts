@@ -11,14 +11,14 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityEndsWith } from './TestEntityEndsWith';
 /**
- * Request builder class for operations supported on the {@link TestEntityEndsWith} entity.
+ * Request builder class for operations supported on the [[TestEntityEndsWith]] entity.
  */
 export declare class TestEntityEndsWithRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityEndsWith<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityEndsWith` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityEndsWith.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityEndsWith.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
    */
   getByKey(
@@ -47,7 +47,7 @@ export declare class TestEntityEndsWithRequestBuilder<
   ): UpdateRequestBuilder<TestEntityEndsWith<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityEndsWith`.
-   * @param keyProperty Key property. See {@link TestEntityEndsWith.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityEndsWith.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityEndsWith`.
    */
   delete(keyProperty: string): DeleteRequestBuilder<TestEntityEndsWith<T>, T>;

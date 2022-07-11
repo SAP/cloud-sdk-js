@@ -12,14 +12,14 @@ import {
 import { TestEntityWithEnumKey } from './TestEntityWithEnumKey';
 import { TestEnumType } from './TestEnumType';
 /**
- * Request builder class for operations supported on the {@link TestEntityWithEnumKey} entity.
+ * Request builder class for operations supported on the [[TestEntityWithEnumKey]] entity.
  */
 export declare class TestEntityWithEnumKeyRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityWithEnumKey<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityWithEnumKey` entity based on its keys.
-   * @param keyPropertyEnum1 Key property. See {@link TestEntityWithEnumKey.keyPropertyEnum1}.
+   * @param keyPropertyEnum1 Key property. See [[TestEntityWithEnumKey.keyPropertyEnum1]].
    * @returns A request builder for creating requests to retrieve one `TestEntityWithEnumKey` entity based on its keys.
    */
   getByKey(
@@ -48,7 +48,7 @@ export declare class TestEntityWithEnumKeyRequestBuilder<
   ): UpdateRequestBuilder<TestEntityWithEnumKey<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityWithEnumKey`.
-   * @param keyPropertyEnum1 Key property. See {@link TestEntityWithEnumKey.keyPropertyEnum1}.
+   * @param keyPropertyEnum1 Key property. See [[TestEntityWithEnumKey.keyPropertyEnum1]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityWithEnumKey`.
    */
   delete(

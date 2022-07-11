@@ -55,7 +55,7 @@ class TestEntitySingleLinkApi {
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the {@link keyProperty} property for query construction.
+         * Static representation of the [[keyProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -64,7 +64,7 @@ class TestEntitySingleLinkApi {
           false
         ),
         /**
-         * Static representation of the {@link stringProperty} property for query construction.
+         * Static representation of the [[stringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -73,7 +73,7 @@ class TestEntitySingleLinkApi {
           true
         ),
         /**
-         * Static representation of the {@link booleanProperty} property for query construction.
+         * Static representation of the [[booleanProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -82,7 +82,7 @@ class TestEntitySingleLinkApi {
           true
         ),
         /**
-         * Static representation of the {@link guidProperty} property for query construction.
+         * Static representation of the [[guidProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
@@ -91,7 +91,7 @@ class TestEntitySingleLinkApi {
           true
         ),
         /**
-         * Static representation of the {@link int16Property} property for query construction.
+         * Static representation of the [[int16Property]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(

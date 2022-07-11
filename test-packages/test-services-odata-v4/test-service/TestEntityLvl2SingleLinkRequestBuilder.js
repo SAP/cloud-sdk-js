@@ -9,12 +9,12 @@ exports.TestEntityLvl2SingleLinkRequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
 /**
- * Request builder class for operations supported on the {@link TestEntityLvl2SingleLink} entity.
+ * Request builder class for operations supported on the [[TestEntityLvl2SingleLink]] entity.
  */
 class TestEntityLvl2SingleLinkRequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityLvl2SingleLink` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityLvl2SingleLink.keyProperty}.
+   * @param keyProperty Key property. See [[TestEntityLvl2SingleLink.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityLvl2SingleLink` entity based on its keys.
    */
   getByKey(keyProperty) {

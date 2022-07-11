@@ -22,7 +22,7 @@ import {
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken,
-  createOriginalTestEntityDataWithLinks
+  createOriginalTestEntityDataWithLinks, mockSingleDestinationCallSkipCredentials
 } from '../../../../test-resources/test/test-util';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import {
@@ -269,13 +269,7 @@ describe('GetAllRequestBuilder', () => {
           .post('/oauth/token')
           .times(1)
           .reply(200, { access_token: providerServiceToken }),
-        mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          certificateMultipleResponse,
-          200,
-          onlyIssuerServiceToken
-        ),
+          mockSingleDestinationCallSkipCredentials(nock,certificateSingleResponse,'ERNIE-UND-CERT',wrapJwtInHeader(onlyIssuerServiceToken)),
         mockSingleDestinationCall(
           nock,
           certificateSingleResponse,

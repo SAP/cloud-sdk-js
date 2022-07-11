@@ -17,7 +17,8 @@ import {
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
 import {
-  defaultResilienceBTPServices,
+  addResilience,
+  defaultResilienceOptions,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
@@ -530,17 +531,31 @@ async function getCsrfHeaders(
   request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
   const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
-  return Object.keys(csrfHeaders).length
-    ? csrfHeaders
-    : buildCsrfHeaders(destination, {
-        params: request.params,
-        headers: request.headers,
-        url: request.url,
-        timeout: request.timeout || defaultResilienceBTPServices.timeout,
-        proxy: request.proxy,
-        httpAgent: request.httpAgent,
-        httpsAgent: request.httpsAgent
-      });
+  if (Object.keys(csrfHeaders).length) {
+    return csrfHeaders;
+  }
+  return addResilience(
+    {
+      fn: buildCsrfHeaders,
+      args: [
+        destination,
+        {
+          params: request.params,
+          headers: request.headers,
+          url: request.url,
+          proxy: request.proxy,
+          httpAgent: request.httpAgent,
+          httpsAgent: request.httpsAgent
+        }
+      ]
+    },
+    {
+      circuitBreaker: false,
+      timeout: request.timeout
+        ? request.timeout
+        : defaultResilienceOptions.timeout
+    }
+  )();
 }
 
 async function addCsrfTokenToHeader(

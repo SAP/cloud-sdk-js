@@ -1,4 +1,3 @@
-import { StringValue } from 'ms';
 import { CircuitBreakerOptions } from './circuit-breaker-options';
 
 /**
@@ -7,8 +6,8 @@ import { CircuitBreakerOptions } from './circuit-breaker-options';
 export interface AsyncRetryLibOptions {
   retries?: number; // default 10
   factor?: number; // default  2.
-  minTimeout?: StringValue; // default 1000 ms. See https://github.com/vercel/ms
-  maxTimeout?: StringValue; // default Infinity. See https://github.com/vercel/ms
+  minTimeout?: number; // default 1000 ms. See https://github.com/vercel/ms
+  maxTimeout?: number; // default Infinity. See https://github.com/vercel/ms
   randomize?: boolean; // default true.
   onRetry?: (e: Error) => any; // default undefined
 }

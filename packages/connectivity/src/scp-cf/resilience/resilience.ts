@@ -1,4 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { getCircuitBreaker } from './circuit-breaker';
 import {
   CircuitBreakerOptions,
   defaultCircuitBreakerOptions
@@ -14,10 +15,12 @@ const logger = createLogger({
   messageContext: 'resilience'
 });
 
+type RequestHandler<ReturnType> = (...args: any[]) => Promise<ReturnType>;
+
 /**
  * @internal
  */
-export function isCircuitBreakerOptionsServiceTarget(
+function isCircuitBreakerOptionsServiceTarget(
   options: CircuitBreakerOptions | CircuitBreakerOptionsServiceTarget
 ): options is CircuitBreakerOptionsServiceTarget {
   if (typeof options === 'object') {
@@ -32,28 +35,19 @@ export function isCircuitBreakerOptionsServiceTarget(
  * @param timeout - Value for the timeout.
  * @returns A promise which times out after the given time.
  */
-export async function timeoutPromise<T>(timeout: number): Promise<T> {
+async function timeoutPromise<T>(timeout: number): Promise<T> {
   return new Promise<T>((_, reject) =>
     setTimeout(() => reject(new Error(`Timed out after ${timeout}ms`)), timeout)
   );
 }
 
-/**
- * Wrap the promise with timeout if timeout is a positive number.
- * @param promise - Promise that will be wrapped with timeout.
- * @param timeout - A positive number for the timeout in millisecond.
- * @returns Wrapped promise with timeout if timeout is a positive number.
- */
-export async function addTimeOut<T>(
-  promise: Promise<T>,
-  timeout: number
-): Promise<T> {
+function addTimeOut<T>(request: { fn: RequestHandler<T>; args: any[] }, timeout: number): RequestHandler<T> {
   // If timeout is non-positive, we don't add timeout to the promise.
   if (timeout <= 0) {
-    return promise;
+    return () => request.fn(...request.args);
   }
   const racePromise = timeoutPromise<T>(timeout);
-  return Promise.race([promise, racePromise]);
+  return () => Promise.race([request.fn(...request.args), racePromise]);
 }
 
 // TODO: write test cases for this!
@@ -62,7 +56,7 @@ export async function addTimeOut<T>(
  * @param resilienceOptions - TODO: Add JSDoc later.
  * @returns - TODO: Add JSDoc later.
  */
-export function formalizeResilienceOptions(
+function formalizeResilienceOptions(
   resilienceOptions: ResilienceOptions | undefined
 ): Required<ResilienceOptions> {
   if (!resilienceOptions) {
@@ -134,4 +128,53 @@ export function formalizeResilienceOptions(
   }
 
   return resilienceOptions as Required<ResilienceOptions>;
+}
+
+/**
+ * TODO: Add JSDoc later.
+ * @param request - TODO: Add JSDoc later.
+ * @param request.fn - TODO: Add JSDoc later.
+ * @param request.args - TODO: Add JSDoc later.
+ * @param resilienceOptions - TODO: Add JSDoc later.
+ * @param requestType - TODO: Add JSDoc later.
+ * @returns TODO: Add JSDoc later.
+ */
+export function addResilience<T>(
+  request: { fn: RequestHandler<T>; args: any[] },
+  resilienceOptions: ResilienceOptions,
+  requestType?: 'service' | 'target'
+): RequestHandler<T> {
+  const { timeout, retry, circuitBreaker } =
+    formalizeResilienceOptions(resilienceOptions);
+
+  let ret: RequestHandler<T>;
+
+  let finalCircuitBreaker: CircuitBreakerOptions = false;
+
+  if (isCircuitBreakerOptionsServiceTarget(circuitBreaker)) {
+    if (requestType === 'service') {
+      finalCircuitBreaker = circuitBreaker.service;
+    } else if (requestType === 'target') {
+      finalCircuitBreaker = circuitBreaker.target;
+    } else {
+      logger.warn(
+        'Unknown request type for adding resilience. Use `target` by default.'
+      );
+      finalCircuitBreaker = circuitBreaker.target;
+    }
+  }
+
+  if (finalCircuitBreaker) {
+    // Add circuit breaker
+    ret = async () =>
+      getCircuitBreaker(() => request.fn(...request.args), finalCircuitBreaker).fire({
+        circuitBreaker: false,
+        timeout: 0
+      });
+  } else {
+    // Add our own timeout
+    ret = addTimeOut(request, timeout);
+  }
+
+  return ret;
 }

@@ -6,12 +6,7 @@ import {
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import { getCircuitBreaker } from '../resilience/circuit-breaker';
-import {
-  addTimeOut,
-  formalizeResilienceOptions,
-  isCircuitBreakerOptionsServiceTarget
-} from '../resilience/resilience';
+import { addResilience } from '../resilience/resilience';
 import { ResilienceOptions } from '../resilience/resilience-options';
 import { urlAndAgent } from '../../http-agent';
 import {
@@ -292,21 +287,14 @@ async function callDestinationService(
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
-  const { circuitBreaker, timeout } = formalizeResilienceOptions(options);
-  const circuitBreakerOptions = isCircuitBreakerOptionsServiceTarget(
-    circuitBreaker
-  )
-    ? circuitBreaker.service
-    : circuitBreaker;
-
-  if (circuitBreakerOptions) {
-    return getCircuitBreaker(
-      callDestinationService,
-      circuitBreakerOptions
-    ).fire(uri, headers, {
-      circuitBreaker: false,
-      timeout: 0
-    });
+  if (options) {
+    return addResilience(
+      {
+        fn: callDestinationService,
+        args: [uri, headers]
+      },
+      options
+    )();
   }
 
   const config: AxiosRequestConfig = {
@@ -316,5 +304,5 @@ async function callDestinationService(
     headers
   };
 
-  return addTimeOut(axios.request(config), timeout);
+  return axios.request(config);
 }

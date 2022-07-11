@@ -3,15 +3,10 @@ import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';
-import {
-  isCircuitBreakerOptionsServiceTarget,
-  addTimeOut,
-  formalizeResilienceOptions
-} from './resilience/resilience';
+import { addResilience } from './resilience/resilience';
 import { ResilienceOptions } from './resilience/resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
-import { getCircuitBreaker } from './resilience/circuit-breaker';
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
@@ -57,21 +52,14 @@ export async function getClientCredentialsToken(
   userJwt?: string | JwtPayload,
   options?: ResilienceOptions
 ): Promise<ClientCredentialsResponse> {
-  const { circuitBreaker, timeout } = formalizeResilienceOptions(options);
-  const circuitBreakerOptions = isCircuitBreakerOptionsServiceTarget(
-    circuitBreaker
-  )
-    ? circuitBreaker.service
-    : circuitBreaker;
-
-  if (circuitBreakerOptions) {
-    return getCircuitBreaker(
-      getClientCredentialsToken,
-      circuitBreakerOptions
-    ).fire(service, userJwt, {
-      circuitBreaker: false,
-      timeout: 0
-    });
+  if (options) {
+    return addResilience(
+      {
+        fn: getClientCredentialsToken,
+        args: [service, userJwt]
+      },
+      options
+    )();
   }
 
   const serviceCredentials = resolveService(service).credentials;
@@ -90,7 +78,7 @@ export async function getClientCredentialsToken(
     }
   );
 
-  return addTimeOut(xssecPromise, timeout);
+  return xssecPromise;
 }
 
 /**
@@ -105,22 +93,14 @@ export function getUserToken(
   userJwt: string,
   options?: ResilienceOptions
 ): Promise<string> {
-  const { circuitBreaker, timeout } = formalizeResilienceOptions(options);
-  const circuitBreakerOptions = isCircuitBreakerOptionsServiceTarget(
-    circuitBreaker
-  )
-    ? circuitBreaker.service
-    : circuitBreaker;
-
-  if (circuitBreakerOptions) {
-    return getCircuitBreaker(getUserToken, circuitBreakerOptions).fire(
-      service,
-      userJwt,
+  if (options) {
+    return addResilience(
       {
-        circuitBreaker: false,
-        timeout: 0
-      }
-    );
+        fn: getUserToken,
+        args: [service, userJwt]
+      },
+      options
+    )();
   }
 
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
@@ -136,5 +116,5 @@ export function getUserToken(
       (err: Error, token: string) => (err ? reject(err) : resolve(token))
     )
   );
-  return addTimeOut(xssecPromise, timeout);
+  return xssecPromise;
 }

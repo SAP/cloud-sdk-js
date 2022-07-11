@@ -8,16 +8,14 @@ import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import {
   expectAllMocksUsed,
-  certificateMultipleResponse,
   certificateSingleResponse,
-  mockInstanceDestinationsCall,
   mockServiceBindings,
   mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
-  providerServiceToken
+  providerServiceToken,
+  mockSingleDestinationCallSkipCredentials
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
@@ -112,12 +110,11 @@ describe('openapi-request-builder', () => {
         .post('/oauth/token')
         .times(1)
         .reply(200, { access_token: providerServiceToken }),
-      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-      mockSubaccountDestinationsCall(
+      mockSingleDestinationCallSkipCredentials(
         nock,
-        certificateMultipleResponse,
-        200,
-        onlyIssuerServiceToken
+        certificateSingleResponse,
+        'ERNIE-UND-CERT',
+        wrapJwtInHeader(onlyIssuerServiceToken)
       ),
       mockSingleDestinationCall(
         nock,

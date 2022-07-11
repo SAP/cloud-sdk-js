@@ -23,3 +23,4 @@ export type {
   Method,
   ParameterEncoder
 } from './http-client-types';
+export { defaultDisallowedKeys } from './http-request-config';

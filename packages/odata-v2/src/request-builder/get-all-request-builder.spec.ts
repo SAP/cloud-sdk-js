@@ -12,17 +12,15 @@ import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   expectAllMocksUsed,
-  certificateMultipleResponse,
   certificateSingleResponse,
-  mockInstanceDestinationsCall,
   mockServiceBindings,
   mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken,
-  createOriginalTestEntityDataWithLinks, mockSingleDestinationCallSkipCredentials
+  createOriginalTestEntityDataWithLinks,
+  mockSingleDestinationCallSkipCredentials
 } from '../../../../test-resources/test/test-util';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import {
@@ -269,7 +267,12 @@ describe('GetAllRequestBuilder', () => {
           .post('/oauth/token')
           .times(1)
           .reply(200, { access_token: providerServiceToken }),
-          mockSingleDestinationCallSkipCredentials(nock,certificateSingleResponse,'ERNIE-UND-CERT',wrapJwtInHeader(onlyIssuerServiceToken)),
+        mockSingleDestinationCallSkipCredentials(
+          nock,
+          certificateSingleResponse,
+          'ERNIE-UND-CERT',
+          wrapJwtInHeader(onlyIssuerServiceToken)
+        ),
         mockSingleDestinationCall(
           nock,
           certificateSingleResponse,

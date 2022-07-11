@@ -101,7 +101,7 @@ export class AirportsApi<
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the {@link icaoCode} property for query construction.
+         * Static representation of the [[icaoCode]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         ICAO_CODE: fieldBuilder.buildEdmTypeField(
@@ -110,12 +110,12 @@ export class AirportsApi<
           false
         ),
         /**
-         * Static representation of the {@link name} property for query construction.
+         * Static representation of the [[name]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
         /**
-         * Static representation of the {@link iataCode} property for query construction.
+         * Static representation of the [[iataCode]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         IATA_CODE: fieldBuilder.buildEdmTypeField(
@@ -124,7 +124,7 @@ export class AirportsApi<
           false
         ),
         /**
-         * Static representation of the {@link location} property for query construction.
+         * Static representation of the [[location]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         LOCATION: fieldBuilder.buildComplexTypeField(

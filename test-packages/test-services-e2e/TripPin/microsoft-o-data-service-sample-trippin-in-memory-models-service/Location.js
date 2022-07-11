@@ -22,7 +22,7 @@ class LocationField extends odata_v4_1.ComplexTypeField {
     super(fieldName, fieldOf, deSerializers, Location, fieldOptions);
     this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
     /**
-     * Representation of the {@link Location.address} property for query construction.
+     * Representation of the [[Location.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.address = this._fieldBuilder.buildEdmTypeField(
@@ -31,7 +31,7 @@ class LocationField extends odata_v4_1.ComplexTypeField {
       false
     );
     /**
-     * Representation of the {@link Location.city} property for query construction.
+     * Representation of the [[Location.city]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.city = this._fieldBuilder.buildComplexTypeField(

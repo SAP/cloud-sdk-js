@@ -17,14 +17,14 @@ import {
 import { Airlines } from './Airlines';
 
 /**
- * Request builder class for operations supported on the {@link Airlines} entity.
+ * Request builder class for operations supported on the [[Airlines]] entity.
  */
 export class AirlinesRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Airlines<T>, T> {
   /**
    * Returns a request builder for retrieving one `Airlines` entity based on its keys.
-   * @param airlineCode Key property. See {@link Airlines.airlineCode}.
+   * @param airlineCode Key property. See [[Airlines.airlineCode]].
    * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
    */
   getByKey(
@@ -63,7 +63,7 @@ export class AirlinesRequestBuilder<
 
   /**
    * Returns a request builder for deleting an entity of type `Airlines`.
-   * @param airlineCode Key property. See {@link Airlines.airlineCode}.
+   * @param airlineCode Key property. See [[Airlines.airlineCode]].
    * @returns A request builder for creating requests that delete an entity of type `Airlines`.
    */
   delete(airlineCode: string): DeleteRequestBuilder<Airlines<T>, T>;

@@ -11,14 +11,14 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity50Prop } from './TestEntity50Prop';
 /**
- * Request builder class for operations supported on the {@link TestEntity50Prop} entity.
+ * Request builder class for operations supported on the [[TestEntity50Prop]] entity.
  */
 export declare class TestEntity50PropRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity50Prop<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntity50Prop` entity based on its keys.
-   * @param keyTestEntity50Prop Key property. See {@link TestEntity50Prop.keyTestEntity50Prop}.
+   * @param keyTestEntity50Prop Key property. See [[TestEntity50Prop.keyTestEntity50Prop]].
    * @returns A request builder for creating requests to retrieve one `TestEntity50Prop` entity based on its keys.
    */
   getByKey(
@@ -47,7 +47,7 @@ export declare class TestEntity50PropRequestBuilder<
   ): UpdateRequestBuilder<TestEntity50Prop<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntity50Prop`.
-   * @param keyTestEntity50Prop Key property. See {@link TestEntity50Prop.keyTestEntity50Prop}.
+   * @param keyTestEntity50Prop Key property. See [[TestEntity50Prop.keyTestEntity50Prop]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntity50Prop`.
    */
   delete(

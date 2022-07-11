@@ -46,7 +46,7 @@ export declare class CityField<
 > {
   private _fieldBuilder;
   /**
-   * Representation of the {@link City.countryRegion} property for query construction.
+   * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   countryRegion: OrderableEdmTypeField<
@@ -57,7 +57,7 @@ export declare class CityField<
     false
   >;
   /**
-   * Representation of the {@link City.name} property for query construction.
+   * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   name: OrderableEdmTypeField<
@@ -68,7 +68,7 @@ export declare class CityField<
     false
   >;
   /**
-   * Representation of the {@link City.region} property for query construction.
+   * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   region: OrderableEdmTypeField<

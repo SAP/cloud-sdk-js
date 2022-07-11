@@ -1,5 +1,5 @@
 /**
- * This enum represents the enum type "{@link PersonGender}".
+ * This enum represents the enum type "[[PersonGender]]".
  * The members represent values of EDM type Edm.Int32.
  */
 export declare enum PersonGender {

@@ -97,7 +97,7 @@ export class TestEntityLinkApi<
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the {@link keyTestEntityLink} property for query construction.
+         * Static representation of the [[keyTestEntityLink]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         KEY_TEST_ENTITY_LINK: fieldBuilder.buildEdmTypeField(
@@ -106,7 +106,7 @@ export class TestEntityLinkApi<
           false
         ),
         /**
-         * Static representation of the {@link keyToTestEntity} property for query construction.
+         * Static representation of the [[keyToTestEntity]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         KEY_TO_TEST_ENTITY: fieldBuilder.buildEdmTypeField(
@@ -115,7 +115,7 @@ export class TestEntityLinkApi<
           false
         ),
         /**
-         * Static representation of the {@link stringProperty} property for query construction.
+         * Static representation of the [[stringProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         STRING_PROPERTY: fieldBuilder.buildEdmTypeField(

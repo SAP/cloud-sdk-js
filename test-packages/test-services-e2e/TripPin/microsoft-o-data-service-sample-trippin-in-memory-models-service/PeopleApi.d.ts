@@ -242,7 +242,7 @@ export declare class PeopleApi<
       true
     >;
     /**
-     * Static representation of the one-to-many navigation property {@link friends} for query construction.
+     * Static representation of the one-to-many navigation property [[friends]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     FRIENDS: OneToManyLink<
@@ -251,7 +251,7 @@ export declare class PeopleApi<
       PeopleApi<DeSerializersT>
     >;
     /**
-     * Static representation of the one-to-one navigation property {@link photo} for query construction.
+     * Static representation of the one-to-one navigation property [[photo]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     PHOTO: OneToOneLink<

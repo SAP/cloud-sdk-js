@@ -17,14 +17,14 @@ import {
 import { People } from './People';
 
 /**
- * Request builder class for operations supported on the {@link People} entity.
+ * Request builder class for operations supported on the [[People]] entity.
  */
 export class PeopleRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<People<T>, T> {
   /**
    * Returns a request builder for retrieving one `People` entity based on its keys.
-   * @param userName Key property. See {@link People.userName}.
+   * @param userName Key property. See [[People.userName]].
    * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
    */
   getByKey(
@@ -63,7 +63,7 @@ export class PeopleRequestBuilder<
 
   /**
    * Returns a request builder for deleting an entity of type `People`.
-   * @param userName Key property. See {@link People.userName}.
+   * @param userName Key property. See [[People.userName]].
    * @returns A request builder for creating requests that delete an entity of type `People`.
    */
   delete(userName: string): DeleteRequestBuilder<People<T>, T>;

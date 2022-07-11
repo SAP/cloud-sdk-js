@@ -437,7 +437,7 @@ export class TestEntity50PropApi<
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the {@link keyTestEntity50Prop} property for query construction.
+         * Static representation of the [[keyTestEntity50Prop]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         KEY_TEST_ENTITY_50_PROP: fieldBuilder.buildEdmTypeField(
@@ -446,7 +446,7 @@ export class TestEntity50PropApi<
           false
         ),
         /**
-         * Static representation of the {@link stringProperty1} property for query construction.
+         * Static representation of the [[stringProperty1]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         STRING_PROPERTY_1: fieldBuilder.buildEdmTypeField(
@@ -455,7 +455,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link guidProperty1} property for query construction.
+         * Static representation of the [[guidProperty1]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         GUID_PROPERTY_1: fieldBuilder.buildEdmTypeField(
@@ -464,7 +464,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link booleanProperty1} property for query construction.
+         * Static representation of the [[booleanProperty1]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         BOOLEAN_PROPERTY_1: fieldBuilder.buildEdmTypeField(
@@ -473,7 +473,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link int64Property1} property for query construction.
+         * Static representation of the [[int64Property1]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         INT_64_PROPERTY_1: fieldBuilder.buildEdmTypeField(
@@ -482,7 +482,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link doubleProperty1} property for query construction.
+         * Static representation of the [[doubleProperty1]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DOUBLE_PROPERTY_1: fieldBuilder.buildEdmTypeField(
@@ -491,7 +491,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link decimalProperty1} property for query construction.
+         * Static representation of the [[decimalProperty1]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DECIMAL_PROPERTY_1: fieldBuilder.buildEdmTypeField(
@@ -500,7 +500,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dateProperty1} property for query construction.
+         * Static representation of the [[dateProperty1]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATE_PROPERTY_1: fieldBuilder.buildEdmTypeField(
@@ -509,7 +509,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link timeOfDayProperty1} property for query construction.
+         * Static representation of the [[timeOfDayProperty1]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         TIME_OF_DAY_PROPERTY_1: fieldBuilder.buildEdmTypeField(
@@ -518,7 +518,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dataTimeOffsetDataTimeProperty1} property for query construction.
+         * Static representation of the [[dataTimeOffsetDataTimeProperty1]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATA_TIME_OFFSET_DATA_TIME_PROPERTY_1: fieldBuilder.buildEdmTypeField(
@@ -527,7 +527,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dataTimeOffsetTimestampProperty1} property for query construction.
+         * Static representation of the [[dataTimeOffsetTimestampProperty1]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_1: fieldBuilder.buildEdmTypeField(
@@ -536,7 +536,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link stringProperty2} property for query construction.
+         * Static representation of the [[stringProperty2]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         STRING_PROPERTY_2: fieldBuilder.buildEdmTypeField(
@@ -545,7 +545,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link guidProperty2} property for query construction.
+         * Static representation of the [[guidProperty2]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         GUID_PROPERTY_2: fieldBuilder.buildEdmTypeField(
@@ -554,7 +554,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link booleanProperty2} property for query construction.
+         * Static representation of the [[booleanProperty2]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         BOOLEAN_PROPERTY_2: fieldBuilder.buildEdmTypeField(
@@ -563,7 +563,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link int64Property2} property for query construction.
+         * Static representation of the [[int64Property2]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         INT_64_PROPERTY_2: fieldBuilder.buildEdmTypeField(
@@ -572,7 +572,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link doubleProperty2} property for query construction.
+         * Static representation of the [[doubleProperty2]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DOUBLE_PROPERTY_2: fieldBuilder.buildEdmTypeField(
@@ -581,7 +581,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link decimalProperty2} property for query construction.
+         * Static representation of the [[decimalProperty2]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DECIMAL_PROPERTY_2: fieldBuilder.buildEdmTypeField(
@@ -590,7 +590,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dateProperty2} property for query construction.
+         * Static representation of the [[dateProperty2]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATE_PROPERTY_2: fieldBuilder.buildEdmTypeField(
@@ -599,7 +599,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link timeOfDayProperty2} property for query construction.
+         * Static representation of the [[timeOfDayProperty2]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         TIME_OF_DAY_PROPERTY_2: fieldBuilder.buildEdmTypeField(
@@ -608,7 +608,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dataTimeOffsetDataTimeProperty2} property for query construction.
+         * Static representation of the [[dataTimeOffsetDataTimeProperty2]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATA_TIME_OFFSET_DATA_TIME_PROPERTY_2: fieldBuilder.buildEdmTypeField(
@@ -617,7 +617,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dataTimeOffsetTimestampProperty2} property for query construction.
+         * Static representation of the [[dataTimeOffsetTimestampProperty2]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_2: fieldBuilder.buildEdmTypeField(
@@ -626,7 +626,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link stringProperty3} property for query construction.
+         * Static representation of the [[stringProperty3]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         STRING_PROPERTY_3: fieldBuilder.buildEdmTypeField(
@@ -635,7 +635,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link guidProperty3} property for query construction.
+         * Static representation of the [[guidProperty3]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         GUID_PROPERTY_3: fieldBuilder.buildEdmTypeField(
@@ -644,7 +644,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link booleanProperty3} property for query construction.
+         * Static representation of the [[booleanProperty3]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         BOOLEAN_PROPERTY_3: fieldBuilder.buildEdmTypeField(
@@ -653,7 +653,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link int64Property3} property for query construction.
+         * Static representation of the [[int64Property3]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         INT_64_PROPERTY_3: fieldBuilder.buildEdmTypeField(
@@ -662,7 +662,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link doubleProperty3} property for query construction.
+         * Static representation of the [[doubleProperty3]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DOUBLE_PROPERTY_3: fieldBuilder.buildEdmTypeField(
@@ -671,7 +671,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link decimalProperty3} property for query construction.
+         * Static representation of the [[decimalProperty3]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DECIMAL_PROPERTY_3: fieldBuilder.buildEdmTypeField(
@@ -680,7 +680,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dateProperty3} property for query construction.
+         * Static representation of the [[dateProperty3]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATE_PROPERTY_3: fieldBuilder.buildEdmTypeField(
@@ -689,7 +689,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link timeOfDayProperty3} property for query construction.
+         * Static representation of the [[timeOfDayProperty3]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         TIME_OF_DAY_PROPERTY_3: fieldBuilder.buildEdmTypeField(
@@ -698,7 +698,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dataTimeOffsetDataTimeProperty3} property for query construction.
+         * Static representation of the [[dataTimeOffsetDataTimeProperty3]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATA_TIME_OFFSET_DATA_TIME_PROPERTY_3: fieldBuilder.buildEdmTypeField(
@@ -707,7 +707,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dataTimeOffsetTimestampProperty3} property for query construction.
+         * Static representation of the [[dataTimeOffsetTimestampProperty3]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_3: fieldBuilder.buildEdmTypeField(
@@ -716,7 +716,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link stringProperty4} property for query construction.
+         * Static representation of the [[stringProperty4]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         STRING_PROPERTY_4: fieldBuilder.buildEdmTypeField(
@@ -725,7 +725,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link guidProperty4} property for query construction.
+         * Static representation of the [[guidProperty4]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         GUID_PROPERTY_4: fieldBuilder.buildEdmTypeField(
@@ -734,7 +734,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link booleanProperty4} property for query construction.
+         * Static representation of the [[booleanProperty4]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         BOOLEAN_PROPERTY_4: fieldBuilder.buildEdmTypeField(
@@ -743,7 +743,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link int64Property4} property for query construction.
+         * Static representation of the [[int64Property4]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         INT_64_PROPERTY_4: fieldBuilder.buildEdmTypeField(
@@ -752,7 +752,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link doubleProperty4} property for query construction.
+         * Static representation of the [[doubleProperty4]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DOUBLE_PROPERTY_4: fieldBuilder.buildEdmTypeField(
@@ -761,7 +761,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link decimalProperty4} property for query construction.
+         * Static representation of the [[decimalProperty4]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DECIMAL_PROPERTY_4: fieldBuilder.buildEdmTypeField(
@@ -770,7 +770,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dateProperty4} property for query construction.
+         * Static representation of the [[dateProperty4]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATE_PROPERTY_4: fieldBuilder.buildEdmTypeField(
@@ -779,7 +779,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link timeOfDayProperty4} property for query construction.
+         * Static representation of the [[timeOfDayProperty4]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         TIME_OF_DAY_PROPERTY_4: fieldBuilder.buildEdmTypeField(
@@ -788,7 +788,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dataTimeOffsetDataTimeProperty4} property for query construction.
+         * Static representation of the [[dataTimeOffsetDataTimeProperty4]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATA_TIME_OFFSET_DATA_TIME_PROPERTY_4: fieldBuilder.buildEdmTypeField(
@@ -797,7 +797,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dataTimeOffsetTimestampProperty4} property for query construction.
+         * Static representation of the [[dataTimeOffsetTimestampProperty4]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_4: fieldBuilder.buildEdmTypeField(
@@ -806,7 +806,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link stringProperty5} property for query construction.
+         * Static representation of the [[stringProperty5]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         STRING_PROPERTY_5: fieldBuilder.buildEdmTypeField(
@@ -815,7 +815,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link guidProperty5} property for query construction.
+         * Static representation of the [[guidProperty5]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         GUID_PROPERTY_5: fieldBuilder.buildEdmTypeField(
@@ -824,7 +824,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link booleanProperty5} property for query construction.
+         * Static representation of the [[booleanProperty5]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         BOOLEAN_PROPERTY_5: fieldBuilder.buildEdmTypeField(
@@ -833,7 +833,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link int64Property5} property for query construction.
+         * Static representation of the [[int64Property5]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         INT_64_PROPERTY_5: fieldBuilder.buildEdmTypeField(
@@ -842,7 +842,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link doubleProperty5} property for query construction.
+         * Static representation of the [[doubleProperty5]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DOUBLE_PROPERTY_5: fieldBuilder.buildEdmTypeField(
@@ -851,7 +851,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link decimalProperty5} property for query construction.
+         * Static representation of the [[decimalProperty5]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DECIMAL_PROPERTY_5: fieldBuilder.buildEdmTypeField(
@@ -860,7 +860,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dateProperty5} property for query construction.
+         * Static representation of the [[dateProperty5]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATE_PROPERTY_5: fieldBuilder.buildEdmTypeField(
@@ -869,7 +869,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link timeOfDayProperty5} property for query construction.
+         * Static representation of the [[timeOfDayProperty5]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         TIME_OF_DAY_PROPERTY_5: fieldBuilder.buildEdmTypeField(
@@ -878,7 +878,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dataTimeOffsetDataTimeProperty5} property for query construction.
+         * Static representation of the [[dataTimeOffsetDataTimeProperty5]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATA_TIME_OFFSET_DATA_TIME_PROPERTY_5: fieldBuilder.buildEdmTypeField(
@@ -887,7 +887,7 @@ export class TestEntity50PropApi<
           true
         ),
         /**
-         * Static representation of the {@link dataTimeOffsetTimestampProperty5} property for query construction.
+         * Static representation of the [[dataTimeOffsetTimestampProperty5]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_5: fieldBuilder.buildEdmTypeField(

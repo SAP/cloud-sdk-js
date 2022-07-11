@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 /**
- * Type of the parameters to be passed to {@link concatStrings}.
+ * Type of the parameters to be passed to [[concatStrings]].
  */
 export interface ConcatStringsParameters<DeSerializersT extends DeSerializers> {
   /**
@@ -33,7 +33,7 @@ export declare function concatStrings<
   string
 >;
 /**
- * Type of the parameters to be passed to {@link getAll}.
+ * Type of the parameters to be passed to [[getAll]].
  */
 export interface GetAllParameters<DeSerializersT extends DeSerializers> {}
 /**
@@ -52,7 +52,7 @@ export declare function getAll<
   TestEntity[]
 >;
 /**
- * Type of the parameters to be passed to {@link getByKey}.
+ * Type of the parameters to be passed to [[getByKey]].
  */
 export interface GetByKeyParameters<DeSerializersT extends DeSerializers> {
   /**
@@ -76,7 +76,7 @@ export declare function getByKey<
   TestEntity
 >;
 /**
- * Type of the parameters to be passed to {@link returnCollection}.
+ * Type of the parameters to be passed to [[returnCollection]].
  */
 export interface ReturnCollectionParameters<
   DeSerializersT extends DeSerializers
@@ -102,7 +102,7 @@ export declare function returnCollection<
   number[]
 >;
 /**
- * Type of the parameters to be passed to {@link returnInt}.
+ * Type of the parameters to be passed to [[returnInt]].
  */
 export interface ReturnIntParameters<DeSerializersT extends DeSerializers> {
   /**
@@ -126,7 +126,7 @@ export declare function returnInt<
   number
 >;
 /**
- * Type of the parameters to be passed to {@link returnSapCloudSdk}.
+ * Type of the parameters to be passed to [[returnSapCloudSdk]].
  */
 export interface ReturnSapCloudSdkParameters<
   DeSerializersT extends DeSerializers

@@ -46,7 +46,7 @@ export declare class LocationField<
 > {
   private _fieldBuilder;
   /**
-   * Representation of the {@link Location.address} property for query construction.
+   * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   address: OrderableEdmTypeField<
@@ -57,7 +57,7 @@ export declare class LocationField<
     false
   >;
   /**
-   * Representation of the {@link Location.city} property for query construction.
+   * Representation of the [[Location.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   city: CityField<EntityT, DeSerializersT, false, false>;

@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 /**
- * Type of the parameters to be passed to {@link createTestEntityById}.
+ * Type of the parameters to be passed to [[createTestEntityById]].
  */
 export interface CreateTestEntityByIdParameters<
   DeSerializersT extends DeSerializers
@@ -32,7 +32,7 @@ export declare function createTestEntityById<
   TestEntity
 >;
 /**
- * Type of the parameters to be passed to {@link createTestEntityByIdReturnId}.
+ * Type of the parameters to be passed to [[createTestEntityByIdReturnId]].
  */
 export interface CreateTestEntityByIdReturnIdParameters<
   DeSerializersT extends DeSerializers

@@ -21,7 +21,7 @@ class CityField extends odata_v4_1.ComplexTypeField {
     super(fieldName, fieldOf, deSerializers, City, fieldOptions);
     this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
     /**
-     * Representation of the {@link City.countryRegion} property for query construction.
+     * Representation of the [[City.countryRegion]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.countryRegion = this._fieldBuilder.buildEdmTypeField(
@@ -30,7 +30,7 @@ class CityField extends odata_v4_1.ComplexTypeField {
       false
     );
     /**
-     * Representation of the {@link City.name} property for query construction.
+     * Representation of the [[City.name]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.name = this._fieldBuilder.buildEdmTypeField(
@@ -39,7 +39,7 @@ class CityField extends odata_v4_1.ComplexTypeField {
       false
     );
     /**
-     * Representation of the {@link City.region} property for query construction.
+     * Representation of the [[City.region]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.region = this._fieldBuilder.buildEdmTypeField(

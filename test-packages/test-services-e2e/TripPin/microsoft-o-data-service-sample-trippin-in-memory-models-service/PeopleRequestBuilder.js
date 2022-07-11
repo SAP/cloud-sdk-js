@@ -9,12 +9,12 @@ exports.PeopleRequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const People_1 = require('./People');
 /**
- * Request builder class for operations supported on the {@link People} entity.
+ * Request builder class for operations supported on the [[People]] entity.
  */
 class PeopleRequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `People` entity based on its keys.
-   * @param userName Key property. See {@link People.userName}.
+   * @param userName Key property. See [[People.userName]].
    * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
    */
   getByKey(userName) {

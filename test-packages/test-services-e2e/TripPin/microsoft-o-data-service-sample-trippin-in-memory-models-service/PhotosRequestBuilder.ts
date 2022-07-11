@@ -18,14 +18,14 @@ import {
 import { Photos } from './Photos';
 
 /**
- * Request builder class for operations supported on the {@link Photos} entity.
+ * Request builder class for operations supported on the [[Photos]] entity.
  */
 export class PhotosRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Photos<T>, T> {
   /**
    * Returns a request builder for retrieving one `Photos` entity based on its keys.
-   * @param id Key property. See {@link Photos.id}.
+   * @param id Key property. See [[Photos.id]].
    * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
    */
   getByKey(
@@ -62,7 +62,7 @@ export class PhotosRequestBuilder<
 
   /**
    * Returns a request builder for deleting an entity of type `Photos`.
-   * @param id Key property. See {@link Photos.id}.
+   * @param id Key property. See [[Photos.id]].
    * @returns A request builder for creating requests that delete an entity of type `Photos`.
    */
   delete(id: BigNumber): DeleteRequestBuilder<Photos<T>, T>;

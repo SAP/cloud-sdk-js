@@ -22,12 +22,12 @@ class AirportLocationField extends odata_v4_1.ComplexTypeField {
     super(fieldName, fieldOf, deSerializers, AirportLocation, fieldOptions);
     this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
     /**
-     * Representation of the {@link AirportLocation.loc} property for query construction.
+     * Representation of the [[AirportLocation.loc]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.loc = this._fieldBuilder.buildEdmTypeField('Loc', 'Edm.Any', false);
     /**
-     * Representation of the {@link AirportLocation.address} property for query construction.
+     * Representation of the [[AirportLocation.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.address = this._fieldBuilder.buildEdmTypeField(
@@ -36,7 +36,7 @@ class AirportLocationField extends odata_v4_1.ComplexTypeField {
       false
     );
     /**
-     * Representation of the {@link AirportLocation.city} property for query construction.
+     * Representation of the [[AirportLocation.city]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.city = this._fieldBuilder.buildComplexTypeField(

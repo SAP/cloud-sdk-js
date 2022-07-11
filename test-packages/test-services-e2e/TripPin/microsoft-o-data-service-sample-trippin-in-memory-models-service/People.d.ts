@@ -58,11 +58,11 @@ export declare class People<T extends DeSerializers = DefaultDeSerializers>
    */
   concurrency: DeserializedType<T, 'Edm.Int64'>;
   /**
-   * One-to-many navigation property to the {@link People} entity.
+   * One-to-many navigation property to the [[People]] entity.
    */
   friends: People<T>[];
   /**
-   * One-to-one navigation property to the {@link Photos} entity.
+   * One-to-one navigation property to the [[Photos]] entity.
    */
   photo?: Photos<T> | null;
 }

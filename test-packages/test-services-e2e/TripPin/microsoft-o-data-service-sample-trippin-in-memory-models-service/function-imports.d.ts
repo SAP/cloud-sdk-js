@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { Airports } from './Airports';
 /**
- * Type of the parameters to be passed to {@link getNearestAirport}.
+ * Type of the parameters to be passed to [[getNearestAirport]].
  */
 export interface GetNearestAirportParameters<
   DeSerializersT extends DeSerializers

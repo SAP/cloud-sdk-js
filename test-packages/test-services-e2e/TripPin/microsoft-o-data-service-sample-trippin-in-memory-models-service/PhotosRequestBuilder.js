@@ -4,12 +4,12 @@ exports.PhotosRequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const Photos_1 = require('./Photos');
 /**
- * Request builder class for operations supported on the {@link Photos} entity.
+ * Request builder class for operations supported on the [[Photos]] entity.
  */
 class PhotosRequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `Photos` entity based on its keys.
-   * @param id Key property. See {@link Photos.id}.
+   * @param id Key property. See [[Photos.id]].
    * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
    */
   getByKey(id) {

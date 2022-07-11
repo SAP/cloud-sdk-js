@@ -22,7 +22,7 @@ class EventLocationField extends odata_v4_1.ComplexTypeField {
     super(fieldName, fieldOf, deSerializers, EventLocation, fieldOptions);
     this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
     /**
-     * Representation of the {@link EventLocation.buildingInfo} property for query construction.
+     * Representation of the [[EventLocation.buildingInfo]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.buildingInfo = this._fieldBuilder.buildEdmTypeField(
@@ -31,7 +31,7 @@ class EventLocationField extends odata_v4_1.ComplexTypeField {
       true
     );
     /**
-     * Representation of the {@link EventLocation.address} property for query construction.
+     * Representation of the [[EventLocation.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.address = this._fieldBuilder.buildEdmTypeField(
@@ -40,7 +40,7 @@ class EventLocationField extends odata_v4_1.ComplexTypeField {
       false
     );
     /**
-     * Representation of the {@link EventLocation.city} property for query construction.
+     * Representation of the [[EventLocation.city]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
     this.city = this._fieldBuilder.buildComplexTypeField(

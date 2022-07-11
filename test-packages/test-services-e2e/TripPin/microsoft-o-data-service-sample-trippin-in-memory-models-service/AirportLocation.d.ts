@@ -51,12 +51,12 @@ export declare class AirportLocationField<
 > {
   private _fieldBuilder;
   /**
-   * Representation of the {@link AirportLocation.loc} property for query construction.
+   * Representation of the [[AirportLocation.loc]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   loc: EdmTypeField<EntityT, DeSerializersT, 'Edm.Any', false, false>;
   /**
-   * Representation of the {@link AirportLocation.address} property for query construction.
+   * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   address: OrderableEdmTypeField<
@@ -67,7 +67,7 @@ export declare class AirportLocationField<
     false
   >;
   /**
-   * Representation of the {@link AirportLocation.city} property for query construction.
+   * Representation of the [[AirportLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
   city: CityField<EntityT, DeSerializersT, false, false>;

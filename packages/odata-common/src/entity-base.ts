@@ -8,12 +8,12 @@ import { DeSerializers } from './de-serializers';
 import { EntityApi } from './entity-api';
 
 /**
- * @internal
+ * Helper type to extract the {@link ODataVersion} from a given entity so ODataVersionOf<MyVersion2Entity> is `v2`.
  */
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 
 /**
- * Describes the static api of an entity.
+ * Represents the static API of an entity.
  */
 export interface Constructable<EntityT extends EntityBase> {
   _entityName: string;
@@ -59,7 +59,7 @@ export abstract class EntityBase {
   /**
    * A mapper representing custom fields in an entity.
    * Custom fields are represented by their field names and the corresponding values.
-   * A custom field can be added or updated using [[setCustomField]] method.
+   * A custom field can be added or updated using {@link setCustomField} method.
    */
   protected _customFields: Record<string, any>;
 
@@ -153,7 +153,7 @@ export abstract class EntityBase {
   /**
    * Initializes or sets the remoteState of the entity.
    * This function is called on all read, create and update requests.
-   * This function should be called after [[initializeCustomFields]], if custom fields are defined.
+   * This function should be called after {@link initializeCustomFields}, if custom fields are defined.
    * @param state - State to be set as remote state.
    * @returns The entity itself, to facilitate method chaining.
    */
@@ -197,7 +197,7 @@ export abstract class EntityBase {
   /**
    * Returns all changed properties compared to the last known remote state.
    * The returned properties do not include custom fields.
-   * Use [[getUpdatedCustomFields]], if you need custom fields.
+   * Use {@link getUpdatedCustomFields}, if you need custom fields.
    * @returns EntityBase with all properties that changed.
    */
   getUpdatedProperties(): Record<string, any> {
@@ -211,7 +211,7 @@ export abstract class EntityBase {
   /**
    * Returns all changed property names compared to the last known remote state.
    * The returned properties names do not include custom fields.
-   * Use [[getUpdatedCustomFields]], if you need custom fields.
+   * Use {@link getUpdatedCustomFields}, if you need custom fields.
    * @returns EntityBase with all properties that changed.
    */
   getUpdatedPropertyNames(): string[] {
@@ -292,7 +292,9 @@ export abstract class EntityBase {
   }
 }
 /**
- * Defines how to identify different types through their structure.
+ * Represents an object that is related to an entity.
+ * Objects that have the same structure would be represented by the same type in TypeScript.
+ * This interface allows to identify equal structures as different structures if they are related to different entities.
  */
 export interface EntityIdentifiable<
   T extends EntityBase,

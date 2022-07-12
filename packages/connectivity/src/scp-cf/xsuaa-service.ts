@@ -44,7 +44,7 @@ export function getSubdomainAndZoneId(
  * Make a user token request against the XSUAA service.
  * @param service - Service as it is defined in the environment variable.
  * @param userJwt - User JWT.
- * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
+ * @param options - Options to influence resilience behavior (see {@link ResilienceOptions}). By default, usage of a circuit breaker is enabled.
  * @returns Client credentials token.
  */
 export async function getClientCredentialsToken(
@@ -85,7 +85,7 @@ export async function getClientCredentialsToken(
  * Make a user token request against the XSUAA service.
  * @param service - Service as it is defined in the environment variable.
  * @param userJwt - User JWT.
- * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
+ * @param options - Options to influence resilience behavior (see {@link ResilienceOptions}). By default, usage of a circuit breaker is enabled.
  * @returns User token.
  */
 export function getUserToken(

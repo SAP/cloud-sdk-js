@@ -36,7 +36,7 @@ type GetFilterType = <
 ) => Partial<{ filter: string }>;
 
 /**
- * Interface representing the return of the getFilter creator [[createGetFilter]].
+ * Interface representing the return of the getFilter creator {@link createGetFilter}.
  * @internal
  */
 export interface GetFilter {
@@ -47,7 +47,7 @@ export interface GetFilter {
  * Creates a getFilter function using the OData v2 or OData v4 URI converter.
  * The concrete filter getters are initiated in odata/v2/uri-conversion/odata-uri.ts and odata/v4/uri-conversion/odata-uri.ts.
  * @param uriConverter - URI converter for v2 or v4.
- * @returns The filter getter. See interface [[GetFilter]]
+ * @returns The filter getter. See interface {@link GetFilter}
  * @internal
  */
 export function createGetFilter(uriConverter: UriConverter): GetFilter {

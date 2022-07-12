@@ -19,7 +19,7 @@ const logger = createLogger({
 
 /**
  * Get all destinations from the environment variable "destinations".
- * This is discouraged for productive use! Use [[useOrFetchDestination]] for fetching destinations from the Cloud Foundry destination service.
+ * This is discouraged for productive use! Use {@link useOrFetchDestination} for fetching destinations from the Cloud Foundry destination service.
  *
  * @returns A list of destinations
  * @internal

@@ -1,6 +1,7 @@
 import { DeSerializers } from './de-serializers';
 import { EntityBase } from './entity-base';
 import { EntityApi } from './entity-api';
+
 /**
  * @internal
  */
@@ -19,22 +20,26 @@ interface BatchResponseTypeGuards<DeSerializersT extends DeSerializers> {
 }
 
 /**
- * @internal
+ * Represents the list of responses for a change set in a batch request.
+ * @typeparam  DeSerializersT - Type of the (de-)serializers.
  */
 export interface WriteResponses<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
   responses: WriteResponse<DeSerializersT>[];
 }
+
 /**
- * @internal
+ * Represents an erroneous response to a retrieve or change set request within a batch request.
  */
 export interface ErrorResponse extends BatchResponseTypeGuards<any> {
   responseType: 'ErrorResponse'; // to make ErrorResponse structurally different and make typeguards work as expected
   httpCode: number;
   body: Record<string, any>;
 }
+
 /**
- * @internal
+ * Represents a response to a retrieve request within a batch request.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
  */
 export interface ReadResponse<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
@@ -48,7 +53,8 @@ export interface ReadResponse<DeSerializersT extends DeSerializers>
 }
 
 /**
- * @internal
+ * Represents a single subresponse to a changeset request within a batch request.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
  */
 export interface WriteResponse<DeSerializersT extends DeSerializers> {
   responseType: 'WriteResponse'; // to make WriteResponse structurally different and make typeguards work as expected

@@ -19,9 +19,8 @@ export class ActionImportParameter<ValueT> {
 }
 
 /**
- * Internal representation of all parameters of a function import as a map
- * @typeparam ParametersT - External representation of all parameters
- * @internal
+ * Internal representation of all parameters of a function import as a map.
+ * @typeparam ParametersT - External representation of all parameters.
  */
 export type ActionImportParameters<ParametersT> = {
   [K in keyof ParametersT]: ActionImportParameter<ParametersT[K]>;

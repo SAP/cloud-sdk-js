@@ -23,4 +23,3 @@ export type {
   Method,
   ParameterEncoder
 } from './http-client-types';
-export { mergeOptionsWithPriority } from './http-request-config';

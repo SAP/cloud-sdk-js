@@ -19,6 +19,8 @@ export {
   contains
 } from './filter-functions';
 
+export type { FilterFunctionTypes } from './filter-functions';
+
 export {
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList,
@@ -26,10 +28,7 @@ export {
   transformReturnValueForEdmTypeList,
   transformReturnValueForEntity,
   transformReturnValueForEntityList,
-  transformReturnValueForUndefined
-} from './request-builder/response-transformers';
-
-export {
+  transformReturnValueForUndefined,
   ActionImportRequestBuilder,
   CountRequestBuilder,
   CreateRequestBuilder,
@@ -39,12 +38,20 @@ export {
   GetByKeyRequestBuilder,
   UpdateRequestBuilder
 } from './request-builder';
+
 export { ODataBatchRequestBuilder } from './request-builder';
-export { ActionImportParameter } from './request';
+
+export {
+  ActionImportParameter,
+  ODataActionImportRequestConfig,
+  ODataFunctionImportRequestConfig
+} from './request';
+
+export type { ActionImportParameters } from './request';
 
 export { Entity } from './entity';
 export { CustomField } from './selectable';
-export { all, any } from './filter';
+export { all, any, DateFilterFunction } from './filter';
 
 export {
   defaultDeSerializers,
@@ -59,4 +66,7 @@ export type {
   DefaultDeSerializers,
   CustomOrDefaultType
 } from './de-serializers';
+
+export type { BatchResponse } from './batch-response';
+
 export * from './common';

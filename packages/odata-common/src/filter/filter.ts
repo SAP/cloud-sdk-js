@@ -4,11 +4,24 @@ import { EntityBase, EntityIdentifiable, ODataVersionOf } from '../entity-base';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 
-type FilterOperatorString = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
-type FilterOperatorBoolean = 'eq' | 'ne';
-type FilterOperatorNumber = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
 /**
- * @internal
+ * Union type representing all filter operations for string properties like `eq` or `ne`.
+ */
+export type FilterOperatorString = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
+
+/**
+ * Union type representing all filter operations for boolean properties.
+ * Possible values are `eq` and `ne`.
+ */
+export type FilterOperatorBoolean = 'eq' | 'ne';
+
+/**
+ * Union type representing all filter operations for number properties like `le` or `gt`.
+ */
+export type FilterOperatorNumber = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
+
+/**
+ * Union type of the filter operators for string, boolean and number types.
  */
 export type FilterOperator =
   | FilterOperatorString
@@ -24,15 +37,13 @@ export type FilterOperatorByType<FieldT> = FieldT extends string
   : FilterOperatorBoolean;
 
 /**
- * Represents a filter expression to narrow the data on a [[GetAllRequestBuilder]] request for multiple entities that match the specified criteria.
- * A filter refers to the field of an entity and restricts the request based on an operator and a value. `Entity.FIELD_NAME.operator(value)`
- *
+ * Represents a filter expression to narrow the data on a {@link GetAllRequestBuilder} request for multiple entities that match the specified criteria.
+ * A filter refers to the field of an entity and restricts the request based on an operator and a value. `Entity.FIELD_NAME.operator(value)`.
  * @example `Product.NAME.equals('cloud-sdk')` creates a filter for the entity `Product` that matches in case the field `NAME` equals 'cloud-sdk'.
  *
- * See also: [[Filterable]].
+ * See also: {@link Filterable}.
  * @typeparam EntityT - Type of the entity to be filtered on.
- * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]].
- * @internal
+ * @typeparam FieldT - Type of the field to be filtered by, see also: {@link FieldType}.
  */
 export class Filter<
   EntityT extends EntityBase,

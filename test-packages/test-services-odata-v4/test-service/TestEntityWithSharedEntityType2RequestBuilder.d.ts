@@ -11,14 +11,14 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityWithSharedEntityType2 } from './TestEntityWithSharedEntityType2';
 /**
- * Request builder class for operations supported on the [[TestEntityWithSharedEntityType2]] entity.
+ * Request builder class for operations supported on the {@link TestEntityWithSharedEntityType2} entity.
  */
 export declare class TestEntityWithSharedEntityType2RequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityWithSharedEntityType2<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityWithSharedEntityType2` entity based on its keys.
-   * @param keyProperty Key property. See [[TestEntityWithSharedEntityType2.keyProperty]].
+   * @param keyProperty Key property. See {@link TestEntityWithSharedEntityType2.keyProperty}.
    * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType2` entity based on its keys.
    */
   getByKey(
@@ -47,7 +47,7 @@ export declare class TestEntityWithSharedEntityType2RequestBuilder<
   ): UpdateRequestBuilder<TestEntityWithSharedEntityType2<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityWithSharedEntityType2`.
-   * @param keyProperty Key property. See [[TestEntityWithSharedEntityType2.keyProperty]].
+   * @param keyProperty Key property. See {@link TestEntityWithSharedEntityType2.keyProperty}.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityWithSharedEntityType2`.
    */
   delete(

@@ -19,9 +19,8 @@ export class FunctionImportParameter<ValueT> {
 }
 
 /**
- * Internal representation of all parameters of a function import as a map
+ * Internal representation of all parameters of a function import as a map.
  * @typeparam ParametersT - External representation of all parameters
- * @internal
  */
 export type FunctionImportParameters<ParametersT> = {
   [K in keyof ParametersT]: FunctionImportParameter<ParametersT[K]>;

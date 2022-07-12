@@ -17,14 +17,14 @@ import {
 import { MultiSchemaTestEntity } from './MultiSchemaTestEntity';
 
 /**
- * Request builder class for operations supported on the [[MultiSchemaTestEntity]] entity.
+ * Request builder class for operations supported on the {@link MultiSchemaTestEntity} entity.
  */
 export class MultiSchemaTestEntityRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<MultiSchemaTestEntity<T>, T> {
   /**
    * Returns a request builder for retrieving one `MultiSchemaTestEntity` entity based on its keys.
-   * @param keyProperty Key property. See [[MultiSchemaTestEntity.keyProperty]].
+   * @param keyProperty Key property. See {@link MultiSchemaTestEntity.keyProperty}.
    * @returns A request builder for creating requests to retrieve one `MultiSchemaTestEntity` entity based on its keys.
    */
   getByKey(
@@ -76,7 +76,7 @@ export class MultiSchemaTestEntityRequestBuilder<
 
   /**
    * Returns a request builder for deleting an entity of type `MultiSchemaTestEntity`.
-   * @param keyProperty Key property. See [[MultiSchemaTestEntity.keyProperty]].
+   * @param keyProperty Key property. See {@link MultiSchemaTestEntity.keyProperty}.
    * @returns A request builder for creating requests that delete an entity of type `MultiSchemaTestEntity`.
    */
   delete(

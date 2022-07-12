@@ -36,7 +36,7 @@ export class PeopleApi<
 
   private navigationPropertyFields!: {
     /**
-     * Static representation of the one-to-many navigation property [[friends]] for query construction.
+     * Static representation of the one-to-many navigation property {@link friends} for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     FRIENDS: OneToManyLink<
@@ -45,7 +45,7 @@ export class PeopleApi<
       PeopleApi<DeSerializersT>
     >;
     /**
-     * Static representation of the one-to-one navigation property [[photo]] for query construction.
+     * Static representation of the one-to-one navigation property {@link photo} for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     PHOTO: OneToOneLink<
@@ -146,7 +146,7 @@ export class PeopleApi<
       true
     >;
     /**
-     * Static representation of the one-to-many navigation property [[friends]] for query construction.
+     * Static representation of the one-to-many navigation property {@link friends} for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     FRIENDS: OneToManyLink<
@@ -155,7 +155,7 @@ export class PeopleApi<
       PeopleApi<DeSerializersT>
     >;
     /**
-     * Static representation of the one-to-one navigation property [[photo]] for query construction.
+     * Static representation of the one-to-one navigation property {@link photo} for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     PHOTO: OneToOneLink<
@@ -171,7 +171,7 @@ export class PeopleApi<
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the [[userName]] property for query construction.
+         * Static representation of the {@link userName} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         USER_NAME: fieldBuilder.buildEdmTypeField(
@@ -180,7 +180,7 @@ export class PeopleApi<
           false
         ),
         /**
-         * Static representation of the [[firstName]] property for query construction.
+         * Static representation of the {@link firstName} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         FIRST_NAME: fieldBuilder.buildEdmTypeField(
@@ -189,7 +189,7 @@ export class PeopleApi<
           false
         ),
         /**
-         * Static representation of the [[lastName]] property for query construction.
+         * Static representation of the {@link lastName} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         LAST_NAME: fieldBuilder.buildEdmTypeField(
@@ -198,12 +198,12 @@ export class PeopleApi<
           false
         ),
         /**
-         * Static representation of the [[emails]] property for query construction.
+         * Static representation of the {@link emails} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         EMAILS: fieldBuilder.buildCollectionField('Emails', 'Edm.String', true),
         /**
-         * Static representation of the [[addressInfo]] property for query construction.
+         * Static representation of the {@link addressInfo} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         ADDRESS_INFO: fieldBuilder.buildCollectionField(
@@ -212,12 +212,12 @@ export class PeopleApi<
           true
         ),
         /**
-         * Static representation of the [[gender]] property for query construction.
+         * Static representation of the {@link gender} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         GENDER: fieldBuilder.buildEnumField('Gender', PersonGender, true),
         /**
-         * Static representation of the [[concurrency]] property for query construction.
+         * Static representation of the {@link concurrency} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         CONCURRENCY: fieldBuilder.buildEdmTypeField(

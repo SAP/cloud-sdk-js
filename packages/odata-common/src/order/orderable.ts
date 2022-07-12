@@ -10,7 +10,6 @@ import { OrderLink } from './order-link';
 /**
  * A union of all types that can be used for ordering.
  * @typeparam EntityT - Type of the entity to be ordered
- * @internal
  */
 export type Orderable<
   EntityT extends EntityBase,
@@ -20,7 +19,6 @@ export type Orderable<
 /**
  * A union of all types that can be used as input for ordering.
  * @typeparam EntityT - Type of the entity to be ordered
- * @internal
  */
 export type OrderableInput<
   EntityT extends EntityBase,

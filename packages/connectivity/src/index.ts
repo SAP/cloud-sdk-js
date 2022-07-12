@@ -26,6 +26,7 @@ export {
   serviceToken,
   Destination,
   DestinationFetchOptions,
+  ServiceBindingTransformFunction,
   DestinationAccessorOptions,
   DestinationSelectionStrategies,
   JwtPayload,
@@ -41,6 +42,7 @@ export {
   DestinationAuthToken,
   DestinationCertificate,
   addResilience
+  DestinationForServiceBindingOptions
 } from './scp-cf';
 
 export type {
@@ -52,7 +54,9 @@ export type {
   DestinationProxyType,
   AuthenticationType,
   ClientCredentialsResponse,
-  ResilienceOptions
+  ResilienceOptions,
+  DestinationWithName,
+  RegisterDestinationOptions
 } from './scp-cf';
 
 export {

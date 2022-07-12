@@ -1,10 +1,11 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 /**
- * @internal
+ * Includes all EDM types which are shared between OData version 2 and 4.
  */
 export type EdmTypeCommon = EdmTypeSameConverters | EdmTypeDifferentConverters;
+
 /**
- * @internal
+ * PLEASER REVIEW.
  */
 export type EdmTypeSameConverters =
   | 'Edm.String'
@@ -23,18 +24,17 @@ export type EdmTypeSameConverters =
   | 'Edm.Any'; // Represents currently unsupported EDM types like Edm.Geography.
 
 /**
- * @internal
+ * Includes all EDM types that have different converters for OData version 2 and 4.
  */
 export type EdmTypeDifferentConverters = 'Edm.DateTimeOffset';
 
-// Exclusive types for ODataVersions
 /**
- * @internal
+ * Exclusive EDM types for OData v2.
  */
 export type ExclusiveEdmTypeV2 = 'Edm.DateTime' | 'Edm.Time';
 
 /**
- * @internal
+ * Exclusive EDM types for OData v4.
  */
 export type ExclusiveEdmTypeV4 =
   | 'Edm.Date'
@@ -45,7 +45,8 @@ export type ExclusiveEdmTypeV4 =
 // The generic parameter is currently unused. We still have to revise whether we can use it in a later version of TypeScript.
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 /**
- * @internal
+ * Represents all valid EDM types for one OData version (either v2 or v4).
+ * Currently, due to an issue in TypeScript, this includes all valid types for OData v2 **and** v4.
  */
 export type EdmTypeShared<VersionT extends ODataVersion | 'any'> =
   // Pretend to use parameter to avoid TS bug in versions > 4.2 (https://github.com/microsoft/TypeScript/issues/44727)
@@ -63,7 +64,7 @@ export type EdmTypeSameConvertersUri = Exclude<
 /**
  * Check whether a value is an EdmType. This will yield positive results for every string starting with `Edm.`.
  * @param val - Value to test.
- * @returns Whether the given value is of type [[EdmTypeShared]]
+ * @returns Whether the given value is of type {@link EdmTypeShared}
  * @internal
  */
 export function isEdmType(val: any): val is EdmTypeShared<'any'> {
@@ -72,7 +73,6 @@ export function isEdmType(val: any): val is EdmTypeShared<'any'> {
 
 /**
  * EDM types that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.
- * @internal
  */
 export type OrderableEdmType =
   | 'Edm.Decimal'
@@ -95,9 +95,9 @@ export type OrderableEdmType =
   | 'Edm.Guid';
 
 /**
- * Convenience function to check whether a given EDM type is of type [[OrderableEdmType]].
+ * Convenience function to check whether a given EDM type is of type {@link OrderableEdmType}.
  * @param edmType - Literal EDM type string to check.
- * @returns Whether the given `edmType` is of type [[OrderableEdmType]].
+ * @returns Whether the given `edmType` is of type {@link OrderableEdmType}.
  */
 export function isOrderableEdmType(edmType: EdmTypeShared<'any'>): boolean {
   return [

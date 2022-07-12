@@ -17,7 +17,6 @@ import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.
  * @typeparam EntityT - Type of the entity to be updated
- * @internal
  */
 export abstract class UpdateRequestBuilderBase<
     EntityT extends EntityBase,

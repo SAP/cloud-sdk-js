@@ -7,4 +7,4 @@
 '@sap-cloud-sdk/test-services-openapi': patch
 ---
 
-[Fixed Issue] Fixed parsing of DateTimeOffset with high-precision fractional seconds and edge-cases like 5-digit years.
+[Fixed Issue] Fix parsing of `Edm.DateTimeOffset` with high-precision fractional seconds and edge-cases like 5-digit years.

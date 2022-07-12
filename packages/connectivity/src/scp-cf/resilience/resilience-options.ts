@@ -37,14 +37,22 @@ export interface CircuitBreakerOptionsServiceTarget {
 }
 
 /**
+ * TODO: Add JSDoc later.
+ */
+export interface RetryOptionsServiceTarget {
+  service: RetryOptions;
+  target: RetryOptions;
+}
+
+/**
  * Options to configure resilience when fetching destinations.
  */
 export interface ResilienceOptions {
   /**
    * Timeout in milliseconds to retrieve the destination.
    */
-  timeout?: number;
-  retry?: RetryOptions | { service: RetryOptions; target: RetryOptions };
+  timeout?: number | false;
+  retry?: RetryOptions | RetryOptionsServiceTarget;
   circuitBreaker?: CircuitBreakerOptions | CircuitBreakerOptionsServiceTarget;
 }
 
@@ -56,3 +64,27 @@ export const defaultResilienceOptions: Required<ResilienceOptions> = {
   retry: false,
   circuitBreaker: true
 };
+
+/**
+ * @internal
+ */
+export function isCircuitBreakerOptionsServiceTarget(
+  options: CircuitBreakerOptions | CircuitBreakerOptionsServiceTarget
+): options is CircuitBreakerOptionsServiceTarget {
+  if (typeof options === 'object') {
+    return 'service' in options || 'target' in options;
+  }
+  return false;
+}
+
+/**
+ * @internal
+ */
+export function isRetryOptionsServiceTarget(
+  options: RetryOptions | RetryOptionsServiceTarget
+): options is RetryOptionsServiceTarget {
+  if (typeof options === 'object') {
+    return 'service' in options || 'target' in options;
+  }
+  return false;
+}

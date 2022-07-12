@@ -2,7 +2,7 @@
  * TODO: Add JSDoc later.
  */
 export interface OpossumLibOptions {
-  timeout?: number | undefined; // default 10 sec
+  timeout?: number | false | undefined; // default 10 sec
   errorThresholdPercentage?: number | undefined; // default 50
   volumeThreshold?: number | undefined; // default 10
   resetTimeout?: number | undefined; // default 30000

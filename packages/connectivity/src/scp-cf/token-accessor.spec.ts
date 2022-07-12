@@ -20,8 +20,6 @@ import {
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { serviceToken } from './token-accessor';
-import * as resilience from './resilience/resilience';
-import { defaultResilienceOptions } from './resilience/resilience-options';
 
 describe('token accessor', () => {
   describe('serviceToken', () => {

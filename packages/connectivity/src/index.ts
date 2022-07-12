@@ -31,7 +31,6 @@ export {
   JwtPayload,
   ProxyConfiguration,
   ProxyConfigurationHeaders,
-  ResilienceOptions,
   Service,
   VerifyJwtOptions,
   buildHeadersForDestination,
@@ -40,7 +39,8 @@ export {
   registerDestination,
   setDestinationCache,
   DestinationAuthToken,
-  DestinationCertificate
+  DestinationCertificate,
+  addResilience
 } from './scp-cf';
 
 export type {
@@ -51,7 +51,8 @@ export type {
   ServiceCredentials,
   DestinationProxyType,
   AuthenticationType,
-  ClientCredentialsResponse
+  ClientCredentialsResponse,
+  ResilienceOptions
 } from './scp-cf';
 
 export {

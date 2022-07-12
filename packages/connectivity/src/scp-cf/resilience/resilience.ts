@@ -45,16 +45,13 @@ async function timeOutPromise<T>(timeout: number): Promise<T> {
  * @param timeout - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
  */
-function addTimeOut<T>(
-  fn: RequestHandler<T>,
-  timeout: number
-): RequestHandler<T> {
+function addTimeOut<T>(fn: RequestHandler<T>, timeout: number): Promise<T> {
   // If timeout is non-positive, we don't add timeout to the promise.
   if (timeout <= 0) {
-    return fn;
+    return fn();
   }
   const racePromise = timeOutPromise<T>(timeout);
-  return () => Promise.race([fn(), racePromise]);
+  return Promise.race([fn(), racePromise]);
 }
 
 /**
@@ -169,7 +166,8 @@ export function addResilience<T>(
     normalizeResilienceOptions(resilienceOptions);
 
   const args = request.args ?? [];
-  let fn: RequestHandler<T> = async () => request.fn(...args);
+
+  let fn: RequestHandler<T>;
 
   // Circuit breaker + timeout
   let finalCircuitBreaker: CircuitBreakerOptions;
@@ -191,15 +189,14 @@ export function addResilience<T>(
 
   if (finalCircuitBreaker) {
     // Add circuit breaker
-    fn = async () =>
-      getCircuitBreaker(fn, finalCircuitBreaker).fire({
-        circuitBreaker: false,
-        timeout: false
-      });
+    fn = () =>
+      getCircuitBreaker(() => request.fn(...args), finalCircuitBreaker).fire();
   } else {
     // Add our own timeout
     if (timeout) {
-      fn = addTimeOut(fn, timeout);
+      fn = () => addTimeOut(() => request.fn(...args), timeout);
+    } else {
+      fn = () => request.fn(...args);
     }
   }
 
@@ -222,7 +219,7 @@ export function addResilience<T>(
   }
 
   if (finalRetry) {
-    fn = async () => asyncRetry(fn, finalRetry as AsyncRetryLibOptions);
+    fn = () => asyncRetry(fn, finalRetry as AsyncRetryLibOptions);
   }
 
   return fn;

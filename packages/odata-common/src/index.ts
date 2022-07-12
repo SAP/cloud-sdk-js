@@ -101,7 +101,8 @@ export {
   WithSelection,
   ODataFunctionImportRequestConfig,
   ODataRequest,
-  ODataRequestConfig
+  ODataRequestConfig,
+  resilience
 } from './request';
 export type { RequestMethodType, FunctionImportParameters } from './request';
 export { throwErrorWhenReturnTypeIsUnionType } from './response-transformer';

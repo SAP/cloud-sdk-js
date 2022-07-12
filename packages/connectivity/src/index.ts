@@ -41,8 +41,10 @@ export {
   setDestinationCache,
   DestinationAuthToken,
   DestinationCertificate,
+  DestinationForServiceBindingOptions,
   addResilience,
-  DestinationForServiceBindingOptions
+  defaultResilienceOptions,
+  RequestHandler
 } from './scp-cf';
 
 export type {

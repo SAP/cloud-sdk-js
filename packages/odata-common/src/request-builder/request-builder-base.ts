@@ -5,7 +5,10 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
 import { ODataRequest } from '../request/odata-request';
-import { ODataRequestConfig } from '../request/odata-request-config';
+import {
+  ODataRequestConfig,
+  MiddlewareType
+} from '../request/odata-request-config';
 
 /**
  * Base class for all request builders.
@@ -53,9 +56,19 @@ export abstract class MethodRequestBuilder<
    * Set timeout for requests towards the target system given in the destination.
    * @param timeout - Value is in milliseconds and default value is 10000 (10 seconds).
    * @returns The request builder itself, to facilitate method chaining.
+   * @deprecated
    */
   timeout(timeout: number): this {
     this.requestConfig.timeout = timeout;
+    return this;
+  }
+
+  middleware(middleware: MiddlewareType<any>, id?: string): this {
+    if (id && id === 'sdkResilience') {
+      this.requestConfig.resilienceMiddleware = middleware;
+    } else {
+      this.requestConfig.middlewares.push(middleware);
+    }
     return this;
   }
 

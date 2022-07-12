@@ -7,16 +7,59 @@ import {
   encodeTypedClientRequest,
   ParameterEncoder
 } from '@sap-cloud-sdk/http-client/internal';
+import {
+  ResilienceOptions,
+  addResilience,
+  defaultResilienceOptions,
+  RequestHandler
+} from '@sap-cloud-sdk/connectivity';
+
+const logger = createLogger({
+  package: 'odata-common',
+  messageContext: 'odata-request-config'
+});
 
 /**
  * Set of possible request methods.
  */
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
 
-const logger = createLogger({
-  package: 'odata-common',
-  messageContext: 'odata-request-config'
-});
+/**
+ * Type of the middleware function.
+ */
+export type MiddlewareType<T> = (
+  fn?: RequestHandler<T>,
+  requestConfig?: ODataRequestConfig
+) => Promise<T>;
+
+/**
+ * Create a resilience middleware with given resilience options and request types.
+ * @param resilienceOptions - Resilience options for adding resilience.
+ * @param requestType - Request type to distinguish between service or target request if specified in retry or circuit breaker.
+ * @returns A resilience middleware.
+ * @internal
+ */
+function createResilienceMiddleware<T>(
+  resilienceOptions: ResilienceOptions,
+  requestType?: 'service' | 'target'
+): MiddlewareType<T> {
+  return (fn: RequestHandler<T>) =>
+    addResilience({ fn }, resilienceOptions, requestType)();
+}
+
+/**
+ * Abbrevation of createResilienceMiddleware function.
+ */
+export const resilience = createResilienceMiddleware;
+
+/**
+ * Create a resilience middleware with default resilience options.
+ * @returns A default resilience middleware.
+ */
+export function createDefaultResilienceMiddleware<T>(): MiddlewareType<T> {
+  return (fn: RequestHandler<T>) =>
+    addResilience({ fn }, defaultResilienceOptions)();
+}
 
 /**
  * Parent class for all OData request configs like `getAll`, `delete` or `count`.
@@ -38,6 +81,8 @@ export abstract class ODataRequestConfig {
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
   private _timeout: number | undefined = undefined;
+  private _resilienceMiddleware = createDefaultResilienceMiddleware();
+  private _middlewares: MiddlewareType<any>[] = [];
 
   constructor(
     method: RequestMethodType,
@@ -68,10 +113,19 @@ export abstract class ODataRequestConfig {
     }
   }
 
+  /**
+   * Set timeout.
+   * @deprecated
+   */
   set timeout(timeout: number | undefined) {
     this._timeout = timeout;
   }
 
+  /**
+   * Get timeout.
+   * @returns Timeout.
+   * @deprecated
+   */
   get timeout(): number | undefined {
     return this._timeout;
   }
@@ -113,6 +167,23 @@ export abstract class ODataRequestConfig {
 
   get fetchCsrfToken(): boolean {
     return this._fetchCsrfToken;
+  }
+
+  // TODO: check the type parameter for MiddlewareType
+  set resilienceMiddleware(resilienceMiddleware: MiddlewareType<any>) {
+    this._resilienceMiddleware = resilienceMiddleware;
+  }
+
+  get resilienceMiddleware(): MiddlewareType<any> {
+    return this._resilienceMiddleware;
+  }
+
+  set middlewares(middlewares: MiddlewareType<any>[]) {
+    this._middlewares = middlewares;
+  }
+
+  get middlewares(): MiddlewareType<any>[] {
+    return this._middlewares;
   }
 
   /**

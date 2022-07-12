@@ -20,7 +20,12 @@ const logger = createLogger({
   messageContext: 'resilience'
 });
 
-type RequestHandler<ReturnType> = (...args: any[]) => Promise<ReturnType>;
+/**
+ * Type of the request handler that needs to be wrapped with resilience.
+ */
+export type RequestHandler<ReturnType> = (
+  ...args: any[]
+) => Promise<ReturnType>;
 
 /**
  * Creates a promise for a timeout race.
@@ -156,14 +161,15 @@ function normalizeResilienceOptions(
  * @returns TODO: Add JSDoc later.
  */
 export function addResilience<T>(
-  request: { fn: RequestHandler<T>; args: any[] },
+  request: { fn: RequestHandler<T>; args?: any[] },
   resilienceOptions: ResilienceOptions,
   requestType?: 'service' | 'target'
 ): RequestHandler<T> {
   const { timeout, retry, circuitBreaker } =
     normalizeResilienceOptions(resilienceOptions);
 
-  let fn: RequestHandler<T> = async () => request.fn(...request.args);
+  const args = request.args ?? [];
+  let fn: RequestHandler<T> = async () => request.fn(...args);
 
   // Circuit breaker + timeout
   let finalCircuitBreaker: CircuitBreakerOptions;
@@ -220,11 +226,4 @@ export function addResilience<T>(
   }
 
   return fn;
-}
-
-export function createResilienceFn<T>(
-  resilienceOptions: ResilienceOptions,
-  requestType?: 'service' | 'target'
-) {
-  return async (fn: RequestHandler<T>) => addResilience(fn, resilienceOptions, requestType)
 }

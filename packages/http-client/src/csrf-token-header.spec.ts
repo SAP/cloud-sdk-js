@@ -1,6 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { defaultResilienceOptions } from '@sap-cloud-sdk/connectivity/internal';
 import { createRequestBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import {
   CommonEntity,
@@ -13,8 +12,6 @@ import {
   mockHeaderRequest
 } from '../../../test-resources/test/test-util';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
-import * as csrfHeaders from './csrf-token-header';
-import { executeHttpRequest } from './http-client';
 
 const standardHeaders = {
   accept: 'application/json',

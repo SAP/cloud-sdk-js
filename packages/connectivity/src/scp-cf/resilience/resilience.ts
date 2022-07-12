@@ -46,7 +46,10 @@ async function timeoutPromise<T>(timeout: number): Promise<T> {
  * @returns TODO: Add JSDoc later.
  * @internal
  */
-export function addTimeout<T>(requestHandler: RequestHandler<T>, timeout: number): Promise<T> {
+export function addTimeout<T>(
+  requestHandler: RequestHandler<T>,
+  timeout: number
+): Promise<T> {
   // If timeout is non-positive, we don't add timeout to the promise.
   if (timeout <= 0) {
     return requestHandler();

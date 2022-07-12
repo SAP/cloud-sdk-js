@@ -423,29 +423,6 @@ describe('destination service', () => {
       await doDelayTest(false);
     });
 
-    // it('considers the default timeout for destination service', async () => {
-    //   const response = {
-    //     URL: 'someDestinationUrl'
-    //   };
-
-    //   nock(destinationServiceUri, {
-    //     reqheaders: {
-    //       authorization: `Bearer ${jwt}`
-    //     }
-    //   })
-    //     .get('/destination-configuration/v1/destinations/timeoutTest')
-    //     .reply(200, response);
-    //   const addTimeOutSpy = jest.spyOn(resilience, 'addTimeOut');
-    //   await fetchDestination(destinationServiceUri, jwt, {
-    //     destinationName: 'timeoutTest',
-    //     circuitBreaker: false
-    //   });
-    //   expect(addTimeOutSpy).toHaveBeenCalledWith(
-    //     expect.anything(),
-    //     defaultResilienceOptions.timeout
-    //   );
-    // });
-
     it('fetches a destination considering no_proxy', async () => {
       const destinationName = 'HTTP-OAUTH';
       process.env.HTTPS_PROXY = 'http://some.foo.bar';

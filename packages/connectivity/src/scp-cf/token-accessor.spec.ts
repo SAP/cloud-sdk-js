@@ -73,27 +73,6 @@ describe('token accessor', () => {
       await doDelayTest(true);
     });
 
-    // it('considers default timeout for client credentials token', async () => {
-    //   const addResilienceSpy = jest.spyOn(resilience, 'addTimeOut');
-
-    //   const jwt = signedJwt({
-    //     iss: 'https://testeroni.example.com'
-    //   });
-    //   mockClientCredentialsGrantCall(
-    //     'https://testeroni.example.com',
-    //     { access_token: 'testValue' },
-    //     200,
-    //     destinationBindingClientSecretMock.credentials
-    //   );
-
-    //   await serviceToken('destination', { jwt, circuitBreaker: false });
-
-    //   expect(addResilienceSpy).toHaveBeenCalledWith(
-    //     expect.anything(),
-    //     defaultResilienceOptions
-    //   );
-    // });
-
     it("uses the JWT's issuer as tenant", async () => {
       const expected = signedJwt({ dummy: 'content' });
       const jwt = signedJwt({

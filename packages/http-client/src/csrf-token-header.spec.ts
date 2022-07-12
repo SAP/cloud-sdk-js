@@ -70,35 +70,6 @@ describe('buildCsrfHeaders', () => {
     );
   });
 
-  it('considers custom timeout on csrf token fetching', async () => {
-    jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
-    await expect(
-      executeHttpRequest(
-        { url: 'http://foo.bar' },
-        { method: 'post', timeout: 123 }
-      )
-    ).rejects.toThrow();
-
-    expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.objectContaining({ timeout: 123 })
-    );
-    jest.restoreAllMocks();
-  });
-
-  it('considers default timeout on csrf token fetching', async () => {
-    jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
-    await expect(
-      executeHttpRequest({ url: 'http://foo.bar' }, { method: 'post' })
-    ).rejects.toThrow();
-
-    expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.objectContaining({ timeout: defaultResilienceOptions.timeout })
-    );
-    jest.restoreAllMocks();
-  });
-
   it('"cookie" should not be defined in header when not defined in CSRF headers response.', async () => {
     const request = await createRequestBuilder({
       payload: new CommonEntity(commonEntityApi.schema)

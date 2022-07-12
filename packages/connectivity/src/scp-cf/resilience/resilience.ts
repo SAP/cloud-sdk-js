@@ -28,38 +28,40 @@ export type RequestHandler<ReturnType> = (
 ) => Promise<ReturnType>;
 
 /**
- * Creates a promise for a timeout race.
- * @internal
+ * Create a promise for a time out race.
  * @param timeout - Value for the timeout.
  * @returns A promise which times out after the given time.
+ * @internal
  */
-async function timeOutPromise<T>(timeout: number): Promise<T> {
+async function timeoutPromise<T>(timeout: number): Promise<T> {
   return new Promise<T>((_, reject) =>
     setTimeout(() => reject(new Error(`Timed out after ${timeout}ms`)), timeout)
   );
 }
 
 /**
- * TODO: Add JSDoc later.
- * @param fn - TODO: Add JSDoc later.
- * @param timeout - TODO: Add JSDoc later.
+ * Add time out to a function call.
+ * @param requestHandler - Function handler with empty parameter.
+ * @param timeout - t.
  * @returns TODO: Add JSDoc later.
+ * @internal
  */
-function addTimeOut<T>(fn: RequestHandler<T>, timeout: number): Promise<T> {
+export function addTimeout<T>(requestHandler: RequestHandler<T>, timeout: number): Promise<T> {
   // If timeout is non-positive, we don't add timeout to the promise.
   if (timeout <= 0) {
-    return fn();
+    return requestHandler();
   }
-  const racePromise = timeOutPromise<T>(timeout);
-  return Promise.race([fn(), racePromise]);
+  const racePromise = timeoutPromise<T>(timeout);
+  return Promise.race([requestHandler(), racePromise]);
 }
 
 /**
  * TODO: Add JSDoc later.
  * @param resilienceOptions - TODO: Add JSDoc later.
  * @returns - TODO: Add JSDoc later.
+ * @internal
  */
-function normalizeTimeOut(
+export function normalizeTimeout(
   resilienceOptions: ResilienceOptions
 ): ResilienceOptions {
   if (resilienceOptions.timeout && resilienceOptions.timeout < 0) {
@@ -141,7 +143,7 @@ function normalizeResilienceOptions(
     return defaultResilienceOptions;
   }
 
-  resilienceOptions = normalizeTimeOut(resilienceOptions);
+  resilienceOptions = normalizeTimeout(resilienceOptions);
   resilienceOptions = normalizeRetryOptions(resilienceOptions);
   resilienceOptions = normalizeCircuitBreakerOptions(resilienceOptions);
 
@@ -194,7 +196,7 @@ export function addResilience<T>(
   } else {
     // Add our own timeout
     if (timeout) {
-      fn = () => addTimeOut(() => request.fn(...args), timeout);
+      fn = () => addTimeout(() => request.fn(...args), timeout);
     } else {
       fn = () => request.fn(...args);
     }

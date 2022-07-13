@@ -67,7 +67,11 @@ export function addTimeout<T>(
 export function normalizeTimeout(
   resilienceOptions: ResilienceOptions
 ): ResilienceOptions {
-  if (resilienceOptions.timeout && resilienceOptions.timeout < 0) {
+  if (resilienceOptions.timeout === undefined) {
+    resilienceOptions.timeout = defaultResilienceOptions.timeout;
+  }
+
+  if (resilienceOptions.timeout !== false && resilienceOptions.timeout <= 0) {
     logger.warn(
       `Invalid time out (${resilienceOptions.timeout}) received! Disabling resilience time out.`
     );
@@ -82,9 +86,74 @@ export function normalizeTimeout(
  * @param resilienceOptions - TODO: Add JSDoc later.
  * @returns - TODO: Add JSDoc later.
  */
-function normalizeRetryOptions(
+export function normalizeCircuitBreakerOptions(
   resilienceOptions: ResilienceOptions
 ): ResilienceOptions {
+  if (resilienceOptions.circuitBreaker === undefined) {
+    // Circuit breaker is enabled by default
+    resilienceOptions.circuitBreaker = defaultResilienceOptions.circuitBreaker;
+  }
+
+  if (resilienceOptions.circuitBreaker === true) {
+    // Circuit breaker is true, use default circuit breaker options with resilience timeout
+    resilienceOptions.circuitBreaker = {
+      ...defaultCircuitBreakerOptions,
+      timeout: resilienceOptions.timeout
+    };
+  } else if (
+    isCircuitBreakerOptionsServiceTarget(resilienceOptions.circuitBreaker)
+  ) {
+    // Circuit breaker is in the form of { service: ..., target: ... }
+    if (resilienceOptions.circuitBreaker.service === true) {
+      resilienceOptions.circuitBreaker.service = {
+        ...defaultCircuitBreakerOptions,
+        timeout: resilienceOptions.timeout
+      };
+    } else if (resilienceOptions.circuitBreaker.service) {
+      // Circuit breaker service is defined explicitly
+      if (resilienceOptions.timeout) {
+        logger.debug(
+          'Resilience timeout is ignored since circuit breaker service is defined explicitly.'
+        );
+      }
+    }
+    if (resilienceOptions.circuitBreaker.target === true) {
+      resilienceOptions.circuitBreaker.target = {
+        ...defaultCircuitBreakerOptions,
+        timeout: resilienceOptions.timeout
+      };
+    } else if (resilienceOptions.circuitBreaker.service) {
+      // Circuit breaker target is defined explicitly
+      if (resilienceOptions.timeout) {
+        logger.debug(
+          'Resilience timeout is ignored since circuit breaker target is defined explicitly.'
+        );
+      }
+    }
+  } else {
+    // Circuit breaker is defined explicitly
+    if (resilienceOptions.timeout) {
+      logger.debug(
+        'Resilience timeout is ignored since circuit breaker is defined explicitly.'
+      );
+    }
+  }
+
+  return resilienceOptions;
+}
+
+/**
+ * TODO: Add JSDoc later.
+ * @param resilienceOptions - TODO: Add JSDoc later.
+ * @returns - TODO: Add JSDoc later.
+ */
+export function normalizeRetryOptions(
+  resilienceOptions: ResilienceOptions
+): ResilienceOptions {
+  if (resilienceOptions.retry === undefined) {
+    resilienceOptions.retry = defaultResilienceOptions.retry;
+  }
+
   if (resilienceOptions.retry === true) {
     resilienceOptions.retry = defaultRetryOptions;
   } else if (isRetryOptionsServiceTarget(resilienceOptions.retry)) {
@@ -103,52 +172,12 @@ function normalizeRetryOptions(
  * @param resilienceOptions - TODO: Add JSDoc later.
  * @returns - TODO: Add JSDoc later.
  */
-function normalizeCircuitBreakerOptions(
+export function normalizeResilienceOptions(
   resilienceOptions: ResilienceOptions
 ): ResilienceOptions {
-  if (resilienceOptions.circuitBreaker === true) {
-    // Circuit breaker is true, use default circuit breaker options with resilience timeout
-    resilienceOptions.circuitBreaker = {
-      ...defaultCircuitBreakerOptions,
-      timeout: resilienceOptions.timeout
-    };
-  } else if (
-    isCircuitBreakerOptionsServiceTarget(resilienceOptions.circuitBreaker)
-  ) {
-    // Circuit breaker is in the form of { service: ..., target: ... }
-    if (resilienceOptions.circuitBreaker.service === true) {
-      resilienceOptions.circuitBreaker.service = {
-        ...defaultCircuitBreakerOptions,
-        timeout: resilienceOptions.timeout
-      };
-    }
-    if (resilienceOptions.circuitBreaker.target === true) {
-      resilienceOptions.circuitBreaker.target = {
-        ...defaultCircuitBreakerOptions,
-        timeout: resilienceOptions.timeout
-      };
-    }
-  }
-
-  return resilienceOptions;
-}
-
-// TODO: write test cases for this!
-/**
- * TODO: Add JSDoc later.
- * @param resilienceOptions - TODO: Add JSDoc later.
- * @returns - TODO: Add JSDoc later.
- */
-function normalizeResilienceOptions(
-  resilienceOptions: ResilienceOptions | undefined
-): ResilienceOptions {
-  if (!resilienceOptions) {
-    return defaultResilienceOptions;
-  }
-
   resilienceOptions = normalizeTimeout(resilienceOptions);
-  resilienceOptions = normalizeRetryOptions(resilienceOptions);
   resilienceOptions = normalizeCircuitBreakerOptions(resilienceOptions);
+  resilienceOptions = normalizeRetryOptions(resilienceOptions);
 
   return resilienceOptions;
 }
@@ -172,8 +201,6 @@ export function addResilience<T>(
 
   const args = request.args ?? [];
 
-  let fn: RequestHandler<T>;
-
   // Circuit breaker + timeout
   let finalCircuitBreaker: CircuitBreakerOptions;
 
@@ -192,16 +219,19 @@ export function addResilience<T>(
     finalCircuitBreaker = circuitBreaker;
   }
 
+  let timeoutOrCircuitBreakerfn: RequestHandler<T>;
+
   if (finalCircuitBreaker) {
     // Add circuit breaker
-    fn = () =>
+    timeoutOrCircuitBreakerfn = () =>
       getCircuitBreaker(() => request.fn(...args), finalCircuitBreaker).fire();
   } else {
     // Add our own timeout
     if (timeout) {
-      fn = () => addTimeout(() => request.fn(...args), timeout);
+      timeoutOrCircuitBreakerfn = () =>
+        addTimeout(() => request.fn(...args), timeout);
     } else {
-      fn = () => request.fn(...args);
+      timeoutOrCircuitBreakerfn = () => request.fn(...args);
     }
   }
 
@@ -223,9 +253,16 @@ export function addResilience<T>(
     finalRetry = retry;
   }
 
+  let retryOrNotFn: RequestHandler<T>;
   if (finalRetry) {
-    fn = () => asyncRetry(fn, finalRetry as AsyncRetryLibOptions);
+    retryOrNotFn = () =>
+      asyncRetry(
+        async () => timeoutOrCircuitBreakerfn(),
+        finalRetry as AsyncRetryLibOptions
+      );
+  } else {
+    retryOrNotFn = () => timeoutOrCircuitBreakerfn();
   }
 
-  return fn;
+  return retryOrNotFn;
 }

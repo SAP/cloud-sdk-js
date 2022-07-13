@@ -282,11 +282,11 @@ describe('EDM to moment and back', () => {
     it('handles midnight', () => {
       // The spec says this is allowed
       // https://www.w3.org/TR/xmlschema11-2/#time
-      // expect(deserializeToTime('24:00:00')).toEqual({
-      //   hours: 0, // or 24?
-      //   minutes: 0,
-      //   seconds: 0
-      // });
+      expect(deserializeToTime('24:00:00')).toEqual({
+        hours: 24, // or should it be 0?
+        minutes: 0,
+        seconds: 0
+      });
       expect(deserializeToTime('00:00:00')).toEqual({
         hours: 0,
         minutes: 0,
@@ -394,19 +394,28 @@ describe('EDM to moment and back', () => {
         })
       ).toBe('12:34:56.789');
     });
+
     xit('handles times with timezones', () => {
       // Currently not supported by us
     });
+
     xit('handles times with high-precision fractional seconds', () => {
       // Currently not supported by us
     });
-    xit('should throw on invalid times', () => {
-      // Currently not supported by us
+
+    it('should throw on invalid times', () => {
       expect(() =>
         serializeToTime({
           hours: 25,
           minutes: 0,
           seconds: 0
+        })
+      ).toThrow();
+      expect(() =>
+        serializeToTime({
+          hours: 24,
+          minutes: 0,
+          seconds: 1
         })
       ).toThrow();
       expect(() =>

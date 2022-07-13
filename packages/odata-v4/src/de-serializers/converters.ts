@@ -70,18 +70,20 @@ export function serializeToDuration(value: moment.Duration): string {
  */
 export function deserializeToTime(value: string): Time {
   // Matches a time with HH:mm:ss.SSSS like 15:05:06
-  // See more: https://regex101.com/r/A5DHee/1
+  // See more: https://regex101.com/r/A5DHee/2
   const timeComponents =
-    /^([01]\d|2[0-3]):([0-5][0-9]):([0-5][0-9](\.[0-9]+)?)$/.exec(value);
+    /^([01]\d|2[0-3]):([0-5][0-9]):([0-5][0-9](\.[0-9]+)?)$|^(24):(00):(00(\.0+)?)$/.exec(
+      value
+    );
   if (!timeComponents) {
     throw new Error(
       `Provided time value ${value} does not follow the Edm.TimeOfDay pattern: HH:MM:SS(.S)`
     );
   }
   return {
-    hours: parseInt(timeComponents[1]),
-    minutes: parseInt(timeComponents[2]),
-    seconds: parseFloat(timeComponents[3])
+    hours: parseInt(timeComponents[1] || timeComponents[5]),
+    minutes: parseInt(timeComponents[2] || timeComponents[6]),
+    seconds: parseFloat(timeComponents[3] || timeComponents[7])
   };
 }
 
@@ -89,9 +91,27 @@ export function deserializeToTime(value: string): Time {
  * @internal
  */
 export function serializeToTime(value: Time): string {
+  if (!validateTime(value)) {
+    throw new Error(
+      `Provided time value ${value} can not be serialized to a valid Edm.TimeOfDay`
+    );
+  }
   return [value.hours, value.minutes, value.seconds]
     .map(timeComponent => padTimeComponent(timeComponent))
     .join(':');
+}
+
+function validateTime({ hours, minutes, seconds }: Time): boolean {
+  if (hours === 24 && minutes === 0 && seconds === 0) {
+    return true;
+  }
+  if (hours < 0 || minutes < 0 || seconds < 0) {
+    return false;
+  }
+  if (hours > 23 || minutes > 59 || seconds > 59) {
+    return false;
+  }
+  return true;
 }
 
 function padTimeComponent(timeComponent: number): string {

@@ -24,7 +24,8 @@ describe('resilience', () => {
     });
 
     it('should disable timeout if invalid', async () => {
-      const fn = () => new Promise(resolve => setTimeout(() => resolve('resolved'), 1000));
+      const fn = () =>
+        new Promise(resolve => setTimeout(() => resolve('resolved'), 1000));
       await expect(addTimeout(fn, -10)).resolves.toEqual('resolved');
     });
   });

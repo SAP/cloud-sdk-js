@@ -50,6 +50,8 @@ export {
   DestinationForServiceBindingOptions,
   addResilience,
   defaultResilienceOptions,
+  defaultCircuitBreakerOptions,
+  defaultRetryOptions,
   RequestHandler
 } from './scp-cf';
 
@@ -63,7 +65,9 @@ export type {
   AuthenticationType,
   ResilienceOptions,
   DestinationWithName,
-  RegisterDestinationOptions
+  RegisterDestinationOptions,
+  CircuitBreakerOptions,
+  RetryOptions
 } from './scp-cf';
 
 export {

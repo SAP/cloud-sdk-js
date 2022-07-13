@@ -85,6 +85,7 @@ export function normalizeTimeout(
  * TODO: Add JSDoc later.
  * @param resilienceOptions - TODO: Add JSDoc later.
  * @returns - TODO: Add JSDoc later.
+ * @internal
  */
 export function normalizeCircuitBreakerOptions(
   resilienceOptions: ResilienceOptions
@@ -146,6 +147,7 @@ export function normalizeCircuitBreakerOptions(
  * TODO: Add JSDoc later.
  * @param resilienceOptions - TODO: Add JSDoc later.
  * @returns - TODO: Add JSDoc later.
+ * @internal
  */
 export function normalizeRetryOptions(
   resilienceOptions: ResilienceOptions
@@ -171,6 +173,7 @@ export function normalizeRetryOptions(
  * TODO: Add JSDoc later.
  * @param resilienceOptions - TODO: Add JSDoc later.
  * @returns - TODO: Add JSDoc later.
+ * @internal
  */
 export function normalizeResilienceOptions(
   resilienceOptions: ResilienceOptions

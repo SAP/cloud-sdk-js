@@ -2,6 +2,7 @@ import { CircuitBreakerOptions } from './circuit-breaker-options';
 
 /**
  * TODO: Add JSDoc later.
+ * @internal
  */
 export interface AsyncRetryLibOptions {
   retries?: number; // default 10
@@ -30,6 +31,7 @@ export const defaultRetryOptions: AsyncRetryLibOptions = {
 
 /**
  * TODO: Add JSDoc later.
+ * @internal
  */
 export interface CircuitBreakerOptionsServiceTarget {
   service: CircuitBreakerOptions;
@@ -38,6 +40,7 @@ export interface CircuitBreakerOptionsServiceTarget {
 
 /**
  * TODO: Add JSDoc later.
+ * @internal
  */
 export interface RetryOptionsServiceTarget {
   service: RetryOptions;

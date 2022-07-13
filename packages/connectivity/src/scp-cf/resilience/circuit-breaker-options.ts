@@ -1,5 +1,6 @@
 /**
  * TODO: Add JSDoc later.
+ * @internal
  */
 export interface OpossumLibOptions {
   timeout?: number | false | undefined; // default 10 sec

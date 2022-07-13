@@ -36,6 +36,7 @@ function transformCircuitBreakerOptionsToOpossumLibOptions(
  * @param requestHandler - TODO: Add JSDoc later.
  * @param circuitBreakerOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
+ * @internal
  */
 export function createCircuitBreaker<ReturnType>(
   requestHandler: RequestHandler<ReturnType>,
@@ -53,6 +54,7 @@ export function createCircuitBreaker<ReturnType>(
  * @param requestHandler - TODO: Add JSDoc later.
  * @param circuitBreakerOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
+ * @internal
  */
 export function getCircuitBreaker<ReturnType>(
   requestHandler: RequestHandler<ReturnType>,

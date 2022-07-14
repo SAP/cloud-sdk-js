@@ -1201,10 +1201,10 @@
     "@sap-cloud-sdk/odata-common" "^2.1.0"
     "@sap-cloud-sdk/odata-v2" "^2.1.0"
 
-"@sap/edm-converters@~1.0.21":
-  version "1.0.41"
-  resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.41.tgz#e38cdd69b49ac407ef3c6637f78f1c6ea26ada4d"
-  integrity sha512-Af7L7amlh06YXfOK2ufjKUZXhcuwXSt0uzPDrHbVBvN1lQS8Gj4BxzXTbnskiFweTR2CFuhoqsSaV2r/7l9mYw==
+"@sap/edm-converters@~1.0.42":
+  version "1.0.42"
+  resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.42.tgz#f39c09dce3f688dfa97c5ec497235a42004c80b0"
+  integrity sha512-lPyBeiUg5nzxNvLMI4zONPq9yMw1ewJ+9qJ/+yIjY8Hzmo+stVc/coswR8/Mt3asPmP6kpHh5icbBO/kKMK5eg==
   dependencies:
     commander "=2.19.0"
     multimap "1.1.0"

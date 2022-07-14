@@ -34,7 +34,7 @@
     "@sap-cloud-sdk/test-services-openapi": "^2.5.0",
     "@sap-cloud-sdk/test-services-e2e": "^2.5.0",
     "@sap-cloud-sdk/util": "^2.5.0",
-    "@sap/cds": "^6.0.2",
+    "@sap/cds": "^6.0.3",
     "@sap/cds-dk": "6.0.2",
     "@types/nodemailer": "^6.4.4",
     "axios": "^0.27.1",

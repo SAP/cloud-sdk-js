@@ -60,14 +60,6 @@ describe('edmToTs()', () => {
 
     expect(() =>
       edmToTs(
-        '2020-05-13T16:14:23.1Z',
-        'Edm.DateTimeOffset',
-        defaultDeSerializers
-      )
-    ).toThrow(/ does not follow the Edm.DateTimeOffset pattern/);
-
-    expect(() =>
-      edmToTs(
         '2020-05-13T16:14:23:57.97+5:00',
         'Edm.DateTimeOffset',
         defaultDeSerializers
@@ -116,10 +108,6 @@ describe('edmToTs()', () => {
   it('should throw on a wrongly formatted Edm.Duration', () => {
     expect(() =>
       edmToTs('+P4DT23H13m50S', 'Edm.Duration', defaultDeSerializers)
-    ).toThrow(/ does not follow the Edm.Duration pattern/);
-
-    expect(() =>
-      edmToTs('PT501S', 'Edm.Duration', defaultDeSerializers)
     ).toThrow(/ does not follow the Edm.Duration pattern/);
 
     expect(() => edmToTs('P23H', 'Edm.Duration', defaultDeSerializers)).toThrow(

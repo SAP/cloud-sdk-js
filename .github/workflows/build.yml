@@ -29,7 +29,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --ignore-engines --frozen-lockfile
+      - run: yarn install --frozen-lockfile
       - run: yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
@@ -127,7 +127,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile --ignore-engines
+      - run: yarn install --frozen-lockfile
       - name: Canary Release
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc

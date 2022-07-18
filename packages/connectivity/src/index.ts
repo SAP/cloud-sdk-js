@@ -48,7 +48,8 @@ export {
   DestinationJson,
   DestinationsByType,
   ServiceBinding,
-  DestinationForServiceBindingOptions
+  DestinationForServiceBindingOptions,
+  destinationForServiceBinding
 } from './scp-cf';
 
 export type {

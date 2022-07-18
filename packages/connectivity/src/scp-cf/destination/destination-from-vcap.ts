@@ -33,7 +33,6 @@ export interface PartialDestinationFetchOptions {
  * @param serviceInstanceName - The name of the service.
  * @param options - Options to customize the behavior of this function.
  * @returns A destination.
- * @internal
  */
 export async function destinationForServiceBinding(
   serviceInstanceName: string,

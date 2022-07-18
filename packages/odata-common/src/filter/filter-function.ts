@@ -4,27 +4,18 @@ import { NumberFilterFunction } from './number-filter-function';
 import { StringFilterFunction } from './string-filter-function';
 import { FilterFunctionParameterType } from './filter-function-base';
 
-/**
- * @internal
- */
 export function filterFunction<EntityT extends EntityBase>(
   functionName: string,
   returnType: 'boolean',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT>;
 
-/**
- * @internal
- */
 export function filterFunction<EntityT extends EntityBase>(
   functionName: string,
   returnType: 'int' | 'double' | 'decimal',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): NumberFilterFunction<EntityT>;
 
-/**
- * @internal
- */
 export function filterFunction<EntityT extends EntityBase>(
   functionName: string,
   returnType: 'string',
@@ -37,7 +28,6 @@ export function filterFunction<EntityT extends EntityBase>(
  * @param returnType - the return type of the filter function
  * @param parameters - the parameter(s) used in the function
  * @returns An instance of filter function suited for the given return type
- * @internal
  */
 export function filterFunction<EntityT extends EntityBase>(
   functionName: string,

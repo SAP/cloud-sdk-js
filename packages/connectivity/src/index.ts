@@ -51,7 +51,6 @@ export {
   addResilience,
   defaultResilienceOptions,
   defaultCircuitBreakerOptions,
-  defaultRetryOptions,
   RequestHandler
 } from './scp-cf';
 
@@ -66,8 +65,7 @@ export type {
   ResilienceOptions,
   DestinationWithName,
   RegisterDestinationOptions,
-  CircuitBreakerOptions,
-  RetryOptions
+  CircuitBreakerOptions
 } from './scp-cf';
 
 export {

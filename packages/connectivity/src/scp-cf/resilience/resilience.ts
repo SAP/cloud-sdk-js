@@ -1,4 +1,3 @@
-import asyncRetry from 'async-retry';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { getCircuitBreaker } from './circuit-breaker';
 import {
@@ -6,13 +5,9 @@ import {
   defaultCircuitBreakerOptions
 } from './circuit-breaker-options';
 import {
-  AsyncRetryLibOptions,
   defaultResilienceOptions,
-  defaultRetryOptions,
   isCircuitBreakerOptionsServiceTarget,
-  isRetryOptionsServiceTarget,
-  ResilienceOptions,
-  RetryOptions
+  ResilienceOptions
 } from './resilience-options';
 
 const logger = createLogger({
@@ -149,38 +144,11 @@ export function normalizeCircuitBreakerOptions(
  * @returns - TODO: Add JSDoc later.
  * @internal
  */
-export function normalizeRetryOptions(
-  resilienceOptions: ResilienceOptions
-): ResilienceOptions {
-  if (resilienceOptions.retry === undefined) {
-    resilienceOptions.retry = defaultResilienceOptions.retry;
-  }
-
-  if (resilienceOptions.retry === true) {
-    resilienceOptions.retry = defaultRetryOptions;
-  } else if (isRetryOptionsServiceTarget(resilienceOptions.retry)) {
-    if (resilienceOptions.retry.service === true) {
-      resilienceOptions.retry.service = defaultRetryOptions;
-    }
-    if (resilienceOptions.retry.target === true) {
-      resilienceOptions.retry.target = defaultRetryOptions;
-    }
-  }
-  return resilienceOptions;
-}
-
-/**
- * TODO: Add JSDoc later.
- * @param resilienceOptions - TODO: Add JSDoc later.
- * @returns - TODO: Add JSDoc later.
- * @internal
- */
 export function normalizeResilienceOptions(
   resilienceOptions: ResilienceOptions
 ): ResilienceOptions {
   resilienceOptions = normalizeTimeout(resilienceOptions);
   resilienceOptions = normalizeCircuitBreakerOptions(resilienceOptions);
-  resilienceOptions = normalizeRetryOptions(resilienceOptions);
 
   return resilienceOptions;
 }
@@ -199,9 +167,7 @@ export function addResilience<T>(
   resilienceOptions: ResilienceOptions,
   requestType?: 'service' | 'target'
 ): RequestHandler<T> {
-  const { timeout, retry, circuitBreaker } =
-    normalizeResilienceOptions(resilienceOptions);
-
+  const { timeout, circuitBreaker } = resilienceOptions;
   const args = request.args ?? [];
 
   // Circuit breaker + timeout
@@ -237,35 +203,5 @@ export function addResilience<T>(
       timeoutOrCircuitBreakerfn = () => request.fn(...args);
     }
   }
-
-  // Retry
-  let finalRetry: RetryOptions;
-
-  if (isRetryOptionsServiceTarget(retry)) {
-    if (requestType === 'service') {
-      finalRetry = retry.service;
-    } else if (requestType === 'target') {
-      finalRetry = retry.target;
-    } else {
-      logger.warn(
-        'Unknown request type for adding resilience. Using `service` retry by default.'
-      );
-      finalRetry = retry.service;
-    }
-  } else {
-    finalRetry = retry;
-  }
-
-  let retryOrNotFn: RequestHandler<T>;
-  if (finalRetry) {
-    retryOrNotFn = () =>
-      asyncRetry(
-        async () => timeoutOrCircuitBreakerfn(),
-        finalRetry as AsyncRetryLibOptions
-      );
-  } else {
-    retryOrNotFn = () => timeoutOrCircuitBreakerfn();
-  }
-
-  return retryOrNotFn;
+  return timeoutOrCircuitBreakerfn;
 }

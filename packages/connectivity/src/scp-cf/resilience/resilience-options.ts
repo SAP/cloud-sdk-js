@@ -79,15 +79,3 @@ export function isCircuitBreakerOptionsServiceTarget(
   }
   return false;
 }
-
-/**
- * @internal
- */
-export function isRetryOptionsServiceTarget(
-  options: RetryOptions | RetryOptionsServiceTarget
-): options is RetryOptionsServiceTarget {
-  if (typeof options === 'object') {
-    return 'service' in options || 'target' in options;
-  }
-  return false;
-}

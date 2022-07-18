@@ -35,7 +35,7 @@ export type MiddlewareType<T> = (
 /**
  * Create a resilience middleware with given resilience options and request types.
  * @param resilienceOptions - Resilience options for adding resilience.
- * @param requestType - Request type to distinguish between service or target request if specified in retry or circuit breaker.
+ * @param requestType - Request type to distinguish between service or target request if specified in  circuit breaker.
  * @returns A resilience middleware.
  * @internal
  */

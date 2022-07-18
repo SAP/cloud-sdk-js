@@ -6,7 +6,8 @@ import {
   finishAll,
   setLogLevel,
   formatJson,
-  ErrorWithCause
+  ErrorWithCause,
+  unique
 } from '@sap-cloud-sdk/util';
 import {
   getSdkMetadataFileNames,
@@ -74,7 +75,7 @@ export async function generateWithParsedOptions(
   if (options.clearOutputDir) {
     await rmdir(options.outputDir, { recursive: true });
   }
-  const inputFilePaths = await getInputFilePaths(options.input);
+  const inputFilePaths = validateInputFilePaths(await getInputFilePaths(options.input));
 
   const optionsPerService = await getOptionsPerService(inputFilePaths, options);
   const tsConfig = await tsconfigJson(options);
@@ -116,6 +117,29 @@ export async function generateWithParsedOptions(
       );
     }
   }
+}
+
+function validateInputFilePaths(inputFilePaths: string[]): string[] {
+  const originalPathsWithoutExtension = inputFilePaths.map(file => parse(file).name);
+  const uniquePathsWithoutExtension = unique(originalPathsWithoutExtension);
+  const hasDuplicates = originalPathsWithoutExtension.length !== uniquePathsWithoutExtension.length;
+  if (hasDuplicates) {
+    const validatedInputFiles = removeDuplicatedYamlFiles(inputFilePaths);
+    const duplicatedFilePaths = inputFilePaths.filter(file => !validatedInputFiles.includes(file)).join('\r\n');
+    logger.warn(`client-generating from YAML file(s) below was skipped because you placed the JSON specification file(s) for the same service in a input directory.\n${duplicatedFilePaths}`);
+    return validatedInputFiles;
+  };
+  return inputFilePaths;
+}
+function removeDuplicatedYamlFiles(file: string[]): string[] {
+  const allJsonFiles = file.filter(files => files.endsWith('.json'));
+  const allYamlFiles = file.filter(files => files.endsWith('.yaml'));
+  const allowedYamlFiles = allYamlFiles
+    .filter(yamlFile => !allJsonFiles
+      .map(jsonFile => parse(jsonFile).name)
+      .includes(parse(yamlFile).name)
+    );
+  return allJsonFiles.concat(allowedYamlFiles);
 }
 
 /**

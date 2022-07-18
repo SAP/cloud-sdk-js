@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
 import mock from 'mock-fs';
-import { readJSON } from '@sap-cloud-sdk/util';
+import { createLogger, readJSON } from '@sap-cloud-sdk/util';
 import { emptyDocument } from '../test/test-util';
 import { generate, getInputFilePaths } from './generator';
 
@@ -272,7 +272,7 @@ describe('generator', () => {
         })
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
               "Could not generate client. Errors: [
-              	ErrorWithCause: Could not write file \\"test.ts\\". File already exists. If you want to allow overwriting files, enable the \`overwrite\` flag.
+                ErrorWithCause: Could not write file \\"test.ts\\". File already exists. If you want to allow overwriting files, enable the \`overwrite\` flag.
               ]"
             `);
     });
@@ -287,6 +287,94 @@ describe('generator', () => {
       ).resolves.toBeUndefined();
     });
   });
+
+  describe('two different types of specification files for the same service exist', () => {
+    it('should exclude the same types YAML files as JSON files and log a warning message', async () => {
+      mock.restore();
+      const logger = createLogger('openapi-generator');
+      const warnSpy = jest.spyOn(logger, 'warn');
+
+      const inputFileJson = resolve(
+        __dirname,
+        '../../../test-resources/openapi-service-specs/test-service.json'
+      );
+      const serviceSpecJson = await promises.readFile(inputFileJson, {
+        encoding: 'utf8'
+      });
+
+      const inputFileYaml = resolve(
+        __dirname,
+        '../../../test-resources/openapi-service-specs/swagger-yaml-service.yml'
+      );
+      const serviceSpecYaml = await promises.readFile(inputFileYaml, {
+        encoding: 'utf8'
+      });
+
+      mock({
+        root: {
+          inputDir: {
+            'test-service.json': serviceSpecJson,
+            'test-service.yaml': serviceSpecYaml,
+            'test-service2.json': serviceSpecJson,
+            'empty-dir': {},
+            'sub-dir': {
+              'test-service2.yaml': serviceSpecYaml,
+              'test-service3.yaml': serviceSpecYaml
+            }
+          },
+          outputDir: {}
+        }
+      });
+
+
+
+      await expect(
+        generate({
+          input: 'root/inputDir',
+          outputDir: 'root/OutDir',
+          skipValidation: true,
+          overwrite: true
+        })
+      ).resolves.toBeUndefined();
+
+      const generatedClients = await promises.readdir('root/OutDir')
+      expect(generatedClients.length).toEqual(3)
+
+      expect(warnSpy).toHaveBeenCalledWith(`client-generating from YAML file(s) below was skipped because you placed the same JSON specification file(s) in a input directory.
+/Users/I346417/projects/sap-cloud-sdk-js/258/root/inputDir/sub-dir/test-service2.yaml
+/Users/I346417/projects/sap-cloud-sdk-js/258/root/inputDir/test-service.yaml`
+      )
+
+      mock.restore();
+    })
+
+    it('should throw an error due to duplicated JSON files', async () => {
+      mock.restore();
+
+      mock({
+        root: {
+          inputDir: {
+            'test-service.json': 'file content here',
+            'sub-dir': {
+              'test-service.json': 'file content here'
+            }
+          },
+          outputDir: {}
+        }
+      });
+
+      await expect(await generate({
+        input: 'root/inputDir',
+        outputDir: 'root/OutDir',
+        overwrite: true
+      })).resolves.toBeUndefined();
+
+      mock.restore();
+    });
+  });
 });
 
 const endsWithNewLine = /\n$/;
+
+
+

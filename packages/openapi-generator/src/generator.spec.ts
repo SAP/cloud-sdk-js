@@ -326,8 +326,6 @@ describe('generator', () => {
         }
       });
 
-
-
       await expect(
         generate({
           input: 'root/inputDir',
@@ -340,9 +338,8 @@ describe('generator', () => {
       const generatedClients = await promises.readdir('root/OutDir')
       expect(generatedClients.length).toEqual(3)
 
-      expect(warnSpy).toHaveBeenCalledWith(`client-generating from YAML file(s) below was skipped because you placed the same JSON specification file(s) in a input directory.
-/Users/I346417/projects/sap-cloud-sdk-js/258/root/inputDir/sub-dir/test-service2.yaml
-/Users/I346417/projects/sap-cloud-sdk-js/258/root/inputDir/test-service.yaml`
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("client-generating from YAML file(s) below was skipped because you placed the JSON specification file(s) for the same service in a input directory")
       )
 
       mock.restore();

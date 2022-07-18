@@ -368,10 +368,9 @@ async function callDestinationService(
     headers
   };
 
-  // fixme: enable before merge
-  // if (enableCircuitBreaker) {
-  //   return getCircuitBreaker().fire(config);
-  // }
+  if (enableCircuitBreaker) {
+    return getCircuitBreaker().fire(config);
+  }
 
   return axios.request(config);
 }

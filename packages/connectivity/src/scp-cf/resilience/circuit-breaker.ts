@@ -1,35 +1,9 @@
 import CircuitBreaker from 'opossum';
-import {
-  CircuitBreakerOptions,
-  OpossumLibOptions,
-  defaultCircuitBreakerOptions
-} from './circuit-breaker-options';
+import { OpossumLibOptions } from './circuit-breaker-options';
 
 type RequestHandler<ReturnType> = (...args: any[]) => Promise<ReturnType>;
 
-const circuitBreakerMap = new Map<
-  RequestHandler<any>,
-  CircuitBreaker<any[], any>
->();
-
-/**
- * TODO: Add JSDoc later.
- * @param circuitBreakerOptions - TODO: Add JSDoc later.
- * @returns TODO: Add JSDoc later.
- */
-function transformCircuitBreakerOptionsToOpossumLibOptions(
-  circuitBreakerOptions: CircuitBreakerOptions
-): OpossumLibOptions {
-  if (!circuitBreakerOptions) {
-    throw new Error(
-      'Failed to transform CircuitBreakerOptions to OpossumLibOptions! `circuitBreakerOptions` is `undefined` or `false`'
-    );
-  } else if (circuitBreakerOptions === true) {
-    return defaultCircuitBreakerOptions;
-  } else {
-    return circuitBreakerOptions;
-  }
-}
+const circuitBreakerMap = new Map<string, CircuitBreaker<any[], any>>();
 
 /**
  * TODO: Add JSDoc later.
@@ -38,14 +12,13 @@ function transformCircuitBreakerOptionsToOpossumLibOptions(
  * @returns TODO: Add JSDoc later.
  * @internal
  */
-export function createCircuitBreaker<ReturnType>(
-  requestHandler: RequestHandler<ReturnType>,
-  circuitBreakerOptions: CircuitBreakerOptions = defaultCircuitBreakerOptions
+export function createCircuitBreaker<T>(
+  id: string,
+  requestHandler: RequestHandler<T>,
+  opossumLibOptions: OpossumLibOptions
 ): CircuitBreaker {
-  const opossumLibOptions = transformCircuitBreakerOptionsToOpossumLibOptions(
-    circuitBreakerOptions
-  );
   const circuitBreaker = new CircuitBreaker(requestHandler, opossumLibOptions);
+  circuitBreakerMap.set(id, circuitBreaker);
   return circuitBreaker;
 }
 
@@ -56,16 +29,13 @@ export function createCircuitBreaker<ReturnType>(
  * @returns TODO: Add JSDoc later.
  * @internal
  */
-export function getCircuitBreaker<ReturnType>(
-  requestHandler: RequestHandler<ReturnType>,
-  circuitBreakerOptions: CircuitBreakerOptions = defaultCircuitBreakerOptions
+export function getCircuitBreaker<T>(
+  id: string,
+  requestHandler: RequestHandler<T>,
+  opossumLibOptions: OpossumLibOptions
 ): CircuitBreaker<any[], any> {
-  if (!circuitBreakerMap.has(requestHandler)) {
-    const circuitBreaker = createCircuitBreaker(
-      requestHandler,
-      circuitBreakerOptions
-    );
-    circuitBreakerMap.set(requestHandler, circuitBreaker);
+  if (!circuitBreakerMap.has(id)) {
+    return createCircuitBreaker(id, requestHandler, opossumLibOptions);
   }
-  return circuitBreakerMap.get(requestHandler)!;
+  return circuitBreakerMap.get(id)!;
 }

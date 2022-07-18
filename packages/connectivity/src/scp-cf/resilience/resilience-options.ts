@@ -1,41 +1,69 @@
-import { CircuitBreakerOptions } from './circuit-breaker-options';
+import { HttpRequestConfig } from '@sap-cloud-sdk/http-client';
+import {
+  CircuitBreakerOptions,
+  defaultCircuitBreakerOptions
+} from './circuit-breaker-options';
 
 /**
  * TODO: Add JSDoc later.
- * @internal
  */
-export interface CircuitBreakerOptionsServiceTarget {
-  service: CircuitBreakerOptions;
-  target: CircuitBreakerOptions;
-}
+export type TimeoutOptions = false | number;
+
+/**
+ * TODO: Add JSDoc later.
+ */
+export type RequestContext = HttpRequestConfig;
 
 /**
  * Options to configure resilience when fetching destinations.
  */
-export interface ResilienceOptions {
+export interface ResilienceMiddlewareOptions {
   /**
    * Timeout in milliseconds to retrieve the destination.
    */
-  timeout?: number | false;
-  circuitBreaker?: CircuitBreakerOptions | CircuitBreakerOptionsServiceTarget;
+  timeout: (context?: RequestContext) => TimeoutOptions;
+  circuitBreaker: (context?: RequestContext) => CircuitBreakerOptions;
 }
 
 /**
  * TODO: Add JSDoc later.
  */
-export const defaultResilienceOptions: Required<ResilienceOptions> = {
-  timeout: 10000,
-  circuitBreaker: true
+export const defaultResilienceOptions: Required<ResilienceMiddlewareOptions> = {
+  timeout: () => 10000,
+  circuitBreaker: enableCircuitBreakerForBTP
 };
 
 /**
- * @internal
+ * TODO: Add JSDoc later.
+ * @param context - TODO: Add JSDoc later.
+ * @returns TODO: Add JSDoc later.
  */
-export function isCircuitBreakerOptionsServiceTarget(
-  options: CircuitBreakerOptions | CircuitBreakerOptionsServiceTarget
-): options is CircuitBreakerOptionsServiceTarget {
-  if (typeof options === 'object') {
-    return 'service' in options || 'target' in options;
+function enableCircuitBreakerForBTP(
+  context: RequestContext
+): CircuitBreakerOptions {
+  if (context.url?.includes('')) {
+    return { ...defaultCircuitBreakerOptions, id: context.url };
   }
   return false;
 }
+
+/**
+ * Type of the request handler that needs to be wrapped with resilience.
+ */
+export type RequestHandler<T> = (...args: any[]) => Promise<T>;
+
+/**
+ * TODO: Add JSDoc later.
+ */
+export interface MiddlewareInOutOptions<T> {
+  fn: RequestHandler<T>;
+  context?: RequestContext;
+  exitChain?: boolean;
+}
+
+/**
+ * TODO: Add JSDoc later.
+ */
+export type Middleware<T> = (
+  options: MiddlewareInOutOptions<T>
+) => MiddlewareInOutOptions<T>;

@@ -1,26 +1,11 @@
-import { createLogger } from '@sap-cloud-sdk/util';
 import { getCircuitBreaker } from './circuit-breaker';
 import {
-  CircuitBreakerOptions,
-  defaultCircuitBreakerOptions
-} from './circuit-breaker-options';
-import {
-  defaultResilienceOptions,
-  isCircuitBreakerOptionsServiceTarget,
-  ResilienceOptions
+  Middleware,
+  MiddlewareInOutOptions,
+  RequestHandler,
+  ResilienceMiddlewareOptions,
+  TimeoutOptions
 } from './resilience-options';
-
-const logger = createLogger({
-  package: 'connectivity',
-  messageContext: 'resilience'
-});
-
-/**
- * Type of the request handler that needs to be wrapped with resilience.
- */
-export type RequestHandler<ReturnType> = (
-  ...args: any[]
-) => Promise<ReturnType>;
 
 /**
  * Create a promise for a time out race.
@@ -43,10 +28,10 @@ async function timeoutPromise<T>(timeout: number): Promise<T> {
  */
 export function addTimeout<T>(
   requestHandler: RequestHandler<T>,
-  timeout: number
+  timeout: TimeoutOptions
 ): Promise<T> {
   // If timeout is non-positive, we don't add timeout to the promise.
-  if (timeout <= 0) {
+  if (!timeout || timeout < 0) {
     return requestHandler();
   }
   const racePromise = timeoutPromise<T>(timeout);
@@ -55,153 +40,102 @@ export function addTimeout<T>(
 
 /**
  * TODO: Add JSDoc later.
- * @param resilienceOptions - TODO: Add JSDoc later.
- * @returns - TODO: Add JSDoc later.
- * @internal
- */
-export function normalizeTimeout(
-  resilienceOptions: ResilienceOptions
-): ResilienceOptions {
-  if (resilienceOptions.timeout === undefined) {
-    resilienceOptions.timeout = defaultResilienceOptions.timeout;
-  }
-
-  if (resilienceOptions.timeout !== false && resilienceOptions.timeout <= 0) {
-    logger.warn(
-      `Invalid time out (${resilienceOptions.timeout}) received! Disabling resilience time out.`
-    );
-    // Disable time out if invalid
-    resilienceOptions.timeout = false;
-  }
-  return resilienceOptions;
-}
-
-/**
- * TODO: Add JSDoc later.
- * @param resilienceOptions - TODO: Add JSDoc later.
- * @returns - TODO: Add JSDoc later.
- * @internal
- */
-export function normalizeCircuitBreakerOptions(
-  resilienceOptions: ResilienceOptions
-): ResilienceOptions {
-  if (resilienceOptions.circuitBreaker === undefined) {
-    // Circuit breaker is enabled by default
-    resilienceOptions.circuitBreaker = defaultResilienceOptions.circuitBreaker;
-  }
-
-  if (resilienceOptions.circuitBreaker === true) {
-    // Circuit breaker is true, use default circuit breaker options with resilience timeout
-    resilienceOptions.circuitBreaker = {
-      ...defaultCircuitBreakerOptions,
-      timeout: resilienceOptions.timeout
-    };
-  } else if (
-    isCircuitBreakerOptionsServiceTarget(resilienceOptions.circuitBreaker)
-  ) {
-    // Circuit breaker is in the form of { service: ..., target: ... }
-    if (resilienceOptions.circuitBreaker.service === true) {
-      resilienceOptions.circuitBreaker.service = {
-        ...defaultCircuitBreakerOptions,
-        timeout: resilienceOptions.timeout
-      };
-    } else if (resilienceOptions.circuitBreaker.service) {
-      // Circuit breaker service is defined explicitly
-      if (resilienceOptions.timeout) {
-        logger.debug(
-          'Resilience timeout is ignored since circuit breaker service is defined explicitly.'
-        );
-      }
-    }
-    if (resilienceOptions.circuitBreaker.target === true) {
-      resilienceOptions.circuitBreaker.target = {
-        ...defaultCircuitBreakerOptions,
-        timeout: resilienceOptions.timeout
-      };
-    } else if (resilienceOptions.circuitBreaker.service) {
-      // Circuit breaker target is defined explicitly
-      if (resilienceOptions.timeout) {
-        logger.debug(
-          'Resilience timeout is ignored since circuit breaker target is defined explicitly.'
-        );
-      }
-    }
-  } else {
-    // Circuit breaker is defined explicitly
-    if (resilienceOptions.timeout) {
-      logger.debug(
-        'Resilience timeout is ignored since circuit breaker is defined explicitly.'
-      );
-    }
-  }
-
-  return resilienceOptions;
-}
-
-/**
- * TODO: Add JSDoc later.
- * @param resilienceOptions - TODO: Add JSDoc later.
- * @returns - TODO: Add JSDoc later.
- * @internal
- */
-export function normalizeResilienceOptions(
-  resilienceOptions: ResilienceOptions
-): ResilienceOptions {
-  resilienceOptions = normalizeTimeout(resilienceOptions);
-  resilienceOptions = normalizeCircuitBreakerOptions(resilienceOptions);
-
-  return resilienceOptions;
-}
-
-/**
- * TODO: Add JSDoc later.
- * @param request - TODO: Add JSDoc later.
- * @param request.fn - TODO: Add JSDoc later.
- * @param request.args - TODO: Add JSDoc later.
- * @param resilienceOptions - TODO: Add JSDoc later.
- * @param requestType - TODO: Add JSDoc later.
+ * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
  */
-export function addResilience<T>(
-  request: { fn: RequestHandler<T>; args?: any[] },
-  resilienceOptions: ResilienceOptions,
-  requestType?: 'service' | 'target'
-): RequestHandler<T> {
-  const { timeout, circuitBreaker } = resilienceOptions;
-  const args = request.args ?? [];
+export function addResilienceMiddlwares<T>(
+  resilienceMiddlewareOptions: ResilienceMiddlewareOptions
+): Middleware<T>[] {
+  return [
+    getTimeoutMiddleware(resilienceMiddlewareOptions),
+    getCircuitBreakerMiddleware(resilienceMiddlewareOptions)
+  ];
+}
 
-  // Circuit breaker + timeout
-  let finalCircuitBreaker: CircuitBreakerOptions;
+/**
+ * TODO: Add JSDoc later.
+ * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
+ * @returns TODO: Add JSDoc later.
+ */
+export function getTimeoutMiddleware<T>(
+  resilienceMiddlewareOptions: ResilienceMiddlewareOptions
+): Middleware<T> {
+  const { timeout, circuitBreaker } = resilienceMiddlewareOptions;
+  const circuitBreakerMiddlewareFn = (
+    middlewareInOutOptions: MiddlewareInOutOptions<T>
+  ) => {
+    const timeoutOptions = timeout(middlewareInOutOptions.context);
+    const circuitBreakerOptions = circuitBreaker(
+      middlewareInOutOptions.context
+    );
 
-  if (isCircuitBreakerOptionsServiceTarget(circuitBreaker)) {
-    if (requestType === 'service') {
-      finalCircuitBreaker = circuitBreaker.service;
-    } else if (requestType === 'target') {
-      finalCircuitBreaker = circuitBreaker.target;
-    } else {
-      logger.warn(
-        'Unknown request type for adding resilience. Using `service` circuit breaker by default.'
-      );
-      finalCircuitBreaker = circuitBreaker.service;
+    if (!circuitBreakerOptions) {
+      return addTimeout(() => middlewareInOutOptions.fn(), timeoutOptions);
     }
-  } else {
-    finalCircuitBreaker = circuitBreaker;
-  }
 
-  let timeoutOrCircuitBreakerfn: RequestHandler<T>;
+    return middlewareInOutOptions.fn();
+  };
 
-  if (finalCircuitBreaker) {
-    // Add circuit breaker
-    timeoutOrCircuitBreakerfn = () =>
-      getCircuitBreaker(() => request.fn(...args), finalCircuitBreaker).fire();
-  } else {
-    // Add our own timeout
-    if (timeout) {
-      timeoutOrCircuitBreakerfn = () =>
-        addTimeout(() => request.fn(...args), timeout);
-    } else {
-      timeoutOrCircuitBreakerfn = () => request.fn(...args);
+  return (middlewareInOutOptions: MiddlewareInOutOptions<T>) => ({
+    fn: circuitBreakerMiddlewareFn,
+    context: middlewareInOutOptions.context,
+    exitChain: middlewareInOutOptions.exitChain
+  });
+}
+
+/**
+ * TODO: Add JSDoc later.
+ * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
+ * @returns TODO: Add JSDoc later.
+ */
+export function getCircuitBreakerMiddleware<T>(
+  resilienceMiddlewareOptions: ResilienceMiddlewareOptions
+): Middleware<T> {
+  const { timeout, circuitBreaker } = resilienceMiddlewareOptions;
+  const timeoutMiddlewareFn = (
+    middlewareInOutOptions: MiddlewareInOutOptions<T>
+  ) => {
+    const timeoutOptions = timeout(middlewareInOutOptions.context);
+    const circuitBreakerOptions = circuitBreaker(
+      middlewareInOutOptions.context
+    );
+
+    if (circuitBreakerOptions) {
+      return getCircuitBreaker(
+        circuitBreakerOptions.id,
+        () => middlewareInOutOptions.fn(),
+        {
+          ...circuitBreakerOptions,
+          timeout: timeoutOptions
+        }
+      ).fire();
     }
-  }
-  return timeoutOrCircuitBreakerfn;
+
+    return middlewareInOutOptions.fn();
+  };
+
+  return (middlewareInOutOptions: MiddlewareInOutOptions<T>) => ({
+    fn: timeoutMiddlewareFn,
+    context: middlewareInOutOptions.context,
+    exitChain: middlewareInOutOptions.exitChain
+  });
+}
+
+/**
+ * TODO: Add JSDoc later.
+ * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
+ * @returns TODO: Add JSDoc later.
+ */
+export function resilience<T>(
+  resilienceMiddlewareOptions: ResilienceMiddlewareOptions
+): Middleware<T> {
+  const resilienceMiddlewares: Middleware<T>[] = addResilienceMiddlwares(
+    resilienceMiddlewareOptions
+  );
+  const reducedMiddleware = resilienceMiddlewares.reduce(
+    (prev, curr) => (middlewareInOutOptions: MiddlewareInOutOptions<T>) =>
+      curr(prev(middlewareInOutOptions))
+  );
+  return (middlewareInOutOptions: MiddlewareInOutOptions<T>) =>
+    reducedMiddleware(middlewareInOutOptions);
 }

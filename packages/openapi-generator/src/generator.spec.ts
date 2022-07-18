@@ -272,7 +272,7 @@ describe('generator', () => {
         })
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
               "Could not generate client. Errors: [
-                ErrorWithCause: Could not write file \\"test.ts\\". File already exists. If you want to allow overwriting files, enable the \`overwrite\` flag.
+              	ErrorWithCause: Could not write file \\"test.ts\\". File already exists. If you want to allow overwriting files, enable the \`overwrite\` flag.
               ]"
             `);
     });
@@ -335,15 +335,17 @@ describe('generator', () => {
         })
       ).resolves.toBeUndefined();
 
-      const generatedClients = await promises.readdir('root/OutDir')
-      expect(generatedClients.length).toEqual(3)
+      const generatedClients = await promises.readdir('root/OutDir');
+      expect(generatedClients.length).toEqual(3);
 
       expect(warnSpy).toHaveBeenCalledWith(
-        expect.stringContaining("client-generating from YAML file(s) below was skipped because you placed the JSON specification file(s) for the same service in a input directory")
-      )
+        expect.stringContaining(
+          'client-generating from YAML file(s) below was skipped because you placed the JSON specification file(s) for the same service in a input directory'
+        )
+      );
 
       mock.restore();
-    })
+    });
 
     it('should throw an error due to duplicated JSON files', async () => {
       mock.restore();
@@ -360,11 +362,15 @@ describe('generator', () => {
         }
       });
 
-      await expect(await generate({
-        input: 'root/inputDir',
-        outputDir: 'root/OutDir',
-        overwrite: true
-      })).resolves.toBeUndefined();
+      await expect(
+        generate({
+          input: 'root/inputDir',
+          outputDir: 'root/OutDir',
+          overwrite: true
+        })
+      ).rejects.toThrowError(
+        'Duplicate service directory names found. Customize directory names with `optionsPerService` or enable automatic name adjustment with `skipValidation`.'
+      );
 
       mock.restore();
     });
@@ -372,6 +378,3 @@ describe('generator', () => {
 });
 
 const endsWithNewLine = /\n$/;
-
-
-

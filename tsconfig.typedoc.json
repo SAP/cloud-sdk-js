@@ -13,7 +13,9 @@
     "./packages/test-util/**/*",
     "./packages/temporal-de-serializers/**/*"
   ],
-  "exclude": ["**/*.spec.ts"],
+  "exclude": [
+    "**/*.spec.ts"
+  ],
   "references": [
     {
       "path": "./packages/util"
@@ -50,7 +52,7 @@
     }
   ],
   "typedocOptions": {
-    "out": "docs/api/2.5.0",
+    "out": "docs/api/2.6.0",
     "entryPoints": [
       "packages/util/src/index.ts",
       "packages/connectivity/src/index.ts",

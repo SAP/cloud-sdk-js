@@ -99,10 +99,6 @@ describe('edmToTs()', () => {
     expect(() => deserializeDurationToTemporal('+P4DT23H13m23S')).toThrow(
       / does not follow the Edm.Duration pattern/
     );
-
-    expect(() => deserializeDurationToTemporal('PT501S')).toThrow(
-      / does not follow the Edm.Duration pattern/
-    );
   });
 
   it('should parse Edm.TimeOfDay to Time', () => {

@@ -33,7 +33,10 @@ export const xsuaaBindingMock: Service = {
     clientid: 'clientid',
     clientsecret: 'clientsecret',
     verificationkey: publicKey,
-    uaadomain: 'authentication.sap.hana.ondemand.com'
+    uaadomain: 'authentication.sap.hana.ondemand.com',
+    subaccountid: "a89ea924-d9c2-4eab-84fb-3ffcaadf5d24",
+    tenantid: "a89ea924-d9c2-4eab-84fb-3ffcaadf5d24",
+    zoneid: "a89ea924-d9c2-4eab-84fb-3ffcaadf5d24"
   }
 };
 

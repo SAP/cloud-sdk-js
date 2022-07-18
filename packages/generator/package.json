@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -40,15 +40,15 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/generator-common": "^2.5.0",
-    "@sap-cloud-sdk/odata-common": "^2.5.0",
-    "@sap-cloud-sdk/odata-v2": "^2.5.0",
-    "@sap-cloud-sdk/odata-v4": "^2.5.0",
-    "@sap-cloud-sdk/util": "^2.5.0",
-    "@sap/edm-converters": "~1.0.21",
+    "@sap-cloud-sdk/generator-common": "^2.6.0",
+    "@sap-cloud-sdk/odata-common": "^2.6.0",
+    "@sap-cloud-sdk/odata-v2": "^2.6.0",
+    "@sap-cloud-sdk/odata-v4": "^2.6.0",
+    "@sap-cloud-sdk/util": "^2.6.0",
+    "@sap/edm-converters": "~1.0.42",
     "@types/fs-extra": "^9.0.1",
     "@types/glob": "^7.1.2",
-    "fast-xml-parser": "^4.0.8",
+    "fast-xml-parser": "^4.0.9",
     "fs-extra": "^10.0.0",
     "glob": "^8.0.1",
     "ts-morph": "^15.1.0",
@@ -59,7 +59,7 @@
   "devDependencies": {
     "@types/yargs": "^17.0.0",
     "execa": "^5.0.0",
-    "jest-extended": "^2.0.0",
+    "jest-extended": "^3.0.1",
     "mock-fs": "^5.0.0",
     "nock": "^13.2.8"
   }

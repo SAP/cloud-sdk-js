@@ -2,6 +2,8 @@
 '@sap-cloud-sdk/connectivity': patch
 ---
 
-[Compatibility Note] When fetching a single destination from destination service, the SDK always loaded and parsed all available destinations and filtered on the name later.
-This behavior had issues when some destinations could not be properly parsed, and it had negative performance implications.
-Now only the specific destination is retrieved and parsed.
+[Compatibility Note] When fetching a single destination from destination service, the SDK always loads and parses all available destinations and filters on the name later.
+This behavior has issues when some destinations can not be properly parsed, and it has negative performance implications when only one destination is used but many destinations were configured.
+The new behavior is to only load and parse the specific destination by name.
+The new behavior might have negative performance implications if many destinations are used.
+This potential issue is addressed in [issue 738](https://github.com/SAP/cloud-sdk-backlog/issues/738).

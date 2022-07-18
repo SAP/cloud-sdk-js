@@ -227,20 +227,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    const executeHttpRequestHandler = async () =>
-      executeHttpRequest(destination, await this.requestConfig(), {
-        fetchCsrfToken: this.config.fetchCsrfToken
-      });
-
-    const middlewareWrappedRequestHandler = [
-      this.config.resilienceMiddleware,
-      ...this.config.middlewares
-    ].reduce(
-      (prev, curr) => () => curr(prev, this.config),
-      executeHttpRequestHandler
-    );
-
-    return middlewareWrappedRequestHandler().catch(error => {
+    return executeHttpRequest(destination, await this.requestConfig(), {
+      fetchCsrfToken: this.config.fetchCsrfToken
+    }).catch(error => {
       throw constructError(error, this.config.method, this.serviceUrl());
     });
   }

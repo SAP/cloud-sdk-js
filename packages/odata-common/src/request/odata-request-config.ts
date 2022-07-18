@@ -81,8 +81,6 @@ export abstract class ODataRequestConfig {
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
   private _timeout: number | undefined = undefined;
-  private _resilienceMiddleware = createDefaultResilienceMiddleware();
-  private _middlewares: MiddlewareType<any>[] = [];
 
   constructor(
     method: RequestMethodType,
@@ -115,7 +113,6 @@ export abstract class ODataRequestConfig {
 
   /**
    * Set timeout.
-   * @deprecated
    */
   set timeout(timeout: number | undefined) {
     this._timeout = timeout;
@@ -124,7 +121,6 @@ export abstract class ODataRequestConfig {
   /**
    * Get timeout.
    * @returns Timeout.
-   * @deprecated
    */
   get timeout(): number | undefined {
     return this._timeout;
@@ -167,23 +163,6 @@ export abstract class ODataRequestConfig {
 
   get fetchCsrfToken(): boolean {
     return this._fetchCsrfToken;
-  }
-
-  // TODO: check the type parameter for MiddlewareType
-  set resilienceMiddleware(resilienceMiddleware: MiddlewareType<any>) {
-    this._resilienceMiddleware = resilienceMiddleware;
-  }
-
-  get resilienceMiddleware(): MiddlewareType<any> {
-    return this._resilienceMiddleware;
-  }
-
-  set middlewares(middlewares: MiddlewareType<any>[]) {
-    this._middlewares = middlewares;
-  }
-
-  get middlewares(): MiddlewareType<any>[] {
-    return this._middlewares;
   }
 
   /**

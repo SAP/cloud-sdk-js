@@ -167,7 +167,7 @@ describe('UpdateRequestBuilder', () => {
       .replaceWholeEntityWithPut()
       .execute(defaultDestination);
 
-    expect(await actual).toEqual(entity.setOrInitializeRemoteState());
+    expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
   it('update request includes required fields', async () => {

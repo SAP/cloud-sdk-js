@@ -16,7 +16,7 @@
 <li><a href="sap_cloud_sdk_odata_common.Filter">Filter</a></li></ul>
 <h1>Class Filter&lt;EntityT, DeSerializersT, FieldT&gt;</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Represents a filter expression to narrow the data on a GetAllRequestBuilder request for multiple entities that match the specified criteria.
+<div class="tsd-comment tsd-typography"><p>Represents a filter expression to narrow the data on a <a href="sap_cloud_sdk_odata_common.GetAllRequestBuilderBase">GetAllRequestBuilder</a> request for multiple entities that match the specified criteria.
 A filter refers to the field of an entity and restricts the request based on an operator and a value. <code>Entity.FIELD_NAME.operator(value)</code>.</p>
 
 <h3>Example</h3><p><code>Product.NAME.equals(&#39;cloud-sdk&#39;)</code> creates a filter for the entity <code>Product</code> that matches in case the field <code>NAME</code> equals &#39;cloud-sdk&#39;.</p>
@@ -24,7 +24,7 @@ A filter refers to the field of an entity and restricts the request based on an 
 
 <h3>Typeparam</h3><p>EntityT - Type of the entity to be filtered on.</p>
 
-<h3>Typeparam</h3><p>FieldT - Type of the field to be filtered by, see also: FieldType.</p>
+<h3>Typeparam</h3><p>FieldT - Type of the field to be filtered by.</p>
 </div></section>
 <section class="tsd-panel tsd-type-parameters">
 <h4>Type Parameters</h4>
@@ -42,7 +42,9 @@ A filter refers to the field of an entity and restricts the request based on an 
 <section class="tsd-panel">
 <h4>Implements</h4>
 <ul class="tsd-hierarchy">
-<li><a href="../interfaces/sap_cloud_sdk_odata_common.EntityIdentifiable" class="tsd-signature-type" data-tsd-kind="Interface">EntityIdentifiable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">DeSerializersT</span><span class="tsd-signature-symbol">&gt;</span></li></ul></section>
+<li><a href="../interfaces/sap_cloud_sdk_odata_common.EntityIdentifiable" class="tsd-signature-type" data-tsd-kind="Interface">EntityIdentifiable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">DeSerializersT</span><span class="tsd-signature-symbol">&gt;</span></li></ul></section><aside class="tsd-sources">
+<ul>
+<li>Defined in packages/odata-common/dist/filter/filter.d.ts:36</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -98,7 +100,9 @@ A filter refers to the field of an entity and restricts the request based on an 
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> edmType: <a href="../types/sap_cloud_sdk_odata_common.EdmTypeShared" class="tsd-signature-type" data-tsd-kind="Type alias">EdmTypeShared</a><span class="tsd-signature-symbol">&lt;</span><a href="../types/sap_cloud_sdk_odata_common.ODataVersionOf" class="tsd-signature-type" data-tsd-kind="Type alias">ODataVersionOf</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
 <div class="tsd-comment tsd-typography"><p>EDM type of the field to filter on, needed for custom fields.</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="sap_cloud_sdk_odata_common.Filter" class="tsd-signature-type" data-tsd-kind="Class">Filter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">DeSerializersT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">FieldT</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section></section>
+<h4 class="tsd-returns-title">Returns <a href="sap_cloud_sdk_odata_common.Filter" class="tsd-signature-type" data-tsd-kind="Class">Filter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">DeSerializersT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">FieldT</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in packages/odata-common/dist/filter/filter.d.ts:53</li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="_deSerializers" class="tsd-anchor"></a>

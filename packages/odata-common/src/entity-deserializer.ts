@@ -45,9 +45,6 @@ export interface EntityDeserializer {
   ) => any;
 }
 
-type ExtractODataETagType = (json: Record<string, any>) => string | undefined;
-type ExtractDataFromOneToManyLinkType = (data: any) => any[];
-
 /**
  * Constructs an entityDeserializer given the OData v2 or v4 specific methods.
  * The concrete deserializers are created in odata/v2/entity-deserializer.ts and odata/v4/entity-deserializer.ts.
@@ -58,8 +55,8 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  */
 export function entityDeserializer<T extends DeSerializers>(
   deSerializers: T,
-  extractODataETag: ExtractODataETagType,
-  extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
+  extractODataETag: (json: Record<string, any>) => string | undefined,
+  extractDataFromOneToManyLink: (data: any) => any[]
 ): EntityDeserializer {
   const edmToTs = createValueDeserializer(deSerializers);
   /**

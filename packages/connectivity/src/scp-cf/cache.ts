@@ -16,7 +16,7 @@ export interface DateInputObject {
 }
 
 /**
- * Respresentation of a cached object.
+ * Representation of a cached object.
  */
 export interface CacheEntry<T> {
   expires?: number;

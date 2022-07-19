@@ -133,8 +133,12 @@ export function resilience<T>(
     resilienceMiddlewareOptions
   );
   const reducedMiddleware = resilienceMiddlewares.reduce(
-    (prev, curr) => (middlewareInOutOptions: MiddlewareInOutOptions<T>) =>
-      curr(prev(middlewareInOutOptions))
+    (prev, curr) => (middlewareInOutOptions: MiddlewareInOutOptions<T>) => {
+      if (middlewareInOutOptions.exitChain) {
+        return prev(middlewareInOutOptions);
+      }
+      return curr(prev(middlewareInOutOptions));
+    }
   );
   return (middlewareInOutOptions: MiddlewareInOutOptions<T>) =>
     reducedMiddleware(middlewareInOutOptions);

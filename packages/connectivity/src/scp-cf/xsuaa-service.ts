@@ -3,10 +3,14 @@ import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';
-import { addResilience } from './resilience/resilience';
-import { ResilienceOptions } from './resilience/resilience-options';
+import {
+  defaultResilienceOptions,
+  ResilienceMiddlewareOptions,
+  ResilienceOptions
+} from './resilience/resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
+import { resilience } from './resilience/resilience';
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
@@ -50,16 +54,28 @@ export function getSubdomainAndZoneId(
 export async function getClientCredentialsToken(
   service: string | Service,
   userJwt?: string | JwtPayload,
-  options?: ResilienceOptions
+  options?: ResilienceOptions & {
+    resilienceMiddleware?: ResilienceMiddlewareOptions;
+  }
 ): Promise<ClientCredentialsResponse> {
   if (options) {
-    return addResilience(
-      {
-        fn: getClientCredentialsToken,
-        args: [service, userJwt]
-      },
-      options
-    )();
+    const timeout =
+      options.resilienceMiddleware?.timeout || options.timeout
+        ? () => options.timeout as number
+        : defaultResilienceOptions.timeout;
+    const circuitBreaker =
+      options.resilienceMiddleware?.circuitBreaker ||
+      options.enableCircuitBreaker
+        ? defaultResilienceOptions.circuitBreaker
+        : () => false as const;
+
+    const resilienceMiddleware = resilience({ timeout, circuitBreaker });
+
+    resilienceMiddleware({
+      fn: () => getClientCredentialsToken(service, userJwt),
+      context: { url: 'btpDomain' },
+      exitChain: false
+    }).fn();
   }
 
   const serviceCredentials = resolveService(service).credentials;
@@ -91,18 +107,29 @@ export async function getClientCredentialsToken(
 export function getUserToken(
   service: Service,
   userJwt: string,
-  options?: ResilienceOptions
+  options?: ResilienceOptions & {
+    resilienceMiddleware?: ResilienceMiddlewareOptions;
+  }
 ): Promise<string> {
   if (options) {
-    return addResilience(
-      {
-        fn: getUserToken,
-        args: [service, userJwt]
-      },
-      options
-    )();
-  }
+    const timeout =
+      options.resilienceMiddleware?.timeout || options.timeout
+        ? () => options.timeout as number
+        : defaultResilienceOptions.timeout;
+    const circuitBreaker =
+      options.resilienceMiddleware?.circuitBreaker ||
+      options.enableCircuitBreaker
+        ? defaultResilienceOptions.circuitBreaker
+        : () => false as const;
 
+    const resilienceMiddleware = resilience({ timeout, circuitBreaker });
+
+    resilienceMiddleware({
+      fn: () => getUserToken(service, userJwt),
+      context: { url: 'btpDomain' },
+      exitChain: false
+    }).fn();
+  }
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
   const xssecPromise = new Promise((resolve: (token: string) => void, reject) =>

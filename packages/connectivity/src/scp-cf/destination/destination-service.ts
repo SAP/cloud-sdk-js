@@ -6,9 +6,13 @@ import {
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import { addResilience } from '../resilience/resilience';
-import { ResilienceOptions } from '../resilience/resilience-options';
+import {
+  defaultResilienceOptions,
+  ResilienceMiddlewareOptions,
+  ResilienceOptions
+} from '../resilience/resilience-options';
 import { urlAndAgent } from '../../http-agent';
+import { resilience } from '../resilience/resilience';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -281,20 +285,32 @@ async function callDestinationEndpoint(
 async function callDestinationService(
   uri: string,
   headers: Record<string, any>,
-  options?: ResilienceOptions
+  options?: ResilienceOptions & {
+    resilienceMiddleware?: ResilienceMiddlewareOptions;
+  }
 ): Promise<
   AxiosResponse<
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
   if (options) {
-    return addResilience(
-      {
-        fn: callDestinationService,
-        args: [uri, headers]
-      },
-      options
-    )();
+    const timeout =
+      options.resilienceMiddleware?.timeout || options.timeout
+        ? () => options.timeout as number
+        : defaultResilienceOptions.timeout;
+    const circuitBreaker =
+      options.resilienceMiddleware?.circuitBreaker ||
+      options.enableCircuitBreaker
+        ? defaultResilienceOptions.circuitBreaker
+        : () => false as const;
+
+    const resilienceMiddleware = resilience({ timeout, circuitBreaker });
+
+    resilienceMiddleware({
+      fn: () => callDestinationService(uri, headers),
+      context: { url: 'btpDomain' },
+      exitChain: false
+    }).fn();
   }
 
   const config: AxiosRequestConfig = {

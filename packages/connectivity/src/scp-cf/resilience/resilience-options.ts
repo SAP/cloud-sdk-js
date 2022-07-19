@@ -1,8 +1,25 @@
-import { HttpRequestConfig } from '@sap-cloud-sdk/http-client';
+import { Method } from '@sap-cloud-sdk/http-client';
 import {
   CircuitBreakerOptions,
   defaultCircuitBreakerOptions
 } from './circuit-breaker-options';
+
+/**
+ * Options to configure resilience when fetching destinations.
+ * @deprecated
+ */
+export interface ResilienceOptions {
+  /**
+   * A boolean value that indicates whether to execute request to SCP-CF services using circuit breaker.
+   * ResilienceOptions.
+   */
+  enableCircuitBreaker?: boolean;
+
+  /**
+   * Timeout in milliseconds to retrieve the destination.
+   */
+  timeout?: number;
+}
 
 /**
  * TODO: Add JSDoc later.
@@ -12,7 +29,12 @@ export type TimeoutOptions = false | number;
 /**
  * TODO: Add JSDoc later.
  */
-export type RequestContext = HttpRequestConfig;
+export interface RequestContext {
+  url?: string;
+  headers?: Record<string, string>;
+  jwt?: string;
+  method?: Method;
+}
 
 /**
  * Options to configure resilience when fetching destinations.
@@ -41,7 +63,7 @@ export const defaultResilienceOptions: Required<ResilienceMiddlewareOptions> = {
 function enableCircuitBreakerForBTP(
   context: RequestContext
 ): CircuitBreakerOptions {
-  if (context.url?.includes('')) {
+  if (context.url && context.url === 'btpDomain') {
     return { ...defaultCircuitBreakerOptions, id: context.url };
   }
   return false;

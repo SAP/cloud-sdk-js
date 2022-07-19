@@ -4,13 +4,12 @@ import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';
 import {
-  defaultResilienceOptions,
   ResilienceMiddlewareOptions,
   ResilienceOptions
 } from './resilience/resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
-import { resilience } from './resilience/resilience';
+import { callWithResilience } from './resilience/resilience';
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
@@ -58,26 +57,15 @@ export async function getClientCredentialsToken(
     resilience?: ResilienceMiddlewareOptions;
   }
 ): Promise<ClientCredentialsResponse> {
-  if (options) {
-    const timeout =
-      options.resilience?.timeout || options.timeout
-        ? () => options.timeout as number
-        : defaultResilienceOptions.timeout;
-    const circuitBreaker =
-      options.resilience?.circuitBreaker || options.enableCircuitBreaker
-        ? defaultResilienceOptions.circuitBreaker
-        : () => false as const;
-
-    const resilienceMiddleware = resilience<ClientCredentialsResponse>({
-      timeout,
-      circuitBreaker
-    });
-
-    return resilienceMiddleware({
-      fn: () => getClientCredentialsToken(service, userJwt),
-      context: { url: 'btpDomain' },
-      exitChain: false
-    }).fn();
+  if (
+    options?.resilience ||
+    options?.enableCircuitBreaker ||
+    options?.timeout
+  ) {
+    return callWithResilience(
+      () => getClientCredentialsToken(service, userJwt),
+      options
+    );
   }
 
   const serviceCredentials = resolveService(service).credentials;
@@ -113,26 +101,12 @@ export function getUserToken(
     resilience?: ResilienceMiddlewareOptions;
   }
 ): Promise<string> {
-  if (options) {
-    const timeout =
-      options.resilience?.timeout || options.timeout
-        ? () => options.timeout as number
-        : defaultResilienceOptions.timeout;
-    const circuitBreaker =
-      options.resilience?.circuitBreaker || options.enableCircuitBreaker
-        ? defaultResilienceOptions.circuitBreaker
-        : () => false as const;
-
-    const resilienceMiddleware = resilience<string>({
-      timeout,
-      circuitBreaker
-    });
-
-    return resilienceMiddleware({
-      fn: () => getUserToken(service, userJwt),
-      context: { url: 'btpDomain' },
-      exitChain: false
-    }).fn();
+  if (
+    options?.resilience ||
+    options?.enableCircuitBreaker ||
+    options?.timeout
+  ) {
+    return callWithResilience(() => getUserToken(service, userJwt), options);
   }
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 

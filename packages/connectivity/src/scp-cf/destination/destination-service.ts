@@ -7,12 +7,11 @@ import {
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
-  defaultResilienceOptions,
   ResilienceMiddlewareOptions,
   ResilienceOptions
 } from '../resilience/resilience-options';
 import { urlAndAgent } from '../../http-agent';
-import { resilience } from '../resilience/resilience';
+import { callWithResilience } from '../resilience/resilience';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -299,27 +298,15 @@ async function callDestinationService(
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
-  if (options) {
-    const timeout =
-      options.resilience?.timeout || options.timeout
-        ? () => options.timeout as number
-        : defaultResilienceOptions.timeout;
-    const circuitBreaker =
-      options.resilience?.circuitBreaker || options.enableCircuitBreaker
-        ? defaultResilienceOptions.circuitBreaker
-        : () => false as const;
-
-    const resilienceMiddleware = resilience<
-      AxiosResponse<
-        DestinationCertificateJson | DestinationConfiguration | DestinationJson
-      >
-    >({ timeout, circuitBreaker });
-
-    return resilienceMiddleware({
-      fn: () => callDestinationService(uri, headers),
-      context: { url: 'btpDomain' },
-      exitChain: false
-    }).fn();
+  if (
+    options?.resilience ||
+    options?.enableCircuitBreaker ||
+    options?.timeout
+  ) {
+    return callWithResilience(
+      () => callDestinationService(uri, headers),
+      options
+    );
   }
 
   const config: AxiosRequestConfig = {

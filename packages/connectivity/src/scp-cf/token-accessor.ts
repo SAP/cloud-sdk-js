@@ -56,11 +56,7 @@ export async function serviceToken(
   }
 
   try {
-    const token = await getClientCredentialsToken(
-      service,
-      options?.jwt,
-      options
-    );
+    const token = await getClientCredentialsToken(service, options?.jwt, opts);
 
     if (opts.useCache) {
       const xsuaa = multiTenantXsuaaCredentials(options);

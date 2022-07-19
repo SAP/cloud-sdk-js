@@ -13,14 +13,14 @@ export interface OpossumLibOptions {
 /**
  * TODO: Add JSDoc later.
  */
-export type CircuitBreakerOptions =
-  | false
-  | (Omit<OpossumLibOptions, 'timeout'> & { id: string });
+export type CircuitBreakerOptions = false | Omit<OpossumLibOptions, 'timeout'>;
 
 /**
  * TODO: Add JSDoc later.
  */
-export const defaultCircuitBreakerOptions: Omit<CircuitBreakerOptions, 'id'> = {
+export const defaultCircuitBreakerOptions: Required<
+  Exclude<CircuitBreakerOptions, false>
+> = {
   errorThresholdPercentage: 50,
   volumeThreshold: 10,
   resetTimeout: 30000

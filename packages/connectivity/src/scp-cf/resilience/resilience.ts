@@ -1,11 +1,15 @@
-import { getCircuitBreaker } from './circuit-breaker';
+import { createCircuitBreaker } from './circuit-breaker';
 import {
+  defaultResilienceOptions,
   Middleware,
   MiddlewareInOutOptions,
   RequestHandler,
   ResilienceMiddlewareOptions,
+  ResilienceOptions,
   TimeoutOptions
 } from './resilience-options';
+
+const resilienceMiddlewareMap = new Map<string, Middleware<any>>();
 
 /**
  * Create a promise for a time out race.
@@ -43,12 +47,66 @@ export function addTimeout<T>(
  * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
  */
-export function addResilienceMiddlwares<T>(
+export function createTimeoutMiddleware<T>(
+  resilienceMiddlewareOptions: ResilienceMiddlewareOptions
+): Middleware<T> {
+  const { timeout, circuitBreaker } = resilienceMiddlewareOptions;
+  const circuitBreakerMiddlewareFn = (
+    middlewareInOutOptions: MiddlewareInOutOptions<T>
+  ) => {
+    const timeoutOptions = timeout();
+    return addTimeout(middlewareInOutOptions.fn, timeoutOptions);
+  };
+
+  return (middlewareInOutOptions: MiddlewareInOutOptions<T>) => ({
+    fn: () => circuitBreakerMiddlewareFn(middlewareInOutOptions),
+    exitChain: middlewareInOutOptions.exitChain
+  });
+}
+
+/**
+ * TODO: Add JSDoc later.
+ * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
+ * @returns TODO: Add JSDoc later.
+ */
+export function createCircuitBreakerMiddleware<T>(
+  resilienceMiddlewareOptions: ResilienceMiddlewareOptions
+): Middleware<T> {
+  const { timeout, circuitBreaker } = resilienceMiddlewareOptions;
+  const timeoutMiddlewareFn = (
+    middlewareInOutOptions: MiddlewareInOutOptions<T>
+  ) => {
+    const circuitBreakerOptions = circuitBreaker();
+
+    if (circuitBreakerOptions) {
+      return createCircuitBreaker({
+        ...circuitBreakerOptions
+      }).fire(middlewareInOutOptions.fn);
+    }
+
+    return middlewareInOutOptions.fn();
+  };
+
+  return (middlewareInOutOptions: MiddlewareInOutOptions<T>) => ({
+    fn: () => timeoutMiddlewareFn(middlewareInOutOptions),
+    exitChain: middlewareInOutOptions.exitChain
+  });
+}
+
+/**
+ * TODO: Add JSDoc later.
+ * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
+ * @returns TODO: Add JSDoc later.
+ */
+export function createMiddlwares<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
 ): Middleware<T>[] {
+  // From innermost to outtermost middleware:
+  // e.g., [a, b, c] -> c(b(a))
+  // The order of Retry(CB(Timeout)) should be [Timeout, CB, Retry], which makes sense.
   return [
-    getTimeoutMiddleware(resilienceMiddlewareOptions),
-    getCircuitBreakerMiddleware(resilienceMiddlewareOptions)
+    createTimeoutMiddleware(resilienceMiddlewareOptions),
+    createCircuitBreakerMiddleware(resilienceMiddlewareOptions)
   ];
 }
 
@@ -57,79 +115,10 @@ export function addResilienceMiddlwares<T>(
  * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
  */
-export function getTimeoutMiddleware<T>(
+export function createResilienceMiddleware<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
 ): Middleware<T> {
-  const { timeout, circuitBreaker } = resilienceMiddlewareOptions;
-  const circuitBreakerMiddlewareFn = (
-    middlewareInOutOptions: MiddlewareInOutOptions<T>
-  ) => {
-    const timeoutOptions = timeout(middlewareInOutOptions.context);
-    const circuitBreakerOptions = circuitBreaker(
-      middlewareInOutOptions.context
-    );
-
-    if (!circuitBreakerOptions) {
-      return addTimeout(() => middlewareInOutOptions.fn(), timeoutOptions);
-    }
-
-    return middlewareInOutOptions.fn();
-  };
-
-  return (middlewareInOutOptions: MiddlewareInOutOptions<T>) => ({
-    fn: circuitBreakerMiddlewareFn,
-    context: middlewareInOutOptions.context,
-    exitChain: middlewareInOutOptions.exitChain
-  });
-}
-
-/**
- * TODO: Add JSDoc later.
- * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
- * @returns TODO: Add JSDoc later.
- */
-export function getCircuitBreakerMiddleware<T>(
-  resilienceMiddlewareOptions: ResilienceMiddlewareOptions
-): Middleware<T> {
-  const { timeout, circuitBreaker } = resilienceMiddlewareOptions;
-  const timeoutMiddlewareFn = (
-    middlewareInOutOptions: MiddlewareInOutOptions<T>
-  ) => {
-    const timeoutOptions = timeout(middlewareInOutOptions.context);
-    const circuitBreakerOptions = circuitBreaker(
-      middlewareInOutOptions.context
-    );
-
-    if (circuitBreakerOptions) {
-      return getCircuitBreaker<T>(
-        circuitBreakerOptions.id,
-        () => middlewareInOutOptions.fn(),
-        {
-          ...circuitBreakerOptions,
-          timeout: timeoutOptions
-        }
-      ).fire();
-    }
-
-    return middlewareInOutOptions.fn();
-  };
-
-  return (middlewareInOutOptions: MiddlewareInOutOptions<T>) => ({
-    fn: timeoutMiddlewareFn,
-    context: middlewareInOutOptions.context,
-    exitChain: middlewareInOutOptions.exitChain
-  });
-}
-
-/**
- * TODO: Add JSDoc later.
- * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
- * @returns TODO: Add JSDoc later.
- */
-export function resilience<T>(
-  resilienceMiddlewareOptions: ResilienceMiddlewareOptions
-): Middleware<T> {
-  const resilienceMiddlewares: Middleware<T>[] = addResilienceMiddlwares(
+  const resilienceMiddlewares: Middleware<T>[] = createMiddlwares(
     resilienceMiddlewareOptions
   );
   const reducedMiddleware = resilienceMiddlewares.reduce(
@@ -140,6 +129,65 @@ export function resilience<T>(
       return curr(prev(middlewareInOutOptions));
     }
   );
-  return (middlewareInOutOptions: MiddlewareInOutOptions<T>) =>
-    reducedMiddleware(middlewareInOutOptions);
+  resilienceMiddlewareMap.set(
+    resilienceMiddlewareOptions.id,
+    reducedMiddleware
+  );
+
+  return reducedMiddleware;
+}
+
+/**
+ * TODO: Add JSDoc later.
+ * @param id - TODO: Add JSDoc later.
+ * @returns TODO: Add JSDoc later.
+ */
+export function getResilienceMiddleware(
+  id: string
+): Middleware<any> | undefined {
+  return resilienceMiddlewareMap.get(id);
+}
+
+/**
+ * TODO: Add JSDoc later.
+ */
+export function clearResilienceMiddlewareMap(): void {
+  resilienceMiddlewareMap.clear();
+}
+
+/**
+ * TODO: Add JSDoc later.
+ * @param fn - TODO: Add JSDoc later.
+ * @param options - TODO: Add JSDoc later.
+ * @returns TODO: Add JSDoc later.
+ */
+export function callWithResilience<T>(
+  fn: RequestHandler<T>,
+  options: ResilienceOptions & { resilience?: ResilienceMiddlewareOptions }
+): Promise<T> {
+  const timeout =
+    options.resilience?.timeout ||
+    (options.timeout
+      ? () => options.timeout as number
+      : defaultResilienceOptions.timeout);
+  const circuitBreaker =
+    options.resilience?.circuitBreaker ||
+    (options.enableCircuitBreaker
+      ? defaultResilienceOptions.circuitBreaker
+      : () => false as const);
+
+  const id = options.resilience?.id ?? 'btpService-getClientCredentialsToken';
+
+  const resilienceMiddleware =
+    getResilienceMiddleware(id) ??
+    createResilienceMiddleware<T>({
+      id: options.resilience?.id ?? 'btpService-getClientCredentialsToken',
+      timeout,
+      circuitBreaker
+    });
+
+  return resilienceMiddleware({
+    fn,
+    exitChain: false
+  }).fn();
 }

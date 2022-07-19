@@ -9,6 +9,7 @@ import {
   defaultResilienceOptions,
   ResilienceMiddlewareOptions
 } from '../resilience/resilience-options';
+import { clearResilienceMiddlewareMap } from '../resilience';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
@@ -54,6 +55,10 @@ const oauth2SamlBearerDestination = {
 };
 
 describe('destination service', () => {
+  afterEach(() => {
+    clearResilienceMiddlewareMap();
+  });
+
   describe('fetchInstanceDestinations', () => {
     it('fetches instance destinations and returns them as Destination array', async () => {
       const response = [basicDestination, oauth2SamlBearerDestination];
@@ -92,6 +97,7 @@ describe('destination service', () => {
       const instanceDestinations: Destination[] =
         await fetchInstanceDestinations(destinationServiceUri, jwt, {
           resilience: {
+            id: 'fetchInstanceDestinations',
             timeout: defaultResilienceOptions.timeout,
             circuitBreaker: () => false
           }
@@ -117,6 +123,7 @@ describe('destination service', () => {
       await expect(
         fetchInstanceDestinations(destinationServiceUri, jwt, {
           resilience: {
+            id: 'fetchInstanceDestinations',
             timeout: defaultResilienceOptions.timeout,
             circuitBreaker: () => false
           }
@@ -136,6 +143,7 @@ describe('destination service', () => {
       await expect(
         fetchInstanceDestinations(destinationServiceUri, jwt, {
           resilience: {
+            id: 'fetchInstanceDestinations',
             timeout: defaultResilienceOptions.timeout,
             circuitBreaker: () => false
           }
@@ -181,6 +189,7 @@ describe('destination service', () => {
       const subaccountDestinations: Destination[] =
         await fetchSubaccountDestinations(destinationServiceUri, jwt, {
           resilience: {
+            id: 'fetchInstanceDestinations',
             timeout: defaultResilienceOptions.timeout,
             circuitBreaker: () => false
           }
@@ -206,6 +215,7 @@ describe('destination service', () => {
       await expect(
         fetchSubaccountDestinations(destinationServiceUri, jwt, {
           resilience: {
+            id: 'fetchInstanceDestinations',
             timeout: defaultResilienceOptions.timeout,
             circuitBreaker: () => false
           }
@@ -362,6 +372,7 @@ describe('destination service', () => {
         {
           destinationName,
           resilience: {
+            id: 'fetchInstanceDestinations',
             timeout: defaultResilienceOptions.timeout,
             circuitBreaker: () => false
           }
@@ -403,6 +414,7 @@ describe('destination service', () => {
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName,
         resilience: {
+          id: 'fetchDestination',
           timeout: defaultResilienceOptions.timeout,
           circuitBreaker: () => false
         }
@@ -447,10 +459,12 @@ describe('destination service', () => {
       }
 
       await doDelayTest({
+        id: 'fetchDestination-without-cb',
         timeout: () => 10,
         circuitBreaker: () => false
       });
       await doDelayTest({
+        id: 'fetchDestination-with-cb',
         timeout: () => 10,
         circuitBreaker: defaultResilienceOptions.circuitBreaker
       });
@@ -491,6 +505,7 @@ describe('destination service', () => {
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName,
         resilience: {
+          id: 'fetchInstanceDestinations',
           timeout: defaultResilienceOptions.timeout,
           circuitBreaker: () => false
         }
@@ -593,6 +608,7 @@ describe('destination service', () => {
         {
           destinationName,
           resilience: {
+            id: 'fetchDestination',
             timeout: defaultResilienceOptions.timeout,
             circuitBreaker: () => false
           }
@@ -616,6 +632,7 @@ describe('destination service', () => {
         fetchDestination(destinationServiceUri, jwt, {
           destinationName,
           resilience: {
+            id: 'fetchDestination',
             timeout: defaultResilienceOptions.timeout,
             circuitBreaker: () => false
           }
@@ -642,6 +659,7 @@ describe('destination service', () => {
         fetchDestination(destinationServiceUri, jwt, {
           destinationName,
           resilience: {
+            id: 'fetchDestination',
             timeout: defaultResilienceOptions.timeout,
             circuitBreaker: () => false
           }

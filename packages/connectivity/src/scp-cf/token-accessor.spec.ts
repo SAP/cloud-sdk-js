@@ -20,6 +20,7 @@ import {
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import {
+  clearResilienceMiddlewareMap,
   defaultResilienceOptions,
   ResilienceMiddlewareOptions
 } from './resilience';
@@ -35,6 +36,7 @@ describe('token accessor', () => {
       nock.cleanAll();
       clientCredentialsTokenCache.clear();
       jest.restoreAllMocks();
+      clearResilienceMiddlewareMap();
     });
 
     it('uses the provider tenant if no JWT is provided', async () => {
@@ -73,10 +75,12 @@ describe('token accessor', () => {
         });
       }
       await doDelayTest({
+        id: 'with-cb',
         timeout: () => 10,
         circuitBreaker: () => false
       });
       await doDelayTest({
+        id: 'without-cb',
         timeout: () => 10,
         circuitBreaker: defaultResilienceOptions.circuitBreaker
       });

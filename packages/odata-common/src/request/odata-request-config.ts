@@ -7,11 +7,6 @@ import {
   encodeTypedClientRequest,
   ParameterEncoder
 } from '@sap-cloud-sdk/http-client/internal';
-import {
-  ResilienceOptions,
-  defaultResilienceOptions,
-  RequestHandler
-} from '@sap-cloud-sdk/connectivity';
 
 const logger = createLogger({
   package: 'odata-common',
@@ -22,43 +17,6 @@ const logger = createLogger({
  * Set of possible request methods.
  */
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
-
-/**
- * Type of the middleware function.
- */
-export type MiddlewareType<T> = (
-  fn?: RequestHandler<T>,
-  requestConfig?: ODataRequestConfig
-) => Promise<T>;
-
-/**
- * Create a resilience middleware with given resilience options and request types.
- * @param resilienceOptions - Resilience options for adding resilience.
- * @param requestType - Request type to distinguish between service or target request if specified in  circuit breaker.
- * @returns A resilience middleware.
- * @internal
- */
-function createResilienceMiddleware<T>(
-  resilienceOptions: ResilienceOptions,
-  requestType?: 'service' | 'target'
-): MiddlewareType<T> {
-  return (fn: RequestHandler<T>) =>
-    addResilience({ fn }, resilienceOptions, requestType)();
-}
-
-/**
- * Abbrevation of createResilienceMiddleware function.
- */
-export const resilience = createResilienceMiddleware;
-
-/**
- * Create a resilience middleware with default resilience options.
- * @returns A default resilience middleware.
- */
-export function createDefaultResilienceMiddleware<T>(): MiddlewareType<T> {
-  return (fn: RequestHandler<T>) =>
-    addResilience({ fn }, defaultResilienceOptions)();
-}
 
 /**
  * Parent class for all OData request configs like `getAll`, `delete` or `count`.

@@ -13,16 +13,17 @@ import {
   Destination,
   DestinationOrFetchOptions,
   getAgentConfig,
-  resilience,
   toDestinationNameUrl,
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
 import {
+  callWithResilience,
   defaultResilienceOptions,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
-  getAuthHeader
+  getAuthHeader,
+  ResilienceMiddlewareOptions
 } from '@sap-cloud-sdk/connectivity/internal';
 import {
   DestinationHttpRequestConfig,
@@ -535,15 +536,13 @@ async function getCsrfHeaders(
     return csrfHeaders;
   }
 
-  const timeout = request.timeout
-    ? () => request.timeout as number
-    : defaultResilienceOptions.timeout;
-  const circuitBreaker = () => false as const;
-
-  const resilienceMiddleware = resilience<Record<string, any>>({
-    timeout,
-    circuitBreaker
-  });
+  const resilienceMiddlewareOptions: ResilienceMiddlewareOptions = {
+    id: 'btpService-getCsrfHeaders',
+    timeout: request.timeout
+      ? () => request.timeout as number
+      : defaultResilienceOptions.timeout,
+    circuitBreaker: () => false
+  };
 
   const requestConfig: Partial<HttpRequestConfig> = {
     params: request.params,
@@ -554,11 +553,10 @@ async function getCsrfHeaders(
     httpsAgent: request.httpsAgent
   };
 
-  return resilienceMiddleware({
-    fn: () => buildCsrfHeaders(destination, requestConfig),
-    context: requestConfig,
-    exitChain: false
-  }).fn();
+  return callWithResilience(
+    () => buildCsrfHeaders(destination, requestConfig),
+    { resilience: resilienceMiddlewareOptions }
+  );
 }
 
 async function addCsrfTokenToHeader(

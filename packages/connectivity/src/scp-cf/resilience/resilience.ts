@@ -155,6 +155,11 @@ export function clearResilienceMiddlewareMap(): void {
   resilienceMiddlewareMap.clear();
 }
 
+/**
+ * Delete resilience middleware from the map.
+ * @param id - Id of the resilience middleware. Used as key of the entry in the map.
+ * @returns `true` if deletion was successful. `false` otherwise.
+ */
 export function deleteResilienceMiddleware(id: string): boolean {
   return resilienceMiddlewareMap.delete(id);
 }

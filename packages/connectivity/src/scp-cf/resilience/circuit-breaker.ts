@@ -16,7 +16,7 @@ export function createCircuitBreaker<T>(
   id: string,
   requestHandler: RequestHandler<T>,
   opossumLibOptions: OpossumLibOptions
-): CircuitBreaker {
+): CircuitBreaker<any[], T> {
   const circuitBreaker = new CircuitBreaker(requestHandler, opossumLibOptions);
   circuitBreakerMap.set(id, circuitBreaker);
   return circuitBreaker;
@@ -33,9 +33,9 @@ export function getCircuitBreaker<T>(
   id: string,
   requestHandler: RequestHandler<T>,
   opossumLibOptions: OpossumLibOptions
-): CircuitBreaker<any[], any> {
+): CircuitBreaker<any[], T> {
   if (!circuitBreakerMap.has(id)) {
-    return createCircuitBreaker(id, requestHandler, opossumLibOptions);
+    return createCircuitBreaker<T>(id, requestHandler, opossumLibOptions);
   }
   return circuitBreakerMap.get(id)!;
 }

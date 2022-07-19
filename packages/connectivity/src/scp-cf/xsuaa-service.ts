@@ -68,7 +68,10 @@ export async function getClientCredentialsToken(
         ? defaultResilienceOptions.circuitBreaker
         : () => false as const;
 
-    const resilienceMiddleware = resilience({ timeout, circuitBreaker });
+    const resilienceMiddleware = resilience<ClientCredentialsResponse>({
+      timeout,
+      circuitBreaker
+    });
 
     return resilienceMiddleware({
       fn: () => getClientCredentialsToken(service, userJwt),
@@ -120,7 +123,10 @@ export function getUserToken(
         ? defaultResilienceOptions.circuitBreaker
         : () => false as const;
 
-    const resilienceMiddleware = resilience({ timeout, circuitBreaker });
+    const resilienceMiddleware = resilience<string>({
+      timeout,
+      circuitBreaker
+    });
 
     return resilienceMiddleware({
       fn: () => getUserToken(service, userJwt),

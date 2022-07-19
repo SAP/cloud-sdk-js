@@ -540,7 +540,10 @@ async function getCsrfHeaders(
     : defaultResilienceOptions.timeout;
   const circuitBreaker = () => false as const;
 
-  const resilienceMiddleware = resilience({ timeout, circuitBreaker });
+  const resilienceMiddleware = resilience<Record<string, any>>({
+    timeout,
+    circuitBreaker
+  });
 
   const requestConfig: Partial<HttpRequestConfig> = {
     params: request.params,

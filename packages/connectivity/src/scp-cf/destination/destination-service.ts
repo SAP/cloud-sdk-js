@@ -309,7 +309,11 @@ async function callDestinationService(
         ? defaultResilienceOptions.circuitBreaker
         : () => false as const;
 
-    const resilienceMiddleware = resilience({ timeout, circuitBreaker });
+    const resilienceMiddleware = resilience<
+      AxiosResponse<
+        DestinationCertificateJson | DestinationConfiguration | DestinationJson
+      >
+    >({ timeout, circuitBreaker });
 
     return resilienceMiddleware({
       fn: () => callDestinationService(uri, headers),

@@ -101,7 +101,7 @@ export function getCircuitBreakerMiddleware<T>(
     );
 
     if (circuitBreakerOptions) {
-      return getCircuitBreaker(
+      return getCircuitBreaker<T>(
         circuitBreakerOptions.id,
         () => middlewareInOutOptions.fn(),
         {

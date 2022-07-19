@@ -9,7 +9,6 @@ import {
 } from '@sap-cloud-sdk/http-client/internal';
 import {
   ResilienceOptions,
-  addResilience,
   defaultResilienceOptions,
   RequestHandler
 } from '@sap-cloud-sdk/connectivity';

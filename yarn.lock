@@ -886,10 +886,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@js-temporal/polyfill@^0.4.0":
-  version "0.4.1"
-  resolved "https://registry.npmjs.org/@js-temporal/polyfill/-/polyfill-0.4.1.tgz#efca927fe7eb92f71bee1486c160ddf7f9c6723c"
-  integrity sha512-q45ecIocpa2TLem2jNOsCrDwP/sgKZdSkt+C1Rx07OkdKsdbvVfHcD1iDiK9scxBZrBQ38uJ8VQISXBS70ql1w==
+"@js-temporal/polyfill@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.npmjs.org/@js-temporal/polyfill/-/polyfill-0.4.2.tgz#badd7a581cac84fda7e9fd900910cad2fb9679b2"
+  integrity sha512-c85vRxyqnJaXKyf4tvYij8jwiVIZhNLYDI9C4LLuOwVEHf4HUqGg07BBn70Le71W193QT/vmKg3jPUyQxJRHKQ==
   dependencies:
     jsbi "^4.1.0"
     tslib "^2.3.1"

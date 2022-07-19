@@ -78,12 +78,18 @@ export function mockSingleDestinationCallSkipCredentials(
   nockRef: nockFunction,
   response: any,
   destName: string,
-  options?: {headers?:Record<string, any>,responseCode?:number,uri?:string}
+  options?: {
+    headers?: Record<string, any>;
+    responseCode?: number;
+    uri?: string;
+  }
 ) {
   return nockRef(options?.uri || destinationServiceUri, {
-    reqheaders: options?.headers || {},
+    reqheaders: options?.headers || {}
   })
-    .get(`/destination-configuration/v1/destinations/${destName}?$skipCredentials=true`)
+    .get(
+      `/destination-configuration/v1/destinations/${destName}?$skipCredentials=true`
+    )
     .reply(options?.responseCode || 200, response);
 }
 

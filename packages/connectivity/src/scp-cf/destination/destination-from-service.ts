@@ -24,10 +24,7 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import {
-  DestinationFetchOptions,
-  DestinationsByType
-} from './destination-accessor-types';
+import { DestinationFetchOptions } from './destination-accessor-types';
 import {
   AuthAndExchangeTokens,
   fetchDestination,

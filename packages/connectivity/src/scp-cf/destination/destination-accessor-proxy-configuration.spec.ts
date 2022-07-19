@@ -31,7 +31,7 @@ import { Protocol } from '../protocol';
 import { getDestination } from './destination-accessor';
 import * as ProxyUtil from './proxy-util';
 import { alwaysProvider } from './destination-selection-strategies';
-import { AuthenticationType, Destination } from './destination-service-types';
+import { AuthenticationType } from './destination-service-types';
 import { destinationCache } from './destination-cache';
 import { destinationServiceCache } from './destination-service-cache';
 
@@ -166,22 +166,6 @@ describe('get destination with PrivateLink proxy type', () => {
     Name: 'PrivateLinkDest',
     ProxyType: 'PrivateLink',
     Authentication: 'NoAuthentication' as AuthenticationType
-  };
-
-  const receivePrivateLinkDest: Destination = {
-    authTokens: [],
-    authentication: 'NoAuthentication',
-    certificates: [],
-    isTrustingAllCertificates: false,
-    name: 'PrivateLinkDest',
-    originalProperties: {
-      Authentication: 'NoAuthentication',
-      Name: 'PrivateLinkDest',
-      ProxyType: 'PrivateLink',
-      URL: 'https://subscriber.example'
-    },
-    proxyType: 'PrivateLink',
-    url: 'https://subscriber.example'
   };
 
   it('should log that PrivateLink proxy type is used.', async () => {

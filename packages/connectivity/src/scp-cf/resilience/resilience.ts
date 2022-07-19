@@ -50,7 +50,7 @@ export function addTimeout<T>(
 export function createTimeoutMiddleware<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
 ): Middleware<T> {
-  const { timeout, circuitBreaker } = resilienceMiddlewareOptions;
+  const { timeout } = resilienceMiddlewareOptions;
   const circuitBreakerMiddlewareFn = (
     middlewareInOutOptions: MiddlewareInOutOptions<T>
   ) => {
@@ -153,6 +153,10 @@ export function getResilienceMiddleware(
  */
 export function clearResilienceMiddlewareMap(): void {
   resilienceMiddlewareMap.clear();
+}
+
+export function deleteResilienceMiddleware(id: string): boolean {
+  return resilienceMiddlewareMap.delete(id);
 }
 
 /**

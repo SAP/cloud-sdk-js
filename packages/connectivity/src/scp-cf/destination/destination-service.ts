@@ -227,8 +227,6 @@ export async function fetchDestinationByNameWithoutTokens(
     options.destinationName
   }?$skipCredentials=true`;
 
-  const authHeader = wrapJwtInHeader(serviceToken).headers;
-
   if (options?.useCache) {
     const destinationsFromCache =
       destinationServiceCache.retrieveDestinationsFromCache(
@@ -242,6 +240,8 @@ export async function fetchDestinationByNameWithoutTokens(
       return destinationsFromCache[0];
     }
   }
+
+  const authHeader = wrapJwtInHeader(serviceToken).headers;
 
   return callDestinationEndpoint(targetUri, authHeader, options)
     .then(response => {

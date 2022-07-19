@@ -188,8 +188,7 @@ describe('Request Builder', () => {
         destinationName: 'FINAL-DESTINATION'
       });
 
-    await request;
-    // await expect(request).resolves.not.toThrow();
+    await expect(request).resolves.not.toThrow();
   });
 
   it('should resolve for getByKey request', async () => {

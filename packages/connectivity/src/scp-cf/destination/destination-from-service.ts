@@ -104,11 +104,6 @@ interface CustomToken {
   serviceJwt: undefined;
 }
 
-const emptyDestinationByType: DestinationsByType = {
-  instance: [],
-  subaccount: []
-};
-
 /**
  * Retrieves a destination with the given name from the Cloud Foundry destination service.
  * Returns `null`, if no destination can be found.

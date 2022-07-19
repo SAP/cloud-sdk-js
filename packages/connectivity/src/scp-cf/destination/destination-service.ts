@@ -32,10 +32,12 @@ const logger = createLogger({
   messageContext: 'destination-service'
 });
 
-type DestinationsServiceOptions = ResilienceOptions &
-  Pick<DestinationFetchOptions, 'useCache'>;
-type DestinationServiceOptions = ResilienceOptions &
-  Pick<DestinationFetchOptions, 'destinationName'>;
+type DestinationsServiceOptions = ResilienceOptions & {
+  resilience?: ResilienceMiddlewareOptions;
+} & Pick<DestinationFetchOptions, 'useCache'>;
+type DestinationServiceOptions = ResilienceOptions & {
+  resilience?: ResilienceMiddlewareOptions;
+} & Pick<DestinationFetchOptions, 'destinationName'>;
 
 /**
  * Fetches all instance destinations from the given URI.
@@ -255,7 +257,9 @@ type DestinationCertificateJson = {
 async function callCertificateEndpoint(
   uri: string,
   headers: Record<string, any>,
-  options?: ResilienceOptions
+  options?: ResilienceOptions & {
+    resilience?: ResilienceMiddlewareOptions;
+  }
 ): Promise<AxiosResponse<DestinationCertificateJson>> {
   if (!uri.includes('Certificates')) {
     throw new Error(
@@ -270,7 +274,9 @@ async function callCertificateEndpoint(
 async function callDestinationEndpoint(
   uri: string,
   headers: Record<string, any>,
-  options?: ResilienceOptions
+  options?: ResilienceOptions & {
+    resilience?: ResilienceMiddlewareOptions;
+  }
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
   if (!uri.match(/[instance|subaccount]Destinations|v1\/destinations/)) {
     throw new Error(
@@ -286,7 +292,7 @@ async function callDestinationService(
   uri: string,
   headers: Record<string, any>,
   options?: ResilienceOptions & {
-    resilienceMiddleware?: ResilienceMiddlewareOptions;
+    resilience?: ResilienceMiddlewareOptions;
   }
 ): Promise<
   AxiosResponse<
@@ -295,18 +301,17 @@ async function callDestinationService(
 > {
   if (options) {
     const timeout =
-      options.resilienceMiddleware?.timeout || options.timeout
+      options.resilience?.timeout || options.timeout
         ? () => options.timeout as number
         : defaultResilienceOptions.timeout;
     const circuitBreaker =
-      options.resilienceMiddleware?.circuitBreaker ||
-      options.enableCircuitBreaker
+      options.resilience?.circuitBreaker || options.enableCircuitBreaker
         ? defaultResilienceOptions.circuitBreaker
         : () => false as const;
 
     const resilienceMiddleware = resilience({ timeout, circuitBreaker });
 
-    resilienceMiddleware({
+    return resilienceMiddleware({
       fn: () => callDestinationService(uri, headers),
       context: { url: 'btpDomain' },
       exitChain: false

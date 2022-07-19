@@ -19,6 +19,10 @@ import {
   mockClientCredentialsGrantWithCertCall
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
+import {
+  defaultResilienceOptions,
+  ResilienceMiddlewareOptions
+} from './resilience';
 import { serviceToken } from './token-accessor';
 
 describe('token accessor', () => {
@@ -51,7 +55,7 @@ describe('token accessor', () => {
       const jwt = signedJwt({
         iss: 'https://testeroni.example.com'
       });
-      async function doDelayTest(circuitBreaker: boolean) {
+      async function doDelayTest(resilience: ResilienceMiddlewareOptions) {
         mockClientCredentialsGrantCall(
           'https://testeroni.example.com',
           { access_token: '' },
@@ -62,15 +66,20 @@ describe('token accessor', () => {
         await expect(
           serviceToken('destination', {
             jwt,
-            timeout: 10,
-            circuitBreaker
+            resilience
           })
         ).rejects.toMatchObject({
           cause: new Error('Timed out after 10ms')
         });
       }
-      await doDelayTest(false);
-      await doDelayTest(true);
+      await doDelayTest({
+        timeout: () => 10,
+        circuitBreaker: () => false
+      });
+      await doDelayTest({
+        timeout: () => 10,
+        circuitBreaker: defaultResilienceOptions.circuitBreaker
+      });
     });
 
     it("uses the JWT's issuer as tenant", async () => {

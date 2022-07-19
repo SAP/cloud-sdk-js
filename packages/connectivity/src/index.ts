@@ -49,6 +49,7 @@ export {
   ServiceBinding,
   DestinationForServiceBindingOptions,
   addResilienceMiddlwares,
+  resilience,
   defaultResilienceOptions,
   defaultCircuitBreakerOptions,
   RequestHandler

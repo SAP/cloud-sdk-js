@@ -5,6 +5,10 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
+import {
+  defaultResilienceOptions,
+  ResilienceMiddlewareOptions
+} from '../resilience/resilience-options';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
@@ -87,7 +91,10 @@ describe('destination service', () => {
 
       const instanceDestinations: Destination[] =
         await fetchInstanceDestinations(destinationServiceUri, jwt, {
-          circuitBreaker: false
+          resilience: {
+            timeout: defaultResilienceOptions.timeout,
+            circuitBreaker: () => false
+          }
         });
       expected.forEach((e, index) => {
         expect(instanceDestinations[index]).toMatchObject(e);
@@ -109,7 +116,10 @@ describe('destination service', () => {
 
       await expect(
         fetchInstanceDestinations(destinationServiceUri, jwt, {
-          circuitBreaker: false
+          resilience: {
+            timeout: defaultResilienceOptions.timeout,
+            circuitBreaker: () => false
+          }
         })
       ).rejects.toThrowError();
     });
@@ -125,7 +135,10 @@ describe('destination service', () => {
 
       await expect(
         fetchInstanceDestinations(destinationServiceUri, jwt, {
-          circuitBreaker: false
+          resilience: {
+            timeout: defaultResilienceOptions.timeout,
+            circuitBreaker: () => false
+          }
         })
       ).rejects.toThrowError();
     });
@@ -167,7 +180,10 @@ describe('destination service', () => {
 
       const subaccountDestinations: Destination[] =
         await fetchSubaccountDestinations(destinationServiceUri, jwt, {
-          circuitBreaker: false
+          resilience: {
+            timeout: defaultResilienceOptions.timeout,
+            circuitBreaker: () => false
+          }
         });
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
@@ -189,7 +205,10 @@ describe('destination service', () => {
 
       await expect(
         fetchSubaccountDestinations(destinationServiceUri, jwt, {
-          circuitBreaker: false
+          resilience: {
+            timeout: defaultResilienceOptions.timeout,
+            circuitBreaker: () => false
+          }
         })
       ).rejects.toThrowError();
     });
@@ -340,7 +359,13 @@ describe('destination service', () => {
         destinationServiceUri,
         jwt,
 
-        { destinationName, circuitBreaker: false }
+        {
+          destinationName,
+          resilience: {
+            timeout: defaultResilienceOptions.timeout,
+            circuitBreaker: () => false
+          }
+        }
       );
       expect(actual).toMatchObject(expected);
     });
@@ -377,7 +402,10 @@ describe('destination service', () => {
       const spy = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName,
-        circuitBreaker: false
+        resilience: {
+          timeout: defaultResilienceOptions.timeout,
+          circuitBreaker: () => false
+        }
       });
       const expectedConfig: AxiosRequestConfig = {
         baseURL:
@@ -399,7 +427,7 @@ describe('destination service', () => {
     });
 
     it('considers the custom timeout for destination service', async () => {
-      async function doDelayTest(circuitBreaker: boolean) {
+      async function doDelayTest(resilience: ResilienceMiddlewareOptions) {
         nock(destinationServiceUri, {
           reqheaders: {
             authorization: `Bearer ${jwt}`
@@ -411,16 +439,21 @@ describe('destination service', () => {
         await expect(
           fetchDestination(destinationServiceUri, jwt, {
             destinationName: 'TIMEOUT-TEST',
-            circuitBreaker,
-            timeout: 10
+            resilience
           })
         ).rejects.toMatchObject({
           cause: new Error('Timed out after 10ms')
         });
       }
 
-      await doDelayTest(true);
-      await doDelayTest(false);
+      await doDelayTest({
+        timeout: () => 10,
+        circuitBreaker: () => false
+      });
+      await doDelayTest({
+        timeout: () => 10,
+        circuitBreaker: defaultResilienceOptions.circuitBreaker
+      });
     });
 
     it('fetches a destination considering no_proxy', async () => {
@@ -457,7 +490,10 @@ describe('destination service', () => {
       const spy = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName,
-        circuitBreaker: false
+        resilience: {
+          timeout: defaultResilienceOptions.timeout,
+          circuitBreaker: () => false
+        }
       });
       const expectedConfig: AxiosRequestConfig = {
         baseURL:
@@ -554,7 +590,13 @@ describe('destination service', () => {
         destinationServiceUri,
         jwt,
 
-        { destinationName, circuitBreaker: false }
+        {
+          destinationName,
+          resilience: {
+            timeout: defaultResilienceOptions.timeout,
+            circuitBreaker: () => false
+          }
+        }
       );
       expect(actual).toMatchObject(expected);
     });
@@ -573,7 +615,10 @@ describe('destination service', () => {
       await expect(
         fetchDestination(destinationServiceUri, jwt, {
           destinationName,
-          circuitBreaker: false
+          resilience: {
+            timeout: defaultResilienceOptions.timeout,
+            circuitBreaker: () => false
+          }
         })
       ).rejects.toThrowError();
     });
@@ -596,7 +641,10 @@ describe('destination service', () => {
       await expect(() =>
         fetchDestination(destinationServiceUri, jwt, {
           destinationName,
-          circuitBreaker: false
+          resilience: {
+            timeout: defaultResilienceOptions.timeout,
+            circuitBreaker: () => false
+          }
         })
       ).rejects.toThrowError();
     });

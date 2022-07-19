@@ -8,7 +8,10 @@ import {
   resolveService
 } from './environment-accessor';
 import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
-import { ResilienceOptions } from './resilience/resilience-options';
+import {
+  ResilienceMiddlewareOptions,
+  ResilienceOptions
+} from './resilience/resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 
@@ -26,13 +29,13 @@ import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 export async function serviceToken(
   service: string | Service,
   options?: CachingOptions &
-    ResilienceOptions & {
+    ResilienceOptions & { resilience?: ResilienceMiddlewareOptions } & {
       jwt?: string | JwtPayload;
     }
 ): Promise<string> {
   const opts = {
     useCache: true,
-    circuitBreaker: true,
+    enableCircuitBreaker: true,
     ...options
   };
 
@@ -91,12 +94,12 @@ export async function serviceToken(
 export async function jwtBearerToken(
   jwt: string,
   service: string | Service,
-  options?: ResilienceOptions
+  options?: ResilienceOptions & { resilience?: ResilienceMiddlewareOptions }
 ): Promise<string> {
   const resolvedService = resolveService(service);
 
   const opts: ResilienceOptions = {
-    circuitBreaker: true,
+    enableCircuitBreaker: true,
     ...options
   };
 

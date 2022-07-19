@@ -26,6 +26,7 @@ import {
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import * as jwt from '../jwt';
+import { defaultResilienceOptions } from '../resilience';
 import { getDestination } from './destination-accessor';
 
 const { wrapJwtInHeader } = jwt;
@@ -100,7 +101,10 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberServiceToken,
-        circuitBreaker: false,
+        resilience: {
+          timeout: defaultResilienceOptions.timeout,
+          circuitBreaker: () => false
+        },
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });
@@ -145,7 +149,10 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberUserJwt,
-        circuitBreaker: false,
+        resilience: {
+          timeout: defaultResilienceOptions.timeout,
+          circuitBreaker: () => false
+        },
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });

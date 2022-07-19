@@ -55,23 +55,22 @@ export async function getClientCredentialsToken(
   service: string | Service,
   userJwt?: string | JwtPayload,
   options?: ResilienceOptions & {
-    resilienceMiddleware?: ResilienceMiddlewareOptions;
+    resilience?: ResilienceMiddlewareOptions;
   }
 ): Promise<ClientCredentialsResponse> {
   if (options) {
     const timeout =
-      options.resilienceMiddleware?.timeout || options.timeout
+      options.resilience?.timeout || options.timeout
         ? () => options.timeout as number
         : defaultResilienceOptions.timeout;
     const circuitBreaker =
-      options.resilienceMiddleware?.circuitBreaker ||
-      options.enableCircuitBreaker
+      options.resilience?.circuitBreaker || options.enableCircuitBreaker
         ? defaultResilienceOptions.circuitBreaker
         : () => false as const;
 
     const resilienceMiddleware = resilience({ timeout, circuitBreaker });
 
-    resilienceMiddleware({
+    return resilienceMiddleware({
       fn: () => getClientCredentialsToken(service, userJwt),
       context: { url: 'btpDomain' },
       exitChain: false
@@ -108,23 +107,22 @@ export function getUserToken(
   service: Service,
   userJwt: string,
   options?: ResilienceOptions & {
-    resilienceMiddleware?: ResilienceMiddlewareOptions;
+    resilience?: ResilienceMiddlewareOptions;
   }
 ): Promise<string> {
   if (options) {
     const timeout =
-      options.resilienceMiddleware?.timeout || options.timeout
+      options.resilience?.timeout || options.timeout
         ? () => options.timeout as number
         : defaultResilienceOptions.timeout;
     const circuitBreaker =
-      options.resilienceMiddleware?.circuitBreaker ||
-      options.enableCircuitBreaker
+      options.resilience?.circuitBreaker || options.enableCircuitBreaker
         ? defaultResilienceOptions.circuitBreaker
         : () => false as const;
 
     const resilienceMiddleware = resilience({ timeout, circuitBreaker });
 
-    resilienceMiddleware({
+    return resilienceMiddleware({
       fn: () => getUserToken(service, userJwt),
       context: { url: 'btpDomain' },
       exitChain: false

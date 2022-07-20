@@ -44,7 +44,7 @@ describe('generator', () => {
       mock.restore();
     });
 
-    it('should return a file path.', async () => {
+    it('should return an array of a file path.', async () => {
       expect(
         await getInputFilePaths('root/inputDir/test-service.json')
       ).toEqual([resolve('root/inputDir/test-service.json')]);

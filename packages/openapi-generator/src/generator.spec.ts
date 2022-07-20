@@ -17,27 +17,55 @@ describe('generator', () => {
     mock.restore();
   });
 
-  it('getInputFilePaths returns an array of all file paths, including subdirectories', async () => {
-    mock({
-      '/path/to/test/dir': {
-        'test-service.txt': 'file content here',
-        'empty-dir': {},
-        'sub-dir': {
-          'test-service.txt': 'another fake service',
-          'sub-directory-service.txt': 'just to add some more'
+  describe('get input file paths', () => {
+    beforeAll(() => {
+      mock({
+        root: {
+          inputDir: {
+            'test-service.text': 'dummy text specification file',
+            'test-service.json': 'dummy json specification file',
+            'test-service.JSON': 'dummy JSON specification file',
+            'test-service.yaml': 'dummy yaml specification file',
+            'empty-dir': {},
+            'sub-dir': {
+              'test-service.YAML': 'dummy YAML specification file',
+              'test-service2.yml': 'dummy yml specification file',
+              'test-service2.YML': 'dummy YML specification file',
+              'test-service.xml': 'dummy xml specification file'
+            }
+          },
+          outputDir: {}
         }
-      }
+      });
     });
 
-    expect(await getInputFilePaths('/path/to/test/dir')).toEqual([
-      resolve('/path/to/test/dir/sub-dir/sub-directory-service.txt'),
-      resolve('/path/to/test/dir/sub-dir/test-service.txt'),
-      resolve('/path/to/test/dir/test-service.txt')
-    ]);
+    afterAll(() => {
+      mock.restore();
+    });
 
-    mock.restore();
+    it('should return an array of all type of JSON and YAML file paths including subdirectories.', async () => {
+      expect((await getInputFilePaths('root/inputDir')).length).toEqual(6);
+    });
+
+    it('should return a file path.', async () => {
+      expect(
+        (await getInputFilePaths('root/inputDir/test-service.json')).length
+      ).toEqual(1);
+    });
+
+    it('should return all .json file paths including subdirectories.', async () => {
+      expect(
+        (await getInputFilePaths('root/inputDir/**/*(*.json)')).length
+      ).toEqual(1);
+    });
+
+    it('should return all .json and .yaml file paths only in a top level directory.', async () => {
+      expect(
+        (await getInputFilePaths('root/inputDir/*(*.json|*.yaml)')).length
+      ).toEqual(2);
+    });
   });
-
+  
   describe('creation of files', () => {
     beforeAll(async () => {
       mock.restore();
@@ -287,6 +315,7 @@ describe('generator', () => {
       ).resolves.toBeUndefined();
     });
   });
+
 });
 
 const endsWithNewLine = /\n$/;

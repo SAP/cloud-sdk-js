@@ -65,7 +65,7 @@ describe('generator', () => {
       ).toEqual(2);
     });
   });
-  
+
   describe('creation of files', () => {
     beforeAll(async () => {
       mock.restore();
@@ -315,7 +315,6 @@ describe('generator', () => {
       ).resolves.toBeUndefined();
     });
   });
-
 });
 
 const endsWithNewLine = /\n$/;

@@ -62,14 +62,6 @@ describe('generator', () => {
       ]);
     });
 
-    it('should return an array of all types of JSON and YAML file paths only in a top level directory.', async () => {
-      expect(await getInputFilePaths('root/inputDir/*')).toEqual([
-        resolve('root/inputDir/test-service.json'),
-        resolve('root/inputDir/test-service.JSON'),
-        resolve('root/inputDir/test-service.yaml')
-      ]);
-    });
-
     it('should return an array of all types of JSON and YAML file paths including subdirectories.', async () => {
       expect(
         await getInputFilePaths(
@@ -93,10 +85,11 @@ describe('generator', () => {
       ]);
     });
 
-    it('should return all .json file paths including subdirectories.', async () => {
-      expect(await getInputFilePaths('root/inputDir/**/*.json')).toEqual([
-        resolve('root/inputDir/sub-dir/test-service2.json'),
-        resolve('root/inputDir/test-service.json')
+    it('should return an array of all types of JSON and YAML file paths only in a top level directory.', async () => {
+      expect(await getInputFilePaths('root/inputDir/*')).toEqual([
+        resolve('root/inputDir/test-service.json'),
+        resolve('root/inputDir/test-service.JSON'),
+        resolve('root/inputDir/test-service.yaml')
       ]);
     });
 

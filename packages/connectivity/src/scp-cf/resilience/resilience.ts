@@ -8,8 +8,13 @@ import {
   ResilienceOptions,
   TimeoutOptions
 } from './resilience-options';
+import _ from 'lodash';
 
-const resilienceMiddlewareMap = new Map<string, Middleware<any>>();
+type ResilienceMiddlewareMapValue = {
+  middleware: Middleware<any>,
+  options: Omit<ResilienceMiddlewareOptions, 'id'>
+}
+const resilienceMiddlewareMap = new Map<string, ResilienceMiddlewareMapValue>();
 
 /**
  * Create a promise for a time out race.
@@ -131,7 +136,10 @@ export function createResilienceMiddleware<T>(
   );
   resilienceMiddlewareMap.set(
     resilienceMiddlewareOptions.id,
-    reducedMiddleware
+    {
+      middleware: reducedMiddleware,
+      options: resilienceMiddlewareOptions
+    }
   );
 
   return reducedMiddleware;
@@ -145,7 +153,23 @@ export function createResilienceMiddleware<T>(
 export function getResilienceMiddleware(
   id: string
 ): Middleware<any> | undefined {
-  return resilienceMiddlewareMap.get(id);
+  return resilienceMiddlewareMap.get(id)?.middleware;
+}
+
+export function resilience(resilienceMiddlewareOptions: ResilienceMiddlewareOptions): Middleware<any> {
+  const { id } = resilienceMiddlewareOptions;
+  const middlewareOptionsPair = resilienceMiddlewareMap.get(resilienceMiddlewareOptions.id);
+  if (middlewareOptionsPair) {
+    const { middleware, options } = middlewareOptionsPair;
+    if (!_.isEqualWith(resilienceMiddlewareOptions, options, (a: ResilienceMiddlewareOptions, b: ResilienceMiddlewareOptions) => {
+      return a.circuitBreaker() === b.circuitBreaker() && a.timeout() === b.timeout();
+    })) {
+      throw new Error(`Id '${id}' has already been used by another resilience middleware with different options!`);
+    }
+    return middleware;
+  } else {
+    return createResilienceMiddleware(resilienceMiddlewareOptions);
+  }
 }
 
 /**
@@ -187,13 +211,11 @@ export function callWithResilience<T>(
 
   const id = options.resilience?.id ?? 'btpService-getClientCredentialsToken';
 
-  const resilienceMiddleware =
-    getResilienceMiddleware(id) ??
-    createResilienceMiddleware<T>({
-      id: options.resilience?.id ?? 'btpService-getClientCredentialsToken',
-      timeout,
-      circuitBreaker
-    });
+  const resilienceMiddleware = resilience({
+    id: options.resilience?.id ?? 'btpService-getClientCredentialsToken',
+    timeout,
+    circuitBreaker
+  });
 
   return resilienceMiddleware({
     fn,

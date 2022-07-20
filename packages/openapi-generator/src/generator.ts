@@ -264,7 +264,9 @@ async function generateService(
  */
 export async function getInputFilePaths(input: string): Promise<string[]> {
   if (glob.hasMagic(input)) {
-    return glob.sync(input);
+    return glob
+      .sync(resolve(input))
+      .filter(path => /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/.test(path));
   }
 
   if (lstatSync(input).isDirectory()) {

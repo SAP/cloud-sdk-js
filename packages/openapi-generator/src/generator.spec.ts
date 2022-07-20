@@ -29,8 +29,8 @@ describe('generator', () => {
             'empty-dir': {},
             'sub-dir': {
               'test-service.YAML': 'dummy YAML specification file',
-              'test-service2.yml': 'dummy yml specification file',
-              'test-service2.YML': 'dummy YML specification file',
+              'test-service.yml': 'dummy yml specification file',
+              'test-service.YML': 'dummy YML specification file',
               'test-service.xml': 'dummy xml specification file'
             }
           },

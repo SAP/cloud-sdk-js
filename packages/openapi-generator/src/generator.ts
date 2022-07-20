@@ -1,4 +1,4 @@
-import { promises as promisesFs } from 'fs';
+import { promises as promisesFs, lstatSync } from 'fs';
 import { resolve, parse, basename, dirname } from 'path';
 import {
   createLogger,
@@ -16,6 +16,7 @@ import {
   transpileDirectory,
   copyFiles
 } from '@sap-cloud-sdk/generator-common/internal';
+import { glob } from 'glob';
 import { apiFile } from './file-serializer/api-file';
 import {
   packageJson,
@@ -43,7 +44,7 @@ import {
 import { tsconfigJson } from './options/tsconfig-json';
 import { sdkMetadata } from './sdk-metadata';
 
-const { readdir, rmdir, mkdir, lstat } = promisesFs;
+const { rmdir, mkdir } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -262,19 +263,17 @@ async function generateService(
  * @internal
  */
 export async function getInputFilePaths(input: string): Promise<string[]> {
-  if ((await lstat(input)).isFile()) {
-    return [input];
+  if (glob.hasMagic(input)) {
+    return glob.sync(input);
   }
 
-  const directoryContents = await readdir(input);
+  if (lstatSync(input).isDirectory()) {
+    return glob.sync(
+      resolve(input, './**/*(*.json|*.JSON|*.yaml|*.YAML|*.yml|*.YML)')
+    );
+  }
 
-  return directoryContents.reduce(
-    async (paths: Promise<string[]>, directoryContent) => [
-      ...(await paths),
-      ...(await getInputFilePaths(resolve(input, directoryContent)))
-    ],
-    Promise.resolve([] as string[])
-  );
+  return [resolve(input)];
 }
 
 function generateReadme(

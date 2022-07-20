@@ -1185,10 +1185,10 @@
     "@sap/cds-compiler" "^2.13.0"
     "@sap/cds-foss" "^3"
 
-"@sap/cds@^6.0.3":
-  version "6.0.3"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.0.3.tgz#8f4b1d36ac49c394f6ee2d0b8aa38849e01d6827"
-  integrity sha512-NcOaFPK+1pTtedTARQ5qDhrYM/DEMZl41gRJnuXZ+e7ly/mU8HsV7sknMAywj4la47MJWWjOOxFiHvjZLWVkJw==
+"@sap/cds@^6.0.3", "@sap/cds@^6.0.4":
+  version "6.0.4"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.0.4.tgz#129ed1d67f8877a22b73f545d1472253e5bc8681"
+  integrity sha512-e94V1w2QXPCNxBXK/mMImo5wEx5rCkuUQTN1LFJwlmGO0CCjmsttagaE3Mx2fVm/lyite5a8NTEqYnbJwFLXYg==
   dependencies:
     "@sap/cds-compiler" ">=2.13.0"
     "@sap/cds-foss" ">=3"

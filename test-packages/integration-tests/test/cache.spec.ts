@@ -27,7 +27,6 @@ import {
   xsuaaBindingMock
 } from '../../../test-resources/test/test-util/environment-mocks';
 import {
-  mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSingleDestinationCallSkipCredentials
 } from '../../../test-resources/test/test-util/destination-service-mocks';

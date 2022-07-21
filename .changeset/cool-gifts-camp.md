@@ -6,4 +6,3 @@
 This behavior has issues when some destinations can not be properly parsed, and it has negative performance implications when only one destination is used but many destinations were configured.
 The new behavior is to only load and parse the specific destination by name.
 The new behavior might have negative performance implications if many destinations are used.
-This potential issue is addressed in [issue 738](https://github.com/SAP/cloud-sdk-backlog/issues/738).

@@ -1,4 +1,4 @@
-import { promises as promisesFs, lstatSync } from 'fs';
+import { promises as promisesFs } from 'fs';
 import { resolve, parse, basename, dirname } from 'path';
 import {
   createLogger,
@@ -44,7 +44,7 @@ import {
 import { tsconfigJson } from './options/tsconfig-json';
 import { sdkMetadata } from './sdk-metadata';
 
-const { rmdir, mkdir } = promisesFs;
+const { rmdir, mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -264,15 +264,26 @@ async function generateService(
  */
 export async function getInputFilePaths(input: string): Promise<string[]> {
   if (glob.hasMagic(input)) {
-    return glob
-      .sync(resolve(input))
-      .filter(path => /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/.test(path));
+    return new Promise(resolvePromise => {
+      glob(resolve(input), (_error, paths) => {
+        resolvePromise(
+          paths.filter(path =>
+            /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/.test(path)
+          )
+        );
+      });
+    });
   }
 
-  if (lstatSync(input).isDirectory()) {
-    return glob.sync(
-      resolve(input, './**/*(*.json|*.JSON|*.yaml|*.YAML|*.yml|*.YML)')
-    );
+  if ((await lstat(input)).isDirectory()) {
+    return new Promise(resolvePromise => {
+      glob(
+        resolve(input, './**/*(*.json|*.JSON|*.yaml|*.YAML|*.yml|*.YML)'),
+        (_error, paths) => {
+          resolvePromise(paths);
+        }
+      );
+    });
   }
 
   return [resolve(input)];

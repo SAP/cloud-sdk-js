@@ -40,73 +40,106 @@ describe('generator', () => {
       });
     });
 
+    const inputDir = 'root/inputDir';
+
     afterAll(() => {
       mock.restore();
     });
 
-    it('should return an array of a file path.', async () => {
+    it('should return an array with one path for one input file', async () => {
       expect(
         await getInputFilePaths('root/inputDir/test-service.json')
-      ).toEqual([resolve('root/inputDir/test-service.json')]);
+      ).toEqual([resolve(inputDir, 'test-service.json')]);
     });
 
-    it('should return an array of all types of JSON and YAML file paths including subdirectories.', async () => {
-      expect(await getInputFilePaths('root/inputDir')).toEqual([
-        resolve('root/inputDir/sub-dir/test-service.YAML'),
-        resolve('root/inputDir/sub-dir/test-service.yml'),
-        resolve('root/inputDir/sub-dir/test-service.YML'),
-        resolve('root/inputDir/sub-dir/test-service2.json'),
-        resolve('root/inputDir/test-service.json'),
-        resolve('root/inputDir/test-service.JSON'),
-        resolve('root/inputDir/test-service.yaml')
+    it('should recursively return an array for all JSON and YAML file paths for an input directory', async () => {
+      expect(await getInputFilePaths(inputDir)).toEqual([
+        resolve(inputDir, 'sub-dir/test-service.YAML'),
+        resolve(inputDir, 'sub-dir/test-service.yml'),
+        resolve(inputDir, 'sub-dir/test-service.YML'),
+        resolve(inputDir, 'sub-dir/test-service2.json'),
+        resolve(inputDir, 'test-service.json'),
+        resolve(inputDir, 'test-service.JSON'),
+        resolve(inputDir, 'test-service.yaml')
       ]);
     });
 
-    it('should return an array of all types of JSON and YAML file paths including subdirectories.', async () => {
-      expect(
-        await getInputFilePaths(
-          'root/inputDir/**/**.{json,JSON,yaml,YAML,yml,YML}'
-        )
-      ).toEqual([
-        resolve('root/inputDir/sub-dir/test-service.YAML'),
-        resolve('root/inputDir/sub-dir/test-service.yml'),
-        resolve('root/inputDir/sub-dir/test-service.YML'),
-        resolve('root/inputDir/sub-dir/test-service2.json'),
-        resolve('root/inputDir/test-service.json'),
-        resolve('root/inputDir/test-service.JSON'),
-        resolve('root/inputDir/test-service.yaml')
-      ]);
-    });
-
-    it('should return all .json file paths including subdirectories.', async () => {
-      expect(await getInputFilePaths('root/inputDir/**/*(*.json)')).toEqual([
-        resolve('root/inputDir/sub-dir/test-service2.json'),
-        resolve('root/inputDir/test-service.json')
-      ]);
-    });
-
-    it('should return all .json file paths including subdirectories.', async () => {
+    it('should recursively return an array for all JSON file paths only with the lowercase file extension for an input directory', async () => {
       expect(await getInputFilePaths('root/inputDir/**/*.json')).toEqual([
-        resolve('root/inputDir/sub-dir/test-service2.json'),
-        resolve('root/inputDir/test-service.json')
+        resolve(inputDir, 'sub-dir/test-service2.json'),
+        resolve(inputDir, 'test-service.json')
       ]);
     });
 
-    it('should return an array of all types of JSON and YAML file paths only in a top level directory.', async () => {
+    it('should non-recursively return an array for all JSON and YAML file paths for an input directory', async () => {
       expect(await getInputFilePaths('root/inputDir/*')).toEqual([
-        resolve('root/inputDir/test-service.json'),
-        resolve('root/inputDir/test-service.JSON'),
-        resolve('root/inputDir/test-service.yaml')
+        resolve(inputDir, 'test-service.json'),
+        resolve(inputDir, 'test-service.JSON'),
+        resolve(inputDir, 'test-service.yaml')
       ]);
     });
 
-    it('should return all .json and .yaml file paths only in a top level directory.', async () => {
-      expect(await getInputFilePaths('root/inputDir/*(*.json|*.yaml)')).toEqual(
-        [
-          resolve('root/inputDir/test-service.json'),
-          resolve('root/inputDir/test-service.yaml')
-        ]
-      );
+    it('should non-recursively return an array for all JSON and YAML file paths only with the lowercase file extension for an input directory', async () => {
+      expect(await getInputFilePaths('root/inputDir/*.{json,yaml}')).toEqual([
+        resolve(inputDir, 'test-service.json'),
+        resolve(inputDir, 'test-service.yaml')
+      ]);
+    });
+
+    it('should recursively return an array for all JSON and YAML file paths for an input directory containing no non-JSON/-YAML files', async () => {
+      mock.restore();
+      mock({
+        root: {
+          inputDir: {
+            'test-service.json': 'dummy json specification file',
+            'test-service.JSON': 'dummy JSON specification file',
+            'test-service.yaml': 'dummy yaml specification file',
+            'empty-dir': {},
+            'sub-dir': {
+              'test-service.YAML': 'dummy YAML specification file',
+              'test-service.yml': 'dummy yml specification file',
+              'test-service.YML': 'dummy YML specification file',
+              'test-service2.json': 'dummy json specification file'
+            }
+          },
+          outputDir: {}
+        }
+      });
+      expect(await getInputFilePaths(inputDir)).toEqual([
+        resolve(inputDir, 'sub-dir/test-service.YAML'),
+        resolve(inputDir, 'sub-dir/test-service.yml'),
+        resolve(inputDir, 'sub-dir/test-service.YML'),
+        resolve(inputDir, 'sub-dir/test-service2.json'),
+        resolve(inputDir, 'test-service.json'),
+        resolve(inputDir, 'test-service.JSON'),
+        resolve(inputDir, 'test-service.yaml')
+      ]);
+    });
+
+    it('should non-recursively return an array for all JSON and YAML file paths for an input directory containing no non-JSON/-YAML files', async () => {
+      mock.restore();
+      mock({
+        root: {
+          inputDir: {
+            'test-service.json': 'dummy json specification file',
+            'test-service.JSON': 'dummy JSON specification file',
+            'test-service.yaml': 'dummy yaml specification file',
+            'empty-dir': {},
+            'sub-dir': {
+              'test-service.YAML': 'dummy YAML specification file',
+              'test-service.yml': 'dummy yml specification file',
+              'test-service.YML': 'dummy YML specification file',
+              'test-service2.json': 'dummy json specification file'
+            }
+          },
+          outputDir: {}
+        }
+      });
+      expect(await getInputFilePaths('root/inputDir/*')).toEqual([
+        resolve(inputDir, 'test-service.json'),
+        resolve(inputDir, 'test-service.JSON'),
+        resolve(inputDir, 'test-service.yaml')
+      ]);
     });
   });
 

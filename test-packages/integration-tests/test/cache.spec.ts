@@ -105,12 +105,6 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       'FINAL-DESTINATION-AUTH-FLOW',
       wrapJwtInHeader(providerServiceToken)
     );
-    mockInstanceDestinationsCall(
-      nock,
-      [destination, destinationAuthFlow],
-      200,
-      providerServiceToken
-    );
     mockSingleDestinationCall(
       nock,
       destinationAuthFlow,

@@ -8,6 +8,7 @@ import {
   formatJson,
   ErrorWithCause
 } from '@sap-cloud-sdk/util';
+import { emptyDirSync } from 'fs-extra';
 import {
   getSdkMetadataFileNames,
   getSdkVersion,
@@ -44,7 +45,7 @@ import {
 import { tsconfigJson } from './options/tsconfig-json';
 import { sdkMetadata } from './sdk-metadata';
 
-const { rm, mkdir, lstat } = promisesFs;
+const { mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -73,7 +74,7 @@ export async function generateWithParsedOptions(
   }
 
   if (options.clearOutputDir) {
-    await rm(options.outputDir, { recursive: true });
+    await emptyDirSync(options.outputDir);
   }
   const inputFilePaths = await getInputFilePaths(options.input);
 

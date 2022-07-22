@@ -6,16 +6,6 @@ interface CacheInterface<T> {
 }
 
 /**
- * @internal
- */
-export interface DateInputObject {
-  hours?: number;
-  minutes?: number;
-  seconds?: number;
-  milliseconds?: number;
-}
-
-/**
  * Respresentation of a cached object.
  */
 export interface CacheEntry<T> {
@@ -48,9 +38,9 @@ export class Cache<T> implements CacheInterface<T> {
    * Default validity period for each entry in cache.
    * If `undefined`, all cached entries will be valid indefinitely.
    */
-  private defaultValidityTime: DateInputObject | undefined;
+  private defaultValidityTime: number | undefined;
 
-  constructor(validityTime?: DateInputObject) {
+  constructor(validityTime?: number) {
     this.cache = {};
     this.defaultValidityTime = validityTime;
   }
@@ -104,22 +94,11 @@ function isExpired<T>(item: CacheEntry<T>): boolean {
 }
 
 function inferExpirationTime(
-  expirationTime: DateInputObject | undefined
+  expirationTime: number | undefined
 ): number | undefined {
   return expirationTime
-    ? inferExpirationTimeFromDate(expirationTime)
+    ? new Date()
+        .setMilliseconds(new Date().getMilliseconds() + expirationTime)
+        .valueOf()
     : undefined;
-}
-
-function inferExpirationTimeFromDate(expirationTime: DateInputObject): number {
-  const currentDate = new Date();
-  const milliseconds =
-    (expirationTime?.hours ?? 0) * 60 * 60 * 1000 +
-    (expirationTime?.minutes ?? 0) * 60 * 1000 +
-    (expirationTime?.seconds ?? 0) * 1000 +
-    (expirationTime?.milliseconds ?? 0);
-
-  return currentDate
-    .setMilliseconds(currentDate.getMilliseconds() + milliseconds)
-    .valueOf();
 }

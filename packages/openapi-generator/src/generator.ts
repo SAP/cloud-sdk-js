@@ -43,7 +43,7 @@ import {
 import { tsconfigJson } from './options/tsconfig-json';
 import { sdkMetadata } from './sdk-metadata';
 
-const { readdir, rmdir, mkdir, lstat } = promisesFs;
+const { readdir, rm, mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -72,7 +72,7 @@ export async function generateWithParsedOptions(
   }
 
   if (options.clearOutputDir) {
-    await rmdir(options.outputDir, { recursive: true });
+    await rm(options.outputDir, { recursive: true });
   }
   const inputFilePaths = await getInputFilePaths(options.input);
 

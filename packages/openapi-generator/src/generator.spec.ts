@@ -22,7 +22,7 @@ describe('generator', () => {
       mock({
         root: {
           inputDir: {
-            'test-service.text': 'dummy text specification file',
+            'test-service.txt': 'dummy text specification file',
             'test-service.json': 'dummy json specification file',
             'test-service.JSON': 'dummy JSON specification file',
             'test-service.yaml': 'dummy yaml specification file',

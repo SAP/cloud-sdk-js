@@ -64,7 +64,7 @@ describe('generator', () => {
       ]);
     });
 
-    it('should recursively return an array for all JSON file paths only with the lowercase file extension for an input directory', async () => {
+    it('should recursively return an array for all .json files for an input directory', async () => {
       expect(await getInputFilePaths('root/inputDir/**/*.json')).toEqual([
         resolve(inputDir, 'sub-dir/test-service2.json'),
         resolve(inputDir, 'test-service.json')

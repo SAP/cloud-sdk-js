@@ -278,7 +278,7 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
   if ((await lstat(input)).isDirectory()) {
     return new Promise(resolvePromise => {
       glob(
-        resolve(input, './**/*(*.json|*.JSON|*.yaml|*.YAML|*.yml|*.YML)'),
+        resolve(input, '**/*.{json,JSON,yaml,YAML,yml,YML}'),
         (_error, paths) => {
           resolvePromise(paths);
         }

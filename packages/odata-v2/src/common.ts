@@ -30,5 +30,9 @@ export {
   EntityBase,
   Constructable,
   EntityBuilder,
-  CustomOrDefaultType as CustomOrDefaultTypeCommon
+  CustomOrDefaultType as CustomOrDefaultTypeCommon,
+  WriteResponses as WriteResponsesCommon,
+  ReadResponse as ReadResponseCommon,
+  WriteResponse as WriteResponseCommon,
+  ErrorResponse
 } from '@sap-cloud-sdk/odata-common';

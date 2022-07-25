@@ -6,7 +6,8 @@ import type {
 import type { DestinationSelectionStrategy } from './destination-selection-strategies';
 
 /**
- * @internal
+ * Collection of all destinations from the provider and subscriber account.
+ * The used {@link DestinationSelectionStrategy} will decide which destination is selected in the end.
  */
 export interface AllDestinations {
   subscriber: DestinationsByType;
@@ -14,7 +15,8 @@ export interface AllDestinations {
 }
 
 /**
- * @internal
+ * Collection of all destinations from an account.
+ * For a given account a destination can originate from the destination service instance or subaccount.
  */
 export interface DestinationsByType {
   instance: Destination[];
@@ -23,11 +25,11 @@ export interface DestinationsByType {
 
 /**
  * Options to configure the behavior of the destination accessor.
- * @see [[DestinationFetchOptions]]
+ * @see {@link DestinationFetchOptions}
  */
 export interface DestinationAccessorOptions {
   /**
-   * Method that implements the selection strategy of the retrieved destination. Uses [[subscriberFirst]] per default. Use the selector helper [[DestinationSelectionStrategies]] to select the appropriate selection strategy.
+   * Method that implements the selection strategy of the retrieved destination. Uses {@link subscriberFirst} per default. Use the selector helper {@link DestinationSelectionStrategies} to select the appropriate selection strategy.
    */
   selectionStrategy?: DestinationSelectionStrategy;
 
@@ -53,7 +55,7 @@ export interface DestinationAccessorOptions {
 }
 
 /**
- * Options used when fetching destinations. Encompasses [[DestinationAccessorOptions]], [[DestinationRetrievalOptions]] and [[VerifyJwtOptions]].
+ * Options used when fetching destinations. Encompasses {@link DestinationAccessorOptions}, {@link DestinationRetrievalOptions} and {@link VerifyJwtOptions}.
  */
 export type DestinationOptions = DestinationAccessorOptions &
   DestinationRetrievalOptions &
@@ -63,10 +65,10 @@ export type DestinationOptions = DestinationAccessorOptions &
  * Declaration of a destination to be retrieved from an environment variable or from the destination service on SAP Business Technology Platform, including all DestinationOptions.
  *
  * Use an object of this interface to specify which destination shall be used when executing a request.
- * The destination will be retrieved via its [[DestinationFetchOptions.destinationName]] according to the following algorithm:
- * 1. If a destination of this [[DestinationFetchOptions.destinationName]] is defined in the environment variable `destinations` (if available), it will be converted into a [[Destination]] and used for the request.
- * 2. Otherwise, the destination service on SAP Business Technology Platform is queried for a destination with the given [[DestinationFetchOptions.destinationName]], using the access token provided as value of property [[jwt]].
- * Additionally, you can set [[DestinationOptions]] for objects of this interface.
+ * The destination will be retrieved via its {@link DestinationFetchOptions.destinationName} according to the following algorithm:
+ * 1. If a destination of this {@link DestinationFetchOptions.destinationName} is defined in the environment variable `destinations` (if available), it will be converted into a {@link Destination} and used for the request.
+ * 2. Otherwise, the destination service on SAP Business Technology Platform is queried for a destination with the given {@link DestinationFetchOptions.destinationName}, using the access token provided as value of property {@link jwt}.
+ * Additionally, you can set {@link DestinationOptions} for objects of this interface.
  * For more information check out our documentation: https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination.
  */
 export interface DestinationFetchOptions extends DestinationOptions {

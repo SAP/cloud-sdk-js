@@ -84,9 +84,9 @@ export function getNavPropertyDescription(
 ): string {
   return `${
     property.isCollection ? 'One-to-many' : 'One-to-one'
-  } navigation property to the [[${
+  } navigation property to the {@link ${
     property.toEntityClassName
-  }]] entity.`.trim();
+  }} entity.`.trim();
 }
 /**
  * @internal
@@ -95,13 +95,13 @@ export function getComplexTypePropertyDescription(
   property: VdmProperty,
   complexTypeName: string
 ): string {
-  return `Representation of the [[${complexTypeName}.${property.instancePropertyName}]] property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`;
+  return `Representation of the {@link ${complexTypeName}.${property.instancePropertyName}} property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`;
 }
 /**
  * @internal
  */
 export function getStaticPropertyDescription(property: VdmProperty): string {
-  return `Static representation of the [[${property.instancePropertyName}]] property for query construction.${unixEOL}Use to reference this property in query operations such as 'select' in the fluent request API.`;
+  return `Static representation of the {@link ${property.instancePropertyName}} property for query construction.${unixEOL}Use to reference this property in query operations such as 'select' in the fluent request API.`;
 }
 /**
  * @internal
@@ -111,9 +111,9 @@ export function getStaticNavPropertyDescription(
 ): string {
   return `Static representation of the ${
     property.isCollection ? 'one-to-many' : 'one-to-one'
-  } navigation property [[${
+  } navigation property {@link ${
     property.instancePropertyName
-  }]] for query construction.${unixEOL}Use to reference this property in query operations such as 'select' in the fluent request API.`;
+  }} for query construction.${unixEOL}Use to reference this property in query operations such as 'select' in the fluent request API.`;
 }
 /**
  * @internal
@@ -154,13 +154,13 @@ const partOfCommunicationScenarios = (communicationScenarios: string) =>
  * @internal
  */
 export function getRequestBuilderDescription(entity: VdmEntity): string {
-  return `Request builder class for operations supported on the [[${entity.className}]] entity.`;
+  return `Request builder class for operations supported on the {@link ${entity.className}} entity.`;
 }
 /**
  * @internal
  */
 export function getLookupDescription(service: VdmServiceMetadata): string {
-  return `Lookup class for finding the constructor for an entity of the [[${service.className}]] service.`;
+  return `Lookup class for finding the constructor for an entity of the {@link ${service.className}} service.`;
 }
 
 function addConstraints(
@@ -198,7 +198,7 @@ function tagToText(tag: string, description = ''): string {
  */
 export function enumDocs(enumType: VdmEnumType): string {
   return [
-    `This enum represents the enum type "[[${enumType.originalName}]]".`,
+    `This enum represents the enum type "{@link ${enumType.originalName}}".`,
     `The members represent values of EDM type ${enumType.underlyingType}.`
   ].join(`${unixEOL}`);
 }

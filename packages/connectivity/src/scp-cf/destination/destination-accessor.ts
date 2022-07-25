@@ -18,7 +18,7 @@ import {
 import { searchRegisteredDestination } from './destination-from-registration';
 
 /**
- * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination
+ * Returns the parameter if it is a destination, calls {@link getDestination} otherwise (which will try to fetch the destination
  * from the Cloud Foundry destination service).
  *
  * Fetching a destination requires:

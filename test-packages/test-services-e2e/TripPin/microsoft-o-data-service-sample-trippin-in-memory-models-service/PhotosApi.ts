@@ -87,12 +87,12 @@ export class PhotosApi<
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the [[id]] property for query construction.
+         * Static representation of the {@link id} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         ID: fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false),
         /**
-         * Static representation of the [[name]] property for query construction.
+         * Static representation of the {@link name} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', true),

@@ -189,7 +189,7 @@ export declare class TestEntityLvl2MultiLinkApi<
       true
     >;
     /**
-     * Static representation of the one-to-many navigation property [[toMultiLink2]] for query construction.
+     * Static representation of the one-to-many navigation property {@link toMultiLink2} for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_MULTI_LINK_2: OneToManyLink<

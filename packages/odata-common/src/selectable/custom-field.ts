@@ -6,7 +6,8 @@ import { FieldBuilder } from './field-builder';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 /**
- * @internal
+ * If your entity contains fields not present in your service specification you can model them using custom fields.
+ * Alternatively you can also generate a client based on a service specification containing all fields.
  */
 export class CustomField<
   EntityT extends EntityBase,

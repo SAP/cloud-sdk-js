@@ -563,7 +563,7 @@ The first line of the comment should start with `@deprecated` followed by a note
 ```ts
 /* Don't leave out from which version on this is deprecated */
 /**
- * @deprecated Use [[foo]] instead.
+ * @deprecated Use {@link foo} instead.
  */
 
 /* Don't leave out what to use instead */
@@ -577,7 +577,7 @@ The first line of the comment should start with `@deprecated` followed by a note
 ```ts
 /* Add all deprecation information */
 /**
- * @deprecated Since v1.2.3. Use [[foo]] instead.
+ * @deprecated Since v1.2.3. Use {@link foo} instead.
  */
 ```
 

@@ -1,7 +1,7 @@
 import { EdmTypeShared } from '../edm-types';
 
 /**
- * @internal
+ * Interface to represent meta information on the _propertyMetadata property of a complex type.
  */
 export interface ComplexTypeNamespace<ComplexT> {
   _propertyMetadata: PropertyMetadata<ComplexT>[];

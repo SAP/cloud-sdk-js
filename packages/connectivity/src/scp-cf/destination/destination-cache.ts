@@ -22,7 +22,7 @@ export enum IsolationStrategy {
 
 /**
  * Interface to implement custom destination caching.
- * To set a custom implementation, call method [[setDestinationCache]] and pass the cache instance.
+ * To set a custom implementation, call method {@link setDestinationCache} and pass the cache instance.
  */
 export interface DestinationCacheInterface {
   hasKey(key: string): Promise<boolean>;
@@ -33,7 +33,7 @@ export interface DestinationCacheInterface {
 
 /**
  * @internal
- * This wrapper class wraps methods of [[Cache]] class as asynchronous methods.
+ * This wrapper class wraps methods of {@link Cache} class as asynchronous methods.
  */
 export class DefaultDestinationCache implements DestinationCacheInterface {
   cache: Cache<Destination>;
@@ -149,8 +149,8 @@ export const DestinationCache = (
 
 /**
  * Calculates a cache key based on the jwt and destination name for the given isolation strategy.
- * Cache keys for strategies are non-overlapping, i.e. using a cache key for strategy [[IsolationStrategy.Tenant]]
- * will not result in a cache hit for a destination that has been cached with strategy [[IsolationStrategy.Tenant_User]].
+ * Cache keys for strategies are non-overlapping, i.e. using a cache key for strategy {@link IsolationStrategy.Tenant}
+ * will not result in a cache hit for a destination that has been cached with strategy {@link IsolationStrategy.Tenant_User}.
  * @param decodedJwt - The decoded JWT of the current request.
  * @param destinationName - The name of the destination.
  * @param isolationStrategy - The strategy used to isolate cache entries.
@@ -209,10 +209,10 @@ async function cacheRetrievedDestination<T extends DestinationCacheInterface>(
 
 /**
  * Sets the custom destination cache instance.
- * Call this method with an instance of [[DestinationCacheInterface]] to override the default cache instance set by the SDK.
+ * Call this method with an instance of {@link DestinationCacheInterface} to override the default cache instance set by the SDK.
  *
- * NOTE: This function should be called at the beginning before any calls to either [[getDestination]] or [[executeHttpRequest]].
- * @param cache - An instance of [[DestinationCacheInterface]].
+ * NOTE: This function should be called at the beginning before any calls to either {@link getDestination} or {@link executeHttpRequest}.
+ * @param cache - An instance of {@link DestinationCacheInterface}.
  */
 export function setDestinationCache(cache: DestinationCacheInterface): void {
   destinationCache = DestinationCache(cache);

@@ -9,12 +9,12 @@ exports.TestEntity1RequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntity1_1 = require('./TestEntity1');
 /**
- * Request builder class for operations supported on the [[TestEntity1]] entity.
+ * Request builder class for operations supported on the {@link TestEntity1} entity.
  */
 class TestEntity1RequestBuilder extends odata_v4_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntity1` entity based on its keys.
-   * @param keyPropertyString Key property. See [[TestEntity1.keyPropertyString]].
+   * @param keyPropertyString Key property. See {@link TestEntity1.keyPropertyString}.
    * @returns A request builder for creating requests to retrieve one `TestEntity1` entity based on its keys.
    */
   getByKey(keyPropertyString) {

@@ -220,12 +220,12 @@ export function getXsuaaServiceCredentials(
 }
 
 /**
- * Takes a string that represents the service type and resolves it by calling [[getService]].
- * If the parameter is already an instance of [[Service]], it is returned directly.
+ * Takes a string that represents the service type and resolves it by calling {@link getService}.
+ * If the parameter is already an instance of {@link Service}, it is returned directly.
  *
  * Throws an error when no service can be found for the given type.
- * @param service - A string representing the service type or a [[Service]] instance.
- * @returns A [[Service]] instance.
+ * @param service - A string representing the service type or a {@link Service} instance.
+ * @returns A {@link Service} instance.
  * @internal
  */
 export function resolveService(service: string | Service): Service {

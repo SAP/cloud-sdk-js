@@ -13,19 +13,19 @@ import { Destination, sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import {
   HttpResponse,
   HttpRequestConfigWithOrigin,
-  mergeOptionsWithPriority,
   executeHttpRequest
 } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
-  OriginOptions
+  OriginOptions,
+  mergeOptionsWithPriority
 } from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
+
 /**
  * OData request configuration for an entity type.
- * @typeparam EntityT - Type of the entity to setup a request for
- * @internal
+ * @typeparam EntityT - Type of the entity to setup a request for.
  */
 export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**

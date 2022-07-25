@@ -30,8 +30,7 @@ const logger = createLogger({
 });
 
 /**
- * Interface representing the return type of the builder function [[entityDeserializer]]
- * @internal
+ * Interface representing the return type of the builder function {@link entityDeserializer}.
  */
 export interface EntityDeserializer {
   deserializeEntity: <EntityT extends EntityBase = EntityBase>(
@@ -55,7 +54,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * @param deSerializers - (De-)serializers used for transformation.
  * @param extractODataETag - Extractor for the ETag.
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
- * @returns an entity deserializer as defined by [[EntityDeserializer]]
+ * @returns an entity deserializer as defined by {@link EntityDeserializer}
  * @internal
  */
 export function entityDeserializer<T extends DeSerializers>(

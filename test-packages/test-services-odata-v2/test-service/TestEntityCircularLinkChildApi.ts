@@ -31,7 +31,7 @@ export class TestEntityCircularLinkChildApi<
 
   private navigationPropertyFields!: {
     /**
-     * Static representation of the one-to-many navigation property [[toParent]] for query construction.
+     * Static representation of the one-to-many navigation property {@link toParent} for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_PARENT: Link<
@@ -102,7 +102,7 @@ export class TestEntityCircularLinkChildApi<
       true
     >;
     /**
-     * Static representation of the one-to-many navigation property [[toParent]] for query construction.
+     * Static representation of the one-to-many navigation property {@link toParent} for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
     TO_PARENT: Link<
@@ -118,7 +118,7 @@ export class TestEntityCircularLinkChildApi<
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
         /**
-         * Static representation of the [[keyProperty]] property for query construction.
+         * Static representation of the {@link keyProperty} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
         KEY_PROPERTY: fieldBuilder.buildEdmTypeField(

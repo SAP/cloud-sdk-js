@@ -24,6 +24,8 @@ export abstract class ActionFunctionImportRequestBuilderBase<
     super(requestConfig);
   }
 
+
+  //Zongping made a change a beloow to allow a deserialization
   /**
    * Execute request.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.

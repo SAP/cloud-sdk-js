@@ -31,7 +31,7 @@
     "bignumber.js": "^9.0.0",
     "execa": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
-    "nock": "^13.2.8",
+    "nock": "^13.2.9",
     "winston": "^3.8.1"
   }
 }

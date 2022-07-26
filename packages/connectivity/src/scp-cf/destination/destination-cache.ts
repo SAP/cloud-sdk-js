@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { Cache, CacheEntry, DateInputObject } from '../cache';
+import { Cache, CacheEntry } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { JwtPayload } from '../jsonwebtoken-type';
@@ -38,8 +38,8 @@ export interface DestinationCacheInterface {
 export class DefaultDestinationCache implements DestinationCacheInterface {
   cache: Cache<Destination>;
 
-  constructor(validityTime?: DateInputObject) {
-    this.cache = new Cache<Destination>(validityTime);
+  constructor(validityTimeInMs?: number) {
+    this.cache = new Cache<Destination>(validityTimeInMs);
   }
 
   /**
@@ -110,11 +110,7 @@ export interface DestinationCacheType {
  * @internal
  */
 export const DestinationCache = (
-  cache: DestinationCacheInterface = new DefaultDestinationCache({
-    hours: 0,
-    minutes: 5,
-    seconds: 0
-  })
+  cache: DestinationCacheInterface = new DefaultDestinationCache(300000)
 ): DestinationCacheType => ({
   retrieveDestinationFromCache: async (
     decodedJwt: Record<string, any>,

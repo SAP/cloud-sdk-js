@@ -38,11 +38,11 @@ export class Cache<T> implements CacheInterface<T> {
    * Default validity period for each entry in cache.
    * If `undefined`, all cached entries will be valid indefinitely.
    */
-  private defaultValidityTime: number | undefined;
+  private defaultValidityTimeInMs: number | undefined;
 
-  constructor(validityTime?: number) {
+  constructor(validityTimeInMs?: number) {
     this.cache = {};
-    this.defaultValidityTime = validityTime;
+    this.defaultValidityTimeInMs = validityTimeInMs;
   }
 
   /**
@@ -80,7 +80,7 @@ export class Cache<T> implements CacheInterface<T> {
   set(key: string | undefined, item: CacheEntry<T>): void {
     if (key) {
       const expires =
-        item.expires ?? inferExpirationTime(this.defaultValidityTime);
+        item.expires ?? inferExpirationTime(this.defaultValidityTimeInMs);
       this.cache[key] = { entry: item.entry, expires };
     }
   }
@@ -94,11 +94,11 @@ function isExpired<T>(item: CacheEntry<T>): boolean {
 }
 
 function inferExpirationTime(
-  expirationTime: number | undefined
+  validityTimeInMs: number | undefined
 ): number | undefined {
-  return expirationTime
+  return validityTimeInMs
     ? new Date()
-        .setMilliseconds(new Date().getMilliseconds() + expirationTime)
+        .setMilliseconds(new Date().getMilliseconds() + validityTimeInMs)
         .valueOf()
     : undefined;
 }

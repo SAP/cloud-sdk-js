@@ -96,9 +96,10 @@ function isExpired<T>(item: CacheEntry<T>): boolean {
 function inferExpirationTime(
   validityTimeInMs: number | undefined
 ): number | undefined {
+  const now = new Date();
   return validityTimeInMs
     ? new Date()
-        .setMilliseconds(new Date().getMilliseconds() + validityTimeInMs)
+        .setMilliseconds(now.getMilliseconds() + validityTimeInMs)
         .valueOf()
     : undefined;
 }

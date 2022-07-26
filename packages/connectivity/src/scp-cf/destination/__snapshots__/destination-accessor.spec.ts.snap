@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`destination accessor throws an error, when destination type does not match 1`] = `"The type of the destination 'name: my-destination, url: https://my.system.com' has to be 'MAIL', but is 'HTTP'."`;

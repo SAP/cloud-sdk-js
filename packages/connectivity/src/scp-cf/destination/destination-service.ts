@@ -233,7 +233,7 @@ export async function fetchDestinationByNameWithoutTokens(
         targetUri,
         decodeJwt(serviceToken)
       );
-    if (destinationsFromCache && destinationsFromCache.length > 0) {
+    if (destinationsFromCache?.length) {
       logger.debug(
         `Destinations retrieved from cache. There were ${destinationsFromCache.length} destinations returned from the cache.`
       );

@@ -1,5 +1,21 @@
 # @sap-cloud-sdk/http-client
 
+## 2.6.0
+
+### Minor Changes
+
+- e44c214a: [Fixed Issue] Fix the `executeHttpRequest`/`executeHttpRequestWithOrigin` function, so the warning is only shown when overwriting headers by using custom headers.
+- e46bb51d: [Improvement] Make `requestConfig` of `OriginOptions` optional.
+
+### Patch Changes
+
+- Updated dependencies [cb598c16]
+- Updated dependencies [09094607]
+- Updated dependencies [93d41281]
+- Updated dependencies [8fdfebd6]
+  - @sap-cloud-sdk/connectivity@2.6.0
+  - @sap-cloud-sdk/util@2.6.0
+
 ## 2.5.0
 
 ### Minor Changes

@@ -157,7 +157,7 @@ function validateDirectoryNames(dirNamesByPaths: Record<string, string>): void {
       )
       .join('\n');
 
-    const errorMessage = `Duplicate service directory names found. Customize directory names with \`optionsPerService\` or enable automatic name adjustment with \`skipValidation\`.\n\tDuplicates:\n${duplicatesList}`;
+    const errorMessage = `Duplicate service file names would result in duplicate directory names. Customize directory names with \`optionsPerService\` or enable automatic name adjustment with \`skipValidation\`.\n\tDuplicates:\n${duplicatesList}`;
     throw new Error(errorMessage);
   }
 }

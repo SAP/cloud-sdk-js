@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/connectivity
 
+## 2.6.0
+
+### Minor Changes
+
+- cb598c16: [New Functionality] Support JWTs without a `JKU` property.
+- 09094607: [New Functionality] Add interface `DestinationCacheInterface` and method `setDestinationCache` to support implementation of custom destination cache.
+- 93d41281: [New Functionality] Fetch client credential token for destinations created by service bindings.
+- 8fdfebd6: [Fixed Issue] Fix `getDestination()` to allow passing an async transform function `serviceBindingTransformFn` in `options`. The transform function can also be passed by `execute()`, `executeHttpRequest()`, `executeRaw()`, etc.
+  [Compatibility Note] Rename `transformationFn` into `serviceBindingTransformFn` in `DestinationForServiceBindingsOptions` to avoid ambiguity and make the function async.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@2.6.0
+
 ## 2.5.0
 
 ### Patch Changes

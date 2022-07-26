@@ -44,6 +44,7 @@ export async function useOrFetchDestination(
  * 3. Return the checked destination.
  * @param destination - A destination or the necessary parameters to fetch one.
  * @returns A promise resolving to the requested destination on success.
+ * @internal
  */
 export async function resolveDestination(
   destination: DestinationOrFetchOptions

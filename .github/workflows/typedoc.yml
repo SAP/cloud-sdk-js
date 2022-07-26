@@ -1,4 +1,4 @@
-name: blackduck-scan
+name: typedoc-check
 
 on:
   pull_request: ~

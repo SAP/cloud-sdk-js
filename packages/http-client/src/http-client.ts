@@ -388,7 +388,7 @@ export function executeHttpRequest<
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
  * @param options - An {@link HttpRequestOptions} of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.
- * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
+ * @returns A promise resolving to an {@link HttpResponse}.
  * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/query-parameters
  */
 export function executeHttpRequestWithOrigin<

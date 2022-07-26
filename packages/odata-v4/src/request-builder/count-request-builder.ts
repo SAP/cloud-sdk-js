@@ -1,4 +1,4 @@
-import { CountRequestBuilder as CountRequestBuilderCommon } from '@sap-cloud-sdk/odata-common/internal';
+import { CountRequestBuilder as CountRequestBuilderCommon } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { DeSerializers, DefaultDeSerializers } from '../de-serializers';
 

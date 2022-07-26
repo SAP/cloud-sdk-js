@@ -1,4 +1,4 @@
-import { EdmTypeShared } from '@sap-cloud-sdk/odata-common/internal';
+import { EdmTypeShared } from '@sap-cloud-sdk/odata-common';
 import { DeSerializers } from './de-serializers';
 
 /**

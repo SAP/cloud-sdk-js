@@ -1,4 +1,4 @@
-import { EntityBase } from '@sap-cloud-sdk/odata-common/internal';
+import { EntityBase } from '@sap-cloud-sdk/odata-common';
 
 /**
  * Super class for all representations of OData v4 entity types.

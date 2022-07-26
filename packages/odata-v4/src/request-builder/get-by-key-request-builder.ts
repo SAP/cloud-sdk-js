@@ -18,8 +18,8 @@ import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create an OData request to get a single entity based on its key properties.
  * The properties available in the response can be restricted by creating a {@link GetByKeyRequestBuilder.select | selection}, where no selection is equal to selecting all fields of the entity.
- * Navigational properties need to expanded explicitly by {@link GetAllRequestBuilder.expand}
- * where no selection is equal to selecting all fields.
+ * Navigational properties need to be expanded explicitly by {@link GetAllRequestBuilder.expand}.
+ * Where no selection is equal to selecting all fields.
  * @typeparam EntityT - Type of the entity to be requested.
  */
 export class GetByKeyRequestBuilder<

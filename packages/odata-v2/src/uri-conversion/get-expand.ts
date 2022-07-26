@@ -1,4 +1,4 @@
-import { Selectable, Link } from '@sap-cloud-sdk/odata-common/internal';
+import { Selectable, Link } from '@sap-cloud-sdk/odata-common';
 import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 

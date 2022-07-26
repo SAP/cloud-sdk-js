@@ -6,5 +6,6 @@ export type {
   AttachmentLike,
   Headers,
   Envelope,
-  MailResponse
+  MailResponse,
+  MailDestination
 } from './mail-client-types';

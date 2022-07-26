@@ -98,8 +98,6 @@ function inferExpirationTime(
 ): number | undefined {
   const now = new Date();
   return validityTimeInMs
-    ? new Date()
-        .setMilliseconds(now.getMilliseconds() + validityTimeInMs)
-        .valueOf()
+    ? now.setMilliseconds(now.getMilliseconds() + validityTimeInMs).valueOf()
     : undefined;
 }

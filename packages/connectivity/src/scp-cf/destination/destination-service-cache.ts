@@ -33,5 +33,5 @@ const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
  * @internal
  */
 export const destinationServiceCache = DestinationServiceCache(
-  new Cache<Destination[]>({ hours: 0, minutes: 5, seconds: 0 })
+  new Cache<Destination[]>(300000)
 );

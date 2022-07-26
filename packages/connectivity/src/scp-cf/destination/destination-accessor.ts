@@ -41,15 +41,12 @@ export async function useOrFetchDestination(
  * Resolve a destination by the following steps:
  * 1. Call [[useOrFetchDestination]]
  * 2. Throw an error, when the resulting destination from the previous step is falsy
- * 3. Throw an error, if the resulting destination does not meet the type parameter
- * 4. Return the checked destination.
+ * 3. Return the checked destination.
  * @param destination - A destination or the necessary parameters to fetch one.
- * @param type - A destination type to be expected.
  * @returns A promise resolving to the requested destination on success.
  */
-export async function resolveDestinationWithType(
-  destination: DestinationOrFetchOptions,
-  type: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC'
+export async function resolveDestination(
+  destination: DestinationOrFetchOptions
 ): Promise<Destination> {
   const resolvedDestination = await useOrFetchDestination(destination).catch(
     error => {
@@ -61,13 +58,6 @@ export async function resolveDestinationWithType(
       `Failed to resolve the destination '${toDestinationNameUrl(
         destination
       )}'.`
-    );
-  }
-  if (!!resolvedDestination.type && resolvedDestination.type !== type) {
-    throw Error(
-      `The type of the destination '${toDestinationNameUrl(
-        destination
-      )}' has to be '${type}', but is '${destination.type}'.`
     );
   }
   return resolvedDestination;

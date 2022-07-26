@@ -13,9 +13,10 @@ import {
   Destination,
   DestinationOrFetchOptions,
   getAgentConfig,
-  resolveDestinationWithType
+  toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
 import {
+  resolveDestination,
   defaultResilienceBTPServices,
   DestinationConfiguration,
   getAdditionalHeaders,
@@ -53,10 +54,15 @@ const logger = createLogger({
 export async function buildHttpRequest(
   destination: DestinationOrFetchOptions
 ): Promise<DestinationHttpRequestConfig> {
-  const resolvedDestination = await resolveDestinationWithType(
-    destination,
-    'HTTP'
-  );
+  const resolvedDestination = await resolveDestination(destination);
+  if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
+    throw Error(
+      `The type of the destination '${toDestinationNameUrl(
+        destination
+      )}' has to be 'HTTP', but is '${destination.type}'.`
+    );
+  }
+
   const headers = await buildHeaders(resolvedDestination);
 
   return buildDestinationHttpRequestConfig(resolvedDestination, headers);
@@ -97,13 +103,16 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
     requestConfig: T,
     options?: HttpRequestOptions
   ): Promise<ReturnT> {
-    const resolvedDestination = await resolveDestinationWithType(
-      destination,
-      'HTTP'
-    );
-    const destinationRequestConfig = await buildHttpRequest(
-      resolvedDestination
-    );
+    const resolvedDestination = await resolveDestination(destination);
+    if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
+      throw Error(
+        `The type of the destination '${toDestinationNameUrl(
+          destination
+        )}' has to be 'HTTP', but is '${destination.type}'.`
+      );
+    }
+
+    const destinationRequestConfig = await buildHttpRequest(destination);
     logCustomHeadersWarning(requestConfig.headers);
     const request = await buildRequestWithMergedHeadersAndQueryParameters(
       requestConfig,

@@ -3,13 +3,11 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
-# @sap-cloud-sdk/mail-client
+# @sap-cloud-sdk/mail-client (experimental)
+With the SAP Cloud SDK mail client you can leverage the connectivity and destination services on SAP BTP to send e-mails from your application.
 
-## This package is released for test purposes. We might introduce breaking changes.
-
-This package contains the mail client functionality of the SAP Cloud SDK.
-
-With the help of the mail client, sending emails from the application on SAP BTP is simplified as the client handles connectivity related issues such as destination lookup, connections to SAP S/4HANA On-premise and web proxies.
+## This package is experimental
+The API of this package is not stable and will likely change in future versions.
 
 ## Installation
 
@@ -19,7 +17,7 @@ $ npm install @sap-cloud-sdk/mail-client
 
 ## Usage
 
-To send mails, use the `sendMail` function.
+Use the `sendMail` function to send e-mails.
 
 ```ts
 `sendMail`(destination, { from: 'from@sap.com', to: 'to@sap.com', subject: 'subject', text: 'text' });

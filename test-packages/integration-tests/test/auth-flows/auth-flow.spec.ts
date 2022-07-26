@@ -485,12 +485,12 @@ describe('OAuth flows', () => {
     const destination = await getDestinationFromDestinationService({
       destinationName: systems.email.providerCloudBasic
     });
-    expect(destination!.type).toEqual('MAIL');
-    expect(destination!.proxyType).toEqual('Internet');
-    expect(destination!.originalProperties!['mail.user']).toBeTruthy();
-    expect(destination!.originalProperties!['mail.smtp.host']).toBeTruthy();
+    expect(destination?.type).toEqual('MAIL');
+    expect(destination?.proxyType).toEqual('Internet');
+    expect(destination?.originalProperties?.['mail.user']).toBeTruthy();
+    expect(destination?.originalProperties?.['mail.smtp.host']).toBeTruthy();
 
-    const myEmailAddress = destination!.originalProperties!['mail.user'];
+    const myEmailAddress = destination?.originalProperties!['mail.user'];
     const res = await sendMail(destination!, {
       from: myEmailAddress,
       to: myEmailAddress,

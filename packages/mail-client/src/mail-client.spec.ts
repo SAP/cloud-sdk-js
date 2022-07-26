@@ -3,18 +3,17 @@ import { sendMail } from './mail-client';
 import { MailOptions } from './mail-client-types';
 
 describe('mail client', () => {
-  class MockMailer {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    sendMail() {}
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    close() {}
-  }
+  const mockMailer = {
+    sendMail: jest.fn(),
+    close: jest.fn()
+  };
+
   it('should create transport, send mails and close the transport', async () => {
     const spyCreateTransport = jest
       .spyOn(nodemailer, 'createTransport')
-      .mockReturnValue(new MockMailer() as any);
-    const spySendMail = jest.spyOn(MockMailer.prototype, 'sendMail');
-    const spyClose = jest.spyOn(MockMailer.prototype, 'close');
+      .mockReturnValue(mockMailer as any);
+    const spySendMail = jest.spyOn(mockMailer, 'sendMail');
+    const spyClose = jest.spyOn(mockMailer, 'close');
     const destination: any = {
       originalProperties: {
         'mail.password': 'password',
@@ -29,7 +28,10 @@ describe('mail client', () => {
     };
     const mailOptions1: MailOptions = {
       from: 'from1@example.com',
-      to: 'to1@example.com'
+      to: 'to1@example.com',
+      subject: 'subject',
+      text: 'txt',
+      attachments: [{ content: 'content' }]
     };
     const mailOptions2: MailOptions = {
       from: 'from2@example.com',

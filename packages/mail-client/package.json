@@ -1,14 +1,15 @@
 {
   "name": "@sap-cloud-sdk/mail-client",
   "version": "2.6.0",
-  "description": "SAP Cloud SDK for JavaScript mail-client",
+  "description": "SAP Cloud SDK for JavaScript e-mail client",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
     "cloud-sdk",
     "sap-cloud-platform",
-    "mail-client"
+    "mail",
+    "client"
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

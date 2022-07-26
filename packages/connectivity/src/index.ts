@@ -42,7 +42,6 @@ export {
   setDestinationCache,
   DestinationAuthToken,
   DestinationCertificate,
-  resolveDestinationWithType,
   ClientCredentialsResponse,
   AllDestinations,
   DestinationConfiguration,

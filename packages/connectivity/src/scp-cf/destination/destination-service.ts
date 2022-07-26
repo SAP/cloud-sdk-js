@@ -220,7 +220,7 @@ export async function fetchDestinationByNameWithoutTokens(
   destinationServiceUri: string,
   serviceToken: string,
   options: DestinationServiceOptions
-): Promise<Omit<Destination, 'AuthAndExchangeTokens'> | undefined> {
+): Promise<Destination | undefined> {
   const targetUri = `${removeTrailingSlashes(
     destinationServiceUri
   )}/destination-configuration/v1/destinations/${
@@ -256,6 +256,7 @@ export async function fetchDestinationByNameWithoutTokens(
       return destination;
     })
     .catch((error: AxiosError<any>) => {
+      // Return 'undefined' when the response is 404 to so the api consumer knows they need to handle that case
       if (error.response?.status === 404) {
         return undefined;
       }

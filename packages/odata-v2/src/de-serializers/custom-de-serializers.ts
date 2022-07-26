@@ -1,4 +1,7 @@
-import { Time , CustomOrDefaultType as CustomOrDefaultTypeCommon } from '@sap-cloud-sdk/odata-common';
+import {
+  Time,
+  CustomOrDefaultType as CustomOrDefaultTypeCommon
+} from '@sap-cloud-sdk/odata-common';
 import BigNumber from 'bignumber.js';
 import { DeSerializers } from './de-serializers';
 import {

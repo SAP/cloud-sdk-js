@@ -8,7 +8,6 @@ import {
   formatJson,
   ErrorWithCause
 } from '@sap-cloud-sdk/util';
-import { emptyDirSync } from 'fs-extra';
 import {
   getSdkMetadataFileNames,
   getSdkVersion,
@@ -74,7 +73,8 @@ export async function generateWithParsedOptions(
   }
 
   if (options.clearOutputDir) {
-    await emptyDirSync(options.outputDir);
+    const rm = promisesFs.rm || promisesFs.rmdir;
+    await rm(options.outputDir, { recursive: true });
   }
   const inputFilePaths = await getInputFilePaths(options.input);
 

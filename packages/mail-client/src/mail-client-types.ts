@@ -197,6 +197,7 @@ export interface MailResponse {
 
 /**
  * Represents a mail destination configured on the SAP Business Technology Platform.
+ * Some keys of the originalProperties are ignored by the SDK for the time being including `mail.transport.protocol` and `mail.smtp.provider.*`.
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface MailDestination {
@@ -224,22 +225,27 @@ export interface MailDestination {
   originalProperties?: { [key: string]: any };
   /**
    * Host of the mail server.
+   * Parsed from originalProperties['mail.smtp.host'].
    */
   host?: string;
   /**
    * Port of the mail server.
+   * Parsed from originalProperties['mail.password'].
    */
   port?: number;
   /**
    * Optional sender info defined in the destination properties.
+   * Parsed from originalProperties['mail.from'].
    */
   from?: string;
   /**
    * Username to use for basic authentication, optional if other means of authentication shall be used.
+   * Parsed from originalProperties['mail.user'].
    */
   username?: string;
   /**
    * Password to use for basic authentication, optional if other means of authentication shall be used.
+   * Parsed from originalProperties['mail.password'].
    */
   password?: string;
 }

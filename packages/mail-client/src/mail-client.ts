@@ -91,6 +91,14 @@ function createTransport(
       user: mailDestination.username,
       pass: mailDestination.password
     },
+    // TODO: Uploading certificates on CF like HTTP destination is not applicable for MAIL destination.
+    // Provide an API option for the users, so they can pass it as parameter for the nodemailer.
+    // The `tls` is the right key:
+    //     tls: {
+    //       cert: xxx,
+    //       ca: xxx,
+    //       rejectUnauthorized: xxx
+    //     }
     tls: {
       /**
        * If true the server will reject any connection which is not

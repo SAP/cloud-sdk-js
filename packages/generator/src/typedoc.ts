@@ -26,7 +26,7 @@ export function getFunctionDoc(
     if (tags.typeparams) {
       tags.typeparams.forEach(typeparam => {
         description += tagToText(
-          'typeparam',
+          'typeParam',
           `${typeparam.type} ${typeparam.description}`
         );
       });

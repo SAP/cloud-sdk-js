@@ -87,7 +87,7 @@ export class EntityBuilder<
 
   /**
    * Builds an entity from JSON representation.
-   * If you have obtained the JSON as a request payload use the {@link deserializeEntity} methods.
+   * If you have obtained the JSON object as a request payload use the {@link entityDeserializer} methods.
    * Note that fields not mappable to a field in the target entity are silently ignored.
    * @param json - Representation of the entity in JSON format.
    * @returns EntityBase constructed from JSON representation.

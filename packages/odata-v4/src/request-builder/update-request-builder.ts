@@ -56,9 +56,9 @@ export class UpdateRequestBuilder<
   }
 
   /**
-   * Execute request and return an {@link HttpResponse}.
+   * Execute request and return an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an {@link HttpResponse}.
+   * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

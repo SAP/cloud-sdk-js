@@ -3,8 +3,8 @@ import {
   TestComplexTypeField,
   TestEntity
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
-import { defaultDeSerializers } from '@sap-cloud-sdk/odata-v4/internal';
-import { FieldBuilder } from '@sap-cloud-sdk/odata-common/internal';
+import { defaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
+import { FieldBuilder } from '@sap-cloud-sdk/odata-common';
 
 // $ExpectType FieldBuilder<typeof TestEntity, DefaultDeSerializers>
 const entityFieldBuilder = new FieldBuilder(TestEntity, defaultDeSerializers);

@@ -8,7 +8,7 @@ import { DeSerializers } from './de-serializers';
 
 /**
  * Entity deserializer instance for v4 entities.
- * See {@link EntityDeserializer} for the provided methods.
+ * See {@link @sap-cloud-sdk/odata-common!EntityDeserializer} for the provided methods.
  * @param deSerializers - DeSerializer to be used.
  * @returns EntityDeserializer.
  */

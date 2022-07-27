@@ -53,7 +53,7 @@ export class Link<
   ) {}
 
   /**
-   * Creates a selection on a linked entity. Has the same behavior as {@link GetAllRequestBuilder.select | GetAllRequestBuilderV2.select} and {@link GetByKeyRequestBuilderV4.select} but for linked entities.
+   * Creates a selection on a linked entity. Has the same behavior as {@link @sap-cloud-sdk/odata-v2!GetAllRequestBuilder.select | GetAllRequestBuilderV2.select} and {@link @sap-cloud-sdk/odata-v4!GetByKeyRequestBuilder.select | GetByKeyRequestBuilderV4.select} but for linked entities.
    *
    * See also, {@link Selectable}.
    * @param selects - Selection of fields or links on a linked entity.

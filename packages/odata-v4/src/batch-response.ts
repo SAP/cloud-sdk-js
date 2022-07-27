@@ -7,7 +7,7 @@ import {
 import { DefaultDeSerializers, DeSerializers } from './de-serializers';
 
 /**
- * Union of the possible batch responses: {@link ReadResponseCommon}, {@link WriteResponsesCommon} and {@link ErrorResponse}.
+ * Union of the possible batch responses: {@link @sap-cloud-sdk/odata-common!ReadResponse | ReadResponseCommon}, {@link @sap-cloud-sdk/odata-common!WriteResponses | WriteResponsesCommon} and {@link @sap-cloud-sdk/odata-common!ErrorResponse}.
  */
 export type BatchResponse<
   DeSerializersT extends DeSerializers = DefaultDeSerializers

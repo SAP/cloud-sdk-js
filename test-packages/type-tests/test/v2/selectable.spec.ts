@@ -1,5 +1,5 @@
 import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { OneToOneLink } from '@sap-cloud-sdk/odata-common/internal';
+import { OneToOneLink } from '@sap-cloud-sdk/odata-common';
 
 const { testEntityApi, testEntitySingleLinkApi } = testService();
 

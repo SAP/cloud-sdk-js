@@ -1,4 +1,4 @@
-import { or } from '@sap-cloud-sdk/odata-common/internal';
+import { or } from '@sap-cloud-sdk/odata-common';
 import {
   TestEnumType,
   testService

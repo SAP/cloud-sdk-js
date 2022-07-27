@@ -18,7 +18,8 @@ export {
   FilterFunctionsType,
   NumberFilterFunction,
   StringFilterFunction,
-  CollectionFilterFunction
+  CollectionFilterFunction,
+  filterFunction
 } from './filter';
 export type {
   Filterable,
@@ -125,10 +126,10 @@ export type {
   NonNullishType,
   NullishTypes
 } from './entity-builder';
-export { EntityDeserializer } from './entity-deserializer';
+export { EntityDeserializer, entityDeserializer } from './entity-deserializer';
 export { ODataUri } from './uri-conversion';
 export { ResponseDataAccessor } from './response-data-accessor';
-export { EntitySerializer } from './entity-serializer';
+export { EntitySerializer, entitySerializer } from './entity-serializer';
 export type { Expandable } from './expandable';
 export {
   ErrorResponse,

@@ -207,7 +207,7 @@ async function cacheRetrievedDestination<T extends DestinationCacheInterface>(
  * Sets the custom destination cache instance.
  * Call this method with an instance of {@link DestinationCacheInterface} to override the default cache instance set by the SDK.
  *
- * NOTE: This function should be called at the beginning before any calls to either {@link getDestination} or {@link executeHttpRequest}.
+ * NOTE: This function should be called at the beginning before any calls to either {@link getDestination} or {@link @sap-cloud-sdk/http-client!executeHttpRequest}.
  * @param cache - An instance of {@link DestinationCacheInterface}.
  */
 export function setDestinationCache(cache: DestinationCacheInterface): void {

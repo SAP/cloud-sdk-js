@@ -41,7 +41,7 @@ export interface DeSerializers<
 /**
  * Represents a set of functions for serialization, deserialization and optionally serialization for URIs.
  * The return type of the `deserialize` function is the type of the input to the `serialize` and `serializeToUri` functions.
- * @typeparam DeserializedT - The return type of `deserialize` and input of `serialize` and `serilizeToUri`.
+ * @typeParam DeserializedT - The return type of `deserialize` and input of `serialize` and `serilizeToUri`.
  */
 export interface DeSerializer<DeserializedT> {
   /**
@@ -73,8 +73,8 @@ export interface DeSerializer<DeserializedT> {
 
 /**
  * Infers the deserialized type for an EDM type from the given (de-)serializers type.
- * @typeparam DeSerializersT - Type of the (de-)serializers.
- * @typeparam EdmT - Return type of the deserialize function for the given EDM type.
+ * @typeParam DeSerializersT - Type of the (de-)serializers.
+ * @typeParam EdmT - Return type of the deserialize function for the given EDM type.
  */
 export type DeserializedType<
   DeSerializersT extends DeSerializers,
@@ -88,7 +88,7 @@ export type DeserializedType<
 /**
  * @internal
  * Creates a function to deserialize values (from EDM to their representation in code).
- * @typeparam DeSerializersT - Type of the (de-)serializers.
+ * @typeParam DeSerializersT - Type of the (de-)serializers.
  * @param deSerializers - (De-)serializers object to use for deserialization of values.
  * @returns A function that deserializes values with the given deserializers.
  */
@@ -104,7 +104,7 @@ export function createValueDeserializer<DeSerializersT extends DeSerializers>(
 /**
  * @internal
  * Creates a function to serialize values (from their representation in code to EDM).
- * @typeparam DeSerializersT - Type of the (de-)serializers.
+ * @typeParam DeSerializersT - Type of the (de-)serializers.
  * @param deSerializers - (De-)serializers object to use for deserialization of values.
  * @returns A function that serializes values with the given serializers.
  */

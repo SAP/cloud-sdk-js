@@ -7,7 +7,7 @@ export type OrderType = 'asc' | 'desc';
 
 /**
  * OData queries take this to determine the order of results.
- * @typeparam EntityT -
+ * @typeParam EntityT -
  */
 export class Order<EntityT extends EntityBase>
   implements EntityIdentifiable<EntityT, any>

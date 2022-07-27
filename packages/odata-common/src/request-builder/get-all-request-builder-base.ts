@@ -13,7 +13,7 @@ import { GetRequestBuilderBase } from './get-request-builder-base';
 
 /**
  * Base class for the get all request builders {@link @sap-cloud-sdk/odata-v2!GetAllRequestBuilder | GetAllRequestBuilderV2} and {@link @sap-cloud-sdk/odata-v4!GetAllRequestBuilder | GetAllRequestBuilderV4}.
- * @typeparam EntityT - Type of the entity to be requested
+ * @typeParam EntityT - Type of the entity to be requested
  */
 export abstract class GetAllRequestBuilderBase<
   EntityT extends EntityBase,

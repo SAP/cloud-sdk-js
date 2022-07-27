@@ -585,7 +585,7 @@ The first line of the comment should start with `@deprecated` followed by a note
 
 In JSDoc it is common to specify the types of parameters and type parameters as JavaScript has no types.
 In TypeDoc this is not necessary, because TypeScript inherently has types and those should not differ between the implementation and documentation.
-A parameter or type parameter line should start with `@param` or `@typeparam`, followed by the (type) parameter name, a dash, and the description.
+A parameter or type parameter line should start with `@param` or `@typeParam`, followed by the (type) parameter name, a dash, and the description.
 The description should end with a full stop.
 
 ❌ Examples of **incorrect** code:

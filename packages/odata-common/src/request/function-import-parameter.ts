@@ -2,7 +2,7 @@ import { EdmTypeShared } from '../edm-types';
 
 /**
  * Internal representation of function import parameters. It adds metadata to the value.
- * @typeparam ValueT - Type of the value.
+ * @typeParam ValueT - Type of the value.
  */
 export class FunctionImportParameter<ValueT> {
   /**
@@ -20,7 +20,7 @@ export class FunctionImportParameter<ValueT> {
 
 /**
  * Internal representation of all parameters of a function import as a map.
- * @typeparam ParametersT - External representation of all parameters
+ * @typeParam ParametersT - External representation of all parameters
  */
 export type FunctionImportParameters<ParametersT> = {
   [K in keyof ParametersT]: FunctionImportParameter<ParametersT[K]>;

@@ -5,8 +5,8 @@ import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
 
 /**
  * Function import request configuration for an entity type.
- * @typeparam DeSerializersT - Type of the deserializer use on the request
- * @typeparam ParametersT - Type of the parameter to setup a request with
+ * @typeParam DeSerializersT - Type of the deserializer use on the request
+ * @typeParam ParametersT - Type of the parameter to setup a request with
  */
 export abstract class ODataFunctionImportRequestConfig<
   DeSerializersT extends DeSerializers,

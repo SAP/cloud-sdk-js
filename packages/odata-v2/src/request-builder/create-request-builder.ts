@@ -15,7 +15,7 @@ import { responseDataAccessor } from './response-data-accessor';
 
 /**
  * Create OData request to create an entity.
- * @typeparam EntityT - Type of the entity to be created.
+ * @typeParam EntityT - Type of the entity to be created.
  */
 export class CreateRequestBuilder<
     EntityT extends Entity,

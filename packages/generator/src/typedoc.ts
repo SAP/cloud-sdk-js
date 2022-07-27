@@ -48,7 +48,7 @@ export function getFunctionDoc(
 export function getComplexTypeFieldDescription(
   complexType: VdmComplexType
 ): string {
-  return `${complexType.fieldType}${unixEOL}@typeparam EntityT - Type of the entity the complex type field belongs to.`;
+  return `${complexType.fieldType}${unixEOL}@typeParam EntityT - Type of the entity the complex type field belongs to.`;
 }
 /**
  * @internal

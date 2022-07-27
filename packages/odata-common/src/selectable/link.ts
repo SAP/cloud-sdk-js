@@ -18,8 +18,8 @@ import type { Selectable } from './selectable';
  * OData v4 entity: 1:N is a {@link OneToManyLink}, 1:0..1 is a {@link OneToOneLink}.
  *
  * See also: {@link Selectable}.
- * @typeparam EntityT - Type of the entity to be linked from.
- * @typeparam LinkedEntityT - Type of the entity to be linked to.
+ * @typeParam EntityT - Type of the entity to be linked from.
+ * @typeParam LinkedEntityT - Type of the entity to be linked to.
  */
 export class Link<
   EntityT extends EntityBase,
@@ -81,8 +81,8 @@ export class Link<
 
   /**
    * Create a new link based on a given link.
-   * @typeparam EntityT - Type of the entity to be linked from.
-   * @typeparam LinkedEntityT - Type of the entity to be linked to.
+   * @typeParam EntityT - Type of the entity to be linked from.
+   * @typeParam LinkedEntityT - Type of the entity to be linked to.
    * @returns Newly created link.
    */
   clone(): this {

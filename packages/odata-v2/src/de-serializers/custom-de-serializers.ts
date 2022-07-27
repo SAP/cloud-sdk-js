@@ -66,8 +66,8 @@ export function mergeDefaultDeSerializersWith<
  * Infers the deserialized type for an EDM type, based on custom (de-)serializers.
  * If the custom (de-)serializers specify a type for the given EDM type, this type is inferred.
  * Otherwise the given DefaultType is used.
- * @typeparam CustomDeSerializerT - Type of the custom (de-)serializers.
- * @typeparam EdmT - The EDM type to infer the type for.
+ * @typeParam CustomDeSerializerT - Type of the custom (de-)serializers.
+ * @typeParam EdmT - The EDM type to infer the type for.
  */
 export type CustomOrDefaultType<CustomDeSerializerT, EdmT> =
   CustomOrDefaultTypeCommon<CustomDeSerializerT, EdmT, DefaultDeSerializers>;

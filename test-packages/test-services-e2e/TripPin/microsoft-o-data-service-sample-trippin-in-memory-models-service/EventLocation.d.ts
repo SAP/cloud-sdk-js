@@ -35,7 +35,7 @@ export interface EventLocation<
 }
 /**
  * EventLocationField
- * @typeparam EntityT - Type of the entity the complex type field belongs to.
+ * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class EventLocationField<
   EntityT extends Entity,

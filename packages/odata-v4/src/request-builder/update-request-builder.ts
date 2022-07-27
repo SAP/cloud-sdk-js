@@ -14,7 +14,7 @@ import { createODataUri } from '../uri-conversion';
 
 /**
  * Create OData query to update an entity.
- * @typeparam EntityT - Type of the entity to be updated.
+ * @typeParam EntityT - Type of the entity to be updated.
  */
 export class UpdateRequestBuilder<
     EntityT extends Entity,

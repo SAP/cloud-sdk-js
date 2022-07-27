@@ -14,7 +14,7 @@ import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.
- * @typeparam EntityT - Type of the entity to be created
+ * @typeParam EntityT - Type of the entity to be created
  */
 export abstract class CreateRequestBuilderBase<
     EntityT extends EntityBase,

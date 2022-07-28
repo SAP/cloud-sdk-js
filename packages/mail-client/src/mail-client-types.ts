@@ -5,23 +5,23 @@ import {
   DestinationProxyType
 } from '@sap-cloud-sdk/connectivity';
 /**
- * Represents an email address.
+ * Represents an e-mail address.
  * This interface is compatible with `Mail.Address` of `nodemailer`.
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface Address {
   /**
-   * Name of the email address.
+   * Name of the recipient.
    */
   name: string;
   /**
-   * Email address like `sdk@sap.com`.
+   * E-mail address of the recipient, e.g. `sender@server.com`.
    */
   address: string;
 }
 
 /**
- * Represents an object or array of additional header fields
+ * Represents an object or array of additional header fields.
  * Prepared header values that are not folded or encoded by Nodemailer.
  * This type is compatible with `Headers` of `nodemailer`.
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -31,17 +31,17 @@ export type Headers =
   | { key: string; value: string }[];
 
 /**
- * Represents a basic structure of an attachment.
+ * Represents the structure of an attachment.
  * This interface is compatible with `AttachmentLike` of `nodemailer`.
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface AttachmentLike {
   /**
-   * String, Buffer or a Stream contents for the attachment.
+   * Contents of the attachment stored in a string, buffer or stream.
    */
   content?: string | Buffer | Readable | undefined;
   /**
-   * Path to a file or an URL (data uris are allowed as well) if you want to stream the file instead of including it (better for larger attachments).
+   * File path or URL (data URIs are allowed as well) if you want to read a file instead of including it (better for larger attachments).
    */
   path?: string | Url | undefined;
 }
@@ -53,23 +53,23 @@ export interface AttachmentLike {
  */
 export interface Attachment extends AttachmentLike {
   /**
-   * Filename to be reported as the name of the attached file, use of unicode is allowed. If you do not want to use a filename, set this value as false, otherwise a filename is generated automatically.
+   * Filename to be reported as the name of the attached file, use of unicode is allowed. If you do not want to use a filename, set this value to false, otherwise a filename is generated automatically.
    */
   filename?: string | false | undefined;
   /**
-   * Optional content id for using inline images in HTML message source. Using cid sets the default contentDisposition to 'inline' and moves the attachment into a multipart/related mime node, so use it only if you actually want to use this attachment as an embedded image.
+   * Optional content id for using inline images in HTML message source. Using cid sets the default `contentDisposition` to 'inline' and moves the attachment into a multipart/related MIME node, so use it only if you actually want to use this attachment as an embedded image.
    */
   cid?: string | undefined;
   /**
-   * If set and content is string, then encodes the content to a Buffer using the specified encoding. Example values: base64, hex, binary etc. Useful if you want to use binary attachments in a JSON formatted e-mail object.
+   * Encoding used to encode the content to a buffer. Example values: base64, hex, binary etc. Useful if you want to use binary attachments in a JSON formatted e-mail object.
    */
   encoding?: string | undefined;
   /**
-   * Optional content type for the attachment, if not set will be derived from the filename property.
+   * Content type of the attachment. Will be derived from the filename property, if not set.
    */
   contentType?: string | undefined;
   /**
-   * Optional transfer encoding for the attachment, if not set it will be derived from the contentType property. Example values: quoted-printable, base64. If it is unset then base64 encoding is used for the attachment. If it is set to false then previous default applies (base64 for most, 7bit for text).
+   * Encoding for the attachment transfer. Will be derived from the `contentType` property, if not set. Example values: quoted-printable, base64. If it is unset then base64 encoding is used for the attachment. If set to false, the previous default applies (base64 for most, 7bit for text).
    */
   contentTransferEncoding?:
     | '7bit'
@@ -78,115 +78,115 @@ export interface Attachment extends AttachmentLike {
     | false
     | undefined;
   /**
-   * Optional content disposition type for the attachment, defaults to `attachment`.
+   * Content disposition type of the attachment. Defaults to `attachment`.
    */
   contentDisposition?: 'attachment' | 'inline' | undefined;
   /**
-   * An object of additional headers.
+   * Additional headers to be sent with the attachment.
    */
   headers?: Headers | undefined;
   /**
-   * An optional value that overrides entire node content in the mime message. If used then all other options set for this node are ignored.
+   * A raw value that overrides entire node content in the MIME message. If used, all other options set for this node are ignored.
    */
   raw?: string | Buffer | Readable | AttachmentLike | undefined;
 }
 
 /**
- * Represents options for sending an email.
+ * Represents options for sending an e-mail.
  * This interface is compatible with `Mail.Options` of `nodemailer`.
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface MailOptions {
   /**
-   * The e-mail address of the sender. All e-mail addresses can be plain 'sender@server.com' or formatted 'Sender Name <sender@server.com>'.
+   * The e-mail address of the sender. E-mail addresses can be plain 'sender@server.com' or formatted 'Sender Name <sender@server.com>'.
    */
   from?: string | Address | undefined;
   /**
-   * An e-mail address that will appear on the Sender: field.
+   * E-mail address that will appear in the "Sender:" field.
    */
   sender?: string | Address | undefined;
   /**
-   * Comma separated list or an array of recipients e-mail addresses that will appear on the To: field.
+   * Comma separated list or array of recipients' e-mail addresses that will appear in the "To:" field.
    */
   to?: string | Address | (string | Address)[] | undefined;
   /**
-   * Comma separated list or an array of recipients e-mail addresses that will appear on the Cc: field.
+   * Comma separated list or array of recipients' e-mail addresses that will appear in the "Cc:" field.
    */
   cc?: string | Address | (string | Address)[] | undefined;
   /**
-   * Comma separated list or an array of recipients e-mail addresses that will appear on the Bcc: field.
+   * Comma separated list or array of recipients e-mail addresses that will appear in the "Bcc:" field.
    */
   bcc?: string | Address | (string | Address)[] | undefined;
   /**
-   * An e-mail address that will appear on the Reply-To: field.
+   * E-mail address that will appear in the "Reply-To:" field.
    */
   replyTo?: string | Address | undefined;
   /**
-   * The subject of the e-mail.
+   * Subject of the e-mail.
    */
   subject?: string | undefined;
   /**
-   * The plaintext version of the message.
+   * Plaintext version of the message.
    */
   text?: string | Buffer | Readable | AttachmentLike | undefined;
   /**
-   * An object or array of additional header fields.
+   * Object or array with additional headers.
    */
   headers?: Headers | undefined;
   /**
-   * An array of attachment objects.
+   * Array of attachment objects.
    */
   attachments?: Attachment[] | undefined;
   /**
-   * Optional Date value, current UTC string will be used if not set.
+   * Date value, current UTC string will be used if not set.
    */
   date?: Date | string | undefined;
   /**
-   * Optional transfer encoding for the textual parts.
+   * Transfer encoding for the textual parts.
    */
   encoding?: string | undefined;
   /**
-   * The priority of the email.
+   * Priority of the e-mail.
    */
   priority?: 'high' | 'normal' | 'low' | undefined;
 }
 
 /**
- * Represents an envelope that contains the email addresses of the sender and the recipients.
+ * Represents an envelope that contains the e-mail addresses of the sender and the recipients.
  * This interface is compatible with `MimeNode.Envelope` of `nodemailer`.
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface Envelope {
   /**
-   * The email address of the sender or is set to false.
+   * E-mail address of the sender or `false` if it should not be shown.
    */
   from: string | false;
   /**
-   * An array of email addresses of recipients.
+   * Array of e-mail addresses of recipients.
    */
   to: string[];
 }
 
 /**
- * Represents the mail response from the mail server.
+ * Represents the response from the mail server.
  * This interface is compatible with `SMTPTransport.SentMessageInfo` of `nodemailer`.
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface MailResponse {
   /**
-   * An envelope that contains the sender and recipients info.
+   * Envelope that contains the sender and recipients info.
    */
   envelope?: Envelope;
   /**
-   * An array of email addresses that accepted the requests.
+   * Array of e-mail addresses that accepted the requests.
    */
   accepted?: (string | Address)[];
   /**
-   * An array of email addresses that rejected the requests.
+   * Array of e-mail addresses that rejected the requests.
    */
   rejected?: (string | Address)[];
   /**
-   * An array of email addresses that are processing the requests.
+   * Array of e-mail addresses that are processing the requests.
    */
   pending?: (string | Address)[];
   /**
@@ -197,26 +197,25 @@ export interface MailResponse {
 
 /**
  * Represents a mail destination configured on the SAP Business Technology Platform.
- * Some keys of the originalProperties are ignored by the SDK for the time being including `mail.transport.protocol` and `mail.smtp.provider.*`.
+ * Currently only `mail.transport.protocol` and `mail.smtp.provider.*` are considered.
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface MailDestination {
   /**
-   * Name of the destination retrieved from SAP Business Technology Platform.
+   * Name of the destination.
    */
   name?: string | null;
   /**
-   * Type of authentication to use.
-   *
+   * Type of authentication.
    * Defaults to `NoAuthentication`, unless {@link username} and {@link password} are provided, in which case the default is `BasicAuthentication`.
    */
   authentication?: AuthenticationType;
   /**
-   * Proxy type to specify whether the target resides on-premise (not used).
+   * Proxy type to specify whether the target resides on-premise (currently not used).
    */
   proxyType?: DestinationProxyType;
   /**
-   * The type of the destination, defaults to 'HTTP'. The SAP Cloud SDK only understands destinations of type 'HTTP' and 'MAIL'.
+   * Type of the destination. Defaults to 'HTTP'.
    */
   type?: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC';
   /**
@@ -225,27 +224,27 @@ export interface MailDestination {
   originalProperties?: { [key: string]: any };
   /**
    * Host of the mail server.
-   * Parsed from originalProperties['mail.smtp.host'].
+   * Based on the additional destination property 'mail.smtp.host'.
    */
   host?: string;
   /**
    * Port of the mail server.
-   * Parsed from originalProperties['mail.password'].
+   * Based on the additional destination property 'mail.password'.
    */
   port?: number;
   /**
-   * Optional sender info defined in the destination properties.
-   * Parsed from originalProperties['mail.from'].
+   * Sender info, e.g. e-mail address.
+   * Based on the additional destination property 'mail.from'.
    */
   from?: string;
   /**
    * Username to use for basic authentication, optional if other means of authentication shall be used.
-   * Parsed from originalProperties['mail.user'].
+   * Based on the additional destination property 'mail.user'.
    */
   username?: string;
   /**
    * Password to use for basic authentication, optional if other means of authentication shall be used.
-   * Parsed from originalProperties['mail.password'].
+   * Based on the additional destination property 'mail.password',
    */
   password?: string;
 }

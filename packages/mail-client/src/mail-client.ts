@@ -147,8 +147,8 @@ async function sendMailWithNodemailer<T extends MailOptions>(
 }
 
 /**
- * Sends emails to a target mail server defined in a given destination.
- * Builds a `Transporter` between the application and the mail server, sends mails sequentially by using the `Transporter`, then closes it.
+ * Sends e-mails to a target mail server defined in a given destination.
+ * Builds a transport between the application and the mail server, sends mails sequentially by using the transport, then closes it.
  * This function also does the destination look up, when passing {@link DestinationFetchOptions}.
  * @param destination - A destination or a destination name and a JWT.
  * @param mailOptions - Any objects representing {@link MailOptions}. Both array and varargs are supported.

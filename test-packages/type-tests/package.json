@@ -16,6 +16,7 @@
     "@sap-cloud-sdk/connectivity": "^2.6.0",
     "@sap-cloud-sdk/generator": "^2.6.0",
     "@sap-cloud-sdk/http-client": "^2.6.0",
+    "@sap-cloud-sdk/mail-client": "^2.6.0",
     "@sap-cloud-sdk/odata-common": "^2.6.0",
     "@sap-cloud-sdk/odata-v2": "^2.6.0",
     "@sap-cloud-sdk/odata-v4": "^2.6.0",

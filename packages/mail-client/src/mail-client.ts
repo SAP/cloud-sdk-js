@@ -122,7 +122,7 @@ async function sendMailWithNodemailer<T extends MailOptions>(
   mailDestination: MailDestination,
   ...mailOptions: T[]
 ): Promise<MailResponse[]> {
-  const transporter = createTransport(mailDestination);
+  const transport = createTransport(mailDestination);
   const mailOptionsFromDestination =
     buildMailOptionsFromDestination(mailDestination);
 
@@ -131,7 +131,7 @@ async function sendMailWithNodemailer<T extends MailOptions>(
     logger.debug(
       `Sending email ${mailOptionIndex + 1}/${mailOptions.length}...`
     );
-    response[mailOptionIndex] = await transporter.sendMail({
+    response[mailOptionIndex] = await transport.sendMail({
       ...mailOptionsFromDestination,
       ...mailOptions[mailOptionIndex]
     });
@@ -142,7 +142,7 @@ async function sendMailWithNodemailer<T extends MailOptions>(
     );
   }
 
-  transporter.close();
+  transport.close();
   return response;
 }
 

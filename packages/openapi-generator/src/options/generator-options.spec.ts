@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join, posix, sep } from 'path';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generateWithParsedOptions } from '../generator';
@@ -43,7 +43,7 @@ describe('parseGeneratorOptions', () => {
         outputDir: 'outputDir'
       })
     ).toEqual({
-      input: join(process.cwd(), 'inputDir'),
+      input: posix.join(...process.cwd().split(sep), 'inputDir'),
       outputDir: join(process.cwd(), 'outputDir'),
       ...options
     });

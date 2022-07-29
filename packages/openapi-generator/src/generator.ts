@@ -1,5 +1,5 @@
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, dirname, sep, posix } from 'path';
+import { resolve, parse, basename, dirname, posix } from 'path';
 import {
   createLogger,
   kebabCase,
@@ -266,7 +266,7 @@ async function generateService(
 export async function getInputFilePaths(input: string): Promise<string[]> {
   if (glob.hasMagic(input)) {
     return new Promise(resolvePromise => {
-      glob(resolve(input).split(sep).join(posix.sep), (_error, paths) => {
+      glob(input, (_error, paths) => {
         resolvePromise(
           paths
             .filter(path => /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/.test(path))
@@ -279,9 +279,7 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
   if ((await lstat(input)).isDirectory()) {
     return new Promise(resolvePromise => {
       glob(
-        resolve(input, '**/*.{json,JSON,yaml,YAML,yml,YML}')
-          .split(sep)
-          .join(posix.sep),
+        posix.join(input, '**/*.{json,JSON,yaml,YAML,yml,YML}'),
         (_error, paths) => {
           resolvePromise(paths.map(path => resolve(path)));
         }

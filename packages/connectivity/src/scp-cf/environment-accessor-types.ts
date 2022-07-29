@@ -43,7 +43,6 @@ export type DestinationServiceCredentials = ServiceCredentials & {
 
 /**
  * Credentials for the XSUAA service.
- *  @internal
  */
 export type XsuaaServiceCredentials = ServiceCredentials & {
   identityzone: string;

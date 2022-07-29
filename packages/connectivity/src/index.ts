@@ -60,6 +60,7 @@ export type {
   DestinationOrFetchOptions,
   DestinationOptions,
   ServiceCredentials,
+  XsuaaServiceCredentials,
   DestinationProxyType,
   AuthenticationType,
   DestinationWithName,

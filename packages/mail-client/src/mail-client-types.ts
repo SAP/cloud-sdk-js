@@ -244,7 +244,7 @@ export interface MailDestination {
   username?: string;
   /**
    * Password to use for basic authentication, optional if other means of authentication shall be used.
-   * Based on the additional destination property 'mail.password',
+   * Based on the additional destination property 'mail.password'.
    */
   password?: string;
 }

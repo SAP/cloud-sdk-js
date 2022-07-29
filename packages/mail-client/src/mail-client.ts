@@ -122,7 +122,7 @@ async function sendMailWithNodemailer<T extends MailOptions>(
   mailDestination: MailDestination,
   ...mailOptions: T[]
 ): Promise<MailResponse[]> {
-  const transporter = createTransport(mailDestination);
+  const transport = createTransport(mailDestination);
   const mailOptionsFromDestination =
     buildMailOptionsFromDestination(mailDestination);
 
@@ -131,7 +131,7 @@ async function sendMailWithNodemailer<T extends MailOptions>(
     logger.debug(
       `Sending email ${mailOptionIndex + 1}/${mailOptions.length}...`
     );
-    response[mailOptionIndex] = await transporter.sendMail({
+    response[mailOptionIndex] = await transport.sendMail({
       ...mailOptionsFromDestination,
       ...mailOptions[mailOptionIndex]
     });
@@ -142,13 +142,13 @@ async function sendMailWithNodemailer<T extends MailOptions>(
     );
   }
 
-  transporter.close();
+  transport.close();
   return response;
 }
 
 /**
- * Sends emails to a target mail server defined in a given destination.
- * Builds a `Transporter` between the application and the mail server, sends mails sequentially by using the `Transporter`, then closes it.
+ * Sends e-mails to a target mail server defined in a given destination.
+ * Builds a transport between the application and the mail server, sends mails sequentially by using the transport, then closes it.
  * This function also does the destination look up, when passing {@link DestinationOrFetchOptions}.
  * @param destination - A destination or a destination name and a JWT.
  * @param mailOptions - Any objects representing {@link MailOptions}. Both array and varargs are supported.

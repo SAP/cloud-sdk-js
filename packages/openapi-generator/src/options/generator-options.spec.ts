@@ -43,7 +43,7 @@ describe('parseGeneratorOptions', () => {
         outputDir: 'outputDir'
       })
     ).toEqual({
-      input: posix.join(...process.cwd().split(sep), 'inputDir'),
+      input: join(process.cwd(), 'inputDir').split(sep).join(posix.sep),
       outputDir: join(process.cwd(), 'outputDir'),
       ...options
     });

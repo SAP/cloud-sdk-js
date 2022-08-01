@@ -19,7 +19,7 @@ const logger = createLogger({
 });
 
 /**
- * @internal
+ * Represents partial options to fetch destinations.
  */
 export interface PartialDestinationFetchOptions {
   useCache?: boolean;
@@ -33,11 +33,10 @@ export interface PartialDestinationFetchOptions {
  * @param serviceInstanceName - The name of the service.
  * @param options - Options to customize the behavior of this function.
  * @returns A destination.
- * @internal
  */
 export async function destinationForServiceBinding(
   serviceInstanceName: string,
-  options: DestinationForServiceBindingsOptions &
+  options: DestinationForServiceBindingOptions &
     PartialDestinationFetchOptions = {}
 ): Promise<Destination> {
   if (options.useCache) {
@@ -77,12 +76,11 @@ export async function destinationForServiceBinding(
 }
 
 /**
- * Options to customize the behavior of [[destinationForServiceBinding]].
- * @internal
+ * Options to customize the behavior of {@link destinationForServiceBinding}.
  */
-export interface DestinationForServiceBindingsOptions {
+export interface DestinationForServiceBindingOptions {
   /**
-   * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
+   * Custom transformation function to control how a {@link Destination} is built from the given {@link ServiceBinding}.
    */
   serviceBindingTransformFn?: ServiceBindingTransformFunction;
 }
@@ -201,18 +199,6 @@ function noServiceBindingFoundError(
 }
 
 /**
- * Options to customize the behavior of {@link destinationForServiceBinding}.
- */
-export interface DestinationForServiceBindingOptions {
-  /**
-   * Custom transformation function to control how a {@link Destination} is built from the given {@link ServiceBinding}.
-   */
-  serviceBindingTransformFn?: (
-    serviceBinding: ServiceBinding
-  ) => Promise<Destination>;
-}
-
-/**
  * @internal
  */
 export async function searchServiceBindingForDestination({
@@ -222,7 +208,7 @@ export async function searchServiceBindingForDestination({
   destinationName,
   useCache
 }: DestinationFetchOptions &
-  DestinationForServiceBindingsOptions): Promise<Destination | null> {
+  DestinationForServiceBindingOptions): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
     const jwtFromOptions = iss ? { iss } : jwt ? decodeJwt(jwt) : undefined;

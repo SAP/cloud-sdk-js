@@ -35,7 +35,7 @@ export interface AirportLocation<
 }
 /**
  * AirportLocationField
- * @typeparam EntityT - Type of the entity the complex type field belongs to.
+ * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class AirportLocationField<
   EntityT extends Entity,

@@ -58,7 +58,9 @@ export {
   getResilienceMiddleware,
   clearResilienceMiddlewareMap,
   deleteResilienceMiddleware,
-  callWithResilience
+  callWithResilience,
+  destinationForServiceBinding,
+  PartialDestinationFetchOptions
 } from './scp-cf';
 
 export type {

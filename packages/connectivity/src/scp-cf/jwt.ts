@@ -152,7 +152,7 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
  * 15 minutes is the default value used by the xssec lib
  *  @internal
  */
-export const verificationKeyCache = new Cache<TokenKey>({ minutes: 15 });
+export const verificationKeyCache = new Cache<TokenKey>(900000);
 
 /**
  * Get the issuer URL of a decoded JWT.

@@ -23,7 +23,7 @@ const logger = createLogger({
 
 /**
  * Create OData query to update an entity.
- * @typeparam EntityT - Type of the entity to be updated.
+ * @typeParam EntityT - Type of the entity to be updated.
  */
 export class UpdateRequestBuilder<
     EntityT extends Entity,
@@ -68,9 +68,9 @@ export class UpdateRequestBuilder<
   }
 
   /**
-   * Execute request and return an {@link HttpResponse}. The request is only executed if some properties of the entity are modified.
+   * Execute request and return an {@link @sap-cloud-sdk/http-client!HttpResponse}. The request is only executed if some properties of the entity are modified.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an {@link HttpResponse} when the request is executed or `undefined` otherwise.
+   * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse} when the request is executed or `undefined` otherwise.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

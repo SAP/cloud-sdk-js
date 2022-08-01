@@ -1,4 +1,4 @@
-import { Selectable, Link } from '@sap-cloud-sdk/odata-common/internal';
+import { Selectable, Link } from '@sap-cloud-sdk/odata-common';
 import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 
@@ -6,8 +6,8 @@ import { Entity } from '../entity';
  * @internal
  * Get an object containing the given expand as a query parameter, or an empty object if none was given.
  * In this OData v2 expand, selected properties are automatically added to the expand.
- * @typeparam EntityT - Type of the entity to expand on.
- * @typeparam DeSerializersT - Type of the (de-)serializers.
+ * @typeParam EntityT - Type of the entity to expand on.
+ * @typeParam DeSerializersT - Type of the (de-)serializers.
  * @param selects - The selects which are expanded if necessary.
  * @returns An object containing the query parameter or an empty object.
  */

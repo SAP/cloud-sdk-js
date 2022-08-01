@@ -8,7 +8,7 @@ import { DeSerializers } from './de-serializers';
 import { EntityApi } from './entity-api';
 
 /**
- * Helper type to extract the {@link ODataVersion} from a given entity so ODataVersionOf<MyVersion2Entity> is `v2`.
+ * Helper type to extract the {@link @sap-cloud-sdk/util!ODataVersion} from a given entity so ODataVersionOf<MyVersion2Entity> is `v2`.
  */
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 
@@ -153,7 +153,6 @@ export abstract class EntityBase {
   /**
    * Initializes or sets the remoteState of the entity.
    * This function is called on all read, create and update requests.
-   * This function should be called after {@link initializeCustomFields}, if custom fields are defined.
    * @param state - State to be set as remote state.
    * @returns The entity itself, to facilitate method chaining.
    */

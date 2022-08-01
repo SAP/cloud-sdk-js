@@ -9,7 +9,7 @@ import { ODataRequestConfig } from '../request/odata-request-config';
 
 /**
  * Base class for all request builders.
- * @typeparam EntityT - Type of the entity to create a request for.
+ * @typeParam EntityT - Type of the entity to create a request for.
  * @internal
  */
 export abstract class MethodRequestBuilder<
@@ -82,7 +82,7 @@ export abstract class MethodRequestBuilder<
 
   /**
    * Add a custom request configuration to the request. Typically, this is used when specifying a response type for downloading files.
-   * If the custom request configuration contains {@link defaultDisallowedKeys | disallowed keys}, those will be ignored.
+   * If the custom request configuration contains {@link @sap-cloud-sdk/http-client!defaultDisallowedKeys | disallowed keys}, those will be ignored.
    * @param requestConfiguration - Key-value pairs denoting additional custom request configuration options to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.
    */

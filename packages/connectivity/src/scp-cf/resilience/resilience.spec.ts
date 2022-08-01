@@ -31,7 +31,11 @@ describe('resilience', () => {
       } catch (e) {
         actualError = e;
       }
-      expect(actualError).toEqual(new Error(`Id 'middleware-id' has already been used by another resilience middleware with different options!`));
+      expect(actualError).toEqual(
+        new Error(
+          "Id 'middleware-id' has already been used by another resilience middleware with different options!"
+        )
+      );
     });
   });
 });

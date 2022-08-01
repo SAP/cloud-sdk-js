@@ -8,11 +8,10 @@ import {
   ResilienceOptions,
   TimeoutOptions
 } from './resilience-options';
-import _ from 'lodash';
 
-type ResilienceMiddlewareMapValue = {
-  middleware: Middleware<any>,
-  options: Omit<ResilienceMiddlewareOptions, 'id'>
+interface ResilienceMiddlewareMapValue {
+  middleware: Middleware<any>;
+  options: Omit<ResilienceMiddlewareOptions, 'id'>;
 }
 const resilienceMiddlewareMap = new Map<string, ResilienceMiddlewareMapValue>();
 
@@ -134,13 +133,10 @@ export function createResilienceMiddleware<T>(
       return curr(prev(middlewareInOutOptions));
     }
   );
-  resilienceMiddlewareMap.set(
-    resilienceMiddlewareOptions.id,
-    {
-      middleware: reducedMiddleware,
-      options: resilienceMiddlewareOptions
-    }
-  );
+  resilienceMiddlewareMap.set(resilienceMiddlewareOptions.id, {
+    middleware: reducedMiddleware,
+    options: resilienceMiddlewareOptions
+  });
 
   return reducedMiddleware;
 }
@@ -156,20 +152,32 @@ export function getResilienceMiddleware(
   return resilienceMiddlewareMap.get(id)?.middleware;
 }
 
-export function resilience(resilienceMiddlewareOptions: ResilienceMiddlewareOptions): Middleware<any> {
+/**
+ * TODO: Add JSDoc later.
+ * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
+ * @returns TODO: Add JSDoc later.
+ */
+export function resilience(
+  resilienceMiddlewareOptions: ResilienceMiddlewareOptions
+): Middleware<any> {
   const { id } = resilienceMiddlewareOptions;
-  const middlewareOptionsPair = resilienceMiddlewareMap.get(resilienceMiddlewareOptions.id);
+  const middlewareOptionsPair = resilienceMiddlewareMap.get(
+    resilienceMiddlewareOptions.id
+  );
   if (middlewareOptionsPair) {
     const { middleware, options } = middlewareOptionsPair;
-    if (!_.isEqualWith(resilienceMiddlewareOptions, options, (a: ResilienceMiddlewareOptions, b: ResilienceMiddlewareOptions) => {
-      return a.circuitBreaker() === b.circuitBreaker() && a.timeout() === b.timeout();
-    })) {
-      throw new Error(`Id '${id}' has already been used by another resilience middleware with different options!`);
+    if (
+      resilienceMiddlewareOptions.circuitBreaker() ===
+        options.circuitBreaker() &&
+      resilienceMiddlewareOptions.timeout() === options.timeout()
+    ) {
+      throw new Error(
+        `Id '${id}' has already been used by another resilience middleware with different options!`
+      );
     }
     return middleware;
-  } else {
-    return createResilienceMiddleware(resilienceMiddlewareOptions);
   }
+  return createResilienceMiddleware(resilienceMiddlewareOptions);
 }
 
 /**

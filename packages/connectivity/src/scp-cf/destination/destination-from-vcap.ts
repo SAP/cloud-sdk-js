@@ -36,7 +36,7 @@ export interface PartialDestinationFetchOptions {
  */
 export async function destinationForServiceBinding(
   serviceInstanceName: string,
-  options: DestinationForServiceBindingsOptions &
+  options: DestinationForServiceBindingOptions &
     PartialDestinationFetchOptions = {}
 ): Promise<Destination> {
   if (options.useCache) {
@@ -78,7 +78,7 @@ export async function destinationForServiceBinding(
 /**
  * Options to customize the behavior of {@link destinationForServiceBinding}.
  */
-export interface DestinationForServiceBindingsOptions {
+export interface DestinationForServiceBindingOptions {
   /**
    * Custom transformation function to control how a {@link Destination} is built from the given {@link ServiceBinding}.
    */
@@ -199,18 +199,6 @@ function noServiceBindingFoundError(
 }
 
 /**
- * Options to customize the behavior of {@link destinationForServiceBinding}.
- */
-export interface DestinationForServiceBindingOptions {
-  /**
-   * Custom transformation function to control how a {@link Destination} is built from the given {@link ServiceBinding}.
-   */
-  serviceBindingTransformFn?: (
-    serviceBinding: ServiceBinding
-  ) => Promise<Destination>;
-}
-
-/**
  * @internal
  */
 export async function searchServiceBindingForDestination({
@@ -220,7 +208,7 @@ export async function searchServiceBindingForDestination({
   destinationName,
   useCache
 }: DestinationFetchOptions &
-  DestinationForServiceBindingsOptions): Promise<Destination | null> {
+  DestinationForServiceBindingOptions): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
     const jwtFromOptions = iss ? { iss } : jwt ? decodeJwt(jwt) : undefined;

@@ -50,6 +50,7 @@ export function addTimeout<T>(
  * TODO: Add JSDoc later.
  * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
+ * @internal
  */
 export function createTimeoutMiddleware<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
@@ -72,6 +73,7 @@ export function createTimeoutMiddleware<T>(
  * TODO: Add JSDoc later.
  * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
+ * @internal
  */
 export function createCircuitBreakerMiddleware<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
@@ -101,8 +103,9 @@ export function createCircuitBreakerMiddleware<T>(
  * TODO: Add JSDoc later.
  * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
+ * @internal
  */
-export function createMiddlwares<T>(
+export function createResilienceMiddlewareList<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
 ): Middleware<T>[] {
   // From innermost to outtermost middleware:
@@ -118,11 +121,12 @@ export function createMiddlwares<T>(
  * TODO: Add JSDoc later.
  * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
+ * @internal
  */
 export function createResilienceMiddleware<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
 ): Middleware<T> {
-  const resilienceMiddlewares: Middleware<T>[] = createMiddlwares(
+  const resilienceMiddlewares: Middleware<T>[] = createResilienceMiddlewareList(
     resilienceMiddlewareOptions
   );
   const reducedMiddleware = resilienceMiddlewares.reduce(
@@ -217,10 +221,10 @@ export function callWithResilience<T>(
       ? defaultResilienceOptions.circuitBreaker
       : () => false as const);
 
-  const id = options.resilience?.id ?? 'btpService-getClientCredentialsToken';
+  const id = options.resilience?.id ?? 'btpService-default';
 
   const resilienceMiddleware = resilience({
-    id: options.resilience?.id ?? 'btpService-getClientCredentialsToken',
+    id: options.resilience?.id ?? 'btpService-default',
     timeout,
     circuitBreaker
   });

@@ -50,7 +50,15 @@ export {
   DestinationForServiceBindingOptions,
   defaultResilienceOptions,
   defaultCircuitBreakerOptions,
-  RequestHandler
+  TimeoutOptions,
+  ResilienceMiddlewareOptions,
+  MiddlewareInOutOptions,
+  Middleware,
+  resilience,
+  getResilienceMiddleware,
+  clearResilienceMiddlewareMap,
+  deleteResilienceMiddleware,
+  callWithResilience
 } from './scp-cf';
 
 export type {

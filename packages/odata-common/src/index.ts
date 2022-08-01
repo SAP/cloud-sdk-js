@@ -100,7 +100,8 @@ export {
   WithGetAllRestrictions,
   WithSelection,
   ODataFunctionImportRequestConfig,
-  ODataRequest
+  ODataRequest,
+  ODataRequestConfig
 } from './request';
 export type { RequestMethodType, FunctionImportParameters } from './request';
 export { throwErrorWhenReturnTypeIsUnionType } from './response-transformer';

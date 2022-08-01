@@ -51,6 +51,7 @@ export const defaultResilienceOptions: Required<
 
 /**
  * Type of the request handler that needs to be wrapped with resilience.
+ * @internal
  */
 export type RequestHandler<T> = (...args: any[]) => Promise<T>;
 

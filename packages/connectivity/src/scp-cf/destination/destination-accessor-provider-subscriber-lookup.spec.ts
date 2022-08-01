@@ -174,7 +174,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
       const requestSpy = jest.spyOn(
         destinationService,
-        'fetchDestinationByNameWithoutTokens'
+        'fetchDestinationByNameWithoutToken'
       );
       const actual = await fetchDestination(subscriberUserJwt, subscriberFirst);
       expect(requestSpy).toHaveBeenCalledTimes(1);
@@ -192,7 +192,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
       const requestSpy = jest.spyOn(
         destinationService,
-        'fetchDestinationByNameWithoutTokens'
+        'fetchDestinationByNameWithoutToken'
       );
       const actual = await fetchDestination(subscriberUserJwt, subscriberFirst);
       expect(requestSpy).toHaveBeenCalledTimes(2);

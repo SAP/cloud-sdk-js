@@ -213,10 +213,11 @@ export async function fetchCertificate(
 }
 
 /**
- * Fetch a single destination by name without credentials.
+ * Fetch a single destination by name without executing the token flow with the XSUAA e.g. OAuth2ClientCredentials defined in the destination.
+ * The authTokens array will be empty for this call but the call is much faster because the destination service just returns its DB entry without the XSUAA detour.
  * @internal
  */
-export async function fetchDestinationByNameWithoutTokens(
+export async function fetchDestinationByNameWithoutToken(
   destinationServiceUri: string,
   serviceToken: string,
   options: DestinationServiceOptions

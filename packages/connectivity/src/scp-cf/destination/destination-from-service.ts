@@ -28,7 +28,7 @@ import { DestinationFetchOptions } from './destination-accessor-types';
 import {
   AuthAndExchangeTokens,
   fetchDestination,
-  fetchDestinationByNameWithoutTokens,
+  fetchDestinationByNameWithoutToken,
   fetchCertificate
 } from './destination-service';
 import {
@@ -325,7 +325,7 @@ class DestinationFromServiceRetriever {
   private async fetchDestinationWithoutToken(
     jwt: string
   ): Promise<Destination | undefined> {
-    return fetchDestinationByNameWithoutTokens(
+    return fetchDestinationByNameWithoutToken(
       this.destinationServiceCredentials.uri,
       jwt,
       this.options

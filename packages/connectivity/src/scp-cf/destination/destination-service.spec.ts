@@ -14,7 +14,7 @@ import { wrapJwtInHeader } from '../jwt';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
-  fetchDestinationByNameWithoutTokens,
+  fetchDestinationByNameWithoutToken,
   fetchInstanceDestinations,
   fetchSubaccountDestinations,
   fetchCertificate
@@ -361,7 +361,7 @@ describe('destination service', () => {
         wrapJwtInHeader(jwt)
       );
 
-      const actual = await fetchDestinationByNameWithoutTokens(
+      const actual = await fetchDestinationByNameWithoutToken(
         destinationServiceUri,
         jwt,
 

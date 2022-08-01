@@ -50,7 +50,6 @@ export {
   ServiceBinding,
   DestinationForServiceBindingOptions,
   destinationForServiceBinding,
-  DestinationForServiceBindingsOptions,
   PartialDestinationFetchOptions
 } from './scp-cf';
 

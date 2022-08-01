@@ -7,6 +7,7 @@
     "./packages/odata-v4/**/*",
     "./packages/connectivity/**/*",
     "./packages/http-client/**/*",
+    "./packages/mail-client/**/*",
     "./packages/openapi/**/*",
     "./packages/generator/**/*",
     "./packages/openapi-generator/**/*",
@@ -36,6 +37,9 @@
       "path": "./packages/http-client"
     },
     {
+      "path": "./packages/mail-client"
+    },
+    {
       "path": "./packages/openapi"
     },
     {
@@ -57,6 +61,7 @@
       "packages/util/src/index.ts",
       "packages/connectivity/src/index.ts",
       "packages/http-client/src/index.ts",
+      "packages/mail-client/src/index.ts",
       "packages/odata-common/src/index.ts",
       "packages/odata-v2/src/index.ts",
       "packages/odata-v4/src/index.ts",
@@ -73,7 +78,7 @@
     "hideGenerator": true,
     "excludePrivate": true,
     "includes": "packages",
-    "treatWarningsAsErrors": false,
+    "treatWarningsAsErrors": true,
     "validation": {
       "invalidLink": true
     }

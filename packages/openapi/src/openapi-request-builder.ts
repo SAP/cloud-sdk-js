@@ -59,7 +59,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   /**
    * Add custom request configuration to the request. Typically, this is used when specifying response type for downloading files.
-   * If the custom request configuration contains keys in this list {@link defaultDisallowedKeys}, they will be removed.
+   * If the custom request configuration contains keys in this list {@link @sap-cloud-sdk/http-client!defaultDisallowedKeys}, they will be removed.
    * @param requestConfiguration - Key-value pairs denoting additional custom request configuration options to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.
    */
@@ -92,10 +92,10 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Execute request and get a raw HttpResponse, including all information about the HTTP response.
+   * Execute request and get a raw {@link @sap-cloud-sdk/http-client!HttpResponse}, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an HttpResponse.
+   * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

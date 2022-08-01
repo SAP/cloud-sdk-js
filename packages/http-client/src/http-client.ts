@@ -13,10 +13,10 @@ import {
   Destination,
   DestinationOrFetchOptions,
   getAgentConfig,
-  toDestinationNameUrl,
-  useOrFetchDestination
+  toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
 import {
+  resolveDestination,
   defaultResilienceBTPServices,
   DestinationConfiguration,
   getAdditionalHeaders,
@@ -55,13 +55,14 @@ export async function buildHttpRequest(
   destination: DestinationOrFetchOptions
 ): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
-  if (!resolvedDestination) {
+  if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
     throw Error(
-      `Failed to resolve the destination '${toDestinationNameUrl(
+      `The type of the destination '${toDestinationNameUrl(
         destination
-      )}'.`
+      )}' has to be 'HTTP', but is '${destination.type}'.`
     );
   }
+
   const headers = await buildHeaders(resolvedDestination);
 
   return buildDestinationHttpRequestConfig(resolvedDestination, headers);
@@ -103,16 +104,15 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
     options?: HttpRequestOptions
   ): Promise<ReturnT> {
     const resolvedDestination = await resolveDestination(destination);
-    if (!resolvedDestination) {
+    if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
       throw Error(
-        `Failed to resolve the destination '${toDestinationNameUrl(
+        `The type of the destination '${toDestinationNameUrl(
           destination
-        )}'.`
+        )}' has to be 'HTTP', but is '${destination.type}'.`
       );
     }
-    const destinationRequestConfig = await buildHttpRequest(
-      resolvedDestination
-    );
+
+    const destinationRequestConfig = await buildHttpRequest(destination);
     logCustomHeadersWarning(requestConfig.headers);
     const request = await buildRequestWithMergedHeadersAndQueryParameters(
       requestConfig,
@@ -420,16 +420,6 @@ async function buildHeaders(
     return await buildHeadersForDestination(destination);
   } catch (error) {
     throw new ErrorWithCause('Failed to build headers.', error);
-  }
-}
-
-async function resolveDestination(
-  destination: DestinationOrFetchOptions
-): Promise<Destination | null> {
-  try {
-    return await useOrFetchDestination(destination);
-  } catch (error) {
-    throw new ErrorWithCause('Failed to load destination.', error);
   }
 }
 

@@ -1,6 +1,7 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
 import {
+  Destination,
   parseDestination,
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
@@ -19,7 +20,7 @@ import {
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
-const destination = {
+const destination: Destination = {
   url: 'http://example.com'
 };
 

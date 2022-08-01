@@ -28,7 +28,9 @@
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
-<li><span class="target">EntityBuilder</span></li></ul></section>
+<li><span class="target">EntityBuilder</span></li></ul></section><aside class="tsd-sources">
+<ul>
+<li>Defined in packages/odata-common/dist/entity-builder.d.ts:30</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -67,7 +69,9 @@
 <ul class="tsd-parameter-list">
 <li>
 <h5>_entityApi: <a href="../interfaces/sap_cloud_sdk_odata_common.EntityApi" class="tsd-signature-type" data-tsd-kind="Interface">EntityApi</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">DeSerializersT</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="sap_cloud_sdk_odata_common.EntityBuilder" class="tsd-signature-type" data-tsd-kind="Class">EntityBuilder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">DeSerializersT</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section></section>
+<h4 class="tsd-returns-title">Returns <a href="sap_cloud_sdk_odata_common.EntityBuilder" class="tsd-signature-type" data-tsd-kind="Class">EntityBuilder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">DeSerializersT</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in packages/odata-common/dist/entity-builder.d.ts:33</li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="_entity" class="tsd-anchor"></a>
@@ -86,14 +90,16 @@
 
 <h3>Returns</h3><p>The entity.</p>
 </div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span></h4></li></ul></section>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in packages/odata-common/dist/entity-builder.d.ts:44</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromJson" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>from<wbr/>Json</span><a href="#fromJson" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fromJson.fromJson-1">from<wbr/>Json<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><a href="../types/sap_cloud_sdk_odata_common.FromJsonType" class="tsd-signature-type" data-tsd-kind="Type alias">FromJsonType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><a href="#fromJson.fromJson-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Builds an entity from JSON representation.
-If you have obtained the JSON as a request payload use the deserializeEntity methods.
+If you have obtained the JSON object as a request payload use the <a href="../functions/sap_cloud_sdk_odata_common.entityDeserializer-1">entityDeserializer</a> methods.
 Note that fields not mappable to a field in the target entity are silently ignored.</p>
 
 <h3>Returns</h3><p>EntityBase constructed from JSON representation.</p>
@@ -105,7 +111,9 @@ Note that fields not mappable to a field in the target entity are silently ignor
 <h5>json: <a href="../types/sap_cloud_sdk_odata_common.FromJsonType" class="tsd-signature-type" data-tsd-kind="Type alias">FromJsonType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">&gt;</span></h5>
 <div class="tsd-comment tsd-typography"><p>Representation of the entity in JSON format.</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span></h4></li></ul></section>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in packages/odata-common/dist/entity-builder.d.ts:52</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="withCustomFields" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>with<wbr/>Custom<wbr/>Fields</span><a href="#withCustomFields" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -122,7 +130,9 @@ Note that fields not mappable to a field in the target entity are silently ignor
 <h5>customFields: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
 <div class="tsd-comment tsd-typography"><p>The custom fields you want to add.</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="sap_cloud_sdk_odata_common.EntityBuilder" class="tsd-signature-type" data-tsd-kind="Class">EntityBuilder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">DeSerializersT</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section></section></div>
+<h4 class="tsd-returns-title">Returns <a href="sap_cloud_sdk_odata_common.EntityBuilder" class="tsd-signature-type" data-tsd-kind="Class">EntityBuilder</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">EntityT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">DeSerializersT</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in packages/odata-common/dist/entity-builder.d.ts:39</li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

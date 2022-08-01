@@ -46,7 +46,7 @@ describe('field-type-class', () => {
         }
       ],
       docs: [
-        `ComplexMealField${unixEOL}@typeparam EntityT - Type of the entity the complex type field belongs to.`
+        `ComplexMealField${unixEOL}@typeParam EntityT - Type of the entity the complex type field belongs to.`
       ],
       ctors: [
         {
@@ -113,7 +113,7 @@ describe('field-type-class', () => {
         }
       ],
       docs: [
-        'ComplexMealWithDesertField\n@typeparam EntityT - Type of the entity the complex type field belongs to.'
+        'ComplexMealWithDesertField\n@typeParam EntityT - Type of the entity the complex type field belongs to.'
       ],
       extends:
         'ComplexTypeField<EntityT, DeSerializersT, ComplexMealWithDesertType, NullableT, SelectableT>',

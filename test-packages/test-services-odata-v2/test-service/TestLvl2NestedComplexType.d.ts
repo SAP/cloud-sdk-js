@@ -23,7 +23,7 @@ export interface TestLvl2NestedComplexType<
 }
 /**
  * TestLvl2NestedComplexTypeField
- * @typeparam EntityT - Type of the entity the complex type field belongs to.
+ * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class TestLvl2NestedComplexTypeField<
   EntityT extends Entity,

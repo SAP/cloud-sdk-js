@@ -9,7 +9,7 @@ import { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4.
- * @typeparam EntityT - Type of the entity to be deleted
+ * @typeParam EntityT - Type of the entity to be deleted
  */
 export abstract class DeleteRequestBuilderBase<
     EntityT extends EntityBase,
@@ -72,9 +72,9 @@ export abstract class DeleteRequestBuilderBase<
   }
 
   /**
-   * Execute request and return an {@link HttpResponse}.
+   * Execute request and return an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an {@link HttpResponse}.
+   * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

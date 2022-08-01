@@ -14,7 +14,7 @@ import { createODataUri } from '../uri-conversion';
 
 /**
  * Create OData query to update an entity.
- * @typeparam EntityT - Type of the entity to be updated.
+ * @typeParam EntityT - Type of the entity to be updated.
  */
 export class UpdateRequestBuilder<
     EntityT extends Entity,
@@ -56,9 +56,9 @@ export class UpdateRequestBuilder<
   }
 
   /**
-   * Execute request and return an {@link HttpResponse}.
+   * Execute request and return an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an {@link HttpResponse}.
+   * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

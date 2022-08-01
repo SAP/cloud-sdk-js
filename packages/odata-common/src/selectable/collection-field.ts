@@ -8,11 +8,11 @@ import { ComplexTypeNamespace } from './complex-type-namespace';
 
 /**
  * Represents a field of an entity or a complex type, that can have a collection as value.
- * @typeparam EntityT - Type of the entity the field belongs to.
- * @typeparam DeSerializersT - Type of the (de-)serializers.
- * @typeparam CollectionFieldT - Type of of elements of the collection. This can either be an EDM type or complex type.
- * @typeparam NullableT - Boolean type that represents whether the field is nullable.
- * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
+ * @typeParam EntityT - Type of the entity the field belongs to.
+ * @typeParam DeSerializersT - Type of the (de-)serializers.
+ * @typeParam CollectionFieldT - Type of of elements of the collection. This can either be an EDM type or complex type.
+ * @typeParam NullableT - Boolean type that represents whether the field is nullable.
+ * @typeParam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class CollectionField<
   EntityT extends EntityBase,
@@ -52,7 +52,7 @@ export class CollectionField<
 /**
  * Convenience type to reflect the type of the instances of a collection field.
  * The actual type of the elements for complex type collections is {@link ComplexTypeNamespace}.
- * @typeparam CollectionFieldT - Type of of elements of the collection. This can either be an EDM type or complex type.
+ * @typeParam CollectionFieldT - Type of of elements of the collection. This can either be an EDM type or complex type.
  */
 export type CollectionFieldType<
   CollectionFieldT extends EdmTypeShared<'any'> | Record<string, any>

@@ -19,7 +19,7 @@ const logger = createLogger({
 });
 
 /**
- * @internal
+ * Represents partial options to fetch destinations.
  */
 export interface PartialDestinationFetchOptions {
   useCache?: boolean;
@@ -33,7 +33,6 @@ export interface PartialDestinationFetchOptions {
  * @param serviceInstanceName - The name of the service.
  * @param options - Options to customize the behavior of this function.
  * @returns A destination.
- * @internal
  */
 export async function destinationForServiceBinding(
   serviceInstanceName: string,
@@ -77,12 +76,11 @@ export async function destinationForServiceBinding(
 }
 
 /**
- * Options to customize the behavior of [[destinationForServiceBinding]].
- * @internal
+ * Options to customize the behavior of {@link destinationForServiceBinding}.
  */
 export interface DestinationForServiceBindingsOptions {
   /**
-   * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
+   * Custom transformation function to control how a {@link Destination} is built from the given {@link ServiceBinding}.
    */
   serviceBindingTransformFn?: ServiceBindingTransformFunction;
 }

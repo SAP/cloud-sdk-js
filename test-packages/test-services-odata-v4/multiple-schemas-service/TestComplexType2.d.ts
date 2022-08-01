@@ -22,7 +22,7 @@ export interface TestComplexType2<
 }
 /**
  * TestComplexType2Field
- * @typeparam EntityT - Type of the entity the complex type field belongs to.
+ * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class TestComplexType2Field<
   EntityT extends Entity,

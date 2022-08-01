@@ -40,13 +40,13 @@ export type ComplexTypeFieldConstructor<
 
 /**
  * Convenience type to determine whether a field should be selectable. If the given `FieldOfT` is the type of an entity, it is selectable.
- * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
+ * @typeParam FieldOfT - Type of the entity or complex type field this field belongs to.
  */
 export type IsSelectableField<FieldOfT extends ConstructorOrField<any>> =
   FieldOfT extends Constructable<any> ? true : false;
 /**
  * Convenience type to determine whether a field should be orderable. If the given `EdmT` is of type `OrderableEdmTypes`, it is orderable.
- * @typeparam EdmT - EDM type of the field.
+ * @typeParam EdmT - EDM type of the field.
  * @internal
  */
 export type IsOrderableField<EdmT extends EdmTypeShared<'any'>> =
@@ -60,8 +60,8 @@ export type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
 
 /**
  * Field builder to orchestrate the creation of the different kinds of fields.
- * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
- * @typeparam DeSerializersT - Type of the (de-)serializers.
+ * @typeParam FieldOfT - Type of the entity or complex type field this field belongs to.
+ * @typeParam DeSerializersT - Type of the (de-)serializers.
  */
 export class FieldBuilder<
   FieldOfT extends ConstructorOrField<any>,

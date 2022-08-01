@@ -5,7 +5,7 @@ import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Create OData request to execute a action or function import.
- * @typeparam ReturnT - Type of the function import return value.
+ * @typeParam ReturnT - Type of the function import return value.
  * @internal
  */
 export abstract class ActionFunctionImportRequestBuilderBase<
@@ -43,9 +43,9 @@ export abstract class ActionFunctionImportRequestBuilderBase<
   }
 
   /**
-   * Execute request and return an {@link HttpResponse}.
+   * Execute request and return an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an {@link HttpResponse}.
+   * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

@@ -10,7 +10,7 @@ const City_1 = require('./City');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
  * AirportLocationField
- * @typeparam EntityT - Type of the entity the complex type field belongs to.
+ * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 class AirportLocationField extends odata_v4_1.ComplexTypeField {
   /**

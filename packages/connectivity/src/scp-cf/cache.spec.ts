@@ -21,7 +21,7 @@ const destinationOne: Destination = {
 };
 
 // Cache with expiration time
-const cacheOne = new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 });
+const cacheOne = new Cache<Destination>(300000);
 
 // Cache without expiration time
 const cacheTwo = new Cache<ClientCredentialsResponse>();

@@ -8,8 +8,8 @@ import { createODataUri } from '../uri-conversion';
 
 /**
  * Create OData request to execute a function import.
- * @typeparam ParametersT - Type of the function import parameters.
- * @typeparam ReturnT - Type of the function import return value.
+ * @typeParam ParametersT - Type of the function import parameters.
+ * @typeParam ReturnT - Type of the function import return value.
  */
 export class FunctionImportRequestBuilder<
   DeSerializersT extends DeSerializers,

@@ -1,4 +1,4 @@
-import { EntityApi } from '@sap-cloud-sdk/odata-common/internal';
+import { EntityApi } from '@sap-cloud-sdk/odata-common';
 import { entityDeserializer } from '../de-serializers';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { Entity } from '../entity';

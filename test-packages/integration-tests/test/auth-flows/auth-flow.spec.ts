@@ -1,6 +1,7 @@
 import { businessPartnerService } from '@sap/cloud-sdk-vdm-business-partner-service';
 import * as xssec from '@sap/xssec';
 import { Destination, getAgentConfig } from '@sap-cloud-sdk/connectivity';
+import { sendMail } from '@sap-cloud-sdk/mail-client';
 import { executeHttpRequest } from '../../../../packages/http-client/src';
 import {
   getService,
@@ -486,9 +487,17 @@ describe('OAuth flows', () => {
     });
     expect(destination?.type).toEqual('MAIL');
     expect(destination?.proxyType).toEqual('Internet');
-    // TODO: username and password need a new mapping as they are come from the keys `mail.user` and `mail.password`
-    // expect(destination?.username).toBeTruthy();
-    // expect(destination?.password).toBeTruthy();
+    expect(destination?.originalProperties?.['mail.user']).toBeTruthy();
+    expect(destination?.originalProperties?.['mail.smtp.host']).toBeTruthy();
+
+    const myEmailAddress = destination?.originalProperties!['mail.user'];
+    const res = await sendMail(destination!, {
+      from: myEmailAddress,
+      to: myEmailAddress,
+      subject: 'sub',
+      text: 'txt'
+    });
+    expect(res).toBeTruthy();
   }, 60000);
 
   xit('Mail: Provider op basic auth', async () => {

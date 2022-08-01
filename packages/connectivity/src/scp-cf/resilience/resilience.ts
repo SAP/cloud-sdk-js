@@ -171,9 +171,9 @@ export function resilience(
   if (middlewareOptionsPair) {
     const { middleware, options } = middlewareOptionsPair;
     if (
-      resilienceMiddlewareOptions.circuitBreaker() ===
-        options.circuitBreaker() &&
-      resilienceMiddlewareOptions.timeout() === options.timeout()
+      resilienceMiddlewareOptions.circuitBreaker() !==
+        options.circuitBreaker() ||
+      resilienceMiddlewareOptions.timeout() !== options.timeout()
     ) {
       throw new Error(
         `Id '${id}' has already been used by another resilience middleware with different options!`
@@ -220,11 +220,8 @@ export function callWithResilience<T>(
     (options.enableCircuitBreaker
       ? defaultResilienceOptions.circuitBreaker
       : () => false as const);
-
-  const id = options.resilience?.id ?? 'btpService-default';
-
   const resilienceMiddleware = resilience({
-    id: options.resilience?.id ?? 'btpService-default',
+    id: options.resilience?.id ?? 'btpService-' + fn.name,
     timeout,
     circuitBreaker
   });

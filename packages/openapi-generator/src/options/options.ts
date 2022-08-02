@@ -33,7 +33,9 @@ export const generatorOptions = {
     description:
       'Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.',
     coerce: (input: string): string =>
-      typeof input !== 'undefined' ? resolve(input) : ''
+      typeof input !== 'undefined'
+        ? resolve(input).split(sep).join(posix.sep)
+        : ''
   },
   outputDir: {
     string: true,

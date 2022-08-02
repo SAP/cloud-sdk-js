@@ -111,7 +111,7 @@ describe('generator', () => {
       });
 
       await generate({
-        input: 'root/inputDir/mySpec.json',
+        input: 'root/inputDir/*.json',
         outputDir: 'root/outputDir',
         skipValidation: true,
         transpile: true,

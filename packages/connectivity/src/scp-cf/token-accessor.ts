@@ -31,6 +31,8 @@ export async function serviceToken(
   options?: CachingOptions &
     ResilienceOptions & { resilience?: ResilienceMiddlewareOptions } & {
       jwt?: string | JwtPayload;
+      // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
+      xsuaaCredentials?: XsuaaServiceCredentials;
     }
 ): Promise<string> {
   const opts = {

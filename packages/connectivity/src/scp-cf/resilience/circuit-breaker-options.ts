@@ -1,9 +1,7 @@
 /**
  * TODO: Add JSDoc later.
- * @internal
  */
 export interface OpossumLibOptions {
-  timeout?: number | false | undefined; // default 10 sec
   errorThresholdPercentage?: number | undefined; // default 50
   volumeThreshold?: number | undefined; // default 10
   resetTimeout?: number | undefined; // default 30000
@@ -13,7 +11,7 @@ export interface OpossumLibOptions {
 /**
  * TODO: Add JSDoc later.
  */
-export type CircuitBreakerOptions = false | Omit<OpossumLibOptions, 'timeout'>;
+export type CircuitBreakerOptions = false | OpossumLibOptions;
 
 /**
  * TODO: Add JSDoc later.

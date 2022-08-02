@@ -60,7 +60,9 @@ export {
   deleteResilienceMiddleware,
   callWithResilience,
   destinationForServiceBinding,
-  PartialDestinationFetchOptions
+  PartialDestinationFetchOptions,
+  OpossumLibOptions,
+  RequestHandler
 } from './scp-cf';
 
 export type {

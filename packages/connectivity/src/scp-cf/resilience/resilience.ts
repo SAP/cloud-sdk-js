@@ -78,7 +78,7 @@ export function createTimeoutMiddleware<T>(
 export function createCircuitBreakerMiddleware<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
 ): Middleware<T> {
-  const { timeout, circuitBreaker } = resilienceMiddlewareOptions;
+  const { circuitBreaker } = resilienceMiddlewareOptions;
   const timeoutMiddlewareFn = (
     middlewareInOutOptions: MiddlewareInOutOptions<T>
   ) => {

@@ -11,8 +11,7 @@ function executeFunction<T>(
 
 /**
  * TODO: Add JSDoc later.
- * @param requestHandler - TODO: Add JSDoc later.
- * @param circuitBreakerOptions - TODO: Add JSDoc later.
+ * @param opossumLibOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
  * @internal
  */

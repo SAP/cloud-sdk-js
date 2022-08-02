@@ -1134,10 +1134,10 @@
   dependencies:
     antlr4 "4.8.0"
 
-"@sap/cds-dk@6.0.3":
-  version "6.0.3"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.0.3.tgz#3cbda05ad398d789162396016f1de724433fed7f"
-  integrity sha512-TEJItO0N0TXNHCS0AXL3O3IP0Y5o4v/9/wHCW4KtwPjg/4pnt1EbngtX6hJlxfI/qRs7Ot7wRuO4pbuTHDYHGA==
+"@sap/cds-dk@6.0.4":
+  version "6.0.4"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.0.4.tgz#0819791d3bb4226803db201c5ee83ff3920bb9d7"
+  integrity sha512-+xRsV/a4ZQzyAczpzjxhb6pzVST01RXp2bMApe4mirIqLgyTCtR3lRtN5ubAaA/QhLGxtJAuY2J00jNJVjeSdw==
   dependencies:
     "@sap/cds" "^6.0.3"
     "@sap/cds-foss" "^4"
@@ -1155,7 +1155,7 @@
     ws "^8.4.2"
     xml-js "^1.6.11"
   optionalDependencies:
-    sqlite3 "^5.0.4"
+    sqlite3 "5.0.8"
 
 "@sap/cds-foss@>=3", "@sap/cds-foss@^4":
   version "4.0.0"
@@ -8114,7 +8114,18 @@ sprintf-js@~1.0.2:
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-sqlite3@^5.0.11, sqlite3@^5.0.4:
+sqlite3@5.0.8:
+  version "5.0.8"
+  resolved "https://registry.npmjs.org/sqlite3/-/sqlite3-5.0.8.tgz#b4b7eab7156debec80866ef492e01165b4688272"
+  integrity sha512-f2ACsbSyb2D1qFFcqIXPfFscLtPVOWJr5GmUzYxf4W+0qelu5MWrR+FAQE1d5IUArEltBrzSDxDORG8P/IkqyQ==
+  dependencies:
+    "@mapbox/node-pre-gyp" "^1.0.0"
+    node-addon-api "^4.2.0"
+    tar "^6.1.11"
+  optionalDependencies:
+    node-gyp "8.x"
+
+sqlite3@^5.0.11:
   version "5.0.11"
   resolved "https://registry.npmjs.org/sqlite3/-/sqlite3-5.0.11.tgz#102c835d70be66da9d95a383fd6ea084a082ef7f"
   integrity sha512-4akFOr7u9lJEeAWLJxmwiV43DJcGV7w3ab7SjQFAFaTVyknY3rZjvXTKIVtWqUoY4xwhjwoHKYs2HDW2SoHVsA==

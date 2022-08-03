@@ -9,7 +9,7 @@ import {
   Destination
 } from './destination/destination-service-types';
 import { getServiceList } from './environment-accessor';
-import { Service } from './environment-accessor-types';
+import { Service, XsuaaServiceCredentials } from "./environment-accessor-types";
 import { serviceToken } from './token-accessor';
 import { isUserToken, JwtPair } from './jwt';
 
@@ -35,6 +35,10 @@ export async function addProxyConfigurationOnPrem(
     throw new Error('For principal propagation a user JWT is needed.');
   }
 
+  if (destination.type === 'MAIL'){
+    return { ...destination, proxyConfiguration: await socksProxyHostAndPort()};
+  }
+
   const proxyConfiguration: ProxyConfiguration = {
     ...proxyHostAndPort(),
     headers: {
@@ -47,7 +51,7 @@ export async function addProxyConfigurationOnPrem(
 interface HostAndPort {
   host: string;
   port: number;
-  protocol: Protocol.HTTP;
+  protocol: Protocol;
 }
 
 /**
@@ -62,6 +66,25 @@ export function proxyHostAndPort(): HostAndPort {
       service.credentials.onpremise_proxy_http_port ||
       service.credentials.onpremise_proxy_port,
     protocol: Protocol.HTTP
+  };
+}
+
+/**
+ * @internal
+ * @returns Socks Proxy Configuration
+ */
+export async function socksProxyHostAndPort(): Promise<ProxyConfiguration> {
+  const service = readConnectivityServiceBinding();
+  const connectivityServiceCredentials = service.credentials;
+  const connectivityServiceToken = await serviceToken('connectivity', {
+    xsuaaCredentials: connectivityServiceCredentials
+  } as any);
+  return {
+    host: service.credentials.onpremise_proxy_host,
+    port:
+      service.credentials.onpremise_socks5_proxy_port,
+    protocol: Protocol.SOCKS,
+    'proxy-authorization': connectivityServiceToken
   };
 }
 

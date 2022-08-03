@@ -1,9 +1,11 @@
 import { Readable } from 'stream';
 import { Url } from 'url';
+import { Socket } from 'net';
 import {
-  AuthenticationType,
-  DestinationProxyType
+  AuthenticationType, DestinationFetchOptions,
+  DestinationProxyType, ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
+import { Xor } from '@sap-cloud-sdk/util';
 /**
  * Represents an e-mail address.
  * This interface is compatible with `Mail.Address` of `nodemailer`.
@@ -233,6 +235,10 @@ export interface MailDestination {
    */
   port?: number;
   /**
+   * ProxyConfiguration for on-premise connectivity. Is present if proxyType of the destination equals "OnPremise".
+   */
+  proxyConfiguration?: ProxyConfiguration;
+  /**
    * Sender info, e.g. e-mail address.
    * Based on the additional destination property 'mail.from'.
    */
@@ -247,4 +253,20 @@ export interface MailDestination {
    * Based on the additional destination property 'mail.password'.
    */
   password?: string;
+}
+
+/**
+ * Type that is either a {@link MailDestination} or (XOR) {@link DestinationFetchOptions}.
+ */
+export type MailDestinationOrFetchOptions = Xor<
+  MailDestination,
+  DestinationFetchOptions
+  >;
+
+interface ReadableState {
+  readableListening: boolean;
+}
+
+export interface SocksSocket extends Socket {
+  _readableState: ReadableState;
 }

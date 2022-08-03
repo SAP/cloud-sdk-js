@@ -506,7 +506,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         return destination;
       default:
         throw new Error(
-          'Illegal argument: No valid proxy configuration found in the destination input to be aded.'
+          'Illegal argument: No valid proxy configuration found in the destination input to be added.'
         );
     }
   }

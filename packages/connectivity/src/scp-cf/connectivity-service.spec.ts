@@ -1,8 +1,8 @@
 import {
   connectivityBindingMock,
-  connectivityProxyConfigMock,
+  connectivityProxyConfigMock, connectivitySocksProxyConfigMock,
   mockServiceBindings
-} from '../../../../test-resources/test/test-util/environment-mocks';
+} from "../../../../test-resources/test/test-util/environment-mocks";
 import {
   providerServiceToken,
   providerUserJwt
@@ -139,5 +139,29 @@ describe('connectivity-service', () => {
       );
       done();
     });
+  });
+
+  it('[MAIL] adds a proxy configuration containing at least the host, the port, and the "proxy-authorization"', async () => {
+    mockServiceBindings();
+    mockServiceToken();
+
+    const input: Destination = {
+      url: 'https://example.com',
+      proxyType: 'OnPremise',
+      type: 'MAIL'
+    };
+
+    const expected: Destination = {
+      url: 'https://example.com',
+      proxyType: 'OnPremise',
+      type: 'MAIL',
+      proxyConfiguration: {
+        ...connectivitySocksProxyConfigMock,
+        ['proxy-authorization']: providerServiceToken
+      }
+    };
+
+    const withProxy = await addProxyConfigurationOnPrem(input);
+    expect(withProxy).toEqual(expected);
   });
 });

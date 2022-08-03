@@ -1,9 +1,17 @@
 import nodemailer from 'nodemailer';
+import { SocksClient } from 'socks';
 import { sendMail } from './mail-client';
 import { MailOptions } from './mail-client-types';
 
 describe('mail client', () => {
-  const mockMailer = {
+  const mockSocket = {
+    socket: {
+      _readableState: {},
+      end: jest.fn(),
+      destroy: jest.fn()
+    }
+  };
+  const mockTransport = {
     sendMail: jest.fn(),
     close: jest.fn()
   };
@@ -11,9 +19,9 @@ describe('mail client', () => {
   it('should create transport, send mails and close the transport', async () => {
     const spyCreateTransport = jest
       .spyOn(nodemailer, 'createTransport')
-      .mockReturnValue(mockMailer as any);
-    const spySendMail = jest.spyOn(mockMailer, 'sendMail');
-    const spyClose = jest.spyOn(mockMailer, 'close');
+      .mockReturnValue(mockTransport as any);
+    const spySendMail = jest.spyOn(mockTransport, 'sendMail');
+    const spyCloseTransport = jest.spyOn(mockTransport, 'close');
     const destination: any = {
       originalProperties: {
         'mail.password': 'password',
@@ -44,6 +52,45 @@ describe('mail client', () => {
     expect(spySendMail).toBeCalledTimes(2);
     expect(spySendMail).toBeCalledWith(mailOptions1);
     expect(spySendMail).toBeCalledWith(mailOptions2);
-    expect(spyClose).toBeCalledTimes(1);
+    expect(spyCloseTransport).toBeCalledTimes(1);
+  });
+
+  it('[OnPrem] should create transport/socket, send mails and close the transport/socket', async () => {
+    const spyCreateSocket = jest
+      .spyOn(SocksClient, 'createConnection')
+      .mockReturnValue(mockSocket as any);
+    const spyCreateTransport = jest
+      .spyOn(nodemailer, 'createTransport')
+      .mockReturnValue(mockTransport as any);
+    const spySendMail = jest.spyOn(mockTransport, 'sendMail');
+    const spyCloseTransport = jest.spyOn(mockTransport, 'close');
+    const spyEndSocket = jest.spyOn(mockSocket.socket, 'end');
+    const spyDestroySocket = jest.spyOn(mockSocket.socket, 'destroy');
+    const destination: any = {
+      originalProperties: {
+        'mail.password': 'password',
+        'mail.user': 'user',
+        'mail.smtp.host': 'smtp.gmail.com',
+        'mail.smtp.port': '587'
+      },
+      name: 'my-destination',
+      type: 'MAIL',
+      authentication: 'BasicAuthentication',
+      proxyType: 'OnPremise'
+    };
+    const mailOptions1: MailOptions = {
+      from: 'from1@example.com',
+      to: 'to1@example.com'
+    };
+    await expect(
+      sendMail(destination, mailOptions1)
+    ).resolves.not.toThrow();
+    expect(spyCreateSocket).toBeCalledTimes(1);
+    expect(spyCreateTransport).toBeCalledTimes(1);
+    expect(spySendMail).toBeCalledTimes(1);
+    expect(spySendMail).toBeCalledWith(mailOptions1);
+    expect(spyCloseTransport).toBeCalledTimes(1);
+    expect(spyEndSocket).toBeCalledTimes(1);
+    expect(spyDestroySocket).toBeCalledTimes(1);
   });
 });

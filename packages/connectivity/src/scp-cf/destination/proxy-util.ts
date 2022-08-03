@@ -259,6 +259,10 @@ export function proxyAgent(
       return {
         httpsAgent: new HttpsProxyAgent(agentConfig)
       };
+    default:
+      throw new Error(
+        `The target protocol: ${targetProtocol} has to be either http or https.`
+      );
   }
 }
 

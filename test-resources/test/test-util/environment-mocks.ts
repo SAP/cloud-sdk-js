@@ -89,6 +89,7 @@ export const connectivityBindingMock: Service = {
     clientid: 'clientid',
     clientsecret: 'clientsecret',
     onpremise_proxy_host: connectivityProxyConfigMock.host,
+    onpremise_proxy_port: connectivityProxyConfigMock.port,
     onpremise_socks5_proxy_port: connectivitySocksProxyConfigMock.port,
   }
 };

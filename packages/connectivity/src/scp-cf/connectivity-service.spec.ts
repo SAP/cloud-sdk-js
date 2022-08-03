@@ -28,12 +28,14 @@ describe('connectivity-service', () => {
 
     const input: Destination = {
       url: 'https://example.com',
-      proxyType: 'OnPremise'
+      proxyType: 'OnPremise',
+      type: 'HTTP'
     };
 
     const expected: Destination = {
       url: 'https://example.com',
       proxyType: 'OnPremise',
+      type: 'HTTP',
       proxyConfiguration: {
         ...connectivityProxyConfigMock,
         headers: {
@@ -53,12 +55,14 @@ describe('connectivity-service', () => {
     const input: Destination = {
       url: 'https://example.com',
       proxyType: 'OnPremise',
+      type: 'HTTP',
       authentication: 'PrincipalPropagation'
     };
 
     const expected: Destination = {
       url: 'https://example.com',
       proxyType: 'OnPremise',
+      type: 'HTTP',
       authentication: 'PrincipalPropagation',
       proxyConfiguration: {
         ...connectivityProxyConfigMock,

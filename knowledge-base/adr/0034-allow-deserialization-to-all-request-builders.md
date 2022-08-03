@@ -55,7 +55,7 @@ async execute(
 ## Discussion
 Some other request builders also should have the `dataAcccessor()`. However multiple implementation options are there.
 
-### **Q1. the `dataAccessor()` should be in the `exexute()` function parameter as optional or separeted as another function?**
+#### **Q1. the `dataAccessor()` should be in the `exexute()` function parameter as optional or separeted as another function?**
 
 **option 1** - palce in the `execute()` as same as a current implementation. (currently it is only implemented in action/function import request builder.) User call the function like
 ```
@@ -76,7 +76,7 @@ const request = functionImports
 - pros: keep `execure()` simple.
 - cons: current one will be deprecated. both are needed. old one will be removed in fure version(breaking change)?
 
-### **Q2-1. If it should be included, how?**
+#### **Q2-1. If it should be included, how?**
 
 **option 1**: create another class like `MethodRequestBuilderWithDataAccessor`
 (see below all request builder list)
@@ -136,7 +136,7 @@ async execute(
     });
 ```
 
-### **Q2-2. If it should be separated, how?**
+#### **Q2-2. If it should be separated, how?**
 
 **option 1**: create another class like `MethodRequestBuilderWithDataAccessor` to separete it. can user call like.
 ```

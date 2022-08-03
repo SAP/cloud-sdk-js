@@ -267,6 +267,9 @@ interface ReadableState {
   readableListening: boolean;
 }
 
+/**
+ * Represent a Socket object used fon OnPrem proxy
+ */
 export interface SocksSocket extends Socket {
   _readableState: ReadableState;
 }

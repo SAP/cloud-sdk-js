@@ -4,6 +4,10 @@ import { sendMail } from './mail-client';
 import { MailOptions } from './mail-client-types';
 
 describe('mail client', () => {
+  beforeEach(()=>{
+    jest.resetAllMocks();
+  })
+
   const mockSocket = {
     socket: {
       _readableState: {},

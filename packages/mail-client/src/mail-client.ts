@@ -101,9 +101,8 @@ async function createSocket(
       port: mailDestination.proxyConfiguration.port,
       type: 5,
       custom_auth_method: 0x80,
-      // eslint-disable-next-line no-return-await
-      custom_auth_request_handler: async () =>
-        await customAuthRequestHandler(
+      custom_auth_request_handler: () =>
+        customAuthRequestHandler(
           mailDestination.proxyConfiguration?.['proxy-authentication']
         ),
       custom_auth_response_size: 2,

@@ -20,7 +20,7 @@ This is a response of `GetAttachmentCount` in the cloud s/4 service `API_CV_ATTA
 ```
 In this case, user wants a value of `AttachmentCount` but it's wrapped by another object `GetAttachmentCount`.
 
-The `dataAccessor` can change the structure to what user want
+The `dataAccessor()` can change the structure to what user want
 ```
 const request = functionImports
     .getAttachmentCount({param})
@@ -36,9 +36,9 @@ then retuns
 ```
 
 ## Discussion
-Some other request builders also should have the `dataAcccessor`. However multiple implementation options are there.
+Some other request builders also should have the `dataAcccessor()`. However multiple implementation options are there.
 
-Q1. the `dataAccessor` should be in `exexute()` function parameter as optional or separeted?
+Q1. the `dataAccessor()` should be in `exexute()` function parameter as optional or separeted?
 
 option 1 - in `execute()` as same as a current implementation currentl implementation is nonly in action/function import request builder.
 ```
@@ -49,7 +49,7 @@ const request = functionImports
     .execute(destination, data => data.d.GetAttachmentCount)
 ```
 - pros: same as current functionality
-- cons: complicated. other request builder set by the builder like skip or selct are separeted but why dataAccessor uis special one?
+- cons: complicated. other methods `set`, `skip` or `selct` are separeted but why only dataAccessor() is included?
 
 option 2 - separated
 ```
@@ -60,13 +60,13 @@ const request = functionImports
     .dataAccessor(data => data.d.GetAttachmentCount)
     .execute(destination)
 ```
-- pros: keep `execure()` simple
-- cons: breaking change. deprecate. keep both.
+- pros: keep `execure()` simple.
+- cons: current one will be deprecated. both are needed. old one will be removed in fure version(breaking change)?
 
 Q2-1. If it should be included, how?
 
-option 1: create another class `MethodRequestBuilderWithDataAccessor`
-see below for a request builder list that shold have dataAccessor.
+option 1: create another class like `MethodRequestBuilderWithDataAccessor`
+(see below all request builder list)
 
 ```
 #action-function-import-request-builder-base.ts
@@ -122,11 +122,10 @@ async execute(
         )
     });
 ```
-option 
 
 Q2-2. If it should be separated, how?
 
-option 1: class between
+option 1: make it separeted and cann be called with below
 ```
 const request = functionImports
     .getAttachmentCount({param})
@@ -137,8 +136,8 @@ pros: no-duplication
 cons: more complicated inhelitance
 
 options 2: in each child cladd, dataAccessor method will be implemented..
-pros: not comlicated inheritance, simple
-cons: co-duplication
+- pros: not comlicated inheritance, simple
+- cons: co-duplication
 
 ## Target Request Builders
 

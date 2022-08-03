@@ -125,17 +125,17 @@ async execute(
 
 Q2-2. If it should be separated, how?
 
-option 1: make it separeted and cann be called with below
+option 1: create another class like `MethodRequestBuilderWithDataAccessor` to separete it and cann be called with below
 ```
 const request = functionImports
     .getAttachmentCount({param})
     .dataAccessor(data => data.d.GetAttachmentCount)
     .execute(destination)
 ```
-pros: no-duplication
-cons: more complicated inhelitance
+- pros: no-duplication
+- cons: more complicated inhelitance
 
-options 2: dataAccessor method is implemented in each child class.
+options 2: dataAccessor method is implemented in each child classes.
 - pros: not comlicated inheritance, simple
 - cons: co-duplication
 

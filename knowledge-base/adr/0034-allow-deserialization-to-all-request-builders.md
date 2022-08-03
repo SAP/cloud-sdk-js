@@ -78,22 +78,26 @@ const request = functionImports
 
 #### **Q2-1. If it should be included, how?**
 
-**option 1**: create another class like `MethodRequestBuilderWithDataAccessor`
+**option 1**: create another parant class like `MethodRequestBuilderWithDataAccessor`
 (see below all request builder list)
 
 ```
 #action-function-import-request-builder-base.ts
 
-async execute(
-  destination: DestinationOrFetchOptions,
-  this.dataAccessor?
-): Promise<ReturnT> {
-  return this.executeRaw(destination).then(response => {
-    const data = dataAccessor
-      ? { d: dataAccessor(response.data) }
-      : response.data;
-    return this.responseTransformer(data);
-  });
+export abstract class ActionFunctionImportRequestBuilderBase<...>
+  extends MethodRequestBuilderWithDataAccessor<...> {
+  ...
+  async execute(
+    destination: DestinationOrFetchOptions,
+    this.dataAccessor?
+  ): Promise<ReturnT> {
+    return this.executeRaw(destination).then(response => {
+      const data = dataAccessor
+        ? { d: dataAccessor(response.data) }
+        : response.data;
+      return this.responseTransformer(data);
+    });
+  }
 }
 ```
 
@@ -138,12 +142,24 @@ async execute(
 
 #### **Q2-2. If it should be separated, how?**
 
-**option 1**: create another class like `MethodRequestBuilderWithDataAccessor` to separete it. can user call like.
+**option 1**: create another parent class like `MethodRequestBuilderWithDataAccessor` to separete it. can user call like.
+
 ```
 const request = functionImports
     .getAttachmentCount({param})
     .dataAccessor(data => data.d.GetAttachmentCount)
     .execute(destination)
+```
+
+the `dataAccessor()` will be in parent class like
+```
+#request-builder-base.ts
+
+export abstract class MethodRequestBuilderWithDataAccessor<...> {
+  ...
+  dataAccessor(...){...}
+  ...
+}
 ```
 - pros: no-duplication
 - cons: more complicated inhelitance

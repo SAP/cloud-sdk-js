@@ -135,7 +135,7 @@ const request = functionImports
 pros: no-duplication
 cons: more complicated inhelitance
 
-options 2: in each child cladd, dataAccessor method will be implemented..
+options 2: dataAccessor method is implemented in each child class.
 - pros: not comlicated inheritance, simple
 - cons: co-duplication
 

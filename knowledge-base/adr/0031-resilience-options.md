@@ -110,7 +110,7 @@ type CircuitBreakerOptions = 'disabled'| Omit<OpsosumLibOptions,'timeout'>; //ti
 type TimeoutOptions = 'disabled' | number
 
 
-interface OpsosumLibOptions {
+interface OpossumLibOptions {
   timeout?: StringValue | false | undefined; // default 10sec
   errorThresholdPercentage?: number | undefined; // default 50
   volumeThreshold?: number | undefined; // default 10
@@ -128,7 +128,7 @@ interface AsyncRetryLibOptions {
 }
 
 // in the resilience call:
-type ResilienceMiddleWareOptions = {
+type ResilienceMiddlewareOptions = {
   timeout: (context:RequestContext)=>TimeoutOptions
   retry:  (context:RequestContext)=>RetryOptions
   circuitBreaker: (context:RequestContext)=>CircuitBreakerOptions  
@@ -139,12 +139,12 @@ The explicit way to define the default situation with 10sec timeout, circuit bre
 
 ```ts
 defaultResilienceOptions: ResilienceMiddleWareOptions = {
-  timeout: (context:RequestContext)=>1000,
+  timeout: (context:RequestContext)=>10000,
   retry: (context:RequestContext)=>'disabled',
-  circuitBreaker: circuitBreakerOnForBTP
+  circuitBreaker: enableCircuitBreakerForBTP
 };
 
-function circuitBreakerOnForBTP(context:RequestContext):CircuitBreakerOptions{
+function enableCircuitBreakerForBTP(context:RequestContext):CircuitBreakerOptions{
     if(context.url.includes(btpDomain)){
         return defaultCircuitBreakerOptions
     }
@@ -204,7 +204,7 @@ type Middleware<T> = <T>(options:MiddlewareInOut) => MiddlewareInOut;
 Implementation Idea: It could make sense to model the resilience internally as multiple middle wares:
 ```ts
 function resilience(options:ResilienceMiddlewareOptions){
-    const [circuitBreaker,timeout,retry]:MiddleWare[] = createResilience(options)    
+    const [circuitBreaker,timeout,retry]:Middleware[] = createResilience(options)    
     return (
             options:MiddlewareInOut
     )=>{
@@ -336,7 +336,7 @@ function getDestination(
 
 function serviceToken( 
     service: string | Service,        
-    options?: OldOptions & {resilience?: MiddleWare}
+    options?: OldOptions & {resilience?: MiddlewareOptions}
 ){
   //implementation
 }
@@ -378,8 +378,8 @@ import {defaultResilienceBTPServices} from "@sap-cloud-sdk/connectivity/dist/scp
 
 function getClientCredentialsToken(service: string | Service,
                                    userJwt?: string | JwtPayload,
-                                   options?: ResilienceOptions & { resilience: ResilienceMiddleWareOptions }) {
+                                   options?: ResilienceOptions & { resilience: ResilienceMiddlewareOptions }) {
     
-   const timeout = options.resilience.timeout || options.timeout ? () => options.timeout : defaultResilienceOptions.timeout
+   const timeout = options.resilience.timeout || (options.timeout ? () => options.timeout : defaultResilienceOptions.timeout)
 }
 ```

@@ -40,7 +40,7 @@ Some other request builders also should have the `dataAcccessor()`. However mult
 
 Q1. the `dataAccessor()` should be in `exexute()` function parameter as optional or separeted?
 
-option 1 - in `execute()` as same as a current implementation currentl implementation is nonly in action/function import request builder.
+option 1 - in `execute()` as same as a current implementation. (currently it is only implemented in action/function import request builder.)
 ```
 #User call the function like
 
@@ -49,7 +49,7 @@ const request = functionImports
     .execute(destination, data => data.d.GetAttachmentCount)
 ```
 - pros: same as current functionality
-- cons: complicated. other methods `set`, `skip` or `selct` are separeted but why only dataAccessor() is included?
+- cons: complicated. other methods `set`, `skip` or `selct` are separeted. why only `dataAccessor()` is included?
 
 option 2 - separated
 ```

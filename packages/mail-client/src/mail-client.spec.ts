@@ -4,7 +4,7 @@ import { sendMail } from './mail-client';
 import { MailOptions } from './mail-client-types';
 
 describe('mail client', () => {
-  beforeEach(()=>{
+  beforeEach(() => {
     jest.resetAllMocks();
   });
 
@@ -80,15 +80,17 @@ describe('mail client', () => {
       name: 'my-destination',
       type: 'MAIL',
       authentication: 'BasicAuthentication',
-      proxyType: 'OnPremise'
+      proxyType: 'OnPremise',
+      proxyConfiguration: {
+        host: 'smtp.gmail.com',
+        port: 587
+      }
     };
     const mailOptions1: MailOptions = {
       from: 'from1@example.com',
       to: 'to1@example.com'
     };
-    await expect(
-      sendMail(destination, mailOptions1)
-    ).resolves.not.toThrow();
+    await expect(sendMail(destination, mailOptions1)).resolves.not.toThrow();
     expect(spyCreateSocket).toBeCalledTimes(1);
     expect(spyCreateTransport).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledTimes(1);

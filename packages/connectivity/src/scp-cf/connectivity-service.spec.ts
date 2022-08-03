@@ -1,8 +1,9 @@
 import {
   connectivityBindingMock,
-  connectivityProxyConfigMock, connectivitySocksProxyConfigMock,
+  connectivityProxyConfigMock,
+  connectivitySocksProxyConfigMock,
   mockServiceBindings
-} from "../../../../test-resources/test/test-util/environment-mocks";
+} from '../../../../test-resources/test/test-util/environment-mocks';
 import {
   providerServiceToken,
   providerUserJwt

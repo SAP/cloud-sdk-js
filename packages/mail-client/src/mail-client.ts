@@ -10,14 +10,18 @@ import {
 } from '@sap-cloud-sdk/util';
 import nodemailer, { SentMessageInfo, Transporter } from 'nodemailer';
 import { SocksClient, SocksClientOptions } from 'socks';
+// eslint-disable-next-line import/no-internal-modules
+import type { Options } from 'nodemailer/lib/smtp-pool';
 import {
   MailDestination,
   MailOptions,
-  MailResponse, SocksSocket
+  MailResponse,
+  SocksSocket
 } from './mail-client-types';
-import { customAuthRequestHandler, customAuthResponseHandler } from './socket-proxy';
-// eslint-disable-next-line import/no-internal-modules
-import type { Options } from 'nodemailer/lib/smtp-pool';
+import {
+  customAuthRequestHandler,
+  customAuthResponseHandler
+} from './socket-proxy';
 
 const logger = createLogger({
   package: 'mail-client',
@@ -83,9 +87,13 @@ function getCredentials(
   return { username, password };
 }
 
-async function createSocket(mailDestination: MailDestination): Promise<SocksSocket>{
+async function createSocket(
+  mailDestination: MailDestination
+): Promise<SocksSocket> {
   if (!mailDestination.proxyConfiguration) {
-    throw Error(`The proxy configuration is undefined, which is mandatory for creating a socket connection.`);
+    throw Error(
+      'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
+    );
   }
   const connectionOptions: SocksClientOptions = {
     proxy: {
@@ -94,7 +102,10 @@ async function createSocket(mailDestination: MailDestination): Promise<SocksSock
       type: 5,
       custom_auth_method: 0x80,
       // eslint-disable-next-line no-return-await
-      custom_auth_request_handler: async () => await customAuthRequestHandler(mailDestination.proxyConfiguration?.['proxy-authentication']),
+      custom_auth_request_handler: async () =>
+        await customAuthRequestHandler(
+          mailDestination.proxyConfiguration?.['proxy-authentication']
+        ),
       custom_auth_response_size: 2,
       custom_auth_response_handler: customAuthResponseHandler
     },
@@ -104,7 +115,9 @@ async function createSocket(mailDestination: MailDestination): Promise<SocksSock
       port: mailDestination.port!
     }
   };
-  const socketConnection = await SocksClient.createConnection(connectionOptions);
+  const socketConnection = await SocksClient.createConnection(
+    connectionOptions
+  );
   const socksSocket = socketConnection.socket as SocksSocket;
   socksSocket._readableState.readableListening = true;
   return socksSocket;
@@ -144,13 +157,13 @@ async function createTransport(
   if (socket) {
     return nodemailer.createTransport({
       ...baseOptions,
-      connection: socket,
+      connection: socket
     });
   }
   return nodemailer.createTransport({
     ...baseOptions,
     host: mailDestination.host,
-    port: mailDestination.port,
+    port: mailDestination.port
   });
 }
 
@@ -166,7 +179,7 @@ async function sendMailWithNodemailer<T extends MailOptions>(
   ...mailOptions: T[]
 ): Promise<MailResponse[]> {
   let socket: SocksSocket | undefined;
-  if(mailDestination.proxyType === 'OnPremise') {
+  if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
   }
   const transport = await createTransport(mailDestination, socket);
@@ -193,11 +206,12 @@ async function sendMailWithNodemailer<T extends MailOptions>(
   return response;
 }
 
-function teardown(transport: Transporter<SentMessageInfo>, socket?: SocksSocket){
+function teardown(
+  transport: Transporter<SentMessageInfo>,
+  socket?: SocksSocket
+) {
   transport.close();
-  logger.debug(
-    'SMTP transport connection closed.'
-  );
+  logger.debug('SMTP transport connection closed.');
   if (socket) {
     socket.end();
     socket.destroy();

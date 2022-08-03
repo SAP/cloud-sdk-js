@@ -2,8 +2,10 @@ import { Readable } from 'stream';
 import { Url } from 'url';
 import { Socket } from 'net';
 import {
-  AuthenticationType, DestinationFetchOptions,
-  DestinationProxyType, ProxyConfiguration
+  AuthenticationType,
+  DestinationFetchOptions,
+  DestinationProxyType,
+  ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
 import { Xor } from '@sap-cloud-sdk/util';
 /**
@@ -261,7 +263,7 @@ export interface MailDestination {
 export type MailDestinationOrFetchOptions = Xor<
   MailDestination,
   DestinationFetchOptions
-  >;
+>;
 
 interface ReadableState {
   readableListening: boolean;

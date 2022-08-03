@@ -8,7 +8,12 @@ export async function customAuthRequestHandler(jwt: string): Promise<Buffer> {
   const jwtBytesLength = jwtBytes.length;
   const jwtLengthBuffer = Buffer.alloc(4);
   jwtLengthBuffer.writeUInt32BE(jwtBytesLength, 0);
-  const customAuthenticationRequest = [0x01, ...jwtLengthBuffer, ...jwtBytes, 0x00];
+  const customAuthenticationRequest = [
+    0x01,
+    ...jwtLengthBuffer,
+    ...jwtBytes,
+    0x00
+  ];
   return Buffer.from(customAuthenticationRequest);
 }
 
@@ -17,6 +22,8 @@ export async function customAuthRequestHandler(jwt: string): Promise<Buffer> {
  * @internal
  */
 // eslint-disable-next-line @typescript-eslint/require-await
-export async function customAuthResponseHandler(data: Buffer): Promise<boolean> {
+export async function customAuthResponseHandler(
+  data: Buffer
+): Promise<boolean> {
   return data[0] === 0x01 && data[1] === 0x00;
 }

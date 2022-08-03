@@ -9,7 +9,7 @@ import {
   Destination
 } from './destination/destination-service-types';
 import { getServiceList } from './environment-accessor';
-import { Service, XsuaaServiceCredentials } from "./environment-accessor-types";
+import { Service } from './environment-accessor-types';
 import { serviceToken } from './token-accessor';
 import { isUserToken, JwtPair } from './jwt';
 
@@ -35,8 +35,11 @@ export async function addProxyConfigurationOnPrem(
     throw new Error('For principal propagation a user JWT is needed.');
   }
 
-  if (destination.type === 'MAIL'){
-    return { ...destination, proxyConfiguration: await socksProxyHostAndPort()};
+  if (destination.type === 'MAIL') {
+    return {
+      ...destination,
+      proxyConfiguration: await socksProxyHostAndPort()
+    };
   }
 
   const proxyConfiguration: ProxyConfiguration = {
@@ -81,8 +84,7 @@ export async function socksProxyHostAndPort(): Promise<ProxyConfiguration> {
   } as any);
   return {
     host: service.credentials.onpremise_proxy_host,
-    port:
-      service.credentials.onpremise_socks5_proxy_port,
+    port: service.credentials.onpremise_socks5_proxy_port,
     protocol: Protocol.SOCKS,
     'proxy-authorization': connectivityServiceToken
   };

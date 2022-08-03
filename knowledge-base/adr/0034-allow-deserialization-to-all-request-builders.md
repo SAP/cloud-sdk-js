@@ -168,7 +168,7 @@ Which request builders should have the `dataAccessor()` or not?
 
 
 ## Decision
-
+TBD
 
 ## Appendix
 
@@ -178,3 +178,4 @@ Which request builders should have the `dataAccessor()` or not?
 - [Ticket](https://github.com/SAP/cloud-sdk-backlog/issues/698)
 - [Original Ticket](https://github.com/SAP/cloud-sdk-backlog/issues/73)
 - [Original issue](https://github.com/SAP/cloud-sdk-js/issues/682)
+- [Mixins](https://www.typescriptlang.org/docs/handbook/mixins.html)

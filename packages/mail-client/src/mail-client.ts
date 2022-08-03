@@ -10,13 +10,14 @@ import {
 } from '@sap-cloud-sdk/util';
 import nodemailer, { SentMessageInfo, Transporter } from 'nodemailer';
 import { SocksClient, SocksClientOptions } from 'socks';
-import { Options } from 'nodemailer/lib/smtp-pool';
 import {
   MailDestination,
   MailOptions,
   MailResponse, SocksSocket
 } from './mail-client-types';
 import { customAuthRequestHandler, customAuthResponseHandler } from './socket-proxy';
+// eslint-disable-next-line import/no-internal-modules
+import type { Options } from 'nodemailer/lib/smtp-pool';
 
 const logger = createLogger({
   package: 'mail-client',
@@ -83,10 +84,13 @@ function getCredentials(
 }
 
 async function createSocket(mailDestination: MailDestination): Promise<SocksSocket>{
+  if (!mailDestination.proxyConfiguration) {
+    throw Error(`The proxy configuration is undefined, which is mandatory for creating a socket connection.`);
+  }
   const connectionOptions: SocksClientOptions = {
     proxy: {
-      host: mailDestination.proxyConfiguration?.host!,
-      port: mailDestination.proxyConfiguration?.port!,
+      host: mailDestination.proxyConfiguration.host,
+      port: mailDestination.proxyConfiguration.port,
       type: 5,
       custom_auth_method: 0x80,
       // eslint-disable-next-line no-return-await

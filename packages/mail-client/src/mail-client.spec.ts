@@ -6,7 +6,7 @@ import { MailOptions } from './mail-client-types';
 describe('mail client', () => {
   beforeEach(()=>{
     jest.resetAllMocks();
-  })
+  });
 
   const mockSocket = {
     socket: {

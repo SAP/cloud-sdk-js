@@ -57,7 +57,7 @@ Some other request builders also should have the `dataAcccessor()`. However mult
 
 #### **Q1. the `dataAccessor()` should be in the `exexute()` function parameter as optional or separeted as another function?**
 
-**option 1** - palce in the `execute()` as same as a current implementation. (currently it is only implemented in action/function import request builder.) User call the function like
+**option 1** - palce the `dataAccessor()` in the `execute()` as same as a current implementation. (currently it is only implemented in action/function import request builder.) User call the function like
 ```
 const request = functionImports
     .getAttachmentCount({param})

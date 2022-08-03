@@ -1,6 +1,6 @@
 # Allow Deserialization to All Request Builders
 
-This ADR is about deserialization 
+This ADR is about deserialization for all request builders
 
 ## Status
 need a discussion

@@ -129,9 +129,9 @@ interface AsyncRetryLibOptions {
 
 // in the resilience call:
 type ResilienceMiddlewareOptions = {
-  timeout: (context:RequestContext)=>TimeoutOptions
-  retry:  (context:RequestContext)=>RetryOptions
-  circuitBreaker: (context:RequestContext)=>CircuitBreakerOptions  
+  timeout: (context?:RequestContext)=>TimeoutOptions
+  retry:  (context?:RequestContext)=>RetryOptions
+  circuitBreaker: (context?:RequestContext)=>CircuitBreakerOptions  
 };
 ```
 
@@ -148,7 +148,7 @@ function enableCircuitBreakerForBTP(context:RequestContext):CircuitBreakerOption
     if(context.url.includes(btpDomain)){
         return defaultCircuitBreakerOptions
     }
-    return 'disabled'
+    return false
 }
 ```
 
@@ -166,8 +166,8 @@ From version 3.0 the resilience will be on per default using the default options
 A `disabled` method for convenience could be nice:
 
 ```ts
-function disabled(context:RequestContext):'disabled'{
-    return 'disabled'
+function disabled(context:RequestContext):false{
+    return false
 }
 ```
 
@@ -181,7 +181,7 @@ function disabled(context:RequestContext):'disabled'{
 ```ts
 myApi
   .getAll()
-  .middleware(resilience({ circuitBreaker: ()=>'disabled' }), id)
+  .middleware(resilience({ circuitBreaker: ()=>false }), id)
   .execute({ destinationName: 'my-dest' });
 
 executeHttpRequest({
@@ -242,9 +242,9 @@ Use Case B:
 
 ```ts
 resilience({
-  retry: ()=>'disabled',
-  circuitBreaker: ()=>'disabled',
-  timoute: ()=>'disabled',
+  retry: ()=>false,
+  circuitBreaker: ()=>false,
+  timoute: ()=>false,
 });
 ```
 
@@ -351,7 +351,7 @@ If both options are given then new one should win.
 myApi
   .getAll()
   .timeout(456)                //deprecated      
-  .middleware(resilience({ circuitBreaker: ()=>'disabled',timeout:()=>123 }), id)
+  .middleware(resilience({ circuitBreaker: ()=>false,timeout:()=>123 }), id)
   .execute({ destinationName: 'my-dest',
     timeout:456,                //deprecated      
     disableCiruitBreaker:true   //deprecated      

@@ -6,7 +6,7 @@ This ADR is about deserialization
 need a discussion
 
 ## Context
-Generally request bilders take one argument `destination` but only action/function imports request builder takes an additional argument `deataAccessor()` to change a responce data structure.
+Generally request bilders take one argument `destination` but only action/function imports request builder takes an additional argument `deataAccessor()` to change a responce data structure like below.
 
 This is a response of `GetAttachmentCount` in the cloud s/4 service `API_CV_ATTACHMENT_SRV`
 ```
@@ -18,9 +18,9 @@ This is a response of `GetAttachmentCount` in the cloud s/4 service `API_CV_ATTA
   }
 }
 ```
-In this case, user wants a value of `AttachmentCount` but it's wrapped by another object `GetAttachmentCount`.
+In this case, a user wants a value of `AttachmentCount` but it's wrapped by another object `GetAttachmentCount`.
 
-The `dataAccessor()` can change the structure to what user want
+The `dataAccessor()` can change the structure to what a user want
 ```
 const request = functionImports
     .getAttachmentCount({param})
@@ -35,26 +35,39 @@ then retuns
 }
 ```
 
+current implementation
+```
+#action-function-import-request-builder-base.ts
+
+async execute(
+  destination: DestinationOrFetchOptions,
+  dataAccessor?: (data: any) => any
+): Promise<ReturnT> {
+  return this.executeRaw(destination).then(response => {
+    const data = dataAccessor
+      ? { d: dataAccessor(response.data) }
+      : response.data;
+    return this.responseTransformer(data);
+  });
+}
+```
+
 ## Discussion
 Some other request builders also should have the `dataAcccessor()`. However multiple implementation options are there.
 
-Q1. the `dataAccessor()` should be in `exexute()` function parameter as optional or separeted?
+### **Q1. the `dataAccessor()` should be in the `exexute()` function parameter as optional or separeted as another function?**
 
-option 1 - in `execute()` as same as a current implementation. (currently it is only implemented in action/function import request builder.)
+**option 1** - palce in the `execute()` as same as a current implementation. (currently it is only implemented in action/function import request builder.) User call the function like
 ```
-#User call the function like
-
 const request = functionImports
     .getAttachmentCount({param})
     .execute(destination, data => data.d.GetAttachmentCount)
 ```
 - pros: same as current functionality
-- cons: complicated. other methods `set`, `skip` or `selct` are separeted. why only `dataAccessor()` is included?
+- cons: complicated. other methods `set`, `skip` or `selct` are separeted. why only the `dataAccessor()` is included?
 
-option 2 - separated
+**option 2** - separated as another function. User call the function like (disscuss about how to separete later!)
 ```
-#User call the function like (disscuss about how to separete later!)
-
 const request = functionImports
     .getAttachmentCount({param})
     .dataAccessor(data => data.d.GetAttachmentCount)
@@ -63,9 +76,9 @@ const request = functionImports
 - pros: keep `execure()` simple.
 - cons: current one will be deprecated. both are needed. old one will be removed in fure version(breaking change)?
 
-Q2-1. If it should be included, how?
+### **Q2-1. If it should be included, how?**
 
-option 1: create another class like `MethodRequestBuilderWithDataAccessor`
+**option 1**: create another class like `MethodRequestBuilderWithDataAccessor`
 (see below all request builder list)
 
 ```
@@ -84,7 +97,7 @@ async execute(
 }
 ```
 
-option 2: add `dataAccessor` into each request builders repeatedly
+**option 2**: add the `dataAccessor()` into each request builders repeatedly
 ```
 #action-function-import-request-builder-base.ts
 
@@ -123,9 +136,9 @@ async execute(
     });
 ```
 
-Q2-2. If it should be separated, how?
+### **Q2-2. If it should be separated, how?**
 
-option 1: create another class like `MethodRequestBuilderWithDataAccessor` to separete it and cann be called with below
+**option 1**: create another class like `MethodRequestBuilderWithDataAccessor` to separete it. can user call like.
 ```
 const request = functionImports
     .getAttachmentCount({param})
@@ -135,7 +148,7 @@ const request = functionImports
 - pros: no-duplication
 - cons: more complicated inhelitance
 
-options 2: dataAccessor method is implemented in each child classes.
+**options** 2: dataAccessor methods are implemented in each child classes.
 - pros: not comlicated inheritance, simple
 - cons: co-duplication
 

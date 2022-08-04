@@ -257,20 +257,13 @@ export interface MailDestination {
   password?: string;
 }
 
-/**
- * Type that is either a {@link MailDestination} or (XOR) {@link DestinationFetchOptions}.
- */
-export type MailDestinationOrFetchOptions = Xor<
-  MailDestination,
-  DestinationFetchOptions
->;
-
 interface ReadableState {
   readableListening: boolean;
 }
 
 /**
  * Represent a Socket object used fon OnPrem proxy.
+ * @internal
  */
 export interface SocksSocket extends Socket {
   _readableState: ReadableState;

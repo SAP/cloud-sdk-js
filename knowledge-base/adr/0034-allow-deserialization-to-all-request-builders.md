@@ -3,7 +3,7 @@
 This ADR is about deserialization for all request builders
 
 ## Status
-need a discussion
+investigating the possibility
 
 ## Context
 Generally request bilders take one argument `destination` but only action/function imports request builder takes an additional argument `deataAccessor()` to change a responce data structure like below.
@@ -185,6 +185,7 @@ Which request builders should have the `dataAccessor()` or not?
 
 ## Decision
 TBD
+(dataAccessor should be changed to more explisit name)
 
 ## Appendix
 
@@ -195,3 +196,5 @@ TBD
 - [Original Ticket](https://github.com/SAP/cloud-sdk-backlog/issues/73)
 - [Original issue](https://github.com/SAP/cloud-sdk-js/issues/682)
 - [Mixins](https://www.typescriptlang.org/docs/handbook/mixins.html)
+
+dataAccessor need  to be change a name

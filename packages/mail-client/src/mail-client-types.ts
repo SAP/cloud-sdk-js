@@ -3,11 +3,9 @@ import { Url } from 'url';
 import { Socket } from 'net';
 import {
   AuthenticationType,
-  DestinationFetchOptions,
   DestinationProxyType,
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
-import { Xor } from '@sap-cloud-sdk/util';
 /**
  * Represents an e-mail address.
  * This interface is compatible with `Mail.Address` of `nodemailer`.

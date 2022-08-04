@@ -86,15 +86,15 @@ describe('mail client', () => {
         port: 587
       }
     };
-    const mailOptions1: MailOptions = {
+    const mailOptions: MailOptions = {
       from: 'from1@example.com',
       to: 'to1@example.com'
     };
-    await expect(sendMail(destination, mailOptions1)).resolves.not.toThrow();
+    await expect(sendMail(destination, mailOptions)).resolves.not.toThrow();
     expect(spyCreateSocket).toBeCalledTimes(1);
     expect(spyCreateTransport).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledTimes(1);
-    expect(spySendMail).toBeCalledWith(mailOptions1);
+    expect(spySendMail).toBeCalledWith(mailOptions);
     expect(spyCloseTransport).toBeCalledTimes(1);
     expect(spyEndSocket).toBeCalledTimes(1);
     expect(spyDestroySocket).toBeCalledTimes(1);

@@ -1,8 +1,12 @@
 import * as path from 'path';
 import execa from 'execa';
 import * as fs from 'fs-extra';
+import mock from 'mock-fs';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
-
+/**
+ * use mock.load
+ * no need to test whole cli, just test functions respectively
+ */
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(
     __dirname,

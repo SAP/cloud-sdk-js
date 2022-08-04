@@ -1,7 +1,6 @@
 name: typedoc-check
 
 on:
-  pull_request: ~
   push:
     branches: ['main']
     tags: ['v*']

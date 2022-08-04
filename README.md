@@ -5,7 +5,7 @@
 [![Fosstars security rating](https://github.com/SAP/cloud-sdk-js/blob/fosstars-report/fosstars_badge.svg)](https://github.com/SAP/cloud-sdk-js/blob/fosstars-report/fosstars_report.md)
 
 # SAP Cloud SDK
-Test 7.
+Test 8.
 An SDK to reduce your development effort when building side-by-side extension applications on SAP Business Technology Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
 
 ## Announcement - Upgrade Strategy

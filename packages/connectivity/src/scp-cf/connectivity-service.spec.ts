@@ -12,7 +12,7 @@ import { mockServiceToken } from '../../../../test-resources/test/test-util/toke
 import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import {
   addProxyConfigurationOnPrem,
-  proxyHostAndPort
+  httpProxyHostAndPort
 } from './connectivity-service';
 import { Protocol } from './protocol';
 import { Destination } from './destination';
@@ -124,7 +124,7 @@ describe('connectivity-service', () => {
       protocol: Protocol.HTTP
     };
 
-    const hostAndPort = proxyHostAndPort();
+    const hostAndPort = httpProxyHostAndPort();
 
     expect(hostAndPort).toEqual(expected);
   });
@@ -146,27 +146,29 @@ describe('connectivity-service', () => {
     });
   });
 
-  it('[MAIL] adds a proxy configuration containing at least the host, the port, and the "proxy-authorization"', async () => {
-    mockServiceBindings();
-    mockServiceToken();
+  describe('MAIL destination',() => {
+    it('adds a proxy configuration containing at least the host, the port, and the "proxy-authorization"', async () => {
+      mockServiceBindings();
+      mockServiceToken();
 
-    const input: Destination = {
-      url: 'https://example.com',
-      proxyType: 'OnPremise',
-      type: 'MAIL'
-    };
+      const input: Destination = {
+        url: 'https://example.com',
+        proxyType: 'OnPremise',
+        type: 'MAIL'
+      };
 
-    const expected: Destination = {
-      url: 'https://example.com',
-      proxyType: 'OnPremise',
-      type: 'MAIL',
-      proxyConfiguration: {
-        ...connectivitySocksProxyConfigMock,
-        ['proxy-authorization']: providerServiceToken
-      }
-    };
+      const expected: Destination = {
+        url: 'https://example.com',
+        proxyType: 'OnPremise',
+        type: 'MAIL',
+        proxyConfiguration: {
+          ...connectivitySocksProxyConfigMock,
+          ['proxy-authorization']: providerServiceToken
+        }
+      };
 
-    const withProxy = await addProxyConfigurationOnPrem(input);
-    expect(withProxy).toEqual(expected);
-  });
+      const withProxy = await addProxyConfigurationOnPrem(input);
+      expect(withProxy).toEqual(expected);
+    });
+  } )
 });

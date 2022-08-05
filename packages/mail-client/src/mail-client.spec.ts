@@ -10,7 +10,6 @@ describe('mail client', () => {
 
   const mockSocket = {
     socket: {
-      _readableState: {},
       end: jest.fn(),
       destroy: jest.fn()
     }

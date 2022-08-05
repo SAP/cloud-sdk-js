@@ -43,7 +43,7 @@ export async function addProxyConfigurationOnPrem(
   }
 
   const proxyConfiguration: ProxyConfiguration = {
-    ...proxyHostAndPort(),
+    ...httpProxyHostAndPort(),
     headers: {
       ...(await proxyHeaders(destination.authentication, jwt?.encoded))
     }
@@ -61,7 +61,7 @@ interface HostAndPort {
  * @internal
  * @returns Proxy host and port
  */
-export function proxyHostAndPort(): HostAndPort {
+export function httpProxyHostAndPort(): HostAndPort {
   const service = readConnectivityServiceBinding();
   return {
     host: service.credentials.onpremise_proxy_host,

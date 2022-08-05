@@ -146,7 +146,7 @@ describe('connectivity-service', () => {
     });
   });
 
-  describe('MAIL destination',() => {
+  describe('MAIL destination', () => {
     it('adds a proxy configuration containing at least the host, the port, and the "proxy-authorization"', async () => {
       mockServiceBindings();
       mockServiceToken();
@@ -170,5 +170,5 @@ describe('connectivity-service', () => {
       const withProxy = await addProxyConfigurationOnPrem(input);
       expect(withProxy).toEqual(expected);
     });
-  } )
+  });
 });

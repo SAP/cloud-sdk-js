@@ -1,3 +1,4 @@
+import { Socket } from 'net';
 import {
   Destination,
   DestinationOrFetchOptions,
@@ -21,7 +22,6 @@ import {
   customAuthRequestHandler,
   customAuthResponseHandler
 } from './socket-proxy';
-import { Socket } from "net";
 
 const logger = createLogger({
   package: 'mail-client',
@@ -87,9 +87,7 @@ function getCredentials(
   return { username, password };
 }
 
-async function createSocket(
-  mailDestination: MailDestination
-): Promise<Socket> {
+async function createSocket(mailDestination: MailDestination): Promise<Socket> {
   if (!mailDestination.proxyConfiguration) {
     throw Error(
       'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
@@ -203,10 +201,7 @@ async function sendMailWithNodemailer<T extends MailOptions>(
   return response;
 }
 
-function teardown(
-  transport: Transporter<SentMessageInfo>,
-  socket?: Socket
-) {
+function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
   transport.close();
   logger.debug('SMTP transport connection closed.');
   if (socket) {

@@ -1,6 +1,5 @@
 import { Readable } from 'stream';
 import { Url } from 'url';
-import { Socket } from 'net';
 import {
   AuthenticationType,
   DestinationProxyType,

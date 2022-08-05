@@ -43,7 +43,7 @@ import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
-} from './proxy-util';
+} from './http-proxy-util';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 

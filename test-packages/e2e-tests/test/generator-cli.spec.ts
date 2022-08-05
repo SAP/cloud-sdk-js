@@ -90,18 +90,44 @@ describe('generator-cli', () => {
     );
   }, 60000);
 
-  it('should just replace generate function itself not throughout cli()', () => {
+  it('[working]should just replace generate function itself not throughout cli()', () => {
 
     mock({
       root: {
-        inputDir: {},
+        inputDir: {'spec': path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')},
         outputDir: {}
       }
     });
     
     generate(createOptions({
-      inputDir: inputDir,
-      outputDir: outputDir
+      inputDir: 'root/inputDir',
+      outputDir: 'root/outputDir'
     }))
+
+    const generatorConfig = {
+      forceOverwrite: true,
+      generateJs: false,
+      useSwagger: false,
+      writeReadme: false,
+      clearOutputDir: true,
+      generateNpmrc: false,
+      generateTypedocJson: false,
+      generatePackageJson: false,
+      generateCSN: false,
+      sdkAfterVersionScript: false,
+      s4hanaCloud: false
+      /* optional:
+        serviceMapping: 'test/directory',
+        changelogFile: 'test/directory',
+        include: 'glob of files to include'
+      */
+    };
+    
+    // generate your project, you can also redefine options
+    generate({
+      ...generatorConfig,
+      inputDir,
+      outputDir
+    });
   });
 });

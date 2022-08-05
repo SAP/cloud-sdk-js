@@ -5,7 +5,9 @@ import mock from 'mock-fs';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 /**
  * use mock.load
+ * run command function withoud execals
  * no need to test whole cli, just test functions respectively
+ * 
  */
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(
@@ -83,4 +85,8 @@ describe('generator-cli', () => {
       /The option 'versionInPackageJson' is deprecated since v2.6.0./
     );
   }, 60000);
+
+  it('should ', () => {
+    
+  });
 });

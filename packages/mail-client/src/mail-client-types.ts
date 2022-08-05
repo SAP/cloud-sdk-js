@@ -254,15 +254,3 @@ export interface MailDestination {
    */
   password?: string;
 }
-
-interface ReadableState {
-  readableListening: boolean;
-}
-
-/**
- * Represent a Socket object used fon OnPrem proxy.
- * @internal
- */
-export interface SocksSocket extends Socket {
-  _readableState: ReadableState;
-}

@@ -15,13 +15,13 @@ import type { Options } from 'nodemailer/lib/smtp-pool';
 import {
   MailDestination,
   MailOptions,
-  MailResponse,
-  SocksSocket
+  MailResponse
 } from './mail-client-types';
 import {
   customAuthRequestHandler,
   customAuthResponseHandler
 } from './socket-proxy';
+import { Socket } from "net";
 
 const logger = createLogger({
   package: 'mail-client',
@@ -89,7 +89,7 @@ function getCredentials(
 
 async function createSocket(
   mailDestination: MailDestination
-): Promise<SocksSocket> {
+): Promise<Socket> {
   if (!mailDestination.proxyConfiguration) {
     throw Error(
       'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
@@ -117,14 +117,12 @@ async function createSocket(
   const socketConnection = await SocksClient.createConnection(
     connectionOptions
   );
-  const socksSocket = socketConnection.socket as SocksSocket;
-  socksSocket._readableState.readableListening = true;
-  return socksSocket;
+  return socketConnection.socket;
 }
 
 async function createTransport(
   mailDestination: MailDestination,
-  socket?: SocksSocket
+  socket?: Socket
 ): Promise<Transporter<SentMessageInfo>> {
   const baseOptions: Options = {
     pool: true,
@@ -177,7 +175,7 @@ async function sendMailWithNodemailer<T extends MailOptions>(
   mailDestination: MailDestination,
   ...mailOptions: T[]
 ): Promise<MailResponse[]> {
-  let socket: SocksSocket | undefined;
+  let socket: Socket | undefined;
   if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
   }
@@ -207,7 +205,7 @@ async function sendMailWithNodemailer<T extends MailOptions>(
 
 function teardown(
   transport: Transporter<SentMessageInfo>,
-  socket?: SocksSocket
+  socket?: Socket
 ) {
   transport.close();
   logger.debug('SMTP transport connection closed.');

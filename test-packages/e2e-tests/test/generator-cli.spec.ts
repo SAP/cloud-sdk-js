@@ -2,7 +2,10 @@ import * as path from 'path';
 import execa from 'execa';
 import * as fs from 'fs-extra';
 import mock from 'mock-fs';
+import { generate } from '../../../packages/generator/src/generator';
+import { createOptions } from '../../../packages/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
+
 /**
  * use mock.load
  * run command function withoud execals
@@ -31,6 +34,7 @@ describe('generator-cli', () => {
     try {
       await execa('npx', ['ts-node', pathToGenerator]);
     } catch (err) {
+      console.log(err.stderr)
       expect(err.stderr).toContain(
         'Missing required arguments: inputDir, outputDir'
       );
@@ -86,7 +90,18 @@ describe('generator-cli', () => {
     );
   }, 60000);
 
-  it('should ', () => {
+  it('should just replace generate function itself not throughout cli()', () => {
+
+    mock({
+      root: {
+        inputDir: {},
+        outputDir: {}
+      }
+    });
     
+    generate(createOptions({
+      inputDir: inputDir,
+      outputDir: outputDir
+    }))
   });
 });

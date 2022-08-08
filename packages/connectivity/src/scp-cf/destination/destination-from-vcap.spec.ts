@@ -46,6 +46,21 @@ describe('vcap-service-destination', () => {
     expect(getActualClientId(spy)).toBe('clientIdBusinessLogging');
   });
 
+  it('creates ad destination for the xsuaa service', async () => {
+    await expect(
+      destinationForServiceBinding('my-xsuaa', {
+        jwt: providerUserPayload
+      })
+    ).resolves.toEqual({
+      url: 'https://api.authentication.sap.hana.ondemand.com',
+      authentication: 'OAuth2ClientCredentials',
+      name: 'my-xsuaa',
+      authTokens: [expect.objectContaining({ value: expect.any(String) })]
+    });
+
+    expect(getActualClientId(spy)).toBe('clientIdXsUaa');
+  });
+
   it('creates a destination for the service manager service', async () => {
     await expect(
       destinationForServiceBinding('my-service-manager', {
@@ -281,6 +296,18 @@ const serviceBindings = {
         sm_url: 'https://service-manager.cfapps.sap.hana.ondemand.com',
         clientid: 'clientIdServiceManager',
         clientsecret: 'PASSWORD'
+      }
+    }
+  ],
+  xsuaa: [
+    {
+      label: 'xsuaa',
+      name: 'my-xsuaa',
+      tags: ['xsuaa'],
+      credentials: {
+        clientid: 'clientIdXsUaa',
+        clientsecret: 'PASSWORD',
+        apiurl: 'https://api.authentication.sap.hana.ondemand.com'
       }
     }
   ]

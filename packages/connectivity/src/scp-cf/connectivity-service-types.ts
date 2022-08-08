@@ -32,6 +32,11 @@ export interface ProxyConfiguration {
    * HTTP headers to be added to a request if tunneled through the proxy.
    */
   headers?: ProxyConfigurationHeaders;
+
+  /**
+   * A JWT for proxy authorization.
+   */
+  'proxy-authorization'?: string;
 }
 
 /**

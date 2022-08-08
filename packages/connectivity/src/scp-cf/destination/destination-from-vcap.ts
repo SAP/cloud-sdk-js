@@ -6,7 +6,7 @@ import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
-} from './proxy-util';
+} from './http-proxy-util';
 import { Destination } from './destination-service-types';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import { destinationCache, IsolationStrategy } from './destination-cache';

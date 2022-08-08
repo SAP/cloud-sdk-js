@@ -6,7 +6,7 @@ import {
   parseProxyEnv,
   ProxyStrategy,
   proxyStrategy
-} from './proxy-util';
+} from './http-proxy-util';
 import { Destination } from './destination-service-types';
 
 describe('proxy-util', () => {

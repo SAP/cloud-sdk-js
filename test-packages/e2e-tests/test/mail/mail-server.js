@@ -23,7 +23,7 @@ const server = new SMTPServer({
           resolve('test'),
           'mail',
           'test-output',
-          `${session.user}-${session.id}.txt`
+          `${session.user}-${session.id}-${session.transaction}.txt`
         )
       )
     );

@@ -5,6 +5,7 @@ import mock from 'mock-fs';
 import { generate } from '../../../packages/generator/src/generator';
 import { createOptions } from '../../../packages/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
+import { log } from 'console';
 
 /**
  * use mock.load
@@ -89,45 +90,57 @@ describe('generator-cli', () => {
       /The option 'versionInPackageJson' is deprecated since v2.6.0./
     );
   }, 60000);
+});
 
-  it('[working]should just replace generate function itself not throughout cli()', () => {
+describe('improving generator-cli test(give better name letter)', () => {
+  const pathTestResources = path.resolve(__dirname, '../../../test-resources');
+  const pathTestService = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
+  const outPutPath = 'mockOutput';
+  const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
 
+  afterEach(() => {
+    mock.restore();
+  });
+  it('should fail if mandatory parameters are not there', async () => {
     mock({
-      root: {
-        inputDir: {'spec': path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')},
-        outputDir: {}
-      }
+      [outPutPath]: {},
+      [pathTestResources]: mock.load(pathTestResources),
+      [rootNodeModules]: mock.load(rootNodeModules)
     });
-    
-    generate(createOptions({
-      inputDir: 'root/inputDir',
-      outputDir: 'root/outputDir'
-    }))
 
-    const generatorConfig = {
-      forceOverwrite: true,
-      generateJs: false,
-      useSwagger: false,
-      writeReadme: false,
-      clearOutputDir: true,
-      generateNpmrc: false,
-      generateTypedocJson: false,
-      generatePackageJson: false,
-      generateCSN: false,
-      sdkAfterVersionScript: false,
-      s4hanaCloud: false
-      /* optional:
-        serviceMapping: 'test/directory',
-        changelogFile: 'test/directory',
-        include: 'glob of files to include'
-      */
-    };
-    
-    // generate your project, you can also redefine options
-    generate({
-      ...generatorConfig,
-      inputDir,
-      outputDir
+    await generate(
+      createOptions({
+        // inputDir: pathTestService,
+        // outputDir: outPutPath,
+        // forceOverwrite: true,
+        // include: '../../../*.md'
+      })
+    );
+  });
+  it('should generate VDM if all arguments are there ', async () => {
+    mock({
+      [outPutPath]: {},
+      [pathTestResources]: mock.load(pathTestResources),
+      [rootNodeModules]: mock.load(rootNodeModules)
     });
+
+    await generate(
+      createOptions({
+        inputDir: pathTestService,
+        outputDir: outPutPath
+      })
+    );
+    const services = fs.readdirSync(outPutPath);
+    expect(services.length).toBeGreaterThan(0);
+    const entities = fs.readdirSync(path.resolve(outPutPath, services[0]));
+    expect(entities).toContain('TestEntity.ts');
+    // expect(entities).toContain('package.json');
+    // console.log(entities);
+  });
+  it('should generate VDM if there is a valid config file', async() => {
+    
+  });
+  it('should set version when versionInPackageJson option is used', async () => {
+    
   });
 });

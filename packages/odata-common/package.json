@@ -40,7 +40,7 @@
     "@sap-cloud-sdk/connectivity": "^2.6.0",
     "@sap-cloud-sdk/http-client": "^2.6.0",
     "@sap-cloud-sdk/util": "^2.6.0",
-    "bignumber.js": "^9.0.0",
+    "bignumber.js": "^9.1.0",
     "moment": "^2.29.4",
     "uuid": "^8.2.0",
     "voca": "^1.4.0"

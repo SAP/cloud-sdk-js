@@ -21,6 +21,12 @@ describe('generator-cli', () => {
   const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
   const outputDir = path.resolve(__dirname, 'generator-test-output');
 
+  const pathTestResources = path.resolve(__dirname, '../../../test-resources');
+  const pathTestService = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
+  const outPutPath = 'mockOutput';
+  const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
+  const generatoeCommon = path.resolve(__dirname, '../../../packages/generator-common');
+
   beforeEach(() => {
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
@@ -29,6 +35,7 @@ describe('generator-cli', () => {
 
   afterEach(() => {
     fs.removeSync(outputDir);
+    mock.restore();
   });
 
   it('should fail if mandatory parameters are not there', async () => {
@@ -43,20 +50,28 @@ describe('generator-cli', () => {
   }, 60000);
 
   it('should generate VDM if all arguments are there', async () => {
-    await execa('npx', [
-      'ts-node',
-      pathToGenerator,
-      '-i',
-      inputDir,
-      '-o',
-      outputDir
-    ]);
-    const services = fs.readdirSync(outputDir);
+    mock({
+      [outPutPath]: {},
+      [pathTestResources]: mock.load(pathTestResources),
+      [rootNodeModules]: mock.load(rootNodeModules),
+      [generatoeCommon]: mock.load(generatoeCommon)
+    });
+
+    await generate(
+      createOptions({
+        inputDir: pathTestService,
+        outputDir: outPutPath,
+        generateJs: true,
+        generatePackageJson: true,
+      })
+    );
+    const services = fs.readdirSync(outPutPath);
     expect(services.length).toBeGreaterThan(0);
-    const entities = fs.readdirSync(path.resolve(outputDir, services[0]));
+    const entities = fs.readdirSync(path.resolve(outPutPath, services[0]));
     expect(entities).toContain('TestEntity.ts');
+    expect(entities).toContain('TestEntity.js');
     expect(entities).toContain('package.json');
-  }, 60000);
+  });
 
   it('should generate VDM if there is a valid config file', async () => {
     await execa('npx', [
@@ -93,49 +108,8 @@ describe('generator-cli', () => {
 });
 
 describe('improving generator-cli test(give better name letter)', () => {
-  const pathTestResources = path.resolve(__dirname, '../../../test-resources');
-  const pathTestService = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
-  const outPutPath = 'mockOutput';
-  const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
-
   afterEach(() => {
     mock.restore();
-  });
-  it('should fail if mandatory parameters are not there', async () => {
-    mock({
-      [outPutPath]: {},
-      [pathTestResources]: mock.load(pathTestResources),
-      [rootNodeModules]: mock.load(rootNodeModules)
-    });
-
-    await generate(
-      createOptions({
-        // inputDir: pathTestService,
-        // outputDir: outPutPath,
-        // forceOverwrite: true,
-        // include: '../../../*.md'
-      })
-    );
-  });
-  it('should generate VDM if all arguments are there ', async () => {
-    mock({
-      [outPutPath]: {},
-      [pathTestResources]: mock.load(pathTestResources),
-      [rootNodeModules]: mock.load(rootNodeModules)
-    });
-
-    await generate(
-      createOptions({
-        inputDir: pathTestService,
-        outputDir: outPutPath
-      })
-    );
-    const services = fs.readdirSync(outPutPath);
-    expect(services.length).toBeGreaterThan(0);
-    const entities = fs.readdirSync(path.resolve(outPutPath, services[0]));
-    expect(entities).toContain('TestEntity.ts');
-    // expect(entities).toContain('package.json');
-    // console.log(entities);
   });
   it('should generate VDM if there is a valid config file', async() => {
     

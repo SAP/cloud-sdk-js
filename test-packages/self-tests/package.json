@@ -14,7 +14,7 @@
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
   },
   "devDependencies": {
-    "@definitelytyped/dtslint": "^0.0.115",
+    "@definitelytyped/dtslint": "^0.0.121",
     "madge": "^5.0.0"
   }
 }

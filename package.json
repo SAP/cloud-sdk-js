@@ -93,7 +93,7 @@
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jest": "^26.8.1",
+    "eslint-plugin-jest": "^26.8.2",
     "eslint-plugin-jsdoc": "^39.3.4",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-unused-imports": "^2.0.0",

@@ -1,4 +1,5 @@
-import { PathLike, readFileSync } from 'fs';
+import { PathLike } from 'fs';
+import { readFileSync } from 'fs-extra';
 import { resolve, dirname } from 'path';
 import { Options } from 'yargs';
 import { createLogger } from '@sap-cloud-sdk/util';

@@ -2,25 +2,20 @@ import * as path from 'path';
 import execa from 'execa';
 import * as fs from 'fs-extra';
 import mock from 'mock-fs';
-import { readFileSync } from 'fs-extra';
 import { generate } from '../../../packages/generator/src/generator';
+import { createOptionsFromConfig } from '../../../packages/generator/src/generator-options';
 import { createOptions } from '../../../packages/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
-// import { parseCmdArgs } from "../../../packages/generator/src/generator-cli";
-import { createOptionsFromConfig } from '../../../packages/generator/src/generator-cli';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(
     __dirname,
     '../../../packages/generator/src/generator-cli.ts'
   );
-  // to be removed
+
   const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
   const outputDir = path.resolve(__dirname, 'generator-test-output');
-
-  const pathTestResources = path.resolve(__dirname, '../../../test-resources');
-  const pathTestService = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
-  const outPutPath = 'mockOutput';
   const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
   const generatorCommon = path.resolve(
     __dirname,
@@ -31,14 +26,11 @@ describe('generator-cli', () => {
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
     }
-    jest.resetModules();
-    delete require.cache[require.resolve('yargs')];
   });
 
   afterEach(() => {
     fs.removeSync(outputDir);
     mock.restore();
-    jest.resetAllMocks();
   });
   it('should fail if mandatory parameters are not there', async () => {
     try {
@@ -51,23 +43,22 @@ describe('generator-cli', () => {
   }, 60000);
   it('should generate VDM if all arguments are there', async () => {
     mock({
-      [outPutPath]: {},
-      [pathTestResources]: mock.load(pathTestResources),
-      [rootNodeModules]: mock.load(rootNodeModules),
-      [generatorCommon]: mock.load(generatorCommon)
+      [inputDir]: mock.load(inputDir),
+      [outputDir]: mock.load(outputDir),
+      [generatorCommon]: mock.load(generatorCommon),
+      [rootNodeModules]: mock.load(rootNodeModules)
     });
-
     await generate(
       createOptions({
-        inputDir: pathTestService,
-        outputDir: outPutPath,
+        inputDir,
+        outputDir,
         generateJs: true,
         generatePackageJson: true
       })
     );
-    const services = fs.readdirSync(outPutPath);
+    const services = fs.readdirSync(outputDir);
     expect(services.length).toBeGreaterThan(0);
-    const entities = fs.readdirSync(path.resolve(outPutPath, services[0]));
+    const entities = fs.readdirSync(path.resolve(outputDir, services[0]));
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('TestEntity.js');
     expect(entities).toContain('package.json');
@@ -75,45 +66,91 @@ describe('generator-cli', () => {
   it('should create options from a config file', () => {
     const pathToConfig = path.resolve(__dirname, 'generator.config.json');
     mock({ [pathToConfig]: mock.load(pathToConfig) });
-
-    // createOptionsFromConfig() calls whole cli functionality then returns error even the only the function is exported and imported.
-    // and this line affects all other tests results. when this file has createOptionsFromConfig(), all tests returns same result(error).
     expect(createOptionsFromConfig(pathToConfig)).toEqual({
-      inputDir:
-        '/Users/I346417/projects/sap-cloud-sdk-js/282-improve-generator-cli-test/test-resources/odata-service-specs/v2/API_TEST_SRV',
-      outputDir:
-        '/Users/I346417/projects/sap-cloud-sdk-js/282-improve-generator-cli-test/test-packages/e2e-tests/test/generator-test-output'
+      inputDir,
+      outputDir
     });
   });
-  // this test containing the same codes createOptionsFromConfig() defined locally works fine only when createOptionsFromConfig() is commented out
-  //please comment out the test above especially createOptionsFromConfig() to test below
-  it('should create options from a config locally', () => {
+  it('should generate VDM if there is a valid config file', async () => {
     const pathToConfig = path.resolve(__dirname, 'generator.config.json');
-    mock({ [pathToConfig]: mock.load(pathToConfig) });
-
-    expect(createOptionsFromConfigLocal(pathToConfig)).toEqual({
-      inputDir:
-        '/Users/I346417/projects/sap-cloud-sdk-js/282-improve-generator-cli-test/test-resources/odata-service-specs/v2/API_TEST_SRV',
-      outputDir:
-        '/Users/I346417/projects/sap-cloud-sdk-js/282-improve-generator-cli-test/test-packages/e2e-tests/test/generator-test-output'
+    const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
+      createOptionsFromConfig(pathToConfig);
+    mock({
+      [inputDirFromConfig]: mock.load(inputDirFromConfig),
+      [outputDirFromConfig]: mock.load(outputDirFromConfig),
+      [generatorCommon]: mock.load(generatorCommon),
+      [pathToConfig]: mock.load(pathToConfig),
+      [rootNodeModules]: mock.load(rootNodeModules)
     });
-
-    function createOptionsFromConfigLocal(configPath: string) {
-      const file = readFileSync(configPath, 'utf-8');
-      const pathLikeKeys = ['inputDir', 'outputDir', 'serviceMapping'];
-      return pathLikeKeys.reduce(
-        (json, pathLikeKey) =>
-          typeof json[pathLikeKey] === 'undefined'
-            ? json
-            : {
-                ...json,
-                [pathLikeKey]: path.resolve(
-                  path.dirname(configPath),
-                  json[pathLikeKey]
-                )
-              },
-        JSON.parse(file)
-      );
-    }
+    await generate(
+      createOptions({
+        inputDir: inputDirFromConfig,
+        outputDir: outputDirFromConfig,
+        generateJs: true,
+        generatePackageJson: true
+      })
+    );
+    const services = fs.readdirSync(outputDirFromConfig);
+    expect(services.length).toBeGreaterThan(0);
+    const entities = fs.readdirSync(
+      path.resolve(outputDirFromConfig, services[0])
+    );
+    expect(entities).toContain('TestEntity.ts');
+    expect(entities).toContain('TestEntity.js');
+    expect(entities).toContain('package.json');
   });
+  it('should set version when versionInPackageJson option is used', async () => {
+    const logger = createLogger('generator-options');
+    const warnSpy = jest.spyOn(logger, 'warn');
+
+    const pathToConfig = path.resolve(__dirname, 'generator.config.json');
+    const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
+      createOptionsFromConfig(pathToConfig);
+    mock({
+      [inputDirFromConfig]: mock.load(inputDirFromConfig),
+      [outputDirFromConfig]: mock.load(outputDirFromConfig),
+      [generatorCommon]: mock.load(generatorCommon),
+      [pathToConfig]: mock.load(pathToConfig),
+      [rootNodeModules]: mock.load(rootNodeModules)
+    });
+    await generate(
+      createOptions({
+        inputDir: inputDirFromConfig,
+        outputDir: outputDirFromConfig,
+        generateJs: true,
+        generatePackageJson: true,
+        versionInPackageJson: '42.23'
+      })
+    );
+    const services = fs.readdirSync(outputDirFromConfig);
+    const actualPackageJson = JSON.parse(
+      fs
+        .readFileSync(
+          path.resolve(outputDirFromConfig, services[0], 'package.json')
+        )
+        .toString()
+    );
+    expect(actualPackageJson.version).toEqual('42.23');
+    //logger.warn never called
+    expect(warnSpy).toHaveBeenCalled();
+
+  });
+  it('[Original one]set version when versionInPackageJson option is used', async () => {
+    const process = await execa('npx', [
+      'ts-node',
+      pathToGenerator,
+      '-c',
+      path.resolve(__dirname, 'generator.config.json'),
+      '--versionInPackageJson=42.23'
+    ]);
+
+    const actualPackageJson = JSON.parse(
+      fs.readFileSync(`${outputDir}/test-service/package.json`).toString()
+    );
+    expect(actualPackageJson.version).toEqual('42.23');
+
+    expect(process.stdout).toMatch(
+      /The option 'versionInPackageJson' is deprecated since v2.6.0./
+    );
+  }, 60000);
 });

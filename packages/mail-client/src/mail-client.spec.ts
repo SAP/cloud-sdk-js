@@ -42,6 +42,7 @@ describe('mail client', () => {
       to: 'to1@example.com',
       subject: 'subject',
       text: 'txt',
+      html: 'html',
       attachments: [{ content: 'content' }]
     };
     const mailOptions2: MailOptions = {

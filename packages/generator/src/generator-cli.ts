@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 
-import { resolve, dirname } from 'path';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { readFileSync } from 'fs-extra';
 import yargs from 'yargs';
 import { generate } from './generator';
-import { GeneratorOptions, generatorOptionsCli } from './generator-options';
+import { GeneratorOptions, generatorOptionsCli, createOptionsFromConfig } from './generator-options';
 
 const logger = createLogger({
   package: 'generator',
@@ -39,8 +37,7 @@ export function parseCmdArgs(): GeneratorOptions {
       'Instead of specifying the options on the command line, you can also provide a path to single .json file holding these options. ' +
       'The file must be a valid .json file where the keys correspond to the command line flags without dashes. Paths will be interpreted relative to the config file.',
       configPath => {
-        const createdOptions = createOptionsFromConfig(configPath);
-        return createdOptions
+        return createOptionsFromConfig(configPath);
       }
     )
     .alias('config', 'c')
@@ -48,19 +45,4 @@ export function parseCmdArgs(): GeneratorOptions {
     .alias('help', 'h')
     .strict(true)
     .recommendCommands().argv as unknown as GeneratorOptions;
-}
-
-export function createOptionsFromConfig(configPath: string) {
-  const file = readFileSync(configPath, 'utf-8');
-  const pathLikeKeys = ['inputDir', 'outputDir', 'serviceMapping'];
-  return pathLikeKeys.reduce(
-    (json, pathLikeKey) =>
-      typeof json[pathLikeKey] === 'undefined'
-        ? json
-        : {
-          ...json,
-          [pathLikeKey]: resolve(dirname(configPath), json[pathLikeKey])
-        },
-    JSON.parse(file)
-  );
 }

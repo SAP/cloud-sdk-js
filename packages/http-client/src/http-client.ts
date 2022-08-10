@@ -10,6 +10,7 @@ import {
 import axios from 'axios';
 import {
   buildHeadersForDestination,
+  decodeJwt,
   Destination,
   DestinationOrFetchOptions,
   getAgentConfig,
@@ -25,6 +26,7 @@ import {
   getAuthHeader,
   ResilienceMiddlewareOptions
 } from '@sap-cloud-sdk/connectivity/internal';
+import { getResilienceMiddlewareManagerByIsolationStrategy } from '@sap-cloud-sdk/connectivity/src/scp-cf/resilience/resilience-middleware-manager';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
@@ -526,8 +528,12 @@ async function getCsrfHeaders(
     return csrfHeaders;
   }
 
+  const jwt = destination.jwt ? decodeJwt(destination.jwt) : undefined;
+  const resilienceMiddlewareManager =
+    getResilienceMiddlewareManagerByIsolationStrategy(jwt);
+
   const resilienceMiddlewareOptions: ResilienceMiddlewareOptions = {
-    id: 'btpService-getCsrfHeaders',
+    id: 'btpService-getCsrfHeaders-',
     timeout: request.timeout
       ? () => request.timeout as number
       : defaultResilienceOptions.timeout,
@@ -545,7 +551,8 @@ async function getCsrfHeaders(
 
   return callWithResilience(
     () => buildCsrfHeaders(destination, requestConfig),
-    { resilience: resilienceMiddlewareOptions }
+    { resilience: resilienceMiddlewareOptions },
+    resilienceMiddlewareManager
   );
 }
 

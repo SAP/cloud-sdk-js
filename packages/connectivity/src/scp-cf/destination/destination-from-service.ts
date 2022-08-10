@@ -18,6 +18,7 @@ import { isIdenticalTenant } from '../tenant';
 import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { getDefaultIsolationStrategy } from '../isolation-strategy';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -35,10 +36,7 @@ import {
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
-import {
-  destinationCache,
-  getDefaultIsolationStrategy
-} from './destination-cache';
+import { destinationCache } from './destination-cache';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,

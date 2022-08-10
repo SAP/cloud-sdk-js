@@ -27,7 +27,7 @@ import {
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import * as jwt from '../jwt';
 import { defaultResilienceOptions } from '../resilience';
-import { resilienceMiddlewareManager } from '../resilience/resilience-middleware-manager';
+import { resetResilienceMiddlewareManager } from '../resilience/resilience-middleware-manager';
 import { getDestination } from './destination-accessor';
 
 const { wrapJwtInHeader } = jwt;
@@ -38,7 +38,7 @@ describe('Failure cases', () => {
   });
 
   afterEach(() => {
-    resilienceMiddlewareManager.clear();
+    resetResilienceMiddlewareManager();
   });
 
   it('fails if no destination service is bound', async () => {

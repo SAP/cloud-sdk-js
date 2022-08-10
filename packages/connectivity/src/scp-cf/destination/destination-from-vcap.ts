@@ -2,6 +2,7 @@ import { createLogger, flatten } from '@sap-cloud-sdk/util';
 import { getVcapService } from '../environment-accessor';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt } from '../jwt';
+import { IsolationStrategy } from '../isolation-strategy';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -9,7 +10,7 @@ import {
 } from './proxy-util';
 import { Destination } from './destination-service-types';
 import type { DestinationFetchOptions } from './destination-accessor-types';
-import { destinationCache, IsolationStrategy } from './destination-cache';
+import { destinationCache } from './destination-cache';
 import { decodedJwtOrZid } from './destination-from-registration';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
 

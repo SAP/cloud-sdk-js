@@ -23,7 +23,7 @@ import {
   defaultResilienceOptions,
   ResilienceMiddlewareOptions
 } from './resilience';
-import { resilienceMiddlewareManager } from './resilience/resilience-middleware-manager';
+import { resetResilienceMiddlewareManager } from './resilience/resilience-middleware-manager';
 import { serviceToken } from './token-accessor';
 
 describe('token accessor', () => {
@@ -36,7 +36,7 @@ describe('token accessor', () => {
       nock.cleanAll();
       clientCredentialsTokenCache.clear();
       jest.restoreAllMocks();
-      resilienceMiddlewareManager.clear();
+      resetResilienceMiddlewareManager();
     });
 
     it('uses the provider tenant if no JWT is provided', async () => {

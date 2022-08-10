@@ -1,14 +1,13 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { decodeJwt } from '../jwt';
 import { getXsuaaServiceCredentials } from '../environment-accessor';
+import {
+  IsolationStrategy,
+  getDefaultIsolationStrategy
+} from '../isolation-strategy';
 import { Destination, DestinationAuthToken } from './destination-service-types';
 import { DestinationFetchOptions } from './destination-accessor-types';
-import {
-  DefaultDestinationCache,
-  DestinationCache,
-  getDefaultIsolationStrategy,
-  IsolationStrategy
-} from './destination-cache';
+import { DefaultDestinationCache, DestinationCache } from './destination-cache';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,

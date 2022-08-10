@@ -2,7 +2,7 @@ import { createLogger, first } from '@sap-cloud-sdk/util';
 import { Cache, CacheEntry } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
-import { JwtPayload } from '../jsonwebtoken-type';
+import { IsolationStrategy } from '../isolation-strategy';
 import { Destination } from './destination-service-types';
 import { DestinationsByType } from './destination-accessor-types';
 
@@ -10,15 +10,6 @@ const logger = createLogger({
   package: 'connectivity',
   messageContext: 'destination-cache'
 });
-
-/**
- * Enumerator that selects the isolation type of destination in cache.
- * The used isolation strategy is either `Tenant` or `Tenant_User` because we want to get results for subaccount and provider tenants which rules out no-isolation or user isolation.
- */
-export enum IsolationStrategy {
-  Tenant = 'Tenant',
-  Tenant_User = 'TenantUser'
-}
 
 /**
  * Interface to implement custom destination caching.
@@ -218,16 +209,3 @@ export function setDestinationCache(cache: DestinationCacheInterface): void {
  * @internal
  */
 export let destinationCache: DestinationCacheType = DestinationCache();
-/**
- * Determin the default Isolation strategy if not given as option.
- * @param jwt - JWT to determine the default isolation strategy
- * @returns The isolation strategy based on the JWT. If no JWT is given it defaults to Tenant isolation
- * @internal
- */
-export function getDefaultIsolationStrategy(
-  jwt: JwtPayload | undefined
-): IsolationStrategy {
-  return jwt && userId(jwt)
-    ? IsolationStrategy.Tenant_User
-    : IsolationStrategy.Tenant;
-}

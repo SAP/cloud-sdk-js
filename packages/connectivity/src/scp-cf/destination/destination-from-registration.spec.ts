@@ -9,6 +9,7 @@ import {
   unmockDestinationsEnv,
   xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util';
+import { IsolationStrategy } from '../isolation-strategy';
 import {
   DestinationWithName,
   registerDestination,
@@ -16,7 +17,6 @@ import {
   searchRegisteredDestination
 } from './destination-from-registration';
 import { getDestination } from './destination-accessor';
-import { IsolationStrategy } from './destination-cache';
 
 const testDestination: DestinationWithName = {
   name: 'RegisteredDestination',

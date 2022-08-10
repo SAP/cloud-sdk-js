@@ -10,6 +10,7 @@ import {
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
 import { callWithResilience } from './resilience/resilience';
+import { getResilienceMiddlewareManagerByIsolationStrategy } from './resilience/resilience-middleware-manager';
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
@@ -62,9 +63,14 @@ export async function getClientCredentialsToken(
     options?.enableCircuitBreaker ||
     options?.timeout
   ) {
+    const jwt = typeof userJwt === 'string' ? decodeJwt(userJwt) : userJwt;
+    const resilienceMiddlewareManager =
+      getResilienceMiddlewareManagerByIsolationStrategy(jwt);
+
     return callWithResilience(
       () => getClientCredentialsToken(service, userJwt),
-      options
+      options,
+      resilienceMiddlewareManager
     );
   }
 
@@ -106,7 +112,14 @@ export function getUserToken(
     options?.enableCircuitBreaker ||
     options?.timeout
   ) {
-    return callWithResilience(() => getUserToken(service, userJwt), options);
+    const jwt = typeof userJwt === 'string' ? decodeJwt(userJwt) : userJwt;
+    const resilienceMiddlewareManager =
+      getResilienceMiddlewareManagerByIsolationStrategy(jwt);
+    return callWithResilience(
+      () => getUserToken(service, userJwt),
+      options,
+      resilienceMiddlewareManager
+    );
   }
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 

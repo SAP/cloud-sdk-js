@@ -1,5 +1,8 @@
 import { createCircuitBreaker } from './circuit-breaker';
-import { resilienceMiddlewareManager } from './resilience-middleware-manager';
+import {
+  getResilienceMiddlewareManager,
+  ResilienceMiddlewareManager
+} from './resilience-middleware-manager';
 import {
   defaultResilienceOptions,
   Middleware,
@@ -138,15 +141,19 @@ export function createResilienceMiddleware<T>(
 /**
  * TODO: Add JSDoc later.
  * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
+ * @param resilienceMiddlewareManager - {@link ResilienceMiddlewareManager}.
  * @returns TODO: Add JSDoc later.
  */
 export function resilience<T>(
-  resilienceMiddlewareOptions: ResilienceMiddlewareOptions
+  resilienceMiddlewareOptions: ResilienceMiddlewareOptions,
+  resilienceMiddlewareManager?: ResilienceMiddlewareManager
 ): Middleware<T> {
   const { id } = resilienceMiddlewareOptions;
-  let middleware = resilienceMiddlewareManager.get<T>(id);
+  const manager =
+    resilienceMiddlewareManager ?? getResilienceMiddlewareManager('default')!;
+  let middleware = manager.get<T>(id);
   if (middleware) {
-    if (resilienceMiddlewareManager.verify(resilienceMiddlewareOptions)) {
+    if (manager.verify(resilienceMiddlewareOptions)) {
       // id matches the options
       return middleware;
     }
@@ -155,10 +162,7 @@ export function resilience<T>(
     );
   } else {
     middleware = createResilienceMiddleware<T>(resilienceMiddlewareOptions);
-    resilienceMiddlewareManager.setWithOptions<T>(
-      resilienceMiddlewareOptions,
-      middleware
-    );
+    manager.setWithOptions<T>(resilienceMiddlewareOptions, middleware);
     return middleware;
   }
 }
@@ -167,11 +171,13 @@ export function resilience<T>(
  * TODO: Add JSDoc later.
  * @param fn - TODO: Add JSDoc later.
  * @param options - TODO: Add JSDoc later.
+ * @param resilienceMiddlewareManager - {@link ResilienceMiddlewareManager}.
  * @returns TODO: Add JSDoc later.
  */
 export function callWithResilience<T>(
   fn: RequestHandler<T>,
-  options: ResilienceOptions & { resilience?: ResilienceMiddlewareOptions }
+  options: ResilienceOptions & { resilience?: ResilienceMiddlewareOptions },
+  resilienceMiddlewareManager?: ResilienceMiddlewareManager
 ): Promise<T> {
   const timeout =
     options.resilience?.timeout ||
@@ -183,11 +189,14 @@ export function callWithResilience<T>(
     (options.enableCircuitBreaker
       ? defaultResilienceOptions.circuitBreaker
       : () => false as const);
-  const resilienceMiddleware = resilience<T>({
-    id: options.resilience?.id ?? 'btpService-' + fn.name,
-    timeout,
-    circuitBreaker
-  });
+  const resilienceMiddleware = resilience<T>(
+    {
+      id: options.resilience?.id ?? 'btpService-' + fn.name,
+      timeout,
+      circuitBreaker
+    },
+    resilienceMiddlewareManager
+  );
 
   return resilienceMiddleware({
     fn,

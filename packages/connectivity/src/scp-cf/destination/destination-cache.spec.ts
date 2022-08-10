@@ -35,6 +35,7 @@ import {
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { signedJwt } from '../../../../../test-resources/test/test-util';
 import { TestCache } from '../../../../../test-resources/test/test-util/test-cache';
+import { IsolationStrategy } from '../isolation-strategy';
 import { destinationServiceCache } from './destination-service-cache';
 import { getDestination } from './destination-accessor';
 import {
@@ -45,8 +46,7 @@ import {
 import {
   destinationCache,
   setDestinationCache,
-  getDestinationCacheKey,
-  IsolationStrategy
+  getDestinationCacheKey
 } from './destination-cache';
 import {
   AuthenticationType,

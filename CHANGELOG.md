@@ -28,6 +28,22 @@
 
 -
 
+# 2.7.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.7.0
+
+## New Functionalities
+
+- [openapi-generator] Support globs in the `input` option. (3f70b0c9)
+
+## Improvements
+
+- [connectivity] Support consumption of the XSUAA API via destinations. (010a46fa)
+
+## Fixed Issues
+
+- [connectivity] Fix a breaking change of `serviceToken` introduced in 2.0, so it accepts `XsuaaServiceCredentials` again as an option. (3bff42e1)
+
 # 2.6.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.6.0

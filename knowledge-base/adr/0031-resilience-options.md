@@ -95,11 +95,11 @@ The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the de
 We will introduce a context passed to the resilience implementation to give information on the context: 
 
 ```ts
-type RequestContext ={
-    url:string,
-    headers?: Record<string,string>
-    jwt?:string
-    method: 'GET'| 'POST' | 'DELTE'
+type RequestContext = {
+    url: string,
+    headers?: Record<string,string>,
+    jwt?: string,
+    method: 'GET' | 'POST' | 'DELETE',
     ...
 }
 ```

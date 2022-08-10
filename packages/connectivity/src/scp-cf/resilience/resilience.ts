@@ -79,7 +79,7 @@ export function createCircuitBreakerMiddleware<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
 ): Middleware<T> {
   const { circuitBreaker } = resilienceMiddlewareOptions;
-  const timeoutMiddlewareFn = (
+  const circuitBreakerMiddlewareFn = (
     middlewareInOutOptions: MiddlewareInOutOptions<T>
   ) => {
     const circuitBreakerOptions = circuitBreaker();
@@ -94,7 +94,7 @@ export function createCircuitBreakerMiddleware<T>(
   };
 
   return (middlewareInOutOptions: MiddlewareInOutOptions<T>) => ({
-    fn: () => timeoutMiddlewareFn(middlewareInOutOptions),
+    fn: () => circuitBreakerMiddlewareFn(middlewareInOutOptions),
     exitChain: middlewareInOutOptions.exitChain
   });
 }
@@ -150,9 +150,9 @@ export function createResilienceMiddleware<T>(
  * @param id - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
  */
-export function getResilienceMiddleware(
+export function getResilienceMiddleware<T>(
   id: string
-): Middleware<any> | undefined {
+): Middleware<T> | undefined {
   return resilienceMiddlewareMap.get(id)?.middleware;
 }
 
@@ -161,9 +161,9 @@ export function getResilienceMiddleware(
  * @param resilienceMiddlewareOptions - TODO: Add JSDoc later.
  * @returns TODO: Add JSDoc later.
  */
-export function resilience(
+export function resilience<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
-): Middleware<any> {
+): Middleware<T> {
   const { id } = resilienceMiddlewareOptions;
   const middlewareOptionsPair = resilienceMiddlewareMap.get(
     resilienceMiddlewareOptions.id
@@ -181,7 +181,7 @@ export function resilience(
     }
     return middleware;
   }
-  return createResilienceMiddleware(resilienceMiddlewareOptions);
+  return createResilienceMiddleware<T>(resilienceMiddlewareOptions);
 }
 
 /**
@@ -220,7 +220,7 @@ export function callWithResilience<T>(
     (options.enableCircuitBreaker
       ? defaultResilienceOptions.circuitBreaker
       : () => false as const);
-  const resilienceMiddleware = resilience({
+  const resilienceMiddleware = resilience<T>({
     id: options.resilience?.id ?? 'btpService-' + fn.name,
     timeout,
     circuitBreaker

@@ -5,19 +5,19 @@ import {
 
 /**
  * Options to configure resilience when fetching destinations.
- * @deprecated
+ * @deprecated Use {@link ResilienceMiddlewareOptions} instead.
  */
 export interface ResilienceOptions {
   /**
    * A boolean value that indicates whether to execute request to SCP-CF services using circuit breaker.
    * ResilienceOptions.
-   * @deprecated
+   * @deprecated Use {@link ResilienceMiddlewareOptions.circuitBreaker} instead.
    */
   enableCircuitBreaker?: boolean;
 
   /**
    * Timeout in milliseconds to retrieve the destination.
-   * @deprecated
+   * @deprecated Use {@link ResilienceMiddlewareOptions.timeout} instead.
    */
   timeout?: number;
 }

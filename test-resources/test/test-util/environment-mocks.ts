@@ -74,6 +74,12 @@ export const connectivityProxyConfigMock: ProxyConfiguration = {
   protocol: Protocol.HTTP
 };
 
+export const connectivitySocksProxyConfigMock: ProxyConfiguration = {
+  host: 'proxy.example.com',
+  port: 54321,
+  protocol: Protocol.SOCKS
+};
+
 export const connectivityBindingMock: Service = {
   plan: 'application',
   label: 'connectivity',
@@ -83,7 +89,8 @@ export const connectivityBindingMock: Service = {
     clientid: 'clientid',
     clientsecret: 'clientsecret',
     onpremise_proxy_host: connectivityProxyConfigMock.host,
-    onpremise_proxy_port: connectivityProxyConfigMock.port
+    onpremise_proxy_port: connectivityProxyConfigMock.port,
+    onpremise_socks5_proxy_port: connectivitySocksProxyConfigMock.port,
   }
 };
 

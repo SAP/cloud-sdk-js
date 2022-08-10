@@ -13,7 +13,7 @@ import {
   proxyAgent,
   proxyStrategy,
   ProxyStrategy
-} from '../scp-cf/destination/proxy-util';
+} from '../scp-cf/destination';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({

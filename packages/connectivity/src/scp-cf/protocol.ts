@@ -5,7 +5,8 @@
  */
 export enum Protocol {
   HTTP = 'http',
-  HTTPS = 'https'
+  HTTPS = 'https',
+  SOCKS = 'socks'
 }
 /**
  * @internal

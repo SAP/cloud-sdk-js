@@ -2,7 +2,8 @@ import { Readable } from 'stream';
 import { Url } from 'url';
 import {
   AuthenticationType,
-  DestinationProxyType
+  DestinationProxyType,
+  ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
 /**
  * Represents an e-mail address.
@@ -232,6 +233,10 @@ export interface MailDestination {
    * Based on the additional destination property 'mail.password'.
    */
   port?: number;
+  /**
+   * ProxyConfiguration for on-premise connectivity. Is present if proxyType of the destination equals "OnPremise".
+   */
+  proxyConfiguration?: ProxyConfiguration;
   /**
    * Sender info, e.g. e-mail address.
    * Based on the additional destination property 'mail.from'.

@@ -10,7 +10,7 @@ import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
-} from './proxy-util';
+} from './http-proxy-util';
 
 const logger = createLogger({
   package: 'connectivity',

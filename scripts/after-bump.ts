@@ -16,4 +16,7 @@ async function afterBump() {
   await commitAndTag();
 }
 
-afterBump();
+afterBump().catch(error => {
+  console.error(error);
+  process.exit(1);
+});

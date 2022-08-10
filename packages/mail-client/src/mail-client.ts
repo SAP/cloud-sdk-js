@@ -1,3 +1,4 @@
+import { Socket } from 'net';
 import {
   Destination,
   DestinationOrFetchOptions,
@@ -9,11 +10,18 @@ import {
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
 import nodemailer, { SentMessageInfo, Transporter } from 'nodemailer';
+import { SocksClient, SocksClientOptions } from 'socks';
+// eslint-disable-next-line import/no-internal-modules
+import type { Options } from 'nodemailer/lib/smtp-pool';
 import {
   MailDestination,
   MailOptions,
   MailResponse
 } from './mail-client-types';
+import {
+  customAuthRequestHandler,
+  customAuthResponseHandler
+} from './socket-proxy';
 
 const logger = createLogger({
   package: 'mail-client',
@@ -79,14 +87,46 @@ function getCredentials(
   return { username, password };
 }
 
-function createTransport(
-  mailDestination: MailDestination
-): Transporter<SentMessageInfo> {
-  return nodemailer.createTransport({
-    host: mailDestination.host,
-    port: mailDestination.port,
-    // Defines if the connection should use SSL (if true) or not (if false).
-    secure: false,
+async function createSocket(mailDestination: MailDestination): Promise<Socket> {
+  if (!mailDestination.proxyConfiguration) {
+    throw Error(
+      'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
+    );
+  }
+  const connectionOptions: SocksClientOptions = {
+    proxy: {
+      host: mailDestination.proxyConfiguration.host,
+      port: mailDestination.proxyConfiguration.port,
+      type: 5,
+      custom_auth_method: 0x80,
+      custom_auth_request_handler: () =>
+        customAuthRequestHandler(
+          mailDestination.proxyConfiguration?.['proxy-authentication']
+        ),
+      custom_auth_response_size: 2,
+      custom_auth_response_handler: customAuthResponseHandler
+    },
+    command: 'connect',
+    destination: {
+      host: mailDestination.host!,
+      port: mailDestination.port!
+    }
+  };
+  const socketConnection = await SocksClient.createConnection(
+    connectionOptions
+  );
+  return socketConnection.socket;
+}
+
+async function createTransport(
+  mailDestination: MailDestination,
+  socket?: Socket
+): Promise<Transporter<SentMessageInfo>> {
+  const baseOptions: Options = {
+    pool: true,
+    // TODO: expose an option, so the user can decide
+    // Defines if the connection should use SSL (if true) or not (if false). See: https://nodemailer.com/smtp/
+    // secure: false,
     auth: {
       user: mailDestination.username,
       pass: mailDestination.password
@@ -108,6 +148,17 @@ function createTransport(
       /** Disable tls config to fix the self signed certificate error. */
       rejectUnauthorized: false
     }
+  };
+  if (socket) {
+    return nodemailer.createTransport({
+      ...baseOptions,
+      connection: socket
+    });
+  }
+  return nodemailer.createTransport({
+    ...baseOptions,
+    host: mailDestination.host,
+    port: mailDestination.port
   });
 }
 
@@ -122,7 +173,11 @@ async function sendMailWithNodemailer<T extends MailOptions>(
   mailDestination: MailDestination,
   ...mailOptions: T[]
 ): Promise<MailResponse[]> {
-  const transport = createTransport(mailDestination);
+  let socket: Socket | undefined;
+  if (mailDestination.proxyType === 'OnPremise') {
+    socket = await createSocket(mailDestination);
+  }
+  const transport = await createTransport(mailDestination, socket);
   const mailOptionsFromDestination =
     buildMailOptionsFromDestination(mailDestination);
 
@@ -142,8 +197,18 @@ async function sendMailWithNodemailer<T extends MailOptions>(
     );
   }
 
-  transport.close();
+  teardown(transport, socket);
   return response;
+}
+
+function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
+  transport.close();
+  logger.debug('SMTP transport connection closed.');
+  if (socket) {
+    socket.end();
+    socket.destroy();
+    logger.debug('Socks connection closed.');
+  }
 }
 
 /**

@@ -60,7 +60,8 @@ export {
   PartialDestinationFetchOptions,
   OpossumLibOptions,
   RequestHandler,
-  getResilienceMiddlewareManagerByIsolationStrategy
+  getResilienceMiddlewareManagerByIsolationStrategy,
+  ResilienceMiddlewareManager
 } from './scp-cf';
 
 export type {

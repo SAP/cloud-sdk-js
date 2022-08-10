@@ -9,7 +9,7 @@ import {
   defaultResilienceOptions,
   ResilienceMiddlewareOptions
 } from '../resilience/resilience-options';
-import { clearResilienceMiddlewareMap } from '../resilience';
+import { resilienceMiddlewareManager } from '../resilience/resilience-middleware-manager';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
@@ -56,7 +56,7 @@ const oauth2SamlBearerDestination = {
 
 describe('destination service', () => {
   afterEach(() => {
-    clearResilienceMiddlewareMap();
+    resilienceMiddlewareManager.clear();
   });
 
   describe('fetchInstanceDestinations', () => {

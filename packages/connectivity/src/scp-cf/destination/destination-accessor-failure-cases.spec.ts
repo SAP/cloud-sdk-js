@@ -26,10 +26,8 @@ import {
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import * as jwt from '../jwt';
-import {
-  clearResilienceMiddlewareMap,
-  defaultResilienceOptions
-} from '../resilience';
+import { defaultResilienceOptions } from '../resilience';
+import { resilienceMiddlewareManager } from '../resilience/resilience-middleware-manager';
 import { getDestination } from './destination-accessor';
 
 const { wrapJwtInHeader } = jwt;
@@ -40,7 +38,7 @@ describe('Failure cases', () => {
   });
 
   afterEach(() => {
-    clearResilienceMiddlewareMap();
+    resilienceMiddlewareManager.clear();
   });
 
   it('fails if no destination service is bound', async () => {

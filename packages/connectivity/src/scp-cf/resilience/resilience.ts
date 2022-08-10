@@ -1,4 +1,5 @@
 import { createCircuitBreaker } from './circuit-breaker';
+import { resilienceMiddlewareManager } from './resilience-middleware-manager';
 import {
   defaultResilienceOptions,
   Middleware,
@@ -8,12 +9,6 @@ import {
   ResilienceOptions,
   TimeoutOptions
 } from './resilience-options';
-
-interface ResilienceMiddlewareMapValue {
-  middleware: Middleware<any>;
-  options: Omit<ResilienceMiddlewareOptions, 'id'>;
-}
-const resilienceMiddlewareMap = new Map<string, ResilienceMiddlewareMapValue>();
 
 /**
  * Create a promise for a time out race.
@@ -137,23 +132,7 @@ export function createResilienceMiddleware<T>(
       return curr(prev(middlewareInOutOptions));
     }
   );
-  resilienceMiddlewareMap.set(resilienceMiddlewareOptions.id, {
-    middleware: reducedMiddleware,
-    options: resilienceMiddlewareOptions
-  });
-
   return reducedMiddleware;
-}
-
-/**
- * TODO: Add JSDoc later.
- * @param id - TODO: Add JSDoc later.
- * @returns TODO: Add JSDoc later.
- */
-export function getResilienceMiddleware<T>(
-  id: string
-): Middleware<T> | undefined {
-  return resilienceMiddlewareMap.get(id)?.middleware;
 }
 
 /**
@@ -165,39 +144,23 @@ export function resilience<T>(
   resilienceMiddlewareOptions: ResilienceMiddlewareOptions
 ): Middleware<T> {
   const { id } = resilienceMiddlewareOptions;
-  const middlewareOptionsPair = resilienceMiddlewareMap.get(
-    resilienceMiddlewareOptions.id
-  );
-  if (middlewareOptionsPair) {
-    const { middleware, options } = middlewareOptionsPair;
-    if (
-      resilienceMiddlewareOptions.circuitBreaker() !==
-        options.circuitBreaker() ||
-      resilienceMiddlewareOptions.timeout() !== options.timeout()
-    ) {
-      throw new Error(
-        `Id '${id}' has already been used by another resilience middleware with different options!`
-      );
+  let middleware = resilienceMiddlewareManager.get<T>(id);
+  if (middleware) {
+    if (resilienceMiddlewareManager.verify(resilienceMiddlewareOptions)) {
+      // id matches the options
+      return middleware;
     }
+    throw new Error(
+      `Id '${id}' has already been used by another resilience middleware with different options!`
+    );
+  } else {
+    middleware = createResilienceMiddleware<T>(resilienceMiddlewareOptions);
+    resilienceMiddlewareManager.setWithOptions<T>(
+      resilienceMiddlewareOptions,
+      middleware
+    );
     return middleware;
   }
-  return createResilienceMiddleware<T>(resilienceMiddlewareOptions);
-}
-
-/**
- * TODO: Add JSDoc later.
- */
-export function clearResilienceMiddlewareMap(): void {
-  resilienceMiddlewareMap.clear();
-}
-
-/**
- * Delete resilience middleware from the map.
- * @param id - Id of the resilience middleware. Used as key of the entry in the map.
- * @returns `true` if deletion was successful. `false` otherwise.
- */
-export function deleteResilienceMiddleware(id: string): boolean {
-  return resilienceMiddlewareMap.delete(id);
 }
 
 /**

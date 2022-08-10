@@ -85,7 +85,8 @@ describe('generator-cli', () => {
         '/Users/I346417/projects/sap-cloud-sdk-js/282-improve-generator-cli-test/test-packages/e2e-tests/test/generator-test-output'
     });
   });
-  // this test containing the same codes createOptionsFromConfig() defined locally works fine when createOptionsFromConfig() is commented out
+  // this test containing the same codes createOptionsFromConfig() defined locally works fine only when createOptionsFromConfig() is commented out
+  //please comment out the test above especially createOptionsFromConfig() to test below
   it('should create options from a config locally', () => {
     const pathToConfig = path.resolve(__dirname, 'generator.config.json');
     mock({ [pathToConfig]: mock.load(pathToConfig) });

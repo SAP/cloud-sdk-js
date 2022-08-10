@@ -162,7 +162,7 @@ defaultResilienceOptions: ResilienceMiddleWareOptions = {
 };
 ```
 We can provide sophisticated methods if asked for.
-From version 3.0 the resilience will be on per default using the default options, so the methods will be either used to disable or adjust the resilience. 
+From version 3.0 the resilience will be on by default using the options above, so the methods will be either used to disable or adjust the resilience. 
 A `disabled` method for convenience could be nice:
 
 ```ts

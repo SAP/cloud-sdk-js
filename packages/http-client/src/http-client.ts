@@ -14,7 +14,8 @@ import {
   Destination,
   DestinationOrFetchOptions,
   getAgentConfig,
-  toDestinationNameUrl
+  toDestinationNameUrl,
+  getResilienceMiddlewareManagerByIsolationStrategy
 } from '@sap-cloud-sdk/connectivity';
 import {
   callWithResilience,
@@ -26,7 +27,6 @@ import {
   getAuthHeader,
   ResilienceMiddlewareOptions
 } from '@sap-cloud-sdk/connectivity/internal';
-import { getResilienceMiddlewareManagerByIsolationStrategy } from '@sap-cloud-sdk/connectivity';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,

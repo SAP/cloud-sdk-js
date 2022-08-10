@@ -201,7 +201,7 @@ type MiddlewareInOut<T> = {
 type Middleware<T> = <T>(options:MiddlewareInOut) => MiddlewareInOut;
 ```
 
-Implementation Idea: It could make sense to model the resilience internally as multiple middle wares:
+Implementation Idea: It could make sense to model the resilience internally as multiple middlewares:
 ```ts
 function resilience(options:ResilienceMiddlewareOptions){
     const [circuitBreaker,timeout,retry]:Middleware[] = createResilience(options)    

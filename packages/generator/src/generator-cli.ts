@@ -37,20 +37,10 @@ export function parseCmdArgs(): GeneratorOptions {
     .config(
       'config',
       'Instead of specifying the options on the command line, you can also provide a path to single .json file holding these options. ' +
-        'The file must be a valid .json file where the keys correspond to the command line flags without dashes. Paths will be interpreted relative to the config file.',
+      'The file must be a valid .json file where the keys correspond to the command line flags without dashes. Paths will be interpreted relative to the config file.',
       configPath => {
-        const file = readFileSync(configPath, 'utf-8');
-        const pathLikeKeys = ['inputDir', 'outputDir', 'serviceMapping'];
-        return pathLikeKeys.reduce(
-          (json, pathLikeKey) =>
-            typeof json[pathLikeKey] === 'undefined'
-              ? json
-              : {
-                  ...json,
-                  [pathLikeKey]: resolve(dirname(configPath), json[pathLikeKey])
-                },
-          JSON.parse(file)
-        );
+        const createdOptions = createOptionsFromConfig(configPath);
+        return createdOptions
       }
     )
     .alias('config', 'c')
@@ -58,4 +48,19 @@ export function parseCmdArgs(): GeneratorOptions {
     .alias('help', 'h')
     .strict(true)
     .recommendCommands().argv as unknown as GeneratorOptions;
+}
+
+export function createOptionsFromConfig(configPath: string) {
+  const file = readFileSync(configPath, 'utf-8');
+  const pathLikeKeys = ['inputDir', 'outputDir', 'serviceMapping'];
+  return pathLikeKeys.reduce(
+    (json, pathLikeKey) =>
+      typeof json[pathLikeKey] === 'undefined'
+        ? json
+        : {
+          ...json,
+          [pathLikeKey]: resolve(dirname(configPath), json[pathLikeKey])
+        },
+    JSON.parse(file)
+  );
 }

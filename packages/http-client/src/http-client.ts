@@ -26,7 +26,7 @@ import {
   getAuthHeader,
   ResilienceMiddlewareOptions
 } from '@sap-cloud-sdk/connectivity/internal';
-import { getResilienceMiddlewareManagerByIsolationStrategy } from '@sap-cloud-sdk/connectivity/src/scp-cf/resilience/resilience-middleware-manager';
+import { getResilienceMiddlewareManagerByIsolationStrategy } from '@sap-cloud-sdk/connectivity';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,

@@ -59,7 +59,8 @@ export {
   destinationForServiceBinding,
   PartialDestinationFetchOptions,
   OpossumLibOptions,
-  RequestHandler
+  RequestHandler,
+  getResilienceMiddlewareManagerByIsolationStrategy
 } from './scp-cf';
 
 export type {

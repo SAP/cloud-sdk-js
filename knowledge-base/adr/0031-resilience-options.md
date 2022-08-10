@@ -107,7 +107,7 @@ The same object is also used to determine and adjust the options
 ```ts
 type RetryOptions = 'disabled' | AsyncRetryLibOptions;
 type CircuitBreakerOptions = 'disabled'| Omit<OpossumLibOptions, 'timeout'>; // timeout is not handled by opossum
-type TimeoutOptions = 'disabled' | number
+type TimeoutOptions = 'disabled' | number;
 
 
 interface OpossumLibOptions {

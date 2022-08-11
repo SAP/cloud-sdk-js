@@ -103,6 +103,7 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
     throw Error(
       'The proxy authorization is undefined, which is mandatory for creating a socket connection.'
     );
+  }
   return {
     host: mailDestination.proxyConfiguration.host,
     port: mailDestination.proxyConfiguration.port,

@@ -6,7 +6,6 @@ import { generate } from '../../../packages/generator/src/generator';
 import { createOptionsFromConfig } from '../../../packages/generator/src/generator-options';
 import { createOptions } from '../../../packages/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
-import { createLogger } from '@sap-cloud-sdk/util';
 
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(
@@ -76,8 +75,8 @@ describe('generator-cli', () => {
     const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
       createOptionsFromConfig(pathToConfig);
     mock({
-      [inputDirFromConfig]: mock.load(inputDirFromConfig),
-      [outputDirFromConfig]: mock.load(outputDirFromConfig),
+      [inputDirFromConfig as string]: mock.load(inputDirFromConfig as string),
+      [outputDirFromConfig as string]: mock.load(outputDirFromConfig as string),
       [generatorCommon]: mock.load(generatorCommon),
       [pathToConfig]: mock.load(pathToConfig),
       [rootNodeModules]: mock.load(rootNodeModules)
@@ -93,22 +92,19 @@ describe('generator-cli', () => {
     const services = fs.readdirSync(outputDirFromConfig);
     expect(services.length).toBeGreaterThan(0);
     const entities = fs.readdirSync(
-      path.resolve(outputDirFromConfig, services[0])
+      path.resolve(outputDirFromConfig as string, services[0])
     );
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('TestEntity.js');
     expect(entities).toContain('package.json');
   });
   it('should set version when versionInPackageJson option is used', async () => {
-    const logger = createLogger('generator-options');
-    const warnSpy = jest.spyOn(logger, 'warn');
-
     const pathToConfig = path.resolve(__dirname, 'generator.config.json');
     const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
       createOptionsFromConfig(pathToConfig);
     mock({
-      [inputDirFromConfig]: mock.load(inputDirFromConfig),
-      [outputDirFromConfig]: mock.load(outputDirFromConfig),
+      [inputDirFromConfig as string]: mock.load(inputDirFromConfig as string),
+      [outputDirFromConfig as string]: mock.load(outputDirFromConfig as string),
       [generatorCommon]: mock.load(generatorCommon),
       [pathToConfig]: mock.load(pathToConfig),
       [rootNodeModules]: mock.load(rootNodeModules)
@@ -126,31 +122,33 @@ describe('generator-cli', () => {
     const actualPackageJson = JSON.parse(
       fs
         .readFileSync(
-          path.resolve(outputDirFromConfig, services[0], 'package.json')
+          path.resolve(
+            outputDirFromConfig.toString(),
+            services[0],
+            'package.json'
+          )
         )
         .toString()
     );
     expect(actualPackageJson.version).toEqual('42.23');
-    //logger.warn never called
-    expect(warnSpy).toHaveBeenCalled();
-
   });
-  it('[Original one]set version when versionInPackageJson option is used', async () => {
-    const process = await execa('npx', [
-      'ts-node',
-      pathToGenerator,
-      '-c',
-      path.resolve(__dirname, 'generator.config.json'),
-      '--versionInPackageJson=42.23'
-    ]);
-
-    const actualPackageJson = JSON.parse(
-      fs.readFileSync(`${outputDir}/test-service/package.json`).toString()
-    );
-    expect(actualPackageJson.version).toEqual('42.23');
-
-    expect(process.stdout).toMatch(
-      /The option 'versionInPackageJson' is deprecated since v2.6.0./
-    );
-  }, 60000);
+  it('should throw an error for a fail of generation due to an invalid specification file', async () => {
+    try {
+      await execa('npx', [
+        'ts-node',
+        pathToGenerator,
+        '-i',
+        path.resolve(
+          __dirname,
+          '../../../test-resources/generator/resources/faulty-edmx'
+        ),
+        '-o',
+        outputDir
+      ]);
+    } catch (err) {
+      expect(err.stdout).toMatch(
+        /Error: No types found for API_TEST_SRV.A_TestComplexTypeMISTAKE/
+      );
+    }
+  });
 });

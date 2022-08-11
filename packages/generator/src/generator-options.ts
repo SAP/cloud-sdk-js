@@ -1,6 +1,6 @@
 import { PathLike } from 'fs';
-import { readFileSync } from 'fs-extra';
 import { resolve, dirname } from 'path';
+import { readFileSync } from 'fs-extra';
 import { Options } from 'yargs';
 import { createLogger } from '@sap-cloud-sdk/util';
 
@@ -187,7 +187,7 @@ export const generatorOptionsCli: KeysToOptions = {
 /**
  * @internal
  */
-export function createOptionsFromConfig(configPath: string) {
+export function createOptionsFromConfig(configPath: string): GeneratorOptions {
   const file = readFileSync(configPath, 'utf-8');
   const pathLikeKeys = ['inputDir', 'outputDir', 'serviceMapping'];
   return pathLikeKeys.reduce(
@@ -195,9 +195,9 @@ export function createOptionsFromConfig(configPath: string) {
       typeof json[pathLikeKey] === 'undefined'
         ? json
         : {
-          ...json,
-          [pathLikeKey]: resolve(dirname(configPath), json[pathLikeKey])
-        },
+            ...json,
+            [pathLikeKey]: resolve(dirname(configPath), json[pathLikeKey])
+          },
     JSON.parse(file)
   );
 }

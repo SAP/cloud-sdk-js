@@ -3,7 +3,11 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import yargs from 'yargs';
 import { generate } from './generator';
-import { GeneratorOptions, generatorOptionsCli, createOptionsFromConfig } from './generator-options';
+import {
+  GeneratorOptions,
+  generatorOptionsCli,
+  createOptionsFromConfig
+} from './generator-options';
 
 const logger = createLogger({
   package: 'generator',
@@ -35,10 +39,8 @@ export function parseCmdArgs(): GeneratorOptions {
     .config(
       'config',
       'Instead of specifying the options on the command line, you can also provide a path to single .json file holding these options. ' +
-      'The file must be a valid .json file where the keys correspond to the command line flags without dashes. Paths will be interpreted relative to the config file.',
-      configPath => {
-        return createOptionsFromConfig(configPath);
-      }
+        'The file must be a valid .json file where the keys correspond to the command line flags without dashes. Paths will be interpreted relative to the config file.',
+      configPath => createOptionsFromConfig(configPath)
     )
     .alias('config', 'c')
     .alias('version', 'v')

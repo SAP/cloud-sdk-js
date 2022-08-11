@@ -100,6 +100,8 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
     host: mailDestination.proxyConfiguration.host,
     port: mailDestination.proxyConfiguration.port,
     type: 5,
+    // socks doc here: https://github.com/JoshGlazebrook/socks#socksclientoptions
+    // see customAuthRequestHandler and customAuthResponseHandler for custom auth details.
     custom_auth_method: 0x80,
     custom_auth_request_handler: () =>
       customAuthRequestHandler(

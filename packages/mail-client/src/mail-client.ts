@@ -93,6 +93,13 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
       'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
     );
   }
+  const proxyAuthorization =
+    mailDestination.proxyConfiguration['proxy-authorization'];
+  if (!proxyAuthorization) {
+    throw Error(
+      'The proxy authorization is undefined, which is mandatory for creating a socket connection.'
+    );
+  }
   const connectionOptions: SocksClientOptions = {
     proxy: {
       host: mailDestination.proxyConfiguration.host,
@@ -100,9 +107,7 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
       type: 5,
       custom_auth_method: 0x80,
       custom_auth_request_handler: () =>
-        customAuthRequestHandler(
-          mailDestination.proxyConfiguration?.['proxy-authentication']
-        ),
+        customAuthRequestHandler(proxyAuthorization),
       custom_auth_response_size: 2,
       custom_auth_response_handler: customAuthResponseHandler
     },

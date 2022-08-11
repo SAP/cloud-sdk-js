@@ -84,7 +84,9 @@ describe('mail client', () => {
       proxyType: 'OnPremise',
       proxyConfiguration: {
         host: 'smtp.gmail.com',
-        port: 587
+        port: 587,
+        protocol: Protocol.SOCKS,
+        'proxy-authorization': 'jwt'
       }
     };
     const mailOptions: MailOptions = {
@@ -108,7 +110,8 @@ describe('buildSocksProxy', () => {
       proxyConfiguration: {
         host: 'www.proxy.com',
         port: 12345,
-        protocol: Protocol.SOCKS
+        protocol: Protocol.SOCKS,
+        'proxy-authorization': 'jwt'
       }
     };
     const proxy = buildSocksProxy(dest);

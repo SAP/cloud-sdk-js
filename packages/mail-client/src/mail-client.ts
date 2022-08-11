@@ -96,7 +96,7 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
       'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
     );
   }
-  
+
   const proxyAuthorization =
     mailDestination.proxyConfiguration['proxy-authorization'];
   if (!proxyAuthorization) {

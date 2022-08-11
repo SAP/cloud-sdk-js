@@ -96,6 +96,14 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
       'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
     );
   }
+
+  const proxyAuthorization =
+    mailDestination.proxyConfiguration['proxy-authorization'];
+  if (!proxyAuthorization) {
+    throw Error(
+      'The proxy authorization is undefined, which is mandatory for creating a socket connection.'
+    );
+  }
   return {
     host: mailDestination.proxyConfiguration.host,
     port: mailDestination.proxyConfiguration.port,
@@ -104,9 +112,7 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
     // see customAuthRequestHandler and customAuthResponseHandler for custom auth details.
     custom_auth_method: 0x80,
     custom_auth_request_handler: () =>
-      customAuthRequestHandler(
-        mailDestination.proxyConfiguration?.['proxy-authentication']
-      ),
+      customAuthRequestHandler(proxyAuthorization),
     custom_auth_response_size: 2,
     custom_auth_response_handler: customAuthResponseHandler
   };

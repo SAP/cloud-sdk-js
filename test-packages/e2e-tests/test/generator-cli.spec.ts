@@ -70,12 +70,22 @@ describe('generator-cli', () => {
       outputDir
     });
   });
+  it('should ', () => {
+    const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
+      createOptionsFromConfig(pathToConfig) as {
+        inputDir: string;
+        outputDir: string;
+      };
+  });
   it('should generate VDM if there is a valid config file', async () => {
     const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
-      createOptionsFromConfig(pathToConfig);
+      createOptionsFromConfig(pathToConfig) as {
+        inputDir: string;
+        outputDir: string;
+      };
     mock({
-      [inputDirFromConfig as string]: mock.load(inputDirFromConfig as string),
-      [outputDirFromConfig as string]: mock.load(outputDirFromConfig as string),
+      [inputDirFromConfig]: mock.load(inputDirFromConfig),
+      [outputDirFromConfig]: mock.load(outputDirFromConfig),
       [generatorCommon]: mock.load(generatorCommon),
       [pathToConfig]: mock.load(pathToConfig),
       [rootNodeModules]: mock.load(rootNodeModules)
@@ -91,7 +101,7 @@ describe('generator-cli', () => {
     const services = fs.readdirSync(outputDirFromConfig);
     expect(services.length).toBeGreaterThan(0);
     const entities = fs.readdirSync(
-      path.resolve(outputDirFromConfig as string, services[0])
+      path.resolve(outputDirFromConfig, services[0])
     );
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('TestEntity.js');
@@ -99,10 +109,13 @@ describe('generator-cli', () => {
   });
   it('should set version when versionInPackageJson option is used', async () => {
     const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
-      createOptionsFromConfig(pathToConfig);
+      createOptionsFromConfig(pathToConfig) as {
+        inputDir: string;
+        outputDir: string;
+      };
     mock({
-      [inputDirFromConfig as string]: mock.load(inputDirFromConfig as string),
-      [outputDirFromConfig as string]: mock.load(outputDirFromConfig as string),
+      [inputDirFromConfig]: mock.load(inputDirFromConfig),
+      [outputDirFromConfig]: mock.load(outputDirFromConfig),
       [generatorCommon]: mock.load(generatorCommon),
       [pathToConfig]: mock.load(pathToConfig),
       [rootNodeModules]: mock.load(rootNodeModules)

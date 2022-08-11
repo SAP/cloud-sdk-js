@@ -16,6 +16,7 @@ describe('generator-cli', () => {
   const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
   const outputDir = path.resolve(__dirname, 'generator-test-output');
   const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
+  const pathToConfig = path.resolve(__dirname, 'generator.config.json');
   const generatorCommon = path.resolve(
     __dirname,
     '../../../packages/generator-common'
@@ -63,7 +64,6 @@ describe('generator-cli', () => {
     expect(entities).toContain('package.json');
   });
   it('should create options from a config file', () => {
-    const pathToConfig = path.resolve(__dirname, 'generator.config.json');
     mock({ [pathToConfig]: mock.load(pathToConfig) });
     expect(createOptionsFromConfig(pathToConfig)).toEqual({
       inputDir,
@@ -71,7 +71,6 @@ describe('generator-cli', () => {
     });
   });
   it('should generate VDM if there is a valid config file', async () => {
-    const pathToConfig = path.resolve(__dirname, 'generator.config.json');
     const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
       createOptionsFromConfig(pathToConfig);
     mock({
@@ -99,7 +98,6 @@ describe('generator-cli', () => {
     expect(entities).toContain('package.json');
   });
   it('should set version when versionInPackageJson option is used', async () => {
-    const pathToConfig = path.resolve(__dirname, 'generator.config.json');
     const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
       createOptionsFromConfig(pathToConfig);
     mock({

@@ -30,6 +30,7 @@ export type Filterable<
   | BooleanFilterFunction<EntityT>
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;
 
+// eslint-disable-next-line jsdoc/require-returns-check
 /**
  * Combine {@link Filterable}s with logical `and` to create a {@link FilterList}.
  * @example
@@ -75,6 +76,7 @@ export function and<
   return new FilterList(transformVariadicArgumentToArray(first, rest));
 }
 
+// eslint-disable-next-line jsdoc/require-returns-check
 /**
  * Combine {@link Filterable}s with logical `or` to create a {@link FilterList}.
  * @example

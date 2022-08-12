@@ -337,9 +337,9 @@ function logRequestInformation(request: HttpRequestConfig) {
   }
 }
 
+// eslint-disable-next-line jsdoc/require-returns-check
 /**
- * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given `requestConfig`
- * and executes it (using Axios).
+ * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given `requestConfig` and executes it (using Axios).
  * The overload, that accepts {@link HttpRequestConfigWithOrigin} as a parameter, is deprecated and replaced the function {@link executeHttpRequestWithOrigin}.
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
@@ -351,8 +351,14 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
   requestConfig: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse>;
+// eslint-disable-next-line jsdoc/require-returns-check
 /**
+ * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given `requestConfig` and executes it (using Axios).
  * @deprecated This overload is replaced by the function {@link executeHttpRequestWithOrigin}.
+ * @param destination - A destination or a destination name and a JWT.
+ * @param requestConfig - Any object representing an HTTP request.
+ * @param options - An {@link HttpRequestOptions} of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.
+ * @returns A promise resolving to an {@link HttpResponse}.
  */
 export function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
   destination: DestinationOrFetchOptions,

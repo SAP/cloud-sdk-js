@@ -8,15 +8,15 @@ import {
   ParameterEncoder
 } from '@sap-cloud-sdk/http-client/internal';
 
-const logger = createLogger({
-  package: 'odata-common',
-  messageContext: 'odata-request-config'
-});
-
 /**
  * Set of possible request methods.
  */
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
+
+const logger = createLogger({
+  package: 'odata-common',
+  messageContext: 'odata-request-config'
+});
 
 /**
  * Parent class for all OData request configs like `getAll`, `delete` or `count`.

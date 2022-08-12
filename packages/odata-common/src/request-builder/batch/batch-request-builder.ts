@@ -9,9 +9,13 @@ import { EntityBase } from '../../entity-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { EntityApi } from '../../entity-api';
-import { BatchChangeSet } from './batch-change-set';
-import { BatchSubRequestPathType } from './batch-request-options';
+import { CreateRequestBuilderBase } from '../create-request-builder-base';
+import { UpdateRequestBuilderBase } from '../update-request-builder-base';
+import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
+import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
 import { serializeBatchRequest } from './batch-request-serializer';
+import { BatchSubRequestPathType } from './batch-request-options';
+import { BatchChangeSet } from './batch-change-set';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. {@link GetAllRequestBuilder | getAll} and {@link GetByKeyRequestBuilder | getByKey} requests and change sets, which in turn can contain {@link CreateRequestBuilder | create}, {@link UpdateRequestBuilder | update} or {@link DeleteRequestBuilder | delete} requests.
@@ -33,8 +37,9 @@ export class BatchRequestBuilder<
     readonly defaultServicePath: string,
     readonly requests: (
       | BatchChangeSet<DeSerializersT>
-      | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
-      | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
+      | Omit<GetAllRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+      | Omit<GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+      | Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'>
     )[]
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
@@ -81,18 +86,16 @@ export class BatchRequestBuilder<
       (apis, request) => ({
         ...apis,
         ...(request instanceof BatchChangeSet
-          ? request.requests.reduce(
-              (changeSetApis, changesetReq) => ({
+          ? request.requests.reduce((changeSetApis, changesetReq) => {
+              if (isActionFunctionImport<DeSerializersT>(changesetReq)) {
+                return changeSetApis;
+              }
+              return {
                 ...changeSetApis,
-                [changesetReq._entityApi.entityConstructor._entityName]:
-                  changesetReq._entityApi
-              }),
-              {}
-            )
-          : {
-              [request._entityApi.entityConstructor._entityName]:
-                request._entityApi
-            })
+                ...buildMapEntry<DeSerializersT>(changesetReq)
+              };
+            }, {})
+          : buildMapEntry<DeSerializersT>(request))
       }),
       {}
     );
@@ -107,4 +110,32 @@ export class BatchRequestBuilder<
     });
     return request;
   }
+}
+
+type AllBuilderTypes<DeSerializersT extends DeSerializers> =
+  | Omit<CreateRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+  | Omit<UpdateRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+  | Omit<GetAllRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+  | Omit<GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+  | Omit<DeleteRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+  | Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'>;
+
+function isActionFunctionImport<DeSerializersT extends DeSerializers>(
+  req: AllBuilderTypes<DeSerializersT>
+): req is Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'> {
+  return (
+    !!req.requestConfig['functionImportName'] ||
+    !!req.requestConfig['actionImportName']
+  );
+}
+
+function buildMapEntry<DeSerializersT extends DeSerializers>(
+  request: AllBuilderTypes<DeSerializersT>
+): Record<string, EntityApi<EntityBase, DeSerializersT>> {
+  if (isActionFunctionImport(request)) {
+    return {};
+  }
+  return {
+    [request._entityApi.entityConstructor._entityName]: request._entityApi
+  };
 }

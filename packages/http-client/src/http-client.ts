@@ -444,7 +444,8 @@ function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest {
 }
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
-  return axios.request(mergeRequestWithAxiosDefaults(request));
+  const foo = mergeRequestWithAxiosDefaults(request);
+  return axios.request(foo);
 }
 
 /**

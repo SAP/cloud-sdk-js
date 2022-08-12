@@ -43,8 +43,8 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
  * @returns The serialized string representation of a multipart request, including the multipart headers.
  * @internal
  */
-export function serializeRequest(
-  request: MethodRequestBuilder,
+export function serializeRequest<DeSerializersT extends DeSerializers>(
+  request: Omit<MethodRequestBuilder, 'execute'>,
   options: BatchRequestSerializationOptions = {}
 ): string {
   const odataRequest = new ODataRequest(
@@ -89,7 +89,7 @@ function getUrl<ConfigT extends ODataRequestConfig>(
   }
 }
 
-function getPayload(request: MethodRequestBuilder): string[] {
+function getPayload(request: Omit<MethodRequestBuilder, 'execute'>): string[] {
   return request.requestConfig.method !== 'get'
     ? [JSON.stringify(request.requestConfig.payload)]
     : [];
@@ -118,9 +118,9 @@ export function serializeBatchRequest<DeSerializersT extends DeSerializers>(
   validateOptions(options);
   const serializedSubRequests = request.requests
     .map(subRequest =>
-      subRequest instanceof MethodRequestBuilder
-        ? serializeRequest(subRequest, options)
-        : serializeChangeSet(subRequest, options)
+      subRequest instanceof BatchChangeSet
+        ? serializeChangeSet(subRequest, options)
+        : serializeRequest(subRequest, options)
     )
     .filter(validRequest => !!validRequest)
     .join(`${unixEOL}--${request.requestConfig.boundary}${unixEOL}`);

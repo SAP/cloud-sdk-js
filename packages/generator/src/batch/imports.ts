@@ -1,6 +1,7 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import { unique } from '@sap-cloud-sdk/util';
 import { odataImportDeclaration } from '../imports';
-import { VdmServiceMetadata } from '../vdm-types';
+import { VdmReturnTypeCategory, VdmServiceMetadata } from '../vdm-types';
 
 /**
  * @internal
@@ -18,6 +19,9 @@ export function importBatchDeclarations(
         'GetByKeyRequestBuilder',
         'ODataBatchRequestBuilder',
         'UpdateRequestBuilder',
+        ...(service.functionImports.length > 0
+          ? ['FunctionImportRequestBuilder']
+          : []),
         'BatchChangeSet'
       ],
       service.oDataVersion
@@ -36,5 +40,15 @@ export function importBatchDeclarations(
 }
 
 function getNamedImports(service: VdmServiceMetadata): string[] {
-  return service.entities.map(e => e.className);
+  const complexTypes = service.functionImports
+    .filter(
+      f =>
+        f.returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
+    )
+    .map(f => f.returnType.returnType);
+  return unique([
+    ...service.entities.map(e => e.className),
+    ...service.functionImports.map(f => f.parametersTypeName),
+    ...complexTypes
+  ]);
 }

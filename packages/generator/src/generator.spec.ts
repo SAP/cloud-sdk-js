@@ -34,6 +34,7 @@ describe('generator', () => {
     afterEach(() => {
       mock.restore();
     });
+
     it('copies the additional files matching the glob.', async () => {
       await generate(
         createOptions({

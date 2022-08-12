@@ -2,7 +2,9 @@ import { resetDataSource } from '@sap-cloud-sdk/test-services-e2e/TripPin/micros
 import { PersonGender } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/PersonGender';
 import {
   People,
-  microsoftODataServiceSampleTrippinInMemoryModelsService
+  microsoftODataServiceSampleTrippinInMemoryModelsService,
+  batch,
+  getNearestAirport
 } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
 import {
   any,
@@ -35,7 +37,7 @@ function createPeople(userName: string): People {
     .build();
 }
 
-xdescribe('Request builder', () => {
+describe('Request builder', () => {
   it('should return a collection of entities for get all request', async () => {
     const people = await requestBuilder
       .getAll()
@@ -49,6 +51,19 @@ xdescribe('Request builder', () => {
       ])
     );
   });
+
+  it('funciton imports with batch', async () => {
+    const result = await batch(getNearestAirport({ lat: 0, lon: 0 }))
+      .withSubRequestPathType('absolute')
+      .execute(destination);
+
+    if (result[0].isReadResponse()) {
+      const parsed = getNearestAirport({ lat: 0, lon: 0 }).responseTransformer(
+        result[0].body
+      );
+      expect(parsed.name).toBe('Rome Ciampino Airport');
+    }
+  }, 60000);
 
   it('should return a collection all friends of a person', async () => {
     const people = (

@@ -88,6 +88,21 @@ export const breakfastEntity: VdmEntity = {
   entityTypeNamespace: ''
 };
 
+function getFunctionImport(
+  originalName: string,
+  httpMethod: string
+): VdmFunctionImport {
+  return {
+    originalName,
+    httpMethod,
+    parametersTypeName: `${originalName}Return`,
+    returnType: {
+      returnType: 'string',
+      returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE
+    }
+  } as VdmFunctionImport;
+}
+
 export const foodService: VdmServiceMetadata = {
   oDataVersion: 'v2',
   directoryName: 'FOOD_SERVICE',
@@ -97,7 +112,10 @@ export const foodService: VdmServiceMetadata = {
   originalFileName: 'food.service.edmx',
   speakingModuleName: 'Food Service',
   entities: [breakfastEntity, brunchEntity],
-  functionImports: [],
+  functionImports: [
+    getFunctionImport('funcGet', 'get'),
+    getFunctionImport('funcPost', 'post')
+  ],
   complexTypes: [],
   enumTypes: [],
   className: 'FoodService',

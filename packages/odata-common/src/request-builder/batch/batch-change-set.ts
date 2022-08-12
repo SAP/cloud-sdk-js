@@ -4,6 +4,7 @@ import { EntityBase } from '../../entity-base';
 import { CreateRequestBuilderBase } from '../create-request-builder-base';
 import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
 import { UpdateRequestBuilderBase } from '../update-request-builder-base';
+import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
 
 /**
  * Representation of a batch change set, which holds a collection of write operations.
@@ -18,9 +19,10 @@ export class BatchChangeSet<
    */
   constructor(
     readonly requests: (
-      | CreateRequestBuilderBase<EntityBase, DeSerializersT>
-      | UpdateRequestBuilderBase<EntityBase, DeSerializersT>
-      | DeleteRequestBuilderBase<EntityBase, DeSerializersT>
+      | Omit<CreateRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+      | Omit<UpdateRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+      | Omit<DeleteRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+      | Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'>
     )[],
     readonly boundary: string = `changeset_${uuid()}`
   ) {}

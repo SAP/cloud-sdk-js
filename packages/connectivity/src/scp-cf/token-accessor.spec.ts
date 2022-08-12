@@ -19,12 +19,9 @@ import {
   mockClientCredentialsGrantWithCertCall
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
-import {
-  clearResilienceMiddlewareMap,
-  defaultResilienceOptions,
-  ResilienceMiddlewareOptions
-} from './resilience';
 import { serviceToken } from './token-accessor';
+import { defaultResilienceBTPServices } from './resilience-options';
+import * as resilience from './resilience-options';
 
 describe('token accessor', () => {
   describe('serviceToken', () => {
@@ -36,7 +33,6 @@ describe('token accessor', () => {
       nock.cleanAll();
       clientCredentialsTokenCache.clear();
       jest.restoreAllMocks();
-      clearResilienceMiddlewareMap();
     });
 
     it('uses the provider tenant if no JWT is provided', async () => {
@@ -57,7 +53,7 @@ describe('token accessor', () => {
       const jwt = signedJwt({
         iss: 'https://testeroni.example.com'
       });
-      async function doDelayTest(resilience: ResilienceMiddlewareOptions) {
+      async function doDelayTest(enableCircuitBreaker: boolean) {
         mockClientCredentialsGrantCall(
           'https://testeroni.example.com',
           { access_token: '' },
@@ -68,22 +64,37 @@ describe('token accessor', () => {
         await expect(
           serviceToken('destination', {
             jwt,
-            resilience
+            timeout: 10,
+            enableCircuitBreaker
           })
         ).rejects.toMatchObject({
-          cause: new Error('Timed out after 10ms')
+          cause: {
+            message: 'Token retrieval ran into timeout.'
+          }
         });
       }
-      await doDelayTest({
-        id: 'with-cb',
-        timeout: () => 10,
-        circuitBreaker: () => false
+      await doDelayTest(false);
+      await doDelayTest(true);
+    });
+
+    it('considers default timeout for client credentials token', async () => {
+      jest.spyOn(resilience, 'timeoutPromise');
+
+      const jwt = signedJwt({
+        iss: 'https://testeroni.example.com'
       });
-      await doDelayTest({
-        id: 'without-cb',
-        timeout: () => 10,
-        circuitBreaker: defaultResilienceOptions.circuitBreaker
-      });
+      mockClientCredentialsGrantCall(
+        'https://testeroni.example.com',
+        { access_token: 'testValue' },
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+
+      await serviceToken('destination', { jwt });
+
+      expect(resilience.timeoutPromise).toHaveBeenCalledWith(
+        defaultResilienceBTPServices.timeout
+      );
     });
 
     it("uses the JWT's issuer as tenant", async () => {

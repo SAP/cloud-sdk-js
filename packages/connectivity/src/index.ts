@@ -32,6 +32,7 @@ export {
   JwtPayload,
   ProxyConfiguration,
   ProxyConfigurationHeaders,
+  ResilienceOptions,
   Service,
   VerifyJwtOptions,
   buildHeadersForDestination,
@@ -48,21 +49,8 @@ export {
   DestinationsByType,
   ServiceBinding,
   DestinationForServiceBindingOptions,
-  defaultResilienceOptions,
-  defaultCircuitBreakerOptions,
-  TimeoutOptions,
-  ResilienceMiddlewareOptions,
-  MiddlewareInOutOptions,
-  Middleware,
-  resilience,
-  getResilienceMiddleware,
-  clearResilienceMiddlewareMap,
-  deleteResilienceMiddleware,
-  callWithResilience,
   destinationForServiceBinding,
-  PartialDestinationFetchOptions,
-  OpossumLibOptions,
-  RequestHandler
+  PartialDestinationFetchOptions
 } from './scp-cf';
 
 export type {
@@ -74,10 +62,8 @@ export type {
   XsuaaServiceCredentials,
   DestinationProxyType,
   AuthenticationType,
-  ResilienceOptions,
   DestinationWithName,
-  RegisterDestinationOptions,
-  CircuitBreakerOptions
+  RegisterDestinationOptions
 } from './scp-cf';
 
 export {

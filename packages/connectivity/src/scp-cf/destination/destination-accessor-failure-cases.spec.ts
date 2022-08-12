@@ -26,10 +26,6 @@ import {
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import * as jwt from '../jwt';
-import {
-  clearResilienceMiddlewareMap,
-  defaultResilienceOptions
-} from '../resilience';
 import { getDestination } from './destination-accessor';
 
 const { wrapJwtInHeader } = jwt;
@@ -37,10 +33,6 @@ const { wrapJwtInHeader } = jwt;
 describe('Failure cases', () => {
   beforeEach(() => {
     clientCredentialsTokenCache.clear();
-  });
-
-  afterEach(() => {
-    clearResilienceMiddlewareMap();
   });
 
   it('fails if no destination service is bound', async () => {
@@ -108,11 +100,7 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberServiceToken,
-        resilience: {
-          id: 'getDestination',
-          timeout: defaultResilienceOptions.timeout,
-          circuitBreaker: () => false
-        },
+        enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });
@@ -157,11 +145,7 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberUserJwt,
-        resilience: {
-          id: 'getDestination',
-          timeout: defaultResilienceOptions.timeout,
-          circuitBreaker: () => false
-        },
+        enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });

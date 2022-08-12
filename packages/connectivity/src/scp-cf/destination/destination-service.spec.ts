@@ -4,12 +4,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
+import { defaultResilienceBTPServices } from '../resilience-options';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
-import {
-  defaultResilienceOptions,
-  ResilienceMiddlewareOptions
-} from '../resilience/resilience-options';
-import { clearResilienceMiddlewareMap } from '../resilience';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
@@ -55,10 +51,6 @@ const oauth2SamlBearerDestination = {
 };
 
 describe('destination service', () => {
-  afterEach(() => {
-    clearResilienceMiddlewareMap();
-  });
-
   describe('fetchInstanceDestinations', () => {
     it('fetches instance destinations and returns them as Destination array', async () => {
       const response = [basicDestination, oauth2SamlBearerDestination];
@@ -96,11 +88,7 @@ describe('destination service', () => {
 
       const instanceDestinations: Destination[] =
         await fetchInstanceDestinations(destinationServiceUri, jwt, {
-          resilience: {
-            id: 'fetchInstanceDestinations',
-            timeout: defaultResilienceOptions.timeout,
-            circuitBreaker: () => false
-          }
+          enableCircuitBreaker: false
         });
       expected.forEach((e, index) => {
         expect(instanceDestinations[index]).toMatchObject(e);
@@ -122,11 +110,7 @@ describe('destination service', () => {
 
       await expect(
         fetchInstanceDestinations(destinationServiceUri, jwt, {
-          resilience: {
-            id: 'fetchInstanceDestinations',
-            timeout: defaultResilienceOptions.timeout,
-            circuitBreaker: () => false
-          }
+          enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
     });
@@ -142,11 +126,7 @@ describe('destination service', () => {
 
       await expect(
         fetchInstanceDestinations(destinationServiceUri, jwt, {
-          resilience: {
-            id: 'fetchInstanceDestinations',
-            timeout: defaultResilienceOptions.timeout,
-            circuitBreaker: () => false
-          }
+          enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
     });
@@ -188,11 +168,7 @@ describe('destination service', () => {
 
       const subaccountDestinations: Destination[] =
         await fetchSubaccountDestinations(destinationServiceUri, jwt, {
-          resilience: {
-            id: 'fetchInstanceDestinations',
-            timeout: defaultResilienceOptions.timeout,
-            circuitBreaker: () => false
-          }
+          enableCircuitBreaker: false
         });
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
@@ -214,11 +190,7 @@ describe('destination service', () => {
 
       await expect(
         fetchSubaccountDestinations(destinationServiceUri, jwt, {
-          resilience: {
-            id: 'fetchInstanceDestinations',
-            timeout: defaultResilienceOptions.timeout,
-            circuitBreaker: () => false
-          }
+          enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
     });
@@ -369,14 +341,7 @@ describe('destination service', () => {
         destinationServiceUri,
         jwt,
 
-        {
-          destinationName,
-          resilience: {
-            id: 'fetchInstanceDestinations',
-            timeout: defaultResilienceOptions.timeout,
-            circuitBreaker: () => false
-          }
-        }
+        { destinationName, enableCircuitBreaker: false }
       );
       expect(actual).toMatchObject(expected);
     });
@@ -413,17 +378,14 @@ describe('destination service', () => {
       const spy = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName,
-        resilience: {
-          id: 'fetchDestination',
-          timeout: defaultResilienceOptions.timeout,
-          circuitBreaker: () => false
-        }
+        enableCircuitBreaker: false
       });
       const expectedConfig: AxiosRequestConfig = {
         baseURL:
           'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         method: 'get',
         proxy: false,
+        timeout: defaultResilienceBTPServices.timeout,
         headers: {
           Authorization: `Bearer ${jwt}`
         },
@@ -439,7 +401,7 @@ describe('destination service', () => {
     });
 
     it('considers the custom timeout for destination service', async () => {
-      async function doDelayTest(resilience: ResilienceMiddlewareOptions) {
+      async function doDelayTest(enableCircuitBreaker: boolean) {
         nock(destinationServiceUri, {
           reqheaders: {
             authorization: `Bearer ${jwt}`
@@ -451,23 +413,42 @@ describe('destination service', () => {
         await expect(
           fetchDestination(destinationServiceUri, jwt, {
             destinationName: 'TIMEOUT-TEST',
-            resilience
+            enableCircuitBreaker,
+            timeout: 10
           })
         ).rejects.toMatchObject({
-          cause: new Error('Timed out after 10ms')
+          cause: {
+            message: 'timeout of 10ms exceeded'
+          }
         });
       }
 
-      await doDelayTest({
-        id: 'fetchDestination-without-cb',
-        timeout: () => 10,
-        circuitBreaker: () => false
+      await doDelayTest(true);
+      await doDelayTest(false);
+    });
+
+    it('considers the default timeout for destination service', async () => {
+      const response = {
+        URL: 'someDestinationUrl'
+      };
+
+      nock(destinationServiceUri, {
+        reqheaders: {
+          authorization: `Bearer ${jwt}`
+        }
+      })
+        .get('/destination-configuration/v1/destinations/timeoutTest')
+        .reply(200, response);
+      const spy = jest.spyOn(axios, 'request');
+      await fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'timeoutTest',
+        enableCircuitBreaker: false
       });
-      await doDelayTest({
-        id: 'fetchDestination-with-cb',
-        timeout: () => 10,
-        circuitBreaker: defaultResilienceOptions.circuitBreaker
-      });
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          timeout: defaultResilienceBTPServices.timeout
+        })
+      );
     });
 
     it('fetches a destination considering no_proxy', async () => {
@@ -504,11 +485,7 @@ describe('destination service', () => {
       const spy = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName,
-        resilience: {
-          id: 'fetchInstanceDestinations',
-          timeout: defaultResilienceOptions.timeout,
-          circuitBreaker: () => false
-        }
+        enableCircuitBreaker: false
       });
       const expectedConfig: AxiosRequestConfig = {
         baseURL:
@@ -521,6 +498,7 @@ describe('destination service', () => {
         // The jest matchers have problems to match two  instances of an httpsAgent.
         // As a workaround I wanted to assert on proxy:undefined but was not able to achieve this.
         // The "_events" property is only present for the httpAgent and not the httpProxyAgent so this works as an implicit test.
+        timeout: defaultResilienceBTPServices.timeout,
         httpsAgent: expect.objectContaining({
           _events: expect.anything(),
           options: expect.objectContaining({ rejectUnauthorized: true })
@@ -605,14 +583,7 @@ describe('destination service', () => {
         destinationServiceUri,
         jwt,
 
-        {
-          destinationName,
-          resilience: {
-            id: 'fetchDestination',
-            timeout: defaultResilienceOptions.timeout,
-            circuitBreaker: () => false
-          }
-        }
+        { destinationName, enableCircuitBreaker: false }
       );
       expect(actual).toMatchObject(expected);
     });
@@ -631,11 +602,7 @@ describe('destination service', () => {
       await expect(
         fetchDestination(destinationServiceUri, jwt, {
           destinationName,
-          resilience: {
-            id: 'fetchDestination',
-            timeout: defaultResilienceOptions.timeout,
-            circuitBreaker: () => false
-          }
+          enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
     });
@@ -658,11 +625,7 @@ describe('destination service', () => {
       await expect(() =>
         fetchDestination(destinationServiceUri, jwt, {
           destinationName,
-          resilience: {
-            id: 'fetchDestination',
-            timeout: defaultResilienceOptions.timeout,
-            circuitBreaker: () => false
-          }
+          enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
     });

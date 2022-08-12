@@ -4,14 +4,15 @@ import {
   propertyExists,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
+import CircuitBreaker from 'opossum';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
-  ResilienceMiddlewareOptions,
+  circuitBreakerDefaultOptions,
+  defaultResilienceBTPServices,
   ResilienceOptions
-} from '../resilience/resilience-options';
+} from '../resilience-options';
 import { urlAndAgent } from '../../http-agent';
-import { callWithResilience } from '../resilience/resilience';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -31,12 +32,19 @@ const logger = createLogger({
   messageContext: 'destination-service'
 });
 
-type DestinationsServiceOptions = ResilienceOptions & {
-  resilience?: ResilienceMiddlewareOptions;
-} & Pick<DestinationFetchOptions, 'useCache'>;
-type DestinationServiceOptions = ResilienceOptions & {
-  resilience?: ResilienceMiddlewareOptions;
-} & Pick<DestinationFetchOptions, 'destinationName'>;
+type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
+  [requestConfig: AxiosRequestConfig],
+  AxiosResponse<ResponseType>
+>;
+
+type DestinationsServiceOptions = ResilienceOptions &
+  Pick<DestinationFetchOptions, 'useCache'>;
+type DestinationServiceOptions = ResilienceOptions &
+  Pick<DestinationFetchOptions, 'destinationName'>;
+
+let circuitBreaker: DestinationCircuitBreaker<
+  DestinationCertificateJson | DestinationConfiguration | DestinationJson
+>;
 
 /**
  * Fetches all instance destinations from the given URI.
@@ -256,9 +264,7 @@ type DestinationCertificateJson = {
 async function callCertificateEndpoint(
   uri: string,
   headers: Record<string, any>,
-  options?: ResilienceOptions & {
-    resilience?: ResilienceMiddlewareOptions;
-  }
+  options?: ResilienceOptions
 ): Promise<AxiosResponse<DestinationCertificateJson>> {
   if (!uri.includes('Certificates')) {
     throw new Error(
@@ -273,9 +279,7 @@ async function callCertificateEndpoint(
 async function callDestinationEndpoint(
   uri: string,
   headers: Record<string, any>,
-  options?: ResilienceOptions & {
-    resilience?: ResilienceMiddlewareOptions;
-  }
+  options?: ResilienceOptions
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
   if (!uri.match(/[instance|subaccount]Destinations|v1\/destinations/)) {
     throw new Error(
@@ -290,31 +294,43 @@ async function callDestinationEndpoint(
 async function callDestinationService(
   uri: string,
   headers: Record<string, any>,
-  options?: ResilienceOptions & {
-    resilience?: ResilienceMiddlewareOptions;
-  }
+  options?: ResilienceOptions
 ): Promise<
   AxiosResponse<
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
-  if (
-    options?.resilience ||
-    options?.enableCircuitBreaker ||
-    options?.timeout
-  ) {
-    return callWithResilience(
-      () => callDestinationService(uri, headers),
-      options
-    );
-  }
-
+  const { enableCircuitBreaker, timeout } = {
+    ...defaultResilienceBTPServices,
+    ...options
+  };
   const config: AxiosRequestConfig = {
     ...urlAndAgent(uri),
     proxy: false,
     method: 'get',
+    timeout,
     headers
   };
 
+  if (enableCircuitBreaker) {
+    return getCircuitBreaker().fire(config);
+  }
+
   return axios.request(config);
+}
+
+function getCircuitBreaker(): DestinationCircuitBreaker<
+  DestinationCertificateJson | DestinationConfiguration | DestinationJson
+> {
+  const request: (
+    config: AxiosRequestConfig
+  ) => Promise<
+    AxiosResponse<
+      DestinationCertificateJson | DestinationConfiguration | DestinationJson
+    >
+  > = axios.request;
+  if (!circuitBreaker) {
+    circuitBreaker = new CircuitBreaker(request, circuitBreakerDefaultOptions);
+  }
+  return circuitBreaker;
 }

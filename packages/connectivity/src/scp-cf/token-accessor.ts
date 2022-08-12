@@ -8,10 +8,7 @@ import {
   resolveService
 } from './environment-accessor';
 import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
-import {
-  ResilienceMiddlewareOptions,
-  ResilienceOptions
-} from './resilience/resilience-options';
+import { ResilienceOptions } from './resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 
@@ -29,7 +26,7 @@ import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 export async function serviceToken(
   service: string | Service,
   options?: CachingOptions &
-    ResilienceOptions & { resilience?: ResilienceMiddlewareOptions } & {
+    ResilienceOptions & {
       jwt?: string | JwtPayload;
       // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
       xsuaaCredentials?: XsuaaServiceCredentials;
@@ -58,7 +55,11 @@ export async function serviceToken(
   }
 
   try {
-    const token = await getClientCredentialsToken(service, options?.jwt, opts);
+    const token = await getClientCredentialsToken(
+      service,
+      options?.jwt,
+      options
+    );
 
     if (opts.useCache) {
       const xsuaa = multiTenantXsuaaCredentials(options);
@@ -92,7 +93,7 @@ export async function serviceToken(
 export async function jwtBearerToken(
   jwt: string,
   service: string | Service,
-  options?: ResilienceOptions & { resilience?: ResilienceMiddlewareOptions }
+  options?: ResilienceOptions
 ): Promise<string> {
   const resolvedService = resolveService(service);
 

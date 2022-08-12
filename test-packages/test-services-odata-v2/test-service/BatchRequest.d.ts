@@ -24,7 +24,6 @@ import {
   TestEntityEndsWithSomethingElse,
   CaseTest,
   Casetest_1,
-  TestFunctionImportNoReturnTypeParameters,
   TestFunctionImportEdmReturnTypeParameters,
   TestFunctionImportEdmReturnTypeCollectionParameters,
   TestFunctionImportEntityReturnTypeParameters,
@@ -35,7 +34,6 @@ import {
   TestFunctionImportUnsupportedEdmTypesParameters,
   TestFunctionImportComplexReturnTypeCollectionParameters,
   TestFunctionImportGetParameters,
-  TestFunctionImportPostParameters,
   TestFunctionImportMultipleParamsParameters,
   CreateTestComplexTypeParameters,
   FContinueParameters,
@@ -151,11 +149,6 @@ export declare type ReadTestServiceRequestBuilder<
   | GetByKeyRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
   | FunctionImportRequestBuilder<
       DeSerializersT,
-      TestFunctionImportNoReturnTypeParameters<DeSerializersT>,
-      undefined
-    >
-  | FunctionImportRequestBuilder<
-      DeSerializersT,
       TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
       boolean
     >
@@ -208,11 +201,6 @@ export declare type ReadTestServiceRequestBuilder<
   | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportGetParameters<DeSerializersT>,
-      boolean
-    >
-  | FunctionImportRequestBuilder<
-      DeSerializersT,
-      TestFunctionImportPostParameters<DeSerializersT>,
       boolean
     >
   | FunctionImportRequestBuilder<

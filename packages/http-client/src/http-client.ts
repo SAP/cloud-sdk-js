@@ -16,14 +16,12 @@ import {
   toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
 import {
-  callWithResilience,
-  defaultResilienceOptions,
   resolveDestination,
+  defaultResilienceBTPServices,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
-  getAuthHeader,
-  ResilienceMiddlewareOptions
+  getAuthHeader
 } from '@sap-cloud-sdk/connectivity/internal';
 import {
   DestinationHttpRequestConfig,
@@ -444,8 +442,7 @@ function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest {
 }
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
-  const foo = mergeRequestWithAxiosDefaults(request);
-  return axios.request(foo);
+  return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 
 /**
@@ -523,31 +520,17 @@ async function getCsrfHeaders(
   request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
   const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
-  if (Object.keys(csrfHeaders).length) {
-    return csrfHeaders;
-  }
-
-  const resilienceMiddlewareOptions: ResilienceMiddlewareOptions = {
-    id: 'btpService-getCsrfHeaders',
-    timeout: request.timeout
-      ? () => request.timeout as number
-      : defaultResilienceOptions.timeout,
-    circuitBreaker: () => false
-  };
-
-  const requestConfig: Partial<HttpRequestConfig> = {
-    params: request.params,
-    headers: request.headers,
-    url: request.url,
-    proxy: request.proxy,
-    httpAgent: request.httpAgent,
-    httpsAgent: request.httpsAgent
-  };
-
-  return callWithResilience(
-    () => buildCsrfHeaders(destination, requestConfig),
-    { resilience: resilienceMiddlewareOptions }
-  );
+  return Object.keys(csrfHeaders).length
+    ? csrfHeaders
+    : buildCsrfHeaders(destination, {
+        params: request.params,
+        headers: request.headers,
+        url: request.url,
+        timeout: request.timeout || defaultResilienceBTPServices.timeout,
+        proxy: request.proxy,
+        httpAgent: request.httpAgent,
+        httpsAgent: request.httpsAgent
+      });
 }
 
 async function addCsrfTokenToHeader(

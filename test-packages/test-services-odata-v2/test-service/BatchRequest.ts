@@ -188,11 +188,6 @@ export type ReadTestServiceRequestBuilder<
   | GetByKeyRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
   | FunctionImportRequestBuilder<
       DeSerializersT,
-      TestFunctionImportNoReturnTypeParameters<DeSerializersT>,
-      undefined
-    >
-  | FunctionImportRequestBuilder<
-      DeSerializersT,
       TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
       boolean
     >
@@ -245,11 +240,6 @@ export type ReadTestServiceRequestBuilder<
   | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportGetParameters<DeSerializersT>,
-      boolean
-    >
-  | FunctionImportRequestBuilder<
-      DeSerializersT,
-      TestFunctionImportPostParameters<DeSerializersT>,
       boolean
     >
   | FunctionImportRequestBuilder<

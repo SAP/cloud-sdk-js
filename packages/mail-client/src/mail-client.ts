@@ -10,7 +10,7 @@ import {
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
 import nodemailer, { SentMessageInfo, Transporter } from 'nodemailer';
-import { SocksClient, SocksClientOptions } from 'socks';
+import { SocksClient, SocksClientOptions, SocksProxy } from 'socks';
 // eslint-disable-next-line import/no-internal-modules
 import type { Options } from 'nodemailer/lib/smtp-pool';
 import {
@@ -87,25 +87,40 @@ function getCredentials(
   return { username, password };
 }
 
-async function createSocket(mailDestination: MailDestination): Promise<Socket> {
+/**
+ * @internal
+ */
+export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
   if (!mailDestination.proxyConfiguration) {
     throw Error(
       'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
     );
   }
+
+  const proxyAuthorization =
+    mailDestination.proxyConfiguration['proxy-authorization'];
+  if (!proxyAuthorization) {
+    throw Error(
+      'The proxy authorization is undefined, which is mandatory for creating a socket connection.'
+    );
+  }
+  return {
+    host: mailDestination.proxyConfiguration.host,
+    port: mailDestination.proxyConfiguration.port,
+    type: 5,
+    // socks doc here: https://github.com/JoshGlazebrook/socks#socksclientoptions
+    // see customAuthRequestHandler and customAuthResponseHandler for custom auth details.
+    custom_auth_method: 0x80,
+    custom_auth_request_handler: () =>
+      customAuthRequestHandler(proxyAuthorization),
+    custom_auth_response_size: 2,
+    custom_auth_response_handler: customAuthResponseHandler
+  };
+}
+
+async function createSocket(mailDestination: MailDestination): Promise<Socket> {
   const connectionOptions: SocksClientOptions = {
-    proxy: {
-      host: mailDestination.proxyConfiguration.host,
-      port: mailDestination.proxyConfiguration.port,
-      type: 5,
-      custom_auth_method: 0x80,
-      custom_auth_request_handler: () =>
-        customAuthRequestHandler(
-          mailDestination.proxyConfiguration?.['proxy-authentication']
-        ),
-      custom_auth_response_size: 2,
-      custom_auth_response_handler: customAuthResponseHandler
-    },
+    proxy: buildSocksProxy(mailDestination),
     command: 'connect',
     destination: {
       host: mailDestination.host!,

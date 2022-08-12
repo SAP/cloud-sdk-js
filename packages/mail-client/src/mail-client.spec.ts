@@ -1,7 +1,8 @@
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
-import { sendMail } from './mail-client';
-import { MailOptions } from './mail-client-types';
+import { Protocol } from '@sap-cloud-sdk/connectivity';
+import { buildSocksProxy, sendMail } from './mail-client';
+import { MailDestination, MailOptions } from './mail-client-types';
 
 describe('mail client', () => {
   beforeEach(() => {
@@ -42,6 +43,7 @@ describe('mail client', () => {
       to: 'to1@example.com',
       subject: 'subject',
       text: 'txt',
+      html: 'html',
       attachments: [{ content: 'content' }]
     };
     const mailOptions2: MailOptions = {
@@ -82,7 +84,9 @@ describe('mail client', () => {
       proxyType: 'OnPremise',
       proxyConfiguration: {
         host: 'smtp.gmail.com',
-        port: 587
+        port: 587,
+        protocol: Protocol.SOCKS,
+        'proxy-authorization': 'jwt'
       }
     };
     const mailOptions: MailOptions = {
@@ -99,3 +103,30 @@ describe('mail client', () => {
     expect(spyDestroySocket).toBeCalledTimes(1);
   });
 });
+
+describe('buildSocksProxy', () => {
+  it('build valid socks proxy', () => {
+    const dest: MailDestination = {
+      proxyConfiguration: {
+        host: 'www.proxy.com',
+        port: 12345,
+        protocol: Protocol.SOCKS,
+        'proxy-authorization': 'jwt'
+      }
+    };
+    const proxy = buildSocksProxy(dest);
+    expect(isValidSocksProxy(proxy)).toBe(true);
+  });
+});
+
+// copied from socks lib
+function isValidSocksProxy(proxy) {
+  return (
+    proxy &&
+    (typeof proxy.host === 'string' || typeof proxy.ipaddress === 'string') &&
+    typeof proxy.port === 'number' &&
+    proxy.port >= 0 &&
+    proxy.port <= 65535 &&
+    (proxy.type === 4 || proxy.type === 5)
+  );
+}

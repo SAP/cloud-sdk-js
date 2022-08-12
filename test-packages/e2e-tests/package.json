@@ -24,7 +24,8 @@
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^10.0.2",
-   "@sap-cloud-sdk/generator": "^2.7.1",
+    "@sap-cloud-sdk/util": "^2.7.1",
+    "@sap-cloud-sdk/generator": "^2.7.1",
     "@sap-cloud-sdk/generator-common": "^2.7.1",
     "@sap-cloud-sdk/odata-common": "^2.7.1",
     "@sap-cloud-sdk/odata-v4": "^2.7.1",

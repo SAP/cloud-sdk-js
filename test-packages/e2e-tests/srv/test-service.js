@@ -62,6 +62,7 @@ module.exports = async srv => {
     const key = p.KeyTestEntity;
     oRequest.reply(key);
   });
+
   // unbound action
   srv.on('createTestEntityById', async oRequest => {
     const id = oRequest.data.id;

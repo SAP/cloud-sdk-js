@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/mail-client
 
+## 2.7.1
+
+### Patch Changes
+
+- e7fa8d35: [Fixed Issue] Fix proxy authorization for sending emails.
+  - @sap-cloud-sdk/connectivity@2.7.1
+  - @sap-cloud-sdk/util@2.7.1
+
 ## 2.7.0
 
 ### Patch Changes

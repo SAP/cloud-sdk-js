@@ -3484,7 +3484,7 @@ eslint-plugin-jest@^26.8.2:
   dependencies:
     "@typescript-eslint/utils" "^5.10.0"
 
-eslint-plugin-jsdoc@^39.3.4:
+eslint-plugin-jsdoc@^39.3.6:
   version "39.3.6"
   resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-39.3.6.tgz#6ba29f32368d72a51335a3dc9ccd22ad0437665d"
   integrity sha512-R6dZ4t83qPdMhIOGr7g2QII2pwCjYyKP+z0tPOfO1bbAbQyKC20Y2Rd6z1te86Lq3T7uM8bNo+VD9YFpE8HU/g==
@@ -6337,10 +6337,10 @@ nodemailer@6.7.3:
   resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.7.3.tgz#b73f9a81b9c8fa8acb4ea14b608f5e725ea8e018"
   integrity sha512-KUdDsspqx89sD4UUyUKzdlUOper3hRkDVkrKh/89G+d9WKsU5ox51NWS4tB1XR5dPUdR4SP0E3molyEfOvSa3g==
 
-nodemailer@6.7.7:
-  version "6.7.7"
-  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.7.7.tgz#e522fbd7507b81c51446d3f79c4603bf00083ddd"
-  integrity sha512-pOLC/s+2I1EXuSqO5Wa34i3kXZG3gugDssH+ZNCevHad65tc8vQlCQpOLaUjopvkRQKm2Cki2aME7fEOPRy3bA==
+nodemailer@6.7.8:
+  version "6.7.8"
+  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.7.8.tgz#9f1af9911314960c0b889079e1754e8d9e3f740a"
+  integrity sha512-2zaTFGqZixVmTxpJRCFC+Vk5eGRd/fYtvIR+dl5u9QXLTQWGIf48x/JXvo58g9sa0bU6To04XUv554Paykum3g==
 
 nopt@^4.0.1:
   version "4.0.3"
@@ -7885,15 +7885,7 @@ socks-proxy-agent@^6.0.0:
     debug "^4.3.3"
     socks "^2.6.2"
 
-socks@2.6.2:
-  version "2.6.2"
-  resolved "https://registry.npmjs.org/socks/-/socks-2.6.2.tgz#ec042d7960073d40d94268ff3bb727dc685f111a"
-  integrity sha512-zDZhHhZRY9PxRruRMR7kMhnf3I8hDs4S3f9RecfnGxvcBHQcKcIH/oUcEWffsfl1XxdYlA7nnlGbbTvPz9D8gA==
-  dependencies:
-    ip "^1.1.5"
-    smart-buffer "^4.2.0"
-
-socks@^2.3.3, socks@^2.6.2:
+socks@2.7.0, socks@^2.3.3, socks@^2.6.2:
   version "2.7.0"
   resolved "https://registry.npmjs.org/socks/-/socks-2.7.0.tgz#f9225acdb841e874dca25f870e9130990f3913d0"
   integrity sha512-scnOe9y4VuiNUULJN72GrM26BNOjVsfPXI+j+98PkyEfsIXroa5ofyjT+FzGvn/xHs73U2JtoBYAVx9Hl4quSA==

@@ -92,13 +92,14 @@ Defaults:
 
 This determines the possible options you can set.
 The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the default values.
-We will introduce a context passed to the resilience implementation to give information on the context: 
+We will introduce a context passed to the resilience implementation to give information on the call: 
 
 ```ts
 type RequestContext = {
     url: string,
     headers?: Record<string,string>,
     jwt?: string,
+    destination?: Destination,
     method: 'GET' | 'POST' | 'DELETE',
     ...
 }
@@ -161,7 +162,7 @@ defaultResilienceOptions: ResilienceMiddleWareOptions = {
   circuitBreaker: (context:RequestContext)=>defaultCircuitBreakerOptions
 };
 ```
-We can provide sophisticated methods if asked for.
+The user can provide sophisticated methods if needed.
 From version 3.0 the resilience will be on by default using the options above, so the methods will be either used to disable or adjust the resilience. 
 A `disabled` method for convenience could be nice:
 

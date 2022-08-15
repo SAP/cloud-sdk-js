@@ -2,14 +2,14 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmEnumType,
-  VdmFunctionImport, VdmFunctionImportReturnType,
+  VdmFunctionImport,
   VdmNavigationProperty,
   VdmProperty,
   VdmReturnTypeCategory,
   VdmServiceMetadata,
+  VdmParameter,
   VdmUnsupportedReason
 } from '../../src/vdm-types';
-import {VdmParameter} from "../../dist/vdm-types";
 
 export const entityName: VdmProperty = {
   instancePropertyName: 'entityName',
@@ -97,11 +97,12 @@ function getFunctionImport(
     originalName,
     httpMethod,
     parametersTypeName: `${originalName}Return`,
-    parameters:[{description:"local test parameter"}] as VdmParameter[],
+    parameters: [{ description: 'local test parameter' }] as VdmParameter[],
     returnType: {
       returnType: 'string',
       returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
-      builderFunction: `(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.String', deSerializers)`
+      builderFunction:
+        "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.String', deSerializers)"
     }
   } as VdmFunctionImport;
 }

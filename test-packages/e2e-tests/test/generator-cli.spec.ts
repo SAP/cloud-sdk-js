@@ -158,7 +158,7 @@ describe('generator-cli', () => {
       ]);
     } catch (err) {
       expect(err.stdout).toMatch(
-        /Error: No types found for API_TEST_SRV.A_TestComplexTypeMISTAKE/
+        /Error: No types found for API_TEST_SRV.A_TestComplexTypeMISTAKE | ErrorWithCause: Generation of services failed./
       );
     }
   });

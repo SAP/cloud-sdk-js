@@ -9,8 +9,8 @@ import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
 /**
  * Create an OData request to count entities based on the configuration of the request.
  * A `CountRequestBuilder` allows only for execution of the request.
- * If you want to apply query parameters like filter, skip or top do it on the {@link GetAllRequestBuilder} the count is created from.
- * @typeparam EntityT - Type of the entity to be requested
+ * If you want to apply query parameters like filter, skip or top do it on the {@link GetAllRequestBuilderBase | GetAllRequestBuilder} the count is created from.
+ * @typeParam EntityT - Type of the entity to be requested
  */
 export class CountRequestBuilder<
   EntityT extends EntityBase,
@@ -42,9 +42,9 @@ export class CountRequestBuilder<
   }
 
   /**
-   * Execute request and return an {@link HttpResponse}.
+   * Execute request and return an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
-   * @returns A promise resolving to an {@link HttpResponse}.
+   * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
     destination: DestinationOrFetchOptions

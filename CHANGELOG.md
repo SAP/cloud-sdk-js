@@ -28,6 +28,63 @@
 
 -
 
+# 2.7.1
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.7.1
+
+## Fixed Issues
+
+- [mail-client] Fix proxy authorization for sending emails.
+  - @sap-cloud-sdk/connectivity@2.7.1
+  - @sap-cloud-sdk/util@2.7.1 (e7fa8d35)
+
+# 2.7.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.7.0
+
+## New Functionalities
+
+- [openapi-generator] Support globs in the `input` option. (3f70b0c9)
+
+## Improvements
+
+- [connectivity] Support consumption of the XSUAA API via destinations. (010a46fa)
+
+## Fixed Issues
+
+- [connectivity] Fix a breaking change of `serviceToken` introduced in 2.0, so it accepts `XsuaaServiceCredentials` again as an option. (3bff42e1)
+
+# 2.6.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.6.0
+
+## Compatibility Notes
+
+- [odata-v4, temporal-de-serializers] Adjust parsing of `Edm.Date`, `Edm.DateTimeOffset`, `Edm.Time`, and `Edm.Duration` to be closer to the OData v4 specification.
+  There may be loss of precision if using the default (de-)serializers with high-precision fractional seconds. (de851289)
+- [generator] Deprecate generator option `versionInPackageJson`. If you need to set the version, use the new `include` option to add your own `package.json` file instead. (069aa168)
+- [generator] The hidden generator option `additionalFiles` is renamed to `include`. (069aa168)
+
+## New Functionalities
+
+- [connectivity] Support JWTs without a `JKU` property. (cb598c16)
+- [connectivity] Add interface `DestinationCacheInterface` and method `setDestinationCache` to support implementation of custom destination cache. (09094607)
+- [connectivity] Fetch client credential token for destinations created by service bindings. (93d41281)
+- [generator] New generator option `include` which allows to add files to generated packages. (069aa168)
+
+## Improvements
+
+- [http-client] Make `requestConfig` of `OriginOptions` optional. (e46bb51d)
+
+## Fixed Issues
+
+- [connectivity] Fix `getDestination()` to allow passing an async transform function `serviceBindingTransformFn` in `options`. The transform function can also be passed by `execute()`, `executeHttpRequest()`, `executeRaw()`, etc.
+  [Compatibility Note] Rename `transformationFn` into `serviceBindingTransformFn` in `DestinationForServiceBindingsOptions` to avoid ambiguity and make the function async. (8fdfebd6)
+- [http-client] Fix the `executeHttpRequest`/`executeHttpRequestWithOrigin` function, so the warning is only shown when overwriting headers by using custom headers. (e44c214a)
+- [odata-common, odata-v4, temporal-de-serializers] Fix parsing of `Edm.DateTimeOffset` with high-precision fractional seconds and edge-cases like 5-digit years. (de851289)
+- [odata-common, generator] Allow OData service to contain an entity name 'entity'. (0675ee3b)
+- [odata-v2] Support negative epoch timestamps in serialization. (9ffe0824)
+
 # 2.5.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.5.0

@@ -12,7 +12,7 @@ import { FilterLink } from './filter-link';
 
 /**
  * A union of all types that can be used for filtering.
- * @typeparam EntityT - Type of the entity to be filtered on.
+ * @typeParam EntityT - Type of the entity to be filtered on.
  */
 export type Filterable<
   EntityT extends EntityBase,
@@ -30,6 +30,7 @@ export type Filterable<
   | BooleanFilterFunction<EntityT>
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;
 
+// eslint-disable-next-line jsdoc/require-returns-check
 /**
  * Combine {@link Filterable}s with logical `and` to create a {@link FilterList}.
  * @example
@@ -39,13 +40,13 @@ export type Filterable<
  *  .filter(and(filterExp1, filterExp2));
  * ```
  *
- * Note that the {@link GetAllRequestBuilder.filter | GetAllRequestBuilderV2.filter}  and {@link GetAllRequestBuilderV4.filter} method take a rest parameter and thereby an array of filter expressions that are then combined conjunctively. As a consequence following is equivalent to the example above:
+ * Note that the {@link @sap-cloud-sdk/odata-v2!GetAllRequestBuilder.filter | GetAllRequestBuilderV2.filter}  and {@link @sap-cloud-sdk/odata-v4!GetAllRequestBuilder.filter | GetAllRequestBuilderV4.filter} method take a rest parameter and thereby an array of filter expressions that are then combined conjunctively. As a consequence following is equivalent to the example above:
  * ```ts
  * Entity.requestBuilder()
  *  .getAll()
  *  .filter(filterExp1, filterExp2);
  * ```
- * @typeparam EntityT - Type of the entity filter on.
+ * @typeParam EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `and`.
  * @returns The newly created FilterList.
  */
@@ -75,6 +76,7 @@ export function and<
   return new FilterList(transformVariadicArgumentToArray(first, rest));
 }
 
+// eslint-disable-next-line jsdoc/require-returns-check
 /**
  * Combine {@link Filterable}s with logical `or` to create a {@link FilterList}.
  * @example
@@ -83,7 +85,7 @@ export function and<
  *  .getAll()
  *  .filter(or(filterExp1, filterExp2));
  * ```
- * @typeparam EntityT - Type of the entity filter on.
+ * @typeParam EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `or`.
  * @returns The newly created FilterList.
  */

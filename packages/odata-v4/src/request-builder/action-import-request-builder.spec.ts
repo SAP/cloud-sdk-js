@@ -6,7 +6,7 @@ import {
   testActionImportUnsupportedEdmTypes
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service/action-imports';
 import { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
-import { entitySerializer } from '@sap-cloud-sdk/odata-common/internal';
+import { entitySerializer } from '@sap-cloud-sdk/odata-common';
 import { defaultDeSerializers } from '../de-serializers';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';

@@ -5,7 +5,7 @@ import {
 import nock from 'nock';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { ErrorResponse } from '@sap-cloud-sdk/odata-common/internal';
+import { ErrorResponse } from '@sap-cloud-sdk/odata-common';
 import {
   createAsChildOfRequest,
   createRequest,

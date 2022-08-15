@@ -18,8 +18,8 @@ import type { Selectable } from './selectable';
  * OData v4 entity: 1:N is a {@link OneToManyLink}, 1:0..1 is a {@link OneToOneLink}.
  *
  * See also: {@link Selectable}.
- * @typeparam EntityT - Type of the entity to be linked from.
- * @typeparam LinkedEntityT - Type of the entity to be linked to.
+ * @typeParam EntityT - Type of the entity to be linked from.
+ * @typeParam LinkedEntityT - Type of the entity to be linked to.
  */
 export class Link<
   EntityT extends EntityBase,
@@ -53,7 +53,7 @@ export class Link<
   ) {}
 
   /**
-   * Creates a selection on a linked entity. Has the same behavior as {@link GetAllRequestBuilder.select | GetAllRequestBuilderV2.select} and {@link GetByKeyRequestBuilderV4.select} but for linked entities.
+   * Creates a selection on a linked entity. Has the same behavior as {@link @sap-cloud-sdk/odata-v2!GetAllRequestBuilder.select | GetAllRequestBuilderV2.select} and {@link @sap-cloud-sdk/odata-v4!GetByKeyRequestBuilder.select | GetByKeyRequestBuilderV4.select} but for linked entities.
    *
    * See also, {@link Selectable}.
    * @param selects - Selection of fields or links on a linked entity.
@@ -81,8 +81,8 @@ export class Link<
 
   /**
    * Create a new link based on a given link.
-   * @typeparam EntityT - Type of the entity to be linked from.
-   * @typeparam LinkedEntityT - Type of the entity to be linked to.
+   * @typeParam EntityT - Type of the entity to be linked from.
+   * @typeParam LinkedEntityT - Type of the entity to be linked to.
    * @returns Newly created link.
    */
   clone(): this {

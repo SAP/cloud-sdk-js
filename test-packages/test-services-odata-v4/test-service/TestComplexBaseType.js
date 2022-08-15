@@ -9,7 +9,7 @@ exports.TestComplexBaseType = exports.TestComplexBaseTypeField = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
  * TestComplexBaseTypeField
- * @typeparam EntityT - Type of the entity the complex type field belongs to.
+ * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 class TestComplexBaseTypeField extends odata_v4_1.ComplexTypeField {
   /**

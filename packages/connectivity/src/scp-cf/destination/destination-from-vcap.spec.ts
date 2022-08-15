@@ -1,7 +1,6 @@
 import {
   mockServiceToken,
-  providerUserPayload,
-  xsuaaBindingMock
+  providerUserPayload
 } from '../../../../../test-resources/test/test-util';
 import * as tokenAccessor from '../token-accessor';
 import { getDestination } from './destination-accessor';
@@ -45,6 +44,21 @@ describe('vcap-service-destination', () => {
     });
 
     expect(getActualClientId(spy)).toBe('clientIdBusinessLogging');
+  });
+
+  it('creates ad destination for the xsuaa service', async () => {
+    await expect(
+      destinationForServiceBinding('my-xsuaa', {
+        jwt: providerUserPayload
+      })
+    ).resolves.toEqual({
+      url: 'https://api.authentication.sap.hana.ondemand.com',
+      authentication: 'OAuth2ClientCredentials',
+      name: 'my-xsuaa',
+      authTokens: [expect.objectContaining({ value: expect.any(String) })]
+    });
+
+    expect(getActualClientId(spy)).toBe('clientIdXsUaa');
   });
 
   it('creates a destination for the service manager service', async () => {
@@ -195,7 +209,6 @@ function mockServiceBindings() {
 }
 
 const serviceBindings = {
-  xsuaa: [xsuaaBindingMock],
   'business-logging': [
     {
       name: 'my-business-logging',
@@ -283,6 +296,18 @@ const serviceBindings = {
         sm_url: 'https://service-manager.cfapps.sap.hana.ondemand.com',
         clientid: 'clientIdServiceManager',
         clientsecret: 'PASSWORD'
+      }
+    }
+  ],
+  xsuaa: [
+    {
+      label: 'xsuaa',
+      name: 'my-xsuaa',
+      tags: ['xsuaa'],
+      credentials: {
+        clientid: 'clientIdXsUaa',
+        clientsecret: 'PASSWORD',
+        apiurl: 'https://api.authentication.sap.hana.ondemand.com'
       }
     }
   ]

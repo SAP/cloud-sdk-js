@@ -13,10 +13,10 @@ import {
   Destination,
   DestinationOrFetchOptions,
   getAgentConfig,
-  toDestinationNameUrl,
-  useOrFetchDestination
+  toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
 import {
+  resolveDestination,
   defaultResilienceBTPServices,
   DestinationConfiguration,
   getAdditionalHeaders,
@@ -55,13 +55,14 @@ export async function buildHttpRequest(
   destination: DestinationOrFetchOptions
 ): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
-  if (!resolvedDestination) {
+  if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
     throw Error(
-      `Failed to resolve the destination '${toDestinationNameUrl(
+      `The type of the destination '${toDestinationNameUrl(
         destination
-      )}'.`
+      )}' has to be 'HTTP', but is '${destination.type}'.`
     );
   }
+
   const headers = await buildHeaders(resolvedDestination);
 
   return buildDestinationHttpRequestConfig(resolvedDestination, headers);
@@ -103,16 +104,15 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
     options?: HttpRequestOptions
   ): Promise<ReturnT> {
     const resolvedDestination = await resolveDestination(destination);
-    if (!resolvedDestination) {
+    if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
       throw Error(
-        `Failed to resolve the destination '${toDestinationNameUrl(
+        `The type of the destination '${toDestinationNameUrl(
           destination
-        )}'.`
+        )}' has to be 'HTTP', but is '${destination.type}'.`
       );
     }
-    const destinationRequestConfig = await buildHttpRequest(
-      resolvedDestination
-    );
+
+    const destinationRequestConfig = await buildHttpRequest(destination);
     logCustomHeadersWarning(requestConfig.headers);
     const request = await buildRequestWithMergedHeadersAndQueryParameters(
       requestConfig,
@@ -337,9 +337,9 @@ function logRequestInformation(request: HttpRequestConfig) {
   }
 }
 
+// eslint-disable-next-line jsdoc/require-returns-check
 /**
- * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given `requestConfig`
- * and executes it (using Axios).
+ * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given `requestConfig` and executes it (using Axios).
  * The overload, that accepts {@link HttpRequestConfigWithOrigin} as a parameter, is deprecated and replaced the function {@link executeHttpRequestWithOrigin}.
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
@@ -351,8 +351,14 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
   requestConfig: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse>;
+// eslint-disable-next-line jsdoc/require-returns-check
 /**
+ * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given `requestConfig` and executes it (using Axios).
  * @deprecated This overload is replaced by the function {@link executeHttpRequestWithOrigin}.
+ * @param destination - A destination or a destination name and a JWT.
+ * @param requestConfig - Any object representing an HTTP request.
+ * @param options - An {@link HttpRequestOptions} of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.
+ * @returns A promise resolving to an {@link HttpResponse}.
  */
 export function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
   destination: DestinationOrFetchOptions,
@@ -420,16 +426,6 @@ async function buildHeaders(
     return await buildHeadersForDestination(destination);
   } catch (error) {
     throw new ErrorWithCause('Failed to build headers.', error);
-  }
-}
-
-async function resolveDestination(
-  destination: DestinationOrFetchOptions
-): Promise<Destination | null> {
-  try {
-    return await useOrFetchDestination(destination);
-  } catch (error) {
-    throw new ErrorWithCause('Failed to load destination.', error);
   }
 }
 

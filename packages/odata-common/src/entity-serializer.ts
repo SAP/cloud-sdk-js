@@ -46,10 +46,9 @@ export interface EntitySerializer {
 
 /**
  * Constructs an entitySerializer given the OData v2 or v4 specific tsToEdm method.
- * The concrete serializers are created in odata/v2/entity-serializer.ts and odata/v4/entity-serializer.ts
+ * The concrete serializers are created in odata/v2/entity-serializer.ts and odata/v4/entity-serializer.ts.
  * @param deSerializers - (De-)serializers used for transformation.
- * @returns a entity serializer as defined by {@link EntitySerializer}
- * @internal
+ * @returns A entity serializer as defined by {@link EntitySerializer}.
  */
 export function entitySerializer(
   deSerializers: DeSerializers

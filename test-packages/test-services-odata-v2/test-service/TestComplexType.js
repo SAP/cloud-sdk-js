@@ -10,7 +10,7 @@ const TestNestedComplexType_1 = require('./TestNestedComplexType');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 /**
  * TestComplexTypeField
- * @typeparam EntityT - Type of the entity the complex type field belongs to.
+ * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 class TestComplexTypeField extends odata_v2_1.ComplexTypeField {
   /**

@@ -5,10 +5,13 @@ export const durationRegexV2 =
   /PT(?<hours>\d{1,2}H)?(?<minutes>\d{1,2}M)?(?<seconds>\d{1,2}S)?/;
 
 /**
+ * Spec see here https://www.w3.org/TR/xmlschema11-2/#nt-duDTFrag
+ * Regex see here https://regex101.com/r/sxO6YO/1
+ * Matches a spec compliant duration like -P5DT12H30M12.9S
  * @internal
  */
 export const durationRegexV4 =
-  /([+-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
+  /^([+-])?P(\d+D)?(T(\d+H)?(\d+M)?(\d+(\.\d+)?S)?)?$/;
 
 /**
  * Interface to represent Time or Duration.

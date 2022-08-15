@@ -1,4 +1,4 @@
-import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common/internal';
+import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common';
 import { defaultDeSerializers, DefaultDeSerializers } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
 import { ODataFunctionImportRequestConfig } from './odata-function-import-request-config';

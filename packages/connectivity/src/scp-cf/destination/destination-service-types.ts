@@ -90,7 +90,7 @@ export interface Destination {
   tokenServicePassword?: string;
 
   /**
-   * The type of the destination, defaults to 'HTTP'. The SAP Cloud SDK only understands destinations of type 'HTTP'.
+   * The type of the destination, defaults to 'HTTP'. The SAP Cloud SDK only understands destinations of type 'HTTP' and 'MAIL'.
    */
   type?: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC';
 
@@ -208,7 +208,7 @@ export interface DestinationCertificate {
 }
 
 /**
- * Options to use while fetching destinations. Encompasses both {@link DestinationCachingOptions} and {@link ResilienceOptions} interfaces.
+ * Options to use while fetching destinations. Encompasses both {@link CachingOptions} and {@link ResilienceOptions} interfaces.
  */
 export type DestinationRetrievalOptions = CachingOptions &
   ResilienceOptions & {

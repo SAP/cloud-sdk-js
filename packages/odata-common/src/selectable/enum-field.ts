@@ -8,10 +8,10 @@ import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 
 /**
  * Represents a property with an enum value.
- * @typeparam EntityT - Type of the entity the field belongs to.
- * @typeparam EnumT - Enum type that contains all valid enum entries for this field.
- * @typeparam NullableT - Boolean type that represents whether the field is nullable.
- * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
+ * @typeParam EntityT - Type of the entity the field belongs to.
+ * @typeParam EnumT - Enum type that contains all valid enum entries for this field.
+ * @typeParam NullableT - Boolean type that represents whether the field is nullable.
+ * @typeParam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class EnumField<
   EntityT extends EntityBase,
@@ -69,7 +69,7 @@ export class EnumField<
 
 /**
  * Convenient type to reflect all the values of a string based enum as a union type.
- * @typeparam T - String based enum type
+ * @typeParam T - String based enum type
  * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html#template-literal-types
  * @internal
  */

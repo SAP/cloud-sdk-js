@@ -1,0 +1,134 @@
+<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@sap-cloud-sdk/temporal-de-serializers | SAP Cloud SDK for JavaScript / TypeScript - v2.7.0</title><meta name="description" content="Documentation for SAP Cloud SDK for JavaScript / TypeScript - v2.7.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base="..">
+<div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">SAP Cloud SDK for JavaScript / TypeScript - v2.7.0</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb">
+<li><a href="../modules.html">SAP Cloud SDK for JavaScript / TypeScript - v2.7.0</a></li>
+<li><a href="sap_cloud_sdk_temporal_de_serializers">@sap-cloud-sdk/temporal-de-serializers</a></li></ul>
+<h1>Module @sap-cloud-sdk/temporal-de-serializers</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><!-- sap-cloud-sdk-logo -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
+<p><a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a></p>
+<!-- sap-cloud-sdk-logo-stop -->
+
+
+<a href="#sap-cloud-sdktemporal-de-serializers" id="sap-cloud-sdktemporal-de-serializers" style="color: inherit; text-decoration: none;">
+  <h1>@sap-cloud-sdk/temporal-de-serializers</h1>
+</a>
+<p>This package contains the <a href="https://tc39.es/proposal-temporal/docs/">Temporal</a> based middleware for date/time (de-)serialization in the SAP Cloud SDK.</p>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<pre><code><span class="hl-0">$</span><span class="hl-1"> </span><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">install</span><span class="hl-1"> @</span><span class="hl-0">sap</span><span class="hl-1">-</span><span class="hl-0">cloud</span><span class="hl-1">-</span><span class="hl-0">sdk</span><span class="hl-1">/</span><span class="hl-0">temporal</span><span class="hl-1">-</span><span class="hl-0">de</span><span class="hl-1">-</span><span class="hl-0">serializers</span>
+</code></pre>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<pre><code><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-0">temporalDeSerializersV4</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sap-cloud-sdk/temporal-de-serializers&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> { </span><span class="hl-6">businessPartnerApi</span><span class="hl-1"> } = </span><span class="hl-8">businessPartnerService</span><span class="hl-1">(</span><span class="hl-0">temporalDeSerializersV4</span><span class="hl-1">);</span><br/><span class="hl-0">businessPartnerApi</span><br/><span class="hl-1">  .</span><span class="hl-8">entityBuilder</span><span class="hl-1">()</span><br/><span class="hl-1">  .</span><span class="hl-8">organizationFoundationDate</span><span class="hl-1">(</span><br/><span class="hl-1">    </span><span class="hl-0">Temporal</span><span class="hl-1">.</span><span class="hl-0">PlainDateTime</span><span class="hl-1">.</span><span class="hl-8">from</span><span class="hl-1">(</span><span class="hl-2">&#39;1995-12-07T03:24:30&#39;</span><span class="hl-1">)</span><br/><span class="hl-1">  )</span><br/><span class="hl-1">  .</span><span class="hl-8">build</span><span class="hl-1">();</span>
+</code></pre>
+<p>For more detailed overview visit our <a href="https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript#using-default-temporal-middleware">Temporal middleware documentation</a>.</p>
+<!-- sap-cloud-sdk-common-readme -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
+
+<a href="#support" id="support" style="color: inherit; text-decoration: none;">
+  <h2>Support</h2>
+</a>
+<p>The recommended way to get in touch with us is to create an issue on <a href="https://github.com/SAP/cloud-sdk-js/issues">GitHub</a>.
+Select the issue category <code>Bug</code>, <code>Feature</code> or <code>Question</code> depending on the nature of your request.
+We try to provide fixes, features and answers as soon as possible.</p>
+
+<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+  <h2>Contribute</h2>
+</a>
+<p>If you would like to contribute to the SAP Cloud SDK, please make yourself familiar with our <a href="https://github.com/SAP/cloud-sdk-js/blob/main/CONTRIBUTING.md">contributing guidelines</a> and follow the given instructions.</p>
+
+<a href="#links" id="links" style="color: inherit; text-decoration: none;">
+  <h2>Links</h2>
+</a>
+<ul>
+<li><a href="https://github.com/SAP/cloud-sdk-js">Github</a></li>
+<li><a href="https://github.com/SAP/cloud-sdk-js/releases">Github - Releases</a></li>
+</ul>
+<br>
+
+<ul>
+<li><a href="https://sap.github.io/cloud-sdk/">SAP Cloud SDK Documentation portal</a></li>
+<li><a href="https://sap.github.io/cloud-sdk/docs/js/getting-started">SAP Cloud SDK Documentation portal - Getting started guide</a></li>
+<li><a href="https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts">SAP Cloud SDK Documentation portal - API documentation</a></li>
+</ul>
+<br>
+
+<ul>
+<li><a href="https://developers.sap.com/topics/cloud-sdk.html">developers.sap.com - Product Overview</a></li>
+<li><a href="https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&amp;tag=topic:javascript">developers.sap.com - Tutorials</a></li>
+</ul>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p>The SAP Cloud SDK is released under the <a href="http://www.apache.org/licenses/">Apache License Version 2.0.</a></p>
+<!-- sap-cloud-sdk-common-readme-stop -->
+</div></section><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/ef338c42/packages/temporal-de-serializers/src/index.ts#L7">packages/temporal-de-serializers/src/index.ts:7</a></li></ul></aside>
+<section class="tsd-panel-group">
+<section class="tsd-panel tsd-typography"></section></section>
+<section class="tsd-panel-group tsd-index-group">
+<section class="tsd-panel tsd-index-panel">
+<h3 class="tsd-index-heading uppercase">Index</h3>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Variables</h3>
+<div class="tsd-index-list"><a href="../variables/sap_cloud_sdk_temporal_de_serializers.temporalDeSerializersV2" class="tsd-index-link tsd-kind-variable tsd-parent-kind-module"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-variable)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-32-path"></rect><path d="M11.106 16L8.85 7.24H9.966L11.454 13.192C11.558 13.608 11.646 13.996 11.718 14.356C11.79 14.708 11.842 14.976 11.874 15.16C11.906 14.976 11.954 14.708 12.018 14.356C12.09 13.996 12.178 13.608 12.282 13.192L13.758 7.24H14.85L12.582 16H11.106Z" fill="var(--color-text)" id="icon-32-text"></path></svg><span>temporal<wbr/>De<wbr/>Serializers<wbr/>V2</span></a>
+<a href="../variables/sap_cloud_sdk_temporal_de_serializers.temporalDeSerializersV4" class="tsd-index-link tsd-kind-variable tsd-parent-kind-module"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-32-path"></use><use href="#icon-32-text"></use></svg><span>temporal<wbr/>De<wbr/>Serializers<wbr/>V4</span></a>
+</div></section></section></section></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current"><a href="../modules.html">SAP <wbr/>Cloud SDK for <wbr/>Java<wbr/>Script / <wbr/>Type<wbr/>Script -<wbr/> v2.7.0</a>
+<ul>
+<li class="tsd-kind-module"><a href="sap_cloud_sdk_connectivity">@sap-<wbr/>cloud-<wbr/>sdk/connectivity</a>
+<ul>
+<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="sap_cloud_sdk_connectivity.Protocol">Protocol</a></li></ul></li>
+<li class="tsd-kind-module"><a href="sap_cloud_sdk_generator">@sap-<wbr/>cloud-<wbr/>sdk/generator</a></li>
+<li class="tsd-kind-module"><a href="sap_cloud_sdk_http_client">@sap-<wbr/>cloud-<wbr/>sdk/http-<wbr/>client</a></li>
+<li class="tsd-kind-module"><a href="sap_cloud_sdk_odata_common">@sap-<wbr/>cloud-<wbr/>sdk/odata-<wbr/>common</a></li>
+<li class="tsd-kind-module"><a href="sap_cloud_sdk_odata_v2">@sap-<wbr/>cloud-<wbr/>sdk/odata-<wbr/>v2</a></li>
+<li class="tsd-kind-module"><a href="sap_cloud_sdk_odata_v4">@sap-<wbr/>cloud-<wbr/>sdk/odata-<wbr/>v4</a></li>
+<li class="tsd-kind-module"><a href="sap_cloud_sdk_openapi">@sap-<wbr/>cloud-<wbr/>sdk/openapi</a></li>
+<li class="tsd-kind-module"><a href="sap_cloud_sdk_openapi_generator">@sap-<wbr/>cloud-<wbr/>sdk/openapi-<wbr/>generator</a></li>
+<li class="current selected tsd-kind-module"><a href="sap_cloud_sdk_temporal_de_serializers">@sap-<wbr/>cloud-<wbr/>sdk/temporal-<wbr/>de-<wbr/>serializers</a></li>
+<li class="tsd-kind-module"><a href="sap_cloud_sdk_test_util">@sap-<wbr/>cloud-<wbr/>sdk/test-<wbr/>util</a></li>
+<li class="tsd-kind-module"><a href="sap_cloud_sdk_util">@sap-<wbr/>cloud-<wbr/>sdk/util</a></li>
+<li class="tsd-kind-module"><a href="mailclient_src">mail-<wbr/>client/src</a></li></ul></li></ul></div></details></nav>
+<nav class="tsd-navigation secondary menu-sticky">
+<ul>
+<li class="tsd-kind-variable tsd-parent-kind-module"><a href="../variables/sap_cloud_sdk_temporal_de_serializers.temporalDeSerializersV2" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-32-path"></use><use href="#icon-32-text"></use></svg>temporal<wbr/>De<wbr/>Serializers<wbr/>V2</a></li>
+<li class="tsd-kind-variable tsd-parent-kind-module"><a href="../variables/sap_cloud_sdk_temporal_de_serializers.temporalDeSerializersV4" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-32-path"></use><use href="#icon-32-text"></use></svg>temporal<wbr/>De<wbr/>Serializers<wbr/>V4</a></li></ul></nav></div></div>
+<div class="container"><p>Copyright Ⓒ 2022 SAP SE or an SAP affiliate company. All rights reserved.</p></div>
+<div class="overlay"></div><script src="../assets/main.js"></script></body></html>

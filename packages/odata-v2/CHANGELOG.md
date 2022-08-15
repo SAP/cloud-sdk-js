@@ -1,5 +1,43 @@
 # @sap-cloud-sdk/odata-v2
 
+## 2.7.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@2.7.1
+- @sap-cloud-sdk/http-client@2.7.1
+- @sap-cloud-sdk/odata-common@2.7.1
+- @sap-cloud-sdk/util@2.7.1
+
+## 2.7.0
+
+### Patch Changes
+
+- Updated dependencies [3bff42e1]
+- Updated dependencies [010a46fa]
+  - @sap-cloud-sdk/connectivity@2.7.0
+  - @sap-cloud-sdk/http-client@2.7.0
+  - @sap-cloud-sdk/odata-common@2.7.0
+  - @sap-cloud-sdk/util@2.7.0
+
+## 2.6.0
+
+### Patch Changes
+
+- 9ffe0824: [Fixed Issue] Support negative epoch timestamps in serialization.
+- Updated dependencies [cb598c16]
+- Updated dependencies [de851289]
+- Updated dependencies [09094607]
+- Updated dependencies [e44c214a]
+- Updated dependencies [0675ee3b]
+- Updated dependencies [93d41281]
+- Updated dependencies [e46bb51d]
+- Updated dependencies [8fdfebd6]
+  - @sap-cloud-sdk/connectivity@2.6.0
+  - @sap-cloud-sdk/odata-common@2.6.0
+  - @sap-cloud-sdk/http-client@2.6.0
+  - @sap-cloud-sdk/util@2.6.0
+
 ## 2.5.0
 
 ### Patch Changes

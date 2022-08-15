@@ -6,7 +6,7 @@ import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
-} from './proxy-util';
+} from './http-proxy-util';
 import { Destination } from './destination-service-types';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import { destinationCache, IsolationStrategy } from './destination-cache';
@@ -19,7 +19,7 @@ const logger = createLogger({
 });
 
 /**
- * @internal
+ * Represents partial options to fetch destinations.
  */
 export interface PartialDestinationFetchOptions {
   useCache?: boolean;
@@ -33,11 +33,10 @@ export interface PartialDestinationFetchOptions {
  * @param serviceInstanceName - The name of the service.
  * @param options - Options to customize the behavior of this function.
  * @returns A destination.
- * @internal
  */
 export async function destinationForServiceBinding(
   serviceInstanceName: string,
-  options: DestinationForServiceBindingsOptions &
+  options: DestinationForServiceBindingOptions &
     PartialDestinationFetchOptions = {}
 ): Promise<Destination> {
   if (options.useCache) {
@@ -54,8 +53,8 @@ export async function destinationForServiceBinding(
   const serviceBindings = loadServiceBindings();
   const selected = findServiceByName(serviceBindings, serviceInstanceName);
   const destination = options.serviceBindingTransformFn
-    ? await options.serviceBindingTransformFn(selected, options.jwt)
-    : await transform(selected, options.jwt);
+    ? await options.serviceBindingTransformFn(selected, options)
+    : await transform(selected, options);
 
   const destWithProxy =
     destination &&
@@ -77,12 +76,11 @@ export async function destinationForServiceBinding(
 }
 
 /**
- * Options to customize the behavior of [[destinationForServiceBinding]].
- * @internal
+ * Options to customize the behavior of {@link destinationForServiceBinding}.
  */
-export interface DestinationForServiceBindingsOptions {
+export interface DestinationForServiceBindingOptions {
   /**
-   * Custom transformation function to control how a [[Destination]] is built from the given [[ServiceBinding]].
+   * Custom transformation function to control how a {@link Destination} is built from the given {@link ServiceBinding}.
    */
   serviceBindingTransformFn?: ServiceBindingTransformFunction;
 }
@@ -92,7 +90,7 @@ export interface DestinationForServiceBindingsOptions {
  */
 export type ServiceBindingTransformFunction = (
   serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
+  options?: PartialDestinationFetchOptions
 ) => Promise<Destination>;
 
 /**
@@ -165,7 +163,7 @@ function findServiceByName(
 
 async function transform(
   serviceBinding: ServiceBinding,
-  jwt?: JwtPayload
+  options?: PartialDestinationFetchOptions
 ): Promise<Destination> {
   if (!serviceToDestinationTransformers[serviceBinding.type]) {
     throw serviceTypeNotSupportedError(serviceBinding.type);
@@ -173,7 +171,7 @@ async function transform(
 
   return serviceToDestinationTransformers[serviceBinding.type](
     serviceBinding,
-    jwt
+    options
   );
 }
 
@@ -201,18 +199,6 @@ function noServiceBindingFoundError(
 }
 
 /**
- * Options to customize the behavior of {@link destinationForServiceBinding}.
- */
-export interface DestinationForServiceBindingOptions {
-  /**
-   * Custom transformation function to control how a {@link Destination} is built from the given {@link ServiceBinding}.
-   */
-  serviceBindingTransformFn?: (
-    serviceBinding: ServiceBinding
-  ) => Promise<Destination>;
-}
-
-/**
  * @internal
  */
 export async function searchServiceBindingForDestination({
@@ -222,14 +208,16 @@ export async function searchServiceBindingForDestination({
   destinationName,
   useCache
 }: DestinationFetchOptions &
-  DestinationForServiceBindingsOptions): Promise<Destination | null> {
+  DestinationForServiceBindingOptions): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
     const jwtFromOptions = iss ? { iss } : jwt ? decodeJwt(jwt) : undefined;
+    const useCacheIgnoringUndefined =
+      typeof useCache !== 'undefined' ? { useCache } : {};
     const destination = await destinationForServiceBinding(destinationName, {
       serviceBindingTransformFn,
       jwt: jwtFromOptions,
-      useCache
+      ...useCacheIgnoringUndefined
     });
     logger.info('Successfully retrieved destination from service binding.');
     return destination;

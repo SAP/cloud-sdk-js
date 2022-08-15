@@ -111,7 +111,7 @@ export interface HttpRequestOptions {
 
 /**
  * This interface is used for defining e.g., headers and query parameters with origin information.
- * The priorities are defined in the {@link origins}.
+ * Options defined in `custom` take precedence over `requestConfig`.
  */
 export interface OriginOptions {
   requestConfig?: Record<string, any>;

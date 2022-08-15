@@ -1,5 +1,5 @@
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, dirname } from 'path';
+import { resolve, parse, basename, dirname, posix } from 'path';
 import {
   createLogger,
   kebabCase,
@@ -16,6 +16,7 @@ import {
   transpileDirectory,
   copyFiles
 } from '@sap-cloud-sdk/generator-common/internal';
+import { glob } from 'glob';
 import { apiFile } from './file-serializer/api-file';
 import {
   packageJson,
@@ -43,7 +44,7 @@ import {
 import { tsconfigJson } from './options/tsconfig-json';
 import { sdkMetadata } from './sdk-metadata';
 
-const { readdir, rmdir, mkdir, lstat } = promisesFs;
+const { mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -72,7 +73,8 @@ export async function generateWithParsedOptions(
   }
 
   if (options.clearOutputDir) {
-    await rmdir(options.outputDir, { recursive: true });
+    const rm = promisesFs.rm || promisesFs.rmdir;
+    await rm(options.outputDir, { recursive: true });
   }
   const inputFilePaths = await getInputFilePaths(options.input);
 
@@ -262,19 +264,30 @@ async function generateService(
  * @internal
  */
 export async function getInputFilePaths(input: string): Promise<string[]> {
-  if ((await lstat(input)).isFile()) {
-    return [input];
+  if (glob.hasMagic(input)) {
+    return new Promise(resolvePromise => {
+      glob(input, (_error, paths) => {
+        resolvePromise(
+          paths
+            .filter(path => /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/.test(path))
+            .map(path => resolve(path))
+        );
+      });
+    });
   }
 
-  const directoryContents = await readdir(input);
+  if ((await lstat(input)).isDirectory()) {
+    return new Promise(resolvePromise => {
+      glob(
+        posix.join(input, '**/*.{json,JSON,yaml,YAML,yml,YML}'),
+        (_error, paths) => {
+          resolvePromise(paths.map(path => resolve(path)));
+        }
+      );
+    });
+  }
 
-  return directoryContents.reduce(
-    async (paths: Promise<string[]>, directoryContent) => [
-      ...(await paths),
-      ...(await getInputFilePaths(resolve(input, directoryContent)))
-    ],
-    Promise.resolve([] as string[])
-  );
+  return [resolve(input)];
 }
 
 function generateReadme(

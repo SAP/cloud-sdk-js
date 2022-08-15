@@ -26,7 +26,7 @@ export function getFunctionDoc(
     if (tags.typeparams) {
       tags.typeparams.forEach(typeparam => {
         description += tagToText(
-          'typeparam',
+          'typeParam',
           `${typeparam.type} ${typeparam.description}`
         );
       });
@@ -48,7 +48,7 @@ export function getFunctionDoc(
 export function getComplexTypeFieldDescription(
   complexType: VdmComplexType
 ): string {
-  return `${complexType.fieldType}${unixEOL}@typeparam EntityT - Type of the entity the complex type field belongs to.`;
+  return `${complexType.fieldType}${unixEOL}@typeParam EntityT - Type of the entity the complex type field belongs to.`;
 }
 /**
  * @internal

@@ -48,7 +48,9 @@ export {
   DestinationJson,
   DestinationsByType,
   ServiceBinding,
-  DestinationForServiceBindingOptions
+  DestinationForServiceBindingOptions,
+  destinationForServiceBinding,
+  PartialDestinationFetchOptions
 } from './scp-cf';
 
 export type {
@@ -57,6 +59,7 @@ export type {
   DestinationOrFetchOptions,
   DestinationOptions,
   ServiceCredentials,
+  XsuaaServiceCredentials,
   DestinationProxyType,
   AuthenticationType,
   DestinationWithName,

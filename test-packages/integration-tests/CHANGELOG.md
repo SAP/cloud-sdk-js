@@ -1,5 +1,45 @@
 # @sap-cloud-sdk/integration-tests
 
+## 2.7.1
+
+### Patch Changes
+
+- Updated dependencies [e7fa8d35]
+  - @sap-cloud-sdk/mail-client@2.7.1
+  - @sap-cloud-sdk/connectivity@2.7.1
+  - @sap-cloud-sdk/test-util@2.7.1
+  - @sap-cloud-sdk/util@2.7.1
+  - @sap-cloud-sdk/test-services-odata-v2@2.7.1
+  - @sap-cloud-sdk/test-services-odata-v4@2.7.1
+
+## 2.7.0
+
+### Patch Changes
+
+- Updated dependencies [3bff42e1]
+- Updated dependencies [010a46fa]
+  - @sap-cloud-sdk/connectivity@2.7.0
+  - @sap-cloud-sdk/mail-client@2.7.0
+  - @sap-cloud-sdk/test-util@2.7.0
+  - @sap-cloud-sdk/util@2.7.0
+  - @sap-cloud-sdk/test-services-odata-v2@2.7.0
+  - @sap-cloud-sdk/test-services-odata-v4@2.7.0
+
+## 2.6.0
+
+### Patch Changes
+
+- Updated dependencies [cb598c16]
+- Updated dependencies [de851289]
+- Updated dependencies [09094607]
+- Updated dependencies [93d41281]
+- Updated dependencies [8fdfebd6]
+  - @sap-cloud-sdk/connectivity@2.6.0
+  - @sap-cloud-sdk/test-services-odata-v2@2.6.0
+  - @sap-cloud-sdk/test-services-odata-v4@2.6.0
+  - @sap-cloud-sdk/test-util@2.6.0
+  - @sap-cloud-sdk/util@2.6.0
+
 ## 2.5.0
 
 ### Patch Changes

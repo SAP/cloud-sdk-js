@@ -1,4 +1,9 @@
-import { DestinationOrFetchOptions, sanitizeDestination } from './destination';
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import {
+  DestinationOrFetchOptions,
+  sanitizeDestination,
+  toDestinationNameUrl
+} from './destination';
 import { Destination } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
 import {
@@ -30,6 +35,33 @@ export async function useOrFetchDestination(
   return isDestinationFetchOptions(destination)
     ? getDestination(destination)
     : sanitizeDestination(destination);
+}
+
+/**
+ * Resolve a destination by the following steps:
+ * 1. Call [[useOrFetchDestination]]
+ * 2. Throw an error, when the resulting destination from the previous step is falsy
+ * 3. Return the checked destination.
+ * @param destination - A destination or the necessary parameters to fetch one.
+ * @returns A promise resolving to the requested destination on success.
+ * @internal
+ */
+export async function resolveDestination(
+  destination: DestinationOrFetchOptions
+): Promise<Destination> {
+  const resolvedDestination = await useOrFetchDestination(destination).catch(
+    error => {
+      throw new ErrorWithCause('Failed to load destination.', error);
+    }
+  );
+  if (!resolvedDestination) {
+    throw Error(
+      `Failed to resolve the destination '${toDestinationNameUrl(
+        destination
+      )}'.`
+    );
+  }
+  return resolvedDestination;
 }
 
 /**

@@ -37,13 +37,13 @@ export type FilterOperatorByType<FieldT> = FieldT extends string
   : FilterOperatorBoolean;
 
 /**
- * Represents a filter expression to narrow the data on a {@link GetAllRequestBuilder} request for multiple entities that match the specified criteria.
+ * Represents a filter expression to narrow the data on a {@link GetAllRequestBuilderBase | GetAllRequestBuilder} request for multiple entities that match the specified criteria.
  * A filter refers to the field of an entity and restricts the request based on an operator and a value. `Entity.FIELD_NAME.operator(value)`.
  * @example `Product.NAME.equals('cloud-sdk')` creates a filter for the entity `Product` that matches in case the field `NAME` equals 'cloud-sdk'.
  *
  * See also: {@link Filterable}.
- * @typeparam EntityT - Type of the entity to be filtered on.
- * @typeparam FieldT - Type of the field to be filtered by, see also: {@link FieldType}.
+ * @typeParam EntityT - Type of the entity to be filtered on.
+ * @typeParam FieldT - Type of the field to be filtered by.
  */
 export class Filter<
   EntityT extends EntityBase,

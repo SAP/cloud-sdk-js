@@ -24,7 +24,7 @@ function getChangelogWithVersion(v = currentSdkVersion): string {
 
 export function addCurrentChangelog(): void {
   const changelog = getChangelogWithVersion();
-  const releaseNotes = openFile('./cloud-sdk/docs/js/release-notes.mdx');
+  const releaseNotes = openFile('./cloud-sdk/docs-js/release-notes.mdx');
   let releaseNotesArray = releaseNotes.split(
     `<!-- This line is used for our release notes automation -->${unixEOL}`
   );
@@ -33,5 +33,5 @@ export function addCurrentChangelog(): void {
   const newReleaseNotes = releaseNotesArray.join(
     `<!-- This line is used for our release notes automation -->${unixEOL}`
   );
-  writeFileSync('./cloud-sdk/docs/js/release-notes.mdx', newReleaseNotes);
+  writeFileSync('./cloud-sdk/docs-js/release-notes.mdx', newReleaseNotes);
 }

@@ -168,7 +168,7 @@ describe('getOptionsPerService', () => {
         skipValidation: false
       } as ParsedGeneratorOptions)
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-            "Duplicate service directory names found. Customize directory names with \`optionsPerService\` or enable automatic name adjustment with \`skipValidation\`.
+            "Duplicate service file names would result in duplicate directory names. Customize directory names with \`optionsPerService\` or enable automatic name adjustment with \`skipValidation\`.
             	Duplicates:
             		Directory name: 'service', specifications: [
             			/user/path1/service,

@@ -94,8 +94,8 @@ export function deserializeDurationToTemporal(
   value: string
 ): Temporal.Duration {
   try {
-    const match = value.match(durationRegexV4);
-    if (match && match[0] !== value) {
+    const match = durationRegexV4.exec(value);
+    if (!match || match[0] !== value) {
       throw new Error();
     }
     return Temporal.Duration.from(value);

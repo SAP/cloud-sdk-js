@@ -9,13 +9,10 @@ import { EntityBase } from '../../entity-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { EntityApi } from '../../entity-api';
-import { CreateRequestBuilderBase } from '../create-request-builder-base';
-import { UpdateRequestBuilderBase } from '../update-request-builder-base';
-import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
 import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
 import { serializeBatchRequest } from './batch-request-serializer';
 import { BatchSubRequestPathType } from './batch-request-options';
-import { BatchChangeSet } from './batch-change-set';
+import { BatchChangeSet, ChangesetBuilderTypes } from './batch-change-set';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. {@link GetAllRequestBuilder | getAll} and {@link GetByKeyRequestBuilder | getByKey} requests and change sets, which in turn can contain {@link CreateRequestBuilder | create}, {@link UpdateRequestBuilder | update} or {@link DeleteRequestBuilder | delete} requests.
@@ -112,19 +109,10 @@ export class BatchRequestBuilder<
   }
 }
 
-/**
- * Some function imports contain not serializable entities and the execute() method is removed from them.
- * Since the execute method is not needed in batch the execute is also removed from all other builders to have a common base class.
- */
-type AllBuilderTypes<DeSerializersT extends DeSerializers> = ChangesetBuilderTypes<DeSerializersT> |
-   Omit<GetAllRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
-  | Omit<GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
-
-export type ChangesetBuilderTypes<DeSerializersT extends DeSerializers> =
-    | Omit<CreateRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
-    | Omit<UpdateRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
-    | Omit<DeleteRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
-    | Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'>;
+type AllBuilderTypes<DeSerializersT extends DeSerializers> =
+  | ChangesetBuilderTypes<DeSerializersT>
+  | Omit<GetAllRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+  | Omit<GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>;
 
 function isActionFunctionImport<DeSerializersT extends DeSerializers>(
   req: AllBuilderTypes<DeSerializersT>

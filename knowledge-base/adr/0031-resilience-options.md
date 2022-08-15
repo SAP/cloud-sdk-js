@@ -92,16 +92,27 @@ Defaults:
 
 This determines the possible options you can set.
 The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the default values.
-If you pass `true`, this will enable the resilience option with the default values.
-If you pass `false`, this will disable the resilience option.
+We will introduce a context passed to the resilience implementation to give information on the call: 
 
 ```ts
-import { StringValue } from 'ms';
-type RetryOptions = undefined | true | false | AsyncRetryLibOptions;
-type CircuitBreakerOptions = undefined | true | false | OpssumLibOptions;
-type TimeoutOptions = undefined | number | { service: number; target: number };
+type RequestContext = {    
+    category: 'xsuaa' | 'destination' | 'target',
+    url?: string,
+    headers?: Record<string,string>,
+    jwt?: string,
+    destination?: Destination,
+    method: 'GET' | 'POST' | 'DELETE',
+    ...
+}
+```
+The same object is also used to determine and adjust the options
+```ts
+type RetryOptions = false | AsyncRetryLibOptions;
+type CircuitBreakerOptions = false| Omit<OpossumLibOptions, 'timeout'>; // timeout is not handled by opossum
+type TimeoutOptions = false | number;
 
-interface OpssumLibOptions {
+
+interface OpossumLibOptions {
   timeout?: StringValue | false | undefined; // default 10sec
   errorThresholdPercentage?: number | undefined; // default 50
   volumeThreshold?: number | undefined; // default 10
@@ -119,24 +130,47 @@ interface AsyncRetryLibOptions {
 }
 
 // in the resilience call:
-type ResilienceOptions = {
-  timeout: undefined | number;
-  retry: RetryOptions | { service: RetryOptions; target: RetryOptions };
-  circuitBreaker:
-    | CircuitBreakerOptions
-    | { service: CircuitBreakerOptions; target: CircuitBreakerOptions };
+type ResilienceMiddlewareOptions = {
+  timeout: (context?:RequestContext) => TimeoutOptions
+  retry:  (context?:RequestContext) => RetryOptions
+  circuitBreaker: (context?:RequestContext) => CircuitBreakerOptions  
 };
 ```
 
-The term `service` indicates the calls to the SAP BTP services and the `target` to the requests to the system in the destination.
-The default situation with 10sec timeout, circuit breaker on and retry switched off would be:
+The explicit way to define the default situation with 10sec timeout, circuit breaker for BTP and retry switched off would be:
 
 ```ts
-defaultResilienceOptions: ResilienceOptions = {
-  timeout: 10000,
-  retry: false,
-  circuitBreaker: true
+defaultResilienceOptions: ResilienceMiddleWareOptions = {
+  timeout: (context:RequestContext) => 10000,
+  retry: (context:RequestContext) => false,
+  circuitBreaker: enableCircuitBreakerForBTP
 };
+
+function enableCircuitBreakerForBTP(context:RequestContext):CircuitBreakerOptions{
+    if(context.url.includes(btpDomain)){
+        return defaultCircuitBreakerOptions
+    }
+    return false
+}
+```
+
+The default will change in version 3.0 to:
+
+```ts
+defaultResilienceOptions: ResilienceMiddleWareOptions = {
+  timeout: (context:RequestContext) => 1000,
+  retry: (context:RequestContext) => defaultRetryOptions,
+  circuitBreaker: (context:RequestContext) => defaultCircuitBreakerOptions
+};
+```
+The user can provide sophisticated methods if needed.
+From version 3.0 the resilience will be on by default using the options above, so the methods will be either used to disable or adjust the resilience. 
+A `disabled` method for convenience could be nice:
+
+```ts
+function disabled(context:RequestContext):false{
+    return false
+}
 ```
 
 ### API
@@ -145,50 +179,80 @@ defaultResilienceOptions: ResilienceOptions = {
 - An optional `id` is passed to the `middleware` method.
 - The `id` will give us the flexibility to add and manage additional middlewares in the future.
 - You can find some rough PoC examples [here](0031-resilience.js)
-- The context will most likely be the request configuration
 
 ```ts
 myApi
   .getAll()
-  .middleware(resilience({ circuitBreaker: false }), id)
+  .middleware(resilience({ circuitBreaker: () => false }), id)
   .execute({ destinationName: 'my-dest' });
 
-type Middleware<T> = <T>(
+executeHttpRequest({
+          destinationName: 'my-dest'
+        },
+        {
+          resilience: resilience({ timeout: () => 123 })
+        }
+);
+
+type MiddlewareInOut<T> = {
   fn: () => Promise<T>,
-  context?: RequestConfig
-) => Promise<T>;
+  exitChain: boolean,
+  context?: RequestContext
+}
+
+type Middleware<T> = <T>(options:MiddlewareInOut) => MiddlewareInOut;
 ```
+
+Implementation Idea: It could make sense to model the resilience internally as multiple middlewares:
+```ts
+function resilience(options:ResilienceMiddlewareOptions){
+    const [circuitBreaker,timeout,retry]:Middleware[] = createResilience(options)    
+    return (
+            options:MiddlewareInOut
+    )=>{
+      asynPipe( [circuitBreaker,timeout,retry], options)               
+    }
+}
+```
+
+Implementation Idea: It could make sense to introduce a `cache` middleware later.
+The cache should triggering an early chain exit before the resilience layer.
+
+### Use Cases
 
 Use Case A :
 
 - User wants to adjust options of resilience.
 - `id` is omitted and options are passed to middleware call.
-- The default resilience middleware function contains a `id` property with content `sdkResilience`.
-- This property identifies the middleware as `resilience` and replaces the default with the one with options.
-- The options are extended - the example below would add retry and set a different timeout
+- The resilience middleware function contains an `id` property with content `sdkResilience`.
+- This property identifies the middleware as `resilience` and passes it down to the [http calls](#Parameter Passing)
+- The example below would add retry and set a different timeout
 
 ```ts
 resilience({
-  timeout: 123,
-  retry: { retries: 3 }
+  timeout: () => 123,
+  retry: ()=>({...defaultRetryOptions,retires:3})
 });
 ```
 
+With the function also complicated conditions are possible see `retryForTarget` above.
+
 Use Case B:
 
-- User wants to switch off resilience.
+- User wants to switch off resilience (consider disable predefined function)
 - User passes the relevant options:
 
 ```ts
 resilience({
-  retry: false,
-  circuitBreaker: false
+  retry: () => false,
+  circuitBreaker: () => false,
+  timoute: () => false,
 });
 ```
 
 Use Case C:
 
-- User needs to replace the resilience implementation because options are not enough
+- User needs to replace the resilience implementation because options depending on request config are not enough
 - A custom method is passed
 - `sdkResilience` is passed as id in the `.middleware()` method
 - The implementation of the SDK is omitted and the provided one is used instead
@@ -204,28 +268,19 @@ myApi.getAll().middleware(myCustomResilience, 'sdkResilience').execute({
 Use Case D:
 
 - User wants to add non resilience middleware or extend the existing one with additional steps
-- `id` is omitted and SDK sets some value
 - Methods with custom implementation are passed and executed in order
 
 ```ts
+//additional layers
 myApi
   .getAll()
-  .middleware(resilience({ retry: true })) // switch on retry using default implementation
-  .middleware(customHandler1)
-  .middleware(customHandler2)
+  .middleware(resilience({ retry: () => defaultRetryOptions })) // switch on retry using default implementation
+  .middleware(custom1)
+  .middleware(custom2)
   .execute({
     destinationName: 'my-dest'
   });
 ```
-
-Pro:
-
-- Flexible
-- Let the user include also other middleware
-
-Contra:
-
-- Most implementation effort
 
 ### Setting Resilience Globally
 
@@ -249,78 +304,84 @@ function globalResilience(middleWare: Middleware, id: string) {}
 function clearGlobalResilience(id?: string) {}
 ```
 
-### Rejected API Alternatives
+### Parameter Passing
 
-#### API A - Opinionated
+We will extend the `HttpRequestOptions` with the resilience related options and pass these around:
 
-We pick an implementation and only provide options.
-The API would look like:
+```ts
+
+function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
+  destination: DestinationOrFetchOptions,
+  requestConfig: T,
+  options?: HttpRequestOptions
+){
+    //implementation
+}
+
+type HttpRequestOptions = {
+    csrfTokenFetching:boolean,
+    resilience?: MiddleWare
+}
+```
+
+The resilience value could be a totally custom middleware, one with custom options or if not given the default.
+If methods execute http request they will get the additional option.
+For example the `getDestination()` or `serviceToken()` methods:
+
+```ts
+function getDestination(
+    options: DestinationFetchOptions & DestinationForServiceBindingOptions,
+    httpRequestOptions?: HttpRequestOptions //contains resilience
+){
+  //implementation
+}
+
+function serviceToken( 
+    service: string | Service,        
+    options?: OldOptions & {resilience?: MiddlewareOptions}
+){
+  //implementation
+}
+```
+
+### Deprecation Period
+
+We will have a deprecation period for the old options.
+If both options are given then new one should win.
 
 ```ts
 myApi
   .getAll()
-  .timeout(20) // deprecate
-  .resilience({...}) // ResilienceOptions
-  .execute({
-      enableCircuitBreaker: true, // deprecate
-      timeout: 10, // deprecate
-      destinationName: 'my-dest'
+  .timeout(456)                //deprecated      
+  .middleware(resilience({ circuitBreaker: () => false,timeout:() => 123 }), id)
+  .execute({ destinationName: 'my-dest',
+    timeout:456,                //deprecated      
+    disableCiruitBreaker:true   //deprecated      
   });
+
+//user 123 as timeout and circuit breaker of
+
 executeHttpRequest({
-      destinationName: 'my-dest'
-    },
-    {
-      resilience: {...} // ResilieceOptions
-    }
+          destinationName: 'my-dest'
+        },
+        {
+          timeout: 456,  
+          resilience: resilience({ timeout: ()=>123 })
+        }
 );
+
+//use 123 as timeout
 ```
 
-Pro:
-
-- Easy to use
-- Defaults non-breaking
-- TypeScript shows options
-
-Contra:
-
-- No custom implementation
-- We have to make assumption on reasonable behavior
-
-#### API B - Middleware (Default off)
-
-- Users can pass a function taking a function with arguments and returning a `Promise<T>`.
-- For example the input could be the `http-request` function with arguments and the return the promise of `http-client`
-- We provide a sample implementation `resilience()` for easy consumption
-- Assumes all resilience is switched off per default
+In the intermediate period where options can be given via the old and new we have to do evaluation:
 
 ```ts
-import {executeHttpRequest} from "@sap-cloud-sdk/http-client";
+import {defaultResilienceBTPServices} from "@sap-cloud-sdk/connectivity/dist/scp-cf";
 
-myApi
-  .getAll()
-  .middleware(resilience({retry: 3}))
-  .execute({destinationName: 'my-dest'});
-
-executeHttpRequest({
-    destinationName: 'my-dest'
-  },
-  {
-    resilience: resilience({...})
-  }
-);
-
-type Middleware<T> = <T>(
-        fn: () => Promise<T>,
-        context?: 'service' | 'target'
-) => Promise<T>;
+function getClientCredentialsToken(service: string | Service,
+                                   userJwt?: string | JwtPayload,
+                                   options?: ResilienceOptions & { resilience: ResilienceMiddlewareOptions }) {
+    
+   const timeout = options.resilience.timeout || (options.timeout ? () => options.timeout : defaultResilienceOptions.timeout)
+}
 ```
-
-Pro:
-
-- Easy to use
-- Flexible
-- TypeScript shows options
-
-Contra:
-
-- Extension of existing resilience not possible

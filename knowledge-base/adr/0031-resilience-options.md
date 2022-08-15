@@ -95,8 +95,9 @@ The `RetryOptions` and `CircuitBreakerOptions` could be used to overwrite the de
 We will introduce a context passed to the resilience implementation to give information on the call: 
 
 ```ts
-type RequestContext = {
-    url: string,
+type RequestContext = {    
+    category: 'xsuaa' | 'destination' | 'target',
+    url?: string,
     headers?: Record<string,string>,
     jwt?: string,
     destination?: Destination,
@@ -106,9 +107,9 @@ type RequestContext = {
 ```
 The same object is also used to determine and adjust the options
 ```ts
-type RetryOptions = 'disabled' | AsyncRetryLibOptions;
-type CircuitBreakerOptions = 'disabled'| Omit<OpossumLibOptions, 'timeout'>; // timeout is not handled by opossum
-type TimeoutOptions = 'disabled' | number;
+type RetryOptions = false | AsyncRetryLibOptions;
+type CircuitBreakerOptions = false| Omit<OpossumLibOptions, 'timeout'>; // timeout is not handled by opossum
+type TimeoutOptions = false | number;
 
 
 interface OpossumLibOptions {
@@ -130,9 +131,9 @@ interface AsyncRetryLibOptions {
 
 // in the resilience call:
 type ResilienceMiddlewareOptions = {
-  timeout: (context?:RequestContext)=>TimeoutOptions
-  retry:  (context?:RequestContext)=>RetryOptions
-  circuitBreaker: (context?:RequestContext)=>CircuitBreakerOptions  
+  timeout: (context?:RequestContext) => TimeoutOptions
+  retry:  (context?:RequestContext) => RetryOptions
+  circuitBreaker: (context?:RequestContext) => CircuitBreakerOptions  
 };
 ```
 
@@ -140,8 +141,8 @@ The explicit way to define the default situation with 10sec timeout, circuit bre
 
 ```ts
 defaultResilienceOptions: ResilienceMiddleWareOptions = {
-  timeout: (context:RequestContext)=>10000,
-  retry: (context:RequestContext)=>'disabled',
+  timeout: (context:RequestContext) => 10000,
+  retry: (context:RequestContext) => false,
   circuitBreaker: enableCircuitBreakerForBTP
 };
 
@@ -157,9 +158,9 @@ The default will change in version 3.0 to:
 
 ```ts
 defaultResilienceOptions: ResilienceMiddleWareOptions = {
-  timeout: (context:RequestContext)=>1000,
-  retry: (context:RequestContext)=>defaultRetryOptions,
-  circuitBreaker: (context:RequestContext)=>defaultCircuitBreakerOptions
+  timeout: (context:RequestContext) => 1000,
+  retry: (context:RequestContext) => defaultRetryOptions,
+  circuitBreaker: (context:RequestContext) => defaultCircuitBreakerOptions
 };
 ```
 The user can provide sophisticated methods if needed.
@@ -182,14 +183,14 @@ function disabled(context:RequestContext):false{
 ```ts
 myApi
   .getAll()
-  .middleware(resilience({ circuitBreaker: ()=>false }), id)
+  .middleware(resilience({ circuitBreaker: () => false }), id)
   .execute({ destinationName: 'my-dest' });
 
 executeHttpRequest({
           destinationName: 'my-dest'
         },
         {
-          resilience: resilience({ timeout: ()=>123 })
+          resilience: resilience({ timeout: () => 123 })
         }
 );
 
@@ -229,7 +230,7 @@ Use Case A :
 
 ```ts
 resilience({
-  timeout: ()=>123,
+  timeout: () => 123,
   retry: ()=>({...defaultRetryOptions,retires:3})
 });
 ```
@@ -243,9 +244,9 @@ Use Case B:
 
 ```ts
 resilience({
-  retry: ()=>false,
-  circuitBreaker: ()=>false,
-  timoute: ()=>false,
+  retry: () => false,
+  circuitBreaker: () => false,
+  timoute: () => false,
 });
 ```
 
@@ -273,7 +274,7 @@ Use Case D:
 //additional layers
 myApi
   .getAll()
-  .middleware(resilience({ retry: ()=>defaultRetryOptions })) // switch on retry using default implementation
+  .middleware(resilience({ retry: () => defaultRetryOptions })) // switch on retry using default implementation
   .middleware(custom1)
   .middleware(custom2)
   .execute({
@@ -352,7 +353,7 @@ If both options are given then new one should win.
 myApi
   .getAll()
   .timeout(456)                //deprecated      
-  .middleware(resilience({ circuitBreaker: ()=>false,timeout:()=>123 }), id)
+  .middleware(resilience({ circuitBreaker: () => false,timeout:() => 123 }), id)
   .execute({ destinationName: 'my-dest',
     timeout:456,                //deprecated      
     disableCiruitBreaker:true   //deprecated      

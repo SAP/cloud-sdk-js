@@ -32,7 +32,7 @@ ${header}
   const functionImportResponse = `--${boundary}
 ${header}
 
-{"TestFunctionImportGET":"true"}
+{"d": {"TestFunctionImportGET":"MyText"}}
 --${boundary}--
 `;
 
@@ -67,7 +67,7 @@ ${header}
       const casted = testFunctionImportGet({} as any).responseTransformer(
         response[0].body
       );
-      expect(casted).toEqual(true);
+      expect(casted).toEqual('MyText');
     }
     jest.restoreAllMocks();
   });

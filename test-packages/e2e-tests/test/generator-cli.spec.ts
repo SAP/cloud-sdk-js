@@ -136,7 +136,7 @@ describe('generator-cli', () => {
     );
     expect(actualPackageJson.version).toEqual('42.23');
   });
-  it('should throw a warning messge for a deprecated option even when the generatoin process is failed', async () => {
+  it('should throw a warning message for a deprecated option even when the generation process is failed', async () => {
     try {
       await execa('npx', [
         'ts-node',

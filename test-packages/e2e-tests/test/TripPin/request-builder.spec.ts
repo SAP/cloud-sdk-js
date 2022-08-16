@@ -37,7 +37,7 @@ function createPeople(userName: string): People {
     .build();
 }
 
-describe('Request builder', () => {
+xdescribe('Request builder', () => {
   it('should return a collection of entities for get all request', async () => {
     const people = await requestBuilder
       .getAll()
@@ -63,7 +63,7 @@ describe('Request builder', () => {
       );
       expect(parsed.name).toBe('Rome Ciampino Airport');
     }
-  }, 60000);
+  });
 
   it('should return a collection all friends of a person', async () => {
     const people = (

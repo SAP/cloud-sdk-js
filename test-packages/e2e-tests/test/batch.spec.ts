@@ -42,7 +42,7 @@ describe('batch', () => {
       const parsed = responseGetAll.as(testEntityApi);
       expect(parsed[0].stringProperty).toBeDefined();
     }
-  }, 999999);
+  });
 
   it('should execute retrieve and change set requests', async () => {
     const getAll = requestBuilder.getAll();

@@ -53,8 +53,6 @@ ${header}
       ''
     ].join('\r\n');
 
-    const bodl =
-      '--batch_test-boundary\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET /sap/opu/odata/sap/API_TEST_SRV/TestFunctionImportGET HTTP/1.1\r\nContent-Type: application/json\r\nAccept: application/json\r\n\r\n\r\n--batch_test-boundary--\r\n';
     nock(baseUrl)
       .post('/sap/opu/odata/sap/API_TEST_SRV/$batch', body)
       .reply(202, functionImportResponse, {

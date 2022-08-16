@@ -80,11 +80,15 @@ export class BatchRequestBuilder<
     EntityApi<EntityBase, DeSerializersT>
   > {
     return this.requests.reduce(
-        (apis, request) => ({
-          ...apis,
-          ...(request instanceof BatchChangeSet ? buildMapEntries<DeSerializersT>(request) : buildMapEntry<DeSerializersT>(request))
-        }),{}
-    )}
+      (apis, request) => ({
+        ...apis,
+        ...(request instanceof BatchChangeSet
+          ? buildMapEntries<DeSerializersT>(request)
+          : buildMapEntry<DeSerializersT>(request))
+      }),
+      {}
+    );
+  }
 
   private setPayload(
     request: ODataRequest<ODataBatchRequestConfig>
@@ -111,19 +115,24 @@ function isActionOrFunctionImport<DeSerializersT extends DeSerializers>(
   );
 }
 
-function buildMapEntries<DeSerializersT extends DeSerializers>(changeSet:BatchChangeSet<DeSerializersT>):Record<
-string,
-EntityApi<EntityBase, DeSerializersT>
->{
-  return changeSet.requests.reduce((changeSetApis, changesetReq)=>
-          (isActionOrFunctionImport(changesetReq) ? changeSetApis :{...changeSetApis,...buildMapEntry(changesetReq)})
-      ,{})
+function buildMapEntries<DeSerializersT extends DeSerializers>(
+  changeSet: BatchChangeSet<DeSerializersT>
+): Record<string, EntityApi<EntityBase, DeSerializersT>> {
+  return changeSet.requests.reduce(
+    (changeSetApis, changesetReq) =>
+      isActionOrFunctionImport(changesetReq)
+        ? changeSetApis
+        : { ...changeSetApis, ...buildMapEntry(changesetReq) },
+    {}
+  );
 }
 
 function buildMapEntry<DeSerializersT extends DeSerializers>(
   request: AllBuilderTypes<DeSerializersT>
 ): Record<string, EntityApi<EntityBase, DeSerializersT>> {
-  return isActionOrFunctionImport(request) ? {} : {
-    [request._entityApi.entityConstructor._entityName]: request._entityApi
-  };
+  return isActionOrFunctionImport(request)
+    ? {}
+    : {
+        [request._entityApi.entityConstructor._entityName]: request._entityApi
+      };
 }

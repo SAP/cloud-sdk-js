@@ -10,6 +10,7 @@ import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { EntityApi } from '../../entity-api';
 import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
+import { ODataRequestConfig } from '../../request';
 import { serializeBatchRequest } from './batch-request-serializer';
 import { BatchSubRequestPathType } from './batch-request-options';
 import { BatchChangeSet, ChangesetBuilderTypes } from './batch-change-set';
@@ -36,7 +37,10 @@ export class BatchRequestBuilder<
       | BatchChangeSet<DeSerializersT>
       | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
       | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
-      | Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'>
+      | Omit<
+          ActionFunctionImportRequestBuilderBase<unknown, ODataRequestConfig>,
+          'execute'
+        >
     )[]
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));

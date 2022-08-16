@@ -117,9 +117,9 @@ type AllBuilderTypes<DeSerializersT extends DeSerializers> =
 function isActionFunctionImport<DeSerializersT extends DeSerializers>(
   req: AllBuilderTypes<DeSerializersT>
 ): req is Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'> {
-  return (
-    !!req.requestConfig['functionImportName'] ||
-    !!req.requestConfig['actionImportName']
+  return !!(
+    req.requestConfig['functionImportName'] ??
+    req.requestConfig['actionImportName']
   );
 }
 

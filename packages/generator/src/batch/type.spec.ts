@@ -6,11 +6,11 @@ describe('type', () => {
 
   it('considers only GET function imports for read response', () => {
     const types = (readRequestType(foodService).type as string).split('|');
-    expect(types.join()).toMatch(  /funcGetReturn/ );
+    expect(types.join()).toMatch(/funcGetReturn/);
   });
 
   it('considers not POST function imports for read response', () => {
     const types = (readRequestType(foodService).type as string).split('|');
-    expect(types.join()).not.toMatch(  /funcPostReturn/ );
+    expect(types.join()).not.toMatch(/funcPostReturn/);
   });
 });

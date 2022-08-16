@@ -28,20 +28,25 @@ describe('batch', () => {
       .skipCsrfTokenFetching()
       .withSubRequestPathType('relativeToEntity')
       .execute(destination);
-    if (responseSdk.isReadResponse()) {
-      const parsed = returnSapCloudSdk({}).responseTransformer(
-        responseSdk.body
-      );
-      expect(parsed).toBe('SapCloudSdk');
+    if (!responseSdk.isReadResponse()) {
+      throw new Error('Expected response type is not read');
     }
-    if (responseInt.isReadResponse()) {
-      const parsed = returnInt({} as any).responseTransformer(responseInt.body);
-      expect(parsed).toBe(123);
+
+    expect(returnSapCloudSdk({}).responseTransformer(responseSdk.body)).toBe(
+      'SapCloudSdk'
+    );
+
+    if (!responseInt.isReadResponse()) {
+      throw new Error('Expected response type is not read');
     }
-    if (responseGetAll.isReadResponse()) {
-      const parsed = responseGetAll.as(testEntityApi);
-      expect(parsed[0].stringProperty).toBeDefined();
+    expect(returnInt({} as any).responseTransformer(responseInt.body)).toBe(
+      123
+    );
+
+    if (!responseGetAll.isReadResponse()) {
+      throw new Error('Expected response type is not read');
     }
+    expect(responseGetAll.as(testEntityApi)[0].stringProperty).toBeDefined();
   });
 
   it('should execute retrieve and change set requests', async () => {

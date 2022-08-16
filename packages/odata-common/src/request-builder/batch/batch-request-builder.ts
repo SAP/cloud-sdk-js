@@ -34,8 +34,8 @@ export class BatchRequestBuilder<
     readonly defaultServicePath: string,
     readonly requests: (
       | BatchChangeSet<DeSerializersT>
-      | Omit<GetAllRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
-      | Omit<GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+      | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
+      | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
       | Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'>
     )[]
   ) {
@@ -99,8 +99,8 @@ export class BatchRequestBuilder<
 
 type AllBuilderTypes<DeSerializersT extends DeSerializers> =
   | ChangesetBuilderTypes<DeSerializersT>
-  | Omit<GetAllRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
-  | Omit<GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>;
+  | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
+  | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>;
 
 function isActionOrFunctionImport<DeSerializersT extends DeSerializers>(
   req: AllBuilderTypes<DeSerializersT>

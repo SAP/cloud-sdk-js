@@ -26,12 +26,12 @@ export class BatchChangeSet<
 /**
  *
  *  Some function imports contain not serializable entities and the execute() method is removed from them.
- *  Since the execute method is not needed in batch the execute is also removed from all other builders to have a common base class.
+ *  Since the execute method is not needed in batch the execute it is removed from all function imports.
  *
  * @Internal
  */
 export type ChangesetBuilderTypes<DeSerializersT extends DeSerializers> =
-  | Omit<CreateRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
-  | Omit<UpdateRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
-  | Omit<DeleteRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
+  | CreateRequestBuilderBase<EntityBase, DeSerializersT>
+  | UpdateRequestBuilderBase<EntityBase, DeSerializersT>
+  | DeleteRequestBuilderBase<EntityBase, DeSerializersT>
   | Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'>;

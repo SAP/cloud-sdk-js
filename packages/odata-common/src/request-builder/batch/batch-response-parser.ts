@@ -164,7 +164,6 @@ export function parseHttpCode(response: string): number {
   if (response.match('Unknown Status Code') && response.match('@odata')) {
       return 200;
     }
-  }
 
   throw new Error('Cannot parse http code of the response.');
 }

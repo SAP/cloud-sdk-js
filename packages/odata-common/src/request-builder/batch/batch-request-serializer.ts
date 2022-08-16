@@ -43,7 +43,7 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
  * @returns The serialized string representation of a multipart request, including the multipart headers.
  * @internal
  */
-export function serializeRequest<DeSerializersT extends DeSerializers>(
+export function serializeRequest(
   request: Omit<MethodRequestBuilder, 'execute'>,
   options: BatchRequestSerializationOptions = {}
 ): string {

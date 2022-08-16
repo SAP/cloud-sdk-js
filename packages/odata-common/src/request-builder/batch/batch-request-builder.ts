@@ -84,10 +84,8 @@ export class BatchRequestBuilder<
         ...apis,
         ...(request instanceof BatchChangeSet
           ? request.requests.reduce((changeSetApis, changesetReq) => {
-              if (isActionFunctionImport<DeSerializersT>(changesetReq)) {
-                return changeSetApis;
-              }
-              return {
+              isActionFunctionImport<DeSerializersT>(changesetReq)) ?
+                changeSetApis : { ...changeSetApis, ...buildMapEntry<>() }
                 ...changeSetApis,
                 ...buildMapEntry<DeSerializersT>(changesetReq)
               };

@@ -124,10 +124,7 @@ function isActionOrFunctionImport<DeSerializersT extends DeSerializers>(
 function buildMapEntry<DeSerializersT extends DeSerializers>(
   request: AllBuilderTypes<DeSerializersT>
 ): Record<string, EntityApi<EntityBase, DeSerializersT>> {
-  if (isActionFunctionImport(request)) {
-    return {};
-  }
-  return {
+  return isActionFunctionImport(request) ? {} : {
     [request._entityApi.entityConstructor._entityName]: request._entityApi
   };
 }

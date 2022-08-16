@@ -6,15 +6,11 @@ describe('type', () => {
 
   it('considers only GET function imports for read response', () => {
     const types = (readRequestType(foodService).type as string).split('|');
-    expect(types).toContain(
-      'FunctionImportRequestBuilder<DeSerializersT, funcGetReturn<DeSerializersT>, string>'
-    );
+    expect(types.join()).toMatch(  /funcGetReturn/ );
   });
 
   it('considers not POST function imports for read response', () => {
     const types = (readRequestType(foodService).type as string).split('|');
-    expect(types).not.toContain(
-      'FunctionImportRequestBuilder<DeSerializersT, funcPostReturn<DeSerializersT>, string>'
-    );
+    expect(types.join()).not.toMatch(  /funcPostReturn/ );
   });
 });

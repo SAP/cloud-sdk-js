@@ -68,17 +68,10 @@ export abstract class ODataRequestConfig {
     }
   }
 
-  /**
-   * Set timeout.
-   */
   set timeout(timeout: number | undefined) {
     this._timeout = timeout;
   }
 
-  /**
-   * Get timeout.
-   * @returns Timeout.
-   */
   get timeout(): number | undefined {
     return this._timeout;
   }

@@ -70,13 +70,6 @@ describe('generator-cli', () => {
       outputDir
     });
   });
-  it('should ', () => {
-    const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
-      createOptionsFromConfig(pathToConfig) as {
-        inputDir: string;
-        outputDir: string;
-      };
-  });
   it('should generate VDM if there is a valid config file', async () => {
     const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
       createOptionsFromConfig(pathToConfig) as {
@@ -143,7 +136,7 @@ describe('generator-cli', () => {
     );
     expect(actualPackageJson.version).toEqual('42.23');
   });
-  it('should throw an error for a fail of generation due to an invalid specification file', async () => {
+  it('should throw a warning messge for a deprecated option even when the generatoin process is failed', async () => {
     try {
       await execa('npx', [
         'ts-node',
@@ -154,11 +147,12 @@ describe('generator-cli', () => {
           '../../../test-resources/generator/resources/faulty-edmx'
         ),
         '-o',
-        outputDir
+        outputDir,
+        '--versionInPackageJson=42.23'
       ]);
     } catch (err) {
       expect(err.stdout).toMatch(
-        /Caused by:\nError: No types found for API_TEST_SRV.A_TestComplexTypeMISTAKE/
+        /\(generator-options\): The option 'versionInPackageJson' is deprecated since v2.6.0./
       );
     }
   });

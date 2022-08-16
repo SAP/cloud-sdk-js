@@ -161,8 +161,7 @@ export function parseHttpCode(response: string): number {
   }
 
   // The Trippin sample service returns this Unknown Status Code but if the @odata metadata is there we got data.
-  if (response.match('Unknown Status Code')) {
-    if (response.match('@odata')) {
+  if (response.match('Unknown Status Code') && response.match('@odata')) {
       return 200;
     }
   }

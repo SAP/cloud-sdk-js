@@ -155,5 +155,5 @@ describe('generator-cli', () => {
         /\(generator-options\): The option 'versionInPackageJson' is deprecated since v2.6.0./
       );
     }
-  });
+  }, 60000);
 });

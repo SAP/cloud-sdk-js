@@ -42,8 +42,8 @@ export function importBatchDeclarations(
 function getNamedImports(service: VdmServiceMetadata): string[] {
   const complexTypes = service.functionImports
     .filter(
-      f =>
-        f.returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
+      ({returnType}) =>
+        returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
     )
     .map(f => f.returnType.returnType);
   return unique([

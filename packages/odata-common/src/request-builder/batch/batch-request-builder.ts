@@ -114,7 +114,7 @@ type AllBuilderTypes<DeSerializersT extends DeSerializers> =
   | Omit<GetAllRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>
   | Omit<GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>, 'execute'>;
 
-function isActionFunctionImport<DeSerializersT extends DeSerializers>(
+function isActionOrFunctionImport<DeSerializersT extends DeSerializers>(
   req: AllBuilderTypes<DeSerializersT>
 ): req is Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'> {
   return !!(

@@ -464,24 +464,6 @@ describe('OAuth flows', () => {
   });
 
   xit('Mail: Provider cloud basic auth', async () => {
-    // {
-    //   "originalProperties": {
-    //   "Name": "dummy-mail-destination-cloud",
-    //     "Type": "MAIL",
-    //     "Authentication": "BasicAuthentication",
-    //     "ProxyType": "Internet",
-    //     "mail.password": "***",
-    //     "mail.description": "***",
-    //     "mail.user": "***"
-    // },
-    //   "authTokens": [],
-    //   "certificates": [],
-    //   "name": "dummy-mail-destination-cloud",
-    //   "type": "MAIL",
-    //   "authentication": "BasicAuthentication",
-    //   "proxyType": "Internet",
-    //   "isTrustingAllCertificates": false
-    // }
     const destination = await getDestinationFromDestinationService({
       destinationName: systems.email.providerCloudBasic
     });
@@ -506,15 +488,12 @@ describe('OAuth flows', () => {
     });
 
     expect(destination?.proxyType).toEqual('OnPremise');
-    // TODO: use the key `onpremise_socks5_proxy_port` for the proxy type of the email destination instead of `onpremise_proxy_port` (normal OnPrem HTTP destination)
-    // The test below should pass now, as the port is anyway a number.
-    // Please double check the value, before enabling.
-    // expect(destination!.proxyConfiguration).toMatchObject({
-    //   headers: { 'Proxy-Authorization': expect.stringMatching(/Bearer.*/) },
-    //   host: expect.stringMatching(/.*sap\.hana\.ondemand\.com/),
-    //   port: expect.stringMatching(/\d+/),
-    //   protocol: 'http'
-    // });
+    expect(destination!.proxyConfiguration).toMatchObject({
+      'proxy-authorization': expect.any(String),
+      host: expect.stringMatching(/.*sap\.hana\.ondemand\.com/),
+      port: expect.any(Number),
+      protocol: 'socks'
+    });
   }, 60000);
 
   xit('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {

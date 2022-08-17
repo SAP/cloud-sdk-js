@@ -106,7 +106,8 @@ interface MailAddress {
 #### Protocol of the Proxy
 
 - When proxy type is `OnPremise`, use `http` protocol, being the same as `http-client`.
-- When proxy type is `Internet` and `http_proxy` is set in the environment, use `http` protocol, being the same as `http-client`.
+- When proxy type is `Internet` and `http(s)_proxy` is set in the environment, use `http` protocol, being the same as `http-client`.
+- When proxy type is `Internet` and `no_proxy` is set in the environment, do not use proxies, being the same as `http-client`.
 
 ### Test strategy
 
@@ -145,3 +146,17 @@ Applications on BTP can send mails with `MAIL` destinations to cloud/On-Prem mai
 ### Useful links
 
 - [Using socks proxy with nodemailer](https://nodemailer.com/smtp/proxies/#2-using-socks-proxy)
+
+### PoC notes
+#### Protocol for sending emails
+- using SMTP protocol
+  Working with `nodemailer` + basic auth
+- using socket protocol
+  Our PoC tried `WS.WebSocket`, but as socket protocol without knowing SMTP, it did not support email related APIs.
+  E.g, authentication + email properties (from/to...) cannot be configured
+#### OnPrm Proxy
+- support socket proxy for now
+  It uses custom auth handler with JWT.
+- http proxy (later)
+  Below is one example with `node-http-proxy-agent`, that is not tested, and has cumbersome implementation.
+  [Useful example](https://github.com/TooTallNate/node-http-proxy-agent/blob/master/src/agent.ts#L83)

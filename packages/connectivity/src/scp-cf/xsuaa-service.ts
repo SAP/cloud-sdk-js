@@ -4,7 +4,7 @@ import { executeWithMiddleWare } from '../resilience/resilience';
 import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
-import {Service, ServiceCredentials} from './environment-accessor-types';
+import { Service, ServiceCredentials } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
   defaultResilienceBTPServices,
@@ -107,14 +107,16 @@ export async function getClientCredentialsToken(
   //   });
   // }
 
-
-  const xssecPromise= <ClientCredentialsResponse>(creds:ServiceCredentials,subAndZone:SubdomainAndZoneId): Promise<ClientCredentialsResponse> => new Promise(
-    (resolve, reject) => {
+  const xssecPromise = <ClientCredentialsResponse>(
+    creds: ServiceCredentials,
+    subAndZone: SubdomainAndZoneId
+  ): Promise<ClientCredentialsResponse> =>
+    new Promise((resolve, reject) => {
       xssec.requests.requestClientCredentialsToken(
         subAndZone.subdomain,
         creds,
         null,
-          subAndZone.zoneId,
+        subAndZone.zoneId,
         (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
           err ? reject(err) : resolve(tokenResponse)
       );
@@ -123,7 +125,12 @@ export async function getClientCredentialsToken(
   const serviceCredentials = resolveService(service).credentials;
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  const wrapped = await executeWithMiddleWare<ClientCredentialsResponse>(xssecPromise,[serviceCredentials,subdomainAndZoneId],options?.middleWare,{ ...options?.middleWareContext,category:'xsuaa',jwt:userJwt });
+  const wrapped = await executeWithMiddleWare<ClientCredentialsResponse>(
+    xssecPromise,
+    [serviceCredentials, subdomainAndZoneId],
+    options?.middleWare,
+    { ...options?.middleWareContext, category: 'xsuaa', jwt: userJwt }
+  );
   return wrapped;
   // return wrapInTimeout(xssecPromise, timeout);
 }

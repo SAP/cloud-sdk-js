@@ -9,10 +9,10 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   circuitBreakerDefaultOptions,
-  defaultResilienceBTPServices,
   ResilienceOptions
 } from '../resilience-options';
 import { urlAndAgent } from '../../http-agent';
+import { executeWithMiddleWare } from '../../resilience/resilience';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -26,7 +26,6 @@ import {
 } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 import { DestinationFetchOptions } from './destination-accessor-types';
-import {executeWithMiddleWare} from "../../resilience/resilience";
 
 const logger = createLogger({
   package: 'connectivity',
@@ -164,7 +163,7 @@ export async function fetchDestination(
   token: string | AuthAndExchangeTokens,
   options: DestinationServiceOptions
 ): Promise<Destination> {
-  options.middleWareContext = {...options.middleWareContext,jwt:token}
+  options.middleWareContext = { ...options.middleWareContext, jwt: token };
   return fetchDestinationByTokens(
     destinationServiceUri,
     typeof token === 'string' ? { authHeaderJwt: token } : token,
@@ -317,7 +316,14 @@ async function callDestinationService(
   //   return getCircuitBreaker().fire(config);
   // }
 
-  return executeWithMiddleWare((config)=>axios.request(config),[config],options?.middleWare,{...options?.middleWareContext,category:'destination'})
+  return executeWithMiddleWare<
+    AxiosResponse<
+      DestinationCertificateJson | DestinationConfiguration | DestinationJson
+    >
+  >(conf => axios.request(conf), [config], options?.middleWare, {
+    ...options?.middleWareContext,
+    category: 'destination'
+  });
 
   // return axios.request(config);
 }

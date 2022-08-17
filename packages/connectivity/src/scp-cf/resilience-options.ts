@@ -3,6 +3,9 @@
  */
 import { MiddleWare, RequestContext } from '../resilience/resilience';
 
+/**
+ * ResilienceOptions.
+ */
 export interface ResilienceOptions {
   /**
    * A boolean value that indicates whether to execute request to SCP-CF services using circuit breaker.
@@ -15,14 +18,23 @@ export interface ResilienceOptions {
    */
   timeout?: number;
 
-  middleWare?: MiddleWare;
+  /**
+   * Middleware.
+   */
+  middleWare?: MiddleWare<any>;
+  /**
+   * Middleware. Context.
+   */
   middleWareContext?: Partial<RequestContext>;
 }
 
 /**
  * @internal
  */
-export const defaultResilienceBTPServices: Omit<Required<ResilienceOptions>,'middleWare'|'middleWareContext'>= {
+export const defaultResilienceBTPServices: Omit<
+  Required<ResilienceOptions>,
+  'middleWare' | 'middleWareContext'
+> = {
   enableCircuitBreaker: true,
   timeout: 10000
 };

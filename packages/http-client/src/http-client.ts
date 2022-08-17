@@ -455,7 +455,7 @@ function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest {
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
   return executeWithMiddleWare(
-    (request) => axios.request(mergeRequestWithAxiosDefaults(request)),
+    req => axios.request(mergeRequestWithAxiosDefaults(req)),
     [request],
     request.middleWare,
     { category: 'target', ...request.middleWareContext }

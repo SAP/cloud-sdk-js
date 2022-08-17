@@ -18,8 +18,6 @@ describe('batch', () => {
   afterEach(async () => deleteEntity(entityKey, destination));
 
   it('should execute multiple function imports', async () => {
-    await deleteEntity(1234, destination);
-
     const [responseSdk, responseInt, responseGetAll] = await batch(
       returnSapCloudSdk({}),
       returnInt({ param: 123 }),

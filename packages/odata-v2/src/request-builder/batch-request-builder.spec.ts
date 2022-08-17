@@ -38,6 +38,10 @@ ${header}
 
   const baseUrl = 'https://some.sdk.test.url.com';
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('batch works with funciton imports', async () => {
     const body = [
       `--batch_${boundary}`,
@@ -67,7 +71,6 @@ ${header}
       );
       expect(casted).toEqual('MyText');
     }
-    jest.restoreAllMocks();
   });
 
   it('executes a getAll request', async () => {

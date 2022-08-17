@@ -14,14 +14,12 @@ import {
   readCompilerOptions,
   sdkMetadataHeader,
   transpileDirectory,
-  copyFiles
+  copyFiles,
+  packageDescription
 } from '@sap-cloud-sdk/generator-common/internal';
 import { glob } from 'glob';
 import { apiFile } from './file-serializer/api-file';
-import {
-  packageJson,
-  genericDescription
-} from './file-serializer/package-json';
+import { packageJson } from './file-serializer/package-json';
 import { readme } from './file-serializer/readme';
 import { schemaFile } from './file-serializer/schema-file';
 import { apiIndexFile, schemaIndexFile } from './file-serializer/index-file';
@@ -353,7 +351,7 @@ async function generatePackageJson(
     'package.json',
     packageJson({
       npmPackageName: packageName,
-      description: genericDescription(directoryName),
+      description: packageDescription(directoryName),
       sdkVersion: await getSdkVersion(),
       version: packageVersion,
       license: licenseInPackageJson

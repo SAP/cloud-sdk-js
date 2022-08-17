@@ -12,6 +12,7 @@ import {
   buildHeadersForDestination,
   Destination,
   DestinationOrFetchOptions,
+  executeWithMiddleWare,
   getAgentConfig,
   toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
@@ -121,6 +122,11 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
     );
 
     request.headers = await addCsrfTokenToHeader(destination, request, options);
+    request.middleWareContext = {
+      destination: resolvedDestination,
+      jwt: destination.jwt,
+      url: destination.url
+    };
     logRequestInformation(request);
     return executeFn(request);
   };
@@ -448,7 +454,12 @@ function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest {
 }
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
-  return axios.request(mergeRequestWithAxiosDefaults(request));
+  return executeWithMiddleWare(
+    (request) => axios.request(mergeRequestWithAxiosDefaults(request)),
+    [request],
+    request.middleWare,
+    { category: 'target', ...request.middleWareContext }
+  );
 }
 
 /**

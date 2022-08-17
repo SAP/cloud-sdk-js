@@ -71,3 +71,6 @@ export {
   HttpAgentConfig,
   HttpsAgentConfig
 } from './http-agent';
+
+export type { MiddleWare,RequestContext } from './resilience/resilience';
+export { executeWithMiddleWare } from './resilience/resilience';

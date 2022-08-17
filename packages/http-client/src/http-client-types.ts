@@ -1,4 +1,5 @@
 import * as http from 'http';
+import { MiddleWare, RequestContext } from '@sap-cloud-sdk/connectivity';
 
 /**
  * Represents the request configuration, that was inferred from a destination.
@@ -63,6 +64,8 @@ export interface HttpRequestConfigBase {
   method: Method;
   data?: any;
   timeout?: number;
+  middleWare?: MiddleWare;
+  middleWareContext?: Partial<RequestContext>;
   maxContentLength?: number;
   proxy?: false;
   httpAgent?: any;

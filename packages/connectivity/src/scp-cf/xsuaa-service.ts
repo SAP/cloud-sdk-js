@@ -1,9 +1,10 @@
 import * as xssec from '@sap/xssec';
 import CircuitBreaker from 'opossum';
+import { executeWithMiddleWare } from '../resilience/resilience';
 import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
-import { Service } from './environment-accessor-types';
+import {Service, ServiceCredentials} from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
   defaultResilienceBTPServices,
@@ -95,33 +96,36 @@ export async function getClientCredentialsToken(
   userJwt?: string | JwtPayload,
   options?: ResilienceOptions
 ): Promise<ClientCredentialsResponse> {
-  const { enableCircuitBreaker, timeout } = {
-    ...defaultResilienceBTPServices,
-    ...options
-  };
-  if (enableCircuitBreaker) {
-    return wrapInCircuitBreaker(getClientCredentialsToken)(service, userJwt, {
-      enableCircuitBreaker: false,
-      timeout
-    });
-  }
-  const serviceCredentials = resolveService(service).credentials;
-  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
+  // const { enableCircuitBreaker, timeout } = {
+  //   ...defaultResilienceBTPServices,
+  //   ...options
+  // };
+  // if (enableCircuitBreaker) {
+  //   return wrapInCircuitBreaker(getClientCredentialsToken)(service, userJwt, {
+  //     enableCircuitBreaker: false,
+  //     timeout
+  //   });
+  // }
 
-  const xssecPromise: Promise<ClientCredentialsResponse> = new Promise(
+
+  const xssecPromise= <ClientCredentialsResponse>(creds:ServiceCredentials,subAndZone:SubdomainAndZoneId): Promise<ClientCredentialsResponse> => new Promise(
     (resolve, reject) => {
       xssec.requests.requestClientCredentialsToken(
-        subdomainAndZoneId.subdomain,
-        serviceCredentials,
+        subAndZone.subdomain,
+        creds,
         null,
-        subdomainAndZoneId.zoneId,
+          subAndZone.zoneId,
         (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
           err ? reject(err) : resolve(tokenResponse)
       );
-    }
-  );
+    });
 
-  return wrapInTimeout(xssecPromise, timeout);
+  const serviceCredentials = resolveService(service).credentials;
+  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
+
+  const wrapped = await executeWithMiddleWare<ClientCredentialsResponse>(xssecPromise,[serviceCredentials,subdomainAndZoneId],options?.middleWare,{ ...options?.middleWareContext,category:'xsuaa',jwt:userJwt });
+  return wrapped;
+  // return wrapInTimeout(xssecPromise, timeout);
 }
 
 /**

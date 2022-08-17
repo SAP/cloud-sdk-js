@@ -1,6 +1,8 @@
 /**
  * Options to configure resilience when fetching destinations.
  */
+import { MiddleWare, RequestContext } from '../resilience/resilience';
+
 export interface ResilienceOptions {
   /**
    * A boolean value that indicates whether to execute request to SCP-CF services using circuit breaker.
@@ -12,12 +14,15 @@ export interface ResilienceOptions {
    * Timeout in milliseconds to retrieve the destination.
    */
   timeout?: number;
+
+  middleWare?: MiddleWare;
+  middleWareContext?: Partial<RequestContext>;
 }
 
 /**
  * @internal
  */
-export const defaultResilienceBTPServices: Required<ResilienceOptions> = {
+export const defaultResilienceBTPServices: Omit<Required<ResilienceOptions>,'middleWare'|'middleWareContext'>= {
   enableCircuitBreaker: true,
   timeout: 10000
 };

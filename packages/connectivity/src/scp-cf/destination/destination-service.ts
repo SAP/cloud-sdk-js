@@ -26,6 +26,7 @@ import {
 } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 import { DestinationFetchOptions } from './destination-accessor-types';
+import {executeWithMiddleWare} from "../../resilience/resilience";
 
 const logger = createLogger({
   package: 'connectivity',
@@ -163,6 +164,7 @@ export async function fetchDestination(
   token: string | AuthAndExchangeTokens,
   options: DestinationServiceOptions
 ): Promise<Destination> {
+  options.middleWareContext = {...options.middleWareContext,jwt:token}
   return fetchDestinationByTokens(
     destinationServiceUri,
     typeof token === 'string' ? { authHeaderJwt: token } : token,
@@ -300,23 +302,24 @@ async function callDestinationService(
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
-  const { enableCircuitBreaker, timeout } = {
-    ...defaultResilienceBTPServices,
-    ...options
-  };
+  // const { enableCircuitBreaker, timeout } = {
+  //   ...defaultResilienceBTPServices,
+  //   ...options
+  // };
   const config: AxiosRequestConfig = {
     ...urlAndAgent(uri),
     proxy: false,
     method: 'get',
-    timeout,
     headers
   };
+  //
+  // if (enableCircuitBreaker) {
+  //   return getCircuitBreaker().fire(config);
+  // }
 
-  if (enableCircuitBreaker) {
-    return getCircuitBreaker().fire(config);
-  }
+  return executeWithMiddleWare((config)=>axios.request(config),[config],options?.middleWare,{...options?.middleWareContext,category:'destination'})
 
-  return axios.request(config);
+  // return axios.request(config);
 }
 
 function getCircuitBreaker(): DestinationCircuitBreaker<

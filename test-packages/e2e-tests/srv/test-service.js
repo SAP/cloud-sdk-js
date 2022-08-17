@@ -1,9 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cds = require('@sap/cds');
+const { SELECT, DELETE, INSERT } = cds;
 
 module.exports = async srv => {
   const db = await cds.connect.to('db');
-  const { TestEntity } = srv.entities;
+  const { TestEntity } = db.entities;
 
   // bound function
   srv.on('getStringProperty', 'TestEntity', async oRequest => {

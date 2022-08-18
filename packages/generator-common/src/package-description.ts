@@ -1,5 +1,10 @@
 /**
  * @internal
  */
-export const packageDescription = (packageName: string): string =>
-  `SAP Cloud SDK for JavaScript: Generated client for service ${packageName}`;
+export function packageDescription(
+  packageName: string,
+  formatter?: (packageName: string) => string
+): string {
+  const formattedPackageName = formatter ? formatter(packageName) : packageName;
+  return `SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service ${formattedPackageName}`;
+}

@@ -1,7 +1,8 @@
-import { createLogger, flatten } from '@sap-cloud-sdk/util';
-import { getVcapService } from '../environment-accessor';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt } from '../jwt';
+import { Service } from '../environment-accessor-types';
+import { getServiceByInstanceName } from '../environment-accessor';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -50,8 +51,7 @@ export async function destinationForServiceBinding(
     }
   }
 
-  const serviceBindings = loadServiceBindings();
-  const selected = findServiceByName(serviceBindings, serviceInstanceName);
+  const selected = getServiceByInstanceName(serviceInstanceName)!;
   const destination = options.serviceBindingTransformFn
     ? await options.serviceBindingTransformFn(selected, options)
     : await transform(selected, options);
@@ -80,7 +80,7 @@ export async function destinationForServiceBinding(
  */
 export interface DestinationForServiceBindingOptions {
   /**
-   * Custom transformation function to control how a {@link Destination} is built from the given {@link ServiceBinding}.
+   * Custom transformation function to control how a {@link Destination} is built from the given {@link Service}.
    */
   serviceBindingTransformFn?: ServiceBindingTransformFunction;
 }
@@ -89,113 +89,27 @@ export interface DestinationForServiceBindingOptions {
  * Type of the function to transform the service binding.
  */
 export type ServiceBindingTransformFunction = (
-  serviceBinding: ServiceBinding,
+  service: Service,
   options?: PartialDestinationFetchOptions
 ) => Promise<Destination>;
 
-/**
- * Represents the JSON object for a given service binding as obtained from the VCAP_SERVICE environment variable.
- * To see service bindings, run `cf env <app-name>` in the terminal. This will produce output like this:
- * ```
- * {
- * ...
- *   "VCAP_SERVICES": {
- *     "s4-hana-cloud": [
- *       {
- *         "name": "...",
- *         "type": "...".
- *         ...
- *       }
- *     ]
- *   }
- * }
- * ```
- * In this example, the key "s4-hana-cloud" refers to an array of service bindings.
- */
-export interface ServiceBinding {
-  [key: string]: any;
-  name: string;
-  type: string;
-}
-
-function loadServiceBindings(): ServiceBinding[] {
-  const vcapServices = getVcapService();
-  if (!vcapServices) {
-    throw noVcapServicesError();
-  }
-  return transformServiceBindings(vcapServices) as ServiceBinding[];
-}
-
-const transformServiceBindings = (vcapService: Record<string, any>) => {
-  const serviceTypes = inlineServiceTypes(vcapService);
-  const flattened = flattenServiceBindings(serviceTypes);
-  return flattened;
-};
-
-function flattenServiceBindings(
-  vcapServices: Record<string, any>
-): Record<string, any>[] {
-  return flatten(Object.values(vcapServices));
-}
-
-function inlineServiceTypes(
-  vcapServices: Record<string, any>
-): Record<string, any> {
-  return Object.entries(vcapServices).reduce(
-    (vcap, [serviceType, bindings]) => ({
-      ...vcap,
-      [serviceType]: bindings.map(b => ({ ...b, type: serviceType }))
-    }),
-    {}
-  );
-}
-
-function findServiceByName(
-  serviceBindings: ServiceBinding[],
-  serviceInstanceName: string
-): ServiceBinding {
-  const found = serviceBindings.find(s => s.name === serviceInstanceName);
-  if (!found) {
-    throw noServiceBindingFoundError(serviceBindings, serviceInstanceName);
-  }
-  return found;
-}
-
 async function transform(
-  serviceBinding: ServiceBinding,
+  service: Service,
   options?: PartialDestinationFetchOptions
 ): Promise<Destination> {
-  if (!serviceToDestinationTransformers[serviceBinding.type]) {
-    throw serviceTypeNotSupportedError(serviceBinding.type);
+  if (!serviceToDestinationTransformers[service.label]) {
+    throw serviceTypeNotSupportedError(service.label);
   }
 
-  return serviceToDestinationTransformers[serviceBinding.type](
-    serviceBinding,
+  return serviceToDestinationTransformers[service.label](
+    service,
     options
-  );
-}
-
-function noVcapServicesError(): Error {
-  return Error(
-    'No services are bound to the application (environment variable VCAP_SERVICES is not defined)!'
   );
 }
 
 function serviceTypeNotSupportedError(serviceType: string): Error {
   return Error(`Service of type ${serviceType} is not supported! Consider providing your own transformation function when calling destinationForServiceBinding, like this:
   destinationServiceForBinding(yourServiceName, { serviceBindingToDestination: yourTransformationFunction });`);
-}
-
-function noServiceBindingFoundError(
-  serviceBindings: Record<string, any>[],
-  serviceInstanceName: string
-): Error {
-  return Error(
-    `Unable to find a service binding for given name "${serviceInstanceName}"! Found the following bindings: ${serviceBindings
-      .map(s => s.name)
-      .join(', ')}.
-      `
-  );
 }
 
 /**

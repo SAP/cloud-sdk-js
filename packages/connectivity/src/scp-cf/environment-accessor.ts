@@ -1,6 +1,5 @@
 import {
   createLogger,
-  ErrorWithCause,
   first,
   unique
 } from '@sap-cloud-sdk/util';
@@ -118,6 +117,21 @@ export function getService(service: string): Service | undefined {
 }
 
 /**
+ * @internal
+ * Write check that its only one, and if it is one only return the first entry in the array.
+ */
+export function getServiceByInstanceName(serviceInstanceName: string): Service | undefined {
+  const service = xsenv.filterServices(serviceInstanceName);
+
+  if(service.length > 1){
+    throw Error(`Multiple services with this name: "${serviceInstanceName}" were found.`);
+  } else if(service.length < 1){
+    throw Error(`No service with the name: "${serviceInstanceName}" was found.`);
+  }
+  return service[0];
+}
+
+/**
  * Get destination service if one is present.
  *
  * @returns Destination service
@@ -131,53 +145,6 @@ export function getDestinationService(): Service {
     throw Error('No binding to a destination service found.');
   }
   return destinationService;
-}
-
-/**
- * 'VCAP_SERVICES' Getter from environment variables.
- * This function returns the VCAP_SERVICES as object or `null`, if it is not defined (i.e. no services are bound to the application).
- *
- * @returns 'VCAP_SERVICES' found in environment variables or `null`, if not defined. The key denotes the name ov the service and the value is the definition.
- * @internal
- */
-export function getVcapService(): Record<string, any> | null {
-  const env = getEnvironmentVariable('VCAP_SERVICES');
-  let vcapServices: Record<string, any>;
-  if (!env) {
-    logger.warn("Environment variable 'VCAP_SERVICES' is not defined.");
-    return null;
-  }
-  try {
-    vcapServices = JSON.parse(env);
-  } catch (error) {
-    throw new ErrorWithCause(
-      "Failed to parse environment variable 'VCAP_SERVICES'.",
-      error
-    );
-  }
-  if (!Object.keys(vcapServices).length) {
-    throw new Error(
-      "Environment variable 'VCAP_SERVICES' is defined but empty. This should not happen."
-    );
-  }
-
-  return vcapServices;
-}
-
-/**
- * Environment variables accessor.
- * @param name - Environment variable name.
- * @returns Env variable value if defined or `null`, if not defined.
- * @internal
- */
-export function getEnvironmentVariable(
-  name: string
-): string | undefined | null {
-  if (process.env[name]) {
-    return process.env[name];
-  }
-  logger.debug(`The environment variable "${name}" is not defined.`);
-  return null;
 }
 
 /**

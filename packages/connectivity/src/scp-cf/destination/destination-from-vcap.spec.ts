@@ -3,10 +3,10 @@ import {
   providerUserPayload
 } from '../../../../../test-resources/test/test-util';
 import * as tokenAccessor from '../token-accessor';
+import { Service } from '../environment-accessor-types';
 import { getDestination } from './destination-accessor';
 import {
-  destinationForServiceBinding,
-  ServiceBinding
+  destinationForServiceBinding
 } from './destination-from-vcap';
 import { destinationCache } from './destination-cache';
 import SpyInstance = jest.SpyInstance;
@@ -151,8 +151,8 @@ describe('vcap-service-destination', () => {
 
   it('creates a destination using a custom transformation function', async () => {
     const serviceBindingTransformFn = jest.fn(
-      async (serviceBinding: ServiceBinding) => ({
-        url: serviceBinding.credentials.sys
+      async (service: Service) => ({
+        url: service.credentials.sys
       })
     );
 
@@ -187,8 +187,8 @@ describe('vcap-service-destination', () => {
 
   it('finds the destination when searching for service bindings', async () => {
     const serviceBindingTransformFn = jest.fn(
-      async (serviceBinding: ServiceBinding) => ({
-        url: serviceBinding.credentials.sys
+      async (service: Service) => ({
+        url: service.credentials.sys
       })
     );
 

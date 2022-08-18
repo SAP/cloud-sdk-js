@@ -43,7 +43,7 @@ import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
-} from './proxy-util';
+} from './http-proxy-util';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -506,7 +506,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         return destination;
       default:
         throw new Error(
-          'Illegal argument: No valid proxy configuration found in the destination input to be aded.'
+          'Illegal argument: No valid proxy configuration found in the destination input to be added.'
         );
     }
   }

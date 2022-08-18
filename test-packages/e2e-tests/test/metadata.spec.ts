@@ -18,7 +18,7 @@ const service = {
   entities: [{ className: 'DummyClass' }]
 } as VdmServiceMetadata;
 
-describe('metadata', () => {
+xdescribe('metadata', () => {
   it('gives instructions with working link', async () => {
     expect(
       getGenerationSteps(

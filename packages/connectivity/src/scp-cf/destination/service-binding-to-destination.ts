@@ -75,7 +75,11 @@ async function businessLoggingBindingToDestination(
   service: Service,
   options: PartialDestinationFetchOptions
 ): Promise<Destination> {
-  const token = await serviceToken(service, options);
+  const transformedService = {
+    ...service,
+    credentials: { ...service.credentials.uaa }
+  };
+  const token = await serviceToken(transformedService, options);
   return buildClientCredentialsDestination(
     token,
     service.credentials.writeUrl,
@@ -87,7 +91,11 @@ async function workflowBindingToDestination(
   service: Service,
   options: PartialDestinationFetchOptions
 ): Promise<Destination> {
-  const token = await serviceToken(service, options);
+  const transformedService = {
+    ...service,
+    credentials: { ...service.credentials.uaa }
+  };
+  const token = await serviceToken(transformedService, options);
   return buildClientCredentialsDestination(
     token,
     service.credentials.endpoints.workflow_odata_url,

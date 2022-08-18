@@ -1,7 +1,8 @@
 import {
   createLogger,
   first,
-  unique
+  unique,
+  flatten
 } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
 import { JwtPayload } from './jsonwebtoken-type';
@@ -125,10 +126,17 @@ export function getServiceByInstanceName(serviceInstanceName: string): Service |
 
   if(service.length > 1){
     throw Error(`Multiple services with this name: "${serviceInstanceName}" were found.`);
-  } else if(service.length < 1){
+  } else if(!service.length){
     throw Error(`No service with the name: "${serviceInstanceName}" was found.`);
   }
   return service[0];
+}
+
+/**
+ * @internal
+ */
+export function flattenServiceBinding(serviceBinding: Service): Service {
+
 }
 
 /**

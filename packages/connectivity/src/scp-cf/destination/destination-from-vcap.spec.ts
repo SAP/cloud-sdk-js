@@ -170,7 +170,9 @@ describe('vcap-service-destination', () => {
   it('throws an error if no service binding can be found for the given name', async () => {
     await expect(() =>
       destinationForServiceBinding('non-existent-service')
-    ).rejects.toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"No service with the name: \\"non-existent-service\\" was found."'
+    );
   });
 
   it('finds the destination when searching for service bindings', async () => {

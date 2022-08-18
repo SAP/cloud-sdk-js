@@ -101,10 +101,7 @@ async function transform(
     throw serviceTypeNotSupportedError(service);
   }
 
-  return serviceToDestinationTransformers[service.label](
-    service,
-    options
-  );
+  return serviceToDestinationTransformers[service.label](service, options);
 }
 
 function serviceTypeNotSupportedError(service: Service): Error {

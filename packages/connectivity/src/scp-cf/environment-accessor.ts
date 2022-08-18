@@ -1,8 +1,4 @@
-import {
-  createLogger,
-  first,
-  unique
-} from '@sap-cloud-sdk/util';
+import { createLogger, first, unique } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
 import { JwtPayload } from './jsonwebtoken-type';
 import { audiences, decodeJwt } from './jwt';
@@ -120,13 +116,19 @@ export function getService(service: string): Service | undefined {
  * @internal
  * Write check that its only one, and if it is one only return the first entry in the array.
  */
-export function getServiceByInstanceName(serviceInstanceName: string): Service | undefined {
+export function getServiceByInstanceName(
+  serviceInstanceName: string
+): Service | undefined {
   const service = xsenv.filterServices(serviceInstanceName);
 
-  if(service.length > 1){
-    throw Error(`Multiple services with this name: "${serviceInstanceName}" were found.`);
-  } else if(!service.length){
-    throw Error(`No service with the name: "${serviceInstanceName}" was found.`);
+  if (service.length > 1) {
+    throw Error(
+      `Multiple services with this name: "${serviceInstanceName}" were found.`
+    );
+  } else if (!service.length) {
+    throw Error(
+      `No service with the name: "${serviceInstanceName}" was found.`
+    );
   }
   return service[0];
 }

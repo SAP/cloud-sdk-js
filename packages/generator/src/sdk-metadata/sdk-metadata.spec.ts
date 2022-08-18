@@ -1,4 +1,5 @@
 import nock from 'nock';
+import { createOptions } from '../../test/test-util/create-generator-options';
 import { getTestService } from './pregenerated-lib.spec';
 import { sdkMetadata } from './sdk-metadata';
 
@@ -12,7 +13,10 @@ describe('sdk-metadata', () => {
       .get(new RegExp(`/${service.npmPackageName}/latest`))
       .reply(200, { version: '1.2.3' });
 
-    const metadata = await sdkMetadata(service);
+    const metadata = await sdkMetadata(
+      service,
+      createOptions({ versionInPackageJson: '1.0.0' })
+    );
     expect(metadata).toMatchSnapshot({
       generationAndUsage: {
         generatorVersion: expect.any(String)
@@ -23,7 +27,10 @@ describe('sdk-metadata', () => {
   });
 
   it('generates the sdk metadata content for services without pregenerated lib', async () => {
-    const metadata = await sdkMetadata(service);
+    const metadata = await sdkMetadata(
+      service,
+      createOptions({ versionInPackageJson: '1.0.0' })
+    );
 
     expect(metadata).toMatchSnapshot({
       generationAndUsage: {

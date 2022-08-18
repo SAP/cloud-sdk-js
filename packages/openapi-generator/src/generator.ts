@@ -351,7 +351,10 @@ async function generatePackageJson(
     'package.json',
     packageJson({
       npmPackageName: packageName,
-      description: packageDescription(directoryName),
+      description: packageDescription(
+        directoryName,
+        (directoryNameRaw: string) => directoryNameRaw.split('-').join(' ')
+      ),
       sdkVersion: await getSdkVersion(),
       version: packageVersion,
       license: licenseInPackageJson

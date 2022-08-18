@@ -10,8 +10,8 @@ export function getServiceDescription(
   options: GeneratorOptions
 ): string {
   return options.s4hanaCloud
-    ? packageDescription(service.directoryName, (packageName: string) =>
-        packageName.split('-').join(' ')
+    ? packageDescription(service.directoryName, (directoryNameRaw: string) =>
+        directoryNameRaw.split('-').join(' ')
       )
     : packageDescription(service.directoryName);
 }

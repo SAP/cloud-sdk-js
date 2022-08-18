@@ -14,7 +14,7 @@ module.exports = {
     sourceType: 'module'
   },
   ignorePatterns: ['dist', 'node_modules'],
-  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'jsdoc'],
+  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'jsdoc', 'regex'],
   overrides: [
     {
       files: ['**/test/**/*', '**/*.spec.ts'],
@@ -27,6 +27,15 @@ module.exports = {
     }
   ],
   rules: {
+    "regex/invalid": [
+      "error", [
+        {
+          "id": "regexLowerCaseInternal",
+          "regex": "\\@Internal",
+          "message": "You are not allowed to use @Internal. Please use @internal.",
+        }
+      ]
+    ],
     '@typescript-eslint/array-type': 'error',
     '@typescript-eslint/consistent-type-assertions': 'error',
     '@typescript-eslint/consistent-type-definitions': 'error',
@@ -183,6 +192,7 @@ module.exports = {
     'jsdoc/check-alignment': 'error',
     'jsdoc/check-indentation': 'error',
     'jsdoc/check-param-names': 'error',
+    'jsdoc/check-tag-names' : ['error',{"definedTags": ["packageDocumentation","typeParam","experimental"]}],
     'jsdoc/check-syntax': 'error',
     'jsdoc/multiline-blocks': 'error',
     'jsdoc/newline-after-description': ['error', 'never'],

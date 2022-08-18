@@ -1,5 +1,6 @@
 import { StructureKind, TypeAliasDeclarationStructure } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
+import { functionImportReturnType } from '../action-function-import';
 
 /**
  * @internal
@@ -47,7 +48,10 @@ function getReadRequestType(service: VdmServiceMetadata): string {
       service.entities.map(
         e =>
           `GetByKeyRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
-      )
+      ),
+      service.functionImports
+        .filter(f => f.httpMethod.toLowerCase() === 'get')
+        .map(f => functionImportReturnType(f))
     )
     .join('|');
 }

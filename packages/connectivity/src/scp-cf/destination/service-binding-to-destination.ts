@@ -16,11 +16,11 @@ export const serviceToDestinationTransformers: Record<
 > = {
   'business-logging': businessLoggingBindingToDestination,
   's4-hana-cloud': xfS4hanaCloudBindingToDestination,
-  destination: destinationBindingToDestination,
+  'destination': destinationBindingToDestination,
   'saas-registry': saasRegistryBindingToDestination,
-  workflow: workflowBindingToDestination,
+  'workflow': workflowBindingToDestination,
   'service-manager': serviceManagerBindingToDestination,
-  xsuaa: xsuaaToDestination
+  'xsuaa': xsuaaToDestination
 };
 
 async function xsuaaToDestination(

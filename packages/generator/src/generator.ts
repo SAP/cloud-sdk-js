@@ -262,7 +262,7 @@ export async function generateSourcesForService(
         npmPackageName: service.npmPackageName,
         version: await getVersionForClient(options.versionInPackageJson),
         sdkVersion: await getSdkVersion(),
-        description: getServiceDescription(service),
+        description: getServiceDescription(service, options),
         sdkAfterVersionScript: options.sdkAfterVersionScript,
         oDataVersion: service.oDataVersion,
         license: options.licenseInPackageJson
@@ -410,7 +410,7 @@ export async function generateSourcesForService(
     otherFile(
       metadataDir,
       clientFileName,
-      JSON.stringify(await sdkMetadata(service), null, 2),
+      JSON.stringify(await sdkMetadata(service, options), null, 2),
       options.forceOverwrite
     );
   }

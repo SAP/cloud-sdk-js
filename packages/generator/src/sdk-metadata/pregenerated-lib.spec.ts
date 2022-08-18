@@ -10,7 +10,7 @@ describe('pregenerated-lib', () => {
   const service: VdmServiceMetadata = getTestService();
 
   it('returns description of the service', () => {
-    expect(getServiceDescription(service)).toMatchSnapshot();
+    expect(getServiceDescription(service, createOptions())).toMatchSnapshot();
   });
 });
 

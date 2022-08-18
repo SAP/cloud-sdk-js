@@ -98,7 +98,7 @@ async function transform(
   options?: PartialDestinationFetchOptions
 ): Promise<Destination> {
   if (!serviceToDestinationTransformers[service.label]) {
-    throw serviceTypeNotSupportedError(service.label);
+    throw serviceTypeNotSupportedError(service);
   }
 
   return serviceToDestinationTransformers[service.label](
@@ -107,8 +107,8 @@ async function transform(
   );
 }
 
-function serviceTypeNotSupportedError(serviceType: string): Error {
-  return Error(`Service of type ${serviceType} is not supported! Consider providing your own transformation function when calling destinationForServiceBinding, like this:
+function serviceTypeNotSupportedError(service: Service): Error {
+  return Error(`The service "${service.name}" is of type "${service.label}" which is not supported! Consider providing your own transformation function when calling destinationForServiceBinding, like this:
   destinationServiceForBinding(yourServiceName, { serviceBindingToDestination: yourTransformationFunction });`);
 }
 

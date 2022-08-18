@@ -5,9 +5,7 @@ import {
 import * as tokenAccessor from '../token-accessor';
 import { Service } from '../environment-accessor-types';
 import { getDestination } from './destination-accessor';
-import {
-  destinationForServiceBinding
-} from './destination-from-vcap';
+import { destinationForServiceBinding } from './destination-from-vcap';
 import { destinationCache } from './destination-cache';
 import SpyInstance = jest.SpyInstance;
 
@@ -150,11 +148,9 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination using a custom transformation function', async () => {
-    const serviceBindingTransformFn = jest.fn(
-      async (service: Service) => ({
-        url: service.credentials.sys
-      })
-    );
+    const serviceBindingTransformFn = jest.fn(async (service: Service) => ({
+      url: service.credentials.sys
+    }));
 
     await expect(
       destinationForServiceBinding('my-custom-service', {
@@ -167,9 +163,8 @@ describe('vcap-service-destination', () => {
   });
 
   it('throws an error if the service type is not supported', async () => {
-    await expect(() =>
-      destinationForServiceBinding('my-custom-service')
-    ).rejects.toThrowErrorMatchingSnapshot();
+    await expect(() => destinationForServiceBinding('my-custom-service'))
+      .rejects.toThrowErrorMatchingSnapshot();
   });
 
   it('throws an error if no service binding can be found for the given name', async () => {
@@ -178,19 +173,10 @@ describe('vcap-service-destination', () => {
     ).rejects.toThrowErrorMatchingSnapshot();
   });
 
-  it('throws an error if there are no service bindings at all', async () => {
-    delete process.env.VCAP_SERVICES;
-    await expect(() =>
-      destinationForServiceBinding('my-custom-service')
-    ).rejects.toThrowErrorMatchingSnapshot();
-  });
-
   it('finds the destination when searching for service bindings', async () => {
-    const serviceBindingTransformFn = jest.fn(
-      async (service: Service) => ({
-        url: service.credentials.sys
-      })
-    );
+    const serviceBindingTransformFn = jest.fn(async (service: Service) => ({
+      url: service.credentials.sys
+    }));
 
     await expect(
       getDestination({

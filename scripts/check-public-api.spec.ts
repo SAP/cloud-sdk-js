@@ -169,7 +169,7 @@ describe('check-public-api', () => {
       mock.restore();
     });
 
-    it('considers',async ()=>{
+    it('parses exports types correctly',async ()=>{
       mock({
         'index.ts': "export * from './common';export type { namedExport } from './named';",
         'common.ts':

@@ -251,7 +251,7 @@ export async function parseIndexFile(filePath: string): Promise<string[]> {
     /export \* from '([\w/.]+)'/g,
     fileContent
   );
-  const starFileExports =  await Promise.all(
+  const starFileExports = await Promise.all(
     starFiles.map(async relativeFilePath =>
       parseIndexFile(resolve(cwd, `${relativeFilePath}.ts`))
     )

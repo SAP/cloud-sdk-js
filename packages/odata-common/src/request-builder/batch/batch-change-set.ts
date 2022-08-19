@@ -24,8 +24,8 @@ export class BatchChangeSet<
 }
 
 /**
- *  Some function imports contain not serializable entities and the execute() method is removed from them.
- *  Since the execute method is not needed in batch the execute it is removed from all function imports.
+ * Some function imports contain not serializable entities and the execute() method is removed from them.
+ * Since the execute method is not needed in batch the execute it is removed from all function imports.
  */
 export type ChangesetBuilderTypes<DeSerializersT extends DeSerializers> =
   | CreateRequestBuilderBase<EntityBase, DeSerializersT>

@@ -10,6 +10,7 @@ import {
   VdmParameter,
   VdmUnsupportedReason
 } from '../../src/vdm-types';
+import {VdmActionImport} from "../../dist/vdm-types";
 
 export const entityName: VdmProperty = {
   instancePropertyName: 'entityName',
@@ -107,6 +108,14 @@ function getFunctionImport(
   } as VdmFunctionImport;
 }
 
+function getActionImport():VdmActionImport{
+  return {
+    originalName: 'food-action-import',
+    httpMethod: 'POST',
+    parameters: [{ description: 'local test parameter' }] as VdmParameter[],
+  } as VdmActionImport
+}
+
 export const foodService: VdmServiceMetadata = {
   oDataVersion: 'v2',
   directoryName: 'FOOD_SERVICE',
@@ -119,6 +128,9 @@ export const foodService: VdmServiceMetadata = {
   functionImports: [
     getFunctionImport('funcGet', 'get'),
     getFunctionImport('funcPost', 'post')
+  ],
+  actionImports: [
+    getActionImport()
   ],
   complexTypes: [],
   enumTypes: [],

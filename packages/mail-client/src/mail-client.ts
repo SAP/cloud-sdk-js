@@ -210,19 +210,19 @@ async function sendMailWithNodemailer<T extends MailOptions>(
     });
   });
 
-  const responses: MailResponse[] = await Promise
+  const response: MailResponse[] = await Promise
     .all(promises)
     .then(result => {
-      result.forEach((_, responceIndex) =>
+      result.forEach((_, responseIndex) =>
         logger.debug(
-          `...email ${responceIndex + 1}/${mailOptions.length} for subject "${mailOptions[responceIndex].subject
+          `...email ${responseIndex + 1}/${mailOptions.length} for subject "${mailOptions[responseIndex].subject
           }" was sent successfully`
         ));
       return result
     });
 
   teardown(transport, socket);
-  return responses;
+  return response;
 }
 
 function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {

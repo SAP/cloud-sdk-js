@@ -196,30 +196,28 @@ async function sendMailWithNodemailer<T extends MailOptions>(
   const mailOptionsFromDestination =
     buildMailOptionsFromDestination(mailDestination);
 
-  const promises = mailOptions.map((
-    mailOption,
-    mailOptionIndex,
-    mailOptions
-  ) => {
-    logger.debug(
-      `Sending email ${mailOptionIndex + 1}/${mailOptions.length}...`
-    );
-    return transport.sendMail({
-      ...mailOptionsFromDestination,
-      ...mailOption
-    });
-  });
+  const promises = mailOptions.map(
+    (mailOption, mailOptionIndex, mailOptionsArray) => {
+      logger.debug(
+        `Sending email ${mailOptionIndex + 1}/${mailOptionsArray.length}...`
+      );
+      return transport.sendMail({
+        ...mailOptionsFromDestination,
+        ...mailOption
+      });
+    }
+  );
 
-  const response: MailResponse[] = await Promise
-    .all(promises)
-    .then(result => {
-      result.forEach((_, responseIndex) =>
-        logger.debug(
-          `...email ${responseIndex + 1}/${mailOptions.length} for subject "${mailOptions[responseIndex].subject
-          }" was sent successfully`
-        ));
-      return result
-    });
+  const response: MailResponse[] = await Promise.all(promises).then(result => {
+    result.forEach((_, responseIndex) =>
+      logger.debug(
+        `...email ${responseIndex + 1}/${mailOptions.length} for subject "${
+          mailOptions[responseIndex].subject
+        }" was sent successfully`
+      )
+    );
+    return result;
+  });
 
   teardown(transport, socket);
   return response;

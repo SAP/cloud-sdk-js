@@ -84,7 +84,7 @@
     "@types/node": "^14.18.24",
     "@types/uuid": "^8.0.0",
     "@types/voca": "^1.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.33.1",
+    "@typescript-eslint/eslint-plugin": "^5.34.0",
     "@typescript-eslint/parser": "^5.34.0",
     "axios": "^0.27.1",
     "compare-versions": "^4.0.1",

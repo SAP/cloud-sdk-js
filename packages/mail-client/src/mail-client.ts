@@ -208,16 +208,18 @@ async function sendMailWithNodemailer<T extends MailOptions>(
     }
   );
 
-  const response: MailResponse[] = await Promise.all(promises).then(result => {
-    result.forEach((_, responseIndex) =>
-      logger.debug(
-        `...email ${responseIndex + 1}/${mailOptions.length} for subject "${
-          mailOptions[responseIndex].subject
-        }" was sent successfully`
-      )
-    );
-    return result;
-  });
+  const response: MailResponse[] = await Promise.all(promises).then(
+    responces => {
+      responces.forEach((_, responseIndex) =>
+        logger.debug(
+          `...email ${responseIndex + 1}/${mailOptions.length} for subject "${
+            mailOptions[responseIndex].subject
+          }" was sent successfully`
+        )
+      );
+      return responces;
+    }
+  );
 
   teardown(transport, socket);
   return response;

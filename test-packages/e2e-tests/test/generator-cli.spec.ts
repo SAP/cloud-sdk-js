@@ -137,7 +137,7 @@ describe('generator-cli', () => {
     expect(actualPackageJson.version).toEqual('42.23');
   });
   it('should throw a warning message for a deprecated option even when the generation process is failed', async () => {
-    //Use a broken service to stop the service generation early - we are only interested in the log statement
+    //Use a broken service to stop the service generation process early - we are only interested in the log statement
     try {
       await execa('npx', [
         'ts-node',

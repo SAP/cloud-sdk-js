@@ -398,79 +398,79 @@ export function filterFunctions<
  */
 export interface FilterFunctionsType {
   /**
-   * TODO-JSDOC.
+   * Build a filter function to test whether a string ends with another. Evaluates to boolean.
    */
   endsWith: typeof endsWith;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to test whether a string starts with another. Evaluates to boolean.
    */
   startsWith: typeof startsWith;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to get the length of a string. Evaluates to int.
    */
   length: typeof length;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to get the start index of a substring. Evaluates to int.
    */
   indexOf: typeof indexOf;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to get a substring starting from a designated position. Evaluates to string.
    */
   substring: typeof substring;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to transform a string to lower case. Evaluates to string.
    */
   toLower: typeof toLower;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to transform a string to upper case. Evaluates to string.
    */
   toUpper: typeof toUpper;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to trim whitespace from a string. Evaluates to string.
    */
   trim: typeof trim;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to concatenate two strings. Evaluates to string.
    */
   concat: typeof concat;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to round a number. Evaluates to double or decimal, defaults to double.
    */
   round: typeof round;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to floor a number. Evaluates to double or decimal, defaults to double.
    */
   floor: typeof floor;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to ceil a number. Evaluates to double or decimal, defaults to double.
    */
   ceiling: typeof ceiling;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to get the day of a date. Evaluates to int.
    */
   day: typeof day;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to get the hour of a date. Evaluates to int.
    */
   hour: typeof hour;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to get the minute of a date. Evaluates to int.
    */
   minute: typeof minute;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to get the month of a date. Evaluates to int.
    */
   month: typeof month;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to get the second of a date. Evaluates to int.
    */
   second: typeof second;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to get the year of a date. Evaluates to int.
    */
   year: typeof year;
   /**
-   * TODO-JSDOC.
+   * Build a filter function to test whether a selection or a field is of a given type. Evaluates to boolean.
    */
   isOf: typeof isOf;
 }

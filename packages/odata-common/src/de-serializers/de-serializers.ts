@@ -22,59 +22,59 @@ export interface DeSerializers<
   AnyT = any
 > {
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Binary` to the generic type `BinaryT`.
    */
   'Edm.Binary': DeSerializer<BinaryT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Boolean` to the generic type `BooleanT`.
    */
   'Edm.Boolean': DeSerializer<BooleanT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Byte` to the generic type `ByteT`.
    */
   'Edm.Byte': DeSerializer<ByteT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Decimal` to the generic type `DecimalT`.
    */
   'Edm.Decimal': DeSerializer<DecimalT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Double` to the generic type `DoubleT`.
    */
   'Edm.Double': DeSerializer<DoubleT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Float` to the generic type `FloatT`.
    */
   'Edm.Float': DeSerializer<FloatT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Int16` to the generic type `Int16T`.
    */
   'Edm.Int16': DeSerializer<Int16T>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Int32` to the generic type `Int32T`.
    */
   'Edm.Int32': DeSerializer<Int32T>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Int64` to the generic type `Int64T`.
    */
   'Edm.Int64': DeSerializer<Int64T>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Guid` to the generic type `GuidT`.
    */
   'Edm.Guid': DeSerializer<GuidT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.SByte` to the generic type `SByteT`.
    */
   'Edm.SByte': DeSerializer<SByteT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Single` to the generic type `SingleT`.
    */
   'Edm.Single': DeSerializer<SingleT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.String` to the generic type `StringT`.
    */
   'Edm.String': DeSerializer<StringT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Any` to the generic type `AnyT`.
    */
   'Edm.Any': DeSerializer<AnyT>;
   // [key: string]: DeSerializer<any>;

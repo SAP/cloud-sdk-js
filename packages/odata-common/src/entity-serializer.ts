@@ -28,7 +28,7 @@ const logger = createLogger({
  */
 export interface EntitySerializer {
   /**
-   * TODO-JSDOC.
+   * {@link entitySerializer!serializeEntity}.
    */
   serializeEntity: <EntityT extends EntityBase>(
     entity: EntityT,
@@ -36,7 +36,7 @@ export interface EntitySerializer {
     diff?: boolean
   ) => Record<string, any>;
   /**
-   * TODO-JSDOC.
+   * {@link entitySerializer!serializeComplexType}.
    */
   serializeComplexType: <
     ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
@@ -45,7 +45,7 @@ export interface EntitySerializer {
     complexTypeNameSpace: ComplexTypeNamespaceT
   ) => any;
   /**
-   * TODO-JSDOC.
+   * {@link entitySerializer!serializeEntityNonCustomFields}.
    */
   serializeEntityNonCustomFields: <EntityT extends EntityBase>(
     entity: EntityT,

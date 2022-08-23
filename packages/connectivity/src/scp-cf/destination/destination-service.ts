@@ -116,9 +116,16 @@ async function fetchDestinations(
 
   return callDestinationEndpoint(targetUri, headers, options)
     .then(response => {
-      const destinations: Destination[] = response.data.map(d =>
-        parseDestination(d)
-      );
+      const destinations: Destination[] = response.data.reduce((all, d) => {
+        try {
+          return [...all, parseDestination(d)];
+        } catch (e) {
+          logger.debug(
+            `Failed to parse destination ${d.Name} - destination skipped.`
+          );
+          return all;
+        }
+      }, []);
       if (options?.useCache) {
         destinationServiceCache.cacheRetrievedDestinations(
           targetUri,

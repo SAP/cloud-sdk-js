@@ -101,7 +101,7 @@ describe('destination service', () => {
       });
     });
 
-    it('returns if some destinations are broken - instance destinations', async () => {
+    it('only returns valid destinations - instance destinations', async () => {
       const response = [
         basicDestination,
         oauth2SamlBearerDestination,
@@ -211,7 +211,7 @@ describe('destination service', () => {
       });
     });
 
-    it('returns if some destinations are broken - subaccount destinations', async () => {
+    it('only returns valid destinations - subaccount destinations', async () => {
       const response = [
         basicDestination,
         oauth2SamlBearerDestination,

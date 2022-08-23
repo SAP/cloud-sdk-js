@@ -154,7 +154,7 @@ Applications on BTP can send mails with `MAIL` destinations to cloud/On-Prem mai
 - using socket protocol
   Our PoC tried `WS.WebSocket`, but as socket protocol without knowing SMTP, it did not support email related APIs.
   E.g, authentication + email properties (from/to...) cannot be configured
-#### OnPrm Proxy
+#### OnPrem Proxy
 - support socket proxy for now
   It uses custom auth handler with JWT.
 - http proxy (later)

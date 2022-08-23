@@ -51,7 +51,7 @@ const oauth2SamlBearerDestination = {
   tokenServicePassword: 'password'
 };
 
-const borkenDestination = {
+const brokenDestination = {
   Name: 'BrokenDestination',
   URL: undefined
 };
@@ -105,7 +105,7 @@ describe('destination service', () => {
       const response = [
         basicDestination,
         oauth2SamlBearerDestination,
-        borkenDestination
+        brokenDestination
       ];
 
       nock(destinationServiceUri, {
@@ -127,7 +127,7 @@ describe('destination service', () => {
         });
       expect(subaccountDestinations.length).toBe(2);
       expect(debugSpy).toHaveBeenCalledWith(
-        `Failed to parse destination ${borkenDestination.Name} - destination skipped.`
+        `Failed to parse destination ${brokenDestination.Name} - destination skipped.`
       );
     });
 
@@ -215,7 +215,7 @@ describe('destination service', () => {
       const response = [
         basicDestination,
         oauth2SamlBearerDestination,
-        borkenDestination
+        brokenDestination
       ];
 
       nock(destinationServiceUri, {
@@ -237,7 +237,7 @@ describe('destination service', () => {
         });
       expect(subaccountDestinations.length).toBe(2);
       expect(debugSpy).toHaveBeenCalledWith(
-        `Failed to parse destination ${borkenDestination.Name} - destination skipped.`
+        `Failed to parse destination ${brokenDestination.Name} - destination skipped.`
       );
     });
 

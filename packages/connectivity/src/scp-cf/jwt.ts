@@ -142,7 +142,7 @@ export async function verifyJwt(
  */
 export interface VerifyJwtOptions {
   /**
-   * TODO-JSDOC.
+   * The verification keys are cached if set to true.
    */
   cacheVerificationKeys?: boolean;
 }
@@ -152,7 +152,7 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
 };
 
 /**
- * 15 minutes is the default value used by the xssec lib
+ * 15 minutes is the default value used by the xssec lib.
  * @internal
  */
 export const verificationKeyCache = new Cache<TokenKey>(900000);

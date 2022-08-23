@@ -23,31 +23,31 @@ export type Algorithm =
 export interface JwtPayload {
   [key: string]: any;
   /**
-   * TODO-JSDOC.
+   * Standard claims https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.
    */
   iss?: string | undefined;
   /**
-   * TODO-JSDOC.
+   * Standard claims https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.
    */
   sub?: string | undefined;
   /**
-   * TODO-JSDOC.
+   * Standard claims https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.
    */
   aud?: string | string[] | undefined;
   /**
-   * TODO-JSDOC.
+   * Standard claims https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.
    */
   exp?: number | undefined;
   /**
-   * TODO-JSDOC.
+   * Standard claims https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.
    */
   nbf?: number | undefined;
   /**
-   * TODO-JSDOC.
+   * Standard claims https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.
    */
   iat?: number | undefined;
   /**
-   * TODO-JSDOC.
+   * Standard claims https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.
    */
   jti?: string | undefined;
 }

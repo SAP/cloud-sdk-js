@@ -11,11 +11,11 @@ import type { DestinationSelectionStrategy } from './destination-selection-strat
  */
 export interface AllDestinations {
   /**
-   * TODO-JSDOC.
+   * Collection of all destinations from a subscriber account.
    */
   subscriber: DestinationsByType;
   /**
-   * TODO-JSDOC.
+   * Collection of all destinations from a provider account.
    */
   provider: DestinationsByType;
 }
@@ -26,11 +26,11 @@ export interface AllDestinations {
  */
 export interface DestinationsByType {
   /**
-   * TODO-JSDOC.
+   * Collection of destinations from the destination service instance.
    */
   instance: Destination[];
   /**
-   * TODO-JSDOC.
+   * Collection of destinations from the subaccount.
    */
   subaccount: Destination[];
 }

@@ -356,11 +356,11 @@ export type LogLevel =
  */
 export interface LoggerOptions {
   /**
-   * TODO-JSDOC.
+   * The log level of the logger.
    */
   level?: LogLevel;
   /**
-   * TODO-JSDOC.
+   * TODO-JSDOC. (Is this property used anywhere?).
    */
   logger?: string;
 }

@@ -4,19 +4,19 @@
 export interface Service {
   [other: string]: any;
   /**
-   * TODO-JSDOC.
+   * The name of the service.
    */
   name: string;
   /**
-   * TODO-JSDOC.
+   * The label of the service.
    */
   label: string;
   /**
-   * TODO-JSDOC.
+   * The tags of the service.
    */
   tags: string[];
   /**
-   * TODO-JSDOC.
+   * The service credentials.
    */
   credentials: ServiceCredentials;
 }

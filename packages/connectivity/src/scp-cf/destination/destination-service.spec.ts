@@ -126,7 +126,8 @@ describe('destination service', () => {
           enableCircuitBreaker: false
         });
       expect(instanceDestinations.length).toBe(2);
-      expect(debugSpy).toHaveBeenCalledWith('Parsing of destination with name "BrokenDestination" failed - skip this destination in parsing.'
+      expect(debugSpy).toHaveBeenCalledWith(
+        'Parsing of destination with name "BrokenDestination" failed - skip this destination in parsing.'
       );
     });
 
@@ -235,7 +236,9 @@ describe('destination service', () => {
           enableCircuitBreaker: false
         });
       expect(subaccountDestinations.length).toBe(2);
-      expect(debugSpy).toHaveBeenCalledWith('Parsing of destination with name "BrokenDestination" failed - skip this destination in parsing.'
+      expect(debugSpy).toHaveBeenCalledWith(
+        'Parsing of destination with name "BrokenDestination" failed - skip this destination in parsing.'
+      );
     });
 
     it('returns 400 for an invalid JWT', async () => {

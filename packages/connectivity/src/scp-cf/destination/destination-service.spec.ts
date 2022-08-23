@@ -101,7 +101,7 @@ describe('destination service', () => {
       });
     });
 
-    it('returns if some destinations are broken', async () => {
+    it('returns if some destinations are broken - instance destinations', async () => {
       const response = [
         basicDestination,
         oauth2SamlBearerDestination,
@@ -121,11 +121,11 @@ describe('destination service', () => {
         messageContext: 'destination-service'
       });
       const debugSpy = jest.spyOn(logger, 'debug');
-      const subaccountDestinations: Destination[] =
+      const instanceDestinations: Destination[] =
         await fetchInstanceDestinations(destinationServiceUri, jwt, {
           enableCircuitBreaker: false
         });
-      expect(subaccountDestinations.length).toBe(2);
+      expect(instanceDestinations.length).toBe(2);
       expect(debugSpy).toHaveBeenCalledWith(
         `Failed to parse destination ${brokenDestination.Name} - destination skipped.`
       );
@@ -211,7 +211,7 @@ describe('destination service', () => {
       });
     });
 
-    it('returns if some destinations are broken', async () => {
+    it('returns if some destinations are broken - subaccount destinations', async () => {
       const response = [
         basicDestination,
         oauth2SamlBearerDestination,

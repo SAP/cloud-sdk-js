@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
-import { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v2';
+import { DefaultDeSerializers } from '../de-serializers';
 const boundary = 'test-boundary';
 jest.mock('uuid', () => ({
   v4: jest.fn(() => boundary)

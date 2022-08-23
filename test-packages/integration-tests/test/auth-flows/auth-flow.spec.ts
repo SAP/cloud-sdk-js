@@ -488,7 +488,7 @@ describe('OAuth flows', () => {
     });
 
     expect(destination?.proxyType).toEqual('OnPremise');
-    expect(destination!.proxyConfiguration).toMatchObject({
+    expect(destination?.proxyConfiguration).toMatchObject({
       'proxy-authorization': expect.any(String),
       host: expect.stringMatching(/.*sap\.hana\.ondemand\.com/),
       port: expect.any(Number),

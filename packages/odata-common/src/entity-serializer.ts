@@ -36,7 +36,7 @@ export interface EntitySerializer {
     diff?: boolean
   ) => Record<string, any>;
   /**
-   * {@link entitySerializer!serializeComplexType}.
+   * {@link serializeComplexType}.
    */
   serializeComplexType: <
     ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
@@ -45,7 +45,7 @@ export interface EntitySerializer {
     complexTypeNameSpace: ComplexTypeNamespaceT
   ) => any;
   /**
-   * {@link entitySerializer!serializeEntityNonCustomFields}.
+   * {@link serializeEntityNonCustomFields}.
    */
   serializeEntityNonCustomFields: <EntityT extends EntityBase>(
     entity: EntityT,

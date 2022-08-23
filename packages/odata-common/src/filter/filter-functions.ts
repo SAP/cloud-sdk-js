@@ -397,24 +397,81 @@ export function filterFunctions<
  * Interface containing all filter functions like `startsWith`, `toUpper` or `floor`.
  */
 export interface FilterFunctionsType {
+  /**
+   * TODO-JSDOC.
+   */
   endsWith: typeof endsWith;
+  /**
+   * TODO-JSDOC.
+   */
   startsWith: typeof startsWith;
+  /**
+   * TODO-JSDOC.
+   */
   length: typeof length;
+  /**
+   * TODO-JSDOC.
+   */
   indexOf: typeof indexOf;
+  /**
+   * TODO-JSDOC.
+   */
   substring: typeof substring;
+  /**
+   * TODO-JSDOC.
+   */
   toLower: typeof toLower;
+  /**
+   * TODO-JSDOC.
+   */
   toUpper: typeof toUpper;
+  /**
+   * TODO-JSDOC.
+   */
   trim: typeof trim;
+  /**
+   * TODO-JSDOC.
+   */
   concat: typeof concat;
+  /**
+   * TODO-JSDOC.
+   */
   round: typeof round;
+  /**
+   * TODO-JSDOC.
+   */
   floor: typeof floor;
+  /**
+   * TODO-JSDOC.
+   */
   ceiling: typeof ceiling;
+  /**
+   * TODO-JSDOC.
+   */
   day: typeof day;
+  /**
+   * TODO-JSDOC.
+   */
   hour: typeof hour;
+  /**
+   * TODO-JSDOC.
+   */
   minute: typeof minute;
+  /**
+   * TODO-JSDOC.
+   */
   month: typeof month;
+  /**
+   * TODO-JSDOC.
+   */
   second: typeof second;
+  /**
+   * TODO-JSDOC.
+   */
   year: typeof year;
+  /**
+   * TODO-JSDOC.
+   */
   isOf: typeof isOf;
 }
 

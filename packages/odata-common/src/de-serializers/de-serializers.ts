@@ -21,19 +21,61 @@ export interface DeSerializers<
   StringT = any,
   AnyT = any
 > {
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Binary': DeSerializer<BinaryT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Boolean': DeSerializer<BooleanT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Byte': DeSerializer<ByteT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Decimal': DeSerializer<DecimalT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Double': DeSerializer<DoubleT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Float': DeSerializer<FloatT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Int16': DeSerializer<Int16T>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Int32': DeSerializer<Int32T>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Int64': DeSerializer<Int64T>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Guid': DeSerializer<GuidT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.SByte': DeSerializer<SByteT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Single': DeSerializer<SingleT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.String': DeSerializer<StringT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Any': DeSerializer<AnyT>;
   // [key: string]: DeSerializer<any>;
 }

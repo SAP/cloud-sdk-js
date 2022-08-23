@@ -40,7 +40,16 @@ export interface DeSerializers<
     StringT,
     AnyT
   > {
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.DateTime': DeSerializer<DateTimeT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.DateTimeOffset': DeSerializer<DateTimeOffsetT>;
+  /**
+   * TODO-JSDOC.
+   */
   'Edm.Time': DeSerializer<TimeT>;
 }

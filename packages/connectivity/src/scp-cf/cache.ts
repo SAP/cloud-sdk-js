@@ -9,9 +9,21 @@ interface CacheInterface<T> {
  * @internal
  */
 export interface DateInputObject {
+  /**
+   * @internal
+   */
   hours?: number;
+  /**
+   * @internal
+   */
   minutes?: number;
+  /**
+   * @internal
+   */
   seconds?: number;
+  /**
+   * @internal
+   */
   milliseconds?: number;
 }
 
@@ -19,7 +31,13 @@ export interface DateInputObject {
  * Representation of a cached object.
  */
 export interface CacheEntry<T> {
+  /**
+   * TODO-JSDOC.
+   */
   expires?: number;
+  /**
+   * TODO-JSDOC.
+   */
   entry: T;
 }
 

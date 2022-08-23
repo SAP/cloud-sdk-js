@@ -17,13 +17,22 @@ export interface EntityApi<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
+  /**
+   * TODO-JSDOC.
+   */
   deSerializers: DeSerializersT;
 
   requestBuilder(): RequestBuilder<EntityT, DeSerializersT>;
 
   entityBuilder(): EntityBuilderType<EntityT, DeSerializersT>;
 
+  /**
+   * TODO-JSDOC.
+   */
   entityConstructor: Constructable<EntityT>;
+  /**
+   * TODO-JSDOC.
+   */
   schema: Record<string, any>;
 
   customField<NullableT extends boolean>(

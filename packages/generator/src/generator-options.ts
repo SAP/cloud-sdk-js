@@ -10,24 +10,81 @@ const logger = createLogger('generator-options');
  * Options that can be used to configure the generation when using the generator programmatically.
  */
 export interface GeneratorOptions {
+  /**
+   * TODO-JSDOC.
+   */
   inputDir: PathLike;
+  /**
+   * TODO-JSDOC.
+   */
   outputDir: PathLike;
+  /**
+   * TODO-JSDOC.
+   */
   serviceMapping?: PathLike;
+  /**
+   * TODO-JSDOC.
+   */
   useSwagger: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   writeReadme: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   include?: string;
+  /**
+   * TODO-JSDOC.
+   */
   forceOverwrite: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   clearOutputDir: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   generateNpmrc: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   generatePackageJson: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   versionInPackageJson?: string;
+  /**
+   * TODO-JSDOC.
+   */
   licenseInPackageJson?: string;
+  /**
+   * TODO-JSDOC.
+   */
   generateJs: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   generateSdkMetadata?: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   processesJsGeneration?: number;
+  /**
+   * TODO-JSDOC.
+   */
   sdkAfterVersionScript: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   s4hanaCloud: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   generateCSN: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   packageVersion?: string;
 }
 /**

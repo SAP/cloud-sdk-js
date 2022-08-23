@@ -9,6 +9,9 @@ import { EntityApi } from '../entity-api';
  * Interface implemented by OData requests needing keys to identify an entity like `getByKey`, `delete` or `update.
  */
 export interface WithKeys {
+  /**
+   * TODO-JSDOC.
+   */
   keys: Record<string, any>;
 }
 
@@ -19,6 +22,9 @@ export interface WithSelection<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 > {
+  /**
+   * TODO-JSDOC.
+   */
   selects: Selectable<EntityT, DeSerializersT>[];
 }
 
@@ -29,9 +35,21 @@ export interface WithGetAllRestrictions<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 > extends WithSelection<EntityT, DeSerializersT> {
+  /**
+   * TODO-JSDOC.
+   */
   top: number;
+  /**
+   * TODO-JSDOC.
+   */
   skip: number;
+  /**
+   * TODO-JSDOC.
+   */
   filter: Filterable<EntityT, DeSerializersT>;
+  /**
+   * TODO-JSDOC.
+   */
   orderBy: Orderable<EntityT, EntityApi<EntityBase>>[];
 }
 
@@ -39,7 +57,13 @@ export interface WithGetAllRestrictions<
  * Interface implemented by OData requests needing `ETags`to avoid conflicts in the persisted data like `update` or `delete`.
  */
 export interface WithETag {
+  /**
+   * TODO-JSDOC.
+   */
   eTag: string;
+  /**
+   * TODO-JSDOC.
+   */
   versionIdentifierIgnored: boolean;
 }
 

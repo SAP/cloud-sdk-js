@@ -7,7 +7,13 @@ export interface SdkMetadataHeader {
    * The unique identifier of the service which is the file name.
    */
   name: string;
+  /**
+   * @internal
+   */
   type: 'odata' | 'rest' | 'soap';
+  /**
+   * @internal
+   */
   version: string;
   /**
    * The first introduction text about the SDK on the API hub.
@@ -20,6 +26,9 @@ export interface SdkMetadataHeader {
  * @internal
  */
 export interface Client {
+  /**
+   * @internal
+   */
   language: 'Java' | 'JavaScript';
   /**
    * Status of the service.
@@ -35,6 +44,9 @@ export interface Client {
    * The information on the pregenerated library. `undefined` if there is no lib generated.
    */
   pregeneratedLibrary: PregeneratedLibrary | undefined;
+  /**
+   * @internal
+   */
   generationAndUsage: GenerationAndUsage;
 }
 
@@ -46,7 +58,13 @@ export interface PregeneratedLibrary {
    * Version of the published client library e.g. "1.23.0". It uses the {@link getVersionForClient} function to get it.
    */
   version: string;
+  /**
+   * @internal
+   */
   generatedAt: DateTimeString;
+  /**
+   * @internal
+   */
   description: string;
   /**
    * Information how to install it via npm or maven.
@@ -56,8 +74,17 @@ export interface PregeneratedLibrary {
    * Compatibility version note. Is not filled yet since there is no flow to detect API changes since the versions are not maintained and the hash workaround is not yet in place.
    */
   compatibilityNotes: '';
+  /**
+   * @internal
+   */
   repository: 'Maven' | 'npm';
+  /**
+   * @internal
+   */
   repositoryLink: UrlString;
+  /**
+   * @internal
+   */
   dependencyName: string;
 }
 
@@ -65,10 +92,25 @@ export interface PregeneratedLibrary {
  * @internal
  */
 export interface Links {
+  /**
+   * @internal
+   */
   gettingStarted: LinkWithName;
+  /**
+   * @internal
+   */
   sdkDocumentation: LinkWithName;
+  /**
+   * @internal
+   */
   support: LinkWithName;
+  /**
+   * @internal
+   */
   generationManual: LinkWithName;
+  /**
+   * @internal
+   */
   overviewDocumentation: LinkWithName;
 }
 
@@ -76,12 +118,33 @@ export interface Links {
  * @internal
  */
 export interface GenerationAndUsage {
+  /**
+   * @internal
+   */
   generatorVersion: string;
+  /**
+   * @internal
+   */
   generatorRepositoryLink: UrlString;
+  /**
+   * @internal
+   */
   repository: 'Maven' | 'npm';
+  /**
+   * @internal
+   */
   generationSteps: InstructionWithTextAndHeader;
+  /**
+   * @internal
+   */
   apiSpecificUsage: InstructionWithTextAndHeader | undefined;
+  /**
+   * @internal
+   */
   genericUsage: InstructionWithTextAndHeader;
+  /**
+   * @internal
+   */
   links: Links;
 }
 
@@ -129,7 +192,13 @@ export interface ServiceStatus {
  * @internal
  */
 interface LinkWithName {
+  /**
+   * @internal
+   */
   url: UrlString;
+  /**
+   * @internal
+   */
   name: string;
 }
 
@@ -138,23 +207,38 @@ interface LinkWithName {
  * @internal
  */
 export interface EmergencyObject {
+  /**
+   * @internal
+   */
   status: string;
+  /**
+   * @internal
+   */
   description: string;
 }
 
 /**
- *  Represents a instruction block e.g. generation steps with some text above the code block
+ * Represents a instruction block e.g. generation steps with some text above the code block
  * @internal
  */
 export interface InstructionWithText {
+  /**
+   * @internal
+   */
   instructions: MultiLineText;
+  /**
+   * @internal
+   */
   text: string;
 }
 
 /**
- *  Represents a instruction block e.g. generation steps with some text above the code block with a header
+ * Represents a instruction block e.g. generation steps with some text above the code block with a header
  * @internal
  */
 export interface InstructionWithTextAndHeader extends InstructionWithText {
+  /**
+   * @internal
+   */
   header: string;
 }

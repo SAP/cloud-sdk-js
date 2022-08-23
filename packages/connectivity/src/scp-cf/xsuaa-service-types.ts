@@ -2,13 +2,25 @@
  * Represents the response to a client credentials request.
  */
 export interface ClientCredentialsResponse {
+  /**
+   * TODO-JSDOC.
+   */
   access_token: string;
+  /**
+   * TODO-JSDOC.
+   */
   token_type: string;
   /**
    * The number of seconds until the access token expires.
    */
   expires_in: number;
+  /**
+   * TODO-JSDOC.
+   */
   scope: string;
+  /**
+   * TODO-JSDOC.
+   */
   jti: string;
 }
 
@@ -16,6 +28,9 @@ export interface ClientCredentialsResponse {
  * @internal
  */
 export interface UserTokenResponse extends ClientCredentialsResponse {
+  /**
+   * @internal
+   */
   refresh_token: string;
 }
 

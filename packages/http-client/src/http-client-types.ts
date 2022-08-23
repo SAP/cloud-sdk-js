@@ -4,10 +4,25 @@ import * as http from 'http';
  * Represents the request configuration, that was inferred from a destination.
  */
 export interface DestinationHttpRequestConfig {
+  /**
+   * TODO-JSDOC.
+   */
   baseURL: string;
+  /**
+   * TODO-JSDOC.
+   */
   headers: Record<string, string>;
+  /**
+   * TODO-JSDOC.
+   */
   params?: Record<string, string>;
+  /**
+   * TODO-JSDOC.
+   */
   httpAgent?: http.Agent;
+  /**
+   * TODO-JSDOC.
+   */
   httpsAgent?: http.Agent;
 }
 
@@ -59,14 +74,41 @@ export type ParameterEncoder = (
  */
 export interface HttpRequestConfigBase {
   [key: string]: any;
+  /**
+   * TODO-JSDOC.
+   */
   url?: string;
+  /**
+   * TODO-JSDOC.
+   */
   method: Method;
+  /**
+   * TODO-JSDOC.
+   */
   data?: any;
+  /**
+   * TODO-JSDOC.
+   */
   timeout?: number;
+  /**
+   * TODO-JSDOC.
+   */
   maxContentLength?: number;
+  /**
+   * TODO-JSDOC.
+   */
   proxy?: false;
+  /**
+   * TODO-JSDOC.
+   */
   httpAgent?: any;
+  /**
+   * TODO-JSDOC.
+   */
   httpsAgent?: any;
+  /**
+   * TODO-JSDOC.
+   */
   parameterEncoder?: ParameterEncoder;
 }
 
@@ -114,7 +156,13 @@ export interface HttpRequestOptions {
  * Options defined in `custom` take precedence over `requestConfig`.
  */
 export interface OriginOptions {
+  /**
+   * TODO-JSDOC.
+   */
   requestConfig?: Record<string, any>;
+  /**
+   * TODO-JSDOC.
+   */
   custom?: Record<string, any>;
 }
 
@@ -156,8 +204,20 @@ export function isHttpRequestConfigWithOrigin(
  * @internal
  */
 export interface OriginOptionsInternal {
+  /**
+   * TODO-JSDOC.
+   */
   requestConfig?: Record<string, any>;
+  /**
+   * TODO-JSDOC.
+   */
   destination?: Record<string, any>;
+  /**
+   * TODO-JSDOC.
+   */
   destinationProperty?: Record<string, any>;
+  /**
+   * TODO-JSDOC.
+   */
   custom?: Record<string, any>;
 }

@@ -17,8 +17,17 @@ export const durationRegexV4 =
  * Interface to represent Time or Duration.
  */
 export interface Time {
+  /**
+   * TODO-JSDOC.
+   */
   hours: number;
+  /**
+   * TODO-JSDOC.
+   */
   minutes: number;
+  /**
+   * TODO-JSDOC.
+   */
   seconds: number;
 }
 

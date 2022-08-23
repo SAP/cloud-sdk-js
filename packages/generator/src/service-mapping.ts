@@ -24,8 +24,17 @@ export interface VdmMapping {
  * @internal
  */
 export interface ServiceMapping {
+  /**
+   * @internal
+   */
   directoryName: string;
+  /**
+   * @internal
+   */
   servicePath: string;
+  /**
+   * @internal
+   */
   npmPackageName: string;
 }
 /**

@@ -3,9 +3,21 @@
  */
 export interface Service {
   [other: string]: any;
+  /**
+   * TODO-JSDOC.
+   */
   name: string;
+  /**
+   * TODO-JSDOC.
+   */
   label: string;
+  /**
+   * TODO-JSDOC.
+   */
   tags: string[];
+  /**
+   * TODO-JSDOC.
+   */
   credentials: ServiceCredentials;
 }
 

@@ -22,7 +22,13 @@ const logger = createLogger({
  * Represents partial options to fetch destinations.
  */
 export interface PartialDestinationFetchOptions {
+  /**
+   * TODO-JSDOC.
+   */
   useCache?: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   jwt?: JwtPayload;
 }
 
@@ -114,7 +120,13 @@ export type ServiceBindingTransformFunction = (
  */
 export interface ServiceBinding {
   [key: string]: any;
+  /**
+   * TODO-JSDOC.
+   */
   name: string;
+  /**
+   * TODO-JSDOC.
+   */
   type: string;
 }
 

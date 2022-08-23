@@ -10,7 +10,13 @@ import type { DestinationSelectionStrategy } from './destination-selection-strat
  * The used {@link DestinationSelectionStrategy} will decide which destination is selected in the end.
  */
 export interface AllDestinations {
+  /**
+   * TODO-JSDOC.
+   */
   subscriber: DestinationsByType;
+  /**
+   * TODO-JSDOC.
+   */
   provider: DestinationsByType;
 }
 
@@ -19,7 +25,13 @@ export interface AllDestinations {
  * For a given account a destination can originate from the destination service instance or subaccount.
  */
 export interface DestinationsByType {
+  /**
+   * TODO-JSDOC.
+   */
   instance: Destination[];
+  /**
+   * TODO-JSDOC.
+   */
   subaccount: Destination[];
 }
 

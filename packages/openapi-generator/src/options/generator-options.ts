@@ -12,21 +12,69 @@ const logger = createLogger('openapi-generator');
  * The options match the CLI options.
  */
 export interface GeneratorOptions {
+  /**
+   * TODO-JSDOC.
+   */
   input: string;
+  /**
+   * TODO-JSDOC.
+   */
   outputDir: string;
+  /**
+   * TODO-JSDOC.
+   */
   transpile?: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   include?: string;
+  /**
+   * TODO-JSDOC.
+   */
   overwrite?: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   clearOutputDir?: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   skipValidation?: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   tsConfig?: string;
+  /**
+   * TODO-JSDOC.
+   */
   packageJson?: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   licenseInPackageJson?: string;
+  /**
+   * TODO-JSDOC.
+   */
   verbose?: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   optionsPerService?: string;
+  /**
+   * TODO-JSDOC.
+   */
   packageVersion?: string;
+  /**
+   * TODO-JSDOC.
+   */
   readme?: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   metadata?: boolean;
+  /**
+   * TODO-JSDOC.
+   */
   config?: string;
 }
 
@@ -35,21 +83,69 @@ export interface GeneratorOptions {
  * @internal
  */
 export interface ParsedGeneratorOptions {
+  /**
+   * @internal
+   */
   input: string;
+  /**
+   * @internal
+   */
   outputDir: string;
+  /**
+   * @internal
+   */
   transpile: boolean;
+  /**
+   * @internal
+   */
   include?: string[];
+  /**
+   * @internal
+   */
   overwrite: boolean;
+  /**
+   * @internal
+   */
   clearOutputDir: boolean;
+  /**
+   * @internal
+   */
   skipValidation: boolean;
+  /**
+   * @internal
+   */
   tsConfig?: string;
+  /**
+   * @internal
+   */
   packageJson: boolean;
+  /**
+   * @internal
+   */
   licenseInPackageJson?: string;
+  /**
+   * @internal
+   */
   verbose: boolean;
+  /**
+   * @internal
+   */
   optionsPerService?: string;
+  /**
+   * @internal
+   */
   packageVersion: string;
+  /**
+   * @internal
+   */
   readme: boolean;
+  /**
+   * @internal
+   */
   metadata: boolean;
+  /**
+   * @internal
+   */
   config?: string;
 }
 

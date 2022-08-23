@@ -180,13 +180,22 @@ function addConstraints(
  * @internal
  */
 export interface DocType {
+  /**
+   * @internal
+   */
   type: string;
+  /**
+   * @internal
+   */
   description: string;
 }
 /**
  * @internal
  */
 export interface NamedDocType extends DocType {
+  /**
+   * @internal
+   */
   name: string;
 }
 

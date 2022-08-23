@@ -181,8 +181,17 @@ export class OpenApiRequestBuilder<ResponseT = any> {
  * Type of the request parameters to be passed to {@link OpenApiRequestBuilder}.
  */
 export interface OpenApiRequestParameters {
+  /**
+   * TODO-JSDOC.
+   */
   pathParameters?: Record<string, any>;
+  /**
+   * TODO-JSDOC.
+   */
   queryParameters?: Record<string, any>;
+  /**
+   * TODO-JSDOC.
+   */
   body?: any;
 }
 

@@ -168,10 +168,25 @@ export interface Destination {
  * Represents authentication token returned from destination service.
  */
 export interface DestinationAuthToken {
+  /**
+   * TODO-JSDOC.
+   */
   type: string;
+  /**
+   * TODO-JSDOC.
+   */
   value: string;
+  /**
+   * TODO-JSDOC.
+   */
   expiresIn: string;
+  /**
+   * TODO-JSDOC.
+   */
   error: string | null;
+  /**
+   * TODO-JSDOC.
+   */
   http_header: {
     key: string;
     value: string;

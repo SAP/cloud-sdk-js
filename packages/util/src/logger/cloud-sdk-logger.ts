@@ -355,7 +355,13 @@ export type LogLevel =
  * Configurable logger options.
  */
 export interface LoggerOptions {
+  /**
+   * TODO-JSDOC.
+   */
   level?: LogLevel;
+  /**
+   * TODO-JSDOC.
+   */
   logger?: string;
 }
 
@@ -363,6 +369,9 @@ export interface LoggerOptions {
  * Log message context for a logger with additional custom data.
  */
 export interface MessageContextObj {
+  /**
+   * TODO-JSDOC.
+   */
   messageContext?: string;
   [key: string]: any;
 }

@@ -15,7 +15,13 @@ const CREDENTIALS_FILE = 'credentials.json';
  * An interface to define `systems.json` and `credentials.json` for loading destinations.
  */
 export interface GetTestDestinationOptions {
+  /**
+   * TODO-JSDOC.
+   */
   systemsFilePath?: string;
+  /**
+   * TODO-JSDOC.
+   */
   credentialsFilePath?: string;
 }
 

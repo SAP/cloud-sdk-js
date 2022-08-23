@@ -314,8 +314,17 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
  */
 export interface DestinationJson {
   [key: string]: any;
+  /**
+   * TODO-JSDOC.
+   */
   destinationConfiguration: DestinationConfiguration;
+  /**
+   * TODO-JSDOC.
+   */
   authTokens?: Record<string, string>[];
+  /**
+   * TODO-JSDOC.
+   */
   certificates?: Record<string, string>[];
 }
 
@@ -324,21 +333,69 @@ export interface DestinationJson {
  */
 export interface DestinationConfiguration {
   [key: string]: any;
+  /**
+   * TODO-JSDOC.
+   */
   URL: string;
+  /**
+   * TODO-JSDOC.
+   */
   Name?: string;
+  /**
+   * TODO-JSDOC.
+   */
   ProxyType?: string;
+  /**
+   * TODO-JSDOC.
+   */
   'sap-client'?: string;
+  /**
+   * TODO-JSDOC.
+   */
   User?: string;
+  /**
+   * TODO-JSDOC.
+   */
   Password?: string;
+  /**
+   * TODO-JSDOC.
+   */
   Authentication?: AuthenticationType;
+  /**
+   * TODO-JSDOC.
+   */
   TrustAll?: string;
+  /**
+   * TODO-JSDOC.
+   */
   tokenServiceURL?: string;
+  /**
+   * TODO-JSDOC.
+   */
   tokenServiceURLType?: 'Common' | 'Dedicated;';
+  /**
+   * TODO-JSDOC.
+   */
   tokenServiceUsername?: string;
+  /**
+   * TODO-JSDOC.
+   */
   tokenServicePass?: string;
+  /**
+   * TODO-JSDOC.
+   */
   clientId?: string;
+  /**
+   * TODO-JSDOC.
+   */
   clientSecret?: string;
+  /**
+   * TODO-JSDOC.
+   */
   SystemUser?: string;
+  /**
+   * TODO-JSDOC.
+   */
   Type?: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC';
 }
 /* eslint-disable-next-line valid-jsdoc */

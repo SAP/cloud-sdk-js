@@ -139,11 +139,20 @@ async function fetchDestinations(
 }
 
 /**
- *  @internal
+ * @internal
  */
 export interface AuthAndExchangeTokens {
+  /**
+   * @internal
+   */
   authHeaderJwt: string;
+  /**
+   * @internal
+   */
   exchangeHeaderJwt?: string;
+  /**
+   * @internal
+   */
   exchangeTenant?: string;
 }
 

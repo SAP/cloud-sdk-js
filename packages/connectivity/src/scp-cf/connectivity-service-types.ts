@@ -44,6 +44,12 @@ export interface ProxyConfiguration {
  */
 export interface ProxyConfigurationHeaders {
   [header: string]: string | undefined;
+  /**
+   * TODO-JSDOC.
+   */
   'Proxy-Authorization': string;
+  /**
+   * TODO-JSDOC.
+   */
   'SAP-Connectivity-Authentication'?: string;
 }

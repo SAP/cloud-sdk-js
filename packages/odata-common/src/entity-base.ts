@@ -16,8 +16,17 @@ export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
  * Represents the static API of an entity.
  */
 export interface Constructable<EntityT extends EntityBase> {
+  /**
+   * TODO-JSDOC.
+   */
   _entityName: string;
+  /**
+   * TODO-JSDOC.
+   */
   _defaultServicePath: string;
+  /**
+   * TODO-JSDOC.
+   */
   _keys: string[];
   new (...args: any[]): EntityT;
 }
@@ -299,7 +308,13 @@ export interface EntityIdentifiable<
   T extends EntityBase,
   DeSerializersT extends DeSerializers
 > {
+  /**
+   * TODO-JSDOC.
+   */
   readonly _entity: T;
+  /**
+   * TODO-JSDOC.
+   */
   readonly _deSerializers: DeSerializersT;
 }
 

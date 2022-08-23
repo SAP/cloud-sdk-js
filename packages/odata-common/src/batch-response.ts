@@ -25,6 +25,9 @@ interface BatchResponseTypeGuards<DeSerializersT extends DeSerializers> {
  */
 export interface WriteResponses<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
+  /**
+   * TODO-JSDOC.
+   */
   responses: WriteResponse<DeSerializersT>[];
 }
 
@@ -32,8 +35,17 @@ export interface WriteResponses<DeSerializersT extends DeSerializers>
  * Represents an erroneous response to a retrieve or change set request within a batch request.
  */
 export interface ErrorResponse extends BatchResponseTypeGuards<any> {
+  /**
+   * TODO-JSDOC.
+   */
   responseType: 'ErrorResponse'; // to make ErrorResponse structurally different and make typeguards work as expected
+  /**
+   * TODO-JSDOC.
+   */
   httpCode: number;
+  /**
+   * TODO-JSDOC.
+   */
   body: Record<string, any>;
 }
 
@@ -43,10 +55,25 @@ export interface ErrorResponse extends BatchResponseTypeGuards<any> {
  */
 export interface ReadResponse<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
+  /**
+   * TODO-JSDOC.
+   */
   responseType: 'ReadResponse'; // to make ReadResponse structurally different and make typeguards work as expected
+  /**
+   * TODO-JSDOC.
+   */
   httpCode: number;
+  /**
+   * TODO-JSDOC.
+   */
   body: Record<string, any>;
+  /**
+   * TODO-JSDOC.
+   */
   type: EntityApi<EntityBase, DeSerializersT>;
+  /**
+   * TODO-JSDOC.
+   */
   as: <EntityT extends EntityBase>(
     entityApi: EntityApi<EntityT, DeSerializersT>
   ) => EntityT[];
@@ -57,10 +84,25 @@ export interface ReadResponse<DeSerializersT extends DeSerializers>
  * @typeParam DeSerializersT - Type of the (de-)serializers.
  */
 export interface WriteResponse<DeSerializersT extends DeSerializers> {
+  /**
+   * TODO-JSDOC.
+   */
   responseType: 'WriteResponse'; // to make WriteResponse structurally different and make typeguards work as expected
+  /**
+   * TODO-JSDOC.
+   */
   httpCode: number;
+  /**
+   * TODO-JSDOC.
+   */
   body?: Record<string, any>;
+  /**
+   * TODO-JSDOC.
+   */
   type?: EntityApi<EntityBase, DeSerializersT>;
+  /**
+   * TODO-JSDOC.
+   */
   as?: <EntityT extends EntityBase>(
     entityApi: EntityApi<EntityT, DeSerializersT>
   ) => EntityT;

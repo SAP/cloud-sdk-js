@@ -1,6 +1,9 @@
 import { StructureKind, TypeAliasDeclarationStructure } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
-import {actionImportReturnType, functionImportReturnType} from '../action-function-import';
+import {
+  actionImportReturnType,
+  functionImportReturnType
+} from '../action-function-import';
 
 /**
  * @internal
@@ -30,14 +33,16 @@ export function writeRequestType(
 }
 
 function getWriteRequestType(service: VdmServiceMetadata): string {
-  const entites =  service.entities
-    .map(
-      e =>
-        `CreateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | UpdateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | DeleteRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
-    )
-      const functionImports = service.functionImports.filter(f => f.httpMethod.toLowerCase() !== 'get').map(f => functionImportReturnType(f))
-      const actionImports = service.actionImports?.map(a=>actionImportReturnType(a))
-    return [...entites,...functionImports].join(' | ');
+  const entites = service.entities.map(
+    e =>
+      `CreateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | UpdateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | DeleteRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
+  );
+  const functionImports = service.functionImports
+    .filter(f => f.httpMethod.toLowerCase() !== 'get')
+    .map(f => functionImportReturnType(f));
+  const actionImports =
+    service.actionImports?.map(a => actionImportReturnType(a)) ?? [];
+  return [...entites, ...functionImports, ...actionImports].join(' | ');
 }
 
 function getReadRequestType(service: VdmServiceMetadata): string {

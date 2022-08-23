@@ -43,13 +43,6 @@ export function importBatchDeclarations(
 }
 
 function getNamedImports(service: VdmServiceMetadata): string[] {
-  const complexReturnTypesOfFunctionImports = service.functionImports
-    .filter(
-      ({ returnType }) =>
-        returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
-    )
-    .map(f => f.returnType.returnType);
-
   const actionsAndFunctions = [
     ...service.functionImports,
     ...(service.actionImports ?? [])

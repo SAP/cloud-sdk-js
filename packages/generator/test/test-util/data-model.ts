@@ -115,6 +115,7 @@ function getActionImport(): VdmActionImport {
     returnType: {
       returnType: 'string'
     },
+    parametersTypeName: `actionImportReturn`,
     parameters: [{ description: 'local test parameter' }] as VdmParameter[]
   } as VdmActionImport;
 }

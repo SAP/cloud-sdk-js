@@ -34,7 +34,7 @@ const logger = createLogger({
  */
 export interface EntityDeserializer {
   /**
-   * {@link entityDeserializer!deserializeEntity}.
+   * TODO-JSDOC.
    */
   deserializeEntity: <EntityT extends EntityBase = EntityBase>(
     json: any,
@@ -43,7 +43,7 @@ export interface EntityDeserializer {
   ) => EntityT;
 
   /**
-   * {@link deserializeComplexType!deserializeEntity}.
+   * TODO-JSDOC.
    */
   deserializeComplexType: (
     json: Record<string, any>,

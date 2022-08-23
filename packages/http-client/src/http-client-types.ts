@@ -5,23 +5,23 @@ import * as http from 'http';
  */
 export interface DestinationHttpRequestConfig {
   /**
-   * TODO-JSDOC.
+   * `baseURL` will be prepended to `url` unless `url` is absolute.
    */
   baseURL: string;
   /**
-   * TODO-JSDOC.
+   * `headers` are custom headers to be sent.
    */
   headers: Record<string, string>;
   /**
-   * TODO-JSDOC.
+   * `params` are the URL parameters to be sent with the request.
    */
   params?: Record<string, string>;
   /**
-   * TODO-JSDOC.
+   * `httpAgent` defines a custom agent to be used when performing http requests.
    */
   httpAgent?: http.Agent;
   /**
-   * TODO-JSDOC.
+   * `httpsAgent` defines a custom agent to be used when performing https requests.
    */
   httpsAgent?: http.Agent;
 }
@@ -75,35 +75,35 @@ export type ParameterEncoder = (
 export interface HttpRequestConfigBase {
   [key: string]: any;
   /**
-   * TODO-JSDOC.
+   * `url` is the server URL that will be used for the request.
    */
   url?: string;
   /**
-   * TODO-JSDOC.
+   * `method` is the request method to be used when making the request.
    */
   method: Method;
   /**
-   * TODO-JSDOC.
+   * `data` is the data to be sent as the request body.
    */
   data?: any;
   /**
-   * TODO-JSDOC.
+   * `timeout` specifies the number of milliseconds before the request times out.
    */
   timeout?: number;
   /**
-   * TODO-JSDOC.
+   * `maxContentLength` defines the max size of the http response content in bytes allowed.
    */
   maxContentLength?: number;
   /**
-   * TODO-JSDOC.
+   * `proxy` defines the hostname, port, and protocol of the proxy server.
    */
   proxy?: false;
   /**
-   * TODO-JSDOC.
+   * `httpAgent` defines a custom agent to be used when performing http requests.
    */
   httpAgent?: any;
   /**
-   * TODO-JSDOC.
+   * `httpsAgent` defines a custom agent to be used when performing https requests.
    */
   httpsAgent?: any;
   /**
@@ -157,11 +157,11 @@ export interface HttpRequestOptions {
  */
 export interface OriginOptions {
   /**
-   * TODO-JSDOC.
+   * Options used for making requests.
    */
   requestConfig?: Record<string, any>;
   /**
-   * TODO-JSDOC.
+   * Custom options for making requests, which take precedence over `requestConfig`.
    */
   custom?: Record<string, any>;
 }
@@ -205,19 +205,19 @@ export function isHttpRequestConfigWithOrigin(
  */
 export interface OriginOptionsInternal {
   /**
-   * TODO-JSDOC.
+   * @internal
    */
   requestConfig?: Record<string, any>;
   /**
-   * TODO-JSDOC.
+   * @internal
    */
   destination?: Record<string, any>;
   /**
-   * TODO-JSDOC.
+   * @internal
    */
   destinationProperty?: Record<string, any>;
   /**
-   * TODO-JSDOC.
+   * @internal
    */
   custom?: Record<string, any>;
 }

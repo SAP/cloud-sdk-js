@@ -178,8 +178,10 @@ function getDestinationConfig(
     ? destinationJson.destinationConfiguration
     : destinationJson;
 }
-
-function validateDestinationConfig(
+/**
+  @internal
+ */
+export function validateDestinationConfig(
   destinationConfig: DestinationConfiguration
 ): void {
   if (

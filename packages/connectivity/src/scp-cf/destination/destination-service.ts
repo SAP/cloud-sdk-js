@@ -17,7 +17,7 @@ import {
   DestinationConfiguration,
   DestinationJson,
   parseCertificate,
-  parseDestination
+  parseDestination, validateDestinationConfig
 } from './destination';
 import {
   Destination,
@@ -116,16 +116,16 @@ async function fetchDestinations(
 
   return callDestinationEndpoint(targetUri, headers, options)
     .then(response => {
-      const destinations: Destination[] = response.data.reduce((all, d) => {
+      const destinations: Destination[] = response.data.filter(dest=> {
         try {
-          return [...all, parseDestination(d)];
-        } catch (e) {
-          logger.debug(
-            `Failed to parse destination ${d.Name} - destination skipped.`
-          );
-          return all;
-        }
-      }, []);
+          validateDestinationConfig(dest)
+          return true
+        }catch (err){
+          logger.debug(`Parsing of destination with name "${dest.Name}" failed - skip this destination in parsing.`)
+          return false
+      }
+      }).map(validatedDestination=>parseDestination(validatedDestination))
+
       if (options?.useCache) {
         destinationServiceCache.cacheRetrievedDestinations(
           targetUri,

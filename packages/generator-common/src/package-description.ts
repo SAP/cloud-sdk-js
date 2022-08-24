@@ -5,18 +5,18 @@ import { VdmServiceMetadata } from '@sap-cloud-sdk/generator/src/vdm-types';
  * @internal
  */
 const isODataMetaData = (
-  metadata: VdmServiceMetadata | OpenApiDocument
-): metadata is VdmServiceMetadata =>
-  !!(metadata as VdmServiceMetadata).apiBusinessHubMetadata;
+  data: VdmServiceMetadata | OpenApiDocument
+): data is VdmServiceMetadata =>
+  !!(data as VdmServiceMetadata).apiBusinessHubMetadata;
 
 /**
  * @internal
  */
 export function packageDescription(
-  metaData: VdmServiceMetadata | OpenApiDocument
+  data: VdmServiceMetadata | OpenApiDocument
 ): string {
-  const packageName = isODataMetaData(metaData)
-    ? metaData.speakingModuleName
-    : metaData.serviceOptions.packageName;
-  return `SAP Cloud SDK for JavaScript: Generated client for service ${packageName}`;
+  const serviceName = isODataMetaData(data)
+    ? data.speakingModuleName
+    : data.serviceOptions.packageName;
+  return `SAP Cloud SDK for JavaScript: Generated client for service ${serviceName}`;
 }

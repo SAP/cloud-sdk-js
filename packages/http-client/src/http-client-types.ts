@@ -5,7 +5,7 @@ import * as http from 'http';
  */
 export interface DestinationHttpRequestConfig {
   /**
-   * `baseURL` will be prepended to `url` unless `url` is absolute.
+   * `baseURL` will be prepended to {@link HttpRequestConfigBase#url} unless `url` is absolute.
    */
   baseURL: string;
   /**
@@ -76,6 +76,7 @@ export interface HttpRequestConfigBase {
   [key: string]: any;
   /**
    * `url` is the server URL that will be used for the request.
+   * Relative `url` can be used together with {@link DestinationHttpRequestConfig#baseURL}
    */
   url?: string;
   /**
@@ -95,7 +96,7 @@ export interface HttpRequestConfigBase {
    */
   maxContentLength?: number;
   /**
-   * `proxy` defines the hostname, port, and protocol of the proxy server.
+   * `proxy` of axios is disabled in http-client. Proxy can be set with {@link @sap-cloud-sdk/connectivity!ProxyConfiguration}
    */
   proxy?: false;
   /**
@@ -157,11 +158,11 @@ export interface HttpRequestOptions {
  */
 export interface OriginOptions {
   /**
-   * Options used for making requests.
+   * Header or parameter properties originating from the request config.
    */
   requestConfig?: Record<string, any>;
   /**
-   * Custom options for making requests, which take precedence over `requestConfig`.
+   * Header or parameters properties set explicitly, which take precedence over `requestConfig`.
    */
   custom?: Record<string, any>;
 }

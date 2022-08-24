@@ -36,7 +36,7 @@ export interface WriteResponses<DeSerializersT extends DeSerializers>
  */
 export interface ErrorResponse extends BatchResponseTypeGuards<any> {
   /**
-   * To make ErrorResponse structurally different and make typeguards work as expected.
+   * Tag for identifying the type of a batch response.
    */
   responseType: 'ErrorResponse';
   /**
@@ -56,7 +56,7 @@ export interface ErrorResponse extends BatchResponseTypeGuards<any> {
 export interface ReadResponse<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
   /**
-   * To make ReadResponse structurally different and make typeguards work as expected.
+   * Tag for identifying the type of a batch response.
    */
   responseType: 'ReadResponse';
   /**
@@ -86,7 +86,7 @@ export interface ReadResponse<DeSerializersT extends DeSerializers>
  */
 export interface WriteResponse<DeSerializersT extends DeSerializers> {
   /**
-   * To make WriteResponse structurally different and make typeguards work as expected.
+   * Tag for identifying the type of a batch response.
    */
   responseType: 'WriteResponse';
   /**

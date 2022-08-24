@@ -337,7 +337,7 @@ async function generateMetadata(
 
 async function generatePackageJson(
   serviceDir: string,
-  openApiDocument: OpenApiDocument,
+  { serviceOptions }: OpenApiDocument,
   { packageVersion, overwrite, licenseInPackageJson }: ParsedGeneratorOptions
 ) {
   logger.verbose(`Generating package.json in ${serviceDir}.`);
@@ -346,8 +346,8 @@ async function generatePackageJson(
     serviceDir,
     'package.json',
     packageJson({
-      npmPackageName: openApiDocument.serviceOptions.packageName,
-      description: packageDescription(openApiDocument),
+      npmPackageName: serviceOptions.packageName,
+      description: packageDescription(serviceOptions.packageName),
       sdkVersion: await getSdkVersion(),
       version: packageVersion,
       license: licenseInPackageJson

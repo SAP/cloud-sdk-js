@@ -153,7 +153,7 @@ The options are super basic - if you need them either create a feature request o
 ```ts
 type ResilienceOptions = {
   retry?: boolean; // default false
-  timeouty?: boolean; // default true
+  timeout?: boolean; // default true
   circuitBreaker?: boolean; // default true
 };
 

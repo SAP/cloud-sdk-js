@@ -14,7 +14,10 @@ export async function sdkMetadata(
   service: VdmServiceMetadata
 ): Promise<Client> {
   const [pregeneratedLibrary, generationAndUsage] = await Promise.all([
-    getPregeneratedLibrary(packageDescription(service.speakingModuleName), service.npmPackageName),
+    getPregeneratedLibrary(
+      packageDescription(service.speakingModuleName),
+      service.npmPackageName
+    ),
     getGenerationAndUsage(service)
   ]);
 

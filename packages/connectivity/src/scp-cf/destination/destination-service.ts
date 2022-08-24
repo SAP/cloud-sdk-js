@@ -90,6 +90,21 @@ export function fetchSubaccountDestinations(
   );
 }
 
+function isParsable(
+  destinationResponse: DestinationConfiguration | DestinationJson
+): boolean {
+  const config = getDestinationConfig(destinationResponse);
+  try {
+    validateDestinationConfig(config);
+    return true;
+  } catch (err) {
+    logger.debug(
+      `Parsing of destination with name "${config.Name}" failed - skip this destination in parsing.`
+    );
+    return false;
+  }
+}
+
 async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
@@ -119,17 +134,8 @@ async function fetchDestinations(
   return callDestinationEndpoint(targetUri, headers, options)
     .then(response => {
       const destinations: Destination[] = response.data
-        .filter(dest => {
-          try {
-            validateDestinationConfig(getDestinationConfig(dest));
-            return true;
-          } catch (err) {
-            logger.debug(
-              `Parsing of destination with name "${dest.Name}" failed - skip this destination in parsing.`
-            );
-          }
-        })
-        .map(validatedDestination => parseDestination(validatedDestination));
+        .filter(isParsable)
+        .map(parsableDestination => parseDestination(parsableDestination));
 
       if (options?.useCache) {
         destinationServiceCache.cacheRetrievedDestinations(

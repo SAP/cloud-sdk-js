@@ -236,5 +236,6 @@ In practice, it could be desirable to enable resilience globally for all request
 ```ts
 function globalMiddlewares(middlewares: Middleware[]) {}
 
-function clearGlobalMiddleware(id?: string) {}
+function clearGlobalMiddlewareById(id?: string) {}
+function clearAllGlobalMiddlewares() {}
 ```

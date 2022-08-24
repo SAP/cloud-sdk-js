@@ -263,7 +263,7 @@ export async function generateSourcesForService(
         npmPackageName: service.npmPackageName,
         version: await getVersionForClient(options.versionInPackageJson),
         sdkVersion: await getSdkVersion(),
-        description: packageDescription(service),
+        description: packageDescription(service.speakingModuleName),
         sdkAfterVersionScript: options.sdkAfterVersionScript,
         oDataVersion: service.oDataVersion,
         license: options.licenseInPackageJson

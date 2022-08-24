@@ -76,7 +76,7 @@ export interface HttpRequestConfigBase {
   [key: string]: any;
   /**
    * `url` is the server URL that will be used for the request.
-   * Relative `url` can be used together with {@link DestinationHttpRequestConfig#baseURL}
+   * Relative `url` can be used together with {@link DestinationHttpRequestConfig#baseURL}.
    */
   url?: string;
   /**
@@ -96,7 +96,8 @@ export interface HttpRequestConfigBase {
    */
   maxContentLength?: number;
   /**
-   * `proxy` of axios is disabled in http-client. Proxy can be set with {@link @sap-cloud-sdk/connectivity!ProxyConfiguration}
+   * `proxy` of axios is disabled in http-client. 
+   * Proxy can be set with {@link @sap-cloud-sdk/connectivity!ProxyConfiguration}.
    */
   proxy?: false;
   /**

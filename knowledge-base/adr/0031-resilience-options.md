@@ -234,7 +234,7 @@ In practice, it could be desirable to enable resilience globally for all request
 - Implementation checks if global config is present and uses them in the request
 
 ```ts
-function globalMiddleware(middleWare: Middleware[]) {}
+function globalMiddlewares(middlewares: Middleware[]) {}
 
 function clearGlobalMiddleware(id?: string) {}
 ```

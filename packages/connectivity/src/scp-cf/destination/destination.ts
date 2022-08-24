@@ -171,7 +171,10 @@ export function getAdditionalQueryParameters(
   return additionalProperties;
 }
 
-function getDestinationConfig(
+/**
+ * @internal
+ */
+export function getDestinationConfig(
   destinationJson: DestinationJson | DestinationConfiguration
 ): DestinationConfiguration {
   return isDestinationJson(destinationJson)

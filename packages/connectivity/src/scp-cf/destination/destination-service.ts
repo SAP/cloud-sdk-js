@@ -16,6 +16,7 @@ import { urlAndAgent } from '../../http-agent';
 import {
   DestinationConfiguration,
   DestinationJson,
+  getDestinationConfig,
   parseCertificate,
   parseDestination,
   validateDestinationConfig
@@ -120,7 +121,7 @@ async function fetchDestinations(
       const destinations: Destination[] = response.data
         .filter(dest => {
           try {
-            validateDestinationConfig(dest);
+            validateDestinationConfig(getDestinationConfig(dest));
             return true;
           } catch (err) {
             logger.debug(

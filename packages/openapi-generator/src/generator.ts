@@ -142,11 +142,7 @@ async function generateSources(
   }
 
   if (options.packageJson) {
-    await generatePackageJson(
-      serviceDir,
-      openApiDocument.serviceOptions,
-      options
-    );
+    await generatePackageJson(serviceDir, openApiDocument, options);
   }
 
   if (options.include) {
@@ -341,7 +337,7 @@ async function generateMetadata(
 
 async function generatePackageJson(
   serviceDir: string,
-  { packageName, directoryName }: ServiceOptions,
+  openApiDocument: OpenApiDocument,
   { packageVersion, overwrite, licenseInPackageJson }: ParsedGeneratorOptions
 ) {
   logger.verbose(`Generating package.json in ${serviceDir}.`);
@@ -350,11 +346,8 @@ async function generatePackageJson(
     serviceDir,
     'package.json',
     packageJson({
-      npmPackageName: packageName,
-      description: packageDescription(
-        directoryName,
-        (directoryNameRaw: string) => directoryNameRaw.split('-').join(' ')
-      ),
+      npmPackageName: openApiDocument.serviceOptions.packageName,
+      description: packageDescription(openApiDocument),
       sdkVersion: await getSdkVersion(),
       version: packageVersion,
       license: licenseInPackageJson

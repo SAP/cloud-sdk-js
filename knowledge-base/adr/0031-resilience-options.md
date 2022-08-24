@@ -99,11 +99,11 @@ type Middleware<T> = <T>(options: MiddlewareInOut) => MiddlewareInOut;
 In our code we will pass around a middleware array and wrap it around evey http call at the very end:
 
 ```ts
-async function someHttpSdkMethod(middleware: Middleware[]): Promise<any> {
+async function someHttpSdkMethod(middlewares: Middleware[]): Promise<any> {
   //return someHttpCall(someArgs)
   const context = {}; //context for this method
 
-  return joinMiddlewares(middlewares: Middleware[])({
+  return joinMiddlewares(middlewares)({
     context,
     fn: someHttpCall,
     someArgs,
@@ -112,7 +112,7 @@ async function someHttpSdkMethod(middleware: Middleware[]): Promise<any> {
 }
 ```
 
-The method `joinMiddleware` joins all the function in an async pipe.
+The method `joinMiddlewares` joins all the function in an async pipe.
 The context will be a minimal but guaranteed amount of information:
 
 ```ts
@@ -185,6 +185,21 @@ function myTimeout(inOut: MiddlewareInOut) {
 }
 
 testApi.requestBuilder().setMiddleware([myTimeout, circuitBreaker]);
+```
+
+Since we will have methods to create the `timeout`, `circuitBreaker` and `retry` middleware, we can also export these to make extension easier:
+
+```ts
+const standardTimeout = createTimeoutMiddleware();
+const standardRety = createRetryMiddleware();
+
+const customCuircuitBreaer = (inOut: MiddlewareInOut) => {
+  //some custome Code
+};
+
+testApi
+  .requestBuilder()
+  .setMiddleware([standardTimeout, customCuircuitBreaer, standardRety]);
 ```
 
 If you want to do something completely custom you just rewrite the whole function without using the SDK implementation at all.

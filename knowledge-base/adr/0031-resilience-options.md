@@ -103,7 +103,7 @@ async function someHttpSdkMethod(middleware: Middleware[]): Promise<any> {
   //return someHttpCall(someArgs)
   const context = {}; //context for this method
 
-  return joinMiddleware(middleware)({
+  return joinMiddlewares(middlewares: Middleware[])({
     context,
     fn: someHttpCall,
     someArgs,

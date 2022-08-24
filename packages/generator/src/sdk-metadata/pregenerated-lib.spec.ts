@@ -1,16 +1,15 @@
 import { resolve } from 'path';
+import { packageDescription } from '@sap-cloud-sdk/generator-common/internal';
 import { VdmServiceMetadata } from '../vdm-types';
 import { parseService } from '../service-generator';
 import { createOptions } from '../../test/test-util/create-generator-options';
 import { GlobalNameFormatter } from '../global-name-formatter';
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
-import { getServiceDescription } from './pregenerated-lib';
-
 describe('pregenerated-lib', () => {
   const service: VdmServiceMetadata = getTestService();
 
   it('returns description of the service', () => {
-    expect(getServiceDescription(service, createOptions())).toMatchSnapshot();
+    expect(packageDescription(service)).toMatchSnapshot();
   });
 });
 

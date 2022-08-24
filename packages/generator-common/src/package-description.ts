@@ -4,13 +4,6 @@ import { OpenApiDocument } from '@sap-cloud-sdk/openapi-generator/src/openapi-ty
 /**
  * @internal
  */
-const isODataMetaData = (
-  data: VdmServiceMetadata | OpenApiDocument
-): data is VdmServiceMetadata => !!(data as VdmServiceMetadata).oDataVersion;
-
-/**
- * @internal
- */
 export function packageDescription(
   data: VdmServiceMetadata | OpenApiDocument
 ): string {

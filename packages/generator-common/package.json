@@ -25,8 +25,6 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "@sap-cloud-sdk/generator-common": "^2.7.1",
-    "@sap-cloud-sdk/openapi-generator": "^2.7.1",
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
     "test": "yarn test:unit",
@@ -39,6 +37,8 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
+    "@sap-cloud-sdk/generator-common": "^2.7.1",
+    "@sap-cloud-sdk/openapi-generator": "^2.7.1",
     "@sap-cloud-sdk/util": "^2.7.1",
     "axios": "^0.27.1",
     "fast-levenshtein": "~3.0.0",

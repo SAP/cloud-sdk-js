@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`pregenerated-lib returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Generated client for service test-service"`;
+exports[`pregenerated-lib returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Generated client for service Test Service"`;
 
 exports[`sdk-metadata generates the sdk metadata content for services with pregenerated lib 1`] = `
 Object {
@@ -58,7 +58,7 @@ const resultPromise = businessPartnerApi.requestBuilder().getAll().top(5).execut
   "pregeneratedLibrary": Object {
     "compatibilityNotes": "",
     "dependencyName": "@sap/cloud-sdk-vdm-test-service",
-    "description": "SAP Cloud SDK for JavaScript: Generated client for service test-service",
+    "description": "SAP Cloud SDK for JavaScript: Generated client for service Test Service",
     "generatedAt": "/Date(0)/",
     "installLibrarySteps": Object {
       "header": "Installation",

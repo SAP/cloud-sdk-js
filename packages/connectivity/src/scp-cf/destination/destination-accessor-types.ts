@@ -11,11 +11,11 @@ import type { DestinationSelectionStrategy } from './destination-selection-strat
  */
 export interface AllDestinations {
   /**
-   * Collection of all destinations from a subscriber account.
+   * Collection of all destinations from the subscriber account.
    */
   subscriber: DestinationsByType;
   /**
-   * Collection of all destinations from a provider account.
+   * Collection of all destinations from the provider account.
    */
   provider: DestinationsByType;
 }

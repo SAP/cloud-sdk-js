@@ -73,7 +73,7 @@ export interface GeneratorOptions {
    */
   generateSdkMetadata?: boolean;
   /**
-   * Number of processes used for transpilation of JavaScript files.
+   * Number of node processes used for transpilation of JavaScript files.
    */
   processesJsGeneration?: number;
   /**

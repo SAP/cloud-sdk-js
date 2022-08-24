@@ -6,8 +6,7 @@ import { VdmServiceMetadata } from '@sap-cloud-sdk/generator/src/vdm-types';
  */
 const isODataMetaData = (
   data: VdmServiceMetadata | OpenApiDocument
-): data is VdmServiceMetadata =>
-  !!(data as VdmServiceMetadata).apiBusinessHubMetadata;
+): data is VdmServiceMetadata => !!(data as VdmServiceMetadata).oDataVersion;
 
 /**
  * @internal

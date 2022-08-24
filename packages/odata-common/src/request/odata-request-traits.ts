@@ -6,7 +6,7 @@ import { DeSerializers } from '../de-serializers';
 import { EntityApi } from '../entity-api';
 
 /**
- * Interface implemented by OData requests needing keys to identify an entity like `getByKey`, `delete` or `update.
+ * Interface implemented by OData requests needing keys to identify an entity like `getByKey`, `delete` or `update`.
  */
 export interface WithKeys {
   /**
@@ -16,14 +16,14 @@ export interface WithKeys {
 }
 
 /**
- * Interface implemented by OData requests returning data like getAll or getByKey.
+ * Interface implemented by OData requests returning data like `getAll` or `getByKey`.
  */
 export interface WithSelection<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 > {
   /**
-   * TODO-JSDOC.
+   * Select a list of fields on the `schema` property of the entity api.
    */
   selects: Selectable<EntityT, DeSerializersT>[];
 }
@@ -36,19 +36,19 @@ export interface WithGetAllRestrictions<
   DeSerializersT extends DeSerializers
 > extends WithSelection<EntityT, DeSerializersT> {
   /**
-   * TODO-JSDOC.
+   * Limit the amount of results to the given number.
    */
   top: number;
   /**
-   * TODO-JSDOC.
+   * Skip a number of results in the requested set.
    */
   skip: number;
   /**
-   * TODO-JSDOC.
+   * Filter the results based on conditions.
    */
   filter: Filterable<EntityT, DeSerializersT>;
   /**
-   * TODO-JSDOC.
+   * Order the results in, e.g., `asc` or `desc` order.
    */
   orderBy: Orderable<EntityT, EntityApi<EntityBase>>[];
 }
@@ -58,11 +58,11 @@ export interface WithGetAllRestrictions<
  */
 export interface WithETag {
   /**
-   * TODO-JSDOC.
+   * Version identifier.
    */
   eTag: string;
   /**
-   * TODO-JSDOC.
+   * Ignore the version identifier if set to true.
    */
   versionIdentifierIgnored: boolean;
 }

@@ -4,7 +4,8 @@
  */
 export interface ResponseDataAccessor {
   /**
-   * TODO-JSDOC.
+   * A function that extracts data from the response object.
+   * The data is extracted per default from `data.d.results`.
    */
   getCollectionResult: (data) => any[];
   /**

@@ -21,12 +21,12 @@ interface BatchResponseTypeGuards<DeSerializersT extends DeSerializers> {
 
 /**
  * Represents the list of responses for a change set in a batch request.
- * @typeParam  DeSerializersT - Type of the (de-)serializers.
+ * @typeParam DeSerializersT - Type of the (de-)serializers.
  */
 export interface WriteResponses<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
   /**
-   * TODO-JSDOC.
+   * List of responses for a change set in a batch request.
    */
   responses: WriteResponse<DeSerializersT>[];
 }
@@ -36,15 +36,15 @@ export interface WriteResponses<DeSerializersT extends DeSerializers>
  */
 export interface ErrorResponse extends BatchResponseTypeGuards<any> {
   /**
-   * TODO-JSDOC.
+   * Tag for identifying the type of a batch response.
    */
-  responseType: 'ErrorResponse'; // to make ErrorResponse structurally different and make typeguards work as expected
+  responseType: 'ErrorResponse';
   /**
-   * TODO-JSDOC.
+   * HTTP response status code.
    */
   httpCode: number;
   /**
-   * TODO-JSDOC.
+   * HTTP raw body.
    */
   body: Record<string, any>;
 }
@@ -56,15 +56,15 @@ export interface ErrorResponse extends BatchResponseTypeGuards<any> {
 export interface ReadResponse<DeSerializersT extends DeSerializers>
   extends BatchResponseTypeGuards<DeSerializersT> {
   /**
-   * TODO-JSDOC.
+   * Tag for identifying the type of a batch response.
    */
-  responseType: 'ReadResponse'; // to make ReadResponse structurally different and make typeguards work as expected
+  responseType: 'ReadResponse';
   /**
-   * TODO-JSDOC.
+   * HTTP response status code.
    */
   httpCode: number;
   /**
-   * TODO-JSDOC.
+   * HTTP raw body.
    */
   body: Record<string, any>;
   /**
@@ -72,7 +72,8 @@ export interface ReadResponse<DeSerializersT extends DeSerializers>
    */
   type: EntityApi<EntityBase, DeSerializersT>;
   /**
-   * TODO-JSDOC.
+   * Transform the raw data into an instance of an entity represented by the given entity API.
+   * Note, this method transforms the raw data to an array of entities, even if the original request was a GetByKeyRequestBuilder.
    */
   as: <EntityT extends EntityBase>(
     entityApi: EntityApi<EntityT, DeSerializersT>
@@ -85,15 +86,15 @@ export interface ReadResponse<DeSerializersT extends DeSerializers>
  */
 export interface WriteResponse<DeSerializersT extends DeSerializers> {
   /**
-   * TODO-JSDOC.
+   * Tag for identifying the type of a batch response.
    */
-  responseType: 'WriteResponse'; // to make WriteResponse structurally different and make typeguards work as expected
+  responseType: 'WriteResponse';
   /**
-   * TODO-JSDOC.
+   * HTTP response status code.
    */
   httpCode: number;
   /**
-   * TODO-JSDOC.
+   * HTTP raw body.
    */
   body?: Record<string, any>;
   /**
@@ -101,7 +102,8 @@ export interface WriteResponse<DeSerializersT extends DeSerializers> {
    */
   type?: EntityApi<EntityBase, DeSerializersT>;
   /**
-   * TODO-JSDOC.
+   * Transform the raw string body into an instance of the given constructor.
+   * Note that the response may not exist, so you should only call this method if you know that there is data.
    */
   as?: <EntityT extends EntityBase>(
     entityApi: EntityApi<EntityT, DeSerializersT>

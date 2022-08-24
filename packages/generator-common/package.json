@@ -37,8 +37,6 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/generator": "^2.7.1",
-    "@sap-cloud-sdk/openapi-generator": "^2.7.1",
     "@sap-cloud-sdk/util": "^2.7.1",
     "axios": "^0.27.1",
     "fast-levenshtein": "~3.0.0",

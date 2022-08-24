@@ -1,6 +1,3 @@
-import { VdmServiceMetadata } from '@sap-cloud-sdk/generator/src/vdm-types';
-import { OpenApiDocument } from '@sap-cloud-sdk/openapi-generator/src/openapi-types';
-
 /**
  * @internal
  */

@@ -15,8 +15,8 @@ const isODataMetaData = (
 export function packageDescription(
   data: VdmServiceMetadata | OpenApiDocument
 ): string {
-  const serviceName = isODataMetaData(data)
+  const serviceReference = isODataMetaData(data)
     ? data.speakingModuleName
     : data.serviceOptions.packageName;
-  return `SAP Cloud SDK for JavaScript: Generated client for service ${serviceName}`;
+  return `SAP Cloud SDK for JavaScript: Generated client for service ${serviceReference}`;
 }

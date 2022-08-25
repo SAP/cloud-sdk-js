@@ -163,8 +163,9 @@ describe('vcap-service-destination', () => {
   });
 
   it('throws an error if the service type is not supported', async () => {
-    await expect(() => destinationForServiceBinding('my-custom-service'))
-      .rejects.toThrowErrorMatchingSnapshot();
+    await expect(() =>
+      destinationForServiceBinding('my-custom-service')
+    ).rejects.toThrowErrorMatchingSnapshot();
   });
 
   it('throws an error if no service binding can be found for the given name', async () => {

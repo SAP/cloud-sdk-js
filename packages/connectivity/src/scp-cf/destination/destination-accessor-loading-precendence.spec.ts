@@ -27,7 +27,7 @@ function mockServiceBindingDestination(existingMock: MockServiceBindings) {
           User: 'adaa579f-3583-4812-a172-52a44194cb6f'
         },
         instance_name: 'instance-name',
-        label: 'destination',
+        label: 's4-hana-cloud',
         name: destinationName,
         plan: 'some-plan',
         provider: null,

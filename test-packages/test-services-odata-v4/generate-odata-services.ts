@@ -10,7 +10,6 @@ const generatorConfigOData = {
   useSwagger: false,
   writeReadme: false,
   clearOutputDir: false,
-  generateNpmrc: false,
   generatePackageJson: false,
   generateCSN: false,
   generateSdkMetadata: false,

@@ -18,7 +18,6 @@ export interface GeneratorOptions {
   include?: string;
   forceOverwrite: boolean;
   clearOutputDir: boolean;
-  generateNpmrc: boolean;
   generatePackageJson: boolean;
   versionInPackageJson?: string;
   licenseInPackageJson?: string;
@@ -104,12 +103,6 @@ export const generatorOptionsCli: KeysToOptions = {
   clearOutputDir: {
     describe:
       'When set to true, the generator will delete EVERYTHING in the specified output directory before generating code.',
-    type: 'boolean',
-    default: false
-  },
-  generateNpmrc: {
-    describe:
-      'Deprecated. If set to true the generator will generate an .npmrc file specifying a registry for @sap scoped dependencies. This is not necessary anymore and will be skipped by default.',
     type: 'boolean',
     default: false
   },

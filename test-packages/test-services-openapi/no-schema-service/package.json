@@ -1,7 +1,7 @@
 {
   "name": "no-schema-service",
   "version": "1.2.3",
-  "description": "SAP Cloud SDK for JavaScript: Generated client for service no-schema-servic",
+  "description": "SAP Cloud SDK for JavaScript: Generated client for service no-schema-service",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
   "main": "./index.js",
   "types": "./index.d.ts",

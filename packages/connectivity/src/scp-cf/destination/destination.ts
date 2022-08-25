@@ -171,15 +171,20 @@ export function getAdditionalQueryParameters(
   return additionalProperties;
 }
 
-function getDestinationConfig(
+/**
+ * @internal
+ */
+export function getDestinationConfig(
   destinationJson: DestinationJson | DestinationConfiguration
 ): DestinationConfiguration {
   return isDestinationJson(destinationJson)
     ? destinationJson.destinationConfiguration
     : destinationJson;
 }
-
-function validateDestinationConfig(
+/**
+  @internal
+ */
+export function validateDestinationConfig(
   destinationConfig: DestinationConfiguration
 ): void {
   if (

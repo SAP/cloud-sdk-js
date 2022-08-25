@@ -26,7 +26,7 @@ jobs:
       - run: sudo apt-get install jq
       - run: echo "project_version=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
       - name: Blackduck Scan
-        uses: SAP/project-piper-action@de2106c218782b7caa3989c7a8af8f3b9d5fa36b
+        uses: SAP/project-piper-action@27cadf261545552a68660531476c0915a97ee3d8
         with:
           command: detectExecuteScan
           flags: \

@@ -6,9 +6,20 @@ import {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
+  FunctionImportRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
-import { TestEntity, TestEntityLink, TestEntity50Prop } from './index';
+import {
+  TestEntity,
+  TestEntityLink,
+  TestEntity50Prop,
+  ConcatStringsParameters,
+  GetAllParameters,
+  GetByKeyParameters,
+  ReturnCollectionParameters,
+  ReturnIntParameters,
+  ReturnSapCloudSdkParameters
+} from './index';
 /**
  * Batch builder for operations supported on the Test Service.
  * @param requests The requests of the batch
@@ -46,7 +57,37 @@ export declare type ReadTestServiceRequestBuilder<
   | GetAllRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>;
+  | GetByKeyRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      ConcatStringsParameters<DeSerializersT>,
+      string
+    >
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      GetAllParameters<DeSerializersT>,
+      TestEntity[]
+    >
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      GetByKeyParameters<DeSerializersT>,
+      TestEntity
+    >
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      ReturnCollectionParameters<DeSerializersT>,
+      number[]
+    >
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      ReturnIntParameters<DeSerializersT>,
+      number
+    >
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      ReturnSapCloudSdkParameters<DeSerializersT>,
+      string
+    >;
 export declare type WriteTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =

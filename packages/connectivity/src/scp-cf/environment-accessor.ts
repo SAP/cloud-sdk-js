@@ -113,8 +113,8 @@ export function getService(service: string): Service | undefined {
 }
 
 /**
+ * Filters services based on service instance name. Throws an error if no or multiple services exist.
  * @internal
- * Write check that its only one, and if it is one only return the first entry in the array.
  */
 export function getServiceByInstanceName(
   serviceInstanceName: string

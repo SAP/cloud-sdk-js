@@ -28,7 +28,7 @@ const logger = createLogger({
  */
 export interface EntitySerializer {
   /**
-   * TODO-JSDOC.
+   * Converts an instance of an entity class into a JSON payload to be sent to an OData service.
    */
   serializeEntity: <EntityT extends EntityBase>(
     entity: EntityT,
@@ -36,7 +36,7 @@ export interface EntitySerializer {
     diff?: boolean
   ) => Record<string, any>;
   /**
-   * TODO-JSDOC.
+   * Method to serialize a complex type to JSON.
    */
   serializeComplexType: <
     ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
@@ -45,7 +45,7 @@ export interface EntitySerializer {
     complexTypeNameSpace: ComplexTypeNamespaceT
   ) => any;
   /**
-   * TODO-JSDOC.
+   * Like [[serializeEntity]]  ignoring custom fields.
    */
   serializeEntityNonCustomFields: <EntityT extends EntityBase>(
     entity: EntityT,

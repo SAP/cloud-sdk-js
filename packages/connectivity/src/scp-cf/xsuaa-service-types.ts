@@ -3,11 +3,11 @@
  */
 export interface ClientCredentialsResponse {
   /**
-   * TODO-JSDOC.
+   * Token to access the service.
    */
   access_token: string;
   /**
-   * TODO-JSDOC.
+   * Type of the token e.g. Bearer.
    */
   token_type: string;
   /**
@@ -15,11 +15,11 @@ export interface ClientCredentialsResponse {
    */
   expires_in: number;
   /**
-   * TODO-JSDOC.
+   * Scopes associated with the token..
    */
   scope: string;
   /**
-   * TODO-JSDOC.
+   * Token id.
    */
   jti: string;
 }

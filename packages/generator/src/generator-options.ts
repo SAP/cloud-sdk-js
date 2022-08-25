@@ -25,11 +25,11 @@ export interface GeneratorOptions {
    */
   serviceMapping?: PathLike;
   /**
-   * TODO-JSDOC.
+   * If set to true `.JSON` files i.e. Swagger definitions are used for generation.
    */
   useSwagger: boolean;
   /**
-   * TODO-JSDOC.
+   * If set to true a `README.dm` will be created on generation.
    */
   writeReadme: boolean;
   /**
@@ -61,7 +61,7 @@ export interface GeneratorOptions {
    */
   versionInPackageJson?: string;
   /**
-   * TODO-JSDOC.
+   * License name to be used on the generated package.json. Only considered if 'packageJson' is enabled.
    */
   licenseInPackageJson?: string;
   /**
@@ -69,7 +69,7 @@ export interface GeneratorOptions {
    */
   generateJs: boolean;
   /**
-   * TODO-JSDOC.
+   * Hidden option only for internal usage - generate metadata for API hub integration.
    */
   generateSdkMetadata?: boolean;
   /**
@@ -77,19 +77,21 @@ export interface GeneratorOptions {
    */
   processesJsGeneration?: number;
   /**
-   * TODO-JSDOC.
+   * When set to true, the package.json of generated services will have the after-version script to internally keep the versions in sync.
    */
   sdkAfterVersionScript: boolean;
+  // TODO remove s4hanaCloud in version 3.0
   /**
-   * TODO-JSDOC.
+   * Internal option used to adjust the description for S/4HANA cloud systems. Will not be used in the future.
    */
   s4hanaCloud: boolean;
   /**
    * Generate A CSN file for each service definition in the output directory.
    */
   generateCSN: boolean;
+  // TODO remove packageVersion in version 3.0
   /**
-   * TODO-JSDOC.
+   * Internal option used to adjust the version in the generated package.json. Will not be used in the future.
    */
   packageVersion?: string;
 }

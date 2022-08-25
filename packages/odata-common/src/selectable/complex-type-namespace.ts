@@ -5,7 +5,7 @@ import { EdmTypeShared } from '../edm-types';
  */
 export interface ComplexTypeNamespace<ComplexT> {
   /**
-   * TODO-JSDOC.
+   * Metadata like `Edm.Type` of the complex type properties.
    */
   _propertyMetadata: PropertyMetadata<ComplexT>[];
 }
@@ -15,19 +15,19 @@ export interface ComplexTypeNamespace<ComplexT> {
  */
 export interface PropertyMetadata<ComplexT = any> {
   /**
-   * TODO-JSDOC.
+   * Name of the complex type property.
    */
   name: keyof ComplexT;
   /**
-   * TODO-JSDOC.
+   * Original name of the complex type property.
    */
   originalName: string;
   /**
-   * TODO-JSDOC.
+   * Type of the complex type property.
    */
   type: EdmTypeShared<'any'> | ComplexTypeNamespace<any>;
   /**
-   * TODO-JSDOC.
+   * If true the property is a collection property.
    */
   isCollection?: boolean;
 }

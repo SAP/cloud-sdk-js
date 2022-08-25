@@ -45,11 +45,11 @@ export interface ProxyConfiguration {
 export interface ProxyConfigurationHeaders {
   [header: string]: string | undefined;
   /**
-   * TODO-JSDOC.
+   * `Proxy-Authorization` header send to the proxy.
    */
   'Proxy-Authorization': string;
   /**
-   * TODO-JSDOC.
+   * `SAP-Connectivity-Authentication` send via the proxy to the target system containing the propagated user.
    */
   'SAP-Connectivity-Authentication'?: string;
 }

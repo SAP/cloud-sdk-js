@@ -4,20 +4,22 @@
  */
 export interface ResponseDataAccessor {
   /**
-   * A function that extracts data from the response object.
+   * A function that extracts array data from the response object.
    * The data is extracted per default from `data.d.results`.
    */
   getCollectionResult: (data) => any[];
   /**
-   * TODO-JSDOC.
+   * Checks if the response if a array like opbject.
    */
   isCollectionResult: (data) => boolean;
   /**
-   * TODO-JSDOC.
+   * A function that extracts object data from the response object.
+   * The data is extracted per default from `data.d.results`.
    */
   getSingleResult: (data: any) => Record<string, any>;
   /**
-   * TODO-JSDOC.
+   * Extract the collection data from the one to many link response.
+   * If the data does not contain a collection an empty array is returned.
    */
   getLinkedCollectionResult: (data) => any[];
 }

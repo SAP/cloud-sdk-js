@@ -34,7 +34,7 @@ const logger = createLogger({
  */
 export interface EntityDeserializer {
   /**
-   * TODO-JSDOC.
+   * Method to deserialize the full entity from JSON to an entity object.
    */
   deserializeEntity: <EntityT extends EntityBase = EntityBase>(
     json: any,
@@ -43,7 +43,7 @@ export interface EntityDeserializer {
   ) => EntityT;
 
   /**
-   * TODO-JSDOC.
+   * Method to deserialize the full entity from JSON to the complex type property.
    */
   deserializeComplexType: (
     json: Record<string, any>,

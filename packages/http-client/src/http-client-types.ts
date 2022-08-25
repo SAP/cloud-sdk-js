@@ -96,7 +96,7 @@ export interface HttpRequestConfigBase {
    */
   maxContentLength?: number;
   /**
-   * `proxy` of axios is disabled in http-client. 
+   * `proxy` of axios is disabled in http-client.
    * Proxy can be set with {@link @sap-cloud-sdk/connectivity!ProxyConfiguration}.
    */
   proxy?: false;
@@ -109,7 +109,7 @@ export interface HttpRequestConfigBase {
    */
   httpsAgent?: any;
   /**
-   * TODO-JSDOC.
+   * Encoder for the query parameters key and values. Per default parameters and keys are percent encoded.
    */
   parameterEncoder?: ParameterEncoder;
 }

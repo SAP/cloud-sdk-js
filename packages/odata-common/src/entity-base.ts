@@ -17,15 +17,15 @@ export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
  */
 export interface Constructable<EntityT extends EntityBase> {
   /**
-   * TODO-JSDOC.
+   * Name of the entity.
    */
   _entityName: string;
   /**
-   * TODO-JSDOC.
+   * Service path as specified in the `service-mapping.json` e.g. `/sap/opu/odata/sap/API_COMMON_SRV`.
    */
   _defaultServicePath: string;
   /**
-   * TODO-JSDOC.
+   * Names of the key properties of the entity.
    */
   _keys: string[];
   new (...args: any[]): EntityT;

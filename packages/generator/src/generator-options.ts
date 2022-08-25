@@ -18,6 +18,7 @@ export interface GeneratorOptions {
   include?: string;
   forceOverwrite: boolean;
   clearOutputDir: boolean;
+  generateNpmrc: boolean;
   generatePackageJson: boolean;
   versionInPackageJson?: string;
   licenseInPackageJson?: string;
@@ -105,6 +106,18 @@ export const generatorOptionsCli: KeysToOptions = {
       'When set to true, the generator will delete EVERYTHING in the specified output directory before generating code.',
     type: 'boolean',
     default: false
+  },
+  generateNpmrc: {
+    deprecated:
+      'Since v2.8.0. This option does not have an effect anymore.',
+    type: 'boolean',
+    default: false,
+    coerce: (input: string): string => {
+      logger.warn(
+        "The option 'generateNpmrc' is deprecated since v2.8.0. It has no effect anymore. Please remove it from your script."
+      );
+      return input;
+    }
   },
   generatePackageJson: {
     describe:

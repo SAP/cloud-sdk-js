@@ -29,6 +29,7 @@
   "peerDependencies": {
     "@typescript-eslint/parser": "^5.21.0",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "eslint-plugin-regex": "^1.10.0",
     "eslint": "^8.0.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-unused-imports": "^2.0.0"

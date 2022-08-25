@@ -84,9 +84,13 @@ export {
   DeleteRequestBuilderBase,
   GetAllRequestBuilderBase,
   GetByKeyRequestBuilderBase,
+  ActionFunctionImportRequestBuilderBase,
   CountRequestBuilder
 } from './request-builder';
-export type { BatchSubRequestPathType } from './request-builder';
+export type {
+  BatchSubRequestPathType,
+  ChangesetBuilderTypes
+} from './request-builder';
 export {
   FunctionImportParameter,
   ODataCreateRequestConfig,

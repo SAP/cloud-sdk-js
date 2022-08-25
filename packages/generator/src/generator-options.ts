@@ -108,8 +108,7 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false
   },
   generateNpmrc: {
-    deprecated:
-      'Since v2.8.0. This option does not have an effect anymore.',
+    deprecated: 'Since v2.8.0. This option does not have an effect anymore.',
     type: 'boolean',
     default: false,
     coerce: (input: string): string => {

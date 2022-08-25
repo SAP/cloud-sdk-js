@@ -96,7 +96,7 @@ export interface HttpRequestConfigBase {
    */
   maxContentLength?: number;
   /**
-   * `proxy` of axios is disabled in http-client. 
+   * `proxy` of axios is disabled in http-client.
    * Proxy can be set with {@link @sap-cloud-sdk/connectivity!ProxyConfiguration}.
    */
   proxy?: false;

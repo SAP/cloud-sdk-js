@@ -29,7 +29,7 @@ export interface GeneratorOptions {
    */
   useSwagger: boolean;
   /**
-   * If set to true a `README.dm` will be created on generation.
+   * Generate default `README.md` files in the client directories.
    */
   writeReadme: boolean;
   /**

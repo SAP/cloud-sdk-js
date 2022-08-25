@@ -169,23 +169,23 @@ export interface Destination {
  */
 export interface DestinationAuthToken {
   /**
-   * TODO-JSDOC.
+   * Type of the token e.g. Bearer.
    */
   type: string;
   /**
-   * TODO-JSDOC.
+   * Value of the token.
    */
   value: string;
   /**
-   * TODO-JSDOC.
+   * The number of seconds until the access token expires.
    */
   expiresIn: string;
   /**
-   * TODO-JSDOC.
+   * Potential error of token retrieval in the destination service.
    */
   error: string | null;
   /**
-   * TODO-JSDOC.
+   * Object containing ready to use key value pairs like `authorization` : `Bearer U29tZVRva2VuVmFsdWU=`.
    */
   http_header: {
     key: string;

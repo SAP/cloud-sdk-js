@@ -309,11 +309,11 @@ export interface EntityIdentifiable<
   DeSerializersT extends DeSerializers
 > {
   /**
-   * TODO-JSDOC.
+   * Dummy property whose type makes structurally identical entities distiguishable in TypeScript.
    */
   readonly _entity: T;
   /**
-   * TODO-JSDOC.
+   * Dummy property to include also the deserializer type in the strucutre of the entity type.
    */
   readonly _deSerializers: DeSerializersT;
 }

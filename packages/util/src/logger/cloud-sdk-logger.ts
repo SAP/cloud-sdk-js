@@ -360,7 +360,8 @@ export interface LoggerOptions {
    */
   level?: LogLevel;
   /**
-   * TODO-JSDOC. (Is this property used anywhere?).
+   * Unused option passed to the winston logger options.
+   * @Deprecated
    */
   logger?: string;
 }
@@ -370,7 +371,7 @@ export interface LoggerOptions {
  */
 export interface MessageContextObj {
   /**
-   * TODO-JSDOC.
+   * Name of the message context.
    */
   messageContext?: string;
   [key: string]: any;

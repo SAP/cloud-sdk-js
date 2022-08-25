@@ -320,15 +320,15 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
 export interface DestinationJson {
   [key: string]: any;
   /**
-   * TODO-JSDOC.
+   * Configuration of a destination as it is available through the destination service.
    */
   destinationConfiguration: DestinationConfiguration;
   /**
-   * TODO-JSDOC.
+   * Authentication tokens as they are available through the destination service.
    */
   authTokens?: Record<string, string>[];
   /**
-   * TODO-JSDOC.
+   * Certificates for authentication as they are available through the destination service.
    */
   certificates?: Record<string, string>[];
 }
@@ -339,67 +339,69 @@ export interface DestinationJson {
 export interface DestinationConfiguration {
   [key: string]: any;
   /**
-   * TODO-JSDOC.
+   * `URL` of the destination.
    */
   URL: string;
   /**
-   * TODO-JSDOC.
+   * `Name` of the destination.
    */
   Name?: string;
   /**
-   * TODO-JSDOC.
+   * `ProxyType` of the destination e.g. `Internet` or `OnPremise`.
    */
   ProxyType?: string;
   /**
-   * TODO-JSDOC.
+   * `sap-client` defined in the destination.
    */
   'sap-client'?: string;
   /**
-   * TODO-JSDOC.
+   * Username in case of basic authentication destinations.
    */
   User?: string;
   /**
-   * TODO-JSDOC.
+   * Password in case of basic authentication destinations.
    */
   Password?: string;
   /**
-   * TODO-JSDOC.
+   * Represents the authentication type of a destination.
    */
   Authentication?: AuthenticationType;
   /**
-   * TODO-JSDOC.
+   * Value of the TrustAll property of the destination.
    */
   TrustAll?: string;
   /**
-   * TODO-JSDOC.
+   * URL of the token service endpoint to retrieve access token.
+   * This may contain placeholders in multi-tenant scenarios https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/c69ea6aacd714ad2ae8ceb5fc3ceea56.html?locale=en-US
+   * In most cases the XSUAA will be used here.
    */
   tokenServiceURL?: string;
   /**
-   * TODO-JSDOC.
+   * Decides if the token service subdomain is fixed or adjusted in multi-tenant scenarios https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/c69ea6aacd714ad2ae8ceb5fc3ceea56.html?locale=en-US.
    */
   tokenServiceURLType?: 'Common' | 'Dedicated;';
   /**
-   * TODO-JSDOC.
+   * Fixed username to retrieve an auth token from the endpoint.
    */
   tokenServiceUsername?: string;
   /**
-   * TODO-JSDOC.
+   * Password to retrieve an auth token from the endpoint.
    */
   tokenServicePass?: string;
   /**
-   * TODO-JSDOC.
+   * ClientId to retrieve an auth token from the token service endpoint.
    */
   clientId?: string;
   /**
-   * TODO-JSDOC.
+   * ClientSecret to retrieve an auth token from the token service endpoint.
    */
   clientSecret?: string;
   /**
-   * TODO-JSDOC.
+   * Deprecated option of the destination service to fix a user in OnPremise principal propagation.
    */
   SystemUser?: string;
   /**
-   * TODO-JSDOC.
+   * Type of the destination.
    */
   Type?: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC';
 }

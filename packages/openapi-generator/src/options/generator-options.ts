@@ -63,7 +63,7 @@ export interface GeneratorOptions {
    */
   packageJson?: boolean;
   /**
-   * TODO-JSDOC.
+   * License name to be used on the generated package.json. Only considered if 'packageJson' is enabled.
    */
   licenseInPackageJson?: string;
   /**
@@ -77,16 +77,17 @@ export interface GeneratorOptions {
    * If a directory is passed, a `options-per-service.json` file is read/created in this directory.
    */
   optionsPerService?: string;
+  // TODO remove packageVersion in version 3.0
   /**
-   * TODO-JSDOC.
+   * Internal option used to adjust the version in the generated package.json. Will not be used in the future.
    */
   packageVersion?: string;
   /**
-   * TODO-JSDOC.
+   * Generate default `README.md` files in the client directories.
    */
   readme?: boolean;
   /**
-   * TODO-JSDOC.
+   * Hidden option only for internal usage - generate metadata for API hub integration.
    */
   metadata?: boolean;
   /**

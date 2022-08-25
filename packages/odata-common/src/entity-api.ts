@@ -27,7 +27,7 @@ export interface EntityApi<
   entityBuilder(): EntityBuilderType<EntityT, DeSerializersT>;
 
   /**
-   * TODO-JSDOC.
+   * Constructor function for the entity.
    */
   entityConstructor: Constructable<EntityT>;
   /**

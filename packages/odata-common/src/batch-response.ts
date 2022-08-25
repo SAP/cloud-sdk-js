@@ -68,7 +68,7 @@ export interface ReadResponse<DeSerializersT extends DeSerializers>
    */
   body: Record<string, any>;
   /**
-   * EntityApi of the response data. Can be undefined for function/action imports or unmapple entites.
+   * EntityApi of the response data. Can be undefined for function/action imports or unmappable entities.
    */
   // TODO could be undefined for function/action imports of unknown if entity is not in the mapping.
   type: EntityApi<EntityBase, DeSerializersT>;
@@ -99,7 +99,7 @@ export interface WriteResponse<DeSerializersT extends DeSerializers> {
    */
   body?: Record<string, any>;
   /**
-   * TODO-JSDOC.
+   * EntityApi of the response data. Can be undefined for function/action imports or unmappable entities.
    */
   type?: EntityApi<EntityBase, DeSerializersT>;
   /**

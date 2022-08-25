@@ -10,7 +10,7 @@ import { EntityApi } from '../entity-api';
  */
 export interface WithKeys {
   /**
-   * TODO-JSDOC.
+   * Map containing the key name and value.
    */
   keys: Record<string, any>;
 }

@@ -182,15 +182,15 @@ export class OpenApiRequestBuilder<ResponseT = any> {
  */
 export interface OpenApiRequestParameters {
   /**
-   * TODO-JSDOC.
+   * Collection of path parameters.
    */
   pathParameters?: Record<string, any>;
   /**
-   * TODO-JSDOC.
+   * Collection of query parameters.
    */
   queryParameters?: Record<string, any>;
   /**
-   * TODO-JSDOC.
+   * Request body typically used with "create" and "update" operations (POST, PUT, PATCH).
    */
   body?: any;
 }

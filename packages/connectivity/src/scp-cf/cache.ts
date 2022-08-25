@@ -32,11 +32,11 @@ export interface DateInputObject {
  */
 export interface CacheEntry<T> {
   /**
-   * TODO-JSDOC.
+   * The expiration time of the cache entry in milliseconds.
    */
   expires?: number;
   /**
-   * TODO-JSDOC.
+   * The cache entry.
    */
   entry: T;
 }

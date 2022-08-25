@@ -16,11 +16,11 @@ const CREDENTIALS_FILE = 'credentials.json';
  */
 export interface GetTestDestinationOptions {
   /**
-   * TODO-JSDOC.
+   * The path of the `systems.json` file.
    */
   systemsFilePath?: string;
   /**
-   * TODO-JSDOC.
+   * The path of the `credentials.json` file.
    */
   credentialsFilePath?: string;
 }

@@ -11,15 +11,17 @@ const logger = createLogger('generator-options');
  */
 export interface GeneratorOptions {
   /**
-   * TODO-JSDOC.
+   * This directory will be recursively searched for `.edmx`/`.xml` files.
    */
   inputDir: PathLike;
   /**
-   * TODO-JSDOC.
+   * Directory to save the generated code in.
    */
   outputDir: PathLike;
   /**
-   * TODO-JSDOC.
+   * Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files.
+   * Will be generated if not existent.
+   * Default set to `inputDir/service-mapping.json`.
    */
   serviceMapping?: PathLike;
   /**
@@ -31,27 +33,31 @@ export interface GeneratorOptions {
    */
   writeReadme: boolean;
   /**
-   * TODO-JSDOC.
+   * Include files matching the given glob into the root of each generated client directory.
    */
   include?: string;
   /**
-   * TODO-JSDOC.
+   * Exit when encountering a file that already exists.
+   * When set to true, it will be overwritten instead.
+   * Please note that compared to the `clearOutputDir` option, this will not delete outdated files.
    */
   forceOverwrite: boolean;
   /**
-   * TODO-JSDOC.
+   * Delete EVERYTHING in the specified output directory before generating code.
    */
   clearOutputDir: boolean;
   /**
-   * TODO-JSDOC.
+   * Generate a `.npmrc` file specifying a registry for `@sap` scoped dependencies.
+   * @deprecated
    */
   generateNpmrc: boolean;
   /**
-   * TODO-JSDOC.
+   * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
    */
   generatePackageJson: boolean;
   /**
-   * TODO-JSDOC.
+   * By default, when generating `package.json` file, the generator will set a version by using the generator version.
+   * It can also be set to a specific version.
    */
   versionInPackageJson?: string;
   /**
@@ -59,7 +65,7 @@ export interface GeneratorOptions {
    */
   licenseInPackageJson?: string;
   /**
-   * TODO-JSDOC.
+   * Generates transpiled `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. When set to `false`, the generator will only generate `.ts` files.
    */
   generateJs: boolean;
   /**
@@ -67,7 +73,7 @@ export interface GeneratorOptions {
    */
   generateSdkMetadata?: boolean;
   /**
-   * TODO-JSDOC.
+   * Number of node processes used for transpilation of JavaScript files.
    */
   processesJsGeneration?: number;
   /**
@@ -79,7 +85,7 @@ export interface GeneratorOptions {
    */
   s4hanaCloud: boolean;
   /**
-   * TODO-JSDOC.
+   * Generate A CSN file for each service definition in the output directory.
    */
   generateCSN: boolean;
   /**

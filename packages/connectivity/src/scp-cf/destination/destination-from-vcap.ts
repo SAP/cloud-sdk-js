@@ -23,11 +23,11 @@ const logger = createLogger({
  */
 export interface PartialDestinationFetchOptions {
   /**
-   * TODO-JSDOC.
+   * The fetched destination will be cached if set to true.
    */
   useCache?: boolean;
   /**
-   * TODO-JSDOC.
+   * The jwt payload used to fetch destinations.
    */
   jwt?: JwtPayload;
 }
@@ -121,11 +121,11 @@ export type ServiceBindingTransformFunction = (
 export interface ServiceBinding {
   [key: string]: any;
   /**
-   * TODO-JSDOC.
+   * The name of the service binding.
    */
   name: string;
   /**
-   * TODO-JSDOC.
+   * The type of the service binding.
    */
   type: string;
 }

@@ -41,15 +41,15 @@ export interface DeSerializers<
     AnyT
   > {
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.DateTime` to the generic type `DateTimeT`.
    */
   'Edm.DateTime': DeSerializer<DateTimeT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.DateTimeOffset` to the generic type `DateTimeOffsetT`.
    */
   'Edm.DateTimeOffset': DeSerializer<DateTimeOffsetT>;
   /**
-   * TODO-JSDOC.
+   * DeSerializer for `Edm.Time` to the generic type `TimeT`.
    */
   'Edm.Time': DeSerializer<TimeT>;
 }

@@ -18,7 +18,7 @@ export interface EntityApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   /**
-   * TODO-JSDOC.
+   * Set of functions that determine (de-)serialization per EDM type.
    */
   deSerializers: DeSerializersT;
 
@@ -31,7 +31,7 @@ export interface EntityApi<
    */
   entityConstructor: Constructable<EntityT>;
   /**
-   * TODO-JSDOC.
+   * Schema of the entity api.
    */
   schema: Record<string, any>;
 

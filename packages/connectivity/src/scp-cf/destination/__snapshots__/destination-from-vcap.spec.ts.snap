@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`vcap-service-destination throws an error if no service binding can be found for the given name 1`] = `
-"Unable to find a service binding for given name \\"non-existent-service\\"! Found the following bindings: my-business-logging, my-workflow, my-destination-service, my-custom-service, my-s4-hana-cloud, my-saas-registry, my-service-manager.
+"Unable to find a service binding for given name \\"non-existent-service\\"! Found the following bindings: my-business-logging, my-workflow, my-destination-service, my-custom-service, my-s4-hana-cloud, my-saas-registry, my-service-manager, my-xsuaa.
       "
 `;
 

@@ -110,6 +110,7 @@ describe('check-public-api', () => {
       expect(exportedType.map(e => e.name).sort()).toEqual([
         'CacheEntry',
         'IsolationStrategy',
+        'MyType',
         'parseTypeDefinitionFile',
         'responseDataAccessor'
       ]);
@@ -168,6 +169,24 @@ describe('check-public-api', () => {
       mock.restore();
     });
 
+    it('parses exports types correctly',async ()=>{
+      mock({
+        'index.ts': "export * from './common';export type { namedExport } from './named';",
+        'common.ts':
+            "export type { commonExport } from './local'",
+        'named.ts':"export type { namedExport } from './local'"
+      });
+
+      const result = await parseIndexFile('index.ts')
+ expect(result).toEqual([
+   'namedExport',
+     'commonExport'
+
+      ]);
+
+      mock.restore();
+    })
+
     it('ignores public re-exports', async () => {
       mock({
         'index.ts':
@@ -216,6 +235,7 @@ export declare enum IsolationStrategy {
 export declare function parseTypeDefinitionFile(path: string): Promise<string[]>;
 export declare const responseDataAccessor: ResponseDataAccessor;
 
+export declare type MyType = {value:string}
 `;
 
 const dummyIndexFile = `export { o1 } from './bla';

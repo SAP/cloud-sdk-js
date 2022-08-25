@@ -20,8 +20,27 @@ export const serviceToDestinationTransformers: Record<
   destination: destinationBindingToDestination,
   'saas-registry': saasRegistryBindingToDestination,
   workflow: workflowBindingToDestination,
-  'service-manager': serviceManagerBindingToDestination
+  'service-manager': serviceManagerBindingToDestination,
+  xsuaa: xsuaaToDestination
 };
+
+async function xsuaaToDestination(
+  serviceBinding: ServiceBinding,
+  options: PartialDestinationFetchOptions
+): Promise<Destination> {
+  const service: Service = {
+    ...serviceBinding,
+    tags: serviceBinding.tags,
+    label: 'xsuaa',
+    credentials: { ...serviceBinding.credentials }
+  };
+  const token = await serviceToken(service, options);
+  return buildClientCredentialsDestination(
+    token,
+    serviceBinding.credentials.apiurl,
+    serviceBinding.name
+  );
+}
 
 async function serviceManagerBindingToDestination(
   serviceBinding: ServiceBinding,

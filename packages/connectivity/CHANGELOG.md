@@ -1,5 +1,22 @@
 # @sap-cloud-sdk/connectivity
 
+## 2.7.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@2.7.1
+
+## 2.7.0
+
+### Minor Changes
+
+- 3bff42e1: [Fixed Issue] Fix a breaking change of `serviceToken` introduced in 2.0, so it accepts `XsuaaServiceCredentials` again as an option.
+- 010a46fa: [Improvement] Support consumption of the XSUAA API via destinations.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@2.7.0
+
 ## 2.6.0
 
 ### Minor Changes

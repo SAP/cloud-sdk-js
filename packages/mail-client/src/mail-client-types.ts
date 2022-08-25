@@ -131,6 +131,10 @@ export interface MailOptions {
    */
   text?: string | Buffer | Readable | AttachmentLike | undefined;
   /**
+   * The HTML version of the message.
+   */
+  html?: string | Buffer | Readable | AttachmentLike | undefined;
+  /**
    * Object or array with additional headers.
    */
   headers?: Headers | undefined;

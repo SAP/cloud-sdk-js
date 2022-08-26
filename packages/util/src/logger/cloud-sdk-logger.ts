@@ -361,7 +361,7 @@ export interface LoggerOptions {
   level?: LogLevel;
   /**
    * Unused option passed to the winston logger options.
-   * @Deprecated
+   * @deprecated
    */
   logger?: string;
 }

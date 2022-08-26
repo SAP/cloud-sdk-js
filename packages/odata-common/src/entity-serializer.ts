@@ -45,7 +45,7 @@ export interface EntitySerializer {
     complexTypeNameSpace: ComplexTypeNamespaceT
   ) => any;
   /**
-   * Like [[serializeEntity]]  ignoring custom fields.
+   * Like {@link EntitySerializer#serializeEntity} ignoring custom fields.
    */
   serializeEntityNonCustomFields: <EntityT extends EntityBase>(
     entity: EntityT,

@@ -9,9 +9,11 @@ import { EntityBase } from '../../entity-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { EntityApi } from '../../entity-api';
-import { BatchChangeSet } from './batch-change-set';
-import { BatchSubRequestPathType } from './batch-request-options';
+import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
+import { ODataRequestConfig } from '../../request';
 import { serializeBatchRequest } from './batch-request-serializer';
+import { BatchSubRequestPathType } from './batch-request-options';
+import { BatchChangeSet, ChangesetBuilderTypes } from './batch-change-set';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. {@link GetAllRequestBuilder | getAll} and {@link GetByKeyRequestBuilder | getByKey} requests and change sets, which in turn can contain {@link CreateRequestBuilder | create}, {@link UpdateRequestBuilder | update} or {@link DeleteRequestBuilder | delete} requests.
@@ -35,6 +37,10 @@ export class BatchRequestBuilder<
       | BatchChangeSet<DeSerializersT>
       | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
       | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
+      | Omit<
+          ActionFunctionImportRequestBuilderBase<unknown, ODataRequestConfig>,
+          'execute'
+        >
     )[]
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
@@ -81,18 +87,8 @@ export class BatchRequestBuilder<
       (apis, request) => ({
         ...apis,
         ...(request instanceof BatchChangeSet
-          ? request.requests.reduce(
-              (changeSetApis, changesetReq) => ({
-                ...changeSetApis,
-                [changesetReq._entityApi.entityConstructor._entityName]:
-                  changesetReq._entityApi
-              }),
-              {}
-            )
-          : {
-              [request._entityApi.entityConstructor._entityName]:
-                request._entityApi
-            })
+          ? buildMapEntries<DeSerializersT>(request)
+          : buildMapEntry<DeSerializersT>(request))
       }),
       {}
     );
@@ -107,4 +103,40 @@ export class BatchRequestBuilder<
     });
     return request;
   }
+}
+
+type AllBuilderTypes<DeSerializersT extends DeSerializers> =
+  | ChangesetBuilderTypes<DeSerializersT>
+  | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
+  | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>;
+
+function isActionOrFunctionImport<DeSerializersT extends DeSerializers>(
+  req: AllBuilderTypes<DeSerializersT>
+): req is Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'> {
+  return !!(
+    req.requestConfig['functionImportName'] ??
+    req.requestConfig['actionImportName']
+  );
+}
+
+function buildMapEntries<DeSerializersT extends DeSerializers>(
+  changeSet: BatchChangeSet<DeSerializersT>
+): Record<string, EntityApi<EntityBase, DeSerializersT>> {
+  return changeSet.requests.reduce(
+    (changeSetApis, changesetReq) =>
+      isActionOrFunctionImport(changesetReq)
+        ? changeSetApis
+        : { ...changeSetApis, ...buildMapEntry(changesetReq) },
+    {}
+  );
+}
+
+function buildMapEntry<DeSerializersT extends DeSerializers>(
+  request: AllBuilderTypes<DeSerializersT>
+): Record<string, EntityApi<EntityBase, DeSerializersT>> {
+  return isActionOrFunctionImport(request)
+    ? {}
+    : {
+        [request._entityApi.entityConstructor._entityName]: request._entityApi
+      };
 }

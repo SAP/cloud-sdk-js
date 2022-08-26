@@ -11,10 +11,17 @@ import {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
+  FunctionImportRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { Photos, People, Airlines, Airports } from './index';
+import {
+  Photos,
+  People,
+  Airlines,
+  Airports,
+  GetNearestAirportParameters
+} from './index';
 
 /**
  * Batch builder for operations supported on the Microsoft O Data Service Sample Trippin In Memory Models Service.
@@ -94,7 +101,12 @@ export type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBu
   | GetByKeyRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<People<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
-  | GetByKeyRequestBuilder<Airports<DeSerializersT>, DeSerializersT>;
+  | GetByKeyRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      GetNearestAirportParameters<DeSerializersT>,
+      Airports
+    >;
 export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =

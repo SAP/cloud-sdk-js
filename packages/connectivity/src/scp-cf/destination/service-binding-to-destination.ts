@@ -3,7 +3,6 @@ import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
 import type {
   PartialDestinationFetchOptions,
-  ServiceBinding,
   ServiceBindingTransformFunction
 } from './destination-from-vcap';
 import { Destination } from './destination-service-types';
@@ -25,121 +24,93 @@ export const serviceToDestinationTransformers: Record<
 };
 
 async function xsuaaToDestination(
-  serviceBinding: ServiceBinding,
+  service: Service,
   options: PartialDestinationFetchOptions
 ): Promise<Destination> {
-  const service: Service = {
-    ...serviceBinding,
-    tags: serviceBinding.tags,
-    label: 'xsuaa',
-    credentials: { ...serviceBinding.credentials }
-  };
   const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
     token,
-    serviceBinding.credentials.apiurl,
-    serviceBinding.name
+    service.credentials.apiurl,
+    service.name
   );
 }
 
 async function serviceManagerBindingToDestination(
-  serviceBinding: ServiceBinding,
+  service: Service,
   options: PartialDestinationFetchOptions
 ): Promise<Destination> {
-  const service: Service = {
-    ...serviceBinding,
-    tags: serviceBinding.tags,
-    label: 'service-manager',
-    credentials: { ...serviceBinding.credentials }
-  };
   const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
     token,
-    serviceBinding.credentials.sm_url,
-    serviceBinding.name
+    service.credentials.sm_url,
+    service.name
   );
 }
 
 async function destinationBindingToDestination(
-  serviceBinding: ServiceBinding,
+  service: Service,
   options: PartialDestinationFetchOptions
 ): Promise<Destination> {
-  const service: Service = {
-    ...serviceBinding,
-    tags: serviceBinding.tags,
-    label: 'destination',
-    credentials: { ...serviceBinding.credentials }
-  };
   const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
     token,
-    serviceBinding.credentials.uri,
-    serviceBinding.name
+    service.credentials.uri,
+    service.name
   );
 }
 
 async function saasRegistryBindingToDestination(
-  serviceBinding: ServiceBinding,
+  service: Service,
   options: PartialDestinationFetchOptions
 ): Promise<Destination> {
-  const service: Service = {
-    ...serviceBinding,
-    tags: serviceBinding.tags,
-    label: 'saas-registry',
-    credentials: { ...serviceBinding.credentials }
-  };
   const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
     token,
-    serviceBinding.credentials['saas_registry_url'],
-    serviceBinding.name
+    service.credentials['saas_registry_url'],
+    service.name
   );
 }
 
 async function businessLoggingBindingToDestination(
-  serviceBinding: ServiceBinding,
+  service: Service,
   options: PartialDestinationFetchOptions
 ): Promise<Destination> {
-  const service: Service = {
-    ...serviceBinding,
-    tags: serviceBinding.tags,
-    label: 'business-logging',
-    credentials: { ...serviceBinding.credentials.uaa }
+  const transformedService = {
+    ...service,
+    credentials: { ...service.credentials.uaa }
   };
-  const token = await serviceToken(service, options);
+  const token = await serviceToken(transformedService, options);
   return buildClientCredentialsDestination(
     token,
-    serviceBinding.credentials.writeUrl,
-    serviceBinding.name
+    service.credentials.writeUrl,
+    service.name
   );
 }
 
 async function workflowBindingToDestination(
-  serviceBinding: ServiceBinding,
+  service: Service,
   options: PartialDestinationFetchOptions
 ): Promise<Destination> {
-  const service: Service = {
-    ...serviceBinding,
-    tags: serviceBinding.tags,
-    label: 'workflow',
-    credentials: { ...serviceBinding.credentials.uaa }
+  const transformedService = {
+    ...service,
+    credentials: { ...service.credentials.uaa }
   };
-  const token = await serviceToken(service, options);
+  const token = await serviceToken(transformedService, options);
   return buildClientCredentialsDestination(
     token,
-    serviceBinding.credentials.endpoints.workflow_odata_url,
-    serviceBinding.name
+    service.credentials.endpoints.workflow_odata_url,
+    service.name
   );
 }
 
 async function xfS4hanaCloudBindingToDestination(
-  serviceBinding: ServiceBinding
+  service: Service
 ): Promise<Destination> {
   return {
-    url: serviceBinding.credentials.URL,
+    url: service.credentials.URL,
     authentication: 'BasicAuthentication',
-    username: serviceBinding.credentials.User,
-    password: serviceBinding.credentials.Password
+    username: service.credentials.User,
+    password: service.credentials.Password
   };
 }
 

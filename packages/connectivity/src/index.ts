@@ -47,7 +47,6 @@ export {
   DestinationConfiguration,
   DestinationJson,
   DestinationsByType,
-  ServiceBinding,
   DestinationForServiceBindingOptions,
   destinationForServiceBinding,
   PartialDestinationFetchOptions

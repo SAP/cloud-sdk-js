@@ -40,7 +40,6 @@ import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';
 import { indexFile } from './service/index-file';
-import { npmrc } from './service/npmrc';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
@@ -363,11 +362,6 @@ export async function generateSourcesForService(
       readme(service, options.s4hanaCloud),
       options.forceOverwrite
     );
-  }
-
-  if (options.generateNpmrc) {
-    logger.info(`[${service.originalFileName}] Generating .npmrc for ...`);
-    otherFile(serviceDir, '.npmrc', npmrc(), options.forceOverwrite);
   }
 
   if (options.generateCSN) {

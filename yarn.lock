@@ -1108,10 +1108,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.1.1":
-  version "6.1.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.1.1.tgz#a9a3d484cd8dd552677d776022fab759d97cd691"
-  integrity sha512-7ltMZ+850JhtjB0yqzOgghvO0YvW1e6I957T1YKgHio9KGxus6QaiSy4LDOo0HFV9ftO2eWhvtRoxeoRHSMJCQ==
+"@sap/cds-dk@6.1.2":
+  version "6.1.2"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.1.2.tgz#a0e04eab7119d98f5853b2471b9cfd25915ae215"
+  integrity sha512-uFEFb0e0yS32TDWlSh1eRN3Iv30gr/S1kMm2eCjDtb1nz4Xe5RUhPaIPBZETU7wMeNo66TsGWB57ZGKMETCyaQ==
   dependencies:
     "@sap/cds" "^6.1.0"
     "@sap/cds-foss" "^4"
@@ -1143,10 +1143,10 @@
     xmlbuilder "^15.1.1"
     yaml "^2.1.1"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.1.0.tgz#f4f26edac47297b2c100e5c9f68bbde4bd292dc4"
-  integrity sha512-H+Gb2uBZ0qM8pKCGYkT7+yCZ3psbuUGtGFZbev9CMgTSf5XI4e7mfw7ledC2XDHb2iBGHC/G/6LSppIpyustVw==
+"@sap/cds@6.1.1", "@sap/cds@>=5.6.0", "@sap/cds@^6.1.0", "@sap/cds@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.1.1.tgz#caec503e75c93a3897c6a78d98fb55802de8e56f"
+  integrity sha512-oOdwHpzPnpt10bJ94E8Umq8Y9uuA+1mpEH9zjQNB/jynNqSMuvM1/68ZAsndhL1pSgw49o8W6b83cKJNUVyzfw==
   dependencies:
     "@sap/cds-compiler" "^3.0.0"
     "@sap/cds-foss" "^4"

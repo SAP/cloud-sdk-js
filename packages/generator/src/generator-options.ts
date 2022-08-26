@@ -108,10 +108,15 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false
   },
   generateNpmrc: {
-    describe:
-      'Deprecated. If set to true the generator will generate an .npmrc file specifying a registry for @sap scoped dependencies. This is not necessary anymore and will be skipped by default.',
+    deprecated: 'Since v2.8.0. This option does not have an effect anymore.',
     type: 'boolean',
-    default: false
+    default: false,
+    coerce: (input: string): string => {
+      logger.warn(
+        "The option 'generateNpmrc' is deprecated since v2.8.0. It has no effect anymore. Please remove it from your script."
+      );
+      return input;
+    }
   },
   generatePackageJson: {
     describe:

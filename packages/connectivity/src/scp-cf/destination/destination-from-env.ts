@@ -79,15 +79,6 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
 /**
  * @internal
  */
-export function getDestinationConfig(
-  dest: string | Destination = 'ErpQueryEndpoint'
-): Destination | null {
-  return typeof dest === 'string' ? getDestinationFromEnvByName(dest) : dest;
-}
-
-/**
- * @internal
- */
 export function getDestinationsEnvVariable(): string | undefined {
   return process.env['destinations'];
 }

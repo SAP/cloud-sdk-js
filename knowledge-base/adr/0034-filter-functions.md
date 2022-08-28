@@ -61,10 +61,6 @@ Simplifies + shortens deep filter paths.
 Possibly rename filter to something else? 
 
 ## Decision
-
-
-
-## Consequences
 Based on the new filter design, collection filter in current api is implemented as:
 
 **Option 1:** 
@@ -72,7 +68,7 @@ Based on the new filter design, collection filter in current api is implemented 
 
 .filter(
   peopleSchema.EMAILS.filter(
-    any(peopleSchema.EMAILS.val.equals())
+    any(e.equals('test'))
   )
 )
 ```

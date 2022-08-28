@@ -2763,15 +2763,10 @@ cookie-signature@1.0.6:
   resolved "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
   integrity sha1-4wOogrNCzD7oylE6eZmXNNqzriw=
 
-cookie@0.5.0:
+cookie@0.5.0, cookie@^0.5.0:
   version "0.5.0"
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.5.0.tgz#d1f5d71adec6558c58f389987c366aa47e994f8b"
   integrity sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==
-
-cookie@^0.4.0:
-  version "0.4.2"
-  resolved "https://registry.npmjs.org/cookie/-/cookie-0.4.2.tgz#0e41f24de5ecf317947c82fc789e06a884824432"
-  integrity sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
 
 core-util-is@1.0.2:
   version "1.0.2"
@@ -6652,30 +6647,30 @@ ono@^4.0.11:
   dependencies:
     format-util "^1.0.3"
 
-openapi-backend@^5.0.0:
-  version "5.3.0"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.3.0.tgz#0f0c9e2509004f4079b281346fab09d8b0423dc9"
-  integrity sha512-wl9LxdM0hgpy+I1cWsjEn4jPnBprd8QTLVwILG/wPc83cQ1CZ8anNmq0CUSYfhW4jG0oEik8TprSUO+pLeznhA==
+openapi-backend@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.5.0.tgz#0cc53b8c850200f125fb2538365b455223e9a955"
+  integrity sha512-gbA2gQHYXG42/PQZWnb1YWEpErkNE9RAJM4RgxT2J0kaNY65T9oXGKrjYgFxRGhLFYuHTnKBYmJe4Lv8qCPLzA==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^9.0.7"
     ajv "^8.6.2"
     bath-es5 "^3.0.3"
-    cookie "^0.4.0"
+    cookie "^0.5.0"
     lodash "^4.17.15"
     mock-json-schema "^1.0.7"
-    openapi-schema-validator "^10.0.0"
+    openapi-schema-validator "^12.0.0"
     openapi-types "^10.0.0"
     qs "^6.9.3"
 
-openapi-schema-validator@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.npmjs.org/openapi-schema-validator/-/openapi-schema-validator-10.0.0.tgz#c2e9a8cffc75fcb6e323b30a29a4f2a340d02be1"
-  integrity sha512-tfXR7kLhI2f7QgArfJn5imkFJ1dvLOO5r4b1JZQoW3PgPb3caOiaWZ+H1iLzFj3IG1gmM3BrYZD1sAvWtDwUCA==
+openapi-schema-validator@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.npmjs.org/openapi-schema-validator/-/openapi-schema-validator-12.0.0.tgz#c5ebd357970fa5c515f77368598e81f31001b5be"
+  integrity sha512-dtQ5iCiCluL/SXmd5LWqfPXvN/WbVJeCp+3+exF6BHBN3fry5tNAhFllZICYHQ2kTfQxrfwbQcy0fqaw9wOb+w==
   dependencies:
     ajv "^8.1.0"
     ajv-formats "^2.0.2"
     lodash.merge "^4.6.1"
-    openapi-types "^10.0.0"
+    openapi-types "^12.0.0"
 
 openapi-types@^10.0.0:
   version "10.0.0"

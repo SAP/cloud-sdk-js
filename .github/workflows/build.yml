@@ -125,9 +125,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 14
       - name: Check if latest commit is within 24 hrs
         run: |
           lastCommitDate=$(git --no-pager log -n 1 main --pretty=format:"%at")
@@ -141,6 +138,9 @@ jobs:
               echo 'Canceling the canary release...'
               curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel
           fi
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
       - uses: actions/cache@v3
         id: cache
         with:

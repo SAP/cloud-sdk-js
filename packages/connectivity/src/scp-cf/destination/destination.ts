@@ -372,12 +372,12 @@ export interface DestinationConfiguration {
   TrustAll?: string;
   /**
    * URL of the token service endpoint to retrieve access token.
-   * This may contain placeholders in multi-tenant scenarios https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/c69ea6aacd714ad2ae8ceb5fc3ceea56.html?locale=en-US
+   * This may contain placeholders in multi-tenant scenarios. @see {@link https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/c69ea6aacd714ad2ae8ceb5fc3ceea56.html?locale=en-US|OAuth SAML Bearer Assertion Authentication}.
    * In most cases the XSUAA will be used here.
    */
   tokenServiceURL?: string;
   /**
-   * Decides if the token service subdomain is fixed or adjusted in multi-tenant scenarios https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/c69ea6aacd714ad2ae8ceb5fc3ceea56.html?locale=en-US.
+   * Decides if the token service subdomain is fixed or adjusted in multi-tenant scenarios. @see {@link https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/c69ea6aacd714ad2ae8ceb5fc3ceea56.html?locale=en-US|OAuth SAML Bearer Assertion Authentication}.
    */
   tokenServiceURLType?: 'Common' | 'Dedicated;';
   /**

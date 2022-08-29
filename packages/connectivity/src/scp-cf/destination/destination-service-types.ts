@@ -185,7 +185,7 @@ export interface DestinationAuthToken {
    */
   error: string | null;
   /**
-   * Object containing ready to use key value pairs like `authorization` : `Bearer U29tZVRva2VuVmFsdWU=`.
+   * An object containing ready-to-use key-value pairs like `Authorization` : `Bearer U29tZVRva2VuVmFsdWU=`.
    */
   http_header: {
     key: string;

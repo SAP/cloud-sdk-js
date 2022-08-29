@@ -18,15 +18,15 @@ export const durationRegexV4 =
  */
 export interface Time {
   /**
-   * The amount of hours.
+   * The number of hours.
    */
   hours: number;
   /**
-   * The amount of minutes.
+   * The number of minutes.
    */
   minutes: number;
   /**
-   * The amount of seconds.
+   * The number of seconds.
    */
   seconds: number;
 }

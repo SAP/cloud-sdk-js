@@ -49,7 +49,7 @@ export interface ProxyConfigurationHeaders {
    */
   'Proxy-Authorization': string;
   /**
-   * `SAP-Connectivity-Authentication` send via the proxy to the target system containing the propagated user.
+   * `SAP-Connectivity-Authentication` header sent via the proxy to the target system containing the propagated user.
    */
   'SAP-Connectivity-Authentication'?: string;
 }

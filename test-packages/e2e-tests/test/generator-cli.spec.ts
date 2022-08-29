@@ -157,4 +157,25 @@ describe('generator-cli', () => {
       );
     }
   }, 60000);
+  it('should throw a warning message for a deprecated option even when the generation is failed', async () => {
+    // Use a broken service to stop the service generation early - we are only interested in the log statement
+    try {
+      await execa('npx', [
+        'ts-node',
+        pathToGenerator,
+        '-i',
+        path.resolve(
+          __dirname,
+          '../../../test-resources/generator/resources/faulty-edmx'
+        ),
+        '-o',
+        outputDir,
+        '--generateNpmrc'
+      ]);
+    } catch (err) {
+      expect(err.stdout).toMatch(
+        /\(generator-options\): The option 'generateNpmrc' is deprecated since v2.8.0./
+      );
+    }
+  }, 60000);
 });

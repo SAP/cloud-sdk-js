@@ -32,11 +32,3 @@ export function packageJson(options: PackageJsonOptions): string {
     ) + unixEOL
   );
 }
-
-/**
- * @internal
- */
-export const genericDescription = (packageName: string): string =>
-  `SAP Cloud SDK for JavaScript: Generated client for OpenAPI service ${packageName
-    .split('-')
-    .join(' ')}`;

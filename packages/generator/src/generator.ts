@@ -24,7 +24,8 @@ import {
   transpileDirectory,
   readCompilerOptions,
   copyFiles,
-  getSdkVersion
+  getSdkVersion,
+  packageDescription
 } from '@sap-cloud-sdk/generator-common/internal';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
@@ -49,7 +50,7 @@ import {
   functionImportSourceFile
 } from './action-function-import/file';
 import { enumTypeSourceFile } from './enum-type/file';
-import { sdkMetadata, getServiceDescription } from './sdk-metadata';
+import { sdkMetadata } from './sdk-metadata';
 import { createFile } from './generator-common/create-file';
 import { entityApiFile } from './generator-without-ts-morph';
 import { serviceFile } from './generator-without-ts-morph/service/file';
@@ -267,7 +268,7 @@ export async function generateSourcesForService(
         npmPackageName: service.npmPackageName,
         version: await getVersionForClient(options.versionInPackageJson),
         sdkVersion: await getSdkVersion(),
-        description: getServiceDescription(service, options),
+        description: packageDescription(service.speakingModuleName),
         sdkAfterVersionScript: options.sdkAfterVersionScript,
         oDataVersion: service.oDataVersion,
         license: options.licenseInPackageJson
@@ -410,7 +411,7 @@ export async function generateSourcesForService(
     otherFile(
       metadataDir,
       clientFileName,
-      JSON.stringify(await sdkMetadata(service, options), null, 2),
+      JSON.stringify(await sdkMetadata(service), null, 2),
       options.forceOverwrite
     );
   }

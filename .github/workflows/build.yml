@@ -11,7 +11,7 @@ on:
     - cron: '0 1 * * *'
   workflow_dispatch:
     inputs:
-      canary-relase:
+      canary-release:
         description: 'Canary release after build'
         type: boolean
         required: false

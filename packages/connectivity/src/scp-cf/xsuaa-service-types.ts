@@ -15,7 +15,7 @@ export interface ClientCredentialsResponse {
    */
   expires_in: number;
   /**
-   * Scopes associated with the token..
+   * Scopes associated with the token.
    */
   scope: string;
   /**

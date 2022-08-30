@@ -92,7 +92,7 @@ HTTP/1.1 200 OK
     }
   });
 
-  it('batch works with action imports', async () => {
+  it('batch works with POST function imports', async () => {
     const body = [
       '--batch_test-boundary',
       'Content-Type: multipart/mixed; boundary=changeset_test-boundary',

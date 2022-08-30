@@ -1,10 +1,10 @@
 import {
   getPregeneratedLibrary,
   getSdkMetadataClient,
-  Client
+  Client,
+  packageDescription
 } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiDocument } from '../openapi-types';
-import { packageDescription } from './package-description';
 import { getGenerationAndUsage } from './generation-and-usage';
 
 /**
@@ -15,7 +15,7 @@ export async function sdkMetadata(
 ): Promise<Client> {
   const [pregeneratedLibrary, generationAndUsage] = await Promise.all([
     getPregeneratedLibrary(
-      packageDescription(openApiDocument.serviceOptions.packageName),
+      packageDescription(openApiDocument.serviceName),
       openApiDocument.serviceOptions.packageName
     ),
     getGenerationAndUsage(openApiDocument)

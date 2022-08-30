@@ -25,7 +25,7 @@ async function deleteAllCreatedEntities() {
 
 describe('batch', () => {
   beforeEach(async () => deleteAllCreatedEntities());
-  afterEach(async () => deleteAllCreatedEntities());
+  afterAll(async () => deleteAllCreatedEntities());
 
   it('should execute multiple action and function imports', async () => {
     const [responseSkd, create] = await batch(

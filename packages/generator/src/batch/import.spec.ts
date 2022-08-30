@@ -30,7 +30,13 @@ describe('batch type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: './index',
-        namedImports: ['Breakfast', 'Brunch', 'funcGetReturn', 'funcPostReturn','actionImportReturn']
+        namedImports: [
+          'Breakfast',
+          'Brunch',
+          'funcGetReturn',
+          'funcPostReturn',
+          'actionImportReturn'
+        ]
       }
     ]);
   });

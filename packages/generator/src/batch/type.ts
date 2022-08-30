@@ -33,32 +33,38 @@ export function writeRequestType(
 }
 
 function getWriteRequestType(service: VdmServiceMetadata): string {
-  const entites = service.entities.map(
+  const createUpdateDeleteBuilderTypes = service.entities.map(
     e =>
       `CreateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | UpdateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | DeleteRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
   );
-  const functionImports = service.functionImports
+  const functionImportsReturnTypes = service.functionImports
     .filter(f => f.httpMethod.toLowerCase() !== 'get')
     .map(f => functionImportReturnType(f));
-  const actionImports =
+  const actionImportsReturnTypes =
     service.actionImports?.map(a => actionImportReturnType(a)) ?? [];
-  return [...entites, ...functionImports, ...actionImports].join(' | ');
+  return [
+    ...createUpdateDeleteBuilderTypes,
+    ...functionImportsReturnTypes,
+    ...actionImportsReturnTypes
+  ].join(' | ');
 }
 
 function getReadRequestType(service: VdmServiceMetadata): string {
-  return Array.prototype
-    .concat(
-      service.entities.map(
-        e =>
-          `GetAllRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
-      ),
-      service.entities.map(
-        e =>
-          `GetByKeyRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
-      ),
-      service.functionImports
-        .filter(f => f.httpMethod.toLowerCase() === 'get')
-        .map(f => functionImportReturnType(f))
-    )
-    .join('|');
+  const getAllBuilderTypes = service.entities.map(
+    e => `GetAllRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
+  );
+
+  const getByKeyBuilderTypes = service.entities.map(
+    e =>
+      `GetByKeyRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
+  );
+  const functionImportsReturnTypes = service.functionImports
+    .filter(f => f.httpMethod.toLowerCase() === 'get')
+    .map(f => functionImportReturnType(f));
+
+  return [
+    ...getAllBuilderTypes,
+    ...getByKeyBuilderTypes,
+    ...functionImportsReturnTypes
+  ].join(' | ');
 }

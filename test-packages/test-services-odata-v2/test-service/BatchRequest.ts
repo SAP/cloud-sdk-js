@@ -373,4 +373,14 @@ export type WriteTestServiceRequestBuilder<
   | DeleteRequestBuilder<CaseTest<DeSerializersT>, DeSerializersT>
   | CreateRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
-  | DeleteRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>;
+  | DeleteRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      TestFunctionImportNoReturnTypeParameters<DeSerializersT>,
+      undefined
+    >
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      TestFunctionImportPostParameters<DeSerializersT>,
+      boolean
+    >;

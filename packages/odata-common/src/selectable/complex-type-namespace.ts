@@ -27,7 +27,7 @@ export interface PropertyMetadata<ComplexT = any> {
    */
   type: EdmTypeShared<'any'> | ComplexTypeNamespace<any>;
   /**
-   * If true the property is a collection property.
+   * If true, the property is a collection property.
    */
   isCollection?: boolean;
 }

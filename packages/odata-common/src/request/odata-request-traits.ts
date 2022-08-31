@@ -36,7 +36,7 @@ export interface WithGetAllRestrictions<
   DeSerializersT extends DeSerializers
 > extends WithSelection<EntityT, DeSerializersT> {
   /**
-   * Limit the amount of results to the given number.
+   * Limit the number of results to the given number.
    */
   top: number;
   /**

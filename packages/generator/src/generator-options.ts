@@ -77,7 +77,7 @@ export interface GeneratorOptions {
    */
   processesJsGeneration?: number;
   /**
-   * When set to true, the package.json of generated services will have the after-version script to internally keep the versions in sync.
+   * When set to true, the `package.json` of generated services will have the after-version script to internally keep the versions in sync.
    */
   sdkAfterVersionScript: boolean;
   // TODO remove s4hanaCloud in version 3.0
@@ -91,7 +91,7 @@ export interface GeneratorOptions {
   generateCSN: boolean;
   // TODO remove packageVersion in version 3.0
   /**
-   * Internal option used to adjust the version in the generated package.json. Will not be used in the future.
+   * Internal option used to adjust the version in the generated `package.json`. Will not be used in the future.
    */
   packageVersion?: string;
 }

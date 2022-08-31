@@ -7,7 +7,7 @@ export interface ClientCredentialsResponse {
    */
   access_token: string;
   /**
-   * Type of the token e.g. Bearer.
+   * Type of the token, e.g., Bearer.
    */
   token_type: string;
   /**

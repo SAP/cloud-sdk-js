@@ -9,17 +9,17 @@ export interface ResponseDataAccessor {
    */
   getCollectionResult: (data) => any[];
   /**
-   * Checks if the response if a array like opbject.
+   * Checks if the response is an array-like object.
    */
   isCollectionResult: (data) => boolean;
   /**
    * A function that extracts object data from the response object.
-   * The data is extracted per default from `data.d.results`.
+   * The data is extracted by default from `data.d.results`.
    */
   getSingleResult: (data: any) => Record<string, any>;
   /**
-   * Extract the collection data from the one to many link response.
-   * If the data does not contain a collection an empty array is returned.
+   * Extract the collection data from the one-to-many link response.
+   * If the data does not contain a collection, an empty array is returned.
    */
   getLinkedCollectionResult: (data) => any[];
 }

@@ -347,7 +347,7 @@ export interface DestinationConfiguration {
    */
   Name?: string;
   /**
-   * `ProxyType` of the destination e.g. `Internet` or `OnPremise`.
+   * `ProxyType` of the destination, e.g., `Internet` or `OnPremise`.
    */
   ProxyType?: string;
   /**

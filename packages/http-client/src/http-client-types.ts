@@ -75,24 +75,24 @@ export type ParameterEncoder = (
 export interface HttpRequestConfigBase {
   [key: string]: any;
   /**
-   * `url` is the server URL that will be used for the request.
+   * Server URL that will be used for the request.
    * Relative `url` can be used together with {@link DestinationHttpRequestConfig#baseURL}.
    */
   url?: string;
   /**
-   * `method` is the request method to be used when making the request.
+   * The request method used when making the request.
    */
   method: Method;
   /**
-   * `data` is the data to be sent as the request body.
+   * Data sent in the request body.
    */
   data?: any;
   /**
-   * `timeout` specifies the number of milliseconds before the request times out.
+   * The number of milliseconds before the request times out.
    */
   timeout?: number;
   /**
-   * `maxContentLength` defines the max size of the http response content in bytes allowed.
+   * The max size of the http response content in bytes.
    */
   maxContentLength?: number;
   /**
@@ -101,11 +101,11 @@ export interface HttpRequestConfigBase {
    */
   proxy?: false;
   /**
-   * `httpAgent` defines a custom agent to be used when performing http requests.
+   * The custom agent used when performing http requests.
    */
   httpAgent?: any;
   /**
-   * `httpsAgent` defines a custom agent to be used when performing https requests.
+   * The custom agent used when performing https requests.
    */
   httpsAgent?: any;
   /**

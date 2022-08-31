@@ -218,7 +218,7 @@ export interface EmergencyObject {
 }
 
 /**
- * Represents a instruction block e.g. generation steps with some text above the code block
+ * Represents an instruction block, e.g., generation steps with some text above the code block.
  * @internal
  */
 export interface InstructionWithText {
@@ -233,7 +233,7 @@ export interface InstructionWithText {
 }
 
 /**
- * Represents a instruction block e.g. generation steps with some text above the code block with a header
+ * Represents an instruction block, e.g., generation steps with some text above the code block with a header.
  * @internal
  */
 export interface InstructionWithTextAndHeader extends InstructionWithText {

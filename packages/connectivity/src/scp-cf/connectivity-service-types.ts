@@ -45,7 +45,7 @@ export interface ProxyConfiguration {
 export interface ProxyConfigurationHeaders {
   [header: string]: string | undefined;
   /**
-   * `Proxy-Authorization` header send to the proxy.
+   * `Proxy-Authorization` header sent to the proxy.
    */
   'Proxy-Authorization': string;
   /**

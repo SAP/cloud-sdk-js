@@ -169,7 +169,7 @@ export interface Destination {
  */
 export interface DestinationAuthToken {
   /**
-   * Type of the token e.g. Bearer.
+   * Type of the token, e.g., Bearer.
    */
   type: string;
   /**

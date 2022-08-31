@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { join, resolve } from 'path';
-import net from 'net';
 import {
   MailOptions,
   MailResponse,
@@ -16,7 +15,10 @@ describe('Mail', () => {
   };
 
   it('should send a mail', async () => {
-    await sendTestMail(undefined, defaultMailOptions);
+    const responses = await sendTestMail(defaultMailOptions);
+
+    expect(responses.length).toBe(1);
+    expect(responses[0].accepted?.length).toBe(2);
 
     const mails = fs.readdirSync(join(resolve('test'), 'mail', 'test-output'));
     expect(
@@ -42,14 +44,17 @@ describe('Mail', () => {
           subject: `mail ${mailIndex}`
         } as MailOptions)
     );
-    await sendTestMail(undefined, ...mailOptions);
+    const responses = await sendTestMail(...mailOptions);
+
+    expect(responses.length).toBeGreaterThan(99);
+    expect(responses[0].accepted?.length).toBe(2);
+
     const mails = fs.readdirSync(join(resolve('test'), 'mail', 'test-output'));
     expect(mails.length).toBeGreaterThan(99);
   }, 60000);
 });
 
 async function sendTestMail(
-  connection?: net.Socket,
   ...mailOptions: MailOptions[]
 ): Promise<MailResponse[]> {
   const originalProperties = {
@@ -62,7 +67,7 @@ async function sendTestMail(
     type: 'MAIL',
     originalProperties
   };
-  return sendMail(destination, ...mailOptions);
+  return sendMail(destination, {}, ...mailOptions);
   // // create reusable transporter object using the default SMTP transport
   // const transporter = nodemailer.createTransport({
   //   connection,

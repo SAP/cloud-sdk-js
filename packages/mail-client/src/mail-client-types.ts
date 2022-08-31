@@ -257,3 +257,13 @@ export interface MailDestination {
    */
   password?: string;
 }
+
+/**
+ * Represents options of the mail client.
+ */
+export interface MailClientOptions {
+  /**
+   * Option to define the strategy of sending emails. The emails will be sent in parallel when setting to true, otherwise in sequential. The default value is true.
+   */
+  parallel?: boolean;
+}

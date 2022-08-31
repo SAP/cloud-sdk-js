@@ -14,6 +14,7 @@ import { SocksClient, SocksClientOptions, SocksProxy } from 'socks';
 // eslint-disable-next-line import/no-internal-modules
 import type { Options } from 'nodemailer/lib/smtp-pool';
 import {
+  MailClientOptions,
   MailDestination,
   MailOptions,
   MailResponse
@@ -184,19 +185,35 @@ function buildMailOptionsFromDestination(
   return { from };
 }
 
-async function sendMailWithNodemailer<T extends MailOptions>(
-  mailDestination: MailDestination,
-  ...mailOptions: T[]
+async function sendMailInSequential<T extends MailOptions>(
+  transport: Transporter,
+  mailOptionsFromDestination: Partial<MailOptions>,
+  mailOptions: T[]
 ): Promise<MailResponse[]> {
-  let socket: Socket | undefined;
-  if (mailDestination.proxyType === 'OnPremise') {
-    socket = await createSocket(mailDestination);
+  const response: MailResponse[] = [];
+  for (const mailOptionIndex in mailOptions) {
+    logger.debug(
+      `Sending email ${mailOptionIndex + 1}/${mailOptions.length}...`
+    );
+    response[mailOptionIndex] = await transport.sendMail({
+      ...mailOptionsFromDestination,
+      ...mailOptions[mailOptionIndex]
+    });
+    logger.debug(
+      `...email ${mailOptionIndex + 1}/${mailOptions.length} for subject "${
+        mailOptions[mailOptionIndex].subject
+      }" was sent successfully.`
+    );
   }
-  const transport = await createTransport(mailDestination, socket);
-  const mailOptionsFromDestination =
-    buildMailOptionsFromDestination(mailDestination);
+  return response;
+}
 
-  const promises = mailOptions.map(
+async function sendMailInParallel<T extends MailOptions>(
+  transport: Transporter,
+  mailOptionsFromDestination: Partial<MailOptions>,
+  mailOptions: T[]
+): Promise<MailResponse[]> {
+  const promises: Promise<MailResponse>[] = mailOptions.map(
     (mailOption, mailOptionIndex, mailOptionsArray) => {
       logger.debug(
         `Sending email ${mailOptionIndex + 1}/${mailOptionsArray.length}...`
@@ -208,18 +225,45 @@ async function sendMailWithNodemailer<T extends MailOptions>(
     }
   );
 
-  const response: MailResponse[] = await Promise.all(promises).then(
-    responses => {
-      responses.forEach((_, responseIndex) =>
-        logger.debug(
-          `...email ${responseIndex + 1}/${mailOptions.length} for subject "${
-            mailOptions[responseIndex].subject
-          }" was sent successfully`
-        )
-      );
-      return responses;
-    }
-  );
+  return Promise.all(promises).then(responses => {
+    responses.forEach((_, responseIndex) =>
+      logger.debug(
+        `...email ${responseIndex + 1}/${mailOptions.length} for subject "${
+          mailOptions[responseIndex].subject
+        }" was sent successfully`
+      )
+    );
+    return responses;
+  });
+}
+
+async function sendMailWithNodemailer<T extends MailOptions>(
+  mailDestination: MailDestination,
+  mailClientOptions: MailClientOptions,
+  ...mailOptions: T[]
+): Promise<MailResponse[]> {
+  let socket: Socket | undefined;
+  if (mailDestination.proxyType === 'OnPremise') {
+    socket = await createSocket(mailDestination);
+  }
+  const transport = await createTransport(mailDestination, socket);
+  const mailOptionsFromDestination =
+    buildMailOptionsFromDestination(mailDestination);
+
+  let response: MailResponse[];
+  if (mailClientOptions.parallel === false) {
+    response = await sendMailInSequential(
+      transport,
+      mailOptionsFromDestination,
+      mailOptions
+    );
+  } else {
+    response = await sendMailInParallel(
+      transport,
+      mailOptionsFromDestination,
+      mailOptions
+    );
+  }
 
   teardown(transport, socket);
   return response;
@@ -240,21 +284,25 @@ function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
  * Builds a transport between the application and the mail server, sends mails sequentially by using the transport, then closes it.
  * This function also does the destination look up, when passing `DestinationOrFetchOptions`.
  * @param destination - A destination or a destination name and a JWT.
+ * @param mailClientOptions - A {@link MailClientOptions} that defines the configurations of the mail client, e.g., whether the mails are sent in parallel.
  * @param mailOptions - Any objects representing {@link MailOptions}. Both array and varargs are supported.
  * @returns A promise resolving to an array of {@link MailResponse}.
  * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination#referencing-destinations-by-name
  */
 export async function sendMail<T extends MailOptions>(
   destination: DestinationOrFetchOptions,
+  mailClientOptions: MailClientOptions,
   ...mailOptions: T[]
 ): Promise<MailResponse[]>;
 export async function sendMail<T extends MailOptions>(
   destination: DestinationOrFetchOptions,
+  mailClientOptions: MailClientOptions,
   mailOptions: T[]
 ): Promise<MailResponse[]>;
 /* eslint-disable jsdoc/require-jsdoc */
 export async function sendMail<T extends MailOptions>(
   destination: DestinationOrFetchOptions,
+  mailClientOptions: MailClientOptions,
   first: T | T[],
   ...rest: T[]
 ): Promise<MailResponse[]> {
@@ -271,6 +319,10 @@ export async function sendMail<T extends MailOptions>(
 
   const mailDestination = buildMailDestination(resolvedDestination);
 
-  return sendMailWithNodemailer(mailDestination, ...mailOptions);
+  return sendMailWithNodemailer(
+    mailDestination,
+    mailClientOptions,
+    ...mailOptions
+  );
 }
 /* eslint-enable jsdoc/require-jsdoc */

@@ -180,7 +180,13 @@ export async function generateProject(
  * @internal
  */
 export interface ProjectAndServices {
+  /**
+   * @internal
+   */
   project: Project;
+  /**
+   * @internal
+   */
   services: VdmServiceMetadata[];
 }
 

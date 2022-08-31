@@ -168,10 +168,25 @@ export interface Destination {
  * Represents authentication token returned from destination service.
  */
 export interface DestinationAuthToken {
+  /**
+   * Type of the token, e.g., Bearer.
+   */
   type: string;
+  /**
+   * Value of the token.
+   */
   value: string;
+  /**
+   * The number of seconds until the access token expires.
+   */
   expiresIn: string;
+  /**
+   * Potential error of token retrieval in the destination service.
+   */
   error: string | null;
+  /**
+   * An object containing ready-to-use key-value pairs like `Authorization` : `Bearer U29tZVRva2VuVmFsdWU=`.
+   */
   http_header: {
     key: string;
     value: string;

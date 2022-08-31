@@ -2,13 +2,25 @@
  * Represents the response to a client credentials request.
  */
 export interface ClientCredentialsResponse {
+  /**
+   * Token to access the service.
+   */
   access_token: string;
+  /**
+   * Type of the token, e.g., Bearer.
+   */
   token_type: string;
   /**
    * The number of seconds until the access token expires.
    */
   expires_in: number;
+  /**
+   * Scopes associated with the token.
+   */
   scope: string;
+  /**
+   * Token id.
+   */
   jti: string;
 }
 
@@ -16,6 +28,9 @@ export interface ClientCredentialsResponse {
  * @internal
  */
 export interface UserTokenResponse extends ClientCredentialsResponse {
+  /**
+   * @internal
+   */
   refresh_token: string;
 }
 

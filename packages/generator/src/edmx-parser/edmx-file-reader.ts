@@ -9,11 +9,29 @@ import { getMergedPropertyWithNamespace } from './common';
  * @internal
  */
 export interface EdmxMetadata {
+  /**
+   * @internal
+   */
   path: PathLike;
+  /**
+   * @internal
+   */
   oDataVersion: ODataVersion;
+  /**
+   * @internal
+   */
   fileName: string;
+  /**
+   * @internal
+   */
   namespaces: string[];
+  /**
+   * @internal
+   */
   selfLink?: string;
+  /**
+   * @internal
+   */
   root: any;
 }
 
@@ -71,6 +89,12 @@ function parseLink(root): string | undefined {
  * @internal
  */
 export interface ServiceMetadata {
+  /**
+   * @internal
+   */
   edmx: EdmxMetadata;
+  /**
+   * @internal
+   */
   swagger?: SwaggerMetadata;
 }

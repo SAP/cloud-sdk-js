@@ -1,6 +1,9 @@
 import { StructureKind, TypeAliasDeclarationStructure } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
-import { functionImportReturnType } from '../action-function-import';
+import {
+  actionImportReturnType,
+  functionImportReturnType
+} from '../action-function-import';
 
 /**
  * @internal
@@ -30,28 +33,38 @@ export function writeRequestType(
 }
 
 function getWriteRequestType(service: VdmServiceMetadata): string {
-  return service.entities
-    .map(
-      e =>
-        `CreateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | UpdateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | DeleteRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
-    )
-    .join(' | ');
+  const createUpdateDeleteBuilderTypes = service.entities.map(
+    e =>
+      `CreateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | UpdateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | DeleteRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
+  );
+  const functionImportsReturnTypes = service.functionImports
+    .filter(f => f.httpMethod.toLowerCase() !== 'get')
+    .map(f => functionImportReturnType(f));
+  const actionImportsReturnTypes =
+    service.actionImports?.map(a => actionImportReturnType(a)) ?? [];
+  return [
+    ...createUpdateDeleteBuilderTypes,
+    ...functionImportsReturnTypes,
+    ...actionImportsReturnTypes
+  ].join(' | ');
 }
 
 function getReadRequestType(service: VdmServiceMetadata): string {
-  return Array.prototype
-    .concat(
-      service.entities.map(
-        e =>
-          `GetAllRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
-      ),
-      service.entities.map(
-        e =>
-          `GetByKeyRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
-      ),
-      service.functionImports
-        .filter(f => f.httpMethod.toLowerCase() === 'get')
-        .map(f => functionImportReturnType(f))
-    )
-    .join('|');
+  const getAllBuilderTypes = service.entities.map(
+    e => `GetAllRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
+  );
+
+  const getByKeyBuilderTypes = service.entities.map(
+    e =>
+      `GetByKeyRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
+  );
+  const functionImportsReturnTypes = service.functionImports
+    .filter(f => f.httpMethod.toLowerCase() === 'get')
+    .map(f => functionImportReturnType(f));
+
+  return [
+    ...getAllBuilderTypes,
+    ...getByKeyBuilderTypes,
+    ...functionImportsReturnTypes
+  ].join(' | ');
 }

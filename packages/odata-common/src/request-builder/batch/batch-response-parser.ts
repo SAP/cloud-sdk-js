@@ -257,6 +257,12 @@ export function isHttpSuccessCode(httpCode: number): boolean {
  * @internal
  */
 export interface ResponseData {
+  /**
+   * @internal
+   */
   body: Record<string, any>;
+  /**
+   * @internal
+   */
   httpCode: number;
 }

@@ -267,7 +267,7 @@ describe('token accessor', () => {
       expect(retrieveFromCacheSpy).toHaveBeenCalledTimes(0);
     });
 
-    it('throws an error having the cause, not the config property', async () => {
+    it('throws an error with only the cause property', async () => {
       mockClientCredentialsGrantCall(
         providerXsuaaUrl,
         { access_token: signedJwt({ dummy: 'content' }) },

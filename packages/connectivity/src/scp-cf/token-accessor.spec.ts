@@ -267,6 +267,19 @@ describe('token accessor', () => {
       expect(retrieveFromCacheSpy).toHaveBeenCalledTimes(0);
     });
 
+    it('throws an error having the cause, not the config property', async () => {
+      mockClientCredentialsGrantCall(
+        providerXsuaaUrl,
+        { access_token: signedJwt({ dummy: 'content' }) },
+        401,
+        destinationBindingClientSecretMock.credentials
+      );
+      await serviceToken('destination').catch(error => {
+        expect(error).toHaveProperty('cause');
+        expect(error).not.toHaveProperty('config');
+      });
+    });
+
     it('throws an error if the client credentials request fails', async () => {
       mockClientCredentialsGrantCall(
         providerXsuaaUrl,

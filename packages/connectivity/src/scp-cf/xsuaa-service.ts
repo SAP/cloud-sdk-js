@@ -116,7 +116,7 @@ export async function getClientCredentialsToken(
         null,
         subdomainAndZoneId.zoneId,
         (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
-          err ? reject(err) : resolve(tokenResponse)
+          err ? reject(err.message) : resolve(tokenResponse)
       );
     }
   );

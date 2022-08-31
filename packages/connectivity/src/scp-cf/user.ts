@@ -7,23 +7,47 @@ import {
 
 /**
  * Representation of the user i.e. authenticated persona. The authentication is done by the XSUAA.
- *  @internal
+ * @internal
  */
 export interface UserData {
+  /**
+   * @internal
+   */
   id: string;
+  /**
+   * @internal
+   */
   userName: string;
+  /**
+   * @internal
+   */
   givenName?: string;
+  /**
+   * @internal
+   */
   familyName?: string;
+  /**
+   * @internal
+   */
   email?: string;
+  /**
+   * @internal
+   */
   scopes: Scope[];
+  /**
+   * @internal
+   */
   customAttributes: Map<string, string[]>;
 }
 
 /**
  * Representation of the user i.e. authenticated persona. The authentication is done by the XSUAA.
- *  @internal
+ * @internal
  */
 export interface User extends UserData {
+  /**
+   * @internal
+   */
   hasScope: (scope: Scope) => boolean;
 }
 
@@ -31,7 +55,7 @@ export interface User extends UserData {
  * Extracts the custom attributes from the JWT.
  * @param jwtPayload - Token payload to read the custom attributes from.
  * @returns Custom attributes added by the XSUAA service to the issued JWT.
- *  @internal
+ * @internal
  */
 export function customAttributes(
   jwtPayload: JwtPayload
@@ -47,7 +71,7 @@ export function customAttributes(
 
 /**
  * Mapping between key name in the User and key name in decoded JWT and the
- *  @internal
+ * @internal
  */
 export const mappingUserFields: JwtKeyMapping<
   UserData,
@@ -75,7 +99,7 @@ export const mappingUserFields: JwtKeyMapping<
  * Get the user's given name from the JWT payload.
  * @param jwtPayload - Token payload to read the user's given name from.
  * @returns The user's given name if available.
- *  @internal
+ * @internal
  */
 export function userGivenName(jwtPayload: JwtPayload): string | undefined {
   if (mappingUserFields.givenName) {
@@ -90,7 +114,7 @@ export function userGivenName(jwtPayload: JwtPayload): string | undefined {
  * Get the user's family name from the JWT payload.
  * @param jwtPayload - Token payload to read the user's family from.
  * @returns The user's family name if available.
- *  @internal
+ * @internal
  */
 export function userFamilyName(jwtPayload: JwtPayload): string | undefined {
   if (mappingUserFields.familyName) {
@@ -115,7 +139,7 @@ export function userName(jwtPayload: JwtPayload): string | undefined {
  * Get the user's e-mail address from the JWT payload.
  * @param jwtPayload - Token payload to read the user e-mail address from.
  * @returns The user's e-mail address if available.
- *  @internal
+ * @internal
  */
 export function userEmail(jwtPayload: JwtPayload): string | undefined {
   if (mappingUserFields.email) {
@@ -127,7 +151,7 @@ export function userEmail(jwtPayload: JwtPayload): string | undefined {
  * Get the user's scopes from the JWT payload.
  * @param jwtPayload - Token payload to read the user's scopes from.
  * @returns The user's scopes if available.
- *  @internal
+ * @internal
  */
 export function userScopes(jwtPayload: JwtPayload): Scope[] {
   if (!(jwtPayload.scope instanceof Array && jwtPayload.scope.length)) {
@@ -142,7 +166,7 @@ export function userScopes(jwtPayload: JwtPayload): Scope[] {
  * Get the user id from the JWT payload.
  * @param jwtPayload - Token payload to read the user id from.
  * @returns The user id if available.
- *  @internal
+ * @internal
  */
 export function userId(jwtPayload: JwtPayload): string | undefined {
   return readPropertyWithWarn(jwtPayload, mappingUserFields.id.keyInJwt);
@@ -153,6 +177,9 @@ export function userId(jwtPayload: JwtPayload): string | undefined {
  * @internal
  */
 export interface Scope {
+  /**
+   * @internal
+   */
   name: string;
 }
 

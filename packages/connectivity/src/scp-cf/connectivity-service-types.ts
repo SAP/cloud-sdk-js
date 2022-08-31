@@ -44,6 +44,12 @@ export interface ProxyConfiguration {
  */
 export interface ProxyConfigurationHeaders {
   [header: string]: string | undefined;
+  /**
+   * `Proxy-Authorization` header sent to the proxy.
+   */
   'Proxy-Authorization': string;
+  /**
+   * `SAP-Connectivity-Authentication` header sent via the proxy to the target system containing the propagated user.
+   */
   'SAP-Connectivity-Authentication'?: string;
 }

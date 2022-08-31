@@ -40,6 +40,9 @@ type GetFilterType = <
  * @internal
  */
 export interface GetFilter {
+  /**
+   * @internal
+   */
   getFilter: GetFilterType;
 }
 

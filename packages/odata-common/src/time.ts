@@ -17,8 +17,17 @@ export const durationRegexV4 =
  * Interface to represent Time or Duration.
  */
 export interface Time {
+  /**
+   * The number of hours.
+   */
   hours: number;
+  /**
+   * The number of minutes.
+   */
   minutes: number;
+  /**
+   * The number of seconds.
+   */
   seconds: number;
 }
 

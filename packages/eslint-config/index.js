@@ -215,7 +215,8 @@ module.exports = {
           'TSInterfaceDeclaration',
           'TSEnumDeclaration',
           'TSTypeAliasDeclaration',
-          'VariableDeclaration'
+          'VariableDeclaration',
+          'TSPropertySignature'
         ]
       }
     ],

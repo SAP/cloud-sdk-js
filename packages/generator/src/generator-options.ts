@@ -10,24 +10,89 @@ const logger = createLogger('generator-options');
  * Options that can be used to configure the generation when using the generator programmatically.
  */
 export interface GeneratorOptions {
+  /**
+   * This directory will be recursively searched for `.edmx`/`.xml` files.
+   */
   inputDir: PathLike;
+  /**
+   * Directory to save the generated code in.
+   */
   outputDir: PathLike;
+  /**
+   * Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files.
+   * Will be generated if not existent.
+   * Default set to `inputDir/service-mapping.json`.
+   */
   serviceMapping?: PathLike;
+  /**
+   * If set to true `.JSON` files i.e. Swagger definitions are used for generation.
+   */
   useSwagger: boolean;
+  /**
+   * Generate default `README.md` files in the client directories.
+   */
   writeReadme: boolean;
+  /**
+   * Include files matching the given glob into the root of each generated client directory.
+   */
   include?: string;
+  /**
+   * Exit when encountering a file that already exists.
+   * When set to true, it will be overwritten instead.
+   * Please note that compared to the `clearOutputDir` option, this will not delete outdated files.
+   */
   forceOverwrite: boolean;
+  /**
+   * Delete EVERYTHING in the specified output directory before generating code.
+   */
   clearOutputDir: boolean;
+  /**
+   * Generate a `.npmrc` file specifying a registry for `@sap` scoped dependencies.
+   * @deprecated
+   */
   generateNpmrc: boolean;
+  /**
+   * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
+   */
   generatePackageJson: boolean;
+  /**
+   * By default, when generating `package.json` file, the generator will set a version by using the generator version.
+   * It can also be set to a specific version.
+   */
   versionInPackageJson?: string;
+  /**
+   * License name to be used on the generated package.json. Only considered if 'packageJson' is enabled.
+   */
   licenseInPackageJson?: string;
+  /**
+   * Generates transpiled `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. When set to `false`, the generator will only generate `.ts` files.
+   */
   generateJs: boolean;
+  /**
+   * Hidden option only for internal usage - generate metadata for API hub integration.
+   */
   generateSdkMetadata?: boolean;
+  /**
+   * Number of node processes used for transpilation of JavaScript files.
+   */
   processesJsGeneration?: number;
+  /**
+   * When set to true, the `package.json` of generated services will have the after-version script to internally keep the versions in sync.
+   */
   sdkAfterVersionScript: boolean;
+  // TODO remove s4hanaCloud in version 3.0
+  /**
+   * Internal option used to adjust the description for S/4HANA cloud systems. Will not be used in the future.
+   */
   s4hanaCloud: boolean;
+  /**
+   * Generate A CSN file for each service definition in the output directory.
+   */
   generateCSN: boolean;
+  // TODO remove packageVersion in version 3.0
+  /**
+   * Internal option used to adjust the version in the generated `package.json`. Will not be used in the future.
+   */
   packageVersion?: string;
 }
 /**

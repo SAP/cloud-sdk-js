@@ -76,7 +76,7 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.24.3",
+    "@changesets/cli": "^2.24.4",
     "@types/jest": "^27.0.0",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/license-checker": "^25.0.1",
@@ -84,8 +84,8 @@
     "@types/node": "^14.18.26",
     "@types/uuid": "^8.0.0",
     "@types/voca": "^1.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.35.1",
-    "@typescript-eslint/parser": "^5.35.1",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
     "axios": "^0.27.1",
     "compare-versions": "^4.1.4",
     "depcheck": "^1.0.0",

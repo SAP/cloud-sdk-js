@@ -7,5 +7,6 @@ export type {
   Headers,
   Envelope,
   MailResponse,
-  MailDestination
+  MailDestination,
+  MailClientOptions
 } from './mail-client-types';

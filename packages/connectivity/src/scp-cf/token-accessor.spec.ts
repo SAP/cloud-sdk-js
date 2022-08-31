@@ -274,10 +274,9 @@ describe('token accessor', () => {
         401,
         destinationBindingClientSecretMock.credentials
       );
-      await serviceToken('destination').catch(error => {
-        expect(error).toHaveProperty('cause');
-        expect(error).not.toHaveProperty('config');
-      });
+      const promise = serviceToken('destination');
+      await expect(promise).rejects.toHaveProperty('cause');
+      await expect(promise).rejects.not.toHaveProperty('config');
     });
 
     it('throws an error if the client credentials request fails', async () => {

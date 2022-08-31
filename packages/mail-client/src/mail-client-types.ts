@@ -5,6 +5,7 @@ import {
   DestinationProxyType,
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
+import { ConnectionOptions } from "tls";
 /**
  * Represents an e-mail address.
  * This interface is compatible with `Mail.Address` of `nodemailer`.
@@ -256,4 +257,16 @@ export interface MailDestination {
    * Based on the additional destination property 'mail.password'.
    */
   password?: string;
+}
+
+/**
+ * Represents options for setting up the SMTP connection.
+ * This interface is compatible with `SMTPConnection.Options` of `nodemailer`.
+ * @experimental This API is experimental and might change in newer versions. Use with caution.
+ */
+export interface SmtpConnectionOptions {
+  /**
+   * Defines additional options to be passed to the socket constructor, e.g. { rejectUnauthorized: true }
+   */
+  tls?: ConnectionOptions | undefined
 }

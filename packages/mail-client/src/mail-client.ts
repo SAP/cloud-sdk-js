@@ -142,6 +142,7 @@ async function createTransport(
     pool: true,
     // TODO: expose an option, so the user can decide
     // Defines if the connection should use SSL (if true) or not (if false). See: https://nodemailer.com/smtp/
+    // true for 465, false for other ports
     // secure: false,
     auth: {
       user: mailDestination.username,

@@ -14,14 +14,12 @@ import {
   readCompilerOptions,
   sdkMetadataHeader,
   transpileDirectory,
-  copyFiles
+  copyFiles,
+  packageDescription
 } from '@sap-cloud-sdk/generator-common/internal';
 import { glob } from 'glob';
 import { apiFile } from './file-serializer/api-file';
-import {
-  packageJson,
-  genericDescription
-} from './file-serializer/package-json';
+import { packageJson } from './file-serializer/package-json';
 import { readme } from './file-serializer/readme';
 import { schemaFile } from './file-serializer/schema-file';
 import { apiIndexFile, schemaIndexFile } from './file-serializer/index-file';
@@ -144,11 +142,7 @@ async function generateSources(
   }
 
   if (options.packageJson) {
-    await generatePackageJson(
-      serviceDir,
-      openApiDocument.serviceOptions,
-      options
-    );
+    await generatePackageJson(serviceDir, openApiDocument, options);
   }
 
   if (options.include) {
@@ -343,7 +337,7 @@ async function generateMetadata(
 
 async function generatePackageJson(
   serviceDir: string,
-  { packageName, directoryName }: ServiceOptions,
+  openApiDocument: OpenApiDocument,
   { packageVersion, overwrite, licenseInPackageJson }: ParsedGeneratorOptions
 ) {
   logger.verbose(`Generating package.json in ${serviceDir}.`);
@@ -352,8 +346,8 @@ async function generatePackageJson(
     serviceDir,
     'package.json',
     packageJson({
-      npmPackageName: packageName,
-      description: genericDescription(directoryName),
+      npmPackageName: openApiDocument.serviceOptions.packageName,
+      description: packageDescription(openApiDocument.serviceName),
       sdkVersion: await getSdkVersion(),
       version: packageVersion,
       license: licenseInPackageJson

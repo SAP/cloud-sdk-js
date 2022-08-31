@@ -11,10 +11,18 @@ import {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
+  FunctionImportRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { TestEntity1, TestEntity2, TestEntity3, TestEntity4 } from './index';
+import {
+  TestEntity1,
+  TestEntity2,
+  TestEntity3,
+  TestEntity4,
+  TestFunctionImportEntityReturnType1Parameters,
+  TestFunctionImportEntityReturnType2Parameters
+} from './index';
 
 /**
  * Batch builder for operations supported on the Multiple Schemas Service.
@@ -86,7 +94,17 @@ export type ReadMultipleSchemasServiceRequestBuilder<
   | GetByKeyRequestBuilder<TestEntity1<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity2<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity3<DeSerializersT>, DeSerializersT>
-  | GetByKeyRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>;
+  | GetByKeyRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
+      TestEntity1
+    >
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
+      TestEntity2
+    >;
 export type WriteMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =

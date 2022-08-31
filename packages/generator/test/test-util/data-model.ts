@@ -7,6 +7,7 @@ import {
   VdmProperty,
   VdmReturnTypeCategory,
   VdmServiceMetadata,
+  VdmParameter,
   VdmUnsupportedReason
 } from '../../src/vdm-types';
 
@@ -88,6 +89,24 @@ export const breakfastEntity: VdmEntity = {
   entityTypeNamespace: ''
 };
 
+function getFunctionImport(
+  originalName: string,
+  httpMethod: string
+): VdmFunctionImport {
+  return {
+    originalName,
+    httpMethod,
+    parametersTypeName: `${originalName}Return`,
+    parameters: [{ description: 'local test parameter' }] as VdmParameter[],
+    returnType: {
+      returnType: 'string',
+      returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
+      builderFunction:
+        "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.String', deSerializers)"
+    }
+  } as VdmFunctionImport;
+}
+
 export const foodService: VdmServiceMetadata = {
   oDataVersion: 'v2',
   directoryName: 'FOOD_SERVICE',
@@ -97,7 +116,10 @@ export const foodService: VdmServiceMetadata = {
   originalFileName: 'food.service.edmx',
   speakingModuleName: 'Food Service',
   entities: [breakfastEntity, brunchEntity],
-  functionImports: [],
+  functionImports: [
+    getFunctionImport('funcGet', 'get'),
+    getFunctionImport('funcPost', 'post')
+  ],
   complexTypes: [],
   enumTypes: [],
   className: 'FoodService',

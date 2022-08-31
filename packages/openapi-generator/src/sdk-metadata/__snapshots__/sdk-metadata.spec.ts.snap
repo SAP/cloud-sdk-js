@@ -52,7 +52,7 @@ const responseData = await MyApi.myFunction().execute({ destinationName:'myDesti
   "pregeneratedLibrary": Object {
     "compatibilityNotes": "",
     "dependencyName": "@sap/dummy-package",
-    "description": "SAP Cloud SDK for JavaScript: Generated client for OpenAPI service @sap/dummy-package",
+    "description": "SAP Cloud SDK for JavaScript: Generated client for service dummy",
     "generatedAt": "/Date(0)/",
     "installLibrarySteps": Object {
       "header": "Installation",

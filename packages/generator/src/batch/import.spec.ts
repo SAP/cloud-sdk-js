@@ -17,6 +17,7 @@ describe('batch type imports', () => {
           'GetByKeyRequestBuilder',
           'ODataBatchRequestBuilder',
           'UpdateRequestBuilder',
+          'FunctionImportRequestBuilder',
           'BatchChangeSet'
         ]
       },
@@ -28,7 +29,7 @@ describe('batch type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: './index',
-        namedImports: ['Breakfast', 'Brunch']
+        namedImports: ['Breakfast', 'Brunch', 'funcGetReturn', 'funcPostReturn']
       }
     ]);
   });

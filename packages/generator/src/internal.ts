@@ -19,7 +19,6 @@ export * from './imports';
 export * from './input-path-provider';
 export * from './internal-prefix';
 export * from './name-formatting-strategies';
-export * from './package-description';
 export * from './reserved-words';
 export * from './service-generator';
 export * from './service-mapping';

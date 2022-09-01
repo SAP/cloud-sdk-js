@@ -276,7 +276,7 @@ describe('token accessor', () => {
       );
       const promise = serviceToken('destination');
       await expect(promise).rejects.toHaveProperty('cause');
-      await expect(promise).rejects.not.toHaveProperty('config');
+      await expect(promise).rejects.not.toHaveProperty('cause.config');
     });
 
     it('throws an error if the client credentials request fails', async () => {

@@ -1,11 +1,4 @@
-# ADR template by Michael Nygard
-
-This is based on the template in [Documenting architecture decisions - Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions).
-
-In each ADR file, write these sections:
-
 # Get All Destinations API
-
 
 ## Status
 
@@ -86,7 +79,7 @@ export async function getDestinations(
 ### Options 4
 
 Similar to Option 1, but offer the possibility to toggle on/off certain look-ups.
-Would take the most effort and increase code complexity, but increase 
+Would take the most effort and increase code complexity, but gives the user more options. 
 
 ```ts
 interface DestinationLookupOptions extends DestinationOptions {

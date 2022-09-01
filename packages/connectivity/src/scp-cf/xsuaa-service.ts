@@ -122,11 +122,12 @@ export async function getClientCredentialsToken(
         ) => {
           const isServiceInterface = (
             serviceInterface: Service | string
-          ): serviceInterface is Service => !!(serviceInterface as Service).name;
+          ): serviceInterface is Service =>
+            !!(serviceInterface as Service).name;
           const serviceName = isServiceInterface(service)
             ? service.name
             : service;
-            
+
           return err
             ? reject(
                 `Error in fetching the token for service ${serviceName}: ${err.message}`

@@ -38,6 +38,8 @@ export abstract class ODataRequestConfig {
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
   private _timeout: number | undefined = undefined;
+  private _contentIdChangesetHeader: string | undefined;
+  private _contentIdChangesetUrl: string | undefined;
 
   constructor(
     method: RequestMethodType,
@@ -66,6 +68,22 @@ export abstract class ODataRequestConfig {
         defaultHeadersOrContentType
       );
     }
+  }
+
+  set contentIdChangesetHeader(contentId: string | undefined) {
+    this._contentIdChangesetHeader = contentId;
+  }
+
+  get contentIdChangesetHeader(): string | undefined {
+    return this._contentIdChangesetHeader;
+  }
+
+  set contentIdChangesetUrl(contentId: string | undefined) {
+    this._contentIdChangesetUrl = contentId;
+  }
+
+  get contentIdChangesetUrl(): string | undefined {
+    return this._contentIdChangesetUrl;
   }
 
   set timeout(timeout: number | undefined) {

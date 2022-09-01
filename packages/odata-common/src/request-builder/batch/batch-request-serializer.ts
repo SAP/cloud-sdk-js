@@ -44,7 +44,7 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
  * @internal
  */
 export function serializeRequest(
-  request: Omit<MethodRequestBuilder, 'execute'>,
+  request: Omit<MethodRequestBuilder<ODataRequestConfig>, 'execute'>,
   options: BatchRequestSerializationOptions = {}
 ): string {
   const odataRequest = new ODataRequest(
@@ -65,7 +65,13 @@ export function serializeRequest(
   return [
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
-    ...(method !== 'GET' ? [`Content-Id: ${uuid()}`] : []),
+    ...(method !== 'GET'
+      ? [
+          `Content-Id: ${
+            request.requestConfig.contentIdChangesetHeader || uuid()
+          }`
+        ]
+      : []), // make function with logging nicer - is this needed here?.
     '',
     `${method} ${getUrl(odataRequest, options.subRequestPathType)} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),
@@ -79,6 +85,12 @@ function getUrl<ConfigT extends ODataRequestConfig>(
   request: ODataRequest<ConfigT>,
   subRequestPathType?: BatchSubRequestPathType
 ): string {
+  if (request.config.contentIdChangesetUrl) {
+    return `$${request.config.contentIdChangesetUrl}/${request.relativeUrl(
+      false
+    )}`;
+  }
+
   switch (subRequestPathType) {
     case 'absolute':
       return request.url();

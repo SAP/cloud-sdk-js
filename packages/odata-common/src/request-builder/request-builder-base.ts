@@ -80,6 +80,16 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
+  setContentIdChangesetHeader(id: string): this {
+    this.requestConfig.contentIdChangesetHeader = id;
+    return this;
+  }
+
+  setcontentIdChangesetUrl(id: string): this {
+    this.requestConfig.contentIdChangesetUrl = id;
+    return this;
+  }
+
   /**
    * Add a custom request configuration to the request. Typically, this is used when specifying a response type for downloading files.
    * If the custom request configuration contains {@link @sap-cloud-sdk/http-client!defaultDisallowedKeys | disallowed keys}, those will be ignored.

@@ -92,6 +92,66 @@ HTTP/1.1 200 OK
     }
   });
 
+  it('batch works with content id', async () => {
+    const body = [
+      '--batch_test-boundary',
+      'Content-Type: multipart/mixed; boundary=changeset_test-boundary',
+      '',
+      '--changeset_test-boundary',
+      'Content-Type: application/http',
+      'Content-Transfer-Encoding: binary',
+      'Content-Id: myContentId',
+      '',
+      'POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1.1',
+      'Content-Type: application/json',
+      'Accept: application/json',
+      '',
+      '{}',
+      '',
+      '--changeset_test-boundary',
+      'Content-Type: application/http',
+      'Content-Transfer-Encoding: binary',
+      'Content-Id: test-boundary',
+      '',
+      "POST $myContentId/TestFunctionImportPOST?SimpleParam='someValue' HTTP/1.1",
+      'Content-Type: application/json',
+      'Accept: application/json',
+      '',
+      '',
+      '',
+      '--changeset_test-boundary--',
+      '--batch_test-boundary--',
+      ''
+    ].join('\r\n');
+    nock(baseUrl)
+      .post('/sap/opu/odata/sap/API_TEST_SRV/$batch', body)
+      .reply(202, postResponse, {
+        'content-type': `multipart/mixed; boundary=${boundary}`
+      });
+
+    const createRequest = testEntityApi
+      .requestBuilder()
+      .create(testEntityApi.entityBuilder().fromJson({}))
+      .setContentIdChangesetHeader('myContentId');
+
+    const requestBuilder = testFunctionImportPost({
+      simpleParam: 'someValue'
+    }).setcontentIdChangesetUrl('myContentId');
+    const changeSet = new BatchChangeSet<DefaultDeSerializers>([
+      createRequest,
+      requestBuilder
+    ]);
+    const response = await batch(changeSet).execute({ url: baseUrl });
+    if (response[0].isWriteResponses()) {
+      const casted = testFunctionImportPost({} as any).responseTransformer(
+        response[0].responses[0].body
+      );
+      expect(casted).toBe(true);
+    } else {
+      throw new Error('Should be writeResponse');
+    }
+  });
+
   it('batch works with POST function imports', async () => {
     const body = [
       '--batch_test-boundary',

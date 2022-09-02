@@ -5,6 +5,7 @@ import {
   LoggerOptions as WinstonLoggerOptions,
   transports
 } from 'winston';
+import TransportStream from 'winston-transport';
 import { kibana, local } from './format';
 
 const loggerReference = 'sap-cloud-sdk-logger';
@@ -201,6 +202,10 @@ export function setGlobalLogLevel(level: LogLevel): void {
  */
 export function getGlobalLogLevel(): string | undefined {
   return container.options.level;
+}
+
+export function setGlobalTransport(transport:TransportStream){
+  container.loggers.forEach(logger => logger.transports.push(transport));
 }
 
 /**

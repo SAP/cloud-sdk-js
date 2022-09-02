@@ -5,18 +5,15 @@ import {
   toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
 import { resolveDestination } from '@sap-cloud-sdk/connectivity/internal';
-import {
-  createLogger,
-  transformVariadicArgumentToArray
-} from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import nodemailer, { SentMessageInfo, Transporter } from 'nodemailer';
 import { SocksClient, SocksClientOptions, SocksProxy } from 'socks';
 // eslint-disable-next-line import/no-internal-modules
 import type { Options } from 'nodemailer/lib/smtp-pool';
 import {
   MailClientOptions,
+  MailConfig,
   MailDestination,
-  MailOptions,
   MailResponse
 } from './mail-client-types';
 import {
@@ -179,49 +176,49 @@ async function createTransport(
   });
 }
 
-function buildMailOptionsFromDestination(
+function buildMailConfigsFromDestination(
   mailDestination: MailDestination
-): Partial<MailOptions> {
+): Partial<MailConfig> {
   const from = mailDestination.from;
   return { from };
 }
 
-async function sendMailInSequential<T extends MailOptions>(
+async function sendMailInSequential<T extends MailConfig>(
   transport: Transporter,
-  mailOptionsFromDestination: Partial<MailOptions>,
-  mailOptions: T[]
+  mailConfigsFromDestination: Partial<MailConfig>,
+  mailConfigs: T[]
 ): Promise<MailResponse[]> {
   const response: MailResponse[] = [];
-  for (const mailOptionIndex in mailOptions) {
+  for (const mailConfigIndex in mailConfigs) {
     logger.debug(
-      `Sending email ${mailOptionIndex + 1}/${mailOptions.length}...`
+      `Sending email ${mailConfigIndex + 1}/${mailConfigs.length}...`
     );
-    response[mailOptionIndex] = await transport.sendMail({
-      ...mailOptionsFromDestination,
-      ...mailOptions[mailOptionIndex]
+    response[mailConfigIndex] = await transport.sendMail({
+      ...mailConfigsFromDestination,
+      ...mailConfigs[mailConfigIndex]
     });
     logger.debug(
-      `...email ${mailOptionIndex + 1}/${mailOptions.length} for subject "${
-        mailOptions[mailOptionIndex].subject
+      `...email ${mailConfigIndex + 1}/${mailConfigs.length} for subject "${
+        mailConfigs[mailConfigIndex].subject
       }" was sent successfully.`
     );
   }
   return response;
 }
 
-async function sendMailInParallel<T extends MailOptions>(
+async function sendMailInParallel<T extends MailConfig>(
   transport: Transporter,
-  mailOptionsFromDestination: Partial<MailOptions>,
-  mailOptions: T[]
+  mailConfigsFromDestination: Partial<MailConfig>,
+  mailConfigs: T[]
 ): Promise<MailResponse[]> {
-  const promises: Promise<MailResponse>[] = mailOptions.map(
-    (mailOption, mailOptionIndex, mailOptionsArray) => {
+  const promises: Promise<MailResponse>[] = mailConfigs.map(
+    (mailConfig, mailConfigIndex, mailConfigsArray) => {
       logger.debug(
-        `Sending email ${mailOptionIndex + 1}/${mailOptionsArray.length}...`
+        `Sending email ${mailConfigIndex + 1}/${mailConfigsArray.length}...`
       );
       return transport.sendMail({
-        ...mailOptionsFromDestination,
-        ...mailOption
+        ...mailConfigsFromDestination,
+        ...mailConfig
       });
     }
   );
@@ -229,8 +226,8 @@ async function sendMailInParallel<T extends MailOptions>(
   return Promise.all(promises).then(responses => {
     responses.forEach((_, responseIndex) =>
       logger.debug(
-        `...email ${responseIndex + 1}/${mailOptions.length} for subject "${
-          mailOptions[responseIndex].subject
+        `...email ${responseIndex + 1}/${mailConfigs.length} for subject "${
+          mailConfigs[responseIndex].subject
         }" was sent successfully`
       )
     );
@@ -238,31 +235,31 @@ async function sendMailInParallel<T extends MailOptions>(
   });
 }
 
-async function sendMailWithNodemailer<T extends MailOptions>(
+async function sendMailWithNodemailer<T extends MailConfig>(
   mailDestination: MailDestination,
-  mailClientOptions: MailClientOptions,
-  ...mailOptions: T[]
+  mailConfigs: T[],
+  mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
   let socket: Socket | undefined;
   if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
   }
   const transport = await createTransport(mailDestination, socket);
-  const mailOptionsFromDestination =
-    buildMailOptionsFromDestination(mailDestination);
+  const mailConfigsFromDestination =
+    buildMailConfigsFromDestination(mailDestination);
 
   let response: MailResponse[];
-  if (mailClientOptions.parallel === false) {
+  if (mailClientOptions && mailClientOptions.parallel === false) {
     response = await sendMailInSequential(
       transport,
-      mailOptionsFromDestination,
-      mailOptions
+      mailConfigsFromDestination,
+      mailConfigs
     );
   } else {
     response = await sendMailInParallel(
       transport,
-      mailOptionsFromDestination,
-      mailOptions
+      mailConfigsFromDestination,
+      mailConfigs
     );
   }
 
@@ -285,30 +282,16 @@ function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
  * Builds a transport between the application and the mail server, sends mails sequentially by using the transport, then closes it.
  * This function also does the destination look up, when passing `DestinationOrFetchOptions`.
  * @param destination - A destination or a destination name and a JWT.
+ * @param mailConfigs - A single object or an array of {@link MailConfig}.
  * @param mailClientOptions - A {@link MailClientOptions} that defines the configurations of the mail client, e.g., whether the mails are sent in parallel.
- * @param mailOptions - Any objects representing {@link MailOptions}. Both array and varargs are supported.
  * @returns A promise resolving to an array of {@link MailResponse}.
  * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination#referencing-destinations-by-name
  */
-export async function sendMail<T extends MailOptions>(
+export async function sendMail<T extends MailConfig>(
   destination: DestinationOrFetchOptions,
-  mailClientOptions: MailClientOptions,
-  ...mailOptions: T[]
-): Promise<MailResponse[]>;
-export async function sendMail<T extends MailOptions>(
-  destination: DestinationOrFetchOptions,
-  mailClientOptions: MailClientOptions,
-  mailOptions: T[]
-): Promise<MailResponse[]>;
-/* eslint-disable jsdoc/require-jsdoc */
-export async function sendMail<T extends MailOptions>(
-  destination: DestinationOrFetchOptions,
-  mailClientOptions: MailClientOptions,
-  first: T | T[],
-  ...rest: T[]
+  mailConfigs: T | T[],
+  mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
-  const mailOptions = transformVariadicArgumentToArray(first, rest);
-
   const resolvedDestination = await resolveDestination(destination);
   if (!!resolvedDestination.type && resolvedDestination.type !== 'MAIL') {
     throw Error(
@@ -322,8 +305,13 @@ export async function sendMail<T extends MailOptions>(
 
   return sendMailWithNodemailer(
     mailDestination,
-    mailClientOptions,
-    ...mailOptions
+    transformToArray(mailConfigs),
+    mailClientOptions
   );
 }
-/* eslint-enable jsdoc/require-jsdoc */
+
+function transformToArray<T>(singleElementOrArray: T | T[]): T[] {
+  return Array.isArray(singleElementOrArray)
+    ? singleElementOrArray
+    : [singleElementOrArray];
+}

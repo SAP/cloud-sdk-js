@@ -1,18 +1,17 @@
 import { sendMail } from '@sap-cloud-sdk/mail-client';
 
-const mailOptions = { from: 'from', to: 'to' };
+const mailConfig = { from: 'from', to: 'to' };
 
 // $ExpectType Promise<MailResponse[]>
-sendMail({ destinationName: 'dest' }, {}, mailOptions);
+sendMail({ destinationName: 'dest' }, mailConfig);
 // $ExpectType Promise<MailResponse[]>
 sendMail(
   { destinationName: 'dest' },
   { parallel: true },
-  mailOptions,
-  mailOptions
+  mailConfig,
+  mailConfig
 );
 // $ExpectType Promise<MailResponse[]>
-sendMail({ destinationName: 'dest' }, { parallel: false }, [
-  mailOptions,
-  mailOptions
-]);
+sendMail({ destinationName: 'dest' }, [mailConfig, mailConfig], {
+  parallel: false
+});

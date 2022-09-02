@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
 import { Protocol } from '@sap-cloud-sdk/connectivity';
 import { buildSocksProxy, sendMail } from './mail-client';
-import { MailDestination, MailOptions } from './mail-client-types';
+import { MailDestination, MailConfig } from './mail-client-types';
 
 describe('mail client', () => {
   beforeEach(() => {
@@ -38,7 +38,7 @@ describe('mail client', () => {
       authentication: 'BasicAuthentication',
       proxyType: 'Internet'
     };
-    const mailOptions1: MailOptions = {
+    const mailOptions1: MailConfig = {
       from: 'from1@example.com',
       to: 'to1@example.com',
       subject: 'subject',
@@ -46,12 +46,12 @@ describe('mail client', () => {
       html: 'html',
       attachments: [{ content: 'content' }]
     };
-    const mailOptions2: MailOptions = {
+    const mailOptions2: MailConfig = {
       from: 'from2@example.com',
       to: 'to2@example.com'
     };
     await expect(
-      sendMail(destination, {}, mailOptions1, mailOptions2)
+      sendMail(destination, [mailOptions1, mailOptions2])
     ).resolves.not.toThrow();
     expect(spyCreateTransport).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledTimes(2);
@@ -89,12 +89,12 @@ describe('mail client', () => {
         'proxy-authorization': 'jwt'
       }
     };
-    const mailOptions: MailOptions = {
+    const mailOptions: MailConfig = {
       from: 'from1@example.com',
       to: 'to1@example.com'
     };
     await expect(
-      sendMail(destination, { parallel: false }, mailOptions)
+      sendMail(destination, mailOptions, { parallel: false })
     ).resolves.not.toThrow();
     expect(spyCreateSocket).toBeCalledTimes(1);
     expect(spyCreateTransport).toBeCalledTimes(1);

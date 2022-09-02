@@ -1,6 +1,6 @@
 export { sendMail } from './mail-client';
 export type {
-  MailOptions,
+  MailConfig,
   Address,
   Attachment,
   AttachmentLike,

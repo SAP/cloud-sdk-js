@@ -473,15 +473,12 @@ describe('OAuth flows', () => {
     expect(destination?.originalProperties?.['mail.smtp.host']).toBeTruthy();
 
     const myEmailAddress = destination?.originalProperties!['mail.user'];
-    const res = await sendMail(
-      destination!,
-      {
-        from: myEmailAddress,
-        to: myEmailAddress,
-        subject: 'sub',
-        text: 'txt'
-      }
-    );
+    const res = await sendMail(destination!, {
+      from: myEmailAddress,
+      to: myEmailAddress,
+      subject: 'sub',
+      text: 'txt'
+    });
     expect(res).toBeTruthy();
   }, 60000);
 

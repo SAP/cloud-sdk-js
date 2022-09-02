@@ -475,7 +475,6 @@ describe('OAuth flows', () => {
     const myEmailAddress = destination?.originalProperties!['mail.user'];
     const res = await sendMail(
       destination!,
-      {},
       {
         from: myEmailAddress,
         to: myEmailAddress,

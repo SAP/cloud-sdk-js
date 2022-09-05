@@ -2,13 +2,13 @@
 
 ## Status
 
-TBD
+approved
 
 ## Context
 
-Customers would like to get all destinations for an account using the SDK and it would be nice to expose this with a proper interface. 
+Our users would like to get all destinations for an account using the SDK and it would be nice to expose this with a proper interface. 
 
-The `getDestinations()` function should be similiar to our `getDestination()` function which has the following API:
+The `getAllDestinations()` function should be similiar to our `getDestination()` function which has the following API:
 
 ```ts
 export async function getDestination(
@@ -28,21 +28,42 @@ Currently all functions searching for a destination only work with a single dest
 
 ## Decision
 
+We decided to implement the function which only gets all destinations from the destination service, as it will fulfill most user stories. We can still implement the other functions on-demand.
+
+```ts
+export async function getAllDestinationsFromDestinationService(
+  options: DestinationOptions
+): Promise<Destination[] | null>
+```
+
+This function should throw a warning if one of the destinations is incomplete/compromised.
+
+If our users have feature requests for the other look-up functions, e.g. `searchEnvVariablesForDestination` etc., we shall implement them on-demand.
+
+If we end up implementing every look-up function to get all destinations, we are to implement the parent function and deprecate and remove the predecessors functions.
+
+## Consequences
+
+Our users get access to a function returning all destinations from the destination service.
+
+# Appendix
+
+Below are other potential candidates we considered.
 
 ### Option 1
 
 Rewrite existing- or create new look-up functions which return all destinations, instead of a specific one.
 This would result in relatively expensive calls and requires alot of rework.
-However it would provide the users with an API that is consistent wiht `getDestination()`.
+However it would provide the users with an API that is consistent with `getDestination()`.
 
 ```ts
-export async function getDestinations(
+export async function getAllDestinations(
   options: DestinationOptions & DestinationForServiceBindingOptions
 ): Promise<Destination[] | null> {
-  const destinations = searchEnvVariablesForDestinations(options).concat(
-            (await searchRegisteredDestinations(options)),
-            (await searchServiceBindingForDestinations(options)),
-            (await getDestinationFromDestinationServices(options))
+  const destinations = searchEnvVariablesForAllDestinations(options).concat(
+            (await searchRegisteredAllDestinations(options)),
+            (await searchServiceBindingForAllDestinations(options)),
+            (await getAllDestinationsFromDestinationService(options))
         );
   return destinations;
 }
@@ -54,29 +75,12 @@ Only get all destinations from the destinations service, as this will be by far 
 Would require the least amount of effort, but wouldn't cover potential corner cases.
 
 ```ts
-export async function getDestinationsFromDestinationService(
+export async function getAllDestinationsFromDestinationService(
   options: DestinationOptions
 ): Promise<Destination[] | null>
 ```
 
-### Option 3
-
-Only offer destinatons from the destination service and environment variables.
-This way we could offer easier testability and still cover the most common use case.
-Would require comparably low effort, but wouldn't cover potential corner cases.
-
-```ts
-export async function getDestinations(
-  options: DestinationOptions & DestinationForServiceBindingOptions
-): Promise<Destination[] | null> {
-  const destinations =
-    searchEnvVariablesForDestinations(options) ||
-    (await getDestinationsFromDestinationService(options));
-  return destination;
-}
-```
-
-### Options 4
+### Options 3
 
 Similar to Option 1, but offer the possibility to toggle on/off certain look-ups.
 Would take the most effort and increase code complexity, but gives the user more options. 
@@ -89,29 +93,14 @@ interface DestinationLookupOptions extends DestinationOptions {
     getDestinationFromDestinationServices?: boolean
 }
 
-export async function getDestinations(
+export async function getAllDestinations(
   options: DestinationLookupOptions & DestinationForServiceBindingOptions
 ): Promise<Destination[] | null> {
-  const destinations = searchEnvVariablesForDestinations(options).concat(
-            (await searchRegisteredDestinations(options)),
-            (await searchServiceBindingForDestinations(options)),
-            (await getDestinationFromDestinationServices(options))
+  const destinations = searchEnvVariablesForAllDestinations(options).concat(
+            (await searchRegisteredAllDestinations(options)),
+            (await searchServiceBindingForAllDestinations(options)),
+            (await getAllDestinationFromDestinationService(options))
         );
   return destinations;
 }
 ```
-
-## Consequences
-
-What becomes easier or more difficult to do because of this change?
-
-# Appendix [Optional]
-
-Details on the discussion leading to the decision.
-Often a list of options with pros and cons including the selection implementation.
-
-## Option A
-
-## Option B
-
-...

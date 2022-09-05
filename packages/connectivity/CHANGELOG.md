@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/connectivity
 
+## 2.8.0
+
+### Minor Changes
+
+- a0b3df70: [Fixed Issue] Remove last explicit references to 'VCAP_SERVICES' and replace them with '@sap/xsenv'.
+- 3bb924bb: [Fixed Issue] Fix that unparsable destinations in the subaccount prevent other destinations from beeing fetched.
+
+### Patch Changes
+
+- 296326b6: [Improvement] Reduce default logs for failing requests in @sap-cloud-sdk/http-client.
+  - @sap-cloud-sdk/util@2.8.0
+
 ## 2.7.1
 
 ### Patch Changes

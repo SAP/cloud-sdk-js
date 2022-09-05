@@ -1,5 +1,20 @@
 # @sap-cloud-sdk/odata-common
 
+## 2.8.0
+
+### Minor Changes
+
+- f7dcd7c0: [New Functionality] Allow function imports using GET http method in batch requests.
+
+### Patch Changes
+
+- Updated dependencies [296326b6]
+- Updated dependencies [a0b3df70]
+- Updated dependencies [3bb924bb]
+  - @sap-cloud-sdk/connectivity@2.8.0
+  - @sap-cloud-sdk/http-client@2.8.0
+  - @sap-cloud-sdk/util@2.8.0
+
 ## 2.7.1
 
 ### Patch Changes

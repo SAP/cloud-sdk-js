@@ -42,9 +42,24 @@ export interface DeSerializers<
     StringT,
     AnyT
   > {
+  /**
+   * DeSerializer for `Edm.DateTime` to the generic type `DateTimeT`.
+   */
   'Edm.Date': DeSerializer<DateT>;
+  /**
+   * DeSerializer for `Edm.DateTimeOffset` to the generic type `DateTimeOffsetT`.
+   */
   'Edm.DateTimeOffset': DeSerializer<DateTimeOffsetT>;
+  /**
+   * DeSerializer for `Edm.Duration` to the generic type `DurationT`.
+   */
   'Edm.Duration': DeSerializer<DurationT>;
+  /**
+   * DeSerializer for `Edm.TimeOfDay` to the generic type `TimeOfDayT`.
+   */
   'Edm.TimeOfDay': DeSerializer<TimeOfDayT>;
+  /**
+   * DeSerializer for `Edm.Enum` to the generic type `EnumT`.
+   */
   'Edm.Enum': DeSerializer<EnumT>;
 }

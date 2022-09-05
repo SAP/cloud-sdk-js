@@ -84,22 +84,37 @@ export class DefaultDestinationCache implements DestinationCacheInterface {
  * @internal
  */
 export interface DestinationCacheType {
+  /**
+   * @internal
+   */
   retrieveDestinationFromCache: (
     decodedJwt: Record<string, any>,
     name: string,
     isolation: IsolationStrategy
   ) => Promise<Destination | undefined>;
+  /**
+   * @internal
+   */
   cacheRetrievedDestination: (
     decodedJwt: Record<string, any>,
     destination: Destination,
     isolation: IsolationStrategy
   ) => Promise<void>;
+  /**
+   * @internal
+   */
   cacheRetrievedDestinations: (
     decodedJwt: Record<string, any>,
     retrievedDestinations: DestinationsByType,
     isolation: IsolationStrategy
   ) => Promise<void>;
+  /**
+   * @internal
+   */
   clear: () => Promise<void>;
+  /**
+   * @internal
+   */
   getCacheInstance: () => DestinationCacheInterface;
 }
 

@@ -12,6 +12,7 @@ import {
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
   FunctionImportRequestBuilder,
+  ActionImportRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
@@ -41,6 +42,13 @@ import {
   TestFunctionImportComplexReturnTypeCollectionParameters,
   TestFunctionImportMultipleParamsParameters,
   TestFunctionImportWithDifferentNameParameters,
+  TestActionImportNoParameterNoReturnTypeParameters,
+  TestActionImportMultipleParameterComplexReturnTypeParameters,
+  TestActionImportUnsupportedEdmTypesParameters,
+  TestActionImportNoParameterEntityReturnTypeParameters,
+  TestActionImportSharedEntityReturnTypeParameters,
+  TestActionImportSharedEntityReturnTypeCollectionParameters,
+  TestActionImportNullableTestParameters,
   TestComplexType
 } from './index';
 
@@ -377,4 +385,45 @@ export type WriteTestServiceRequestBuilder<
   | DeleteRequestBuilder<
       TestEntityEndsWithSomethingElse<DeSerializersT>,
       DeSerializersT
+    >
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>,
+      undefined
+    >
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>,
+      TestComplexType
+    >
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>,
+      any
+    >
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>,
+      TestEntity
+    >
+  | Omit<
+      ActionImportRequestBuilder<
+        DeSerializersT,
+        TestActionImportSharedEntityReturnTypeParameters<DeSerializersT>,
+        never
+      >,
+      'execute'
+    >
+  | Omit<
+      ActionImportRequestBuilder<
+        DeSerializersT,
+        TestActionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
+        never
+      >,
+      'execute'
+    >
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      TestActionImportNullableTestParameters<DeSerializersT>,
+      TestComplexType | null
     >;

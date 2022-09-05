@@ -28,6 +28,31 @@
 
 -
 
+# 2.8.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.8.0
+
+## Compatibility Notes
+
+- [eslint-config] Activated the eslint rule 'check-tag-names' to allowed jsdoc tags. If you use custom tags add them via the 'definedTags' in the eslint options. (f6eb1893)
+- [generator] Deprecated `generateNpmrc` cli option. This option was only used to configure the now defunct npm registry hosted by SAP. It now has no effect anymore and should be removed in all invocations of the generator cli. (ae97cdbc)
+- [generator, openapi-generator, generator-common] Description for package.json in a generated client has changed. (5cc05008)
+
+## New Functionalities
+
+- [mail-client] Support defining the strategy of sending emails. By default, the emails are sent "in parallel" and can be set to "in sequential". (fedcce48)
+- [odata-common, generator] Allow function imports using GET http method in batch requests. (f7dcd7c0)
+
+## Improvements
+
+- [connectivity] Reduce default logs for failing requests in @sap-cloud-sdk/http-client.
+  - @sap-cloud-sdk/util@2.8.0 (296326b6)
+
+## Fixed Issues
+
+- [connectivity] Remove last explicit references to 'VCAP_SERVICES' and replace them with '@sap/xsenv'. (a0b3df70)
+- [connectivity] Fix that unparsable destinations in the subaccount prevent other destinations from beeing fetched. (3bb924bb)
+
 # 2.7.1
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.7.1

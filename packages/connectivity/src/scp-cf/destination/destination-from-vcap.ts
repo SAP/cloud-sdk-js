@@ -23,7 +23,13 @@ const logger = createLogger({
  * Represents partial options to fetch destinations.
  */
 export interface PartialDestinationFetchOptions {
+  /**
+   * The fetched destination will be cached if set to true.
+   */
   useCache?: boolean;
+  /**
+   * The jwt payload used to fetch destinations.
+   */
   jwt?: JwtPayload;
 }
 

@@ -355,7 +355,14 @@ export type LogLevel =
  * Configurable logger options.
  */
 export interface LoggerOptions {
+  /**
+   * The log level of the logger.
+   */
   level?: LogLevel;
+  /**
+   * Unused option passed to the winston logger options.
+   * @deprecated
+   */
   logger?: string;
 }
 
@@ -363,6 +370,9 @@ export interface LoggerOptions {
  * Log message context for a logger with additional custom data.
  */
 export interface MessageContextObj {
+  /**
+   * Name of the message context.
+   */
   messageContext?: string;
   [key: string]: any;
 }

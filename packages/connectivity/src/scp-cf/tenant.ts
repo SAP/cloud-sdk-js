@@ -42,7 +42,13 @@ export function tenantName(jwtPayload: JwtPayload): string | undefined {
  * @internal
  */
 export interface Tenant {
+  /**
+   * @internal
+   */
   id: string;
+  /**
+   * @internal
+   */
   name?: string;
 }
 

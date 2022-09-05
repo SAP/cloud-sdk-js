@@ -1,4 +1,3 @@
-import { createLogger } from '@sap-cloud-sdk/util';
 import {
   edmToFieldType,
   edmToTsType,
@@ -38,11 +37,6 @@ import {
   typesForCollection
 } from '../edmx-to-vdm-util';
 import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
-
-const logger = createLogger({
-  package: 'generator',
-  messageContext: 'entity'
-});
 
 /**
  * @internal

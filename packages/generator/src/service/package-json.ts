@@ -8,7 +8,13 @@ import {
  * @internal
  */
 export interface PackageJsonOptions extends PackageJsonOptionsBase {
+  /**
+   * @internal
+   */
   sdkAfterVersionScript: boolean;
+  /**
+   * @internal
+   */
   oDataVersion: ODataVersion;
 }
 

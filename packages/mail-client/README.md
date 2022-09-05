@@ -20,7 +20,7 @@ $ npm install @sap-cloud-sdk/mail-client
 Use the `sendMail` function to send e-mails.
 
 ```ts
-`sendMail`(destination, { from: 'from@sap.com', to: 'to@sap.com', subject: 'subject', text: 'text' });
+sendMail(destination, { from: 'from@sap.com', to: 'to@sap.com', subject: 'subject', text: 'text' });
 ```
 
 <!-- sap-cloud-sdk-common-readme -->

@@ -33,12 +33,18 @@ const logger = createLogger({
  * Interface representing the return type of the builder function {@link entityDeserializer}.
  */
 export interface EntityDeserializer {
+  /**
+   * Method to deserialize the full entity from JSON to an entity object.
+   */
   deserializeEntity: <EntityT extends EntityBase = EntityBase>(
     json: any,
     entityApi: EntityApi<EntityT, any>,
     requestHeader?: any
   ) => EntityT;
 
+  /**
+   * Method to deserialize the full entity from JSON to the complex type property.
+   */
   deserializeComplexType: (
     json: Record<string, any>,
     complexType: ComplexTypeNamespace<any>

@@ -16,8 +16,10 @@ import { urlAndAgent } from '../../http-agent';
 import {
   DestinationConfiguration,
   DestinationJson,
+  getDestinationConfig,
   parseCertificate,
-  parseDestination
+  parseDestination,
+  validateDestinationConfig
 } from './destination';
 import {
   Destination,
@@ -88,6 +90,21 @@ export function fetchSubaccountDestinations(
   );
 }
 
+function isParsable(
+  destinationResponse: DestinationConfiguration | DestinationJson
+): boolean {
+  const config = getDestinationConfig(destinationResponse);
+  try {
+    validateDestinationConfig(config);
+    return true;
+  } catch (err) {
+    logger.debug(
+      `Parsing of destination with name "${config.Name}" failed - skip this destination in parsing.`
+    );
+    return false;
+  }
+}
+
 async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
@@ -116,9 +133,10 @@ async function fetchDestinations(
 
   return callDestinationEndpoint(targetUri, headers, options)
     .then(response => {
-      const destinations: Destination[] = response.data.map(d =>
-        parseDestination(d)
-      );
+      const destinations: Destination[] = response.data
+        .filter(isParsable)
+        .map(parsableDestination => parseDestination(parsableDestination));
+
       if (options?.useCache) {
         destinationServiceCache.cacheRetrievedDestinations(
           targetUri,
@@ -139,11 +157,20 @@ async function fetchDestinations(
 }
 
 /**
- *  @internal
+ * @internal
  */
 export interface AuthAndExchangeTokens {
+  /**
+   * @internal
+   */
   authHeaderJwt: string;
+  /**
+   * @internal
+   */
   exchangeHeaderJwt?: string;
+  /**
+   * @internal
+   */
   exchangeTenant?: string;
 }
 

@@ -1,3 +1,7 @@
+import * as path from 'path';
+import * as fs from 'fs';
+import { transports } from 'winston';
+import mock from 'mock-fs';
 import {
   cloudSdkExceptionLogger,
   createLogger,
@@ -13,6 +17,7 @@ import {
   sanitizeRecord,
   setGlobalLogFormat,
   setGlobalLogLevel,
+  setGlobalTransports,
   setLogFormat,
   setLogLevel,
   unmuteLoggers
@@ -242,6 +247,53 @@ describe('Cloud SDK Logger', () => {
       logger = createLogger(messageContext);
 
       expect(logger.level).toEqual('warn');
+    });
+  });
+
+  describe('set global transport', () => {
+    const logger = createLogger(messageContext);
+    const httpTransport = new transports.Http();
+    const streamTransport = new transports.Console();
+
+    it('should replace all transpots in all active loggers with the global transport', async () => {
+      const consoleSpy = jest.spyOn(process.stdout, 'write');
+      const rootNodeModules = path.resolve(
+        __dirname,
+        '../../../../node_modules'
+      );
+      mock({
+        'test.log': 'content',
+        [rootNodeModules]: mock.load(rootNodeModules)
+      });
+      const fileTransport = new transports.File({
+        filename: 'test.log',
+        level: 'info'
+      });
+      const defaultLogger = getLogger('cloud-sdk-logger');
+      const defaultExceptionLogger = getLogger('sap-cloud-sdk-exception-logger');
+
+      setGlobalTransports(fileTransport);
+
+      expect(logger?.transports).toHaveLength(1);
+      expect(logger?.transports).toContainEqual(fileTransport);
+      expect(defaultLogger?.transports).toHaveLength(1);
+      expect(defaultLogger?.transports).toContainEqual(fileTransport);
+      expect(defaultExceptionLogger?.transports).toHaveLength(1);
+      expect(defaultExceptionLogger?.transports).toContainEqual(fileTransport);
+
+      logger.info('logs only in test.log');
+      expect(consoleSpy).not.toBeCalled();
+      const log = await fs.promises.readFile('test.log', { encoding: 'utf-8' });
+      expect(log).toMatch(/logs only in test.log/);
+      mock.restore();
+    });
+    it('should accept multiple transports', () => {
+      setGlobalTransports(httpTransport, streamTransport);
+      expect(logger?.transports).toHaveLength(2);
+    });
+    it('should accept an array with multiple transports', () => {
+      setGlobalTransports([httpTransport, streamTransport]);
+      expect(logger?.transports).toHaveLength(2);
     });
   });
 

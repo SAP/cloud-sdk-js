@@ -6,8 +6,8 @@ import {
   transports
 } from 'winston';
 import TransportStream from 'winston-transport';
+import { transformVariadicArgumentToArray } from '../array';
 import { kibana, local } from './format';
-
 const loggerReference = 'sap-cloud-sdk-logger';
 const exceptionLoggerId = 'sap-cloud-sdk-exception-logger';
 
@@ -204,8 +204,26 @@ export function getGlobalLogLevel(): string | undefined {
   return container.options.level;
 }
 
-export function setGlobalTransport(transport:TransportStream){
-  container.loggers.forEach(logger => logger.transports.push(transport));
+/**
+ * Change the global transport of the container which will set default transport for all active loggers.
+ * e.g., to set the global transport call `addTransporstGlobally(httpTransport)`.
+ * @param customTransports - The transport to set the global transport to. Both array and varargs are supported.
+ */
+export function setGlobalTransports(
+  ...customTransports: TransportStream[]
+): void;
+export function setGlobalTransports(customTransports: TransportStream[]): void;
+/* eslint-disable jsdoc/require-jsdoc */
+export function setGlobalTransports(
+  first: TransportStream | TransportStream[],
+  ...rest: TransportStream[]
+): void {
+  const customTransports = transformVariadicArgumentToArray(first, rest);
+  container.options.transports = customTransports;
+  container.loggers.forEach(logger => {
+    logger.clear();
+    customTransports.forEach(transport => logger.add(transport));
+  });
 }
 
 /**

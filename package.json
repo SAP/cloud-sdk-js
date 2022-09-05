@@ -85,7 +85,7 @@
     "@types/uuid": "^8.0.0",
     "@types/voca": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
-    "@typescript-eslint/parser": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.2",
     "axios": "^0.27.1",
     "compare-versions": "^4.1.4",
     "depcheck": "^1.0.0",

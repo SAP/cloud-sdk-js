@@ -5,6 +5,8 @@ import {
   DestinationProxyType,
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
+import { ConnectionOptions } from "tls";
+
 /**
  * Represents an e-mail address.
  * This interface is compatible with `Mail.Address` of `nodemailer`.
@@ -266,4 +268,16 @@ export interface MailClientOptions {
    * Option to define the strategy of sending emails. The emails will be sent in parallel when setting to true, otherwise in sequential. The default value is true.
    */
   parallel?: boolean;
+}
+
+/**
+ * Represents options for setting up the SMTP connection.
+ * This interface is compatible with `SMTPConnection.Options` of `nodemailer`.
+ * @experimental This API is experimental and might change in newer versions. Use with caution.
+ */
+export interface SmtpConnectionOptions {
+  /**
+   * Defines additional options to be passed to the socket constructor, e.g. { rejectUnauthorized: true }
+   */
+  tls?: ConnectionOptions | undefined
 }

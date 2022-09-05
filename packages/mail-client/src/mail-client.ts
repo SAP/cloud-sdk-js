@@ -14,8 +14,8 @@ import {
   MailClientOptions,
   MailConfig,
   MailDestination,
-  MailResponse
-} from './mail-client-types';
+  MailResponse, SmtpConnectionOptions
+} from "./mail-client-types";
 import {
   customAuthRequestHandler,
   customAuthResponseHandler
@@ -133,6 +133,7 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
 
 async function createTransport(
   mailDestination: MailDestination,
+  connectionOptions?: SmtpConnectionOptions,
   socket?: Socket
 ): Promise<Transporter<SentMessageInfo>> {
   const baseOptions: Options = {
@@ -145,23 +146,7 @@ async function createTransport(
       user: mailDestination.username,
       pass: mailDestination.password
     },
-    // TODO: Uploading certificates on CF like HTTP destination is not applicable for MAIL destination.
-    // Provide an API option for the users, so they can pass it as parameter for the nodemailer.
-    // The `tls` is the right key:
-    //     tls: {
-    //       cert: xxx,
-    //       ca: xxx,
-    //       rejectUnauthorized: xxx
-    //     }
-    tls: {
-      /**
-       * If true the server will reject any connection which is not
-       * authorized with the list of supplied CAs. This option only has an
-       * effect if requestCert is true.
-       */
-      /** Disable tls config to fix the self signed certificate error. */
-      rejectUnauthorized: false
-    }
+    ...connectionOptions
   };
   if (socket) {
     return nodemailer.createTransport({
@@ -238,13 +223,14 @@ async function sendMailInParallel<T extends MailConfig>(
 async function sendMailWithNodemailer<T extends MailConfig>(
   mailDestination: MailDestination,
   mailConfigs: T[],
+  connectionOptions?: SmtpConnectionOptions,
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
   let socket: Socket | undefined;
   if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
   }
-  const transport = await createTransport(mailDestination, socket);
+  const transport = await createTransport(mailDestination, connectionOptions, socket);
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 

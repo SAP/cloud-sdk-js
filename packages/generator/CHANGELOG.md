@@ -1,23 +1,5 @@
 # @sap-cloud-sdk/generator
 
-## 2.8.0
-
-### Minor Changes
-
-- ae97cdbc: [Compatibility Note] Deprecated `generateNpmrc` cli option. This option was only used to configure the now defunct npm registry hosted by SAP. It now has no effect anymore and should be removed in all invocations of the generator cli.
-- 5cc05008: [Compatibility Note] Description for package.json in a generated client has changed.
-- f7dcd7c0: [New Functionality] Allow function imports using GET http method in batch requests.
-
-### Patch Changes
-
-- Updated dependencies [5cc05008]
-- Updated dependencies [f7dcd7c0]
-  - @sap-cloud-sdk/generator-common@2.8.0
-  - @sap-cloud-sdk/odata-common@2.8.0
-  - @sap-cloud-sdk/odata-v2@2.8.0
-  - @sap-cloud-sdk/odata-v4@2.8.0
-  - @sap-cloud-sdk/util@2.8.0
-
 ## 2.7.1
 
 ### Patch Changes

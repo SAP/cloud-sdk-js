@@ -50,6 +50,29 @@ describe('batch', () => {
     expect(casted.sort()).toEqual([1000, 1001]);
   });
 
+  it('extracts Content-Id from response', async () => {
+    const dataForCreation = testEntityApi
+      .entityBuilder()
+      .keyTestEntity(entityKey)
+      .build();
+
+    const create = testEntityApi
+      .requestBuilder()
+      .create(dataForCreation)
+      .setContentIdBatch({ header: 'createdId' });
+    const [response] = await batch(changeset(create))
+      .withSubRequestPathType('relativeToEntity')
+      .execute(destination);
+
+    if (response.isWriteResponses()) {
+      expect(response.responses[0].contentId).toBe('createdId');
+    }
+  });
+
+  it('uses content-id to create related entities of freshly created one', async () => {
+    throw new Error('Implement this test.');
+  });
+
   it('should execute multiple function imports', async () => {
     const [responseSdk, responseInt, responseGetAll] = await batch(
       returnSapCloudSdk({}),

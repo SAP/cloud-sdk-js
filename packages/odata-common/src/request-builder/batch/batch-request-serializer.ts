@@ -68,13 +68,16 @@ export function serializeRequest(
     ...(method !== 'GET'
       ? [
           `Content-Id: ${
-            request.requestConfig.contentIdChangesetHeader || uuid()
+            request.requestConfig.contentIdBatch?.header || uuid()
           }`
         ]
       : []), // make function with logging nicer - is this needed here?.
     '',
     `${method} ${getUrl(odataRequest, options.subRequestPathType)} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),
+    ...(request.requestConfig.contentIdBatch?.etag
+      ? [`If-Match: ${request.requestConfig.contentIdBatch?.etag}`]
+      : []),
     '',
     ...getPayload(request),
     ''
@@ -85,8 +88,8 @@ function getUrl<ConfigT extends ODataRequestConfig>(
   request: ODataRequest<ConfigT>,
   subRequestPathType?: BatchSubRequestPathType
 ): string {
-  if (request.config.contentIdChangesetUrl) {
-    return `$${request.config.contentIdChangesetUrl}/${request.relativeUrl(
+  if (request.config.contentIdBatch?.url) {
+    return `$${request.config.contentIdBatch.url}/${request.relativeUrl(
       false
     )}`;
   }

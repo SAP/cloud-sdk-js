@@ -217,6 +217,22 @@ describe('batch response parser', () => {
 
     const body = { valid: 'json' };
 
+    it('parses content-id', () => {
+      const response = [
+        firstHeader,
+        'content-id: someContentId',
+        'HTTP/1.1 200 Success',
+        secondHeader,
+        JSON.stringify(body)
+      ].join(unixEOL);
+
+      expect(parseResponseData(response)).toEqual({
+        contentId: 'someContentId',
+        httpCode: 200,
+        body
+      });
+    });
+
     it('parses get response', () => {
       const response = [
         firstHeader,

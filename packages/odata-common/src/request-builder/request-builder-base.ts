@@ -6,6 +6,7 @@ import {
 import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
+import { ContentIdConfig } from './batch';
 
 /**
  * Base class for all request builders.
@@ -80,13 +81,8 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
-  setContentIdChangesetHeader(id: string): this {
-    this.requestConfig.contentIdChangesetHeader = id;
-    return this;
-  }
-
-  setcontentIdChangesetUrl(id: string): this {
-    this.requestConfig.contentIdChangesetUrl = id;
+  setContentIdBatch(id: ContentIdConfig): this {
+    this.requestConfig.contentIdBatch = id;
     return this;
   }
 

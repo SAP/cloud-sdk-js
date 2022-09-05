@@ -16,6 +16,24 @@ import { BatchSubRequestPathType } from './batch-request-options';
 import { BatchChangeSet, ChangesetBuilderTypes } from './batch-change-set';
 
 /**
+ * Configure Content-Id for batch requests. Either use it in the URL, header or Etag depending on reference.
+ */
+export interface ContentIdConfig {
+  /**
+   * Set the etag header for batch request.
+   */
+  etag?: string;
+  /**
+   * Set content-id header for batch request.
+   */
+  header?: string;
+  /**
+   * Set reference to content-id in URL - `$` is added automatically.
+   */
+  url?: string;
+}
+
+/**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. {@link GetAllRequestBuilder | getAll} and {@link GetByKeyRequestBuilder | getByKey} requests and change sets, which in turn can contain {@link CreateRequestBuilder | create}, {@link UpdateRequestBuilder | update} or {@link DeleteRequestBuilder | delete} requests.
  * The retrieve and change sets will be executed in order, while the order within a change set can vary.
  * @internal

@@ -12,7 +12,8 @@ jest.mock('uuid', () => ({
 }));
 
 describe('batch request', () => {
-  const { batch, testEntityApi, functionImports } = testService();
+  const { batch, testEntityApi, testEntitySingleLinkApi, functionImports } =
+    testService();
 
   const getHeader = contentType => `Content-Type: ${contentType}
 Content-Length: 3886
@@ -92,7 +93,11 @@ HTTP/1.1 200 OK
     }
   });
 
-  it('batch works with content id', async () => {
+  it('batch works with content-id - Etag', async () => {
+    throw new Error('Implement Etag test');
+  });
+
+  it('batch works with content-id - URL', async () => {
     const body = [
       '--batch_test-boundary',
       'Content-Type: multipart/mixed; boundary=changeset_test-boundary',
@@ -113,11 +118,11 @@ HTTP/1.1 200 OK
       'Content-Transfer-Encoding: binary',
       'Content-Id: test-boundary',
       '',
-      "POST $myContentId/TestFunctionImportPOST?SimpleParam='someValue' HTTP/1.1",
+      'POST $myContentId/A_TestEntitySingleLink HTTP/1.1',
       'Content-Type: application/json',
       'Accept: application/json',
       '',
-      '',
+      '{}',
       '',
       '--changeset_test-boundary--',
       '--batch_test-boundary--',
@@ -132,14 +137,15 @@ HTTP/1.1 200 OK
     const createRequest = testEntityApi
       .requestBuilder()
       .create(testEntityApi.entityBuilder().fromJson({}))
-      .setContentIdChangesetHeader('myContentId');
+      .setContentIdBatch({ header: 'myContentId' });
 
-    const requestBuilder = testFunctionImportPost({
-      simpleParam: 'someValue'
-    }).setcontentIdChangesetUrl('myContentId');
+    const updateRequestBuilder = testEntitySingleLinkApi
+      .requestBuilder()
+      .create(testEntitySingleLinkApi.entityBuilder().fromJson({}))
+      .setContentIdBatch({ url: 'myContentId' });
     const changeSet = new BatchChangeSet<DefaultDeSerializers>([
       createRequest,
-      requestBuilder
+      updateRequestBuilder
     ]);
     const response = await batch(changeSet).execute({ url: baseUrl });
     if (response[0].isWriteResponses()) {

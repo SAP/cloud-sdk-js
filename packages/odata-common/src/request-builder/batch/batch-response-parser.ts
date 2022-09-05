@@ -147,6 +147,13 @@ export function splitResponse(response: string, boundary: string): string[] {
   );
 }
 
+function parseContentId(response: string) {
+  const group = response.match(/content-id:\s+(\w+)/);
+  if (group) {
+    return group[1];
+  }
+}
+
 /**
  * Parse the HTTP code of response.
  * @param response - String representation of the response.
@@ -200,7 +207,8 @@ function parseResponseBody(response: string): Record<string, any> {
 export function parseResponseData(response: string): ResponseData {
   return {
     body: parseResponseBody(response),
-    httpCode: parseHttpCode(response)
+    httpCode: parseHttpCode(response),
+    contentId: parseContentId(response)
   };
 }
 
@@ -265,4 +273,8 @@ export interface ResponseData {
    * @internal
    */
   httpCode: number;
+  /**
+   * @internal
+   */
+  contentId?: string;
 }

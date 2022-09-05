@@ -109,4 +109,9 @@ export interface WriteResponse<DeSerializersT extends DeSerializers> {
   as?: <EntityT extends EntityBase>(
     entityApi: EntityApi<EntityT, DeSerializersT>
   ) => EntityT;
+
+  /**
+   * Value of the content-id header returned from the response.
+   */
+  contentId?: string;
 }

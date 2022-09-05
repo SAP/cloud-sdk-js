@@ -7,6 +7,7 @@ import {
   encodeTypedClientRequest,
   ParameterEncoder
 } from '@sap-cloud-sdk/http-client/internal';
+import { ContentIdConfig } from '../request-builder';
 
 /**
  * Set of possible request methods.
@@ -38,8 +39,7 @@ export abstract class ODataRequestConfig {
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
   private _timeout: number | undefined = undefined;
-  private _contentIdChangesetHeader: string | undefined;
-  private _contentIdChangesetUrl: string | undefined;
+  private _contentIdBatch: ContentIdConfig | undefined;
 
   constructor(
     method: RequestMethodType,
@@ -70,20 +70,12 @@ export abstract class ODataRequestConfig {
     }
   }
 
-  set contentIdChangesetHeader(contentId: string | undefined) {
-    this._contentIdChangesetHeader = contentId;
+  set contentIdBatch(contentId: ContentIdConfig | undefined) {
+    this._contentIdBatch = contentId;
   }
 
-  get contentIdChangesetHeader(): string | undefined {
-    return this._contentIdChangesetHeader;
-  }
-
-  set contentIdChangesetUrl(contentId: string | undefined) {
-    this._contentIdChangesetUrl = contentId;
-  }
-
-  get contentIdChangesetUrl(): string | undefined {
-    return this._contentIdChangesetUrl;
+  get contentIdBatch(): ContentIdConfig | undefined {
+    return this._contentIdBatch;
   }
 
   set timeout(timeout: number | undefined) {

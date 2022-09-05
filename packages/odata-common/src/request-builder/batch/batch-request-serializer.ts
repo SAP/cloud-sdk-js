@@ -75,6 +75,7 @@ export function serializeRequest(
     '',
     `${method} ${getUrl(odataRequest, options.subRequestPathType)} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),
+      //TODO add wrapper method with log if eTag was also in the requestHeaders.
     ...(request.requestConfig.contentIdBatch?.etag
       ? [`If-Match: ${request.requestConfig.contentIdBatch?.etag}`]
       : []),

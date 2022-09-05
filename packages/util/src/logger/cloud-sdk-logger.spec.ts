@@ -251,7 +251,7 @@ describe('Cloud SDK Logger', () => {
   });
 
   describe('set global transport', () => {
-    const logger = createLogger(messageContext);
+    const customLogger = createLogger(messageContext);
     const httpTransport = new transports.Http();
     const streamTransport = new transports.Console();
 
@@ -270,18 +270,20 @@ describe('Cloud SDK Logger', () => {
         level: 'info'
       });
       const defaultLogger = getLogger('cloud-sdk-logger');
-      const defaultExceptionLogger = getLogger('sap-cloud-sdk-exception-logger');
+      const defaultExceptionLogger = getLogger(
+        'sap-cloud-sdk-exception-logger'
+      );
 
       setGlobalTransports(fileTransport);
 
-      expect(logger?.transports).toHaveLength(1);
-      expect(logger?.transports).toContainEqual(fileTransport);
+      expect(customLogger?.transports).toHaveLength(1);
+      expect(customLogger?.transports).toContainEqual(fileTransport);
       expect(defaultLogger?.transports).toHaveLength(1);
       expect(defaultLogger?.transports).toContainEqual(fileTransport);
       expect(defaultExceptionLogger?.transports).toHaveLength(1);
       expect(defaultExceptionLogger?.transports).toContainEqual(fileTransport);
 
-      logger.info('logs only in test.log');
+      customLogger.info('logs only in test.log');
       expect(consoleSpy).not.toBeCalled();
       const log = await fs.promises.readFile('test.log', { encoding: 'utf-8' });
       expect(log).toMatch(/logs only in test.log/);
@@ -289,11 +291,11 @@ describe('Cloud SDK Logger', () => {
     });
     it('should accept multiple transports', () => {
       setGlobalTransports(httpTransport, streamTransport);
-      expect(logger?.transports).toHaveLength(2);
+      expect(customLogger?.transports).toHaveLength(2);
     });
     it('should accept an array with multiple transports', () => {
       setGlobalTransports([httpTransport, streamTransport]);
-      expect(logger?.transports).toHaveLength(2);
+      expect(customLogger?.transports).toHaveLength(2);
     });
   });
 

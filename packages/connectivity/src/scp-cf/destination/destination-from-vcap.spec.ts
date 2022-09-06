@@ -3,11 +3,9 @@ import {
   providerUserPayload
 } from '../../../../../test-resources/test/test-util';
 import * as tokenAccessor from '../token-accessor';
+import { Service } from '../environment-accessor-types';
 import { getDestination } from './destination-accessor';
-import {
-  destinationForServiceBinding,
-  ServiceBinding
-} from './destination-from-vcap';
+import { destinationForServiceBinding } from './destination-from-vcap';
 import { destinationCache } from './destination-cache';
 import SpyInstance = jest.SpyInstance;
 
@@ -150,11 +148,9 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination using a custom transformation function', async () => {
-    const serviceBindingTransformFn = jest.fn(
-      async (serviceBinding: ServiceBinding) => ({
-        url: serviceBinding.credentials.sys
-      })
-    );
+    const serviceBindingTransformFn = jest.fn(async (service: Service) => ({
+      url: service.credentials.sys
+    }));
 
     await expect(
       destinationForServiceBinding('my-custom-service', {
@@ -175,22 +171,15 @@ describe('vcap-service-destination', () => {
   it('throws an error if no service binding can be found for the given name', async () => {
     await expect(() =>
       destinationForServiceBinding('non-existent-service')
-    ).rejects.toThrowErrorMatchingSnapshot();
-  });
-
-  it('throws an error if there are no service bindings at all', async () => {
-    delete process.env.VCAP_SERVICES;
-    await expect(() =>
-      destinationForServiceBinding('my-custom-service')
-    ).rejects.toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"No service with the name: \\"non-existent-service\\" was found."'
+    );
   });
 
   it('finds the destination when searching for service bindings', async () => {
-    const serviceBindingTransformFn = jest.fn(
-      async (serviceBinding: ServiceBinding) => ({
-        url: serviceBinding.credentials.sys
-      })
-    );
+    const serviceBindingTransformFn = jest.fn(async (service: Service) => ({
+      url: service.credentials.sys
+    }));
 
     await expect(
       getDestination({

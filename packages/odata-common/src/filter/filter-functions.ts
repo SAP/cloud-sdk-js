@@ -397,24 +397,81 @@ export function filterFunctions<
  * Interface containing all filter functions like `startsWith`, `toUpper` or `floor`.
  */
 export interface FilterFunctionsType {
+  /**
+   * Build a filter function to test whether a string ends with another. Evaluates to boolean.
+   */
   endsWith: typeof endsWith;
+  /**
+   * Build a filter function to test whether a string starts with another. Evaluates to boolean.
+   */
   startsWith: typeof startsWith;
+  /**
+   * Build a filter function to get the length of a string. Evaluates to int.
+   */
   length: typeof length;
+  /**
+   * Build a filter function to get the start index of a substring. Evaluates to int.
+   */
   indexOf: typeof indexOf;
+  /**
+   * Build a filter function to get a substring starting from a designated position. Evaluates to string.
+   */
   substring: typeof substring;
+  /**
+   * Build a filter function to transform a string to lower case. Evaluates to string.
+   */
   toLower: typeof toLower;
+  /**
+   * Build a filter function to transform a string to upper case. Evaluates to string.
+   */
   toUpper: typeof toUpper;
+  /**
+   * Build a filter function to trim whitespace from a string. Evaluates to string.
+   */
   trim: typeof trim;
+  /**
+   * Build a filter function to concatenate two strings. Evaluates to string.
+   */
   concat: typeof concat;
+  /**
+   * Build a filter function to round a number. Evaluates to double or decimal, defaults to double.
+   */
   round: typeof round;
+  /**
+   * Build a filter function to floor a number. Evaluates to double or decimal, defaults to double.
+   */
   floor: typeof floor;
+  /**
+   * Build a filter function to ceil a number. Evaluates to double or decimal, defaults to double.
+   */
   ceiling: typeof ceiling;
+  /**
+   * Build a filter function to get the day of a date. Evaluates to int.
+   */
   day: typeof day;
+  /**
+   * Build a filter function to get the hour of a date. Evaluates to int.
+   */
   hour: typeof hour;
+  /**
+   * Build a filter function to get the minute of a date. Evaluates to int.
+   */
   minute: typeof minute;
+  /**
+   * Build a filter function to get the month of a date. Evaluates to int.
+   */
   month: typeof month;
+  /**
+   * Build a filter function to get the second of a date. Evaluates to int.
+   */
   second: typeof second;
+  /**
+   * Build a filter function to get the year of a date. Evaluates to int.
+   */
   year: typeof year;
+  /**
+   * Build a filter function to test whether a selection or a field is of a given type. Evaluates to boolean.
+   */
   isOf: typeof isOf;
 }
 

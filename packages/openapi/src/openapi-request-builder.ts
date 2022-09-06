@@ -181,8 +181,17 @@ export class OpenApiRequestBuilder<ResponseT = any> {
  * Type of the request parameters to be passed to {@link OpenApiRequestBuilder}.
  */
 export interface OpenApiRequestParameters {
+  /**
+   * Collection of path parameters.
+   */
   pathParameters?: Record<string, any>;
+  /**
+   * Collection of query parameters.
+   */
   queryParameters?: Record<string, any>;
+  /**
+   * Request body typically used with "create" and "update" operations (POST, PUT, PATCH).
+   */
   body?: any;
 }
 

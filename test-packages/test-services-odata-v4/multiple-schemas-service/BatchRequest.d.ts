@@ -7,6 +7,7 @@ import {
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
   FunctionImportRequestBuilder,
+  ActionImportRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import {
@@ -15,7 +16,11 @@ import {
   TestEntity3,
   TestEntity4,
   TestFunctionImportEntityReturnType1Parameters,
-  TestFunctionImportEntityReturnType2Parameters
+  TestFunctionImportEntityReturnType2Parameters,
+  TestActionImportNoParameterComplexReturnType1Parameters,
+  TestActionImportNoParameterComplexReturnType2Parameters,
+  TestComplexType1,
+  TestComplexType2
 } from './index';
 /**
  * Batch builder for operations supported on the Multiple Schemas Service.
@@ -82,5 +87,15 @@ export declare type WriteMultipleSchemasServiceRequestBuilder<
   | DeleteRequestBuilder<TestEntity3<DeSerializersT>, DeSerializersT>
   | CreateRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
-  | DeleteRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>;
+  | DeleteRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
+      TestComplexType1
+    >
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
+      TestComplexType2
+    >;
 //# sourceMappingURL=BatchRequest.d.ts.map

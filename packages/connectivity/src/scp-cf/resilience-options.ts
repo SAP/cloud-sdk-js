@@ -52,8 +52,20 @@ export function timeoutPromise<T>(timeout: number): Promise<T> {
  * @internal
  */
 export interface CircuitBreakerOptions {
+  /**
+   * @internal
+   */
   timeout?: number | false | undefined;
+  /**
+   * @internal
+   */
   errorThresholdPercentage?: number | undefined;
+  /**
+   * @internal
+   */
   volumeThreshold?: number | undefined;
+  /**
+   * @internal
+   */
   resetTimeout?: number | undefined;
 }

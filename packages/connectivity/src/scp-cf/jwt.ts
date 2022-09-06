@@ -25,7 +25,7 @@ export function decodeJwt(token: string): JwtPayload {
  * Decode JWT and return the complete decoded token.
  * @param token - JWT to be decoded.
  * @returns Decoded token containing payload, header and signature.
- *  @internal
+ * @internal
  */
 export function decodeJwtComplete(token: string): JwtWithPayloadObject {
   const decodedToken = decode(token, { complete: true, json: true });
@@ -141,6 +141,9 @@ export async function verifyJwt(
  * Options to control certain aspects of JWT verification behavior.
  */
 export interface VerifyJwtOptions {
+  /**
+   * The verification keys are cached if set to true.
+   */
   cacheVerificationKeys?: boolean;
 }
 
@@ -149,8 +152,8 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
 };
 
 /**
- * 15 minutes is the default value used by the xssec lib
- *  @internal
+ * 15 minutes is the default value used by the xssec lib.
+ * @internal
  */
 export const verificationKeyCache = new Cache<TokenKey>(900000);
 
@@ -158,7 +161,7 @@ export const verificationKeyCache = new Cache<TokenKey>(900000);
  * Get the issuer URL of a decoded JWT.
  * @param decodedToken - Token to read the issuer URL from.
  * @returns The issuer URL if available.
- *  @internal
+ * @internal
  */
 export function issuerUrl(decodedToken: JwtPayload): string | undefined {
   return readPropertyWithWarn(decodedToken, 'iss');
@@ -168,7 +171,7 @@ export function issuerUrl(decodedToken: JwtPayload): string | undefined {
  * Retrieve the audiences of a decoded JWT based on the audiences and scopes in the token.
  * @param decodedToken - Token to retrieve the audiences from.
  * @returns A set of audiences.
- *  @internal
+ * @internal
  */
 // Comments taken from the Java SDK implementation
 // Currently, scopes containing dots are allowed.
@@ -278,7 +281,13 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT>(
  * @internal
  */
 export interface JwtPair {
+  /**
+   * @internal
+   */
   decoded: JwtPayload;
+  /**
+   * @internal
+   */
   encoded: string;
 }
 

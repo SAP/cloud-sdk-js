@@ -1,14 +1,9 @@
 import fs from 'fs';
 import { join, resolve } from 'path';
-import net from 'net';
-import {
-  MailOptions,
-  MailResponse,
-  sendMail
-} from '@sap-cloud-sdk/mail-client';
+import { MailConfig, MailResponse, sendMail } from '@sap-cloud-sdk/mail-client';
 
 describe('Mail', () => {
-  const defaultMailOptions: MailOptions = {
+  const defaultMailOptions: MailConfig = {
     from: '"FROM" <from@example.com>',
     to: 'TO1@example.com, TO2@example.com',
     subject: 'SUBJECT',
@@ -16,7 +11,10 @@ describe('Mail', () => {
   };
 
   it('should send a mail', async () => {
-    await sendTestMail(undefined, defaultMailOptions);
+    const responses = await sendTestMail([defaultMailOptions]);
+
+    expect(responses.length).toBe(1);
+    expect(responses[0].accepted?.length).toBe(2);
 
     const mails = fs.readdirSync(join(resolve('test'), 'mail', 'test-output'));
     expect(
@@ -40,17 +38,20 @@ describe('Mail', () => {
         ({
           ...defaultMailOptions,
           subject: `mail ${mailIndex}`
-        } as MailOptions)
+        } as MailConfig)
     );
-    await sendTestMail(undefined, ...mailOptions);
+    const responses = await sendTestMail(mailOptions);
+
+    expect(responses.length).toBeGreaterThan(99);
+    expect(responses[0].accepted?.length).toBe(2);
+
     const mails = fs.readdirSync(join(resolve('test'), 'mail', 'test-output'));
     expect(mails.length).toBeGreaterThan(99);
   }, 60000);
 });
 
 async function sendTestMail(
-  connection?: net.Socket,
-  ...mailOptions: MailOptions[]
+  mainConfigs: MailConfig[]
 ): Promise<MailResponse[]> {
   const originalProperties = {
     'mail.smtp.host': 'localhost',
@@ -62,7 +63,7 @@ async function sendTestMail(
     type: 'MAIL',
     originalProperties
   };
-  return sendMail(destination, ...mailOptions);
+  return sendMail(destination, mainConfigs);
 }
 
 function buildArrayWithNatualNums(length): number[] {

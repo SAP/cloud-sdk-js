@@ -3,9 +3,21 @@
  */
 export interface Service {
   [other: string]: any;
+  /**
+   * The name of the service.
+   */
   name: string;
+  /**
+   * The label of the service.
+   */
   label: string;
+  /**
+   * The tags of the service.
+   */
   tags: string[];
+  /**
+   * The service credentials.
+   */
   credentials: ServiceCredentials;
 }
 

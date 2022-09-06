@@ -4,9 +4,7 @@ import {
   getDestinationBasicCredentials,
   getDestinationServiceCredentialsList,
   getDestinationServiceUri,
-  getEnvironmentVariable,
   getServiceList,
-  getVcapService,
   getXsuaaServiceCredentials
 } from './environment-accessor';
 
@@ -50,44 +48,6 @@ describe('Environment Accessor', () => {
 
     afterEach(() => {
       warnSpy.mockRestore();
-    });
-
-    it('should return the defined environment variable with the respective name', () => {
-      const env = services;
-      const expected = JSON.stringify(env);
-      const actual = getEnvironmentVariable('VCAP_SERVICES');
-      expect(actual).toBe(expected);
-    });
-
-    it('should return null, when the environment variable is not defined', () => {
-      const expected = null;
-      const actual = getEnvironmentVariable('random_env');
-      expect(actual).toBe(expected);
-    });
-
-    it('should return "VCAP_SERVICES" json object', () => {
-      const expected = services;
-      const actual = getVcapService();
-      expect(actual).toEqual(expected);
-    });
-
-    it('returns null if VCAP_SERVICES is not defined', () => {
-      delete process.env.VCAP_SERVICES;
-      expect(getVcapService()).toBe(null);
-    });
-
-    it('throws an error if VCAP_SERVICES is not parsable', () => {
-      process.env.VCAP_SERVICES = '{JSON?!';
-      expect(() => getVcapService()).toThrowError(
-        "Failed to parse environment variable 'VCAP_SERVICES'."
-      );
-    });
-
-    it('throws an error if VCAP_SERVICES is empty', () => {
-      process.env.VCAP_SERVICES = JSON.stringify({});
-      expect(() => getVcapService()).toThrowError(
-        "Environment variable 'VCAP_SERVICES' is defined but empty. This should not happen."
-      );
     });
 
     it('check a non defined service in env variables', () => {

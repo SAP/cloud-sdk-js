@@ -2,10 +2,25 @@
  * @internal
  */
 export interface PackageJsonOptions {
+  /**
+   * @internal
+   */
   npmPackageName: string;
+  /**
+   * @internal
+   */
   version: string;
+  /**
+   * @internal
+   */
   sdkVersion: string;
+  /**
+   * @internal
+   */
   description: string;
+  /**
+   * @internal
+   */
   license?: string;
 }
 

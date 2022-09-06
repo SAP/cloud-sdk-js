@@ -30,17 +30,35 @@ Currently all functions searching for a destination only work with a single dest
 
 We decided to implement the function which only gets all destinations from the destination service, as it will fulfill most user stories. We can still implement the other functions on-demand.
 
+We omit the `authTokens` because running the authentication flow to receive the token from the destinatioon service for every destination could lead to a heavy burden on the destination service.
+
+```ts
+interface DestinationWithoutToken = Omit<Destination, "authTokens">;
+```
+
+If a user desires to receive the `authTokens` for every destination they can still map over the returned array.
+
+Additionally, neither the `selectionStrategy` nor the `isolationStrategy` serve a purpose in the `DestinationOptions`,
+
+The `selectionStrategy` would specify which destinations are supposed to be fetched, this will be decided based on the provided JWT.
+The `isolationStrategy` is used to decide how to cache destinations, this becomes redundant as destinations without `authTokens` don't need to be cached.?
+
+
+```ts
+interface AllDestinationOptions = Omit<DestinationOptions, "selectionStrategy"|"isolationStrategy">
+```
+
 ```ts
 export async function getAllDestinationsFromDestinationService(
-  options: DestinationOptions
-): Promise<Destination[] | null>
+  options: AllDestinationOptions
+): Promise<DestinationWithoutToken[] | null>
 ```
 
 This function should throw a warning if one of the destinations is incomplete/compromised.
 
 If our users have feature requests for the other look-up functions, e.g. `searchEnvVariablesForDestination` etc., we shall implement them on-demand.
 
-If we end up implementing every look-up function to get all destinations, we are to implement the parent function and deprecate and remove the predecessors functions.
+If we end up implementing every look-up function to get all destinations, we are to implement the parent function and deprecate and remove the preceding functions.
 
 ## Consequences
 
@@ -79,6 +97,9 @@ export async function getAllDestinationsFromDestinationService(
   options: DestinationOptions
 ): Promise<Destination[] | null>
 ```
+
+const myFilterDestination = await getAllDestinationsFromDestinationService().filter(.)
+getDestination(myFilterDestination);
 
 ### Options 3
 

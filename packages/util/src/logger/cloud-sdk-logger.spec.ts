@@ -251,12 +251,9 @@ describe('Cloud SDK Logger', () => {
   });
 
   describe('set global transport', () => {
-    const customLogger = createLogger(messageContext);
-    const httpTransport = new transports.Http();
-    const streamTransport = new transports.Console();
-
     it('should replace all transpots in all active loggers with the global transport', async () => {
-      const consoleSpy = jest.spyOn(process.stdout, 'write');
+    const customLogger = createLogger(messageContext);
+    const consoleSpy = jest.spyOn(process.stdout, 'write');
       const rootNodeModules = path.resolve(
         __dirname,
         '../../../../node_modules'
@@ -275,7 +272,6 @@ describe('Cloud SDK Logger', () => {
       );
 
       setGlobalTransports(fileTransport);
-
       expect(customLogger?.transports).toHaveLength(1);
       expect(customLogger?.transports).toContainEqual(fileTransport);
       expect(defaultLogger?.transports).toHaveLength(1);
@@ -290,12 +286,18 @@ describe('Cloud SDK Logger', () => {
       mock.restore();
     });
     it('should accept multiple transports', () => {
+      logger = createLogger(messageContext);
+      const httpTransport = new transports.Http();
+      const streamTransport = new transports.Console();
       setGlobalTransports(httpTransport, streamTransport);
-      expect(customLogger?.transports).toHaveLength(2);
+      expect(logger?.transports).toHaveLength(2);
     });
     it('should accept an array with multiple transports', () => {
+      logger = createLogger(messageContext);
+      const httpTransport = new transports.Http();
+      const streamTransport = new transports.Console();
       setGlobalTransports([httpTransport, streamTransport]);
-      expect(customLogger?.transports).toHaveLength(2);
+      expect(logger?.transports).toHaveLength(2);
     });
   });
 

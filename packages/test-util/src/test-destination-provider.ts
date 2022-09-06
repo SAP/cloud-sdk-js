@@ -15,7 +15,13 @@ const CREDENTIALS_FILE = 'credentials.json';
  * An interface to define `systems.json` and `credentials.json` for loading destinations.
  */
 export interface GetTestDestinationOptions {
+  /**
+   * The path of the `systems.json` file.
+   */
   systemsFilePath?: string;
+  /**
+   * The path of the `credentials.json` file.
+   */
   credentialsFilePath?: string;
 }
 

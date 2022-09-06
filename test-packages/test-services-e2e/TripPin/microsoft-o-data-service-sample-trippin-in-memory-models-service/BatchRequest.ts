@@ -12,6 +12,7 @@ import {
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
   FunctionImportRequestBuilder,
+  ActionImportRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
@@ -20,7 +21,8 @@ import {
   People,
   Airlines,
   Airports,
-  GetNearestAirportParameters
+  GetNearestAirportParameters,
+  ResetDataSourceParameters
 } from './index';
 
 /**
@@ -121,4 +123,9 @@ export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestB
   | DeleteRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
   | CreateRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
-  | DeleteRequestBuilder<Airports<DeSerializersT>, DeSerializersT>;
+  | DeleteRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      ResetDataSourceParameters<DeSerializersT>,
+      undefined
+    >;

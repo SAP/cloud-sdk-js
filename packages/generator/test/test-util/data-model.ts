@@ -8,6 +8,7 @@ import {
   VdmReturnTypeCategory,
   VdmServiceMetadata,
   VdmParameter,
+  VdmActionImport,
   VdmUnsupportedReason
 } from '../../src/vdm-types';
 
@@ -107,6 +108,18 @@ function getFunctionImport(
   } as VdmFunctionImport;
 }
 
+function getActionImport(): VdmActionImport {
+  return {
+    originalName: 'food-action-import',
+    httpMethod: 'POST',
+    returnType: {
+      returnType: 'string'
+    },
+    parametersTypeName: 'actionImportReturn',
+    parameters: [{ description: 'local test parameter' }] as VdmParameter[]
+  } as VdmActionImport;
+}
+
 export const foodService: VdmServiceMetadata = {
   oDataVersion: 'v2',
   directoryName: 'FOOD_SERVICE',
@@ -120,6 +133,7 @@ export const foodService: VdmServiceMetadata = {
     getFunctionImport('funcGet', 'get'),
     getFunctionImport('funcPost', 'post')
   ],
+  actionImports: [getActionImport()],
   complexTypes: [],
   enumTypes: [],
   className: 'FoodService',

@@ -6,19 +6,25 @@ import { DeSerializers } from '../de-serializers';
 import { EntityApi } from '../entity-api';
 
 /**
- * Interface implemented by OData requests needing keys to identify an entity like `getByKey`, `delete` or `update.
+ * Interface implemented by OData requests needing keys to identify an entity like `getByKey`, `delete` or `update`.
  */
 export interface WithKeys {
+  /**
+   * Map containing the key name and value.
+   */
   keys: Record<string, any>;
 }
 
 /**
- * Interface implemented by OData requests returning data like getAll or getByKey.
+ * Interface implemented by OData requests returning data like `getAll` or `getByKey`.
  */
 export interface WithSelection<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 > {
+  /**
+   * Select a list of fields on the `schema` property of the entity api.
+   */
   selects: Selectable<EntityT, DeSerializersT>[];
 }
 
@@ -29,9 +35,21 @@ export interface WithGetAllRestrictions<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 > extends WithSelection<EntityT, DeSerializersT> {
+  /**
+   * Limit the number of results to the given number.
+   */
   top: number;
+  /**
+   * Skip a number of results in the requested set.
+   */
   skip: number;
+  /**
+   * Filter the results based on conditions.
+   */
   filter: Filterable<EntityT, DeSerializersT>;
+  /**
+   * Order the results in, e.g., `asc` or `desc` order.
+   */
   orderBy: Orderable<EntityT, EntityApi<EntityBase>>[];
 }
 
@@ -39,7 +57,13 @@ export interface WithGetAllRestrictions<
  * Interface implemented by OData requests needing `ETags`to avoid conflicts in the persisted data like `update` or `delete`.
  */
 export interface WithETag {
+  /**
+   * Version identifier.
+   */
   eTag: string;
+  /**
+   * Ignore the version identifier if set to true.
+   */
   versionIdentifierIgnored: boolean;
 }
 

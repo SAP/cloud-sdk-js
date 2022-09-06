@@ -17,13 +17,22 @@ export interface EntityApi<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
+  /**
+   * Set of functions that determine (de-)serialization per EDM type.
+   */
   deSerializers: DeSerializersT;
 
   requestBuilder(): RequestBuilder<EntityT, DeSerializersT>;
 
   entityBuilder(): EntityBuilderType<EntityT, DeSerializersT>;
 
+  /**
+   * Constructor function for the entity.
+   */
   entityConstructor: Constructable<EntityT>;
+  /**
+   * Schema of the entity api.
+   */
   schema: Record<string, any>;
 
   customField<NullableT extends boolean>(

@@ -6,20 +6,16 @@ interface CacheInterface<T> {
 }
 
 /**
- * @internal
- */
-export interface DateInputObject {
-  hours?: number;
-  minutes?: number;
-  seconds?: number;
-  milliseconds?: number;
-}
-
-/**
  * Representation of a cached object.
  */
 export interface CacheEntry<T> {
+  /**
+   * The expiration time of the cache entry in milliseconds.
+   */
   expires?: number;
+  /**
+   * The cache entry.
+   */
   entry: T;
 }
 

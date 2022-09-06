@@ -16,8 +16,17 @@ export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
  * Represents the static API of an entity.
  */
 export interface Constructable<EntityT extends EntityBase> {
+  /**
+   * Name of the entity.
+   */
   _entityName: string;
+  /**
+   * Service path as specified in the `service-mapping.json`, e.g., `/sap/opu/odata/sap/API_COMMON_SRV`.
+   */
   _defaultServicePath: string;
+  /**
+   * Names of the key properties of the entity.
+   */
   _keys: string[];
   new (...args: any[]): EntityT;
 }
@@ -299,7 +308,13 @@ export interface EntityIdentifiable<
   T extends EntityBase,
   DeSerializersT extends DeSerializers
 > {
+  /**
+   * Dummy property whose type makes structurally identical entities distiguishable in TypeScript.
+   */
   readonly _entity: T;
+  /**
+   * Dummy property to include also the deserializer type in the strucutre of the entity type.
+   */
   readonly _deSerializers: DeSerializersT;
 }
 

@@ -7,6 +7,7 @@ import {
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
   FunctionImportRequestBuilder,
+  ActionImportRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import {
@@ -18,7 +19,9 @@ import {
   GetByKeyParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
-  ReturnSapCloudSdkParameters
+  ReturnSapCloudSdkParameters,
+  CreateTestEntityByIdParameters,
+  CreateTestEntityByIdReturnIdParameters
 } from './index';
 /**
  * Batch builder for operations supported on the Test Service.
@@ -99,5 +102,15 @@ export declare type WriteTestServiceRequestBuilder<
   | DeleteRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | CreateRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
-  | DeleteRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>;
+  | DeleteRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      CreateTestEntityByIdParameters<DeSerializersT>,
+      TestEntity
+    >
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
+      number
+    >;
 //# sourceMappingURL=BatchRequest.d.ts.map

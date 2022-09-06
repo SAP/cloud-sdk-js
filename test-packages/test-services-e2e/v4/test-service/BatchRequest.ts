@@ -12,6 +12,7 @@ import {
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
   FunctionImportRequestBuilder,
+  ActionImportRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
@@ -24,7 +25,9 @@ import {
   GetByKeyParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
-  ReturnSapCloudSdkParameters
+  ReturnSapCloudSdkParameters,
+  CreateTestEntityByIdParameters,
+  CreateTestEntityByIdReturnIdParameters
 } from './index';
 
 /**
@@ -136,4 +139,14 @@ export type WriteTestServiceRequestBuilder<
   | DeleteRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | CreateRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
-  | DeleteRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>;
+  | DeleteRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      CreateTestEntityByIdParameters<DeSerializersT>,
+      TestEntity
+    >
+  | ActionImportRequestBuilder<
+      DeSerializersT,
+      CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
+      number
+    >;

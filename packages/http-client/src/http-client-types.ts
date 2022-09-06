@@ -4,10 +4,25 @@ import * as http from 'http';
  * Represents the request configuration, that was inferred from a destination.
  */
 export interface DestinationHttpRequestConfig {
+  /**
+   * `baseURL` will be prepended to {@link HttpRequestConfigBase#url} unless `url` is absolute.
+   */
   baseURL: string;
+  /**
+   * `headers` are custom headers to be sent.
+   */
   headers: Record<string, string>;
+  /**
+   * `params` are the URL parameters to be sent with the request.
+   */
   params?: Record<string, string>;
+  /**
+   * `httpAgent` defines a custom agent to be used when performing http requests.
+   */
   httpAgent?: http.Agent;
+  /**
+   * `httpsAgent` defines a custom agent to be used when performing https requests.
+   */
   httpsAgent?: http.Agent;
 }
 
@@ -59,14 +74,43 @@ export type ParameterEncoder = (
  */
 export interface HttpRequestConfigBase {
   [key: string]: any;
+  /**
+   * Server URL that will be used for the request.
+   * Relative `url` can be used together with {@link DestinationHttpRequestConfig#baseURL}.
+   */
   url?: string;
+  /**
+   * The request method used when making the request.
+   */
   method: Method;
+  /**
+   * Data sent in the request body.
+   */
   data?: any;
+  /**
+   * The number of milliseconds before the request times out.
+   */
   timeout?: number;
+  /**
+   * The max size of the http response content in bytes.
+   */
   maxContentLength?: number;
+  /**
+   * `proxy` of axios is disabled in http-client.
+   * Proxy can be set with {@link @sap-cloud-sdk/connectivity!ProxyConfiguration}.
+   */
   proxy?: false;
+  /**
+   * The custom agent used when performing http requests.
+   */
   httpAgent?: any;
+  /**
+   * The custom agent used when performing https requests.
+   */
   httpsAgent?: any;
+  /**
+   * Encoder for the query parameters key and values. Per default parameters and keys are percent encoded.
+   */
   parameterEncoder?: ParameterEncoder;
 }
 
@@ -114,7 +158,13 @@ export interface HttpRequestOptions {
  * Options defined in `custom` take precedence over `requestConfig`.
  */
 export interface OriginOptions {
+  /**
+   * Header or parameter properties originating from the request config.
+   */
   requestConfig?: Record<string, any>;
+  /**
+   * Header or parameters properties set explicitly, which take precedence over `requestConfig`.
+   */
   custom?: Record<string, any>;
 }
 
@@ -156,8 +206,20 @@ export function isHttpRequestConfigWithOrigin(
  * @internal
  */
 export interface OriginOptionsInternal {
+  /**
+   * @internal
+   */
   requestConfig?: Record<string, any>;
+  /**
+   * @internal
+   */
   destination?: Record<string, any>;
+  /**
+   * @internal
+   */
   destinationProperty?: Record<string, any>;
+  /**
+   * @internal
+   */
   custom?: Record<string, any>;
 }

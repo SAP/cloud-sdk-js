@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/mail-client
 
+## 2.8.0
+
+### Minor Changes
+
+- 15e9ef4b: [New Functionality] Support defining the strategy of sending emails. By default, the emails are sent "in parallel" and can be set to "in sequential".
+
+### Patch Changes
+
+- Updated dependencies [15e9ef4b]
+- Updated dependencies [15e9ef4b]
+- Updated dependencies [15e9ef4b]
+  - @sap-cloud-sdk/connectivity@2.8.0
+  - @sap-cloud-sdk/util@2.8.0
+
 ## 2.7.1
 
 ### Patch Changes

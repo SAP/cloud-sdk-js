@@ -10,7 +10,13 @@ import type { DestinationSelectionStrategy } from './destination-selection-strat
  * The used {@link DestinationSelectionStrategy} will decide which destination is selected in the end.
  */
 export interface AllDestinations {
+  /**
+   * Collection of all destinations from the subscriber account.
+   */
   subscriber: DestinationsByType;
+  /**
+   * Collection of all destinations from the provider account.
+   */
   provider: DestinationsByType;
 }
 
@@ -19,7 +25,13 @@ export interface AllDestinations {
  * For a given account a destination can originate from the destination service instance or subaccount.
  */
 export interface DestinationsByType {
+  /**
+   * Collection of destinations from the destination service instance.
+   */
   instance: Destination[];
+  /**
+   * Collection of destinations from the subaccount.
+   */
   subaccount: Destination[];
 }
 

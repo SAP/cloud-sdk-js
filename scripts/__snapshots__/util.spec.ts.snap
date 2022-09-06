@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`nextSdkVersion should not make a major update 1`] = `"The turbo repo/changeset release processes are not planned to be applied to the major version release."`;
+
+exports[`nextSdkVersion should throw an error, when no changesets exist 1`] = `"Invalid new version -- the current version: 1.2.3 and the release type: undefined."`;

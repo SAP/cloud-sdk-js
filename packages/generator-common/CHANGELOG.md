@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/generator-common
 
+## 2.8.0
+
+### Minor Changes
+
+- 15e9ef4b: [Compatibility Note] Description for package.json in a generated client has changed.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@2.8.0
+
 ## 2.7.1
 
 ### Patch Changes

@@ -253,7 +253,7 @@ describe('Cloud SDK Logger', () => {
   describe('set global transport', () => {
     beforeEach(() => {
       logger = createLogger(messageContext);
-    })
+    });
     it('should replace all transpots in all active loggers with the global transport', async () => {
       const consoleSpy = jest.spyOn(process.stdout, 'write');
       const rootNodeModules = path.resolve(
@@ -281,14 +281,26 @@ describe('Cloud SDK Logger', () => {
       expect(defaultExceptionLogger?.transports).toHaveLength(1);
       expect(defaultExceptionLogger?.transports).toContainEqual(fileTransport);
 
-      logger.info('info logs only in test.log');
-      logger.error('error logs only in test.log');
-      logger.verbose('verbose error logs nowhere')
+      logger.error(
+        'logs error only in test.log because the level is less than info'
+      );
+      logger.info(
+        'logs info only in test.log because the level is equal to info'
+      );
+      logger.verbose(
+        'logs verbose nowhere because the level is higher than info'
+      );
       expect(consoleSpy).not.toBeCalled();
       const log = await fs.promises.readFile('test.log', { encoding: 'utf-8' });
-      expect(log).toMatch(/info logs only in test.log/);
-      expect(log).toMatch(/error logs only in test.log/);
-      expect(log).not.toMatch(/verbose error logs nowhere/)
+      expect(log).toMatch(
+        /logs error only in test.log because the level is less than info/
+      );
+      expect(log).toMatch(
+        /logs info only in test.log because the level is equal to info/
+      );
+      expect(log).not.toMatch(
+        /logs verbose nowhere because the level is higher than info/
+      );
       mock.restore();
     });
     it('should accept multiple transports', () => {

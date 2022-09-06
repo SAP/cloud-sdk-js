@@ -251,8 +251,10 @@ describe('Cloud SDK Logger', () => {
   });
 
   describe('set global transport', () => {
+    beforeEach(() => {
+      logger = createLogger(messageContext);
+    })
     it('should replace all transpots in all active loggers with the global transport', async () => {
-      const customLogger = createLogger(messageContext);
       const consoleSpy = jest.spyOn(process.stdout, 'write');
       const rootNodeModules = path.resolve(
         __dirname,
@@ -272,28 +274,30 @@ describe('Cloud SDK Logger', () => {
       );
 
       setGlobalTransports(fileTransport);
-      expect(customLogger?.transports).toHaveLength(1);
-      expect(customLogger?.transports).toContainEqual(fileTransport);
+      expect(logger?.transports).toHaveLength(1);
+      expect(logger?.transports).toContainEqual(fileTransport);
       expect(defaultLogger?.transports).toHaveLength(1);
       expect(defaultLogger?.transports).toContainEqual(fileTransport);
       expect(defaultExceptionLogger?.transports).toHaveLength(1);
       expect(defaultExceptionLogger?.transports).toContainEqual(fileTransport);
 
-      customLogger.info('logs only in test.log');
+      logger.info('info logs only in test.log');
+      logger.error('error logs only in test.log');
+      logger.verbose('verbose error logs nowhere')
       expect(consoleSpy).not.toBeCalled();
       const log = await fs.promises.readFile('test.log', { encoding: 'utf-8' });
-      expect(log).toMatch(/logs only in test.log/);
+      expect(log).toMatch(/info logs only in test.log/);
+      expect(log).toMatch(/error logs only in test.log/);
+      expect(log).not.toMatch(/verbose error logs nowhere/)
       mock.restore();
     });
     it('should accept multiple transports', () => {
-      logger = createLogger(messageContext);
       const httpTransport = new transports.Http();
       const streamTransport = new transports.Console();
       setGlobalTransports(httpTransport, streamTransport);
       expect(logger?.transports).toHaveLength(2);
     });
     it('should accept an array with multiple transports', () => {
-      logger = createLogger(messageContext);
       const httpTransport = new transports.Http();
       const streamTransport = new transports.Console();
       setGlobalTransports([httpTransport, streamTransport]);

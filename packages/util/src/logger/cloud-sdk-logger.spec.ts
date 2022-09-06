@@ -303,12 +303,6 @@ describe('Cloud SDK Logger', () => {
       );
       mock.restore();
     });
-    it('should accept multiple transports', () => {
-      const httpTransport = new transports.Http();
-      const streamTransport = new transports.Console();
-      setGlobalTransports(httpTransport, streamTransport);
-      expect(logger?.transports).toHaveLength(2);
-    });
     it('should accept an array with multiple transports', () => {
       const httpTransport = new transports.Http();
       const streamTransport = new transports.Console();

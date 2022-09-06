@@ -26,6 +26,7 @@ import {
 } from './destination-selection-strategies';
 import {
   DestinationFetchOptions,
+  DestinationOptions,
   DestinationsByType
 } from './destination-accessor-types';
 import {
@@ -128,9 +129,38 @@ export async function getDestinationFromDestinationService(
 }
 
 /**
+ * Some docs.
+ */
+export type DestinationWithoutToken = Omit<Destination, 'authTokens'>;
+
+/**
+ * Some docs.
+ */
+export type AllDestinationOptions = Omit<DestinationOptions, 'selectionStrategy'|'isolationStrategy'>;
+
+/**
+ * Some docs.
+ * @param options - Are options.
+ */
+export async function getAllDestinationsFromDestinationService(
+  options: AllDestinationOptions
+): Promise<DestinationWithoutToken[] | null> {
+  logger.debug('Attempting to retrieve all destinations from destination service.');
+  return DestinationFromServiceRetriever.getAllDestinationsFromDestinationService(
+    options
+  );
+}
+
+/**
  * @internal
  */
 class DestinationFromServiceRetriever {
+  public static async getAllDestinationsFromDestinationService(
+    options: AllDestinationOptions
+  ): Promise<DestinationWithoutToken[] | null> {
+    return null;
+  }
+
   public static async getDestinationFromDestinationService(
     options: DestinationFetchOptions
   ): Promise<Destination | null> {

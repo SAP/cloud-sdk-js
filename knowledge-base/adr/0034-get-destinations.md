@@ -30,22 +30,25 @@ Currently all functions searching for a destination only work with a single dest
 
 We decided to implement the function which only gets all destinations from the destination service, as it will fulfill most user stories. We can still implement the other functions on-demand.
 
-We omit the `authTokens` because running the authentication flow to receive the token from the destinatioon service for every destination could lead to a heavy burden on the destination service.
+We omit the `authTokens` from the returned destinations, because running the authentication flow to receive the token from the destinatioon service for every destination could lead to a heavy burden on the destination service.
 
 ```ts
-interface DestinationWithoutToken = Omit<Destination, "authTokens">;
+type DestinationWithoutToken = Omit<Destination, "authTokens">;
 ```
 
-If a user desires to receive the `authTokens` for every destination they can still map over the returned array.
+If a user desires to receive the `authTokens` for every destination, they can still map over the returned array.
 
-Additionally, neither the `selectionStrategy` nor the `isolationStrategy` serve a purpose in the `DestinationOptions`,
+Additionally, neither the `selectionStrategy` nor the `isolationStrategy` serve a purpose in the `DestinationOptions` in this scenario.
 
 The `selectionStrategy` would specify which destinations are supposed to be fetched, this will be decided based on the provided JWT.
-The `isolationStrategy` is used to decide how to cache destinations, this becomes redundant as destinations without `authTokens` don't need to be cached.?
+
+The `isolationStrategy` is used to decide how to cache destinations.
+- `TenantUser` doesn't make sense in this context because the destinations aren't depending on a specific user, therefore we will omit it.
+- `Tenant` is the only reasonable strategy, therefore we use the `Tenant` isolation strategy and omit the option.
 
 
 ```ts
-interface AllDestinationOptions = Omit<DestinationOptions, "selectionStrategy"|"isolationStrategy">
+type AllDestinationOptions = Omit<DestinationOptions, "selectionStrategy"|"isolationStrategy">
 ```
 
 ```ts
@@ -97,9 +100,6 @@ export async function getAllDestinationsFromDestinationService(
   options: DestinationOptions
 ): Promise<Destination[] | null>
 ```
-
-const myFilterDestination = await getAllDestinationsFromDestinationService().filter(.)
-getDestination(myFilterDestination);
 
 ### Options 3
 

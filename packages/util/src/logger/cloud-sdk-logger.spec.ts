@@ -252,8 +252,8 @@ describe('Cloud SDK Logger', () => {
 
   describe('set global transport', () => {
     it('should replace all transpots in all active loggers with the global transport', async () => {
-    const customLogger = createLogger(messageContext);
-    const consoleSpy = jest.spyOn(process.stdout, 'write');
+      const customLogger = createLogger(messageContext);
+      const consoleSpy = jest.spyOn(process.stdout, 'write');
       const rootNodeModules = path.resolve(
         __dirname,
         '../../../../node_modules'

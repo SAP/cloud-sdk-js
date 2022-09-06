@@ -1125,19 +1125,19 @@
     voca "^1.4.0"
     winston "^3.3.3"
 
-"@sap/cds-compiler@>=2.13.0":
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-3.0.2.tgz#7419bdd86460fe39376ef0863f5c74ff7795183c"
-  integrity sha512-EI+cTYCNSGNEYJVnvHiQm+5WaxbR98TtQMgiH2q3EEMJG1w0ZHXL7Wgla8STHdlO1fSNETouNmyl9CVLPO1psQ==
-  dependencies:
-    antlr4 "4.9.3"
-
 "@sap/cds-compiler@^2.13.0":
   version "2.13.8"
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.13.8.tgz#b1833a114b5bfa138dbde20e7f6cd4f86d6d8152"
   integrity sha512-sdwPgS718aBEPFsEmE198yUYV35eIxspsahvtAe985+wQl+MimNHCQxItnHklfKnaVMYA5FD2aX9aWg9k+qtgQ==
   dependencies:
     antlr4 "4.8.0"
+
+"@sap/cds-compiler@^3.0.0":
+  version "3.1.2"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-3.1.2.tgz#6024956ba9a26c4be06ea2a804c7c7ceb53ab164"
+  integrity sha512-csH3aEs4aPCzAtc75Jx/Ayym2A06JgAeaDUFLXI867/Vsp2F0g7MJxuCkNhpa+zVZsXcyB0Kxzzv4xU7zuJXsQ==
+  dependencies:
+    antlr4 "4.9.3"
 
 "@sap/cds-dk@6.0.4":
   version "6.0.4"
@@ -1162,17 +1162,6 @@
   optionalDependencies:
     sqlite3 "5.0.8"
 
-"@sap/cds-foss@>=3", "@sap/cds-foss@^4":
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-4.0.0.tgz#f4734af9a4abcf6c6b8e8b0e48352442d7ed6a3f"
-  integrity sha512-66enuhyx+SdcIgdYstLGk31GFWDyK+Ch5+bWFRYJJ8340izZJlgyCYtHjZI1m9j4tNxWg9ZhkbFkXG5d80xWdw==
-  dependencies:
-    big.js "^6.1.1"
-    generic-pool "^3.8.2"
-    uuid "^8.3.2"
-    xmlbuilder "^15.1.1"
-    yaml "^2.1.1"
-
 "@sap/cds-foss@^3":
   version "3.1.1"
   resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-3.1.1.tgz#1263c40b106c5c9b8509e322bd2640f516d70e71"
@@ -1185,6 +1174,17 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
+"@sap/cds-foss@^4":
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-4.0.0.tgz#f4734af9a4abcf6c6b8e8b0e48352442d7ed6a3f"
+  integrity sha512-66enuhyx+SdcIgdYstLGk31GFWDyK+Ch5+bWFRYJJ8340izZJlgyCYtHjZI1m9j4tNxWg9ZhkbFkXG5d80xWdw==
+  dependencies:
+    big.js "^6.1.1"
+    generic-pool "^3.8.2"
+    uuid "^8.3.2"
+    xmlbuilder "^15.1.1"
+    yaml "^2.1.1"
+
 "@sap/cds@^5.6.0":
   version "5.9.8"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.9.8.tgz#4ba06e6441fd4226faf1045d804188e0d36def5b"
@@ -1195,13 +1195,13 @@
     "@sap/cds-compiler" "^2.13.0"
     "@sap/cds-foss" "^3"
 
-"@sap/cds@^6.0.3", "@sap/cds@^6.0.4":
-  version "6.0.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.0.4.tgz#129ed1d67f8877a22b73f545d1472253e5bc8681"
-  integrity sha512-e94V1w2QXPCNxBXK/mMImo5wEx5rCkuUQTN1LFJwlmGO0CCjmsttagaE3Mx2fVm/lyite5a8NTEqYnbJwFLXYg==
+"@sap/cds@^6.0.3", "@sap/cds@^6.1.2":
+  version "6.1.2"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.1.2.tgz#69a9a242cf65386e7bece539fff4a2129bb1d9ce"
+  integrity sha512-xMqZgx/m85BUxlC9U/GW2zVM5+m+jpfehvL2FljIlTT9cs5A8YV7SlNfEhFNxznBPt2xgxmw7hAOv7v9ulmbgQ==
   dependencies:
-    "@sap/cds-compiler" ">=2.13.0"
-    "@sap/cds-foss" ">=3"
+    "@sap/cds-compiler" "^3.0.0"
+    "@sap/cds-foss" "^4"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^2.1.0":
   version "2.1.0"

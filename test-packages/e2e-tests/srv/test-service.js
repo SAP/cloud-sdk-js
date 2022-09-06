@@ -2,6 +2,9 @@
 const cds = require('@sap/cds');
 
 module.exports = async srv => {
+  const csn = await cds.load('*');
+  cds.model = cds.compile.for.nodejs(csn);
+
   const db = await cds.connect.to('db');
   const { TestEntity } = srv.entities;
 

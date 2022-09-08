@@ -13,12 +13,12 @@ jest.mock('../../generator-common/internal', () => {
 const { readFile } = promises;
 
 describe('generator', () => {
-  afterAll(() => {
+  afterEach(() => {
     mock.restore();
   });
 
   describe('get input file paths', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mock({
         root: {
           inputDir: {
@@ -40,11 +40,11 @@ describe('generator', () => {
       });
     });
 
-    const inputDir = 'root/inputDir';
-
-    afterAll(() => {
+    afterEach(() => {
       mock.restore();
     });
+
+    const inputDir = 'root/inputDir';
 
     it('should return an array with one file path for an input file', async () => {
       expect(
@@ -88,7 +88,7 @@ describe('generator', () => {
   });
 
   describe('creation of files', () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
       mock.restore();
       const inputFile = resolve(
         __dirname,
@@ -127,7 +127,7 @@ describe('generator', () => {
     const outputPath = resolve('root', 'outputDir', 'mySpec');
     const inputPath = resolve('root', 'inputDir');
 
-    afterAll(() => {
+    afterEach(() => {
       jest.clearAllMocks();
       mock.restore();
     });
@@ -283,7 +283,7 @@ describe('generator', () => {
   });
 
   describe('overwrite', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mock({
         specs: {
           'spec.json': JSON.stringify({
@@ -302,7 +302,7 @@ describe('generator', () => {
       });
     });
 
-    afterAll(() => {
+    afterEach(() => {
       mock.restore();
     });
 

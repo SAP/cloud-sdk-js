@@ -17,7 +17,7 @@ import {
 
 describe('compiler options', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
-  beforeAll(() => {
+  beforeEach(() => {
     mock({
       [pathRootNodeModules]: mock.load(pathRootNodeModules),
       'config1/tsconfig.json': JSON.stringify({
@@ -42,7 +42,7 @@ describe('compiler options', () => {
     });
   });
 
-  afterAll(() => {
+  afterEach(() => {
     mock.restore();
   });
 
@@ -103,7 +103,7 @@ describe('compiler options', () => {
 });
 
 describe('compilation', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     const rootNodeModules = resolve(__dirname, '../../../node_modules');
     const packageNodeModules = resolve(__dirname, '../node_modules');
     mock({
@@ -130,7 +130,7 @@ describe('compilation', () => {
     };
   }
 
-  afterAll(() => {
+  afterEach(() => {
     mock.restore();
   });
 

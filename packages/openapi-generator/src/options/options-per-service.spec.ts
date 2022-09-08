@@ -27,7 +27,7 @@ describe('getOriginalOptionsPerService', () => {
     }
   };
 
-  beforeAll(() => {
+  beforeEach(() => {
     mock({
       path: {
         'myConfig.json': JSON.stringify(config)
@@ -35,7 +35,7 @@ describe('getOriginalOptionsPerService', () => {
     });
   });
 
-  afterAll(() => {
+  afterEach(() => {
     mock.restore();
   });
 
@@ -91,7 +91,7 @@ describe('getServiceOptions', () => {
 });
 
 describe('getOptionsPerService', () => {
-  afterAll(() => {
+  afterEach(() => {
     mock.restore();
   });
 

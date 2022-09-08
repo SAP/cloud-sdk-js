@@ -1459,10 +1459,10 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-12.20.50.tgz#14ba5198f1754ffd0472a2f84ab433b45ee0b65e"
   integrity sha512-+9axpWx2b2JCVovr7Ilgt96uc6C1zBKOQMpGtRbWT9IoR/8ue32GGMfGA4woP8QyP2gBs6GQWEVM3tCybGCxDA==
 
-"@types/node@^14.14.35", "@types/node@^14.18.27":
-  version "14.18.27"
-  resolved "https://registry.npmjs.org/@types/node/-/node-14.18.27.tgz#940c1d419143fd9fbdc46ae1320b86077aef8155"
-  integrity sha512-DcTUcwT9xEcf4rp2UHyGAcmlqG4Mhe7acozl5vY2xzSrwP1z19ZVyjzQ6DsNUrvIadpiyZoQCTHFt4t2omYIZQ==
+"@types/node@^14.14.35", "@types/node@^14.18.28":
+  version "14.18.28"
+  resolved "https://registry.npmjs.org/@types/node/-/node-14.18.28.tgz#ddb82da2fff476a8e827e8773c84c19d9c235278"
+  integrity sha512-CK2fnrQlIgKlCV3N2kM+Gznb5USlwA1KFX3rJVHmgVk6NJxFPuQ86pAcvKnu37IA4BGlSRz7sEE1lHL1aLZ/eQ==
 
 "@types/nodemailer@^6.4.5":
   version "6.4.5"
@@ -3539,10 +3539,10 @@ eslint-plugin-import@^2.20.2:
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-jest@^27.0.1:
-  version "27.0.1"
-  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-27.0.1.tgz#3e67ee2051411540988c62075e8788702a1064da"
-  integrity sha512-LosUsrkwVSs/8Z/I8Hqn5vWgTEsHrfIquDEKOsV8/cl+gbFR4tiRCE1AimEotsHjSC0Rx1tYm6vPhw8C3ktmmg==
+eslint-plugin-jest@^27.0.2:
+  version "27.0.2"
+  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-27.0.2.tgz#c57e13793fe0e06727a7818ba390844a0abe48c9"
+  integrity sha512-VEZaj19IMxqg/URcHNT4PhfoJJ1EsFurgq0SjMEYprDCq+et9fKkE4jIHnAsFh3mHLPBgAq04YQqkeW3slXs+Q==
   dependencies:
     "@typescript-eslint/utils" "^5.10.0"
 

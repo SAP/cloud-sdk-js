@@ -42,7 +42,7 @@
     "fast-levenshtein": "~3.0.0",
     "fs-extra": "^10.0.0",
     "glob": "^8.0.1",
-    "typescript": "~4.7.4"
+    "typescript": "~4.8.2"
   },
   "devDependencies": {
     "jest-extended": "^3.0.2",

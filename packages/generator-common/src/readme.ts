@@ -16,3 +16,8 @@ export function helpfulLinksSection(): string[] {
     '- [SAP API Business Hub](https://api.sap.com/)'
   ];
 }
+
+/**
+ * @internal
+ */
+ export const usageHeaderText = 'Usage Example';

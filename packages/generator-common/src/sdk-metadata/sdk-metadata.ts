@@ -1,11 +1,8 @@
-import { removeFileExtension } from '@sap-cloud-sdk/util';
 import levenstein from 'fast-levenshtein';
 import { getSdkVersion } from './util';
 import {
   Client,
-  GenerationAndUsage,
-  PregeneratedLibrary,
-  SdkMetadataHeader,
+  MultiLineText,
   ServiceStatus
 } from './sdk-metadata-types';
 
@@ -16,29 +13,12 @@ const distanceThreshold = 5;
  */
 export function getSdkMetadataFileNames(originalFileName: string): {
   clientFileName: string;
-  headerFileName: string;
 } {
   return {
-    clientFileName: `${originalFileName}_CLIENT_JS.json`,
-    headerFileName: `${originalFileName}_HEADER.json`
+    clientFileName: `${originalFileName}_CLIENT_JS.json`
   };
 }
-/**
- * @internal
- */
-export async function sdkMetadataHeader(
-  type: 'odata' | 'rest' | 'soap',
-  originalFileName: string,
-  versionInPackageJson?: string
-): Promise<SdkMetadataHeader> {
-  return {
-    type,
-    // For the file name with use the artifact.name from API which should be the unique identifier
-    name: removeFileExtension(originalFileName),
-    version: await getVersionForClient(versionInPackageJson),
-    introText: sdkMetadataHeaderIntroText
-  };
-}
+
 /**
  * @internal
  */
@@ -50,18 +30,17 @@ export async function getVersionForClient(
 /**
  * @internal
  */
-export function getSdkMetadataClient(
-  generationAndUsage: GenerationAndUsage,
-  pregeneratedLibrary?: PregeneratedLibrary
-): Client {
-  const status = pregeneratedLibrary
-    ? ServiceStatusValues.certified
-    : ServiceStatusValues.verified;
+export async function getSdkMetadataClient(
+  apiSpecificUsage: MultiLineText,
+  apiType: 'OData' | 'OpenAPI'
+): Promise<Client> {
+  const status = ServiceStatusValues.verified.status;
   return {
+    apiType,
     language: 'JavaScript',
     serviceStatus: status,
-    pregeneratedLibrary,
-    generationAndUsage
+    generatorVersion: await getSdkVersion(),
+    apiSpecificUsage
   };
 }
 /**
@@ -99,11 +78,7 @@ function getLevenshteinDistance(stringA: string, stringB: string): number {
 function getSanitizedString(text: string): string {
   return text.replace(/[^A-Za-z]/g, '').toLowerCase();
 }
-/**
- * @internal
- */
-export const sdkMetadataHeaderIntroText =
-  'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build cloud-native applications on the SAP Business Technology Platform. To simplify the consumption of multiple services published on the SAP API Business Hub, the SDK offers code generators for OData and OpenAPI together with pregenerated typed client libraries. These libraries are seamlessly integrated with connectivity, authentication, multi-tenancy, and other abstractions to speed up application development.';
+
 /**
  * @internal
  */

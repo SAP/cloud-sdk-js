@@ -172,14 +172,6 @@ describe('generator', () => {
       expect(existsSync(readme)).toBe(true);
     });
 
-    it('should create metadata header', () => {
-      const metaDataHeader = resolve(
-        inputPath,
-        'sdk-metadata/mySpec_HEADER.json'
-      );
-      expect(existsSync(metaDataHeader)).toBe(true);
-    });
-
     it('should create metadata client', () => {
       const metaDataHeader = resolve(
         inputPath,

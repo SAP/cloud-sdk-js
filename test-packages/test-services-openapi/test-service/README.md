@@ -5,9 +5,9 @@ Test API
 
 ## Usage Example
 ```
-import { TestCaseApi } from 'test-service';
+import { TestCaseApi } from './generated/test-service';
 
-const responseData = await TestCaseApi.duplicateOperationId().execute({ destinationName:'myDestinationName' });
+const responseData = await TestCaseApi.duplicateOperationId().execute({ destinationName: 'myDestinationName' });
 ```
 
 ## Helpful Links

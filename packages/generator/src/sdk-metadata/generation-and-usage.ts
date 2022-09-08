@@ -1,75 +1,25 @@
-import {
-  getSdkVersion,
-  getLinks,
-  getGenerationSteps,
-  Links,
-  InstructionWithTextAndHeader,
-  usageHeaderText,
-  GenerationAndUsage
-} from '@sap-cloud-sdk/generator-common/internal';
+import { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
 import { VdmServiceMetadata } from '../vdm-types';
 import {
   actionImportCodeSample,
   entityCodeSample,
-  functionImportCodeSample,
-  genericEntityCodeSample
+  functionImportCodeSample
 } from './code-samples';
 import { getActionFunctionImport, getODataEntity } from './code-sample-util';
 
 /**
  * @internal
  */
-export async function getGenerationAndUsage(
-  service: VdmServiceMetadata
-): Promise<GenerationAndUsage> {
-  return {
-    ...(await getGenericGenerationAndUsage()),
-    apiSpecificUsage: getApiSpecificUsage(service)
-  };
-}
-/**
- * @internal
- */
-export const linkGenerationDocumentation =
-  'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
-
-// will be used to generate metadata for failed and unknown case.
-/**
- * @internal
- */
-export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage> {
-  return {
-    genericUsage: genericEntityCodeSample(),
-    repository: 'npm',
-    apiSpecificUsage: undefined,
-    links: getODataLinks(),
-    generationSteps: getGenerationSteps(
-      'npm install -g @sap-cloud-sdk/generator',
-      'generate-odata-client --inputDir path/to/specification/ --outputDir path/to/client/',
-      linkGenerationDocumentation,
-      'OData'
-    ),
-    generatorVersion: await getSdkVersion(),
-    generatorRepositoryLink:
-      'https://www.npmjs.com/package/@sap-cloud-sdk/generator'
-  };
-}
-/**
- * @internal
- */
 export function getApiSpecificUsage(
   service: VdmServiceMetadata
-): InstructionWithTextAndHeader {
+): MultiLineText {
   if (service.entities?.length > 0) {
     const entity = getODataEntity(service.originalFileName, service.entities);
-    return {
-      ...entityCodeSample(
-        entity.className,
-        service.className,
-        service.npmPackageName
-      ),
-      header: usageHeaderText
-    };
+    return entityCodeSample(
+      entity.className,
+      service.className,
+      service.directoryName
+    );
   }
   // Return function/action import usage if no entity is found.
   if (service.functionImports?.length > 0) {
@@ -77,40 +27,20 @@ export function getApiSpecificUsage(
       service.originalFileName,
       service.functionImports
     );
-    return {
-      ...functionImportCodeSample(
-        functionImport,
-        `${service.npmPackageName}/function-imports`
-      ),
-      header: usageHeaderText
-    };
+    return functionImportCodeSample(
+      functionImport,
+      `${service.directoryName}/function-imports`
+    );
   }
   if (service.actionImports) {
     const actionImport = getActionFunctionImport(
       service.originalFileName,
       service.actionImports
     );
-    return {
-      ...actionImportCodeSample(
-        actionImport,
-        `${service.npmPackageName}/action-imports`
-      ),
-      header: usageHeaderText
-    };
+    return actionImportCodeSample(
+      actionImport,
+      `${service.directoryName}/action-imports`
+    );
   }
-  return {
-    instructions: '',
-    text: '',
-    header: usageHeaderText
-  };
-}
-/**
- * @internal
- */
-export function getODataLinks(): Links {
-  return getLinks(
-    'https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request',
-    linkGenerationDocumentation,
-    'OData'
-  );
+  return '';
 }

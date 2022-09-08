@@ -206,7 +206,7 @@ export function getGlobalLogLevel(): string | undefined {
 /**
  * Change the global transport of the container which will set default transport for all active loggers.
  * e.g., to set the global transport call `setGlobalTransports(httpTransport)`.
- * @param customTransports - The transport to set the global transport to. Both single transport and an array with multiple transpots are supported.
+ * @param customTransports - The transport to set the global transport to. Both single transport and an array with multiple transports are supported.
  */
 export function setGlobalTransports(
   customTransports: TransportStream | TransportStream[]

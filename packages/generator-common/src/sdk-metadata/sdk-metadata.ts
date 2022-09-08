@@ -28,6 +28,7 @@ export async function getVersionForClient(
  */
 export async function getSdkMetadataClient(
   apiSpecificUsage: MultiLineText,
+  generatorVersion: string,
   apiType: 'OData' | 'OpenAPI'
 ): Promise<Client> {
   const status = ServiceStatusValues.verified.status;
@@ -35,7 +36,7 @@ export async function getSdkMetadataClient(
     apiType,
     language: 'JavaScript',
     serviceStatus: status,
-    generatorVersion: await getSdkVersion(),
+    generatorVersion,
     apiSpecificUsage
   };
 }

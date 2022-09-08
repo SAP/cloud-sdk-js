@@ -6,7 +6,7 @@ export interface Client {
   /**
    * @internal
    */
-   apiType: 'OData' | 'OpenAPI';
+  apiType: 'OData' | 'OpenAPI';
   /**
    * @internal
    */

@@ -1,10 +1,6 @@
 import levenstein from 'fast-levenshtein';
 import { getSdkVersion } from './util';
-import {
-  Client,
-  MultiLineText,
-  ServiceStatus
-} from './sdk-metadata-types';
+import { Client, MultiLineText, ServiceStatus } from './sdk-metadata-types';
 
 const distanceThreshold = 5;
 

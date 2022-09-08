@@ -20,4 +20,4 @@ export function helpfulLinksSection(): string[] {
 /**
  * @internal
  */
- export const usageHeaderText = 'Usage Example';
+export const usageHeaderText = 'Usage Example';

@@ -9,10 +9,6 @@ import { DefaultDeSerializers } from '../de-serializers';
 
 const boundary = 'test-boundary';
 
-jest.mock('uuid', () => ({
-  v4: jest.fn(() => boundary)
-}));
-
 describe('batch request', () => {
   const { batch, testEntityApi, functionImports } = testService();
 
@@ -57,27 +53,9 @@ HTTP/1.1 200 OK
 
   const baseUrl = 'https://some.sdk.test.url.com';
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   it('batch works with function imports', async () => {
-    const body = [
-      `--batch_${boundary}`,
-      'Content-Type: application/http',
-      'Content-Transfer-Encoding: binary',
-      '',
-      'GET /sap/opu/odata/sap/API_TEST_SRV/TestFunctionImportGET HTTP/1.1',
-      'Content-Type: application/json',
-      'Accept: application/json',
-      '',
-      '',
-      `--batch_${boundary}--`,
-      ''
-    ].join('\r\n');
-
     nock(baseUrl)
-      .post('/sap/opu/odata/sap/API_TEST_SRV/$batch', body)
+      .post('/sap/opu/odata/sap/API_TEST_SRV/$batch')
       .reply(202, functionImportResponse, {
         'content-type': `multipart/mixed; boundary=${boundary}`
       });
@@ -95,27 +73,8 @@ HTTP/1.1 200 OK
   });
 
   it('batch works with POST function imports', async () => {
-    const body = [
-      '--batch_test-boundary',
-      'Content-Type: multipart/mixed; boundary=changeset_test-boundary',
-      '',
-      '--changeset_test-boundary',
-      'Content-Type: application/http',
-      'Content-Transfer-Encoding: binary',
-      'Content-Id: test-boundary',
-      '',
-      "POST /sap/opu/odata/sap/API_TEST_SRV/TestFunctionImportPOST?SimpleParam='someValue' HTTP/1.1",
-      'Content-Type: application/json',
-      'Accept: application/json',
-      '',
-      '',
-      '',
-      '--changeset_test-boundary--',
-      '--batch_test-boundary--',
-      ''
-    ].join('\r\n');
     nock(baseUrl)
-      .post('/sap/opu/odata/sap/API_TEST_SRV/$batch', body)
+      .post('/sap/opu/odata/sap/API_TEST_SRV/$batch')
       .reply(202, postResponse, {
         'content-type': `multipart/mixed; boundary=${boundary}`
       });

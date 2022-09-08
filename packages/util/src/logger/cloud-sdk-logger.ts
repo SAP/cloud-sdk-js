@@ -212,17 +212,11 @@ export function setGlobalTransports(
   customTransports: TransportStream | TransportStream[]
 ): void {
   container.options.transports = customTransports;
-  const isArray = (
-    transport: TransportStream | TransportStream[]
-  ): transport is TransportStream[] =>
-    Array.isArray(customTransports as TransportStream[]);
   container.loggers.forEach(logger => {
     logger.clear();
-    if (isArray(customTransports)) {
-      customTransports.forEach(transport => logger.add(transport));
-    } else {
-      logger.add(customTransports);
-    }
+    return Array.isArray(customTransports)
+      ? customTransports.forEach(transport => logger.add(transport))
+      : logger.add(customTransports);
   });
 }
 

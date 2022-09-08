@@ -6,7 +6,9 @@ import {
 import nock from 'nock';
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
 import { DefaultDeSerializers } from '../de-serializers';
+
 const boundary = 'test-boundary';
+
 jest.mock('uuid', () => ({
   v4: jest.fn(() => boundary)
 }));
@@ -59,7 +61,7 @@ HTTP/1.1 200 OK
     jest.restoreAllMocks();
   });
 
-  it('batch works with funciton imports', async () => {
+  it('batch works with function imports', async () => {
     const body = [
       `--batch_${boundary}`,
       'Content-Type: application/http',

@@ -3,6 +3,8 @@ import mock from 'mock-fs';
 import { swaggerPathForEdmx } from './input-path-provider';
 
 describe('swaggerPathForEdmx', () => {
+  afterEach(() => mock.restore());
+
   it('replaces path ending with .json', () => {
     mock({
       '/service-specs': {
@@ -13,7 +15,6 @@ describe('swaggerPathForEdmx', () => {
     expect(swaggerPathForEdmx('/service-specs/service.edmx')).toEqual(
       `${sep}service-specs${sep}service.json`
     );
-    mock.restore();
   });
 
   it('replaces path ending with .JSON', () => {
@@ -26,7 +27,6 @@ describe('swaggerPathForEdmx', () => {
     expect(swaggerPathForEdmx('/service-specs/service.edmx')).toEqual(
       `${sep}service-specs${sep}service.JSON`
     );
-    mock.restore();
   });
 
   it('returns undefined if there is no equally named json file', () => {
@@ -38,6 +38,5 @@ describe('swaggerPathForEdmx', () => {
       }
     });
     expect(swaggerPathForEdmx('/service-specs/service.edmx')).toBeUndefined();
-    mock.restore();
   });
 });

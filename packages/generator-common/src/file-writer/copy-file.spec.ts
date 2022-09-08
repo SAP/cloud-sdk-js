@@ -3,6 +3,8 @@ import mock from 'mock-fs';
 import { copyFile } from './copy-file';
 
 describe('copyFile', () => {
+  afterEach(() => mock.restore());
+
   it('should copy file', async () => {
     const newContent = 'new';
     mock({
@@ -18,7 +20,6 @@ describe('copyFile', () => {
       encoding: 'utf-8'
     });
     expect(actual).toBe(newContent);
-    mock.restore();
   });
 
   it('should overwrite when overwrite is set', async () => {
@@ -37,7 +38,6 @@ describe('copyFile', () => {
       encoding: 'utf-8'
     });
     expect(actual).toBe(newContent);
-    mock.restore();
   });
 
   it('should not overwrite when overwrite is not set', async () => {
@@ -56,6 +56,5 @@ describe('copyFile', () => {
       encoding: 'utf-8'
     });
     expect(actual).toBe(oldContent);
-    mock.restore();
   });
 });

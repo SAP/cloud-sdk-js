@@ -11,6 +11,11 @@ sendMail({ destinationName: 'dest' }, [mailConfig, mailConfig], {
   }
 });
 // $ExpectType Promise<MailResponse[]>
-sendMail({ destinationName: 'dest' }, [mailConfig, mailConfig], {}, {
-  parallel: false
-});
+sendMail(
+  { destinationName: 'dest' },
+  [mailConfig, mailConfig],
+  {},
+  {
+    parallel: false
+  }
+);

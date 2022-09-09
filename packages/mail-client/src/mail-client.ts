@@ -14,8 +14,9 @@ import {
   MailClientOptions,
   MailConfig,
   MailDestination,
-  MailResponse, SmtpTransportOptions
-} from "./mail-client-types";
+  MailResponse,
+  SmtpTransportOptions
+} from './mail-client-types';
 import {
   customAuthRequestHandler,
   customAuthResponseHandler
@@ -227,7 +228,11 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
   }
-  const transport = await createTransport(mailDestination, smtpTransportOptions, socket);
+  const transport = await createTransport(
+    mailDestination,
+    smtpTransportOptions,
+    socket
+  );
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 

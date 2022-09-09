@@ -310,7 +310,9 @@ export interface SmtpTransportOptions {
    */
   debug?: boolean | undefined;
   /**
-   * Defines additional options to be passed to the socket constructor, e.g. { rejectUnauthorized: true }.
+   * Defines additional options to be passed to the socket constructor.
+   * @example
+   * { rejectUnauthorized: true }
    */
   tls?: ConnectionOptions | undefined;
   /**

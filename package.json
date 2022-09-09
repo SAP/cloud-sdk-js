@@ -114,6 +114,7 @@
     "typescript": "~4.7.4"
   },
   "resolutions": {
+    "@sap/cds": "^6.1.1",
     "agent-base": ">=6.0.2",
     "color-string": ">=1.5.5",
     "dot-prop": "^6.0.1",

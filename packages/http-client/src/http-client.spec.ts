@@ -220,28 +220,27 @@ describe('generic http client', () => {
     });
 
     it('takes a generic HTTP request and executes it', async () => {
-      // nock('https://example.com', {
-      //   reqheaders: {
-      //     authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
-      //     'sap-client': '001'
-      //   }
-      // })
-      //   .get('/api/entity')
-      //   .query({
-      //     $a: 'a',
-      //     b: 'b'
-      //   })
-      //   .reply(200, { res: 'ult' }, { sharp: 'header' });
+      nock('https://example.com', {
+        reqheaders: {
+          authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
+          'sap-client': '001'
+        }
+      })
+        .get('/api/entity')
+        .query({
+          $a: 'a',
+          b: 'b'
+        })
+        .reply(200, { res: 'ult' }, { sharp: 'header' });
 
-      // jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
+      jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
       const config: HttpRequestConfig = {
         method: 'GET',
         url: '/api/entity',
         params: {
           $a: 'a',
           b: 'b'
-        },
-        maxContentLength: Infinity
+        }
       };
 
       const response = await executeHttpRequest(httpsDestination, config);

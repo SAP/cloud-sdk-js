@@ -42,7 +42,7 @@
     "@sap-cloud-sdk/util": "^2.8.0",
     "bignumber.js": "^9.1.0",
     "moment": "^2.29.4",
-    "uuid": "^8.2.0",
+    "uuid": "^9.0.0",
     "voca": "^1.4.0"
   },
   "devDependencies": {

@@ -6,7 +6,7 @@ import {
 import nock from 'nock';
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
 import { DefaultDeSerializers } from '../de-serializers';
-const regexUuid = '\\w{8,8}-\\w{4,4}-\\w{4,4}-\\w{4,4}-\\w{12,12}';
+const regexUuid = '\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}';
 const responseBoudary = 'responseBoundary';
 
 describe('batch request', () => {

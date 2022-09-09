@@ -14,7 +14,7 @@ import {
   MailClientOptions,
   MailConfig,
   MailDestination,
-  MailResponse, SmtpConnectionOptions
+  MailResponse, SmtpTransportOptions
 } from "./mail-client-types";
 import {
   customAuthRequestHandler,
@@ -133,31 +133,28 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
 
 async function createTransport(
   mailDestination: MailDestination,
-  connectionOptions?: SmtpConnectionOptions,
+  transportOptions?: SmtpTransportOptions,
   socket?: Socket
 ): Promise<Transporter<SentMessageInfo>> {
   const baseOptions: Options = {
     pool: true,
-    // TODO: expose an option, so the user can decide
-    // Defines if the connection should use SSL (if true) or not (if false). See: https://nodemailer.com/smtp/
-    // true for 465, false for other ports
-    // secure: false,
     auth: {
       user: mailDestination.username,
       pass: mailDestination.password
-    },
-    ...connectionOptions
+    }
   };
   if (socket) {
     return nodemailer.createTransport({
       ...baseOptions,
-      connection: socket
+      connection: socket,
+      ...transportOptions
     });
   }
   return nodemailer.createTransport({
     ...baseOptions,
     host: mailDestination.host,
-    port: mailDestination.port
+    port: mailDestination.port,
+    ...transportOptions
   });
 }
 
@@ -223,14 +220,14 @@ async function sendMailInParallel<T extends MailConfig>(
 async function sendMailWithNodemailer<T extends MailConfig>(
   mailDestination: MailDestination,
   mailConfigs: T[],
-  connectionOptions?: SmtpConnectionOptions,
+  smtpTransportOptions?: SmtpTransportOptions,
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
   let socket: Socket | undefined;
   if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
   }
-  const transport = await createTransport(mailDestination, connectionOptions, socket);
+  const transport = await createTransport(mailDestination, smtpTransportOptions, socket);
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 
@@ -269,6 +266,7 @@ function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
  * This function also does the destination look up, when passing `DestinationOrFetchOptions`.
  * @param destination - A destination or a destination name and a JWT.
  * @param mailConfigs - A single object or an array of {@link MailConfig}.
+ * @param smtpTransportOptions - A {@link SmtpTransportOptions} that defines how to set up an SMTP transport, including SSL and tls configurations.
  * @param mailClientOptions - A {@link MailClientOptions} that defines the configurations of the mail client, e.g., whether the mails are sent in parallel.
  * @returns A promise resolving to an array of {@link MailResponse}.
  * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination#referencing-destinations-by-name
@@ -276,6 +274,7 @@ function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
 export async function sendMail<T extends MailConfig>(
   destination: DestinationOrFetchOptions,
   mailConfigs: T | T[],
+  smtpTransportOptions?: SmtpTransportOptions,
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
   const resolvedDestination = await resolveDestination(destination);
@@ -292,6 +291,7 @@ export async function sendMail<T extends MailConfig>(
   return sendMailWithNodemailer(
     mailDestination,
     transformToArray(mailConfigs),
+    smtpTransportOptions,
     mailClientOptions
   );
 }

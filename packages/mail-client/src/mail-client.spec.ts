@@ -94,7 +94,7 @@ describe('mail client', () => {
       to: 'to1@example.com'
     };
     await expect(
-      sendMail(destination, mailOptions, { parallel: false })
+      sendMail(destination, mailOptions, {}, { parallel: false })
     ).resolves.not.toThrow();
     expect(spyCreateSocket).toBeCalledTimes(1);
     expect(spyCreateTransport).toBeCalledTimes(1);

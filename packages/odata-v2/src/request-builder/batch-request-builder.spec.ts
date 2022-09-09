@@ -53,10 +53,6 @@ HTTP/1.1 200 OK
 
   const baseUrl = 'https://some.sdk.test.url.com';
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   it('batch works with funciton imports', async () => {
     const body = [
       `--batch_${regexUuid}`,

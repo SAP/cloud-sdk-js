@@ -69,7 +69,7 @@ interface DestinationSearchResult {
  * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the"provider account", where the application is running.
  * The tenant defined in the subscriber token is the provider tenant for single tenant applications.
  */
-type SubscriberToken = IssToken | XsuaaToken | CustomToken;
+export type SubscriberToken = IssToken | XsuaaToken | CustomToken;
 
 /**
  * User provided a dummy token with the `iss` property.
@@ -129,38 +129,9 @@ export async function getDestinationFromDestinationService(
 }
 
 /**
- * Some docs.
- */
-export type DestinationWithoutToken = Omit<Destination, 'authTokens'>;
-
-/**
- * Some docs.
- */
-export type AllDestinationOptions = Omit<DestinationOptions, 'selectionStrategy'|'isolationStrategy'>;
-
-/**
- * Some docs.
- * @param options - Are options.
- */
-export async function getAllDestinationsFromDestinationService(
-  options: AllDestinationOptions
-): Promise<DestinationWithoutToken[] | null> {
-  logger.debug('Attempting to retrieve all destinations from destination service.');
-  return DestinationFromServiceRetriever.getAllDestinationsFromDestinationService(
-    options
-  );
-}
-
-/**
  * @internal
  */
-class DestinationFromServiceRetriever {
-  public static async getAllDestinationsFromDestinationService(
-    options: AllDestinationOptions
-  ): Promise<DestinationWithoutToken[] | null> {
-    return null;
-  }
-
+export class DestinationFromServiceRetriever {
   public static async getDestinationFromDestinationService(
     options: DestinationFetchOptions
   ): Promise<Destination | null> {
@@ -224,22 +195,8 @@ class DestinationFromServiceRetriever {
     return withTrustStore;
   }
 
-  private static checkDestinationForCustomJwt(destination: Destination): void {
-    if (!destination.jwks && !destination.jwksUri) {
-      throw new Error(
-        'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
-      );
-    }
-  }
-
-  private static isUserJwt(
-    token: SubscriberToken | undefined
-  ): token is CustomToken | XsuaaToken {
-    return !!token && token.type !== 'iss';
-  }
-
-  private static async getSubscriberToken(
-    options: DestinationFetchOptions
+  public static async getSubscriberToken(
+    options: DestinationOptions
   ): Promise<SubscriberToken | undefined> {
     if (options.jwt) {
       if (options.iss) {
@@ -283,8 +240,8 @@ class DestinationFromServiceRetriever {
     }
   }
 
-  private static async getProviderServiceToken(
-    options: DestinationFetchOptions
+  public static async getProviderServiceToken(
+    options: DestinationOptions
   ): Promise<JwtPair> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { jwt, ...optionsWithoutJwt } = options;
@@ -292,6 +249,20 @@ class DestinationFromServiceRetriever {
       ...optionsWithoutJwt
     });
     return { encoded, decoded: decodeJwt(encoded) };
+  }
+
+  private static checkDestinationForCustomJwt(destination: Destination): void {
+    if (!destination.jwks && !destination.jwksUri) {
+      throw new Error(
+        'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
+      );
+    }
+  }
+
+  private static isUserJwt(
+    token: SubscriberToken | undefined
+  ): token is CustomToken | XsuaaToken {
+    return !!token && token.type !== 'iss';
   }
 
   private options: RequiredProperties<

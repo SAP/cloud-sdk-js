@@ -5,8 +5,8 @@ import {
   LoggerOptions as WinstonLoggerOptions,
   transports
 } from 'winston';
+import TransportStream from 'winston-transport';
 import { kibana, local } from './format';
-
 const loggerReference = 'sap-cloud-sdk-logger';
 const exceptionLoggerId = 'sap-cloud-sdk-exception-logger';
 
@@ -201,6 +201,23 @@ export function setGlobalLogLevel(level: LogLevel): void {
  */
 export function getGlobalLogLevel(): string | undefined {
   return container.options.level;
+}
+
+/**
+ * Change the global transport of the container which will set default transport for all active loggers.
+ * e.g., to set the global transport call `setGlobalTransports(httpTransport)`.
+ * @param customTransports - The transport to set the global transport to. Both single transport and an array with multiple transports are supported.
+ */
+export function setGlobalTransports(
+  customTransports: TransportStream | TransportStream[]
+): void {
+  container.options.transports = customTransports;
+  container.loggers.forEach(logger => {
+    logger.clear();
+    return Array.isArray(customTransports)
+      ? customTransports.forEach(transport => logger.add(transport))
+      : logger.add(customTransports);
+  });
 }
 
 /**

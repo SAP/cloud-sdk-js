@@ -52,7 +52,7 @@ xdescribe('Request builder', () => {
     );
   });
 
-  it('funciton imports with batch', async () => {
+  it('function imports with batch', async () => {
     const result = await batch(getNearestAirport({ lat: 0, lon: 0 }))
       .withSubRequestPathType('absolute')
       .execute(destination);

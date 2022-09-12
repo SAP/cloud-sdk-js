@@ -142,7 +142,7 @@ describe('generator', () => {
         )
       );
 
-      expect(files).toIncludeAllMembers(expectedFiles);
+      expect(files).toEqual(expectedFiles);
     });
 
     it('should create a package.json', () => {

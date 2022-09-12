@@ -41,9 +41,9 @@ describe('file', () => {
       element => element.kind === StructureKind.ImportDeclaration
     );
 
-    expect(imports.map(i => i.moduleSpecifier)).toIncludeSameMembers([
-      '@sap-cloud-sdk/odata-v2',
-      './ComplexDesert'
+    expect(imports.map(i => i.moduleSpecifier)).toEqual([
+      './ComplexDesert',
+      '@sap-cloud-sdk/odata-v2'
     ]);
 
     const entities = (actual.statements as any[]).filter(

@@ -3,6 +3,10 @@ import { ParsedGeneratorOptions } from './generator-options';
 import { defaultTsConfig, tsconfigJson } from './tsconfig-json';
 
 describe('tsconfigJson', () => {
+  afterEach(() => {
+    mock.restore();
+  });
+
   it('returns the default tsconfig if transpilation is enabled', async () => {
     const tsConfig = await tsconfigJson({
       transpile: true
@@ -28,7 +32,6 @@ describe('tsconfigJson', () => {
       tsConfig: './path/customConfig.json'
     } as ParsedGeneratorOptions);
     expect(JSON.parse(tsConfig!)).toEqual(customConfig);
-    mock.restore();
   });
 
   it('returns custom config content if custom directory path is defined', async () => {
@@ -42,7 +45,6 @@ describe('tsconfigJson', () => {
       tsConfig: './path'
     } as ParsedGeneratorOptions);
     expect(JSON.parse(tsConfig!)).toEqual(customConfig);
-    mock.restore();
   });
 
   it('returns custom config content if custom file or directory does not exist', async () => {
@@ -54,6 +56,5 @@ describe('tsconfigJson', () => {
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Could not read tsconfig.json at ./path."'
     );
-    mock.restore();
   });
 });

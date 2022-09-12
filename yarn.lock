@@ -1113,10 +1113,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.1.2":
-  version "6.1.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.1.2.tgz#a0e04eab7119d98f5853b2471b9cfd25915ae215"
-  integrity sha512-uFEFb0e0yS32TDWlSh1eRN3Iv30gr/S1kMm2eCjDtb1nz4Xe5RUhPaIPBZETU7wMeNo66TsGWB57ZGKMETCyaQ==
+"@sap/cds-dk@6.1.4":
+  version "6.1.4"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.1.4.tgz#36e7d40f0d023d40eddfad7661306d879c4b6698"
+  integrity sha512-lhsZOyAJrTKTt92TGmRw3YW8W4EamVAvVj3FlJf453QBNxOwX9VYPdp7PIWYwHdKvFrf7kkx8o0Hcj+yGN/aaQ==
   dependencies:
     "@sap/cds" "^6.1.0"
     "@sap/cds-foss" "^4"
@@ -3483,10 +3483,10 @@ eslint-plugin-import@^2.20.2:
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-jest@^27.0.2:
-  version "27.0.2"
-  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-27.0.2.tgz#c57e13793fe0e06727a7818ba390844a0abe48c9"
-  integrity sha512-VEZaj19IMxqg/URcHNT4PhfoJJ1EsFurgq0SjMEYprDCq+et9fKkE4jIHnAsFh3mHLPBgAq04YQqkeW3slXs+Q==
+eslint-plugin-jest@^27.0.4:
+  version "27.0.4"
+  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-27.0.4.tgz#ab9c7b3f48bfade4762c24c415a5d9bbc0174a61"
+  integrity sha512-BuvY78pHMpMJ6Cio7sKg6jrqEcnRYPUc4Nlihku4vKx3FjlmMINSX4vcYokZIe+8TKcyr1aI5Kq7vYwgJNdQSA==
   dependencies:
     "@typescript-eslint/utils" "^5.10.0"
 
@@ -8843,10 +8843,15 @@ uuid@^3.2.1, uuid@^3.3.2:
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^8.2.0, uuid@^8.3.2:
+uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 v8-compile-cache-lib@^3.0.1:
   version "3.0.1"

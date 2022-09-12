@@ -55,7 +55,7 @@ export async function getAllDestinationsFromDestinationService(
       await DestinationFromServiceRetriever.getProviderServiceToken(options);
   }
 
-  const destinationSearchResult = await searchDestination(
+  const destinationSearchResult = await searchForAllDestinationFromDestinationService(
     options,
     subscriberToken,
     providerToken
@@ -68,7 +68,7 @@ export async function getAllDestinationsFromDestinationService(
   return destinationSearchResult;
 }
 
-async function searchDestination(
+async function searchForAllDestinationFromDestinationService(
   options: AllDestinationOptions,
   subscriberToken?: SubscriberToken,
   providerToken?: JwtPair

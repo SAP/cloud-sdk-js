@@ -1,8 +1,6 @@
 import * as xssec from '@sap/xssec';
 import { first } from '@sap-cloud-sdk/util';
-import {
-  DestinationOptions
-} from './destination/destination-accessor-types';
+import { DestinationOptions } from './destination/destination-accessor-types';
 import { getServiceCredentialsList } from './environment-accessor';
 
 /**

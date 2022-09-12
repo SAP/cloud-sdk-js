@@ -2,6 +2,5 @@
 const commonConfig = require('../../test-resources/jest.common.config');
 module.exports = {
   ...commonConfig,
-  displayName: 'generator',
-  setupFilesAfterEnv: ['jest-extended/all']
+  displayName: 'generator'
 };

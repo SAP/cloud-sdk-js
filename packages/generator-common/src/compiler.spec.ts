@@ -138,12 +138,27 @@ describe('compilation', () => {
     await transpileDirectory('test-src', compilerConfig('test-dist'));
     const files = await promises.readdir('test-dist');
     expect(files.includes('test-file.spec.js')).toBe(false);
-    expect(files).toEqual(['file-1.js', 'file-1.d.ts', 'file-1.d.ts.map']);
+    expect(files).toEqual([
+      'file-1.d.ts',
+      'file-1.d.ts.map',
+      'file-1.js',
+      'file-1.js.map',
+      'index.d.ts',
+      'index.d.ts.map',
+      'index.js',
+      'index.js.map',
+      'sub-folder'
+    ]);
     const filesSubfolder = await promises.readdir('test-dist/sub-folder');
     expect(filesSubfolder).toEqual([
-      'file-2.js',
       'file-2.d.ts',
-      'file-2.d.ts.map'
+      'file-2.d.ts.map',
+      'file-2.js',
+      'file-2.js.map',
+      'index.d.ts',
+      'index.d.ts.map',
+      'index.js',
+      'index.js.map'
     ]);
   });
 

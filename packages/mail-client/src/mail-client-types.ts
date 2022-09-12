@@ -93,11 +93,11 @@ export interface Attachment extends AttachmentLike {
 }
 
 /**
- * Represents options for sending an e-mail.
+ * Represents configurations for sending an e-mail.
  * This interface is compatible with `Mail.Options` of `nodemailer`.
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
-export interface MailOptions {
+export interface MailConfig {
   /**
    * The e-mail address of the sender. E-mail addresses can be plain 'sender@server.com' or formatted 'Sender Name <sender@server.com>'.
    */
@@ -256,4 +256,14 @@ export interface MailDestination {
    * Based on the additional destination property 'mail.password'.
    */
   password?: string;
+}
+
+/**
+ * Represents options of the mail client.
+ */
+export interface MailClientOptions {
+  /**
+   * Option to define the strategy of sending emails. The emails will be sent in parallel when setting to true, otherwise in sequential. The default value is true.
+   */
+  parallel?: boolean;
 }

@@ -13,6 +13,12 @@ export type BatchSubRequestPathType =
  * @internal
  */
 export interface BatchRequestSerializationOptions {
+  /**
+   * @internal
+   */
   subRequestPathType?: BatchSubRequestPathType;
+  /**
+   * @internal
+   */
   destination?: Destination;
 }

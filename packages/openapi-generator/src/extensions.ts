@@ -19,6 +19,9 @@ export const operationNameExtension = 'x-sap-cloud-sdk-operation-name';
  * @internal
  */
 export interface ApiNameExtended {
+  /**
+   * @internal
+   */
   [apiNameExtension]?: string;
 }
 
@@ -27,5 +30,8 @@ export interface ApiNameExtended {
  * @internal
  */
 export interface OperationNameExtended {
+  /**
+   * @internal
+   */
   [operationNameExtension]?: string;
 }

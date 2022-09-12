@@ -52,6 +52,12 @@ function hasEdmxFileExtension(fileName: string): boolean {
  * @internal
  */
 export interface ServiceDefinitionPaths {
+  /**
+   * @internal
+   */
   edmxPath: PathLike;
+  /**
+   * @internal
+   */
   swaggerPath?: PathLike;
 }

@@ -5,8 +5,8 @@ import {
   LoggerOptions as WinstonLoggerOptions,
   transports
 } from 'winston';
+import TransportStream from 'winston-transport';
 import { kibana, local } from './format';
-
 const loggerReference = 'sap-cloud-sdk-logger';
 const exceptionLoggerId = 'sap-cloud-sdk-exception-logger';
 
@@ -204,6 +204,23 @@ export function getGlobalLogLevel(): string | undefined {
 }
 
 /**
+ * Change the global transport of the container which will set default transport for all active loggers.
+ * e.g., to set the global transport call `setGlobalTransports(httpTransport)`.
+ * @param customTransports - The transport to set the global transport to. Both single transport and an array with multiple transports are supported.
+ */
+export function setGlobalTransports(
+  customTransports: TransportStream | TransportStream[]
+): void {
+  container.options.transports = customTransports;
+  container.loggers.forEach(logger => {
+    logger.clear();
+    return Array.isArray(customTransports)
+      ? customTransports.forEach(transport => logger.add(transport))
+      : logger.add(customTransports);
+  });
+}
+
+/**
  * Change the log format of a logger based on its message context.
  * e.g., to set the log format for the destination accessor module of the SDK to `local`, simply call `setLogFormat(logFormat.local, 'destination-accessor')`.
  * @param format - Format to set the logger to. Use `logFormat` to get the pre-defined log formats or use a custom log format.
@@ -355,7 +372,14 @@ export type LogLevel =
  * Configurable logger options.
  */
 export interface LoggerOptions {
+  /**
+   * The log level of the logger.
+   */
   level?: LogLevel;
+  /**
+   * Unused option passed to the winston logger options.
+   * @deprecated
+   */
   logger?: string;
 }
 
@@ -363,6 +387,9 @@ export interface LoggerOptions {
  * Log message context for a logger with additional custom data.
  */
 export interface MessageContextObj {
+  /**
+   * Name of the message context.
+   */
   messageContext?: string;
   [key: string]: any;
 }

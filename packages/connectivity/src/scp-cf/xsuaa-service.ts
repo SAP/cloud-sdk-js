@@ -115,8 +115,25 @@ export async function getClientCredentialsToken(
         serviceCredentials,
         null,
         subdomainAndZoneId.zoneId,
-        (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
-          err ? reject(err) : resolve(tokenResponse)
+        (
+          err: Error,
+          token: string,
+          tokenResponse: ClientCredentialsResponse
+        ) => {
+          const isServiceInterface = (
+            serviceInterface: Service | string
+          ): serviceInterface is Service =>
+            !!(serviceInterface as Service).name;
+          const serviceName = isServiceInterface(service)
+            ? service.name
+            : service;
+
+          return err
+            ? reject(
+                `Error in fetching the token for service ${serviceName}: ${err.message}`
+              )
+            : resolve(tokenResponse);
+        }
       );
     }
   );

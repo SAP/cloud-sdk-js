@@ -24,6 +24,7 @@ import {
   TestEntityEndsWithSomethingElse,
   CaseTest,
   Casetest_1,
+  TestFunctionImportNoReturnTypeParameters,
   TestFunctionImportEdmReturnTypeParameters,
   TestFunctionImportEdmReturnTypeCollectionParameters,
   TestFunctionImportEntityReturnTypeParameters,
@@ -34,6 +35,7 @@ import {
   TestFunctionImportUnsupportedEdmTypesParameters,
   TestFunctionImportComplexReturnTypeCollectionParameters,
   TestFunctionImportGetParameters,
+  TestFunctionImportPostParameters,
   TestFunctionImportMultipleParamsParameters,
   CreateTestComplexTypeParameters,
   FContinueParameters,
@@ -334,5 +336,15 @@ export declare type WriteTestServiceRequestBuilder<
   | DeleteRequestBuilder<CaseTest<DeSerializersT>, DeSerializersT>
   | CreateRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
-  | DeleteRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>;
+  | DeleteRequestBuilder<Casetest_1<DeSerializersT>, DeSerializersT>
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      TestFunctionImportNoReturnTypeParameters<DeSerializersT>,
+      undefined
+    >
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      TestFunctionImportPostParameters<DeSerializersT>,
+      boolean
+    >;
 //# sourceMappingURL=BatchRequest.d.ts.map

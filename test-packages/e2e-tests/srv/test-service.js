@@ -2,8 +2,12 @@
 const cds = require('@sap/cds');
 
 module.exports = async srv => {
+  const csn = await cds.load('*');
+  cds.model = cds.compile.for.nodejs(csn);
+
   const db = await cds.connect.to('db');
   const { TestEntity } = srv.entities;
+
   // bound function
   srv.on('getStringProperty', 'TestEntity', async oRequest => {
     const entity = await cds
@@ -11,6 +15,7 @@ module.exports = async srv => {
       .run(SELECT.one.from(oRequest.query.SELECT.from));
     oRequest.reply(entity.StringProperty);
   });
+
   // bound action
   srv.on('deleteEntity', 'TestEntity', async oRequest => {
     const entity = await cds
@@ -21,6 +26,7 @@ module.exports = async srv => {
       .run(DELETE.from(TestEntity).byKey(entity.KeyTestEntity));
     oRequest.reply(entity.KeyTestEntity);
   });
+
   // unbound function
   srv.on('returnSapCloudSdk', async oRequest => {
     oRequest.reply('SapCloudSdk');
@@ -59,6 +65,7 @@ module.exports = async srv => {
     const key = p.KeyTestEntity;
     oRequest.reply(key);
   });
+
   // unbound action
   srv.on('createTestEntityById', async oRequest => {
     const id = oRequest.data.id;

@@ -3,7 +3,8 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import getReleasePlan from '@changesets/get-release-plan';
-import { currentSdkVersion } from './current-sdk-version';
+import { getPackageVersion } from "./get-package-version";
+import { inc, ReleaseType } from "semver";
 
 export const apiDocsDir = resolve('docs', 'api');
 
@@ -19,13 +20,20 @@ export function transformFile(
 const versionOrder = ['major', 'minor', 'patch'];
 
 export async function nextSdkVersion(): Promise<string> {
-  const currentVersion = currentSdkVersion
-    .split('.')
-    .map(num => parseInt(num, 10));
+  const currentVersion = getPackageVersion();
   const releasePlan = await getReleasePlan(process.cwd());
-  const versionIncrease = releasePlan.releases
+
+  const versionIncreases = releasePlan.releases
     .map(({ type }) => versionOrder.indexOf(type))
     .sort((a, b) => b - a);
-  currentVersion[Math.min(...versionIncrease)] += 1;
-  return currentVersion.join('.');
+  const release = versionOrder[Math.min(...versionIncreases)];
+  if(release === 'major'){
+    throw new Error(`The turbo repo/changeset release processes are not planned to be applied to the major version release.`);
+  }
+
+  const newVersion = inc(currentVersion, release as ReleaseType);
+  if(!newVersion){
+    throw new Error(`Invalid new version -- the current version: ${currentVersion} and the release type: ${release}.`);
+  }
+  return newVersion;
 }

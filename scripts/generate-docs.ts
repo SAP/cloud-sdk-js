@@ -9,7 +9,7 @@ import {
 import { resolve, basename, extname } from 'path';
 import execa from 'execa';
 import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
-import compareVersions from 'compare-versions';
+import { compareVersions } from 'compare-versions';
 import { transformFile } from './util';
 const apiDocPath = resolve('docs', 'api');
 

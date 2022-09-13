@@ -127,10 +127,10 @@ export function getDestinationServiceCredentials(): DestinationServiceCredential
  * Fetches all destinations from the destination service which match the token.
  * With a subscriber token it fetches all subscriber destinations, otherwise all provider destinations.
  * @param options - The {@link AllDestinationOptions | options} to fetch all destinations.
- * @returns A promise of an array of all destinations without authTokens from the destination service on success.
+ * @returns A promise of an array of all destinations without authTokens from the destination service, on success.
  */
 export async function getAllDestinationsFromDestinationService(
-  options: AllDestinationOptions
+  options: AllDestinationOptions = {}
 ): Promise<DestinationWithoutToken[] | null> {
   logger.debug(
     'Attempting to retrieve all destinations from destination service.'
@@ -177,7 +177,7 @@ export async function getAllDestinationsFromDestinationService(
     );
   }
   if (!allDestinations) {
-    logger.debug('Could not retrieve destinations from destination service.');
+    logger.warn('Could not retrieve destinations from destination service.');
   }
 
   if (!allDestinations) {

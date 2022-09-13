@@ -33,7 +33,7 @@ import {
   subscriberFirst
 } from './destination-selection-strategies';
 import { Destination } from './destination-service-types';
-import { getDestination } from './destination-accessor';
+import { getAllDestinationsFromDestinationService, getDestination } from './destination-accessor';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { DestinationFetchOptions } from './destination-accessor-types';
 
@@ -293,6 +293,51 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
       const actual = await fetchDestination(undefined, subscriberFirst);
       assertSubscriberNotCalledAndProviderFound(mocks, actual!);
+    });
+  });
+
+  describe('call getAllDestinations with and without subscriber token', () => {
+    beforeEach(() => {
+      mockThingsForCombinations();
+    });
+
+    afterEach(() => {
+      nock.cleanAll();
+      jest.clearAllMocks();
+    });
+    it('should fetch all subscriber destinations', async () => {
+      const logger = createLogger({
+        package: 'connectivity',
+        messageContext: 'destination-accessor'
+      });
+      const debugSpy = jest.spyOn(logger, 'debug');
+
+      const allDestinations = await getAllDestinationsFromDestinationService({ jwt: subscriberUserJwt });
+
+      expect(allDestinations).toBe([subscriberDestination]);
+      expect(debugSpy).toHaveBeenCalledWith('Retrieving subaccount destination: DESTINATION.\n');
+    });
+
+    it('should fetch all provider destinations, because custom jwt was provided', async () => {
+      const allDestinations = await getAllDestinationsFromDestinationService({ jwt: 'custom' });
+      expect(allDestinations).toBe([providerDestination]);
+    });
+
+    it('should fetch all provider destinations when called without anything', async () => {
+      const allDestinations = await getAllDestinationsFromDestinationService();
+      expect(allDestinations).toBe([providerDestination]);
+    });
+
+    it('should not fetch anything', async () => {
+      const logger = createLogger({
+        package: 'connectivity',
+        messageContext: 'destination-accessor'
+      });
+      const warnSpy = jest.spyOn(logger, 'warn');
+
+      const allDestinations = await getAllDestinationsFromDestinationService();
+      expect(allDestinations).toBeNull();
+      expect(warnSpy).toHaveBeenCalledWith('Could not retrieve destinations from destination service.');
     });
   });
 });

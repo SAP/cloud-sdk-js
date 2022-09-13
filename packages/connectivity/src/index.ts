@@ -49,7 +49,8 @@ export {
   DestinationsByType,
   DestinationForServiceBindingOptions,
   destinationForServiceBinding,
-  PartialDestinationFetchOptions
+  PartialDestinationFetchOptions,
+  getAllDestinationsFromDestinationService
 } from './scp-cf';
 
 export type {
@@ -62,7 +63,9 @@ export type {
   DestinationProxyType,
   AuthenticationType,
   DestinationWithName,
-  RegisterDestinationOptions
+  RegisterDestinationOptions,
+  DestinationWithoutToken,
+  AllDestinationOptions
 } from './scp-cf';
 
 export {

@@ -5,13 +5,18 @@
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "private": true,
-  "types": "test",
+  "types": "test-new",
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "test": "dtslint --expectOnly --localTs ../../node_modules/typescript/lib test",
+    "test-new": "yarn tsd",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
   },
+  "tsd": {
+    "directory": "test-new"
+  },
   "devDependencies": {
+    "tsd": "^0.23.0",
     "@definitelytyped/dtslint": "^0.0.127",
     "@sap-cloud-sdk/connectivity": "^2.8.0",
     "@sap-cloud-sdk/generator": "^2.8.0",

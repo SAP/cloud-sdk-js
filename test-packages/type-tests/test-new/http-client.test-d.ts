@@ -1,52 +1,48 @@
-import {
+import {expectError, expectType} from 'tsd';
+import {HttpResponse,
   executeHttpRequest,
   executeHttpRequestWithOrigin
 } from '@sap-cloud-sdk/http-client';
+import {ServiceBindingTransformFunction} from "@sap-cloud-sdk/connectivity";
 
-// $ExpectType Promise<HttpResponse>
-executeHttpRequest(
+expectType<Promise<HttpResponse>>(executeHttpRequest(
   { url: 'https://example.com', authentication: 'BasicAuthentication' },
   { method: 'get' }
-);
+));
 
-// $ExpectType Promise<HttpResponse>
-executeHttpRequest(
+expectType<Promise<HttpResponse>>(executeHttpRequest(
   { destinationName: 'myDestinationName', jwt: 'testJwt' },
   { method: 'get' }
-);
+));
 
-const serviceBindingTransformFn = async serviceBinding => ({
+const serviceBindingTransformFn:ServiceBindingTransformFunction = async serviceBinding => ({
   url: serviceBinding.credentials.sys
 });
 
-// $ExpectType Promise<HttpResponse>
-executeHttpRequest(
+expectType<Promise<HttpResponse>>(executeHttpRequest(
   { destinationName: 'myDestination', serviceBindingTransformFn },
   { method: 'get' }
-);
+));
 
-executeHttpRequest(
-  // $ExpectError
+expectError<any>(executeHttpRequest(
   { url: 'https://example.com', destinationName: 'myDestinationName' },
   { method: 'get' }
-);
+));
 
-// $ExpectType Promise<HttpResponse>
-executeHttpRequest(
+expectType<Promise<HttpResponse>>(executeHttpRequest(
   { destinationName: 'dest' },
   {
     method: 'get',
     headers: { authorization: 'customAuth' },
     params: { myParam: 'customParam' }
   }
-);
+));
 
-// $ExpectType Promise<HttpResponse>
-executeHttpRequestWithOrigin(
+expectType<Promise<HttpResponse>>(executeHttpRequestWithOrigin(
   { destinationName: 'dest' },
   {
     method: 'get',
     headers: { requestConfig: { authorization: 'defaultAuth' } },
     params: { requestConfig: { myParam: 'defaultParam' } }
   }
-);
+));

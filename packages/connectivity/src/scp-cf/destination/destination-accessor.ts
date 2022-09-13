@@ -172,9 +172,9 @@ export async function getAllDestinationsFromDestinationService(
 
   if (allDestinations && allDestinations.length !== 0) {
     logger.debug(
-      `Successfully retrieved all destinations for account: "${
-        new URL(token.decoded.iss!).hostname
-      }" from destination service.`
+      `Successfully retrieved all destinations for account: "${parseSubdomain(
+        token.decoded.iss!
+      )}" from destination service.`
     );
   } else {
     logger.warn('Could not retrieve destinations from destination service.');

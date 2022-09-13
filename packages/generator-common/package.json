@@ -37,7 +37,7 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^2.7.1",
+    "@sap-cloud-sdk/util": "^2.8.0",
     "fast-levenshtein": "~3.0.0",
     "fs-extra": "^10.0.0",
     "glob": "^8.0.1",

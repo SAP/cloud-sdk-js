@@ -66,7 +66,7 @@ interface DestinationSearchResult {
  * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the"provider account", where the application is running.
  * The tenant defined in the subscriber token is the provider tenant for single tenant applications.
  */
-export type SubscriberToken = IssToken | XsuaaToken | CustomToken;
+type SubscriberToken = IssToken | XsuaaToken | CustomToken;
 
 /**
  * User provided a dummy token with the `iss` property.

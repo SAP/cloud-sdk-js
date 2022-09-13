@@ -14,8 +14,7 @@ import {
   MailClientOptions,
   MailConfig,
   MailDestination,
-  MailResponse,
-  SmtpTransportOptions
+  MailResponse
 } from './mail-client-types';
 import {
   customAuthRequestHandler,
@@ -134,7 +133,7 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
 
 async function createTransport(
   mailDestination: MailDestination,
-  transportOptions?: SmtpTransportOptions,
+  mailClientOptions?: MailClientOptions,
   socket?: Socket
 ): Promise<Transporter<SentMessageInfo>> {
   const baseOptions: Options = {
@@ -148,14 +147,14 @@ async function createTransport(
     return nodemailer.createTransport({
       ...baseOptions,
       connection: socket,
-      ...transportOptions
+      ...mailClientOptions
     });
   }
   return nodemailer.createTransport({
     ...baseOptions,
     host: mailDestination.host,
     port: mailDestination.port,
-    ...transportOptions
+    ...mailClientOptions
   });
 }
 
@@ -221,7 +220,6 @@ async function sendMailInParallel<T extends MailConfig>(
 async function sendMailWithNodemailer<T extends MailConfig>(
   mailDestination: MailDestination,
   mailConfigs: T[],
-  smtpTransportOptions?: SmtpTransportOptions,
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
   let socket: Socket | undefined;
@@ -230,14 +228,14 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   }
   const transport = await createTransport(
     mailDestination,
-    smtpTransportOptions,
+    mailClientOptions,
     socket
   );
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 
   let response: MailResponse[];
-  if (mailClientOptions && mailClientOptions.parallel === false) {
+  if (isMailSentInSequential(mailClientOptions)) {
     response = await sendMailInSequential(
       transport,
       mailConfigsFromDestination,
@@ -271,15 +269,13 @@ function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
  * This function also does the destination look up, when passing `DestinationOrFetchOptions`.
  * @param destination - A destination or a destination name and a JWT.
  * @param mailConfigs - A single object or an array of {@link MailConfig}.
- * @param smtpTransportOptions - A {@link SmtpTransportOptions} that defines how to set up an SMTP transport, including SSL and tls configurations.
- * @param mailClientOptions - A {@link MailClientOptions} that defines the configurations of the mail client, e.g., whether the mails are sent in parallel.
+ * @param mailClientOptions - A {@link MailClientOptions} that defines the configurations of the mail client, e.g., how to set up an SMTP transport, including SSL and tls configurations.
  * @returns A promise resolving to an array of {@link MailResponse}.
  * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination#referencing-destinations-by-name
  */
 export async function sendMail<T extends MailConfig>(
   destination: DestinationOrFetchOptions,
   mailConfigs: T | T[],
-  smtpTransportOptions?: SmtpTransportOptions,
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
   const resolvedDestination = await resolveDestination(destination);
@@ -296,7 +292,6 @@ export async function sendMail<T extends MailConfig>(
   return sendMailWithNodemailer(
     mailDestination,
     transformToArray(mailConfigs),
-    smtpTransportOptions,
     mailClientOptions
   );
 }
@@ -305,4 +300,13 @@ function transformToArray<T>(singleElementOrArray: T | T[]): T[] {
   return Array.isArray(singleElementOrArray)
     ? singleElementOrArray
     : [singleElementOrArray];
+}
+
+/**
+ * @internal
+ */
+export function isMailSentInSequential(
+  mailClientOptions?: MailClientOptions
+): boolean {
+  return mailClientOptions?.sdkOptions?.parallel === false;
 }

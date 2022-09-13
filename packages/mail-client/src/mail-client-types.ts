@@ -262,13 +262,23 @@ export interface MailDestination {
 }
 
 /**
- * Represents options of the mail client.
+ * Represents options for SDK behaviours, for example whether the mails are sent in parallel.
  */
-export interface MailClientOptions {
+export interface SDKOptions {
   /**
    * Option to define the strategy of sending emails. The emails will be sent in parallel when setting to true, otherwise in sequential. The default value is true.
    */
   parallel?: boolean;
+}
+
+/**
+ * Represents options of the mail client.
+ */
+export interface MailClientOptions extends SmtpTransportOptions {
+  /**
+   * Defines the SDK behaviours, for example whether the mails are sent in parallel.
+   */
+  sdkOptions?: SDKOptions;
 }
 
 /**

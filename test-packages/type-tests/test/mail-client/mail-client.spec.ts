@@ -11,11 +11,8 @@ sendMail({ destinationName: 'dest' }, [mailConfig, mailConfig], {
   }
 });
 // $ExpectType Promise<MailResponse[]>
-sendMail(
-  { destinationName: 'dest' },
-  [mailConfig, mailConfig],
-  {},
-  {
+sendMail({ destinationName: 'dest' }, [mailConfig, mailConfig], {
+  sdkOptions: {
     parallel: false
   }
-);
+});

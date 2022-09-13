@@ -1,8 +1,16 @@
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
 import { Protocol } from '@sap-cloud-sdk/connectivity';
-import { buildSocksProxy, sendMail } from './mail-client';
-import { MailDestination, MailConfig } from './mail-client-types';
+import {
+  buildSocksProxy,
+  isMailSentInSequential,
+  sendMail
+} from './mail-client';
+import {
+  MailDestination,
+  MailConfig,
+  MailClientOptions
+} from './mail-client-types';
 
 describe('mail client', () => {
   beforeEach(() => {
@@ -94,7 +102,7 @@ describe('mail client', () => {
       to: 'to1@example.com'
     };
     await expect(
-      sendMail(destination, mailOptions, {}, { parallel: false })
+      sendMail(destination, mailOptions, { sdkOptions: { parallel: false } })
     ).resolves.not.toThrow();
     expect(spyCreateSocket).toBeCalledTimes(1);
     expect(spyCreateTransport).toBeCalledTimes(1);
@@ -103,6 +111,36 @@ describe('mail client', () => {
     expect(spyCloseTransport).toBeCalledTimes(1);
     expect(spyEndSocket).toBeCalledTimes(1);
     expect(spyDestroySocket).toBeCalledTimes(1);
+  });
+});
+
+describe('isMailSentInSequential', () => {
+  it('should return false when the mail client options is undefined', () => {
+    expect(isMailSentInSequential()).toBe(false);
+  });
+
+  it('should return false when the sdk options is undefined', () => {
+    const mailClientOptions: MailClientOptions = {};
+    expect(isMailSentInSequential(mailClientOptions)).toBe(false);
+  });
+
+  it('should return false when the parallel option is undefined', () => {
+    const mailClientOptions: MailClientOptions = { sdkOptions: {} };
+    expect(isMailSentInSequential(mailClientOptions)).toBe(false);
+  });
+
+  it('should return false when the parallel option is set to true', () => {
+    const mailClientOptions: MailClientOptions = {
+      sdkOptions: { parallel: true }
+    };
+    expect(isMailSentInSequential(mailClientOptions)).toBe(false);
+  });
+
+  it('should return true when the parallel option is set to false', () => {
+    const mailClientOptions: MailClientOptions = {
+      sdkOptions: { parallel: false }
+    };
+    expect(isMailSentInSequential(mailClientOptions)).toBe(true);
   });
 });
 

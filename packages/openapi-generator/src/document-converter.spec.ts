@@ -137,6 +137,8 @@ describe('document-converter', () => {
   });
 
   describe('parseFileAsJson', () => {
+    afterEach(() => mock.restore());
+
     it('does not throw error for JSON or YAML files', async () => {
       const jsonContent = { test: 'test' };
       mock({
@@ -155,7 +157,6 @@ describe('document-converter', () => {
       expect(await parseFileAsJson('/path/spec.yml')).toStrictEqual(
         jsonContent
       );
-      mock.restore();
     });
 
     it('throws an error for non JSON or YAML files', async () => {
@@ -175,7 +176,6 @@ describe('document-converter', () => {
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Could not parse OpenAPI specification at /path/other-extension.test. Only JSON and YAML files are allowed."'
       );
-      mock.restore();
     });
   });
 });

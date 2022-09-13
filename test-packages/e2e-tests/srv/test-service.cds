@@ -1,8 +1,8 @@
-using {cloudsdk.test as cloudsdk} from '../db/schema';
+using { cloudsdk.test as cloudsdk } from '../db/schema';
 
 @path : 'test-service'
 service TestService {
-  entity TestEntity     as projection on cloudsdk.TestEntity
+  entity TestEntity as projection on cloudsdk.TestEntity
     actions {
       function getStringProperty() returns String;
 

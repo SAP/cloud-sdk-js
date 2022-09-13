@@ -112,33 +112,37 @@ function compareApisAndLog(
  * @param pathToPackage - Path to the package.
  */
 export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
-  logger.info(`Check package: ${pathToPackage}`);
-  const { pathToSource, pathCompiled } = paths(pathToPackage);
-  mockFileSystem(pathToPackage);
-  await transpileDirectory(
-    pathToSource,
-    await getCompilerOptions(pathToPackage)
-  );
-  await checkBarrelRecursive(pathToSource);
+  try {
+    logger.info(`Check package: ${pathToPackage}`);
+    const { pathToSource, pathCompiled } = paths(pathToPackage);
+    mockFileSystem(pathToPackage);
+    await transpileDirectory(
+      pathToSource,
+      await getCompilerOptions(pathToPackage)
+    );
+    await checkBarrelRecursive(pathToSource);
 
-  const indexFilePath = join(pathToSource, 'index.ts');
-  checkIndexFileExists(indexFilePath);
+    const indexFilePath = join(pathToSource, 'index.ts');
+    checkIndexFileExists(indexFilePath);
 
-  const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
-  const allExportedIndex = await parseIndexFile(indexFilePath);
+    const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
+    const allExportedIndex = await parseIndexFile(indexFilePath);
 
-  const setsAreEqual = compareApisAndLog(
-    allExportedIndex,
-    allExportedTypes,
-    true
-  );
-  mock.restore();
-  if (!setsAreEqual) {
-    process.exit(1);
+    const setsAreEqual = compareApisAndLog(
+      allExportedIndex,
+      allExportedTypes,
+      true
+    );
+    mock.restore();
+    if (!setsAreEqual) {
+      process.exit(1);
+    }
+    logger.info(
+      `The index.ts of package ${pathToPackage} is in sync with the type annotations.`
+    );
+  } finally {
+    mock.restore();
   }
-  logger.info(
-    `The index.ts of package ${pathToPackage} is in sync with the type annotations.`
-  );
 }
 
 export function checkIndexFileExists(indexFilePath: string): void {

@@ -12,6 +12,8 @@ import {
 } from './check-public-api';
 
 describe('check-public-api', () => {
+  afterEach(() => mock.restore());
+
   it('checkIndexFileExists fails if index file is not in root', () => {
     mock({
       root: {
@@ -23,10 +25,11 @@ describe('check-public-api', () => {
     expect(() => checkIndexFileExists('root/index.ts')).toThrowError(
       'No index.ts file found in root.'
     );
-    mock.restore();
   });
 
   describe('exportAllInBarrel', () => {
+    afterEach(() => mock.restore());
+
     it('fails if internal.ts is not present in root', async () => {
       mock({
         src: {
@@ -39,7 +42,6 @@ describe('check-public-api', () => {
       await expect(() =>
         exportAllInBarrel('src', 'internal.ts')
       ).rejects.toThrowError("No 'internal.ts' file found in 'src'.");
-      mock.restore();
     });
 
     it('fails if a file is not exported in barrel file', async () => {
@@ -64,7 +66,6 @@ describe('check-public-api', () => {
       expect(errorSpy).toHaveBeenCalledWith(
         "'dir2' is not exported in 'dir1/index.ts'."
       );
-      mock.restore();
     });
   });
 
@@ -81,7 +82,6 @@ describe('check-public-api', () => {
       }
     });
     checkBarrelRecursive('dir1');
-    mock.restore();
   });
 
   it('typeDescriptorPaths finds the .d.ts files and excludes index.d.ts', () => {
@@ -101,7 +101,6 @@ describe('check-public-api', () => {
       'dir1/dir2/file3.d.ts',
       'dir1/file1.d.ts'
     ]);
-    mock.restore();
   });
 
   describe('parseTypeDefinitionFile', () => {
@@ -149,6 +148,8 @@ describe('check-public-api', () => {
   });
 
   describe('parseIndexFile', () => {
+    afterEach(() => mock.restore());
+
     it('parses referenced star imports', async () => {
       mock({
         'index.ts': "export * from './common';export * from './subdir/ref';",
@@ -165,27 +166,19 @@ describe('check-public-api', () => {
         'crossRefExport',
         'subdirRefExport'
       ]);
-
-      mock.restore();
     });
 
-    it('parses exports types correctly',async ()=>{
+    it('parses exports types correctly', async () => {
       mock({
-        'index.ts': "export * from './common';export type { namedExport } from './named';",
-        'common.ts':
-            "export type { commonExport } from './local'",
-        'named.ts':"export type { namedExport } from './local'"
+        'index.ts':
+          "export * from './common';export type { namedExport } from './named';",
+        'common.ts': "export type { commonExport } from './local'",
+        'named.ts': "export type { namedExport } from './local'"
       });
 
-      const result = await parseIndexFile('index.ts')
- expect(result).toEqual([
-   'namedExport',
-     'commonExport'
-
-      ]);
-
-      mock.restore();
-    })
+      const result = await parseIndexFile('index.ts');
+      expect(result).toEqual(['namedExport', 'commonExport']);
+    });
 
     it('ignores public re-exports', async () => {
       mock({
@@ -194,8 +187,6 @@ describe('check-public-api', () => {
       });
 
       await expect(parseIndexFile('index.ts')).resolves.toEqual(['local']);
-
-      mock.restore();
     });
 
     it('throws an error on internal re-exports', async () => {
@@ -207,8 +198,6 @@ describe('check-public-api', () => {
       await expect(parseIndexFile('index.ts')).rejects.toThrowError(
         "Re-exporting internal modules is not allowed. 'internal' exported in 'index.ts'."
       );
-
-      mock.restore();
     });
   });
 });

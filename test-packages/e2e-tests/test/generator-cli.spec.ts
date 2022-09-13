@@ -32,6 +32,7 @@ describe('generator-cli', () => {
     fs.removeSync(outputDir);
     mock.restore();
   });
+
   it('should fail if mandatory parameters are not there', async () => {
     try {
       await execa('npx', ['ts-node', pathToGenerator]);
@@ -41,6 +42,7 @@ describe('generator-cli', () => {
       );
     }
   }, 60000);
+
   it('should generate VDM if all arguments are there', async () => {
     mock({
       [inputDir]: mock.load(inputDir),
@@ -63,6 +65,7 @@ describe('generator-cli', () => {
     expect(entities).toContain('TestEntity.js');
     expect(entities).toContain('package.json');
   });
+
   it('should create options from a config file', () => {
     mock({ [pathToConfig]: mock.load(pathToConfig) });
     expect(createOptionsFromConfig(pathToConfig)).toEqual({
@@ -70,6 +73,7 @@ describe('generator-cli', () => {
       outputDir
     });
   });
+
   it('should generate VDM if there is a valid config file', async () => {
     const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
       createOptionsFromConfig(pathToConfig) as {
@@ -100,6 +104,7 @@ describe('generator-cli', () => {
     expect(entities).toContain('TestEntity.js');
     expect(entities).toContain('package.json');
   });
+
   it('should set version when versionInPackageJson option is used', async () => {
     const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
       createOptionsFromConfig(pathToConfig) as {
@@ -136,6 +141,7 @@ describe('generator-cli', () => {
     );
     expect(actualPackageJson.version).toEqual('42.23');
   });
+
   it('should throw a warning message for a deprecated option even when the generation is failed', async () => {
     // Use a broken service to stop the service generation early - we are only interested in the log statement
     try {
@@ -157,6 +163,7 @@ describe('generator-cli', () => {
       );
     }
   }, 60000);
+
   it('should throw a warning message for a deprecated option even when the generation is failed', async () => {
     // Use a broken service to stop the service generation early - we are only interested in the log statement
     try {

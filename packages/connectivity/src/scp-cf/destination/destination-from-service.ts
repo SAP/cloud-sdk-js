@@ -10,9 +10,7 @@ import {
 } from '../jwt';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
-import {
-  getDestinationService
-} from '../environment-accessor';
+import { getDestinationService } from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';

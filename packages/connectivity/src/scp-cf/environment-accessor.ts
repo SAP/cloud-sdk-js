@@ -22,8 +22,13 @@ const logger = createLogger({
  */
 export function getDestinationBasicCredentials(): BasicCredentials {
   const destinationCredentials = getDestinationServiceCredentials();
-  if(!destinationCredentials.clientid || !destinationCredentials.clientsecret) {
-    throw Error('JWT generation failed: Destination service credentials didn\'t contain ClientID or ClientSecret');
+  if (
+    !destinationCredentials.clientid ||
+    !destinationCredentials.clientsecret
+  ) {
+    throw Error(
+      "JWT generation failed: Destination service credentials didn't contain ClientID or ClientSecret"
+    );
   }
 
   const basicCredentials: BasicCredentials = {

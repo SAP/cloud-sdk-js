@@ -13,13 +13,16 @@ import {
   DestinationForServiceBindingOptions,
   searchServiceBindingForDestination
 } from './destination-from-vcap';
-import { getDestinationFromDestinationService ,
+import {
+  getDestinationFromDestinationService,
   DestinationFromServiceRetriever
 } from './destination-from-service';
 import {
   DestinationFetchOptions,
-  isDestinationFetchOptions
-, DestinationOptions } from './destination-accessor-types';
+  isDestinationFetchOptions,
+  AllDestinationOptions,
+  DestinationWithoutToken
+} from './destination-accessor-types';
 import { searchRegisteredDestination } from './destination-from-registration';
 import {
   fetchInstanceDestinations,
@@ -121,22 +124,9 @@ export function getDestinationServiceCredentials(): DestinationServiceCredential
 }
 
 /**
- * A {@link Destination} which does not contain {@link Destination.authTokens || authTokens}.
- */
-export type DestinationWithoutToken = Omit<Destination, 'authTokens'>;
-
-/**
- * Options used to fetch all destinations.
- */
-export type AllDestinationOptions = Omit<
-  DestinationOptions,
-  'selectionStrategy' | 'isolationStrategy'
->;
-
-/**
  * Fetches all destinations from the destination service which match the token.
  * With a subscriber token it fetches all subscriber destinations, otherwise all provider destinations.
- * @param options - The {@link AllDestinationOptions | options} to fetch all destinations.
+ * @param options - The {@link AllDestinationOptions | options} to fetch all destinations.
  * @returns A promise of an array of all destinations without authTokens from the destination service on success.
  */
 export async function getAllDestinationsFromDestinationService(
@@ -149,10 +139,17 @@ export async function getAllDestinationsFromDestinationService(
     options.jwt = await exchangeToken(options);
   }
 
-  const token = (await DestinationFromServiceRetriever.getSubscriberToken(options))?.serviceJwt || (await DestinationFromServiceRetriever.getProviderServiceToken(options));
+  const token =
+    (await DestinationFromServiceRetriever.getSubscriberToken(options))
+      ?.serviceJwt ||
+    (await DestinationFromServiceRetriever.getProviderServiceToken(options));
 
   const destinationServiceUri = getDestinationServiceCredentials().uri;
-  logger.debug(`Retrieving all destinations for account: "${new URL(token.decoded.iss!).hostname}" from destination service.`);
+  logger.debug(
+    `Retrieving all destinations for account: "${
+      new URL(token.decoded.iss!).hostname
+    }" from destination service.`
+  );
 
   const [instance, subaccount] = await Promise.all([
     fetchInstanceDestinations(destinationServiceUri, token.encoded, options),
@@ -160,15 +157,23 @@ export async function getAllDestinationsFromDestinationService(
   ]);
 
   let loggerMessage = '';
-  instance.map(destination => loggerMessage += `Retrieving instance destination: ${destination.name}.\n`);
-  subaccount.map(destination => loggerMessage += `Retrieving subaccount destination: ${destination.name}.\n`);
+  instance.map(
+    destination =>
+      (loggerMessage += `Retrieving instance destination: ${destination.name}.\n`)
+  );
+  subaccount.map(
+    destination =>
+      (loggerMessage += `Retrieving subaccount destination: ${destination.name}.\n`)
+  );
   logger.debug(loggerMessage);
 
   const allDestinations = instance.concat(subaccount);
 
   if (allDestinations) {
     logger.debug(
-      `Successfully retrieved all destinations for account: "${new URL(token.decoded.iss!).hostname}" from destination service.`
+      `Successfully retrieved all destinations for account: "${
+        new URL(token.decoded.iss!).hostname
+      }" from destination service.`
     );
   }
   if (!allDestinations) {

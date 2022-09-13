@@ -101,3 +101,16 @@ export function isDestinationFetchOptions(
 ): destination is DestinationFetchOptions {
   return destination.destinationName !== undefined;
 }
+
+/**
+ * A {@link Destination} which does not contain {@link Destination.authTokens || authTokens}.
+ */
+export type DestinationWithoutToken = Omit<Destination, 'authTokens'>;
+
+/**
+ * Options used to fetch all destinations.
+ */
+export type AllDestinationOptions = Omit<
+  DestinationOptions,
+  'selectionStrategy' | 'isolationStrategy'
+>;

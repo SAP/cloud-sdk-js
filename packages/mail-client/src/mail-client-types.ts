@@ -262,7 +262,7 @@ export interface MailDestination {
 }
 
 /**
- * Represents options for SDK behaviours, for example whether the mails are sent in parallel.
+ * Represents options for sending mails provided by the SDK. For example whether the mails are sent in parallel.
  */
 export interface SDKOptions {
   /**

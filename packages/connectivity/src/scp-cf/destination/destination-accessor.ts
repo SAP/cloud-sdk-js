@@ -1,4 +1,6 @@
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { DestinationServiceCredentials } from '../environment-accessor-types';
+import { getDestinationServiceCredentialsList } from '../environment-accessor';
 import {
   DestinationOrFetchOptions,
   sanitizeDestination,
@@ -16,6 +18,11 @@ import {
   isDestinationFetchOptions
 } from './destination-accessor-types';
 import { searchRegisteredDestination } from './destination-from-registration';
+
+const logger = createLogger({
+  package: 'connectivity',
+  messageContext: 'destination-accessor'
+});
 
 /**
  * Returns the parameter if it is a destination, calls {@link getDestination} otherwise (which will try to fetch the destination
@@ -84,4 +91,24 @@ export async function getDestination(
     (await searchServiceBindingForDestination(options)) ||
     (await getDestinationFromDestinationService(options));
   return destination;
+}
+
+/**
+ * Utility function to get destination service credentails, including error handling.
+ * @internal
+ */
+export function getDestinationServiceCredentials(): DestinationServiceCredentials {
+  const credentials = getDestinationServiceCredentialsList();
+  if (!credentials || credentials.length === 0) {
+    throw Error(
+      'No binding to a destination service instance found. Please bind a destination service instance to your application.'
+    );
+  }
+  if (credentials.length > 1) {
+    logger.warn(
+      'Found more than one destination service instance. Using the first one.'
+    );
+  }
+
+  return credentials[0];
 }

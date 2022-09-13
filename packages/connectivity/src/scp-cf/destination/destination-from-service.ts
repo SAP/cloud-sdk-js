@@ -11,11 +11,9 @@ import {
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
-  getDestinationService,
-  getDestinationServiceCredentialsList
+  getDestinationService
 } from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
-import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
 import { Destination } from './destination-service-types';
@@ -45,6 +43,7 @@ import {
   ProxyStrategy,
   proxyStrategy
 } from './http-proxy-util';
+import { getDestinationServiceCredentials } from './destination-accessor';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -320,12 +319,12 @@ export class DestinationFromServiceRetriever {
   ): Promise<DestinationsByType> {
     const [instance, subaccount] = await Promise.all([
       fetchInstanceDestinations(
-        this.destinationServiceCredentials.uri,
+        getDestinationServiceCredentials().uri,
         accessToken,
         this.options
       ),
       fetchSubaccountDestinations(
-        this.destinationServiceCredentials.uri,
+        getDestinationServiceCredentials().uri,
         accessToken,
         this.options
       )
@@ -337,27 +336,11 @@ export class DestinationFromServiceRetriever {
     };
   }
 
-  private get destinationServiceCredentials(): DestinationServiceCredentials {
-    const credentials = getDestinationServiceCredentialsList();
-    if (!credentials || credentials.length === 0) {
-      throw Error(
-        'No binding to a destination service instance found. Please bind a destination service instance to your application.'
-      );
-    }
-    if (credentials.length > 1) {
-      logger.warn(
-        'Found more than one destination service instance. Using the first one.'
-      );
-    }
-
-    return credentials[0];
-  }
-
   private async fetchDestinationByToken(
     jwt: string | AuthAndExchangeTokens
   ): Promise<Destination> {
     return fetchDestination(
-      this.destinationServiceCredentials.uri,
+      getDestinationServiceCredentials().uri,
       jwt,
       this.options
     );
@@ -674,7 +657,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   ): Promise<Destination> {
     if (destination.originalProperties?.TrustStoreLocation) {
       const trustStoreCertificate = await fetchCertificate(
-        this.destinationServiceCredentials.uri,
+        getDestinationServiceCredentials().uri,
         origin === 'provider'
           ? this.providerServiceToken.encoded
           : this.subscriberToken!.serviceJwt!.encoded,

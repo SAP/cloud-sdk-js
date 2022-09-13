@@ -1,11 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { getDestinationServiceCredentialsList } from '../environment-accessor';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
-import { JwtPair } from '../jwt';
+import { getDestinationServiceCredentials } from './destination-accessor';
 import { DestinationOptions } from './destination-accessor-types';
 import {
-  DestinationFromServiceRetriever,
-  SubscriberToken
+  DestinationFromServiceRetriever
 } from './destination-from-service';
 import {
   fetchInstanceDestinations,
@@ -46,102 +44,35 @@ export async function getAllDestinationsFromDestinationService(
     options.jwt = await exchangeToken(options);
   }
 
-  const subscriberToken =
-    await DestinationFromServiceRetriever.getSubscriberToken(options);
+  const token = (await DestinationFromServiceRetriever.getSubscriberToken(options))?.serviceJwt || (await DestinationFromServiceRetriever.getProviderServiceToken(options));
 
-  let providerToken: JwtPair | undefined;
-  if (!subscriberToken) {
-    providerToken =
-      await DestinationFromServiceRetriever.getProviderServiceToken(options);
-  }
+  const destinationServiceUri = getDestinationServiceCredentials().uri;
+  logger.debug(`Retrieving all destinations for account: "${new URL(token.decoded.iss!).hostname}" from destination service.`);
 
-  const destinationSearchResult = await searchForAllDestinationsFromDestinationService(
-    options,
-    subscriberToken,
-    providerToken
-  );
+  const [instance, subaccount] = await Promise.all([
+    fetchInstanceDestinations(destinationServiceUri, token.encoded, options),
+    fetchSubaccountDestinations(destinationServiceUri, token.encoded, options)
+  ]);
 
-  if (!destinationSearchResult) {
-    return null;
-  }
+  let loggerMessage = '';
+  instance.map(destination => loggerMessage += `Retrieving instance destination: ${destination.name}.\n`);
+  subaccount.map(destination => loggerMessage += `Retrieving subaccount destination: ${destination.name}.\n`);
+  logger.debug(loggerMessage);
 
-  return destinationSearchResult;
-}
+  const allDestinations = instance.concat(subaccount);
 
-async function searchForAllDestinationsFromDestinationService(
-  options: AllDestinationOptions,
-  subscriberToken?: SubscriberToken,
-  providerToken?: JwtPair
-): Promise<DestinationWithoutToken[] | undefined> {
-  let destinationSearchResult: Destination[] | undefined;
-
-  const credentials = getDestinationServiceCredentialsList();
-  if (!credentials || credentials.length === 0) {
-    throw Error(
-      'No binding to a destination service instance found. Please bind a destination service instance to your application.'
-    );
-  }
-  if (credentials.length > 1) {
-    logger.warn(
-      'Found more than one destination service instance. Using the first one.'
-    );
-  }
-
-  const destinationServiceUri = credentials[0].uri;
-
-  if (isSubscriberNeeded(subscriberToken)) {
+  if (allDestinations) {
     logger.debug(
-      'Retrieving all subscriber destinations from destination service.'
-    );
-    destinationSearchResult = await getInstanceAndSubaccountDestinations(
-      destinationServiceUri,
-      options,
-      subscriberToken!.serviceJwt!.encoded
-    );
-  } else {
-    logger.debug(
-      'Retrieving all provider destinations from destination service.'
-    );
-    await getInstanceAndSubaccountDestinations(
-      destinationServiceUri,
-      options,
-      providerToken!.encoded
+      `Successfully retrieved all destinations for account: "${new URL(token.decoded.iss!).hostname}" from destination service.`
     );
   }
-
-  if (destinationSearchResult) {
-    logger.debug(
-      'Successfully retrieved all destinations from destination service.'
-    );
-  }
-  if (!destinationSearchResult) {
+  if (!allDestinations) {
     logger.debug('Could not retrieve destinations from destination service.');
   }
 
-  return destinationSearchResult;
-}
-
-function isSubscriberNeeded(subscriberToken?: SubscriberToken): boolean {
-  if (!subscriberToken) {
-    return false;
+  if (!allDestinations) {
+    return null;
   }
 
-  if (this.subscriberToken.type === 'custom') {
-    return false;
-  }
-
-  return true;
-}
-
-async function getInstanceAndSubaccountDestinations(
-  destinationServiceUri: string,
-  options: AllDestinationOptions,
-  accessToken: string
-): Promise<DestinationWithoutToken[]> {
-  const [instance, subaccount] = await Promise.all([
-    fetchInstanceDestinations(destinationServiceUri, accessToken, options),
-    fetchSubaccountDestinations(destinationServiceUri, accessToken, options)
-  ]);
-
-  return instance.concat(subaccount);
+  return allDestinations;
 }

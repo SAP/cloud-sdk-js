@@ -2,6 +2,7 @@ import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { getDestinationServiceCredentialsList } from '../environment-accessor';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
+import { parseSubdomain } from '../subdomain-replacer';
 import {
   DestinationOrFetchOptions,
   sanitizeDestination,
@@ -146,9 +147,9 @@ export async function getAllDestinationsFromDestinationService(
 
   const destinationServiceUri = getDestinationServiceCredentials().uri;
   logger.debug(
-    `Retrieving all destinations for account: "${
-      new URL(token.decoded.iss!).hostname
-    }" from destination service.`
+    `Retrieving all destinations for account: "${parseSubdomain(
+      token.decoded.iss!
+    )}" from destination service.`
   );
 
   const [instance, subaccount] = await Promise.all([
@@ -169,20 +170,22 @@ export async function getAllDestinationsFromDestinationService(
 
   const allDestinations = instance.concat(subaccount);
 
-  if (allDestinations) {
+  if (allDestinations && allDestinations.length !== 0) {
     logger.debug(
       `Successfully retrieved all destinations for account: "${
         new URL(token.decoded.iss!).hostname
       }" from destination service.`
     );
-  }
-  if (!allDestinations) {
+  } else {
     logger.warn('Could not retrieve destinations from destination service.');
-  }
-
-  if (!allDestinations) {
     return null;
   }
 
-  return allDestinations;
+  const allDestinationsWithoutToken: DestinationWithoutToken[] =
+    allDestinations.map(destination => {
+      delete destination.authTokens;
+      return destination;
+    });
+
+  return allDestinationsWithoutToken;
 }

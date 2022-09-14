@@ -3816,10 +3816,10 @@ fast-safe-stringify@^2.0.7:
   resolved "https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
-fast-xml-parser@^4.0.9:
-  version "4.0.9"
-  resolved "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.9.tgz#3a81dab7b4952b8d38f0136d28bd055b80ed6512"
-  integrity sha512-4G8EzDg2Nb1Qurs3f7BpFV4+jpMVsdgLVuG1Uv8O2OHJfVCg7gcA53obuKbmVqzd4Y7YXVBK05oJG7hzGIdyzg==
+fast-xml-parser@^4.0.10:
+  version "4.0.10"
+  resolved "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.10.tgz#72c81f74a0ef98af77ef37dd19d227533aae2994"
+  integrity sha512-mYMMIk7Ho1QOiedyvafdyPamn1Vlda+5n95lcn0g79UiCQoLQ2xfPQ8m3pcxBMpVaftYXtoIE2wrNTjmLQnnkg==
   dependencies:
     strnum "^1.0.5"
 

@@ -133,46 +133,28 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
 
 async function createTransport(
   mailDestination: MailDestination,
+  mailClientOptions?: MailClientOptions,
   socket?: Socket
 ): Promise<Transporter<SentMessageInfo>> {
   const baseOptions: Options = {
     pool: true,
-    // TODO: expose an option, so the user can decide
-    // Defines if the connection should use SSL (if true) or not (if false). See: https://nodemailer.com/smtp/
-    // true for 465, false for other ports
-    // secure: false,
     auth: {
       user: mailDestination.username,
       pass: mailDestination.password
-    },
-    // TODO: Uploading certificates on CF like HTTP destination is not applicable for MAIL destination.
-    // Provide an API option for the users, so they can pass it as parameter for the nodemailer.
-    // The `tls` is the right key:
-    //     tls: {
-    //       cert: xxx,
-    //       ca: xxx,
-    //       rejectUnauthorized: xxx
-    //     }
-    tls: {
-      /**
-       * If true the server will reject any connection which is not
-       * authorized with the list of supplied CAs. This option only has an
-       * effect if requestCert is true.
-       */
-      /** Disable tls config to fix the self signed certificate error. */
-      rejectUnauthorized: false
     }
   };
   if (socket) {
     return nodemailer.createTransport({
       ...baseOptions,
-      connection: socket
+      connection: socket,
+      ...mailClientOptions
     });
   }
   return nodemailer.createTransport({
     ...baseOptions,
     host: mailDestination.host,
-    port: mailDestination.port
+    port: mailDestination.port,
+    ...mailClientOptions
   });
 }
 
@@ -244,12 +226,16 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
   }
-  const transport = await createTransport(mailDestination, socket);
+  const transport = await createTransport(
+    mailDestination,
+    mailClientOptions,
+    socket
+  );
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 
   let response: MailResponse[];
-  if (mailClientOptions && mailClientOptions.parallel === false) {
+  if (isMailSentInSequential(mailClientOptions)) {
     response = await sendMailInSequential(
       transport,
       mailConfigsFromDestination,
@@ -283,7 +269,7 @@ function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
  * This function also does the destination look up, when passing `DestinationOrFetchOptions`.
  * @param destination - A destination or a destination name and a JWT.
  * @param mailConfigs - A single object or an array of {@link MailConfig}.
- * @param mailClientOptions - A {@link MailClientOptions} that defines the configurations of the mail client, e.g., whether the mails are sent in parallel.
+ * @param mailClientOptions - A {@link MailClientOptions} that defines the configurations of the mail client, e.g., how to set up an SMTP transport, including SSL and tls configurations.
  * @returns A promise resolving to an array of {@link MailResponse}.
  * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination#referencing-destinations-by-name
  */
@@ -314,4 +300,13 @@ function transformToArray<T>(singleElementOrArray: T | T[]): T[] {
   return Array.isArray(singleElementOrArray)
     ? singleElementOrArray
     : [singleElementOrArray];
+}
+
+/**
+ * @internal
+ */
+export function isMailSentInSequential(
+  mailClientOptions?: MailClientOptions
+): boolean {
+  return mailClientOptions?.sdkOptions?.parallel === false;
 }

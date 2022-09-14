@@ -28,9 +28,9 @@ With the API, you can, for example, start new workflow instances and work with t
 
 ## Usage Example
 \`\`\`
-import { testApi } from '@sap-cloud-sdk/workflow-service';
+import { testApi } from './generated/workflow-service';
 
-const responseData = await testApi.getAll().execute({ destinationName:'myDestinationName' });
+const responseData = await testApi.getAll().execute({ destinationName: 'myDestinationName' });
 \`\`\`
 
 ## Helpful Links

@@ -24,7 +24,7 @@ describe('readme', () => {
       readme({
         serviceOptions: {
           packageName: '@sap-cloud-sdk/workflow-service',
-          directoryName: ''
+          directoryName: 'workflow-service'
         },
         serviceName: 'WorkflowAPI',
         serviceDescription:

@@ -20,7 +20,6 @@ import { GlobSync } from 'glob';
 import {
   getSdkMetadataFileNames,
   getVersionForClient,
-  sdkMetadataHeader,
   transpileDirectory,
   readCompilerOptions,
   copyFiles,
@@ -384,30 +383,14 @@ export async function generateSourcesForService(
   }
 
   if (options.generateSdkMetadata) {
-    const { clientFileName, headerFileName } = getSdkMetadataFileNames(
+    const { clientFileName } = getSdkMetadataFileNames(
       service.originalFileName
     );
-    logger.info(`Generating sdk header metadata ${headerFileName}...`);
+    logger.info(`Generating sdk client metadata ${clientFileName}...`);
     const metadataDir = project.createDirectory(
       resolve(dirname(service.edmxPath.toString()), 'sdk-metadata')
     );
 
-    otherFile(
-      metadataDir,
-      headerFileName,
-      JSON.stringify(
-        await sdkMetadataHeader(
-          'odata',
-          service.originalFileName,
-          options.versionInPackageJson
-        ),
-        null,
-        2
-      ),
-      options.forceOverwrite
-    );
-
-    logger.info(`Generating sdk client metadata ${clientFileName}...`);
     otherFile(
       metadataDir,
       clientFileName,

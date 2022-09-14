@@ -1,5 +1,8 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { helpfulLinksSection } from '@sap-cloud-sdk/generator-common/internal';
+import {
+  helpfulLinksSection,
+  usageHeaderText
+} from '@sap-cloud-sdk/generator-common/internal';
 import { getApiSpecificUsage } from '../sdk-metadata';
 import { VdmServiceMetadata } from '../vdm-types';
 
@@ -60,14 +63,8 @@ export function readme(
 
 function addUsageExample(service: VdmServiceMetadata): string[] {
   const usageText = getApiSpecificUsage(service);
-  if (usageText.instructions) {
-    return [
-      `## ${usageText.header}`,
-      '```',
-      `${usageText.instructions}`,
-      '```',
-      ''
-    ];
+  if (usageText) {
+    return [`## ${usageHeaderText}`, '```', `${usageText}`, '```', ''];
   }
   return [];
 }

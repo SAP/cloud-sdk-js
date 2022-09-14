@@ -138,16 +138,27 @@ describe('compilation', () => {
     await transpileDirectory('test-src', compilerConfig('test-dist'));
     const files = await promises.readdir('test-dist');
     expect(files.includes('test-file.spec.js')).toBe(false);
-    expect(files).toIncludeAnyMembers([
-      'file-1.js',
+    expect(files).toEqual([
       'file-1.d.ts',
-      'file-1.d.ts.map'
+      'file-1.d.ts.map',
+      'file-1.js',
+      'file-1.js.map',
+      'index.d.ts',
+      'index.d.ts.map',
+      'index.js',
+      'index.js.map',
+      'sub-folder'
     ]);
     const filesSubfolder = await promises.readdir('test-dist/sub-folder');
-    expect(filesSubfolder).toIncludeAnyMembers([
-      'file-2.js',
+    expect(filesSubfolder).toEqual([
       'file-2.d.ts',
-      'file-2.d.ts.map'
+      'file-2.d.ts.map',
+      'file-2.js',
+      'file-2.js.map',
+      'index.d.ts',
+      'index.d.ts.map',
+      'index.js',
+      'index.js.map'
     ]);
   });
 
@@ -159,7 +170,7 @@ describe('compilation', () => {
     const files = new GlobSync('**/*.js', {
       cwd: 'test-dist-1'
     }).found;
-    expect(files).toIncludeSameMembers(['file-1.js', 'sub-folder/file-2.js']);
+    expect(files).toEqual(['file-1.js', 'sub-folder/file-2.js']);
   });
 
   it('considers exclude correctly', async () => {
@@ -170,7 +181,7 @@ describe('compilation', () => {
     const files = new GlobSync('**/*.js', {
       cwd: 'test-dist-2'
     }).found;
-    expect(files).toIncludeSameMembers(['file-1.js', 'sub-folder/file-2.js']);
+    expect(files).toEqual(['file-1.js', 'sub-folder/file-2.js']);
   });
 
   it('throws error with file information on broken source file', async () => {

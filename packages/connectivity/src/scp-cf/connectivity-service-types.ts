@@ -34,7 +34,7 @@ export interface ProxyConfiguration {
   headers?: ProxyConfigurationHeaders;
 
   /**
-   * A JWT for proxy authorization.
+   * A JWT for proxy authorization, which is used when http headers are not applicable, e.g., using socket protocols.
    */
   'proxy-authorization'?: string;
 }

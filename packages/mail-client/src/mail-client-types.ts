@@ -1,13 +1,10 @@
 import { Readable } from 'stream';
 import { Url } from 'url';
-import { ConnectionOptions } from 'tls';
-import net from 'net';
 import {
   AuthenticationType,
   DestinationProxyType,
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
-
 /**
  * Represents an e-mail address.
  * This interface is compatible with `Mail.Address` of `nodemailer`.
@@ -262,75 +259,11 @@ export interface MailDestination {
 }
 
 /**
- * Represents options for sending mails provided by the SDK. For example whether the mails are sent in parallel.
+ * Represents options of the mail client.
  */
-export interface SDKOptions {
+export interface MailClientOptions {
   /**
    * Option to define the strategy of sending emails. The emails will be sent in parallel when setting to true, otherwise in sequential. The default value is true.
    */
   parallel?: boolean;
-}
-
-/**
- * Represents options of the mail client.
- */
-export interface MailClientOptions extends SmtpTransportOptions {
-  /**
-   * Defines the SDK behaviours, for example whether the mails are sent in parallel.
-   */
-  sdkOptions?: SDKOptions;
-}
-
-/**
- * Represents options for setting up the SMTP connection.
- * This interface is compatible with `SMTPConnection.Options` of `nodemailer`.
- * @experimental This API is experimental and might change in newer versions. Use with caution.
- */
-export interface SmtpTransportOptions {
-  /**
-   * Defines if the connection should use SSL (if true) or not (if false).
-   */
-  secure?: boolean | undefined;
-  /**
-   * Turns off STARTTLS support if true.
-   */
-  ignoreTLS?: boolean | undefined;
-  /**
-   * Forces the client to use STARTTLS. Returns an error if upgrading the connection is not possible or fails.
-   */
-  requireTLS?: boolean | undefined;
-  /**
-   * Tries to use STARTTLS and continues normally if it fails.
-   */
-  opportunisticTLS?: boolean | undefined;
-  /**
-   * How many milliseconds to wait for the connection to establish.
-   */
-  connectionTimeout?: number | undefined;
-  /**
-   * How many milliseconds to wait for the greeting after connection is established.
-   */
-  greetingTimeout?: number | undefined;
-  /**
-   * How many milliseconds of inactivity to allow.
-   */
-  socketTimeout?: number | undefined;
-  /**
-   * If set to true, then logs SMTP traffic and message content, otherwise logs only transaction events.
-   */
-  debug?: boolean | undefined;
-  /**
-   * Defines additional options to be passed to the socket constructor.
-   * @example
-   * { rejectUnauthorized: true }
-   */
-  tls?: ConnectionOptions | undefined;
-  /**
-   * Initialized socket to use instead of creating a new one.
-   */
-  socket?: net.Socket | undefined;
-  /**
-   * Connected socket to use instead of creating and connecting a new one. If secure option is true, then socket is upgraded from plaintext to ciphertext.
-   */
-  connection?: net.Socket | undefined;
 }

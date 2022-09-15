@@ -156,14 +156,17 @@ export function parseProxyEnv(
     const proxyConfig: ProxyConfiguration = {
       host: url.hostname,
       protocol: Protocol.of(url.protocol)!,
-      port: getPort(url)
+      port: getPort(url),
+      username: url.username ? decodeURIComponent(url.username): url.username,
+      password: url.password ? decodeURIComponent(url.password): url.password,
+      url: href
     };
 
-    if (url.username && url.password) {
+    if (proxyConfig.username && proxyConfig.password) {
       proxyConfig.headers = {
         'Proxy-Authorization': basicHeader(
-          decodeURIComponent(url.username),
-          decodeURIComponent(url.password)
+          proxyConfig.username,
+          proxyConfig.password
         )
       };
     }

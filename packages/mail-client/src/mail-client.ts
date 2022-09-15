@@ -131,11 +131,11 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
   return socketConnection.socket;
 }
 
-async function createTransport(
+function createTransport(
   mailDestination: MailDestination,
   mailClientOptions?: MailClientOptions,
   socket?: Socket
-): Promise<Transporter<SentMessageInfo>> {
+): Transporter<SentMessageInfo> {
   const baseOptions: Options = {
     pool: true,
     auth: {
@@ -143,19 +143,28 @@ async function createTransport(
       pass: mailDestination.password
     }
   };
-  if (socket) {
+  if (mailDestination.proxyType === 'OnPremise' && socket) {
     return nodemailer.createTransport({
       ...baseOptions,
       connection: socket,
       ...mailClientOptions
     });
   }
-  return nodemailer.createTransport({
+  const transport =  nodemailer.createTransport({
     ...baseOptions,
     host: mailDestination.host,
     port: mailDestination.port,
-    ...mailClientOptions
-  });
+    ...mailClientOptions,
+    proxy: mailDestination.proxyConfiguration?.url
+  } as any);
+
+  if(mailDestination.proxyConfiguration?.url){
+    logger.debug(
+      `Setting proxy: ${mailDestination.proxyConfiguration.url} for proxy type: ${mailDestination.proxyType}.`
+    );
+    // transport.setupProxy(mailDestination.proxyConfiguration.url);
+  }
+  return transport;
 }
 
 function buildMailConfigsFromDestination(

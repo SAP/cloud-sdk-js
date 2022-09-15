@@ -30,6 +30,19 @@ export type OrderableInput<
   | ComplexTypePropertyFields<EntityT>;
 
 /**
+ * A union of Orderable and OrderableInput.
+ * @typeParam EntityT - Type of the entity to be ordered
+ */
+export type OrderableAndOrderableInput<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>,
+  LinkedEntityApiTOptional extends EntityApi<EntityBase> = EntityApi<EntityBase>
+> =
+  | Orderable<EntityT, LinkedEntityApiTOptional>
+  | OrderableInput<EntityT, DeSerializersT, LinkedEntityApiT>;
+
+/**
  * Create new Order by `orderBy._fieldName` in ascending order.
  * @typeParam EntityT - Type of the entity to be ordered
  * @param orderBy - Field or link to be ordered by.

@@ -133,7 +133,7 @@ describe('generator', () => {
     });
 
     it('should transpile the generated sources', async () => {
-      const files = await promises.readdir(outputPath);
+      const actualFiles = await promises.readdir(outputPath);
 
       const expectedFiles: string[] = [];
       ['default-api', 'entity-api', 'test-case-api'].forEach(file =>
@@ -142,7 +142,9 @@ describe('generator', () => {
         )
       );
 
-      expect(files).toIncludeAllMembers(expectedFiles);
+      expectedFiles.forEach(expectedFile =>
+        expect(actualFiles.includes(expectedFile)).toBe(true)
+      );
     });
 
     it('should create a package.json', () => {
@@ -170,14 +172,6 @@ describe('generator', () => {
     it('should create a README.md', () => {
       const readme = resolve(outputPath, 'README.md');
       expect(existsSync(readme)).toBe(true);
-    });
-
-    it('should create metadata header', () => {
-      const metaDataHeader = resolve(
-        inputPath,
-        'sdk-metadata/mySpec_HEADER.json'
-      );
-      expect(existsSync(metaDataHeader)).toBe(true);
     });
 
     it('should create metadata client', () => {

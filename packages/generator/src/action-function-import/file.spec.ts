@@ -10,7 +10,7 @@ describe('file', () => {
       element => element.kind === StructureKind.ImportDeclaration
     );
 
-    expect(imports.map(i => i.moduleSpecifier)).toIncludeSameMembers([
+    expect(imports.map(i => i.moduleSpecifier)).toEqual([
       '@sap-cloud-sdk/odata-v2',
       './service'
     ]);

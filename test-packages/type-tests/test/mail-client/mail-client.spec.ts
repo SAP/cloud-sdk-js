@@ -6,9 +6,13 @@ const mailConfig = { from: 'from', to: 'to' };
 sendMail({ destinationName: 'dest' }, mailConfig);
 // $ExpectType Promise<MailResponse[]>
 sendMail({ destinationName: 'dest' }, [mailConfig, mailConfig], {
-  parallel: true
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 // $ExpectType Promise<MailResponse[]>
 sendMail({ destinationName: 'dest' }, [mailConfig, mailConfig], {
-  parallel: false
+  sdkOptions: {
+    parallel: false
+  }
 });

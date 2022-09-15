@@ -63,7 +63,11 @@ async function sendTestMail(
     type: 'MAIL',
     originalProperties
   };
-  return sendMail(destination, mainConfigs);
+  return sendMail(destination, mainConfigs, {
+    tls: {
+      rejectUnauthorized: false
+    }
+  });
 }
 
 function buildArrayWithNatualNums(length): number[] {

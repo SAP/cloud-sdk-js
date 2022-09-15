@@ -79,15 +79,15 @@ export abstract class GetAllRequestBuilderBase<
     first:
       | undefined
       | OrderableAndOrderableInput<
-        EntityT,
-        DeSerializersT,
-        EntityApi<EntityBase, DeSerializersT>
-      >
+          EntityT,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >
       | OrderableAndOrderableInput<
-        EntityT,
-        DeSerializersT,
-        EntityApi<EntityBase, DeSerializersT>
-      >[],
+          EntityT,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >[],
     ...rest: OrderableAndOrderableInput<
       EntityT,
       DeSerializersT,

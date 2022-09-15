@@ -150,21 +150,12 @@ function createTransport(
       ...mailClientOptions
     });
   }
-  const transport =  nodemailer.createTransport({
+  return nodemailer.createTransport({
     ...baseOptions,
     host: mailDestination.host,
     port: mailDestination.port,
-    ...mailClientOptions,
-    proxy: mailDestination.proxyConfiguration?.url
-  } as any);
-
-  if(mailDestination.proxyConfiguration?.url){
-    logger.debug(
-      `Setting proxy: ${mailDestination.proxyConfiguration.url} for proxy type: ${mailDestination.proxyType}.`
-    );
-    // transport.setupProxy(mailDestination.proxyConfiguration.url);
-  }
-  return transport;
+    ...mailClientOptions
+  });
 }
 
 function buildMailConfigsFromDestination(

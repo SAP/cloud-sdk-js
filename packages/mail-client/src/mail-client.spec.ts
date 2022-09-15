@@ -58,10 +58,21 @@ describe('mail client', () => {
       from: 'from2@example.com',
       to: 'to2@example.com'
     };
+
+    const mailClientOptions: MailClientOptions = {
+      secure: true,
+      proxy: 'http://my.proxy.com:25',
+      tls: {
+        rejectUnauthorized: false
+      }
+    };
     await expect(
-      sendMail(destination, [mailOptions1, mailOptions2])
+      sendMail(destination, [mailOptions1, mailOptions2], mailClientOptions)
     ).resolves.not.toThrow();
     expect(spyCreateTransport).toBeCalledTimes(1);
+    expect(spyCreateTransport).toBeCalledWith(
+      expect.objectContaining(mailClientOptions)
+    );
     expect(spySendMail).toBeCalledTimes(2);
     expect(spySendMail).toBeCalledWith(mailOptions1);
     expect(spySendMail).toBeCalledWith(mailOptions2);

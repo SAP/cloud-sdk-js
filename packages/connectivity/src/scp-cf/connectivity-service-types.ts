@@ -29,21 +29,6 @@ export interface ProxyConfiguration {
   protocol: Protocol;
 
   /**
-   * Username to use for basic authentication, optional if other means of authentication shall be used.
-   */
-  username?: string;
-
-  /**
-   * Password to use for basic authentication, optional if other means of authentication shall be used.
-   */
-  password?: string;
-
-  /**
-   * Complete proxy url that contains protocol (http by default), username, password, domain and port.
-   */
-  url?: string;
-
-  /**
    * HTTP headers to be added to a request if tunneled through the proxy.
    */
   headers?: ProxyConfigurationHeaders;

@@ -14,17 +14,15 @@ const custom = {
   }
 };
 
-const desirializer = mergeDefaultDeSerializersWith(custom);
+const deSerializer = mergeDefaultDeSerializersWith(custom);
 
 const { testEntityApi } = testService(custom);
 
-// $ExpectType TestEntitySingleLinkApi<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
-expectType<TestEntitySingleLinkApi<typeof desirializer>>(
+expectType<TestEntitySingleLinkApi<typeof deSerializer>>(
   testEntityApi.schema.TO_SINGLE_LINK._linkedEntityApi
 );
 
-// $ExpectType TestEntityLvl2MultiLinkApi<DeSerializers<number, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
-expectType<TestEntityLvl2MultiLinkApi<typeof desirializer>>(
+expectType<TestEntityLvl2MultiLinkApi<typeof deSerializer>>(
   testEntityApi.schema.TO_SINGLE_LINK._linkedEntityApi.schema.TO_MULTI_LINK
     ._linkedEntityApi
 );

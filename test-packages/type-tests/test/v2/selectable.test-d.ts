@@ -27,6 +27,6 @@ expectError<any>(
   new OneToOneLink(
     'SomeWrongLink',
     testEntityApi,
-    {} // $ExpectError
+    {}
   )
 );

@@ -59,12 +59,6 @@ expectType<BatchChangeSet<DefaultDeSerializerV2>>(
   otherServiceChangeset(createTestEntityFromOtherService)
 );
 
-// // $ExpectError
-// TestEntityChangeset(createTestEntityFromOtherService);
-
-// // $ExpectError
-// TestEntityChangeset(createTestEntity, createTestEntityFromOtherService);
-
 expectType<ODataBatchRequestBuilder<DefaultDeSerializerV2>>(
   batch(changeSetTestEntity, changeSetTestEntity)
 );
@@ -72,9 +66,6 @@ expectType<ODataBatchRequestBuilder<DefaultDeSerializerV2>>(
 expectType<ODataBatchRequestBuilder<DefaultDeSerializerV2>>(
   batch([changeSetTestEntity, changeSetTestEntity])
 );
-
-// // $ExpectError
-// Batch(changeSetTestEntity, changeSetOtherServiceTestEntity);
 
 expectType<() => ReadResponse<DefaultDeSerializers>>(
   (): ReadResponse => ({} as any)
@@ -99,7 +90,6 @@ async () => {
     expectType<TestEntity<DefaultDeSerializerV2>[]>(response.as(testEntityApi));
   }
 
-  // $ExpectType BatchResponse<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, number, any, Moment, Moment, Time>>[]
   const responsesCustomDeserializer = await batch(
     testService(customTestDeSerializers).testEntityApi.requestBuilder().getAll()
   ).execute({} as any);

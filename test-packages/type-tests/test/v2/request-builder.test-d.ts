@@ -24,7 +24,6 @@ const testMultiLinkInstance = testEntityMultiLinkApi.entityBuilder().build();
 /**
  * REQUEST BUILDER.
  */
-// $ExpectType TestEntityRequestBuilder<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<TestEntityRequestBuilder<DefaultDeSerializerV2>>(
   testEntityApi.requestBuilder()
 );
@@ -32,13 +31,11 @@ expectType<TestEntityRequestBuilder<DefaultDeSerializerV2>>(
 /**
  * METHOD REQUEST BUILDERS.
  */
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 const testEntityGetAllRequest = testEntityApi.requestBuilder().getAll();
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(testEntityGetAllRequest);
 
-// $ExpectType GetByKeyRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetByKeyRequestBuilder<
     TestEntity<DefaultDeSerializerV2>,
@@ -46,26 +43,21 @@ expectType<
   >
 >(testEntityApi.requestBuilder().getByKey('uuid', 'test'));
 
-// $ExpectType CreateRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   CreateRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(testEntityApi.requestBuilder().create(testEntityInstance));
 
-// $ExpectType UpdateRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   UpdateRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(testEntityApi.requestBuilder().update(testEntityInstance));
 
-// $ExpectError
 expectError<any>(testEntityApi.requestBuilder().create(testMultiLinkInstance));
 
-// $ExpectError
 expectError<any>(testEntityApi.requestBuilder().update(testMultiLinkInstance));
 
 /**
  * AsChildOf.
  */
-// $ExpectType CreateRequestBuilder<TestEntityMultiLink<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   CreateRequestBuilder<
     TestEntityMultiLink<DefaultDeSerializerV2>,
@@ -83,7 +75,7 @@ expectError<any>(
     .requestBuilder()
     .create(testMultiLinkInstance)
     .asChildOf(testEntityInstance, testEntitySchema.TO_OTHER_MULTI_LINK)
-); // $ExpectError
+);
 
 expectError<any>(
   testEntityMultiLinkApi
@@ -95,31 +87,27 @@ expectError<any>(
 /**
  * SELECTION.
  */
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(testEntityGetAllRequest.select(testEntitySchema.STRING_PROPERTY));
 
-// $ExpectError
 expectError<any>(
   testEntityGetAllRequest.select(testEntityMultiLinkSchema.STRING_PROPERTY)
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(testEntityGetAllRequest.select(testEntityApi.customField('CustomField')));
 
 expectError<any>(
   testEntityGetAllRequest.select(
-    testEntityMultiLinkApi.customField('CustomField') // $ExpectError
+    testEntityMultiLinkApi.customField('CustomField')
   )
 );
 
 /**
  * SELECTION & EXPANSION.
  */
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(
@@ -130,7 +118,6 @@ expectType<
   )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(
@@ -144,7 +131,7 @@ expectType<
 expectError<any>(
   testEntityGetAllRequest.select(
     testEntitySchema.TO_MULTI_LINK.select(
-      testEntitySchema.KEY_PROPERTY_GUID // $ExpectError
+      testEntitySchema.KEY_PROPERTY_GUID
     )
   )
 );
@@ -152,7 +139,6 @@ expectError<any>(
 /**
  * FILTER.
  */
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(
@@ -161,7 +147,6 @@ expectType<
   )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(
@@ -171,7 +156,6 @@ expectType<
   )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(
@@ -183,7 +167,6 @@ expectType<
   )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(
@@ -197,23 +180,22 @@ expectType<
 
 expectError<any>(
   testEntityGetAllRequest.filter(
-    testEntityMultiLinkSchema.STRING_PROPERTY.equals('test') // $ExpectError
+    testEntityMultiLinkSchema.STRING_PROPERTY.equals('test')
   )
 );
 
 expectError<any>(
   testEntityGetAllRequest.filter(
-    and(testEntityMultiLinkSchema.STRING_PROPERTY.equals('test')) // $ExpectError
+    and(testEntityMultiLinkSchema.STRING_PROPERTY.equals('test'))
   )
 );
 
 expectError<any>(
   testEntityGetAllRequest.filter(
-    or(testEntityMultiLinkSchema.STRING_PROPERTY.equals('test')) // $ExpectError
+    or(testEntityMultiLinkSchema.STRING_PROPERTY.equals('test'))
   )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(
@@ -222,7 +204,6 @@ expectType<
   )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(
@@ -231,7 +212,6 @@ expectType<
   )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(
@@ -245,26 +225,23 @@ expectType<
 
 expectError<any>(
   testEntitySchema.customField('SomeCustomField').edmString().equals(13214)
-); // $ExpectError
+);
 
 expectError<any>(
   testEntitySchema.customField('SomeCustomField').edmDouble().equals('aString')
-); // $ExpectError
+);
 
 /**
  * ORDER BY.
  */
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(testEntityGetAllRequest.orderBy(asc(testEntitySchema.STRING_PROPERTY)));
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(testEntityGetAllRequest.orderBy(desc(testEntitySchema.STRING_PROPERTY)));
 
-// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 expectType<
   GetAllRequestBuilder<TestEntity<DefaultDeSerializerV2>, DefaultDeSerializerV2>
 >(
@@ -276,6 +253,6 @@ expectType<
 
 expectError<any>(
   testEntityGetAllRequest.orderBy(
-    asc(testEntityMultiLinkSchema.STRING_PROPERTY) // $ExpectError
+    asc(testEntityMultiLinkSchema.STRING_PROPERTY)
   )
 );

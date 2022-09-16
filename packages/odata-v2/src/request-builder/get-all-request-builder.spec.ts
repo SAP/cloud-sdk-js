@@ -83,7 +83,7 @@ describe('GetAllRequestBuilder', () => {
       expect(request).toBe(expected);
     });
 
-    it('should set the correct order when both ascending order by default and descending order are passed', async () => {
+    it('should set the correct order when both default ascending order and descending order are passed', async () => {
       const expected =
         '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc,ComplexTypeProperty/DateTimeProperty%20desc';
       const stringProperty =

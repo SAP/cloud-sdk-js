@@ -1,5 +1,5 @@
 import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { asc, desc } from '@sap-cloud-sdk/odata-common';
+import { asc, desc } from "../order/orderable";
 import { defaultDestination } from '../../../../test-resources/test/test-util/request-mocker';
 const { testEntityApi } = testService();
 
@@ -7,6 +7,7 @@ describe('mock getAllRequestBuilders', () => {
   it('should set ascending order', async () => {
     const expected =
       '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc';
+    // const ascending = asc(testEntityApi.schema.COMPLEX_TYPE_PROPERTY)
     const request = await testEntityApi
       .requestBuilder()
       .getAll()

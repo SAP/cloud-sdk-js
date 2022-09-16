@@ -2,7 +2,7 @@ import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
-import { Orderable } from '../order';
+import { OrderableAndOrderableInput, isOrderable, asc } from '../order';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
@@ -61,13 +61,48 @@ export abstract class GetAllRequestBuilderBase<
    * @param orderBy - OrderBy statements to order the response by.
    * @returns The request builder itself, to facilitate method chaining.
    */
-  orderBy(orderBy: Orderable<EntityT>[]): this;
-  orderBy(...orderBy: Orderable<EntityT>[]): this;
   orderBy(
-    first: undefined | Orderable<EntityT> | Orderable<EntityT>[],
-    ...rest: Orderable<EntityT>[]
+    orderBy: OrderableAndOrderableInput<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): this;
+  orderBy(
+    ...orderBy: OrderableAndOrderableInput<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
+  ): this;
+  orderBy(
+    first:
+      | undefined
+      | OrderableAndOrderableInput<
+          EntityT,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >
+      | OrderableAndOrderableInput<
+          EntityT,
+          DeSerializersT,
+          EntityApi<EntityBase, DeSerializersT>
+        >[],
+    ...rest: OrderableAndOrderableInput<
+      EntityT,
+      DeSerializersT,
+      EntityApi<EntityBase, DeSerializersT>
+    >[]
   ): this {
-    this.requestConfig.orderBy = transformVariadicArgumentToArray(first, rest);
+    this.requestConfig.orderBy = transformVariadicArgumentToArray(
+      first,
+      rest
+    ).map(element => {
+      if (!isOrderable<EntityT, DeSerializersT>(element)) {
+        return asc(element);
+      }
+      return element;
+    });
     return this;
   }
 

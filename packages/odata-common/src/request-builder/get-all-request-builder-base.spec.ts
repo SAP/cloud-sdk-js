@@ -1,9 +1,11 @@
 import { testService as testServiceV2 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { testService as testServiceV4 } from "@sap-cloud-sdk/test-services-odata-v4/test-service";
-import { asc, desc } from "../order/orderable";
+import { asc, desc } from '@sap-cloud-sdk/odata-common';
 import { defaultDestination } from '../../../../test-resources/test/test-util/request-mocker';
 const { testEntityApi: testEntityApiV2 } = testServiceV2();
 const { testEntityApi: testEntityApiV4 } = testServiceV4();
+
+const testEntitySchema = testEntityApiV2.schema;
 
 describe('mock getAllRequestBuilders', () => {
   it('should set ascending order', async () => {

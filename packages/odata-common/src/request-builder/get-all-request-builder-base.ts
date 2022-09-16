@@ -97,11 +97,11 @@ export abstract class GetAllRequestBuilderBase<
     this.requestConfig.orderBy = transformVariadicArgumentToArray(
       first,
       rest
-    ).map(entity => {
-      if (!isOrderable<EntityT, DeSerializersT>(entity)) {
-        return asc(entity);
+    ).map(element => {
+      if (!isOrderable<EntityT, DeSerializersT>(element)) {
+        return asc(element);
       }
-      return entity;
+      return element;
     });
     return this;
   }

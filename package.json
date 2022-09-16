@@ -38,6 +38,9 @@
     "test-packages/type-tests",
     "test-packages/self-tests"
   ],
+  "tsd": {
+    "directory": "test-packages/type-tests/test-new"
+  },
   "scripts": {
     "postinstall": "yarn compile",
     "compile": "turbo run compile",

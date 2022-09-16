@@ -8,11 +8,14 @@
   "types": "test",
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "test": "dtslint --expectOnly --localTs ../../node_modules/typescript/lib test",
+    "test": "yarn tsd",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
   },
+  "tsd": {
+    "directory": "test"
+  },
   "devDependencies": {
-    "@definitelytyped/dtslint": "^0.0.115",
+    "tsd": "^0.23.0",
     "@sap-cloud-sdk/connectivity": "^2.8.0",
     "@sap-cloud-sdk/generator": "^2.8.0",
     "@sap-cloud-sdk/http-client": "^2.8.0",

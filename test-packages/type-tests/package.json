@@ -12,11 +12,10 @@
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
   },
   "tsd": {
-    "directory": "test-new"
+    "directory": "test"
   },
   "devDependencies": {
     "tsd": "^0.23.0",
-    "@definitelytyped/dtslint": "^0.0.127",
     "@sap-cloud-sdk/connectivity": "^2.8.0",
     "@sap-cloud-sdk/generator": "^2.8.0",
     "@sap-cloud-sdk/http-client": "^2.8.0",

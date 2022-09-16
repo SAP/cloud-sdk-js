@@ -130,9 +130,7 @@ expectType<
 
 expectError<any>(
   testEntityGetAllRequest.select(
-    testEntitySchema.TO_MULTI_LINK.select(
-      testEntitySchema.KEY_PROPERTY_GUID
-    )
+    testEntitySchema.TO_MULTI_LINK.select(testEntitySchema.KEY_PROPERTY_GUID)
   )
 );
 

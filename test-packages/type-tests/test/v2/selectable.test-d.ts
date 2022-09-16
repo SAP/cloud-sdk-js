@@ -23,10 +23,4 @@ expectType<
   )
 );
 
-expectError<any>(
-  new OneToOneLink(
-    'SomeWrongLink',
-    testEntityApi,
-    {}
-  )
-);
+expectError<any>(new OneToOneLink('SomeWrongLink', testEntityApi, {}));

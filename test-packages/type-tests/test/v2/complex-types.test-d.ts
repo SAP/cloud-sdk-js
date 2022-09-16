@@ -111,7 +111,5 @@ expectType<
 );
 
 expectError<any>(
-  getAllTSE.orderBy(
-    asc(testEntitySchema.COMPLEX_TYPE_PROPERTY)
-  )
+  getAllTSE.orderBy(asc(testEntitySchema.COMPLEX_TYPE_PROPERTY))
 );

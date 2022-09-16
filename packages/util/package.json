@@ -39,10 +39,12 @@
     "logform": "^2.4.2",
     "promise.allsettled": "^1.0.4",
     "voca": "^1.4.0",
-    "winston": "^3.8.1"
+    "winston": "^3.8.2",
+    "winston-transport": "^4.5.0"
   },
   "devDependencies": {
     "nock": "^13.2.9",
-    "typescript": "~4.7.4"
+    "typescript": "~4.8.3",
+    "mock-fs": "^5.1.4"
   }
 }

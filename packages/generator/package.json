@@ -48,18 +48,17 @@
     "@sap/edm-converters": "~1.0.42",
     "@types/fs-extra": "^9.0.1",
     "@types/glob": "^8.0.0",
-    "fast-xml-parser": "^4.0.9",
+    "fast-xml-parser": "^4.0.10",
     "fs-extra": "^10.0.0",
     "glob": "^8.0.1",
     "ts-morph": "^16.0.0",
-    "typescript": "~4.7.4",
+    "typescript": "~4.8.3",
     "voca": "^1.4.0",
     "yargs": "^17.0.1"
   },
   "devDependencies": {
     "@types/yargs": "^17.0.12",
     "execa": "^5.0.0",
-    "jest-extended": "^3.0.2",
     "mock-fs": "^5.1.4",
     "nock": "^13.2.9"
   }

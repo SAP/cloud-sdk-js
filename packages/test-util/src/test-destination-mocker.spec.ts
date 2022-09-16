@@ -18,7 +18,7 @@ describe('setTestDestinationInEnv', () => {
     name: 'envDestination'
   };
 
-  beforeAll(() => {
+  beforeEach(() => {
     mock({
       [pathRootNodeModules]: mock.load(pathRootNodeModules),
       'systems.json': JSON.stringify(systems),
@@ -26,11 +26,8 @@ describe('setTestDestinationInEnv', () => {
     });
   });
 
-  afterAll(() => {
-    mock.restore();
-  });
-
   afterEach(() => {
+    mock.restore();
     delete process.env['destinations'];
   });
 

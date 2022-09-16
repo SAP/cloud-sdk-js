@@ -3,12 +3,14 @@ import { writeFile, readFile, removeSync } from 'fs-extra';
 import execa from 'execa';
 import { VdmServiceMetadata } from '../vdm-types';
 import { getApiSpecificUsage } from './generation-and-usage';
-import { entityCodeSample, genericEntityCodeSample } from './code-samples';
+import { entityCodeSample } from './code-samples';
 
-xdescribe('generation-and-usage', () => {
+describe('generation-and-usage', () => {
   const service = {
     npmPackageName: '@sap/dummy-package',
     originalFileName: 'DummyClass',
+    directoryName: 'dummy-service',
+    className: 'dummyService',
     entities: [{ className: 'DummyCollection' }, { className: 'DummyClass' }]
   } as VdmServiceMetadata;
 
@@ -62,10 +64,6 @@ xdescribe('generation-and-usage', () => {
     ]
   } as VdmServiceMetadata;
 
-  it('creates generic usage example', () => {
-    expect(genericEntityCodeSample()).toMatchSnapshot();
-  });
-
   it('creates api specific usage for entity', () => {
     expect(getApiSpecificUsage(service)).toMatchSnapshot();
   });
@@ -82,12 +80,12 @@ xdescribe('generation-and-usage', () => {
     expect(getApiSpecificUsage(serviceWithActionImport)).toMatchSnapshot();
   });
 
-  it('creates compiling generic usage', async () => {
+  xit('creates compiling generic usage', async () => {
     const codeSnippet = entityCodeSample(
       'TestEntity',
       'TestService',
       '@sap-cloud-sdk/test-services-odata-v2/test-service'
-    ).instructions;
+    );
     const tsFile = 'generic-get-all-code-sample.ts';
     const jsFile = tsFile.replace('.ts', '.js');
     await writeFile(resolve(__dirname, tsFile), codeSnippet);

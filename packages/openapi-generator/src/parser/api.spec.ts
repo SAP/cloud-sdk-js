@@ -92,7 +92,10 @@ describe('parseApis', () => {
     interface ExtensionType {
       [apiNameExtension]?: string;
     }
-    type DocumentWithExtensions<T> = Omit<OpenAPIV3.Document<T>, 'paths'> &
+    type DocumentWithExtensions<T extends ExtensionType> = Omit<
+      OpenAPIV3.Document<T>,
+      'paths'
+    > &
       ExtensionType & { paths: OpenAPIV3.PathsObject<T, ExtensionType> };
     const document: DocumentWithExtensions<ExtensionType> = {
       ...emptyDocument,

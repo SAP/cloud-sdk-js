@@ -48,7 +48,7 @@
     "@sap/edm-converters": "~1.0.42",
     "@types/fs-extra": "^9.0.1",
     "@types/glob": "^8.0.0",
-    "fast-xml-parser": "^4.0.9",
+    "fast-xml-parser": "^4.0.10",
     "fs-extra": "^10.0.0",
     "glob": "^8.0.1",
     "ts-morph": "^16.0.0",

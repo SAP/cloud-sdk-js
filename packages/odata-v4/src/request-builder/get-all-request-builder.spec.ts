@@ -66,7 +66,7 @@ describe('GetAllRequestBuilder', () => {
         .url(defaultDestination);
       expect(request).toBe(expected);
     });
-    
+
     it('is built correctly', async () => {
       const expected =
         '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity';

@@ -58,7 +58,7 @@ describe('GetAllRequestBuilder', () => {
         .url(defaultDestination);
       expect(request).toBe(expected);
     });
-    
+
     it('should set descending order', async () => {
       const expected =
         '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20desc';

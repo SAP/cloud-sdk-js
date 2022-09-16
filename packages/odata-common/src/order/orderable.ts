@@ -43,8 +43,8 @@ export type OrderableAndOrderableInput<
   | OrderableInput<EntityT, DeSerializersT, LinkedEntityApiT>;
 
 /**
- * Convenience function to check whether a given type is of type {@link Orderable}.
  * @internal
+ * Convenience function to check whether a given type is of type {@link Orderable}.
  * @typeParam EntityT - Type of the entity to be ordered
  * @typeParam DeSerializersT - Type of the (de-)serializers
  * @param orderType - Type {@link Orderable} or {@link OrderableInput}.

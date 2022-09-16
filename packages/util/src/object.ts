@@ -46,7 +46,7 @@ export const renameKeys = (
  * @param obj - Object from which the values are taken.
  * @returns An object with the selected keys and corresponding values.
  */
-export const pick = <T>(keys: string[], obj: T): Partial<T> => {
+export const pick = <T extends object>(keys: string[], obj: T): Partial<T> => {
   const result = {};
   keys.forEach(key => {
     const value = obj[key];

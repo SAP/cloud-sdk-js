@@ -8,7 +8,5 @@ export type {
   Envelope,
   MailResponse,
   MailDestination,
-  MailClientOptions,
-  SmtpTransportOptions,
-  SDKOptions
+  MailClientOptions
 } from './mail-client-types';

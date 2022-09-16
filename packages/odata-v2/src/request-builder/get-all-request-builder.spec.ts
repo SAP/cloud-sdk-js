@@ -83,6 +83,19 @@ describe('GetAllRequestBuilder', () => {
       expect(request).toBe(expected);
     });
 
+    it('should set the correct order when both ascending order by default and descending order are passed', async () => {
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc,ComplexTypeProperty/DateTimeProperty%20desc';
+      const stringProperty = testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty
+      const dateTimeProperty = testEntityApi.schema.COMPLEX_TYPE_PROPERTY.dateTimeProperty
+      const request = await testEntityApi
+        .requestBuilder()
+        .getAll()
+        .orderBy(stringProperty, desc(dateTimeProperty))
+        .url(defaultDestination);
+      expect(request).toBe(expected);
+    });
+
     it('is built correctly', async () => {
       const expected =
         '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity';

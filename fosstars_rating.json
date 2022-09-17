@@ -258,9 +258,9 @@
         }
       }
     },
-    "value" : 6.736624758220502,
+    "value" : 6.573007736943906,
     "weight" : 1.0,
-    "confidence" : 10.0,
+    "confidence" : 9.645390070921986,
     "usedValues" : [ {
       "type" : "ScoreValue",
       "score" : {
@@ -1540,7 +1540,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 249,
+        "number" : 253,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1551,7 +1551,7 @@
         "number" : 4,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "249 commits in the last 3 months results to 10.00 points", "4 contributors increase the score value from 10.00 to 11.00" ],
+      "explanation" : [ "253 commits in the last 3 months results to 10.00 points", "4 contributors increase the score value from 10.00 to 11.00" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
@@ -2677,9 +2677,9 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 1.697,
+      "value" : 0.159,
       "weight" : 0.5,
-      "confidence" : 10.0,
+      "confidence" : 6.666666666666667,
       "usedValues" : [ {
         "type" : "IntegerValue",
         "feature" : {
@@ -2697,12 +2697,11 @@
         "number" : 15,
         "explanation" : [ ]
       }, {
-        "type" : "IntegerValue",
+        "type" : "UnknownValue",
         "feature" : {
           "type" : "PositiveIntegerFeature",
           "name" : "Number of projects on GitHub that use an open source project"
         },
-        "number" : 2307,
         "explanation" : [ ]
       } ],
       "explanation" : [ ],

@@ -109,10 +109,16 @@ export async function getDestination(
  * @param destinations - Array of destinations.
  * @returns Logs of the retrival of destinations.
  */
- function destinationFetchLogHelper(origin: string, destinations: Destination[]): string {
+function destinationFetchLogHelper(
+  origin: string,
+  destinations: Destination[]
+): string {
   return destinations.reduce(
     (prevLogMessages, currentDestination) =>
-      prevLogMessages + `Retrieving ${origin} destination: ${currentDestination.name}`, '');
+      prevLogMessages +
+      `Retrieving ${origin} destination: ${currentDestination.name}`,
+    ''
+  );
 }
 
 /**
@@ -148,7 +154,9 @@ export async function getAllDestinationsFromDestinationService(
     fetchSubaccountDestinations(destinationServiceUri, token.encoded, options)
   ]);
 
-  const loggerMessage = destinationFetchLogHelper('instance', instance) + destinationFetchLogHelper('subaccount', subaccount);
+  const loggerMessage =
+    destinationFetchLogHelper('instance', instance) +
+    destinationFetchLogHelper('subaccount', subaccount);
 
   logger.debug(loggerMessage);
 

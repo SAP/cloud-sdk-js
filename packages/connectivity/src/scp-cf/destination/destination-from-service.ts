@@ -10,10 +10,14 @@ import {
 } from '../jwt';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
-import { getDestinationService, getDestinationServiceCredentialsList } from '../environment-accessor';
+import {
+  getDestinationService,
+  getDestinationServiceCredentialsList
+} from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -41,7 +45,6 @@ import {
   ProxyStrategy,
   proxyStrategy
 } from './http-proxy-util';
-import { DestinationServiceCredentials } from '../environment-accessor-types';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -112,7 +115,7 @@ const emptyDestinationByType: DestinationsByType = {
  * Utility function to get destination service credentails, including error handling.
  * @internal
  */
- export function getDestinationServiceCredentials(): DestinationServiceCredentials {
+export function getDestinationServiceCredentials(): DestinationServiceCredentials {
   const credentials = getDestinationServiceCredentialsList();
   if (!credentials || credentials.length === 0) {
     throw Error(

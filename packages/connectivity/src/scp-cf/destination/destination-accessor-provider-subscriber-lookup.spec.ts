@@ -1,5 +1,6 @@
 import nock from 'nock';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { AxiosError } from 'axios';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
@@ -109,6 +110,24 @@ function mockSubscriber(returnEmpty: boolean): nock.Scope[] {
     )
   ];
 }
+
+function mockInternalErrorSubscriber(): nock.Scope[] {
+  return [
+    mockInstanceDestinationsCall(
+      nock,
+      'Internal Server Error',
+      500,
+      subscriberServiceToken
+    ),
+    mockSubaccountDestinationsCall(
+      nock,
+      'Internal Server Error',
+      500,
+      subscriberServiceToken
+    )
+  ];
+}
+
 interface mocks {
   subscriberMocks: nock.Scope[];
   providerMocks: nock.Scope[];
@@ -389,5 +408,25 @@ describe('call getAllDestinations with and without subscriber token', () => {
     expect(debugSpy).toHaveBeenCalledWith(
       'Could not retrieve destinations from destination service.'
     );
+  });
+
+  it('should throw an error', async () => {
+    nock.cleanAll();
+    jest.clearAllMocks();
+
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
+    mockInternalErrorSubscriber();
+
+    await getAllDestinationsFromDestinationService({
+      ...options,
+      jwt: subscriberUserJwt
+    }).catch((error: ErrorWithCause) => {
+      const errorStatus = (error.rootCause as AxiosError).response!.status;
+
+      expect(errorStatus).toEqual(500);
+      expect(error.message).toMatch('Failed to fetch instance destinations.');
+    });
   });
 });

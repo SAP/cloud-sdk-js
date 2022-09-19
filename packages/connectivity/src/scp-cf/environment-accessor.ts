@@ -7,7 +7,7 @@ import {
   Service,
   XsuaaServiceCredentials
 } from './environment-accessor-types';
-import { getDestinationServiceCredentials } from './destination/destination-accessor';
+import { getDestinationServiceCredentials } from './destination';
 
 const logger = createLogger({
   package: 'connectivity',

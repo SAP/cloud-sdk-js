@@ -382,11 +382,11 @@ describe('call getAllDestinations with and without subscriber token', () => {
       package: 'connectivity',
       messageContext: 'destination-accessor'
     });
-    const warnSpy = jest.spyOn(logger, 'warn');
+    const debugSpy = jest.spyOn(logger, 'debug');
 
     const allDestinations = await getAllDestinationsFromDestinationService();
-    expect(allDestinations).toEqual(null);
-    expect(warnSpy).toHaveBeenCalledWith(
+    expect(allDestinations).toEqual([]);
+    expect(debugSpy).toHaveBeenCalledWith(
       'Could not retrieve destinations from destination service.'
     );
   });

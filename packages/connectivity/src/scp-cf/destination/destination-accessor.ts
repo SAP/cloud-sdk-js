@@ -116,7 +116,7 @@ function destinationFetchLogHelper(
   return destinations.reduce(
     (prevLogMessages, currentDestination) =>
       prevLogMessages +
-      `Retrieving ${origin} destination: ${currentDestination.name}`,
+      `Retrieving ${origin} destination: ${currentDestination.name}.\n`,
     ''
   );
 }
@@ -143,10 +143,9 @@ export async function getAllDestinationsFromDestinationService(
     (await DestinationFromServiceRetriever.getProviderServiceToken(options));
 
   const destinationServiceUri = getDestinationServiceCredentials().uri;
+  const accountName = parseSubdomain(token.decoded.iss!);
   logger.debug(
-    `Retrieving all destinations for account: "${parseSubdomain(
-      token.decoded.iss!
-    )}" from destination service.`
+    `Retrieving all destinations for account: "${accountName}" from destination service.`
   );
 
   const [instance, subaccount] = await Promise.all([
@@ -164,9 +163,7 @@ export async function getAllDestinationsFromDestinationService(
 
   if (allDestinations && allDestinations.length !== 0) {
     logger.debug(
-      `Successfully retrieved all destinations for account: "${parseSubdomain(
-        token.decoded.iss!
-      )}" from destination service.`
+      `Successfully retrieved all destinations for account: "${accountName}" from destination service.`
     );
   } else {
     logger.debug('Could not retrieve destinations from destination service.');

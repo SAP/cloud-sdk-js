@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/connectivity': minor
 ---
 
-[New Functionality] Support fetching all destinations from the destination service simultaneously.
+[New Functionality] Support fetching all subaccount- and service instance destinations from the destination service simultaneously.

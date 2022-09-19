@@ -1,6 +1,4 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { DestinationServiceCredentials } from '../environment-accessor-types';
-import { getDestinationServiceCredentialsList } from '../environment-accessor';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { parseSubdomain } from '../subdomain-replacer';
 import {
@@ -16,7 +14,8 @@ import {
 } from './destination-from-vcap';
 import {
   getDestinationFromDestinationService,
-  DestinationFromServiceRetriever
+  DestinationFromServiceRetriever,
+  getDestinationServiceCredentials
 } from './destination-from-service';
 import {
   DestinationFetchOptions,
@@ -105,23 +104,15 @@ export async function getDestination(
 }
 
 /**
- * Utility function to get destination service credentails, including error handling.
- * @internal
+ * Creates comprehensive log messages from a destinations array and their origin.
+ * @param origin - Origin of the destination.
+ * @param destinations - Array of destinations.
+ * @returns Logs of the retrival of destinations.
  */
-export function getDestinationServiceCredentials(): DestinationServiceCredentials {
-  const credentials = getDestinationServiceCredentialsList();
-  if (!credentials || credentials.length === 0) {
-    throw Error(
-      'No binding to a destination service instance found. Please bind a destination service instance to your application.'
-    );
-  }
-  if (credentials.length > 1) {
-    logger.warn(
-      'Found more than one destination service instance. Using the first one.'
-    );
-  }
-
-  return credentials[0];
+ function destinationFetchLogHelper(origin: string, destinations: Destination[]): string {
+  return destinations.reduce(
+    (prevLogMessages, currentDestination) =>
+      prevLogMessages + `Retrieving ${origin} destination: ${currentDestination.name}`, '');
 }
 
 /**
@@ -132,7 +123,7 @@ export function getDestinationServiceCredentials(): DestinationServiceCredential
  */
 export async function getAllDestinationsFromDestinationService(
   options: AllDestinationOptions = {}
-): Promise<DestinationWithoutToken[] | null> {
+): Promise<DestinationWithoutToken[]> {
   logger.debug(
     'Attempting to retrieve all destinations from destination service.'
   );
@@ -157,15 +148,8 @@ export async function getAllDestinationsFromDestinationService(
     fetchSubaccountDestinations(destinationServiceUri, token.encoded, options)
   ]);
 
-  let loggerMessage = '';
-  instance.map(
-    destination =>
-      (loggerMessage += `Retrieving instance destination: ${destination.name}.\n`)
-  );
-  subaccount.map(
-    destination =>
-      (loggerMessage += `Retrieving subaccount destination: ${destination.name}.\n`)
-  );
+  const loggerMessage = destinationFetchLogHelper('instance', instance) + destinationFetchLogHelper('subaccount', subaccount);
+
   logger.debug(loggerMessage);
 
   const allDestinations = instance.concat(subaccount);
@@ -177,8 +161,8 @@ export async function getAllDestinationsFromDestinationService(
       )}" from destination service.`
     );
   } else {
-    logger.warn('Could not retrieve destinations from destination service.');
-    return null;
+    logger.debug('Could not retrieve destinations from destination service.');
+    return [];
   }
 
   const allDestinationsWithoutToken: DestinationWithoutToken[] =

@@ -10,7 +10,7 @@ import {
 } from '../jwt';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
-import { getDestinationService } from '../environment-accessor';
+import { getDestinationService, getDestinationServiceCredentialsList } from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
@@ -41,7 +41,7 @@ import {
   ProxyStrategy,
   proxyStrategy
 } from './http-proxy-util';
-import { getDestinationServiceCredentials } from './destination-accessor';
+import { DestinationServiceCredentials } from '../environment-accessor-types';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -107,6 +107,26 @@ const emptyDestinationByType: DestinationsByType = {
   instance: [],
   subaccount: []
 };
+
+/**
+ * Utility function to get destination service credentails, including error handling.
+ * @internal
+ */
+ export function getDestinationServiceCredentials(): DestinationServiceCredentials {
+  const credentials = getDestinationServiceCredentialsList();
+  if (!credentials || credentials.length === 0) {
+    throw Error(
+      'No binding to a destination service instance found. Please bind a destination service instance to your application.'
+    );
+  }
+  if (credentials.length > 1) {
+    logger.warn(
+      'Found more than one destination service instance. Using the first one.'
+    );
+  }
+
+  return credentials[0];
+}
 
 /**
  * Retrieves a destination with the given name from the Cloud Foundry destination service.

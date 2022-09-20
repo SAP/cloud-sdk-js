@@ -406,7 +406,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
     const allDestinations = await getAllDestinationsFromDestinationService();
     expect(allDestinations).toEqual([]);
     expect(debugSpy).toHaveBeenCalledWith(
-      'Could not retrieve destinations from destination service.'
+      "Didn't receive any destinations from destination service."
     );
   });
 

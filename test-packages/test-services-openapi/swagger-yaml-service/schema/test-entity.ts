@@ -3,19 +3,17 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-
-/**
- * Representation of the 'TestEntity' schema.
- */
-export type TestEntity =
-  | {
+    
+    /**
+     * Representation of the 'TestEntity' schema.
+     */
+    export type TestEntity = {
       /**
        * A string property
        */
-      stringProperty?: string;
+      'stringProperty'?: string;
       /**
        * An integer property
        */
-      integerProperty?: number;
-    }
-  | Record<string, any>;
+      'integerProperty'?: number;
+    } | Record<string, any>;

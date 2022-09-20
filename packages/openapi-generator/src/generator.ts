@@ -71,7 +71,9 @@ export async function generateWithParsedOptions(
 
   if (options.clearOutputDir) {
     const rm = promisesFs.rm || promisesFs.rmdir;
-    await rm(options.outputDir, { recursive: true });
+    const forceOption =
+      typeof promisesFs.rm === 'undefined' ? {} : { force: true };
+    await rm(options.outputDir, { recursive: true, ...forceOption });
   }
   const inputFilePaths = await getInputFilePaths(options.input);
 

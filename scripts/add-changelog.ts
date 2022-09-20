@@ -20,7 +20,7 @@ function getChangelogWithVersion(v = currentSdkVersion): string {
   const year = date.getFullYear();
 
   const headerWithVersion = `${unixEOL}## ${v} [Core Modules] - ${month} ${day}, ${year}`
-  const apiReferenceLink= `**API Reference:** [${v}](https://sap.github.io/cloud-sdk/api/${v})`;
+  const apiReferenceLink= `${unixEOL}**API Reference:** [${v}](https://sap.github.io/cloud-sdk/api/${v})`;
 
   return [headerWithVersion,apiReferenceLink,logs].join(unixEOL);
 }

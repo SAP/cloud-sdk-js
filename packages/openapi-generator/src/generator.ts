@@ -12,7 +12,6 @@ import {
   getSdkMetadataFileNames,
   getSdkVersion,
   readCompilerOptions,
-  sdkMetadataHeader,
   transpileDirectory,
   copyFiles,
   packageDescription
@@ -303,26 +302,13 @@ function generateReadme(
 async function generateMetadata(
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
-  { packageVersion, overwrite }: ParsedGeneratorOptions
+  { overwrite }: ParsedGeneratorOptions
 ) {
   const { name: inputFileName, dir: inputDirPath } = parse(inputFilePath);
-  const { clientFileName, headerFileName } =
-    getSdkMetadataFileNames(inputFileName);
+  const { clientFileName } = getSdkMetadataFileNames(inputFileName);
 
-  logger.verbose(`Generating header metadata ${headerFileName}.`);
   const metadataDir = resolve(inputDirPath, 'sdk-metadata');
   await mkdir(metadataDir, { recursive: true });
-  const headerFile = createFile(
-    metadataDir,
-    headerFileName,
-    JSON.stringify(
-      await sdkMetadataHeader('rest', inputFileName, packageVersion),
-      null,
-      2
-    ),
-    overwrite,
-    false
-  );
 
   logger.verbose(`Generating client metadata ${clientFileName}...`);
   const clientFile = createFile(
@@ -332,7 +318,7 @@ async function generateMetadata(
     overwrite,
     false
   );
-  return Promise.all([headerFile, clientFile]);
+  return clientFile;
 }
 
 async function generatePackageJson(

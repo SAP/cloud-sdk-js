@@ -5,9 +5,9 @@ Test Service for OpenAPI version 2 (also known as Swagger) as YAML file.
 
 ## Usage Example
 ```
-import { DefaultApi } from 'swagger-yaml-service';
+import { DefaultApi } from './generated/swagger-yaml-service';
 
-const responseData = await DefaultApi.postEntity(pathParam).execute({ destinationName:'myDestinationName' });
+const responseData = await DefaultApi.postEntity(pathParam).execute({ destinationName: 'myDestinationName' });
 ```
 
 ## Helpful Links

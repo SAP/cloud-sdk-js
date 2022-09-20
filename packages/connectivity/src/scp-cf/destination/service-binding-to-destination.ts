@@ -25,7 +25,7 @@ export const serviceToDestinationTransformers: Record<
 
 async function xsuaaToDestination(
   service: Service,
-  options: PartialDestinationFetchOptions
+  options?: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
@@ -37,7 +37,7 @@ async function xsuaaToDestination(
 
 async function serviceManagerBindingToDestination(
   service: Service,
-  options: PartialDestinationFetchOptions
+  options?: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
@@ -49,7 +49,7 @@ async function serviceManagerBindingToDestination(
 
 async function destinationBindingToDestination(
   service: Service,
-  options: PartialDestinationFetchOptions
+  options?: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
@@ -61,7 +61,7 @@ async function destinationBindingToDestination(
 
 async function saasRegistryBindingToDestination(
   service: Service,
-  options: PartialDestinationFetchOptions
+  options?: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
@@ -73,7 +73,7 @@ async function saasRegistryBindingToDestination(
 
 async function businessLoggingBindingToDestination(
   service: Service,
-  options: PartialDestinationFetchOptions
+  options?: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const transformedService = {
     ...service,
@@ -89,7 +89,7 @@ async function businessLoggingBindingToDestination(
 
 async function workflowBindingToDestination(
   service: Service,
-  options: PartialDestinationFetchOptions
+  options?: PartialDestinationFetchOptions
 ): Promise<Destination> {
   const transformedService = {
     ...service,

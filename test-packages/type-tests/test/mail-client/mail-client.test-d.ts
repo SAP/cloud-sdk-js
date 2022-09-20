@@ -9,12 +9,16 @@ expectType<Promise<MailResponse[]>>(
 
 expectType<Promise<MailResponse[]>>(
   sendMail({ destinationName: 'dest' }, [mailConfig, mailConfig], {
-    parallel: true
+    tls: {
+      rejectUnauthorized: false
+    }
   })
 );
 
 expectType<Promise<MailResponse[]>>(
   sendMail({ destinationName: 'dest' }, [mailConfig, mailConfig], {
-    parallel: false
+    sdkOptions: {
+      parallel: false
+    }
   })
 );

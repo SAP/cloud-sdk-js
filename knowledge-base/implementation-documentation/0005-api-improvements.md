@@ -214,6 +214,62 @@ Cons:
 - Difficult to implement.
 - Not realistic for 2.0, but maybe later.
 
+## Function style filtering [Updated]
+
+The new filter api is implemented as non-breaking change and the current methods are deprecated. Lambda filters on collection properties will be implemented as a new feature in the major version.
+
+### Current API
+
+```ts
+peopleApi.requestBuilder()
+  .getAll()
+  .filter(
+    //Basic
+    peopleApi.schema.USER_NAME.equals('Peter'),
+    // 1-to-1 navigation
+    peopleApi.schema.PHOTOS.filter(photoApi.schema.NAME.equals('Photo1')),
+    // 1-to-N navigation
+    peopleApi.schema.TO_FRIENDS.filter(
+      any(
+        peopleApi.schema.FIRST_NAME.equals('John'),
+        peopleApi.schema.LAST_NAME.equals('Miller')
+      )
+    )
+  );
+```
+Filters on collection properties are not supported.
+
+### Examples
+
+**Option 1: Similar to the current api**
+
+```ts
+.filter(({ USER_NAME, PHOTOS, TO_FRIENDS, EMAILS, ADDRESSES }) => 
+  and(
+    USER_NAME.equals('Peter'),
+    PHOTOS.filter((photo) => photo.NAME.equals('Photo1')),
+    TO_FRIENDS.filter((friend) => any(friend.FIRST_NAME.equals('John'))),
+    EMAILS.filter(e => any(e.equals('peter@example.com'))), // String type Collection
+    ADDRESSES.filter(address => any(address.street.equals('Peter'))) // Complex type collection
+  )
+);
+```
+Issue remains: The inner `.filter` is confusing, because it implies that we are filtering the Friends/Photos/Emails here, while it is actually filtering people.
+
+**Option 2: Without inner `.filter` on properties**
+
+```ts
+.filter(({ USER_NAME, PHOTOS, TO_FRIENDS, EMAILS, ADDRESSES }) => and(
+    USER_NAME.equals('Peter'),
+    PHOTOS.filter(({ NAME }) => NAME.equals('Photo1'))
+    TO_FRIENDS.any(({ FIRST_NAME }) => and(FIRST_NAME.equals('Peter'), LAST_NAME.equals(''))),
+    EMAILS.any(e => e.equals('Peter')), // String type Collection
+    ADDRESSES.any(address => address.street.equals('Peter')) // Complex type collection
+));
+```
+- Shorter, improved discoverability of lambda filters.
+- Need to decide api for 1-1 nav property, since it has no direct filter method except `.filter`.
+
 ## Get rid of `execute`
 
 ### Current API

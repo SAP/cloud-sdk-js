@@ -1,5 +1,8 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { helpfulLinksSection } from '@sap-cloud-sdk/generator-common/internal';
+import {
+  helpfulLinksSection,
+  usageHeaderText
+} from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiDocument } from '../openapi-types';
 import { getApiSpecificUsage } from '../sdk-metadata';
 /**
@@ -22,14 +25,8 @@ ${helpfulLinksSection().join(unixEOL)}
 
 function addUsageExample(openApiDocument: OpenApiDocument): string[] {
   const usageText = getApiSpecificUsage(openApiDocument);
-  if (usageText.instructions) {
-    return [
-      `## ${usageText.header}`,
-      '```',
-      `${usageText.instructions}`,
-      '```',
-      ''
-    ];
+  if (usageText) {
+    return [`## ${usageHeaderText}`, '```', `${usageText}`, '```', ''];
   }
   return [];
 }

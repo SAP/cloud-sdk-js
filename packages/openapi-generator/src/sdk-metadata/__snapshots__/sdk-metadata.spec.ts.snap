@@ -1,130 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sdk-metadata generates metadata content for services with pregenerated lib 1`] = `
-Object {
-  "generationAndUsage": Object {
-    "apiSpecificUsage": Object {
-      "header": "Usage Example",
-      "instructions": "import { DummyApi } from '@sap/dummy-package';
-
-const responseData = await DummyApi.DummyFunction(dummyId, undefined, { query_1: 'myQuery1' }).execute({ destinationName:'myDestinationName' });",
-      "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OpenAPI client libraries chose \\"OpenAPI Consumption Manual\\" from the \\"Helpful Links\\" menu.",
-    },
-    "generationSteps": Object {
-      "header": "Installation & Generation Steps",
-      "instructions": "<ol type=\\"1\\"><li>Install <a href=\\"https://docs.npmjs.com/downloading-and-installing-node-js-and-npm\\">Node and npm</a>. We recommend the use of the LTS version.</li><li>Download the API specification from the Overview -&gt; API Specification section. Choose JSON format.</li><li>Install the generator by running: <code><b>npm install -g @sap-cloud-sdk/openapi-generator</b></code></li><li>Generate a typed client by running the generator: <code><b>openapi-generator --inputDir path/to/specification/ --outputDir path/to/client/</b></code></li></ol><p>You should now find generated classes in the output directory specified in step 4. By default, we generate TypeScript only. If you need to transpile it to JavaScript, check the <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client#options-of-the-openapi-cli\\"> CLI options in the documentation</a>.</p><p>If you encounter issues during generation, carefully check your configuration and refer to the <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client\\">extended documentation</a> on generating OpenAPI clients</a>.</p><p>Congratulations! Check the usage example below to import and use your generated OpenAPI client library.</p>",
-      "text": "You can generate a typed OData client for this service on your own. Follow the instructions below to install the SAP Cloud SDK OpenAPI generator and complete the generation steps:",
-    },
-    "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/openapi-generator",
-    "generatorVersion": Any<String>,
-    "genericUsage": Object {
-      "header": "Usage Example",
-      "instructions": "import { MyApi } from 'my-npm-package';
-
-const responseData = await MyApi.myFunction().execute({ destinationName:'myDestinationName' });",
-      "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OpenAPI client libraries chose \\"OpenAPI Consumption Manual\\" from the \\"Helpful Links\\" menu.",
-    },
-    "links": Object {
-      "generationManual": Object {
-        "name": "OpenAPI client generation manual",
-        "url": "https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client",
-      },
-      "gettingStarted": Object {
-        "name": "Getting Started with the SAP Cloud SDK for JavaScript",
-        "url": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
-      },
-      "overviewDocumentation": Object {
-        "name": "OpenAPI consumption manual",
-        "url": "https://sap.github.io/cloud-sdk/docs/js/features/openapi/execute-openapi-request",
-      },
-      "sdkDocumentation": Object {
-        "name": "The SAP Cloud SDK documentation",
-        "url": "https://sap.github.io/cloud-sdk/",
-      },
-      "support": Object {
-        "name": "Get support or give feedback",
-        "url": "https://sap.github.io/cloud-sdk/docs/overview/get-support",
-      },
-    },
-    "repository": "npm",
-  },
-  "language": "JavaScript",
-  "pregeneratedLibrary": Object {
-    "compatibilityNotes": "",
-    "dependencyName": "@sap/dummy-package",
-    "description": "SAP Cloud SDK for JavaScript: Generated client for service dummy",
-    "generatedAt": "/Date(0)/",
-    "installLibrarySteps": Object {
-      "header": "Installation",
-      "instructions": "npm i @sap/dummy-package:latest",
-      "text": "Add this client library as a dependency to your JavaScript project by running the npm command below in the root folder of your project. For more details take a look at our \\"Getting Started with the SAP Cloud SDK for JavaScript\\" guide in the \\"Helpful Links\\" menu.",
-    },
-    "repository": "npm",
-    "repositoryLink": "https://www.npmjs.com/package/@sap/dummy-package",
-    "version": "1.2.3",
-  },
-  "serviceStatus": Object {
-    "status": "certified",
-    "statusLongText": "You can download our pregenerated API client for this API.",
-    "statusText": "API Client available for download",
-  },
-}
-`;
-
 exports[`sdk-metadata generates metadata content for services without pregenerated lib 1`] = `
 Object {
-  "generationAndUsage": Object {
-    "apiSpecificUsage": Object {
-      "header": "Usage Example",
-      "instructions": "import { DummyApi } from '@sap/dummy-package';
+  "apiSpecificUsage": "import { DummyApi } from './generated/dummy-package';
 
-const responseData = await DummyApi.DummyFunction(dummyId, undefined, { query_1: 'myQuery1' }).execute({ destinationName:'myDestinationName' });",
-      "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OpenAPI client libraries chose \\"OpenAPI Consumption Manual\\" from the \\"Helpful Links\\" menu.",
-    },
-    "generationSteps": Object {
-      "header": "Installation & Generation Steps",
-      "instructions": "<ol type=\\"1\\"><li>Install <a href=\\"https://docs.npmjs.com/downloading-and-installing-node-js-and-npm\\">Node and npm</a>. We recommend the use of the LTS version.</li><li>Download the API specification from the Overview -&gt; API Specification section. Choose JSON format.</li><li>Install the generator by running: <code><b>npm install -g @sap-cloud-sdk/openapi-generator</b></code></li><li>Generate a typed client by running the generator: <code><b>openapi-generator --inputDir path/to/specification/ --outputDir path/to/client/</b></code></li></ol><p>You should now find generated classes in the output directory specified in step 4. By default, we generate TypeScript only. If you need to transpile it to JavaScript, check the <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client#options-of-the-openapi-cli\\"> CLI options in the documentation</a>.</p><p>If you encounter issues during generation, carefully check your configuration and refer to the <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client\\">extended documentation</a> on generating OpenAPI clients</a>.</p><p>Congratulations! Check the usage example below to import and use your generated OpenAPI client library.</p>",
-      "text": "You can generate a typed OData client for this service on your own. Follow the instructions below to install the SAP Cloud SDK OpenAPI generator and complete the generation steps:",
-    },
-    "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/openapi-generator",
-    "generatorVersion": Any<String>,
-    "genericUsage": Object {
-      "header": "Usage Example",
-      "instructions": "import { MyApi } from 'my-npm-package';
-
-const responseData = await MyApi.myFunction().execute({ destinationName:'myDestinationName' });",
-      "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OpenAPI client libraries chose \\"OpenAPI Consumption Manual\\" from the \\"Helpful Links\\" menu.",
-    },
-    "links": Object {
-      "generationManual": Object {
-        "name": "OpenAPI client generation manual",
-        "url": "https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client",
-      },
-      "gettingStarted": Object {
-        "name": "Getting Started with the SAP Cloud SDK for JavaScript",
-        "url": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
-      },
-      "overviewDocumentation": Object {
-        "name": "OpenAPI consumption manual",
-        "url": "https://sap.github.io/cloud-sdk/docs/js/features/openapi/execute-openapi-request",
-      },
-      "sdkDocumentation": Object {
-        "name": "The SAP Cloud SDK documentation",
-        "url": "https://sap.github.io/cloud-sdk/",
-      },
-      "support": Object {
-        "name": "Get support or give feedback",
-        "url": "https://sap.github.io/cloud-sdk/docs/overview/get-support",
-      },
-    },
-    "repository": "npm",
-  },
+const responseData = await DummyApi.DummyFunction(dummyId, undefined, { query_1: 'myQuery1' }).execute({ destinationName: 'myDestinationName' });",
+  "apiType": "OpenAPI",
+  "generatorVersion": Any<String>,
   "language": "JavaScript",
-  "pregeneratedLibrary": undefined,
-  "serviceStatus": Object {
-    "status": "verified",
-    "statusLongText": "The SAP Cloud SDK team checked for this API that generating an API client works, but no pregenerated client is available. You can generate your own client for this API.",
-    "statusText": "API Client generation tested but no download available",
-  },
+  "serviceStatus": "verified",
 }
 `;

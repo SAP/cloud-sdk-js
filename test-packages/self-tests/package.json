@@ -5,16 +5,19 @@
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "private": true,
-  "types": "test",
+  "types": "tsd-test",
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "test": "yarn test:dtslint-test && yarn test:madge-test",
-    "test:dtslint-test": "yarn ts-node dtslint-test/check-if-dtslint-is-working.ts",
+    "test": "yarn test:madge-test",
     "test:madge-test": "yarn ts-node madge-test/check-if-madge-is-working.ts",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
   },
+  "tsd": {
+    "directory": "test-test"
+  },
   "devDependencies": {
-    "@definitelytyped/dtslint": "^0.0.115",
+    "@definitelytyped/dtslint": "^0.0.127",
+    "tsd": "^0.24.1",
     "madge": "^5.0.0"
   }
 }

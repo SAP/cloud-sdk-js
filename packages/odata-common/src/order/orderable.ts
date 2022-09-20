@@ -30,6 +30,45 @@ export type OrderableInput<
   | ComplexTypePropertyFields<EntityT>;
 
 /**
+ * A union of Orderable and OrderableInput.
+ * @typeParam EntityT - Type of the entity to be ordered
+ */
+export type OrderableAndOrderableInput<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>,
+  LinkedEntityApiTOptional extends EntityApi<EntityBase> = EntityApi<EntityBase>
+> =
+  | Orderable<EntityT, LinkedEntityApiTOptional>
+  | OrderableInput<EntityT, DeSerializersT, LinkedEntityApiT>;
+
+/**
+ * @internal
+ * Convenience function to check whether a given type is of type {@link Orderable}.
+ * @typeParam EntityT - Type of the entity to be ordered
+ * @typeParam DeSerializersT - Type of the (de-)serializers
+ * @param orderType - Type {@link Orderable} or {@link OrderableInput}.
+ * @returns Whether the given `orderType` is of type {@link Orderable}.
+ */
+export function isOrderable<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  orderType:
+    | Orderable<EntityT>
+    | OrderableInput<
+        EntityT,
+        DeSerializersT,
+        EntityApi<EntityBase, DeSerializersT>
+      >
+): orderType is Orderable<EntityT> {
+  return (
+    !!(orderType as Order<EntityT>).orderType ||
+    !!(orderType as OrderLink<EntityT, EntityApi<EntityBase>>).link
+  );
+}
+
+/**
  * Create new Order by `orderBy._fieldName` in ascending order.
  * @typeParam EntityT - Type of the entity to be ordered
  * @param orderBy - Field or link to be ordered by.

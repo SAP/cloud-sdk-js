@@ -1,11 +1,10 @@
 import {
   getSdkMetadataClient,
-  getPregeneratedLibrary,
   Client,
-  packageDescription
+  getSdkVersion
 } from '@sap-cloud-sdk/generator-common/internal';
 import { VdmServiceMetadata } from '../vdm-types';
-import { getGenerationAndUsage } from './generation-and-usage';
+import { getApiSpecificUsage } from './generation-and-usage';
 
 /**
  * @internal
@@ -13,13 +12,7 @@ import { getGenerationAndUsage } from './generation-and-usage';
 export async function sdkMetadata(
   service: VdmServiceMetadata
 ): Promise<Client> {
-  const [pregeneratedLibrary, generationAndUsage] = await Promise.all([
-    getPregeneratedLibrary(
-      packageDescription(service.speakingModuleName),
-      service.npmPackageName
-    ),
-    getGenerationAndUsage(service)
-  ]);
-
-  return getSdkMetadataClient(generationAndUsage, pregeneratedLibrary);
+  const generationAndUsage = getApiSpecificUsage(service);
+  const sdkVersion = await getSdkVersion();
+  return getSdkMetadataClient(generationAndUsage, sdkVersion, 'OData');
 }

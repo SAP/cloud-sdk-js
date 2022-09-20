@@ -109,7 +109,7 @@ export async function getDestination(
  * @param destinations - Array of destinations.
  * @returns Logs of the retrival of destinations.
  */
-function destinationFetchLogHelper(
+function createDestinationFetchLogs(
   origin: string,
   destinations: Destination[]
 ): string {
@@ -154,8 +154,8 @@ export async function getAllDestinationsFromDestinationService(
   ]);
 
   const loggerMessage =
-    destinationFetchLogHelper('instance', instance) +
-    destinationFetchLogHelper('subaccount', subaccount);
+    createDestinationFetchLogs('instance', instance) +
+    createDestinationFetchLogs('subaccount', subaccount);
 
   logger.debug(loggerMessage);
 
@@ -166,7 +166,7 @@ export async function getAllDestinationsFromDestinationService(
       `Successfully retrieved all destinations for account: "${accountName}" from destination service.`
     );
   } else {
-    logger.debug('Could not retrieve destinations from destination service.');
+    logger.debug("Didn't receive any destinations from destination service.");
     return [];
   }
 

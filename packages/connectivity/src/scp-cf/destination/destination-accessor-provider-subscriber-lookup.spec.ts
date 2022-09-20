@@ -387,12 +387,12 @@ describe('call getAllDestinations with and without subscriber token', () => {
     );
   });
 
-  it('should fetch all provider destinations when called without anything', async () => {
+  it('should fetch all provider destinations when called without passing a JWT', async () => {
     const allDestinations = await getAllDestinationsFromDestinationService();
     expect(allDestinations).toEqual([parsedProviderDestination]);
   });
 
-  it('should not fetch anything', async () => {
+  it('should return an empty array if no destination are present', async () => {
     nock.cleanAll();
     jest.clearAllMocks();
     mockThingsForCombinations(true, true);

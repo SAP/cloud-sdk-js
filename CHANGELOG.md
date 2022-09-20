@@ -28,6 +28,20 @@
 
 -
 
+# 2.9.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.9.0
+
+## New Functionalities
+
+- [connectivity] Support fetching all subaccount- and service instance destinations from the destination service simultaneously. (24029503)
+- [mail-client] Expose SMTP transport options of `nodemailer`. (d1bf2dee)
+- [util] Add method `setGlobalTransports` to support setting custom transport globally. (4c51d3dc)
+
+## Improvements
+
+- [odata-common] Make OderBy() set in asscending order by defalt. (f62eb0d3)
+
 # 2.8.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.8.0

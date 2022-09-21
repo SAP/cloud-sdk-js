@@ -25,13 +25,15 @@ describe('mail client', () => {
   };
   const mockTransport = {
     sendMail: jest.fn(),
-    close: jest.fn()
+    close: jest.fn(),
+    verify: jest.fn()
   };
 
   it('should create transport, send mails and close the transport', async () => {
     const spyCreateTransport = jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
+    const spyVerifyTransport = jest.spyOn(mockTransport, 'verify');
     const spySendMail = jest.spyOn(mockTransport, 'sendMail');
     const spyCloseTransport = jest.spyOn(mockTransport, 'close');
     const destination: any = {
@@ -58,10 +60,22 @@ describe('mail client', () => {
       from: 'from2@example.com',
       to: 'to2@example.com'
     };
+
+    const mailClientOptions: MailClientOptions = {
+      secure: true,
+      proxy: 'http://my.proxy.com:25',
+      tls: {
+        rejectUnauthorized: false
+      }
+    };
     await expect(
-      sendMail(destination, [mailOptions1, mailOptions2])
+      sendMail(destination, [mailOptions1, mailOptions2], mailClientOptions)
     ).resolves.not.toThrow();
     expect(spyCreateTransport).toBeCalledTimes(1);
+    expect(spyCreateTransport).toBeCalledWith(
+      expect.objectContaining(mailClientOptions)
+    );
+    expect(spyVerifyTransport).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledTimes(2);
     expect(spySendMail).toBeCalledWith(mailOptions1);
     expect(spySendMail).toBeCalledWith(mailOptions2);
@@ -75,6 +89,7 @@ describe('mail client', () => {
     const spyCreateTransport = jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
+    const spyVerifyTransport = jest.spyOn(mockTransport, 'verify');
     const spySendMail = jest.spyOn(mockTransport, 'sendMail');
     const spyCloseTransport = jest.spyOn(mockTransport, 'close');
     const spyEndSocket = jest.spyOn(mockSocket.socket, 'end');
@@ -106,6 +121,7 @@ describe('mail client', () => {
     ).resolves.not.toThrow();
     expect(spyCreateSocket).toBeCalledTimes(1);
     expect(spyCreateTransport).toBeCalledTimes(1);
+    expect(spyVerifyTransport).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledWith(mailOptions);
     expect(spyCloseTransport).toBeCalledTimes(1);

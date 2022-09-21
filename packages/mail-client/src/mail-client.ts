@@ -131,11 +131,11 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
   return socketConnection.socket;
 }
 
-async function createTransport(
+function createTransport(
   mailDestination: MailDestination,
   mailClientOptions?: MailClientOptions,
   socket?: Socket
-): Promise<Transporter<SentMessageInfo>> {
+): Transporter<SentMessageInfo> {
   const baseOptions: Options = {
     pool: true,
     auth: {
@@ -143,7 +143,7 @@ async function createTransport(
       pass: mailDestination.password
     }
   };
-  if (socket) {
+  if (mailDestination.proxyType === 'OnPremise' && socket) {
     return nodemailer.createTransport({
       ...baseOptions,
       connection: socket,
@@ -231,6 +231,14 @@ async function sendMailWithNodemailer<T extends MailConfig>(
     mailClientOptions,
     socket
   );
+  transport.verify(function (error) {
+    if (error) {
+      logger.debug(`The verification of the transport failed: ${error}`);
+    } else {
+      logger.debug('The transport is successfully verified.');
+    }
+  });
+
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 

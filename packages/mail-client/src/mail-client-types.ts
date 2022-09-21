@@ -333,4 +333,8 @@ export interface SmtpTransportOptions {
    * Connected socket to use instead of creating and connecting a new one. If secure option is true, then socket is upgraded from plaintext to ciphertext.
    */
   connection?: net.Socket | undefined;
+  /**
+   * A proxy URL used for connecting the SMTP server. This value will be forwarded to the underlying `nodemailer` lib, so it handles the proxy job for the SDK.
+   */
+  proxy?: string;
 }

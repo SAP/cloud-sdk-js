@@ -1,7 +1,7 @@
 import { writeFile, readFile } from 'fs/promises';
 import { resolve } from 'path';
 
-const validMessageTypes = [
+export const validMessageTypes = [
   'Known Issue',
   'Compatibility Note',
   'New Functionality',

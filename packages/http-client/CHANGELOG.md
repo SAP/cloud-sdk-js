@@ -1,5 +1,14 @@
 # @sap-cloud-sdk/http-client
 
+## 2.9.0
+
+### Patch Changes
+
+- Updated dependencies [4c51d3dc]
+- Updated dependencies [24029503]
+  - @sap-cloud-sdk/util@2.9.0
+  - @sap-cloud-sdk/connectivity@2.9.0
+
 ## 2.8.0
 
 ### Patch Changes

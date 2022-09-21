@@ -3,7 +3,7 @@ import * as jwt123 from 'jsonwebtoken';
 import axios, { AxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { serviceUrl } from '../../../../../test-resources/test/test-util/environment-mocks';
+import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { defaultResilienceBTPServices } from '../resilience-options';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
@@ -84,7 +84,7 @@ describe('destination service', () => {
         }
       ];
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -93,7 +93,7 @@ describe('destination service', () => {
         .reply(200, response);
 
       const instanceDestinations: Destination[] =
-        await fetchInstanceDestinations(serviceUrl, jwt, {
+        await fetchInstanceDestinations(destinationServiceUri, jwt, {
           enableCircuitBreaker: false
         });
       expected.forEach((e, index) => {
@@ -108,7 +108,7 @@ describe('destination service', () => {
         brokenDestination
       ];
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -122,7 +122,7 @@ describe('destination service', () => {
       });
       const debugSpy = jest.spyOn(logger, 'debug');
       const instanceDestinations: Destination[] =
-        await fetchInstanceDestinations(serviceUrl, jwt, {
+        await fetchInstanceDestinations(destinationServiceUri, jwt, {
           enableCircuitBreaker: false
         });
       expect(instanceDestinations.length).toBe(2);
@@ -136,7 +136,7 @@ describe('destination service', () => {
         ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
       };
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -145,14 +145,14 @@ describe('destination service', () => {
         .reply(400, response);
 
       await expect(
-        fetchInstanceDestinations(serviceUrl, jwt, {
+        fetchInstanceDestinations(destinationServiceUri, jwt, {
           enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
     });
 
     it('does not fail horribly when an internal server error occurs', async () => {
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -161,7 +161,7 @@ describe('destination service', () => {
         .reply(500);
 
       await expect(
-        fetchInstanceDestinations(serviceUrl, jwt, {
+        fetchInstanceDestinations(destinationServiceUri, jwt, {
           enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
@@ -194,7 +194,7 @@ describe('destination service', () => {
         }
       ];
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -203,7 +203,7 @@ describe('destination service', () => {
         .reply(200, response);
 
       const subaccountDestinations: Destination[] =
-        await fetchSubaccountDestinations(serviceUrl, jwt, {
+        await fetchSubaccountDestinations(destinationServiceUri, jwt, {
           enableCircuitBreaker: false
         });
       expected.forEach((e, index) => {
@@ -218,7 +218,7 @@ describe('destination service', () => {
         brokenDestination
       ];
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -232,7 +232,7 @@ describe('destination service', () => {
       });
       const debugSpy = jest.spyOn(logger, 'debug');
       const subaccountDestinations: Destination[] =
-        await fetchSubaccountDestinations(serviceUrl, jwt, {
+        await fetchSubaccountDestinations(destinationServiceUri, jwt, {
           enableCircuitBreaker: false
         });
       expect(subaccountDestinations.length).toBe(2);
@@ -246,7 +246,7 @@ describe('destination service', () => {
         ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
       };
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -255,7 +255,7 @@ describe('destination service', () => {
         .reply(400, response);
 
       await expect(
-        fetchSubaccountDestinations(serviceUrl, jwt, {
+        fetchSubaccountDestinations(destinationServiceUri, jwt, {
           enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
@@ -267,7 +267,7 @@ describe('destination service', () => {
       mockCertificateCall(nock, 'server-public-cert.pem', jwt, 'subaccount');
 
       const actual = await fetchCertificate(
-        serviceUrl,
+        destinationServiceUri,
         jwt,
         'server-public-cert.pem'
       );
@@ -282,7 +282,7 @@ describe('destination service', () => {
       mockCertificateCall(nock, 'server-public-cert.pem', jwt, 'instance');
 
       const actual = await fetchCertificate(
-        serviceUrl,
+        destinationServiceUri,
         jwt,
         'server-public-cert.pem'
       );
@@ -303,7 +303,7 @@ describe('destination service', () => {
       );
 
       await fetchCertificate(
-        serviceUrl,
+        destinationServiceUri,
         jwt,
         'server-public-cert.pem'
       );
@@ -314,7 +314,7 @@ describe('destination service', () => {
       mockCertificateCall(nock, 'server-public-cert.jks', jwt, 'subaccount');
 
       const actual = await fetchCertificate(
-        serviceUrl,
+        destinationServiceUri,
         jwt,
         'server-public-cert.jks'
       );
@@ -322,12 +322,12 @@ describe('destination service', () => {
     });
 
     it('returns undefined for failing service call', async () => {
-      return nock(serviceUrl)
+      return nock(destinationServiceUri)
         .get('/destination-configuration/v1/subaccountCertificates/*')
         .reply(500);
 
       const actual = await fetchCertificate(
-        serviceUrl,
+        destinationServiceUri,
         jwt,
         'server-public-cert.jks'
       );
@@ -395,7 +395,7 @@ describe('destination service', () => {
         ]
       };
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -404,7 +404,7 @@ describe('destination service', () => {
         .reply(200, response);
 
       const actual = await fetchDestination(
-        serviceUrl,
+        destinationServiceUri,
         jwt,
 
         { destinationName, enableCircuitBreaker: false }
@@ -434,7 +434,7 @@ describe('destination service', () => {
         ]
       };
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -442,7 +442,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
       const spy = jest.spyOn(axios, 'request');
-      await fetchDestination(serviceUrl, jwt, {
+      await fetchDestination(destinationServiceUri, jwt, {
         destinationName,
         enableCircuitBreaker: false
       });
@@ -468,7 +468,7 @@ describe('destination service', () => {
 
     it('considers the custom timeout for destination service', async () => {
       async function doDelayTest(enableCircuitBreaker: boolean) {
-        nock(serviceUrl, {
+        nock(destinationServiceUri, {
           reqheaders: {
             authorization: `Bearer ${jwt}`
           }
@@ -477,7 +477,7 @@ describe('destination service', () => {
           .delay(100)
           .reply(200, {});
         await expect(
-          fetchDestination(serviceUrl, jwt, {
+          fetchDestination(destinationServiceUri, jwt, {
             destinationName: 'TIMEOUT-TEST',
             enableCircuitBreaker,
             timeout: 10
@@ -498,7 +498,7 @@ describe('destination service', () => {
         URL: 'someDestinationUrl'
       };
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -506,7 +506,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/timeoutTest')
         .reply(200, response);
       const spy = jest.spyOn(axios, 'request');
-      await fetchDestination(serviceUrl, jwt, {
+      await fetchDestination(destinationServiceUri, jwt, {
         destinationName: 'timeoutTest',
         enableCircuitBreaker: false
       });
@@ -541,7 +541,7 @@ describe('destination service', () => {
         ]
       };
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -549,7 +549,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
       const spy = jest.spyOn(axios, 'request');
-      await fetchDestination(serviceUrl, jwt, {
+      await fetchDestination(destinationServiceUri, jwt, {
         destinationName,
         enableCircuitBreaker: false
       });
@@ -637,7 +637,7 @@ describe('destination service', () => {
         originalProperties: response
       };
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -646,7 +646,7 @@ describe('destination service', () => {
         .reply(200, response);
 
       const actual = await fetchDestination(
-        serviceUrl,
+        destinationServiceUri,
         jwt,
 
         { destinationName, enableCircuitBreaker: false }
@@ -657,7 +657,7 @@ describe('destination service', () => {
     it('does not fail horribly when an internal server error occurs', async () => {
       const destinationName = 'FINAL-DESTINATION';
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -666,7 +666,7 @@ describe('destination service', () => {
         .reply(500);
 
       await expect(
-        fetchDestination(serviceUrl, jwt, {
+        fetchDestination(destinationServiceUri, jwt, {
           destinationName,
           enableCircuitBreaker: false
         })
@@ -680,7 +680,7 @@ describe('destination service', () => {
         ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
       };
 
-      nock(serviceUrl, {
+      nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
         }
@@ -689,7 +689,7 @@ describe('destination service', () => {
         .reply(400, response);
 
       await expect(() =>
-        fetchDestination(serviceUrl, jwt, {
+        fetchDestination(destinationServiceUri, jwt, {
           destinationName,
           enableCircuitBreaker: false
         })

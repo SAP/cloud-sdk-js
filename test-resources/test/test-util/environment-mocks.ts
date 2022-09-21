@@ -16,7 +16,7 @@ export const providerXsuaaUrl = `https://${TestTenants.PROVIDER}.example.com`;
 export const providerXsuaaCertUrl = `https://${TestTenants.PROVIDER}.cert.example.com`;
 export const subscriberXsuaaUrl = `https://${TestTenants.SUBSCRIBER}.example.com`;
 export const onlyIssuerXsuaaUrl = `https://${TestTenants.SUBSCRIBER_ONLY_ISS}.example.com`;
-export const destinationServiceUri = 'https://destination.example.com';
+export const serviceUrl = 'https://destination.example.com';
 
 export const providerXsuaaClientCredentials = {
   url: providerXsuaaUrl
@@ -48,7 +48,7 @@ export const destinationBindingClientSecretMock: Service = {
   credentials: {
     clientid: 'destinationClient',
     clientsecret: 'destinationSecret',
-    uri: destinationServiceUri,
+    uri: serviceUrl,
     url: providerXsuaaUrl
   }
 };
@@ -62,7 +62,7 @@ export const destinationBindingCertMock: Service = {
     clientid: 'destinationClient',
     certificate: 'certificate',
     key: 'certificateKey',
-    uri: destinationServiceUri,
+    uri: serviceUrl,
     url: providerXsuaaUrl,
     certurl: providerXsuaaCertUrl
   }

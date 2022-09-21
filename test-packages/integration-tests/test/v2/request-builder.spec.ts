@@ -10,7 +10,7 @@ import {
   mockSubaccountDestinationsCall
 } from '../../../../test-resources/test/test-util/destination-service-mocks';
 import {
-  destinationServiceUri,
+  serviceUrl,
   destinationBindingClientSecretMock,
   mockServiceBindings,
   providerXsuaaUrl
@@ -96,7 +96,7 @@ describe('Request Builder', () => {
   });
 
   it('should resolve without authentication when only destination url is specified', async () => {
-    nock(destinationServiceUri, {
+    nock(serviceUrl, {
       reqheaders: {
         accept: 'application/json',
         'content-type': 'application/json'
@@ -106,7 +106,7 @@ describe('Request Builder', () => {
       .reply(200, getAllResponse);
 
     const request = testEntityApi.requestBuilder().getAll().execute({
-      url: destinationServiceUri
+      url: serviceUrl
     });
 
     await expect(request).resolves.not.toThrow();
@@ -116,11 +116,11 @@ describe('Request Builder', () => {
     process.env.destinations = JSON.stringify([
       {
         name: 'Testination',
-        url: destinationServiceUri
+        url: serviceUrl
       }
     ]);
 
-    nock(destinationServiceUri, {
+    nock(serviceUrl, {
       reqheaders: {
         authorization: 'customcustom',
         accept: 'application/json',
@@ -484,7 +484,7 @@ describe('Request Builder', () => {
   });
 
   it('should allow setting custom headers', async () => {
-    nock(destinationServiceUri, {
+    nock(serviceUrl, {
       reqheaders: {
         authorization: 'customcustom',
         accept: 'application/json',
@@ -501,14 +501,14 @@ describe('Request Builder', () => {
         authorization: 'customcustom'
       })
       .execute({
-        url: destinationServiceUri
+        url: serviceUrl
       });
 
     await expect(request).resolves.not.toThrow();
   });
 
   it('should allow setting custom headers twice', async () => {
-    nock(destinationServiceUri, {
+    nock(serviceUrl, {
       reqheaders: {
         authorization: 'customcustom',
         additionalheader: 'additional',
@@ -529,14 +529,14 @@ describe('Request Builder', () => {
         additionalHeader: 'additional'
       })
       .execute({
-        url: destinationServiceUri
+        url: serviceUrl
       });
 
     await expect(request).resolves.not.toThrow();
   });
 
   it('should allow setting custom query parameters', async () => {
-    nock(destinationServiceUri)
+    nock(serviceUrl)
       .get(`${servicePath}/${entityName}`)
       .query({
         testParameter: 'customcustom'
@@ -550,14 +550,14 @@ describe('Request Builder', () => {
         testParameter: 'customcustom'
       })
       .execute({
-        url: destinationServiceUri
+        url: serviceUrl
       });
 
     await expect(request).resolves.not.toThrow();
   });
 
   it('should allow setting custom query parameters twice', async () => {
-    nock(destinationServiceUri)
+    nock(serviceUrl)
       .get(`${servicePath}/${entityName}`)
       .query({
         testParameter: 'customcustom',
@@ -575,7 +575,7 @@ describe('Request Builder', () => {
         additionalParameter: 'additional'
       })
       .execute({
-        url: destinationServiceUri
+        url: serviceUrl
       });
 
     await expect(request).resolves.not.toThrow();

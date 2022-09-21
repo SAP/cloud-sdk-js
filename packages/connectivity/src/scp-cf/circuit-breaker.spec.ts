@@ -1,7 +1,7 @@
 import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
 import {
-  destinationServiceUri,
+  serviceUrl,
   providerXsuaaUrl,
   xsuaaBindingMock
 } from '../../../../test-resources/test/test-util/environment-mocks';
@@ -23,15 +23,15 @@ const attempts = circuitBreakerDefaultOptions.volumeThreshold!;
 describe('circuit breaker', () => {
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for destination service', async () => {
     const request = () =>
-      fetchDestination(destinationServiceUri, jwt, {
+      fetchDestination(serviceUrl, jwt, {
         destinationName: 'FINAL-DESTINATION'
       });
 
-    nock(destinationServiceUri)
+    nock(serviceUrl)
       .get(/.*/)
       .times(1)
       .reply(200, JSON.stringify({ URL: 'test' }));
-    nock(destinationServiceUri).get(/.*/).times(attempts).reply(400);
+    nock(serviceUrl).get(/.*/).times(attempts).reply(400);
 
     // First attempt should succeed
     await expect(request()).resolves.toBeDefined();

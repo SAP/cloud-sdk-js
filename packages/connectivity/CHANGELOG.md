@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/connectivity
 
+## 2.9.0
+
+### Minor Changes
+
+- 24029503: [New Functionality] Support fetching all subaccount- and service instance destinations from the destination service simultaneously.
+
+### Patch Changes
+
+- Updated dependencies [4c51d3dc]
+  - @sap-cloud-sdk/util@2.9.0
+
 ## 2.8.0
 
 ### Minor Changes

@@ -2,6 +2,7 @@ import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
 import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
+import { asc, desc } from '@sap-cloud-sdk/odata-common';
 import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
@@ -47,6 +48,56 @@ describe('GetAllRequestBuilder', () => {
   });
 
   describe('url', () => {
+    it('should set ascending order', async () => {
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc';
+      const request = await testEntityApi
+        .requestBuilder()
+        .getAll()
+        .orderBy(asc(testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty))
+        .url(defaultDestination);
+      expect(request).toBe(expected);
+    });
+
+    it('should set descending order', async () => {
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20desc';
+      const request = await testEntityApi
+        .requestBuilder()
+        .getAll()
+        .orderBy(
+          desc(testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty)
+        )
+        .url(defaultDestination);
+      expect(request).toBe(expected);
+    });
+
+    it('should set ascending order as default if no order is specified', async () => {
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc';
+      const request = await testEntityApi
+        .requestBuilder()
+        .getAll()
+        .orderBy(testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty)
+        .url(defaultDestination);
+      expect(request).toBe(expected);
+    });
+
+    it('should set the correct order when both default ascending order and descending order are passed', async () => {
+      const expected =
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc,ComplexTypeProperty/DateTimeProperty%20desc';
+      const stringProperty =
+        testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty;
+      const dateTimeProperty =
+        testEntityApi.schema.COMPLEX_TYPE_PROPERTY.dateTimeProperty;
+      const request = await testEntityApi
+        .requestBuilder()
+        .getAll()
+        .orderBy(stringProperty, desc(dateTimeProperty))
+        .url(defaultDestination);
+      expect(request).toBe(expected);
+    });
+
     it('is built correctly', async () => {
       const expected =
         '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity';

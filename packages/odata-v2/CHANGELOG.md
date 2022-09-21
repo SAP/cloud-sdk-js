@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/odata-v2
 
+## 2.9.0
+
+### Patch Changes
+
+- Updated dependencies [f62eb0d3]
+- Updated dependencies [4c51d3dc]
+- Updated dependencies [24029503]
+  - @sap-cloud-sdk/odata-common@2.9.0
+  - @sap-cloud-sdk/util@2.9.0
+  - @sap-cloud-sdk/connectivity@2.9.0
+  - @sap-cloud-sdk/http-client@2.9.0
+
 ## 2.8.0
 
 ### Patch Changes

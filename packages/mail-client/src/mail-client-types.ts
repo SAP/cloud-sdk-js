@@ -334,7 +334,7 @@ export interface SmtpTransportOptions {
    */
   connection?: net.Socket | undefined;
   /**
-   * A proxy URL used for connecting the SMTP server.
+   * A proxy URL used for connecting the SMTP server. This value will be forwarded to the underlying `nodemailer` lib, so it handles the proxy job for the SDK.
    */
   proxy?: string;
 }

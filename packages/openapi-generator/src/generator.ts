@@ -70,6 +70,7 @@ export async function generateWithParsedOptions(
   }
 
   if (options.clearOutputDir) {
+    // function rm was added in node version 14 and is the preferred method to use.
     const rm = promisesFs.rm || promisesFs.rmdir;
     const forceOption =
       typeof promisesFs.rm === 'undefined' ? {} : { force: true };

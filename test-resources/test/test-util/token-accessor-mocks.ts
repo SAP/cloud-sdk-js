@@ -19,7 +19,7 @@ export function expectAllMocksUsed(nocks: nock.Scope[]) {
 export function mockServiceToken() {
   return jest
     .spyOn(tokenAccessor, 'serviceToken')
-    .mockImplementation((service, options) => {
+    .mockImplementation((_, options) => {
       if (!options || typeof options.jwt === 'undefined') {
         return Promise.resolve(providerServiceToken);
       }

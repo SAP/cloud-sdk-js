@@ -1,9 +1,6 @@
 import * as xssec from '@sap/xssec';
 import { first } from '@sap-cloud-sdk/util';
-import {
-  DestinationFetchOptions,
-  DestinationOptions
-} from './destination/destination-accessor-types';
+import { DestinationOptions } from './destination/destination-accessor-types';
 import { getServiceCredentialsList } from './environment-accessor';
 
 /**
@@ -13,7 +10,7 @@ import { getServiceCredentialsList } from './environment-accessor';
  * @returns Exchanged token.
  */
 export async function exchangeToken(
-  options: DestinationFetchOptions
+  options: DestinationOptions
 ): Promise<string> {
   const xsuaaServiceCredentials = first(getServiceCredentialsList('xsuaa'));
   return new Promise((resolve: (p: string) => void, reject) => {

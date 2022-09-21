@@ -15,9 +15,9 @@ import {
   getDestinationServiceCredentialsList
 } from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
-import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -26,6 +26,7 @@ import {
 } from './destination-selection-strategies';
 import {
   DestinationFetchOptions,
+  DestinationOptions,
   DestinationsByType
 } from './destination-accessor-types';
 import {
@@ -111,6 +112,26 @@ const emptyDestinationByType: DestinationsByType = {
 };
 
 /**
+ * Utility function to get destination service credentails, including error handling.
+ * @internal
+ */
+export function getDestinationServiceCredentials(): DestinationServiceCredentials {
+  const credentials = getDestinationServiceCredentialsList();
+  if (!credentials || credentials.length === 0) {
+    throw Error(
+      'No binding to a destination service instance found. Please bind a destination service instance to your application.'
+    );
+  }
+  if (credentials.length > 1) {
+    logger.warn(
+      'Found more than one destination service instance. Using the first one.'
+    );
+  }
+
+  return credentials[0];
+}
+
+/**
  * Retrieves a destination with the given name from the Cloud Foundry destination service.
  * Returns `null`, if no destination can be found.
  * Requires the following service bindings: destination, XSUAA
@@ -130,7 +151,7 @@ export async function getDestinationFromDestinationService(
 /**
  * @internal
  */
-class DestinationFromServiceRetriever {
+export class DestinationFromServiceRetriever {
   public static async getDestinationFromDestinationService(
     options: DestinationFetchOptions
   ): Promise<Destination | null> {
@@ -194,22 +215,8 @@ class DestinationFromServiceRetriever {
     return withTrustStore;
   }
 
-  private static checkDestinationForCustomJwt(destination: Destination): void {
-    if (!destination.jwks && !destination.jwksUri) {
-      throw new Error(
-        'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
-      );
-    }
-  }
-
-  private static isUserJwt(
-    token: SubscriberToken | undefined
-  ): token is CustomToken | XsuaaToken {
-    return !!token && token.type !== 'iss';
-  }
-
-  private static async getSubscriberToken(
-    options: DestinationFetchOptions
+  public static async getSubscriberToken(
+    options: DestinationOptions
   ): Promise<SubscriberToken | undefined> {
     if (options.jwt) {
       if (options.iss) {
@@ -253,8 +260,8 @@ class DestinationFromServiceRetriever {
     }
   }
 
-  private static async getProviderServiceToken(
-    options: DestinationFetchOptions
+  public static async getProviderServiceToken(
+    options: DestinationOptions
   ): Promise<JwtPair> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { jwt, ...optionsWithoutJwt } = options;
@@ -262,6 +269,20 @@ class DestinationFromServiceRetriever {
       ...optionsWithoutJwt
     });
     return { encoded, decoded: decodeJwt(encoded) };
+  }
+
+  private static checkDestinationForCustomJwt(destination: Destination): void {
+    if (!destination.jwks && !destination.jwksUri) {
+      throw new Error(
+        'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
+      );
+    }
+  }
+
+  private static isUserJwt(
+    token: SubscriberToken | undefined
+  ): token is CustomToken | XsuaaToken {
+    return !!token && token.type !== 'iss';
   }
 
   private options: RequiredProperties<
@@ -319,12 +340,12 @@ class DestinationFromServiceRetriever {
   ): Promise<DestinationsByType> {
     const [instance, subaccount] = await Promise.all([
       fetchInstanceDestinations(
-        this.destinationServiceCredentials.uri,
+        getDestinationServiceCredentials().uri,
         accessToken,
         this.options
       ),
       fetchSubaccountDestinations(
-        this.destinationServiceCredentials.uri,
+        getDestinationServiceCredentials().uri,
         accessToken,
         this.options
       )
@@ -336,27 +357,11 @@ class DestinationFromServiceRetriever {
     };
   }
 
-  private get destinationServiceCredentials(): DestinationServiceCredentials {
-    const credentials = getDestinationServiceCredentialsList();
-    if (!credentials || credentials.length === 0) {
-      throw Error(
-        'No binding to a destination service instance found. Please bind a destination service instance to your application.'
-      );
-    }
-    if (credentials.length > 1) {
-      logger.warn(
-        'Found more than one destination service instance. Using the first one.'
-      );
-    }
-
-    return credentials[0];
-  }
-
   private async fetchDestinationByToken(
     jwt: string | AuthAndExchangeTokens
   ): Promise<Destination> {
     return fetchDestination(
-      this.destinationServiceCredentials.uri,
+      getDestinationServiceCredentials().uri,
       jwt,
       this.options
     );
@@ -673,7 +678,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   ): Promise<Destination> {
     if (destination.originalProperties?.TrustStoreLocation) {
       const trustStoreCertificate = await fetchCertificate(
-        this.destinationServiceCredentials.uri,
+        getDestinationServiceCredentials().uri,
         origin === 'provider'
           ? this.providerServiceToken.encoded
           : this.subscriberToken!.serviceJwt!.encoded,

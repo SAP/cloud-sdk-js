@@ -1,7 +1,7 @@
 import { writeFile, readFile } from 'fs/promises';
 import { resolve } from 'path';
 
-const validMessageTypes = [
+export const validMessageTypes = [
   'Known Issue',
   'Compatibility Note',
   'New Functionality',
@@ -57,11 +57,19 @@ function assertGroups(
   type: typeof validMessageTypes[number];
 } {
   if (!validMessageTypes.includes(groups?.type as any)) {
+    console.error(
+      groups?.type
+        ? `Error: Type [${groups?.type}] is not valid (${groups?.commit})`
+        : `Error: No type was provided for "${groups?.summary} (${groups?.commit})"`
+    );
     throw new Error(
       `Incorrect or missing type in CHANGELOG.md in ${packageName} for v${version}!`
     );
   }
   if (typeof groups?.summary !== 'string' || groups?.summary.trim() === '') {
+    console.error(
+      `Error: Empty or missing summary in CHANGELOG.md in ${packageName} for v${version}! (${groups?.commit})`
+    );
     throw new Error(
       `Empty or missing summary in CHANGELOG.md in ${packageName} for v${version}!`
     );
@@ -73,9 +81,9 @@ function parseContent(
   version: string,
   packageName: string
 ): Change[] {
-  // Explanation: https://regex101.com/r/9UhEwo/3
+  // Explanation: https://regex101.com/r/ikvIaa/2
   const contentRegex =
-    /- ((?<commit>.*):) (\[(?<type>.*?)\]) (?<summary>[^]*?)(?=(\n- |\n### |$))/g;
+    /- ((?<commit>.*):) (\[(?<type>.*?)\])? ?(?<summary>[^]*?)(?=(\n- |\n### |$))/g;
 
   return [...content.matchAll(contentRegex)].map(({ groups }) => {
     assertGroups(groups, packageName, version);

@@ -66,6 +66,7 @@
     "generator": "yarn workspace @sap-cloud-sdk/generator",
     "generator-common": "yarn workspace @sap-cloud-sdk/generator-common",
     "http-client": "yarn workspace @sap-cloud-sdk/http-client",
+    "mail-client": "yarn workspace @sap-cloud-sdk/mail-client",
     "openapi": "yarn workspace @sap-cloud-sdk/openapi",
     "openapi-generator": "yarn workspace @sap-cloud-sdk/openapi-generator",
     "odata-common": "yarn workspace @sap-cloud-sdk/odata-common",

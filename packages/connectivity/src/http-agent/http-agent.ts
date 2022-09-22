@@ -196,7 +196,7 @@ function createDefaultAgent(
  * @returns HttpRequestConfig containing baseUrl and http(s) agents.
  */
 export function urlAndAgent(targetUri: string): {
-  baseURL: string;
+  baseURL?: string;
   httpAgent?: http.Agent;
   httpsAgent?: http.Agent;
 } {

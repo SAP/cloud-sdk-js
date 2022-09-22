@@ -48,7 +48,7 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
     return ProxyStrategy.NO_PROXY;
   }
 
-  if (getNoProxyEnvValue().includes(destination.url)) {
+  if (destination.url && getNoProxyEnvValue().includes(destination.url)) {
     logger.debug(
       `Destination URL ${
         destination.url

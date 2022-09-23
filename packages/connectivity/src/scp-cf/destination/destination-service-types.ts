@@ -20,7 +20,7 @@ export interface Destination {
    * The URL has to define the protocol, like `http://` or `https://`, and a host.
    * The path for requests against this destination will be appended to the path defined in the URL as a new path segment.
    */
-  url: string | undefined;
+  url: string;
 
   /**
    * Type of authentication to use.

@@ -7,7 +7,7 @@ export interface DestinationHttpRequestConfig {
   /**
    * `baseURL` will be prepended to {@link HttpRequestConfigBase#url} unless `url` is absolute.
    */
-  baseURL?: string;
+  baseURL: string;
   /**
    * `headers` are custom headers to be sent.
    */

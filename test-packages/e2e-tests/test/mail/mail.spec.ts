@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { join, resolve } from 'path';
 import { MailConfig, MailResponse, sendMail } from '@sap-cloud-sdk/mail-client';
-import { Destination } from "@sap-cloud-sdk/connectivity";
 
 describe('Mail', () => {
   const defaultMailOptions: MailConfig = {
@@ -60,7 +59,7 @@ async function sendTestMail(
     'mail.user': 'user',
     'mail.password': 'pd'
   };
-  const destination: Destination = {
+  const destination: any = {
     type: 'MAIL',
     originalProperties
   };

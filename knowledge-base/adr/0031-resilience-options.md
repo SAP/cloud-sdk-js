@@ -96,7 +96,7 @@ type MiddlewareInOut<T> = {
 type Middleware<T> = <T>(options: MiddlewareInOut) => MiddlewareInOut;
 ```
 
-In our code we will pass around a middleware array and wrap it around evey http call at the very end:
+In our code, we will pass a middleware array and wrap it around every HTTP call at the very end:
 
 ```ts
 async function someHttpSdkMethod(middlewares: Middleware[]): Promise<any> {

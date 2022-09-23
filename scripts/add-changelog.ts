@@ -12,14 +12,17 @@ function getChangelogWithVersion(v = currentSdkVersion): string {
   const [, olderLogs] = changelog.split(`${unixEOL}# ${v}`);
   let logs = olderLogs.split(`${unixEOL}# `)[0];
   logs = unixEOL + logs.slice(logs.indexOf(`${unixEOL}##`) + 1);
+  logs = logs.replace(/## /g,'### ',)
 
   const date = new Date();
   const day = date.toLocaleString('default', { day: '2-digit' });
   const month = date.toLocaleString('default', { month: 'long' });
   const year = date.getFullYear();
 
-  const logsWithVersion = `${unixEOL}# ${v} [Core Modules] - ${month} ${day}, ${year}${unixEOL}${logs}`;
-  return logsWithVersion;
+  const headerWithVersion = `${unixEOL}## ${v} [Core Modules] - ${month} ${day}, ${year}`
+  const apiReferenceLink= `**API Reference:** [${v}](https://sap.github.io/cloud-sdk/api/${v})`;
+
+  return [headerWithVersion,apiReferenceLink,logs].join(unixEOL);
 }
 
 export function addCurrentChangelog(): void {

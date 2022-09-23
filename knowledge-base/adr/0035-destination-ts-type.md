@@ -78,7 +78,7 @@ const md4: MailDestination = { originalProperties: {'mail.smtp.host': ''}}
 - [-] The code `executeHttpReqeust(getDestination(...), ...)` is not possible, as `getDestination()` does not know the type (`HTTP`/`MAIL`) in compile time.
 - [-] At least medium complexity, as all the `Destination`s in the `http-client` are affected.
 
-### C:
+### C: Only create a new `MailDestination`
 We can also keep the `Destination` for both `connectivity` and `http-client` packages and only create a new `MailDestination`.
 The `url` of the `MailDestination` will be optional and `mail.smtp.host` will be mandatory.
 ```ts

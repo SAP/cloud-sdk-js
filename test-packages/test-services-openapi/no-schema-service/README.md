@@ -5,9 +5,9 @@ This package contains the OpenAPI client for the no-schema-service.
 
 ## Usage Example
 ```
-import { DefaultApi } from 'no-schema-service';
+import { DefaultApi } from './generated/no-schema-service';
 
-const responseData = await DefaultApi.get().execute({ destinationName:'myDestinationName' });
+const responseData = await DefaultApi.get().execute({ destinationName: 'myDestinationName' });
 ```
 
 ## Helpful Links

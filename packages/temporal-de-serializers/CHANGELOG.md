@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/temporal-de-serializers
 
+## 2.9.0
+
+### Patch Changes
+
+- Updated dependencies [f62eb0d3]
+  - @sap-cloud-sdk/odata-common@2.9.0
+
+## 2.8.0
+
+### Patch Changes
+
+- Updated dependencies [15e9ef4b]
+  - @sap-cloud-sdk/odata-common@2.8.0
+
 ## 2.7.1
 
 ### Patch Changes

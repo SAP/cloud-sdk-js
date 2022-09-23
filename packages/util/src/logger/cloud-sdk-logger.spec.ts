@@ -1,3 +1,7 @@
+import * as path from 'path';
+import * as fs from 'fs';
+import { transports } from 'winston';
+import mock from 'mock-fs';
 import {
   cloudSdkExceptionLogger,
   createLogger,
@@ -13,6 +17,7 @@ import {
   sanitizeRecord,
   setGlobalLogFormat,
   setGlobalLogLevel,
+  setGlobalTransports,
   setLogFormat,
   setLogLevel,
   unmuteLoggers
@@ -242,6 +247,67 @@ describe('Cloud SDK Logger', () => {
       logger = createLogger(messageContext);
 
       expect(logger.level).toEqual('warn');
+    });
+  });
+
+  describe('set global transport', () => {
+    beforeEach(() => {
+      logger = createLogger(messageContext);
+    });
+    it('should replace all transports in all active loggers with the global transport', async () => {
+      const consoleSpy = jest.spyOn(process.stdout, 'write');
+      const rootNodeModules = path.resolve(
+        __dirname,
+        '../../../../node_modules'
+      );
+      mock({
+        'test.log': 'content',
+        [rootNodeModules]: mock.load(rootNodeModules)
+      });
+      const fileTransport = new transports.File({
+        filename: 'test.log',
+        level: 'info'
+      });
+      const defaultLogger = getLogger('cloud-sdk-logger');
+      const defaultExceptionLogger = getLogger(
+        'sap-cloud-sdk-exception-logger'
+      );
+
+      setGlobalTransports(fileTransport);
+      expect(logger?.transports).toHaveLength(1);
+      expect(logger?.transports).toContainEqual(fileTransport);
+      expect(defaultLogger?.transports).toHaveLength(1);
+      expect(defaultLogger?.transports).toContainEqual(fileTransport);
+      expect(defaultExceptionLogger?.transports).toHaveLength(1);
+      expect(defaultExceptionLogger?.transports).toContainEqual(fileTransport);
+
+      logger.error(
+        'logs error only in test.log because the level is less than info'
+      );
+      logger.info(
+        'logs info only in test.log because the level is equal to info'
+      );
+      logger.verbose(
+        'logs verbose nowhere because the level is higher than info'
+      );
+      expect(consoleSpy).not.toBeCalled();
+      const log = await fs.promises.readFile('test.log', { encoding: 'utf-8' });
+      expect(log).toMatch(
+        /logs error only in test.log because the level is less than info/
+      );
+      expect(log).toMatch(
+        /logs info only in test.log because the level is equal to info/
+      );
+      expect(log).not.toMatch(
+        /logs verbose nowhere because the level is higher than info/
+      );
+      mock.restore();
+    });
+    it('should accept an array with multiple transports', () => {
+      const httpTransport = new transports.Http();
+      const streamTransport = new transports.Console();
+      setGlobalTransports([httpTransport, streamTransport]);
+      expect(logger?.transports).toHaveLength(2);
     });
   });
 

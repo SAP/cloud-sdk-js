@@ -121,7 +121,12 @@ export type {
   OrderableEdmType
 } from './edm-types';
 export { asc, desc, Order, OrderLink } from './order';
-export type { Orderable, OrderType, OrderableInput } from './order';
+export type {
+  Orderable,
+  OrderType,
+  OrderableInput,
+  OrderableAndOrderableInput
+} from './order';
 export { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
 export { EntityBuilder } from './entity-builder';
 export type {

@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/eslint-config
 
+## 2.9.0
+
+## 2.8.0
+
+### Minor Changes
+
+- 15e9ef4b: [Compatibility Note] Activated the eslint rule 'check-tag-names' to allowed jsdoc tags. If you use custom tags add them via the 'definedTags' in the eslint options.
+
 ## 2.7.1
 
 ## 2.7.0

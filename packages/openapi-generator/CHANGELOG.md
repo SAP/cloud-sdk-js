@@ -1,5 +1,27 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 2.9.0
+
+### Patch Changes
+
+- Updated dependencies [4c51d3dc]
+  - @sap-cloud-sdk/util@2.9.0
+  - @sap-cloud-sdk/generator-common@2.9.0
+  - @sap-cloud-sdk/openapi@2.9.0
+
+## 2.8.0
+
+### Minor Changes
+
+- 15e9ef4b: [Compatibility Note] Description for package.json in a generated client has changed.
+
+### Patch Changes
+
+- Updated dependencies [15e9ef4b]
+  - @sap-cloud-sdk/generator-common@2.8.0
+  - @sap-cloud-sdk/openapi@2.8.0
+  - @sap-cloud-sdk/util@2.8.0
+
 ## 2.7.1
 
 ### Patch Changes

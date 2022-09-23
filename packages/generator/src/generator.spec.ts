@@ -69,16 +69,11 @@ describe('generator', () => {
       const clientFile = sourceFiles.find(
         file => file.getBaseName() === 'API_TEST_SRV_CLIENT_JS.json'
       );
-      const headerFile = sourceFiles.find(
-        file => file.getBaseName() === 'API_TEST_SRV_HEADER.json'
-      );
 
-      [clientFile, headerFile].forEach(file => {
-        expect(file).toBeDefined();
-        expect(file!.getDirectoryPath()).toMatch(
-          /test-resources\/odata-service-specs\/v2\/API_TEST_SRV\/sdk-metadata/
-        );
-      });
+      expect(clientFile).toBeDefined();
+      expect(clientFile!.getDirectoryPath()).toMatch(
+        /test-resources\/odata-service-specs\/v2\/API_TEST_SRV\/sdk-metadata/
+      );
     }, 10000);
   });
   describe('edmx-to-csn', () => {

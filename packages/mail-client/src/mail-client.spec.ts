@@ -1,8 +1,16 @@
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
 import { Protocol } from '@sap-cloud-sdk/connectivity';
-import { buildSocksProxy, sendMail } from './mail-client';
-import { MailDestination, MailConfig } from './mail-client-types';
+import {
+  buildSocksProxy,
+  isMailSentInSequential,
+  sendMail
+} from './mail-client';
+import {
+  MailDestination,
+  MailConfig,
+  MailClientOptions
+} from './mail-client-types';
 
 describe('mail client', () => {
   beforeEach(() => {
@@ -17,13 +25,15 @@ describe('mail client', () => {
   };
   const mockTransport = {
     sendMail: jest.fn(),
-    close: jest.fn()
+    close: jest.fn(),
+    verify: jest.fn()
   };
 
   it('should create transport, send mails and close the transport', async () => {
     const spyCreateTransport = jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
+    const spyVerifyTransport = jest.spyOn(mockTransport, 'verify');
     const spySendMail = jest.spyOn(mockTransport, 'sendMail');
     const spyCloseTransport = jest.spyOn(mockTransport, 'close');
     const destination: any = {
@@ -50,10 +60,22 @@ describe('mail client', () => {
       from: 'from2@example.com',
       to: 'to2@example.com'
     };
+
+    const mailClientOptions: MailClientOptions = {
+      secure: true,
+      proxy: 'http://my.proxy.com:25',
+      tls: {
+        rejectUnauthorized: false
+      }
+    };
     await expect(
-      sendMail(destination, [mailOptions1, mailOptions2])
+      sendMail(destination, [mailOptions1, mailOptions2], mailClientOptions)
     ).resolves.not.toThrow();
     expect(spyCreateTransport).toBeCalledTimes(1);
+    expect(spyCreateTransport).toBeCalledWith(
+      expect.objectContaining(mailClientOptions)
+    );
+    expect(spyVerifyTransport).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledTimes(2);
     expect(spySendMail).toBeCalledWith(mailOptions1);
     expect(spySendMail).toBeCalledWith(mailOptions2);
@@ -67,6 +89,7 @@ describe('mail client', () => {
     const spyCreateTransport = jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
+    const spyVerifyTransport = jest.spyOn(mockTransport, 'verify');
     const spySendMail = jest.spyOn(mockTransport, 'sendMail');
     const spyCloseTransport = jest.spyOn(mockTransport, 'close');
     const spyEndSocket = jest.spyOn(mockSocket.socket, 'end');
@@ -94,15 +117,46 @@ describe('mail client', () => {
       to: 'to1@example.com'
     };
     await expect(
-      sendMail(destination, mailOptions, { parallel: false })
+      sendMail(destination, mailOptions, { sdkOptions: { parallel: false } })
     ).resolves.not.toThrow();
     expect(spyCreateSocket).toBeCalledTimes(1);
     expect(spyCreateTransport).toBeCalledTimes(1);
+    expect(spyVerifyTransport).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledWith(mailOptions);
     expect(spyCloseTransport).toBeCalledTimes(1);
     expect(spyEndSocket).toBeCalledTimes(1);
     expect(spyDestroySocket).toBeCalledTimes(1);
+  });
+});
+
+describe('isMailSentInSequential', () => {
+  it('should return false when the mail client options is undefined', () => {
+    expect(isMailSentInSequential()).toBe(false);
+  });
+
+  it('should return false when the sdk options is undefined', () => {
+    const mailClientOptions: MailClientOptions = {};
+    expect(isMailSentInSequential(mailClientOptions)).toBe(false);
+  });
+
+  it('should return false when the parallel option is undefined', () => {
+    const mailClientOptions: MailClientOptions = { sdkOptions: {} };
+    expect(isMailSentInSequential(mailClientOptions)).toBe(false);
+  });
+
+  it('should return false when the parallel option is set to true', () => {
+    const mailClientOptions: MailClientOptions = {
+      sdkOptions: { parallel: true }
+    };
+    expect(isMailSentInSequential(mailClientOptions)).toBe(false);
+  });
+
+  it('should return true when the parallel option is set to false', () => {
+    const mailClientOptions: MailClientOptions = {
+      sdkOptions: { parallel: false }
+    };
+    expect(isMailSentInSequential(mailClientOptions)).toBe(true);
   });
 });
 

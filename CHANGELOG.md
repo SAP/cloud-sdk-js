@@ -28,6 +28,45 @@
 
 -
 
+# 2.9.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.9.0
+
+## New Functionalities
+
+- [connectivity] Support fetching all subaccount- and service instance destinations from the destination service simultaneously. (24029503)
+- [mail-client] Expose SMTP transport options of `nodemailer`. (d1bf2dee)
+- [util] Add method `setGlobalTransports` to support setting custom transport globally. (4c51d3dc)
+
+## Improvements
+
+- [odata-common] Make OderBy() set in asscending order by defalt. (f62eb0d3)
+
+# 2.8.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.8.0
+
+## Compatibility Notes
+
+- [eslint-config] Activated the eslint rule 'check-tag-names' to allowed jsdoc tags. If you use custom tags add them via the 'definedTags' in the eslint options. (15e9ef4b)
+- [generator] Deprecated `generateNpmrc` cli option. This option was only used to configure the now defunct npm registry hosted by SAP. It now has no effect anymore and should be removed in all invocations of the generator cli. (15e9ef4b)
+- [generator, openapi-generator, generator-common] Description for package.json in a generated client has changed. (15e9ef4b)
+
+## New Functionalities
+
+- [mail-client] Support defining the strategy of sending emails. By default, the emails are sent "in parallel" and can be set to "in sequential". (15e9ef4b)
+- [odata-common, generator] Allow function imports using GET http method in batch requests. (15e9ef4b)
+
+## Improvements
+
+- [connectivity] Reduce default logs for failing requests in @sap-cloud-sdk/http-client.
+  - @sap-cloud-sdk/util@2.8.0 (15e9ef4b)
+
+## Fixed Issues
+
+- [connectivity] Remove last explicit references to 'VCAP_SERVICES' and replace them with '@sap/xsenv'. (15e9ef4b)
+- [connectivity] Fix that unparsable destinations in the subaccount prevent other destinations from beeing fetched. (15e9ef4b)
+
 # 2.7.1
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.7.1

@@ -62,7 +62,7 @@ So we have something for circuit breaker and timeout.
 - Rate limit and bulk limit we will not be done -> no user request.
 - We will implement an [extendable middleware approach](#api).
 - Per default the resilience middleware is off.
-- This is a breaking change done in version 3.
+- This is a breaking change and therefore will be included in a future major version upgrade.
 - All resilience related options (timeout, circuitbreaker) are deprecated in version 2.
 
 |     Option      | On target | On BTP | Default target | Default BTP | Remarks                                                    |

@@ -241,7 +241,7 @@ From version 3 on there will be the middleware approach to add resilience.
 
 ### Setting Resilience Globally
 
-Up to know, we discussed the configuration on a per-request basis.
+Up to now, we discussed the configuration on a per-request basis.
 In practice, it could be desirable to enable resilience globally for all requests.
 
 - Per request config overrules global config

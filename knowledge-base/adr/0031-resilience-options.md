@@ -211,34 +211,6 @@ The SDK uses the following libraries to implement resilience:
 - For retry, we will use [async retry](https://www.npmjs.com/package/async-retry)
 - For circuit breaker, we will use [opossum](https://www.npmjs.com/package/opossum)
 
-### Deprecation Period
-
-We will have a deprecation period for the old options.
-
-```ts
-myApi
-  .getAll()
-  .timeout(456) //deprecated
-  .execute({
-    destinationName: 'my-dest',
-    timeout: 456, //deprecated
-    enableCircuitBreaker: true //deprecated
-  });
-
-//user 123 as timeout and circuit breaker of
-
-executeHttpRequest(
-  {
-    destinationName: 'my-dest'
-  },
-  {
-    timeout: 456 //deprecated
-  }
-);
-```
-
-From version 3 on there will be the middleware approach to add resilience.
-
 ### Setting Resilience Globally
 
 Up to now, we discussed the configuration on a per-request basis.

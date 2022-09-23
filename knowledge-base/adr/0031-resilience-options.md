@@ -248,9 +248,7 @@ In practice, it could be desirable to enable resilience globally for all request
 - Some global state (list) holds the given option
 - Implementation checks if global config is present and uses them in the request
 
-```ts
-function globalMiddlewares(middlewares: Middleware[]) {}
-
-function clearGlobalMiddlewareById(id?: string) {}
-function clearAllGlobalMiddlewares() {}
-```
+There should be methods to:
+- Set multiple middlewares globally
+- Remove all globally set middlewares
+- [Optional] Remove one particular global middleware by an identifier.

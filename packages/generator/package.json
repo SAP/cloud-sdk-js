@@ -57,7 +57,7 @@
     "yargs": "^17.0.1"
   },
   "devDependencies": {
-    "@types/yargs": "^17.0.12",
+    "@types/yargs": "^17.0.13",
     "execa": "^5.0.0",
     "mock-fs": "^5.1.4",
     "nock": "^13.2.9"

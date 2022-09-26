@@ -769,7 +769,7 @@ describe('destination cache', () => {
       expect([actual1, actual2]).toEqual(expected);
     });
 
-    it('should return undefined when the destination is not valid', async () => {
+    it('should return undefined when the destination is expired with default expiration time', async () => {
       jest.useFakeTimers('modern');
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
       await destinationCache.cacheRetrievedDestination(
@@ -778,23 +778,35 @@ describe('destination cache', () => {
         IsolationStrategy.Tenant_User
       );
       const minutesToExpire = 6;
+      const actualBefore = await destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        'destToCache1',
+        IsolationStrategy.Tenant_User
+      );
+      expect(actualBefore).toBeDefined();
+
       jest.advanceTimersByTime(60000 * minutesToExpire);
 
-      const actual = await destinationCache.retrieveDestinationFromCache(
+      const actualAfter = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
         IsolationStrategy.Tenant_User
       );
 
-      expect(actual).toBeUndefined();
+      expect(actualAfter).toBeUndefined();
     });
 
-    it('should return undefined when the destination is not valid and has an auth token expiration time', async () => {
+    it('should return undefined when the destination is expired with token defined expiration time', async () => {
       jest.useFakeTimers('modern');
+      const sixMinutesTokenLifetime = 6 * 60;
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
       const destination = {
         ...destinationOne,
-        authTokens: [{ expiresIn: '60' } as DestinationAuthToken]
+        authTokens: [
+          {
+            expiresIn: sixMinutesTokenLifetime.toString()
+          } as DestinationAuthToken
+        ]
       };
       await destinationCache.cacheRetrievedDestination(
         dummyJwt,
@@ -810,8 +822,7 @@ describe('destination cache', () => {
 
       await expect(retrieveDestination()).resolves.toEqual(destination);
 
-      const minutesToExpire = 2;
-      jest.advanceTimersByTime(60000 * minutesToExpire);
+      jest.advanceTimersByTime(sixMinutesTokenLifetime * 1000 + 1);
 
       await expect(retrieveDestination()).resolves.toBeUndefined();
     });

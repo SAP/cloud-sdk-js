@@ -20,6 +20,10 @@ const destinationOne: Destination = {
   isTrustingAllCertificates: false
 };
 
+const dummyToken = {
+  access_token: '1234567890'
+} as ClientCredentialsResponse;
+
 // Cache with expiration time
 const cacheOne = new Cache<Destination>(300000);
 
@@ -48,10 +52,26 @@ describe('Cache', () => {
     jest.useFakeTimers('modern');
     cacheOne.set('one', { entry: destinationOne });
 
-    const minutesToExpire = 6;
-    // Shift time to expire the set item
-    jest.advanceTimersByTime(60000 * minutesToExpire);
+    expect(cacheOne.get('one')).toBeDefined();
+
+    const minutesToExpire = 5;
+    jest.advanceTimersByTime(minutesToExpire * 60 * 1000 + 1);
     expect(cacheOne.get('one')).toBeUndefined();
+  });
+
+  it('retrieving expired item with custom expire time should return undefined', () => {
+    jest.useFakeTimers('modern');
+    const timeToExpire = 5000;
+
+    cacheOne.set('expireTest', {
+      entry: destinationOne,
+      expires: Date.now() + timeToExpire
+    });
+
+    expect(cacheOne.get('expireTest')).toBeDefined();
+
+    jest.advanceTimersByTime(timeToExpire + 1);
+    expect(cacheOne.get('expireTest')).toBeUndefined();
   });
 
   it('clear() should remove all entries in cache', () => {
@@ -61,25 +81,11 @@ describe('Cache', () => {
   });
 
   it('should return the item when its expiration time is undefined', () => {
-    const dummyToken = {
-      access_token: '1234567890',
-      token_type: 'UserToken',
-      expires_in: 12312343414,
-      jti: '',
-      scope: ''
-    };
     cacheTwo.set('someToken', { entry: dummyToken });
     expect(cacheTwo.get('someToken')).toEqual(dummyToken);
   });
 
   it('custom expiration time should be set correctly', () => {
-    const dummyToken = {
-      access_token: '1234567890',
-      token_type: 'UserToken',
-      expires_in: 12312343414,
-      jti: '',
-      scope: ''
-    };
     cacheTwo.set('expiredToken', { entry: dummyToken, expires: 10 });
     cacheTwo.set('validToken', {
       entry: dummyToken,

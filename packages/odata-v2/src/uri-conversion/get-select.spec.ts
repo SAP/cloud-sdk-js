@@ -1,60 +1,74 @@
 import {
-    testEntityApi,
-    testEntityMultiLinkApi,
-    testEntitySingleLinkApi
+  testEntityApi,
+  testEntityMultiLinkApi,
+  testEntitySingleLinkApi
 } from '../../test/test-util';
-import { getSelect } from "./get-select";
+import { getSelect } from './get-select';
 
 describe('get select', () => {
-    it('all fields', () => {
-        expect(
-            getSelect([
-                testEntityApi.schema.ALL_FIELDS,
-                testEntityApi.schema.TO_SINGLE_LINK,
-                testEntityApi.schema.TO_MULTI_LINK
-            ]).select
-        ).toBe('*,to_SingleLink/*,to_MultiLink/*')
-    });
+  it('should returns all properties that does not select any specific property', () => {
+    expect(
+      getSelect([
+        testEntityApi.schema.ALL_FIELDS,
+        testEntityApi.schema.TO_SINGLE_LINK,
+        testEntityApi.schema.TO_MULTI_LINK
+      ]).select
+    ).toBe('*,to_SingleLink/*,to_MultiLink/*');
+  });
 
-    it('for single link with sub-query', () => {
-        expect(
-            getSelect([
-                testSingleLink.expand
-            ]).select
-        ).toBe('to_SingleLink/StringProperty,to_SingleLink/BooleanProperty')
-    });
+  it('should return all properties', () => {
+    expect(
+      getSelect([
+        testEntityApi.schema.STRING_PROPERTY,
+        testEntityApi.schema.TO_SINGLE_LINK,
+        testEntityApi.schema.COMPLEX_TYPE_PROPERTY,
+        testEntityApi.customField('TEST_CUSTOM_PROPERTY')
+      ]).select
+    ).toBe(
+      'to_SingleLink/*,StringProperty,ComplexTypeProperty,TEST_CUSTOM_PROPERTY'
+    );
+  });
 
-    it('for multi link with sub-query', () => {
-        expect(getSelect([testMultiLink.expand]).select).toBe(
-            // subqueries after `select` doesn't work because the methods doesn't exist in class `Link`
-            `${testMultiLink.odataStr}`
-        );
-    });
+  it('should return only a selection of all fields', () => {
+    expect(
+      getSelect([
+        testEntityApi.schema.ALL_FIELDS,
+        testEntityApi.schema.STRING_PROPERTY
+      ]).select
+    ).toBe('*');
+  });
 
+  it('should return all selected properties of single link', () => {
+    expect(
+      getSelect([
+        testEntityApi.schema.TO_SINGLE_LINK.select(
+          testEntitySingleLinkApi.schema.STRING_PROPERTY,
+          testEntitySingleLinkApi.schema.BOOLEAN_PROPERTY
+        )
+      ]).select
+    ).toBe('to_SingleLink/StringProperty,to_SingleLink/BooleanProperty');
+  });
+
+  it('should return all selected properties of multi link', () => {
+    expect(
+      getSelect([
+        testEntityApi.schema.TO_MULTI_LINK.select(
+          testEntityMultiLinkApi.schema.STRING_PROPERTY,
+          testEntityMultiLinkApi.schema.BOOLEAN_PROPERTY
+        )
+      ]).select
+    ).toBe('to_MultiLink/StringProperty,to_MultiLink/BooleanProperty');
+  });
+
+  it('returns all selected properties with a nested selection', () => {
+    expect(
+      getSelect([
+        testEntityApi.schema.TO_SINGLE_LINK.select(
+          testEntitySingleLinkApi.schema.TO_MULTI_LINK.select(
+            testEntityMultiLinkApi.schema.STRING_PROPERTY
+          )
+        )
+      ]).select
+    ).toBe('to_SingleLink/to_MultiLink/StringProperty');
+  });
 });
-
-const encodedSpace = encodeURIComponent(' ');
-
-const testSingleLink = {
-    expand: testEntityApi.schema.TO_SINGLE_LINK.select(
-        testEntitySingleLinkApi.schema.STRING_PROPERTY,
-        testEntitySingleLinkApi.schema.BOOLEAN_PROPERTY
-    ),
-    odataStr: 'to_SingleLink($select=StringProperty,BooleanProperty)'
-};
-
-const testMultiLink = {
-    expand: testEntityApi.schema.TO_MULTI_LINK.select(
-        testEntityMultiLinkApi.schema.STRING_PROPERTY,
-        testEntityMultiLinkApi.schema.BOOLEAN_PROPERTY
-    )
-            // methods below thorws an error because class `Link` used in v2 doesn't have the methods.
-            // Unlikely v4 uses OneToManyLink has the methods hence methods below work in v4 but here v2.
-            .orderBy(asc(testEntityMultiLinkApi.schema.STRING_PROPERTY))
-            .filter(testEntityMultiLinkApi.schema.STRING_PROPERTY.equals('test'))
-            .top(1)
-            .skip(1),
-        // subqueries after `select` `to_MultiLink($select=StringProperty,BooleanProperty;$filter=(StringProperty%20eq%20'test');$skip=1;$top=1;$orderby=StringProperty${encodedSpace}asc)`are ignored
-        odataStr: 'to_MultiLink/StringProperty,to_MultiLink/BooleanProperty'
-        // 
-};

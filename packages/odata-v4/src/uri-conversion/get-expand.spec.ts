@@ -32,7 +32,7 @@ describe('get expand', () => {
     );
   });
 
-  it('for multi link with nested sub-query', () => {
+  it('for multi link with a nested expansion', () => {
     expect(getExpand([testNestedExpandLink.expand], testEntityApi).expand).toBe(
       `${testNestedExpandLink.odataStr}`
     );
@@ -68,4 +68,4 @@ const testNestedExpandLink = {
     )
   ),
   odataStr: 'to_SingleLink($expand=to_SingleLink($expand=to_MultiLink1))'
-}
+};

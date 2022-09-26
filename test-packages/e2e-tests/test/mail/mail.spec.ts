@@ -32,8 +32,8 @@ describe('Mail', () => {
     ).toBe(true);
   }, 60000);
 
-  it('should send 100 mails', async () => {
-    const mailOptions = buildArrayWithNatualNums(100).map(
+  it('should send 10 mails', async () => {
+    const mailOptions = buildArrayWithNatualNums(10).map(
       mailIndex =>
         ({
           ...defaultMailOptions,
@@ -42,11 +42,11 @@ describe('Mail', () => {
     );
     const responses = await sendTestMail(mailOptions);
 
-    expect(responses.length).toBeGreaterThan(99);
+    expect(responses.length).toBeGreaterThan(9);
     expect(responses[0].accepted?.length).toBe(2);
 
     const mails = fs.readdirSync(join(resolve('test'), 'mail', 'test-output'));
-    expect(mails.length).toBeGreaterThan(99);
+    expect(mails.length).toBeGreaterThan(9);
   }, 60000);
 });
 

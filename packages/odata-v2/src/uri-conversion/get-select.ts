@@ -46,7 +46,6 @@ function getSelectsAsStrings<
 ): string[] {
   return selectables.reduce((select: string[], selectable) => {
     const fullFieldName = getPath(parent, selectable._fieldName);
-    const isSelectable = selectable instanceof Link
     if (selectable instanceof Link) {
       if (selectable._selects.length) {
         return getSelectsAsStrings(selectable._selects, select, fullFieldName);

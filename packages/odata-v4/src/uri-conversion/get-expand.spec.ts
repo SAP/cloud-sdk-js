@@ -31,6 +31,12 @@ describe('get expand', () => {
       `${testExpandMultiLink.odataStr}`
     );
   });
+
+  it('for multi link with nested sub-query', () => {
+    expect(getExpand([testNestedExpandLink.expand], testEntityApi).expand).toBe(
+      `${testNestedExpandLink.odataStr}`
+    );
+  });
 });
 
 const encodedSpace = encodeURIComponent(' ');
@@ -54,3 +60,12 @@ const testExpandMultiLink = {
     .skip(1),
   odataStr: `to_MultiLink($select=StringProperty,BooleanProperty;$filter=(StringProperty%20eq%20'test');$skip=1;$top=1;$orderby=StringProperty${encodedSpace}asc)`
 };
+
+const testNestedExpandLink = {
+  expand: testEntityApi.schema.TO_SINGLE_LINK.expand(
+    testEntitySingleLinkApi.schema.TO_SINGLE_LINK.expand(
+      testEntityMultiLinkApi.schema.TO_MULTI_LINK_1
+    )
+  ),
+  odataStr: 'to_SingleLink($expand=to_SingleLink($expand=to_MultiLink1))'
+}

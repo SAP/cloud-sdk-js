@@ -2,10 +2,10 @@ import { testEntityApi } from '../../test/test-util';
 import { getSelect } from './get-select';
 
 describe('get select', () => {
-  it('all fields', () => {
+  it('should return a selection of all fields', () => {
     expect(getSelect([testEntityApi.schema.ALL_FIELDS]).select).toBe('*');
   });
-  it('should return all selected propertiesmj', () => {
+  it('should return all selected properties', () => {
     expect(
       getSelect([
         testEntityApi.schema.STRING_PROPERTY,
@@ -13,9 +13,9 @@ describe('get select', () => {
         testEntityApi.customField('TEST_CUSTOM_PROPERTY'),
         testEntityApi.schema.COMPLEX_TYPE_COLLECTION_PROPERTY
       ]).select
-    ).toBe('StringProperty,BooleanProperty');
+    ).toBe('StringProperty,ComplexTypeProperty,TEST_CUSTOM_PROPERTY,ComplexTypeCollectionProperty');
   });
-  it('ignore', () => {
+  it('should return only a selection of all fields', () => {
     expect(
       getSelect([
         testEntityApi.schema.ALL_FIELDS,

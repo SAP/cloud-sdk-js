@@ -13,7 +13,9 @@ describe('get select', () => {
         testEntityApi.customField('TEST_CUSTOM_PROPERTY'),
         testEntityApi.schema.COMPLEX_TYPE_COLLECTION_PROPERTY
       ]).select
-    ).toBe('StringProperty,ComplexTypeProperty,TEST_CUSTOM_PROPERTY,ComplexTypeCollectionProperty');
+    ).toBe(
+      'StringProperty,ComplexTypeProperty,TEST_CUSTOM_PROPERTY,ComplexTypeCollectionProperty'
+    );
   });
   it('should return only a selection of all fields', () => {
     expect(

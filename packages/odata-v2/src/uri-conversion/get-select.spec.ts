@@ -60,7 +60,7 @@ describe('get select', () => {
     ).toBe('to_MultiLink/StringProperty,to_MultiLink/BooleanProperty');
   });
 
-  it('returns all selected properties with a nested selection', () => {
+  it('returns all nested selected properties', () => {
     expect(
       getSelect([
         testEntityApi.schema.TO_SINGLE_LINK.select(

@@ -18,12 +18,6 @@ describe('isNavigationProperty', () => {
     );
   });
 
-  it('returns true for one to many navigation property ', () => {
-    expect(isNavigationProperty('toMultiLink', commonEntityApi.schema)).toBe(
-      true
-    );
-  });
-
   it('returns false for string property', () => {
     expect(isNavigationProperty('stringProperty', commonEntityApi.schema)).toBe(
       false

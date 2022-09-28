@@ -18,7 +18,7 @@ describe('get select', () => {
       'StringProperty,ComplexTypeProperty,TEST_CUSTOM_PROPERTY,ComplexTypeCollectionProperty'
     );
   });
-  
+
   it('should return only a selection of all fields', () => {
     expect(
       getSelect([

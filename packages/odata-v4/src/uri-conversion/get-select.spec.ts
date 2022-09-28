@@ -5,6 +5,7 @@ describe('get select', () => {
   it('should return a selection of all fields', () => {
     expect(getSelect([testEntityApi.schema.ALL_FIELDS]).select).toBe('*');
   });
+
   it('should return all selected properties', () => {
     expect(
       getSelect([
@@ -17,6 +18,7 @@ describe('get select', () => {
       'StringProperty,ComplexTypeProperty,TEST_CUSTOM_PROPERTY,ComplexTypeCollectionProperty'
     );
   });
+  
   it('should return only a selection of all fields', () => {
     expect(
       getSelect([

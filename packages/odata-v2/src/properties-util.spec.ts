@@ -16,21 +16,9 @@ describe('properties-util', () => {
     ).toBeFalsy();
   });
 
-  it('returns true for one to one navigation property ', () => {
-    expect(isNavigationProperty('toSingleLink', testEntityApi.schema)).toBe(
-      true
-    );
-  });
-
   it('returns true for one to many navigation property ', () => {
     expect(isNavigationProperty('toMultiLink', testEntityApi.schema)).toBe(
       true
-    );
-  });
-
-  it('returns false for string property', () => {
-    expect(isNavigationProperty('stringProperty', testEntityApi.schema)).toBe(
-      false
     );
   });
 });

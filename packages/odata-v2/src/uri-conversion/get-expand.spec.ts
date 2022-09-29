@@ -6,7 +6,7 @@ import {
 import { getExpand } from './get-expand';
 
 describe('get expand', () => {
-  it('should return all expand quey parameters except for a selection of all fields', () => {
+  it('should return all expand query parameters except for a selection of all fields', () => {
     expect(
       getExpand([
         testEntityApi.schema.ALL_FIELDS,
@@ -16,7 +16,7 @@ describe('get expand', () => {
     ).toBe('to_SingleLink,to_MultiLink');
   });
 
-  it('should return an expand query parameter for single link', () => {
+  it('should return an expand query parameter for single link with sub-query', () => {
     expect(getExpand([testExpandSingleLink.expand]).expand).toBe(
       `${testExpandSingleLink.odataStr}`
     );
@@ -28,7 +28,7 @@ describe('get expand', () => {
     );
   });
 
-  it('should return an expand query parameter for multi link with a nested expansion', () => {
+  it('should return expand query parameters for multi link with a nested expansion', () => {
     expect(getExpand([testNestedExpandLink.expand]).expand).toBe(
       `${testNestedExpandLink.odataStr}`
     );

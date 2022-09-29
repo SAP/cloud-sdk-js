@@ -11,7 +11,7 @@ export enum Protocol {
 /**
  * @internal
  */
-export namespace Protocol {
+export namespace ProtocolNamespace {
   /**
    * Get {@link Protocol} from its string representation.
    * @param protocol - Protocol as string, either 'http'/'https' or 'http:'/'https:'.

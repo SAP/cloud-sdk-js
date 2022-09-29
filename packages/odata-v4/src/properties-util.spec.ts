@@ -5,7 +5,7 @@ import {
 import {
   nonEnumerable,
   isNavigationProperty
-} from '@sap-cloud-sdk/odata-common/dist/properties-util';
+} from '@sap-cloud-sdk/odata-common/internal';
 const { testEntityApi } = testService();
 
 describe('properties-util', () => {

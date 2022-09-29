@@ -65,18 +65,20 @@ export async function transpileDirectory(
 
 function getErrorList(diagnostics: Diagnostic[]): string[] {
   return diagnostics.map(diagnostic => {
+    const text =
+      typeof diagnostic.messageText === 'string'
+        ? diagnostic.messageText
+        : diagnostic.messageText.messageText;
+
     if (diagnostic.file) {
       const { lineNumber, linePosition } = findPositions(
         diagnostic.file.statements,
         diagnostic.start
       );
 
-      return `${diagnostic.file.fileName}:${lineNumber}:${linePosition} - error TS${diagnostic.code}: ${diagnostic.messageText}`;
+      return `${diagnostic.file.fileName}:${lineNumber}:${linePosition} - error TS${diagnostic.code}: ${text}`;
     }
-    const text =
-      typeof diagnostic.messageText === 'string'
-        ? diagnostic.messageText
-        : diagnostic.messageText.messageText;
+
     return `error TS${diagnostic.code}: ${text}`;
   });
 }

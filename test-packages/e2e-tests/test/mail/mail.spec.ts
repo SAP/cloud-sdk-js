@@ -1,8 +1,13 @@
 import fs from 'fs';
 import { join, resolve } from 'path';
+import * as fsExtra from 'fs-extra';
 import { MailConfig, MailResponse, sendMail } from '@sap-cloud-sdk/mail-client';
 
 describe('Mail', () => {
+  beforeEach(async () => {
+    fsExtra.emptyDirSync(join(resolve('test'), 'mail', 'test-output'));
+  });
+
   const defaultMailOptions: MailConfig = {
     from: '"FROM" <from@example.com>',
     to: 'TO1@example.com, TO2@example.com',

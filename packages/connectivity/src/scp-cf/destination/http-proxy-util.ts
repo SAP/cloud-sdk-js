@@ -3,7 +3,7 @@ import { URL } from 'url';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger, sanitizeRecord } from '@sap-cloud-sdk/util';
-import { Protocol } from '../protocol';
+import { Protocol, getProtocol } from '../protocol';
 import { ProxyConfiguration } from '../connectivity-service-types';
 import { basicHeader } from '../authorization-header';
 import {
@@ -155,7 +155,7 @@ export function parseProxyEnv(
 
     const proxyConfig: ProxyConfiguration = {
       host: url.hostname,
-      protocol: Protocol.of(url.protocol)!,
+      protocol: getProtocol(url.protocol)!,
       port: getPort(url)
     };
 

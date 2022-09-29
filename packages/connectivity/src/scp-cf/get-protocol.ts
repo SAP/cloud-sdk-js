@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination } from './destination/destination-service-types';
-import { Protocol } from './protocol';
+import { Protocol, getProtocol } from './protocol';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -23,7 +23,7 @@ export function getProtocolOrDefault(destination: Destination): Protocol {
     );
     return Protocol.HTTPS;
   }
-  const casted = Protocol.of(protocol[0]);
+  const casted = getProtocol(protocol[0]);
   if (casted) {
     return casted;
   }

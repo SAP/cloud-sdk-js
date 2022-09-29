@@ -6,7 +6,7 @@ import {
 import { getSelect } from './get-select';
 
 describe('get select', () => {
-  it('should returns all properties that does not select any specific property', () => {
+  it('should return all properties that do not select any specific property', () => {
     expect(
       getSelect([
         testEntityApi.schema.ALL_FIELDS,

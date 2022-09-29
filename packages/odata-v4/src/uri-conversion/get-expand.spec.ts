@@ -7,7 +7,7 @@ import {
 import { getExpand } from './get-expand';
 
 describe('get expand', () => {
-  it('for first level expand without sub-query', () => {
+  it('should return all expand quey parameters', () => {
     expect(
       getExpand(
         [
@@ -20,19 +20,19 @@ describe('get expand', () => {
     ).toBe('*,to_SingleLink,to_MultiLink');
   });
 
-  it('for single link with sub-query', () => {
+  it('should return an expand query parameter for single link with sub-query', () => {
     expect(getExpand([testExpandSingleLink.expand], testEntityApi).expand).toBe(
       `${testExpandSingleLink.odataStr}`
     );
   });
 
-  it('for multi link with sub-query', () => {
+  it('should return an expand query parameter for multi link with sub-query', () => {
     expect(getExpand([testExpandMultiLink.expand], testEntityApi).expand).toBe(
       `${testExpandMultiLink.odataStr}`
     );
   });
 
-  it('for multi link with a nested expansion', () => {
+  it('should return an expand query parameter for multi link with a nested expansion', () => {
     expect(getExpand([testNestedExpandLink.expand], testEntityApi).expand).toBe(
       `${testNestedExpandLink.odataStr}`
     );

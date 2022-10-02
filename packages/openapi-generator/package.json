@@ -45,7 +45,7 @@
     "js-yaml": "^4.0.0",
     "openapi-types": "^12.0.2",
     "swagger2openapi": "^7.0.4",
-    "yargs": "^17.1.1"
+    "yargs": "^17.6.0"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.0",

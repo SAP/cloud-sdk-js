@@ -10,7 +10,7 @@ jobs:
     name: 'Security rating'
     steps:
       - uses: actions/checkout@v3
-      - uses: SAP/fosstars-rating-core-action@v1.8.0
+      - uses: SAP/fosstars-rating-core-action@v1.9.0
         with:
           report-branch: fosstars-report
           token: '${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}'

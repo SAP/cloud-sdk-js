@@ -207,6 +207,7 @@ export interface MailResponse {
  * Represents a mail destination configured on the SAP Business Technology Platform.
  * Currently only `mail.transport.protocol` and `mail.smtp.provider.*` are considered.
  * @experimental This API is experimental and might change in newer versions. Use with caution.
+ * @internal
  */
 export interface MailDestination {
   /**

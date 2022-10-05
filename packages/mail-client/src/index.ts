@@ -13,7 +13,6 @@ export type {
   Headers,
   Envelope,
   MailResponse,
-  MailDestination,
   MailClientOptions,
   SmtpTransportOptions,
   SDKOptions

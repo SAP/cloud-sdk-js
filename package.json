@@ -51,6 +51,7 @@
     "test:e2e": "turbo run test --filter=e2e-tests",
     "test:self": "turbo run test --filter=self-tests",
     "generate": "turbo run generate",
+    "readme": "turbo run readme",
     "doc": "ts-node scripts/generate-docs.ts",
     "preversion": "ts-node scripts/before-bump.ts",
     "version": "changeset version",

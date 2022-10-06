@@ -23,7 +23,7 @@ export class DeleteRequestBuilder<
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
-    keysOrEntity: Record<string, any> | Entity
+    keysOrEntity: Record<string, any> | EntityT
   ) {
     super(entityApi, createODataUri(entityApi.deSerializers), keysOrEntity);
   }

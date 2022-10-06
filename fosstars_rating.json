@@ -258,9 +258,9 @@
         }
       }
     },
-    "value" : 6.7406673114119915,
+    "value" : 6.7419439071566725,
     "weight" : 1.0,
-    "confidence" : 10.0,
+    "confidence" : 9.569935476990347,
     "usedValues" : [ {
       "type" : "ScoreValue",
       "score" : {
@@ -367,7 +367,7 @@
       },
       "value" : 8.0,
       "weight" : 0.6,
-      "confidence" : 10.0,
+      "confidence" : 9.404761904761905,
       "usedValues" : [ {
         "type" : "VulnerabilitiesValue",
         "feature" : {
@@ -507,7 +507,7 @@
         },
         "value" : 8.863636363636363,
         "weight" : 1.0,
-        "confidence" : 10.0,
+        "confidence" : 8.809523809523808,
         "usedValues" : [ {
           "type" : "ScoreValue",
           "score" : {
@@ -1144,7 +1144,7 @@
           },
           "value" : 0.0,
           "weight" : 1.0,
-          "confidence" : 10.0,
+          "confidence" : 5.0,
           "usedValues" : [ {
             "type" : "LanguagesValue",
             "feature" : {
@@ -1156,12 +1156,11 @@
             },
             "explanation" : [ ]
           }, {
-            "type" : "BooleanValue",
+            "type" : "UnknownValue",
             "feature" : {
               "type" : "BooleanFeature",
               "name" : "If an open-source project is included to OSS-Fuzz project"
             },
-            "flag" : false,
             "explanation" : [ ]
           } ],
           "explanation" : [ ],
@@ -1540,7 +1539,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 242,
+        "number" : 245,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1551,7 +1550,7 @@
         "number" : 4,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "242 commits in the last 3 months results to 10.00 points", "4 contributors increase the score value from 10.00 to 11.00" ],
+      "explanation" : [ "245 commits in the last 3 months results to 10.00 points", "4 contributors increase the score value from 10.00 to 11.00" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
@@ -1660,7 +1659,7 @@
       },
       "value" : 8.863636363636363,
       "weight" : 1.0,
-      "confidence" : 10.0,
+      "confidence" : 8.809523809523808,
       "usedValues" : [ {
         "type" : "ScoreValue",
         "score" : {
@@ -2297,7 +2296,7 @@
         },
         "value" : 0.0,
         "weight" : 1.0,
-        "confidence" : 10.0,
+        "confidence" : 5.0,
         "usedValues" : [ {
           "type" : "LanguagesValue",
           "feature" : {
@@ -2309,12 +2308,11 @@
           },
           "explanation" : [ ]
         }, {
-          "type" : "BooleanValue",
+          "type" : "UnknownValue",
           "feature" : {
             "type" : "BooleanFeature",
             "name" : "If an open-source project is included to OSS-Fuzz project"
           },
-          "flag" : false,
           "explanation" : [ ]
         } ],
         "explanation" : [ ],
@@ -2485,7 +2483,7 @@
       },
       "value" : 3.5,
       "weight" : 0.9,
-      "confidence" : 10.0,
+      "confidence" : 9.473684210526315,
       "usedValues" : [ {
         "type" : "BooleanValue",
         "feature" : {
@@ -2535,12 +2533,11 @@
         "flag" : false,
         "explanation" : [ ]
       }, {
-        "type" : "BooleanValue",
+        "type" : "UnknownValue",
         "feature" : {
           "type" : "BooleanFeature",
           "name" : "If an open-source project is included to OSS-Fuzz project"
         },
-        "flag" : false,
         "explanation" : [ ]
       }, {
         "type" : "BooleanValue",
@@ -2677,7 +2674,7 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 1.735,
+      "value" : 1.747,
       "weight" : 0.5,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -2702,7 +2699,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of projects on GitHub that use an open source project"
         },
-        "number" : 2364,
+        "number" : 2382,
         "explanation" : [ ]
       } ],
       "explanation" : [ ],

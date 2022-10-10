@@ -7,7 +7,7 @@ import {
 import { getExpand } from './get-expand';
 
 describe('get expand', () => {
-  it('should return all expand quey parameters', () => {
+  it('should return all expand query parameters', () => {
     expect(
       getExpand(
         [

@@ -20,6 +20,14 @@ export function entityImportDeclarations(
       oDataVersion
     ),
     ...complexTypeImportDeclarations(entity.properties),
+    {
+      namedImports: [
+          `${entity.className}Api`
+      ],
+      moduleSpecifier: `./${entity.className}Api`,
+      kind: StructureKind.ImportDeclaration,
+      isTypeOnly: true
+    },
     ...enumTypeImportDeclarations(entity.properties)
   ];
 }

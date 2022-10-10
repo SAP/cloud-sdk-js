@@ -4,6 +4,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
  */
@@ -13,6 +14,7 @@ export declare class TestEntityLvl2SingleLink<
   extends Entity
   implements TestEntityLvl2SingleLinkType<T>
 {
+  readonly _entityApi: TestEntityLvl2SingleLinkApi<T>;
   /**
    * Technical entity name for TestEntityLvl2SingleLink.
    */
@@ -51,6 +53,7 @@ export declare class TestEntityLvl2SingleLink<
    * Maximum length: 10.
    */
   keyProperty: DeserializedType<T, 'Edm.String'>;
+  constructor(_entityApi: TestEntityLvl2SingleLinkApi<T>);
 }
 export interface TestEntityLvl2SingleLinkType<
   T extends DeSerializers = DefaultDeSerializers

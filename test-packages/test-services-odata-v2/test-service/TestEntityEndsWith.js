@@ -10,7 +10,12 @@ const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */
-class TestEntityEndsWith extends odata_v2_1.Entity {}
+class TestEntityEndsWith extends odata_v2_1.Entity {
+  constructor(_entityApi) {
+    super(_entityApi);
+    this._entityApi = _entityApi;
+  }
+}
 exports.TestEntityEndsWith = TestEntityEndsWith;
 /**
  * Technical entity name for TestEntityEndsWith.

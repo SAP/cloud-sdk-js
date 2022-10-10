@@ -10,7 +10,12 @@ const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
  */
-class TestEntityLink extends odata_v4_1.Entity {}
+class TestEntityLink extends odata_v4_1.Entity {
+  constructor(_entityApi) {
+    super(_entityApi);
+    this._entityApi = _entityApi;
+  }
+}
 exports.TestEntityLink = TestEntityLink;
 /**
  * Technical entity name for TestEntityLink.

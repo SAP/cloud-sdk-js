@@ -37,7 +37,8 @@ export declare function changeset<DeSerializersT extends DeSerializers>(
 export declare function changeset<DeSerializersT extends DeSerializers>(
   requests: Array<WriteMultipleSchemasServiceRequestBuilder<DeSerializersT>>
 ): BatchChangeSet<DeSerializersT>;
-export declare const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
+export declare const defaultMultipleSchemasServicePath =
+  '/sap/opu/odata/sap/API_MULTIPLE_SCHEMAS_SRV';
 export declare type ReadMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =

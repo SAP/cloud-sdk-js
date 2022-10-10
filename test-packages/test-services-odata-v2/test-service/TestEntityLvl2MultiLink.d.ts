@@ -4,6 +4,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v2';
+import type { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';
 /**
  * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
  */
@@ -13,6 +14,7 @@ export declare class TestEntityLvl2MultiLink<
   extends Entity
   implements TestEntityLvl2MultiLinkType<T>
 {
+  readonly _entityApi: TestEntityLvl2MultiLinkApi<T>;
   /**
    * Technical entity name for TestEntityLvl2MultiLink.
    */
@@ -51,6 +53,7 @@ export declare class TestEntityLvl2MultiLink<
    * @nullable
    */
   int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
+  constructor(_entityApi: TestEntityLvl2MultiLinkApi<T>);
 }
 export interface TestEntityLvl2MultiLinkType<
   T extends DeSerializers = DefaultDeSerializers

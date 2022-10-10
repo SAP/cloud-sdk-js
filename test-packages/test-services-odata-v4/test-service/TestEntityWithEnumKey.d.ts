@@ -3,6 +3,7 @@ import {
   DefaultDeSerializers,
   DeSerializers
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntityWithEnumKeyApi } from './TestEntityWithEnumKeyApi';
 import { TestEnumType } from './TestEnumType';
 /**
  * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
@@ -13,6 +14,7 @@ export declare class TestEntityWithEnumKey<
   extends Entity
   implements TestEntityWithEnumKeyType<T>
 {
+  readonly _entityApi: TestEntityWithEnumKeyApi<T>;
   /**
    * Technical entity name for TestEntityWithEnumKey.
    */
@@ -29,6 +31,7 @@ export declare class TestEntityWithEnumKey<
    * Key Property Enum 1.
    */
   keyPropertyEnum1: TestEnumType;
+  constructor(_entityApi: TestEntityWithEnumKeyApi<T>);
 }
 export interface TestEntityWithEnumKeyType<
   T extends DeSerializers = DefaultDeSerializers

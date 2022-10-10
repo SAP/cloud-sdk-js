@@ -9,6 +9,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v2';
+import type { MultiSchemaTestEntityApi } from './MultiSchemaTestEntityApi';
 
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -26,7 +27,7 @@ export class MultiSchemaTestEntity<
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = 'VALUE_IS_UNDEFINED';
+  static _defaultServicePath = '/sap/opu/odata/sap/API_MULTIPLE_SCHEMAS_SRV';
   /**
    * All key fields of the MultiSchemaTestEntity entity
    */
@@ -35,6 +36,10 @@ export class MultiSchemaTestEntity<
    * Key Property.
    */
   keyProperty!: DeserializedType<T, 'Edm.String'>;
+
+  constructor(readonly _entityApi: MultiSchemaTestEntityApi<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface MultiSchemaTestEntityType<

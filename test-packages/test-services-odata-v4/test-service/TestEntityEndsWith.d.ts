@@ -4,6 +4,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */
@@ -13,6 +14,7 @@ export declare class TestEntityEndsWith<
   extends Entity
   implements TestEntityEndsWithType<T>
 {
+  readonly _entityApi: TestEntityEndsWithApi<T>;
   /**
    * Technical entity name for TestEntityEndsWith.
    */
@@ -30,6 +32,7 @@ export declare class TestEntityEndsWith<
    * Maximum length: 10.
    */
   keyProperty: DeserializedType<T, 'Edm.String'>;
+  constructor(_entityApi: TestEntityEndsWithApi<T>);
 }
 export interface TestEntityEndsWithType<
   T extends DeSerializers = DefaultDeSerializers

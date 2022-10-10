@@ -9,6 +9,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v2';
+import type { CaseTestApi } from './CaseTestApi';
 
 /**
  * This class represents the entity "A_CaseTest" of service "API_TEST_SRV".
@@ -33,6 +34,10 @@ export class CaseTest<T extends DeSerializers = DefaultDeSerializers>
    * Key Property String.
    */
   keyPropertyString!: DeserializedType<T, 'Edm.String'>;
+
+  constructor(readonly _entityApi: CaseTestApi<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface CaseTestType<T extends DeSerializers = DefaultDeSerializers> {

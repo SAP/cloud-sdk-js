@@ -10,7 +10,12 @@ const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-class MultiSchemaTestEntity extends odata_v2_1.Entity {}
+class MultiSchemaTestEntity extends odata_v2_1.Entity {
+  constructor(_entityApi) {
+    super(_entityApi);
+    this._entityApi = _entityApi;
+  }
+}
 exports.MultiSchemaTestEntity = MultiSchemaTestEntity;
 /**
  * Technical entity name for MultiSchemaTestEntity.
@@ -19,7 +24,8 @@ MultiSchemaTestEntity._entityName = 'MultiSchemaTestEntity';
 /**
  * Default url path for the according service.
  */
-MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
+MultiSchemaTestEntity._defaultServicePath =
+  '/sap/opu/odata/sap/API_MULTIPLE_SCHEMAS_SRV';
 /**
  * All key fields of the MultiSchemaTestEntity entity
  */

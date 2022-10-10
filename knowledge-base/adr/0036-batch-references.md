@@ -72,17 +72,17 @@ Those requests are:
 
 Delete and get all probably does not make sense for this.
 
-API (`getBatchRef()`):
+API (`getBatchReference()`):
 
 ```ts
-/* extend request type with getBatchRef() method */
+/* extend request type with getBatchReference() method */
 interface CreateRequestBuilder<EntityT> {
   ...
-  getBatchRef(): BatchRef
+  getBatchReference(): BatchReference
 }
 
-interface BatchRef {
-  ref: string;
+interface BatchReference {
+  id: string;
 }
 ```
 
@@ -98,12 +98,12 @@ However, this will not work for bound functions, as they rely on the physical ex
 
 To solve this we should have a new method on the entity builder, that allows building an entity based on a reference only.
 
-API (`fromBatchRef()`):
+API (`fromBatchReference()`):
 
 ```ts
 interface EntityBuilder<EntityT> {
    ...
-   fromBatchRef(ref: BatchRef): EntityT
+   fromBatchRef(ref: BatchReference): EntityT
 }
 ```
 
@@ -118,7 +118,7 @@ const createRequest = businessPartnerApi
   .create(businessPartner);
 
 /* reference to newly created business partner */
-const businessPartnerRef = createRequest.getBatchRef();
+const businessPartnerRef = createRequest.getBatchReference();
 
 /* request 2 - create as child of with reference to newly created business partner */
 const asChildOfRequest = businessPartnerAddressApi
@@ -131,7 +131,7 @@ const asChildOfRequest = businessPartnerAddressApi
 
 /* request 3 - bound function with reference to newly created business partner => let's assume there is a bound function in businessPartner */
 const functionRequest = businessPartnerApi.entityBuilder
-  .fromBatchRef(businessPartnerRef)
+  .fromBatchReference(businessPartnerRef)
   .doSomething();
 
 const batchResponse = await changeset(createRequest, asChildOfRequest, functionRequest).execute(...);
@@ -148,11 +148,11 @@ Referencing batch becomes possible. The batch references are simple objects, whi
 Currently the request ID (content-id of the batch request headers) is created on `execute()`. This would yield a new request ID on every request execution. The ID would neither be available nor reusable for sharing with other requests.
 In the future this should happen when instantiating a request. Users should be able to overwrite this request id.
 
-API (`setBatchRef()`):
+API (`setBatchReference()`):
 
 ```ts
 interface CreateRequestBuilder<EntityT> {
   ...
-  setBatchRef(ref: string): void;
+  setBatchId(id: string): void;
 }
 ```

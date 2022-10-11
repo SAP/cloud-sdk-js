@@ -29,7 +29,12 @@ jobs:
           git checkout ${{ github.event.inputs.branch }}
           yarn lint:fix
       - name: Commit Changes if needed
-        run : |      
+        env:
+          USE_SSH: true
+          GIT_USER: cloud-sdk-js
+        run : |
+          git config --global user.email "cloud-sdk-js@github.com"
+          git config --global user.name "cloud-sdk-js"
           diff=`git diff`
           if [ ! -z "$diff" ]; then
             git commit -m "linter" -a

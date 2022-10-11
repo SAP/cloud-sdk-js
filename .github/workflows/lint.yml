@@ -27,6 +27,7 @@ jobs:
         run: |      
           yarn install --frozen-lockfile
           git checkout ${{ github.event.inputs.branch }}
+          git pull
           yarn lint:fix
       - name: Commit Changes if needed
         env:

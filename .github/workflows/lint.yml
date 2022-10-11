@@ -23,7 +23,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
-      - name: Run Linter
+      - name: Run lint:fix
         run: |      
           yarn install --frozen-lockfile
           git checkout ${{ github.event.inputs.branch }}
@@ -37,6 +37,6 @@ jobs:
           git config --global user.name "cloud-sdk-js"
           diff=`git diff`
           if [ ! -z "$diff" ]; then
-            git commit -m "linter" -a
+            git commit -m "Changes from lint:fix" -a
             git push -u origin ${{ github.event.inputs.branch }}
           fi

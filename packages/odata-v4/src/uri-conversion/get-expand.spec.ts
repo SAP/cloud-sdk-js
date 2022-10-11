@@ -2,7 +2,7 @@ import { asc } from '@sap-cloud-sdk/odata-common';
 import {
   testEntityApi,
   testEntityMultiLinkApi,
-  testEntitySingleLinkApi,
+  testEntitySingleLinkApi
 } from '../../test/test-util';
 import { getExpand } from './get-expand';
 

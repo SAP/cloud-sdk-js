@@ -9,7 +9,7 @@ describe('imports', () => {
       actual.map(imports => ({
         moduleSpecifier: imports.moduleSpecifier,
         namedImports: imports.namedImports,
-        isTypeOnly: !!imports.isTypeOnly,
+        isTypeOnly: !!imports.isTypeOnly
       }))
     ).toEqual(expectedEntityImports);
   });
@@ -37,9 +37,7 @@ const expectedEntityImports = [
     isTypeOnly: false
   },
   {
-    namedImports: [
-        'BreakfastApi'
-    ],
+    namedImports: ['BreakfastApi'],
     moduleSpecifier: './BreakfastApi',
     isTypeOnly: true
   }

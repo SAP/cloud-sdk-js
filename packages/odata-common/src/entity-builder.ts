@@ -79,9 +79,7 @@ export class EntityBuilder<
    */
   public build(): EntityT {
     const entity = this._entity;
-    this._entity = new this._entityApi.entityConstructor(
-      this._entityApi
-    );
+    this._entity = new this._entityApi.entityConstructor(this._entityApi);
     return entity;
   }
 

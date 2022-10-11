@@ -41,9 +41,7 @@ describe('EntityBuilder', () => {
   it('builds an entity with custom (de-)serializers', () => {
     const builder = commonEntityApiCustom.entityBuilder();
     builder.stringProperty;
-    expect(builder.build()).toEqual(
-      new CommonEntity(commonEntityApiCustom)
-    );
+    expect(builder.build()).toEqual(new CommonEntity(commonEntityApiCustom));
   });
 
   describe('fromJson', () => {

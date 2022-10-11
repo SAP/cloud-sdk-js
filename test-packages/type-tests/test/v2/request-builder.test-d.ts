@@ -14,7 +14,8 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 import { DefaultDeSerializerV2 } from '../duplicated-types';
 
-const { testEntityApi, testEntityMultiLinkApi, testEntitySingleLinkApi } = testService();
+const { testEntityApi, testEntityMultiLinkApi, testEntitySingleLinkApi } =
+  testService();
 
 const testEntitySchema = testEntityApi.schema;
 const testEntityMultiLinkSchema = testEntityMultiLinkApi.schema;

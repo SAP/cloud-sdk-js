@@ -21,9 +21,7 @@ export function entityImportDeclarations(
     ),
     ...complexTypeImportDeclarations(entity.properties),
     {
-      namedImports: [
-          `${entity.className}Api`
-      ],
+      namedImports: [`${entity.className}Api`],
       moduleSpecifier: `./${entity.className}Api`,
       kind: StructureKind.ImportDeclaration,
       isTypeOnly: true

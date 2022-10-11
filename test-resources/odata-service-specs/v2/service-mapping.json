@@ -1,7 +1,7 @@
 {
   "API_MULTIPLE_SCHEMAS_SRV": {
     "directoryName": "multiple-schemas-service",
-    "servicePath": "/sap/opu/odata/sap/API_MULTIPLE_SCHEMAS_SRV",
+    "servicePath": "VALUE_IS_UNDEFINED",
     "npmPackageName": "multiple-schemas-service"
   },
   "API_TEST_SRV": {

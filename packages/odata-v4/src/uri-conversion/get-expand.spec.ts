@@ -2,7 +2,7 @@ import { asc } from '@sap-cloud-sdk/odata-common';
 import {
   testEntityApi,
   testEntityMultiLinkApi,
-  testEntitySingleLinkApi
+  testEntitySingleLinkApi,
 } from '../../test/test-util';
 import { getExpand } from './get-expand';
 
@@ -64,7 +64,8 @@ const testExpandMultiLink = {
 const testNestedExpandLink = {
   expand: testEntityApi.schema.TO_SINGLE_LINK.expand(
     testEntitySingleLinkApi.schema.TO_SINGLE_LINK.expand(
-      testEntityMultiLinkApi.schema.TO_MULTI_LINK_1
+      // Incorrect type, therefore type assertion to "any", level 2 api does not have navigation properties
+      testEntityMultiLinkApi.schema.TO_MULTI_LINK_1 as any
     )
   ),
   odataStr: 'to_SingleLink($expand=to_SingleLink($expand=to_MultiLink1))'

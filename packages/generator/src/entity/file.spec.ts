@@ -12,6 +12,7 @@ describe('file', () => {
 
     expect(imports.map(i => i.moduleSpecifier)).toEqual([
       '@sap-cloud-sdk/odata-v2',
+      './BreakfastApi',
       './Brunch'
     ]);
 

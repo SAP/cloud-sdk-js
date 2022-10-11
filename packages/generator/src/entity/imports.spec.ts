@@ -8,7 +8,8 @@ describe('imports', () => {
     expect(
       actual.map(imports => ({
         moduleSpecifier: imports.moduleSpecifier,
-        namedImports: imports.namedImports
+        namedImports: imports.namedImports,
+        isTypeOnly: !!imports.isTypeOnly,
       }))
     ).toEqual(expectedEntityImports);
   });
@@ -32,7 +33,15 @@ const expectedEntityImports = [
       'DefaultDeSerializers',
       'DeSerializers',
       'DeserializedType'
-    ]
+    ],
+    isTypeOnly: false
+  },
+  {
+    namedImports: [
+        'BreakfastApi'
+    ],
+    moduleSpecifier: './BreakfastApi',
+    isTypeOnly: true
   }
 ];
 

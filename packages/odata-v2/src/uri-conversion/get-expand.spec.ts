@@ -54,7 +54,8 @@ const testExpandMultiLink = {
 const testNestedExpandLink = {
   expand: testEntityApi.schema.TO_SINGLE_LINK.select(
     testEntitySingleLinkApi.schema.TO_MULTI_LINK.select(
-      testEntityMultiLinkApi.schema.TO_MULTI_LINK
+      // Incorrect type, therefore type assertion to "any", level 2 api does not have navigation properties
+      testEntityMultiLinkApi.schema.TO_MULTI_LINK as any
     )
   ),
   odataStr:

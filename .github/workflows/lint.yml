@@ -1,0 +1,34 @@
+name: typedoc-check
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        type: string
+        description: Branch to run the linting on.
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: git fetch --depth=1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
+      - run: |
+          yarn install --frozen-lockfile
+          git checkout -b ${{${{ github.event.inputs.branch }}
+          yarn lint:fix          
+          diff=`git diff`
+          if [ ! -z "$diff" ]; then
+            git commit -m "linter" -a
+            git push -u ${{${{ github.event.inputs.branch }}
+          fi

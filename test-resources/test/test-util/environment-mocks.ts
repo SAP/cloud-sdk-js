@@ -34,9 +34,9 @@ export const xsuaaBindingMock: Service = {
     clientsecret: 'clientsecret',
     verificationkey: publicKey,
     uaadomain: 'authentication.sap.hana.ondemand.com',
-    subaccountid: "a89ea924-d9c2-4eab-84fb-3ffcaadf5d24",
-    tenantid: "a89ea924-d9c2-4eab-84fb-3ffcaadf5d24",
-    zoneid: "a89ea924-d9c2-4eab-84fb-3ffcaadf5d24"
+    subaccountid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+    tenantid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+    zoneid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24'
   }
 };
 
@@ -90,7 +90,7 @@ export const connectivityBindingMock: Service = {
     clientsecret: 'clientsecret',
     onpremise_proxy_host: connectivityProxyConfigMock.host,
     onpremise_proxy_port: connectivityProxyConfigMock.port,
-    onpremise_socks5_proxy_port: connectivitySocksProxyConfigMock.port,
+    onpremise_socks5_proxy_port: connectivitySocksProxyConfigMock.port
   }
 };
 

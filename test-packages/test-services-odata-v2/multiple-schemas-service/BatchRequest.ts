@@ -74,8 +74,7 @@ export function changeset<DeSerializersT extends DeSerializers>(
   return new BatchChangeSet(transformVariadicArgumentToArray(first, rest));
 }
 
-export const defaultMultipleSchemasServicePath =
-  '/sap/opu/odata/sap/API_MULTIPLE_SCHEMAS_SRV';
+export const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
 export type ReadMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =

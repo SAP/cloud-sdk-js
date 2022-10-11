@@ -24,6 +24,5 @@ function changeset(first, ...rest) {
   );
 }
 exports.changeset = changeset;
-exports.defaultMultipleSchemasServicePath =
-  '/sap/opu/odata/sap/API_MULTIPLE_SCHEMAS_SRV';
+exports.defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
 //# sourceMappingURL=BatchRequest.js.map

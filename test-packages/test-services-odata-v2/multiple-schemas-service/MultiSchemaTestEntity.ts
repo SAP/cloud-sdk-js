@@ -27,7 +27,7 @@ export class MultiSchemaTestEntity<
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = '/sap/opu/odata/sap/API_MULTIPLE_SCHEMAS_SRV';
+  static _defaultServicePath = 'VALUE_IS_UNDEFINED';
   /**
    * All key fields of the MultiSchemaTestEntity entity
    */

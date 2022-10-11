@@ -24,8 +24,7 @@ MultiSchemaTestEntity._entityName = 'MultiSchemaTestEntity';
 /**
  * Default url path for the according service.
  */
-MultiSchemaTestEntity._defaultServicePath =
-  '/sap/opu/odata/sap/API_MULTIPLE_SCHEMAS_SRV';
+MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
 /**
  * All key fields of the MultiSchemaTestEntity entity
  */

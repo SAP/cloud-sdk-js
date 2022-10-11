@@ -24,12 +24,12 @@ jobs:
             */*/node_modules
           key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
       - name: Run Linter and Check for Diffs
-      - run: |      
+        run: |      
           yarn install --frozen-lockfile
           git checkout ${{ github.event.inputs.branch }}
           yarn lint:fix
       - name: Check for Diffs and Commit
-      - run : |      
+        run : |      
           diff=`git diff`
           if [ ! -z "$diff" ]; then
             git commit -m "linter" -a

@@ -1,4 +1,4 @@
-name: typedoc-check
+name: lint
 
 on:
   workflow_dispatch:

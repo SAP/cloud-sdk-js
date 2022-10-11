@@ -7,4 +7,4 @@ import {
  * Allowed Edm types for OData v2.
  * @internal
  */
-export type EdmType = EdmTypeCommon|ExclusiveEdmTypeV2;
+export type EdmType = EdmTypeCommon | ExclusiveEdmTypeV2;

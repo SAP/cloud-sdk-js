@@ -25,7 +25,7 @@ jobs:
           key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
       - run: |
           yarn install --frozen-lockfile
-          git checkout -b ${{ github.event.inputs.branch }}
+          git checkout ${{ github.event.inputs.branch }}
           yarn lint:fix          
           diff=`git diff`
           if [ ! -z "$diff" ]; then

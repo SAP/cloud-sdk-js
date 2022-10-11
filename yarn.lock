@@ -5619,10 +5619,10 @@ json-parse-even-better-errors@^2.3.0:
   resolved "https://registry.npmjs.org/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
-json-schema-faker@^0.5.0-rcv.44:
-  version "0.5.0-rcv.44"
-  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.0-rcv.44.tgz#dca9b8f3a844c0426cf4c581cc8d7f4428f29f90"
-  integrity sha512-MbDxYFsPXTVMawW1Y6zEU7QhfwsT+ZJ2d+LI8n57Y8+Xw1Cdx1hITgsFTLNOJ1lDMHZqWeXGGgMbc1hW0BGisg==
+json-schema-faker@^0.5.0-rcv.46:
+  version "0.5.0-rcv.46"
+  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.0-rcv.46.tgz#5f9eff94f463c337a361044a460cc46797ceb053"
+  integrity sha512-Q+sGrxptZfezwm7M9W9VmHT9E8s5fWPCaRC4J2zUjb3CmDsxokiCBdHdS/psu91Tafc/ITv+GtIztGzUVT2zIg==
   dependencies:
     json-schema-ref-parser "^6.1.0"
     jsonpath-plus "^5.1.0"

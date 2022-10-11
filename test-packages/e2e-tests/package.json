@@ -40,7 +40,7 @@
     "express": "^4.18.2",
     "fs-extra": "^10.0.0",
     "http-proxy-middleware": "^2.0.6",
-    "json-schema-faker": "^0.5.0-rcv.44",
+    "json-schema-faker": "^0.5.0-rcv.46",
     "mock-fs": "^5.0.0",
     "moment": "^2.29.4",
     "openapi-backend": "^5.5.0",

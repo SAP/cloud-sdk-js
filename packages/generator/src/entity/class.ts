@@ -27,18 +27,18 @@ export function entityClass(
   return {
     kind: StructureKind.Class,
     name: `${entity.className}<T extends DeSerializers = DefaultDeSerializers>`,
-    ctors: [
-      {
-        parameters: [
-          {
-            name: '_entityApi',
-            type: `${entity.className}Api<T>`,
-            isReadonly: true
-          }
-        ],
-        statements: ['super(_entityApi);']
-      }
-    ],
+    // ctors: [
+    //   {
+    //     parameters: [
+    //       {
+    //         name: '_entityApi',
+    //         type: `${entity.className}Api<T>`,
+    //         isReadonly: true
+    //       }
+    //     ],
+    //     statements: ['super(_entityApi);']
+    //   }
+    // ],
     extends: 'Entity',
     implements: [`${entity.className}Type<T>`],
     properties: [

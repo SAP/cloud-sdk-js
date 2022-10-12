@@ -72,17 +72,13 @@ export abstract class EntityBase {
    */
   protected _customFields: Record<string, any>;
 
-  private schema: Record<string, any>;
-
   abstract readonly _oDataVersion: any;
 
   constructor(readonly _entityApi: any) {
-    nonEnumerable(this, 'schema');
     nonEnumerable(this, '_oDataVersion');
     nonEnumerable(this, '_customFields');
     nonEnumerable(this, '_entityApi');
     this._customFields = {};
-    this.schema = _entityApi?.schema;
   }
 
   /**
@@ -257,7 +253,7 @@ export abstract class EntityBase {
     key: string,
     visitedEntities: EntityBase[] = []
   ): any {
-    if (isNavigationProperty(key, this.schema)) {
+    if (isNavigationProperty(key, this._entityApi.schema)) {
       if (isNullish(this[key])) {
         return this[key];
       }
@@ -274,7 +270,7 @@ export abstract class EntityBase {
    * @returns Boolean value that describes whether a field name can be defined as custom field.
    */
   protected isConflictingCustomField(customFieldName: string): boolean {
-    return Object.values(this.schema)
+    return Object.values(this._entityApi.schema)
       .map((f: any) => f._fieldName)
       .includes(customFieldName);
   }
@@ -291,7 +287,7 @@ export abstract class EntityBase {
       .filter(
         key =>
           this.propertyIsEnumerable(key) &&
-          (!isNavigationProperty(key, this.schema) ||
+          (!isNavigationProperty(key, this._entityApi.schema) ||
             !this.isVisitedEntity(this[key], visitedEntities))
       )
       .reduce(

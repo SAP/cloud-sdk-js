@@ -45,7 +45,10 @@ export class TestEntityLvl2SingleLinkApi<
     TestEntityLvl2SingleLink<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<
+      TestEntityLvl2SingleLink<DeSerializersT>,
+      DeSerializersT
+    >(this);
   }
 
   customField<NullableT extends boolean = false>(

@@ -256,7 +256,10 @@ export class CommonEntitySingleLinkApi<
     CommonEntitySingleLink<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<
+      CommonEntitySingleLink<DeSerializersT>,
+      DeSerializersT
+    >(this);
   }
 
   customField<NullableT extends boolean = false>(
@@ -412,7 +415,7 @@ export class CommonEntityApi<
     CommonEntity<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<CommonEntity<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(

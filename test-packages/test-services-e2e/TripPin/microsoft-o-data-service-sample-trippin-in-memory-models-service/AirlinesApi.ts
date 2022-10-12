@@ -41,7 +41,7 @@ export class AirlinesApi<
   }
 
   entityBuilder(): EntityBuilderType<Airlines<DeSerializersT>, DeSerializersT> {
-    return entityBuilder(this);
+    return entityBuilder<Airlines<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(

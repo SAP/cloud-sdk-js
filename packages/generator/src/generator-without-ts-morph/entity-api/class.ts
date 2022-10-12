@@ -48,7 +48,7 @@ export function classContent(
     >,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<${entity.className}<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(

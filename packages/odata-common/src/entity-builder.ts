@@ -56,7 +56,7 @@ export class EntityBuilder<
 > {
   protected _entity: EntityT;
 
-  constructor(private _entityApi: EntityApi<EntityT, DeSerializersT>) {
+  constructor(readonly _entityApi: EntityApi<EntityT, DeSerializersT>) {
     if (!this._entity) {
       this._entity = new _entityApi.entityConstructor(_entityApi);
     }

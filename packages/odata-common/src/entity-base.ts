@@ -82,7 +82,7 @@ export abstract class EntityBase {
     nonEnumerable(this, '_customFields');
     nonEnumerable(this, '_entityApi');
     this._customFields = {};
-    this.schema = _entityApi.schema;
+    this.schema = _entityApi?.schema;
   }
 
   /**

@@ -74,6 +74,9 @@ export abstract class EntityBase {
 
   abstract readonly _oDataVersion: any;
 
+  /**
+   * @internal
+   */
   constructor(readonly _entityApi: any) {
     nonEnumerable(this, '_oDataVersion');
     nonEnumerable(this, '_customFields');

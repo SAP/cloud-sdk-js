@@ -37,23 +37,22 @@ describe('Mail', () => {
     ).toBe(true);
   }, 60000);
 
-  // fixme(fwilhe)
-  // it('should send 10 mails', async () => {
-  //   const mailOptions = buildArrayWithNatualNums(10).map(
-  //     mailIndex =>
-  //       ({
-  //         ...defaultMailOptions,
-  //         subject: `mail ${mailIndex}`
-  //       } as MailConfig)
-  //   );
-  //   const responses = await sendTestMail(mailOptions);
+  it('should send 10 mails', async () => {
+    const mailOptions = buildArrayWithNaturalNumbers(10).map(
+      mailIndex =>
+        ({
+          ...defaultMailOptions,
+          subject: `mail ${mailIndex}`
+        } as MailConfig)
+    );
+    const responses = await sendTestMail(mailOptions);
 
-  //   expect(responses.length).toBeGreaterThan(9);
-  //   expect(responses[0].accepted?.length).toBe(2);
+    expect(responses.length).toBeGreaterThan(9);
+    expect(responses[0].accepted?.length).toBe(2);
 
-  //   const mails = fs.readdirSync(join(resolve('test'), 'mail', 'test-output'));
-  //   expect(mails.length).toBeGreaterThan(9);
-  // }, 60000);
+    const mails = fs.readdirSync(join(resolve('test'), 'mail', 'test-output'));
+    expect(mails.length).toBeGreaterThan(9);
+  }, 60000);
 });
 
 async function sendTestMail(
@@ -76,6 +75,6 @@ async function sendTestMail(
   });
 }
 
-function buildArrayWithNatualNums(length): number[] {
+function buildArrayWithNaturalNumbers(length): number[] {
   return Array.from({ length }, (_, i) => i + 1);
 }

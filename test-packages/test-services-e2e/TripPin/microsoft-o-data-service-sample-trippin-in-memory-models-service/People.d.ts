@@ -5,6 +5,7 @@ import {
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import { Location } from './Location';
+import type { PeopleApi } from './PeopleApi';
 import { PersonGender } from './PersonGender';
 import { Photos, PhotosType } from './Photos';
 /**
@@ -14,6 +15,7 @@ export declare class People<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements PeopleType<T>
 {
+  readonly _entityApi: PeopleApi<T>;
   /**
    * Technical entity name for People.
    */
@@ -65,6 +67,7 @@ export declare class People<T extends DeSerializers = DefaultDeSerializers>
    * One-to-one navigation property to the {@link Photos} entity.
    */
   photo?: Photos<T> | null;
+  constructor(_entityApi: PeopleApi<T>);
 }
 export interface PeopleType<T extends DeSerializers = DefaultDeSerializers> {
   userName: DeserializedType<T, 'Edm.String'>;

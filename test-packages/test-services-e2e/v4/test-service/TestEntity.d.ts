@@ -4,6 +4,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntityApi } from './TestEntityApi';
 import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
 /**
  * This class represents the entity "TestEntity" of service "TestService".
@@ -12,6 +13,7 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements TestEntityType<T>
 {
+  readonly _entityApi: TestEntityApi<T>;
   /**
    * Technical entity name for TestEntity.
    */
@@ -89,6 +91,7 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    * One-to-many navigation property to the {@link TestEntityLink} entity.
    */
   toMultiLink: TestEntityLink<T>[];
+  constructor(_entityApi: TestEntityApi<T>);
 }
 export interface TestEntityType<
   T extends DeSerializers = DefaultDeSerializers

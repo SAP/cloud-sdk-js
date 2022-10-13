@@ -9,6 +9,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntity2Api } from './TestEntity2Api';
 
 /**
  * This class represents the entity "A_TestEntity2" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -38,6 +39,10 @@ export class TestEntity2<T extends DeSerializers = DefaultDeSerializers>
    * @nullable
    */
   singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
+
+  constructor(readonly _entityApi: TestEntity2Api<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface TestEntity2Type<

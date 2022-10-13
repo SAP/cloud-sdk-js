@@ -9,6 +9,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntityApi } from './TestEntityApi';
 import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
 
 /**
@@ -95,6 +96,10 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    * One-to-many navigation property to the {@link TestEntityLink} entity.
    */
   toMultiLink!: TestEntityLink<T>[];
+
+  constructor(readonly _entityApi: TestEntityApi<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface TestEntityType<

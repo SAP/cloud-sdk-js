@@ -9,6 +9,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v2';
+import type { MultiSchemaTestEntityApi } from './MultiSchemaTestEntityApi';
 
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -35,6 +36,10 @@ export class MultiSchemaTestEntity<
    * Key Property.
    */
   keyProperty!: DeserializedType<T, 'Edm.String'>;
+
+  constructor(readonly _entityApi: MultiSchemaTestEntityApi<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface MultiSchemaTestEntityType<

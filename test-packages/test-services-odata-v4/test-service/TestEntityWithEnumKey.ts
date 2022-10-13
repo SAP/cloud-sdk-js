@@ -9,6 +9,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntityWithEnumKeyApi } from './TestEntityWithEnumKeyApi';
 import { TestEnumType } from './TestEnumType';
 
 /**
@@ -36,6 +37,10 @@ export class TestEntityWithEnumKey<
    * Key Property Enum 1.
    */
   keyPropertyEnum1!: TestEnumType;
+
+  constructor(readonly _entityApi: TestEntityWithEnumKeyApi<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface TestEntityWithEnumKeyType<

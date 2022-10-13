@@ -9,6 +9,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntityWithSharedEntityType2Api } from './TestEntityWithSharedEntityType2Api';
 
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType2" of service "API_TEST_SRV".
@@ -36,6 +37,10 @@ export class TestEntityWithSharedEntityType2<
    * Maximum length: 10.
    */
   keyProperty!: DeserializedType<T, 'Edm.String'>;
+
+  constructor(readonly _entityApi: TestEntityWithSharedEntityType2Api<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface TestEntityWithSharedEntityType2Type<

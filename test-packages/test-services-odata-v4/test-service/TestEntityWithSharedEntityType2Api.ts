@@ -47,7 +47,10 @@ export class TestEntityWithSharedEntityType2Api<
     TestEntityWithSharedEntityType2<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<
+      TestEntityWithSharedEntityType2<DeSerializersT>,
+      DeSerializersT
+    >(this);
   }
 
   customField<NullableT extends boolean = false>(

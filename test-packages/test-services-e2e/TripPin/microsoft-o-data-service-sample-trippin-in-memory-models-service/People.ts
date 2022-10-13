@@ -10,6 +10,7 @@ import {
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import { Location } from './Location';
+import type { PeopleApi } from './PeopleApi';
 import { PersonGender } from './PersonGender';
 import { Photos, PhotosType } from './Photos';
 
@@ -72,6 +73,10 @@ export class People<T extends DeSerializers = DefaultDeSerializers>
    * One-to-one navigation property to the {@link Photos} entity.
    */
   photo?: Photos<T> | null;
+
+  constructor(readonly _entityApi: PeopleApi<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface PeopleType<T extends DeSerializers = DefaultDeSerializers> {

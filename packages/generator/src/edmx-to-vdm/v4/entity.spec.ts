@@ -349,8 +349,6 @@ export function createEntityType(
       Name: propName,
       Type: `namespace.${type}`
     })),
-    Namespace: namespace,
-    BoundAction: [],
-    BoundFunction: []
+    Namespace: namespace
   };
 }

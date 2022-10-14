@@ -153,6 +153,9 @@ function stringToBool(input: string | undefined): boolean {
 export function transformBoundFunctions(
   functions: EdmxFunction[]
 ): VdmFunctionImport[] {
+  if (!functions) {
+    return [];
+  }
   return functions.filter(f => f.IsBound).map(f => ({
     name: f.Name,
     // Remove first parameter which per spec always is the entity the function is bound to
@@ -184,6 +187,9 @@ export function transformBoundFunctions(
 function transformBoundActions(
   actions: EdmxAction[]
 ): VdmActionImport[] {
+  if (!actions) {
+    return [];
+  }
   return actions.filter(a => a.IsBound).map(a => ({
     name: a.Name,
     // Remove first parameter which per spec always is the entity the function is bound to

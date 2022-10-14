@@ -34,8 +34,9 @@ export function generateEntitiesV4(
   const entitySets = parseEntitySetsV4(serviceMetadata.edmx.root);
   const entityTypes = parseEntityType(serviceMetadata.edmx.root);
 
-  const boundFunctions = serviceMetadata.edmx.root.Function;
-  const boundActions = serviceMetadata.edmx.root.Action;
+  //fixme(fwilhe)
+  const boundFunctions = serviceMetadata.edmx.root[0].Function;
+  const boundActions = serviceMetadata.edmx.root[0].Action;
 
   const entitiesMetadata = joinEntityMetadata(
     entitySets,

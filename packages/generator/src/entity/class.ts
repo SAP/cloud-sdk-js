@@ -239,10 +239,9 @@ function boundActionsStatements(
 ): string[] {
   const statements: string[] = boundActionsParameterStatements(a).concat([
     'const deSerializers = defaultDeSerializers as any;',
-    `const entityQueryString = ${entity.className}._keys.map(key => key + '=' + this[camelCase(key) as keyof ${entity.className}]).join(',');`,
     'return new BoundActionRequestBuilder(',
     // fixme: do we need to do anything in the transformer function?
-    `'${service.servicePath}', '${entity.entitySetName}', entityQueryString, '${service.className}' ,'${a.name}', (data) => data, params, deSerializers`,
+    `'${service.servicePath}', '${entity.entitySetName}', '', '${service.className}' ,'${a.name}', (data) => data, params, deSerializers`,
     ');'
   ]);
   return statements;

@@ -164,7 +164,8 @@ export function transformBoundFunctions(
       .slice(1)
       .map((p: EdmxParameter) => ({
         parameterName: p.Name,
-        jsType: edmToTsType(p.Type),
+        // jsType: edmToTsType(p.Type),
+        jsType: 'string',  //fixme(fwilhe)
         edmType: p.Type,
         originalName: p.Name,
         nullable: stringToBool(p.Nullable),
@@ -172,7 +173,8 @@ export function transformBoundFunctions(
         fieldType: edmToTsType(p.Type)
       })),
     returnType: {
-      returnType: emptyIfUndefined(f.ReturnType?.Type),
+      // returnType: emptyIfUndefined(f.ReturnType?.Type),
+      returnType: 'string',
       isCollection: false,
       isNullable: stringToBool(f.ReturnType?.Nullable),
       returnTypeCategory: VdmReturnTypeCategory.VOID
@@ -198,7 +200,7 @@ function transformBoundActions(
       .slice(1)
       .map((p: EdmxParameter) => ({
         parameterName: p.Name,
-        jsType: edmToTsType(p.Type),
+        jsType: 'string', //fixme(fwilhe)
         edmType: p.Type,
         originalName: p.Name,
         nullable: stringToBool(p.Nullable),
@@ -206,7 +208,8 @@ function transformBoundActions(
         fieldType: edmToTsType(p.Type)
       })),
     returnType: {
-      returnType: emptyIfUndefined(a.ReturnType?.Type),
+      // returnType: emptyIfUndefined(a.ReturnType?.Type),
+      returnType: 'string',
       isCollection: false,
       isNullable: stringToBool(a.ReturnType?.Nullable),
       returnTypeCategory: VdmReturnTypeCategory.VOID

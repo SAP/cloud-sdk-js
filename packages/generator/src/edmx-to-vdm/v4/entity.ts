@@ -21,6 +21,7 @@ import {
 } from '../../edmx-parser/v4/edm-types';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { isCollectionType } from '../edmx-to-vdm-util';
+import { forceArray } from '../../generator-utils';
 
 /**
  * @internal
@@ -35,8 +36,8 @@ export function generateEntitiesV4(
   const entityTypes = parseEntityType(serviceMetadata.edmx.root);
 
   //fixme(fwilhe)
-  const boundFunctions = serviceMetadata.edmx.root[0].Function;
-  const boundActions = serviceMetadata.edmx.root[0].Action;
+  const boundFunctions = forceArray(serviceMetadata.edmx.root)[0]?.Function;
+  const boundActions = forceArray(serviceMetadata.edmx.root)[0]?.Action;
 
   const entitiesMetadata = joinEntityMetadata(
     entitySets,

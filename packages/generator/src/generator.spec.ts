@@ -150,7 +150,6 @@ describe('generator', () => {
       expect(imports).toEqual([
         '@sap-cloud-sdk/odata-v4',
         './TestComplexType',
-        './TestEntityApi',
         './TestEnumType',
         './TestEnumTypeInt64',
         './TestEnumTypeWithOneMember',

@@ -137,14 +137,14 @@ function properties(
 }
 
 function emptyIfUndefined(input: string | undefined): string {
-  return input? input : ''
+  return input ? input : '';
 }
 
 function stringToBool(input: string | undefined): boolean {
   if (input) {
-    return input.toLowerCase() === 'true'
+    return input.toLowerCase() === 'true';
   }
-  return false
+  return false;
 }
 
 /**
@@ -167,14 +167,14 @@ export function transformBoundFunctions(
         jsType: edmToTsType(p.Type),
         edmType: p.Type,
         originalName: p.Name,
-        nullable: stringToBool(p.Nullable), 
-        description: emptyIfUndefined(p.Documentation?.Summary), 
+        nullable: stringToBool(p.Nullable),
+        description: emptyIfUndefined(p.Documentation?.Summary),
         fieldType: edmToTsType(p.Type)
       })),
     returnType: {
       returnType: emptyIfUndefined(f.ReturnType?.Type),
-      isCollection: false, 
-      isNullable: stringToBool(f.ReturnType?.Nullable), 
+      isCollection: false,
+      isNullable: stringToBool(f.ReturnType?.Nullable),
       returnTypeCategory: VdmReturnTypeCategory.VOID
     },
     httpMethod: '',
@@ -201,14 +201,14 @@ function transformBoundActions(
         jsType: edmToTsType(p.Type),
         edmType: p.Type,
         originalName: p.Name,
-        nullable: stringToBool(p.Nullable), 
-        description: emptyIfUndefined(p.Documentation?.Summary), 
+        nullable: stringToBool(p.Nullable),
+        description: emptyIfUndefined(p.Documentation?.Summary),
         fieldType: edmToTsType(p.Type)
       })),
     returnType: {
       returnType: emptyIfUndefined(a.ReturnType?.Type),
-      isCollection: false, 
-      isNullable: stringToBool(a.ReturnType?.Nullable), 
+      isCollection: false,
+      isNullable: stringToBool(a.ReturnType?.Nullable),
       returnTypeCategory: VdmReturnTypeCategory.VOID
     },
     httpMethod: 'post',

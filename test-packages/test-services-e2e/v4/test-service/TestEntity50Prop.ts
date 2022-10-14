@@ -7,7 +7,14 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  entityDeserializer,
+  BoundActionRequestBuilder,
+  transformReturnValueForComplexType,
+  defaultDeSerializers,
+  BoundFunctionRequestBuilder,
+  FunctionImportParameter,
+  ActionImportParameter
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntity50PropApi } from './TestEntity50PropApi';
 
@@ -322,6 +329,353 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: TestEntity50PropApi<T>) {
     super(_entityApi);
+  }
+
+  boundFunctionWithoutArguments<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.boundFunctionWithoutArguments',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  boundFunctionWithoutArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.boundFunctionWithoutArgumentsWithMultipleKeys',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  boundFunctionWithArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    param1: string,
+    param2: string
+  ): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {
+      param1: new FunctionImportParameter('param1', 'Edm.String', param1),
+      param2: new FunctionImportParameter('param2', 'Edm.String', param2)
+    };
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.boundFunctionWithArgumentsWithMultipleKeys',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  getStringProperty<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.getStringProperty',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  concatStrings<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
+    Str2: string
+  ): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {
+      Str2: new FunctionImportParameter('Str2', 'Edm.String', Str2)
+    };
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.concatStrings',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  getAll<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.getAll',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  getByKey<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.getByKey',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  getByKeyWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    StringPropertyWithMultipleKeys: string,
+    BooleanPropertyWithMultipleKeys: string
+  ): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {
+      StringPropertyWithMultipleKeys: new FunctionImportParameter(
+        'StringPropertyWithMultipleKeys',
+        'Edm.String',
+        StringPropertyWithMultipleKeys
+      ),
+      BooleanPropertyWithMultipleKeys: new FunctionImportParameter(
+        'BooleanPropertyWithMultipleKeys',
+        'Edm.Boolean',
+        BooleanPropertyWithMultipleKeys
+      )
+    };
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.getByKeyWithMultipleKeys',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  returnCollection<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.returnCollection',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  returnInt<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.returnInt',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  returnKey<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.returnKey',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  returnSapCloudSdk<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.returnSapCloudSdk',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  boundActionWithoutArguments<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      '/odata/test-service',
+      'TestEntity50Prop',
+      '',
+      'TestService',
+      'boundActionWithoutArguments',
+      data => data,
+      params,
+      deSerializers
+    );
+  }
+
+  deleteEntity<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      '/odata/test-service',
+      'TestEntity50Prop',
+      '',
+      'TestService',
+      'deleteEntity',
+      data => data,
+      params,
+      deSerializers
+    );
+  }
+
+  createTestEntityById<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      '/odata/test-service',
+      'TestEntity50Prop',
+      '',
+      'TestService',
+      'createTestEntityById',
+      data => data,
+      params,
+      deSerializers
+    );
+  }
+
+  createTestEntityByIdReturnId<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      '/odata/test-service',
+      'TestEntity50Prop',
+      '',
+      'TestService',
+      'createTestEntityByIdReturnId',
+      data => data,
+      params,
+      deSerializers
+    );
+  }
+
+  createTestEntityReturnId<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      '/odata/test-service',
+      'TestEntity50Prop',
+      '',
+      'TestService',
+      'createTestEntityReturnId',
+      data => data,
+      params,
+      deSerializers
+    );
   }
 }
 

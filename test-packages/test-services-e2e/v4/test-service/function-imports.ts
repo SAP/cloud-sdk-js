@@ -18,6 +18,8 @@ import {
 import { testService } from './service';
 import { TestEntity } from './TestEntity';
 import { TestEntityApi } from './TestEntityApi';
+import { TestEntityWithMultipleKeys } from './TestEntityWithMultipleKeys';
+import { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 
 /**
  * Type of the parameters to be passed to {@link concatStrings}.
@@ -136,6 +138,72 @@ export function getByKey<
       transformReturnValueForEntity(
         data,
         testService(deSerializers).testEntityApi
+      ),
+    params,
+    deSerializers
+  );
+}
+
+/**
+ * Type of the parameters to be passed to {@link getByKeyWithMultipleKeys}.
+ */
+export interface GetByKeyWithMultipleKeysParameters<
+  DeSerializersT extends DeSerializers
+> {
+  /**
+   * Key Test Entity With Multiple Keys.
+   */
+  keyTestEntityWithMultipleKeys: number;
+  /**
+   * String Property With Multiple Keys.
+   */
+  stringPropertyWithMultipleKeys: string;
+  /**
+   * Boolean Property With Multiple Keys.
+   */
+  booleanPropertyWithMultipleKeys: boolean;
+}
+
+/**
+ * Get By Key With Multiple Keys.
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export function getByKeyWithMultipleKeys<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: GetByKeyWithMultipleKeysParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  GetByKeyWithMultipleKeysParameters<DeSerializersT>,
+  TestEntityWithMultipleKeys
+> {
+  const params = {
+    keyTestEntityWithMultipleKeys: new FunctionImportParameter(
+      'KeyTestEntityWithMultipleKeys',
+      'Edm.Int32',
+      parameters.keyTestEntityWithMultipleKeys
+    ),
+    stringPropertyWithMultipleKeys: new FunctionImportParameter(
+      'StringPropertyWithMultipleKeys',
+      'Edm.String',
+      parameters.stringPropertyWithMultipleKeys
+    ),
+    booleanPropertyWithMultipleKeys: new FunctionImportParameter(
+      'BooleanPropertyWithMultipleKeys',
+      'Edm.Boolean',
+      parameters.booleanPropertyWithMultipleKeys
+    )
+  };
+
+  return new FunctionImportRequestBuilder(
+    '/odata/test-service',
+    'getByKeyWithMultipleKeys',
+    data =>
+      transformReturnValueForEntity(
+        data,
+        testService(deSerializers).testEntityWithMultipleKeysApi
       ),
     params,
     deSerializers
@@ -266,6 +334,7 @@ export const functionImports = {
   concatStrings,
   getAll,
   getByKey,
+  getByKeyWithMultipleKeys,
   returnCollection,
   returnInt,
   returnSapCloudSdk

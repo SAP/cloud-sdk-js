@@ -1,6 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.TestEntity50Prop = void 0;
+exports.TestEntityWithMultipleKeys = void 0;
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -8,9 +8,9 @@ exports.TestEntity50Prop = void 0;
  */
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
- * This class represents the entity "TestEntity50Prop" of service "TestService".
+ * This class represents the entity "TestEntityWithMultipleKeys" of service "TestService".
  */
-class TestEntity50Prop extends odata_v4_1.Entity {
+class TestEntityWithMultipleKeys extends odata_v4_1.Entity {
   constructor(_entityApi) {
     super(_entityApi);
     this._entityApi = _entityApi;
@@ -191,7 +191,7 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
       '/odata/test-service',
-      'TestEntity50Prop',
+      'TestEntityWithMultipleKeys',
       '',
       'TestService',
       'boundActionWithoutArguments',
@@ -205,7 +205,7 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
       '/odata/test-service',
-      'TestEntity50Prop',
+      'TestEntityWithMultipleKeys',
       '',
       'TestService',
       'deleteEntity',
@@ -219,7 +219,7 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
       '/odata/test-service',
-      'TestEntity50Prop',
+      'TestEntityWithMultipleKeys',
       '',
       'TestService',
       'createTestEntityById',
@@ -233,7 +233,7 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
       '/odata/test-service',
-      'TestEntity50Prop',
+      'TestEntityWithMultipleKeys',
       '',
       'TestService',
       'createTestEntityByIdReturnId',
@@ -247,7 +247,7 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
       '/odata/test-service',
-      'TestEntity50Prop',
+      'TestEntityWithMultipleKeys',
       '',
       'TestService',
       'createTestEntityReturnId',
@@ -257,17 +257,21 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     );
   }
 }
-exports.TestEntity50Prop = TestEntity50Prop;
+exports.TestEntityWithMultipleKeys = TestEntityWithMultipleKeys;
 /**
- * Technical entity name for TestEntity50Prop.
+ * Technical entity name for TestEntityWithMultipleKeys.
  */
-TestEntity50Prop._entityName = 'TestEntity50Prop';
+TestEntityWithMultipleKeys._entityName = 'TestEntityWithMultipleKeys';
 /**
  * Default url path for the according service.
  */
-TestEntity50Prop._defaultServicePath = '/odata/test-service';
+TestEntityWithMultipleKeys._defaultServicePath = '/odata/test-service';
 /**
- * All key fields of the TestEntity50Prop entity
+ * All key fields of the TestEntityWithMultipleKeys entity
  */
-TestEntity50Prop._keys = ['KeyTestEntity50Prop'];
-//# sourceMappingURL=TestEntity50Prop.js.map
+TestEntityWithMultipleKeys._keys = [
+  'KeyTestEntityWithMultipleKeys',
+  'StringPropertyWithMultipleKeys',
+  'BooleanPropertyWithMultipleKeys'
+];
+//# sourceMappingURL=TestEntityWithMultipleKeys.js.map

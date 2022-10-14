@@ -12,11 +12,13 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import {
   TestEntity,
+  TestEntityWithMultipleKeys,
   TestEntityLink,
   TestEntity50Prop,
   ConcatStringsParameters,
   GetAllParameters,
   GetByKeyParameters,
+  GetByKeyWithMultipleKeysParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
   ReturnSapCloudSdkParameters,
@@ -56,9 +58,17 @@ export declare type ReadTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | GetAllRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<
+      TestEntityWithMultipleKeys<DeSerializersT>,
+      DeSerializersT
+    >
   | GetAllRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | GetAllRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | GetByKeyRequestBuilder<
+      TestEntityWithMultipleKeys<DeSerializersT>,
+      DeSerializersT
+    >
   | GetByKeyRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | FunctionImportRequestBuilder<
@@ -75,6 +85,11 @@ export declare type ReadTestServiceRequestBuilder<
       DeSerializersT,
       GetByKeyParameters<DeSerializersT>,
       TestEntity
+    >
+  | FunctionImportRequestBuilder<
+      DeSerializersT,
+      GetByKeyWithMultipleKeysParameters<DeSerializersT>,
+      TestEntityWithMultipleKeys
     >
   | FunctionImportRequestBuilder<
       DeSerializersT,
@@ -97,6 +112,18 @@ export declare type WriteTestServiceRequestBuilder<
   | CreateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
   | DeleteRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<
+      TestEntityWithMultipleKeys<DeSerializersT>,
+      DeSerializersT
+    >
+  | UpdateRequestBuilder<
+      TestEntityWithMultipleKeys<DeSerializersT>,
+      DeSerializersT
+    >
+  | DeleteRequestBuilder<
+      TestEntityWithMultipleKeys<DeSerializersT>,
+      DeSerializersT
+    >
   | CreateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | DeleteRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>

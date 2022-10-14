@@ -2,7 +2,9 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  BoundActionRequestBuilder,
+  BoundFunctionRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntity50PropApi } from './TestEntity50PropApi';
 /**
@@ -317,6 +319,123 @@ export declare class TestEntity50Prop<
     'Edm.DateTimeOffset'
   > | null;
   constructor(_entityApi: TestEntity50PropApi<T>);
+  boundFunctionWithoutArguments<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  boundFunctionWithoutArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  boundFunctionWithArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    param1: string,
+    param2: string
+  ): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  getStringProperty<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  concatStrings<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
+    Str2: string
+  ): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  getAll<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  getByKey<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  getByKeyWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    StringPropertyWithMultipleKeys: string,
+    BooleanPropertyWithMultipleKeys: string
+  ): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  returnCollection<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  returnInt<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  returnKey<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  returnSapCloudSdk<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  boundActionWithoutArguments<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  deleteEntity<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  createTestEntityById<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  createTestEntityByIdReturnId<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  createTestEntityReturnId<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
 }
 export interface TestEntity50PropType<
   T extends DeSerializers = DefaultDeSerializers

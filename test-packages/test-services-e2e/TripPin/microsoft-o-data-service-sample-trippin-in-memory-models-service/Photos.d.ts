@@ -2,7 +2,9 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  BoundActionRequestBuilder,
+  BoundFunctionRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { PhotosApi } from './PhotosApi';
 /**
@@ -35,6 +37,34 @@ export declare class Photos<T extends DeSerializers = DefaultDeSerializers>
    */
   name?: DeserializedType<T, 'Edm.String'> | null;
   constructor(_entityApi: PhotosApi<T>);
+  GetFavoriteAirline<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    Photos<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  GetInvolvedPeople<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    Photos<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  GetFriendsTrips<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
+    userName: string
+  ): BoundFunctionRequestBuilder<
+    Photos<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  ShareTrip<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
+    userName: string,
+    tripId: string
+  ): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
 }
 export interface PhotosType<T extends DeSerializers = DefaultDeSerializers> {
   id: DeserializedType<T, 'Edm.Int64'>;

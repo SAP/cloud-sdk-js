@@ -16,50 +16,55 @@ import {
   FunctionImportParameter,
   ActionImportParameter
 } from '@sap-cloud-sdk/odata-v4';
-import type { TestEntityLinkApi } from './TestEntityLinkApi';
+import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 
 /**
- * This class represents the entity "TestEntityLink" of service "TestService".
+ * This class represents the entity "TestEntityWithMultipleKeys" of service "TestService".
  */
-export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
+export class TestEntityWithMultipleKeys<
+    T extends DeSerializers = DefaultDeSerializers
+  >
   extends Entity
-  implements TestEntityLinkType<T>
+  implements TestEntityWithMultipleKeysType<T>
 {
   /**
-   * Technical entity name for TestEntityLink.
+   * Technical entity name for TestEntityWithMultipleKeys.
    */
-  static _entityName = 'TestEntityLink';
+  static _entityName = 'TestEntityWithMultipleKeys';
   /**
    * Default url path for the according service.
    */
   static _defaultServicePath = '/odata/test-service';
   /**
-   * All key fields of the TestEntityLink entity
+   * All key fields of the TestEntityWithMultipleKeys entity
    */
-  static _keys = ['KeyTestEntityLink', 'KeyToTestEntity'];
+  static _keys = [
+    'KeyTestEntityWithMultipleKeys',
+    'StringPropertyWithMultipleKeys',
+    'BooleanPropertyWithMultipleKeys'
+  ];
   /**
-   * Key Test Entity Link.
+   * Key Test Entity With Multiple Keys.
    */
-  keyTestEntityLink!: DeserializedType<T, 'Edm.Int32'>;
+  keyTestEntityWithMultipleKeys!: DeserializedType<T, 'Edm.Int32'>;
   /**
-   * Key To Test Entity.
-   */
-  keyToTestEntity!: DeserializedType<T, 'Edm.Int32'>;
-  /**
-   * String Property.
+   * String Property With Multiple Keys.
    * Maximum length: 111.
-   * @nullable
    */
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  stringPropertyWithMultipleKeys!: DeserializedType<T, 'Edm.String'>;
+  /**
+   * Boolean Property With Multiple Keys.
+   */
+  booleanPropertyWithMultipleKeys!: DeserializedType<T, 'Edm.Boolean'>;
 
-  constructor(readonly _entityApi: TestEntityLinkApi<T>) {
+  constructor(readonly _entityApi: TestEntityWithMultipleKeysApi<T>) {
     super(_entityApi);
   }
 
   boundFunctionWithoutArguments<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -79,7 +84,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   boundFunctionWithoutArgumentsWithMultipleKeys<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -102,7 +107,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
     param1: string,
     param2: string
   ): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -125,7 +130,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   getStringProperty<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -145,7 +150,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   concatStrings<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
     Str2: string
   ): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -167,7 +172,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   getAll<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -187,7 +192,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   getByKey<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -210,7 +215,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
     StringPropertyWithMultipleKeys: string,
     BooleanPropertyWithMultipleKeys: string
   ): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -241,7 +246,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   returnCollection<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -261,7 +266,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   returnInt<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -281,7 +286,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   returnKey<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -301,7 +306,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   returnSapCloudSdk<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<
-    TestEntityLink<DeSerializersT>,
+    TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,
     string | null
@@ -325,7 +330,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
       '/odata/test-service',
-      'TestEntityLink',
+      'TestEntityWithMultipleKeys',
       '',
       'TestService',
       'boundActionWithoutArguments',
@@ -342,7 +347,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
       '/odata/test-service',
-      'TestEntityLink',
+      'TestEntityWithMultipleKeys',
       '',
       'TestService',
       'deleteEntity',
@@ -359,7 +364,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
       '/odata/test-service',
-      'TestEntityLink',
+      'TestEntityWithMultipleKeys',
       '',
       'TestService',
       'createTestEntityById',
@@ -376,7 +381,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
       '/odata/test-service',
-      'TestEntityLink',
+      'TestEntityWithMultipleKeys',
       '',
       'TestService',
       'createTestEntityByIdReturnId',
@@ -393,7 +398,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
       '/odata/test-service',
-      'TestEntityLink',
+      'TestEntityWithMultipleKeys',
       '',
       'TestService',
       'createTestEntityReturnId',
@@ -404,10 +409,10 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   }
 }
 
-export interface TestEntityLinkType<
+export interface TestEntityWithMultipleKeysType<
   T extends DeSerializers = DefaultDeSerializers
 > {
-  keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>;
-  keyToTestEntity: DeserializedType<T, 'Edm.Int32'>;
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  keyTestEntityWithMultipleKeys: DeserializedType<T, 'Edm.Int32'>;
+  stringPropertyWithMultipleKeys: DeserializedType<T, 'Edm.String'>;
+  booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>;
 }

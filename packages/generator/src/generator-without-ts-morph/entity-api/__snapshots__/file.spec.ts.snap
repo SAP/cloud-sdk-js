@@ -59,7 +59,7 @@ export class BreakfastApi<DeSerializersT extends DeSerializers = DefaultDeSerial
     >,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<Breakfast<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(

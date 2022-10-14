@@ -47,7 +47,7 @@ export class TestEntity3Api<
     TestEntity3<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<TestEntity3<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(

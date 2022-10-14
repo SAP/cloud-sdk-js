@@ -2505,7 +2505,7 @@ charm@~0.1.1:
   resolved "https://registry.npmjs.org/charm/-/charm-0.1.2.tgz#06c21eed1a1b06aeb67553cdc53e23274bac2296"
   integrity sha512-syedaZ9cPe7r3hoQA9twWYKu5AIyCswN5+szkmPBe9ccdLrj4bYaCnLVPTLd2kgVRc7+zoX4tyPgRnFKCj5YjQ==
 
-"chokidar@>=3.0.0 <4.0.0", chokidar@^3.5.1:
+"chokidar@>=3.0.0 <4.0.0", chokidar@^3.5.3:
   version "3.5.3"
   resolved "https://registry.npmjs.org/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"
   integrity sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==
@@ -2917,7 +2917,12 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-dayjs@~1.8.24, dayjs@~1.8.25:
+dayjs@~1.11.5:
+  version "1.11.5"
+  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.5.tgz#00e8cc627f231f9499c19b38af49f56dc0ac5e93"
+  integrity sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==
+
+dayjs@~1.8.24:
   version "1.8.36"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.8.36.tgz#be36e248467afabf8f5a86bae0de0cdceecced50"
   integrity sha512-3VmRXEtw7RZKAf+4Tv1Ym9AGeo8r8+CjDi26x+7SYQil1UqtqdaokhzoEJohqlzt0m5kacJSDhJQkG/LWhpRBw==
@@ -6749,10 +6754,10 @@ openapi-types@^12.0.2:
   resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-12.0.2.tgz#b752ab0a463c594fd7e3142e0e5983a9645503f6"
   integrity sha512-GuTo7FyZjOIWVhIhQSWJVaws6A82sWIGyQogxxYBYKZ0NBdyP2CYSIgOwFfSB+UVoPExk/YzFpyYitHS8KVZtA==
 
-opossum@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.npmjs.org/opossum/-/opossum-6.4.0.tgz#9eeb8af88257967be37b778b750485eb72caedb7"
-  integrity sha512-JVSEBsP3L1S8n6OEyFFfXqE9jzmM7QBeDGMT7/EPfv/TMHvbkFUxgXfklE3j1YeOIfIixfpT/4oKbNMhpAsHUQ==
+opossum@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/opossum/-/opossum-7.0.0.tgz#50d39444cccacd29d84643463c02deb88180fd1a"
+  integrity sha512-bNtidPtzdFFG7lfkzXwXt6YvpJyL70gU/mwdMXnYJxiOT6N4UBStB17B59MMPW77loBV6SpgBmXhjmeC2GUuaA==
 
 optionator@^0.8.1:
   version "0.8.3"
@@ -7082,10 +7087,10 @@ pm2-sysmonit@^1.2.8:
     systeminformation "^5.7"
     tx2 "~1.0.4"
 
-pm2@^5.1.2:
-  version "5.2.0"
-  resolved "https://registry.npmjs.org/pm2/-/pm2-5.2.0.tgz#fda71fab4b8fcfa5b7f546ca55a6e59e9ec5a68d"
-  integrity sha512-PO5hMVhQ85cTszFM++6v07Me9hPJMkFbHjkFigtMMk+La8ty2wCi2dlBTeZYJDhPUSjK8Ccltpq2buNRcyMOTw==
+pm2@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.npmjs.org/pm2/-/pm2-5.2.2.tgz#f563c2b2dbbc19a1380d228a89794f854aa435f2"
+  integrity sha512-mASxgh/MZhtVze/wijGf+tE6JKdA3lEq64FOfXVhhArkuk9Qxl4ePw9XgFJaArOXnU3bde+KbeAJHYxppVvYBQ==
   dependencies:
     "@pm2/agent" "~2.0.0"
     "@pm2/io" "~5.0.0"
@@ -7094,11 +7099,11 @@ pm2@^5.1.2:
     async "~3.2.0"
     blessed "0.1.81"
     chalk "3.0.0"
-    chokidar "^3.5.1"
+    chokidar "^3.5.3"
     cli-tableau "^2.0.0"
     commander "2.15.1"
     croner "~4.1.92"
-    dayjs "~1.8.25"
+    dayjs "~1.11.5"
     debug "^4.3.1"
     enquirer "2.3.6"
     eventemitter2 "5.0.1"
@@ -7112,7 +7117,7 @@ pm2@^5.1.2:
     pm2-multimeter "^0.1.2"
     promptly "^2"
     semver "^7.2"
-    source-map-support "0.5.19"
+    source-map-support "0.5.21"
     sprintf-js "1.1.2"
     vizion "~2.2.1"
     yamljs "0.3.0"
@@ -8034,15 +8039,7 @@ socks@2.7.1, socks@^2.3.3, socks@^2.6.2:
   resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
   integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
 
-source-map-support@0.5.19:
-  version "0.5.19"
-  resolved "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
-  integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
-  dependencies:
-    buffer-from "^1.0.0"
-    source-map "^0.6.0"
-
-source-map-support@^0.5.6:
+source-map-support@0.5.21, source-map-support@^0.5.6:
   version "0.5.21"
   resolved "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"
   integrity sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==

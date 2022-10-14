@@ -55,7 +55,7 @@ exports[`entity api class gets proper class content 1`] = `
     >,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<Breakfast<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(

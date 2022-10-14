@@ -27,7 +27,7 @@ describe('buildCsrfHeaders', () => {
 
   it('should build "cookie" and "x-csrf-token" properties.', async () => {
     const request = await createRequestBuilder({
-      payload: new CommonEntity(commonEntityApi.schema)
+      payload: new CommonEntity(commonEntityApi)
     })['build'](defaultDestination);
     const mockedHeaders = {
       'x-csrf-token': 'mocked-x-csrf-token',
@@ -49,7 +49,7 @@ describe('buildCsrfHeaders', () => {
 
   it('"x-csrf-token" should not be defined in header when not defined in CSRF headers response.', async () => {
     const request = await createRequestBuilder({
-      payload: new CommonEntity(commonEntityApi.schema)
+      payload: new CommonEntity(commonEntityApi)
     })['build'](defaultDestination);
     const warnSpy = jest.spyOn(logger, 'warn');
 
@@ -101,7 +101,7 @@ describe('buildCsrfHeaders', () => {
 
   it('"cookie" should not be defined in header when not defined in CSRF headers response.', async () => {
     const request = await createRequestBuilder({
-      payload: new CommonEntity(commonEntityApi.schema)
+      payload: new CommonEntity(commonEntityApi)
     })['build'](defaultDestination);
     const warnSpy = jest.spyOn(logger, 'warn');
 
@@ -123,7 +123,7 @@ describe('buildCsrfHeaders', () => {
 
   it('should try csrf request with / in the end first', async () => {
     const request = await createRequestBuilder({
-      payload: new CommonEntity(commonEntityApi.schema)
+      payload: new CommonEntity(commonEntityApi)
     })['build'](defaultDestination);
     const mockedHeaders = {
       'x-csrf-token': 'mocked-x-csrf-token',
@@ -147,7 +147,7 @@ describe('buildCsrfHeaders', () => {
 
   it('tries csrf request without / if the first one fails', async () => {
     const request = await createRequestBuilder({
-      payload: new CommonEntity(commonEntityApi.schema)
+      payload: new CommonEntity(commonEntityApi)
     })['build'](defaultDestination);
     const mockedHeaders = {
       'x-csrf-token': 'mocked-x-csrf-token',

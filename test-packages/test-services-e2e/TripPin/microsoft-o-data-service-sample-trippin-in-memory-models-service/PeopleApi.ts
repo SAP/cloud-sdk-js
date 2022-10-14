@@ -72,7 +72,7 @@ export class PeopleApi<
   }
 
   entityBuilder(): EntityBuilderType<People<DeSerializersT>, DeSerializersT> {
-    return entityBuilder(this);
+    return entityBuilder<People<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(

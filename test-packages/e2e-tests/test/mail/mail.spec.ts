@@ -38,7 +38,7 @@ describe('Mail', () => {
   }, 60000);
 
   it('should send 10 mails', async () => {
-    const mailOptions = buildArrayWithNatualNums(10).map(
+    const mailOptions = buildArrayWithNaturalNumbers(10).map(
       mailIndex =>
         ({
           ...defaultMailOptions,
@@ -75,6 +75,6 @@ async function sendTestMail(
   });
 }
 
-function buildArrayWithNatualNums(length): number[] {
+function buildArrayWithNaturalNumbers(length): number[] {
   return Array.from({ length }, (_, i) => i + 1);
 }

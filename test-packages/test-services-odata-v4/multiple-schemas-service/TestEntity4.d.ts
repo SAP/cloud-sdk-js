@@ -4,6 +4,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntity4Api } from './TestEntity4Api';
 /**
  * This class represents the entity "A_TestEntity4" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
@@ -11,6 +12,7 @@ export declare class TestEntity4<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements TestEntity4Type<T>
 {
+  readonly _entityApi: TestEntity4Api<T>;
   /**
    * Technical entity name for TestEntity4.
    */
@@ -32,6 +34,7 @@ export declare class TestEntity4<T extends DeSerializers = DefaultDeSerializers>
    * @nullable
    */
   booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  constructor(_entityApi: TestEntity4Api<T>);
 }
 export interface TestEntity4Type<
   T extends DeSerializers = DefaultDeSerializers

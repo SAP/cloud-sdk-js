@@ -6,7 +6,7 @@ module.exports = async srv => {
   cds.model = cds.compile.for.nodejs(csn);
 
   const db = await cds.connect.to('db');
-  const { TestEntity } = srv.entities;
+  const { TestEntity, TestEntityWithMultipleKeys } = srv.entities;
 
   // bound function
   srv.on('getStringProperty', 'TestEntity', async oRequest => {
@@ -15,6 +15,44 @@ module.exports = async srv => {
       .run(SELECT.one.from(oRequest.query.SELECT.from));
     oRequest.reply(entity.StringProperty);
   });
+
+  srv.on('boundFunctionWithoutArgumentsWithMultipleKeys', 'TestEntityWithMultipleKeys', async oRequest => {
+    oRequest.reply('xyz');
+  });
+
+  srv.on('boundFunctionWithoutArguments', 'TestEntity', async oRequest => {
+    oRequest.reply('xyz');
+  });
+
+  srv.on('boundFunctionWithArguments', 'TestEntity', async oRequest => {
+    oRequest.reply('xyz' + oRequest.data.param1 + oRequest.data.param2);
+  });
+
+  srv.on('boundFunctionWithArgumentsWithMultipleKeys', 'TestEntityWithMultipleKeys', async oRequest => {
+    oRequest.reply('xyz' + oRequest.data.param1 + oRequest.data.param2);
+  });
+
+  srv.on(
+    'boundFunctionWithoutArgumentsComplexReturnType',
+    'TestEntity',
+    async oRequest => {
+      oRequest.reply({
+        someMessage: 'xyz',
+        someId: 42
+      });
+    }
+  );
+
+  srv.on(
+    'boundFunctionWithComplexArgumentsComplexReturnType',
+    'TestEntity',
+    async oRequest => {
+      oRequest.reply({
+        someMessage: 'xyz' + oRequest.data.param1 + oRequest.data.param2,
+        someId: 42
+      });
+    }
+  );
 
   // bound action
   srv.on('deleteEntity', 'TestEntity', async oRequest => {
@@ -25,6 +63,10 @@ module.exports = async srv => {
       .transaction(oRequest)
       .run(DELETE.from(TestEntity).byKey(entity.KeyTestEntity));
     oRequest.reply(entity.KeyTestEntity);
+  });
+
+  srv.on('boundActionWithoutArguments', 'TestEntity', async oRequest => {
+    oRequest.reply('abc');
   });
 
   // unbound function
@@ -51,6 +93,18 @@ module.exports = async srv => {
     const entity = await SELECT.one
       .from(TestEntity)
       .where({ KeyTestEntity: param });
+    oRequest.reply(entity);
+  });
+
+  srv.on('getByKeyWithMultipleKeys', async oRequest => {
+    const param1 = oRequest.data.param1;
+    const param2 = oRequest.data.param2;
+    const param3 = oRequest.data.param3;
+    const entity = await SELECT.one
+      .from(TestEntityWithMultipleKeys)
+      .where({ KeyTestEntityWithMultipleKeys: param1,
+        StringPropertyWithMultipleKeys: param2,
+        BooleanPropertyWithMultipleKeys: param3 });
     oRequest.reply(entity);
   });
 

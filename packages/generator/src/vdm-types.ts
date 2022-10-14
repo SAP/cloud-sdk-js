@@ -126,6 +126,14 @@ export interface VdmEntity {
    * @internal
    */
   entityTypeNamespace: string;
+  /**
+   * @internal
+   */
+   boundFunctions: VdmFunctionImport[];
+   /**
+    * @internal
+    */
+   boundActions: VdmActionImport[];
 }
 
 /**

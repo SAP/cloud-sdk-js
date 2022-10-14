@@ -58,6 +58,8 @@ export function generateEntitiesV2(
       classNames,
       complexTypes,
       [],
+      [],
+      [],
       formatter
     ),
     navigationProperties: navigationProperties(

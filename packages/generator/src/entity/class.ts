@@ -1,5 +1,7 @@
 import {
   ClassDeclarationStructure,
+  MethodDeclarationStructure,
+  ParameterDeclarationStructure,
   PropertyDeclarationStructure,
   StructureKind
 } from 'ts-morph';
@@ -11,7 +13,9 @@ import {
   addLeadingNewline
 } from '../typedoc';
 import {
+  VdmActionImport,
   VdmEntity,
+  VdmFunctionImport,
   VdmNavigationProperty,
   VdmProperty,
   VdmServiceMetadata
@@ -27,24 +31,16 @@ export function entityClass(
   return {
     kind: StructureKind.Class,
     name: `${entity.className}<T extends DeSerializers = DefaultDeSerializers>`,
-    ctors: [
-      {
-        parameters: [
-          {
-            name: '_entityApi',
-            type: `${entity.className}Api<T>`,
-            isReadonly: true
-          }
-        ],
-        statements: ['super(_entityApi);']
-      }
-    ],
     extends: 'Entity',
     implements: [`${entity.className}Type<T>`],
     properties: [
       ...staticProperties(entity, service),
       ...properties(entity),
       ...navProperties(entity, service)
+    ],
+    methods: [
+      ...boundFunctions(entity, service),
+      ...boundActions(entity, service)
     ],
     isExported: true,
     docs: [addLeadingNewline(getEntityDescription(entity, service))]
@@ -98,6 +94,26 @@ function properties(entity: VdmEntity): PropertyDeclarationStructure[] {
   return entity.properties.map(prop => property(prop));
 }
 
+function boundFunctions(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): MethodDeclarationStructure[] {
+  if (entity.boundFunctions === undefined) {
+    return [];
+  }
+  return entity.boundFunctions.map(f => boundFunction(f, entity, service));
+}
+
+function boundActions(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): MethodDeclarationStructure[] {
+  if (entity.boundActions === undefined) {
+    return [];
+  }
+  return entity.boundActions.map(a => boundAction(a, entity, service));
+}
+
 function property(prop: VdmProperty): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
@@ -112,6 +128,122 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
       )
     ]
   };
+}
+
+function boundFunction(
+  fn: VdmFunctionImport,
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): MethodDeclarationStructure {
+  return {
+    kind: StructureKind.Method,
+    name: fn.name,
+    returnType: `BoundFunctionRequestBuilder<${entity.className}<DeSerializersT>, DeSerializersT, any, ${fn.returnType.returnType} | null>`,
+    typeParameters: [
+      {
+        name: 'DeSerializersT extends DeSerializers = DefaultDeSerializers'
+      }
+    ],
+    parameters: boundFunctionsParameter(fn),
+    statements: boundFunctionsStatements(fn, entity, service)
+  };
+}
+
+function boundFunctionsParameter(
+  fn: VdmFunctionImport
+): ParameterDeclarationStructure[] {
+  if (!fn.parameters) {
+    return [];
+  }
+  return fn.parameters.map(p => ({
+    name: p.parameterName,
+    type: p.jsType,
+    kind: StructureKind.Parameter
+  }));
+}
+
+function boundFunctionsStatements(
+  fn: VdmFunctionImport,
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): string[] {
+  const name = `${service.namespaces[0]}.${fn.originalName}`;
+  const statements: string[] = boundFunctionsParameterStatements(fn).concat([
+    'const deSerializers = defaultDeSerializers as any;',
+    'return new BoundFunctionRequestBuilder(',
+    // fixme: do we need to do anything in the transformer function?
+    `this._entityApi as any, this as any, '${name}', (data) => data, params, deSerializers`,
+    ') as any;'
+  ]);
+  return statements;
+}
+
+function boundFunctionsParameterStatements(fn: VdmFunctionImport): string[] {
+  return ['const params = {'].concat(
+    fn.parameters?.map(
+      p =>
+        `${p.parameterName}: new FunctionImportParameter('${p.parameterName}', '${p.edmType}', ${p.parameterName}),`
+    ),
+    ['};']
+  );
+}
+
+function boundAction(
+  a: VdmActionImport,
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): MethodDeclarationStructure {
+  return {
+    kind: StructureKind.Method,
+    name: a.name,
+    returnType: `BoundActionRequestBuilder<DeSerializersT, any, ${a.returnType.returnType} | null>`,
+    typeParameters: [
+      {
+        name: 'DeSerializersT extends DeSerializers = DefaultDeSerializers'
+      }
+    ],
+    parameters: boundActionsParameter(a),
+    statements: boundActionsStatements(a, entity, service)
+  };
+}
+
+function boundActionsParameter(
+  a: VdmActionImport
+): ParameterDeclarationStructure[] {
+  if (!a.parameters) {
+    return [];
+  }
+  return a.parameters.map(p => ({
+    name: p.parameterName,
+    type: p.jsType,
+    kind: StructureKind.Parameter
+  }));
+}
+
+function boundActionsStatements(
+  a: VdmActionImport,
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): string[] {
+  const statements: string[] = boundActionsParameterStatements(a).concat([
+    'const deSerializers = defaultDeSerializers as any;',
+    `const entityQueryString = ${entity.className}._keys.map(key => key + '=' + this[camelCase(key) as keyof ${entity.className}]).join(',');`,
+    'return new BoundActionRequestBuilder(',
+    // fixme: do we need to do anything in the transformer function?
+    `'${service.servicePath}', '${entity.entitySetName}', entityQueryString, '${service.className}' ,'${a.name}', (data) => data, params, deSerializers`,
+    ');'
+  ]);
+  return statements;
+}
+
+function boundActionsParameterStatements(a: VdmActionImport): string[] {
+  return ['const params = {'].concat(
+    a.parameters?.map(
+      p =>
+        `${p.parameterName}: new ActionImportParameter('${p.parameterName}', '${p.edmType}', ${p.parameterName}),`
+    ),
+    ['};']
+  );
 }
 
 /**

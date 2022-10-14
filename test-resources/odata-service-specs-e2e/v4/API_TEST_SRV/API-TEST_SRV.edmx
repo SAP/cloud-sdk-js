@@ -6,6 +6,7 @@
                 <EntitySet Name="TestEntity" EntityType="TestService.TestEntity">
                     <NavigationPropertyBinding Path="ToMultiLink" Target="TestEntityLink"/>
                 </EntitySet>
+                <EntitySet Name="TestEntityWithMultipleKeys" EntityType="TestService.TestEntityWithMultipleKeys"/>
                 <EntitySet Name="TestEntityLink" EntityType="TestService.TestEntityLink"/>
                 <EntitySet Name="TestEntity50Prop" EntityType="TestService.TestEntity50Prop"/>
                 <FunctionImport Name="concatStrings" Function="TestService.concatStrings"/>
@@ -14,6 +15,7 @@
                 <ActionImport Name="createTestEntityReturnId" Action="TestService.createTestEntityReturnId"/>
                 <FunctionImport Name="getAll" Function="TestService.getAll" EntitySet="TestEntity"/>
                 <FunctionImport Name="getByKey" Function="TestService.getByKey" EntitySet="TestEntity"/>
+                <FunctionImport Name="getByKeyWithMultipleKeys" Function="TestService.getByKeyWithMultipleKeys" EntitySet="TestEntityWithMultipleKeys"/>
                 <FunctionImport Name="returnCollection" Function="TestService.returnCollection"/>
                 <FunctionImport Name="returnInt" Function="TestService.returnInt"/>
                 <FunctionImport Name="returnKey" Function="TestService.returnKey"/>
@@ -38,6 +40,16 @@
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
             </EntityType>
+            <EntityType Name="TestEntityWithMultipleKeys">
+                <Key>
+                  <PropertyRef Name="KeyTestEntityWithMultipleKeys"/>
+                  <PropertyRef Name="StringPropertyWithMultipleKeys"/>
+                  <PropertyRef Name="BooleanPropertyWithMultipleKeys"/>
+                </Key>
+                <Property Name="KeyTestEntityWithMultipleKeys" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="StringPropertyWithMultipleKeys" Type="Edm.String" MaxLength="111" Nullable="false"/>
+                <Property Name="BooleanPropertyWithMultipleKeys" Type="Edm.Boolean" Nullable="false"/>
+              </EntityType>
             <EntityType Name="TestEntityLink">
                 <Key>
                     <PropertyRef Name="KeyTestEntityLink"/>
@@ -104,6 +116,24 @@
                 <Property Name="DataTimeOffsetDataTimeProperty5" Type="Edm.DateTimeOffset"/>
                 <Property Name="DataTimeOffsetTimestampProperty5" Type="Edm.DateTimeOffset" Precision="7"/>
             </EntityType>
+            <Function Name="boundFunctionWithoutArguments" IsBound="true" IsComposable="false">
+                <Parameter Name="in" Type="TestService.TestEntity"/>
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Action Name="boundActionWithoutArguments" IsBound="true">
+                <Parameter Name="in" Type="TestService.TestEntity"/>
+                <ReturnType Type="Edm.String"/>
+            </Action>
+            <Function Name="boundFunctionWithoutArgumentsWithMultipleKeys" IsBound="true" IsComposable="false">
+                <Parameter Name="in" Type="TestService.TestEntityWithMultipleKeys"/>
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Function Name="boundFunctionWithArgumentsWithMultipleKeys" IsBound="true" IsComposable="false">
+                <Parameter Name="in" Type="TestService.TestEntityWithMultipleKeys"/>
+                <Parameter Name="param1" Type="Edm.String"/>
+                <Parameter Name="param2" Type="Edm.String"/>
+                <ReturnType Type="Edm.String"/>
+            </Function>
             <Function Name="getStringProperty" IsBound="true" IsComposable="false">
                 <Parameter Name="in" Type="TestService.TestEntity"/>
                 <ReturnType Type="Edm.String"/>
@@ -135,6 +165,12 @@
             <Function Name="getByKey" IsBound="false" IsComposable="false">
                 <Parameter Name="param" Type="Edm.Int32" Nullable="false"/>
                 <ReturnType Type="TestService.TestEntity" Nullable="false"/>
+            </Function>
+            <Function Name="getByKeyWithMultipleKeys" IsBound="false" IsComposable="false">
+                <Parameter Name="KeyTestEntityWithMultipleKeys" Type="Edm.Int32" Nullable="false" />
+                <Parameter Name="StringPropertyWithMultipleKeys" Type="Edm.String" Nullable="false" />
+                <Parameter Name="BooleanPropertyWithMultipleKeys" Type="Edm.Boolean" Nullable="false" />
+                <ReturnType Type="TestService.TestEntityWithMultipleKeys" Nullable="false"/>
             </Function>
             <Function Name="returnCollection" IsBound="false" IsComposable="false">
                 <Parameter Name="param" Type="Edm.Int32" Nullable="false"/>

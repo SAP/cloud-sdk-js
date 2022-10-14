@@ -167,6 +167,75 @@ describe('entity', () => {
   });
 });
 
+it('transforms bound actions and functions', () => {
+  const service = createTestServiceData(
+    [ createEntityType( 'TestEntityType', [], [] ) ],
+    [ createTestEntitySet('TestEntity', 'ns.TestEntityType', [ ]) ]
+  );
+
+  service.edmx.root.Function = [
+    {
+      IsBound: true,
+      Name: 'fn1IsBound',
+      ReturnType: {
+        Type: 'Edm.String'
+      },
+      Parameter: [
+        {
+          Name: 'theEntity',
+          Type: 'SomeEntity'
+        },
+        {
+          Name: 'parameter1',
+          Type: 'Edm.String'
+        },
+      ]
+    },
+    {
+      IsBound: false,
+      Name: 'fn2IsNotBound',
+      ReturnType: {
+        Type: 'Edm.String'
+      },
+      Parameter: []
+    }
+  ];
+
+  service.edmx.root.Action = [
+    {
+      IsBound: true,
+      Name: 'act1IsBound',
+      ReturnType: {
+        Type: 'Edm.String'
+      },
+      Parameter: [
+        {
+          Name: 'theEntity',
+          Type: 'SomeEntity'
+        },
+        {
+          Name: 'parameter1',
+          Type: 'Edm.String'
+        },
+      ]
+    },
+    {
+      IsBound: false,
+      Name: 'act2IsNotBound',
+      ReturnType: {
+        Type: 'Edm.String'
+      },
+      Parameter: []
+    }
+  ];
+
+  const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
+
+  expect(entity.boundFunctions.length).toBe(1);
+  expect(entity.boundFunctions[0].parameters.length).toBe(1);
+
+});
+
 const defaultNamespace = 'ns';
 
 export function getFormatter() {
@@ -280,6 +349,8 @@ export function createEntityType(
       Name: propName,
       Type: `namespace.${type}`
     })),
-    Namespace: namespace
+    Namespace: namespace,
+    BoundAction: [],
+    BoundFunction: []
   };
 }

@@ -14,6 +14,28 @@ export function entityImportDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
+  if (oDataVersion === 'v4') {
+    return [
+      odataImportDeclaration(
+        [
+          'Entity',
+          'DefaultDeSerializers',
+          'DeSerializers',
+          'DeserializedType',
+          'entityDeserializer',
+          'BoundActionRequestBuilder',
+          'transformReturnValueForComplexType',
+          'defaultDeSerializers',
+          'BoundFunctionRequestBuilder',
+          'FunctionImportParameter',
+          'ActionImportParameter'
+        ],
+        oDataVersion
+      ),
+      ...complexTypeImportDeclarations(entity.properties),
+      ...enumTypeImportDeclarations(entity.properties)
+    ];
+  }
   return [
     odataImportDeclaration(
       ['Entity', 'DefaultDeSerializers', 'DeSerializers', 'DeserializedType'],

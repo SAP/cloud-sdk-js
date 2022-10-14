@@ -1,6 +1,7 @@
 import {
   edmToFieldType,
   edmToTsType,
+  forceArray,
   getFallbackEdmTypeIfNeeded,
   isCreatable,
   isDeletable,
@@ -13,7 +14,10 @@ import {
   VdmNavigationProperty,
   VdmProperty,
   VdmMappedEdmType,
-  VdmEnumType
+  VdmEnumType,
+  VdmFunctionImport,
+  VdmActionImport,
+  VdmReturnTypeCategory
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
@@ -22,6 +26,7 @@ import {
   EdmxEntitySetBase,
   EdmxEntityTypeBase,
   EdmxNamed,
+  EdmxParameter,
   JoinedEntityMetadata
 } from '../../edmx-parser/common';
 import {
@@ -37,6 +42,7 @@ import {
   typesForCollection
 } from '../edmx-to-vdm-util';
 import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
+import { EdmxAction, EdmxFunction } from '../../edmx-parser';
 
 /**
  * @internal
@@ -46,6 +52,8 @@ export function transformEntityBase(
   classNames: Record<string, any>,
   complexTypes: VdmComplexType[],
   enumTypes: VdmEnumType[],
+  boundFunctions: EdmxFunction[],
+  boundActions: EdmxAction[],
   formatter: ServiceNameFormatter
 ): Omit<VdmEntity, 'navigationProperties'> {
   const entity = {
@@ -62,7 +70,9 @@ export function transformEntityBase(
       : true,
     deletable: entityMetadata.entitySet
       ? isDeletable(entityMetadata.entitySet)
-      : true
+      : true,
+    boundFunctions: transformBoundFunctions(boundFunctions),
+    boundActions: transformBoundActions(boundActions)
   };
 
   return {
@@ -125,6 +135,83 @@ function properties(
     };
   });
 }
+
+function emptyIfUndefined(input: string | undefined): string {
+  return input? input : ''
+}
+
+function stringToBool(input: string | undefined): boolean {
+  if (input) {
+    return input.toLowerCase() === 'true'
+  }
+  return false
+}
+
+/**
+ * @internal
+ */
+export function transformBoundFunctions(
+  functions: EdmxFunction[]
+): VdmFunctionImport[] {
+  return functions.filter(f => f.IsBound).map(f => ({
+    name: f.Name,
+    // Remove first parameter which per spec always is the entity the function is bound to
+    // cf https://docs.oasis-open.org/odata/odata-csdl-xml/v4.01/os/odata-csdl-xml-v4.01-os.html#sec_Parameter
+    parameters: forceArray(f.Parameter)
+      .slice(1)
+      .map((p: EdmxParameter) => ({
+        parameterName: p.Name,
+        jsType: edmToTsType(p.Type),
+        edmType: p.Type,
+        originalName: p.Name,
+        nullable: stringToBool(p.Nullable), 
+        description: emptyIfUndefined(p.Documentation?.Summary), 
+        fieldType: edmToTsType(p.Type)
+      })),
+    returnType: {
+      returnType: emptyIfUndefined(f.ReturnType?.Type),
+      isCollection: false, 
+      isNullable: stringToBool(f.ReturnType?.Nullable), 
+      returnTypeCategory: VdmReturnTypeCategory.VOID
+    },
+    httpMethod: '',
+    originalName: f.Name,
+    parametersTypeName: '',
+    description: ''
+  }));
+}
+
+function transformBoundActions(
+  actions: EdmxAction[]
+): VdmActionImport[] {
+  return actions.filter(a => a.IsBound).map(a => ({
+    name: a.Name,
+    // Remove first parameter which per spec always is the entity the function is bound to
+    // cf https://docs.oasis-open.org/odata/odata-csdl-xml/v4.01/os/odata-csdl-xml-v4.01-os.html#sec_Parameter
+    parameters: forceArray(a.Parameter)
+      .slice(1)
+      .map((p: EdmxParameter) => ({
+        parameterName: p.Name,
+        jsType: edmToTsType(p.Type),
+        edmType: p.Type,
+        originalName: p.Name,
+        nullable: stringToBool(p.Nullable), 
+        description: emptyIfUndefined(p.Documentation?.Summary), 
+        fieldType: edmToTsType(p.Type)
+      })),
+    returnType: {
+      returnType: emptyIfUndefined(a.ReturnType?.Type),
+      isCollection: false, 
+      isNullable: stringToBool(a.ReturnType?.Nullable), 
+      returnTypeCategory: VdmReturnTypeCategory.VOID
+    },
+    httpMethod: 'post',
+    originalName: a.Name,
+    parametersTypeName: '',
+    description: ''
+  }));
+}
+
 /**
  * @internal
  */

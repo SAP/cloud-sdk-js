@@ -1105,10 +1105,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.2.1":
-  version "6.2.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.2.1.tgz#ef888980ae3bc8d7929eea9853970b47d534adc0"
-  integrity sha512-wVsvKMhufPX0dnO98q4xYIFNytmhpc2PR+ft5qo+UeO23ZNV0ZN99shGsWsLf1emVmIr2/jhwHeohMEaMTaNcg==
+"@sap/cds-dk@6.2.2":
+  version "6.2.2"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.2.2.tgz#aaf91820a71ed69dc816e9ebfbff6c1410d9235a"
+  integrity sha512-HCvFKJmtCTKtY+ZVu3Mf015LHObvs5QYMW6GXrOWuVLs0RRRbfn3HrjZBiGZPa1p1in+ZFhyyvhLP1GKXVRDDQ==
   dependencies:
     "@sap/cds" "^6.2.0"
     "@sap/cds-foss" "^4"

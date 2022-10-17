@@ -104,13 +104,3 @@ Con:
 [SAP Blogs: Cheat sheet for URI patterns for calling OData actions and functions](https://blogs.sap.com/2021/08/21/cheat-sheet-for-uri-patterns-for-calling-odata-actions-and-functions/)
 
 [OData Common Schema Definition Language (CSDL) XML Representation Version 4.01](https://docs.oasis-open.org/odata/odata-csdl-xml/v4.01/os/odata-csdl-xml-v4.01-os.html)
-
-
-## Scratchpad
-
-urls for test service
-
-```
-http http://localhost:4004/odata/test-service/TestEntity\(KeyTestEntity\=101\)/TestService.boundFunctionWithoutArguments\(\)
-http POST http://localhost:4004/odata/test-service/TestEntity\(KeyTestEntity\=101\)/TestService.boundActionWithoutArguments foo=bar
-```

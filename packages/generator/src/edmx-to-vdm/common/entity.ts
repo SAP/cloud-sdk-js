@@ -166,8 +166,7 @@ export function transformBoundFunctions(
         .slice(1)
         .map((p: EdmxParameter) => ({
           parameterName: p.Name,
-          // jsType: edmToTsType(p.Type),
-          jsType: 'string', // fixme(fwilhe)
+          jsType: edmToTsType(p.Type),
           edmType: p.Type,
           originalName: p.Name,
           nullable: stringToBool(p.Nullable),
@@ -202,7 +201,7 @@ function transformBoundActions(actions: EdmxAction[]): VdmActionImport[] {
         .slice(1)
         .map((p: EdmxParameter) => ({
           parameterName: p.Name,
-          jsType: 'string', // fixme(fwilhe)
+          jsType: edmToTsType(p.Type),
           edmType: p.Type,
           originalName: p.Name,
           nullable: stringToBool(p.Nullable),

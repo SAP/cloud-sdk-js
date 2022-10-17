@@ -6,9 +6,7 @@ import {
   WithKeys
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
-import {
-  ActionImportParameters
-} from './action-import-parameter';
+import { ActionImportParameters } from './action-import-parameter';
 import { ODataActionImportRequestConfig } from './odata-action-import-request-config';
 
 /**
@@ -17,11 +15,13 @@ import { ODataActionImportRequestConfig } from './odata-action-import-request-co
  * @typeParam ParametersT - Type of the parameter to setup a request with
  */
 export class ODataBoundActionImportRequestConfig<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  ParametersT
->   extends ODataActionImportRequestConfig<DeSerializersT, ParametersT>
-implements WithKeys {
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
+    ParametersT
+  >
+  extends ODataActionImportRequestConfig<DeSerializersT, ParametersT>
+  implements WithKeys
+{
   keys: Record<string, any>;
   constructor(
     method: RequestMethodType,

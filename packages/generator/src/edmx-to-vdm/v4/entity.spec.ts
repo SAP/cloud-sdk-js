@@ -169,8 +169,8 @@ describe('entity', () => {
 
 it('transforms bound actions and functions', () => {
   const service = createTestServiceData(
-    [ createEntityType( 'TestEntityType', [], [] ) ],
-    [ createTestEntitySet('TestEntity', 'ns.TestEntityType', [ ]) ]
+    [createEntityType('TestEntityType', [], [])],
+    [createTestEntitySet('TestEntity', 'ns.TestEntityType', [])]
   );
 
   service.edmx.root.Function = [
@@ -188,7 +188,7 @@ it('transforms bound actions and functions', () => {
         {
           Name: 'parameter1',
           Type: 'Edm.String'
-        },
+        }
       ]
     },
     {
@@ -216,7 +216,7 @@ it('transforms bound actions and functions', () => {
         {
           Name: 'parameter1',
           Type: 'Edm.String'
-        },
+        }
       ]
     },
     {
@@ -233,7 +233,6 @@ it('transforms bound actions and functions', () => {
 
   expect(entity.boundFunctions.length).toBe(1);
   expect(entity.boundFunctions[0].parameters.length).toBe(1);
-
 });
 
 const defaultNamespace = 'ns';

@@ -16,13 +16,21 @@ module.exports = async srv => {
     oRequest.reply(entity.StringProperty);
   });
 
-  srv.on('boundFunctionWithoutArgumentsWithMultipleKeys', 'TestEntityWithMultipleKeys', async oRequest => {
-    oRequest.reply('xyz');
-  });
+  srv.on(
+    'boundFunctionWithoutArgumentsWithMultipleKeys',
+    'TestEntityWithMultipleKeys',
+    async oRequest => {
+      oRequest.reply('xyz');
+    }
+  );
 
-  srv.on('boundActionWithoutArgumentsWithMultipleKeys', 'TestEntityWithMultipleKeys', async oRequest => {
-    oRequest.reply('abc');
-  });
+  srv.on(
+    'boundActionWithoutArgumentsWithMultipleKeys',
+    'TestEntityWithMultipleKeys',
+    async oRequest => {
+      oRequest.reply('abc');
+    }
+  );
 
   srv.on('boundFunctionWithoutArguments', 'TestEntity', async oRequest => {
     oRequest.reply('xyz');
@@ -32,9 +40,13 @@ module.exports = async srv => {
     oRequest.reply('xyz' + oRequest.data.param1 + oRequest.data.param2);
   });
 
-  srv.on('boundFunctionWithArgumentsWithMultipleKeys', 'TestEntityWithMultipleKeys', async oRequest => {
-    oRequest.reply('xyz' + oRequest.data.param1 + oRequest.data.param2);
-  });
+  srv.on(
+    'boundFunctionWithArgumentsWithMultipleKeys',
+    'TestEntityWithMultipleKeys',
+    async oRequest => {
+      oRequest.reply('xyz' + oRequest.data.param1 + oRequest.data.param2);
+    }
+  );
 
   srv.on(
     'boundFunctionWithoutArgumentsComplexReturnType',
@@ -106,9 +118,11 @@ module.exports = async srv => {
     const param3 = oRequest.data.param3;
     const entity = await SELECT.one
       .from(TestEntityWithMultipleKeys)
-      .where({ KeyTestEntityWithMultipleKeys: param1,
+      .where({
+        KeyTestEntityWithMultipleKeys: param1,
         StringPropertyWithMultipleKeys: param2,
-        BooleanPropertyWithMultipleKeys: param3 });
+        BooleanPropertyWithMultipleKeys: param3
+      });
     oRequest.reply(entity);
   });
 

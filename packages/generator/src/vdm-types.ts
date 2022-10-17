@@ -129,11 +129,11 @@ export interface VdmEntity {
   /**
    * @internal
    */
-   boundFunctions: VdmFunctionImport[];
-   /**
-    * @internal
-    */
-   boundActions: VdmActionImport[];
+  boundFunctions: VdmFunctionImport[];
+  /**
+   * @internal
+   */
+  boundActions: VdmActionImport[];
 }
 
 /**

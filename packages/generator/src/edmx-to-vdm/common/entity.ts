@@ -156,69 +156,71 @@ export function transformBoundFunctions(
   if (!functions) {
     return [];
   }
-  return functions.filter(f => f.IsBound).map(f => ({
-    name: f.Name,
-    // Remove first parameter which per spec always is the entity the function is bound to
-    // cf https://docs.oasis-open.org/odata/odata-csdl-xml/v4.01/os/odata-csdl-xml-v4.01-os.html#sec_Parameter
-    parameters: forceArray(f.Parameter)
-      .slice(1)
-      .map((p: EdmxParameter) => ({
-        parameterName: p.Name,
-        // jsType: edmToTsType(p.Type),
-        jsType: 'string',  //fixme(fwilhe)
-        edmType: p.Type,
-        originalName: p.Name,
-        nullable: stringToBool(p.Nullable),
-        description: emptyIfUndefined(p.Documentation?.Summary),
-        fieldType: edmToTsType(p.Type)
-      })),
-    returnType: {
-      // returnType: emptyIfUndefined(f.ReturnType?.Type),
-      returnType: 'string',
-      isCollection: false,
-      isNullable: stringToBool(f.ReturnType?.Nullable),
-      returnTypeCategory: VdmReturnTypeCategory.VOID
-    },
-    httpMethod: '',
-    originalName: f.Name,
-    parametersTypeName: '',
-    description: ''
-  }));
+  return functions
+    .filter(f => f.IsBound)
+    .map(f => ({
+      name: f.Name,
+      // Remove first parameter which per spec always is the entity the function is bound to
+      // cf https://docs.oasis-open.org/odata/odata-csdl-xml/v4.01/os/odata-csdl-xml-v4.01-os.html#sec_Parameter
+      parameters: forceArray(f.Parameter)
+        .slice(1)
+        .map((p: EdmxParameter) => ({
+          parameterName: p.Name,
+          // jsType: edmToTsType(p.Type),
+          jsType: 'string', // fixme(fwilhe)
+          edmType: p.Type,
+          originalName: p.Name,
+          nullable: stringToBool(p.Nullable),
+          description: emptyIfUndefined(p.Documentation?.Summary),
+          fieldType: edmToTsType(p.Type)
+        })),
+      returnType: {
+        // returnType: emptyIfUndefined(f.ReturnType?.Type),
+        returnType: 'string',
+        isCollection: false,
+        isNullable: stringToBool(f.ReturnType?.Nullable),
+        returnTypeCategory: VdmReturnTypeCategory.VOID
+      },
+      httpMethod: '',
+      originalName: f.Name,
+      parametersTypeName: '',
+      description: ''
+    }));
 }
 
-function transformBoundActions(
-  actions: EdmxAction[]
-): VdmActionImport[] {
+function transformBoundActions(actions: EdmxAction[]): VdmActionImport[] {
   if (!actions) {
     return [];
   }
-  return actions.filter(a => a.IsBound).map(a => ({
-    name: a.Name,
-    // Remove first parameter which per spec always is the entity the function is bound to
-    // cf https://docs.oasis-open.org/odata/odata-csdl-xml/v4.01/os/odata-csdl-xml-v4.01-os.html#sec_Parameter
-    parameters: forceArray(a.Parameter)
-      .slice(1)
-      .map((p: EdmxParameter) => ({
-        parameterName: p.Name,
-        jsType: 'string', //fixme(fwilhe)
-        edmType: p.Type,
-        originalName: p.Name,
-        nullable: stringToBool(p.Nullable),
-        description: emptyIfUndefined(p.Documentation?.Summary),
-        fieldType: edmToTsType(p.Type)
-      })),
-    returnType: {
-      // returnType: emptyIfUndefined(a.ReturnType?.Type),
-      returnType: 'string',
-      isCollection: false,
-      isNullable: stringToBool(a.ReturnType?.Nullable),
-      returnTypeCategory: VdmReturnTypeCategory.VOID
-    },
-    httpMethod: 'post',
-    originalName: a.Name,
-    parametersTypeName: '',
-    description: ''
-  }));
+  return actions
+    .filter(a => a.IsBound)
+    .map(a => ({
+      name: a.Name,
+      // Remove first parameter which per spec always is the entity the function is bound to
+      // cf https://docs.oasis-open.org/odata/odata-csdl-xml/v4.01/os/odata-csdl-xml-v4.01-os.html#sec_Parameter
+      parameters: forceArray(a.Parameter)
+        .slice(1)
+        .map((p: EdmxParameter) => ({
+          parameterName: p.Name,
+          jsType: 'string', // fixme(fwilhe)
+          edmType: p.Type,
+          originalName: p.Name,
+          nullable: stringToBool(p.Nullable),
+          description: emptyIfUndefined(p.Documentation?.Summary),
+          fieldType: edmToTsType(p.Type)
+        })),
+      returnType: {
+        // returnType: emptyIfUndefined(a.ReturnType?.Type),
+        returnType: 'string',
+        isCollection: false,
+        isNullable: stringToBool(a.ReturnType?.Nullable),
+        returnTypeCategory: VdmReturnTypeCategory.VOID
+      },
+      httpMethod: 'post',
+      originalName: a.Name,
+      parametersTypeName: '',
+      description: ''
+    }));
 }
 
 /**

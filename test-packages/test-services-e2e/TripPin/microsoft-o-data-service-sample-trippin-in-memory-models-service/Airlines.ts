@@ -116,22 +116,25 @@ export class Airlines<T extends DeSerializers = DefaultDeSerializers>
   ShareTrip<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
     userName: string,
     tripId: string
-  ): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+  ): BoundActionRequestBuilder<
+    Airlines<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
     const params = {
       userName: new ActionImportParameter('userName', 'Edm.String', userName),
       tripId: new ActionImportParameter('tripId', 'Edm.Int32', tripId)
     };
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
-      'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
-      'Airlines',
-      '',
-      'MicrosoftODataServiceSampleTrippinInMemoryModelsService',
-      'ShareTrip',
+      this._entityApi as any,
+      this as any,
+      'Microsoft.OData.SampleService.Models.TripPin.ShareTrip',
       data => data,
       params,
       deSerializers
-    );
+    ) as any;
   }
 }
 

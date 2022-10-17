@@ -72,11 +72,9 @@ class Airports extends odata_v4_1.Entity {
     };
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
-      'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
-      'Airports',
-      '',
-      'MicrosoftODataServiceSampleTrippinInMemoryModelsService',
-      'ShareTrip',
+      this._entityApi,
+      this,
+      'Microsoft.OData.SampleService.Models.TripPin.ShareTrip',
       data => data,
       params,
       deSerializers

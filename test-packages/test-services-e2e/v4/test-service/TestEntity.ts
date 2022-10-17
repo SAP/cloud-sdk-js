@@ -372,87 +372,102 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
 
   boundActionWithoutArguments<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+  >(): BoundActionRequestBuilder<
+    TestEntity<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
     const params = {};
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
-      '/odata/test-service',
-      'TestEntity',
-      '',
-      'TestService',
-      'boundActionWithoutArguments',
+      this._entityApi as any,
+      this as any,
+      'TestService.boundActionWithoutArguments',
       data => data,
       params,
       deSerializers
-    );
+    ) as any;
   }
 
   deleteEntity<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+  >(): BoundActionRequestBuilder<
+    TestEntity<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
     const params = {};
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
-      '/odata/test-service',
-      'TestEntity',
-      '',
-      'TestService',
-      'deleteEntity',
+      this._entityApi as any,
+      this as any,
+      'TestService.deleteEntity',
       data => data,
       params,
       deSerializers
-    );
+    ) as any;
   }
 
   createTestEntityById<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+  >(): BoundActionRequestBuilder<
+    TestEntity<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
     const params = {};
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
-      '/odata/test-service',
-      'TestEntity',
-      '',
-      'TestService',
-      'createTestEntityById',
+      this._entityApi as any,
+      this as any,
+      'TestService.createTestEntityById',
       data => data,
       params,
       deSerializers
-    );
+    ) as any;
   }
 
   createTestEntityByIdReturnId<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+  >(): BoundActionRequestBuilder<
+    TestEntity<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
     const params = {};
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
-      '/odata/test-service',
-      'TestEntity',
-      '',
-      'TestService',
-      'createTestEntityByIdReturnId',
+      this._entityApi as any,
+      this as any,
+      'TestService.createTestEntityByIdReturnId',
       data => data,
       params,
       deSerializers
-    );
+    ) as any;
   }
 
   createTestEntityReturnId<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null> {
+  >(): BoundActionRequestBuilder<
+    TestEntity<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
     const params = {};
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
-      '/odata/test-service',
-      'TestEntity',
-      '',
-      'TestService',
-      'createTestEntityReturnId',
+      this._entityApi as any,
+      this as any,
+      'TestService.createTestEntityReturnId',
       data => data,
       params,
       deSerializers
-    );
+    ) as any;
   }
 }
 

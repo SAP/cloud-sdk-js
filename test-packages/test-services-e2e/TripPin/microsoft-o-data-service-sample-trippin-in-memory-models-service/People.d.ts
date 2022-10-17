@@ -97,7 +97,12 @@ export declare class People<T extends DeSerializers = DefaultDeSerializers>
   ShareTrip<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
     userName: string,
     tripId: string
-  ): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  ): BoundActionRequestBuilder<
+    People<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
 }
 export interface PeopleType<T extends DeSerializers = DefaultDeSerializers> {
   userName: DeserializedType<T, 'Edm.String'>;

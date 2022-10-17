@@ -64,7 +64,12 @@ export declare class Photos<T extends DeSerializers = DefaultDeSerializers>
   ShareTrip<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
     userName: string,
     tripId: string
-  ): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  ): BoundActionRequestBuilder<
+    Photos<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
 }
 export interface PhotosType<T extends DeSerializers = DefaultDeSerializers> {
   id: DeserializedType<T, 'Edm.Int64'>;

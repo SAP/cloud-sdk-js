@@ -63,7 +63,12 @@ export declare class Airlines<T extends DeSerializers = DefaultDeSerializers>
   ShareTrip<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
     userName: string,
     tripId: string
-  ): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  ): BoundActionRequestBuilder<
+    Airlines<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
 }
 export interface AirlinesType<T extends DeSerializers = DefaultDeSerializers> {
   airlineCode: DeserializedType<T, 'Edm.String'>;

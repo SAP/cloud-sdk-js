@@ -190,11 +190,9 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     const params = {};
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
-      '/odata/test-service',
-      'TestEntity50Prop',
-      '',
-      'TestService',
-      'boundActionWithoutArguments',
+      this._entityApi,
+      this,
+      'TestService.boundActionWithoutArguments',
       data => data,
       params,
       deSerializers
@@ -204,11 +202,9 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     const params = {};
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
-      '/odata/test-service',
-      'TestEntity50Prop',
-      '',
-      'TestService',
-      'deleteEntity',
+      this._entityApi,
+      this,
+      'TestService.deleteEntity',
       data => data,
       params,
       deSerializers
@@ -218,11 +214,9 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     const params = {};
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
-      '/odata/test-service',
-      'TestEntity50Prop',
-      '',
-      'TestService',
-      'createTestEntityById',
+      this._entityApi,
+      this,
+      'TestService.createTestEntityById',
       data => data,
       params,
       deSerializers
@@ -232,11 +226,9 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     const params = {};
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
-      '/odata/test-service',
-      'TestEntity50Prop',
-      '',
-      'TestService',
-      'createTestEntityByIdReturnId',
+      this._entityApi,
+      this,
+      'TestService.createTestEntityByIdReturnId',
       data => data,
       params,
       deSerializers
@@ -246,11 +238,9 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     const params = {};
     const deSerializers = odata_v4_1.defaultDeSerializers;
     return new odata_v4_1.BoundActionRequestBuilder(
-      '/odata/test-service',
-      'TestEntity50Prop',
-      '',
-      'TestService',
-      'createTestEntityReturnId',
+      this._entityApi,
+      this,
+      'TestService.createTestEntityReturnId',
       data => data,
       params,
       deSerializers

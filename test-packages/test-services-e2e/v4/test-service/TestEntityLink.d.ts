@@ -148,19 +148,44 @@ export declare class TestEntityLink<
   >;
   boundActionWithoutArguments<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  >(): BoundActionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
   deleteEntity<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  >(): BoundActionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
   createTestEntityById<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  >(): BoundActionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
   createTestEntityByIdReturnId<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  >(): BoundActionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
   createTestEntityReturnId<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<DeSerializersT, any, string | null>;
+  >(): BoundActionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
 }
 export interface TestEntityLinkType<
   T extends DeSerializers = DefaultDeSerializers

@@ -208,7 +208,7 @@ function boundAction(
   return {
     kind: StructureKind.Method,
     name: a.name,
-    returnType: `BoundActionRequestBuilder<DeSerializersT, any, ${a.returnType.returnType} | null>`,
+    returnType: `BoundActionRequestBuilder<${entity.className}<DeSerializersT>, DeSerializersT, any, ${a.returnType.returnType} | null>`,
     typeParameters: [
       {
         name: 'DeSerializersT extends DeSerializers = DefaultDeSerializers'
@@ -237,12 +237,13 @@ function boundActionsStatements(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): string[] {
+  const name = `${service.namespaces[0]}.${a.originalName}`;
   const statements: string[] = boundActionsParameterStatements(a).concat([
     'const deSerializers = defaultDeSerializers as any;',
     'return new BoundActionRequestBuilder(',
     // fixme: do we need to do anything in the transformer function?
-    `'${service.servicePath}', '${entity.entitySetName}', '', '${service.className}' ,'${a.name}', (data) => data, params, deSerializers`,
-    ');'
+    `this._entityApi as any, this as any, '${name}', (data) => data, params, deSerializers`,
+    ') as any;'
   ]);
   return statements;
 }

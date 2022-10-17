@@ -1,36 +1,35 @@
-import { ActionFunctionImportRequestBuilderBase } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
 import {
-  ODataBoundActionImportRequestConfig,
-  ActionImportParameters
-} from '../request';
+  ActionFunctionImportRequestBuilderBase,
+  EntityApi,
+  EntityBase,
+  FunctionImportParameters //fixme(??)
+} from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from '../de-serializers';
+import { ODataBoundActionImportRequestConfig } from '../request';
 import { createODataUri } from '../uri-conversion';
 
 export class BoundActionRequestBuilder<
+  EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
   ParametersT,
   ReturnT
 > extends ActionFunctionImportRequestBuilderBase<
   ReturnT,
-  ODataBoundActionImportRequestConfig<DeSerializersT, ParametersT>
+  ODataBoundActionImportRequestConfig<EntityT, DeSerializersT, ParametersT>
 > {
   constructor(
-    defaultServicePath: string,
-    entitySetName: string,
-    entityQueryString: string,
-    serviceClassName: string,
+    entityApi: EntityApi<EntityT, DeSerializersT>,
+    entity: EntityT,
     actionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
-    parameters: ActionImportParameters<ParametersT>,
+    parameters: FunctionImportParameters<ParametersT>,
     deSerializers: DeSerializersT
   ) {
     super(
       responseTransformer,
       new ODataBoundActionImportRequestConfig(
-        defaultServicePath,
-        entitySetName,
-        entityQueryString,
-        serviceClassName,
+        'get',
+        entityApi,
         actionImportName,
         parameters,
         createODataUri(deSerializers)

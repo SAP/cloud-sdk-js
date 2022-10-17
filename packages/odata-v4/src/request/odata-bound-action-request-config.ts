@@ -1,12 +1,15 @@
 import {
-  ODataRequestConfig,
-  ODataUri
+  ODataUri,
+  EntityBase,
+  RequestMethodType,
+  EntityApi,
+  WithKeys
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
 import {
-  ActionImportParameters,
-  ActionImportParameter
+  ActionImportParameters
 } from './action-import-parameter';
+import { ODataActionImportRequestConfig } from './odata-action-import-request-config';
 
 /**
  * Action import request configuration for an entity type.
@@ -14,58 +17,35 @@ import {
  * @typeParam ParametersT - Type of the parameter to setup a request with
  */
 export class ODataBoundActionImportRequestConfig<
+  EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
   ParametersT
-> extends ODataRequestConfig {
-  entitySetName: string;
-  serviceClassName: string;
-  entityQueryString: string;
-  /**
-   * Creates an instance of ODataActionImportRequestConfig.
-   * @param defaultServicePath - Default path of the service.
-   * @param entitySetName - The name of the entity set.
-   * @param entityQueryString - The string to query the instance of the entity this action is bound to.
-   * @param serviceClassName - The name of the service class.
-   * @param actionImportName - The name of the action import.
-   * @param parameters - Parameters of the action imports.
-   * @param oDataUri - URI conversion functions.
-   */
+>   extends ODataActionImportRequestConfig<DeSerializersT, ParametersT>
+implements WithKeys {
+  keys: Record<string, any>;
   constructor(
-    defaultServicePath: string,
-    entitySetName: string,
-    entityQueryString: string,
-    serviceClassName: string,
-    readonly actionImportName: string,
-    public parameters: ActionImportParameters<ParametersT>,
-    protected oDataUri: ODataUri<DeSerializersT>
+    method: RequestMethodType,
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
+    functionImportName: string,
+    parameters: ActionImportParameters<ParametersT>,
+    readonly oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('post', defaultServicePath);
-    this.entitySetName = entitySetName;
-    this.serviceClassName = serviceClassName;
-    this.entityQueryString = entityQueryString;
-    this.payload = this.buildHttpPayload(parameters);
+    super(
+      entityApi.entityConstructor._defaultServicePath,
+      functionImportName,
+      parameters,
+      oDataUri
+    );
   }
 
   resourcePath(): string {
-    return `${this.entitySetName}(${this.entityQueryString})/${this.serviceClassName}.${this.actionImportName}`;
+    return `${this.oDataUri.getResourcePathForKeys(
+      this.keys,
+      this.entityApi
+    )}/${super.resourcePath()}`;
   }
 
   queryParameters(): Record<string, any> {
     return {};
-  }
-
-  private buildHttpPayload(
-    parameters: ActionImportParameters<ParametersT>
-  ): Record<string, any> {
-    const payload = Object.keys(parameters).reduce((all, key) => {
-      const payloadElement: ActionImportParameter<ParametersT> =
-        parameters[key];
-      if (typeof payloadElement.value !== 'undefined') {
-        all[payloadElement.originalName] = payloadElement.value;
-      }
-      return all;
-    }, {});
-
-    return payload;
   }
 }

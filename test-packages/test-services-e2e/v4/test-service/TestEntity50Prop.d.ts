@@ -382,7 +382,7 @@ export declare class TestEntity50Prop<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(
     StringPropertyWithMultipleKeys: string,
-    BooleanPropertyWithMultipleKeys: string
+    BooleanPropertyWithMultipleKeys: boolean
   ): BoundFunctionRequestBuilder<
     TestEntity50Prop<DeSerializersT>,
     DeSerializersT,

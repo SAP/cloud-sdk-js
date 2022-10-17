@@ -96,7 +96,7 @@ export declare class People<T extends DeSerializers = DefaultDeSerializers>
   >;
   ShareTrip<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
     userName: string,
-    tripId: string
+    tripId: number
   ): BoundActionRequestBuilder<
     People<DeSerializersT>,
     DeSerializersT,

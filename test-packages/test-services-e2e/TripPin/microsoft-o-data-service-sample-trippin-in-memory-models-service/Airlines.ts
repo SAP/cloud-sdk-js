@@ -115,7 +115,7 @@ export class Airlines<T extends DeSerializers = DefaultDeSerializers>
 
   ShareTrip<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
     userName: string,
-    tripId: string
+    tripId: number
   ): BoundActionRequestBuilder<
     Airlines<DeSerializersT>,
     DeSerializersT,

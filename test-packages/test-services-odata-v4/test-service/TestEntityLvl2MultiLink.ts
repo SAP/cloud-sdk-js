@@ -7,7 +7,14 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  entityDeserializer,
+  BoundActionRequestBuilder,
+  transformReturnValueForComplexType,
+  defaultDeSerializers,
+  BoundFunctionRequestBuilder,
+  FunctionImportParameter,
+  ActionImportParameter
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';
 import {

@@ -208,7 +208,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(
     StringPropertyWithMultipleKeys: string,
-    BooleanPropertyWithMultipleKeys: string
+    BooleanPropertyWithMultipleKeys: boolean
   ): BoundFunctionRequestBuilder<
     TestEntityLink<DeSerializersT>,
     DeSerializersT,

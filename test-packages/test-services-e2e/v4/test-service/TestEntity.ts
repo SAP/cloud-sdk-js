@@ -390,6 +390,26 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     ) as any;
   }
 
+  boundActionWithoutArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
+    TestEntity<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.boundActionWithoutArgumentsWithMultipleKeys',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
   deleteEntity<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundActionRequestBuilder<

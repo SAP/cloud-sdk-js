@@ -20,6 +20,10 @@ module.exports = async srv => {
     oRequest.reply('xyz');
   });
 
+  srv.on('boundActionWithoutArgumentsWithMultipleKeys', 'TestEntityWithMultipleKeys', async oRequest => {
+    oRequest.reply('abc');
+  });
+
   srv.on('boundFunctionWithoutArguments', 'TestEntity', async oRequest => {
     oRequest.reply('xyz');
   });

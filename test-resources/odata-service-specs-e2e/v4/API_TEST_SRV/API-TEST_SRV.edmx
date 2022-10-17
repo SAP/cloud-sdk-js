@@ -128,6 +128,10 @@
                 <Parameter Name="in" Type="TestService.TestEntityWithMultipleKeys"/>
                 <ReturnType Type="Edm.String"/>
             </Function>
+            <Action Name="boundActionWithoutArgumentsWithMultipleKeys" IsBound="true" IsComposable="false">
+                <Parameter Name="in" Type="TestService.TestEntityWithMultipleKeys"/>
+                <ReturnType Type="Edm.String"/>
+            </Action>
             <Function Name="boundFunctionWithArgumentsWithMultipleKeys" IsBound="true" IsComposable="false">
                 <Parameter Name="in" Type="TestService.TestEntityWithMultipleKeys"/>
                 <Parameter Name="param1" Type="Edm.String"/>

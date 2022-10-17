@@ -19,6 +19,8 @@ service TestService {
   actions {
     function boundFunctionWithoutArgumentsWithMultipleKeys() returns String;
     function boundFunctionWithArgumentsWithMultipleKeys(param1:String, param2:String) returns String;
+
+    action boundActionWithoutArgumentsWithMultipleKeys() returns String;
   }
 
   function returnSapCloudSdk() returns String;

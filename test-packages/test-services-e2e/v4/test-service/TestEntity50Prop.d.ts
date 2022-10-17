@@ -429,6 +429,14 @@ export declare class TestEntity50Prop<
     any,
     string | null
   >;
+  boundActionWithoutArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
+    TestEntity50Prop<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
   deleteEntity<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundActionRequestBuilder<

@@ -154,6 +154,14 @@ export declare class TestEntityLink<
     any,
     string | null
   >;
+  boundActionWithoutArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
   deleteEntity<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundActionRequestBuilder<

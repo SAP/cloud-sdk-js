@@ -204,6 +204,14 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     any,
     string | null
   >;
+  boundActionWithoutArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
+    TestEntity<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
   deleteEntity<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundActionRequestBuilder<

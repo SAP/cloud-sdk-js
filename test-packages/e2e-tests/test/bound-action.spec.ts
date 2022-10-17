@@ -1,21 +1,47 @@
-import { createTestEntityById } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/action-imports';
-import { TestEntity } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/TestEntity';
-import { destination } from './test-util';
-import { deleteEntity } from './test-utils/test-entity-operations';
+import {
+  TestEntity,
+  TestEntityWithMultipleKeys,
+  testService
+} from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
+import { getByKey } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/function-imports';
 
-const entityKey = 999;
+const url = 'http://localhost:4004/';
+const destination = { url };
 
-describe('bound action', () => {
-  beforeEach(async () => deleteEntity(entityKey, destination));
-  afterEach(async () => deleteEntity(entityKey, destination));
+describe('bound actions', () => {
+  describe('integer parameter, returns entity', () => {
+    const request = getByKey({
+      param: 101
+    });
 
-  it('should be able to call simple bound action', async () => {
-    const expected = { '@odata.context': '../$metadata#Edm.String', 'value': 'abc' };
-    const entity: TestEntity = await createTestEntityById({ id: entityKey })
-      .skipCsrfTokenFetching()
-      .execute(destination);
+    it('bound action returns expected string', async () => {
+      const expected = {
+        '@odata.context': '../$metadata#Edm.String',
+        value: 'abc'
+      };
+      const entity: TestEntity = await request.execute(destination);
+      const actionResult = await entity
+        .boundActionWithoutArguments()
+        .execute(destination);
+      expect(actionResult).toEqual(expected);
+    });
 
-    const actionResult = await entity.boundActionWithoutArguments().execute(destination);
-    expect(actionResult).toEqual(expected);
+    it('bound action of entity with multiple keys returns expected string', async () => {
+      const { testEntityWithMultipleKeysApi } = testService();
+      const entity: TestEntityWithMultipleKeys =
+        await testEntityWithMultipleKeysApi
+          .requestBuilder()
+          .getByKey(101, 'a', true)
+          .execute(destination);
+      const expected = {
+        '@odata.context': '../$metadata#Edm.String',
+        value: 'abc'
+      };
+
+      const actionResult = await entity
+        .boundActionWithoutArgumentsWithMultipleKeys()
+        .execute(destination);
+      expect(actionResult).toEqual(expected);
+    });
   });
 });

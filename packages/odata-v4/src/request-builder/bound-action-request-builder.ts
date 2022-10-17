@@ -35,5 +35,10 @@ export class BoundActionRequestBuilder<
         createODataUri(deSerializers)
       )
     );
+
+    this.requestConfig.keys = this.requestConfig.oDataUri.getEntityKeys(
+      entity,
+      entityApi
+    );
   }
 }

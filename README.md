@@ -147,7 +147,7 @@ Want to contribute? Check out our [contribution](./CONTRIBUTING.md) guide and fo
 ## Links
 
 - [Documentation portal](https://sap.github.io/cloud-sdk/)
-- [Sample repositoy](https://github.com/SAP-samples/cloud-sdk-js)
+- [Sample repository](https://github.com/SAP-samples/cloud-sdk-js)
 - [SAP Help Page on SAP Cloud SDK](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
 - [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
 - [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)

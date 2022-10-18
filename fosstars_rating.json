@@ -258,7 +258,7 @@
         }
       }
     },
-    "value" : 6.743823339780786,
+    "value" : 6.743681495809155,
     "weight" : 1.0,
     "confidence" : 10.0,
     "usedValues" : [ {
@@ -2677,7 +2677,7 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 1.7646666666666666,
+      "value" : 1.7633333333333334,
       "weight" : 0.5,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -2694,7 +2694,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of watchers for a GitHub repository"
         },
-        "number" : 15,
+        "number" : 14,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -2702,7 +2702,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of projects on GitHub that use an open source project"
         },
-        "number" : 2404,
+        "number" : 2407,
         "explanation" : [ ]
       } ],
       "explanation" : [ ],

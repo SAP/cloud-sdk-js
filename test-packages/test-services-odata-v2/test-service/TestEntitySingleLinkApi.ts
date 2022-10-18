@@ -75,7 +75,9 @@ export class TestEntitySingleLinkApi<
     TestEntitySingleLink<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<TestEntitySingleLink<DeSerializersT>, DeSerializersT>(
+      this
+    );
   }
 
   customField<NullableT extends boolean = false>(

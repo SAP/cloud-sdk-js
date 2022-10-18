@@ -45,7 +45,9 @@ export class TestEntityWithEnumKeyApi<
     TestEntityWithEnumKey<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<TestEntityWithEnumKey<DeSerializersT>, DeSerializersT>(
+      this
+    );
   }
 
   customField<NullableT extends boolean = false>(

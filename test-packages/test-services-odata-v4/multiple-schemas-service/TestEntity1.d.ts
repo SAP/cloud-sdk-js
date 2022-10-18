@@ -5,6 +5,7 @@ import {
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType1 } from './TestComplexType1';
+import type { TestEntity1Api } from './TestEntity1Api';
 import { TestEnumType1 } from './TestEnumType1';
 /**
  * This class represents the entity "A_TestEntity1" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -13,6 +14,7 @@ export declare class TestEntity1<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements TestEntity1Type<T>
 {
+  readonly _entityApi: TestEntity1Api<T>;
   /**
    * Technical entity name for TestEntity1.
    */
@@ -44,6 +46,7 @@ export declare class TestEntity1<T extends DeSerializers = DefaultDeSerializers>
    * @nullable
    */
   complexTypeProperty?: TestComplexType1<T> | null;
+  constructor(_entityApi: TestEntity1Api<T>);
 }
 export interface TestEntity1Type<
   T extends DeSerializers = DefaultDeSerializers

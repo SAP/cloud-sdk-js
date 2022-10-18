@@ -44,7 +44,7 @@ export class Casetest_1Api<
     Casetest_1<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<Casetest_1<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(

@@ -61,7 +61,10 @@ export class TestEntityCircularLinkParentApi<
     TestEntityCircularLinkParent<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<
+      TestEntityCircularLinkParent<DeSerializersT>,
+      DeSerializersT
+    >(this);
   }
 
   customField<NullableT extends boolean = false>(

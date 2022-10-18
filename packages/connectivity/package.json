@@ -39,12 +39,12 @@
   "dependencies": {
     "@sap-cloud-sdk/util": "^2.9.0",
     "@sap/xsenv": "^3.3.2",
-    "@sap/xssec": "^3.2.7",
+    "@sap/xssec": "^3.2.14",
     "axios": "^0.27.1",
     "http-proxy-agent": "^5.0.0",
     "https-proxy-agent": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
-    "opossum": "^6.4.0"
+    "opossum": "^7.0.0"
   },
   "devDependencies": {
     "@types/opossum": "^6.2.2",

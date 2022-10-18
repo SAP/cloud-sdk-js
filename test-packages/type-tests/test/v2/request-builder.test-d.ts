@@ -14,10 +14,12 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 import { DefaultDeSerializerV2 } from '../duplicated-types';
 
-const { testEntityApi, testEntityMultiLinkApi } = testService();
+const { testEntityApi, testEntityMultiLinkApi, testEntitySingleLinkApi } =
+  testService();
 
 const testEntitySchema = testEntityApi.schema;
 const testEntityMultiLinkSchema = testEntityMultiLinkApi.schema;
+const testEntitySingleLinkSchema = testEntitySingleLinkApi.schema;
 const testEntityInstance = testEntityApi.entityBuilder().build();
 const testMultiLinkInstance = testEntityMultiLinkApi.entityBuilder().build();
 
@@ -123,7 +125,7 @@ expectType<
 >(
   testEntityGetAllRequest.select(
     testEntitySchema.TO_SINGLE_LINK.select(
-      testEntityMultiLinkSchema.BOOLEAN_PROPERTY
+      testEntitySingleLinkSchema.BOOLEAN_PROPERTY
     )
   )
 );

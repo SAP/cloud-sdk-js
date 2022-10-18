@@ -1,4 +1,4 @@
-import { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { customTestDeSerializers } from '../../../test-resources/test/test-util';
 import {
   testEntityApi,
@@ -38,9 +38,9 @@ describe('entity builder with custom (de-)serializers', () => {
   it('builds an entity', () => {
     const builder = testEntityApiCustom.entityBuilder();
     builder.stringProperty(25);
-    const expected = new CommonEntity<
+    const expected = new TestEntity<
       CustomDeSerializers<typeof customTestDeSerializers>
-    >(testEntityApiCustom.schema);
+    >(testEntityApiCustom);
     expected.stringProperty = 25;
     expect(builder.build()).toEqual(expected);
   });

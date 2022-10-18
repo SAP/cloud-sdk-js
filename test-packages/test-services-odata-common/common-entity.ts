@@ -210,6 +210,10 @@ export class CommonEntitySingleLink<
   static _keys = ['KeyProperty'];
   keyProperty!: DeserializedType<T, 'Edm.String'>;
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+
+  constructor(readonly _entityApi: CommonEntitySingleLinkApi<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface CommonEntitySingleLinkType<
@@ -252,7 +256,10 @@ export class CommonEntitySingleLinkApi<
     CommonEntitySingleLink<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<
+      CommonEntitySingleLink<DeSerializersT>,
+      DeSerializersT
+    >(this);
   }
 
   customField<NullableT extends boolean = false>(
@@ -347,6 +354,10 @@ export class CommonEntity<T extends DeSerializers = DefaultDeSerializers>
   collectionProperty?: DeserializedType<T, 'Edm.String'>[] | null;
   complexTypeProperty?: CommonComplexType<T> | null;
   toSingleLink?: CommonEntitySingleLink<T> | null;
+
+  constructor(readonly _entityApi: CommonEntityApi<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface CommonEntityType<
@@ -404,7 +415,7 @@ export class CommonEntityApi<
     CommonEntity<DeSerializersT>,
     DeSerializersT
   > {
-    return entityBuilder(this);
+    return entityBuilder<CommonEntity<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(

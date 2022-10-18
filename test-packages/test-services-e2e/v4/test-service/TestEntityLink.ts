@@ -9,6 +9,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntityLinkApi } from './TestEntityLinkApi';
 
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
@@ -43,6 +44,10 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
    * @nullable
    */
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+
+  constructor(readonly _entityApi: TestEntityLinkApi<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface TestEntityLinkType<

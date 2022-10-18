@@ -41,7 +41,7 @@ export class PhotosApi<
   }
 
   entityBuilder(): EntityBuilderType<Photos<DeSerializersT>, DeSerializersT> {
-    return entityBuilder(this);
+    return entityBuilder<Photos<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(

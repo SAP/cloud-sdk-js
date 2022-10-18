@@ -6,7 +6,7 @@ import {
 describe('entity', () => {
   describe('remote state', () => {
     it('setOrInitializeRemoteState() sets remote state on entity', () => {
-      const entity = new CommonEntity(commonEntityApi.schema);
+      const entity = new CommonEntity(commonEntityApi);
       entity.setOrInitializeRemoteState();
 
       expect(entity['remoteState']).toStrictEqual(entity['asObject']());

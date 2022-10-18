@@ -5,6 +5,7 @@ import {
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import { AirportLocation } from './AirportLocation';
+import type { AirportsApi } from './AirportsApi';
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
@@ -12,6 +13,7 @@ export declare class Airports<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements AirportsType<T>
 {
+  readonly _entityApi: AirportsApi<T>;
   /**
    * Technical entity name for Airports.
    */
@@ -40,6 +42,7 @@ export declare class Airports<T extends DeSerializers = DefaultDeSerializers>
    * Location.
    */
   location: AirportLocation<T>;
+  constructor(_entityApi: AirportsApi<T>);
 }
 export interface AirportsType<T extends DeSerializers = DefaultDeSerializers> {
   icaoCode: DeserializedType<T, 'Edm.String'>;

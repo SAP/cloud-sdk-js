@@ -10,7 +10,12 @@ const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-class Airports extends odata_v4_1.Entity {}
+class Airports extends odata_v4_1.Entity {
+  constructor(_entityApi) {
+    super(_entityApi);
+    this._entityApi = _entityApi;
+  }
+}
 exports.Airports = Airports;
 /**
  * Technical entity name for Airports.

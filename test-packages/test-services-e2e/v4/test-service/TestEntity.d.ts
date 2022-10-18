@@ -1,270 +1,116 @@
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers,
-  DeserializedType,
-  BoundActionRequestBuilder,
-  BoundFunctionRequestBuilder
-} from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, BoundActionRequestBuilder, BoundFunctionRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityApi } from './TestEntityApi';
+import type { TestEntityWithMultipleKeys } from './TestEntityWithMultipleKeys';
+import type { TestEntity } from './TestEntity';
 import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
 /**
  * This class represents the entity "TestEntity" of service "TestService".
  */
-export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
-  extends Entity
-  implements TestEntityType<T>
-{
-  readonly _entityApi: TestEntityApi<T>;
-  /**
-   * Technical entity name for TestEntity.
-   */
-  static _entityName: string;
-  /**
-   * Default url path for the according service.
-   */
-  static _defaultServicePath: string;
-  /**
-   * All key fields of the TestEntity entity
-   */
-  static _keys: string[];
-  /**
-   * Key Test Entity.
-   */
-  keyTestEntity: DeserializedType<T, 'Edm.Int32'>;
-  /**
-   * String Property.
-   * Maximum length: 111.
-   * @nullable
-   */
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
-  /**
-   * Guid Property.
-   * @nullable
-   */
-  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
-  /**
-   * Boolean Property.
-   * @nullable
-   */
-  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
-  /**
-   * Int 64 Property.
-   * @nullable
-   */
-  int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
-  /**
-   * Double Property.
-   * @nullable
-   */
-  doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
-  /**
-   * Decimal Property.
-   * @nullable
-   */
-  decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
-  /**
-   * Date Property.
-   * @nullable
-   */
-  dateProperty?: DeserializedType<T, 'Edm.Date'> | null;
-  /**
-   * Time Of Day Property.
-   * @nullable
-   */
-  timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
-  /**
-   * Data Time Offset Data Time Property.
-   * @nullable
-   */
-  dataTimeOffsetDataTimeProperty?: DeserializedType<
-    T,
-    'Edm.DateTimeOffset'
-  > | null;
-  /**
-   * Data Time Offset Timestamp Property.
-   * @nullable
-   */
-  dataTimeOffsetTimestampProperty?: DeserializedType<
-    T,
-    'Edm.DateTimeOffset'
-  > | null;
-  /**
-   * One-to-many navigation property to the {@link TestEntityLink} entity.
-   */
-  toMultiLink: TestEntityLink<T>[];
-  constructor(_entityApi: TestEntityApi<T>);
-  boundFunctionWithoutArguments<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  boundFunctionWithoutArgumentsWithMultipleKeys<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  boundFunctionWithArgumentsWithMultipleKeys<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(
-    param1: string,
-    param2: string
-  ): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  getStringProperty<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  concatStrings<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
-    Str2: string
-  ): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  getAll<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  getByKey<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  getByKeyWithMultipleKeys<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(
-    StringPropertyWithMultipleKeys: string,
-    BooleanPropertyWithMultipleKeys: boolean
-  ): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  returnCollection<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  returnInt<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  returnKey<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  returnSapCloudSdk<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  boundActionWithoutArguments<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  boundActionWithoutArgumentsWithMultipleKeys<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  deleteEntity<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  createTestEntityById<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  createTestEntityByIdReturnId<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  createTestEntityReturnId<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
+export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityType<T> {
+    readonly _entityApi: TestEntityApi<T>;
+    /**
+     * Technical entity name for TestEntity.
+     */
+    static _entityName: string;
+    /**
+     * Default url path for the according service.
+     */
+    static _defaultServicePath: string;
+    /**
+     * All key fields of the TestEntity entity
+     */
+    static _keys: string[];
+    /**
+     * Key Test Entity.
+     */
+    keyTestEntity: DeserializedType<T, 'Edm.Int32'>;
+    /**
+     * String Property.
+     * Maximum length: 111.
+     * @nullable
+     */
+    stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+    /**
+     * Guid Property.
+     * @nullable
+     */
+    guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+    /**
+     * Boolean Property.
+     * @nullable
+     */
+    booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+    /**
+     * Int 64 Property.
+     * @nullable
+     */
+    int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
+    /**
+     * Double Property.
+     * @nullable
+     */
+    doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
+    /**
+     * Decimal Property.
+     * @nullable
+     */
+    decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
+    /**
+     * Date Property.
+     * @nullable
+     */
+    dateProperty?: DeserializedType<T, 'Edm.Date'> | null;
+    /**
+     * Time Of Day Property.
+     * @nullable
+     */
+    timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
+    /**
+     * Data Time Offset Data Time Property.
+     * @nullable
+     */
+    dataTimeOffsetDataTimeProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+    /**
+     * Data Time Offset Timestamp Property.
+     * @nullable
+     */
+    dataTimeOffsetTimestampProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+    /**
+     * One-to-many navigation property to the {@link TestEntityLink} entity.
+     */
+    toMultiLink: TestEntityLink<T>[];
+    constructor(_entityApi: TestEntityApi<T>);
+    boundFunctionWithoutArguments<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, string | null>;
+    boundFunctionWithoutArgumentsWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, string | null>;
+    boundFunctionWithArgumentsWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(param1: string, param2: string): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, string | null>;
+    getStringProperty<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, string | null>;
+    concatStrings<DeSerializersT extends DeSerializers = DefaultDeSerializers>(Str2: string): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, string | null>;
+    getAll<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, TestEntity[] | null>;
+    getByKey<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, TestEntity | null>;
+    getByKeyWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(StringPropertyWithMultipleKeys: string, BooleanPropertyWithMultipleKeys: boolean): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, TestEntityWithMultipleKeys | null>;
+    returnCollection<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, number[] | null>;
+    returnInt<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, number | null>;
+    returnKey<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, number | null>;
+    returnSapCloudSdk<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, string | null>;
+    boundActionWithoutArguments<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, string | null>;
+    boundActionWithoutArgumentsWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, string | null>;
+    deleteEntity<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, number | null>;
+    createTestEntityById<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, TestEntity | null>;
+    createTestEntityByIdReturnId<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, number | null>;
+    createTestEntityReturnId<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, number | null>;
 }
-export interface TestEntityType<
-  T extends DeSerializers = DefaultDeSerializers
-> {
-  keyTestEntity: DeserializedType<T, 'Edm.Int32'>;
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
-  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
-  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
-  int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
-  doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
-  decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
-  dateProperty?: DeserializedType<T, 'Edm.Date'> | null;
-  timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
-  dataTimeOffsetDataTimeProperty?: DeserializedType<
-    T,
-    'Edm.DateTimeOffset'
-  > | null;
-  dataTimeOffsetTimestampProperty?: DeserializedType<
-    T,
-    'Edm.DateTimeOffset'
-  > | null;
-  toMultiLink: TestEntityLinkType<T>[];
+export interface TestEntityType<T extends DeSerializers = DefaultDeSerializers> {
+    keyTestEntity: DeserializedType<T, 'Edm.Int32'>;
+    stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+    guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+    booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+    int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
+    doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
+    decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
+    dateProperty?: DeserializedType<T, 'Edm.Date'> | null;
+    timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
+    dataTimeOffsetDataTimeProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+    dataTimeOffsetTimestampProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+    toMultiLink: TestEntityLinkType<T>[];
 }
 //# sourceMappingURL=TestEntity.d.ts.map

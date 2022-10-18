@@ -116,13 +116,11 @@ module.exports = async srv => {
     const param1 = oRequest.data.param1;
     const param2 = oRequest.data.param2;
     const param3 = oRequest.data.param3;
-    const entity = await SELECT.one
-      .from(TestEntityWithMultipleKeys)
-      .where({
-        KeyTestEntityWithMultipleKeys: param1,
-        StringPropertyWithMultipleKeys: param2,
-        BooleanPropertyWithMultipleKeys: param3
-      });
+    const entity = await SELECT.one.from(TestEntityWithMultipleKeys).where({
+      KeyTestEntityWithMultipleKeys: param1,
+      StringPropertyWithMultipleKeys: param2,
+      BooleanPropertyWithMultipleKeys: param3
+    });
     oRequest.reply(entity);
   });
 

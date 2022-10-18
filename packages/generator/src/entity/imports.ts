@@ -39,6 +39,18 @@ export function entityImportDeclarations(
         kind: StructureKind.ImportDeclaration,
         isTypeOnly: true
       },
+      {
+        namedImports: [`TestEntityWithMultipleKeys`],
+        moduleSpecifier: `./TestEntityWithMultipleKeys`,
+        kind: StructureKind.ImportDeclaration,
+        isTypeOnly: true
+      },
+      {
+        namedImports: [`TestEntity`],
+        moduleSpecifier: `./TestEntity`,
+        kind: StructureKind.ImportDeclaration,
+        isTypeOnly: true
+      },
       ...enumTypeImportDeclarations(entity.properties)
     ];
   }

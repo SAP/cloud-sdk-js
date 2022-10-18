@@ -31,6 +31,7 @@ import {
 } from '../../edmx-parser/common';
 import {
   checkCollectionKind,
+  collectionRegExp,
   complexTypeFieldForName,
   complexTypeForName,
   enumTypeForName,
@@ -140,6 +141,37 @@ function emptyIfUndefined(input: string | undefined): string {
   return input ? input : '';
 }
 
+// fixme: not sure if we should have logic for this conversion here
+// quick and dirty for now, let's discuss if we need this
+function parseType(input: string | undefined): string {
+  if (!input) {
+    return 'any';
+  }
+  const typeInsideCollection =
+    input.match(collectionRegExp)?.groups?.collectionType;
+  // not a collection type
+  if (!typeInsideCollection) {
+    // special case for complex types such as 'TestService.TestEntity'
+    if (!input.startsWith('Edm') && input.indexOf('.') > 0) {
+      return input.split('.').slice(-1)[0];
+    }
+
+    return edmToTsType(input);
+  }
+
+  // Collection Type
+
+  // special case for complex types such as 'TestService.TestEntity'
+  if (
+    !typeInsideCollection.startsWith('Edm') &&
+    typeInsideCollection.indexOf('.') > 0
+  ) {
+    return `${typeInsideCollection.split('.').slice(-1)[0]}[]`;
+  }
+
+  return `${edmToTsType(typeInsideCollection)}[]`;
+}
+
 function stringToBool(input: string | undefined): boolean {
   if (input) {
     return input.toLowerCase() === 'true';
@@ -175,7 +207,7 @@ export function transformBoundFunctions(
         })),
       returnType: {
         // returnType: emptyIfUndefined(f.ReturnType?.Type),
-        returnType: 'string',
+        returnType: parseType(f.ReturnType?.Type),
         isCollection: false,
         isNullable: stringToBool(f.ReturnType?.Nullable),
         returnTypeCategory: VdmReturnTypeCategory.VOID
@@ -210,7 +242,7 @@ function transformBoundActions(actions: EdmxAction[]): VdmActionImport[] {
         })),
       returnType: {
         // returnType: emptyIfUndefined(a.ReturnType?.Type),
-        returnType: 'string',
+        returnType: parseType(a.ReturnType?.Type),
         isCollection: false,
         isNullable: stringToBool(a.ReturnType?.Nullable),
         returnTypeCategory: VdmReturnTypeCategory.VOID

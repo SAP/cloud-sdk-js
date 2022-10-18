@@ -4,4 +4,4 @@
 '@sap-cloud-sdk/openapi-generator': patch
 ---
 
-[Fixed Issue] Show detailed error message instead of `[object Object]`.
+[Fixed Issue] Show detailed error message of compilation errors instead of `[object Object]`.

@@ -103,7 +103,7 @@ API (`fromBatchReference()`):
 ```ts
 interface EntityBuilder<EntityT> {
    ...
-   fromBatchRef(ref: BatchReference): EntityT
+   fromBatchReference(ref: BatchReference): EntityT
 }
 ```
 
@@ -134,7 +134,9 @@ const functionRequest = businessPartnerApi.entityBuilder
   .fromBatchReference(businessPartnerRef)
   .doSomething();
 
-const batchResponse = await changeset(createRequest, asChildOfRequest, functionRequest).execute(...);
+const batchResponse = await batch(
+  changeset(createRequest, asChildOfRequest, functionRequest)
+).execute(...);
 ```
 
 ### Consequences
@@ -148,7 +150,7 @@ Referencing batch becomes possible. The batch references are simple objects, whi
 Currently the request ID (content-id of the batch request headers) is created on `execute()`. This would yield a new request ID on every request execution. The ID would neither be available nor reusable for sharing with other requests.
 In the future this should happen when instantiating a request. Users should be able to overwrite this request id.
 
-API (`setBatchReference()`):
+API (`setBatchId()`):
 
 ```ts
 interface CreateRequestBuilder<EntityT> {

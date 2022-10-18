@@ -55,9 +55,9 @@ const asChildOfRequest = businessPartnerAddressApi
 const newChildAddress = await asChildOfRequest.execute(...);
 
 /* request 3 - bound function with reference to newly created business partner => let's assume there is a bound function in businessPartner */
-const functionRequest = newBusinessPartner.getNumOfAddresses();
+const actionRequest = newBusinessPartner.getNumOfAddresses();
 
-const numOfAddresses = await functionRequest.execute(...);
+const numOfAddresses = await actionRequest.execute(...);
 ```
 
 ### Proposal

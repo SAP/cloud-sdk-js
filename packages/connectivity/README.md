@@ -49,6 +49,10 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 
 <br>
 
+- [Sample repository](https://github.com/SAP-samples/cloud-sdk-js)
+
+<br>
+
 - [developers.sap.com - Product Overview](https://developers.sap.com/topics/cloud-sdk.html)
 - [developers.sap.com - Tutorials](https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:javascript)
 

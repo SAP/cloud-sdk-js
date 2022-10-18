@@ -62,7 +62,7 @@ This package contains all Cloud Foundry connectivity service related methods lik
 To install the SAP Cloud SDK conectivity in your project, run:
 
 ```bash
-$ npm install @sap-cloud-sdk/conectivity
+$ npm install @sap-cloud-sdk/connectivity
 ```
 
 ### @sap-cloud-sdk/odata-v2

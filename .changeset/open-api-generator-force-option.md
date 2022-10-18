@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/openapi-generator': patch
 ---
 
-[Improvement] Apply `force` option, when setting `clearOutputDir` to true.
+[Improvement] Add `force` option to`rm` commands, when setting `clearOutputDir` to true.

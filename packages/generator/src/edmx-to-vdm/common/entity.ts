@@ -185,6 +185,7 @@ function stringToBool(input: string | undefined): boolean {
 export function transformBoundFunctions(
   functions: EdmxFunction[]
 ): VdmFunctionImport[] {
+  // fixme question: Is VdmFunctionImport the correct return type here? Can we meaningfully set the http method field?
   if (!functions) {
     return [];
   }

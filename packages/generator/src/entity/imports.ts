@@ -39,6 +39,7 @@ export function entityImportDeclarations(
         kind: StructureKind.ImportDeclaration,
         isTypeOnly: true
       },
+      // fixme (fwilhe) those imports need to be dynamically generated
       {
         namedImports: [`TestEntityWithMultipleKeys`],
         moduleSpecifier: `./TestEntityWithMultipleKeys`,

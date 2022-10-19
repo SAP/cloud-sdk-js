@@ -110,20 +110,22 @@ function boundFunctions(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): MethodDeclarationStructure[] {
-  if (entity.boundFunctions === undefined) {
-    return [];
-  }
-  return entity.boundFunctions.map(f => boundFunction(f, entity, service));
+  return []
+  // if (entity.boundFunctions === undefined) {
+  //   return [];
+  // }
+  // return entity.boundFunctions.map(f => boundFunction(f, entity, service));
 }
 
 function boundActions(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): MethodDeclarationStructure[] {
-  if (entity.boundActions === undefined) {
-    return [];
-  }
-  return entity.boundActions.map(a => boundAction(a, entity, service));
+  return []
+  // if (entity.boundActions === undefined) {
+  //   return [];
+  // }
+  // return entity.boundActions.map(a => boundAction(a, entity, service));
 }
 
 function property(prop: VdmProperty): PropertyDeclarationStructure {

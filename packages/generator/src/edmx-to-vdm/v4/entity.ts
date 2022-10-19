@@ -1,27 +1,28 @@
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import {
+  EdmxEntitySet,
+  EdmxEntityTypeV4
+} from '../../edmx-parser/v4/edm-types';
+import {
+  parseEntitySetsV4,
+  parseEntityType
+} from '../../edmx-parser/v4/edmx-parser';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import {
+  VdmComplexType,
+  VdmEntity,
+  VdmEnumType,
+  VdmFunctionImport,
+  VdmNavigationProperty
+} from '../../vdm-types';
 import {
   createEntityClassNames,
   joinEntityMetadata,
   navigationPropertyBase,
   transformEntityBase
 } from '../common/entity';
-import {
-  VdmComplexType,
-  VdmEntity,
-  VdmEnumType,
-  VdmNavigationProperty
-} from '../../vdm-types';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
-  parseEntitySetsV4,
-  parseEntityType
-} from '../../edmx-parser/v4/edmx-parser';
-import {
-  EdmxEntitySet,
-  EdmxEntityTypeV4
-} from '../../edmx-parser/v4/edm-types';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { isCollectionType } from '../edmx-to-vdm-util';
-import { forceArray } from '../../generator-utils';
+import { generateFunctionImportsV4 } from './function-import';
 
 /**
  * @internal
@@ -34,10 +35,6 @@ export function generateEntitiesV4(
 ): VdmEntity[] {
   const entitySets = parseEntitySetsV4(serviceMetadata.edmx.root);
   const entityTypes = parseEntityType(serviceMetadata.edmx.root);
-
-  // fixme(fwilhe)
-  const boundFunctions = forceArray(serviceMetadata.edmx.root)[0]?.Function;
-  const boundActions = forceArray(serviceMetadata.edmx.root)[0]?.Action;
 
   const entitiesMetadata = joinEntityMetadata(
     entitySets,
@@ -52,11 +49,16 @@ export function generateEntitiesV4(
       classNames,
       complexTypes,
       enumTypes,
-      boundFunctions,
-      boundActions,
       formatter
     ),
     navigationProperties: navigationProperties(
+      entityMetadata.entityType,
+      entityMetadata.entitySet,
+      classNames,
+      formatter
+    ),
+    boundFunctions: transformBoundFunctions2(
+      serviceMetadata,
       entityMetadata.entityType,
       entityMetadata.entitySet,
       classNames,
@@ -94,6 +96,18 @@ function navigationProperties(
       isCollection
     };
   });
+}
+
+function transformBoundFunctions2(
+  serviceMetadata: ServiceMetadata,
+  entityType: EdmxEntityTypeV4,
+  entitySet: EdmxEntitySet,
+  classNames: { [originalName: string]: string; },
+  formatter: ServiceNameFormatter
+): VdmFunctionImport[] {
+  const x = generateFunctionImportsV4(serviceMetadata, '', [], [], formatter, true);
+
+  return x;
 }
 
 // TODO: This should be removed once derived types are considered.

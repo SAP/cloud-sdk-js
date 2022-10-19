@@ -1,15 +1,15 @@
-import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { transformFunctionImportBase } from '../common/function-import';
-import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
-import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
+import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
+import { parseFunctionImportsV4, parseFunctions } from '../../edmx-parser';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import {
   EdmxFunction,
   EdmxFunctionImportV4
 } from '../../edmx-parser/v4/edm-types';
-import { parseFunctionImportsV4, parseFunctions } from '../../edmx-parser';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
 import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
+import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
+import { transformFunctionImportBase } from '../common/function-import';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 import { findActionFunctionByImportName } from './action-function-util';
 const logger = createLogger({
@@ -76,7 +76,8 @@ export function generateFunctionImportsV4(
   serviceName: string,
   entities: VdmEntity[],
   complexTypes: VdmComplexType[],
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  bound = false
 ): VdmFunctionImport[] {
   const functions = parseFunctions(serviceMetadata.edmx.root);
   const functionImports = parseFunctionImportsV4(serviceMetadata.edmx.root);
@@ -87,7 +88,7 @@ export function generateFunctionImportsV4(
       // TODO 1571 remove when supporting entity type as parameter
       .filter(
         ({ function: edmxFunction }) =>
-          !hasUnsupportedParameterTypes(edmxFunction)
+          !hasUnsupportedParameterTypes(edmxFunction, bound)
       )
       .map(({ functionImport, function: edmxFunction }) => {
         const httpMethod = 'get';
@@ -102,7 +103,8 @@ export function generateFunctionImportsV4(
             functionImport,
             edmxFunction.Parameter,
             swaggerDefinition,
-            formatter
+            formatter,
+            bound
           ),
           httpMethod,
           returnType: parseFunctionImportReturnTypes(

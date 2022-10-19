@@ -1,14 +1,14 @@
 import { createLogger, last } from '@sap-cloud-sdk/util';
-import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
 import { EdmxProperty } from '../edmx-parser/common/edmx-types';
+import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
+import { EdmxFunctionImportV2 } from '../edmx-parser/v2/edm-types';
+import { EdmxAction, EdmxFunction } from '../edmx-parser/v4/edm-types';
 import {
   edmToFieldType,
   edmToTsType,
   getFallbackEdmTypeIfNeeded
 } from '../generator-utils';
 import { VdmComplexType, VdmEnumType, VdmMappedEdmType } from '../vdm-types';
-import { EdmxAction, EdmxFunction } from '../edmx-parser/v4/edm-types';
-import { EdmxFunctionImportV2 } from '../edmx-parser/v2/edm-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -193,9 +193,11 @@ export const propertyJsType = (type: string): string | undefined =>
  * @internal
  */
 export function hasUnsupportedParameterTypes(
-  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImportV2
+  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImportV2, bound: boolean
 ): boolean {
-  const unsupportedParameters = functionOrAction.Parameter.filter(
+  const parameters = bound ? functionOrAction.Parameter.slice(1) : functionOrAction.Parameter;
+
+  const unsupportedParameters = parameters.filter(
     p => !isEdmType(p.Type)
   );
   if (unsupportedParameters.length) {

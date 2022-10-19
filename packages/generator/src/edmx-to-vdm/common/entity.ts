@@ -53,10 +53,8 @@ export function transformEntityBase(
   classNames: Record<string, any>,
   complexTypes: VdmComplexType[],
   enumTypes: VdmEnumType[],
-  boundFunctions: EdmxFunction[],
-  boundActions: EdmxAction[],
   formatter: ServiceNameFormatter
-): Omit<VdmEntity, 'navigationProperties'> {
+): Omit<VdmEntity, 'navigationProperties' | 'boundFunctions'> {
   const entity = {
     entitySetName: entityMetadata.entitySet.Name,
     entityTypeName: entityMetadata.entityType.Name,
@@ -71,9 +69,7 @@ export function transformEntityBase(
       : true,
     deletable: entityMetadata.entitySet
       ? isDeletable(entityMetadata.entitySet)
-      : true,
-    boundFunctions: transformBoundFunctions(boundFunctions),
-    boundActions: transformBoundActions(boundActions)
+      : true
   };
 
   return {

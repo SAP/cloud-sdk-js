@@ -1,14 +1,14 @@
-import { VdmParameter } from '../../vdm-types';
-import { isNullableProperty } from '../../generator-utils';
-import { parameterDescription } from '../description-util';
 import { EdmxNamed, EdmxParameter } from '../../edmx-parser/common/edmx-types';
-import { SwaggerPath } from '../../swagger-parser';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { EdmxFunctionImportV2 as EdmxFunctionImportV2 } from '../../edmx-parser/v2/edm-types';
+import { EdmxFunctionImportV2 } from '../../edmx-parser/v2/edm-types';
 import {
   EdmxActionImport,
-  EdmxFunctionImportV4 as EdmxFunctionImportV4
+  EdmxFunctionImportV4
 } from '../../edmx-parser/v4/edm-types';
+import { isNullableProperty } from '../../generator-utils';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { SwaggerPath } from '../../swagger-parser';
+import { VdmParameter } from '../../vdm-types';
+import { parameterDescription } from '../description-util';
 import { getTypeMappingActionFunction } from '../edmx-to-vdm-util';
 
 /**
@@ -18,13 +18,15 @@ export function getActionImportParameters(
   edmxActionImport: EdmxActionImport,
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  bound: boolean
 ): VdmParameter[] {
   return getParameter(
     edmxActionImport,
     edmxParameters,
     swaggerDefinition,
-    formatter
+    formatter,
+    bound
   );
 }
 /**
@@ -34,13 +36,15 @@ export function getFunctionImportParameters(
   edmxFunctionImport: EdmxFunctionImportV2 | EdmxFunctionImportV4,
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  bound: boolean
 ): VdmParameter[] {
   return getParameter(
     edmxFunctionImport,
     edmxParameters,
     swaggerDefinition,
-    formatter
+    formatter,
+    bound
   );
 }
 
@@ -48,9 +52,11 @@ function getParameter<T extends EdmxNamed>(
   edmxActionFunctionImport: T,
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  bound: boolean
 ): VdmParameter[] {
-  return edmxParameters.map(p => {
+  const parameters = bound ? edmxParameters.slice(1) : edmxParameters;
+  return parameters.map(p => {
     const swaggerParameter = swaggerDefinition
       ? swaggerDefinition.parameters.find(param => param.name === p.Name)
       : undefined;

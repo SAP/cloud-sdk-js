@@ -58,8 +58,6 @@ export function generateEntitiesV2(
       classNames,
       complexTypes,
       [],
-      [],
-      [],
       formatter
     ),
     navigationProperties: navigationProperties(
@@ -67,7 +65,8 @@ export function generateEntitiesV2(
       associations,
       classNames,
       formatter
-    )
+    ),
+    boundFunctions: []
   }));
 }
 

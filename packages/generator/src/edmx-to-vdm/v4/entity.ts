@@ -106,18 +106,15 @@ function transformBoundFunctions2(
   classNames: { [originalName: string]: string; },
   formatter: ServiceNameFormatter
 ): VdmFunctionImport[] {
-  const name = entitySet.Name
   const entities: MiniEntity[] = [
     {
-      className: name,
+      className: entitySet.Name,
       entityTypeName: entitySet.EntityType,
       entityTypeNamespace: entitySet.Namespace
     }
-  ]
+  ];
 
-  const x = generateFunctionImportsV4(serviceMetadata, '', entities as VdmEntity[], [], formatter, true);
-
-  return x;
+  return generateFunctionImportsV4(serviceMetadata, '', entities as VdmEntity[], [], formatter, true);
 }
 
 // TODO: This should be removed once derived types are considered.

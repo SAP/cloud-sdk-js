@@ -2,9 +2,7 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType,
-  BoundActionRequestBuilder,
-  BoundFunctionRequestBuilder
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import type { AirlinesApi } from './AirlinesApi';
 /**
@@ -36,39 +34,6 @@ export declare class Airlines<T extends DeSerializers = DefaultDeSerializers>
    */
   name: DeserializedType<T, 'Edm.String'>;
   constructor(_entityApi: AirlinesApi<T>);
-  GetFavoriteAirline<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    Airlines<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  GetInvolvedPeople<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    Airlines<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  GetFriendsTrips<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
-    userName: string
-  ): BoundFunctionRequestBuilder<
-    Airlines<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
-  ShareTrip<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
-    userName: string,
-    tripId: number
-  ): BoundActionRequestBuilder<
-    Airlines<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  >;
 }
 export interface AirlinesType<T extends DeSerializers = DefaultDeSerializers> {
   airlineCode: DeserializedType<T, 'Edm.String'>;

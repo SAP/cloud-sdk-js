@@ -117,7 +117,7 @@
                 <Property Name="DataTimeOffsetTimestampProperty5" Type="Edm.DateTimeOffset" Precision="7"/>
             </EntityType>
             <Function Name="boundFunctionWithoutArguments" IsBound="true" IsComposable="false">
-                <Parameter Name="in" Type="TestService.TestEntity"/>
+                <Parameter Name="param" Type="TestService.TestEntity" Nullable="false"/>
                 <ReturnType Type="Edm.String"/>
             </Function>
             <Action Name="boundActionWithoutArguments" IsBound="true">

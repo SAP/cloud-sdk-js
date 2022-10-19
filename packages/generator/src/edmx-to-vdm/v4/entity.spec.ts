@@ -183,7 +183,7 @@ it('transforms bound actions and functions', () => {
       Parameter: [
         {
           Name: 'theEntity',
-          Type: 'TestEntity'
+          Type: 'TestService.TestEntity'
         },
         {
           Name: 'parameter1',
@@ -221,7 +221,7 @@ it('transforms bound actions and functions', () => {
       Parameter: [
         {
           Name: 'theEntity',
-          Type: 'TestEntity'
+          Type: 'TestService.TestEntity'
         },
         {
           Name: 'parameter1',

@@ -3,15 +3,28 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers,
+  DeserializedType,
+  entityDeserializer,
+  BoundActionRequestBuilder,
+  transformReturnValueForComplexType,
+  defaultDeSerializers,
+  BoundFunctionRequestBuilder,
+  FunctionImportParameter,
+  ActionImportParameter
+} from '@sap-cloud-sdk/odata-v4';
 import type { TestEntity50PropApi } from './TestEntity50PropApi';
-import type { TestEntityWithMultipleKeys } from './TestEntityWithMultipleKeys';
-import type { TestEntity } from './TestEntity';
 
 /**
  * This class represents the entity "TestEntity50Prop" of service "TestService".
  */
-export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntity50PropType<T> {
+export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
+  extends Entity
+  implements TestEntity50PropType<T>
+{
   /**
    * Technical entity name for TestEntity50Prop.
    */
@@ -73,12 +86,18 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers> ex
    * Data Time Offset Data Time Property 1.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty1?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty1?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * Data Time Offset Timestamp Property 1.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty1?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetTimestampProperty1?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * String Property 2.
    * Maximum length: 111.
@@ -124,12 +143,18 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers> ex
    * Data Time Offset Data Time Property 2.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty2?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty2?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * Data Time Offset Timestamp Property 2.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty2?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetTimestampProperty2?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * String Property 3.
    * Maximum length: 111.
@@ -175,12 +200,18 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers> ex
    * Data Time Offset Data Time Property 3.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty3?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty3?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * Data Time Offset Timestamp Property 3.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty3?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetTimestampProperty3?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * String Property 4.
    * Maximum length: 111.
@@ -226,12 +257,18 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers> ex
    * Data Time Offset Data Time Property 4.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty4?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty4?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * Data Time Offset Timestamp Property 4.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty4?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetTimestampProperty4?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * String Property 5.
    * Maximum length: 111.
@@ -277,186 +314,27 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers> ex
    * Data Time Offset Data Time Property 5.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty5?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty5?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * Data Time Offset Timestamp Property 5.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty5?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetTimestampProperty5?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
 
   constructor(readonly _entityApi: TestEntity50PropApi<T>) {
     super(_entityApi);
   }
-
-  boundFunctionWithoutArguments<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, string | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.boundFunctionWithoutArguments', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  boundFunctionWithoutArgumentsWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, string | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.boundFunctionWithoutArgumentsWithMultipleKeys', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  boundFunctionWithArgumentsWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(param1: string, param2: string): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, string | null> {
-    const params = {
-      param1: new FunctionImportParameter('param1', 'Edm.String', param1),
-      param2: new FunctionImportParameter('param2', 'Edm.String', param2),
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.boundFunctionWithArgumentsWithMultipleKeys', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  getStringProperty<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, string | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.getStringProperty', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  concatStrings<DeSerializersT extends DeSerializers = DefaultDeSerializers>(Str2: string): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, string | null> {
-    const params = {
-      Str2: new FunctionImportParameter('Str2', 'Edm.String', Str2),
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.concatStrings', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  getAll<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, TestEntity[] | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.getAll', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  getByKey<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, TestEntity | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.getByKey', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  getByKeyWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(StringPropertyWithMultipleKeys: string, BooleanPropertyWithMultipleKeys: boolean): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, TestEntityWithMultipleKeys | null> {
-    const params = {
-      StringPropertyWithMultipleKeys: new FunctionImportParameter('StringPropertyWithMultipleKeys', 'Edm.String', StringPropertyWithMultipleKeys),
-      BooleanPropertyWithMultipleKeys: new FunctionImportParameter('BooleanPropertyWithMultipleKeys', 'Edm.Boolean', BooleanPropertyWithMultipleKeys),
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.getByKeyWithMultipleKeys', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  returnCollection<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, number[] | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.returnCollection', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  returnInt<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, number | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.returnInt', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  returnKey<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, number | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.returnKey', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  returnSapCloudSdk<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, string | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.returnSapCloudSdk', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  boundActionWithoutArguments<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, string | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.boundActionWithoutArguments', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  boundActionWithoutArgumentsWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, string | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.boundActionWithoutArgumentsWithMultipleKeys', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  deleteEntity<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, number | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.deleteEntity', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  createTestEntityById<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, TestEntity | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.createTestEntityById', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  createTestEntityByIdReturnId<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, number | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.createTestEntityByIdReturnId', (data) => data, params, deSerializers
-    ) as any;
-  }
-
-  createTestEntityReturnId<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, number | null> {
-    const params = {
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any, this as any, 'TestService.createTestEntityReturnId', (data) => data, params, deSerializers
-    ) as any;
-  }
 }
 
-export interface TestEntity50PropType<T extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntity50PropType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   keyTestEntity50Prop: DeserializedType<T, 'Edm.Int32'>;
   stringProperty1?: DeserializedType<T, 'Edm.String'> | null;
   guidProperty1?: DeserializedType<T, 'Edm.Guid'> | null;
@@ -466,8 +344,14 @@ export interface TestEntity50PropType<T extends DeSerializers = DefaultDeSeriali
   decimalProperty1?: DeserializedType<T, 'Edm.Decimal'> | null;
   dateProperty1?: DeserializedType<T, 'Edm.Date'> | null;
   timeOfDayProperty1?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
-  dataTimeOffsetDataTimeProperty1?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
-  dataTimeOffsetTimestampProperty1?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty1?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
+  dataTimeOffsetTimestampProperty1?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   stringProperty2?: DeserializedType<T, 'Edm.String'> | null;
   guidProperty2?: DeserializedType<T, 'Edm.Guid'> | null;
   booleanProperty2?: DeserializedType<T, 'Edm.Boolean'> | null;
@@ -476,8 +360,14 @@ export interface TestEntity50PropType<T extends DeSerializers = DefaultDeSeriali
   decimalProperty2?: DeserializedType<T, 'Edm.Decimal'> | null;
   dateProperty2?: DeserializedType<T, 'Edm.Date'> | null;
   timeOfDayProperty2?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
-  dataTimeOffsetDataTimeProperty2?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
-  dataTimeOffsetTimestampProperty2?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty2?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
+  dataTimeOffsetTimestampProperty2?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   stringProperty3?: DeserializedType<T, 'Edm.String'> | null;
   guidProperty3?: DeserializedType<T, 'Edm.Guid'> | null;
   booleanProperty3?: DeserializedType<T, 'Edm.Boolean'> | null;
@@ -486,8 +376,14 @@ export interface TestEntity50PropType<T extends DeSerializers = DefaultDeSeriali
   decimalProperty3?: DeserializedType<T, 'Edm.Decimal'> | null;
   dateProperty3?: DeserializedType<T, 'Edm.Date'> | null;
   timeOfDayProperty3?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
-  dataTimeOffsetDataTimeProperty3?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
-  dataTimeOffsetTimestampProperty3?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty3?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
+  dataTimeOffsetTimestampProperty3?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   stringProperty4?: DeserializedType<T, 'Edm.String'> | null;
   guidProperty4?: DeserializedType<T, 'Edm.Guid'> | null;
   booleanProperty4?: DeserializedType<T, 'Edm.Boolean'> | null;
@@ -496,8 +392,14 @@ export interface TestEntity50PropType<T extends DeSerializers = DefaultDeSeriali
   decimalProperty4?: DeserializedType<T, 'Edm.Decimal'> | null;
   dateProperty4?: DeserializedType<T, 'Edm.Date'> | null;
   timeOfDayProperty4?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
-  dataTimeOffsetDataTimeProperty4?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
-  dataTimeOffsetTimestampProperty4?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty4?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
+  dataTimeOffsetTimestampProperty4?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   stringProperty5?: DeserializedType<T, 'Edm.String'> | null;
   guidProperty5?: DeserializedType<T, 'Edm.Guid'> | null;
   booleanProperty5?: DeserializedType<T, 'Edm.Boolean'> | null;
@@ -506,6 +408,12 @@ export interface TestEntity50PropType<T extends DeSerializers = DefaultDeSeriali
   decimalProperty5?: DeserializedType<T, 'Edm.Decimal'> | null;
   dateProperty5?: DeserializedType<T, 'Edm.Date'> | null;
   timeOfDayProperty5?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
-  dataTimeOffsetDataTimeProperty5?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
-  dataTimeOffsetTimestampProperty5?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty5?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
+  dataTimeOffsetTimestampProperty5?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
 }

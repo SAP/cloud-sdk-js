@@ -3,7 +3,18 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { edmToTs, FunctionImportRequestBuilder, DeSerializers, transformReturnValueForEdmType, transformReturnValueForEntityList, transformReturnValueForEntity, transformReturnValueForEdmTypeList, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter } from '@sap-cloud-sdk/odata-v4';
+import {
+  edmToTs,
+  FunctionImportRequestBuilder,
+  DeSerializers,
+  transformReturnValueForEdmType,
+  transformReturnValueForEntityList,
+  transformReturnValueForEntity,
+  transformReturnValueForEdmTypeList,
+  DefaultDeSerializers,
+  defaultDeSerializers,
+  FunctionImportParameter
+} from '@sap-cloud-sdk/odata-v4';
 import { testService } from './service';
 import { TestEntity } from './TestEntity';
 import { TestEntityApi } from './TestEntityApi';
@@ -25,38 +36,70 @@ export interface ConcatStringsParameters<DeSerializersT extends DeSerializers> {
 }
 
 /**
- * Concat Strings. 
+ * Concat Strings.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function concatStrings<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: ConcatStringsParameters<DeSerializersT>, deSerializers: DeSerializersT = defaultDeSerializers as any): FunctionImportRequestBuilder<DeSerializersT, ConcatStringsParameters<DeSerializersT>, string> {
+export function concatStrings<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: ConcatStringsParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  ConcatStringsParameters<DeSerializersT>,
+  string
+> {
   const params = {
     str1: new FunctionImportParameter('Str1', 'Edm.String', parameters.str1),
     str2: new FunctionImportParameter('Str2', 'Edm.String', parameters.str2)
   };
 
-
-  return new FunctionImportRequestBuilder('/odata/test-service', 'concatStrings', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val.value, 'Edm.String', deSerializers)), params, deSerializers);
+  return new FunctionImportRequestBuilder(
+    '/odata/test-service',
+    'concatStrings',
+    data =>
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.value, 'Edm.String', deSerializers)
+      ),
+    params,
+    deSerializers
+  );
 }
 
 /**
  * Type of the parameters to be passed to {@link getAll}.
  */
-export interface GetAllParameters<DeSerializersT extends DeSerializers> {
-}
+export interface GetAllParameters<DeSerializersT extends DeSerializers> {}
 
 /**
- * Get All. 
+ * Get All.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function getAll<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: GetAllParameters<DeSerializersT>, deSerializers: DeSerializersT = defaultDeSerializers as any): FunctionImportRequestBuilder<DeSerializersT, GetAllParameters<DeSerializersT>, TestEntity[]> {
-  const params = {
+export function getAll<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: GetAllParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  GetAllParameters<DeSerializersT>,
+  TestEntity[]
+> {
+  const params = {};
 
-  };
-
-
-  return new FunctionImportRequestBuilder('/odata/test-service', 'getAll', (data) => transformReturnValueForEntityList(data, testService(deSerializers).testEntityApi), params, deSerializers);
+  return new FunctionImportRequestBuilder(
+    '/odata/test-service',
+    'getAll',
+    data =>
+      transformReturnValueForEntityList(
+        data,
+        testService(deSerializers).testEntityApi
+      ),
+    params,
+    deSerializers
+  );
 }
 
 /**
@@ -70,23 +113,43 @@ export interface GetByKeyParameters<DeSerializersT extends DeSerializers> {
 }
 
 /**
- * Get By Key. 
+ * Get By Key.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function getByKey<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: GetByKeyParameters<DeSerializersT>, deSerializers: DeSerializersT = defaultDeSerializers as any): FunctionImportRequestBuilder<DeSerializersT, GetByKeyParameters<DeSerializersT>, TestEntity> {
+export function getByKey<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: GetByKeyParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  GetByKeyParameters<DeSerializersT>,
+  TestEntity
+> {
   const params = {
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   };
 
-
-  return new FunctionImportRequestBuilder('/odata/test-service', 'getByKey', (data) => transformReturnValueForEntity(data, testService(deSerializers).testEntityApi), params, deSerializers);
+  return new FunctionImportRequestBuilder(
+    '/odata/test-service',
+    'getByKey',
+    data =>
+      transformReturnValueForEntity(
+        data,
+        testService(deSerializers).testEntityApi
+      ),
+    params,
+    deSerializers
+  );
 }
 
 /**
  * Type of the parameters to be passed to {@link getByKeyWithMultipleKeys}.
  */
-export interface GetByKeyWithMultipleKeysParameters<DeSerializersT extends DeSerializers> {
+export interface GetByKeyWithMultipleKeysParameters<
+  DeSerializersT extends DeSerializers
+> {
   /**
    * Key Test Entity With Multiple Keys.
    */
@@ -102,25 +165,57 @@ export interface GetByKeyWithMultipleKeysParameters<DeSerializersT extends DeSer
 }
 
 /**
- * Get By Key With Multiple Keys. 
+ * Get By Key With Multiple Keys.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function getByKeyWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: GetByKeyWithMultipleKeysParameters<DeSerializersT>, deSerializers: DeSerializersT = defaultDeSerializers as any): FunctionImportRequestBuilder<DeSerializersT, GetByKeyWithMultipleKeysParameters<DeSerializersT>, TestEntityWithMultipleKeys> {
+export function getByKeyWithMultipleKeys<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: GetByKeyWithMultipleKeysParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  GetByKeyWithMultipleKeysParameters<DeSerializersT>,
+  TestEntityWithMultipleKeys
+> {
   const params = {
-    keyTestEntityWithMultipleKeys: new FunctionImportParameter('KeyTestEntityWithMultipleKeys', 'Edm.Int32', parameters.keyTestEntityWithMultipleKeys),
-    stringPropertyWithMultipleKeys: new FunctionImportParameter('StringPropertyWithMultipleKeys', 'Edm.String', parameters.stringPropertyWithMultipleKeys),
-    booleanPropertyWithMultipleKeys: new FunctionImportParameter('BooleanPropertyWithMultipleKeys', 'Edm.Boolean', parameters.booleanPropertyWithMultipleKeys)
+    keyTestEntityWithMultipleKeys: new FunctionImportParameter(
+      'KeyTestEntityWithMultipleKeys',
+      'Edm.Int32',
+      parameters.keyTestEntityWithMultipleKeys
+    ),
+    stringPropertyWithMultipleKeys: new FunctionImportParameter(
+      'StringPropertyWithMultipleKeys',
+      'Edm.String',
+      parameters.stringPropertyWithMultipleKeys
+    ),
+    booleanPropertyWithMultipleKeys: new FunctionImportParameter(
+      'BooleanPropertyWithMultipleKeys',
+      'Edm.Boolean',
+      parameters.booleanPropertyWithMultipleKeys
+    )
   };
 
-
-  return new FunctionImportRequestBuilder('/odata/test-service', 'getByKeyWithMultipleKeys', (data) => transformReturnValueForEntity(data, testService(deSerializers).testEntityWithMultipleKeysApi), params, deSerializers);
+  return new FunctionImportRequestBuilder(
+    '/odata/test-service',
+    'getByKeyWithMultipleKeys',
+    data =>
+      transformReturnValueForEntity(
+        data,
+        testService(deSerializers).testEntityWithMultipleKeysApi
+      ),
+    params,
+    deSerializers
+  );
 }
 
 /**
  * Type of the parameters to be passed to {@link returnCollection}.
  */
-export interface ReturnCollectionParameters<DeSerializersT extends DeSerializers> {
+export interface ReturnCollectionParameters<
+  DeSerializersT extends DeSerializers
+> {
   /**
    * Param.
    */
@@ -128,17 +223,34 @@ export interface ReturnCollectionParameters<DeSerializersT extends DeSerializers
 }
 
 /**
- * Return Collection. 
+ * Return Collection.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function returnCollection<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: ReturnCollectionParameters<DeSerializersT>, deSerializers: DeSerializersT = defaultDeSerializers as any): FunctionImportRequestBuilder<DeSerializersT, ReturnCollectionParameters<DeSerializersT>, number[]> {
+export function returnCollection<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: ReturnCollectionParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  ReturnCollectionParameters<DeSerializersT>,
+  number[]
+> {
   const params = {
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   };
 
-
-  return new FunctionImportRequestBuilder('/odata/test-service', 'returnCollection', (data) => transformReturnValueForEdmTypeList(data, (val) => edmToTs(val, 'Edm.Int32', deSerializers)), params, deSerializers);
+  return new FunctionImportRequestBuilder(
+    '/odata/test-service',
+    'returnCollection',
+    data =>
+      transformReturnValueForEdmTypeList(data, val =>
+        edmToTs(val, 'Edm.Int32', deSerializers)
+      ),
+    params,
+    deSerializers
+  );
 }
 
 /**
@@ -152,37 +264,70 @@ export interface ReturnIntParameters<DeSerializersT extends DeSerializers> {
 }
 
 /**
- * Return Int. 
+ * Return Int.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function returnInt<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: ReturnIntParameters<DeSerializersT>, deSerializers: DeSerializersT = defaultDeSerializers as any): FunctionImportRequestBuilder<DeSerializersT, ReturnIntParameters<DeSerializersT>, number> {
+export function returnInt<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: ReturnIntParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  ReturnIntParameters<DeSerializersT>,
+  number
+> {
   const params = {
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   };
 
-
-  return new FunctionImportRequestBuilder('/odata/test-service', 'returnInt', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val.value, 'Edm.Int32', deSerializers)), params, deSerializers);
+  return new FunctionImportRequestBuilder(
+    '/odata/test-service',
+    'returnInt',
+    data =>
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.value, 'Edm.Int32', deSerializers)
+      ),
+    params,
+    deSerializers
+  );
 }
 
 /**
  * Type of the parameters to be passed to {@link returnSapCloudSdk}.
  */
-export interface ReturnSapCloudSdkParameters<DeSerializersT extends DeSerializers> {
-}
+export interface ReturnSapCloudSdkParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
- * Return Sap Cloud Sdk. 
+ * Return Sap Cloud Sdk.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function returnSapCloudSdk<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: ReturnSapCloudSdkParameters<DeSerializersT>, deSerializers: DeSerializersT = defaultDeSerializers as any): FunctionImportRequestBuilder<DeSerializersT, ReturnSapCloudSdkParameters<DeSerializersT>, string> {
-  const params = {
+export function returnSapCloudSdk<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: ReturnSapCloudSdkParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  ReturnSapCloudSdkParameters<DeSerializersT>,
+  string
+> {
+  const params = {};
 
-  };
-
-
-  return new FunctionImportRequestBuilder('/odata/test-service', 'returnSapCloudSdk', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val.value, 'Edm.String', deSerializers)), params, deSerializers);
+  return new FunctionImportRequestBuilder(
+    '/odata/test-service',
+    'returnSapCloudSdk',
+    data =>
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.value, 'Edm.String', deSerializers)
+      ),
+    params,
+    deSerializers
+  );
 }
 
 export const functionImports = {

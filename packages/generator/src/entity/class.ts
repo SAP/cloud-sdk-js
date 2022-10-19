@@ -110,11 +110,8 @@ function boundFunctions(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): MethodDeclarationStructure[] {
-  return []
-  // if (entity.boundFunctions === undefined) {
-  //   return [];
-  // }
-  // return entity.boundFunctions.map(f => boundFunction(f, entity, service));
+  console.log(JSON.stringify(entity.boundFunctions))
+  return entity.boundFunctions.map(f => boundFunction(f, entity, service));
 }
 
 function boundActions(

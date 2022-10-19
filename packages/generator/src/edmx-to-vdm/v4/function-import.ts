@@ -7,7 +7,7 @@ import {
 } from '../../edmx-parser/v4/edm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
-import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
+import { MiniEntity, VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
 import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
 import { transformFunctionImportBase } from '../common/function-import';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
@@ -90,6 +90,7 @@ export function generateFunctionImportsV4(
         ({ function: edmxFunction }) =>
           !hasUnsupportedParameterTypes(edmxFunction, bound)
       )
+      .filter(f => bound ? f.function.Parameter[0]?.Type === entities[0].className : true)
       .map(({ functionImport, function: edmxFunction }) => {
         const httpMethod = 'get';
         const swaggerDefinition = swaggerDefinitionForFunctionImport(

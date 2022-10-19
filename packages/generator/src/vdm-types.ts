@@ -129,6 +129,8 @@ export interface VdmEntity {
   boundFunctions: VdmFunctionImport[]
 }
 
+export type MiniEntity = Pick<VdmEntity, 'entityTypeName' | 'entityTypeNamespace' | 'className'>
+
 /**
  * Properties
  * @internal

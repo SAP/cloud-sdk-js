@@ -86,7 +86,7 @@ export function generateActionImportsV4(
     joinedFunctionData
       // TODO 1571 remove when supporting entity type as parameter
       .filter(
-        ({ action: edmxAction }) => !hasUnsupportedParameterTypes(edmxAction)
+        ({ action: edmxAction }) => !hasUnsupportedParameterTypes(edmxAction, false)
       )
       .map(({ actionImport, action: edmxAction }) => {
         const httpMethod = 'post';

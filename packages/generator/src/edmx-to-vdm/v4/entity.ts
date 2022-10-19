@@ -9,6 +9,7 @@ import {
 } from '../../edmx-parser/v4/edmx-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
+  MiniEntity,
   VdmComplexType,
   VdmEntity,
   VdmEnumType,
@@ -105,7 +106,16 @@ function transformBoundFunctions2(
   classNames: { [originalName: string]: string; },
   formatter: ServiceNameFormatter
 ): VdmFunctionImport[] {
-  const x = generateFunctionImportsV4(serviceMetadata, '', [], [], formatter, true);
+  const name = entitySet.Name
+  const entities: MiniEntity[] = [
+    {
+      className: name,
+      entityTypeName: entitySet.EntityType,
+      entityTypeNamespace: entitySet.Namespace
+    }
+  ]
+
+  const x = generateFunctionImportsV4(serviceMetadata, '', entities as VdmEntity[], [], formatter, true);
 
   return x;
 }

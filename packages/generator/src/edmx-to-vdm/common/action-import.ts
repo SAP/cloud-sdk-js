@@ -27,7 +27,8 @@ export function transformActionImportBase(
     edmxActionImport,
     edmxParameters,
     swaggerDefinition,
-    formatter
+    formatter,
+    false
   );
 
   return {

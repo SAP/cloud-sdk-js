@@ -10,7 +10,12 @@ const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
  */
-class TestEntityCircularLinkChild extends odata_v4_1.Entity {}
+class TestEntityCircularLinkChild extends odata_v4_1.Entity {
+  constructor(_entityApi) {
+    super(_entityApi);
+    this._entityApi = _entityApi;
+  }
+}
 exports.TestEntityCircularLinkChild = TestEntityCircularLinkChild;
 /**
  * Technical entity name for TestEntityCircularLinkChild.

@@ -4,6 +4,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
 import {
   TestEntityCircularLinkParent,
   TestEntityCircularLinkParentType
@@ -17,6 +18,7 @@ export declare class TestEntityCircularLinkChild<
   extends Entity
   implements TestEntityCircularLinkChildType<T>
 {
+  readonly _entityApi: TestEntityCircularLinkChildApi<T>;
   /**
    * Technical entity name for TestEntityCircularLinkChild.
    */
@@ -38,6 +40,7 @@ export declare class TestEntityCircularLinkChild<
    * One-to-one navigation property to the {@link TestEntityCircularLinkParent} entity.
    */
   toParent?: TestEntityCircularLinkParent<T> | null;
+  constructor(_entityApi: TestEntityCircularLinkChildApi<T>);
 }
 export interface TestEntityCircularLinkChildType<
   T extends DeSerializers = DefaultDeSerializers

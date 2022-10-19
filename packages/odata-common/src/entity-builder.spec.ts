@@ -9,7 +9,7 @@ import {
 describe('EntityBuilder', () => {
   it('should build an empty entity when no properties are defined', () => {
     const builder = commonEntityApi.entityBuilder();
-    expect(builder.build()).toEqual(new CommonEntity(commonEntityApi.schema));
+    expect(builder.build()).toEqual(new CommonEntity(commonEntityApi));
   });
 
   it('should build an entity with custom fields', () => {
@@ -41,9 +41,7 @@ describe('EntityBuilder', () => {
   it('builds an entity with custom (de-)serializers', () => {
     const builder = commonEntityApiCustom.entityBuilder();
     builder.stringProperty;
-    expect(builder.build()).toEqual(
-      new CommonEntity(commonEntityApiCustom.schema)
-    );
+    expect(builder.build()).toEqual(new CommonEntity(commonEntityApiCustom));
   });
 
   describe('fromJson', () => {

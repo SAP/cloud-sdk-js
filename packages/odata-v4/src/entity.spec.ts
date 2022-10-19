@@ -2,7 +2,7 @@ import {
   testEntityApi,
   testEntityCircularLinkChildApi,
   testEntityCircularLinkParentApi,
-  testEntityLvl2MultiLinkApi,
+  testEntityLvl2SingleLinkApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
 } from '../test/test-util';
@@ -36,7 +36,7 @@ describe('entity', () => {
         testEntitySingleLinkApi
           .entityBuilder()
           .toSingleLink(
-            testEntityLvl2MultiLinkApi
+            testEntityLvl2SingleLinkApi
               .entityBuilder()
               .stringProperty('test')
               .build()

@@ -10,7 +10,12 @@ const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
  * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
  */
-class TestEntityWithEnumKey extends odata_v4_1.Entity {}
+class TestEntityWithEnumKey extends odata_v4_1.Entity {
+  constructor(_entityApi) {
+    super(_entityApi);
+    this._entityApi = _entityApi;
+  }
+}
 exports.TestEntityWithEnumKey = TestEntityWithEnumKey;
 /**
  * Technical entity name for TestEntityWithEnumKey.

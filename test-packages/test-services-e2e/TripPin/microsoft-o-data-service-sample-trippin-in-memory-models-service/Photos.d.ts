@@ -4,6 +4,7 @@ import {
   DeSerializers,
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
+import type { PhotosApi } from './PhotosApi';
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
@@ -11,6 +12,7 @@ export declare class Photos<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements PhotosType<T>
 {
+  readonly _entityApi: PhotosApi<T>;
   /**
    * Technical entity name for Photos.
    */
@@ -32,6 +34,7 @@ export declare class Photos<T extends DeSerializers = DefaultDeSerializers>
    * @nullable
    */
   name?: DeserializedType<T, 'Edm.String'> | null;
+  constructor(_entityApi: PhotosApi<T>);
 }
 export interface PhotosType<T extends DeSerializers = DefaultDeSerializers> {
   id: DeserializedType<T, 'Edm.Int64'>;

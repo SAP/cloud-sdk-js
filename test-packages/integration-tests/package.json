@@ -21,7 +21,7 @@
     "@sap-cloud-sdk/test-util": "^2.9.0",
     "@sap-cloud-sdk/util": "^2.9.0",
     "@sap-cloud-sdk/mail-client": "^2.9.0",
-    "@sap/xssec": "^3.2.5"
+    "@sap/xssec": "^3.2.14"
   },
   "devDependencies": {
     "@sap-cloud-sdk/generator": "^2.9.0",

@@ -14,7 +14,7 @@ const logger = createLogger({
 });
 
 /**
- * Union type of `null` and `undefiend`.
+ * Union type of `null` and `undefined`.
  */
 export type NullishTypes = null | undefined;
 
@@ -56,9 +56,9 @@ export class EntityBuilder<
 > {
   protected _entity: EntityT;
 
-  constructor(private _entityApi: EntityApi<EntityT, DeSerializersT>) {
+  constructor(readonly _entityApi: EntityApi<EntityT, DeSerializersT>) {
     if (!this._entity) {
-      this._entity = new _entityApi.entityConstructor(_entityApi.schema);
+      this._entity = new _entityApi.entityConstructor(_entityApi);
     }
   }
 
@@ -79,9 +79,7 @@ export class EntityBuilder<
    */
   public build(): EntityT {
     const entity = this._entity;
-    this._entity = new this._entityApi.entityConstructor(
-      this._entityApi.schema
-    );
+    this._entity = new this._entityApi.entityConstructor(this._entityApi);
     return entity;
   }
 

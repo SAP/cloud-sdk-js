@@ -10,7 +10,12 @@ const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 /**
  * This class represents the entity "A_CASETEST" of service "API_TEST_SRV".
  */
-class Casetest_1 extends odata_v2_1.Entity {}
+class Casetest_1 extends odata_v2_1.Entity {
+  constructor(_entityApi) {
+    super(_entityApi);
+    this._entityApi = _entityApi;
+  }
+}
 exports.Casetest_1 = Casetest_1;
 /**
  * Technical entity name for Casetest_1.

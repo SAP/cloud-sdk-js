@@ -10,6 +10,7 @@ import {
   DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType2, TestComplexType2Field } from './TestComplexType2';
+import type { TestEntity3Api } from './TestEntity3Api';
 import { TestEnumType2 } from './TestEnumType2';
 
 /**
@@ -45,6 +46,10 @@ export class TestEntity3<T extends DeSerializers = DefaultDeSerializers>
    * @nullable
    */
   complexTypeProperty?: TestComplexType2<T> | null;
+
+  constructor(readonly _entityApi: TestEntity3Api<T>) {
+    super(_entityApi);
+  }
 }
 
 export interface TestEntity3Type<

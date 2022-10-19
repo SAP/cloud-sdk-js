@@ -1,5 +1,6 @@
 import {
   testEntityApi,
+  testEntityLvl2MultiLinkApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
 } from '../../test/test-util';
@@ -65,7 +66,7 @@ describe('get select', () => {
       getSelect([
         testEntityApi.schema.TO_SINGLE_LINK.select(
           testEntitySingleLinkApi.schema.TO_MULTI_LINK.select(
-            testEntityMultiLinkApi.schema.STRING_PROPERTY
+            testEntityLvl2MultiLinkApi.schema.STRING_PROPERTY
           )
         )
       ]).select

@@ -423,9 +423,14 @@ export async function generateSourcesForService(
     );
     logger.info(`Generating sdk client metadata ${clientFileName}...`);
 
+    const path = resolve(dirname(service.edmxPath.toString()), 'sdk-metadata');
+    if (!existsSync(path)) {
+      await mkdir(path);
+    }
+
     filePromises.push(
       createFile(
-        resolve(dirname(service.edmxPath.toString()), 'sdk-metadata'),
+        path,
         clientFileName,
         JSON.stringify(await sdkMetadata(service), null, 2),
         options.forceOverwrite

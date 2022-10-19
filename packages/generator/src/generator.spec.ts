@@ -20,6 +20,7 @@ import * as csnGeneration from './service/csn';
 
 const pathTestResources = resolve(__dirname, '../../../test-resources');
 const pathTestService = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
+const pathToGeneratorCommon = resolve(__dirname, '../../generator-common');
 const outPutPath = 'mockOutput';
 
 describe('generator', () => {
@@ -58,22 +59,28 @@ describe('generator', () => {
   describe('common ts-morph', () => {
     it('generates the api hub metadata and writes to the input folder', async () => {
       nock('http://registry.npmjs.org/').head(/.*/).reply(404);
+      mock({
+        [outPutPath]: {},
+        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
+        [pathTestService]: mock.load(pathTestService)
+      });
       const project = await generateProject(
         createOptions({
           inputDir: pathTestService,
           forceOverwrite: true,
-          generateSdkMetadata: true
+          generateSdkMetadata: true,
+          outputDir: outPutPath
         })
       );
-      const sourceFiles = project!.project!.getSourceFiles();
+      const sourceFiles = await promises.readdir(
+        join(pathTestService, 'sdk-metadata')
+      );
       const clientFile = sourceFiles.find(
-        file => file.getBaseName() === 'API_TEST_SRV_CLIENT_JS.json'
+        file => file === 'API_TEST_SRV_CLIENT_JS.json'
       );
 
       expect(clientFile).toBeDefined();
-      expect(clientFile!.getDirectoryPath()).toMatch(
-        /test-resources\/odata-service-specs\/v2\/API_TEST_SRV\/sdk-metadata/
-      );
+      mock.restore();
     }, 10000);
   });
   describe('edmx-to-csn', () => {
@@ -89,16 +96,30 @@ describe('generator', () => {
     });
 
     it('should invoke csn', async () => {
+      mock({
+        [outPutPath]: {},
+        [pathTestResources]: mock.load(pathTestResources)
+      });
+
       jest.spyOn(csnGeneration, 'csn');
       await generateProject(testGeneratorOptions);
       expect(csnGeneration.csn).toHaveBeenCalled();
+      mock.restore();
     });
   });
 
   describe('v2', () => {
     let files: SourceFile[];
     beforeAll(async () => {
-      files = await getGeneratedFiles('v2');
+      mock({
+        [outPutPath]: {},
+        [pathTestResources]: mock.load(pathTestResources)
+      });
+      files = await getGeneratedFiles('v2', outPutPath);
+    });
+
+    afterAll(async () => {
+      mock.restore();
     });
 
     it('generates expected number of files', () => {
@@ -129,7 +150,11 @@ describe('generator', () => {
   describe('v4', () => {
     let files: SourceFile[];
     beforeAll(async () => {
-      files = await getGeneratedFiles('v4');
+      mock({
+        [outPutPath]: {},
+        [pathTestResources]: mock.load(pathTestResources)
+      });
+      files = await getGeneratedFiles('v4', outPutPath);
     });
 
     it('generates expected number of files', () => {

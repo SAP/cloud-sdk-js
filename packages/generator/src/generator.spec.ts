@@ -1,6 +1,5 @@
 import { join, resolve } from 'path';
 import { promises } from 'fs';
-import nock from 'nock';
 import { FunctionDeclaration, SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import { createOptions } from '../test/test-util/create-generator-options';
@@ -21,54 +20,52 @@ import * as csnGeneration from './service/csn';
 const pathTestResources = resolve(__dirname, '../../../test-resources');
 const pathTestService = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
 const pathToGeneratorCommon = resolve(__dirname, '../../generator-common');
-const outPutPath = 'mockOutput';
+// const outPutPath = 'mockOutput';
 
 describe('generator', () => {
-  describe('common mock-fs', () => {
-    it('copies the additional files matching the glob.', async () => {
+  describe('common', () => {
+    let project;
+    beforeAll(async () => {
       mock({
-        [outPutPath]: {},
-        [pathTestResources]: mock.load(pathTestResources)
+        common: {},
+        [pathTestResources]: mock.load(pathTestResources),
+        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon)
+        // [pathTestService]: mock.load(pathTestService)
       });
 
-      await generate(
-        createOptions({
-          inputDir: pathTestService,
-          outputDir: outPutPath,
-          forceOverwrite: true,
-          include: '../../../*.md'
-        })
-      );
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'common',
+        forceOverwrite: true,
+        generateSdkMetadata: true,
+        include: join(pathTestResources, '*.md')
+      });
+      // TODO the first call will go away once ts-morph is removed
+      project = await generateProject(options);
+      await generate(options);
+    });
 
+    afterAll(() => mock.restore());
+
+    it('recommends to install odata packages', async () => {
+      expect(getInstallODataErrorMessage(project!)).toMatchInlineSnapshot(
+        '"Did you forget to install \\"@sap-cloud-sdk/odata-v2\\"?"'
+      );
+    });
+
+    it('copies the additional files matching the glob.', async () => {
       const sourceFiles = await promises.readdir(
-        join(outPutPath, 'test-service')
+        join('common', 'test-service')
       );
 
       expect(
         sourceFiles.find(file => file === 'some-test-markdown.md')
       ).toBeDefined();
-      expect(sourceFiles.find(file => file === 'CHANGELOG.md')).toBeDefined();
-
-      mock.restore();
     });
-  });
 
-  describe('common ts-morph', () => {
     it('generates the api hub metadata and writes to the input folder', async () => {
-      nock('http://registry.npmjs.org/').head(/.*/).reply(404);
-      mock({
-        [outPutPath]: {},
-        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
-        [pathTestService]: mock.load(pathTestService)
-      });
-      const project = await generateProject(
-        createOptions({
-          inputDir: pathTestService,
-          forceOverwrite: true,
-          generateSdkMetadata: true,
-          outputDir: outPutPath
-        })
-      );
+      // nock('http://registry.npmjs.org/').head(/.*/).reply(404);
+
       const sourceFiles = await promises.readdir(
         join(pathTestService, 'sdk-metadata')
       );
@@ -77,9 +74,9 @@ describe('generator', () => {
       );
 
       expect(clientFile).toBeDefined();
-      mock.restore();
     }, 10000);
   });
+
   describe('edmx-to-csn', () => {
     const testGeneratorOptions: GeneratorOptions = createOptions({
       inputDir: resolve(
@@ -88,13 +85,13 @@ describe('generator', () => {
         'API_TEST_SRV',
         'API_TEST_SRV.edmx'
       ),
-      outputDir: 'foo',
+      outputDir: 'csn-test',
       generateCSN: true
     });
 
     it('should invoke csn', async () => {
       mock({
-        [outPutPath]: {},
+        ['csn-test']: {},
         [pathTestResources]: mock.load(pathTestResources)
       });
 
@@ -109,10 +106,10 @@ describe('generator', () => {
     let files: SourceFile[];
     beforeAll(async () => {
       mock({
-        [outPutPath]: {},
+        ['v2-test']: {},
         [pathTestResources]: mock.load(pathTestResources)
       });
-      files = await getGeneratedFiles('v2', outPutPath);
+      files = await getGeneratedFiles('v2', 'v2-test');
     });
 
     afterAll(async () => {
@@ -148,10 +145,10 @@ describe('generator', () => {
     let files: SourceFile[];
     beforeAll(async () => {
       mock({
-        [outPutPath]: {},
+        ['v4-test']: {},
         [pathTestResources]: mock.load(pathTestResources)
       });
-      files = await getGeneratedFiles('v4', outPutPath);
+      files = await getGeneratedFiles('v4', 'v4-test');
     });
 
     afterAll(() => {
@@ -215,22 +212,6 @@ describe('generator', () => {
         ])
       );
     });
-  });
-
-  it('recommends to install odata packages', async () => {
-    const project = await generateProject(
-      createOptions({
-        inputDir: pathTestService,
-        outputDir: outPutPath,
-        forceOverwrite: true,
-        generateJs: true,
-        include: '../../../*.md'
-      })
-    );
-
-    expect(getInstallODataErrorMessage(project!)).toMatchInlineSnapshot(
-      '"Did you forget to install \\"@sap-cloud-sdk/odata-v2\\"?"'
-    );
   });
 });
 

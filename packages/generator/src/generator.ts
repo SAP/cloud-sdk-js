@@ -66,10 +66,11 @@ const logger = createLogger({
  * @param options - Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
-  const services = await generateProject(options);
-  if (!services || services.length === 0) {
-    throw Error('There are no services generated.');
+  const projectAndServices = await generateProject(options);
+  if (!projectAndServices) {
+    throw Error('The project is undefined.');
   }
+  const services = projectAndServices.services;
 
   await generateFilesWithoutTsMorph(services, options);
 
@@ -94,7 +95,10 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       );
     } catch (err) {
       if (err.message?.includes('error TS2307')) {
-        throw new ErrorWithCause(getInstallODataErrorMessage(services), err);
+        throw new ErrorWithCause(
+          getInstallODataErrorMessage(projectAndServices),
+          err
+        );
       }
       throw err;
     }
@@ -107,10 +111,14 @@ export async function generate(options: GeneratorOptions): Promise<void> {
  * @returns An error message with a recommendation to install specific SDK packages.
  */
 export function getInstallODataErrorMessage(
-  services: VdmServiceMetadata[]
+  projectAndServices: ProjectAndServices
 ): string {
-  const hasV2 = services.some(service => service.oDataVersion === 'v2');
-  const hasV4 = services.some(service => service.oDataVersion === 'v4');
+  const hasV2 = projectAndServices.services.some(
+    service => service.oDataVersion === 'v2'
+  );
+  const hasV4 = projectAndServices.services.some(
+    service => service.oDataVersion === 'v4'
+  );
 
   if (hasV2 && hasV4) {
     return 'Did you forget to install "@sap-cloud-sdk/odata-v2" and "@sap-cloud-sdk/odata-v4"?';
@@ -138,7 +146,7 @@ export async function transpileDirectories(
  */
 export async function generateProject(
   options: GeneratorOptions
-): Promise<VdmServiceMetadata[] | undefined> {
+): Promise<ProjectAndServices | undefined> {
   options = sanitizeOptions(options);
   const services = parseServices(options);
 
@@ -168,7 +176,21 @@ export async function generateProject(
     { overwrite: true }
   );
 
-  return services;
+  return { project, services };
+}
+
+/**
+ * @internal
+ */
+export interface ProjectAndServices {
+  /**
+   * @internal
+   */
+  project: Project;
+  /**
+   * @internal
+   */
+  services: VdmServiceMetadata[];
 }
 
 async function generateFilesWithoutTsMorph(

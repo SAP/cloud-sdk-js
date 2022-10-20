@@ -1,9 +1,7 @@
-import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { ODataVersion } from '@sap-cloud-sdk/util';
+import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import {
-  complexTypeImportDeclarations,
-  odataImportDeclaration,
-  enumTypeImportDeclarations
+  complexTypeImportDeclarations, enumTypeImportDeclarations, odataImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
@@ -12,6 +10,7 @@ import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
  */
 export function entityImportDeclarations(
   entity: VdmEntity,
+  service: VdmServiceMetadata,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
   if (oDataVersion === 'v4') {
@@ -39,19 +38,7 @@ export function entityImportDeclarations(
         kind: StructureKind.ImportDeclaration,
         isTypeOnly: true
       },
-      // // fixme (fwilhe) those imports need to be dynamically generated
-      // {
-      //   namedImports: [`TestEntityWithMultipleKeys`],
-      //   moduleSpecifier: `./TestEntityWithMultipleKeys`,
-      //   kind: StructureKind.ImportDeclaration,
-      //   isTypeOnly: true
-      // },
-      // {
-      //   namedImports: [`TestEntity`],
-      //   moduleSpecifier: `./TestEntity`,
-      //   kind: StructureKind.ImportDeclaration,
-      //   isTypeOnly: true
-      // },
+      ...entityDependencies(entity, service),
       ...enumTypeImportDeclarations(entity.properties)
     ];
   }
@@ -91,6 +78,16 @@ export function otherEntityImports(
     })
     .filter(name => name !== entity.className)
     .map(name => otherEntityImport(name));
+}
+
+function entityDependencies(entity: VdmEntity,
+  service: VdmServiceMetadata): ImportDeclarationStructure[] {
+  return service.entities.filter(e => e.className !== entity.className).map(e => ({
+    namedImports: [e.className],
+    moduleSpecifier: `./${e.className}`,
+    kind: StructureKind.ImportDeclaration,
+    isTypeOnly: true
+  }));
 }
 
 function otherEntityImport(name: string): ImportDeclarationStructure {

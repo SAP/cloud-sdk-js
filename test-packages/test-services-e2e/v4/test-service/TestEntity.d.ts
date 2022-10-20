@@ -1,6 +1,7 @@
 import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, BoundActionRequestBuilder, BoundFunctionRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityApi } from './TestEntityApi';
-import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
+import type { TestEntityLink } from './TestEntityLink';
+import { TestEntityLinkType } from './TestEntityLink';
 /**
  * This class represents the entity "TestEntity" of service "TestService".
  */

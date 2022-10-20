@@ -110,7 +110,6 @@ function boundFunctions(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): MethodDeclarationStructure[] {
-  console.log(JSON.stringify(entity.boundFunctions))
   return entity.boundFunctions.map(f => boundFunction(f, entity, service));
 }
 

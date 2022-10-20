@@ -2,7 +2,8 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  BoundFunctionRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 /**
@@ -41,6 +42,25 @@ export declare class TestEntityWithMultipleKeys<
    */
   booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>;
   constructor(_entityApi: TestEntityWithMultipleKeysApi<T>);
+  boundFunctionWithoutArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntityWithMultipleKeys<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  boundFunctionWithArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    param1: string,
+    param2: string
+  ): BoundFunctionRequestBuilder<
+    TestEntityWithMultipleKeys<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
 }
 export interface TestEntityWithMultipleKeysType<
   T extends DeSerializers = DefaultDeSerializers

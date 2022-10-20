@@ -83,9 +83,6 @@ export function generateFunctionImportsV4(
   const functionImports = parseFunctionImportsV4(serviceMetadata.edmx.root);
   const joinedFunctionData = joinFunctionImportData(functionImports, functions);
 
-  console.log(JSON.stringify(joinedFunctionData))
-
-
   return (
     joinedFunctionData
       // TODO 1571 remove when supporting entity type as parameter
@@ -101,8 +98,6 @@ export function generateFunctionImportsV4(
           httpMethod,
           serviceMetadata.swagger
         );
-
-        console.log(JSON.stringify(functionImport))
 
         return {
           ...transformFunctionImportBase(

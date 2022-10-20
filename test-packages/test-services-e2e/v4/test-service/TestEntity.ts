@@ -108,6 +108,26 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     super(_entityApi);
   }
 
+  boundFunctionWithoutArguments<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.boundFunctionWithoutArguments',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
   returnKey<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<

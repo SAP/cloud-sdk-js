@@ -114,6 +114,7 @@ function transformBoundFunctions2(
     }
   ];
 
+
   return generateFunctionImportsV4(serviceMetadata, '', entities as VdmEntity[], [], formatter, true);
 }
 

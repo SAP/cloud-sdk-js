@@ -60,6 +60,52 @@ export class TestEntityWithMultipleKeys<
   constructor(readonly _entityApi: TestEntityWithMultipleKeysApi<T>) {
     super(_entityApi);
   }
+
+  boundFunctionWithoutArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntityWithMultipleKeys<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.boundFunctionWithoutArgumentsWithMultipleKeys',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  boundFunctionWithArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    param1: string,
+    param2: string
+  ): BoundFunctionRequestBuilder<
+    TestEntityWithMultipleKeys<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {
+      param1: new FunctionImportParameter('param1', 'Edm.String', param1),
+      param2: new FunctionImportParameter('param2', 'Edm.String', param2)
+    };
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.boundFunctionWithArgumentsWithMultipleKeys',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
 }
 
 export interface TestEntityWithMultipleKeysType<

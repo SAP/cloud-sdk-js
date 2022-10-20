@@ -93,6 +93,14 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   toMultiLink: TestEntityLink<T>[];
   constructor(_entityApi: TestEntityApi<T>);
+  boundFunctionWithoutArguments<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntity<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
   returnKey<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
   >(): BoundFunctionRequestBuilder<

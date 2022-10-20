@@ -1,4 +1,4 @@
-import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, BoundActionRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, BoundActionRequestBuilder, BoundFunctionRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityLinkApi } from './TestEntityLinkApi';
 import type { TestEntity } from './TestEntity';
 /**
@@ -33,6 +33,8 @@ export declare class TestEntityLink<T extends DeSerializers = DefaultDeSerialize
      */
     stringProperty?: DeserializedType<T, 'Edm.String'> | null;
     constructor(_entityApi: TestEntityLinkApi<T>);
+    boundFunctionWithoutArguments_2<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT, any, string | null>;
+    returnKey_2<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT, any, number | null>;
     boundActionWithoutArguments_2<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT, any, string | null>;
     createTestEntityById_2<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT, any, TestEntity | null>;
     createTestEntityByIdReturnId_2<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT, any, number | null>;

@@ -32,8 +32,8 @@ export declare class TestEntityWithMultipleKeys<T extends DeSerializers = Defaul
      */
     booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>;
     constructor(_entityApi: TestEntityWithMultipleKeysApi<T>);
-    boundFunctionWithoutArgumentsWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntityWithMultipleKeys<DeSerializersT>, DeSerializersT, any, string | null>;
-    boundFunctionWithArgumentsWithMultipleKeys<DeSerializersT extends DeSerializers = DefaultDeSerializers>(param1: string, param2: string): BoundFunctionRequestBuilder<TestEntityWithMultipleKeys<DeSerializersT>, DeSerializersT, any, string | null>;
+    boundFunctionWithoutArguments_1<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntityWithMultipleKeys<DeSerializersT>, DeSerializersT, any, string | null>;
+    returnKey_1<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntityWithMultipleKeys<DeSerializersT>, DeSerializersT, any, number | null>;
     boundActionWithoutArguments_1<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntityWithMultipleKeys<DeSerializersT>, DeSerializersT, any, string | null>;
     createTestEntityById_1<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntityWithMultipleKeys<DeSerializersT>, DeSerializersT, any, TestEntity | null>;
     createTestEntityByIdReturnId_1<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntityWithMultipleKeys<DeSerializersT>, DeSerializersT, any, number | null>;

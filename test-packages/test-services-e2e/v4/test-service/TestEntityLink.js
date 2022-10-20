@@ -15,6 +15,16 @@ class TestEntityLink extends odata_v4_1.Entity {
         super(_entityApi);
         this._entityApi = _entityApi;
     }
+    boundFunctionWithoutArguments_2() {
+        const params = {};
+        const deSerializers = odata_v4_1.defaultDeSerializers;
+        return new odata_v4_1.BoundFunctionRequestBuilder(this._entityApi, this, 'TestService.boundFunctionWithoutArguments', (data) => data, params, deSerializers);
+    }
+    returnKey_2() {
+        const params = {};
+        const deSerializers = odata_v4_1.defaultDeSerializers;
+        return new odata_v4_1.BoundFunctionRequestBuilder(this._entityApi, this, 'TestService.returnKey', (data) => data, params, deSerializers);
+    }
     boundActionWithoutArguments_2() {
         const params = {};
         const deSerializers = odata_v4_1.defaultDeSerializers;

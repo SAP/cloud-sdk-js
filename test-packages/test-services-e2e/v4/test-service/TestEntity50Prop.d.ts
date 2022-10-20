@@ -1,4 +1,4 @@
-import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, BoundActionRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, BoundActionRequestBuilder, BoundFunctionRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntity50PropApi } from './TestEntity50PropApi';
 import type { TestEntity } from './TestEntity';
 /**
@@ -278,6 +278,8 @@ export declare class TestEntity50Prop<T extends DeSerializers = DefaultDeSeriali
      */
     dataTimeOffsetTimestampProperty5?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
     constructor(_entityApi: TestEntity50PropApi<T>);
+    boundFunctionWithoutArguments_3<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, string | null>;
+    returnKey_3<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, number | null>;
     boundActionWithoutArguments_3<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, string | null>;
     createTestEntityById_3<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, TestEntity | null>;
     createTestEntityByIdReturnId_3<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT, any, number | null>;

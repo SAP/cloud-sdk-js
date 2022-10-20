@@ -248,7 +248,7 @@ it('transforms bound actions and functions', () => {
 
   const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
 
-  expect(entity.boundFunctions.length).toBe(1);
+  expect(entity.functions.length).toBe(1);
   // expect(entity.boundFunctions[0].parameters.length).toBe(1);
 });
 

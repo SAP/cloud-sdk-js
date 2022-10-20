@@ -1,16 +1,10 @@
 import {
-  VdmComplexType,
+  VdmActionImport, VdmComplexType,
   VdmEntity,
   VdmEnumType,
-  VdmFunctionImport,
-  VdmNavigationProperty,
-  VdmProperty,
+  VdmFunctionImport, VdmFunctionImportReturnType, VdmNavigationProperty, VdmParameter, VdmProperty,
   VdmReturnTypeCategory,
-  VdmServiceMetadata,
-  VdmParameter,
-  VdmActionImport,
-  VdmUnsupportedReason,
-  VdmFunctionImportReturnType
+  VdmServiceMetadata, VdmUnsupportedReason
 } from '../../src/vdm-types';
 
 export const entityName: VdmProperty = {
@@ -64,8 +58,8 @@ export const brunchEntity: VdmEntity = {
   deletable: true,
   updatable: true,
   entityTypeNamespace: '',
-  boundFunctions: [],
-  boundActions: []
+  functions: [],
+  actions: []
 };
 
 export const toBrunch: VdmNavigationProperty = {
@@ -138,8 +132,8 @@ export const breakfastEntity: VdmEntity = {
   deletable: false,
   updatable: true,
   entityTypeNamespace: '',
-  boundFunctions: [myFunction],
-  boundActions: [myAction]
+  functions: [myFunction],
+  actions: [myAction]
 };
 
 function getFunctionImport(

@@ -60,14 +60,14 @@ export function generateEntitiesV4(
       classNames,
       formatter
     ),
-    boundFunctions: transformBoundFunctions(
+    functions: transformBoundFunctions(
       serviceMetadata,
       entityMetadata.entityType,
       entityMetadata.entitySet,
       classNames,
       formatter
     ),
-    boundActions: transformBoundActions(
+    actions: transformBoundActions(
       serviceMetadata,
       entityMetadata.entityType,
       entityMetadata.entitySet,

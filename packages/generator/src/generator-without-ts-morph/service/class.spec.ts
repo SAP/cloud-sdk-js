@@ -92,8 +92,8 @@ describe('class', () => {
           navigationProperties: [],
           description: 'desc',
           entityTypeNamespace: 'ns',
-          boundActions: [],
-          boundFunctions: []
+          actions: [],
+          functions: []
         }
       ]
     });

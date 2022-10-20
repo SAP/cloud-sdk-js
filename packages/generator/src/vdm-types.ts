@@ -1,5 +1,5 @@
-import { PathLike } from 'fs';
 import { ODataVersion } from '@sap-cloud-sdk/util';
+import { PathLike } from 'fs';
 /**
  * @internal
  */
@@ -126,11 +126,17 @@ export interface VdmEntity {
    * @internal
    */
   entityTypeNamespace: string;
-  boundFunctions: VdmFunctionImport[]
-  boundActions: VdmActionImport[]
+  /**
+  * @internal
+  */
+  functions: VdmFunctionImport[];
+  /**
+  * @internal
+  */
+  actions: VdmActionImport[];
 }
 
-export type MiniEntity = Pick<VdmEntity, 'entityTypeName' | 'entityTypeNamespace' | 'className'>
+export type MiniEntity = Pick<VdmEntity, 'entityTypeName' | 'entityTypeNamespace' | 'className'>;
 
 /**
  * Properties

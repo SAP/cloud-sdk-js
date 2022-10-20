@@ -109,14 +109,14 @@ function boundFunctions(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): MethodDeclarationStructure[] {
-  return entity.boundFunctions.map(f => boundFunction(f, entity, service));
+  return entity.functions.map(f => boundFunction(f, entity, service));
 }
 
 function boundActions(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): MethodDeclarationStructure[] {
-  return entity.boundActions.map(f => boundAction(f, entity, service));
+  return entity.actions.map(f => boundAction(f, entity, service));
 }
 
 function property(prop: VdmProperty): PropertyDeclarationStructure {

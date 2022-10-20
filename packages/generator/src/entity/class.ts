@@ -173,15 +173,17 @@ function boundFunctionsStatements(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): string[] {
-  const name = `${service.namespaces[0]}.${fn.originalName}`;
-  const statements: string[] = boundFunctionsParameterStatements(fn).concat([
+  const fnBodyStatements = [
     'const deSerializers = defaultDeSerializers as any;',
     'return new BoundFunctionRequestBuilder(',
     // fixme: do we need to do anything in the transformer function?
-    `this._entityApi as any, this as any, '${name}', (data) => data, params, deSerializers`,
+    `this._entityApi as any, this as any, '${service.namespaces[0]}.${fn.originalName}', (data) => data, params, deSerializers`,
     ') as any;'
-  ]);
-  return statements;
+  ];
+  return [
+    ...boundFunctionsParameterStatements(fn),
+    ...fnBodyStatements
+  ];
 }
 
 function boundFunctionsParameterStatements(fn: VdmFunctionImport): string[] {

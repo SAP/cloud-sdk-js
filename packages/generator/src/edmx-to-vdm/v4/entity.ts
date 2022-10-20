@@ -23,6 +23,8 @@ import {
 } from '../common/entity';
 import { isCollectionType } from '../edmx-to-vdm-util';
 import { generateActionImportsV4 } from './action-import';
+import { generateComplexTypesV4 } from './complex-type';
+import { generateEnumTypesV4 } from './enum-type';
 import { generateFunctionImportsV4 } from './function-import';
 
 /**
@@ -131,15 +133,16 @@ function transformBoundActions(
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter
 ): VdmActionImport[] {
-  const entities: VdmEntityInConstruction[] = [
-    {
-      className: entitySet.Name,
-      entityTypeName: entitySet.EntityType,
-      entityTypeNamespace: entitySet.Namespace
-    }
-  ];
+  const entities: VdmEntityInConstruction[] = Object.keys(classNames).map(c => ({
+    className: c,
+    entityTypeName: c,
+    entityTypeNamespace: entityType.Namespace
+  }));
 
-  return generateActionImportsV4(serviceMetadata, '', entities as VdmEntity[], [], formatter, true);
+  const enumTypes: VdmEnumType[] = generateEnumTypesV4(serviceMetadata, formatter);
+  const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
+
+  return generateActionImportsV4(serviceMetadata, serviceMetadata.edmx.root[0].Namespace, entities as VdmEntity[], complexTypes, formatter, true);
 }
 
 // TODO: This should be removed once derived types are considered.

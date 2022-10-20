@@ -94,10 +94,6 @@ function parseReturnTypes(
     return getComplexReturnType(isCollection, isNullable, complexType);
   }
 
-  if (bound) {
-    return getVoidReturnType(); //fixme
-  }
-
   throw Error(
     `Unable to find a return type for name ${JSON.stringify(returnType)}.`
   );

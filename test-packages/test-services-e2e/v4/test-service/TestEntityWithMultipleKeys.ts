@@ -69,7 +69,7 @@ export class TestEntityWithMultipleKeys<T extends DeSerializers = DefaultDeSeria
     ) as any;
   }
 
-  createTestEntityById_1<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntityWithMultipleKeys<DeSerializersT>, DeSerializersT, any, undefined | null> {
+  createTestEntityById_1<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntityWithMultipleKeys<DeSerializersT>, DeSerializersT, any, TestEntity | null> {
     const params = {
     };
     const deSerializers = defaultDeSerializers as any;

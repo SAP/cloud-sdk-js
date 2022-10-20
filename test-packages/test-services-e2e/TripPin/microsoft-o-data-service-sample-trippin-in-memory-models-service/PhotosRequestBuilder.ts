@@ -4,19 +4,33 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { BigNumber } from 'bignumber.js';
-import { DefaultDeSerializers, DeSerializers, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder, DeserializedType, RequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder,
+  DeserializedType,
+  RequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { Photos } from './Photos';
 
 /**
  * Request builder class for operations supported on the {@link Photos} entity.
  */
-export class PhotosRequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<Photos<T>, T> {
+export class PhotosRequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<Photos<T>, T> {
   /**
    * Returns a request builder for retrieving one `Photos` entity based on its keys.
    * @param id Key property. See {@link Photos.id}.
    * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
    */
-  getByKey(id: DeserializedType<T, 'Edm.Int64'>): GetByKeyRequestBuilder<Photos<T>, T> {
+  getByKey(
+    id: DeserializedType<T, 'Edm.Int64'>
+  ): GetByKeyRequestBuilder<Photos<T>, T> {
     return new GetByKeyRequestBuilder<Photos<T>, T>(this.entityApi, { Id: id });
   }
 
@@ -59,6 +73,9 @@ export class PhotosRequestBuilder<T extends DeSerializers = DefaultDeSerializers
    */
   delete(entity: Photos<T>): DeleteRequestBuilder<Photos<T>, T>;
   delete(idOrEntity: any): DeleteRequestBuilder<Photos<T>, T> {
-    return new DeleteRequestBuilder<Photos<T>, T>(this.entityApi, idOrEntity instanceof Photos ? idOrEntity : { Id: idOrEntity! });
+    return new DeleteRequestBuilder<Photos<T>, T>(
+      this.entityApi,
+      idOrEntity instanceof Photos ? idOrEntity : { Id: idOrEntity! }
+    );
   }
 }

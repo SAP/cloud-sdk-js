@@ -114,7 +114,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers> extends 
     ) as any;
   }
 
-  createTestEntityById<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, undefined | null> {
+  createTestEntityById<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, TestEntity | null> {
     const params = {
     };
     const deSerializers = defaultDeSerializers as any;

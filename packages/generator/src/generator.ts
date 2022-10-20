@@ -7,7 +7,6 @@ import {
 } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
-  Directory,
   IndentationText,
   ModuleResolutionKind,
   Project,
@@ -54,7 +53,7 @@ import { sdkMetadata } from './sdk-metadata';
 import { entityApiFile } from './generator-without-ts-morph';
 import { serviceFile } from './generator-without-ts-morph/service/file';
 
-const { mkdir } = fsPromises;
+const { mkdir, readdir } = fsPromises;
 
 const logger = createLogger({
   package: 'generator',
@@ -67,19 +66,23 @@ const logger = createLogger({
  * @param options - Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
-  const projectAndServices = await generateProject(options);
-  if (!projectAndServices) {
-    throw Error('The project is undefined.');
+  const services = await generateProject(options);
+  if (!services || services.length === 0) {
+    throw Error('There are no services generated.');
   }
-  const project = projectAndServices.project;
-  const services = projectAndServices.services;
 
   await generateFilesWithoutTsMorph(services, options);
 
   if (options.generateJs) {
-    const directories = project
-      .getDirectories()
-      .filter(dir => !!dir.getSourceFile('tsconfig.json'));
+    const directories = services
+      .filter(async service => {
+        const files = await readdir(
+          resolvePath(service.directoryName, options)
+        );
+        return files.includes('tsconfig.json');
+      })
+      .map(service => resolvePath(service.directoryName, options));
+
     const chunks = splitInChunks(
       directories,
       options.processesJsGeneration || defaultValueProcessesJsGeneration
@@ -91,10 +94,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       );
     } catch (err) {
       if (err.message?.includes('error TS2307')) {
-        throw new ErrorWithCause(
-          getInstallODataErrorMessage(projectAndServices),
-          err
-        );
+        throw new ErrorWithCause(getInstallODataErrorMessage(services), err);
       }
       throw err;
     }
@@ -107,14 +107,10 @@ export async function generate(options: GeneratorOptions): Promise<void> {
  * @returns An error message with a recommendation to install specific SDK packages.
  */
 export function getInstallODataErrorMessage(
-  projectAndServices: ProjectAndServices
+  services: VdmServiceMetadata[]
 ): string {
-  const hasV2 = projectAndServices.services.some(
-    service => service.oDataVersion === 'v2'
-  );
-  const hasV4 = projectAndServices.services.some(
-    service => service.oDataVersion === 'v4'
-  );
+  const hasV2 = services.some(service => service.oDataVersion === 'v2');
+  const hasV4 = services.some(service => service.oDataVersion === 'v4');
 
   if (hasV2 && hasV4) {
     return 'Did you forget to install "@sap-cloud-sdk/odata-v2" and "@sap-cloud-sdk/odata-v4"?';
@@ -128,12 +124,12 @@ export function getInstallODataErrorMessage(
  * @internal
  */
 export async function transpileDirectories(
-  directories: Directory[]
+  directories: string[]
 ): Promise<void[]> {
   return Promise.all(
     directories.map(async directory => {
-      const compilerOptions = await readCompilerOptions(directory.getPath());
-      return transpileDirectory(directory.getPath(), compilerOptions);
+      const compilerOptions = await readCompilerOptions(directory);
+      return transpileDirectory(directory, compilerOptions);
     })
   );
 }
@@ -142,7 +138,7 @@ export async function transpileDirectories(
  */
 export async function generateProject(
   options: GeneratorOptions
-): Promise<ProjectAndServices | undefined> {
+): Promise<VdmServiceMetadata[] | undefined> {
   options = sanitizeOptions(options);
   const services = parseServices(options);
 
@@ -172,21 +168,7 @@ export async function generateProject(
     { overwrite: true }
   );
 
-  return { project, services };
-}
-
-/**
- * @internal
- */
-export interface ProjectAndServices {
-  /**
-   * @internal
-   */
-  project: Project;
-  /**
-   * @internal
-   */
-  services: VdmServiceMetadata[];
+  return services;
 }
 
 async function generateFilesWithoutTsMorph(

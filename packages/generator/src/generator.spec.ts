@@ -25,17 +25,12 @@ const outPutPath = 'mockOutput';
 
 describe('generator', () => {
   describe('common mock-fs', () => {
-    beforeEach(() => {
+    it('copies the additional files matching the glob.', async () => {
       mock({
         [outPutPath]: {},
         [pathTestResources]: mock.load(pathTestResources)
       });
-    });
 
-    afterEach(() => {
-      mock.restore();
-    });
-    it('copies the additional files matching the glob.', async () => {
       await generate(
         createOptions({
           inputDir: pathTestService,
@@ -53,6 +48,8 @@ describe('generator', () => {
         sourceFiles.find(file => file === 'some-test-markdown.md')
       ).toBeDefined();
       expect(sourceFiles.find(file => file === 'CHANGELOG.md')).toBeDefined();
+
+      mock.restore();
     });
   });
 
@@ -155,6 +152,10 @@ describe('generator', () => {
         [pathTestResources]: mock.load(pathTestResources)
       });
       files = await getGeneratedFiles('v4', outPutPath);
+    });
+
+    afterAll(() => {
+      mock.restore();
     });
 
     it('generates expected number of files', () => {

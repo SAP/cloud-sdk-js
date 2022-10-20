@@ -7,10 +7,9 @@ import {
 } from 'ts-morph';
 import { prependPrefix } from '../internal-prefix';
 import {
-  getEntityDescription,
+  addLeadingNewline, getEntityDescription,
   getNavPropertyDescription,
-  getPropertyDescription,
-  addLeadingNewline
+  getPropertyDescription
 } from '../typedoc';
 import {
   VdmActionImport,
@@ -187,13 +186,14 @@ function boundFunctionsStatements(
 }
 
 function boundFunctionsParameterStatements(fn: VdmFunctionImport): string[] {
-  return ['const params = {'].concat(
-    fn.parameters?.map(
-      p =>
-        `${p.parameterName}: new FunctionImportParameter('${p.parameterName}', '${p.edmType}', ${p.parameterName}),`
-    ),
-    ['};']
+  const pre = ['const params = {'];
+  const params = fn.parameters?.map(
+    p =>
+      `${p.parameterName}: new FunctionImportParameter('${p.parameterName}', '${p.edmType}', ${p.parameterName}),`
   );
+  const post = ['};'];
+
+  return [...pre, ...params, ...post];
 }
 
 function boundAction(
@@ -233,25 +233,28 @@ function boundActionsStatements(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): string[] {
-  const name = `${service.namespaces[0]}.${a.originalName}`;
-  const statements: string[] = boundActionsParameterStatements(a).concat([
+  const actBodyStatements = [
     'const deSerializers = defaultDeSerializers as any;',
     'return new BoundActionRequestBuilder(',
-    // fixme: do we need to do anything in the transformer function?
-    `this._entityApi as any, this as any, '${name}', (data) => data, params, deSerializers`,
+      // fixme: do we need to do anything in the transformer function?
+    `this._entityApi as any, this as any, '${service.namespaces[0]}.${a.originalName}', (data) => data, params, deSerializers`,
     ') as any;'
-  ]);
-  return statements;
+  ];
+  return [
+    ...boundActionsParameterStatements(a),
+    ...actBodyStatements
+  ];
 }
 
 function boundActionsParameterStatements(a: VdmActionImport): string[] {
-  return ['const params = {'].concat(
-    a.parameters?.map(
-      p =>
-        `${p.parameterName}: new ActionImportParameter('${p.parameterName}', '${p.edmType}', ${p.parameterName}),`
-    ),
-    ['};']
+  const pre = ['const params = {'];
+  const params = a.parameters?.map(
+    p =>
+      `${p.parameterName}: new ActionImportParameter('${p.parameterName}', '${p.edmType}', ${p.parameterName}),`
   );
+  const post = ['};'];
+
+  return [...pre, ...params, ...post];
 }
 
 /**

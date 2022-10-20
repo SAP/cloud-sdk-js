@@ -49,7 +49,8 @@ export function generateFunctionImportsV2(
             entities,
             complexTypes,
             extractResponse(f.Name),
-            serviceName
+            serviceName,
+            false
           )
         };
       })

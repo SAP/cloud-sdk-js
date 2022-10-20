@@ -76,7 +76,8 @@ export function generateActionImportsV4(
   serviceName: string,
   entities: VdmEntity[],
   complexTypes: VdmComplexType[],
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  bound = false
 ): VdmActionImport[] {
   const actions = parseActions(serviceMetadata.edmx.root);
   const actionImports = parseActionImport(serviceMetadata.edmx.root);
@@ -86,7 +87,7 @@ export function generateActionImportsV4(
     joinedFunctionData
       // TODO 1571 remove when supporting entity type as parameter
       .filter(
-        ({ action: edmxAction }) => !hasUnsupportedParameterTypes(edmxAction, false)
+        ({ action: edmxAction }) => !hasUnsupportedParameterTypes(edmxAction, bound)
       )
       .map(({ actionImport, action: edmxAction }) => {
         const httpMethod = 'post';
@@ -101,7 +102,8 @@ export function generateActionImportsV4(
             actionImport,
             edmxAction.Parameter || [],
             swaggerDefinition,
-            formatter
+            formatter,
+            bound
           ),
           httpMethod,
           returnType: parseActionImportReturnTypes(
@@ -109,7 +111,8 @@ export function generateActionImportsV4(
             entities,
             complexTypes,
             extractResponse,
-            serviceName
+            serviceName,
+            bound
           )
         };
       })

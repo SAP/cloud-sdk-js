@@ -54,7 +54,7 @@ export function transformEntityBase(
   complexTypes: VdmComplexType[],
   enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
-): Omit<VdmEntity, 'navigationProperties' | 'boundFunctions'> {
+): Omit<VdmEntity, 'navigationProperties' | 'boundFunctions' | 'boundActions'> {
   const entity = {
     entitySetName: entityMetadata.entitySet.Name,
     entityTypeName: entityMetadata.entityType.Name,

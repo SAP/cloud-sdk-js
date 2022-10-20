@@ -113,7 +113,8 @@ export function generateFunctionImportsV4(
             entities,
             complexTypes,
             extractResponse,
-            serviceName
+            serviceName,
+            bound
           )
         };
       })

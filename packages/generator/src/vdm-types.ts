@@ -127,6 +127,7 @@ export interface VdmEntity {
    */
   entityTypeNamespace: string;
   boundFunctions: VdmFunctionImport[]
+  boundActions: VdmActionImport[]
 }
 
 export type MiniEntity = Pick<VdmEntity, 'entityTypeName' | 'entityTypeNamespace' | 'className'>

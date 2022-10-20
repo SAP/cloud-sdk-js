@@ -14,7 +14,8 @@ export function transformActionImportBase(
   edmxActionImport: EdmxActionImport,
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  bound = false
 ): VdmActionImportBase {
   const name = formatter.originalToActionImportName(edmxActionImport.Name);
   const actionImport = {
@@ -28,7 +29,7 @@ export function transformActionImportBase(
     edmxParameters,
     swaggerDefinition,
     formatter,
-    false
+    bound
   );
 
   return {

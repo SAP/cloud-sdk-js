@@ -10,6 +10,7 @@ import {
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   MiniEntity,
+  VdmActionImport,
   VdmComplexType,
   VdmEntity,
   VdmEnumType,
@@ -23,6 +24,7 @@ import {
   transformEntityBase
 } from '../common/entity';
 import { isCollectionType } from '../edmx-to-vdm-util';
+import { generateActionImportsV4 } from './action-import';
 import { generateFunctionImportsV4 } from './function-import';
 
 /**
@@ -59,6 +61,13 @@ export function generateEntitiesV4(
       formatter
     ),
     boundFunctions: transformBoundFunctions2(
+      serviceMetadata,
+      entityMetadata.entityType,
+      entityMetadata.entitySet,
+      classNames,
+      formatter
+    ),
+    boundActions: transformBoundActions2(
       serviceMetadata,
       entityMetadata.entityType,
       entityMetadata.entitySet,
@@ -114,8 +123,25 @@ function transformBoundFunctions2(
     }
   ];
 
-
   return generateFunctionImportsV4(serviceMetadata, '', entities as VdmEntity[], [], formatter, true);
+}
+
+function transformBoundActions2(
+  serviceMetadata: ServiceMetadata,
+  entityType: EdmxEntityTypeV4,
+  entitySet: EdmxEntitySet,
+  classNames: { [originalName: string]: string; },
+  formatter: ServiceNameFormatter
+): VdmActionImport[] {
+  const entities: MiniEntity[] = [
+    {
+      className: entitySet.Name,
+      entityTypeName: entitySet.EntityType,
+      entityTypeNamespace: entitySet.Namespace
+    }
+  ];
+
+  return generateActionImportsV4(serviceMetadata, '', entities as VdmEntity[], [], formatter, true);
 }
 
 // TODO: This should be removed once derived types are considered.

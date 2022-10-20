@@ -25,14 +25,16 @@ export function parseFunctionImportReturnTypes(
   entities: VdmEntity[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
-  serviceName: string
+  serviceName: string,
+  bound: boolean
 ): VdmFunctionImportReturnType {
   return parseReturnTypes(
     returnType,
     entities,
     complexTypes,
     extractResponse,
-    serviceName
+    serviceName,
+    bound
   ) as VdmFunctionImportReturnType;
 }
 /**
@@ -43,14 +45,16 @@ export function parseActionImportReturnTypes(
   entities: VdmEntity[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
-  serviceName: string
+  serviceName: string,
+  bound: boolean
 ): VdmActionImportReturnType {
   return parseReturnTypes(
     returnType,
     entities,
     complexTypes,
     extractResponse,
-    serviceName
+    serviceName,
+    bound
   ) as VdmActionImportReturnType;
 }
 
@@ -59,7 +63,8 @@ function parseReturnTypes(
   entities: VdmEntity[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
-  serviceName: string
+  serviceName: string,
+  bound: boolean
 ): VdmFunctionImportReturnType | VdmActionImportReturnType {
   if (!returnType) {
     return getVoidReturnType();
@@ -87,6 +92,10 @@ function parseReturnTypes(
   const complexType = findComplexType(returnType.Type, complexTypes);
   if (complexType) {
     return getComplexReturnType(isCollection, isNullable, complexType);
+  }
+
+  if (bound) {
+    return getVoidReturnType(); //fixme
   }
 
   throw Error(

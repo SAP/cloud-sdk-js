@@ -117,11 +117,7 @@ function boundActions(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): MethodDeclarationStructure[] {
-  return []
-  // if (entity.boundActions === undefined) {
-  //   return [];
-  // }
-  // return entity.boundActions.map(a => boundAction(a, entity, service));
+  return entity.boundActions.map(f => boundAction(f, entity, service));
 }
 
 function property(prop: VdmProperty): PropertyDeclarationStructure {

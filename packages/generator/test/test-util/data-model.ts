@@ -110,8 +110,18 @@ const myAction: VdmActionImport = {
   httpMethod: 'GET',
   returnType: myReturnType,
   originalName: 'myAct',
-  parameters: [],
-  parametersTypeName: '',
+  parameters: [
+    {
+      originalName: 'FirstParameter',
+      parameterName: 'FirstParameter',
+      nullable: false,
+      description: 'My Parameter',
+      jsType: 'string',
+      fieldType: 'string',
+      edmType: 'Edm.String'
+    }
+  ],
+    parametersTypeName: '',
   name: 'myAct',
   description: ''
 };

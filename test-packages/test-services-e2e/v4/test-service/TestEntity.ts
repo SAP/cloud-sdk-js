@@ -3,29 +3,14 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers,
-  DeserializedType,
-  entityDeserializer,
-  BoundActionRequestBuilder,
-  transformReturnValueForComplexType,
-  defaultDeSerializers,
-  BoundFunctionRequestBuilder,
-  FunctionImportParameter,
-  ActionImportParameter
-} from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityApi } from './TestEntityApi';
 import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
 
 /**
  * This class represents the entity "TestEntity" of service "TestService".
  */
-export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
-  extends Entity
-  implements TestEntityType<T>
-{
+export class TestEntity<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityType<T> {
   /**
    * Technical entity name for TestEntity.
    */
@@ -87,18 +72,12 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    * Data Time Offset Data Time Property.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty?: DeserializedType<
-    T,
-    'Edm.DateTimeOffset'
-  > | null;
+  dataTimeOffsetDataTimeProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
   /**
    * Data Time Offset Timestamp Property.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty?: DeserializedType<
-    T,
-    'Edm.DateTimeOffset'
-  > | null;
+  dataTimeOffsetTimestampProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
   /**
    * One-to-many navigation property to the {@link TestEntityLink} entity.
    */
@@ -108,50 +87,62 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     super(_entityApi);
   }
 
-  boundFunctionWithoutArguments<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  > {
-    const params = {};
+  boundFunctionWithoutArguments<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, string | null> {
+    const params = {
+    };
     const deSerializers = defaultDeSerializers as any;
     return new BoundFunctionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.boundFunctionWithoutArguments',
-      data => data,
-      params,
-      deSerializers
+      this._entityApi as any, this as any, 'TestService.boundFunctionWithoutArguments', (data) => data, params, deSerializers
     ) as any;
   }
 
-  returnKey<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    number | null
-  > {
-    const params = {};
+  returnKey<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundFunctionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, number | null> {
+    const params = {
+    };
     const deSerializers = defaultDeSerializers as any;
     return new BoundFunctionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.returnKey',
-      data => data,
-      params,
-      deSerializers
+      this._entityApi as any, this as any, 'TestService.returnKey', (data) => data, params, deSerializers
+    ) as any;
+  }
+
+  boundActionWithoutArguments<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, string | null> {
+    const params = {
+    };
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      this._entityApi as any, this as any, 'TestService.boundActionWithoutArguments', (data) => data, params, deSerializers
+    ) as any;
+  }
+
+  createTestEntityById<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, undefined | null> {
+    const params = {
+    };
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      this._entityApi as any, this as any, 'TestService.createTestEntityById', (data) => data, params, deSerializers
+    ) as any;
+  }
+
+  createTestEntityByIdReturnId<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, number | null> {
+    const params = {
+    };
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      this._entityApi as any, this as any, 'TestService.createTestEntityByIdReturnId', (data) => data, params, deSerializers
+    ) as any;
+  }
+
+  createTestEntityReturnId<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT, any, number | null> {
+    const params = {
+    };
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      this._entityApi as any, this as any, 'TestService.createTestEntityReturnId', (data) => data, params, deSerializers
     ) as any;
   }
 }
 
-export interface TestEntityType<
-  T extends DeSerializers = DefaultDeSerializers
-> {
+export interface TestEntityType<T extends DeSerializers = DefaultDeSerializers> {
   keyTestEntity: DeserializedType<T, 'Edm.Int32'>;
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
@@ -161,13 +152,7 @@ export interface TestEntityType<
   decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
   dateProperty?: DeserializedType<T, 'Edm.Date'> | null;
   timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
-  dataTimeOffsetDataTimeProperty?: DeserializedType<
-    T,
-    'Edm.DateTimeOffset'
-  > | null;
-  dataTimeOffsetTimestampProperty?: DeserializedType<
-    T,
-    'Edm.DateTimeOffset'
-  > | null;
+  dataTimeOffsetDataTimeProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetTimestampProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
   toMultiLink: TestEntityLinkType<T>[];
 }

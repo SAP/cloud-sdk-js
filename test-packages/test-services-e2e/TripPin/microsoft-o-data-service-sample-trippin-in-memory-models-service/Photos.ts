@@ -3,28 +3,13 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers,
-  DeserializedType,
-  entityDeserializer,
-  BoundActionRequestBuilder,
-  transformReturnValueForComplexType,
-  defaultDeSerializers,
-  BoundFunctionRequestBuilder,
-  FunctionImportParameter,
-  ActionImportParameter
-} from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
 import type { PhotosApi } from './PhotosApi';
 
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export class Photos<T extends DeSerializers = DefaultDeSerializers>
-  extends Entity
-  implements PhotosType<T>
-{
+export class Photos<T extends DeSerializers = DefaultDeSerializers> extends Entity implements PhotosType<T> {
   /**
    * Technical entity name for Photos.
    */
@@ -32,8 +17,7 @@ export class Photos<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath =
-    'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * All key fields of the Photos entity
    */
@@ -50,6 +34,15 @@ export class Photos<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: PhotosApi<T>) {
     super(_entityApi);
+  }
+
+  resetDataSource<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<Photos<DeSerializersT>, DeSerializersT, any, undefined | null> {
+    const params = {
+    };
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      this._entityApi as any, this as any, 'Microsoft.OData.SampleService.Models.TripPin.ResetDataSource', (data) => data, params, deSerializers
+    ) as any;
   }
 }
 

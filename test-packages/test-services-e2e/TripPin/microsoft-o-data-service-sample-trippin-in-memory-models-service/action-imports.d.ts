@@ -4,9 +4,9 @@ import {
   DefaultDeSerializers
 } from '@sap-cloud-sdk/odata-v4';
 /**
- * Type of the parameters to be passed to {@link resetDataSource}.
+ * Type of the parameters to be passed to {@link resetDataSource_4}.
  */
-export interface ResetDataSourceParameters<
+export interface ResetDataSource4Parameters<
   DeSerializersT extends DeSerializers
 > {}
 /**
@@ -15,17 +15,17 @@ export interface ResetDataSourceParameters<
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function resetDataSource<
+export declare function resetDataSource_4<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
-  parameters: ResetDataSourceParameters<DeSerializersT>,
+  parameters: ResetDataSource4Parameters<DeSerializersT>,
   deSerializers?: DeSerializersT
 ): ActionImportRequestBuilder<
   DeSerializersT,
-  ResetDataSourceParameters<DeSerializersT>,
+  ResetDataSource4Parameters<DeSerializersT>,
   undefined
 >;
 export declare const actionImports: {
-  resetDataSource: typeof resetDataSource;
+  resetDataSource_4: typeof resetDataSource_4;
 };
 //# sourceMappingURL=action-imports.d.ts.map

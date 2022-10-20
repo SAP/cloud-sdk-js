@@ -60,14 +60,14 @@ export function generateEntitiesV4(
       classNames,
       formatter
     ),
-    boundFunctions: transformBoundFunctions2(
+    boundFunctions: transformBoundFunctions(
       serviceMetadata,
       entityMetadata.entityType,
       entityMetadata.entitySet,
       classNames,
       formatter
     ),
-    boundActions: transformBoundActions2(
+    boundActions: transformBoundActions(
       serviceMetadata,
       entityMetadata.entityType,
       entityMetadata.entitySet,
@@ -108,7 +108,7 @@ function navigationProperties(
   });
 }
 
-function transformBoundFunctions2(
+function transformBoundFunctions(
   serviceMetadata: ServiceMetadata,
   entityType: EdmxEntityTypeV4,
   entitySet: EdmxEntitySet,
@@ -126,7 +126,7 @@ function transformBoundFunctions2(
   return generateFunctionImportsV4(serviceMetadata, '', entities as VdmEntity[], [], formatter, true);
 }
 
-function transformBoundActions2(
+function transformBoundActions(
   serviceMetadata: ServiceMetadata,
   entityType: EdmxEntityTypeV4,
   entitySet: EdmxEntitySet,

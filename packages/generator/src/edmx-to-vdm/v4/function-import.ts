@@ -7,7 +7,7 @@ import {
 } from '../../edmx-parser/v4/edm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
-import { MiniEntity, VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
+import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
 import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
 import { transformFunctionImportBase } from '../common/function-import';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';

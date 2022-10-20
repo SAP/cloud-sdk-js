@@ -136,7 +136,13 @@ export interface VdmEntity {
   actions: VdmActionImport[];
 }
 
-export type MiniEntity = Pick<VdmEntity, 'entityTypeName' | 'entityTypeNamespace' | 'className'>;
+/**
+ * Subset of Entity required for generating bound actions and functions.
+ * This is required because at the time of generating bound actions and functions the full list of entities is not yet available.
+ * But the properties included here are needed for generating the functions and actions.
+ * @internal
+ */
+export type VdmEntityInConstruction = Pick<VdmEntity, 'entityTypeName' | 'entityTypeNamespace' | 'className'>;
 
 /**
  * Properties

@@ -9,11 +9,9 @@ import {
 } from '../../edmx-parser/v4/edmx-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
-  MiniEntity,
   VdmActionImport,
   VdmComplexType,
-  VdmEntity,
-  VdmEnumType,
+  VdmEntity, VdmEntityInConstruction, VdmEnumType,
   VdmFunctionImport,
   VdmNavigationProperty
 } from '../../vdm-types';
@@ -112,10 +110,10 @@ function transformBoundFunctions(
   serviceMetadata: ServiceMetadata,
   entityType: EdmxEntityTypeV4,
   entitySet: EdmxEntitySet,
-  classNames: { [originalName: string]: string; },
+  classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter
 ): VdmFunctionImport[] {
-  const entities: MiniEntity[] = [
+  const entities: VdmEntityInConstruction[] = [
     {
       className: entitySet.Name,
       entityTypeName: entitySet.EntityType,
@@ -130,10 +128,10 @@ function transformBoundActions(
   serviceMetadata: ServiceMetadata,
   entityType: EdmxEntityTypeV4,
   entitySet: EdmxEntitySet,
-  classNames: { [originalName: string]: string; },
+  classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter
 ): VdmActionImport[] {
-  const entities: MiniEntity[] = [
+  const entities: VdmEntityInConstruction[] = [
     {
       className: entitySet.Name,
       entityTypeName: entitySet.EntityType,

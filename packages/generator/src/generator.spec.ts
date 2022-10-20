@@ -20,7 +20,6 @@ import * as csnGeneration from './service/csn';
 const pathTestResources = resolve(__dirname, '../../../test-resources');
 const pathTestService = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
 const pathToGeneratorCommon = resolve(__dirname, '../../generator-common');
-// const outPutPath = 'mockOutput';
 
 describe('generator', () => {
   describe('common', () => {
@@ -30,7 +29,6 @@ describe('generator', () => {
         common: {},
         [pathTestResources]: mock.load(pathTestResources),
         [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon)
-        // [pathTestService]: mock.load(pathTestService)
       });
 
       const options = createOptions({

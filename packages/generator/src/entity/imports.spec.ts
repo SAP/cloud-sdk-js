@@ -3,7 +3,7 @@ import { entityImportDeclarations, otherEntityImports } from './imports';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = entityImportDeclarations(breakfastEntity, 'v2');
+    const actual = entityImportDeclarations(breakfastEntity, foodService, 'v2');
 
     expect(
       actual.map(imports => ({

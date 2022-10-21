@@ -19,14 +19,14 @@ export function getActionImportParameters(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter,
-  bound: boolean
+  bindingEntity?: string
 ): VdmParameter[] {
   return getParameter(
     edmxActionImport,
     edmxParameters,
     swaggerDefinition,
     formatter,
-    bound
+    bindingEntity
   );
 }
 /**
@@ -37,14 +37,14 @@ export function getFunctionImportParameters(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter,
-  bound: boolean
+  bindingEntity?: string
 ): VdmParameter[] {
   return getParameter(
     edmxFunctionImport,
     edmxParameters,
     swaggerDefinition,
     formatter,
-    bound
+    bindingEntity
   );
 }
 
@@ -53,9 +53,9 @@ function getParameter<T extends EdmxNamed>(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter,
-  bound: boolean
+  bindingEntity?: string
 ): VdmParameter[] {
-  const parameters = bound ? edmxParameters.slice(1) : edmxParameters;
+  const parameters = bindingEntity ? edmxParameters.slice(1) : edmxParameters;
   return parameters.map(p => {
     const swaggerParameter = swaggerDefinition
       ? swaggerDefinition.parameters.find(param => param.name === p.Name)

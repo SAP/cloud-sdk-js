@@ -1,13 +1,13 @@
-import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { swaggerDefinitionForFunctionImport } from '../../swagger-parser';
+import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { EdmxAction, EdmxActionImport } from '../../edmx-parser/v4/edm-types';
 import {
   parseActionImport,
   parseActions
 } from '../../edmx-parser/v4/edmx-parser';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import { VdmActionImport, VdmComplexType, VdmEntity } from '../../vdm-types';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser';
+import { VdmActionImport, VdmComplexType, VdmEntityInConstruction } from '../../vdm-types';
 import { parseActionImportReturnTypes } from '../common/action-function-return-types';
 import { transformActionImportBase } from '../common/action-import';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
@@ -74,10 +74,10 @@ ${actionImportsWithoutActions
 export function generateActionImportsV4(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
-  entities: VdmEntity[],
+  entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
-  bound = false
+  bindingEntity?: string
 ): VdmActionImport[] {
   const actions = parseActions(serviceMetadata.edmx.root);
   const actionImports = parseActionImport(serviceMetadata.edmx.root);
@@ -87,7 +87,7 @@ export function generateActionImportsV4(
     joinedFunctionData
       // TODO 1571 remove when supporting entity type as parameter
       .filter(
-        ({ action: edmxAction }) => !hasUnsupportedParameterTypes(edmxAction, bound)
+        ({ action: edmxAction }) => !hasUnsupportedParameterTypes(edmxAction, bindingEntity)
       )
       .map(({ actionImport, action: edmxAction }) => {
         const httpMethod = 'post';
@@ -103,7 +103,7 @@ export function generateActionImportsV4(
             edmxAction.Parameter || [],
             swaggerDefinition,
             formatter,
-            bound
+            bindingEntity
           ),
           httpMethod,
           returnType: parseActionImportReturnTypes(
@@ -111,8 +111,7 @@ export function generateActionImportsV4(
             entities,
             complexTypes,
             extractResponse,
-            serviceName,
-            bound
+            serviceName
           )
         };
       })

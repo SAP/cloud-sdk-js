@@ -25,7 +25,7 @@ export function generateFunctionImportsV2(
   return (
     edmxFunctionImports
       // TODO 1571 remove when supporting entity type as parameter
-      .filter(functionImport => !hasUnsupportedParameterTypes(functionImport, false))
+      .filter(functionImport => !hasUnsupportedParameterTypes(functionImport, undefined))
       .map(f => {
         const httpMethod = f['m:HttpMethod'].toLowerCase();
         const swaggerDefinition = swaggerDefinitionForFunctionImport(
@@ -39,7 +39,7 @@ export function generateFunctionImportsV2(
             f,
             f.Parameter,
             swaggerDefinition,
-            formatter, false
+            formatter, undefined
           ),
           httpMethod,
           returnType: parseFunctionImportReturnTypes(
@@ -49,8 +49,7 @@ export function generateFunctionImportsV2(
             entities,
             complexTypes,
             extractResponse(f.Name),
-            serviceName,
-            false
+            serviceName
           )
         };
       })

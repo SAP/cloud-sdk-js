@@ -193,9 +193,9 @@ export const propertyJsType = (type: string): string | undefined =>
  * @internal
  */
 export function hasUnsupportedParameterTypes(
-  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImportV2, bound: boolean
+  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImportV2, bindingEntity?: string
 ): boolean {
-  const parameters = bound ? functionOrAction.Parameter.slice(1) : functionOrAction.Parameter;
+  const parameters = bindingEntity ? functionOrAction.Parameter.slice(1) : functionOrAction.Parameter;
 
   const unsupportedParameters = parameters.filter(
     p => !isEdmType(p.Type)

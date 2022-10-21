@@ -16,7 +16,7 @@ export function transformFunctionImportBase(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter,
-  bound: boolean
+  bindingEntity?: string
 ): VdmFunctionImportBase {
   const name = formatter.originalToFunctionImportName(edmxFunctionImport.Name);
   const functionImport = {
@@ -30,7 +30,7 @@ export function transformFunctionImportBase(
     edmxParameters,
     swaggerDefinition,
     formatter,
-    bound
+    bindingEntity
   );
 
   return {

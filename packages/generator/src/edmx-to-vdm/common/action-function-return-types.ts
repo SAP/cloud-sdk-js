@@ -1,9 +1,13 @@
 import { first } from '@sap-cloud-sdk/util';
 import voca from 'voca';
+import { EdmxReturnType } from '../../edmx-parser/v4';
+import { isNullableProperty } from '../../generator-utils';
+import { getApiName } from '../../generator-without-ts-morph/service';
 import {
   VdmActionImportReturnType,
   VdmComplexType,
   VdmEntity,
+  VdmEntityInConstruction,
   VdmFunctionImportReturnType,
   VdmReturnTypeCategory,
   VdmUnsupportedReason
@@ -13,9 +17,6 @@ import {
   isCollectionType,
   parseTypeName
 } from '../edmx-to-vdm-util';
-import { EdmxReturnType } from '../../edmx-parser/v4';
-import { isNullableProperty } from '../../generator-utils';
-import { getApiName } from '../../generator-without-ts-morph/service';
 
 /**
  * @internal
@@ -26,15 +27,13 @@ export function parseFunctionImportReturnTypes(
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
   serviceName: string,
-  bound: boolean
 ): VdmFunctionImportReturnType {
   return parseReturnTypes(
     returnType,
     entities,
     complexTypes,
     extractResponse,
-    serviceName,
-    bound
+    serviceName
   ) as VdmFunctionImportReturnType;
 }
 /**
@@ -42,19 +41,17 @@ export function parseFunctionImportReturnTypes(
  */
 export function parseActionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
-  entities: VdmEntity[],
+  entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
-  serviceName: string,
-  bound: boolean
+  serviceName: string
 ): VdmActionImportReturnType {
   return parseReturnTypes(
     returnType,
-    entities,
+    entities as VdmEntity[],
     complexTypes,
     extractResponse,
-    serviceName,
-    bound
+    serviceName
   ) as VdmActionImportReturnType;
 }
 
@@ -63,8 +60,7 @@ function parseReturnTypes(
   entities: VdmEntity[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
-  serviceName: string,
-  bound: boolean
+  serviceName: string
 ): VdmFunctionImportReturnType | VdmActionImportReturnType {
   if (!returnType) {
     return getVoidReturnType();

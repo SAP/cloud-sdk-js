@@ -115,16 +115,16 @@ function transformBoundFunctions(
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter
 ): VdmFunctionImport[] {
-  const entities: VdmEntityInConstruction[] = Object.keys(classNames).map(c => ({
-    className: c,
-    entityTypeName: c,
+  const entities: VdmEntityInConstruction[] = Object.entries(classNames).map(([originalName, className]) => ({
+    className,
+    entityTypeName: originalName, // entity type or set
     entityTypeNamespace: entityType.Namespace
   }));
 
   const enumTypes: VdmEnumType[] = generateEnumTypesV4(serviceMetadata, formatter);
   const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
 
-  return generateFunctionImportsV4(serviceMetadata, entityType.Namespace, entities as VdmEntity[], complexTypes, formatter, true);
+  return generateFunctionImportsV4(serviceMetadata, entityType.Namespace, entities as VdmEntity[], complexTypes, formatter, entitySet.EntityType /*fixme is this the right parameter? */);
 }
 
 function transformBoundActions(
@@ -143,7 +143,7 @@ function transformBoundActions(
   const enumTypes: VdmEnumType[] = generateEnumTypesV4(serviceMetadata, formatter);
   const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
 
-  return generateActionImportsV4(serviceMetadata, entityType.Namespace, entities as VdmEntity[], complexTypes, formatter, true);
+  return generateActionImportsV4(serviceMetadata, entityType.Namespace, entities as VdmEntity[], complexTypes, formatter, entitySet.EntityType);
 }
 
 // TODO: This should be removed once derived types are considered.

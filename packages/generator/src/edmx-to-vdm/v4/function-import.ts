@@ -77,8 +77,9 @@ export function generateFunctionImportsV4(
   entities: VdmEntity[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
-  bound = false
+  bindingEntity?: string
 ): VdmFunctionImport[] {
+  // fixme do this only once not per entity?
   const functions = parseFunctions(serviceMetadata.edmx.root);
   const functionImports = parseFunctionImportsV4(serviceMetadata.edmx.root);
   const joinedFunctionData = joinFunctionImportData(functionImports, functions);
@@ -88,9 +89,9 @@ export function generateFunctionImportsV4(
       // TODO 1571 remove when supporting entity type as parameter
       .filter(
         ({ function: edmxFunction }) =>
-          !hasUnsupportedParameterTypes(edmxFunction, bound)
+          !hasUnsupportedParameterTypes(edmxFunction, bindingEntity)
       )
-      .filter(f => bound ? f.function.Parameter[0]?.Type.endsWith(entities[0].className) : true) // fixme proper name compare
+      .filter(f => removeBindingParameter(f, bindingEntity)) // assign correct entity
       .map(({ functionImport, function: edmxFunction }) => {
         const httpMethod = 'get';
         const swaggerDefinition = swaggerDefinitionForFunctionImport(
@@ -105,7 +106,7 @@ export function generateFunctionImportsV4(
             edmxFunction.Parameter,
             swaggerDefinition,
             formatter,
-            bound
+            bindingEntity
           ),
           httpMethod,
           returnType: parseFunctionImportReturnTypes(
@@ -113,10 +114,13 @@ export function generateFunctionImportsV4(
             entities,
             complexTypes,
             extractResponse,
-            serviceName,
-            bound
+            serviceName
           )
         };
       })
   );
 }
+function removeBindingParameter(joinedFunctionData: JoinedFunctionImportData, bindingEntity?: string): boolean {
+  return bindingEntity ? joinedFunctionData.function.Parameter[0]?.Type.endsWith(bindingEntity) : true;
+}
+

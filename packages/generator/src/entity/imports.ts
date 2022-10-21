@@ -64,6 +64,22 @@ export function otherEntityImports(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
+  return linkedEntities(entity, service).map(name => otherEntityImport(name));
+}
+
+function entityDependencies(entity: VdmEntity,
+  service: VdmServiceMetadata): ImportDeclarationStructure[] {
+  const toRemove = linkedEntities(entity, service);
+
+  return service.entities.filter(e => e.className !== entity.className).filter(e => toRemove.indexOf(e.className) === -1).map(e => ({
+    namedImports: [e.className],
+    moduleSpecifier: `./${e.className}`,
+    kind: StructureKind.ImportDeclaration,
+    isTypeOnly: true
+  }));
+}
+
+function linkedEntities(entity: VdmEntity, service: VdmServiceMetadata) {
   return Array.from(new Set(entity.navigationProperties.map(n => n.to)))
     .map(to => {
       const matchedEntity = service.entities.find(e => e.entitySetName === to);
@@ -76,18 +92,7 @@ export function otherEntityImports(
       }
       return matchedEntity.className;
     })
-    .filter(name => name !== entity.className)
-    .map(name => otherEntityImport(name));
-}
-
-function entityDependencies(entity: VdmEntity,
-  service: VdmServiceMetadata): ImportDeclarationStructure[] {
-  return service.entities.filter(e => e.className !== entity.className).map(e => ({
-    namedImports: [e.className],
-    moduleSpecifier: `./${e.className}`,
-    kind: StructureKind.ImportDeclaration,
-    isTypeOnly: true
-  }));
+    .filter(name => name !== entity.className);
 }
 
 function otherEntityImport(name: string): ImportDeclarationStructure {

@@ -91,7 +91,7 @@ function parseReturnTypes(
   }
 
   throw Error(
-    `Unable to find a return type for name ${JSON.stringify(returnType)}.`
+    `Unable to find a return type for name ${JSON.stringify(returnType)} in entities ${entities.map(e => `${e.entityTypeNamespace}.${e.entityTypeName}`).join(', ')}.`
   );
 }
 

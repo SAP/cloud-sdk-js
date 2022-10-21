@@ -124,7 +124,11 @@ function transformBoundFunctions(
   const enumTypes: VdmEnumType[] = generateEnumTypesV4(serviceMetadata, formatter);
   const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
 
-  return generateFunctionImportsV4(serviceMetadata, entityType.Namespace, entities, complexTypes, formatter, entitySet.EntityType /*fixme is this the right parameter? */);
+  if (classNames[entitySet.Name]) {
+    return generateFunctionImportsV4(serviceMetadata, entityType.Namespace, entities, complexTypes, formatter, entitySet.Name /*fixme is this the right parameter? */);
+  }
+
+  return []
 }
 
 function transformBoundActions(
@@ -143,7 +147,12 @@ function transformBoundActions(
   const enumTypes: VdmEnumType[] = generateEnumTypesV4(serviceMetadata, formatter);
   const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
 
-  return generateActionImportsV4(serviceMetadata, entityType.Namespace, entities, complexTypes, formatter, entitySet.EntityType);
+
+  if (classNames[entitySet.Name]) {
+    return generateActionImportsV4(serviceMetadata, entityType.Namespace, entities, complexTypes, formatter, entitySet.Name /*fixme is this the right parameter? */);
+  }
+
+  return []
 }
 
 // TODO: This should be removed once derived types are considered.

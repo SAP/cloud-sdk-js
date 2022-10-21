@@ -7,7 +7,7 @@ import {
 } from '../../edmx-parser/v4/edm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
-import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
+import { VdmComplexType, VdmEntity, VdmEntityInConstruction, VdmFunctionImport } from '../../vdm-types';
 import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
 import { transformFunctionImportBase } from '../common/function-import';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
@@ -74,7 +74,7 @@ function joinFunctionImportData(
 export function generateFunctionImportsV4(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
-  entities: VdmEntity[],
+  entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
   bindingEntity?: string

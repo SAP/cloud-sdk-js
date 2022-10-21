@@ -23,7 +23,7 @@ import {
  */
 export function parseFunctionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
-  entities: VdmEntity[],
+  entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
   serviceName: string,
@@ -57,7 +57,7 @@ export function parseActionImportReturnTypes(
 
 function parseReturnTypes(
   returnType: EdmxReturnType | undefined,
-  entities: VdmEntity[],
+  entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
   serviceName: string
@@ -104,8 +104,8 @@ function findEdmType(returnType: string): string | undefined {
 
 function findEntityTypes(
   returnType: string,
-  entities: VdmEntity[]
-): VdmEntity[] {
+  entities: VdmEntityInConstruction[]
+): VdmEntityInConstruction[] {
   returnType = parseTypeName(returnType);
   return entities.filter(
     e => `${e.entityTypeNamespace}.${e.entityTypeName}` === returnType
@@ -153,7 +153,7 @@ function getEdmReturnType(
 function getEntityReturnType(
   isCollection: boolean,
   isNullable: boolean,
-  entities: VdmEntity[],
+  entities: VdmEntityInConstruction[],
   serviceName: string
 ): VdmFunctionImportReturnType {
   if (!entities.length) {

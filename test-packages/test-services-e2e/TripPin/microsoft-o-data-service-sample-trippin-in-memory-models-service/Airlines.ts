@@ -17,6 +17,9 @@ import {
   ActionImportParameter
 } from '@sap-cloud-sdk/odata-v4';
 import type { AirlinesApi } from './AirlinesApi';
+import type { Photos } from './Photos';
+import type { People } from './People';
+import type { Airports } from './Airports';
 
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".

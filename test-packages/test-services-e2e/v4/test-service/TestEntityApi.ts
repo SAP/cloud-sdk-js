@@ -6,59 +6,59 @@
 import { TestEntity } from './TestEntity';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time, OrderableEdmTypeField, OneToManyLink } from '@sap-cloud-sdk/odata-v4';
-export class TestEntityApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
-    EntityApi<
-      TestEntity<
-        DeSerializersT
-      >, 
-      DeSerializersT
-    > {
+import {
+  CustomField,
+  defaultDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers,
+  AllFields,
+  entityBuilder,
+  EntityBuilderType,
+  EntityApi,
+  FieldBuilder,
+  Time,
+  OrderableEdmTypeField,
+  OneToManyLink
+} from '@sap-cloud-sdk/odata-v4';
+export class TestEntityApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<TestEntity<DeSerializersT>, DeSerializersT>
+{
   public deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
   private navigationPropertyFields!: {
-      /**
-       * Static representation of the one-to-many navigation property {@link toMultiLink} for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      TO_MULTI_LINK: OneToManyLink<
-            TestEntity<DeSerializersT>,
-            DeSerializersT,
-            TestEntityLinkApi<DeSerializersT>
-          >
-    };
+    /**
+     * Static representation of the one-to-many navigation property {@link toMultiLink} for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_MULTI_LINK: OneToManyLink<
+      TestEntity<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLinkApi<DeSerializersT>
+    >;
+  };
 
   _addNavigationProperties(
-      linkedApis: [
-        TestEntityLinkApi<DeSerializersT>
-      ]): this {
-        this.navigationPropertyFields = {
-          TO_MULTI_LINK: new OneToManyLink(
-              'ToMultiLink',
-              this,
-              linkedApis[0]
-            )
-        };
-        return this;
-      }
-  
+    linkedApis: [TestEntityLinkApi<DeSerializersT>]
+  ): this {
+    this.navigationPropertyFields = {
+      TO_MULTI_LINK: new OneToManyLink('ToMultiLink', this, linkedApis[0])
+    };
+    return this;
+  }
+
   entityConstructor = TestEntity;
-  
-  requestBuilder(): TestEntityRequestBuilder<
-    DeSerializersT
-  > {
+
+  requestBuilder(): TestEntityRequestBuilder<DeSerializersT> {
     return new TestEntityRequestBuilder<DeSerializersT>(this);
   }
-  
+
   entityBuilder(): EntityBuilderType<
-    TestEntity<
-      DeSerializersT
-    >,
+    TestEntity<DeSerializersT>,
     DeSerializersT
   > {
     return entityBuilder<TestEntity<DeSerializersT>, DeSerializersT>(this);
@@ -67,12 +67,7 @@ export class TestEntityApi<DeSerializersT extends DeSerializers = DefaultDeSeria
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<
-  TestEntity<
-      DeSerializersT>,
-    DeSerializersT,
-    NullableT
-  > {
+  ): CustomField<TestEntity<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -83,104 +78,214 @@ export class TestEntityApi<DeSerializersT extends DeSerializers = DefaultDeSeria
 
   private _fieldBuilder?: FieldBuilder<typeof TestEntity, DeSerializersT>;
   get fieldBuilder() {
-    if(!this._fieldBuilder){
+    if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(TestEntity, this.deSerializers);
     }
     return this._fieldBuilder;
   }
 
   private _schema?: {
-    KEY_TEST_ENTITY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.Int32', false, true>,
-STRING_PROPERTY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.String', true, true>,
-GUID_PROPERTY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.Guid', true, true>,
-BOOLEAN_PROPERTY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.Boolean', true, true>,
-INT_64_PROPERTY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.Int64', true, true>,
-DOUBLE_PROPERTY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.Double', true, true>,
-DECIMAL_PROPERTY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.Decimal', true, true>,
-DATE_PROPERTY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.Date', true, true>,
-TIME_OF_DAY_PROPERTY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.TimeOfDay', true, true>,
-DATA_TIME_OFFSET_DATA_TIME_PROPERTY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
-DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: OrderableEdmTypeField<TestEntity<DeSerializers>, DeSerializersT, 'Edm.DateTimeOffset', true, true>,
-/**
- * Static representation of the one-to-many navigation property {@link toMultiLink} for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-TO_MULTI_LINK: OneToManyLink<
+    KEY_TEST_ENTITY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int32',
+      false,
+      true
+    >;
+    STRING_PROPERTY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      true,
+      true
+    >;
+    GUID_PROPERTY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Guid',
+      true,
+      true
+    >;
+    BOOLEAN_PROPERTY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Boolean',
+      true,
+      true
+    >;
+    INT_64_PROPERTY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Int64',
+      true,
+      true
+    >;
+    DOUBLE_PROPERTY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Double',
+      true,
+      true
+    >;
+    DECIMAL_PROPERTY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Decimal',
+      true,
+      true
+    >;
+    DATE_PROPERTY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.Date',
+      true,
+      true
+    >;
+    TIME_OF_DAY_PROPERTY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.TimeOfDay',
+      true,
+      true
+    >;
+    DATA_TIME_OFFSET_DATA_TIME_PROPERTY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.DateTimeOffset',
+      true,
+      true
+    >;
+    DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: OrderableEdmTypeField<
+      TestEntity<DeSerializers>,
+      DeSerializersT,
+      'Edm.DateTimeOffset',
+      true,
+      true
+    >;
+    /**
+     * Static representation of the one-to-many navigation property {@link toMultiLink} for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_MULTI_LINK: OneToManyLink<
       TestEntity<DeSerializersT>,
       DeSerializersT,
       TestEntityLinkApi<DeSerializersT>
-    >,
-ALL_FIELDS: AllFields<TestEntity<DeSerializers>>
+    >;
+    ALL_FIELDS: AllFields<TestEntity<DeSerializers>>;
   };
 
   get schema() {
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
-      this._schema = { 
-    /**
- * Static representation of the {@link keyTestEntity} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-KEY_TEST_ENTITY: fieldBuilder.buildEdmTypeField('KeyTestEntity', 'Edm.Int32', false),
-/**
- * Static representation of the {@link stringProperty} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-STRING_PROPERTY: fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true),
-/**
- * Static representation of the {@link guidProperty} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-GUID_PROPERTY: fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true),
-/**
- * Static representation of the {@link booleanProperty} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField('BooleanProperty', 'Edm.Boolean', true),
-/**
- * Static representation of the {@link int64Property} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-INT_64_PROPERTY: fieldBuilder.buildEdmTypeField('Int64Property', 'Edm.Int64', true),
-/**
- * Static representation of the {@link doubleProperty} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-DOUBLE_PROPERTY: fieldBuilder.buildEdmTypeField('DoubleProperty', 'Edm.Double', true),
-/**
- * Static representation of the {@link decimalProperty} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField('DecimalProperty', 'Edm.Decimal', true),
-/**
- * Static representation of the {@link dateProperty} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-DATE_PROPERTY: fieldBuilder.buildEdmTypeField('DateProperty', 'Edm.Date', true),
-/**
- * Static representation of the {@link timeOfDayProperty} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-TIME_OF_DAY_PROPERTY: fieldBuilder.buildEdmTypeField('TimeOfDayProperty', 'Edm.TimeOfDay', true),
-/**
- * Static representation of the {@link dataTimeOffsetDataTimeProperty} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-DATA_TIME_OFFSET_DATA_TIME_PROPERTY: fieldBuilder.buildEdmTypeField('DataTimeOffsetDataTimeProperty', 'Edm.DateTimeOffset', true),
-/**
- * Static representation of the {@link dataTimeOffsetTimestampProperty} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty', 'Edm.DateTimeOffset', true),
-...this.navigationPropertyFields,
-/**
- * 
- * All fields selector.
- */
-ALL_FIELDS: new AllFields('*', TestEntity) 
-  };
+      this._schema = {
+        /**
+         * Static representation of the {@link keyTestEntity} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        KEY_TEST_ENTITY: fieldBuilder.buildEdmTypeField(
+          'KeyTestEntity',
+          'Edm.Int32',
+          false
+        ),
+        /**
+         * Static representation of the {@link stringProperty} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'StringProperty',
+          'Edm.String',
+          true
+        ),
+        /**
+         * Static representation of the {@link guidProperty} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'GuidProperty',
+          'Edm.Guid',
+          true
+        ),
+        /**
+         * Static representation of the {@link booleanProperty} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'BooleanProperty',
+          'Edm.Boolean',
+          true
+        ),
+        /**
+         * Static representation of the {@link int64Property} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        INT_64_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'Int64Property',
+          'Edm.Int64',
+          true
+        ),
+        /**
+         * Static representation of the {@link doubleProperty} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        DOUBLE_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'DoubleProperty',
+          'Edm.Double',
+          true
+        ),
+        /**
+         * Static representation of the {@link decimalProperty} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'DecimalProperty',
+          'Edm.Decimal',
+          true
+        ),
+        /**
+         * Static representation of the {@link dateProperty} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        DATE_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'DateProperty',
+          'Edm.Date',
+          true
+        ),
+        /**
+         * Static representation of the {@link timeOfDayProperty} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        TIME_OF_DAY_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'TimeOfDayProperty',
+          'Edm.TimeOfDay',
+          true
+        ),
+        /**
+         * Static representation of the {@link dataTimeOffsetDataTimeProperty} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        DATA_TIME_OFFSET_DATA_TIME_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'DataTimeOffsetDataTimeProperty',
+          'Edm.DateTimeOffset',
+          true
+        ),
+        /**
+         * Static representation of the {@link dataTimeOffsetTimestampProperty} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'DataTimeOffsetTimestampProperty',
+          'Edm.DateTimeOffset',
+          true
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntity)
+      };
     }
-  
+
     return this._schema;
   }
 }

@@ -18,6 +18,9 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { AirportLocation, AirportLocationField } from './AirportLocation';
 import type { AirportsApi } from './AirportsApi';
+import type { Photos } from './Photos';
+import type { People } from './People';
+import type { Airlines } from './Airlines';
 
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".

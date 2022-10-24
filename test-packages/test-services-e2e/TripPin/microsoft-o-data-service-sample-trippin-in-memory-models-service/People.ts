@@ -18,6 +18,8 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { Location } from './Location';
 import type { PeopleApi } from './PeopleApi';
+import type { Airlines } from './Airlines';
+import type { Airports } from './Airports';
 import { PersonGender } from './PersonGender';
 import { Photos, PhotosType } from './Photos';
 

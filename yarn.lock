@@ -1105,12 +1105,12 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.2.2":
-  version "6.2.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.2.2.tgz#aaf91820a71ed69dc816e9ebfbff6c1410d9235a"
-  integrity sha512-HCvFKJmtCTKtY+ZVu3Mf015LHObvs5QYMW6GXrOWuVLs0RRRbfn3HrjZBiGZPa1p1in+ZFhyyvhLP1GKXVRDDQ==
+"@sap/cds-dk@6.2.3":
+  version "6.2.3"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.2.3.tgz#caa96319cbad38e14ebbc707719c81db6b1ff5e6"
+  integrity sha512-Th23mK1QuQ/K7GIIa4VxlrET0X9dnUhr1VpH4e4TOTaojywjxHzgOt3kPYHgbudkjqMA/HitChx2RtYYcG5obQ==
   dependencies:
-    "@sap/cds" "^6.2.0"
+    "@sap/cds" "^6.2.3"
     "@sap/cds-foss" "^4"
     "@sap/eslint-plugin-cds" "^2.6.0"
     axios ">=0.21"
@@ -1150,7 +1150,7 @@
     "@sap/instance-manager" "^3"
     axios "^0.27.2"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.2.0", "@sap/cds@^6.2.3":
+"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.2.3":
   version "6.2.3"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.2.3.tgz#362079d21295e702b3c2d42d2e7e21a87179cb6e"
   integrity sha512-GutzoJMAFHkeFCOWn/wVhQVVdmYaaF+qtWCh2jQB67EX73RbgAOlh4JvAeGAcRDL8D9PK+jBzdwuB/AZbqfpwA==

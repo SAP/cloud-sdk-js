@@ -4,6 +4,7 @@ import {
   DefaultDeSerializers
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
+import { TestEntityWithMultipleKeys } from './TestEntityWithMultipleKeys';
 /**
  * Type of the parameters to be passed to {@link concatStrings}.
  */
@@ -74,6 +75,40 @@ export declare function getByKey<
   DeSerializersT,
   GetByKeyParameters<DeSerializersT>,
   TestEntity
+>;
+/**
+ * Type of the parameters to be passed to {@link getByKeyWithMultipleKeys}.
+ */
+export interface GetByKeyWithMultipleKeysParameters<
+  DeSerializersT extends DeSerializers
+> {
+  /**
+   * Key Test Entity With Multiple Keys.
+   */
+  keyTestEntityWithMultipleKeys: number;
+  /**
+   * String Property With Multiple Keys.
+   */
+  stringPropertyWithMultipleKeys: string;
+  /**
+   * Boolean Property With Multiple Keys.
+   */
+  booleanPropertyWithMultipleKeys: boolean;
+}
+/**
+ * Get By Key With Multiple Keys.
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function getByKeyWithMultipleKeys<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: GetByKeyWithMultipleKeysParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  GetByKeyWithMultipleKeysParameters<DeSerializersT>,
+  TestEntityWithMultipleKeys
 >;
 /**
  * Type of the parameters to be passed to {@link returnCollection}.
@@ -150,6 +185,7 @@ export declare const functionImports: {
   concatStrings: typeof concatStrings;
   getAll: typeof getAll;
   getByKey: typeof getByKey;
+  getByKeyWithMultipleKeys: typeof getByKeyWithMultipleKeys;
   returnCollection: typeof returnCollection;
   returnInt: typeof returnInt;
   returnSapCloudSdk: typeof returnSapCloudSdk;

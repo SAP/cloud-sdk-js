@@ -20,7 +20,7 @@ import { TestEntityApi } from './TestEntityApi';
 /**
  * Type of the parameters to be passed to {@link createTestEntityById}.
  */
-export interface CreateTestEntityByIdParameters<
+export interface CreateTestEntityById4Parameters<
   DeSerializersT extends DeSerializers
 > {
   /**
@@ -38,11 +38,11 @@ export interface CreateTestEntityByIdParameters<
 export function createTestEntityById<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
-  parameters: CreateTestEntityByIdParameters<DeSerializersT>,
+  parameters: CreateTestEntityById4Parameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
 ): ActionImportRequestBuilder<
   DeSerializersT,
-  CreateTestEntityByIdParameters<DeSerializersT>,
+  CreateTestEntityById4Parameters<DeSerializersT>,
   TestEntity
 > {
   const params = {
@@ -65,7 +65,7 @@ export function createTestEntityById<
 /**
  * Type of the parameters to be passed to {@link createTestEntityByIdReturnId}.
  */
-export interface CreateTestEntityByIdReturnIdParameters<
+export interface CreateTestEntityByIdReturnId4Parameters<
   DeSerializersT extends DeSerializers
 > {
   /**
@@ -83,11 +83,11 @@ export interface CreateTestEntityByIdReturnIdParameters<
 export function createTestEntityByIdReturnId<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
-  parameters: CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
+  parameters: CreateTestEntityByIdReturnId4Parameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
 ): ActionImportRequestBuilder<
   DeSerializersT,
-  CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
+  CreateTestEntityByIdReturnId4Parameters<DeSerializersT>,
   number
 > {
   const params = {

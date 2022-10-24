@@ -26,6 +26,7 @@ describe('bound actions', () => {
       expect(actionResult).toEqual(expected);
     });
 
+    // fixme(fwilhe) enable test, why _1 in the name?
     it('bound action of entity with multiple keys returns expected string', async () => {
       const { testEntityWithMultipleKeysApi } = testService();
       const entity: TestEntityWithMultipleKeys =

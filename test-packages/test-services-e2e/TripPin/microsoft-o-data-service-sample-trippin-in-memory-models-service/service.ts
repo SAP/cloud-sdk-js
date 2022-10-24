@@ -11,7 +11,10 @@ import {
   getNearestAirport,
   GetNearestAirportParameters
 } from './function-imports';
-import { resetDataSource, ResetDataSourceParameters } from './action-imports';
+import {
+  resetDataSource_4,
+  ResetDataSource4Parameters
+} from './action-imports';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
@@ -143,8 +146,9 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
 
   get actionImports() {
     return {
-      resetDataSource: (parameter: ResetDataSourceParameters<DeSerializersT>) =>
-        resetDataSource(parameter, this.deSerializers)
+      resetDataSource_4: (
+        parameter: ResetDataSource4Parameters<DeSerializersT>
+      ) => resetDataSource_4(parameter, this.deSerializers)
     };
   }
 

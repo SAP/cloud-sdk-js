@@ -2,7 +2,8 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  BoundActionRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { AirportLocation } from './AirportLocation';
 import type { AirportsApi } from './AirportsApi';
@@ -43,6 +44,14 @@ export declare class Airports<T extends DeSerializers = DefaultDeSerializers>
    */
   location: AirportLocation<T>;
   constructor(_entityApi: AirportsApi<T>);
+  resetDataSource_3<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
+    Airports<DeSerializersT>,
+    DeSerializersT,
+    any,
+    undefined | null
+  >;
 }
 export interface AirportsType<T extends DeSerializers = DefaultDeSerializers> {
   icaoCode: DeserializedType<T, 'Edm.String'>;

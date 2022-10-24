@@ -2,7 +2,8 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  BoundActionRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { Location } from './Location';
 import type { PeopleApi } from './PeopleApi';
@@ -68,6 +69,14 @@ export declare class People<T extends DeSerializers = DefaultDeSerializers>
    */
   photo?: Photos<T> | null;
   constructor(_entityApi: PeopleApi<T>);
+  resetDataSource_1<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
+    People<DeSerializersT>,
+    DeSerializersT,
+    any,
+    undefined | null
+  >;
 }
 export interface PeopleType<T extends DeSerializers = DefaultDeSerializers> {
   userName: DeserializedType<T, 'Edm.String'>;

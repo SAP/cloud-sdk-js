@@ -15,6 +15,54 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     super(_entityApi);
     this._entityApi = _entityApi;
   }
+  boundActionWithoutArguments_3() {
+    const params = {};
+    const deSerializers = odata_v4_1.defaultDeSerializers;
+    return new odata_v4_1.BoundActionRequestBuilder(
+      this._entityApi,
+      this,
+      'TestService.boundActionWithoutArguments',
+      data => data,
+      params,
+      deSerializers
+    );
+  }
+  createTestEntityById_3() {
+    const params = {};
+    const deSerializers = odata_v4_1.defaultDeSerializers;
+    return new odata_v4_1.BoundActionRequestBuilder(
+      this._entityApi,
+      this,
+      'TestService.createTestEntityById',
+      data => data,
+      params,
+      deSerializers
+    );
+  }
+  createTestEntityByIdReturnId_3() {
+    const params = {};
+    const deSerializers = odata_v4_1.defaultDeSerializers;
+    return new odata_v4_1.BoundActionRequestBuilder(
+      this._entityApi,
+      this,
+      'TestService.createTestEntityByIdReturnId',
+      data => data,
+      params,
+      deSerializers
+    );
+  }
+  createTestEntityReturnId_3() {
+    const params = {};
+    const deSerializers = odata_v4_1.defaultDeSerializers;
+    return new odata_v4_1.BoundActionRequestBuilder(
+      this._entityApi,
+      this,
+      'TestService.createTestEntityReturnId',
+      data => data,
+      params,
+      deSerializers
+    );
+  }
 }
 exports.TestEntity50Prop = TestEntity50Prop;
 /**

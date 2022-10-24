@@ -16,7 +16,7 @@ import {
   Airlines,
   Airports,
   GetNearestAirportParameters,
-  ResetDataSourceParameters
+  ResetDataSource4Parameters
 } from './index';
 /**
  * Batch builder for operations supported on the Microsoft O Data Service Sample Trippin In Memory Models Service.
@@ -85,7 +85,7 @@ export declare type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsService
   | DeleteRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
   | ActionImportRequestBuilder<
       DeSerializersT,
-      ResetDataSourceParameters<DeSerializersT>,
+      ResetDataSource4Parameters<DeSerializersT>,
       undefined
     >;
 //# sourceMappingURL=BatchRequest.d.ts.map

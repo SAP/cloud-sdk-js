@@ -117,14 +117,14 @@ function transformBoundFunctions(
 ): VdmFunctionImport[] {
   const entities: VdmEntityInConstruction[] = Object.entries(classNames).map(([originalName, className]) => ({
     className,
-    entityTypeName: originalName, // entity type or set
+    entityTypeName: entityType.Name, // entity type or set
     entityTypeNamespace: entityType.Namespace
   }));
 
   const enumTypes: VdmEnumType[] = generateEnumTypesV4(serviceMetadata, formatter);
   const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
 
-  if (classNames[entitySet.Name]) {
+  if (classNames[entitySet.Name] && classNames[entityType.Name]) {
     return generateFunctionImportsV4(serviceMetadata, entityType.Namespace, entities, complexTypes, formatter, entitySet.Name /*fixme is this the right parameter? */);
   }
 
@@ -140,7 +140,7 @@ function transformBoundActions(
 ): VdmActionImport[] {
   const entities: VdmEntityInConstruction[] = Object.keys(classNames).map(c => ({
     className: c,
-    entityTypeName: c,
+    entityTypeName: entityType.Name,
     entityTypeNamespace: entityType.Namespace
   }));
 
@@ -148,7 +148,7 @@ function transformBoundActions(
   const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
 
 
-  if (classNames[entitySet.Name]) {
+  if (classNames[entitySet.Name] && classNames[entityType.Name]) {
     return generateActionImportsV4(serviceMetadata, entityType.Namespace, entities, complexTypes, formatter, entitySet.Name /*fixme is this the right parameter? */);
   }
 

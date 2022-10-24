@@ -275,11 +275,8 @@
           <NavigationPropertyBinding Path="to_OtherMultiLink" Target="A_TestEntityMultiLink"/>
           <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntitySingleLink"/>
         </EntitySet>
-        <EntitySet Name="A_TestEntityType" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1"></EntitySet> <!--fixme(fwilhe) -->
         <EntitySet Name="A_TestEntityWithEnumKey" EntityType="API_TEST_SRV.A_TestEntityWithEnumKeyType" sap:content-version="1">
         </EntitySet>
-        <EntitySet Name="A_TestEntityTypeToBeShared" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
-        </EntitySet>        
         <EntitySet Name="A_TestEntityWithSharedEntityType1" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
         </EntitySet>
         <EntitySet Name="A_TestEntityWithSharedEntityType2" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">

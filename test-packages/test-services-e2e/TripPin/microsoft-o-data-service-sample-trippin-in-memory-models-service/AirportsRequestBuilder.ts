@@ -3,36 +3,20 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  CreateRequestBuilder,
-  UpdateRequestBuilder,
-  DeleteRequestBuilder,
-  DeserializedType,
-  RequestBuilder
-} from '@sap-cloud-sdk/odata-v4';
+import { DefaultDeSerializers, DeSerializers, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder, DeserializedType, RequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { Airports } from './Airports';
 
 /**
  * Request builder class for operations supported on the {@link Airports} entity.
  */
-export class AirportsRequestBuilder<
-  T extends DeSerializers = DefaultDeSerializers
-> extends RequestBuilder<Airports<T>, T> {
+export class AirportsRequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<Airports<T>, T> {
   /**
    * Returns a request builder for retrieving one `Airports` entity based on its keys.
    * @param icaoCode Key property. See {@link Airports.icaoCode}.
    * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
    */
-  getByKey(
-    icaoCode: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<Airports<T>, T> {
-    return new GetByKeyRequestBuilder<Airports<T>, T>(this.entityApi, {
-      IcaoCode: icaoCode
-    });
+  getByKey(icaoCode: DeserializedType<T, 'Edm.String'>): GetByKeyRequestBuilder<Airports<T>, T> {
+    return new GetByKeyRequestBuilder<Airports<T>, T>(this.entityApi, { IcaoCode: icaoCode });
   }
 
   /**
@@ -74,11 +58,6 @@ export class AirportsRequestBuilder<
    */
   delete(entity: Airports<T>): DeleteRequestBuilder<Airports<T>, T>;
   delete(icaoCodeOrEntity: any): DeleteRequestBuilder<Airports<T>, T> {
-    return new DeleteRequestBuilder<Airports<T>, T>(
-      this.entityApi,
-      icaoCodeOrEntity instanceof Airports
-        ? icaoCodeOrEntity
-        : { IcaoCode: icaoCodeOrEntity! }
-    );
+    return new DeleteRequestBuilder<Airports<T>, T>(this.entityApi, icaoCodeOrEntity instanceof Airports ? icaoCodeOrEntity : { IcaoCode: icaoCodeOrEntity! });
   }
 }

@@ -5,49 +5,61 @@
  */
 import { Photos } from './Photos';
 import { PhotosRequestBuilder } from './PhotosRequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-v4';
-export class PhotosApi<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<Photos<DeSerializersT>, DeSerializersT>
-{
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, OrderableEdmTypeField } from '@sap-cloud-sdk/odata-v4';
+export class PhotosApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      Photos<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {};
+  private navigationPropertyFields!: {
+      
+    };
 
-  _addNavigationProperties(linkedApis: []): this {
-    this.navigationPropertyFields = {};
-    return this;
-  }
-
+  _addNavigationProperties(
+      linkedApis: [
+        
+      ]): this {
+        this.navigationPropertyFields = {
+          
+        };
+        return this;
+      }
+  
   entityConstructor = Photos;
-
-  requestBuilder(): PhotosRequestBuilder<DeSerializersT> {
+  
+  requestBuilder(): PhotosRequestBuilder<
+    DeSerializersT
+  > {
     return new PhotosRequestBuilder<DeSerializersT>(this);
   }
-
-  entityBuilder(): EntityBuilderType<Photos<DeSerializersT>, DeSerializersT> {
+  
+  entityBuilder(): EntityBuilderType<
+    Photos<
+      DeSerializersT
+    >,
+    DeSerializersT
+  > {
     return entityBuilder<Photos<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<Photos<DeSerializersT>, DeSerializersT, NullableT> {
+  ): CustomField<
+  Photos<
+      DeSerializersT>,
+    DeSerializersT,
+    NullableT
+  > {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -58,53 +70,41 @@ export class PhotosApi<
 
   private _fieldBuilder?: FieldBuilder<typeof Photos, DeSerializersT>;
   get fieldBuilder() {
-    if (!this._fieldBuilder) {
+    if(!this._fieldBuilder){
       this._fieldBuilder = new FieldBuilder(Photos, this.deSerializers);
     }
     return this._fieldBuilder;
   }
 
   private _schema?: {
-    ID: OrderableEdmTypeField<
-      Photos<DeSerializers>,
-      DeSerializersT,
-      'Edm.Int64',
-      false,
-      true
-    >;
-    NAME: OrderableEdmTypeField<
-      Photos<DeSerializers>,
-      DeSerializersT,
-      'Edm.String',
-      true,
-      true
-    >;
-    ALL_FIELDS: AllFields<Photos<DeSerializers>>;
+    ID: OrderableEdmTypeField<Photos<DeSerializers>, DeSerializersT, 'Edm.Int64', false, true>,
+NAME: OrderableEdmTypeField<Photos<DeSerializers>, DeSerializersT, 'Edm.String', true, true>,
+ALL_FIELDS: AllFields<Photos<DeSerializers>>
   };
 
   get schema() {
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
-      this._schema = {
-        /**
-         * Static representation of the {@link id} property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        ID: fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false),
-        /**
-         * Static representation of the {@link name} property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', true),
-        ...this.navigationPropertyFields,
-        /**
-         *
-         * All fields selector.
-         */
-        ALL_FIELDS: new AllFields('*', Photos)
-      };
+      this._schema = { 
+    /**
+ * Static representation of the {@link id} property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+ID: fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false),
+/**
+ * Static representation of the {@link name} property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', true),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', Photos) 
+  };
     }
-
+  
     return this._schema;
   }
 }

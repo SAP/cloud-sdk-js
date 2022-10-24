@@ -5,49 +5,61 @@
  */
 import { Airlines } from './Airlines';
 import { AirlinesRequestBuilder } from './AirlinesRequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-v4';
-export class AirlinesApi<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<Airlines<DeSerializersT>, DeSerializersT>
-{
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, OrderableEdmTypeField } from '@sap-cloud-sdk/odata-v4';
+export class AirlinesApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      Airlines<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {};
+  private navigationPropertyFields!: {
+      
+    };
 
-  _addNavigationProperties(linkedApis: []): this {
-    this.navigationPropertyFields = {};
-    return this;
-  }
-
+  _addNavigationProperties(
+      linkedApis: [
+        
+      ]): this {
+        this.navigationPropertyFields = {
+          
+        };
+        return this;
+      }
+  
   entityConstructor = Airlines;
-
-  requestBuilder(): AirlinesRequestBuilder<DeSerializersT> {
+  
+  requestBuilder(): AirlinesRequestBuilder<
+    DeSerializersT
+  > {
     return new AirlinesRequestBuilder<DeSerializersT>(this);
   }
-
-  entityBuilder(): EntityBuilderType<Airlines<DeSerializersT>, DeSerializersT> {
+  
+  entityBuilder(): EntityBuilderType<
+    Airlines<
+      DeSerializersT
+    >,
+    DeSerializersT
+  > {
     return entityBuilder<Airlines<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<Airlines<DeSerializersT>, DeSerializersT, NullableT> {
+  ): CustomField<
+  Airlines<
+      DeSerializersT>,
+    DeSerializersT,
+    NullableT
+  > {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -58,57 +70,41 @@ export class AirlinesApi<
 
   private _fieldBuilder?: FieldBuilder<typeof Airlines, DeSerializersT>;
   get fieldBuilder() {
-    if (!this._fieldBuilder) {
+    if(!this._fieldBuilder){
       this._fieldBuilder = new FieldBuilder(Airlines, this.deSerializers);
     }
     return this._fieldBuilder;
   }
 
   private _schema?: {
-    AIRLINE_CODE: OrderableEdmTypeField<
-      Airlines<DeSerializers>,
-      DeSerializersT,
-      'Edm.String',
-      false,
-      true
-    >;
-    NAME: OrderableEdmTypeField<
-      Airlines<DeSerializers>,
-      DeSerializersT,
-      'Edm.String',
-      false,
-      true
-    >;
-    ALL_FIELDS: AllFields<Airlines<DeSerializers>>;
+    AIRLINE_CODE: OrderableEdmTypeField<Airlines<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
+NAME: OrderableEdmTypeField<Airlines<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
+ALL_FIELDS: AllFields<Airlines<DeSerializers>>
   };
 
   get schema() {
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
-      this._schema = {
-        /**
-         * Static representation of the {@link airlineCode} property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        AIRLINE_CODE: fieldBuilder.buildEdmTypeField(
-          'AirlineCode',
-          'Edm.String',
-          false
-        ),
-        /**
-         * Static representation of the {@link name} property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
-        ...this.navigationPropertyFields,
-        /**
-         *
-         * All fields selector.
-         */
-        ALL_FIELDS: new AllFields('*', Airlines)
-      };
+      this._schema = { 
+    /**
+ * Static representation of the {@link airlineCode} property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+AIRLINE_CODE: fieldBuilder.buildEdmTypeField('AirlineCode', 'Edm.String', false),
+/**
+ * Static representation of the {@link name} property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', Airlines) 
+  };
     }
-
+  
     return this._schema;
   }
 }

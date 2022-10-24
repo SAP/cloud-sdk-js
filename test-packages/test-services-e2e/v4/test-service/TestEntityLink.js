@@ -1,68 +1,40 @@
-'use strict';
-Object.defineProperty(exports, '__esModule', { value: true });
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestEntityLink = void 0;
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
  */
 class TestEntityLink extends odata_v4_1.Entity {
-  constructor(_entityApi) {
-    super(_entityApi);
-    this._entityApi = _entityApi;
-  }
-  boundActionWithoutArguments_2() {
-    const params = {};
-    const deSerializers = odata_v4_1.defaultDeSerializers;
-    return new odata_v4_1.BoundActionRequestBuilder(
-      this._entityApi,
-      this,
-      'TestService.boundActionWithoutArguments',
-      data => data,
-      params,
-      deSerializers
-    );
-  }
-  createTestEntityById_2() {
-    const params = {};
-    const deSerializers = odata_v4_1.defaultDeSerializers;
-    return new odata_v4_1.BoundActionRequestBuilder(
-      this._entityApi,
-      this,
-      'TestService.createTestEntityById',
-      data => data,
-      params,
-      deSerializers
-    );
-  }
-  createTestEntityByIdReturnId_2() {
-    const params = {};
-    const deSerializers = odata_v4_1.defaultDeSerializers;
-    return new odata_v4_1.BoundActionRequestBuilder(
-      this._entityApi,
-      this,
-      'TestService.createTestEntityByIdReturnId',
-      data => data,
-      params,
-      deSerializers
-    );
-  }
-  createTestEntityReturnId_2() {
-    const params = {};
-    const deSerializers = odata_v4_1.defaultDeSerializers;
-    return new odata_v4_1.BoundActionRequestBuilder(
-      this._entityApi,
-      this,
-      'TestService.createTestEntityReturnId',
-      data => data,
-      params,
-      deSerializers
-    );
-  }
+    constructor(_entityApi) {
+        super(_entityApi);
+        this._entityApi = _entityApi;
+    }
+    boundActionWithoutArguments_2() {
+        const params = {};
+        const deSerializers = odata_v4_1.defaultDeSerializers;
+        return new odata_v4_1.BoundActionRequestBuilder(this._entityApi, this, 'TestService.boundActionWithoutArguments', (data) => data, params, deSerializers);
+    }
+    createTestEntityById_2() {
+        const params = {};
+        const deSerializers = odata_v4_1.defaultDeSerializers;
+        return new odata_v4_1.BoundActionRequestBuilder(this._entityApi, this, 'TestService.createTestEntityById', (data) => data, params, deSerializers);
+    }
+    createTestEntityByIdReturnId_2() {
+        const params = {};
+        const deSerializers = odata_v4_1.defaultDeSerializers;
+        return new odata_v4_1.BoundActionRequestBuilder(this._entityApi, this, 'TestService.createTestEntityByIdReturnId', (data) => data, params, deSerializers);
+    }
+    createTestEntityReturnId_2() {
+        const params = {};
+        const deSerializers = odata_v4_1.defaultDeSerializers;
+        return new odata_v4_1.BoundActionRequestBuilder(this._entityApi, this, 'TestService.createTestEntityReturnId', (data) => data, params, deSerializers);
+    }
 }
 exports.TestEntityLink = TestEntityLink;
 /**

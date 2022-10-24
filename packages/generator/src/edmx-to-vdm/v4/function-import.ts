@@ -84,6 +84,8 @@ export function generateFunctionImportsV4(
   const functionImports = parseFunctionImportsV4(serviceMetadata.edmx.root);
   const joinedFunctionData = joinFunctionImportData(functionImports, functions);
 
+
+  //fixme(fwilhe): filter 3 aspects: is bound?, is right bounding entity, has unsupported parameters
   return (
     joinedFunctionData
       // TODO 1571 remove when supporting entity type as parameter

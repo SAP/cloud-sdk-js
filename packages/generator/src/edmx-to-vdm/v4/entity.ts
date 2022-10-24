@@ -1,3 +1,4 @@
+import { JoinedEntityMetadata } from '../../edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import {
   EdmxEntitySet,
@@ -65,14 +66,16 @@ export function generateEntitiesV4(
       entityMetadata.entityType,
       entityMetadata.entitySet,
       classNames,
-      formatter
+      formatter,
+      entitiesMetadata
     ),
     actions: transformBoundActions(
       serviceMetadata,
       entityMetadata.entityType,
       entityMetadata.entitySet,
       classNames,
-      formatter
+      formatter,
+      entitiesMetadata
     )
   }));
 }
@@ -110,49 +113,42 @@ function navigationProperties(
 
 function transformBoundFunctions(
   serviceMetadata: ServiceMetadata,
-  entityType: EdmxEntityTypeV4,
-  entitySet: EdmxEntitySet,
+  boundEntityType: EdmxEntityTypeV4,
+  boundEntitySet: EdmxEntitySet,
   classNames: { [originalName: string]: string },
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  entitiesMetadata: JoinedEntityMetadata<EdmxEntitySet, EdmxEntityTypeV4>[]
 ): VdmFunctionImport[] {
-  const entities: VdmEntityInConstruction[] = Object.entries(classNames).map(([originalName, className]) => ({
-    className,
-    entityTypeName: entityType.Name, // entity type or set
+  const entities: VdmEntityInConstruction[] = entitiesMetadata.map(({ entityType, entitySet }) => ({
+    entityTypeName: entityType.Name,
+    className: classNames[entitySet.Name],
     entityTypeNamespace: entityType.Namespace
   }));
 
   const enumTypes: VdmEnumType[] = generateEnumTypesV4(serviceMetadata, formatter);
   const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
 
-  if (classNames[entitySet.Name] && classNames[entityType.Name]) {
-    return generateFunctionImportsV4(serviceMetadata, entityType.Namespace, entities, complexTypes, formatter, entitySet.Name /*fixme is this the right parameter? */);
-  }
-
-  return []
+  return generateFunctionImportsV4(serviceMetadata, boundEntityType.Namespace, entities, complexTypes, formatter, boundEntitySet.Name);
 }
 
 function transformBoundActions(
   serviceMetadata: ServiceMetadata,
-  entityType: EdmxEntityTypeV4,
-  entitySet: EdmxEntitySet,
+  boundEntityType: EdmxEntityTypeV4,
+  boundEntitySet: EdmxEntitySet,
   classNames: { [originalName: string]: string },
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  entitiesMetadata: JoinedEntityMetadata<EdmxEntitySet, EdmxEntityTypeV4>[]
 ): VdmActionImport[] {
-  const entities: VdmEntityInConstruction[] = Object.keys(classNames).map(c => ({
-    className: c,
+  const entities: VdmEntityInConstruction[] = entitiesMetadata.map(({ entityType, entitySet }) => ({
     entityTypeName: entityType.Name,
+    className: classNames[entitySet.Name],
     entityTypeNamespace: entityType.Namespace
   }));
 
   const enumTypes: VdmEnumType[] = generateEnumTypesV4(serviceMetadata, formatter);
   const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
 
-
-  if (classNames[entitySet.Name] && classNames[entityType.Name]) {
-    return generateActionImportsV4(serviceMetadata, entityType.Namespace, entities, complexTypes, formatter, entitySet.Name /*fixme is this the right parameter? */);
-  }
-
-  return []
+  return generateActionImportsV4(serviceMetadata, boundEntityType.Namespace, entities, complexTypes, formatter, boundEntitySet.Name);
 }
 
 // TODO: This should be removed once derived types are considered.

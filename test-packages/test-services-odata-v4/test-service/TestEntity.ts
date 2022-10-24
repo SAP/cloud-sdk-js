@@ -7,14 +7,7 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType,
-  entityDeserializer,
-  BoundActionRequestBuilder,
-  transformReturnValueForComplexType,
-  defaultDeSerializers,
-  BoundFunctionRequestBuilder,
-  FunctionImportParameter,
-  ActionImportParameter
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import type { TestEntityApi } from './TestEntityApi';

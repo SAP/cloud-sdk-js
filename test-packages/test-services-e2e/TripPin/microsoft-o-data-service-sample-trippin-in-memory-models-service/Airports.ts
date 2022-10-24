@@ -7,20 +7,10 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType,
-  entityDeserializer,
-  BoundActionRequestBuilder,
-  transformReturnValueForComplexType,
-  defaultDeSerializers,
-  BoundFunctionRequestBuilder,
-  FunctionImportParameter,
-  ActionImportParameter
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import { AirportLocation, AirportLocationField } from './AirportLocation';
 import type { AirportsApi } from './AirportsApi';
-import type { Photos } from './Photos';
-import type { People } from './People';
-import type { Airlines } from './Airlines';
 
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -61,26 +51,6 @@ export class Airports<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: AirportsApi<T>) {
     super(_entityApi);
-  }
-
-  resetDataSource_3<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    Airports<DeSerializersT>,
-    DeSerializersT,
-    any,
-    undefined | null
-  > {
-    const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'Microsoft.OData.SampleService.Models.TripPin.ResetDataSource',
-      data => data,
-      params,
-      deSerializers
-    ) as any;
   }
 }
 

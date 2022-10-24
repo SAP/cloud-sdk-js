@@ -22,7 +22,7 @@ import {
   Airlines,
   Airports,
   GetNearestAirportParameters,
-  ResetDataSource4Parameters
+  ResetDataSourceParameters
 } from './index';
 
 /**
@@ -126,6 +126,6 @@ export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestB
   | DeleteRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
   | ActionImportRequestBuilder<
       DeSerializersT,
-      ResetDataSource4Parameters<DeSerializersT>,
+      ResetDataSourceParameters<DeSerializersT>,
       undefined
     >;

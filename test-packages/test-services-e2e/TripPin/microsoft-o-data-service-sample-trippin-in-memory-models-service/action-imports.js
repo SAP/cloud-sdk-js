@@ -1,6 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.actionImports = exports.resetDataSource_4 = void 0;
+exports.actionImports = exports.resetDataSource = void 0;
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -13,7 +13,7 @@ const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function resetDataSource_4(
+function resetDataSource(
   parameters,
   deSerializers = odata_v4_1.defaultDeSerializers
 ) {
@@ -27,8 +27,8 @@ function resetDataSource_4(
     deSerializers
   );
 }
-exports.resetDataSource_4 = resetDataSource_4;
+exports.resetDataSource = resetDataSource;
 exports.actionImports = {
-  resetDataSource_4
+  resetDataSource
 };
 //# sourceMappingURL=action-imports.js.map

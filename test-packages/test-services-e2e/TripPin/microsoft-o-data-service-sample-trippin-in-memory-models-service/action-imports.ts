@@ -14,9 +14,9 @@ import {
 import { microsoftODataServiceSampleTrippinInMemoryModelsService } from './service';
 
 /**
- * Type of the parameters to be passed to {@link resetDataSource_4}.
+ * Type of the parameters to be passed to {@link resetDataSource}.
  */
-export interface ResetDataSource4Parameters<
+export interface ResetDataSourceParameters<
   DeSerializersT extends DeSerializers
 > {}
 
@@ -26,14 +26,14 @@ export interface ResetDataSource4Parameters<
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function resetDataSource_4<
+export function resetDataSource<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
-  parameters: ResetDataSource4Parameters<DeSerializersT>,
+  parameters: ResetDataSourceParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
 ): ActionImportRequestBuilder<
   DeSerializersT,
-  ResetDataSource4Parameters<DeSerializersT>,
+  ResetDataSourceParameters<DeSerializersT>,
   undefined
 > {
   const params = {};
@@ -48,5 +48,5 @@ export function resetDataSource_4<
 }
 
 export const actionImports = {
-  resetDataSource_4
+  resetDataSource
 };

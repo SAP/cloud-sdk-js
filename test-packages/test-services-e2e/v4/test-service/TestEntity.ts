@@ -7,18 +7,9 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType,
-  entityDeserializer,
-  BoundActionRequestBuilder,
-  transformReturnValueForComplexType,
-  defaultDeSerializers,
-  BoundFunctionRequestBuilder,
-  FunctionImportParameter,
-  ActionImportParameter
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityApi } from './TestEntityApi';
-import type { TestEntityWithMultipleKeys } from './TestEntityWithMultipleKeys';
-import type { TestEntity50Prop } from './TestEntity50Prop';
 import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
 
 /**
@@ -108,126 +99,6 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: TestEntityApi<T>) {
     super(_entityApi);
-  }
-
-  boundFunctionWithoutArguments<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  > {
-    const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.boundFunctionWithoutArguments',
-      data => data,
-      params,
-      deSerializers
-    ) as any;
-  }
-
-  returnKey<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    number | null
-  > {
-    const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.returnKey',
-      data => data,
-      params,
-      deSerializers
-    ) as any;
-  }
-
-  boundActionWithoutArguments<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    string | null
-  > {
-    const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.boundActionWithoutArguments',
-      data => data,
-      params,
-      deSerializers
-    ) as any;
-  }
-
-  createTestEntityById<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    TestEntity | null
-  > {
-    const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.createTestEntityById',
-      data => data,
-      params,
-      deSerializers
-    ) as any;
-  }
-
-  createTestEntityByIdReturnId<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    number | null
-  > {
-    const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.createTestEntityByIdReturnId',
-      data => data,
-      params,
-      deSerializers
-    ) as any;
-  }
-
-  createTestEntityReturnId<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
-    DeSerializersT,
-    any,
-    number | null
-  > {
-    const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.createTestEntityReturnId',
-      data => data,
-      params,
-      deSerializers
-    ) as any;
   }
 }
 

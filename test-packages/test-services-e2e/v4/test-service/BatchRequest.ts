@@ -18,18 +18,16 @@ import {
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   TestEntity,
-  TestEntityWithMultipleKeys,
   TestEntityLink,
   TestEntity50Prop,
   ConcatStringsParameters,
   GetAllParameters,
   GetByKeyParameters,
-  GetByKeyWithMultipleKeysParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
   ReturnSapCloudSdkParameters,
-  CreateTestEntityById4Parameters,
-  CreateTestEntityByIdReturnId4Parameters
+  CreateTestEntityByIdParameters,
+  CreateTestEntityByIdReturnIdParameters
 } from './index';
 
 /**
@@ -95,17 +93,9 @@ export type ReadTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | GetAllRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
-  | GetAllRequestBuilder<
-      TestEntityWithMultipleKeys<DeSerializersT>,
-      DeSerializersT
-    >
   | GetAllRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | GetAllRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
-  | GetByKeyRequestBuilder<
-      TestEntityWithMultipleKeys<DeSerializersT>,
-      DeSerializersT
-    >
   | GetByKeyRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | FunctionImportRequestBuilder<
@@ -122,11 +112,6 @@ export type ReadTestServiceRequestBuilder<
       DeSerializersT,
       GetByKeyParameters<DeSerializersT>,
       TestEntity
-    >
-  | FunctionImportRequestBuilder<
-      DeSerializersT,
-      GetByKeyWithMultipleKeysParameters<DeSerializersT>,
-      TestEntityWithMultipleKeys
     >
   | FunctionImportRequestBuilder<
       DeSerializersT,
@@ -149,18 +134,6 @@ export type WriteTestServiceRequestBuilder<
   | CreateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
   | DeleteRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
-  | CreateRequestBuilder<
-      TestEntityWithMultipleKeys<DeSerializersT>,
-      DeSerializersT
-    >
-  | UpdateRequestBuilder<
-      TestEntityWithMultipleKeys<DeSerializersT>,
-      DeSerializersT
-    >
-  | DeleteRequestBuilder<
-      TestEntityWithMultipleKeys<DeSerializersT>,
-      DeSerializersT
-    >
   | CreateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | DeleteRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
@@ -169,11 +142,11 @@ export type WriteTestServiceRequestBuilder<
   | DeleteRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | ActionImportRequestBuilder<
       DeSerializersT,
-      CreateTestEntityById4Parameters<DeSerializersT>,
+      CreateTestEntityByIdParameters<DeSerializersT>,
       TestEntity
     >
   | ActionImportRequestBuilder<
       DeSerializersT,
-      CreateTestEntityByIdReturnId4Parameters<DeSerializersT>,
+      CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
       number
     >;

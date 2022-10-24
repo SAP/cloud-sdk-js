@@ -3,20 +3,36 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { DefaultDeSerializers, DeSerializers, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder, DeserializedType, RequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder,
+  DeserializedType,
+  RequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 
 /**
  * Request builder class for operations supported on the {@link TestEntity} entity.
  */
-export class TestEntityRequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<TestEntity<T>, T> {
+export class TestEntityRequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<TestEntity<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
    * @param keyTestEntity Key property. See {@link TestEntity.keyTestEntity}.
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
-  getByKey(keyTestEntity: DeserializedType<T, 'Edm.Int32'>): GetByKeyRequestBuilder<TestEntity<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntity<T>, T>(this.entityApi, { KeyTestEntity: keyTestEntity });
+  getByKey(
+    keyTestEntity: DeserializedType<T, 'Edm.Int32'>
+  ): GetByKeyRequestBuilder<TestEntity<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntity<T>, T>(this.entityApi, {
+      KeyTestEntity: keyTestEntity
+    });
   }
 
   /**
@@ -58,6 +74,11 @@ export class TestEntityRequestBuilder<T extends DeSerializers = DefaultDeSeriali
    */
   delete(entity: TestEntity<T>): DeleteRequestBuilder<TestEntity<T>, T>;
   delete(keyTestEntityOrEntity: any): DeleteRequestBuilder<TestEntity<T>, T> {
-    return new DeleteRequestBuilder<TestEntity<T>, T>(this.entityApi, keyTestEntityOrEntity instanceof TestEntity ? keyTestEntityOrEntity : { KeyTestEntity: keyTestEntityOrEntity! });
+    return new DeleteRequestBuilder<TestEntity<T>, T>(
+      this.entityApi,
+      keyTestEntityOrEntity instanceof TestEntity
+        ? keyTestEntityOrEntity
+        : { KeyTestEntity: keyTestEntityOrEntity! }
+    );
   }
 }

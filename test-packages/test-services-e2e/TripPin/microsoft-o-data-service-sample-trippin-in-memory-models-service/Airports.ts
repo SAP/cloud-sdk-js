@@ -3,7 +3,19 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers,
+  DeserializedType,
+  entityDeserializer,
+  BoundActionRequestBuilder,
+  transformReturnValueForComplexType,
+  defaultDeSerializers,
+  BoundFunctionRequestBuilder,
+  FunctionImportParameter,
+  ActionImportParameter
+} from '@sap-cloud-sdk/odata-v4';
 import { AirportLocation, AirportLocationField } from './AirportLocation';
 import type { AirportsApi } from './AirportsApi';
 import type { Photos } from './Photos';
@@ -13,7 +25,10 @@ import type { Airlines } from './Airlines';
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export class Airports<T extends DeSerializers = DefaultDeSerializers> extends Entity implements AirportsType<T> {
+export class Airports<T extends DeSerializers = DefaultDeSerializers>
+  extends Entity
+  implements AirportsType<T>
+{
   /**
    * Technical entity name for Airports.
    */
@@ -21,7 +36,8 @@ export class Airports<T extends DeSerializers = DefaultDeSerializers> extends En
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+  static _defaultServicePath =
+    'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * All key fields of the Airports entity
    */
@@ -47,12 +63,23 @@ export class Airports<T extends DeSerializers = DefaultDeSerializers> extends En
     super(_entityApi);
   }
 
-  resetDataSource_3<DeSerializersT extends DeSerializers = DefaultDeSerializers>(): BoundActionRequestBuilder<Airports<DeSerializersT>, DeSerializersT, any, undefined | null> {
-    const params = {
-    };
+  resetDataSource_3<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
+    Airports<DeSerializersT>,
+    DeSerializersT,
+    any,
+    undefined | null
+  > {
+    const params = {};
     const deSerializers = defaultDeSerializers as any;
     return new BoundActionRequestBuilder(
-      this._entityApi as any, this as any, 'Microsoft.OData.SampleService.Models.TripPin.ResetDataSource', (data) => data, params, deSerializers
+      this._entityApi as any,
+      this as any,
+      'Microsoft.OData.SampleService.Models.TripPin.ResetDataSource',
+      data => data,
+      params,
+      deSerializers
     ) as any;
   }
 }

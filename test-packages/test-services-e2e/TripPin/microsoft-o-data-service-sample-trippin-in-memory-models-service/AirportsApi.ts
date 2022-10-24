@@ -6,61 +6,49 @@
 import { Airports } from './Airports';
 import { AirportsRequestBuilder } from './AirportsRequestBuilder';
 import { AirportLocation, AirportLocationField } from './AirportLocation';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, OrderableEdmTypeField } from '@sap-cloud-sdk/odata-v4';
-export class AirportsApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
-    EntityApi<
-      Airports<
-        DeSerializersT
-      >, 
-      DeSerializersT
-    > {
+import {
+  CustomField,
+  defaultDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers,
+  AllFields,
+  entityBuilder,
+  EntityBuilderType,
+  EntityApi,
+  FieldBuilder,
+  OrderableEdmTypeField
+} from '@sap-cloud-sdk/odata-v4';
+export class AirportsApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<Airports<DeSerializersT>, DeSerializersT>
+{
   public deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {
-      
-    };
+  private navigationPropertyFields!: {};
 
-  _addNavigationProperties(
-      linkedApis: [
-        
-      ]): this {
-        this.navigationPropertyFields = {
-          
-        };
-        return this;
-      }
-  
+  _addNavigationProperties(linkedApis: []): this {
+    this.navigationPropertyFields = {};
+    return this;
+  }
+
   entityConstructor = Airports;
-  
-  requestBuilder(): AirportsRequestBuilder<
-    DeSerializersT
-  > {
+
+  requestBuilder(): AirportsRequestBuilder<DeSerializersT> {
     return new AirportsRequestBuilder<DeSerializersT>(this);
   }
-  
-  entityBuilder(): EntityBuilderType<
-    Airports<
-      DeSerializersT
-    >,
-    DeSerializersT
-  > {
+
+  entityBuilder(): EntityBuilderType<Airports<DeSerializersT>, DeSerializersT> {
     return entityBuilder<Airports<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<
-  Airports<
-      DeSerializersT>,
-    DeSerializersT,
-    NullableT
-  > {
+  ): CustomField<Airports<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -71,53 +59,88 @@ export class AirportsApi<DeSerializersT extends DeSerializers = DefaultDeSeriali
 
   private _fieldBuilder?: FieldBuilder<typeof Airports, DeSerializersT>;
   get fieldBuilder() {
-    if(!this._fieldBuilder){
+    if (!this._fieldBuilder) {
       this._fieldBuilder = new FieldBuilder(Airports, this.deSerializers);
     }
     return this._fieldBuilder;
   }
 
   private _schema?: {
-    ICAO_CODE: OrderableEdmTypeField<Airports<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
-NAME: OrderableEdmTypeField<Airports<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
-IATA_CODE: OrderableEdmTypeField<Airports<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
-LOCATION: AirportLocationField<Airports<DeSerializers>, DeSerializersT, false, true>,
-ALL_FIELDS: AllFields<Airports<DeSerializers>>
+    ICAO_CODE: OrderableEdmTypeField<
+      Airports<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    NAME: OrderableEdmTypeField<
+      Airports<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    IATA_CODE: OrderableEdmTypeField<
+      Airports<DeSerializers>,
+      DeSerializersT,
+      'Edm.String',
+      false,
+      true
+    >;
+    LOCATION: AirportLocationField<
+      Airports<DeSerializers>,
+      DeSerializersT,
+      false,
+      true
+    >;
+    ALL_FIELDS: AllFields<Airports<DeSerializers>>;
   };
 
   get schema() {
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
-      this._schema = { 
-    /**
- * Static representation of the {@link icaoCode} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-ICAO_CODE: fieldBuilder.buildEdmTypeField('IcaoCode', 'Edm.String', false),
-/**
- * Static representation of the {@link name} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
-/**
- * Static representation of the {@link iataCode} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-IATA_CODE: fieldBuilder.buildEdmTypeField('IataCode', 'Edm.String', false),
-/**
- * Static representation of the {@link location} property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-LOCATION: fieldBuilder.buildComplexTypeField('Location', AirportLocationField, false),
-...this.navigationPropertyFields,
-/**
- * 
- * All fields selector.
- */
-ALL_FIELDS: new AllFields('*', Airports) 
-  };
+      this._schema = {
+        /**
+         * Static representation of the {@link icaoCode} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        ICAO_CODE: fieldBuilder.buildEdmTypeField(
+          'IcaoCode',
+          'Edm.String',
+          false
+        ),
+        /**
+         * Static representation of the {@link name} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
+        /**
+         * Static representation of the {@link iataCode} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        IATA_CODE: fieldBuilder.buildEdmTypeField(
+          'IataCode',
+          'Edm.String',
+          false
+        ),
+        /**
+         * Static representation of the {@link location} property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        LOCATION: fieldBuilder.buildComplexTypeField(
+          'Location',
+          AirportLocationField,
+          false
+        ),
+        ...this.navigationPropertyFields,
+        /**
+         *
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', Airports)
+      };
     }
-  
+
     return this._schema;
   }
 }

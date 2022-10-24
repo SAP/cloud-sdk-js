@@ -1,25 +1,32 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.Airlines = void 0;
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
 class Airlines extends odata_v4_1.Entity {
-    constructor(_entityApi) {
-        super(_entityApi);
-        this._entityApi = _entityApi;
-    }
-    resetDataSource_2() {
-        const params = {};
-        const deSerializers = odata_v4_1.defaultDeSerializers;
-        return new odata_v4_1.BoundActionRequestBuilder(this._entityApi, this, 'Microsoft.OData.SampleService.Models.TripPin.ResetDataSource', (data) => data, params, deSerializers);
-    }
+  constructor(_entityApi) {
+    super(_entityApi);
+    this._entityApi = _entityApi;
+  }
+  resetDataSource_2() {
+    const params = {};
+    const deSerializers = odata_v4_1.defaultDeSerializers;
+    return new odata_v4_1.BoundActionRequestBuilder(
+      this._entityApi,
+      this,
+      'Microsoft.OData.SampleService.Models.TripPin.ResetDataSource',
+      data => data,
+      params,
+      deSerializers
+    );
+  }
 }
 exports.Airlines = Airlines;
 /**
@@ -29,7 +36,8 @@ Airlines._entityName = 'Airlines';
 /**
  * Default url path for the according service.
  */
-Airlines._defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+Airlines._defaultServicePath =
+  'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 /**
  * All key fields of the Airlines entity
  */

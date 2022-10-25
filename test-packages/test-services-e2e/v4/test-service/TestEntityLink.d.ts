@@ -2,9 +2,13 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  BoundActionRequestBuilder,
+  BoundFunctionRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityLinkApi } from './TestEntityLinkApi';
+import type { TestEntity } from './TestEntity';
+import type { TestEntityWithMultipleKeys } from './TestEntityWithMultipleKeys';
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
  */
@@ -42,6 +46,87 @@ export declare class TestEntityLink<
    */
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   constructor(_entityApi: TestEntityLinkApi<T>);
+  concatStrings<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
+    str1: string,
+    str2: string
+  ): BoundFunctionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  getAll<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    TestEntity | null
+  >;
+  getByKey<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
+    param: number
+  ): BoundFunctionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    TestEntity | null
+  >;
+  getByKeyWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    keyTestEntityWithMultipleKeys: number,
+    stringPropertyWithMultipleKeys: string,
+    booleanPropertyWithMultipleKeys: boolean
+  ): BoundFunctionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    TestEntityWithMultipleKeys | null
+  >;
+  returnCollection<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
+    param: number
+  ): BoundFunctionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    number | null
+  >;
+  returnInt<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
+    param: number
+  ): BoundFunctionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    number | null
+  >;
+  returnSapCloudSdk<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundFunctionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  createTestEntityById<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    id: number
+  ): BoundActionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    TestEntity | null
+  >;
+  createTestEntityByIdReturnId<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    id: number
+  ): BoundActionRequestBuilder<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT,
+    any,
+    number | null
+  >;
 }
 export interface TestEntityLinkType<
   T extends DeSerializers = DefaultDeSerializers

@@ -7,10 +7,19 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  entityDeserializer,
+  BoundActionRequestBuilder,
+  transformReturnValueForComplexType,
+  defaultDeSerializers,
+  BoundFunctionRequestBuilder,
+  FunctionImportParameter,
+  ActionImportParameter
 } from '@sap-cloud-sdk/odata-v4';
 import { Location } from './Location';
 import type { PeopleApi } from './PeopleApi';
+import type { Airlines } from './Airlines';
+import type { Airports } from './Airports';
 import { PersonGender } from './PersonGender';
 import { Photos, PhotosType } from './Photos';
 
@@ -76,6 +85,52 @@ export class People<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: PeopleApi<T>) {
     super(_entityApi);
+  }
+
+  getNearestAirport<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    lat: number,
+    lon: number
+  ): BoundFunctionRequestBuilder<
+    People<DeSerializersT>,
+    DeSerializersT,
+    any,
+    Airports | null
+  > {
+    const params = {
+      lat: new FunctionImportParameter('lat', 'Edm.Double', lat),
+      lon: new FunctionImportParameter('lon', 'Edm.Double', lon)
+    };
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundFunctionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'Microsoft.OData.SampleService.Models.TripPin.GetNearestAirport',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  resetDataSource<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
+    People<DeSerializersT>,
+    DeSerializersT,
+    any,
+    undefined | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'Microsoft.OData.SampleService.Models.TripPin.ResetDataSource',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
   }
 }
 

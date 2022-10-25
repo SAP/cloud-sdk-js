@@ -1,10 +1,12 @@
 import { TestEntityApi } from './TestEntityApi';
+import { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
 import { TestEntity50PropApi } from './TestEntity50PropApi';
 import {
   ConcatStringsParameters,
   GetAllParameters,
   GetByKeyParameters,
+  GetByKeyWithMultipleKeysParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
   ReturnSapCloudSdkParameters
@@ -96,6 +98,7 @@ declare class TestService<
   constructor(deSerializers: DeSerializersT);
   private initApi;
   get testEntityApi(): TestEntityApi<DeSerializersT>;
+  get testEntityWithMultipleKeysApi(): TestEntityWithMultipleKeysApi<DeSerializersT>;
   get testEntityLinkApi(): TestEntityLinkApi<DeSerializersT>;
   get testEntity50PropApi(): TestEntity50PropApi<DeSerializersT>;
   get functionImports(): {
@@ -119,6 +122,13 @@ declare class TestService<
       DeSerializersT,
       GetByKeyParameters<DeSerializersT>,
       import('./TestEntity').TestEntity<DefaultDeSerializers>
+    >;
+    getByKeyWithMultipleKeys: (
+      parameter: GetByKeyWithMultipleKeysParameters<DeSerializersT>
+    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+      DeSerializersT,
+      GetByKeyWithMultipleKeysParameters<DeSerializersT>,
+      import('./TestEntityWithMultipleKeys').TestEntityWithMultipleKeys<DefaultDeSerializers>
     >;
     returnCollection: (
       parameter: ReturnCollectionParameters<DeSerializersT>

@@ -2,9 +2,12 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  BoundActionRequestBuilder,
+  BoundFunctionRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { PhotosApi } from './PhotosApi';
+import type { Airports } from './Airports';
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
@@ -35,6 +38,25 @@ export declare class Photos<T extends DeSerializers = DefaultDeSerializers>
    */
   name?: DeserializedType<T, 'Edm.String'> | null;
   constructor(_entityApi: PhotosApi<T>);
+  getNearestAirport<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    lat: number,
+    lon: number
+  ): BoundFunctionRequestBuilder<
+    Photos<DeSerializersT>,
+    DeSerializersT,
+    any,
+    Airports | null
+  >;
+  resetDataSource<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
+    Photos<DeSerializersT>,
+    DeSerializersT,
+    any,
+    undefined | null
+  >;
 }
 export interface PhotosType<T extends DeSerializers = DefaultDeSerializers> {
   id: DeserializedType<T, 'Edm.Int64'>;

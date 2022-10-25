@@ -2,8 +2,7 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType,
-  BoundActionRequestBuilder
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import type { AirlinesApi } from './AirlinesApi';
 /**
@@ -35,14 +34,6 @@ export declare class Airlines<T extends DeSerializers = DefaultDeSerializers>
    */
   name: DeserializedType<T, 'Edm.String'>;
   constructor(_entityApi: AirlinesApi<T>);
-  resetDataSource_2<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    Airlines<DeSerializersT>,
-    DeSerializersT,
-    any,
-    undefined | null
-  >;
 }
 export interface AirlinesType<T extends DeSerializers = DefaultDeSerializers> {
   airlineCode: DeserializedType<T, 'Edm.String'>;

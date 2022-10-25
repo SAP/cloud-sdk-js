@@ -5,9 +5,9 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 /**
- * Type of the parameters to be passed to {@link createTestEntityById_4}.
+ * Type of the parameters to be passed to {@link createTestEntityById}.
  */
-export interface CreateTestEntityById4Parameters<
+export interface CreateTestEntityByIdParameters<
   DeSerializersT extends DeSerializers
 > {
   /**
@@ -21,20 +21,20 @@ export interface CreateTestEntityById4Parameters<
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function createTestEntityById_4<
+export declare function createTestEntityById<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
-  parameters: CreateTestEntityById4Parameters<DeSerializersT>,
+  parameters: CreateTestEntityByIdParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
 ): ActionImportRequestBuilder<
   DeSerializersT,
-  CreateTestEntityById4Parameters<DeSerializersT>,
+  CreateTestEntityByIdParameters<DeSerializersT>,
   TestEntity
 >;
 /**
- * Type of the parameters to be passed to {@link createTestEntityByIdReturnId_4}.
+ * Type of the parameters to be passed to {@link createTestEntityByIdReturnId}.
  */
-export interface CreateTestEntityByIdReturnId4Parameters<
+export interface CreateTestEntityByIdReturnIdParameters<
   DeSerializersT extends DeSerializers
 > {
   /**
@@ -48,18 +48,18 @@ export interface CreateTestEntityByIdReturnId4Parameters<
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function createTestEntityByIdReturnId_4<
+export declare function createTestEntityByIdReturnId<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
-  parameters: CreateTestEntityByIdReturnId4Parameters<DeSerializersT>,
+  parameters: CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
 ): ActionImportRequestBuilder<
   DeSerializersT,
-  CreateTestEntityByIdReturnId4Parameters<DeSerializersT>,
+  CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
   number
 >;
 export declare const actionImports: {
-  createTestEntityById_4: typeof createTestEntityById_4;
-  createTestEntityByIdReturnId_4: typeof createTestEntityByIdReturnId_4;
+  createTestEntityById: typeof createTestEntityById;
+  createTestEntityByIdReturnId: typeof createTestEntityByIdReturnId;
 };
 //# sourceMappingURL=action-imports.d.ts.map

@@ -1,8 +1,8 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.actionImports =
-  exports.createTestEntityByIdReturnId_4 =
-  exports.createTestEntityById_4 =
+  exports.createTestEntityByIdReturnId =
+  exports.createTestEntityById =
     void 0;
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
@@ -17,7 +17,7 @@ const service_1 = require('./service');
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function createTestEntityById_4(
+function createTestEntityById(
   parameters,
   deSerializers = odata_v4_1.defaultDeSerializers
 ) {
@@ -36,14 +36,14 @@ function createTestEntityById_4(
     deSerializers
   );
 }
-exports.createTestEntityById_4 = createTestEntityById_4;
+exports.createTestEntityById = createTestEntityById;
 /**
  * Create Test Entity By Id Return Id.
  *
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function createTestEntityByIdReturnId_4(
+function createTestEntityByIdReturnId(
   parameters,
   deSerializers = odata_v4_1.defaultDeSerializers
 ) {
@@ -61,9 +61,9 @@ function createTestEntityByIdReturnId_4(
     deSerializers
   );
 }
-exports.createTestEntityByIdReturnId_4 = createTestEntityByIdReturnId_4;
+exports.createTestEntityByIdReturnId = createTestEntityByIdReturnId;
 exports.actionImports = {
-  createTestEntityById_4,
-  createTestEntityByIdReturnId_4
+  createTestEntityById,
+  createTestEntityByIdReturnId
 };
 //# sourceMappingURL=action-imports.js.map

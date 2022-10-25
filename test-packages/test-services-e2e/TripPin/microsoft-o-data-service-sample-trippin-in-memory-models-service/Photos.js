@@ -15,18 +15,6 @@ class Photos extends odata_v4_1.Entity {
     super(_entityApi);
     this._entityApi = _entityApi;
   }
-  resetDataSource() {
-    const params = {};
-    const deSerializers = odata_v4_1.defaultDeSerializers;
-    return new odata_v4_1.BoundActionRequestBuilder(
-      this._entityApi,
-      this,
-      'Microsoft.OData.SampleService.Models.TripPin.ResetDataSource',
-      data => data,
-      params,
-      deSerializers
-    );
-  }
 }
 exports.Photos = Photos;
 /**

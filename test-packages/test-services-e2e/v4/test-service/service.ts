@@ -4,30 +4,27 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityApi } from './TestEntityApi';
-import { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
 import { TestEntity50PropApi } from './TestEntity50PropApi';
 import {
   concatStrings,
   getAll,
   getByKey,
-  getByKeyWithMultipleKeys,
   returnCollection,
   returnInt,
   returnSapCloudSdk,
   ConcatStringsParameters,
   GetAllParameters,
   GetByKeyParameters,
-  GetByKeyWithMultipleKeysParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
   ReturnSapCloudSdkParameters
 } from './function-imports';
 import {
-  createTestEntityById_4,
-  createTestEntityByIdReturnId_4,
-  CreateTestEntityById4Parameters,
-  CreateTestEntityByIdReturnId4Parameters
+  createTestEntityById,
+  createTestEntityByIdReturnId,
+  CreateTestEntityByIdParameters,
+  CreateTestEntityByIdReturnIdParameters
 } from './action-imports';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
@@ -131,13 +128,6 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     return api;
   }
 
-  get testEntityWithMultipleKeysApi(): TestEntityWithMultipleKeysApi<DeSerializersT> {
-    return this.initApi(
-      'testEntityWithMultipleKeysApi',
-      TestEntityWithMultipleKeysApi
-    );
-  }
-
   get testEntityLinkApi(): TestEntityLinkApi<DeSerializersT> {
     return this.initApi('testEntityLinkApi', TestEntityLinkApi);
   }
@@ -154,9 +144,6 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
         getAll(parameter, this.deSerializers),
       getByKey: (parameter: GetByKeyParameters<DeSerializersT>) =>
         getByKey(parameter, this.deSerializers),
-      getByKeyWithMultipleKeys: (
-        parameter: GetByKeyWithMultipleKeysParameters<DeSerializersT>
-      ) => getByKeyWithMultipleKeys(parameter, this.deSerializers),
       returnCollection: (
         parameter: ReturnCollectionParameters<DeSerializersT>
       ) => returnCollection(parameter, this.deSerializers),
@@ -170,12 +157,12 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
 
   get actionImports() {
     return {
-      createTestEntityById_4: (
-        parameter: CreateTestEntityById4Parameters<DeSerializersT>
-      ) => createTestEntityById_4(parameter, this.deSerializers),
-      createTestEntityByIdReturnId_4: (
-        parameter: CreateTestEntityByIdReturnId4Parameters<DeSerializersT>
-      ) => createTestEntityByIdReturnId_4(parameter, this.deSerializers)
+      createTestEntityById: (
+        parameter: CreateTestEntityByIdParameters<DeSerializersT>
+      ) => createTestEntityById(parameter, this.deSerializers),
+      createTestEntityByIdReturnId: (
+        parameter: CreateTestEntityByIdReturnIdParameters<DeSerializersT>
+      ) => createTestEntityByIdReturnId(parameter, this.deSerializers)
     };
   }
 

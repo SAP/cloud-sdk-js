@@ -60,8 +60,8 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService {
   }
   get actionImports() {
     return {
-      resetDataSource_4: parameter =>
-        (0, action_imports_1.resetDataSource_4)(parameter, this.deSerializers)
+      resetDataSource: parameter =>
+        (0, action_imports_1.resetDataSource)(parameter, this.deSerializers)
     };
   }
   get batch() {

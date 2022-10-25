@@ -2,8 +2,7 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType,
-  BoundActionRequestBuilder
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import type { PhotosApi } from './PhotosApi';
 /**
@@ -36,14 +35,6 @@ export declare class Photos<T extends DeSerializers = DefaultDeSerializers>
    */
   name?: DeserializedType<T, 'Edm.String'> | null;
   constructor(_entityApi: PhotosApi<T>);
-  resetDataSource<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    Photos<DeSerializersT>,
-    DeSerializersT,
-    any,
-    undefined | null
-  >;
 }
 export interface PhotosType<T extends DeSerializers = DefaultDeSerializers> {
   id: DeserializedType<T, 'Edm.Int64'>;

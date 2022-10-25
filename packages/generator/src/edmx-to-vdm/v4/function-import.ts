@@ -1,15 +1,15 @@
-import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
-import { parseFunctionImportsV4, parseFunctions } from '../../edmx-parser';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { transformFunctionImportBase } from '../common/function-import';
+import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
 import {
   EdmxFunction,
   EdmxFunctionImportV4
 } from '../../edmx-parser/v4/edm-types';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
+import { parseFunctionImportsV4, parseFunctions } from '../../edmx-parser';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { VdmComplexType, VdmEntity, VdmEntityInConstruction, VdmFunctionImport } from '../../vdm-types';
-import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
-import { transformFunctionImportBase } from '../common/function-import';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 import { findActionFunctionByImportName } from './action-function-util';
 const logger = createLogger({
@@ -79,21 +79,18 @@ export function generateFunctionImportsV4(
   formatter: ServiceNameFormatter,
   bindingEntity?: string
 ): VdmFunctionImport[] {
-  // fixme do this only once not per entity?
   const functions = parseFunctions(serviceMetadata.edmx.root);
   const functionImports = parseFunctionImportsV4(serviceMetadata.edmx.root);
   const joinedFunctionData = joinFunctionImportData(functionImports, functions);
 
-
-  //fixme(fwilhe): filter 3 aspects: is bound?, is right bounding entity, has unsupported parameters
+  //fixme(fwilhe) adapt filter for bound
   return (
     joinedFunctionData
       // TODO 1571 remove when supporting entity type as parameter
       .filter(
         ({ function: edmxFunction }) =>
-          !hasUnsupportedParameterTypes(edmxFunction, bindingEntity)
+          !hasUnsupportedParameterTypes(edmxFunction)
       )
-      .filter(f => removeBindingParameter(f, bindingEntity)) // assign correct entity
       .map(({ functionImport, function: edmxFunction }) => {
         const httpMethod = 'get';
         const swaggerDefinition = swaggerDefinitionForFunctionImport(
@@ -107,8 +104,7 @@ export function generateFunctionImportsV4(
             functionImport,
             edmxFunction.Parameter,
             swaggerDefinition,
-            formatter,
-            bindingEntity
+            formatter
           ),
           httpMethod,
           returnType: parseFunctionImportReturnTypes(
@@ -122,7 +118,3 @@ export function generateFunctionImportsV4(
       })
   );
 }
-function removeBindingParameter(joinedFunctionData: JoinedFunctionImportData, bindingEntity?: string): boolean {
-  return bindingEntity ? joinedFunctionData.function.Parameter[0]?.Type.endsWith(bindingEntity) : true;
-}
-

@@ -1,13 +1,13 @@
-import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser';
 import { EdmxAction, EdmxActionImport } from '../../edmx-parser/v4/edm-types';
 import {
   parseActionImport,
   parseActions
 } from '../../edmx-parser/v4/edmx-parser';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { swaggerDefinitionForFunctionImport } from '../../swagger-parser';
-import { VdmActionImport, VdmComplexType, VdmEntityInConstruction } from '../../vdm-types';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { VdmActionImport, VdmComplexType, VdmEntity, VdmEntityInConstruction } from '../../vdm-types';
 import { parseActionImportReturnTypes } from '../common/action-function-return-types';
 import { transformActionImportBase } from '../common/action-import';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
@@ -82,12 +82,13 @@ export function generateActionImportsV4(
   const actions = parseActions(serviceMetadata.edmx.root);
   const actionImports = parseActionImport(serviceMetadata.edmx.root);
 
+  //fixme(fwilhe) adapt filter for bound
   const joinedFunctionData = joinActionImportData(actionImports, actions);
   return (
     joinedFunctionData
       // TODO 1571 remove when supporting entity type as parameter
       .filter(
-        ({ action: edmxAction }) => !hasUnsupportedParameterTypes(edmxAction, bindingEntity)
+        ({ action: edmxAction }) => !hasUnsupportedParameterTypes(edmxAction)
       )
       .map(({ actionImport, action: edmxAction }) => {
         const httpMethod = 'post';
@@ -102,8 +103,7 @@ export function generateActionImportsV4(
             actionImport,
             edmxAction.Parameter || [],
             swaggerDefinition,
-            formatter,
-            bindingEntity
+            formatter
           ),
           httpMethod,
           returnType: parseActionImportReturnTypes(

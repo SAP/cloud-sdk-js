@@ -3,6 +3,8 @@ import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import voca from 'voca';
 import {
   VdmActionFunctionImportReturnType,
+  VdmActionImport,
+  VdmFunctionImport,
   VdmParameter,
   VdmReturnTypeCategory,
   VdmServiceMetadata
@@ -129,17 +131,18 @@ function returnTypeImport(
 /**
  * @internal
  */
-export function importDeclarationsFunction(
-  service: VdmServiceMetadata
+export function importDeclarationsAction(
+  service: VdmServiceMetadata,
+  imports: VdmFunctionImport[]
 ): ImportDeclarationStructure[] {
-  if (!service.actionImports) {
+  if (!imports) {
     return [];
   }
 
   const actionImportPayloadElements = flat(
-    service.actionImports.map(actionImport => actionImport.parameters)
+    imports.map(actionImport => actionImport.parameters)
   );
-  const returnTypes = service.actionImports.map(
+  const returnTypes = imports.map(
     actionImport => actionImport.returnType
   );
   return actionFunctionImportDeclarations(
@@ -156,13 +159,14 @@ export function importDeclarationsFunction(
 /**
  * @internal
  */
-export function importDeclarationsAction(
-  service: VdmServiceMetadata
+export function importDeclarationsFunction(
+  service: VdmServiceMetadata,
+  imports: VdmFunctionImport[]
 ): ImportDeclarationStructure[] {
   const functionImportParameters = flat(
-    service.functionImports.map(functionImport => functionImport.parameters)
+    imports.map(functionImport => functionImport.parameters)
   );
-  const returnTypes = service.functionImports.map(
+  const returnTypes = imports.map(
     functionImport => functionImport.returnType
   );
   return actionFunctionImportDeclarations(

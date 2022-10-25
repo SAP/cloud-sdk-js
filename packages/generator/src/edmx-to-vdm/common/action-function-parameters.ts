@@ -63,7 +63,8 @@ function getParameter<T extends EdmxNamed>(
     const typeMapping = getTypeMappingActionFunction(p.Type);
     return {
       originalName: p.Name,
-      parameterName: formatter.originalToParameterName(
+      parameterName: bindingEntity ? formatter.originalToBoundParameterName(bindingEntity, edmxActionFunctionImport.Name, p.Name) :
+        formatter.originalToParameterName(
         edmxActionFunctionImport.Name,
         p.Name
       ),

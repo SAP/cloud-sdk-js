@@ -168,6 +168,21 @@ export class ServiceNameFormatter {
     return generator.generateAndSaveUniqueName(transformedName);
   }
 
+  originalToBoundParameterName(
+    entityName: string,
+    originalFunctionImportName: string,
+    originalParameterName: string,
+  ): string {
+    const transformedName = voca.camelCase(originalParameterName);
+
+    const generator = this.getOrInitGenerator(
+      this.parameterNameGenerators,
+      `${entityName}.${originalFunctionImportName}`
+    );
+
+    return generator.generateAndSaveUniqueName(transformedName);
+  }
+
   originalToEntityClassName(entitySetName: string): string {
     let transformedName = entitySetName;
     if (transformedName.endsWith('Collection')) {

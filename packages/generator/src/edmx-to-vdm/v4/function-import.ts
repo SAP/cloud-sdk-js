@@ -77,7 +77,7 @@ export function generateFunctionImportsV4(
   entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
-  bindingEntity?: string
+  bindingEntity?: string // rename set name
 ): VdmFunctionImport[] {
   const functions = parseFunctions(serviceMetadata.edmx.root);
   const functionImports = parseFunctionImportsV4(serviceMetadata.edmx.root);
@@ -104,7 +104,8 @@ export function generateFunctionImportsV4(
             functionImport,
             edmxFunction.Parameter,
             swaggerDefinition,
-            formatter
+            formatter,
+            bindingEntity
           ),
           httpMethod,
           returnType: parseFunctionImportReturnTypes(

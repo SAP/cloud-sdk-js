@@ -17,7 +17,7 @@ export function transformActionImportBase(
   formatter: ServiceNameFormatter,
   bindingEntity?: string
 ): VdmActionImportBase {
-  const name = formatter.originalToActionImportName(edmxActionImport.Name);
+  const name = bindingEntity? formatter.originalToBoundActionImportName(bindingEntity, edmxActionImport.Name) :  formatter.originalToActionImportName(edmxActionImport.Name);
   const actionImport = {
     originalName: edmxActionImport.Name,
     name,

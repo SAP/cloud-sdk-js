@@ -103,7 +103,8 @@ export function generateActionImportsV4(
             actionImport,
             edmxAction.Parameter || [],
             swaggerDefinition,
-            formatter
+            formatter,
+            bindingEntity
           ),
           httpMethod,
           returnType: parseActionImportReturnTypes(

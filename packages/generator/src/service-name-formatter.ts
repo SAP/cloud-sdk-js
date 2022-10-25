@@ -1,9 +1,8 @@
-import voca from 'voca';
 import {
-  UniqueNameGenerator,
-  upperCaseSnakeCase,
-  camelCase
+  camelCase, UniqueNameGenerator,
+  upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
+import voca from 'voca';
 import { stripPrefix } from './internal-prefix';
 import { applyPrefixOnJsConflictFunctionImports } from './name-formatting-strategies';
 import {
@@ -106,8 +105,24 @@ export class ServiceNameFormatter {
     return applyPrefixOnJsConflictFunctionImports(newName);
   }
 
+  originalToBoundFunctionImportName(entityName: string, functionName: string): string {
+    const generator = this.getOrInitGenerator(
+      this.instancePropertyNameGenerators,
+      entityName
+    );
+    const transformedName = voca.camelCase(functionName);
+    const newName =
+      generator.generateAndSaveUniqueName(transformedName);
+
+    return applyPrefixOnJsConflictFunctionImports(newName);
+  }
+
   originalToActionImportName(str: string): string {
     return this.originalToFunctionImportName(str);
+  }
+
+  originalToBoundActionImportName(entityName: string, actionName: string): string {
+    return this.originalToBoundFunctionImportName(entityName, actionName);
   }
 
   originalToComplexTypeName(str: string): string {

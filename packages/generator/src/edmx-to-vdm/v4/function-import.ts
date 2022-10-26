@@ -71,6 +71,28 @@ function joinFunctionImportData(
 /**
  * @internal
  */
+export function filterFunctions(joinedFunctionData: JoinedFunctionImportData[], bindingEntitySetName?: string): JoinedFunctionImportData[] {
+  if (bindingEntitySetName) {
+    // filter 3 aspects: is bound?, is right bounding entity, has unsupported parameters
+    return joinedFunctionData
+      .filter(({ function: edmxFunction }) => edmxFunction.IsBound)
+      .filter(({ function: edmxFunction }) => edmxFunction.Parameter.length > 0)
+      .filter(({ function: edmxFunction }) => edmxFunction.Parameter[0].Type.endsWith(bindingEntitySetName))
+      .filter(
+        ({ function: edmxFunction }) =>
+          !hasUnsupportedParameterTypes(edmxFunction, bindingEntitySetName)
+      );
+  }
+      // TODO 1571 remove when supporting entity type as parameter
+  return joinedFunctionData.filter(
+    ({ function: edmxFunction }) =>
+      !hasUnsupportedParameterTypes(edmxFunction, bindingEntitySetName)
+  );
+}
+
+/**
+ * @internal
+ */
 export function generateFunctionImportsV4(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
@@ -82,15 +104,11 @@ export function generateFunctionImportsV4(
   const functions = parseFunctions(serviceMetadata.edmx.root);
   const functionImports = parseFunctionImportsV4(serviceMetadata.edmx.root);
   const joinedFunctionData = joinFunctionImportData(functionImports, functions);
+  const filteredJoinedFunctionData = filterFunctions(joinedFunctionData, bindingEntitySetName);
 
   // fixme(fwilhe) adapt filter for bound
   return (
-    joinedFunctionData
-      // TODO 1571 remove when supporting entity type as parameter
-      .filter(
-        ({ function: edmxFunction }) =>
-          !hasUnsupportedParameterTypes(edmxFunction)
-      )
+    filteredJoinedFunctionData
       .map(({ functionImport, function: edmxFunction }) => {
         const httpMethod = 'get';
         const swaggerDefinition = swaggerDefinitionForFunctionImport(

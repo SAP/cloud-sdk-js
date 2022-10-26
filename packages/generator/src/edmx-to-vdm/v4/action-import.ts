@@ -1,13 +1,13 @@
-import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { swaggerDefinitionForFunctionImport } from '../../swagger-parser';
+import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { EdmxAction, EdmxActionImport } from '../../edmx-parser/v4/edm-types';
 import {
   parseActionImport,
   parseActions
 } from '../../edmx-parser/v4/edmx-parser';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import { VdmActionImport, VdmComplexType, VdmEntity, VdmEntityInConstruction } from '../../vdm-types';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser';
+import { VdmActionImport, VdmComplexType, VdmEntityInConstruction } from '../../vdm-types';
 import { parseActionImportReturnTypes } from '../common/action-function-return-types';
 import { transformActionImportBase } from '../common/action-import';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
@@ -77,7 +77,7 @@ export function generateActionImportsV4(
   entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
-  bindingEntity?: string
+  bindingEntitySetName?: string
 ): VdmActionImport[] {
   const actions = parseActions(serviceMetadata.edmx.root);
   const actionImports = parseActionImport(serviceMetadata.edmx.root);
@@ -104,7 +104,7 @@ export function generateActionImportsV4(
             edmxAction.Parameter || [],
             swaggerDefinition,
             formatter,
-            bindingEntity
+            bindingEntitySetName
           ),
           httpMethod,
           returnType: parseActionImportReturnTypes(

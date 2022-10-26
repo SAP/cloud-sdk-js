@@ -1,15 +1,15 @@
-import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { transformFunctionImportBase } from '../common/function-import';
-import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
-import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
+import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
+import { parseFunctionImportsV4, parseFunctions } from '../../edmx-parser';
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import {
   EdmxFunction,
   EdmxFunctionImportV4
 } from '../../edmx-parser/v4/edm-types';
-import { parseFunctionImportsV4, parseFunctions } from '../../edmx-parser';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import { VdmComplexType, VdmEntity, VdmEntityInConstruction, VdmFunctionImport } from '../../vdm-types';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
+import { VdmComplexType, VdmEntityInConstruction, VdmFunctionImport } from '../../vdm-types';
+import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
+import { transformFunctionImportBase } from '../common/function-import';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 import { findActionFunctionByImportName } from './action-function-util';
 const logger = createLogger({
@@ -77,13 +77,13 @@ export function generateFunctionImportsV4(
   entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
-  bindingEntity?: string // rename set name
+  bindingEntitySetName?: string // rename set name
 ): VdmFunctionImport[] {
   const functions = parseFunctions(serviceMetadata.edmx.root);
   const functionImports = parseFunctionImportsV4(serviceMetadata.edmx.root);
   const joinedFunctionData = joinFunctionImportData(functionImports, functions);
 
-  //fixme(fwilhe) adapt filter for bound
+  // fixme(fwilhe) adapt filter for bound
   return (
     joinedFunctionData
       // TODO 1571 remove when supporting entity type as parameter
@@ -105,7 +105,7 @@ export function generateFunctionImportsV4(
             edmxFunction.Parameter,
             swaggerDefinition,
             formatter,
-            bindingEntity
+            bindingEntitySetName
           ),
           httpMethod,
           returnType: parseFunctionImportReturnTypes(

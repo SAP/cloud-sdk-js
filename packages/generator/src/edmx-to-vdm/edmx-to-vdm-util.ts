@@ -4,9 +4,9 @@ import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
 import { EdmxFunctionImportV2 } from '../edmx-parser/v2/edm-types';
 import { EdmxAction, EdmxFunction } from '../edmx-parser/v4/edm-types';
 import {
-  edmToFieldType,
-  edmToTsType,
-  getFallbackEdmTypeIfNeeded
+    edmToFieldType,
+    edmToTsType,
+    getFallbackEdmTypeIfNeeded
 } from '../generator-utils';
 import { VdmComplexType, VdmEnumType, VdmMappedEdmType } from '../vdm-types';
 
@@ -193,9 +193,9 @@ export const propertyJsType = (type: string): string | undefined =>
  * @internal
  */
 export function hasUnsupportedParameterTypes(
-  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImportV2, bindingEntity?: string
+  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImportV2, bindingEntitySetName?: string
 ): boolean {
-  const parameters = bindingEntity ? functionOrAction.Parameter.slice(1) : functionOrAction.Parameter;
+  const parameters = bindingEntitySetName ? functionOrAction.Parameter.slice(1) : functionOrAction.Parameter;
 
   const unsupportedParameters = parameters.filter(
     p => !isEdmType(p.Type)

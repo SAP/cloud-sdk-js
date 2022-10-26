@@ -19,14 +19,14 @@ export function getActionImportParameters(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter,
-  bindingEntity?: string
+  bindingEntitySetName?: string
 ): VdmParameter[] {
   return getParameter(
     edmxActionImport,
     edmxParameters,
     swaggerDefinition,
     formatter,
-    bindingEntity
+    bindingEntitySetName
   );
 }
 /**
@@ -37,14 +37,14 @@ export function getFunctionImportParameters(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter,
-  bindingEntity?: string
+  bindingEntitySetName?: string
 ): VdmParameter[] {
   return getParameter(
     edmxFunctionImport,
     edmxParameters,
     swaggerDefinition,
     formatter,
-    bindingEntity
+    bindingEntitySetName
   );
 }
 
@@ -53,9 +53,9 @@ function getParameter<T extends EdmxNamed>(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter,
-  bindingEntity?: string
+  bindingEntitySetName?: string
 ): VdmParameter[] {
-  const parameters = bindingEntity ? edmxParameters.slice(1) : edmxParameters;
+  const parameters = bindingEntitySetName ? edmxParameters.slice(1) : edmxParameters;
   return parameters.map(p => {
     const swaggerParameter = swaggerDefinition
       ? swaggerDefinition.parameters.find(param => param.name === p.Name)
@@ -63,7 +63,7 @@ function getParameter<T extends EdmxNamed>(
     const typeMapping = getTypeMappingActionFunction(p.Type);
     return {
       originalName: p.Name,
-      parameterName: bindingEntity ? formatter.originalToBoundParameterName(bindingEntity, edmxActionFunctionImport.Name, p.Name) :
+      parameterName: bindingEntitySetName ? formatter.originalToBoundParameterName(bindingEntitySetName, edmxActionFunctionImport.Name, p.Name) :
         formatter.originalToParameterName(
         edmxActionFunctionImport.Name,
         p.Name

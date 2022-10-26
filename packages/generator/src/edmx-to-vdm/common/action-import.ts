@@ -15,9 +15,9 @@ export function transformActionImportBase(
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter,
-  bindingEntity?: string
+  bindingEntitySetName?: string
 ): VdmActionImportBase {
-  const name = bindingEntity? formatter.originalToBoundActionImportName(bindingEntity, edmxActionImport.Name) :  formatter.originalToActionImportName(edmxActionImport.Name);
+  const name = bindingEntitySetName ? formatter.originalToBoundActionImportName(bindingEntitySetName, edmxActionImport.Name) : formatter.originalToActionImportName(edmxActionImport.Name);
   const actionImport = {
     originalName: edmxActionImport.Name,
     name,
@@ -29,7 +29,7 @@ export function transformActionImportBase(
     edmxParameters,
     swaggerDefinition,
     formatter,
-    bindingEntity
+    bindingEntitySetName
   );
 
   return {

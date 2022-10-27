@@ -22,7 +22,7 @@ function parseSwaggerFile(swaggerFile: string): SwaggerMetadata {
 /**
  * @internal
  */
-export function swaggerDefinitionForFunctionImport(
+export function getSwaggerDefinitionForOperation(
   originalName: string,
   httpMethod: string,
   swaggerMetadata: SwaggerMetadata | undefined

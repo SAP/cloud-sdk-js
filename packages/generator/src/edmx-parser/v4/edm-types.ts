@@ -94,7 +94,7 @@ export interface EdmxActionImport extends EdmxNamed, EdmxNamespaced {
 /**
  * @internal
  */
-export interface EdmxFunction extends EdmxNamed, EdmxNamespaced {
+export interface EdmxOperation extends EdmxNamed, EdmxNamespaced {
   /**
    * @internal
    */
@@ -121,10 +121,7 @@ export interface EdmxReturnType {
    */
   Nullable?: string;
 }
-/**
- * @internal
- */
-export type EdmxAction = EdmxFunction;
+
 /**
  * @internal
  */

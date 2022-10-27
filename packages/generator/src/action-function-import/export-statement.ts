@@ -1,16 +1,15 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import {
   StructureKind,
   VariableDeclarationKind,
   VariableStatementStructure
 } from 'ts-morph';
-import { VdmFunctionImport, VdmActionImport } from '../vdm-types';
+import { VdmOperation } from '../vdm-types';
 
 /**
  * @internal
  */
 export function exportStatement(
-  actionFunctionImports: VdmFunctionImport[] | VdmActionImport[],
+  operations: VdmOperation[],
   name: 'functionImports' | 'actionImports'
 ): VariableStatementStructure {
   return {
@@ -19,23 +18,15 @@ export function exportStatement(
     declarations: [
       {
         name,
-        initializer: exportsInitializer(actionFunctionImports)
+        initializer: exportsInitializer(operations)
       }
     ],
     isExported: true
   };
 }
 
-function exportsInitializer(
-  actionFunctionImports: VdmFunctionImport[] | VdmActionImport[]
-): string {
-  return (
-    actionFunctionImports.reduce((initializer, currentImport) => {
-      if (initializer !== `{${unixEOL}`) {
-        initializer += `,${unixEOL}`;
-      }
-      initializer += `${currentImport.name}`;
-      return initializer;
-    }, `{${unixEOL}`) + `${unixEOL}}`
-  );
+function exportsInitializer(operations: VdmOperation[]): string {
+  const exports = operations.map(({ name }) => name);
+
+  return `{\n${exports.join(',\n')}\n}`;
 }

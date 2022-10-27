@@ -5,7 +5,7 @@ import {
   entityCodeSample,
   functionImportCodeSample
 } from './code-samples';
-import { getActionFunctionImport, getODataEntity } from './code-sample-util';
+import { sampleOperationImport, getODataEntity } from './code-sample-util';
 
 /**
  * @internal
@@ -23,7 +23,7 @@ export function getApiSpecificUsage(
   }
   // Return function/action import usage if no entity is found.
   if (service.functionImports?.length > 0) {
-    const functionImport = getActionFunctionImport(
+    const functionImport = sampleOperationImport(
       service.originalFileName,
       service.functionImports
     );
@@ -33,7 +33,7 @@ export function getApiSpecificUsage(
     );
   }
   if (service.actionImports) {
-    const actionImport = getActionFunctionImport(
+    const actionImport = sampleOperationImport(
       service.originalFileName,
       service.actionImports
     );

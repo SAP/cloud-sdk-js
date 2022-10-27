@@ -13,7 +13,7 @@ export interface TestFunctionImportEntityReturnType1Parameters<
 > {}
 /**
  * Test Function Import Entity Return Type 1.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportEntityReturnType1<
@@ -34,7 +34,7 @@ export interface TestFunctionImportEntityReturnType2Parameters<
 > {}
 /**
  * Test Function Import Entity Return Type 2.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportEntityReturnType2<

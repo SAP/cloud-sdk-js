@@ -19,8 +19,7 @@ const service_1 = require('./service');
 const TestComplexType_1 = require('./TestComplexType');
 /**
  * Test Action Import No Parameter No Return Type.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportNoParameterNoReturnType(
@@ -41,8 +40,7 @@ exports.testActionImportNoParameterNoReturnType =
   testActionImportNoParameterNoReturnType;
 /**
  * Test Action Import Multiple Parameter Complex Return Type.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportMultipleParameterComplexReturnType(
@@ -88,8 +86,7 @@ exports.testActionImportMultipleParameterComplexReturnType =
   testActionImportMultipleParameterComplexReturnType;
 /**
  * Test Action Import Unsupported Edm Types.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportUnsupportedEdmTypes(
@@ -118,8 +115,7 @@ exports.testActionImportUnsupportedEdmTypes =
   testActionImportUnsupportedEdmTypes;
 /**
  * Test Action Import No Parameter Entity Return Type.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportNoParameterEntityReturnType(
@@ -142,9 +138,8 @@ function testActionImportNoParameterEntityReturnType(
 exports.testActionImportNoParameterEntityReturnType =
   testActionImportNoParameterEntityReturnType;
 /**
- * Test Action Import Shared Entity Return Type. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * Test Action Import Shared Entity Return Type. The 'execute' method does not exist when using this action import. Please use the 'executeRaw' for getting the raw response.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportSharedEntityReturnType(
@@ -167,9 +162,8 @@ function testActionImportSharedEntityReturnType(
 exports.testActionImportSharedEntityReturnType =
   testActionImportSharedEntityReturnType;
 /**
- * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this action import. Please use the 'executeRaw' for getting the raw response.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportSharedEntityReturnTypeCollection(
@@ -193,8 +187,7 @@ exports.testActionImportSharedEntityReturnTypeCollection =
   testActionImportSharedEntityReturnTypeCollection;
 /**
  * Test Action Import Nullable Test.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportNullableTest(

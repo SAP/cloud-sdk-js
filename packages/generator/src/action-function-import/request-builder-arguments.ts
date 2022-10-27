@@ -1,8 +1,4 @@
-import {
-  VdmActionImport,
-  VdmFunctionImport,
-  VdmServiceMetadata
-} from '../vdm-types';
+import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
@@ -10,31 +6,29 @@ import { responseTransformerFunctionName } from './response-transformer-function
  * @internal
  */
 export function getRequestBuilderArgumentsBase(
-  actionFunctionImport: VdmFunctionImport | VdmActionImport,
+  operation: VdmOperation,
   service: VdmServiceMetadata
 ): string[] {
-  const transformer = getTransformer(actionFunctionImport);
+  const transformer = getTransformer(operation);
   return [
     `'${service.servicePath}'`,
-    `'${actionFunctionImport.originalName}'`,
+    `'${operation.originalName}'`,
     transformer,
     'params',
     'deSerializers'
   ];
 }
 
-function getTransformer(
-  actionFunctionImport: VdmFunctionImport | VdmActionImport
-): string {
-  if (isEntityNotDeserializable(actionFunctionImport.returnType)) {
-    return `(data) => throwErrorWhenReturnTypeIsUnionType(data, '${actionFunctionImport.originalName}')`;
+function getTransformer(operation: VdmOperation): string {
+  if (isEntityNotDeserializable(operation.returnType)) {
+    return `(data) => throwErrorWhenReturnTypeIsUnionType(data, '${operation.originalName}')`;
   }
-  if (actionFunctionImport.returnType.builderFunction) {
+  if (operation.returnType.builderFunction) {
     return `(data) => ${responseTransformerFunctionName(
-      actionFunctionImport.returnType
-    )}(data, ${actionFunctionImport.returnType.builderFunction})`;
+      operation.returnType
+    )}(data, ${operation.returnType.builderFunction})`;
   }
   throw Error(
-    `Cannot build function/action import ${actionFunctionImport.originalName} because the builder function: ${actionFunctionImport.returnType.builderFunction} is missing.`
+    `Cannot build function/action import ${operation.originalName} because the builder function: ${operation.returnType.builderFunction} is missing.`
   );
 }

@@ -1,11 +1,8 @@
 import { orderBreakfast } from '../../test/test-util/data-model';
-import {
-  VdmActionFunctionImportReturnType,
-  VdmReturnTypeCategory
-} from '../vdm-types';
+import { VdmOperationReturnType, VdmReturnTypeCategory } from '../vdm-types';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
-const returnTypeEntity: VdmActionFunctionImportReturnType = {
+const returnTypeEntity: VdmOperationReturnType = {
   builderFunction: '',
   returnType: 'Entity',
   isCollection: false,
@@ -13,7 +10,7 @@ const returnTypeEntity: VdmActionFunctionImportReturnType = {
   returnTypeCategory: VdmReturnTypeCategory.ENTITY
 };
 
-const returnTypeComplexType: VdmActionFunctionImportReturnType = {
+const returnTypeComplexType: VdmOperationReturnType = {
   builderFunction: '',
   returnType: 'ComplexType',
   isCollection: true,

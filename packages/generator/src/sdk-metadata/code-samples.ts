@@ -1,9 +1,9 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
 import { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
 import voca from 'voca';
-import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
+import { VdmOperation } from '../vdm-types';
 import { getApiName } from '../generator-without-ts-morph/service';
-import { getActionFunctionParams } from './code-sample-util';
+import { getOperationParams } from './code-sample-util';
 
 /**
  * @internal
@@ -30,7 +30,7 @@ const resultPromise = ${getApiName(
  * @internal
  */
 export function functionImportCodeSample(
-  functionImport: VdmFunctionImport,
+  functionImport: VdmOperation,
   packageName: string
 ): MultiLineText {
   return importsCodeSample(functionImport, packageName);
@@ -39,14 +39,14 @@ export function functionImportCodeSample(
  * @internal
  */
 export function actionImportCodeSample(
-  actionImport: VdmActionImport,
+  actionImport: VdmOperation,
   packageName: string
 ): MultiLineText {
   return importsCodeSample(actionImport, packageName);
 }
 
 function importsCodeSample(
-  actionFunctionImport: VdmFunctionImport | VdmActionImport,
+  actionFunctionImport: VdmOperation,
   packageName: string
 ): MultiLineText {
   return codeBlock`
@@ -63,11 +63,11 @@ const resultPromise = ${actionFunctionImport.name}(${
 `;
 }
 
-function getParameterCodeSample(functionImport: VdmFunctionImport): string {
+function getParameterCodeSample(functionImport: VdmOperation): string {
   if (functionImport.parameters) {
     return `const parameter: ${
       functionImport.parametersTypeName
-    } = ${getActionFunctionParams(functionImport.parameters)};
+    } = ${getOperationParams(functionImport.parameters)};
     `;
   }
   return '';

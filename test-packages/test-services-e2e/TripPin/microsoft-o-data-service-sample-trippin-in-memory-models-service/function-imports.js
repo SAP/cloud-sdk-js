@@ -10,7 +10,7 @@ const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const service_1 = require('./service');
 /**
  * Get Nearest Airport.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getNearestAirport(

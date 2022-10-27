@@ -5,75 +5,37 @@ import {
   SourceFileStructure,
   StructureKind
 } from 'ts-morph';
-import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
+import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
 import { parametersInterface } from './parameters-interface';
 import { exportStatement } from './export-statement';
-import { actionImportFunction } from './action';
 import { operationImportDeclarations } from './import';
-import { functionImportFunction } from './function';
+import { operationFunction } from './operation';
 
 /**
  * @internal
  */
-export function actionImportSourceFile(
-  service: VdmServiceMetadata
+export function operationsSourceFile(
+  service: VdmServiceMetadata,
+  type: 'function' | 'action'
 ): SourceFileStructure {
-  if (!service.actionImports) {
-    throw new Error(
-      'Tried to create action import source files without actions in service metadata.'
-    );
-  }
+  const propertyName = `${type}Imports`;
+  const operations: VdmOperation[] = service[propertyName];
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...operationImportDeclarations(service, 'action', service.actionImports),
-      ...flat(
-        service.actionImports.map(action =>
-          actionImportStatements(action, service)
-        )
-      ),
-      exportStatement(service.actionImports, 'actionImports')
+      ...operationImportDeclarations(service, type, operations),
+      ...flat(operations.map(operation => operationStatements(operation, service))),
+      exportStatement(operations, `${type}Imports`)
     ]
   };
 }
 
-function actionImportStatements(
-  actionImport: VdmFunctionImport,
+function operationStatements(
+  operation: VdmOperation,
   service: VdmServiceMetadata
 ): [InterfaceDeclarationStructure, FunctionDeclarationStructure] {
   return [
-    parametersInterface(actionImport),
-    actionImportFunction(actionImport, service)
-  ];
-}
-/**
- * @internal
- */
-export function functionImportSourceFile(
-  service: VdmServiceMetadata
-): SourceFileStructure {
-  return {
-    kind: StructureKind.SourceFile,
-    statements: [
-      ...operationImportDeclarations(
-        service,
-        'function',
-        service.functionImports
-      ),
-      ...flat(
-        service.functionImports.map(fn => functionImportStatements(fn, service))
-      ),
-      exportStatement(service.functionImports, 'functionImports')
-    ]
-  };
-}
-
-function functionImportStatements(
-  functionImport: VdmFunctionImport,
-  service: VdmServiceMetadata
-): [InterfaceDeclarationStructure, FunctionDeclarationStructure] {
-  return [
-    parametersInterface(functionImport),
-    functionImportFunction(functionImport, service)
+    parametersInterface(operation),
+    operationFunction(operation, service)
   ];
 }

@@ -1,9 +1,6 @@
 import { StructureKind, TypeAliasDeclarationStructure } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
-import {
-  actionImportReturnType,
-  functionImportReturnType
-} from '../action-function-import';
+import { operationReturnType } from '../action-function-import';
 
 /**
  * @internal
@@ -38,10 +35,10 @@ function getWriteRequestType(service: VdmServiceMetadata): string {
       `CreateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | UpdateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | DeleteRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
   );
   const functionImportsReturnTypes = service.functionImports
-    .filter(f => f.httpMethod.toLowerCase() !== 'get')
-    .map(f => functionImportReturnType(f));
+    .filter(fn => fn.httpMethod.toLowerCase() !== 'get')
+    .map(fn => operationReturnType(fn));
   const actionImportsReturnTypes =
-    service.actionImports?.map(a => actionImportReturnType(a)) ?? [];
+    service.actionImports?.map(fn => operationReturnType(fn)) ?? [];
   return [
     ...createUpdateDeleteBuilderTypes,
     ...functionImportsReturnTypes,
@@ -60,7 +57,7 @@ function getReadRequestType(service: VdmServiceMetadata): string {
   );
   const functionImportsReturnTypes = service.functionImports
     .filter(f => f.httpMethod.toLowerCase() === 'get')
-    .map(f => functionImportReturnType(f));
+    .map(fn => operationReturnType(fn));
 
   return [
     ...getAllBuilderTypes,

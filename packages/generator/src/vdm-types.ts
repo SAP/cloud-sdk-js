@@ -64,11 +64,11 @@ export interface VdmServiceEntities {
   /**
    * @internal
    */
-  functionImports: VdmFunctionImport[];
+  functionImports: VdmOperation[];
   /**
    * @internal
    */
-  actionImports?: VdmActionImport[];
+  actionImports?: VdmOperation[];
 }
 /**
  * @internal
@@ -270,7 +270,7 @@ export interface VdmComplexType {
 /**
  * @internal
  */
-export interface VdmFunctionImportBase {
+export interface VdmOperationBase {
   /**
    * @internal
    */
@@ -291,15 +291,16 @@ export interface VdmFunctionImportBase {
    * @internal
    */
   description: string;
+  /**
+   * @internal
+   */
+  type: 'function' | 'action';
 }
+
 /**
  * @internal
  */
-export type VdmActionImportBase = VdmFunctionImportBase;
-/**
- * @internal
- */
-export interface VdmFunctionImport extends VdmFunctionImportBase {
+export interface VdmOperation extends VdmOperationBase {
   /**
    * @internal
    */
@@ -307,26 +308,13 @@ export interface VdmFunctionImport extends VdmFunctionImportBase {
   /**
    * @internal
    */
-  returnType: VdmFunctionImportReturnType;
+  returnType: VdmOperationReturnType;
 }
+
 /**
  * @internal
  */
-export type VdmActionImport = VdmFunctionImport;
-/**
- * @internal
- */
-export type VdmActionImportReturnType = VdmFunctionImportReturnType;
-/**
- * @internal
- */
-export type VdmActionFunctionImportReturnType =
-  | VdmActionImportReturnType
-  | VdmFunctionImportReturnType;
-/**
- * @internal
- */
-export interface VdmFunctionImportReturnType {
+export interface VdmOperationReturnType {
   /**
    * @internal
    */

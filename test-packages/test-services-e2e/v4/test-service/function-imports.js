@@ -17,7 +17,7 @@ const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const service_1 = require('./service');
 /**
  * Concat Strings.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function concatStrings(
@@ -50,7 +50,7 @@ function concatStrings(
 exports.concatStrings = concatStrings;
 /**
  * Get All.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getAll(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -70,7 +70,7 @@ function getAll(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
 exports.getAll = getAll;
 /**
  * Get By Key.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getByKey(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -96,7 +96,7 @@ function getByKey(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
 exports.getByKey = getByKey;
 /**
  * Return Collection.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnCollection(
@@ -124,7 +124,7 @@ function returnCollection(
 exports.returnCollection = returnCollection;
 /**
  * Return Int.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnInt(
@@ -152,7 +152,7 @@ function returnInt(
 exports.returnInt = returnInt;
 /**
  * Return Sap Cloud Sdk.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnSapCloudSdk(

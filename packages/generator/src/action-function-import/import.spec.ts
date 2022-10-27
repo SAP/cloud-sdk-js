@@ -3,7 +3,7 @@ import { VdmServiceMetadata } from '../vdm-types';
 import { importDeclarationsAction, importDeclarationsFunction } from './import';
 
 describe('function / action-import generation', () => {
-  it('creates correct imports for action when there is an EDM return types', () => {
+  it('creates correct imports for an action when there is an EDM return type', () => {
     const service = {
     };
 

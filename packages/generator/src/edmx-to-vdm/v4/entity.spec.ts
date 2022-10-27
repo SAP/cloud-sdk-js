@@ -329,14 +329,14 @@ it('transforms bound actions and functions only in expected entities', () => {
   expect(entities.length).toBe(2);
 
   const testEntityHasFunctions = entities.filter(e => e.entitySetName === 'TestEntity')[0];
-  const foobarTestEntityHasNoFunctions = entities.filter(e => e.entitySetName === 'FoobarTestEntity')[0];
-
+  expect(testEntityHasFunctions).toBeDefined();
   expect(testEntityHasFunctions.functions.length).toBe(1);
   expect(testEntityHasFunctions.functions[0].parameters.length).toBe(0);
-
   expect(testEntityHasFunctions.actions.length).toBe(1);
   expect(testEntityHasFunctions.actions[0].parameters.length).toBe(0);
 
+  const foobarTestEntityHasNoFunctions = entities.filter(e => e.entitySetName === 'FoobarTestEntity')[0];
+  expect(foobarTestEntityHasNoFunctions).toBeDefined();
   expect(foobarTestEntityHasNoFunctions.functions.length).toBe(0);
   expect(foobarTestEntityHasNoFunctions.actions.length).toBe(0);
 });

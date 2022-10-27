@@ -3,11 +3,6 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { Directory, SourceFile, SourceFileStructure } from 'ts-morph';
 import { createFile } from '@sap-cloud-sdk/generator-common/internal';
 
-const logger = createLogger({
-  package: 'generator',
-  messageContext: 'file-generator'
-});
-
 /**
  * @internal
  */

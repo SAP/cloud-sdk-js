@@ -279,6 +279,68 @@ it('transforms bound actions and functions', () => {
   expect(entity.actions[0].parameters.length).toBe(1);
 });
 
+it('transforms bound actions and functions only in expected entities', () => {
+  const service = createTestServiceData(
+    [createEntityType('TestEntityType', [], []), createEntityType('FoobarTestEntityType', [], []),],
+    [createTestEntitySet('TestEntity', 'ns.TestEntityType', []), createTestEntitySet('FoobarTestEntity', 'ns.FoobarTestEntityType', [])]
+  );
+
+  service.edmx.root.Function = [
+    {
+      IsBound: true,
+      Name: 'fn1IsBoundToTestEntity',
+      ReturnType: {
+        Type: 'Edm.String'
+      },
+      Parameter: [
+        {
+          Name: 'theEntity',
+          Type: 'TestService.TestEntity'
+        }
+      ]
+    }
+  ];
+
+  service.edmx.root.Action = [
+    {
+      IsBound: true,
+      Name: 'act1IsBoundToTestEntity',
+      ReturnType: {
+        Type: 'Edm.String'
+      },
+      Parameter: [
+        {
+          Name: 'theEntity',
+          Type: 'TestService.TestEntity'
+        }
+      ]
+    }
+  ];
+
+  service.edmx.root.EntityContainer = {
+    EntitySet: [createTestEntitySet('TestEntity', 'ns.TestEntityType', []), createTestEntitySet('FoobarTestEntity', 'ns.FoobarTestEntityType', [])],
+    ActionImport: createImportsForActions(service.edmx.root.Action),
+    FunctionImport: createImportsForFunctions(service.edmx.root.Function),
+    Name: ''
+  };
+
+  const entities = generateEntitiesV4(service, [], [], getFormatter());
+
+  expect(entities.length).toBe(2);
+
+  const testEntityHasFunctions = entities.filter(e => e.entitySetName === 'TestEntity')[0];
+  const foobarTestEntityHasNoFunctions = entities.filter(e => e.entitySetName === 'FoobarTestEntity')[0];
+
+  expect(testEntityHasFunctions.functions.length).toBe(1);
+  expect(testEntityHasFunctions.functions[0].parameters.length).toBe(0);
+
+  expect(testEntityHasFunctions.actions.length).toBe(1);
+  expect(testEntityHasFunctions.actions[0].parameters.length).toBe(0);
+
+  expect(foobarTestEntityHasNoFunctions.functions.length).toBe(0);
+  expect(foobarTestEntityHasNoFunctions.actions.length).toBe(0);
+});
+
 const defaultNamespace = 'ns';
 
 export function getFormatter() {

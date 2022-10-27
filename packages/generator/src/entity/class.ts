@@ -109,14 +109,36 @@ function boundFunctions(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): MethodDeclarationStructure[] {
-  return entity.functions.map(f => boundFunction(f, entity, service));
+  return entity.functions.map(fn => ({
+    kind: StructureKind.Method,
+    name: fn.name,
+    returnType: `BoundFunctionRequestBuilder<${entity.className}<DeSerializersT>, DeSerializersT, any, ${fn.returnType.returnType} | null>`,
+    typeParameters: [
+      {
+        name: 'DeSerializersT extends DeSerializers = DefaultDeSerializers'
+      }
+    ],
+    parameters: boundFunctionsParameter(fn),
+    statements: boundFunctionsStatements(fn, entity, service)
+  }));
 }
 
 function boundActions(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): MethodDeclarationStructure[] {
-  return entity.actions.map(f => boundAction(f, entity, service));
+  return entity.actions.map(a => ({
+    kind: StructureKind.Method,
+    name: a.name,
+    returnType: `BoundActionRequestBuilder<${entity.className}<DeSerializersT>, DeSerializersT, any, ${a.returnType.returnType} | null>`,
+    typeParameters: [
+      {
+        name: 'DeSerializersT extends DeSerializers = DefaultDeSerializers'
+      }
+    ],
+    parameters: boundActionsParameter(a),
+    statements: boundActionsStatements(a, entity, service)
+  }));
 }
 
 function property(prop: VdmProperty): PropertyDeclarationStructure {
@@ -132,25 +154,6 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
         })
       )
     ]
-  };
-}
-
-function boundFunction(
-  fn: VdmFunctionImport,
-  entity: VdmEntity,
-  service: VdmServiceMetadata
-): MethodDeclarationStructure {
-  return {
-    kind: StructureKind.Method,
-    name: fn.name,
-    returnType: `BoundFunctionRequestBuilder<${entity.className}<DeSerializersT>, DeSerializersT, any, ${fn.returnType.returnType} | null>`,
-    typeParameters: [
-      {
-        name: 'DeSerializersT extends DeSerializers = DefaultDeSerializers'
-      }
-    ],
-    parameters: boundFunctionsParameter(fn),
-    statements: boundFunctionsStatements(fn, entity, service)
   };
 }
 
@@ -194,25 +197,6 @@ function boundFunctionsParameterStatements(fn: VdmFunctionImport): string[] {
   const post = ['};'];
 
   return [...pre, ...params, ...post];
-}
-
-function boundAction(
-  a: VdmActionImport,
-  entity: VdmEntity,
-  service: VdmServiceMetadata
-): MethodDeclarationStructure {
-  return {
-    kind: StructureKind.Method,
-    name: a.name,
-    returnType: `BoundActionRequestBuilder<${entity.className}<DeSerializersT>, DeSerializersT, any, ${a.returnType.returnType} | null>`,
-    typeParameters: [
-      {
-        name: 'DeSerializersT extends DeSerializers = DefaultDeSerializers'
-      }
-    ],
-    parameters: boundActionsParameter(a),
-    statements: boundActionsStatements(a, entity, service)
-  };
 }
 
 function boundActionsParameter(

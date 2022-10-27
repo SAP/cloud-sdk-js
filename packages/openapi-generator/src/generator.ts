@@ -14,7 +14,8 @@ import {
   readCompilerOptions,
   transpileDirectory,
   copyFiles,
-  packageDescription
+  packageDescription,
+  createFile
 } from '@sap-cloud-sdk/generator-common/internal';
 import { glob } from 'glob';
 import { apiFile } from './file-serializer/api-file';
@@ -25,7 +26,6 @@ import { apiIndexFile, schemaIndexFile } from './file-serializer/index-file';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser/document';
 import { convertOpenApiSpec } from './document-converter';
-import { createFile } from './file-writer';
 import {
   parseGeneratorOptions,
   ParsedGeneratorOptions,

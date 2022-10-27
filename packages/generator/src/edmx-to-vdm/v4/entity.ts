@@ -24,8 +24,6 @@ import {
 } from '../common/entity';
 import { isCollectionType } from '../edmx-to-vdm-util';
 import { generateActionImportsV4 } from './action-import';
-import { generateComplexTypesV4 } from './complex-type';
-import { generateEnumTypesV4 } from './enum-type';
 import { generateFunctionImportsV4 } from './function-import';
 
 /**
@@ -67,7 +65,8 @@ export function generateEntitiesV4(
       entityMetadata.entitySet,
       classNames,
       formatter,
-      entitiesMetadata
+      entitiesMetadata,
+      complexTypes
     ),
     actions: transformBoundActions(
       serviceMetadata,
@@ -75,7 +74,8 @@ export function generateEntitiesV4(
       entityMetadata.entitySet,
       classNames,
       formatter,
-      entitiesMetadata
+      entitiesMetadata,
+      complexTypes
     )
   }));
 }
@@ -117,16 +117,14 @@ function transformBoundFunctions(
   boundEntitySet: EdmxEntitySet,
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter,
-  entitiesMetadata: JoinedEntityMetadata<EdmxEntitySet, EdmxEntityTypeV4>[]
+  entitiesMetadata: JoinedEntityMetadata<EdmxEntitySet, EdmxEntityTypeV4>[],
+  complexTypes: VdmComplexType[]
 ): VdmFunctionImport[] {
   const entities: VdmEntityInConstruction[] = entitiesMetadata.map(({ entityType, entitySet }) => ({
     entityTypeName: entityType.Name,
     className: classNames[entitySet.Name],
     entityTypeNamespace: entityType.Namespace
   }));
-
-  const enumTypes: VdmEnumType[] = generateEnumTypesV4(serviceMetadata, formatter);
-  const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
 
   return generateFunctionImportsV4(serviceMetadata, boundEntityType.Namespace, entities, complexTypes, formatter, boundEntitySet.Name);
 }
@@ -137,16 +135,14 @@ function transformBoundActions(
   boundEntitySet: EdmxEntitySet,
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter,
-  entitiesMetadata: JoinedEntityMetadata<EdmxEntitySet, EdmxEntityTypeV4>[]
+  entitiesMetadata: JoinedEntityMetadata<EdmxEntitySet, EdmxEntityTypeV4>[],
+  complexTypes: VdmComplexType[]
 ): VdmActionImport[] {
   const entities: VdmEntityInConstruction[] = entitiesMetadata.map(({ entityType, entitySet }) => ({
     entityTypeName: entityType.Name,
     className: classNames[entitySet.Name],
     entityTypeNamespace: entityType.Namespace
   }));
-
-  const enumTypes: VdmEnumType[] = generateEnumTypesV4(serviceMetadata, formatter);
-  const complexTypes: VdmComplexType[] = generateComplexTypesV4(serviceMetadata, enumTypes, formatter);
 
   return generateActionImportsV4(serviceMetadata, boundEntityType.Namespace, entities, complexTypes, formatter, boundEntitySet.Name);
 }

@@ -48,7 +48,7 @@ export function parseActionImportReturnTypes(
 ): VdmActionImportReturnType {
   return parseReturnTypes(
     returnType,
-    entities as VdmEntity[],
+    entities,
     complexTypes,
     extractResponse,
     serviceName

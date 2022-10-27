@@ -216,6 +216,23 @@ it('transforms bound actions and functions', () => {
         }
       ]
     },
+    {
+      IsBound: true,
+      Name: 'fn4IsBoundToWrongEntity',
+      ReturnType: {
+        Type: 'Edm.String'
+      },
+      Parameter: [
+        {
+          Name: 'theEntity',
+          Type: 'TestService.FoobarTestEntity'
+        },
+        {
+          Name: 'parameter1',
+          Type: 'Edm.String'
+        }
+      ]
+    },
   ];
 
   service.edmx.root.Action = [

@@ -175,7 +175,7 @@ function boundFunctionsStatements(
   const fnBodyStatements = [
     'const deSerializers = defaultDeSerializers as any;',
     'return new BoundFunctionRequestBuilder(',
-    // fixme: do we need to do anything in the transformer function?
+    // fixme: do we need to do anything in the transformer function? take from unbound functions.
     `this._entityApi as any, this as any, '${service.namespaces[0]}.${fn.originalName}', (data) => data, params, deSerializers`,
     ') as any;'
   ];

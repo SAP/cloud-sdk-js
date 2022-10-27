@@ -77,7 +77,7 @@ export function filterFunctions(joinedFunctionData: JoinedFunctionImportData[], 
     return joinedFunctionData
       .filter(({ function: edmxFunction }) => edmxFunction.IsBound)
       .filter(({ function: edmxFunction }) => edmxFunction.Parameter.length > 0)
-      .filter(({ function: edmxFunction }) => edmxFunction.Parameter[0].Type.endsWith(bindingEntitySetName))
+      .filter(({ function: edmxFunction }) => edmxFunction.Parameter[0].Type.split('.')[1] === bindingEntitySetName)
       .filter(
         ({ function: edmxFunction }) =>
           !hasUnsupportedParameterTypes(edmxFunction, bindingEntitySetName)

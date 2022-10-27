@@ -1,5 +1,4 @@
 import { parse } from 'path';
-import { createLogger } from '@sap-cloud-sdk/util';
 import { Directory, SourceFile, SourceFileStructure } from 'ts-morph';
 import { createFile } from '@sap-cloud-sdk/generator-common/internal';
 

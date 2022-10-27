@@ -23,7 +23,7 @@ describe('function-import generation', () => {
           'DefaultDeSerializers',
           'defaultDeSerializers',
           'FunctionImportParameter',
-          'FunctionImportRequestBuilder',
+          'FunctionImportRequestBuilder'
         ]
       },
       {

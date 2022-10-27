@@ -24,7 +24,9 @@ export function operationsSourceFile(
     kind: StructureKind.SourceFile,
     statements: [
       ...operationImportDeclarations(service, type, operations),
-      ...flat(operations.map(operation => operationStatements(operation, service))),
+      ...flat(
+        operations.map(operation => operationStatements(operation, service))
+      ),
       exportStatement(operations, `${type}Imports`)
     ]
   };

@@ -66,8 +66,25 @@ describe('entity class generator', () => {
       fail(new Error('Expected functions to be defined'));
     }
 
-    expect(
-      classDeclaration.methods?.filter(x => x.name === 'myAct').length
-    ).toEqual(1);
+    const actions = classDeclaration.methods?.filter(x => x.name === 'myAct');
+    expect(actions).toBeDefined();
+    expect(actions?.length).toBe(1);
+    if (actions) {
+      const myAct = actions[0];
+      expect(myAct).toBeDefined();
+      expect(myAct.parameters?.length).toBe(1);
+      if (myAct.parameters) {
+        expect(myAct.parameters[0].name).toEqual('FirstParameter');
+        if (myAct.statements) {
+          expect(
+            myAct.statements.toString().indexOf('FirstParameter') > 0
+          ).toBeTruthy();
+        }
+      } else {
+        fail(new Error('Expected parameters to be defined'));
+      }
+    } else {
+      fail(new Error('Expected actions to be defined'));
+    }
   });
 });

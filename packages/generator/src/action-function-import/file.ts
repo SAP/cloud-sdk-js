@@ -26,7 +26,7 @@ export function actionImportSourceFile(
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...importDeclarationsFunction(service, service.functionImports),
+      ...importDeclarationsAction(service, service.actionImports),
       ...flat(
         service.actionImports.map(action =>
           actionImportStatements(action, service)
@@ -55,7 +55,7 @@ export function functionImportSourceFile(
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...importDeclarationsAction(service, service.actionImports ? service.actionImports : []),
+      ...importDeclarationsFunction(service, service.functionImports),
       ...flat(
         service.functionImports.map(fi => functionImportStatements(fi, service))
       ),

@@ -106,7 +106,6 @@ export function generateFunctionImportsV4(
   const joinedFunctionData = joinFunctionImportData(functionImports, functions);
   const filteredJoinedFunctionData = filterFunctions(joinedFunctionData, bindingEntitySetName);
 
-  // fixme(fwilhe) adapt filter for bound
   return (
     filteredJoinedFunctionData
       .map(({ functionImport, function: edmxFunction }) => {

@@ -18,11 +18,11 @@ describe('function-import generation', () => {
         moduleSpecifier: '@sap-cloud-sdk/odata-v4',
         namedImports: [
           'edmToTs',
-          'FunctionImportRequestBuilder',
-          'DeSerializers',
           'transformReturnValueForEdmType',
+          'DeSerializers',
           'DefaultDeSerializers',
           'defaultDeSerializers',
+          'FunctionImportRequestBuilder',
           'FunctionImportParameter'
         ]
       },

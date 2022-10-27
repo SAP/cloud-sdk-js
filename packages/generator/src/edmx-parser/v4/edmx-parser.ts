@@ -147,7 +147,7 @@ function parseActionsFunctions(
     actionOrFunction => ({
       ...actionOrFunction,
       Parameter: forceArray(actionOrFunction.Parameter),
-      IsBound: actionOrFunction.IsBound
+      IsBound: !!actionOrFunction.IsBound
     })
   );
 }

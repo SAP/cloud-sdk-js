@@ -77,7 +77,7 @@ ${actionImportsWithoutActions
     return joinedFunctionData
       .filter(({ action: edmxAction }) => edmxAction.IsBound)
       .filter(({ action: edmxAction }) => edmxAction.Parameter.length > 0)
-      .filter(({ action: edmxAction }) => edmxAction.Parameter[0].Type.endsWith(bindingEntitySetName))
+      .filter(({ action: edmxAction }) => edmxAction.Parameter[0].Type.endsWith(bindingEntitySetName)) //fixme this won't work if with TestEntity and FoobarTestEntity.. need to split at the .?
       .filter(
         ({ action: edmxAction }) =>
           !hasUnsupportedParameterTypes(edmxAction, bindingEntitySetName)

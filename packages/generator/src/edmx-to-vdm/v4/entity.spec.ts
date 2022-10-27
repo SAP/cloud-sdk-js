@@ -198,18 +198,25 @@ it('transforms bound actions and functions', () => {
         Type: 'Edm.String'
       },
       Parameter: []
-    }
+    },
+    {
+      IsBound: true,
+      Name: 'fn3IsBoundToWrongEntity',
+      ReturnType: {
+        Type: 'Edm.String'
+      },
+      Parameter: [
+        {
+          Name: 'theEntity',
+          Type: 'TestService.TestEntityFoobar'
+        },
+        {
+          Name: 'parameter1',
+          Type: 'Edm.String'
+        }
+      ]
+    },
   ];
-
-  // service.edmx.root.FunctionImport = [
-  //   {
-  //     Function: 'fn1IsBound',
-
-  //   },
-  //   {
-  //     Function: 'fn2IsNotBound'
-  //   }
-  // ]
 
   service.edmx.root.Action = [
     {
@@ -249,7 +256,10 @@ it('transforms bound actions and functions', () => {
   const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
 
   expect(entity.functions.length).toBe(1);
-  // expect(entity.boundFunctions[0].parameters.length).toBe(1);
+  expect(entity.functions[0].parameters.length).toBe(1);
+
+  expect(entity.actions.length).toBe(1);
+  expect(entity.actions[0].parameters.length).toBe(1);
 });
 
 const defaultNamespace = 'ns';

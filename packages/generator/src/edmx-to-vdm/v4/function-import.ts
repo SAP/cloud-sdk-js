@@ -84,9 +84,11 @@ export function filterFunctions(joinedFunctionData: JoinedFunctionImportData[], 
       );
   }
       // TODO 1571 remove when supporting entity type as parameter
-  return joinedFunctionData.filter(
+  return joinedFunctionData
+    .filter(({ function: edmxFunction }) => !edmxFunction.IsBound)
+    .filter(
     ({ function: edmxFunction }) =>
-      !hasUnsupportedParameterTypes(edmxFunction, bindingEntitySetName)
+      !hasUnsupportedParameterTypes(edmxFunction)
   );
 }
 

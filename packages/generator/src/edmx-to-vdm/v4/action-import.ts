@@ -75,18 +75,20 @@ ${actionImportsWithoutActions
   if (bindingEntitySetName) {
     // filter 3 aspects: is bound?, is right bounding entity, has unsupported parameters
     return joinedFunctionData
-      .filter(({ action: edmxAction }) => edmxAction.IsBound)
-      .filter(({ action: edmxAction }) => edmxAction.Parameter.length > 0)
-      .filter(({ action: edmxAction }) => edmxAction.Parameter[0].Type.split('.')[1] === bindingEntitySetName)
+      .filter(({ action }) => action.IsBound)
+      .filter(({ action }) => action.Parameter.length > 0)
+      .filter(({ action }) => action.Parameter[0].Type.split('.')[1] === bindingEntitySetName)
       .filter(
-        ({ action: edmxAction }) =>
-          !hasUnsupportedParameterTypes(edmxAction, bindingEntitySetName)
+        ({ action }) =>
+          !hasUnsupportedParameterTypes(action, bindingEntitySetName)
       );
   }
       // TODO 1571 remove when supporting entity type as parameter
-  return joinedFunctionData.filter(
-    ({ action: edmxAction }) =>
-      !hasUnsupportedParameterTypes(edmxAction, bindingEntitySetName)
+   return joinedFunctionData
+     .filter(({ action }) => !action.IsBound)
+     .filter(
+       ({ action }) =>
+         !hasUnsupportedParameterTypes(action)
   );
 }
 

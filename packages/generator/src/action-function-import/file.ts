@@ -9,7 +9,7 @@ import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
 import { parametersInterface } from './parameters-interface';
 import { exportStatement } from './export-statement';
 import { actionImportFunction } from './action';
-import { importDeclarationsAction, importDeclarationsFunction } from './import';
+import { operationImportDeclarations } from './import';
 import { functionImportFunction } from './function';
 
 /**
@@ -26,7 +26,7 @@ export function actionImportSourceFile(
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...importDeclarationsFunction(service),
+      ...operationImportDeclarations(service, 'action', service.actionImports),
       ...flat(
         service.actionImports.map(action =>
           actionImportStatements(action, service)
@@ -55,9 +55,13 @@ export function functionImportSourceFile(
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...importDeclarationsAction(service),
+      ...operationImportDeclarations(
+        service,
+        'function',
+        service.functionImports
+      ),
       ...flat(
-        service.functionImports.map(fi => functionImportStatements(fi, service))
+        service.functionImports.map(fn => functionImportStatements(fn, service))
       ),
       exportStatement(service.functionImports, 'functionImports')
     ]

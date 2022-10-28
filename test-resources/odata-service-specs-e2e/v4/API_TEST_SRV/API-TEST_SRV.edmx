@@ -13,7 +13,7 @@
                 <FunctionImport Name="boundFunctionWithoutArguments" Function="TestService.boundFunctionWithoutArguments"/>
                 <ActionImport Name="boundActionWithoutArguments" Action="TestService.boundActionWithoutArguments"/>
                 <FunctionImport Name="boundFunctionWithoutArgumentsWithMultipleKeys" Function="TestService.boundFunctionWithoutArgumentsWithMultipleKeys"/>
-                <FunctionImport Name="boundActionWithoutArgumentsWithMultipleKeys" Function="TestService.boundActionWithoutArgumentsWithMultipleKeys"/>
+                <ActionImport Name="boundActionWithoutArgumentsWithMultipleKeys" Action="TestService.boundActionWithoutArgumentsWithMultipleKeys"/>
                 <FunctionImport Name="boundFunctionWithArgumentsWithMultipleKeys" Function="TestService.boundFunctionWithArgumentsWithMultipleKeys"/>
                 <ActionImport Name="createTestEntityById" Action="TestService.createTestEntityById" EntitySet="TestEntity"/>
                 <ActionImport Name="createTestEntityByIdReturnId" Action="TestService.createTestEntityByIdReturnId"/>

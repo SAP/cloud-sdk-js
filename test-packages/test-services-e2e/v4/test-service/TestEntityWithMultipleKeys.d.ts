@@ -3,6 +3,7 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   DeserializedType,
+  BoundActionRequestBuilder,
   BoundFunctionRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
@@ -56,6 +57,14 @@ export declare class TestEntityWithMultipleKeys<
     param1: string,
     param2: string
   ): BoundFunctionRequestBuilder<
+    TestEntityWithMultipleKeys<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  >;
+  boundActionWithoutArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
     TestEntityWithMultipleKeys<DeSerializersT>,
     DeSerializersT,
     any,

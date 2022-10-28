@@ -17,6 +17,7 @@ import {
   ActionImportParameter,
   edmToTs,
   transformReturnValueForEdmType,
+  ActionImportRequestBuilder,
   FunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
@@ -105,6 +106,26 @@ export class TestEntityWithMultipleKeys<
       this._entityApi as any,
       this as any,
       'TestService.boundFunctionWithArgumentsWithMultipleKeys',
+      data => data,
+      params,
+      deSerializers
+    ) as any;
+  }
+
+  boundActionWithoutArgumentsWithMultipleKeys<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(): BoundActionRequestBuilder<
+    TestEntityWithMultipleKeys<DeSerializersT>,
+    DeSerializersT,
+    any,
+    string | null
+  > {
+    const params = {};
+    const deSerializers = defaultDeSerializers as any;
+    return new BoundActionRequestBuilder(
+      this._entityApi as any,
+      this as any,
+      'TestService.boundActionWithoutArgumentsWithMultipleKeys',
       data => data,
       params,
       deSerializers

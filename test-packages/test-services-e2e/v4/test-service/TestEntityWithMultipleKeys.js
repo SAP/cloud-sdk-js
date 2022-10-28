@@ -50,6 +50,18 @@ class TestEntityWithMultipleKeys extends odata_v4_1.Entity {
       deSerializers
     );
   }
+  boundActionWithoutArgumentsWithMultipleKeys() {
+    const params = {};
+    const deSerializers = odata_v4_1.defaultDeSerializers;
+    return new odata_v4_1.BoundActionRequestBuilder(
+      this._entityApi,
+      this,
+      'TestService.boundActionWithoutArgumentsWithMultipleKeys',
+      data => data,
+      params,
+      deSerializers
+    );
+  }
 }
 exports.TestEntityWithMultipleKeys = TestEntityWithMultipleKeys;
 /**

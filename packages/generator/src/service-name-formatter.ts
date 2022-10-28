@@ -107,10 +107,9 @@ export class ServiceNameFormatter {
   }
 
   originalToComplexTypeName(originalName: string): string {
-    const transformedName = stripAUnderscore(voca.titleCase(originalName)).replace(
-      '_',
-      ''
-    );
+    const transformedName = stripAUnderscore(
+      voca.titleCase(originalName)
+    ).replace('_', '');
 
     return this.serviceWideNameGenerator.generateAndSaveUniqueName(
       transformedName,

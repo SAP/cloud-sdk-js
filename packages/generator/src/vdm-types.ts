@@ -269,6 +269,7 @@ export interface VdmComplexType {
 }
 /**
  * @internal
+ * Represents a partial operation (action or function).
  */
 export interface VdmOperationBase {
   /**
@@ -299,6 +300,7 @@ export interface VdmOperationBase {
 
 /**
  * @internal
+ * Represents either a function or an action.
  */
 export interface VdmOperation extends VdmOperationBase {
   /**

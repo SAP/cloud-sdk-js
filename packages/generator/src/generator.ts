@@ -44,7 +44,7 @@ import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
 import { VdmServiceMetadata } from './vdm-types';
-import { operationsSourceFile } from './action-function-import/file';
+import { operationsSourceFile } from './operations/file';
 import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetadata } from './sdk-metadata';
 import { entityApiFile } from './generator-without-ts-morph';

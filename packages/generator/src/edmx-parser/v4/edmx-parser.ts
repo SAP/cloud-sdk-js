@@ -9,15 +9,14 @@ import {
 import { forceArray } from '../../generator-utils';
 import { stripNamespace } from '../../edmx-to-vdm/edmx-to-vdm-util';
 import {
-  EdmxActionImport,
   EdmxComplexType,
   EdmxDerivedType,
   EdmxEntitySet,
   EdmxEntityTypeV4,
   EdmxEnumType,
   EdmxOperation,
-  EdmxFunctionImportV4,
-  EdmxNavigationPropertyBinding
+  EdmxNavigationPropertyBinding,
+  EdmxOperationImport
 } from './edm-types';
 
 /**
@@ -132,11 +131,17 @@ function parseNavigationPropertyBinding(
 export function parseOperationImports(
   root: any,
   operationType: 'function' | 'action'
-): EdmxFunctionImportV4[] | EdmxActionImport[] {
-  return getPropertyFromEntityContainer(
+): EdmxOperationImport[] {
+  const operationImports = getPropertyFromEntityContainer(
     root,
     `${voca.capitalize(operationType)}Import`
   );
+
+  return operationImports.map(operationImport => ({
+    ...operationImport,
+    operationName: operationImport[voca.capitalize(operationType)],
+    operationType
+  }));
 }
 
 /**

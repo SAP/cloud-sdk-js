@@ -1,11 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { EdmxParameter, EdmxProperty } from '../../edmx-parser/common';
 import {
-  EdmxActionImport,
   EdmxComplexType,
   EdmxEntitySet,
   EdmxEntityTypeV4,
-  EdmxOperation
+  EdmxOperation,
+  EdmxOperationImport
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser';
 import { generateEntitiesV4 } from './entity';
@@ -259,11 +259,14 @@ function createTestServiceData(
   };
 }
 
-function createImportsForActions(actions: EdmxOperation[]): EdmxActionImport[] {
+function createImportsForActions(
+  actions: EdmxOperation[]
+): EdmxOperationImport[] {
   return actions.map(action => ({
     Name: action.Name,
-    Action: `SomePrefix.${action.Name}`,
-    Namespace: action.Namespace
+    Namespace: action.Namespace,
+    operationName: `SomePrefix.${action.Name}`,
+    operationType: 'action'
   }));
 }
 

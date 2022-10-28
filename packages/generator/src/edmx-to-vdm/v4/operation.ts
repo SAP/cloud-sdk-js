@@ -1,13 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import voca from 'voca';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformOperationBase } from '../common/operation';
 import { parseOperationReturnType } from '../common/operation-return-type';
 import { getSwaggerDefinitionForOperation } from '../../swagger-parser/swagger-parser';
 import {
-  EdmxActionImport,
   EdmxOperation,
-  EdmxFunctionImportV4
+  EdmxOperationImport
 } from '../../edmx-parser/v4/edm-types';
 import { parseOperationImports, parseOperations } from '../../edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
@@ -20,36 +18,23 @@ const logger = createLogger({
   messageContext: 'operation'
 });
 
-function findOperationForOperationImport(
-  operations: EdmxOperation[],
-  operationImport: EdmxFunctionImportV4 | EdmxActionImport
-): EdmxOperation | undefined {
-  const operationName =
-    'Function' in operationImport
-      ? operationImport.Function
-      : operationImport.Action;
-  return findOperationByImportName(operations, operationName);
-}
-
 const extractResponse = (response: string) => `${response}.value`;
 
 interface JoinedOperationData {
-  operationImport: EdmxFunctionImportV4 | EdmxActionImport;
+  operationImport: EdmxOperationImport;
   operation: EdmxOperation;
 }
 
 function joinOperationData(
-  operationImports: EdmxFunctionImportV4[] | EdmxActionImport[],
+  operationImports: EdmxOperationImport[],
   operations: EdmxOperation[]
 ): JoinedOperationData[] {
-  const operationImportsWithoutOperations:
-    | EdmxFunctionImportV4[]
-    | EdmxActionImport[] = [];
+  const operationImportsWithoutOperations: EdmxOperationImport[] = [];
   const joinedOperationData: JoinedOperationData[] = [];
   operationImports.forEach(operationImport => {
-    const operation = findOperationForOperationImport(
+    const operation = findOperationByImportName(
       operations,
-      operationImport
+      operationImport.operationName
     );
 
     if (operation) {
@@ -63,13 +48,14 @@ function joinOperationData(
   });
 
   if (operationImportsWithoutOperations.length) {
-    const operationType =
-      'Function' in operationImportsWithoutOperations[0]
-        ? 'function'
-        : 'action';
+    const operationType = operationImportsWithoutOperations[0].operationType;
+
     logger.warn(
       `Could not find ${operationType}s referenced by the following ${operationType} imports. Skipping code generation: ${operationImportsWithoutOperations
-        .map(fn => `${fn.Name} => ${fn[voca.capitalize(operationType)]}`)
+        .map(
+          operationImport =>
+            `${operationImport.Name} => ${operationImport.operationName}`
+        )
         .join(', \n')}`
     );
   }

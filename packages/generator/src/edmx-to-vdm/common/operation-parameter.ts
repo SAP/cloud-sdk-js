@@ -4,21 +4,15 @@ import { parameterDescription } from '../description-util';
 import { EdmxParameter } from '../../edmx-parser/common/edmx-types';
 import { SwaggerPath } from '../../swagger-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { EdmxFunctionImportV2 as EdmxFunctionImportV2 } from '../../edmx-parser/v2/edm-types';
-import {
-  EdmxActionImport,
-  EdmxFunctionImportV4 as EdmxFunctionImportV4
-} from '../../edmx-parser/v4/edm-types';
+import { EdmxFunctionImportV2 } from '../../edmx-parser/v2/edm-types';
 import { getTypeMappingActionFunction } from '../edmx-to-vdm-util';
+import { EdmxOperationImport } from '../../edmx-parser';
 
 /**
  * @internal
  */
 export function getOperationParameters(
-  edmxActionFunctionImport:
-    | EdmxFunctionImportV2
-    | EdmxFunctionImportV4
-    | EdmxActionImport,
+  edmxOperationImport: EdmxFunctionImportV2 | EdmxOperationImport,
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
@@ -31,7 +25,7 @@ export function getOperationParameters(
     return {
       originalName: p.Name,
       parameterName: formatter.originalToParameterName(
-        edmxActionFunctionImport.Name,
+        edmxOperationImport.Name,
         p.Name
       ),
       edmType: typeMapping.edmType,

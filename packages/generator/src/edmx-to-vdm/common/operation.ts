@@ -5,14 +5,15 @@ import { SwaggerPath } from '../../swagger-parser';
 import { functionImportDescription } from '../description-util';
 import { EdmxParameter } from '../../edmx-parser/common';
 import { EdmxFunctionImportV2 } from '../../edmx-parser/v2';
-import { EdmxActionImport, EdmxFunctionImportV4 } from '../../edmx-parser/v4';
+import { EdmxOperationImport } from '../../edmx-parser/v4';
 import { getOperationParameters } from './operation-parameter';
 
 /**
  * @internal
+ * This transforms an EDMX operation (function or action) to its representation for the VDM.
  */
 export function transformOperationBase(
-  edmxOperation: EdmxFunctionImportV2 | EdmxFunctionImportV4 | EdmxActionImport,
+  edmxOperation: EdmxFunctionImportV2 | EdmxOperationImport,
   edmxParameters: EdmxParameter[],
   type: 'function' | 'action',
   swaggerDefinition: SwaggerPath | undefined,

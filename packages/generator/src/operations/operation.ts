@@ -9,6 +9,7 @@ const parameterName = 'parameters';
 
 /**
  * @internal
+ * Returns a function declaration representation for an action or function.
  */
 export function operationFunction(
   operation: VdmOperation,

@@ -5,6 +5,7 @@ import { join, resolve } from 'path';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { generate } from '@sap-cloud-sdk/generator/src';
+import {createFile} from "@sap-cloud-sdk/generator-common/dist/file-writer";
 
 const outDir = resolve(__dirname, 'common-service');
 
@@ -145,11 +146,7 @@ async function generateCommonTestEntity() {
     'export const { commonEntityApi } = commonService();',
     'export const { commonEntityApi: commonEntityApiCustom } = commonService(\n  customTestDeSerializers\n);'
   ].join(unixEOL);
-  await promises.writeFile(
-    resolve(__dirname, 'common-entity.ts'),
-    allParts,
-    'utf8'
-  );
+  await createFile(__dirname,'common-entity.ts',allParts,{withCopyright:false,overwrite:true})
 }
 
 const disclaimer = `/* This entity was generated from the COMMON_SRV.edmx and the generate-test-service.ts script.

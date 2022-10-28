@@ -129,7 +129,8 @@ function addCopyrightHeader(content: string, withCopyright: boolean): string {
     codeBlock`
 ${getCopyrightHeader()}
 ${content}
-` + unixEOL
+${unixEOL}
+`
   );
 }
 

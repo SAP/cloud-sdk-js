@@ -67,7 +67,7 @@ export async function transpileDirectory(
     const parsed = parse(fileName);
     const promise = mkdir(parsed.dir, { recursive: true }).then(() => {
       // Formatting emitted .js file could break source map -> skip these.
-      // Formatting the map files also is not necessary - only .d.ts files are nicer if linted
+      // Formatting the .map files also is not necessary increases only file size - only .d.ts files are nicer if linted
       const usePrettier = getFileExtension(fileName) === '.d.ts' ? true : false;
 
       // Prettier config should be cached from previous steps if present.

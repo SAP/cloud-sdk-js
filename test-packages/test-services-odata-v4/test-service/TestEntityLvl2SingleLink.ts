@@ -3,17 +3,30 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers,
+  DeserializedType,
+  entityDeserializer,
+  BoundActionRequestBuilder,
+  transformReturnValueForComplexType,
+  defaultDeSerializers,
+  BoundFunctionRequestBuilder,
+  FunctionImportParameter,
+  ActionImportParameter
+} from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
-import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, ActionImportParameter, ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
-import { testService } from './service';
-import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter, FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
-import { testService } from './service';
 
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
  */
-export class TestEntityLvl2SingleLink<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityLvl2SingleLinkType<T> {
+export class TestEntityLvl2SingleLink<
+    T extends DeSerializers = DefaultDeSerializers
+  >
+  extends Entity
+  implements TestEntityLvl2SingleLinkType<T>
+{
   /**
    * Technical entity name for TestEntityLvl2SingleLink.
    */
@@ -58,11 +71,12 @@ export class TestEntityLvl2SingleLink<T extends DeSerializers = DefaultDeSeriali
   }
 }
 
-export interface TestEntityLvl2SingleLinkType<T extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntityLvl2SingleLinkType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
   guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }
-

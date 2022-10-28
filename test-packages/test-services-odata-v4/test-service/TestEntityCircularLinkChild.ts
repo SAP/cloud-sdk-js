@@ -3,18 +3,34 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers,
+  DeserializedType,
+  entityDeserializer,
+  BoundActionRequestBuilder,
+  transformReturnValueForComplexType,
+  defaultDeSerializers,
+  BoundFunctionRequestBuilder,
+  FunctionImportParameter,
+  ActionImportParameter
+} from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
-import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, ActionImportParameter, ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
-import { testService } from './service';
-import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter, FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
-import { testService } from './service';
-import { TestEntityCircularLinkParent, TestEntityCircularLinkParentType } from './TestEntityCircularLinkParent';
+import {
+  TestEntityCircularLinkParent,
+  TestEntityCircularLinkParentType
+} from './TestEntityCircularLinkParent';
 
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
  */
-export class TestEntityCircularLinkChild<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityCircularLinkChildType<T> {
+export class TestEntityCircularLinkChild<
+    T extends DeSerializers = DefaultDeSerializers
+  >
+  extends Entity
+  implements TestEntityCircularLinkChildType<T>
+{
   /**
    * Technical entity name for TestEntityCircularLinkChild.
    */
@@ -42,8 +58,9 @@ export class TestEntityCircularLinkChild<T extends DeSerializers = DefaultDeSeri
   }
 }
 
-export interface TestEntityCircularLinkChildType<T extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntityCircularLinkChildType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   keyProperty: DeserializedType<T, 'Edm.String'>;
   toParent?: TestEntityCircularLinkParentType<T> | null;
 }
-

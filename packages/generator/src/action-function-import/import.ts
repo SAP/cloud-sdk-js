@@ -95,6 +95,10 @@ export function operationImportDeclarations(
   type: 'function' | 'action',
   operations: (VdmFunctionImport | VdmActionImport)[] = []
 ): ImportDeclarationStructure[] {
+  if (!operations.length) {
+    return [];
+  }
+
   const parameters = operations.flatMap(({ parameters: params }) => params);
   const returnTypes = operations.map(({ returnType }) => returnType);
 

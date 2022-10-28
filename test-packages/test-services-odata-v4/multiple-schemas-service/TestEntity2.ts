@@ -3,17 +3,28 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers,
+  DeserializedType,
+  entityDeserializer,
+  BoundActionRequestBuilder,
+  transformReturnValueForComplexType,
+  defaultDeSerializers,
+  BoundFunctionRequestBuilder,
+  FunctionImportParameter,
+  ActionImportParameter
+} from '@sap-cloud-sdk/odata-v4';
 import type { TestEntity2Api } from './TestEntity2Api';
-import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, ActionImportParameter, ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
-import { multipleSchemasService } from './service';
-import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter, FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
-import { multipleSchemasService } from './service';
 
 /**
  * This class represents the entity "A_TestEntity2" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class TestEntity2<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntity2Type<T> {
+export class TestEntity2<T extends DeSerializers = DefaultDeSerializers>
+  extends Entity
+  implements TestEntity2Type<T>
+{
   /**
    * Technical entity name for TestEntity2.
    */
@@ -41,8 +52,9 @@ export class TestEntity2<T extends DeSerializers = DefaultDeSerializers> extends
   }
 }
 
-export interface TestEntity2Type<T extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntity2Type<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   keyPropertyString: DeserializedType<T, 'Edm.String'>;
   singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
 }
-

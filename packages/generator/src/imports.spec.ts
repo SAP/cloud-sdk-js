@@ -153,41 +153,53 @@ describe('imports', () => {
     });
   });
 
-  it('merge import declarations', () => {
-    const someEmptyDeclaration = {
+  describe('merge import declarations', () => {
+    const emptyDeclaration = {
       kind: StructureKind.ImportDeclaration,
       moduleSpecifier: './empty',
       namedImports: []
     } as ImportDeclarationStructure;
 
-    const someDeclaration1 = {
+    const declaration1FromModule = {
       kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: './someModule',
+      moduleSpecifier: './module',
       namedImports: ['1']
     } as ImportDeclarationStructure;
 
-    const someDeclaration2 = {
+    const declaration2FromModule = {
       kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: './someModule',
+      moduleSpecifier: './module',
       namedImports: ['2']
     } as ImportDeclarationStructure;
 
-    const merged = {
-      kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: './someModule',
-      namedImports: ['1', '2']
-    } as ImportDeclarationStructure;
-    expect(
-      mergeImportDeclarations([
-        someEmptyDeclaration,
-        someDeclaration1,
-        momentImport,
-        momentImport,
-        bigNumberImport,
-        momentImport,
-        bigNumberImport,
-        someDeclaration2
-      ])
-    ).toEqual([merged, momentImport, bigNumberImport]);
+    it('merges named imports', () => {
+      const merged = {
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: './module',
+        namedImports: ['1', '2']
+      } as ImportDeclarationStructure;
+
+      expect(
+        mergeImportDeclarations([
+          emptyDeclaration,
+          declaration1FromModule,
+          momentImport,
+          momentImport,
+          bigNumberImport,
+          momentImport,
+          bigNumberImport,
+          declaration2FromModule
+        ])
+      ).toEqual([merged, momentImport, bigNumberImport]);
+    });
+
+    it('merges named imports including type imports', () => {
+      const declarations = [
+        { ...declaration1FromModule, isTypeOnly: true },
+        declaration2FromModule
+      ];
+
+      expect(mergeImportDeclarations(declarations)).toEqual(declarations);
+    });
   });
 });

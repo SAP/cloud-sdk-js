@@ -3,17 +3,28 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers,
+  DeserializedType,
+  entityDeserializer,
+  BoundActionRequestBuilder,
+  transformReturnValueForComplexType,
+  defaultDeSerializers,
+  BoundFunctionRequestBuilder,
+  FunctionImportParameter,
+  ActionImportParameter
+} from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityLinkApi } from './TestEntityLinkApi';
-import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, ActionImportParameter, ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
-import { testService } from './service';
-import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter, FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
-import { testService } from './service';
 
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
  */
-export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityLinkType<T> {
+export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
+  extends Entity
+  implements TestEntityLinkType<T>
+{
   /**
    * Technical entity name for TestEntityLink.
    */
@@ -46,9 +57,10 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers> exte
   }
 }
 
-export interface TestEntityLinkType<T extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntityLinkType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>;
   keyToTestEntity: DeserializedType<T, 'Edm.Int32'>;
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
 }
-

@@ -3,17 +3,30 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers,
+  DeserializedType,
+  entityDeserializer,
+  BoundActionRequestBuilder,
+  transformReturnValueForComplexType,
+  defaultDeSerializers,
+  BoundFunctionRequestBuilder,
+  FunctionImportParameter,
+  ActionImportParameter
+} from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithSharedEntityType1Api } from './TestEntityWithSharedEntityType1Api';
-import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, ActionImportParameter, ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
-import { testService } from './service';
-import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter, FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
-import { testService } from './service';
 
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType1" of service "API_TEST_SRV".
  */
-export class TestEntityWithSharedEntityType1<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityWithSharedEntityType1Type<T> {
+export class TestEntityWithSharedEntityType1<
+    T extends DeSerializers = DefaultDeSerializers
+  >
+  extends Entity
+  implements TestEntityWithSharedEntityType1Type<T>
+{
   /**
    * Technical entity name for TestEntityWithSharedEntityType1.
    */
@@ -37,7 +50,8 @@ export class TestEntityWithSharedEntityType1<T extends DeSerializers = DefaultDe
   }
 }
 
-export interface TestEntityWithSharedEntityType1Type<T extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntityWithSharedEntityType1Type<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }
-

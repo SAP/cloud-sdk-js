@@ -15,33 +15,6 @@ class People extends odata_v4_1.Entity {
     super(_entityApi);
     this._entityApi = _entityApi;
   }
-  getNearestAirport(lat, lon) {
-    const params = {
-      lat: new odata_v4_1.FunctionImportParameter('lat', 'Edm.Double', lat),
-      lon: new odata_v4_1.FunctionImportParameter('lon', 'Edm.Double', lon)
-    };
-    const deSerializers = odata_v4_1.defaultDeSerializers;
-    return new odata_v4_1.BoundFunctionRequestBuilder(
-      this._entityApi,
-      this,
-      'Microsoft.OData.SampleService.Models.TripPin.GetNearestAirport',
-      data => data,
-      params,
-      deSerializers
-    );
-  }
-  resetDataSource() {
-    const params = {};
-    const deSerializers = odata_v4_1.defaultDeSerializers;
-    return new odata_v4_1.BoundActionRequestBuilder(
-      this._entityApi,
-      this,
-      'Microsoft.OData.SampleService.Models.TripPin.ResetDataSource',
-      data => data,
-      params,
-      deSerializers
-    );
-  }
 }
 exports.People = People;
 /**

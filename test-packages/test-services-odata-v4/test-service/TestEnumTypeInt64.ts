@@ -17,4 +17,3 @@ export enum TestEnumTypeInt64 {
    */
   Member2 = 'Member2'
 }
-

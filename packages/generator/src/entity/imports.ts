@@ -4,6 +4,7 @@ import { operationImportDeclarations } from '../action-function-import';
 import {
   complexTypeImportDeclarations,
   enumTypeImportDeclarations,
+  mergeImportDeclarations,
   odataImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
@@ -17,7 +18,7 @@ export function entityImportDeclarations(
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
   if (oDataVersion === 'v4') {
-    return [
+    return mergeImportDeclarations([
       odataImportDeclaration(
         [
           'Entity',
@@ -44,8 +45,9 @@ export function entityImportDeclarations(
       ...operationImportDeclarations(service, 'action', entity.actions), // fixme(fwilhe) need to filter here
       ...operationImportDeclarations(service, 'function', entity.functions),
       ...enumTypeImportDeclarations(entity.properties)
-    ];
+    ]);
   }
+
   return [
     odataImportDeclaration(
       ['Entity', 'DefaultDeSerializers', 'DeSerializers', 'DeserializedType'],

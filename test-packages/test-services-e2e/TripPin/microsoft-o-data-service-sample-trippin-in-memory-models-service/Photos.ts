@@ -17,9 +17,6 @@ import {
   ActionImportParameter
 } from '@sap-cloud-sdk/odata-v4';
 import type { PhotosApi } from './PhotosApi';
-import type { People } from './People';
-import type { Airlines } from './Airlines';
-import type { Airports } from './Airports';
 
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -53,52 +50,6 @@ export class Photos<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: PhotosApi<T>) {
     super(_entityApi);
-  }
-
-  getNearestAirport<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(
-    lat: number,
-    lon: number
-  ): BoundFunctionRequestBuilder<
-    Photos<DeSerializersT>,
-    DeSerializersT,
-    any,
-    Airports | null
-  > {
-    const params = {
-      lat: new FunctionImportParameter('lat', 'Edm.Double', lat),
-      lon: new FunctionImportParameter('lon', 'Edm.Double', lon)
-    };
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'Microsoft.OData.SampleService.Models.TripPin.GetNearestAirport',
-      data => data,
-      params,
-      deSerializers
-    ) as any;
-  }
-
-  resetDataSource<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    Photos<DeSerializersT>,
-    DeSerializersT,
-    any,
-    undefined | null
-  > {
-    const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'Microsoft.OData.SampleService.Models.TripPin.ResetDataSource',
-      data => data,
-      params,
-      deSerializers
-    ) as any;
   }
 }
 

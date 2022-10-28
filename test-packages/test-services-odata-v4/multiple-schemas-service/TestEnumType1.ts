@@ -17,4 +17,3 @@ export enum TestEnumType1 {
    */
   Member2 = 'Member2'
 }
-

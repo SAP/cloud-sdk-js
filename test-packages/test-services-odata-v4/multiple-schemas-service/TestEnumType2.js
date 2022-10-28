@@ -1,5 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.TestEnumType2 = void 0;
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
@@ -12,13 +12,13 @@ exports.TestEnumType2 = void 0;
  */
 var TestEnumType2;
 (function (TestEnumType2) {
-    /**
-     * Original value: 1
-     */
-    TestEnumType2["Member1"] = "Member1";
-    /**
-     * Original value: 2
-     */
-    TestEnumType2["Member2"] = "Member2";
-})(TestEnumType2 = exports.TestEnumType2 || (exports.TestEnumType2 = {}));
+  /**
+   * Original value: 1
+   */
+  TestEnumType2['Member1'] = 'Member1';
+  /**
+   * Original value: 2
+   */
+  TestEnumType2['Member2'] = 'Member2';
+})((TestEnumType2 = exports.TestEnumType2 || (exports.TestEnumType2 = {})));
 //# sourceMappingURL=TestEnumType2.js.map

@@ -13,4 +13,3 @@ export * from './TestEntityLinkRequestBuilder';
 export * from './TestEntity50PropRequestBuilder';
 export * from './BatchRequest';
 export * from './service';
-

@@ -66,11 +66,12 @@ export async function transpileDirectory(
   ) => {
     const parsed = parse(fileName);
     const promise = mkdir(parsed.dir, { recursive: true }).then(() => {
+      // All not emitted files like .md or .json should be already prettified.
       // Formatting emitted .js file could break source map -> skip these.
       // Formatting the .map files also is not necessary increases only file size - only .d.ts files are nicer if linted
-      const usePrettier = getFileExtension(fileName) === '.d.ts' ? true : false;
+      const usePrettier = getFileExtension(fileName) === 'd.ts' ? true : false;
 
-      // Prettier config should be cached from previous steps if present.
+      // Prettier config should be cached from previous steps already.
       // Emit also overwrites and copyright is either already there.
       fileWriterPromises.push(
         createFile(parsed.dir, parsed.base, text, {

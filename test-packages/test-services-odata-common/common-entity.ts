@@ -2,48 +2,25 @@
 /* This entity was generated from the COMMON_SRV.edmx and the generate-test-service.ts script.
 The idea behind this entity is to use only odata-common imports and use it in the tests for the odata-common functionality.*/
 
-import { Moment } from 'moment';
-import { BigNumber } from 'bignumber.js';
-import {
-  AllFields,
-  CollectionField,
-  ComplexTypeField,
-  Constructable,
-  ConstructorOrField,
-  CustomField,
-  CustomDeSerializers,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeserializedType,
-  DeSerializers,
-  EdmTypeField,
-  EntityApi,
-  EntityBase as Entity,
-  entityBuilder,
-  EntityBuilderType,
-  Field,
-  FieldBuilder,
-  FieldOptions,
-  mergeDefaultDeSerializersWith,
-  OneToOneLink,
-  OrderableEdmTypeField,
-  PropertyMetadata,
-  Time
-} from '../../packages/odata-common/src/internal';
-import { customTestDeSerializers } from '../../test-resources/test/test-util';
-
+  import { Moment } from "moment";
+  import { BigNumber } from "bignumber.js";
+  import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time } from '../../packages/odata-common/src/internal';
+  import { customTestDeSerializers } from '../../test-resources/test/test-util';
+  
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
+
+
 export interface CommonComplexType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
-  stringProperty: DeserializedType<DeSerializersT, 'Edm.String'>;
-  booleanProperty?: DeserializedType<DeSerializersT, 'Edm.Boolean'>;
-  complexTypeProperty?: DeserializedType<
+    stringProperty: DeserializedType<DeSerializersT, 'Edm.String'>;
+    booleanProperty?: DeserializedType<DeSerializersT, 'Edm.Boolean'>;
+    complexTypeProperty?: DeserializedType<
     DeSerializersT,
     'API_COMMON_SRV.A_NestedComplexType'
   >;
@@ -65,7 +42,7 @@ export class CommonComplexTypeField<
     this,
     this.deSerializers
   );
-  stringProperty: OrderableEdmTypeField<
+    stringProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',
@@ -76,7 +53,7 @@ export class CommonComplexTypeField<
     'Edm.String',
     false
   );
-  booleanProperty: OrderableEdmTypeField<
+    booleanProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.Boolean',
@@ -87,7 +64,7 @@ export class CommonComplexTypeField<
     'Edm.Boolean',
     true
   );
-  complexTypeProperty: NestedComplexTypeField<
+    complexTypeProperty: NestedComplexTypeField<
     EntityT,
     DeSerializersT,
     true,
@@ -98,7 +75,7 @@ export class CommonComplexTypeField<
     true
   );
 
-  constructor(
+    constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
     deSerializers: DeSerializersT,
@@ -109,7 +86,7 @@ export class CommonComplexTypeField<
 }
 
 export namespace CommonComplexType {
-  export const _propertyMetadata: PropertyMetadata<CommonComplexType>[] = [
+    export const _propertyMetadata: PropertyMetadata<CommonComplexType>[] = [
     {
       originalName: 'StringProperty',
       name: 'stringProperty',
@@ -137,10 +114,11 @@ export namespace CommonComplexType {
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
+
 export interface NestedComplexType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
-  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
+    stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
 
 export class NestedComplexTypeField<
@@ -159,7 +137,7 @@ export class NestedComplexTypeField<
     this,
     this.deSerializers
   );
-  stringProperty: OrderableEdmTypeField<
+    stringProperty: OrderableEdmTypeField<
     EntityT,
     DeSerializersT,
     'Edm.String',
@@ -171,7 +149,7 @@ export class NestedComplexTypeField<
     true
   );
 
-  constructor(
+    constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
     deSerializers: DeSerializersT,
@@ -182,7 +160,7 @@ export class NestedComplexTypeField<
 }
 
 export namespace NestedComplexType {
-  export const _propertyMetadata: PropertyMetadata<NestedComplexType>[] = [
+    export const _propertyMetadata: PropertyMetadata<NestedComplexType>[] = [
     {
       originalName: 'StringProperty',
       name: 'stringProperty',
@@ -198,18 +176,20 @@ export namespace NestedComplexType {
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
+
+
 export class CommonEntitySingleLink<
     T extends DeSerializers = DefaultDeSerializers
   >
   extends Entity
   implements CommonEntitySingleLinkType<T>
 {
-  static _entityName = 'A_CommonEntitySingleLink';
-  readonly _oDataVersion: any;
-  static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
-  static _keys = ['KeyProperty'];
-  keyProperty!: DeserializedType<T, 'Edm.String'>;
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+    static _entityName = 'A_CommonEntitySingleLink';
+readonly _oDataVersion: any;
+    static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
+    static _keys = ['KeyProperty'];
+    keyProperty!: DeserializedType<T, 'Edm.String'>;
+    stringProperty?: DeserializedType<T, 'Edm.String'> | null;
 
   constructor(readonly _entityApi: CommonEntitySingleLinkApi<T>) {
     super(_entityApi);
@@ -228,6 +208,8 @@ export interface CommonEntitySingleLinkType<
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
+
 
 export class CommonEntitySingleLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
@@ -248,9 +230,7 @@ export class CommonEntitySingleLinkApi<
 
   entityConstructor = CommonEntitySingleLink;
 
-  requestBuilder(): any {
-    throw new Error('Not implemented');
-  }
+requestBuilder(): any { throw new Error("Not implemented"); }
 
   entityBuilder(): EntityBuilderType<
     CommonEntitySingleLink<DeSerializersT>,
@@ -314,18 +294,18 @@ export class CommonEntitySingleLinkApi<
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
-        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+                KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
           'KeyProperty',
           'Edm.String',
           false
         ),
-        STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
+                STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
           'StringProperty',
           'Edm.String',
           true
         ),
         ...this.navigationPropertyFields,
-        ALL_FIELDS: new AllFields('*', CommonEntitySingleLink)
+                ALL_FIELDS: new AllFields('*', CommonEntitySingleLink)
       };
     }
 
@@ -339,21 +319,25 @@ export class CommonEntitySingleLinkApi<
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
+
+
+
+
 export class CommonEntity<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements CommonEntityType<T>
 {
-  static _entityName = 'A_CommonEntity';
-  readonly _oDataVersion: any;
-  static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
-  static _keys = ['KeyPropertyGuid', 'KeyPropertyString'];
-  keyPropertyGuid!: DeserializedType<T, 'Edm.Guid'>;
-  keyPropertyString!: DeserializedType<T, 'Edm.String'>;
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
-  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
-  collectionProperty?: DeserializedType<T, 'Edm.String'>[] | null;
-  complexTypeProperty?: CommonComplexType<T> | null;
-  toSingleLink?: CommonEntitySingleLink<T> | null;
+    static _entityName = 'A_CommonEntity';
+readonly _oDataVersion: any;
+    static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
+    static _keys = ['KeyPropertyGuid', 'KeyPropertyString'];
+    keyPropertyGuid!: DeserializedType<T, 'Edm.Guid'>;
+    keyPropertyString!: DeserializedType<T, 'Edm.String'>;
+    stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+    int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
+    collectionProperty?: DeserializedType<T, 'Edm.String'>[] | null;
+    complexTypeProperty?: CommonComplexType<T> | null;
+    toSingleLink?: CommonEntitySingleLink<T> | null;
 
   constructor(readonly _entityApi: CommonEntityApi<T>) {
     super(_entityApi);
@@ -378,6 +362,10 @@ export interface CommonEntityType<
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
+
+
+
+
 export class CommonEntityApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<CommonEntity<DeSerializersT>, DeSerializersT>
@@ -389,7 +377,7 @@ export class CommonEntityApi<
   }
 
   private navigationPropertyFields!: {
-    TO_SINGLE_LINK: OneToOneLink<
+        TO_SINGLE_LINK: OneToOneLink<
       CommonEntity<DeSerializersT>,
       DeSerializersT,
       CommonEntitySingleLinkApi<DeSerializersT>
@@ -407,9 +395,7 @@ export class CommonEntityApi<
 
   entityConstructor = CommonEntity;
 
-  requestBuilder(): any {
-    throw new Error('Not implemented');
-  }
+requestBuilder(): any { throw new Error("Not implemented"); }
 
   entityBuilder(): EntityBuilderType<
     CommonEntity<DeSerializersT>,
@@ -480,7 +466,7 @@ export class CommonEntityApi<
       true,
       true
     >;
-    TO_SINGLE_LINK: OneToOneLink<
+        TO_SINGLE_LINK: OneToOneLink<
       CommonEntity<DeSerializersT>,
       DeSerializersT,
       CommonEntitySingleLinkApi<DeSerializersT>
@@ -492,38 +478,38 @@ export class CommonEntityApi<
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
       this._schema = {
-        KEY_PROPERTY_GUID: fieldBuilder.buildEdmTypeField(
+                KEY_PROPERTY_GUID: fieldBuilder.buildEdmTypeField(
           'KeyPropertyGuid',
           'Edm.Guid',
           false
         ),
-        KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
+                KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
           'KeyPropertyString',
           'Edm.String',
           false
         ),
-        STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
+                STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
           'StringProperty',
           'Edm.String',
           true
         ),
-        INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
+                INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
           'Int16Property',
           'Edm.Int16',
           true
         ),
-        COLLECTION_PROPERTY: fieldBuilder.buildCollectionField(
+                COLLECTION_PROPERTY: fieldBuilder.buildCollectionField(
           'CollectionProperty',
           'Edm.String',
           true
         ),
-        COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField(
+                COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField(
           'ComplexTypeProperty',
           CommonComplexTypeField,
           true
         ),
         ...this.navigationPropertyFields,
-        ALL_FIELDS: new AllFields('*', CommonEntity)
+                ALL_FIELDS: new AllFields('*', CommonEntity)
       };
     }
 
@@ -536,6 +522,12 @@ export class CommonEntityApi<
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
+
+
+
+
+
 
 export function commonService<
   BinaryT = string,
@@ -551,8 +543,7 @@ export function commonService<
   SByteT = number,
   SingleT = number,
   StringT = string,
-  AnyT = any
->(
+  AnyT = any>(
   deSerializers: Partial<
     DeSerializers<
       BinaryT,
@@ -568,8 +559,7 @@ export function commonService<
       SByteT,
       SingleT,
       StringT,
-      AnyT
-    >
+      AnyT>
   > = defaultDeSerializers as any
 ): CommonService<
   DeSerializers<
@@ -586,8 +576,7 @@ export function commonService<
     SByteT,
     SingleT,
     StringT,
-    AnyT
-  >
+    AnyT>
 > {
   return new CommonService(mergeDefaultDeSerializersWith(deSerializers));
 }
@@ -620,6 +609,10 @@ class CommonService<
   get commonEntitySingleLinkApi(): CommonEntitySingleLinkApi<DeSerializersT> {
     return this.initApi('commonEntitySingleLinkApi', CommonEntitySingleLinkApi);
   }
+
+  
+
+  
 }
 
 export const { commonEntityApi } = commonService();

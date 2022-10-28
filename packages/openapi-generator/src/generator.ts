@@ -152,13 +152,10 @@ async function generateSources(
   }
 
   if (tsConfig) {
-    await createFile(
-      serviceDir,
-      'tsconfig.json',
-      tsConfig,
-      options.overwrite,
-      false
-    );
+    await createFile(serviceDir, 'tsconfig.json', tsConfig, {
+      ...options,
+      withCopyright: false
+    });
     await transpileDirectory(serviceDir, await readCompilerOptions(serviceDir));
   }
 
@@ -175,21 +172,15 @@ async function generateMandatorySources(
   if (openApiDocument.schemas.length) {
     const schemaDir = resolve(serviceDir, 'schema');
     await createSchemaFiles(schemaDir, openApiDocument, overwrite);
-    await createFile(
-      schemaDir,
-      'index.ts',
-      schemaIndexFile(openApiDocument),
+    await createFile(schemaDir, 'index.ts', schemaIndexFile(openApiDocument), {
       overwrite
-    );
+    });
   }
 
   await createApis(serviceDir, openApiDocument, overwrite);
-  await createFile(
-    serviceDir,
-    'index.ts',
-    apiIndexFile(openApiDocument),
+  await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), {
     overwrite
-  );
+  });
 }
 
 async function createApis(
@@ -203,7 +194,7 @@ async function createApis(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
         apiFile(api, openApiDocument.serviceName),
-        overwrite
+        { overwrite }
       )
     )
   );
@@ -217,7 +208,9 @@ async function createSchemaFiles(
   await mkdir(dir, { recursive: true });
   await Promise.all(
     openApiDocument.schemas.map(schema =>
-      createFile(dir, `${schema.fileName}.ts`, schemaFile(schema), overwrite)
+      createFile(dir, `${schema.fileName}.ts`, schemaFile(schema), {
+        overwrite
+      })
     )
   );
 }
@@ -293,13 +286,10 @@ function generateReadme(
 ): Promise<void> {
   logger.verbose(`Generating readme in ${serviceDir}.`);
 
-  return createFile(
-    serviceDir,
-    'README.md',
-    readme(openApiDocument),
+  return createFile(serviceDir, 'README.md', readme(openApiDocument), {
     overwrite,
-    false
-  );
+    withCopyright: false
+  });
 }
 
 async function generateMetadata(
@@ -318,8 +308,7 @@ async function generateMetadata(
     metadataDir,
     clientFileName,
     JSON.stringify(await sdkMetadata(openApiDocument), null, 2),
-    overwrite,
-    false
+    { overwrite, withCopyright: false }
   );
   return clientFile;
 }
@@ -341,8 +330,7 @@ async function generatePackageJson(
       version: packageVersion,
       license: licenseInPackageJson
     }),
-    overwrite,
-    false
+    { overwrite, withCopyright: false }
   );
 }
 
@@ -361,7 +349,6 @@ async function generateOptionsPerService(
       ...(await getOriginalOptionsPerService(filePath)),
       ...optionsPerService
     }),
-    true,
-    false
+    { overwrite: true, withCopyright: false }
   );
 }

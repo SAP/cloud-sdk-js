@@ -25,7 +25,10 @@ export async function generateCommonEntity() {
 }
 
 function removeImports(str: string): string {
-  const removed = str.replace(/import (type )?\{.*\}.*;/g, '');
+  const removed = str.replace(
+    /import (type )*\{(\s*\w+,{0,1}\s+)+\} from '\S+';/g,
+    ''
+  );
   return removed;
 }
 

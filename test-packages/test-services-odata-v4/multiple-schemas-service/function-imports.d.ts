@@ -1,7 +1,7 @@
 import {
-  FunctionImportRequestBuilder,
   DeSerializers,
-  DefaultDeSerializers
+  DefaultDeSerializers,
+  FunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity1 } from './TestEntity1';
 import { TestEntity2 } from './TestEntity2';

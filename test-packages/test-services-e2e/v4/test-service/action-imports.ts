@@ -5,13 +5,13 @@
  */
 import {
   edmToTs,
-  ActionImportRequestBuilder,
-  ActionImportParameter,
   transformReturnValueForEntity,
   transformReturnValueForEdmType,
   DeSerializers,
   DefaultDeSerializers,
-  defaultDeSerializers
+  defaultDeSerializers,
+  ActionImportParameter,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { testService } from './service';
 import { TestEntity } from './TestEntity';

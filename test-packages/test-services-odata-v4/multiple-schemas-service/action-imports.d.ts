@@ -1,7 +1,7 @@
 import {
-  ActionImportRequestBuilder,
   DeSerializers,
-  DefaultDeSerializers
+  DefaultDeSerializers,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType1 } from './TestComplexType1';
 import { TestComplexType2 } from './TestComplexType2';

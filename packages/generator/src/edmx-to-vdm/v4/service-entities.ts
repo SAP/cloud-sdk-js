@@ -28,7 +28,7 @@ export function getServiceEntitiesV4(
     enumTypes,
     formatter
   );
-  const actionsImports = generateActionImportsV4(
+  const actionImports = generateActionImportsV4(
     serviceMetadata,
     serviceName,
     entities,
@@ -48,6 +48,6 @@ export function getServiceEntitiesV4(
     enumTypes,
     entities,
     functionImports,
-    actionImports: actionsImports
+    actionImports
   };
 }

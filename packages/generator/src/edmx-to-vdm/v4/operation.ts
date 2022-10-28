@@ -11,7 +11,6 @@ import { parseOperationImports, parseOperations } from '../../edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import {
   VdmComplexType,
-  VdmEntity,
   VdmEntityInConstruction,
   VdmOperation
 } from '../../vdm-types';

@@ -1,11 +1,11 @@
 import { join, resolve } from 'path';
 import { promises } from 'fs';
-import { FunctionDeclaration, SourceFile } from 'ts-morph';
+import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import { createOptions } from '../test/test-util/create-generator-options';
 import {
   checkStaticProperties,
-  getFunctionImportDeclarations,
+  getOperationFunctionDeclarations,
   getGeneratedFiles
 } from '../test/test-util/generator';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
@@ -134,7 +134,10 @@ describe('generator', () => {
     });
 
     it('generates function-imports.ts file', () => {
-      const functionImports = getFunctionImportDeclarations(files);
+      const functionImports = getOperationFunctionDeclarations(
+        files,
+        'function'
+      );
       expect(functionImports.length).toBe(15);
     });
   });
@@ -186,7 +189,10 @@ describe('generator', () => {
     });
 
     it('generates function-imports.ts file', () => {
-      const functionImports = getFunctionImportDeclarations(files);
+      const functionImports = getOperationFunctionDeclarations(
+        files,
+        'function'
+      );
       expect(functionImports.length).toBe(11);
       const functionImportNames = functionImports.map(fi => fi.getName());
       expect(functionImportNames).toEqual(
@@ -198,7 +204,7 @@ describe('generator', () => {
     });
 
     it('generates action-imports.ts file', () => {
-      const actionImports = getActionImportDeclarations(files);
+      const actionImports = getOperationFunctionDeclarations(files, 'action');
       expect(actionImports.length).toBe(7);
       const actionImportNames = actionImports.map(action => action.getName());
       expect(actionImportNames).toEqual(
@@ -212,13 +218,3 @@ describe('generator', () => {
     });
   });
 });
-
-function getActionImportDeclarations(
-  files: SourceFile[]
-): FunctionDeclaration[] {
-  const actionImportFile = files.find(
-    file => file.getBaseName() === 'action-imports.ts'
-  );
-
-  return actionImportFile!.getFunctions();
-}

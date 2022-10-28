@@ -1,9 +1,9 @@
 import {
-  EdmxAction,
-  EdmxActionImport,
   EdmxComplexType,
   EdmxEntitySet,
-  EdmxEntityTypeV4
+  EdmxEntityTypeV4,
+  EdmxOperation,
+  EdmxOperationImport
 } from '../../edmx-parser/v4';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { EdmxProperty } from '../../edmx-parser/common';
@@ -220,11 +220,14 @@ function createTestProperty(name: string, type = 'Edm.String'): EdmxProperty {
   };
 }
 
-function createImportsForActions(actions: EdmxAction[]): EdmxActionImport[] {
+function createImportsForActions(
+  actions: EdmxOperation[]
+): EdmxOperationImport[] {
   return actions.map(action => ({
     Name: action.Name,
-    Action: `SomePrefix.${action.Name}`,
-    Namespace: action.Namespace
+    Namespace: action.Namespace,
+    operationName: `SomePrefix.${action.Name}`,
+    operationType: 'action'
   }));
 }
 
@@ -232,7 +235,7 @@ function createTestServiceData(
   entityTypes: EdmxEntityTypeV4[],
   entitySets: EdmxEntitySet[],
   complexType: EdmxComplexType[] = [getComplexType()],
-  actions: EdmxAction[] = [],
+  actions: EdmxOperation[] = [],
   namespace: string = defaultNamespace
 ): ServiceMetadata {
   return {

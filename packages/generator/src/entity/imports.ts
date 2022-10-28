@@ -1,8 +1,10 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { importDeclarationsAction, importDeclarationsFunction } from '../action-function-import';
+import { operationImportDeclarations } from '../action-function-import';
 import {
-  complexTypeImportDeclarations, enumTypeImportDeclarations, odataImportDeclaration
+  complexTypeImportDeclarations,
+  enumTypeImportDeclarations,
+  odataImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
@@ -39,8 +41,8 @@ export function entityImportDeclarations(
         kind: StructureKind.ImportDeclaration,
         isTypeOnly: true
       },
-      ...importDeclarationsAction(service, entity.actions), //fixme(fwilhe) need to filter here
-      ...importDeclarationsFunction(service, entity.functions),
+      ...operationImportDeclarations(service, 'action', entity.actions), // fixme(fwilhe) need to filter here
+      ...operationImportDeclarations(service, 'function', entity.functions),
       ...enumTypeImportDeclarations(entity.properties)
     ];
   }
@@ -67,18 +69,19 @@ export function otherEntityImports(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
   return Array.from(new Set(entity.navigationProperties.map(n => n.to)))
-  .map(to => {
-    const matchedEntity = service.entities.find(e => e.entitySetName === to);
-    if (!matchedEntity) {
-      throw Error(
-        `Failed to find the entity from the service: ${JSON.stringify(
-          service
-        )} for entity ${entity}`
-      );
-    }
-    return matchedEntity.className;
-  })
-  .filter(name => name !== entity.className).map(name => otherEntityImport(name));
+    .map(to => {
+      const matchedEntity = service.entities.find(e => e.entitySetName === to);
+      if (!matchedEntity) {
+        throw Error(
+          `Failed to find the entity from the service: ${JSON.stringify(
+            service
+          )} for entity ${entity}`
+        );
+      }
+      return matchedEntity.className;
+    })
+    .filter(name => name !== entity.className)
+    .map(name => otherEntityImport(name));
 }
 
 function otherEntityImport(name: string): ImportDeclarationStructure {

@@ -5,15 +5,15 @@
  */
 import {
   edmToTs,
-  FunctionImportRequestBuilder,
-  DeSerializers,
   transformReturnValueForEdmType,
   transformReturnValueForEntityList,
   transformReturnValueForEntity,
   transformReturnValueForEdmTypeList,
+  DeSerializers,
   DefaultDeSerializers,
   defaultDeSerializers,
-  FunctionImportParameter
+  FunctionImportParameter,
+  FunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { testService } from './service';
 import { TestEntity } from './TestEntity';

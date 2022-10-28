@@ -3,30 +3,17 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers,
-  DeserializedType,
-  entityDeserializer,
-  BoundActionRequestBuilder,
-  transformReturnValueForComplexType,
-  defaultDeSerializers,
-  BoundFunctionRequestBuilder,
-  FunctionImportParameter,
-  ActionImportParameter
-} from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityEndsWithSomethingElseApi } from './TestEntityEndsWithSomethingElseApi';
+import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, ActionImportParameter, ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
+import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter, FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
 
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
-export class TestEntityEndsWithSomethingElse<
-    T extends DeSerializers = DefaultDeSerializers
-  >
-  extends Entity
-  implements TestEntityEndsWithSomethingElseType<T>
-{
+export class TestEntityEndsWithSomethingElse<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityEndsWithSomethingElseType<T> {
   /**
    * Technical entity name for TestEntityEndsWithSomethingElse.
    */
@@ -50,8 +37,7 @@ export class TestEntityEndsWithSomethingElse<
   }
 }
 
-export interface TestEntityEndsWithSomethingElseType<
-  T extends DeSerializers = DefaultDeSerializers
-> {
+export interface TestEntityEndsWithSomethingElseType<T extends DeSerializers = DefaultDeSerializers> {
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }
+

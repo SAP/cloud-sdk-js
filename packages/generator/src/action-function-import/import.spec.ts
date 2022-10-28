@@ -1,6 +1,6 @@
 import { orderBreakfast } from '../../test/test-util/data-model';
 import { VdmServiceMetadata } from '../vdm-types';
-import { importDeclarationsAction, importDeclarationsFunction } from './import';
+import { operationImportDeclarations } from './import';
 
 describe('function / action-import generation', () => {
   it('creates correct imports for an action when there is an EDM return type', () => {
@@ -35,20 +35,22 @@ describe('function / action-import generation', () => {
     const service = {
     };
 
-    const actual = importDeclarationsFunction(service as VdmServiceMetadata, [orderBreakfast]);
-
-    expect(actual).toEqual([
+    expect(
+      operationImportDeclarations(service as VdmServiceMetadata, 'function', [
+        orderBreakfast
+      ])
+    ).toEqual([
       {
         kind: 16,
         moduleSpecifier: '@sap-cloud-sdk/odata-v4',
         namedImports: [
           'edmToTs',
-          'FunctionImportRequestBuilder',
-          'DeSerializers',
           'transformReturnValueForEdmType',
+          'DeSerializers',
           'DefaultDeSerializers',
           'defaultDeSerializers',
-          'FunctionImportParameter'
+          'FunctionImportParameter',
+          'FunctionImportRequestBuilder'
         ]
       },
       {

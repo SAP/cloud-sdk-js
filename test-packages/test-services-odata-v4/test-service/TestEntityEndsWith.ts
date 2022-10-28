@@ -3,28 +3,17 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers,
-  DeserializedType,
-  entityDeserializer,
-  BoundActionRequestBuilder,
-  transformReturnValueForComplexType,
-  defaultDeSerializers,
-  BoundFunctionRequestBuilder,
-  FunctionImportParameter,
-  ActionImportParameter
-} from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
+import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, ActionImportParameter, ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
+import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter, FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
 
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */
-export class TestEntityEndsWith<T extends DeSerializers = DefaultDeSerializers>
-  extends Entity
-  implements TestEntityEndsWithType<T>
-{
+export class TestEntityEndsWith<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityEndsWithType<T> {
   /**
    * Technical entity name for TestEntityEndsWith.
    */
@@ -48,8 +37,7 @@ export class TestEntityEndsWith<T extends DeSerializers = DefaultDeSerializers>
   }
 }
 
-export interface TestEntityEndsWithType<
-  T extends DeSerializers = DefaultDeSerializers
-> {
+export interface TestEntityEndsWithType<T extends DeSerializers = DefaultDeSerializers> {
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }
+

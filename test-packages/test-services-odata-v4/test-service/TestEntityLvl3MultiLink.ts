@@ -3,30 +3,17 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers,
-  DeserializedType,
-  entityDeserializer,
-  BoundActionRequestBuilder,
-  transformReturnValueForComplexType,
-  defaultDeSerializers,
-  BoundFunctionRequestBuilder,
-  FunctionImportParameter,
-  ActionImportParameter
-} from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityLvl3MultiLinkApi } from './TestEntityLvl3MultiLinkApi';
+import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, ActionImportParameter, ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
+import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter, FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
 
 /**
  * This class represents the entity "A_TestEntityLvl3MultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityLvl3MultiLink<
-    T extends DeSerializers = DefaultDeSerializers
-  >
-  extends Entity
-  implements TestEntityLvl3MultiLinkType<T>
-{
+export class TestEntityLvl3MultiLink<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityLvl3MultiLinkType<T> {
   /**
    * Technical entity name for TestEntityLvl3MultiLink.
    */
@@ -61,10 +48,9 @@ export class TestEntityLvl3MultiLink<
   }
 }
 
-export interface TestEntityLvl3MultiLinkType<
-  T extends DeSerializers = DefaultDeSerializers
-> {
+export interface TestEntityLvl3MultiLinkType<T extends DeSerializers = DefaultDeSerializers> {
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }
+

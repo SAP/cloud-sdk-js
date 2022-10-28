@@ -3,40 +3,23 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers,
-  DeserializedType,
-  entityDeserializer,
-  BoundActionRequestBuilder,
-  transformReturnValueForComplexType,
-  defaultDeSerializers,
-  BoundFunctionRequestBuilder,
-  FunctionImportParameter,
-  ActionImportParameter
-} from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import type { TestEntityApi } from './TestEntityApi';
+import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, ActionImportParameter, ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
+import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter, FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
 import { TestEnumType } from './TestEnumType';
 import { TestEnumTypeInt64 } from './TestEnumTypeInt64';
 import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
-import {
-  TestEntityMultiLink,
-  TestEntityMultiLinkType
-} from './TestEntityMultiLink';
-import {
-  TestEntitySingleLink,
-  TestEntitySingleLinkType
-} from './TestEntitySingleLink';
+import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
+import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
-  extends Entity
-  implements TestEntityType<T>
-{
+export class TestEntity<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityType<T> {
   /**
    * Technical entity name for TestEntity.
    */
@@ -202,9 +185,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   }
 }
 
-export interface TestEntityType<
-  T extends DeSerializers = DefaultDeSerializers
-> {
+export interface TestEntityType<T extends DeSerializers = DefaultDeSerializers> {
   keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>;
   keyPropertyString: DeserializedType<T, 'Edm.String'>;
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
@@ -236,3 +217,4 @@ export interface TestEntityType<
   toOtherMultiLink: TestEntityMultiLinkType<T>[];
   toSingleLink?: TestEntitySingleLinkType<T> | null;
 }
+

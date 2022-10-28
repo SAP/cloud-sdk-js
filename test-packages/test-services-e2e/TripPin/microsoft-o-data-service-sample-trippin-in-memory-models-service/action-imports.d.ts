@@ -1,7 +1,7 @@
 import {
-  ActionImportRequestBuilder,
   DeSerializers,
-  DefaultDeSerializers
+  DefaultDeSerializers,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 /**
  * Type of the parameters to be passed to {@link resetDataSource}.

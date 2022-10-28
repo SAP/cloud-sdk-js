@@ -3,30 +3,19 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers,
-  DeserializedType,
-  entityDeserializer,
-  BoundActionRequestBuilder,
-  transformReturnValueForComplexType,
-  defaultDeSerializers,
-  BoundFunctionRequestBuilder,
-  FunctionImportParameter,
-  ActionImportParameter
-} from '@sap-cloud-sdk/odata-v4';
+import { Entity, DefaultDeSerializers, DeSerializers, DeserializedType, entityDeserializer, BoundActionRequestBuilder, transformReturnValueForComplexType, defaultDeSerializers, BoundFunctionRequestBuilder, FunctionImportParameter, ActionImportParameter } from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType1, TestComplexType1Field } from './TestComplexType1';
 import type { TestEntity1Api } from './TestEntity1Api';
+import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, ActionImportParameter, ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { multipleSchemasService } from './service';
+import { DeSerializers, DefaultDeSerializers, defaultDeSerializers, FunctionImportParameter, FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { multipleSchemasService } from './service';
 import { TestEnumType1 } from './TestEnumType1';
 
 /**
  * This class represents the entity "A_TestEntity1" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class TestEntity1<T extends DeSerializers = DefaultDeSerializers>
-  extends Entity
-  implements TestEntity1Type<T>
-{
+export class TestEntity1<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntity1Type<T> {
   /**
    * Technical entity name for TestEntity1.
    */
@@ -64,11 +53,10 @@ export class TestEntity1<T extends DeSerializers = DefaultDeSerializers>
   }
 }
 
-export interface TestEntity1Type<
-  T extends DeSerializers = DefaultDeSerializers
-> {
+export interface TestEntity1Type<T extends DeSerializers = DefaultDeSerializers> {
   keyPropertyString: DeserializedType<T, 'Edm.String'>;
   int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   enumProperty?: TestEnumType1 | null;
   complexTypeProperty?: TestComplexType1<T> | null;
 }
+

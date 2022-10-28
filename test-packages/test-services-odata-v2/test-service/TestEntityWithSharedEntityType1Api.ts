@@ -5,59 +5,58 @@
  */
 import { TestEntityWithSharedEntityType1 } from './TestEntityWithSharedEntityType1';
 import { TestEntityWithSharedEntityType1RequestBuilder } from './TestEntityWithSharedEntityType1RequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-v2';
-export class TestEntityWithSharedEntityType1Api<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements
-    EntityApi<TestEntityWithSharedEntityType1<DeSerializersT>, DeSerializersT>
-{
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, OrderableEdmTypeField } from '@sap-cloud-sdk/odata-v2';
+export class TestEntityWithSharedEntityType1Api<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      TestEntityWithSharedEntityType1<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {};
+  private navigationPropertyFields!: {
+      
+    };
 
-  _addNavigationProperties(linkedApis: []): this {
-    this.navigationPropertyFields = {};
-    return this;
-  }
-
+  _addNavigationProperties(
+      linkedApis: [
+        
+      ]): this {
+        this.navigationPropertyFields = {
+          
+        };
+        return this;
+      }
+  
   entityConstructor = TestEntityWithSharedEntityType1;
-
-  requestBuilder(): TestEntityWithSharedEntityType1RequestBuilder<DeSerializersT> {
-    return new TestEntityWithSharedEntityType1RequestBuilder<DeSerializersT>(
-      this
-    );
-  }
-
-  entityBuilder(): EntityBuilderType<
-    TestEntityWithSharedEntityType1<DeSerializersT>,
+  
+  requestBuilder(): TestEntityWithSharedEntityType1RequestBuilder<
     DeSerializersT
   > {
-    return entityBuilder<
-      TestEntityWithSharedEntityType1<DeSerializersT>,
+    return new TestEntityWithSharedEntityType1RequestBuilder<DeSerializersT>(this);
+  }
+  
+  entityBuilder(): EntityBuilderType<
+    TestEntityWithSharedEntityType1<
       DeSerializersT
-    >(this);
+    >,
+    DeSerializersT
+  > {
+    return entityBuilder<TestEntityWithSharedEntityType1<DeSerializersT>, DeSerializersT>(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
   ): CustomField<
-    TestEntityWithSharedEntityType1<DeSerializersT>,
+  TestEntityWithSharedEntityType1<
+      DeSerializersT>,
     DeSerializersT,
     NullableT
   > {
@@ -69,53 +68,37 @@ export class TestEntityWithSharedEntityType1Api<
     ) as any;
   }
 
-  private _fieldBuilder?: FieldBuilder<
-    typeof TestEntityWithSharedEntityType1,
-    DeSerializersT
-  >;
+  private _fieldBuilder?: FieldBuilder<typeof TestEntityWithSharedEntityType1, DeSerializersT>;
   get fieldBuilder() {
-    if (!this._fieldBuilder) {
-      this._fieldBuilder = new FieldBuilder(
-        TestEntityWithSharedEntityType1,
-        this.deSerializers
-      );
+    if(!this._fieldBuilder){
+      this._fieldBuilder = new FieldBuilder(TestEntityWithSharedEntityType1, this.deSerializers);
     }
     return this._fieldBuilder;
   }
 
   private _schema?: {
-    KEY_PROPERTY: OrderableEdmTypeField<
-      TestEntityWithSharedEntityType1<DeSerializers>,
-      DeSerializersT,
-      'Edm.String',
-      false,
-      true
-    >;
-    ALL_FIELDS: AllFields<TestEntityWithSharedEntityType1<DeSerializers>>;
+    KEY_PROPERTY: OrderableEdmTypeField<TestEntityWithSharedEntityType1<DeSerializers>, DeSerializersT, 'Edm.String', false, true>,
+ALL_FIELDS: AllFields<TestEntityWithSharedEntityType1<DeSerializers>>
   };
 
   get schema() {
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
-      this._schema = {
-        /**
-         * Static representation of the {@link keyProperty} property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-          'KeyProperty',
-          'Edm.String',
-          false
-        ),
-        ...this.navigationPropertyFields,
-        /**
-         *
-         * All fields selector.
-         */
-        ALL_FIELDS: new AllFields('*', TestEntityWithSharedEntityType1)
-      };
+      this._schema = { 
+    /**
+ * Static representation of the {@link keyProperty} property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', TestEntityWithSharedEntityType1) 
+  };
     }
-
+  
     return this._schema;
   }
 }

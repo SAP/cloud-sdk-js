@@ -100,8 +100,7 @@ const fileParserMap: Record<string, BuiltInParserName> = {
  * @internal
  */
 export function getFileExtension(fileName: string): string {
-  const fileType = parse(fileName).base.split('.').slice(1).join('.');
-  return fileType;
+  return parse(fileName).base.split('.').slice(1).join('.');
 }
 
 async function formatWithPrettier(

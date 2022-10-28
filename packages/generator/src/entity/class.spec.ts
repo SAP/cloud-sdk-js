@@ -8,12 +8,19 @@ import {
 } from '../../test/test-util/data-model';
 import { entityClass } from './class';
 
-describe('entity class generator', () => {
-  it('creates a class', () => {
-    const classDeclaration = entityClass(breakfastEntity, foodService);
+describe('entity class generator generates a class', () => {
+  let classDeclaration;
+  beforeAll(() => {
+    classDeclaration = entityClass(breakfastEntity, foodService);
+  });
+
+  it('has expected name', () => {
     expect(classDeclaration.name).toBe(
       `${breakfastEntity.className}<T extends DeSerializers = DefaultDeSerializers>`
     );
+  });
+
+  it('has expected static properties', () => {
     const staticProperties = classDeclaration.properties!.filter(
       prop => prop.isStatic
     );
@@ -24,6 +31,9 @@ describe('entity class generator', () => {
         ['_keys', "['EntityName','BreakfastTime']"]
       ]
     );
+  });
+
+  it('has expected instance properties', () => {
     const instanceProperties = classDeclaration.properties!.filter(
       prop => !prop.isStatic
     );
@@ -42,49 +52,22 @@ describe('entity class generator', () => {
       ],
       [`${toBrunch.instancePropertyName}?`, 'Brunch<T> | null']
     ]);
+  });
 
-    expect(classDeclaration.methods).toBeDefined();
+  it('has expected number of methods', () => {
     expect(classDeclaration.methods?.length).toEqual(2);
-    const functions = classDeclaration.methods?.filter(x => x.name === 'myFn');
-    expect(functions).toBeDefined();
-    expect(functions?.length).toBe(1);
-    if (functions) {
-      const myFn = functions[0];
-      expect(myFn).toBeDefined();
-      expect(myFn.parameters?.length).toBe(1);
-      if (myFn.parameters) {
-        expect(myFn.parameters[0].name).toEqual('FirstParameter');
-        if (myFn.statements) {
-          expect(
-            myFn.statements.toString().indexOf('FirstParameter') > 0
-          ).toBeTruthy();
-        }
-      } else {
-        fail(new Error('Expected parameters to be defined'));
-      }
-    } else {
-      fail(new Error('Expected functions to be defined'));
-    }
+  });
 
-    const actions = classDeclaration.methods?.filter(x => x.name === 'myAct');
-    expect(actions).toBeDefined();
-    expect(actions?.length).toBe(1);
-    if (actions) {
-      const myAct = actions[0];
-      expect(myAct).toBeDefined();
-      expect(myAct.parameters?.length).toBe(1);
-      if (myAct.parameters) {
-        expect(myAct.parameters[0].name).toEqual('FirstParameter');
-        if (myAct.statements) {
-          expect(
-            myAct.statements.toString().indexOf('FirstParameter') > 0
-          ).toBeTruthy();
-        }
-      } else {
-        fail(new Error('Expected parameters to be defined'));
-      }
-    } else {
-      fail(new Error('Expected actions to be defined'));
-    }
+  it('has expected parameters for function', () => {
+    const fn = classDeclaration.methods?.find(
+      ({ name }) => name === 'getPrice'
+    );
+
+    expect(fn?.parameters?.map(({ name }) => name)).toEqual(['meal']);
+  });
+
+  it('has expected parameters for action', () => {
+    const fn = classDeclaration.methods?.find(({ name }) => name === 'payMeal');
+    expect(fn?.parameters?.map(({ name }) => name)).toEqual(['meal', 'cash']);
   });
 });

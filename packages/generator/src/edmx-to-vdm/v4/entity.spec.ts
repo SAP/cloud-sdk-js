@@ -1,10 +1,10 @@
 import { ServiceMetadata } from '../../edmx-parser';
 import { EdmxProperty } from '../../edmx-parser/common';
 import {
+  EdmxComplexType,
   EdmxEntitySet,
   EdmxEntityTypeV4,
-  EdmxOperation,
-  EdmxOperationImport
+  EdmxOperation
 } from '../../edmx-parser/v4';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { generateComplexTypesV4 } from './complex-type';
@@ -12,14 +12,14 @@ import { generateEntitiesV4 } from './entity';
 
 describe('entity', () => {
   it('transforms collection type properties for primitive types', () => {
-    const service = createTestServiceData(
-      [
+    const service = createTestServiceData({
+      entityTypes: [
         createEntityType('TestEntityType', [
           ['CollectionProperty', 'Collection(Edm.String)', false]
         ])
       ],
-      [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
-    );
+      entitySets: [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
+    });
 
     const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
     expect(entity.properties[0]).toMatchObject({
@@ -31,8 +31,8 @@ describe('entity', () => {
   });
 
   it('transforms collection type properties for unknown EDMX types', () => {
-    const service = createTestServiceData(
-      [
+    const service = createTestServiceData({
+      entityTypes: [
         createEntityType('TestEntityType', [
           [
             'CollectionProperty',
@@ -41,8 +41,8 @@ describe('entity', () => {
           ]
         ])
       ],
-      [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
-    );
+      entitySets: [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
+    });
 
     const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
     expect(entity.properties[0]).toMatchObject({
@@ -54,14 +54,14 @@ describe('entity', () => {
   });
 
   it('transforms collection type properties for complex types', () => {
-    const service = createTestServiceData(
-      [
+    const service = createTestServiceData({
+      entityTypes: [
         createEntityType('TestEntityType', [
           ['CollectionProperty', 'Collection(namespace.TestComplexType)', false]
         ])
       ],
-      [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
-    );
+      entitySets: [createTestEntitySet('TestEntity', 'ns.TestEntityType')]
+    });
 
     const formatter = getFormatter();
     const vdmComplexTypes = generateComplexTypesV4(service, [], formatter);
@@ -82,20 +82,20 @@ describe('entity', () => {
   });
 
   it('transforms one to one navigation properties', () => {
-    const service = createTestServiceData(
-      [
+    const service = createTestServiceData({
+      entityTypes: [
         createEntityType(
           'TestEntityType',
           [],
           [['SingleNavProperty', 'TestEntityType']]
         )
       ],
-      [
+      entitySets: [
         createTestEntitySet('TestEntity', 'ns.TestEntityType', [
           ['SingleNavProperty', 'TestEntity']
         ])
       ]
-    );
+    });
 
     const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
     expect(entity.navigationProperties[0]).toMatchObject({
@@ -107,20 +107,20 @@ describe('entity', () => {
   });
 
   it('transforms one to many navigation properties', () => {
-    const service = createTestServiceData(
-      [
+    const service = createTestServiceData({
+      entityTypes: [
         createEntityType(
           'TestEntityType',
           [],
           [['CollectionNavProperty', 'Collection(TestEntityType)']]
         )
       ],
-      [
+      entitySets: [
         createTestEntitySet('TestEntity', 'ns.TestEntityType', [
           ['CollectionNavProperty', 'TestEntity']
         ])
       ]
-    );
+    });
 
     const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
     expect(entity.navigationProperties[0]).toMatchObject({
@@ -132,8 +132,8 @@ describe('entity', () => {
   });
 
   it('transforms collection type properties', () => {
-    const service = createTestServiceData(
-      [
+    const service = createTestServiceData({
+      entityTypes: [
         createEntityType(
           'TestEntityType',
           [
@@ -147,13 +147,13 @@ describe('entity', () => {
           ]
         )
       ],
-      [
+      entitySets: [
         createTestEntitySet('TestEntity', 'ns.TestEntityType', [
           ['SingleNavProperty', 'TestEntity'],
           ['CollectionNavProperty', 'TestEntity']
         ])
       ]
-    );
+    });
 
     const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
     expect(entity.properties.length).toBe(3);
@@ -164,180 +164,46 @@ describe('entity', () => {
       fieldType: 'CollectionField'
     });
   });
-});
 
-it('transforms bound actions and functions', () => {
-  const service = createTestServiceData(
-    [createEntityType('TestEntityType', [], [])],
-    [createTestEntitySet('TestEntity', 'ns.TestEntityType', [])]
-  );
+  it('transforms bound operations', () => {
+    const service = createTestServiceData({
+      entityTypes: [
+        createEntityType('TestEntityType', [], []),
+        createEntityType('OtherTestEntityType', [], []),
+        createEntityType('TestEntityNoOpsType', [], [])
+      ],
+      entitySets: [
+        createTestEntitySet('TestEntity', 'ns.TestEntityType', []),
+        createTestEntitySet('OtherTestEntity', 'ns.OtherTestEntityType', []),
+        createTestEntitySet('TestEntityNoOps', 'ns.TestEntityNoOpsType', [])
+      ],
+      functions: testFunctions,
+      actions: testActions
+    });
 
-  service.edmx.root.Function = [
-    {
-      IsBound: true,
-      Name: 'fn1IsBound',
-      ReturnType: {
-        Type: 'Edm.String'
-      },
-      Parameter: [
-        {
-          Name: 'theEntity',
-          Type: 'TestService.TestEntity'
-        },
-        {
-          Name: 'parameter1',
-          Type: 'Edm.String'
-        }
-      ]
-    },
-    {
-      IsBound: false,
-      Name: 'fn2IsNotBound',
-      ReturnType: {
-        Type: 'Edm.String'
-      },
-      Parameter: []
-    },
-    {
-      IsBound: true,
-      Name: 'fn3IsBoundToWrongEntity',
-      ReturnType: {
-        Type: 'Edm.String'
-      },
-      Parameter: [
-        {
-          Name: 'theEntity',
-          Type: 'TestService.TestEntityFoobar'
-        },
-        {
-          Name: 'parameter1',
-          Type: 'Edm.String'
-        }
-      ]
-    },
-    {
-      IsBound: true,
-      Name: 'fn4IsBoundToWrongEntity',
-      ReturnType: {
-        Type: 'Edm.String'
-      },
-      Parameter: [
-        {
-          Name: 'theEntity',
-          Type: 'TestService.FoobarTestEntity'
-        },
-        {
-          Name: 'parameter1',
-          Type: 'Edm.String'
-        }
-      ]
-    },
-  ];
+    const entities = generateEntitiesV4(service, [], [], getFormatter());
 
-  service.edmx.root.Action = [
-    {
-      IsBound: true,
-      Name: 'act1IsBound',
-      ReturnType: {
-        Type: 'Edm.String'
-      },
-      Parameter: [
-        {
-          Name: 'theEntity',
-          Type: 'TestService.TestEntity'
-        },
-        {
-          Name: 'parameter1',
-          Type: 'Edm.String'
-        }
-      ]
-    },
-    {
-      IsBound: false,
-      Name: 'act2IsNotBound',
-      ReturnType: {
-        Type: 'Edm.String'
-      },
-      Parameter: []
-    }
-  ];
+    // entities[0]
+    expect(entities[0].functions.map(({ name }) => name)).toEqual([
+      'fn1IsBound'
+    ]);
+    expect(entities[0].functions[0].parameters.length).toBe(1);
+    expect(entities[0].actions.map(({ name }) => name)).toEqual([
+      'action1IsBound'
+    ]);
+    expect(entities[0].actions[0].parameters.length).toBe(0);
 
-  service.edmx.root.EntityContainer = {
-    EntitySet: createTestEntitySet('TestEntity', 'ns.TestEntityType', []),
-    ActionImport: createImportsForActions(service.edmx.root.Action),
-    FunctionImport: createImportsForFunctions(service.edmx.root.Function),
-    Name: ''
-  };
+    // entities[1]
+    expect(entities[1].functions.map(({ name }) => name)).toEqual([
+      'fn3IsBoundToOtherEntity'
+    ]);
+    expect(entities[1].functions[0].parameters.length).toBe(1);
+    expect(entities[1].actions.length).toBe(0);
 
-  const entity = generateEntitiesV4(service, [], [], getFormatter())[0];
-
-  expect(entity.functions.length).toBe(1);
-  expect(entity.functions[0].parameters.length).toBe(1);
-
-  expect(entity.actions.length).toBe(1);
-  expect(entity.actions[0].parameters.length).toBe(1);
-});
-
-it('transforms bound actions and functions only in expected entities', () => {
-  const service = createTestServiceData(
-    [createEntityType('TestEntityType', [], []), createEntityType('FoobarTestEntityType', [], []),],
-    [createTestEntitySet('TestEntity', 'ns.TestEntityType', []), createTestEntitySet('FoobarTestEntity', 'ns.FoobarTestEntityType', [])]
-  );
-
-  service.edmx.root.Function = [
-    {
-      IsBound: true,
-      Name: 'fn1IsBoundToTestEntity',
-      ReturnType: {
-        Type: 'Edm.String'
-      },
-      Parameter: [
-        {
-          Name: 'theEntity',
-          Type: 'TestService.TestEntity'
-        }
-      ]
-    }
-  ];
-
-  service.edmx.root.Action = [
-    {
-      IsBound: true,
-      Name: 'act1IsBoundToTestEntity',
-      ReturnType: {
-        Type: 'Edm.String'
-      },
-      Parameter: [
-        {
-          Name: 'theEntity',
-          Type: 'TestService.TestEntity'
-        }
-      ]
-    }
-  ];
-
-  service.edmx.root.EntityContainer = {
-    EntitySet: [createTestEntitySet('TestEntity', 'ns.TestEntityType', []), createTestEntitySet('FoobarTestEntity', 'ns.FoobarTestEntityType', [])],
-    ActionImport: createImportsForActions(service.edmx.root.Action),
-    FunctionImport: createImportsForFunctions(service.edmx.root.Function),
-    Name: ''
-  };
-
-  const entities = generateEntitiesV4(service, [], [], getFormatter());
-
-  expect(entities.length).toBe(2);
-
-  const testEntityHasFunctions = entities.filter(e => e.entitySetName === 'TestEntity')[0];
-  expect(testEntityHasFunctions).toBeDefined();
-  expect(testEntityHasFunctions.functions.length).toBe(1);
-  expect(testEntityHasFunctions.functions[0].parameters.length).toBe(0);
-  expect(testEntityHasFunctions.actions.length).toBe(1);
-  expect(testEntityHasFunctions.actions[0].parameters.length).toBe(0);
-
-  const foobarTestEntityHasNoFunctions = entities.filter(e => e.entitySetName === 'FoobarTestEntity')[0];
-  expect(foobarTestEntityHasNoFunctions).toBeDefined();
-  expect(foobarTestEntityHasNoFunctions.functions.length).toBe(0);
-  expect(foobarTestEntityHasNoFunctions.actions.length).toBe(0);
+    // entities[2]
+    expect(entities[2].functions.length).toBe(0);
+    expect(entities[2].actions.length).toBe(0);
+  });
 });
 
 const defaultNamespace = 'ns';
@@ -368,6 +234,80 @@ function createTestEntitySet(
   };
 }
 
+const testFunctions: EdmxOperation[] = [
+  {
+    IsBound: true,
+    Name: 'fn1IsBound',
+    Namespace: 'TestService',
+    ReturnType: {
+      Type: 'Edm.String'
+    },
+    Parameter: [
+      {
+        Name: 'theEntity',
+        Type: 'TestService.TestEntity'
+      },
+      {
+        Name: 'parameter1',
+        Type: 'Edm.String'
+      }
+    ]
+  },
+  {
+    IsBound: false,
+    Name: 'fn2IsNotBound',
+    Namespace: 'TestService',
+    ReturnType: {
+      Type: 'Edm.String'
+    },
+    Parameter: []
+  },
+  {
+    IsBound: true,
+    Name: 'fn3IsBoundToOtherEntity',
+    Namespace: 'TestService',
+    ReturnType: {
+      Type: 'Edm.String'
+    },
+    Parameter: [
+      {
+        Name: 'theEntity',
+        Type: 'TestService.OtherTestEntity'
+      },
+      {
+        Name: 'parameter1',
+        Type: 'Edm.String'
+      }
+    ]
+  }
+];
+
+const testActions: EdmxOperation[] = [
+  {
+    IsBound: true,
+    Name: 'action1IsBound',
+    Namespace: 'TestService',
+    ReturnType: {
+      Type: 'Edm.String'
+    },
+    Parameter: [
+      {
+        Name: 'theEntity',
+        Type: 'TestService.TestEntity'
+      }
+    ]
+  },
+  {
+    IsBound: false,
+    Name: 'act2IsNotBound',
+    Namespace: 'TestService',
+    ReturnType: {
+      Type: 'Edm.String'
+    },
+    Parameter: []
+  }
+];
+
 export function getComplexType(
   namespace: string = defaultNamespace
 ): EdmxComplexType {
@@ -393,32 +333,32 @@ function createTestProperty(name: string, type = 'Edm.String'): EdmxProperty {
   };
 }
 
-function createImportsForActions(
-  actions: EdmxOperation[]
-): EdmxOperationImport[] {
-  return actions.map(action => ({
-    Name: action.Name,
-    Namespace: action.Namespace,
-    operationName: `SomePrefix.${action.Name}`,
-    operationType: 'action'
+function createImportsForOperations(
+  operations: EdmxOperation[],
+  operationKey: 'Function' | 'Action'
+) {
+  return operations.map(operation => ({
+    Name: operation.Name,
+    Namespace: operation.Namespace,
+    [operationKey]: `SomePrefix.${operation.Name}`
   }));
 }
 
-function createImportsForFunctions(functions: EdmxFunction[]): EdmxFunctionImportV4[] {
-  return functions.map(fn => ({
-    Name: fn.Name,
-    Function: `SomePrefix.${fn.Name}`,
-    Namespace: fn.Namespace
-  }));
-}
-
-function createTestServiceData(
-  entityTypes: EdmxEntityTypeV4[],
-  entitySets: EdmxEntitySet[],
-  complexType: EdmxComplexType[] = [getComplexType()],
-  actions: EdmxOperation[] = [],
-  namespace: string = defaultNamespace
-): ServiceMetadata {
+function createTestServiceData({
+  entityTypes,
+  entitySets,
+  complexType = [getComplexType()],
+  actions = [],
+  functions = [],
+  namespace = defaultNamespace
+}: {
+  entityTypes: EdmxEntityTypeV4[];
+  entitySets: EdmxEntitySet[];
+  complexType?: EdmxComplexType[];
+  actions?: EdmxOperation[];
+  functions?: EdmxOperation[];
+  namespace?: string;
+}): ServiceMetadata {
   return {
     edmx: {
       fileName: '',
@@ -428,14 +368,14 @@ function createTestServiceData(
       root: {
         EntityContainer: {
           EntitySet: entitySets,
-          ActionImport: createImportsForActions(actions),
-          FunctionImport: [],
+          ActionImport: createImportsForOperations(actions, 'Action'),
+          FunctionImport: createImportsForOperations(functions, 'Function'),
           Name: ''
         },
         Action: actions,
+        Function: functions,
         EntityType: entityTypes,
         ComplexType: complexType,
-        Function: [],
         EnumType: [],
         Namespace: [namespace]
       }

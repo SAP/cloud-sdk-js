@@ -8,7 +8,8 @@ import {
   VdmReturnTypeCategory,
   VdmServiceMetadata,
   VdmParameter,
-  VdmUnsupportedReason
+  VdmUnsupportedReason,
+  VdmOperationReturnType
 } from '../../src/vdm-types';
 
 export const entityName: VdmProperty = {
@@ -77,51 +78,63 @@ export const toBrunch: VdmNavigationProperty = {
   toEntityClassName: brunchEntity.className
 };
 
-const myReturnType: VdmFunctionImportReturnType = {
+const returnType: VdmOperationReturnType = {
   returnType: 'string',
   isCollection: false,
   isNullable: false,
   returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE
 };
 
-const myFunction: VdmFunctionImport = {
+const getPriceFunction: VdmOperation = {
   httpMethod: 'GET',
-  returnType: myReturnType,
-  originalName: 'myFn',
+  type: 'function',
+  returnType,
+  originalName: 'GetPrice',
   parameters: [
     {
-      originalName: 'FirstParameter',
-      parameterName: 'FirstParameter',
+      originalName: 'Meal',
+      parameterName: 'meal',
       nullable: false,
-      description: 'My Parameter',
+      description: 'Name of the meal',
       jsType: 'string',
-      fieldType: 'string',
+      fieldType: 'EdmTypeField',
       edmType: 'Edm.String'
     }
   ],
-  parametersTypeName: '',
-  name: 'myFn',
-  description: ''
+  parametersTypeName: 'GetPriceParameters',
+  name: 'getPrice',
+  description: 'Get the price of a meal'
 };
 
-const myAction: VdmActionImport = {
-  httpMethod: 'GET',
-  returnType: myReturnType,
-  originalName: 'myAct',
+const payMealAction: VdmOperation = {
+  httpMethod: 'POST',
+  type: 'action',
+  returnType,
+  originalName: 'payMeal',
   parameters: [
     {
-      originalName: 'FirstParameter',
-      parameterName: 'FirstParameter',
+      originalName: 'Meal',
+      parameterName: 'meal',
       nullable: false,
-      description: 'My Parameter',
+      description: 'The meal to pay.',
       jsType: 'string',
-      fieldType: 'string',
+      fieldType: 'EdmTypeField',
+      edmType: 'Edm.String'
+    },
+    {
+      originalName: 'Cash',
+      parameterName: 'cash',
+      nullable: false,
+      description: 'Cash amount, that was handed over.',
+      jsType: 'string',
+      fieldType: 'EdmTypeField',
       edmType: 'Edm.String'
     }
   ],
-  parametersTypeName: '',
-  name: 'myAct',
-  description: ''
+  parametersTypeName: 'PayMealParameters',
+  name: 'payMeal',
+  description:
+    'Pay for a meal, with a certain amount of cash. Returns the amount of change.'
 };
 
 export const breakfastEntity: VdmEntity = {
@@ -136,8 +149,8 @@ export const breakfastEntity: VdmEntity = {
   deletable: false,
   updatable: true,
   entityTypeNamespace: '',
-  functions: [myFunction],
-  actions: [myAction]
+  functions: [getPriceFunction],
+  actions: [payMealAction]
 };
 
 function getFunctionImport(

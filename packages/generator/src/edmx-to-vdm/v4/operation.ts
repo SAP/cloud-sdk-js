@@ -9,7 +9,12 @@ import {
 } from '../../edmx-parser/v4/edm-types';
 import { parseOperationImports, parseOperations } from '../../edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import { VdmComplexType, VdmEntity, VdmOperation } from '../../vdm-types';
+import {
+  VdmComplexType,
+  VdmEntity,
+  VdmEntityInConstruction,
+  VdmOperation
+} from '../../vdm-types';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 import { findOperationByImportName as findOperationByImportName } from './operation-util';
 
@@ -31,10 +36,6 @@ function joinOperationData(
 ): JoinedOperationData[] {
   const operationImportsWithoutOperations: EdmxOperationImport[] = [];
   const joinedOperationData: JoinedOperationData[] = [];
-  const filteredJoinedFunctionData = filterOperationData(
-    joinedFunctionData,
-    bindingEntitySetName
-  );
 
   operationImports.forEach(operationImport => {
     const operation = findOperationByImportName(
@@ -109,16 +110,20 @@ export function generateOperations(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
   operationType: 'function' | 'action',
-  entities: VdmEntity[],
+  entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  bindingEntitySetName?: string
 ): VdmOperation[] {
   const operations = parseOperations(serviceMetadata.edmx.root, operationType);
   const operationImports = parseOperationImports(
     serviceMetadata.edmx.root,
     operationType
   );
-  const joinedOperationData = joinOperationData(operationImports, operations);
+  const joinedOperationData = filterOperationData(
+    joinOperationData(operationImports, operations),
+    bindingEntitySetName
+  );
 
   return (
     joinedOperationData

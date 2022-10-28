@@ -41,8 +41,7 @@ export function getServiceEntitiesV4(
     'function',
     entities,
     complexTypes,
-    formatter,
-    undefined
+    formatter
   );
 
   return {

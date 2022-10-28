@@ -1,4 +1,3 @@
-import { JoinedEntityMetadata } from '../../edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import {
   EdmxEntitySet,
@@ -10,10 +9,10 @@ import {
 } from '../../edmx-parser/v4/edmx-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
-  VdmActionImport,
   VdmComplexType,
-  VdmEntity, VdmEntityInConstruction, VdmEnumType,
-  VdmFunctionImport,
+  VdmEntity,
+  VdmEntityInConstruction,
+  VdmEnumType,
   VdmNavigationProperty
 } from '../../vdm-types';
 import {
@@ -23,8 +22,7 @@ import {
   transformEntityBase
 } from '../common/entity';
 import { isCollectionType } from '../edmx-to-vdm-util';
-import { generateActionImportsV4 } from './action-import';
-import { generateFunctionImportsV4 } from './function-import';
+import { generateOperations } from './operation';
 
 /**
  * @internal
@@ -45,6 +43,14 @@ export function generateEntitiesV4(
   );
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
+  const entities: VdmEntityInConstruction[] = entitiesMetadata.map(
+    ({ entityType, entitySet }) => ({
+      entityTypeName: entityType.Name,
+      className: classNames[entitySet.Name],
+      entityTypeNamespace: entityType.Namespace
+    })
+  );
+
   return entitiesMetadata.map(entityMetadata => ({
     ...transformEntityBase(
       entityMetadata,
@@ -59,23 +65,23 @@ export function generateEntitiesV4(
       classNames,
       formatter
     ),
-    functions: transformBoundFunctions(
+    functions: generateOperations(
       serviceMetadata,
-      entityMetadata.entityType,
-      entityMetadata.entitySet,
-      classNames,
+      entityMetadata.entityType.Namespace,
+      'function',
+      entities,
+      complexTypes,
       formatter,
-      entitiesMetadata,
-      complexTypes
+      entityMetadata.entitySet.Name
     ),
-    actions: transformBoundActions(
+    actions: generateOperations(
       serviceMetadata,
-      entityMetadata.entityType,
-      entityMetadata.entitySet,
-      classNames,
+      entityMetadata.entityType.Namespace,
+      'action',
+      entities,
+      complexTypes,
       formatter,
-      entitiesMetadata,
-      complexTypes
+      entityMetadata.entitySet.Name
     )
   }));
 }
@@ -109,42 +115,6 @@ function navigationProperties(
       isCollection
     };
   });
-}
-
-function transformBoundFunctions(
-  serviceMetadata: ServiceMetadata,
-  boundEntityType: EdmxEntityTypeV4,
-  boundEntitySet: EdmxEntitySet,
-  classNames: { [originalName: string]: string },
-  formatter: ServiceNameFormatter,
-  entitiesMetadata: JoinedEntityMetadata<EdmxEntitySet, EdmxEntityTypeV4>[],
-  complexTypes: VdmComplexType[]
-): VdmFunctionImport[] {
-  const entities: VdmEntityInConstruction[] = entitiesMetadata.map(({ entityType, entitySet }) => ({
-    entityTypeName: entityType.Name,
-    className: classNames[entitySet.Name],
-    entityTypeNamespace: entityType.Namespace
-  }));
-
-  return generateFunctionImportsV4(serviceMetadata, boundEntityType.Namespace, entities, complexTypes, formatter, boundEntitySet.Name);
-}
-
-function transformBoundActions(
-  serviceMetadata: ServiceMetadata,
-  boundEntityType: EdmxEntityTypeV4,
-  boundEntitySet: EdmxEntitySet,
-  classNames: { [originalName: string]: string },
-  formatter: ServiceNameFormatter,
-  entitiesMetadata: JoinedEntityMetadata<EdmxEntitySet, EdmxEntityTypeV4>[],
-  complexTypes: VdmComplexType[]
-): VdmActionImport[] {
-  const entities: VdmEntityInConstruction[] = entitiesMetadata.map(({ entityType, entitySet }) => ({
-    entityTypeName: entityType.Name,
-    className: classNames[entitySet.Name],
-    entityTypeNamespace: entityType.Namespace
-  }));
-
-  return generateActionImportsV4(serviceMetadata, boundEntityType.Namespace, entities, complexTypes, formatter, boundEntitySet.Name);
 }
 
 // TODO: This should be removed once derived types are considered.

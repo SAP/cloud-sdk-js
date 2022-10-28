@@ -1,6 +1,6 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { operationImportDeclarations } from '../action-function-import';
+import { operationImportDeclarations } from '../operations';
 import {
   complexTypeImportDeclarations,
   enumTypeImportDeclarations,

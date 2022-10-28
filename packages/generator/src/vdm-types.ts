@@ -1,5 +1,5 @@
-import { ODataVersion } from '@sap-cloud-sdk/util';
 import { PathLike } from 'fs';
+import { ODataVersion } from '@sap-cloud-sdk/util';
 /**
  * @internal
  */
@@ -127,13 +127,13 @@ export interface VdmEntity {
    */
   entityTypeNamespace: string;
   /**
-  * @internal
-  */
-  functions: VdmFunctionImport[];
+   * @internal
+   */
+  functions: VdmOperation[];
   /**
-  * @internal
-  */
-  actions: VdmActionImport[];
+   * @internal
+   */
+  actions: VdmOperation[];
 }
 
 /**
@@ -142,7 +142,10 @@ export interface VdmEntity {
  * But the properties included here are needed for generating the functions and actions.
  * @internal
  */
-export type VdmEntityInConstruction = Pick<VdmEntity, 'entityTypeName' | 'entityTypeNamespace' | 'className'>;
+export type VdmEntityInConstruction = Pick<
+  VdmEntity,
+  'entityTypeName' | 'entityTypeNamespace' | 'className'
+>;
 
 /**
  * Properties

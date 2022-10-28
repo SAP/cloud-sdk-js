@@ -5,12 +5,12 @@
  */
 import {
   entityDeserializer,
-  ActionImportRequestBuilder,
-  ActionImportParameter,
   transformReturnValueForComplexType,
   DeSerializers,
   DefaultDeSerializers,
-  defaultDeSerializers
+  defaultDeSerializers,
+  ActionImportParameter,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { multipleSchemasService } from './service';
 import { TestComplexType1 } from './TestComplexType1';

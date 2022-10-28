@@ -6,19 +6,19 @@
 import {
   edmToTs,
   entityDeserializer,
-  FunctionImportRequestBuilder,
-  DeSerializers,
   transformReturnValueForEdmType,
   transformReturnValueForEdmTypeList,
   transformReturnValueForEntity,
   transformReturnValueForEntityList,
+  throwErrorWhenReturnTypeIsUnionType,
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList,
   transformReturnValueForUndefined,
+  DeSerializers,
   DefaultDeSerializers,
   defaultDeSerializers,
   FunctionImportParameter,
-  throwErrorWhenReturnTypeIsUnionType
+  FunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { testService } from './service';
 import { TestEntity } from './TestEntity';

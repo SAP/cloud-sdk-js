@@ -1,4 +1,8 @@
-import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
+import {
+  FunctionDeclarationStructure,
+  FunctionLikeDeclarationStructure,
+  StructureKind
+} from 'ts-morph';
 import voca from 'voca';
 import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
@@ -9,17 +13,16 @@ const parameterName = 'parameters';
 
 /**
  * @internal
- * Returns a function declaration representation for an action or function.
+ * Returns a function like declaration representation for an action or function.
+ * Reusable for bound and unbound functions.
  */
-export function operationFunction(
+export function operationFunctionBase(
   operation: VdmOperation,
   service: VdmServiceMetadata
-): FunctionDeclarationStructure {
-  const returnType = operationReturnType(operation);
+): FunctionLikeDeclarationStructure & { name: string } {
   return {
-    kind: StructureKind.Function,
     name: `${operation.name}<DeSerializersT extends DeSerializers = DefaultDeSerializers>`,
-    isExported: true,
+
     parameters: [
       {
         name: parameterName,
@@ -31,7 +34,7 @@ export function operationFunction(
         initializer: 'defaultDeSerializers as any'
       }
     ],
-    returnType,
+    returnType: operationReturnType(operation),
     statements: getOperationStatements(operation, service),
     docs: [
       [
@@ -40,6 +43,21 @@ export function operationFunction(
         '@returns A request builder that allows to overwrite some of the values and execute the resulting request.'
       ].join('\n')
     ]
+  };
+}
+
+/**
+ * @internal
+ * Returns a function declaration representation for an action or function.
+ */
+export function operationFunction(
+  operation: VdmOperation,
+  service: VdmServiceMetadata
+): FunctionDeclarationStructure {
+  return {
+    kind: StructureKind.Function,
+    isExported: true,
+    ...operationFunctionBase(operation, service)
   };
 }
 
@@ -55,6 +73,9 @@ function getOperationStatements(
   operation: VdmOperation,
   service: VdmServiceMetadata
 ): string {
+  const requestBuilderName = `${
+    operation.isBound ? 'Bound' : ''
+  }${voca.capitalize(operation.type)}ImportRequestBuilder`;
   const paramsLines = (operation.parameters || []).map(
     param =>
       `${param.parameterName}: new ${voca.capitalize(
@@ -70,9 +91,9 @@ function getOperationStatements(
     parameters = [`'${operation.httpMethod}'`, ...parameters];
   }
 
-  const returnStatement = `return new ${voca.capitalize(
-    operation.type
-  )}ImportRequestBuilder(${parameters.join(', ')});`;
+  const returnStatement = `return new ${requestBuilderName}(${parameters.join(
+    ', '
+  )});`;
 
   return `${params}\n\n${returnStatement}`;
 }

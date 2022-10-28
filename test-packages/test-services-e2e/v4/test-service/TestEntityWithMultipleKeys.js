@@ -15,49 +15,76 @@ class TestEntityWithMultipleKeys extends odata_v4_1.Entity {
     super(_entityApi);
     this._entityApi = _entityApi;
   }
-  boundFunctionWithoutArgumentsWithMultipleKeys() {
+  /**
+   * Bound Function Without Arguments With Multiple Keys.
+   * @param parameters - Object containing all parameters for the function.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundFunctionWithoutArgumentsWithMultipleKeys(
+    parameters,
+    deSerializers = odata_v4_1.defaultDeSerializers
+  ) {
     const params = {};
-    const deSerializers = odata_v4_1.defaultDeSerializers;
-    return new odata_v4_1.BoundFunctionRequestBuilder(
-      this._entityApi,
-      this,
-      'TestService.boundFunctionWithoutArgumentsWithMultipleKeys',
-      data => data,
+    return new odata_v4_1.FunctionImportRequestBuilder(
+      '/odata/test-service',
+      'boundFunctionWithoutArgumentsWithMultipleKeys',
+      data =>
+        (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+          (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers)
+        ),
       params,
       deSerializers
     );
   }
-  boundFunctionWithArgumentsWithMultipleKeys(param1, param2) {
+  /**
+   * Bound Function With Arguments With Multiple Keys.
+   * @param parameters - Object containing all parameters for the function.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundFunctionWithArgumentsWithMultipleKeys(
+    parameters,
+    deSerializers = odata_v4_1.defaultDeSerializers
+  ) {
     const params = {
       param1: new odata_v4_1.FunctionImportParameter(
         'param1',
         'Edm.String',
-        param1
+        parameters.param1
       ),
       param2: new odata_v4_1.FunctionImportParameter(
         'param2',
         'Edm.String',
-        param2
+        parameters.param2
       )
     };
-    const deSerializers = odata_v4_1.defaultDeSerializers;
-    return new odata_v4_1.BoundFunctionRequestBuilder(
-      this._entityApi,
-      this,
-      'TestService.boundFunctionWithArgumentsWithMultipleKeys',
-      data => data,
+    return new odata_v4_1.FunctionImportRequestBuilder(
+      '/odata/test-service',
+      'boundFunctionWithArgumentsWithMultipleKeys',
+      data =>
+        (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+          (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers)
+        ),
       params,
       deSerializers
     );
   }
-  boundActionWithoutArgumentsWithMultipleKeys() {
+  /**
+   * Bound Action Without Arguments With Multiple Keys.
+   * @param parameters - Object containing all parameters for the action.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundActionWithoutArgumentsWithMultipleKeys(
+    parameters,
+    deSerializers = odata_v4_1.defaultDeSerializers
+  ) {
     const params = {};
-    const deSerializers = odata_v4_1.defaultDeSerializers;
-    return new odata_v4_1.BoundActionRequestBuilder(
-      this._entityApi,
-      this,
-      'TestService.boundActionWithoutArgumentsWithMultipleKeys',
-      data => data,
+    return new odata_v4_1.ActionImportRequestBuilder(
+      '/odata/test-service',
+      'boundActionWithoutArgumentsWithMultipleKeys',
+      data =>
+        (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+          (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers)
+        ),
       params,
       deSerializers
     );

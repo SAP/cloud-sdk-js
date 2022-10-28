@@ -46,6 +46,7 @@ export function transformOperationBase(
       swaggerDefinition,
       operation.originalName
     ),
-    type
+    type,
+    isBound: !!bindingEntitySetName
   };
 }

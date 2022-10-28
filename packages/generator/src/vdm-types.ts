@@ -315,6 +315,10 @@ export interface VdmOperationBase {
    * @internal
    */
   type: 'function' | 'action';
+  /**
+   * @internal
+   */
+  isBound: boolean;
 }
 
 /**

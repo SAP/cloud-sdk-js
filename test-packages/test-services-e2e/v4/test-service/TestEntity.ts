@@ -113,84 +113,118 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     super(_entityApi);
   }
 
+  /**
+   * Bound Function Without Arguments.
+   * @param parameters - Object containing all parameters for the function.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
   boundFunctionWithoutArguments<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
+  >(
+    parameters: BoundFunctionWithoutArgumentsParameters<DeSerializersT>,
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ): FunctionImportRequestBuilder<
     DeSerializersT,
-    any,
+    BoundFunctionWithoutArgumentsParameters<DeSerializersT>,
     string | null
   > {
     const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.boundFunctionWithoutArguments',
-      data => data,
+
+    return new FunctionImportRequestBuilder(
+      '/odata/test-service',
+      'boundFunctionWithoutArguments',
+      data =>
+        transformReturnValueForEdmType(data, val =>
+          edmToTs(val.value, 'Edm.String', deSerializers)
+        ),
       params,
       deSerializers
-    ) as any;
+    );
   }
 
-  returnKey<
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundFunctionRequestBuilder<
-    TestEntity<DeSerializersT>,
+  /**
+   * Return Key.
+   * @param parameters - Object containing all parameters for the function.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  returnKey<DeSerializersT extends DeSerializers = DefaultDeSerializers>(
+    parameters: ReturnKeyParameters<DeSerializersT>,
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ): FunctionImportRequestBuilder<
     DeSerializersT,
-    any,
-    number | null
+    ReturnKeyParameters<DeSerializersT>,
+    number
   > {
     const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundFunctionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.returnKey',
-      data => data,
+
+    return new FunctionImportRequestBuilder(
+      '/odata/test-service',
+      'returnKey',
+      data =>
+        transformReturnValueForEdmType(data, val =>
+          edmToTs(val.value, 'Edm.Int32', deSerializers)
+        ),
       params,
       deSerializers
-    ) as any;
+    );
   }
 
+  /**
+   * Bound Action Without Arguments.
+   * @param parameters - Object containing all parameters for the action.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
   boundActionWithoutArguments<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
+  >(
+    parameters: BoundActionWithoutArgumentsParameters<DeSerializersT>,
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ): ActionImportRequestBuilder<
     DeSerializersT,
-    any,
+    BoundActionWithoutArgumentsParameters<DeSerializersT>,
     string | null
   > {
     const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.boundActionWithoutArguments',
-      data => data,
+
+    return new ActionImportRequestBuilder(
+      '/odata/test-service',
+      'boundActionWithoutArguments',
+      data =>
+        transformReturnValueForEdmType(data, val =>
+          edmToTs(val.value, 'Edm.String', deSerializers)
+        ),
       params,
       deSerializers
-    ) as any;
+    );
   }
 
+  /**
+   * Create Test Entity Return Id.
+   * @param parameters - Object containing all parameters for the action.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
   createTestEntityReturnId<
     DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >(): BoundActionRequestBuilder<
-    TestEntity<DeSerializersT>,
+  >(
+    parameters: CreateTestEntityReturnIdParameters<DeSerializersT>,
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ): ActionImportRequestBuilder<
     DeSerializersT,
-    any,
-    number | null
+    CreateTestEntityReturnIdParameters<DeSerializersT>,
+    number
   > {
     const params = {};
-    const deSerializers = defaultDeSerializers as any;
-    return new BoundActionRequestBuilder(
-      this._entityApi as any,
-      this as any,
-      'TestService.createTestEntityReturnId',
-      data => data,
+
+    return new ActionImportRequestBuilder(
+      '/odata/test-service',
+      'createTestEntityReturnId',
+      data =>
+        transformReturnValueForEdmType(data, val =>
+          edmToTs(val.value, 'Edm.Int32', deSerializers)
+        ),
       params,
       deSerializers
-    ) as any;
+    );
   }
 }
 
@@ -216,3 +250,29 @@ export interface TestEntityType<
   > | null;
   toMultiLink: TestEntityLinkType<T>[];
 }
+
+/**
+ * Type of the parameters to be passed to {@link boundFunctionWithoutArguments}.
+ */
+export interface BoundFunctionWithoutArgumentsParameters<
+  DeSerializersT extends DeSerializers
+> {}
+
+/**
+ * Type of the parameters to be passed to {@link returnKey}.
+ */
+export interface ReturnKeyParameters<DeSerializersT extends DeSerializers> {}
+
+/**
+ * Type of the parameters to be passed to {@link boundActionWithoutArguments}.
+ */
+export interface BoundActionWithoutArgumentsParameters<
+  DeSerializersT extends DeSerializers
+> {}
+
+/**
+ * Type of the parameters to be passed to {@link createTestEntityReturnId}.
+ */
+export interface CreateTestEntityReturnIdParameters<
+  DeSerializersT extends DeSerializers
+> {}

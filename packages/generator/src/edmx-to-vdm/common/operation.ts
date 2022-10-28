@@ -19,7 +19,7 @@ export function transformOperationBase(
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
 ): VdmOperationBase {
-  const name = formatter.originalToFunctionImportName(edmxOperation.Name);
+  const name = formatter.originalToOperationName(edmxOperation.Name);
   const operation = {
     originalName: edmxOperation.Name,
     name,

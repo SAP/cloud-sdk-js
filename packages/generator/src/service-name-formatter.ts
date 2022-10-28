@@ -98,20 +98,16 @@ export class ServiceNameFormatter {
     return generator.generateAndSaveUniqueName(transformedName);
   }
 
-  originalToFunctionImportName(str: string): string {
-    const transformedName = voca.camelCase(str);
+  originalToOperationName(originalName: string): string {
+    const transformedName = voca.camelCase(originalName);
     const newName =
       this.serviceWideNameGenerator.generateAndSaveUniqueName(transformedName);
 
     return applyPrefixOnJsConflictFunctionImports(newName);
   }
 
-  originalToActionImportName(str: string): string {
-    return this.originalToFunctionImportName(str);
-  }
-
-  originalToComplexTypeName(str: string): string {
-    const transformedName = stripAUnderscore(voca.titleCase(str)).replace(
+  originalToComplexTypeName(originalName: string): string {
+    const transformedName = stripAUnderscore(voca.titleCase(originalName)).replace(
       '_',
       ''
     );
@@ -122,8 +118,8 @@ export class ServiceNameFormatter {
     );
   }
 
-  originalToEnumTypeName(str: string): string {
-    return this.originalToComplexTypeName(str);
+  originalToEnumTypeName(originalName: string): string {
+    return this.originalToComplexTypeName(originalName);
   }
 
   originalToNavigationPropertyName(

@@ -44,10 +44,7 @@ import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
 import { VdmServiceMetadata } from './vdm-types';
-import {
-  actionImportSourceFile,
-  functionImportSourceFile
-} from './action-function-import/file';
+import { operationsSourceFile } from './operations/file';
 import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetadata } from './sdk-metadata';
 import { entityApiFile } from './generator-without-ts-morph';
@@ -358,7 +355,7 @@ export async function generateSourcesForService(
     );
   });
 
-  if (service.functionImports && service.functionImports.length) {
+  if (service.functionImports?.length) {
     logger.info(
       `[${service.originalFileName}] Generating function imports ...`
     );
@@ -366,19 +363,19 @@ export async function generateSourcesForService(
       sourceFile(
         serviceDir,
         'function-imports',
-        functionImportSourceFile(service),
+        operationsSourceFile(service, 'function'),
         options.forceOverwrite
       )
     );
   }
 
-  if (service.actionImports && service.actionImports.length) {
+  if (service.actionImports?.length) {
     logger.info(`[${service.originalFileName}] Generating action imports ...`);
     filePromises.push(
       sourceFile(
         serviceDir,
         'action-imports',
-        actionImportSourceFile(service),
+        operationsSourceFile(service, 'action'),
         options.forceOverwrite
       )
     );

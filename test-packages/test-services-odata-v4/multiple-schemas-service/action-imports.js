@@ -14,8 +14,7 @@ const TestComplexType1_1 = require('./TestComplexType1');
 const TestComplexType2_1 = require('./TestComplexType2');
 /**
  * Test Action Import No Parameter Complex Return Type 1.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportNoParameterComplexReturnType1(
@@ -40,8 +39,7 @@ exports.testActionImportNoParameterComplexReturnType1 =
   testActionImportNoParameterComplexReturnType1;
 /**
  * Test Action Import No Parameter Complex Return Type 2.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportNoParameterComplexReturnType2(

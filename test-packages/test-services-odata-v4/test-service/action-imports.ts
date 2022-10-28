@@ -31,8 +31,7 @@ export interface TestActionImportNoParameterNoReturnTypeParameters<
 
 /**
  * Test Action Import No Parameter No Return Type.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportNoParameterNoReturnType<
@@ -82,8 +81,7 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters<
 
 /**
  * Test Action Import Multiple Parameter Complex Return Type.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportMultipleParameterComplexReturnType<
@@ -148,8 +146,7 @@ export interface TestActionImportUnsupportedEdmTypesParameters<
 
 /**
  * Test Action Import Unsupported Edm Types.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportUnsupportedEdmTypes<
@@ -191,8 +188,7 @@ export interface TestActionImportNoParameterEntityReturnTypeParameters<
 
 /**
  * Test Action Import No Parameter Entity Return Type.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportNoParameterEntityReturnType<
@@ -228,9 +224,8 @@ export interface TestActionImportSharedEntityReturnTypeParameters<
 > {}
 
 /**
- * Test Action Import Shared Entity Return Type. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * Test Action Import Shared Entity Return Type. The 'execute' method does not exist when using this action import. Please use the 'executeRaw' for getting the raw response.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportSharedEntityReturnType<
@@ -269,9 +264,8 @@ export interface TestActionImportSharedEntityReturnTypeCollectionParameters<
 > {}
 
 /**
- * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this action import. Please use the 'executeRaw' for getting the raw response.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportSharedEntityReturnTypeCollection<
@@ -324,8 +318,7 @@ export interface TestActionImportNullableTestParameters<
 
 /**
  * Test Action Import Nullable Test.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportNullableTest<

@@ -1,10 +1,14 @@
 import {
-  VdmActionImport, VdmComplexType,
+  VdmComplexType,
   VdmEntity,
   VdmEnumType,
-  VdmFunctionImport, VdmFunctionImportReturnType, VdmNavigationProperty, VdmParameter, VdmProperty,
+  VdmOperation,
+  VdmNavigationProperty,
+  VdmProperty,
   VdmReturnTypeCategory,
-  VdmServiceMetadata, VdmUnsupportedReason
+  VdmServiceMetadata,
+  VdmParameter,
+  VdmUnsupportedReason
 } from '../../src/vdm-types';
 
 export const entityName: VdmProperty = {
@@ -115,7 +119,7 @@ const myAction: VdmActionImport = {
       edmType: 'Edm.String'
     }
   ],
-    parametersTypeName: '',
+  parametersTypeName: '',
   name: 'myAct',
   description: ''
 };
@@ -139,7 +143,7 @@ export const breakfastEntity: VdmEntity = {
 function getFunctionImport(
   originalName: string,
   httpMethod: string
-): VdmFunctionImport {
+): VdmOperation {
   return {
     originalName,
     httpMethod,
@@ -151,10 +155,10 @@ function getFunctionImport(
       builderFunction:
         "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.String', deSerializers)"
     }
-  } as VdmFunctionImport;
+  } as VdmOperation;
 }
 
-function getActionImport(): VdmActionImport {
+function getActionImport(): VdmOperation {
   return {
     originalName: 'food-action-import',
     httpMethod: 'POST',
@@ -163,7 +167,7 @@ function getActionImport(): VdmActionImport {
     },
     parametersTypeName: 'actionImportReturn',
     parameters: [{ description: 'local test parameter' }] as VdmParameter[]
-  } as VdmActionImport;
+  } as VdmOperation;
 }
 
 export const foodService: VdmServiceMetadata = {
@@ -296,11 +300,12 @@ export const complexMealWithDesert: VdmComplexType = {
   namespace: ''
 };
 
-const orderBreakfastBuilder = (isNullable: boolean): VdmFunctionImport => ({
+const orderBreakfastBuilder = (isNullable: boolean): VdmOperation => ({
   description: 'order a breakfast',
   name: 'orderBreakfast',
   httpMethod: 'post',
   originalName: 'OrderBreakfast',
+  type: 'function',
   parameters: [
     {
       originalName: 'WithHoneyToast',
@@ -325,13 +330,14 @@ const orderBreakfastBuilder = (isNullable: boolean): VdmFunctionImport => ({
 export const orderBreakfast = orderBreakfastBuilder(false);
 export const orderBreakfastNullable = orderBreakfastBuilder(true);
 
-export const entityNotDeserializable: VdmFunctionImport = {
+export const entityNotDeserializable: VdmOperation = {
   description: 'entityNotDeserializable',
   name: 'entityNotDeserializable',
   httpMethod: 'get',
   originalName: 'entityNotDeserializable',
   parameters: [],
   parametersTypeName: 'Params',
+  type: 'function',
   returnType: {
     builderFunction: '',
     returnType: 'never',

@@ -1,5 +1,6 @@
 import {
-  camelCase, UniqueNameGenerator,
+  camelCase,
+  UniqueNameGenerator,
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
 import voca from 'voca';
@@ -97,39 +98,32 @@ export class ServiceNameFormatter {
     return generator.generateAndSaveUniqueName(transformedName);
   }
 
-  originalToFunctionImportName(str: string): string {
-    const transformedName = voca.camelCase(str);
+  originalToOperationName(originalName: string): string {
+    const transformedName = voca.camelCase(originalName);
     const newName =
       this.serviceWideNameGenerator.generateAndSaveUniqueName(transformedName);
 
     return applyPrefixOnJsConflictFunctionImports(newName);
   }
 
-  originalToBoundFunctionImportName(entityName: string, functionName: string): string {
+  originalToBoundOperationName(
+    entityName: string,
+    functionName: string
+  ): string {
     const generator = this.getOrInitGenerator(
       this.instancePropertyNameGenerators,
       entityName
     );
     const transformedName = voca.camelCase(functionName);
-    const newName =
-      generator.generateAndSaveUniqueName(transformedName);
+    const newName = generator.generateAndSaveUniqueName(transformedName);
 
     return applyPrefixOnJsConflictFunctionImports(newName);
   }
 
-  originalToActionImportName(str: string): string {
-    return this.originalToFunctionImportName(str);
-  }
-
-  originalToBoundActionImportName(entityName: string, actionName: string): string {
-    return this.originalToBoundFunctionImportName(entityName, actionName);
-  }
-
-  originalToComplexTypeName(str: string): string {
-    const transformedName = stripAUnderscore(voca.titleCase(str)).replace(
-      '_',
-      ''
-    );
+  originalToComplexTypeName(originalName: string): string {
+    const transformedName = stripAUnderscore(
+      voca.titleCase(originalName)
+    ).replace('_', '');
 
     return this.serviceWideNameGenerator.generateAndSaveUniqueName(
       transformedName,
@@ -137,8 +131,8 @@ export class ServiceNameFormatter {
     );
   }
 
-  originalToEnumTypeName(str: string): string {
-    return this.originalToComplexTypeName(str);
+  originalToEnumTypeName(originalName: string): string {
+    return this.originalToComplexTypeName(originalName);
   }
 
   originalToNavigationPropertyName(
@@ -171,7 +165,7 @@ export class ServiceNameFormatter {
   originalToBoundParameterName(
     entityName: string,
     originalFunctionImportName: string,
-    originalParameterName: string,
+    originalParameterName: string
   ): string {
     const transformedName = voca.camelCase(originalParameterName);
 

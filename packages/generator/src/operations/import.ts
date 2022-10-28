@@ -1,9 +1,8 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import voca from 'voca';
 import {
-  VdmActionFunctionImportReturnType,
-  VdmActionImport,
-  VdmFunctionImport,
+  VdmOperationReturnType,
+  VdmOperation,
   VdmReturnTypeCategory,
   VdmServiceMetadata
 } from '../vdm-types';
@@ -16,9 +15,7 @@ import {
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
-function complexTypeRelatedImports(
-  returnTypes: VdmActionFunctionImportReturnType[]
-) {
+function complexTypeRelatedImports(returnTypes: VdmOperationReturnType[]) {
   return returnTypes.some(
     returnType =>
       returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
@@ -27,7 +24,7 @@ function complexTypeRelatedImports(
     : [];
 }
 
-function edmRelatedImports(returnTypes: VdmActionFunctionImportReturnType[]) {
+function edmRelatedImports(returnTypes: VdmOperationReturnType[]) {
   return returnTypes.some(
     returnType =>
       returnType.returnTypeCategory === VdmReturnTypeCategory.EDM_TYPE
@@ -36,9 +33,7 @@ function edmRelatedImports(returnTypes: VdmActionFunctionImportReturnType[]) {
     : [];
 }
 
-function responseTransformerImports(
-  returnTypes: VdmActionFunctionImportReturnType[]
-) {
+function responseTransformerImports(returnTypes: VdmOperationReturnType[]) {
   return returnTypes.map(returnType =>
     isEntityNotDeserializable(returnType)
       ? 'throwErrorWhenReturnTypeIsUnionType'
@@ -47,7 +42,7 @@ function responseTransformerImports(
 }
 
 function returnTypeImports(
-  returnTypes: VdmActionFunctionImportReturnType[]
+  returnTypes: VdmOperationReturnType[]
 ): ImportDeclarationStructure[] {
   return mergeImportDeclarations(
     returnTypes
@@ -65,7 +60,7 @@ function returnTypeImports(
 }
 
 function returnTypeImport(
-  returnType: VdmActionFunctionImportReturnType
+  returnType: VdmOperationReturnType
 ): ImportDeclarationStructure[] {
   const typeImports: ImportDeclarationStructure[] = [
     {
@@ -93,7 +88,7 @@ function returnTypeImport(
 export function operationImportDeclarations(
   { oDataVersion, className }: VdmServiceMetadata,
   type: 'function' | 'action',
-  operations: (VdmFunctionImport | VdmActionImport)[] = []
+  operations: VdmOperation[] = []
 ): ImportDeclarationStructure[] {
   if (!operations.length) {
     return [];

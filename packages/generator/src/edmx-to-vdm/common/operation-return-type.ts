@@ -4,11 +4,10 @@ import { EdmxReturnType } from '../../edmx-parser/v4';
 import { isNullableProperty } from '../../generator-utils';
 import { getApiName } from '../../generator-without-ts-morph/service';
 import {
-  VdmActionImportReturnType,
   VdmComplexType,
   VdmEntity,
   VdmEntityInConstruction,
-  VdmFunctionImportReturnType,
+  VdmOperationReturnType,
   VdmReturnTypeCategory,
   VdmUnsupportedReason
 } from '../../vdm-types';
@@ -21,47 +20,13 @@ import {
 /**
  * @internal
  */
-export function parseFunctionImportReturnTypes(
+export function parseOperationReturnType(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
   serviceName: string,
-): VdmFunctionImportReturnType {
-  return parseReturnTypes(
-    returnType,
-    entities,
-    complexTypes,
-    extractResponse,
-    serviceName
-  ) as VdmFunctionImportReturnType;
-}
-/**
- * @internal
- */
-export function parseActionImportReturnTypes(
-  returnType: EdmxReturnType | undefined,
-  entities: VdmEntityInConstruction[],
-  complexTypes: VdmComplexType[],
-  extractResponse: ExtractResponse,
-  serviceName: string
-): VdmActionImportReturnType {
-  return parseReturnTypes(
-    returnType,
-    entities,
-    complexTypes,
-    extractResponse,
-    serviceName
-  ) as VdmActionImportReturnType;
-}
-
-function parseReturnTypes(
-  returnType: EdmxReturnType | undefined,
-  entities: VdmEntityInConstruction[],
-  complexTypes: VdmComplexType[],
-  extractResponse: ExtractResponse,
-  serviceName: string
-): VdmFunctionImportReturnType | VdmActionImportReturnType {
+): VdmOperationReturnType {
   if (!returnType) {
     return getVoidReturnType();
   }
@@ -118,11 +83,12 @@ function findComplexType(
 ): VdmComplexType | undefined {
   returnType = parseTypeName(returnType);
   return complexTypes.find(
-    e => `${e.namespace}.${e.originalName}` === returnType
+    ({ namespace, originalName }) =>
+      `${namespace}.${originalName}` === returnType
   );
 }
 
-function getVoidReturnType(): VdmFunctionImportReturnType {
+function getVoidReturnType(): VdmOperationReturnType {
   return {
     returnTypeCategory: VdmReturnTypeCategory.VOID,
     returnType: 'undefined',
@@ -137,7 +103,7 @@ function getEdmReturnType(
   isNullable: boolean,
   edmType: string,
   extractResponse: ExtractResponse
-): VdmFunctionImportReturnType {
+): VdmOperationReturnType {
   const typeMapping = getTypeMappingActionFunction(edmType);
   const valueAlias = 'val';
   const extracted = isCollection ? valueAlias : extractResponse(valueAlias);
@@ -155,7 +121,7 @@ function getEntityReturnType(
   isNullable: boolean,
   entities: VdmEntityInConstruction[],
   serviceName: string
-): VdmFunctionImportReturnType {
+): VdmOperationReturnType {
   if (!entities.length) {
     throw Error(
       'Could not get entity return type for function import. No matching entity types found.'
@@ -185,7 +151,7 @@ function getComplexReturnType(
   isCollection: boolean,
   isNullable: boolean,
   complexType: VdmComplexType
-): VdmFunctionImportReturnType {
+): VdmOperationReturnType {
   return {
     returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
@@ -200,7 +166,7 @@ function getComplexReturnType(
  * @internal
  */
 export function isEntityNotDeserializable(
-  returnType: VdmFunctionImportReturnType
+  returnType: VdmOperationReturnType
 ): boolean {
   return (
     returnType.returnTypeCategory === VdmReturnTypeCategory.NEVER &&

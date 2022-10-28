@@ -2,14 +2,12 @@ import { resolve } from 'path';
 import { readEdmxFile } from '../edmx-file-reader';
 import { parseComplexTypesBase } from '../common';
 import {
-  parseActionImport,
-  parseActions,
   parseComplexTypesV4,
   parseEntitySetsV4,
   parseEntityType,
   parseEnumTypes,
-  parseFunctionImportsV4,
-  parseFunctions
+  parseOperationImports,
+  parseOperations
 } from '../v4';
 import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 
@@ -21,10 +19,12 @@ describe('edmx-edmx-parser', () => {
 
     expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(14);
     expect(parseEntityType(metadataEdmx.root).length).toBe(14);
-    expect(parseFunctionImportsV4(metadataEdmx.root).length).toBe(11);
-    expect(parseFunctions(metadataEdmx.root).length).toBe(11);
-    expect(parseActionImport(metadataEdmx.root).length).toBe(9);
-    expect(parseActions(metadataEdmx.root).length).toBe(8);
+    expect(parseOperationImports(metadataEdmx.root, 'function').length).toBe(
+      11
+    );
+    expect(parseOperations(metadataEdmx.root, 'function').length).toBe(11);
+    expect(parseOperationImports(metadataEdmx.root, 'action').length).toBe(9);
+    expect(parseOperations(metadataEdmx.root, 'action').length).toBe(8);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
     expect(parseEnumTypes(metadataEdmx.root).length).toBe(3);
 
@@ -63,7 +63,11 @@ describe('edmx-edmx-parser', () => {
       expect(complexTypeWithBaseType?.Property).toContain(p);
     });
 
-    parseFunctions(metadataEdmx.root).forEach(f => {
+    parseOperations(metadataEdmx.root, 'function').forEach(f => {
+      expect(f.Parameter).toBeInstanceOf(Array);
+    });
+
+    parseOperations(metadataEdmx.root, 'action').forEach(f => {
       expect(f.Parameter).toBeInstanceOf(Array);
     });
 

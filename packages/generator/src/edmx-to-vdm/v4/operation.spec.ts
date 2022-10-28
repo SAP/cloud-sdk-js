@@ -1,15 +1,14 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { EdmxParameter, EdmxProperty } from '../../edmx-parser/common';
 import {
-  EdmxAction,
-  EdmxActionImport,
   EdmxComplexType,
   EdmxEntitySet,
-  EdmxEntityTypeV4
+  EdmxEntityTypeV4,
+  EdmxOperation
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser';
 import { generateEntitiesV4 } from './entity';
-import { generateActionImportsV4 } from './action-import';
+import { generateOperations } from './operation';
 import { generateComplexTypesV4 } from './complex-type';
 import { createEntityType, getComplexType, getFormatter } from './entity.spec';
 
@@ -22,9 +21,10 @@ describe('action-import', () => {
     const formatter = getFormatter();
     const service = createServiceWithActions();
     const entities = generateEntitiesV4(service, [], [], formatter);
-    const actionImport = generateActionImportsV4(
+    const actionImport = generateOperations(
       service,
       'myServiceWithActions',
+      'action',
       entities,
       [],
       formatter
@@ -104,9 +104,10 @@ describe('action-import', () => {
     );
     expect(entities.length).toBe(2);
 
-    const actionImports = generateActionImportsV4(
+    const actionImports = generateOperations(
       service,
       'myTestServiceName',
+      'action',
       entities,
       complexTypes,
       getFormatter()
@@ -115,13 +116,20 @@ describe('action-import', () => {
   });
 
   it('should log with warning message, when actions referenced by action imports are not found', () => {
-    const logger = createLogger('action-import');
+    const logger = createLogger('operation');
     const warnSpy = jest.spyOn(logger, 'warn');
 
     const formatter = getFormatter();
     const service =
       createServiceMetadataWithActionImportLinksToUndefinedAction();
-    generateActionImportsV4(service, 'myTestServiceName', [], [], formatter);
+    generateOperations(
+      service,
+      'myTestServiceName',
+      'action',
+      [],
+      [],
+      formatter
+    );
     expect(warnSpy).toBeCalledWith(
       expect.stringContaining(
         'Could not find actions referenced by the following action imports.'
@@ -136,9 +144,10 @@ describe('action-import', () => {
     const formatter = getFormatter();
     const service = createServiceWithActions();
     const entities = generateEntitiesV4(service, [], [], formatter);
-    generateActionImportsV4(
+    generateOperations(
       service,
       'myTestServiceName',
+      'action',
       entities,
       [],
       formatter
@@ -154,7 +163,7 @@ function createAction(
   returnType: string | undefined,
   parameter: EdmxParameter[],
   namespace: string = defaultNamespace
-): EdmxAction {
+): EdmxOperation {
   return {
     Name: name,
     Parameter: parameter,
@@ -222,7 +231,7 @@ function createTestServiceData(
   entityTypes: EdmxEntityTypeV4[],
   entitySets: EdmxEntitySet[],
   complexType: EdmxComplexType[] = [getComplexType()],
-  actions: EdmxAction[] = [],
+  actions: EdmxOperation[] = [],
   namespace: string = defaultNamespace
 ): ServiceMetadata {
   return {
@@ -249,11 +258,11 @@ function createTestServiceData(
   };
 }
 
-function createImportsForActions(actions: EdmxAction[]): EdmxActionImport[] {
+function createImportsForActions(actions: EdmxOperation[]) {
   return actions.map(action => ({
     Name: action.Name,
-    Action: `SomePrefix.${action.Name}`,
-    Namespace: action.Namespace
+    Namespace: action.Namespace,
+    Action: `SomePrefix.${action.Name}`
   }));
 }
 

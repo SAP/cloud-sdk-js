@@ -9,6 +9,8 @@ import {
     getFallbackEdmTypeIfNeeded
 } from '../generator-utils';
 import { VdmComplexType, VdmEnumType, VdmMappedEdmType } from '../vdm-types';
+import { EdmxOperation } from '../edmx-parser/v4/edm-types';
+import { EdmxFunctionImportV2 } from '../edmx-parser/v2/edm-types';
 
 const logger = createLogger({
   package: 'generator',
@@ -193,19 +195,17 @@ export const propertyJsType = (type: string): string | undefined =>
  * @internal
  */
 export function hasUnsupportedParameterTypes(
-  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImportV2, bindingEntitySetName?: string
+  operation: EdmxOperation | EdmxFunctionImportV2
 ): boolean {
-  const parameters = bindingEntitySetName ? functionOrAction.Parameter.slice(1) : functionOrAction.Parameter;
-
-  const unsupportedParameters = parameters.filter(
+  const unsupportedParameters = operation.Parameter.filter(
     p => !isEdmType(p.Type)
   );
   if (unsupportedParameters.length) {
     logger.warn(
       [
-        `Found unsupported function or action import parameter types for action '${functionOrAction.Name}'.`,
+        `Found unsupported parameter types for function or action '${operation.Name}'.`,
         'The SAP Cloud SDK only supports EDM types in parameters.',
-        'Skipping code generation for function/action import.',
+        'Skipping code generation for function/action.',
         `Unsupported parameter types: [${unsupportedParameters
           .map(p => `'${p.Type}'`)
           .join(', ')}].`

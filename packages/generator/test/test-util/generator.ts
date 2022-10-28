@@ -34,12 +34,13 @@ export async function getGeneratedFiles(
   return project!.project.getSourceFiles();
 }
 
-export function getFunctionImportDeclarations(
-  files: SourceFile[]
+export function getOperationFunctionDeclarations(
+  files: SourceFile[],
+  type: 'function' | 'action'
 ): FunctionDeclaration[] {
   const functionImportsFile = files.find(
-    file => file.getBaseName() === 'function-imports.ts'
+    file => file.getBaseName() === `${type}-imports.ts`
   );
 
-  return functionImportsFile!.getFunctions();
+  return functionImportsFile?.getFunctions() || [];
 }

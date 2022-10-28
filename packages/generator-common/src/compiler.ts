@@ -66,8 +66,9 @@ export async function transpileDirectory(
   ) => {
     const parsed = parse(fileName);
     const promise = mkdir(parsed.dir, { recursive: true }).then(() => {
-      // On emitted .js file the prettier could break soure map -> skip these.
-      const usePrettier = getFileExtension(fileName) === 'js' ? false : true;
+      // Formatting emitted .js file could break source map -> skip these.
+      // Formatting the map files also is not necessary - only .d.ts files are nicer if linted
+      const usePrettier = getFileExtension(fileName) === '.d.ts' ? true : false;
 
       // Prettier config should be cached from previous steps if present.
       // Emit also overwrites and copyright is either already there.

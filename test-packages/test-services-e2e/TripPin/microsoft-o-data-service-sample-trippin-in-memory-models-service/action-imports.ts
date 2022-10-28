@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  ActionImportRequestBuilder,
-  ActionImportParameter,
   transformReturnValueForUndefined,
   DeSerializers,
   DefaultDeSerializers,
-  defaultDeSerializers
+  defaultDeSerializers,
+  ActionImportParameter,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { microsoftODataServiceSampleTrippinInMemoryModelsService } from './service';
 

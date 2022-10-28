@@ -4,8 +4,7 @@ import {
   EdmxComplexType,
   EdmxEntitySet,
   EdmxEntityTypeV4,
-  EdmxOperation,
-  EdmxOperationImport
+  EdmxOperation
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser';
 import { generateEntitiesV4 } from './entity';
@@ -259,14 +258,11 @@ function createTestServiceData(
   };
 }
 
-function createImportsForActions(
-  actions: EdmxOperation[]
-): EdmxOperationImport[] {
+function createImportsForActions(actions: EdmxOperation[]) {
   return actions.map(action => ({
     Name: action.Name,
     Namespace: action.Namespace,
-    operationName: `SomePrefix.${action.Name}`,
-    operationType: 'action'
+    Action: `SomePrefix.${action.Name}`
   }));
 }
 

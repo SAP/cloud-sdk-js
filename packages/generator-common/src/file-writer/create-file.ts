@@ -125,13 +125,11 @@ function addCopyrightHeader(content: string, withCopyright: boolean): string {
   if (!withCopyright) {
     return content;
   }
-  return (
-    codeBlock`
+  return codeBlock`
 ${getCopyrightHeader()}
 ${content}
 ${unixEOL}
-`
-  );
+`;
 }
 
 /**

@@ -105,20 +105,22 @@ describe('compiler options', () => {
 });
 
 describe('compilation', () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     const rootNodeModules = resolve(__dirname, '../../../node_modules');
     const packageNodeModules = resolve(__dirname, '../node_modules');
     mock({
-      'test-src/file-1.ts': "export type someOtherType = 'A' | 'B'",
+      'test-src/file-1.ts': "export type someOtherType='A'|'B'",
       'test-src/index.ts': "export * from './file-1'",
-      'test-src/sub-folder/file-2.ts': "export type someType = 'A' | 'B'",
+      'test-src/sub-folder/file-2.ts': "export type someType= 'A' | 'B'",
       'test-src/test-file.spec.ts': 'This should be excluded per default',
       'test-src/sub-folder/index.ts': "export * from './file-2'",
       'broken-src/file.ts': `const foo = 1;${EOL}const bar = 1;${EOL}   foo = 2;`,
       [rootNodeModules]: mock.load(rootNodeModules),
       [packageNodeModules]: mock.load(packageNodeModules)
     });
+    await transpileDirectory('test-src', compilerConfig('test-dist'));
   });
+
   function compilerConfig(outFolder): CompilerOptions {
     return {
       outDir: outFolder,
@@ -132,12 +134,11 @@ describe('compilation', () => {
     };
   }
 
-  afterEach(() => {
+  afterAll(() => {
     mock.restore();
   });
 
   it('compiles all files', async () => {
-    await transpileDirectory('test-src', compilerConfig('test-dist'));
     const files = await readdir('test-dist');
     expect(files.includes('test-file.spec.js')).toBe(false);
     expect(files).toEqual([
@@ -164,18 +165,25 @@ describe('compilation', () => {
     ]);
   });
 
-  it('runs prettier on files excluding emitted .js files to not break source maps', async () => {
-    await transpileDirectory('test-src', compilerConfig('test-dist'));
-
+  it('does NOT runs prettier on emitted .js files to keep source maps intact', async () => {
     await expect(
       readFile('test-dist/file-1.js', { encoding: 'utf-8' })
     ).resolves.toContain('"'); // double quotes get await with prettier
+  });
+
+  it('does NOT runs prettier on emitted .map files to keep them minimal', async () => {
     await expect(
       readFile('test-dist/file-1.js.map', { encoding: 'utf-8' })
-    ).resolves.toContain('"version": 3,'); // spacing after : added by prettier
+    ).resolves.toContain('"version":3,'); // no spacing after
     await expect(
       readFile('test-dist/file-1.d.ts.map', { encoding: 'utf-8' })
-    ).resolves.toContain('"version": 3,'); // spacing after : added by prettier
+    ).resolves.toContain('"version":3,'); // no spacing after
+  });
+
+  it('runs prettier on emitted .d.ts files', async () => {
+    await expect(
+      readFile('test-dist/file-1.d.ts', { encoding: 'utf-8' })
+    ).resolves.toContain('someOtherType = '); // spacing after = added by prettier
   });
 
   it('considers includes correctly', async () => {
@@ -212,6 +220,7 @@ describe('compilation', () => {
     await expect(
       transpileDirectory('test-src', {
         ...compilerConfig,
+        outDir: 'test-non-existing-lib',
         lib: ['non-existing-lib']
       })
     ).rejects.toThrowError(

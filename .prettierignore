@@ -6,3 +6,5 @@ coverage/
 CHANGELOG.md
 README.md
 .*rc
+test-packages/**/*.js
+

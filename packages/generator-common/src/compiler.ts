@@ -11,11 +11,14 @@ import {
   ModuleResolutionKind,
   NodeArray,
   ScriptTarget,
-  Statement
+  Statement,
+  WriteFileCallback
 } from 'typescript';
 import { GlobSync } from 'glob';
+import { createFile, getFileExtension } from './file-writer';
 
 const logger = createLogger('compiler');
+const { writeFile, mkdir } = promises;
 
 /**
  * Executes the TypeScript compilation for the given directory.
@@ -50,8 +53,37 @@ export async function transpileDirectory(
     allFiles2.map(file => resolve(path, file)),
     compilerOptions
   );
-  const emitResult = await program.emit();
 
+  // The write file handler does not support async function hence the work around with the outer promise list.
+  const fileWriterPromises: Promise<void>[] = [];
+  const prettierWriter: WriteFileCallback = (
+    fileName,
+    text,
+    writeByteOrderMark,
+    onError?,
+    sourceFiles?,
+    data?
+  ) => {
+    const parsed = parse(fileName);
+    const promise = mkdir(parsed.dir, { recursive: true }).then(() => {
+      // On emitted .js file the prettier could break soure map -> skip these.
+      const usePrettier = getFileExtension(fileName) === 'js' ? false : true;
+
+      // Prettier config should be cached from previous steps if present.
+      // Emit also overwrites and copyright is either already there.
+      fileWriterPromises.push(
+        createFile(parsed.dir, parsed.base, text, {
+          overwrite: true,
+          withCopyright: false,
+          usePrettier
+        })
+      );
+    });
+    fileWriterPromises.push(promise);
+  };
+
+  const emitResult = program.emit(undefined, prettierWriter);
+  await Promise.all(fileWriterPromises);
   const allDiagnostics = getPreEmitDiagnostics(program).concat(
     emitResult.diagnostics
   );

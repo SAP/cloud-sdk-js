@@ -1,4 +1,4 @@
-import {resolve, join, parse} from 'path';
+import { resolve, join, parse } from 'path';
 import { promises } from 'fs';
 import {
   codeBlock,
@@ -6,7 +6,10 @@ import {
   ErrorWithCause,
   unixEOL
 } from '@sap-cloud-sdk/util';
-import prettier, {BuiltInParserName, Options as PrettierOptions} from 'prettier';
+import prettier, {
+  BuiltInParserName,
+  Options as PrettierOptions
+} from 'prettier';
 import { getCopyrightHeader } from '../util';
 
 const { writeFile, readFile } = promises;
@@ -29,6 +32,10 @@ export interface CreateFileOptions {
    * Path to the prettier config with respect to the process.cwd().
    */
   prettierConfigPath?: string;
+  /**
+   * Flag to indicate if the file is prettified before.
+   */
+  usePrettier?: boolean;
 }
 
 /**
@@ -73,31 +80,46 @@ async function readPrettierConfig(
   return prettierConfigCache || defaultPrettierConfig;
 }
 
-const fileParserMap:Record<string,BuiltInParserName>= {
-  '.ts':'typescript',
-  '.md':'markdown',
-  '.json': 'json',
-  '.js' : 'espree',
-  '.mdx' : 'mdx',
-  '.yml' : 'yaml',
-  '.yaml': 'yaml'
+const fileParserMap: Record<string, BuiltInParserName> = {
+  ts: 'typescript',
+  md: 'markdown',
+  json: 'json',
+  js: 'espree',
+  mdx: 'mdx',
+  yml: 'yaml',
+  yaml: 'yaml',
+  'd.ts': 'typescript',
+  'js.map': 'json',
+  'd.ts.map': 'json'
+};
+
+/**
+ * This method considers also double dots like `.map.js`
+ * @param fileName
+ * @returns The complete file extension containing multiple dots
+ * @internal
+ */
+export function getFileExtension(fileName: string): string {
+  const fileType = parse(fileName).base.split('.').slice(1).join('.');
+  return fileType;
 }
 
-
 async function formatWithPrettier(
-    fileName:string,
+  fileName: string,
   content: string,
   prettierConfigPath: string | undefined
 ) {
   const prettierConfig = await readPrettierConfig(prettierConfigPath);
-  const fileType = parse(fileName).ext.toLowerCase()
-  const parser : BuiltInParserName | undefined = fileParserMap[fileType]
+  const fileExtension = getFileExtension(fileName);
+  const parser: BuiltInParserName | undefined = fileParserMap[fileExtension];
 
-  if(parser){
-    return prettier.format(content,{...prettierConfig,parser})
+  if (parser) {
+    return prettier.format(content, { ...prettierConfig, parser });
   }
-  logger.info(`No prettier-parser configured for file ${fileName} - skip prettier.`)
-  return content
+  logger.info(
+    `No prettier-parser configured for file ${fileName} - skip prettier.`
+  );
+  return content;
 }
 
 function addCopyrightHeader(content: string, withCopyright: boolean): string {
@@ -130,11 +152,18 @@ export async function createFile(
   const {
     overwrite = false,
     withCopyright = true,
-    prettierConfigPath = undefined
+    prettierConfigPath = undefined,
+    usePrettier = true
   } = options || {};
   try {
     let adjusted = addCopyrightHeader(content, withCopyright);
-    adjusted = await formatWithPrettier(fileName,adjusted, prettierConfigPath);
+    if (usePrettier) {
+      adjusted = await formatWithPrettier(
+        fileName,
+        adjusted,
+        prettierConfigPath
+      );
+    }
 
     return await writeFile(join(directoryPath, fileName), adjusted, {
       encoding: 'utf8',

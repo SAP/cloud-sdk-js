@@ -1,1 +1,8 @@
-{"version":3,"file":"simple-test-entity.d.ts","sourceRoot":"","sources":["simple-test-entity.ts"],"names":[],"mappings":"AAMA;;GAEG;AACH,oBAAY,gBAAgB,GACxB;IACE;;OAEG;IACH,cAAc,EAAE,MAAM,CAAC;CACxB,GACD,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,CAAC"}
+{
+  "version": 3,
+  "file": "simple-test-entity.d.ts",
+  "sourceRoot": "",
+  "sources": ["simple-test-entity.ts"],
+  "names": [],
+  "mappings": "AAMA;;GAEG;AACH,oBAAY,gBAAgB,GACxB;IACE;;OAEG;IACH,cAAc,EAAE,MAAM,CAAC;CACxB,GACD,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,CAAC"
+}

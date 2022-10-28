@@ -1,1 +1,8 @@
-{"version":3,"file":"TestEnumTypeWithOneMember.d.ts","sourceRoot":"","sources":["TestEnumTypeWithOneMember.ts"],"names":[],"mappings":"AAKA;;;GAGG;AACH,oBAAY,yBAAyB;IACnC;;OAEG;IACH,OAAO,YAAY;CACpB"}
+{
+  "version": 3,
+  "file": "TestEnumTypeWithOneMember.d.ts",
+  "sourceRoot": "",
+  "sources": ["TestEnumTypeWithOneMember.ts"],
+  "names": [],
+  "mappings": "AAKA;;;GAGG;AACH,oBAAY,yBAAyB;IACnC;;OAEG;IACH,OAAO,YAAY;CACpB"
+}

@@ -98,4 +98,19 @@ describe('createFile', () => {
     );
     expect(spy).toHaveBeenCalledWith(expect.any(String), defaultPrettierConfig);
   });
+
+  it('does not fail on unknown file and warns', async () => {
+    const logger = createLogger('create-file');
+    const loggerSpy = jest.spyOn(logger, 'info');
+    await createFile('directory', 'formatted.unknown', "const abc='123'", {
+      prettierConfigPath: join('not-existing/.prettierrc'),
+      withCopyright: false
+    });
+    expect(loggerSpy).toHaveBeenCalledWith(
+      'No prettier-parser configured for file formatted.unknown - skip prettier.'
+    );
+    expect(
+      readFileSync('directory/formatted.unknown', { encoding: 'utf-8' })
+    ).toEqual("const abc='123'");
+  });
 });

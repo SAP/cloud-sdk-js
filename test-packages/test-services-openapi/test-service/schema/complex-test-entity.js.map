@@ -1,1 +1,8 @@
-{"version":3,"file":"complex-test-entity.js","sourceRoot":"","sources":["complex-test-entity.ts"],"names":[],"mappings":""}
+{
+  "version": 3,
+  "file": "complex-test-entity.js",
+  "sourceRoot": "",
+  "sources": ["complex-test-entity.ts"],
+  "names": [],
+  "mappings": ""
+}

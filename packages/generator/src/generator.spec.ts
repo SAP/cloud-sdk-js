@@ -30,7 +30,7 @@ describe('generator', () => {
         common: {},
         [pathTestResources]: mock.load(pathTestResources),
         [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
-        [pathRootNodeModules]: mock.load(pathRootNodeModules),
+        [pathRootNodeModules]: mock.load(pathRootNodeModules)
       });
 
       const options = createOptions({

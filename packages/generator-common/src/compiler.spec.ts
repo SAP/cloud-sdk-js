@@ -15,6 +15,8 @@ import {
   transpileDirectory
 } from './compiler';
 
+const { readFile, readdir } = promises;
+
 describe('compiler options', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
   beforeEach(() => {
@@ -136,7 +138,7 @@ describe('compilation', () => {
 
   it('compiles all files', async () => {
     await transpileDirectory('test-src', compilerConfig('test-dist'));
-    const files = await promises.readdir('test-dist');
+    const files = await readdir('test-dist');
     expect(files.includes('test-file.spec.js')).toBe(false);
     expect(files).toEqual([
       'file-1.d.ts',
@@ -149,7 +151,7 @@ describe('compilation', () => {
       'index.js.map',
       'sub-folder'
     ]);
-    const filesSubfolder = await promises.readdir('test-dist/sub-folder');
+    const filesSubfolder = await readdir('test-dist/sub-folder');
     expect(filesSubfolder).toEqual([
       'file-2.d.ts',
       'file-2.d.ts.map',
@@ -160,6 +162,20 @@ describe('compilation', () => {
       'index.js',
       'index.js.map'
     ]);
+  });
+
+  it('runs prettier on files excluding emitted .js files to not break source maps', async () => {
+    await transpileDirectory('test-src', compilerConfig('test-dist'));
+
+    await expect(
+      readFile('test-dist/file-1.js', { encoding: 'utf-8' })
+    ).resolves.toContain('"'); // double quotes get await with prettier
+    await expect(
+      readFile('test-dist/file-1.js.map', { encoding: 'utf-8' })
+    ).resolves.toContain('"version": 3,'); // spacing after : added by prettier
+    await expect(
+      readFile('test-dist/file-1.d.ts.map', { encoding: 'utf-8' })
+    ).resolves.toContain('"version": 3,'); // spacing after : added by prettier
   });
 
   it('considers includes correctly', async () => {

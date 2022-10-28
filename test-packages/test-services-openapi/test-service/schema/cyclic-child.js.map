@@ -1,1 +1,8 @@
-{"version":3,"file":"cyclic-child.js","sourceRoot":"","sources":["cyclic-child.ts"],"names":[],"mappings":""}
+{
+  "version": 3,
+  "file": "cyclic-child.js",
+  "sourceRoot": "",
+  "sources": ["cyclic-child.ts"],
+  "names": [],
+  "mappings": ""
+}

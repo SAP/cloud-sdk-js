@@ -141,7 +141,7 @@ export async function transpileDirectories(
     directories.map(async directory => {
       const [compilerOptions, createFileOptions] = await Promise.all([
         readCompilerOptions(directory),
-        getFileCreationOptions(options, false)
+        getFileCreationOptions(options)
       ]);
       return transpileDirectory(directory, {
         compilerOptions,
@@ -224,11 +224,9 @@ async function generateFilesWithoutTsMorph(
 }
 
 async function getFileCreationOptions(
-  options: GeneratorOptions,
-  withCopyright = true
+  options: GeneratorOptions
 ): Promise<CreateFileOptions> {
   return {
-    withCopyright,
     prettierOptions: await readPrettierConfig(
       options.prettierConfig?.toString()
     ),

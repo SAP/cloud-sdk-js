@@ -124,11 +124,9 @@ export async function generateWithParsedOptions(
 }
 
 async function getFileCreationOptions(
-  options: ParsedGeneratorOptions,
-  withCopyright = true
+  options: ParsedGeneratorOptions
 ): Promise<CreateFileOptions> {
   return {
-    withCopyright,
     prettierOptions: await readPrettierConfig(options.prettierConfig),
     overwrite: options.overwrite
   };
@@ -170,11 +168,11 @@ async function generateSources(
       serviceDir,
       'tsconfig.json',
       tsConfig,
-      await getFileCreationOptions(options, false)
+      await getFileCreationOptions(options)
     );
     const transpileOptions = {
       compilerOptions: await readCompilerOptions(serviceDir),
-      createFileOptions: await getFileCreationOptions(options,false)
+      createFileOptions: await getFileCreationOptions(options)
     };
     await transpileDirectory(serviceDir, transpileOptions);
   }
@@ -321,7 +319,7 @@ async function generateReadme(
     serviceDir,
     'README.md',
     readme(openApiDocument),
-    await getFileCreationOptions(options, false)
+    await getFileCreationOptions(options)
   );
 }
 
@@ -337,7 +335,7 @@ async function generateMetadata(
   await mkdir(metadataDir, { recursive: true });
 
   logger.verbose(`Generating client metadata ${clientFileName}...`);
-  const createFileOptions = await getFileCreationOptions(options, false);
+  const createFileOptions = await getFileCreationOptions(options);
   const clientFile = createFile(
     metadataDir,
     clientFileName,
@@ -353,7 +351,7 @@ async function generatePackageJson(
   options: ParsedGeneratorOptions
 ) {
   logger.verbose(`Generating package.json in ${serviceDir}.`);
-  const createFileOptions = await getFileCreationOptions(options, false);
+  const createFileOptions = await getFileCreationOptions(options);
 
   await createFile(
     serviceDir,
@@ -386,7 +384,6 @@ async function generateOptionsPerService(
     }),
     {
       overwrite: true,
-      withCopyright: false,
       prettierOptions: await readPrettierConfig(options.prettierConfig)
     }
   );

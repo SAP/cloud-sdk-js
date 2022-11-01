@@ -147,7 +147,6 @@ async function generateCommonTestEntity() {
     'export const { commonEntityApi: commonEntityApiCustom } = commonService(\n  customTestDeSerializers\n);'
   ].join(unixEOL);
   await createFile(__dirname, 'common-entity.ts', allParts, {
-    withCopyright: false,
     overwrite: true,
     prettierOptions: defaultPrettierConfig
   });

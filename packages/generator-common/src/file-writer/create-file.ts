@@ -25,10 +25,6 @@ export interface CreateFileOptions {
    */
   overwrite: boolean;
   /**
-   * Flag to indicate if copy write header is added.
-   */
-  withCopyright: boolean;
-  /**
    * Path to the prettier config with respect to the process.cwd().
    */
   prettierOptions: PrettierOptions;
@@ -146,11 +142,13 @@ export async function createFile(
 ): Promise<void> {
   const {
     overwrite,
-    withCopyright,
     prettierOptions,
     usePrettier = true
   } = options;
   try {
+    //Our copyright header is only valid for source files i.e. typescript.
+    const withCopyright = getFileExtension(fileName) === 'ts'
+
     let adjusted = addCopyrightHeader(content, withCopyright);
     if (usePrettier) {
       adjusted = await formatWithPrettier(fileName, adjusted, prettierOptions);

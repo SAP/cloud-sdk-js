@@ -5,14 +5,15 @@ import prettier from 'prettier';
 import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
 import {
   clearPrettierConfigCache,
-  createFile,
-  defaultPrettierConfig
+  createFile, CreateFileOptions,
+  defaultPrettierConfig, readPrettierConfig
 } from './create-file';
 
 const { readFile } = promises;
 
 describe('createFile', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../../node_modules');
+  const defaultCreateConfig: CreateFileOptions = {prettierOptions:defaultPrettierConfig,overwrite:true}
 
   beforeEach(() => {
     mock({
@@ -32,7 +33,7 @@ describe('createFile', () => {
   });
 
   it('creates content ending with new line', async () => {
-    await createFile('directory', 'filename', 'content', { overwrite: true });
+    await createFile('directory', 'filename', 'content', defaultCreateConfig);
     expect(await readFile('directory/filename', 'utf8')).toMatchInlineSnapshot(`
       "/*
        * Copyright (c) ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.
@@ -45,10 +46,7 @@ describe('createFile', () => {
   });
 
   it('creates content without copyright', async () => {
-    await createFile('directory', 'filename', 'content', {
-      overwrite: true,
-      withCopyright: false
-    });
+    await createFile('directory', 'filename', 'content', defaultCreateConfig);
     expect(await readFile('directory/filename', 'utf8')).toEqual(
       `content;${unixEOL}`
     );
@@ -56,7 +54,7 @@ describe('createFile', () => {
 
   it('throws an error if overwriting is disabled', async () => {
     await expect(() =>
-      createFile('directory', 'existingFile', 'content', { overwrite: false })
+      createFile('directory', 'existingFile', 'content', { ...defaultCreateConfig,overwrite: false })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Could not write file \\"existingFile\\". File already exists. If you want to allow overwriting files, enable the `overwrite` flag."'
     );
@@ -64,9 +62,7 @@ describe('createFile', () => {
 
   it('uses prettier per default', async () => {
     const spy = jest.spyOn(prettier, 'format');
-    await createFile('directory', 'formatted.ts', "const abc='123'", {
-      withCopyright: false
-    });
+    await createFile('directory', 'formatted.ts', "const abc='123'", defaultCreateConfig);
     expect(
       readFileSync('directory/formatted.ts', { encoding: 'utf-8' })
     ).toEqual(`const abc = '123';${unixEOL}`);
@@ -75,8 +71,8 @@ describe('createFile', () => {
 
   it('uses custom prettier config', async () => {
     await createFile('directory', 'formatted.ts', "const abc='123'", {
-      prettierConfigPath: join('some-dir/.prettierrc'),
-      withCopyright: false
+      ...defaultCreateConfig,prettierOptions: await readPrettierConfig('some-dir/.prettierrc')
+
     });
     expect(
       readFileSync('directory/formatted.ts', { encoding: 'utf-8' })
@@ -87,25 +83,20 @@ describe('createFile', () => {
     const logger = createLogger('create-file');
     const spy = jest.spyOn(prettier, 'format');
     const loggerSpy = jest.spyOn(logger, 'warn');
-    await createFile('directory', 'formatted.ts', "const abc='123'", {
-      prettierConfigPath: join('not-existing/.prettierrc'),
-      withCopyright: false
-    });
+    const defaultConfig = await readPrettierConfig('not-existing/.prettierrc')
+
     expect(loggerSpy).toHaveBeenCalledWith(
       expect.stringMatching(
         'Prettier config file not found: .*not-existing/.prettierrc - default is used.'
       )
     );
-    expect(spy).toHaveBeenCalledWith(expect.any(String), defaultPrettierConfig);
+    expect(defaultConfig).toBe(defaultPrettierConfig);
   });
 
   it('does not fail on unknown file and warns', async () => {
     const logger = createLogger('create-file');
     const loggerSpy = jest.spyOn(logger, 'info');
-    await createFile('directory', 'formatted.unknown', "const abc='123'", {
-      prettierConfigPath: join('not-existing/.prettierrc'),
-      withCopyright: false
-    });
+    await createFile('directory', 'formatted.unknown', "const abc='123'", defaultCreateConfig);
     expect(loggerSpy).toHaveBeenCalledWith(
       'No prettier-parser configured for file formatted.unknown - skip prettier.'
     );

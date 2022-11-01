@@ -24,7 +24,9 @@ import {
   copyFiles,
   getSdkVersion,
   packageDescription,
-  createFile
+  createFile,
+  readPrettierConfig,
+  CreateFileOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
@@ -90,7 +92,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     );
     try {
       await chunks.reduce(
-        (all, chunk) => all.then(() => transpileDirectories(chunk)),
+        (all, chunk) => all.then(() => transpileDirectories(chunk, options)),
         Promise.resolve()
       );
     } catch (err) {
@@ -132,15 +134,23 @@ export function getInstallODataErrorMessage(
  * @internal
  */
 export async function transpileDirectories(
-  directories: string[]
+  directories: string[],
+  options: GeneratorOptions
 ): Promise<void[]> {
   return Promise.all(
     directories.map(async directory => {
-      const compilerOptions = await readCompilerOptions(directory);
-      return transpileDirectory(directory, compilerOptions);
+      const [compilerOptions, createFileOptions] = await Promise.all([
+        readCompilerOptions(directory),
+        getFileCreationOptions(options, false)
+      ]);
+      return transpileDirectory(directory, {
+        compilerOptions,
+        createFileOptions
+      });
     })
   );
 }
+
 /**
  * @internal
  */
@@ -193,6 +203,14 @@ export interface ProjectAndServices {
   services: VdmServiceMetadata[];
 }
 
+// async function createFileOptions(options: {prettierConfig?:PathLike|string,overwrite:boolean,forceOverwrite?:boolean},withCopyright=true): Promise<CreateFileOptions>{
+//   return {
+//     prettierOptions: await readPrettierConfig(options.prettierConfig?.toString()),
+//     overwrite: options.forceOverwrite,
+//     withCopyright:true
+//   };
+// }
+
 async function generateFilesWithoutTsMorph(
   services: VdmServiceMetadata[],
   options: GeneratorOptions
@@ -203,6 +221,19 @@ async function generateFilesWithoutTsMorph(
     generateIncludes(service, options)
   ]);
   await Promise.all(promises);
+}
+
+async function getFileCreationOptions(
+  options: GeneratorOptions,
+  withCopyright = true
+): Promise<CreateFileOptions> {
+  return {
+    withCopyright,
+    prettierOptions: await readPrettierConfig(
+      options.prettierConfig?.toString()
+    ),
+    overwrite: options.forceOverwrite
+  };
 }
 
 async function generateIncludes(
@@ -224,23 +255,27 @@ async function generateServiceFile(
   options: GeneratorOptions
 ): Promise<void> {
   const serviceDir = resolvePath(service.directoryName, options);
-  await createFile(serviceDir, 'service.ts', serviceFile(service), {
-    overwrite: options.forceOverwrite
-  });
+  const createFileWithHeader = await getFileCreationOptions(options);
+  await createFile(
+    serviceDir,
+    'service.ts',
+    serviceFile(service),
+    createFileWithHeader
+  );
 }
 
 async function generateEntityApis(
   service: VdmServiceMetadata,
   options: GeneratorOptions
 ): Promise<void> {
-  const serviceDir = resolvePath(service.directoryName, options);
+  const createFileWithHeader = await getFileCreationOptions(options);
   await Promise.all(
     service.entities.map(entity =>
       createFile(
-        serviceDir,
+        resolvePath(service.directoryName, options),
         `${entity.className}Api.ts`,
         entityApiFile(entity, service),
-        { overwrite: options.forceOverwrite }
+        createFileWithHeader
       )
     )
   );
@@ -256,7 +291,11 @@ export async function generateSourcesForService(
 ): Promise<void> {
   const serviceDirPath = resolvePath(service.directoryName, options);
   const serviceDir = project.createDirectory(serviceDirPath);
-  const overwrite = options.forceOverwrite;
+  const createFileWithHeader = await getFileCreationOptions(options);
+  const createFileWithoutHeader = {
+    ...createFileWithHeader,
+    withCopyright: false
+  };
 
   if (!existsSync(serviceDirPath)) {
     await mkdir(serviceDirPath, { recursive: true });
@@ -278,16 +317,18 @@ export async function generateSourcesForService(
           oDataVersion: service.oDataVersion,
           license: options.licenseInPackageJson
         }),
-        { ...options, withCopyright: false }
+        createFileWithoutHeader
       )
     );
   }
 
   filePromises.push(
-    createFile(serviceDirPath, 'tsconfig.json', tsConfig(), {
-      overwrite,
-      withCopyright: false
-    })
+    createFile(
+      serviceDirPath,
+      'tsconfig.json',
+      tsConfig(),
+      createFileWithoutHeader
+    )
   );
 
   if (hasEntities(service)) {
@@ -295,9 +336,12 @@ export async function generateSourcesForService(
       `[${service.originalFileName}] Generating batch request builder ...`
     );
     filePromises.push(
-      sourceFile(serviceDir, 'BatchRequest', batchSourceFile(service), {
-        overwrite
-      })
+      sourceFile(
+        serviceDir,
+        'BatchRequest',
+        batchSourceFile(service),
+        createFileWithHeader
+      )
     );
   }
 
@@ -308,7 +352,7 @@ export async function generateSourcesForService(
         serviceDir,
         entity.className,
         entitySourceFile(entity, service),
-        { overwrite }
+        createFileWithHeader
       )
     );
     filePromises.push(
@@ -316,7 +360,7 @@ export async function generateSourcesForService(
         serviceDir,
         `${entity.className}RequestBuilder`,
         requestBuilderSourceFile(entity, service.oDataVersion),
-        { overwrite }
+        createFileWithHeader
       )
     );
   });
@@ -326,9 +370,12 @@ export async function generateSourcesForService(
       `[${service.originalFileName}] Generating enum type ${enumType.originalName} ...`
     );
     filePromises.push(
-      sourceFile(serviceDir, enumType.typeName, enumTypeSourceFile(enumType), {
-        overwrite
-      })
+      sourceFile(
+        serviceDir,
+        enumType.typeName,
+        enumTypeSourceFile(enumType),
+        createFileWithHeader
+      )
     );
   });
 
@@ -341,7 +388,7 @@ export async function generateSourcesForService(
         serviceDir,
         complexType.typeName,
         complexTypeSourceFile(complexType, service.oDataVersion),
-        { overwrite }
+        createFileWithHeader
       )
     );
   });
@@ -355,7 +402,7 @@ export async function generateSourcesForService(
         serviceDir,
         'function-imports',
         functionImportSourceFile(service),
-        { overwrite }
+        createFileWithHeader
       )
     );
   }
@@ -367,13 +414,13 @@ export async function generateSourcesForService(
         serviceDir,
         'action-imports',
         actionImportSourceFile(service),
-        { overwrite }
+        createFileWithHeader
       )
     );
   }
 
   filePromises.push(
-    sourceFile(serviceDir, 'index', indexFile(service), { overwrite })
+    sourceFile(serviceDir, 'index', indexFile(service), createFileWithHeader)
   );
 
   if (options.writeReadme) {
@@ -383,7 +430,7 @@ export async function generateSourcesForService(
         serviceDirPath,
         'README.md',
         readme(service, options.s4hanaCloud),
-        { overwrite }
+        createFileWithHeader
       )
     );
   }
@@ -398,7 +445,7 @@ export async function generateSourcesForService(
           serviceDirPath,
           `${service.directoryName}-csn.json`,
           await csn(service),
-          { overwrite, withCopyright: false }
+          createFileWithoutHeader
         )
       );
     } catch (e) {
@@ -424,7 +471,7 @@ export async function generateSourcesForService(
         path,
         clientFileName,
         JSON.stringify(await sdkMetadata(service), null, 2),
-        { overwrite: options.forceOverwrite }
+        createFileWithoutHeader
       )
     );
   }

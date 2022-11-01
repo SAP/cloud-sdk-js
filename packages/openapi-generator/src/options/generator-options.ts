@@ -114,6 +114,10 @@ export interface ParsedGeneratorOptions {
   /**
    * @internal
    */
+  prettierConfig?: string;
+  /**
+   * @internal
+   */
   transpile: boolean;
   /**
    * @internal

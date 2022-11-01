@@ -15,7 +15,7 @@ import {
   WriteFileCallback
 } from 'typescript';
 import { GlobSync } from 'glob';
-import { createFile, getFileExtension } from './file-writer';
+import { createFile, CreateFileOptions, getFileExtension } from './file-writer';
 
 const logger = createLogger('compiler');
 const { writeFile, mkdir } = promises;
@@ -30,7 +30,10 @@ const { writeFile, mkdir } = promises;
  */
 export async function transpileDirectory(
   path: string,
-  compilerOptions: CompilerOptions,
+  {
+    compilerOptions,
+    createFileOptions
+  }: { compilerOptions: CompilerOptions; createFileOptions: CreateFileOptions },
   includeExclude: IncludeExclude = defaultIncludeExclude
 ): Promise<void> {
   logger.verbose(`Transpiling files in the directory: ${path} started.`);
@@ -66,17 +69,15 @@ export async function transpileDirectory(
   ) => {
     const parsed = parse(fileName);
     const promise = mkdir(parsed.dir, { recursive: true }).then(() => {
-      // All not emitted files like .md or .json should be already prettied.
-      // Formatting emitted .js files could break source map -> skip these.
-      // Formatting the .map files also is not necessary increases only file size - only .d.ts files are nicer if linted
+      // The transpile process creates `.map.js`, `.js` and `.d.ts` files
+      // All not emitted files like .md or .json should be already formatted using prettier on creation.
+      // Formatting .js files could break source map -> skip these.
+      // The .map files are not human-readable and formatting increases file size -> skip these.
       const usePrettier = getFileExtension(fileName) === 'd.ts';
 
-      // Prettier config should be cached from previous steps already.
-      // Emit also overwrites and copyright is either already there.
       fileWriterPromises.push(
         createFile(parsed.dir, parsed.base, text, {
-          overwrite: true,
-          withCopyright: false,
+          ...createFileOptions,
           usePrettier
         })
       );

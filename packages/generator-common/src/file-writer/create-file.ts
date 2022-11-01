@@ -1,4 +1,4 @@
-import { resolve, join, parse } from 'path';
+import { join, parse } from 'path';
 import { promises } from 'fs';
 import {
   codeBlock,
@@ -23,17 +23,17 @@ export interface CreateFileOptions {
   /**
    * Flag to indicate if the file is overwritten.
    */
-  overwrite?: boolean;
+  overwrite: boolean;
   /**
    * Flag to indicate if copy write header is added.
    */
-  withCopyright?: boolean;
+  withCopyright: boolean;
   /**
    * Path to the prettier config with respect to the process.cwd().
    */
-  prettierConfigPath?: string;
+  prettierOptions: PrettierOptions;
   /**
-   * Flag to indicate if the file is prettified before.
+   * Flag to indicate if the file is formatted using prettier - Default is true.
    */
   usePrettier?: boolean;
 }
@@ -48,36 +48,34 @@ export const defaultPrettierConfig: PrettierOptions = {
   endOfLine: 'lf'
 };
 
-let prettierConfigCache: PrettierOptions | undefined;
+const prettierConfigCache: Record<string, PrettierOptions> = {};
 
 /**
- * @internal
+ * Read the prettier config and caches it.
+ * @param prettierConfigPath - Path to the prettier config.
+ * @returns Config or default.
  */
-export function clearPrettierConfigCache(): void {
-  prettierConfigCache = undefined;
-}
-
-async function readPrettierConfig(
+export async function readPrettierConfig(
   prettierConfigPath: string | undefined
 ): Promise<PrettierOptions> {
-  if (prettierConfigCache) {
-    return prettierConfigCache;
+  if (prettierConfigPath && prettierConfigCache[prettierConfigPath]) {
+    return prettierConfigCache[prettierConfigPath];
   }
 
   if (prettierConfigPath) {
-    const resolved = resolve(process.cwd(), prettierConfigPath);
     try {
-      const config = await readFile(resolved, { encoding: 'utf-8' });
-      prettierConfigCache = JSON.parse(config);
+      const config = await readFile(prettierConfigPath, { encoding: 'utf-8' });
+      prettierConfigCache[prettierConfigPath] = JSON.parse(config);
+      return prettierConfigCache[prettierConfigPath];
     } catch (e) {
       logger.warn(
-        `Prettier config file not found: ${resolved} - default is used.`
+        `Prettier config file not found: ${prettierConfigPath} - default is used.`
       );
-      prettierConfigCache = defaultPrettierConfig;
+      return defaultPrettierConfig;
     }
   }
-
-  return prettierConfigCache || defaultPrettierConfig;
+  logger.debug('Default prettier config is used.');
+  return defaultPrettierConfig;
 }
 
 const fileParserMap: Record<string, BuiltInParserName> = {
@@ -106,14 +104,13 @@ export function getFileExtension(fileName: string): string {
 async function formatWithPrettier(
   fileName: string,
   content: string,
-  prettierConfigPath: string | undefined
+  prettierOptions: PrettierOptions
 ) {
-  const prettierConfig = await readPrettierConfig(prettierConfigPath);
   const fileExtension = getFileExtension(fileName);
   const parser: BuiltInParserName | undefined = fileParserMap[fileExtension];
 
   if (parser) {
-    return prettier.format(content, { ...prettierConfig, parser });
+    return prettier.format(content, { ...prettierOptions, parser });
   }
   logger.info(
     `No prettier-parser configured for file ${fileName} - skip prettier.`
@@ -145,22 +142,18 @@ export async function createFile(
   directoryPath: string,
   fileName: string,
   content: string,
-  options?: CreateFileOptions
+  options: CreateFileOptions
 ): Promise<void> {
   const {
-    overwrite = false,
-    withCopyright = true,
-    prettierConfigPath = undefined,
+    overwrite,
+    withCopyright,
+    prettierOptions,
     usePrettier = true
-  } = options || {};
+  } = options;
   try {
     let adjusted = addCopyrightHeader(content, withCopyright);
     if (usePrettier) {
-      adjusted = await formatWithPrettier(
-        fileName,
-        adjusted,
-        prettierConfigPath
-      );
+      adjusted = await formatWithPrettier(fileName, adjusted, prettierOptions);
     }
 
     return await writeFile(join(directoryPath, fileName), adjusted, {

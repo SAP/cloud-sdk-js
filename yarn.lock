@@ -1224,10 +1224,19 @@
     node-fetch "2.6.7"
     uuid "7.0.0"
 
-"@sap/xsenv@3.3.2", "@sap/xsenv@^3.3.2":
+"@sap/xsenv@3.3.2":
   version "3.3.2"
   resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.3.2.tgz#55824999f77bb974a9919d2fdad45751b7f11632"
   integrity sha512-PRxzoNEB0wMCuQOOC7q7QIkCYyLgxgHY1vIHFcPorajLLskqhqJNPfycWAfhUgDn6WryGluUVxnQVeTQncY6dg==
+  dependencies:
+    debug "4.3.3"
+    node-cache "^5.1.0"
+    verror "1.10.0"
+
+"@sap/xsenv@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.4.0.tgz#4a1ac00e3086bfff46e897c16c285f62689eb325"
+  integrity sha512-bZ/NFhS+wZI0JlMO1OOBEThfyOTmf2x5oQ+wToJGkZ2T5+gLUE3emZiC4iHA+BuSmUtO+vYoe29Q1qiE4qaiJQ==
   dependencies:
     debug "4.3.3"
     node-cache "^5.1.0"

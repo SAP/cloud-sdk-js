@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@sap-cloud-sdk/util": "^2.9.0",
-    "@sap/xsenv": "^3.3.2",
+    "@sap/xsenv": "^3.4.0",
     "@sap/xssec": "^3.2.14",
     "axios": "^0.27.1",
     "http-proxy-agent": "^5.0.0",

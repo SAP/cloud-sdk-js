@@ -174,7 +174,7 @@ async function generateSources(
     );
     const transpileOptions = {
       compilerOptions: await readCompilerOptions(serviceDir),
-      createFileOptions: await getFileCreationOptions(options)
+      createFileOptions: await getFileCreationOptions(options,false)
     };
     await transpileDirectory(serviceDir, transpileOptions);
   }

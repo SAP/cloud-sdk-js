@@ -74,6 +74,7 @@ export async function transpileDirectory(
       // Formatting .js files could break source map -> skip these.
       // The .map files are not human-readable and formatting increases file size -> skip these.
       const usePrettier = getFileExtension(fileName) === 'd.ts';
+      const withCopyright = getFileExtension(fileName) === 'd.ts';
 
       fileWriterPromises.push(
         createFile(parsed.dir, parsed.base, text, {

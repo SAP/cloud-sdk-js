@@ -14,6 +14,7 @@ import {
   readIncludeExcludeWithDefaults,
   transpileDirectory
 } from './compiler';
+import {CreateFileOptions,defaultPrettierConfig} from "./file-writer";
 
 const { readFile, readdir } = promises;
 
@@ -105,6 +106,12 @@ describe('compiler options', () => {
 });
 
 describe('compilation', () => {
+  const createFileOptions:CreateFileOptions = {
+    overwrite:true,
+    withCopyright:false,
+    prettierOptions:defaultPrettierConfig
+  }
+
   beforeAll(async () => {
     const rootNodeModules = resolve(__dirname, '../../../node_modules');
     const packageNodeModules = resolve(__dirname, '../node_modules');
@@ -118,7 +125,7 @@ describe('compilation', () => {
       [rootNodeModules]: mock.load(rootNodeModules),
       [packageNodeModules]: mock.load(packageNodeModules)
     });
-    await transpileDirectory('test-src', compilerConfig('test-dist'));
+    await transpileDirectory('test-src', {compilerOptions:compilerConfig('test-dist'),createFileOptions});
   });
 
   function compilerConfig(outFolder): CompilerOptions {
@@ -187,7 +194,7 @@ describe('compilation', () => {
   });
 
   it('considers includes correctly', async () => {
-    await transpileDirectory('test-src', compilerConfig('test-dist-1'), {
+    await transpileDirectory('test-src', {compilerOptions:compilerConfig('test-dist-1'),createFileOptions}, {
       include: ['file-1.ts', '**/file-2.ts'],
       exclude: []
     });
@@ -198,7 +205,7 @@ describe('compilation', () => {
   });
 
   it('considers exclude correctly', async () => {
-    await transpileDirectory('test-src', compilerConfig('test-dist-2'), {
+    await transpileDirectory('test-src', {compilerOptions:compilerConfig('test-dist-2'),createFileOptions}, {
       include: ['**/*.ts'],
       exclude: ['**/index.ts', 'test-file.spec.ts']
     });
@@ -210,19 +217,21 @@ describe('compilation', () => {
 
   it('throws error with file information on broken source file', async () => {
     await expect(
-      transpileDirectory('broken-src', compilerConfig('broken-dist'))
+      transpileDirectory('broken-src', {compilerOptions:compilerConfig('broken-dist'),createFileOptions})
     ).rejects.toThrowError(
       "error TS2588: Cannot assign to 'foo' because it is a constant"
     );
   });
 
   it('throws error general information on broken module', async () => {
+
+  const compilerOptions = {
+    ...compilerConfig,
+    outDir: 'test-non-existing-lib',
+    lib: ['non-existing-lib']
+  }
     await expect(
-      transpileDirectory('test-src', {
-        ...compilerConfig,
-        outDir: 'test-non-existing-lib',
-        lib: ['non-existing-lib']
-      })
+      transpileDirectory('test-src', {compilerOptions,createFileOptions})
     ).rejects.toThrowError(
       /error TS6231: Could not resolve the path .* with the extensions: '\.ts', '\.tsx', '\.d\.ts'\.*/
     );

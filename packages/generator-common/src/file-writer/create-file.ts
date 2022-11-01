@@ -140,14 +140,12 @@ export async function createFile(
   content: string,
   options: CreateFileOptions
 ): Promise<void> {
-  const {
-    overwrite,
-    prettierOptions,
-    usePrettier = true
-  } = options;
+  const { overwrite, prettierOptions, usePrettier = true } = options;
   try {
-    //Our copyright header is only valid for source files i.e. typescript.
-    const withCopyright = getFileExtension(fileName) === 'ts'
+    // Our copyright header is only valid for source files i.e. typescript.
+    const withCopyright =
+      getFileExtension(fileName) === 'ts' ||
+      getFileExtension(fileName) === 'd.ts';
 
     let adjusted = addCopyrightHeader(content, withCopyright);
     if (usePrettier) {

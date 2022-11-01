@@ -1,19 +1,23 @@
 import { promises, readFileSync } from 'fs';
-import { join, resolve } from 'path';
+import { resolve } from 'path';
 import mock from 'mock-fs';
 import prettier from 'prettier';
 import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
 import {
-  clearPrettierConfigCache,
-  createFile, CreateFileOptions,
-  defaultPrettierConfig, readPrettierConfig
+  createFile,
+  CreateFileOptions,
+  defaultPrettierConfig,
+  readPrettierConfig
 } from './create-file';
 
 const { readFile } = promises;
 
 describe('createFile', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../../node_modules');
-  const defaultCreateConfig: CreateFileOptions = {prettierOptions:defaultPrettierConfig,overwrite:true}
+  const defaultCreateConfig: CreateFileOptions = {
+    prettierOptions: defaultPrettierConfig,
+    overwrite: true
+  };
 
   beforeEach(() => {
     mock({
@@ -28,33 +32,46 @@ describe('createFile', () => {
   });
 
   afterEach(() => {
-    clearPrettierConfigCache();
     mock.restore();
   });
 
-  it('creates content ending with new line', async () => {
-    await createFile('directory', 'filename', 'content', defaultCreateConfig);
-    expect(await readFile('directory/filename', 'utf8')).toMatchInlineSnapshot(`
+  it('creates formatted content with copyright for non typescript files', async () => {
+    await createFile(
+      'directory',
+      'filename.ts',
+      'const content = 123;',
+      defaultCreateConfig
+    );
+    expect(await readFile('directory/filename.ts', 'utf8'))
+      .toMatchInlineSnapshot(`
       "/*
        * Copyright (c) ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.
        *
        * This is a generated file powered by the SAP Cloud SDK for JavaScript.
        */
-      content;
+      const content = 123;
       "
     `);
   });
 
-  it('creates content without copyright', async () => {
-    await createFile('directory', 'filename', 'content', defaultCreateConfig);
-    expect(await readFile('directory/filename', 'utf8')).toEqual(
-      `content;${unixEOL}`
+  it('creates formatted content without copyright for non typescript files', async () => {
+    await createFile(
+      'directory',
+      'filename.json',
+      JSON.stringify({ content: 123 }),
+      defaultCreateConfig
+    );
+    expect(await readFile('directory/filename.json', 'utf8')).toEqual(
+      `{ "content": 123 }${unixEOL}`
     );
   });
 
   it('throws an error if overwriting is disabled', async () => {
     await expect(() =>
-      createFile('directory', 'existingFile', 'content', { ...defaultCreateConfig,overwrite: false })
+      createFile('directory', 'existingFile', 'content', {
+        ...defaultCreateConfig,
+        overwrite: false
+      })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Could not write file \\"existingFile\\". File already exists. If you want to allow overwriting files, enable the `overwrite` flag."'
     );
@@ -62,28 +79,36 @@ describe('createFile', () => {
 
   it('uses prettier per default', async () => {
     const spy = jest.spyOn(prettier, 'format');
-    await createFile('directory', 'formatted.ts', "const abc='123'", defaultCreateConfig);
+    await createFile(
+      'directory',
+      'formatted.ts',
+      "const abc='123'",
+      defaultCreateConfig
+    );
     expect(
       readFileSync('directory/formatted.ts', { encoding: 'utf-8' })
-    ).toEqual(`const abc = '123';${unixEOL}`);
-    expect(spy).toHaveBeenCalledWith(expect.any(String), defaultPrettierConfig);
+    ).toContain(`const abc = '123';${unixEOL}`);
+    expect(spy).toHaveBeenCalledWith(expect.any(String), {
+      ...defaultPrettierConfig,
+      parser: 'typescript'
+    });
   });
 
   it('uses custom prettier config', async () => {
     await createFile('directory', 'formatted.ts', "const abc='123'", {
-      ...defaultCreateConfig,prettierOptions: await readPrettierConfig('some-dir/.prettierrc')
-
+      ...defaultCreateConfig,
+      prettierOptions: await readPrettierConfig('some-dir/.prettierrc')
     });
     expect(
       readFileSync('directory/formatted.ts', { encoding: 'utf-8' })
-    ).toEqual(`const abc = "123"${unixEOL}`);
+    ).toContain(`const abc = "123"${unixEOL}`);
   });
 
   it('uses default config if custom prettier config is not found', async () => {
     const logger = createLogger('create-file');
     const spy = jest.spyOn(prettier, 'format');
     const loggerSpy = jest.spyOn(logger, 'warn');
-    const defaultConfig = await readPrettierConfig('not-existing/.prettierrc')
+    const defaultConfig = await readPrettierConfig('not-existing/.prettierrc');
 
     expect(loggerSpy).toHaveBeenCalledWith(
       expect.stringMatching(
@@ -96,7 +121,12 @@ describe('createFile', () => {
   it('does not fail on unknown file and warns', async () => {
     const logger = createLogger('create-file');
     const loggerSpy = jest.spyOn(logger, 'info');
-    await createFile('directory', 'formatted.unknown', "const abc='123'", defaultCreateConfig);
+    await createFile(
+      'directory',
+      'formatted.unknown',
+      "const abc='123'",
+      defaultCreateConfig
+    );
     expect(loggerSpy).toHaveBeenCalledWith(
       'No prettier-parser configured for file formatted.unknown - skip prettier.'
     );

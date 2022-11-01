@@ -5,7 +5,10 @@ import { join, resolve } from 'path';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { generate } from '@sap-cloud-sdk/generator/src';
-import {createFile, defaultPrettierConfig} from '@sap-cloud-sdk/generator-common/dist/file-writer';
+import {
+  createFile,
+  defaultPrettierConfig
+} from '@sap-cloud-sdk/generator-common/dist/file-writer';
 
 const outDir = resolve(__dirname, 'common-service');
 

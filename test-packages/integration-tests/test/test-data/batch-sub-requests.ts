@@ -79,7 +79,7 @@ export const createRequestWithAppendPath = testEntityApi
     testEntityApi
       .entityBuilder()
       .stringProperty('stringProp')
-      .withCustomFields( { customPropKey: 'customPropVal' } )
+      .withCustomFields({ customPropKey: 'customPropVal' })
       .build()
   )
   .appendPath('/$links', '/to_MultiLink');

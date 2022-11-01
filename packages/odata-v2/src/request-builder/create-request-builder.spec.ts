@@ -235,7 +235,7 @@ describe('CreateRequestBuilder', () => {
     const testEntity = testEntityApi
       .entityBuilder()
       .stringProperty(stringProp)
-      .withCustomFields( { [customPropKey]: customPropVal } )
+      .withCustomFields({ [customPropKey]: customPropVal })
       .build();
 
     const body = { StringProperty: stringProp, customPropKey: customPropVal };

@@ -8,13 +8,13 @@ import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { ErrorResponse } from '@sap-cloud-sdk/odata-common';
 import {
   createAsChildOfRequest,
-  createRequest,
+  createRequest, createRequestWithAppendPath,
   deleteRequest,
   getAllRequest,
   getByKeyRequest,
   patchRequest,
   putRequest
-} from '../test-data/batch-sub-requests';
+} from "../test-data/batch-sub-requests";
 import {
   mixedBatchRequest,
   mixedErrorRequest,
@@ -94,7 +94,11 @@ describe('Batch', () => {
 
     const request = batch(
       changeset(createRequest),
-      changeset(createAsChildOfRequest, patchRequest, putRequest, deleteRequest)
+      changeset(createAsChildOfRequest, patchRequest, putRequest, deleteRequest),
+      // When `appendPath` is used, `execute` is disabled and only `executeRaw` can be used, as the response type is unknown.
+      // We have to use "as any" for "fixing" the compile time error.
+      // For runtime, batch write response does not know entity type anyways, so it does not hurt.
+      changeset(createRequestWithAppendPath as any)
     ).execute(destination);
     await expect(request).resolves.not.toThrow();
   });

@@ -50,6 +50,7 @@ const prettierConfigCache: Record<string, PrettierOptions> = {};
  * Read the prettier config and caches it.
  * @param prettierConfigPath - Path to the prettier config.
  * @returns Config or default.
+ * @internal
  */
 export async function readPrettierConfig(
   prettierConfigPath: string | undefined

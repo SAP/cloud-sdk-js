@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 2.10.0
+
+### Patch Changes
+
+- f76da3060: [Fixed Issue] Show detailed error message of compilation errors instead of `[object Object]`.
+- f76da3060: [Improvement] Add `force` option to`rm` commands, when setting `clearOutputDir` to true.
+- Updated dependencies [f76da3060]
+  - @sap-cloud-sdk/generator-common@2.10.0
+  - @sap-cloud-sdk/openapi@2.10.0
+  - @sap-cloud-sdk/util@2.10.0
+
 ## 2.9.0
 
 ### Patch Changes

@@ -54,7 +54,7 @@ describe('generator', () => {
 
     it('reads custom prettier configuration', () => {
       expect(prettierSpy).toHaveBeenCalledWith(expect.any(String), {
-        parser: 'json',
+        parser: expect.any(String),
         printWidth: 66
       });
     });

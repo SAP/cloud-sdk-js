@@ -203,14 +203,6 @@ export interface ProjectAndServices {
   services: VdmServiceMetadata[];
 }
 
-// async function createFileOptions(options: {prettierConfig?:PathLike|string,overwrite:boolean,forceOverwrite?:boolean},withCopyright=true): Promise<CreateFileOptions>{
-//   return {
-//     prettierOptions: await readPrettierConfig(options.prettierConfig?.toString()),
-//     overwrite: options.forceOverwrite,
-//     withCopyright:true
-//   };
-// }
-
 async function generateFilesWithoutTsMorph(
   services: VdmServiceMetadata[],
   options: GeneratorOptions

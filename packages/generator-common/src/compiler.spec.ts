@@ -108,7 +108,6 @@ describe('compiler options', () => {
 describe('compilation', () => {
   const createFileOptions: CreateFileOptions = {
     overwrite: true,
-    withCopyright: false,
     prettierOptions: defaultPrettierConfig
   };
 

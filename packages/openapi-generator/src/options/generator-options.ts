@@ -26,6 +26,10 @@ export interface GeneratorOptions {
    */
   outputDir: string;
   /**
+   * Specify the path to the prettier config. If not given a default config will be used for the generated sources.
+   */
+  prettierConfig?: string;
+  /**
    * Transpile the generated TypeScript code.
    * When enabled, a default `tsconfig.json` will be generated and used.
    * It emits `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files.

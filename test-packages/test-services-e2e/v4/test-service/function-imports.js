@@ -10,7 +10,7 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 const service_1 = require("./service");
 /**
  * Concat Strings.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function concatStrings(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -23,7 +23,7 @@ function concatStrings(parameters, deSerializers = odata_v4_1.defaultDeSerialize
 exports.concatStrings = concatStrings;
 /**
  * Get All.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getAll(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -33,7 +33,7 @@ function getAll(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
 exports.getAll = getAll;
 /**
  * Get By Key.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getByKey(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -45,7 +45,7 @@ function getByKey(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
 exports.getByKey = getByKey;
 /**
  * Return Collection.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnCollection(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -57,7 +57,7 @@ function returnCollection(parameters, deSerializers = odata_v4_1.defaultDeSerial
 exports.returnCollection = returnCollection;
 /**
  * Return Int.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnInt(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -69,7 +69,7 @@ function returnInt(parameters, deSerializers = odata_v4_1.defaultDeSerializers) 
 exports.returnInt = returnInt;
 /**
  * Return Sap Cloud Sdk.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnSapCloudSdk(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {

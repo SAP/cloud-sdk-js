@@ -1,18 +1,18 @@
 import { InterfaceDeclarationStructure, StructureKind } from 'ts-morph';
-import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
+import { VdmOperation } from '../vdm-types';
 import { addLeadingNewline } from '../typedoc';
 
 /**
  * @internal
  */
 export function parametersInterface(
-  actionFunctionImport: VdmFunctionImport | VdmActionImport
+  operation: VdmOperation
 ): InterfaceDeclarationStructure {
   return {
     kind: StructureKind.Interface,
-    name: `${actionFunctionImport.parametersTypeName}<DeSerializersT extends DeSerializers>`,
+    name: `${operation.parametersTypeName}<DeSerializersT extends DeSerializers>`,
     isExported: true,
-    properties: actionFunctionImport.parameters.map(parameter => ({
+    properties: operation.parameters.map(parameter => ({
       name: parameter.parameterName,
       type: parameter.nullable
         ? `${parameter.jsType} | null`
@@ -22,7 +22,7 @@ export function parametersInterface(
     })),
     docs: [
       addLeadingNewline(
-        `Type of the parameters to be passed to {@link ${actionFunctionImport.name}}.`
+        `Type of the parameters to be passed to {@link ${operation.name}}.`
       )
     ]
   };

@@ -1,42 +1,45 @@
 import { pascalCase } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmFunctionImportBase } from '../../vdm-types';
+import { VdmOperationBase } from '../../vdm-types';
 import { SwaggerPath } from '../../swagger-parser';
 import { functionImportDescription } from '../description-util';
 import { EdmxParameter } from '../../edmx-parser/common';
 import { EdmxFunctionImportV2 } from '../../edmx-parser/v2';
-import { EdmxFunctionImportV4 } from '../../edmx-parser/v4';
-import { getFunctionImportParameters } from './action-function-parameters';
+import { EdmxOperationImport } from '../../edmx-parser/v4';
+import { getOperationParameters } from './operation-parameter';
 
 /**
  * @internal
+ * This transforms an EDMX operation (function or action) to its representation for the VDM.
  */
-export function transformFunctionImportBase(
-  edmxFunctionImport: EdmxFunctionImportV2 | EdmxFunctionImportV4,
+export function transformOperationBase(
+  edmxOperation: EdmxFunctionImportV2 | EdmxOperationImport,
   edmxParameters: EdmxParameter[],
+  type: 'function' | 'action',
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter
-): VdmFunctionImportBase {
-  const name = formatter.originalToFunctionImportName(edmxFunctionImport.Name);
-  const functionImport = {
-    originalName: edmxFunctionImport.Name,
+): VdmOperationBase {
+  const name = formatter.originalToOperationName(edmxOperation.Name);
+  const operation = {
+    originalName: edmxOperation.Name,
     name,
     parametersTypeName: pascalCase(`${name}Parameters`)
   };
 
-  const parameters = getFunctionImportParameters(
-    edmxFunctionImport,
+  const parameters = getOperationParameters(
+    edmxOperation,
     edmxParameters,
     swaggerDefinition,
     formatter
   );
 
   return {
-    ...functionImport,
+    ...operation,
     parameters,
     description: functionImportDescription(
       swaggerDefinition,
-      functionImport.originalName
-    )
+      operation.originalName
+    ),
+    type
   };
 }

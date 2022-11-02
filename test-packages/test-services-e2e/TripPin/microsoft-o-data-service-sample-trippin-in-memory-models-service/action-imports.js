@@ -9,8 +9,7 @@ exports.actionImports = exports.resetDataSource = void 0;
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 /**
  * Reset Data Source.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function resetDataSource(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {

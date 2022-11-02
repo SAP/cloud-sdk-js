@@ -10,8 +10,7 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 const service_1 = require("./service");
 /**
  * Create Test Entity By Id.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function createTestEntityById(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -23,8 +22,7 @@ function createTestEntityById(parameters, deSerializers = odata_v4_1.defaultDeSe
 exports.createTestEntityById = createTestEntityById;
 /**
  * Create Test Entity By Id Return Id.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function createTestEntityByIdReturnId(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {

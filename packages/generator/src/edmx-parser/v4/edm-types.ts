@@ -65,10 +65,17 @@ export interface EdmxEnumType extends EdmxNamed, EdmxNamespaced {
    */
   Member: EdmxEnumMember[];
 }
+
 /**
  * @internal
+ * Represents a v4 function import or action import.
+ * This type does not represent the exact structure from EDMX, but merges action imports and function imports as follows:
+ * Function imports have a property `Function`; action imports have a property `Action`.
+ * Those are the names of the according operations.
+ * To simplify parsing we split this information into `operationName` and `operationType`.
+ * While the type representation does not include the `Function` nor `Action` properties, they still exist at runtime.
  */
-export interface EdmxFunctionImportV4 extends EdmxNamed, EdmxNamespaced {
+export interface EdmxOperationImport extends EdmxNamed, EdmxNamespaced {
   /**
    * @internal
    */
@@ -76,25 +83,18 @@ export interface EdmxFunctionImportV4 extends EdmxNamed, EdmxNamespaced {
   /**
    * @internal
    */
-  Function: string;
-}
-/**
- * @internal
- */
-export interface EdmxActionImport extends EdmxNamed, EdmxNamespaced {
+  operationName: string;
   /**
    * @internal
    */
-  EntitySet?: string;
-  /**
-   * @internal
-   */
-  Action: string;
+  operationType: 'function' | 'action';
 }
 /**
  * @internal
+ * Represents a v4 function or action.
+ * Each operation corresponds to one function import or action import in EDMX (@link EdmxOperationImport).
  */
-export interface EdmxFunction extends EdmxNamed, EdmxNamespaced {
+export interface EdmxOperation extends EdmxNamed, EdmxNamespaced {
   /**
    * @internal
    */
@@ -121,10 +121,7 @@ export interface EdmxReturnType {
    */
   Nullable?: string;
 }
-/**
- * @internal
- */
-export type EdmxAction = EdmxFunction;
+
 /**
  * @internal
  */

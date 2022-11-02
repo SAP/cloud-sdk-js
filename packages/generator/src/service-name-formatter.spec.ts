@@ -65,7 +65,7 @@ describe('name-formatter', () => {
 
     it('function import', () => {
       const formatter = new ServiceNameFormatter([], [], ['FunctionImport']);
-      expect(formatter.originalToFunctionImportName('FunctionImport')).toBe(
+      expect(formatter.originalToOperationName('FunctionImport')).toBe(
         'functionImport'
       );
     });
@@ -173,10 +173,10 @@ describe('name-formatter', () => {
         [],
         ['FunctionImport', 'functionImport']
       );
-      expect(formatter.originalToFunctionImportName('FunctionImport')).toBe(
+      expect(formatter.originalToOperationName('FunctionImport')).toBe(
         'functionImport'
       );
-      expect(formatter.originalToFunctionImportName('functionImport')).toBe(
+      expect(formatter.originalToOperationName('functionImport')).toBe(
         'functionImport_1'
       );
     });
@@ -255,7 +255,7 @@ describe('name-formatter', () => {
 
     it('should add the function import name to the service wide cache', () => {
       const formatter = getFreshNameFormatter();
-      formatter.originalToFunctionImportName('MyFunctionImport');
+      formatter.originalToOperationName('MyFunctionImport');
       expect(formatter['serviceWideNameGenerator']['usedNames'].pop()).toBe(
         'myFunctionImport'
       );

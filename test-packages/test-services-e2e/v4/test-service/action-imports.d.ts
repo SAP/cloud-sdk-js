@@ -22,8 +22,7 @@ export interface CreateTestEntityByIdParameters<
 }
 /**
  * Create Test Entity By Id.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function createTestEntityById<
@@ -49,8 +48,7 @@ export interface CreateTestEntityByIdReturnIdParameters<
 }
 /**
  * Create Test Entity By Id Return Id.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function createTestEntityByIdReturnId<

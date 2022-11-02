@@ -45,6 +45,6 @@
     "prettier": "^2.7.1"
   },
   "devDependencies": {
-    "mock-fs": "^5.1.4"
+    "mock-fs": "^5.2.0"
   }
 }

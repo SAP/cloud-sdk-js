@@ -1,3 +1,4 @@
+import voca from 'voca';
 import {
   getMergedPropertyWithNamespace,
   getPropertyFromEntityContainer,
@@ -8,16 +9,14 @@ import {
 import { forceArray } from '../../generator-utils';
 import { stripNamespace } from '../../edmx-to-vdm/edmx-to-vdm-util';
 import {
-  EdmxAction,
-  EdmxActionImport,
   EdmxComplexType,
   EdmxDerivedType,
   EdmxEntitySet,
   EdmxEntityTypeV4,
   EdmxEnumType,
-  EdmxFunction,
-  EdmxFunctionImportV4,
-  EdmxNavigationPropertyBinding
+  EdmxOperation,
+  EdmxNavigationPropertyBinding,
+  EdmxOperationImport
 } from './edm-types';
 
 /**
@@ -129,37 +128,35 @@ function parseNavigationPropertyBinding(
 /**
  * @internal
  */
-export function parseFunctionImportsV4(root: any): EdmxFunctionImportV4[] {
-  return getPropertyFromEntityContainer(root, 'FunctionImport');
-}
-/**
- * @internal
- */
-export function parseActionImport(root: any): EdmxActionImport[] {
-  return getPropertyFromEntityContainer(root, 'ActionImport');
+export function parseOperationImports(
+  root: any,
+  operationType: 'function' | 'action'
+): EdmxOperationImport[] {
+  const operationImports = getPropertyFromEntityContainer(
+    root,
+    `${voca.capitalize(operationType)}Import`
+  );
+
+  return operationImports.map(operationImport => ({
+    ...operationImport,
+    operationName: operationImport[voca.capitalize(operationType)],
+    operationType
+  }));
 }
 
-function parseActionsFunctions(
-  root,
-  actionFunctionKey: 'Action' | 'Function'
-): EdmxFunction[] | EdmxAction[] {
-  return getMergedPropertyWithNamespace(root, actionFunctionKey).map(
-    actionOrFunction => ({
-      ...actionOrFunction,
-      Parameter: forceArray(actionOrFunction.Parameter),
-      IsBound: false
-    })
-  );
-}
 /**
  * @internal
  */
-export function parseFunctions(root: any): EdmxFunction[] {
-  return parseActionsFunctions(root, 'Function');
-}
-/**
- * @internal
- */
-export function parseActions(root: any): EdmxAction[] {
-  return parseActionsFunctions(root, 'Action');
+export function parseOperations(
+  root: any,
+  operationType: 'function' | 'action'
+): EdmxOperation[] {
+  return getMergedPropertyWithNamespace(
+    root,
+    voca.capitalize(operationType)
+  ).map(operation => ({
+    ...operation,
+    Parameter: forceArray(operation.Parameter),
+    IsBound: false
+  }));
 }

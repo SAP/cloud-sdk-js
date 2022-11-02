@@ -1,10 +1,5 @@
 import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
-import {
-  VdmActionImport,
-  VdmEntity,
-  VdmFunctionImport,
-  VdmParameter
-} from '../vdm-types';
+import { VdmEntity, VdmOperation, VdmParameter } from '../vdm-types';
 
 /**
  * @internal
@@ -30,53 +25,53 @@ export function getShortestNameEntity(vdmEntities: VdmEntity[]): VdmEntity {
 /**
  * @internal
  */
-export function getActionFunctionImport(
+export function sampleOperationImport(
   serviceName: string,
-  actionFunctionImports: VdmFunctionImport[] | VdmActionImport[]
-): VdmFunctionImport | VdmActionImport {
-  if (actionFunctionImports.length === 1) {
-    return actionFunctionImports[0];
+  operationImports: VdmOperation[]
+): VdmOperation {
+  if (operationImports.length === 1) {
+    return operationImports[0];
   }
 
   return (
-    getLevenshteinClosest(serviceName, actionFunctionImports, x => x.name) ||
-    getFunctionWithoutParameters(actionFunctionImports) ||
-    getFunctionWithMinParameters(actionFunctionImports)
+    getLevenshteinClosest(serviceName, operationImports, x => x.name) ||
+    getOperationWithoutParameters(operationImports) ||
+    getOperationWithMinParameters(operationImports)
   );
 }
 /**
  * @internal
  */
-export function getFunctionWithoutParameters(
-  actionFunctionImports: VdmFunctionImport[] | VdmActionImport[]
-): VdmFunctionImport | VdmActionImport | undefined {
-  return actionFunctionImports.find(func => func.parameters?.length === 0);
+export function getOperationWithoutParameters(
+  operationImports: VdmOperation[]
+): VdmOperation | undefined {
+  return operationImports.find(func => func.parameters?.length === 0);
 }
 
 /**
- * Sorts and gets a function import having minimum input parameters.
- * @param actionFunctionImports - function or action imports array
- * @returns Import containing minimum input paramters
+ * Sorts and gets a function or action import having minimum input parameters.
+ * @param operationImports - function or action imports array
+ * @returns Function or action containing minimum input parameters
  * @internal
  */
-export function getFunctionWithMinParameters(
-  actionFunctionImports: VdmFunctionImport[] | VdmActionImport[]
-): VdmFunctionImport | VdmActionImport {
-  const getFunctions = actionFunctionImports.filter(
+export function getOperationWithMinParameters(
+  operationImports: VdmOperation[]
+): VdmOperation {
+  const getOperations = operationImports.filter(
     func => func.httpMethod?.toLowerCase() === 'get'
   );
-  if (getFunctions.length > 0) {
-    actionFunctionImports = getFunctions;
+  if (getOperations.length) {
+    operationImports = getOperations;
   }
-  const sortedfunctions = actionFunctionImports.sort((funcA, funcB) =>
+  const sortedOperations = operationImports.sort((funcA, funcB) =>
     funcA.parameters?.length < funcB.parameters?.length ? -1 : 1
   );
-  return sortedfunctions[0];
+  return sortedOperations[0];
 }
 /**
  * @internal
  */
-export function getActionFunctionParams(parameters: VdmParameter[]): string {
+export function getOperationParams(parameters: VdmParameter[]): string {
   const paramString = parameters
     .slice(0, 2)
     .reduce(

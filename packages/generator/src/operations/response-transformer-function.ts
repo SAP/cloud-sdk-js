@@ -1,14 +1,10 @@
-import {
-  VdmActionFunctionImportReturnType,
-  VdmFunctionImportReturnType,
-  VdmReturnTypeCategory
-} from '../vdm-types';
+import { VdmOperationReturnType, VdmReturnTypeCategory } from '../vdm-types';
 
 /**
  * @internal
  */
 export function responseTransformerFunctionName(
-  returnType: VdmActionFunctionImportReturnType
+  returnType: VdmOperationReturnType
 ): string {
   const transformationFn = singleTransformationFunction(returnType);
   return returnType.isCollection
@@ -17,7 +13,7 @@ export function responseTransformerFunctionName(
 }
 
 function singleTransformationFunction(
-  returnType: VdmFunctionImportReturnType
+  returnType: VdmOperationReturnType
 ): string {
   switch (returnType.returnTypeCategory) {
     case VdmReturnTypeCategory.VOID:

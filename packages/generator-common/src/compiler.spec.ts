@@ -174,7 +174,7 @@ describe('compilation', () => {
     ]);
   });
 
-  it('does NOT runs prettier on emitted .js files to keep source maps intact', async () => {
+  it('does NOT run prettier on emitted .js files to keep source maps intact', async () => {
     await expect(
       readFile('test-dist/file-1.js', { encoding: 'utf-8' })
     ).resolves.toContain('"'); // double quotes get await with prettier

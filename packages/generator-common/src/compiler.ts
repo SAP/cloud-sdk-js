@@ -68,7 +68,7 @@ export async function transpileDirectory(
     data?
   ) => {
     const parsed = parse(fileName);
-    const promise = mkdir(parsed.dir, { recursive: true }).then(() => {
+    const promise = mkdir(parsed.dir, { recursive: true }).then(async () => {
       // The transpile process creates `.map.js`, `.js` and `.d.ts` files
       // All not emitted files like .md or .json should be already formatted using prettier on creation.
       // Formatting .js files could break source map -> skip these.
@@ -78,7 +78,7 @@ export async function transpileDirectory(
           ? false
           : getFileExtension(fileName) === 'd.ts';
 
-      createFile(parsed.dir, parsed.base, text, {
+      return createFile(parsed.dir, parsed.base, text, {
         ...createFileOptions,
         usePrettier
       });

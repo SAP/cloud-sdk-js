@@ -14,6 +14,10 @@ const { readFile } = promises;
 
 describe('createFile', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../../node_modules');
+  const pathFormattedPackageJson = resolve(
+    __dirname,
+    '../../test/package.json'
+  );
   const defaultCreateConfig: CreateFileOptions = {
     prettierOptions: defaultPrettierConfig,
     overwrite: true
@@ -22,6 +26,7 @@ describe('createFile', () => {
   beforeEach(() => {
     mock({
       [pathRootNodeModules]: mock.load(pathRootNodeModules),
+      [pathFormattedPackageJson]: mock.load(pathFormattedPackageJson),
       [resolve(process.cwd(), 'some-dir', '.prettierrc')]: JSON.stringify({
         semi: false
       }),
@@ -75,6 +80,21 @@ describe('createFile', () => {
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Could not write file \\"existingFile\\". File already exists. If you want to allow overwriting files, enable the `overwrite` flag."'
     );
+  });
+
+  xit('has the same result as CLI prettier for .json files.', async () => {
+    // TODO I could not get this to work. For some reason the CLI makes each array entry a new line, the API does it when the printWith is hit.
+    const formattedCLI = await readFile(pathFormattedPackageJson, {
+      encoding: 'utf-8'
+    });
+    await createFile('/', 'api-formatted.json', formattedCLI, {
+      overwrite: true,
+      prettierOptions: defaultPrettierConfig
+    });
+    const formattedAPI = await readFile('/api-formatted.json', {
+      encoding: 'utf-8'
+    });
+    expect(formattedAPI).toEqual(formattedCLI);
   });
 
   it('uses prettier per default', async () => {

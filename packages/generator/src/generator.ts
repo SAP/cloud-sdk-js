@@ -262,7 +262,7 @@ async function generateEntityApis(
         resolvePath(service.directoryName, options),
         `${entity.className}Api.ts`,
         entityApiFile(entity, service),
-          createFileOptions
+        createFileOptions
       )
     )
   );
@@ -300,18 +300,13 @@ export async function generateSourcesForService(
           oDataVersion: service.oDataVersion,
           license: options.licenseInPackageJson
         }),
-          createFileOptions
+        createFileOptions
       )
     );
   }
 
   filePromises.push(
-    createFile(
-      serviceDirPath,
-      'tsconfig.json',
-      tsConfig(),
-        createFileOptions
-    )
+    createFile(serviceDirPath, 'tsconfig.json', tsConfig(), createFileOptions)
   );
 
   if (hasEntities(service)) {
@@ -323,7 +318,7 @@ export async function generateSourcesForService(
         serviceDir,
         'BatchRequest',
         batchSourceFile(service),
-          createFileOptions
+        createFileOptions
       )
     );
   }
@@ -335,7 +330,7 @@ export async function generateSourcesForService(
         serviceDir,
         entity.className,
         entitySourceFile(entity, service),
-          createFileOptions
+        createFileOptions
       )
     );
     filePromises.push(
@@ -343,7 +338,7 @@ export async function generateSourcesForService(
         serviceDir,
         `${entity.className}RequestBuilder`,
         requestBuilderSourceFile(entity, service.oDataVersion),
-          createFileOptions
+        createFileOptions
       )
     );
   });
@@ -357,7 +352,7 @@ export async function generateSourcesForService(
         serviceDir,
         enumType.typeName,
         enumTypeSourceFile(enumType),
-          createFileOptions
+        createFileOptions
       )
     );
   });
@@ -371,7 +366,7 @@ export async function generateSourcesForService(
         serviceDir,
         complexType.typeName,
         complexTypeSourceFile(complexType, service.oDataVersion),
-          createFileOptions
+        createFileOptions
       )
     );
   });
@@ -385,7 +380,7 @@ export async function generateSourcesForService(
         serviceDir,
         'function-imports',
         operationsSourceFile(service, 'function'),
-          createFileOptions
+        createFileOptions
       )
     );
   }
@@ -397,7 +392,7 @@ export async function generateSourcesForService(
         serviceDir,
         'action-imports',
         operationsSourceFile(service, 'action'),
-          createFileOptions
+        createFileOptions
       )
     );
   }
@@ -413,7 +408,7 @@ export async function generateSourcesForService(
         serviceDirPath,
         'README.md',
         readme(service, options.s4hanaCloud),
-          createFileOptions
+        createFileOptions
       )
     );
   }
@@ -428,7 +423,7 @@ export async function generateSourcesForService(
           serviceDirPath,
           `${service.directoryName}-csn.json`,
           await csn(service),
-            createFileOptions
+          createFileOptions
         )
       );
     } catch (e) {
@@ -454,7 +449,7 @@ export async function generateSourcesForService(
         path,
         clientFileName,
         JSON.stringify(await sdkMetadata(service), null, 2),
-          createFileOptions
+        createFileOptions
       )
     );
   }

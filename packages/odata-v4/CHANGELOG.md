@@ -1,5 +1,20 @@
 # @sap-cloud-sdk/odata-v4
 
+## 2.10.0
+
+### Minor Changes
+
+- 144ff66f4: [Compatibility Note] Changed constructor argument of class `EntityBase` from `schema` to `_entityApi`.
+
+### Patch Changes
+
+- f76da3060: [Fixed Issue] Fix the "entity generic type" of the "delete request builder".
+- Updated dependencies [144ff66f4]
+  - @sap-cloud-sdk/odata-common@2.10.0
+  - @sap-cloud-sdk/connectivity@2.10.0
+  - @sap-cloud-sdk/http-client@2.10.0
+  - @sap-cloud-sdk/util@2.10.0
+
 ## 2.9.0
 
 ### Patch Changes

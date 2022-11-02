@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/odata-common
 
+## 2.10.0
+
+### Minor Changes
+
+- 144ff66f4: [Compatibility Note] Changed constructor argument of class `EntityBase` from `schema` to `_entityApi`.
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@2.10.0
+- @sap-cloud-sdk/http-client@2.10.0
+- @sap-cloud-sdk/util@2.10.0
+
 ## 2.9.0
 
 ### Minor Changes

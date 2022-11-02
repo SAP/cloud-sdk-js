@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/connectivity
 
+## 2.10.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@2.10.0
+
 ## 2.9.0
 
 ### Minor Changes

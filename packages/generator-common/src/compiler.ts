@@ -78,12 +78,10 @@ export async function transpileDirectory(
           ? false
           : getFileExtension(fileName) === 'd.ts';
 
-      fileWriterPromises.push(
-        createFile(parsed.dir, parsed.base, text, {
-          ...createFileOptions,
-          usePrettier
-        })
-      );
+      createFile(parsed.dir, parsed.base, text, {
+        ...createFileOptions,
+        usePrettier
+      });
     });
     fileWriterPromises.push(promise);
   };

@@ -12,8 +12,3 @@ export function prependPrefix(name: string): string {
 export function stripPrefix(name: string): string {
   return name.startsWith(INTERNAL_PREFIX) ? name.substr(1) : name.substr(0);
 }
-
-const secret = {
-  password : '123',
-  user: 'abc'
-}

@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { resolve } from 'path';
 import execa from 'execa';
 import * as fs from 'fs-extra';
 import mock from 'mock-fs';
@@ -7,29 +8,37 @@ import { createOptionsFromConfig } from '../../../packages/generator/src/generat
 import { createOptions } from '../../../packages/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 
-describe('generator-cli', () => {
-  const pathToGenerator = path.resolve(
-    __dirname,
-    '../../../packages/generator/src/generator-cli.ts'
-  );
+const pathToGenerator = path.resolve(
+  __dirname,
+  '../../../packages/generator/src/generator-cli.ts'
+);
 
+describe('generator-cli', () => {
   const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
-  // const outputDir = path.resolve(__dirname, 'generator-test-output');
   const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
   const pathToConfig = path.resolve(__dirname, 'generator.config.json');
   const generatorCommon = path.resolve(
     __dirname,
     '../../../packages/generator-common'
   );
+  const outputDirVerionPackageJson = resolve(
+    __dirname,
+    '../generation-e2e-test-version-in-package-json'
+  );
+  const outputDirGenerateAll = resolve(__dirname, '../generation-e2e-test');
 
-  beforeEach(() => {
-    // if (!fs.existsSync(outputDir)) {
-    //   fs.mkdirSync(outputDir);
-    // }
+  beforeAll(() => {
+    mock({
+      [inputDir]: mock.load(inputDir),
+      [generatorCommon]: mock.load(generatorCommon),
+      [pathToConfig]: mock.load(pathToConfig),
+      [rootNodeModules]: mock.load(rootNodeModules),
+      [outputDirGenerateAll]: {},
+      [outputDirVerionPackageJson]: {}
+    });
   });
 
   afterAll(() => {
-    // fs.removeSync(outputDir);
     mock.restore();
   });
 
@@ -44,24 +53,19 @@ describe('generator-cli', () => {
   }, 60000);
 
   it('should generate VDM if all arguments are there', async () => {
-    const outputDir = '/generation-e2e-test'
-    mock({
-      [inputDir]: mock.load(inputDir),
-      [outputDir]: {},
-      [generatorCommon]: mock.load(generatorCommon),
-      [rootNodeModules]: mock.load(rootNodeModules)
-    });
     await generate(
       createOptions({
         inputDir,
-        outputDir,
+        outputDir: outputDirGenerateAll,
         generateJs: true,
         generatePackageJson: true
       })
     );
-    const services = fs.readdirSync(outputDir);
+    const services = fs.readdirSync(outputDirGenerateAll);
     expect(services.length).toBeGreaterThan(0);
-    const entities = fs.readdirSync(path.resolve(outputDir, services[0]));
+    const entities = fs.readdirSync(
+      path.resolve(outputDirGenerateAll, services[0])
+    );
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('TestEntity.js');
     expect(entities).toContain('package.json');
@@ -69,63 +73,28 @@ describe('generator-cli', () => {
 
   it('should create options from a config file', () => {
     const outputDir = path.resolve(__dirname, 'generator-test-output');
-    mock({ [pathToConfig]: mock.load(pathToConfig) });
     expect(createOptionsFromConfig(pathToConfig)).toEqual({
       inputDir,
       outputDir
     });
   });
 
-  it('should generate VDM if there is a valid config file', async () => {
-    mock({
-      [inputDir]: mock.load(inputDir),
-      [outputDirFromConfig]: mock.load(outputDirFromConfig),
-      [generatorCommon]: mock.load(generatorCommon),
-      [pathToConfig]: mock.load(pathToConfig),
-      [rootNodeModules]: mock.load(rootNodeModules)
-    });
-    await generate(
-      createOptions({
-        inputDir: inputDirFromConfig,
-        outputDir: outputDirFromConfig,
-        generateJs: true,
-        generatePackageJson: true
-      })
-    );
-    const services = fs.readdirSync(outputDirFromConfig);
-    expect(services.length).toBeGreaterThan(0);
-    const entities = fs.readdirSync(
-      path.resolve(outputDirFromConfig, services[0])
-    );
-    expect(entities).toContain('TestEntity.ts');
-    expect(entities).toContain('TestEntity.js');
-    expect(entities).toContain('package.json');
-  });
-
   it('should set version when versionInPackageJson option is used', async () => {
-
-    mock({
-      [inputDir]: mock.load(inputDir),
-      ['/']: mock.load(outputDirFromConfig),
-      [generatorCommon]: mock.load(generatorCommon),
-      [pathToConfig]: mock.load(pathToConfig),
-      [rootNodeModules]: mock.load(rootNodeModules)
-    });
     await generate(
       createOptions({
-        inputDir: inputDirFromConfig,
-        outputDir: outputDirFromConfig,
+        inputDir,
+        outputDir: outputDirVerionPackageJson,
         generateJs: true,
         generatePackageJson: true,
         versionInPackageJson: '42.23'
       })
     );
-    const services = fs.readdirSync(outputDirFromConfig);
+    const services = fs.readdirSync(outputDirVerionPackageJson);
     const actualPackageJson = JSON.parse(
       fs
         .readFileSync(
           path.resolve(
-            outputDirFromConfig.toString(),
+            outputDirVerionPackageJson.toString(),
             services[0],
             'package.json'
           )
@@ -147,7 +116,7 @@ describe('generator-cli', () => {
           '../../../test-resources/generator/resources/faulty-edmx'
         ),
         '-o',
-        'does not matter',
+        'doesNotMatter',
         '--versionInPackageJson=42.23'
       ]);
     } catch (err) {
@@ -169,7 +138,7 @@ describe('generator-cli', () => {
           '../../../test-resources/generator/resources/faulty-edmx'
         ),
         '-o',
-        'does not matter',
+        'doesNotMatter',
         '--generateNpmrc'
       ]);
     } catch (err) {

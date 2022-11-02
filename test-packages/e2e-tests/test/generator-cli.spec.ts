@@ -14,7 +14,7 @@ describe('generator-cli', () => {
   );
 
   const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
-  const outputDir = path.resolve(__dirname, 'generator-test-output');
+  // const outputDir = path.resolve(__dirname, 'generator-test-output');
   const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
   const pathToConfig = path.resolve(__dirname, 'generator.config.json');
   const generatorCommon = path.resolve(
@@ -23,13 +23,13 @@ describe('generator-cli', () => {
   );
 
   beforeEach(() => {
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir);
-    }
+    // if (!fs.existsSync(outputDir)) {
+    //   fs.mkdirSync(outputDir);
+    // }
   });
 
-  afterEach(() => {
-    fs.removeSync(outputDir);
+  afterAll(() => {
+    // fs.removeSync(outputDir);
     mock.restore();
   });
 
@@ -44,9 +44,10 @@ describe('generator-cli', () => {
   }, 60000);
 
   it('should generate VDM if all arguments are there', async () => {
+    const outputDir = '/generation-e2e-test'
     mock({
       [inputDir]: mock.load(inputDir),
-      [outputDir]: mock.load(outputDir),
+      [outputDir]: {},
       [generatorCommon]: mock.load(generatorCommon),
       [rootNodeModules]: mock.load(rootNodeModules)
     });
@@ -67,6 +68,7 @@ describe('generator-cli', () => {
   });
 
   it('should create options from a config file', () => {
+    const outputDir = path.resolve(__dirname, 'generator-test-output');
     mock({ [pathToConfig]: mock.load(pathToConfig) });
     expect(createOptionsFromConfig(pathToConfig)).toEqual({
       inputDir,
@@ -75,13 +77,8 @@ describe('generator-cli', () => {
   });
 
   it('should generate VDM if there is a valid config file', async () => {
-    const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
-      createOptionsFromConfig(pathToConfig) as {
-        inputDir: string;
-        outputDir: string;
-      };
     mock({
-      [inputDirFromConfig]: mock.load(inputDirFromConfig),
+      [inputDir]: mock.load(inputDir),
       [outputDirFromConfig]: mock.load(outputDirFromConfig),
       [generatorCommon]: mock.load(generatorCommon),
       [pathToConfig]: mock.load(pathToConfig),
@@ -106,14 +103,10 @@ describe('generator-cli', () => {
   });
 
   it('should set version when versionInPackageJson option is used', async () => {
-    const { inputDir: inputDirFromConfig, outputDir: outputDirFromConfig } =
-      createOptionsFromConfig(pathToConfig) as {
-        inputDir: string;
-        outputDir: string;
-      };
+
     mock({
-      [inputDirFromConfig]: mock.load(inputDirFromConfig),
-      [outputDirFromConfig]: mock.load(outputDirFromConfig),
+      [inputDir]: mock.load(inputDir),
+      ['/']: mock.load(outputDirFromConfig),
       [generatorCommon]: mock.load(generatorCommon),
       [pathToConfig]: mock.load(pathToConfig),
       [rootNodeModules]: mock.load(rootNodeModules)
@@ -154,7 +147,7 @@ describe('generator-cli', () => {
           '../../../test-resources/generator/resources/faulty-edmx'
         ),
         '-o',
-        outputDir,
+        'does not matter',
         '--versionInPackageJson=42.23'
       ]);
     } catch (err) {
@@ -176,7 +169,7 @@ describe('generator-cli', () => {
           '../../../test-resources/generator/resources/faulty-edmx'
         ),
         '-o',
-        outputDir,
+        'does not matter',
         '--generateNpmrc'
       ]);
     } catch (err) {

@@ -20,19 +20,7 @@ export function entityImportDeclarations(
   if (oDataVersion === 'v4') {
     return mergeImportDeclarations([
       odataImportDeclaration(
-        [
-          'Entity',
-          'DefaultDeSerializers',
-          'DeSerializers',
-          'DeserializedType',
-          'entityDeserializer',
-          'BoundActionRequestBuilder',
-          'transformReturnValueForComplexType',
-          'defaultDeSerializers',
-          'BoundFunctionRequestBuilder',
-          'FunctionImportParameter',
-          'ActionImportParameter'
-        ],
+          ['Entity', 'DefaultDeSerializers', 'DeSerializers', 'DeserializedType'],
         oDataVersion
       ),
       ...complexTypeImportDeclarations(entity.properties),

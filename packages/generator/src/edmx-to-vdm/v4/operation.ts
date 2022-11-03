@@ -95,13 +95,18 @@ function splitMissingParameter(
  * Filters out all bound operations without a parameter and extracts the entityset name from the frist parameter
  * It also removes the first parameter which contains only the entity information
  */
-export function joinOperationData(
+export function filterAndTransformOperations(
   operationImports: EdmxOperationImport[],
-  operations: EdmxOperation[]
+  operations: EdmxOperation[],
+  isBound: boolean
 ): EdmxJoinedOperation[] {
+  const filteredByBoundOperations = operations.filter(
+    operation => operation.IsBound === isBound
+  );
+
   const [withoutOperation, withOperation] = splitMissingOperation(
     operationImports,
-    operations
+    filteredByBoundOperations
   );
 
   const [validOperations, withoutParameter] =
@@ -192,7 +197,51 @@ function isBoundOperation(
 /**
  * @internal
  */
-export function generateOperations(
+export function generateUnboundOperations(
+  serviceMetadata: ServiceMetadata,
+  serviceName: string,
+  operationType: 'function' | 'action',
+  entities: VdmEntityInConstruction[],
+  complexTypes: VdmComplexType[],
+  formatter: ServiceNameFormatter
+): VdmOperation[] {
+  return generateOperations(
+    serviceMetadata,
+    serviceName,
+    operationType,
+    entities,
+    complexTypes,
+    formatter
+  );
+}
+
+/**
+ * @internal
+ */
+export function generateBoundOperations(
+  serviceMetadata: ServiceMetadata,
+  serviceName: string,
+  operationType: 'function' | 'action',
+  entities: VdmEntityInConstruction[],
+  complexTypes: VdmComplexType[],
+  formatter: ServiceNameFormatter,
+  bindingEntitySetName: string
+): VdmOperation[] {
+  return generateOperations(
+    serviceMetadata,
+    serviceName,
+    operationType,
+    entities,
+    complexTypes,
+    formatter,
+    bindingEntitySetName
+  );
+}
+
+/**
+ * @internal
+ */
+function generateOperations(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
   operationType: 'function' | 'action',
@@ -206,38 +255,44 @@ export function generateOperations(
     serviceMetadata.edmx.root,
     operationType
   );
-  const joinedOperationData = joinOperationData(operationImports, operations);
+  const joinedOperationData = filterAndTransformOperations(
+    operationImports,
+    operations,
+    !!bindingEntitySetName
+  )
+    .filter(
+      operation =>
+        !bindingEntitySetName ||
+        bindingEntitySetName === operation.operationName
+    )
+    // TODO 1571 remove when supporting entity type as parameter
+    .filter(operation => !hasUnsupportedParameterTypes(operation));
 
-  return (
-    joinedOperationData
-      // TODO 1571 remove when supporting entity type as parameter
-      .filter(operation => !hasUnsupportedParameterTypes(operation))
-      .map(operation => {
-        const httpMethod = operationType === 'function' ? 'get' : 'post';
-        const swaggerDefinition = getSwaggerDefinitionForOperation(
-          operation.Name,
-          httpMethod,
-          serviceMetadata.swagger
-        );
+  return joinedOperationData.map(operation => {
+    const httpMethod = operationType === 'function' ? 'get' : 'post';
+    const swaggerDefinition = getSwaggerDefinitionForOperation(
+      operation.Name,
+      httpMethod,
+      serviceMetadata.swagger
+    );
 
-        return {
-          ...transformOperationBase(
-            operation,
-            operation.Parameter,
-            operation.operationType,
-            swaggerDefinition,
-            formatter,
-            bindingEntitySetName
-          ),
-          httpMethod,
-          returnType: parseOperationReturnType(
-            operation.ReturnType,
-            entities,
-            complexTypes,
-            extractResponse,
-            serviceName
-          )
-        };
-      })
-  );
+    return {
+      ...transformOperationBase(
+        operation,
+        operation.Parameter,
+        operation.operationType,
+        swaggerDefinition,
+        formatter,
+        bindingEntitySetName
+      ),
+      httpMethod,
+      returnType: parseOperationReturnType(
+        operation.ReturnType,
+        entities,
+        complexTypes,
+        extractResponse,
+        serviceName
+      )
+    };
+  });
 }

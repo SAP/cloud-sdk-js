@@ -9,7 +9,10 @@ import {
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser';
 import { generateEntitiesV4 } from './entity';
-import { generateOperations, joinOperationData } from './operation';
+import {
+  filterAndTransformOperations,
+  generateUnboundOperations
+} from './operation';
 import { generateComplexTypesV4 } from './complex-type';
 import { createEntityType, getComplexType, getFormatter } from './entity.spec';
 
@@ -18,13 +21,20 @@ describe('action-import', () => {
     jest.clearAllMocks();
   });
 
+  it('considers the isBound filter removing unbound', () => {
+    const imports: EdmxOperationImport[] = [{ operationName: 'op1' } as any];
+    const operations: EdmxOperation[] = [{ Name: 'op1' }] as any;
+    const joined = filterAndTransformOperations(imports, operations, true);
+    expect(joined).toEqual([]);
+  });
+
   it('considers only operations where a import matches', () => {
     const imports: EdmxOperationImport[] = [{ operationName: 'op1' } as any];
     const operations: EdmxOperation[] = [
       { Name: 'op1' },
       { Name: 'op2' }
     ] as any;
-    const joined = joinOperationData(imports, operations);
+    const joined = filterAndTransformOperations(imports, operations, false);
     expect(joined).toEqual([{ operationName: 'op1' }]);
   });
 
@@ -34,7 +44,7 @@ describe('action-import', () => {
       { Name: 'op1' },
       { Name: 'op2' }
     ] as any;
-    const joined = joinOperationData(imports, operations);
+    const joined = filterAndTransformOperations(imports, operations, false);
     expect(joined).toEqual([{ operationName: 'ns.op1' }]);
   });
 
@@ -47,7 +57,7 @@ describe('action-import', () => {
       { Name: 'op1', Parameter: [], IsBound: true },
       { Name: 'op2' }
     ] as any;
-    const joined = joinOperationData(imports, operations);
+    const joined = filterAndTransformOperations(imports, operations, true);
     expect(joined).toEqual([{ operationName: 'op2' }]);
   });
 
@@ -60,7 +70,7 @@ describe('action-import', () => {
       { Name: 'op1', Parameter: [{ Type: 'noEntitySet' }], IsBound: true },
       { Name: 'op2' }
     ] as any;
-    const joined = joinOperationData(imports, operations);
+    const joined = filterAndTransformOperations(imports, operations, true);
     expect(joined).toEqual([{ operationName: 'op2' }]);
   });
 
@@ -73,7 +83,7 @@ describe('action-import', () => {
       { Name: 'op1', Parameter: [{ Type: 'ns.Entity' }], IsBound: true },
       { Name: 'op2' }
     ] as any;
-    const joined = joinOperationData(imports, operations);
+    const joined = filterAndTransformOperations(imports, operations, true);
     expect(joined).toEqual([
       { operationName: 'op2' },
       {
@@ -85,6 +95,15 @@ describe('action-import', () => {
     ]);
   });
 
+  it('considers isBound filter removing bound operations', () => {
+    const imports: EdmxOperationImport[] = [{ operationName: 'op1' }] as any;
+    const operations: EdmxOperation[] = [
+      { Name: 'op1', Parameter: [{ Type: 'ns.Entity' }], IsBound: true }
+    ] as any;
+    const joined = filterAndTransformOperations(imports, operations, false);
+    expect(joined).toEqual([]);
+  });
+
   it('removes first parameter for bound operations', () => {
     const imports: EdmxOperationImport[] = [{ operationName: 'op1' }] as any;
     const operations: EdmxOperation[] = [
@@ -94,7 +113,7 @@ describe('action-import', () => {
         IsBound: true
       }
     ] as any;
-    const joined = joinOperationData(imports, operations);
+    const joined = filterAndTransformOperations(imports, operations, true);
     expect(joined[0].Parameter).toEqual([{ Type: 'para1' }]);
   });
 
@@ -102,7 +121,7 @@ describe('action-import', () => {
     const formatter = getFormatter();
     const service = createServiceWithActions();
     const entities = generateEntitiesV4(service, [], [], formatter);
-    const actionImport = generateOperations(
+    const actionImport = generateUnboundOperations(
       service,
       'myServiceWithActions',
       'action',
@@ -185,7 +204,7 @@ describe('action-import', () => {
     );
     expect(entities.length).toBe(2);
 
-    const actionImports = generateOperations(
+    const actionImports = generateUnboundOperations(
       service,
       'myTestServiceName',
       'action',
@@ -203,7 +222,7 @@ describe('action-import', () => {
     const formatter = getFormatter();
     const service =
       createServiceMetadataWithActionImportLinksToUndefinedAction();
-    generateOperations(
+    generateUnboundOperations(
       service,
       'myTestServiceName',
       'action',
@@ -225,7 +244,7 @@ describe('action-import', () => {
     const formatter = getFormatter();
     const service = createServiceWithActions();
     const entities = generateEntitiesV4(service, [], [], formatter);
-    generateOperations(
+    generateUnboundOperations(
       service,
       'myTestServiceName',
       'action',

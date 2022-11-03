@@ -22,7 +22,7 @@ import {
   transformEntityBase
 } from '../common/entity';
 import { isCollectionType } from '../edmx-to-vdm-util';
-import { generateOperations } from './operation';
+import { generateBoundOperations } from './operation';
 
 /**
  * @internal
@@ -65,7 +65,7 @@ export function generateEntitiesV4(
       classNames,
       formatter
     ),
-    functions: generateOperations(
+    functions: generateBoundOperations(
       serviceMetadata,
       entityMetadata.entityType.Namespace,
       'function',
@@ -74,7 +74,7 @@ export function generateEntitiesV4(
       formatter,
       entityMetadata.entitySet.Name
     ),
-    actions: generateOperations(
+    actions: generateBoundOperations(
       serviceMetadata,
       entityMetadata.entityType.Namespace,
       'action',

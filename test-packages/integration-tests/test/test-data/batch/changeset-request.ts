@@ -56,6 +56,16 @@ const deleteTestEntity = [
   ''
 ];
 
+const createTestEntityWithAppendPath = [
+  ...changesetHeader(),
+  '',
+  'POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity/\\$links/to_MultiLink HTTP/1\\.1',
+  ...requestHeader(),
+  '',
+  '{"StringProperty":"stringProp","customPropKey":"customPropVal"}',
+  ''
+];
+
 export const singleChangesetRequest = [
   'Content-Type: multipart/mixed; boundary=changeset_.*',
   '',
@@ -75,5 +85,13 @@ export const multiChangesetRequest = [
   ...putTestEntity,
   '--changeset_.*',
   ...deleteTestEntity,
+  '--changeset_.*'
+];
+
+export const singleChangesetRequestWithCustomUrl = [
+  'Content-Type: multipart/mixed; boundary=changeset_.*',
+  '',
+  '--changeset_.*',
+  ...createTestEntityWithAppendPath,
   '--changeset_.*'
 ];

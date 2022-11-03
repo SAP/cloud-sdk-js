@@ -58,6 +58,7 @@
   "devDependencies": {
     "@types/yargs": "^17.0.13",
     "execa": "^5.0.0",
-    "mock-fs": "^5.2.0"
+    "mock-fs": "^5.2.0",
+    "prettier": "^2.7.1"
   }
 }

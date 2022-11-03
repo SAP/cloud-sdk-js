@@ -4,6 +4,7 @@ This package contains the OpenAPI client for the test-service.
 Test API
 
 ## Usage Example
+
 ```
 import { TestCaseApi } from './generated/test-service';
 
@@ -19,4 +20,3 @@ const responseData = await TestCaseApi.duplicateOperationId().execute({ destinat
 - [developers.sap.com - Tutorials](https://developers.sap.com/tutorial-navigator.html?tag=software-product:technology-platform/sap-cloud-sdk&tag=tutorial:type/tutorial&tag=programming-tool:javascript)
 - [Release notes](https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html)
 - [SAP API Business Hub](https://api.sap.com/)
-    

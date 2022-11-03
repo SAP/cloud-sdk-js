@@ -15,7 +15,9 @@ import {
   transpileDirectory,
   copyFiles,
   packageDescription,
-  createFile
+  createFile,
+  CreateFileOptions,
+  readPrettierConfig
 } from '@sap-cloud-sdk/generator-common/internal';
 import { glob } from 'glob';
 import { apiFile } from './file-serializer/api-file';
@@ -108,7 +110,8 @@ export async function generateWithParsedOptions(
     if (options.optionsPerService) {
       await generateOptionsPerService(
         options.optionsPerService,
-        optionsPerService
+        optionsPerService,
+        options
       );
     }
 
@@ -118,6 +121,15 @@ export async function generateWithParsedOptions(
       );
     }
   }
+}
+
+async function getFileCreationOptions(
+  options: ParsedGeneratorOptions
+): Promise<CreateFileOptions> {
+  return {
+    prettierOptions: await readPrettierConfig(options.prettierConfig),
+    overwrite: options.overwrite
+  };
 }
 
 /**
@@ -156,10 +168,13 @@ async function generateSources(
       serviceDir,
       'tsconfig.json',
       tsConfig,
-      options.overwrite,
-      false
+      await getFileCreationOptions(options)
     );
-    await transpileDirectory(serviceDir, await readCompilerOptions(serviceDir));
+    const transpileOptions = {
+      compilerOptions: await readCompilerOptions(serviceDir),
+      createFileOptions: await getFileCreationOptions(options)
+    };
+    await transpileDirectory(serviceDir, transpileOptions);
   }
 
   if (options.readme) {
@@ -170,32 +185,33 @@ async function generateSources(
 async function generateMandatorySources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  { overwrite }: ParsedGeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<void> {
+  const createFileOptions = await getFileCreationOptions(options);
   if (openApiDocument.schemas.length) {
     const schemaDir = resolve(serviceDir, 'schema');
-    await createSchemaFiles(schemaDir, openApiDocument, overwrite);
+    await createSchemaFiles(schemaDir, openApiDocument, options);
     await createFile(
       schemaDir,
       'index.ts',
       schemaIndexFile(openApiDocument),
-      overwrite
+      createFileOptions
     );
   }
 
-  await createApis(serviceDir, openApiDocument, overwrite);
+  await createApis(serviceDir, openApiDocument, createFileOptions);
   await createFile(
     serviceDir,
     'index.ts',
     apiIndexFile(openApiDocument),
-    overwrite
+    createFileOptions
   );
 }
 
 async function createApis(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  overwrite: boolean
+  options: CreateFileOptions
 ): Promise<void> {
   await Promise.all(
     openApiDocument.apis.map(api =>
@@ -203,7 +219,7 @@ async function createApis(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
         apiFile(api, openApiDocument.serviceName),
-        overwrite
+        options
       )
     )
   );
@@ -212,12 +228,18 @@ async function createApis(
 async function createSchemaFiles(
   dir: string,
   openApiDocument: OpenApiDocument,
-  overwrite: boolean
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   await mkdir(dir, { recursive: true });
+  const fileCreateOptions = await getFileCreationOptions(options);
   await Promise.all(
     openApiDocument.schemas.map(schema =>
-      createFile(dir, `${schema.fileName}.ts`, schemaFile(schema), overwrite)
+      createFile(
+        dir,
+        `${schema.fileName}.ts`,
+        schemaFile(schema),
+        fileCreateOptions
+      )
     )
   );
 }
@@ -286,10 +308,10 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
   return [resolve(input)];
 }
 
-function generateReadme(
+async function generateReadme(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  { overwrite }: ParsedGeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   logger.verbose(`Generating readme in ${serviceDir}.`);
 
@@ -297,15 +319,14 @@ function generateReadme(
     serviceDir,
     'README.md',
     readme(openApiDocument),
-    overwrite,
-    false
+    await getFileCreationOptions(options)
   );
 }
 
 async function generateMetadata(
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
-  { overwrite }: ParsedGeneratorOptions
+  options: ParsedGeneratorOptions
 ) {
   const { name: inputFileName, dir: inputDirPath } = parse(inputFilePath);
   const { clientFileName } = getSdkMetadataFileNames(inputFileName);
@@ -314,12 +335,12 @@ async function generateMetadata(
   await mkdir(metadataDir, { recursive: true });
 
   logger.verbose(`Generating client metadata ${clientFileName}...`);
+  const createFileOptions = await getFileCreationOptions(options);
   const clientFile = createFile(
     metadataDir,
     clientFileName,
     JSON.stringify(await sdkMetadata(openApiDocument), null, 2),
-    overwrite,
-    false
+    createFileOptions
   );
   return clientFile;
 }
@@ -327,9 +348,10 @@ async function generateMetadata(
 async function generatePackageJson(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  { packageVersion, overwrite, licenseInPackageJson }: ParsedGeneratorOptions
+  options: ParsedGeneratorOptions
 ) {
   logger.verbose(`Generating package.json in ${serviceDir}.`);
+  const createFileOptions = await getFileCreationOptions(options);
 
   await createFile(
     serviceDir,
@@ -338,20 +360,19 @@ async function generatePackageJson(
       npmPackageName: openApiDocument.serviceOptions.packageName,
       description: packageDescription(openApiDocument.serviceName),
       sdkVersion: await getSdkVersion(),
-      version: packageVersion,
-      license: licenseInPackageJson
+      version: options.packageVersion,
+      license: options.licenseInPackageJson
     }),
-    overwrite,
-    false
+    createFileOptions
   );
 }
 
 async function generateOptionsPerService(
   filePath: string,
-  optionsPerService: OptionsPerService
+  optionsPerService: OptionsPerService,
+  options: ParsedGeneratorOptions
 ) {
   logger.verbose('Generating options per service.');
-
   const dir = dirname(filePath);
   await mkdir(dir, { recursive: true });
   await createFile(
@@ -361,7 +382,9 @@ async function generateOptionsPerService(
       ...(await getOriginalOptionsPerService(filePath)),
       ...optionsPerService
     }),
-    true,
-    false
+    {
+      overwrite: true,
+      prettierOptions: await readPrettierConfig(options.prettierConfig)
+    }
   );
 }

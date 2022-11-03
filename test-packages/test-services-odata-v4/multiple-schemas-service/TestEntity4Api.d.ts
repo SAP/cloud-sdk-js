@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
 import { TestEntity4 } from './TestEntity4';
 import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
 import {

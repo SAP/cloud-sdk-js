@@ -5,6 +5,10 @@ import { join, resolve } from 'path';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { generate } from '@sap-cloud-sdk/generator/src';
+import {
+  createFile,
+  defaultPrettierConfig
+} from '@sap-cloud-sdk/generator-common/dist/file-writer';
 
 const outDir = resolve(__dirname, 'common-service');
 
@@ -25,7 +29,10 @@ export async function generateCommonEntity() {
 }
 
 function removeImports(str: string): string {
-  const removed = str.replace(/import (type )?\{.*\}.*;/g, '');
+  const removed = str.replace(
+    /import (type )*\{(\s*\w+,{0,1}\s+)+\} from '\S+';/g,
+    ''
+  );
   return removed;
 }
 
@@ -142,11 +149,10 @@ async function generateCommonTestEntity() {
     'export const { commonEntityApi } = commonService();',
     'export const { commonEntityApi: commonEntityApiCustom } = commonService(\n  customTestDeSerializers\n);'
   ].join(unixEOL);
-  await promises.writeFile(
-    resolve(__dirname, 'common-entity.ts'),
-    allParts,
-    'utf8'
-  );
+  await createFile(__dirname, 'common-entity.ts', allParts, {
+    overwrite: true,
+    prettierOptions: defaultPrettierConfig
+  });
 }
 
 const disclaimer = `/* This entity was generated from the COMMON_SRV.edmx and the generate-test-service.ts script.

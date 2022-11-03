@@ -24,7 +24,9 @@ import {
   copyFiles,
   getSdkVersion,
   packageDescription,
-  createFile
+  createFile,
+  readPrettierConfig,
+  CreateFileOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
@@ -87,7 +89,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     );
     try {
       await chunks.reduce(
-        (all, chunk) => all.then(() => transpileDirectories(chunk)),
+        (all, chunk) => all.then(() => transpileDirectories(chunk, options)),
         Promise.resolve()
       );
     } catch (err) {
@@ -129,15 +131,23 @@ export function getInstallODataErrorMessage(
  * @internal
  */
 export async function transpileDirectories(
-  directories: string[]
+  directories: string[],
+  options: GeneratorOptions
 ): Promise<void[]> {
   return Promise.all(
     directories.map(async directory => {
-      const compilerOptions = await readCompilerOptions(directory);
-      return transpileDirectory(directory, compilerOptions);
+      const [compilerOptions, createFileOptions] = await Promise.all([
+        readCompilerOptions(directory),
+        getFileCreationOptions(options)
+      ]);
+      return transpileDirectory(directory, {
+        compilerOptions,
+        createFileOptions
+      });
     })
   );
 }
+
 /**
  * @internal
  */
@@ -202,6 +212,17 @@ async function generateFilesWithoutTsMorph(
   await Promise.all(promises);
 }
 
+async function getFileCreationOptions(
+  options: GeneratorOptions
+): Promise<CreateFileOptions> {
+  return {
+    prettierOptions: await readPrettierConfig(
+      options.prettierConfig?.toString()
+    ),
+    overwrite: options.forceOverwrite
+  };
+}
+
 async function generateIncludes(
   service: VdmServiceMetadata,
   options: GeneratorOptions
@@ -221,11 +242,12 @@ async function generateServiceFile(
   options: GeneratorOptions
 ): Promise<void> {
   const serviceDir = resolvePath(service.directoryName, options);
+  const createFileOptions = await getFileCreationOptions(options);
   await createFile(
     serviceDir,
     'service.ts',
     serviceFile(service),
-    options.forceOverwrite
+    createFileOptions
   );
 }
 
@@ -233,14 +255,14 @@ async function generateEntityApis(
   service: VdmServiceMetadata,
   options: GeneratorOptions
 ): Promise<void> {
-  const serviceDir = resolvePath(service.directoryName, options);
+  const createFileOptions = await getFileCreationOptions(options);
   await Promise.all(
     service.entities.map(entity =>
       createFile(
-        serviceDir,
+        resolvePath(service.directoryName, options),
         `${entity.className}Api.ts`,
         entityApiFile(entity, service),
-        options.forceOverwrite
+        createFileOptions
       )
     )
   );
@@ -256,6 +278,7 @@ export async function generateSourcesForService(
 ): Promise<void> {
   const serviceDirPath = resolvePath(service.directoryName, options);
   const serviceDir = project.createDirectory(serviceDirPath);
+  const createFileOptions = await getFileCreationOptions(options);
 
   if (!existsSync(serviceDirPath)) {
     await mkdir(serviceDirPath, { recursive: true });
@@ -277,20 +300,13 @@ export async function generateSourcesForService(
           oDataVersion: service.oDataVersion,
           license: options.licenseInPackageJson
         }),
-        options.forceOverwrite,
-        false
+        createFileOptions
       )
     );
   }
 
   filePromises.push(
-    createFile(
-      serviceDirPath,
-      'tsconfig.json',
-      tsConfig(),
-      options.forceOverwrite,
-      false
-    )
+    createFile(serviceDirPath, 'tsconfig.json', tsConfig(), createFileOptions)
   );
 
   if (hasEntities(service)) {
@@ -302,7 +318,7 @@ export async function generateSourcesForService(
         serviceDir,
         'BatchRequest',
         batchSourceFile(service),
-        options.forceOverwrite
+        createFileOptions
       )
     );
   }
@@ -314,7 +330,7 @@ export async function generateSourcesForService(
         serviceDir,
         entity.className,
         entitySourceFile(entity, service),
-        options.forceOverwrite
+        createFileOptions
       )
     );
     filePromises.push(
@@ -322,7 +338,7 @@ export async function generateSourcesForService(
         serviceDir,
         `${entity.className}RequestBuilder`,
         requestBuilderSourceFile(entity, service.oDataVersion),
-        options.forceOverwrite
+        createFileOptions
       )
     );
   });
@@ -336,7 +352,7 @@ export async function generateSourcesForService(
         serviceDir,
         enumType.typeName,
         enumTypeSourceFile(enumType),
-        options.forceOverwrite
+        createFileOptions
       )
     );
   });
@@ -350,7 +366,7 @@ export async function generateSourcesForService(
         serviceDir,
         complexType.typeName,
         complexTypeSourceFile(complexType, service.oDataVersion),
-        options.forceOverwrite
+        createFileOptions
       )
     );
   });
@@ -364,7 +380,7 @@ export async function generateSourcesForService(
         serviceDir,
         'function-imports',
         operationsSourceFile(service, 'function'),
-        options.forceOverwrite
+        createFileOptions
       )
     );
   }
@@ -376,13 +392,13 @@ export async function generateSourcesForService(
         serviceDir,
         'action-imports',
         operationsSourceFile(service, 'action'),
-        options.forceOverwrite
+        createFileOptions
       )
     );
   }
 
   filePromises.push(
-    sourceFile(serviceDir, 'index', indexFile(service), options.forceOverwrite)
+    sourceFile(serviceDir, 'index', indexFile(service), createFileOptions)
   );
 
   if (options.writeReadme) {
@@ -392,7 +408,7 @@ export async function generateSourcesForService(
         serviceDirPath,
         'README.md',
         readme(service, options.s4hanaCloud),
-        options.forceOverwrite
+        createFileOptions
       )
     );
   }
@@ -407,8 +423,7 @@ export async function generateSourcesForService(
           serviceDirPath,
           `${service.directoryName}-csn.json`,
           await csn(service),
-          options.forceOverwrite,
-          false
+          createFileOptions
         )
       );
     } catch (e) {
@@ -434,7 +449,7 @@ export async function generateSourcesForService(
         path,
         clientFileName,
         JSON.stringify(await sdkMetadata(service), null, 2),
-        options.forceOverwrite
+        createFileOptions
       )
     );
   }

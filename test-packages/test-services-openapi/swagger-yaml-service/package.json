@@ -12,12 +12,7 @@
     "type": "git",
     "url": ""
   },
-  "files": [
-    "**/*.js",
-    "**/*.js.map",
-    "**/*.d.ts",
-    "**/d.ts.map"
-  ],
+  "files": ["**/*.js", "**/*.js.map", "**/*.d.ts", "**/d.ts.map"],
   "scripts": {
     "compile": "npx tsc"
   },

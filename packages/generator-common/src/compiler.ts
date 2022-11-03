@@ -11,11 +11,14 @@ import {
   ModuleResolutionKind,
   NodeArray,
   ScriptTarget,
-  Statement
+  Statement,
+  WriteFileCallback
 } from 'typescript';
 import { GlobSync } from 'glob';
+import { createFile, CreateFileOptions, getFileExtension } from './file-writer';
 
 const logger = createLogger('compiler');
+const { writeFile, mkdir } = promises;
 
 /**
  * Executes the TypeScript compilation for the given directory.
@@ -27,7 +30,10 @@ const logger = createLogger('compiler');
  */
 export async function transpileDirectory(
   path: string,
-  compilerOptions: CompilerOptions,
+  {
+    compilerOptions,
+    createFileOptions
+  }: { compilerOptions: CompilerOptions; createFileOptions: CreateFileOptions },
   includeExclude: IncludeExclude = defaultIncludeExclude
 ): Promise<void> {
   logger.verbose(`Transpiling files in the directory: ${path} started.`);
@@ -50,8 +56,38 @@ export async function transpileDirectory(
     allFiles2.map(file => resolve(path, file)),
     compilerOptions
   );
-  const emitResult = await program.emit();
 
+  // The write file handler does not support async function hence the work around with the outer promise list.
+  const fileWriterPromises: Promise<void>[] = [];
+  const prettierWriter: WriteFileCallback = (
+    fileName,
+    text,
+    writeByteOrderMark,
+    onError?,
+    sourceFiles?,
+    data?
+  ) => {
+    const parsed = parse(fileName);
+    const promise = mkdir(parsed.dir, { recursive: true }).then(async () => {
+      // The transpile process creates `.map.js`, `.js` and `.d.ts` files
+      // All not emitted files like .md or .json should be already formatted using prettier on creation.
+      // Formatting .js files could break source map -> skip these.
+      // The .map files are not human-readable and formatting increases file size -> skip these.
+      const usePrettier =
+        createFileOptions.usePrettier === false
+          ? false
+          : getFileExtension(fileName) === 'd.ts';
+
+      return createFile(parsed.dir, parsed.base, text, {
+        ...createFileOptions,
+        usePrettier
+      });
+    });
+    fileWriterPromises.push(promise);
+  };
+
+  const emitResult = program.emit(undefined, prettierWriter);
+  await Promise.all(fileWriterPromises);
   const allDiagnostics = getPreEmitDiagnostics(program).concat(
     emitResult.diagnostics
   );

@@ -1,20 +1,20 @@
-'use strict';
-Object.defineProperty(exports, '__esModule', { value: true });
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestEntity4 = void 0;
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 /**
  * This class represents the entity "A_TestEntity4" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
 class TestEntity4 extends odata_v4_1.Entity {
-  constructor(_entityApi) {
-    super(_entityApi);
-    this._entityApi = _entityApi;
-  }
+    constructor(_entityApi) {
+        super(_entityApi);
+        this._entityApi = _entityApi;
+    }
 }
 exports.TestEntity4 = TestEntity4;
 /**

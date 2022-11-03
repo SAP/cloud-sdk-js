@@ -5,7 +5,7 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmOperationBase } from '../../vdm-types';
 import { SwaggerPath } from '../../swagger-parser';
 import { functionImportDescription } from '../description-util';
-import { EdmxOperationImport } from '../../edmx-parser/v4';
+import { EdmxJoinedOperation } from '../v4';
 import { getOperationParameters } from './operation-parameter';
 
 /**
@@ -13,7 +13,7 @@ import { getOperationParameters } from './operation-parameter';
  * This transforms an EDMX operation (function or action) to its representation for the VDM.
  */
 export function transformOperationBase(
-  edmxOperation: EdmxFunctionImportV2 | EdmxOperationImport,
+  edmxOperation: EdmxFunctionImportV2 | EdmxJoinedOperation,
   edmxParameters: EdmxParameter[],
   type: 'function' | 'action',
   swaggerDefinition: SwaggerPath | undefined,

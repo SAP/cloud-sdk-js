@@ -6,13 +6,13 @@ import { SwaggerPath } from '../../swagger-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { EdmxFunctionImportV2 } from '../../edmx-parser/v2/edm-types';
 import { getTypeMappingActionFunction } from '../edmx-to-vdm-util';
-import { EdmxOperationImport } from '../../edmx-parser';
+import { EdmxJoinedOperation } from '../v4';
 
 /**
  * @internal
  */
 export function getOperationParameters(
-  edmxOperationImport: EdmxFunctionImportV2 | EdmxOperationImport,
+  edmxOperationImport: EdmxFunctionImportV2 | EdmxJoinedOperation,
   edmxParameters: EdmxParameter[],
   swaggerDefinition: SwaggerPath | undefined,
   formatter: ServiceNameFormatter

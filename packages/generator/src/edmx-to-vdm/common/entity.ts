@@ -18,7 +18,10 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
 import {
   VdmComplexType,
-  VdmEntity, VdmEnumType, VdmMappedEdmType, VdmNavigationProperty,
+  VdmEntity,
+  VdmEnumType,
+  VdmMappedEdmType,
+  VdmNavigationProperty,
   VdmProperty
 } from '../../vdm-types';
 import { entityDescription, propertyDescription } from '../description-util';

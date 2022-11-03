@@ -4,17 +4,98 @@ import {
   EdmxComplexType,
   EdmxEntitySet,
   EdmxEntityTypeV4,
-  EdmxOperation
+  EdmxOperation,
+  EdmxOperationImport
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser';
 import { generateEntitiesV4 } from './entity';
-import { generateOperations } from './operation';
+import { generateOperations, joinOperationData } from './operation';
 import { generateComplexTypesV4 } from './complex-type';
 import { createEntityType, getComplexType, getFormatter } from './entity.spec';
 
 describe('action-import', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  it('considers only operations where a import matches', () => {
+    const imports: EdmxOperationImport[] = [{ operationName: 'op1' } as any];
+    const operations: EdmxOperation[] = [
+      { Name: 'op1' },
+      { Name: 'op2' }
+    ] as any;
+    const joined = joinOperationData(imports, operations);
+    expect(joined).toEqual([{ operationName: 'op1' }]);
+  });
+
+  it('considers only operations where a import with namespace matches', () => {
+    const imports: EdmxOperationImport[] = [{ operationName: 'ns.op1' } as any];
+    const operations: EdmxOperation[] = [
+      { Name: 'op1' },
+      { Name: 'op2' }
+    ] as any;
+    const joined = joinOperationData(imports, operations);
+    expect(joined).toEqual([{ operationName: 'ns.op1' }]);
+  });
+
+  it('removes bound operations with no parameter', () => {
+    const imports: EdmxOperationImport[] = [
+      { operationName: 'op1' },
+      { operationName: 'op2' }
+    ] as any;
+    const operations: EdmxOperation[] = [
+      { Name: 'op1', Parameter: [], IsBound: true },
+      { Name: 'op2' }
+    ] as any;
+    const joined = joinOperationData(imports, operations);
+    expect(joined).toEqual([{ operationName: 'op2' }]);
+  });
+
+  it('removes bound operations with no binding entity set name', () => {
+    const imports: EdmxOperationImport[] = [
+      { operationName: 'op1' },
+      { operationName: 'op2' }
+    ] as any;
+    const operations: EdmxOperation[] = [
+      { Name: 'op1', Parameter: [{ Type: 'noEntitySet' }], IsBound: true },
+      { Name: 'op2' }
+    ] as any;
+    const joined = joinOperationData(imports, operations);
+    expect(joined).toEqual([{ operationName: 'op2' }]);
+  });
+
+  it('considers bound operations', () => {
+    const imports: EdmxOperationImport[] = [
+      { operationName: 'op1' },
+      { operationName: 'op2' }
+    ] as any;
+    const operations: EdmxOperation[] = [
+      { Name: 'op1', Parameter: [{ Type: 'ns.Entity' }], IsBound: true },
+      { Name: 'op2' }
+    ] as any;
+    const joined = joinOperationData(imports, operations);
+    expect(joined).toEqual([
+      { operationName: 'op2' },
+      {
+        IsBound: true,
+        operationName: 'op1',
+        Paramater: expect.any(Array),
+        entitySetName: 'Entity'
+      }
+    ]);
+  });
+
+  it('removes first parameter for bound operations', () => {
+    const imports: EdmxOperationImport[] = [{ operationName: 'op1' }] as any;
+    const operations: EdmxOperation[] = [
+      {
+        Name: 'op1',
+        Parameter: [{ Type: 'ns.Entity' }, { Type: 'para1' }],
+        IsBound: true
+      }
+    ] as any;
+    const joined = joinOperationData(imports, operations);
+    expect(joined[0].Parameter).toEqual([{ Type: 'para1' }]);
   });
 
   it('transforms action imports', () => {

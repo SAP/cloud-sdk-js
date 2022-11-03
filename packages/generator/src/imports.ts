@@ -135,8 +135,8 @@ export function mergeImportDeclarations(
       (mergedDeclarations: ImportDeclarationStructure[], importDeclaration) => {
         const sameModuleSpecifier = mergedDeclarations.find(
           declaration =>
-            declaration.moduleSpecifier === importDeclaration.moduleSpecifier
-            && declaration.isTypeOnly === importDeclaration.isTypeOnly
+            declaration.moduleSpecifier === importDeclaration.moduleSpecifier &&
+            declaration.isTypeOnly === importDeclaration.isTypeOnly
         );
         if (sameModuleSpecifier) {
           if (!sameModuleSpecifier.namedImports) {

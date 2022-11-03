@@ -5,7 +5,6 @@ import { isNullableProperty } from '../../generator-utils';
 import { getApiName } from '../../generator-without-ts-morph/service';
 import {
   VdmComplexType,
-  VdmEntity,
   VdmEntityInConstruction,
   VdmOperationReturnType,
   VdmReturnTypeCategory,
@@ -25,7 +24,7 @@ export function parseOperationReturnType(
   entities: VdmEntityInConstruction[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
-  serviceName: string,
+  serviceName: string
 ): VdmOperationReturnType {
   if (!returnType) {
     return getVoidReturnType();
@@ -56,7 +55,11 @@ export function parseOperationReturnType(
   }
 
   throw Error(
-    `Unable to find a return type for name ${JSON.stringify(returnType)} in entities ${entities.map(e => `${e.entityTypeNamespace}.${e.entityTypeName}`).join(', ')}.`
+    `Unable to find a return type for name ${JSON.stringify(
+      returnType
+    )} in entities ${entities
+      .map(e => `${e.entityTypeNamespace}.${e.entityTypeName}`)
+      .join(', ')}.`
   );
 }
 

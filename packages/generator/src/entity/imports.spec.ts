@@ -14,7 +14,7 @@ describe('imports', () => {
     ).toEqual(expectedEntityImports);
   });
 
-  //todo
+  // todo
   // it('importDeclarations oData v4', () => {
   //   const actual = entityImportDeclarations(breakfastEntity, foodService, 'v4');
 

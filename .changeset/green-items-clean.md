@@ -4,4 +4,4 @@
 '@sap-cloud-sdk/openapi-generator': minor
 ---
 
-[New Functionality] The generated sources are formatted using prettier. Use the CLI option `prettierConfigPath` to provide a custom config.
+[New Functionality] Generated sources are formatted using prettier with default config. Use the CLI option `prettierConfigPath` to provide a custom config.

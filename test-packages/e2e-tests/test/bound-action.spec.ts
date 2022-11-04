@@ -21,7 +21,7 @@ describe('bound actions', () => {
       };
       const entity: TestEntity = await request.execute(destination);
       const actionResult = await entity
-        .boundActionWithoutArguments()
+        .boundActionWithoutArguments({})
         .execute(destination);
       expect(actionResult).toEqual(expected);
     });
@@ -39,7 +39,7 @@ describe('bound actions', () => {
       };
 
       const actionResult = await entity
-        .boundActionWithoutArgumentsWithMultipleKeys()
+        .boundActionWithoutArgumentsWithMultipleKeys({})
         .execute(destination);
       expect(actionResult).toEqual(expected);
     });

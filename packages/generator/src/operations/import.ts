@@ -102,6 +102,24 @@ export function operationImportDeclarations(
   const includesUnbound = !!operations.filter(operation => !operation.isBound)
     .length;
 
+  const hasOperationWithParameters = !!operations.filter(
+    operation => operation.parameters.length > 0 && operation.type === type
+  ).length;
+  if (includesUnbound && includesBound) {
+    throw new Error(
+      'Bound and unbound operations found in generation - this should not happen.'
+    );
+  }
+  const serviceImport: ImportDeclarationStructure[] = includesBound
+    ? []
+    : [
+        {
+          kind: StructureKind.ImportDeclaration,
+          namedImports: [voca.decapitalize(className)],
+          moduleSpecifier: './service'
+        }
+      ];
+
   return [
     ...externalImportDeclarations(parameters),
     odataImportDeclaration(
@@ -113,7 +131,9 @@ export function operationImportDeclarations(
         'DefaultDeSerializers',
         'defaultDeSerializers',
         ...propertyTypeImportNames(parameters),
-        `${voca.capitalize(type)}ImportParameter`,
+        ...(hasOperationWithParameters
+          ? [`${voca.capitalize(type)}ImportParameter`]
+          : []),
         ...(includesUnbound
           ? [`${voca.capitalize(type)}ImportRequestBuilder`]
           : []),
@@ -123,11 +143,7 @@ export function operationImportDeclarations(
       ],
       oDataVersion
     ),
-    {
-      kind: StructureKind.ImportDeclaration,
-      namedImports: [voca.decapitalize(className)],
-      moduleSpecifier: './service'
-    },
+    ...serviceImport,
     ...returnTypeImports(returnTypes)
   ];
 }

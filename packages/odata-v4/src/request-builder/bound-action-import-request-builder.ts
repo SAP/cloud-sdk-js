@@ -2,7 +2,7 @@ import {
   ActionFunctionImportRequestBuilderBase,
   EntityApi,
   EntityBase,
-  FunctionImportParameters // fixme(fwilhe): clarify if it is an issue to re-use this type or do we need a separate type for ActionImportParameter? Seems no issue so far.
+  ActionImportParameters
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
 import { ODataBoundActionImportRequestConfig } from '../request';
@@ -22,7 +22,7 @@ export class BoundActionImportRequestBuilder<
     entity: EntityT,
     actionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
-    parameters: FunctionImportParameters<ParametersT>,
+    parameters: ActionImportParameters<ParametersT>,
     deSerializers: DeSerializersT
   ) {
     super(

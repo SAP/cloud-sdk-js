@@ -11,13 +11,10 @@ import {
   edmToTs,
   transformReturnValueForEdmType,
   defaultDeSerializers,
-  ActionImportParameter,
   BoundActionImportRequestBuilder,
-  FunctionImportParameter,
   BoundFunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityApi } from './TestEntityApi';
-import { testService } from './service';
 import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
 
 /**

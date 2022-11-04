@@ -1,12 +1,12 @@
-import { VdmParameter } from '../../vdm-types';
+import type { VdmParameter } from '../../vdm-types';
 import { isNullableProperty } from '../../generator-utils';
 import { parameterDescription } from '../description-util';
-import { EdmxParameter } from '../../edmx-parser/common/edmx-types';
+import type { EdmxParameter } from '../../edmx-parser/common/edmx-types';
 import { SwaggerPath } from '../../swagger-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { EdmxFunctionImportV2 } from '../../edmx-parser/v2/edm-types';
+import type { EdmxFunctionImportV2 } from '../../edmx-parser/v2/edm-types';
 import { getTypeMappingActionFunction } from '../edmx-to-vdm-util';
-import { EdmxJoinedOperation } from '../v4';
+import type { EdmxJoinedOperation } from '../v4';
 
 /**
  * @internal

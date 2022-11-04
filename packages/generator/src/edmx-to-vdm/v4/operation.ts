@@ -3,7 +3,7 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformOperationBase } from '../common/operation';
 import { parseOperationReturnType } from '../common/operation-return-type';
 import { getSwaggerDefinitionForOperation } from '../../swagger-parser/swagger-parser';
-import {
+import type {
   EdmxOperation,
   EdmxOperationImport,
   EdmxReturnType
@@ -14,7 +14,7 @@ import {
   parseOperations
 } from '../../edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import {
+import type {
   VdmComplexType,
   VdmPartialEntity,
   VdmOperation

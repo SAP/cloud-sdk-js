@@ -11,13 +11,11 @@ import {
   edmToTs,
   transformReturnValueForEdmType,
   defaultDeSerializers,
-  ActionImportParameter,
   BoundActionImportRequestBuilder,
   FunctionImportParameter,
   BoundFunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
-import { testService } from './service';
 
 /**
  * This class represents the entity "TestEntityWithMultipleKeys" of service "TestService".

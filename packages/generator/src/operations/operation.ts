@@ -25,7 +25,7 @@ export function operationFunctionBase(
     name: isBound
       ? operation.name
       : `${operation.name}<DeSerializersT extends DeSerializers = DefaultDeSerializers>`,
-    // boundActionWithoutArguments(parameters: BoundActionWithoutArgumentsParameters<T>, deSerializers: T):
+
     parameters: [
       {
         name: parameterName,

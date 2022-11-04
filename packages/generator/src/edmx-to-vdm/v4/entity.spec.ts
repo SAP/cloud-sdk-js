@@ -236,7 +236,7 @@ function createTestEntitySet(
 
 const testFunctions: EdmxOperation[] = [
   {
-    IsBound: true,
+    IsBound: 'true',
     Name: 'fn1IsBound',
     Namespace: 'TestService',
     ReturnType: {
@@ -254,7 +254,7 @@ const testFunctions: EdmxOperation[] = [
     ]
   },
   {
-    IsBound: false,
+    IsBound: 'true',
     Name: 'fn2IsNotBound',
     Namespace: 'TestService',
     ReturnType: {
@@ -263,7 +263,7 @@ const testFunctions: EdmxOperation[] = [
     Parameter: []
   },
   {
-    IsBound: true,
+    IsBound: 'true',
     Name: 'fn3IsBoundToOtherEntity',
     Namespace: 'TestService',
     ReturnType: {
@@ -284,7 +284,7 @@ const testFunctions: EdmxOperation[] = [
 
 const testActions: EdmxOperation[] = [
   {
-    IsBound: true,
+    IsBound: 'true',
     Name: 'action1IsBound',
     Namespace: 'TestService',
     ReturnType: {
@@ -298,7 +298,7 @@ const testActions: EdmxOperation[] = [
     ]
   },
   {
-    IsBound: false,
+    IsBound: 'true',
     Name: 'act2IsNotBound',
     Namespace: 'TestService',
     ReturnType: {

@@ -23,7 +23,9 @@ describe('action-import', () => {
 
   it('considers the isBound filter removing unbound', () => {
     const imports: EdmxOperationImport[] = [{ operationName: 'op1' } as any];
-    const operations: EdmxOperation[] = [{ Name: 'op1' }] as any;
+    const operations: EdmxOperation[] = [
+      { Name: 'op1', IsBound: 'false' }
+    ] as any;
     const joined = filterAndTransformOperations(imports, operations, true);
     expect(joined).toEqual([]);
   });
@@ -31,21 +33,21 @@ describe('action-import', () => {
   it('considers only operations where a import matches', () => {
     const imports: EdmxOperationImport[] = [{ operationName: 'op1' } as any];
     const operations: EdmxOperation[] = [
-      { Name: 'op1' },
-      { Name: 'op2' }
+      { Name: 'op1', IsBound: 'false' },
+      { Name: 'op2', IsBound: 'false' }
     ] as any;
     const joined = filterAndTransformOperations(imports, operations, false);
-    expect(joined).toEqual([{ operationName: 'op1' }]);
+    expect(joined).toEqual([{ operationName: 'op1', IsBound: false }]);
   });
 
   it('considers only operations where a import with namespace matches', () => {
     const imports: EdmxOperationImport[] = [{ operationName: 'ns.op1' } as any];
     const operations: EdmxOperation[] = [
-      { Name: 'op1' },
-      { Name: 'op2' }
+      { Name: 'op1', IsBound: 'false' },
+      { Name: 'op2', IsBound: 'false' }
     ] as any;
     const joined = filterAndTransformOperations(imports, operations, false);
-    expect(joined).toEqual([{ operationName: 'ns.op1' }]);
+    expect(joined).toEqual([{ operationName: 'ns.op1', IsBound: false }]);
   });
 
   it('removes bound operations with no parameter', () => {
@@ -54,11 +56,18 @@ describe('action-import', () => {
       { operationName: 'op2' }
     ] as any;
     const operations: EdmxOperation[] = [
-      { Name: 'op1', Parameter: [], IsBound: true },
-      { Name: 'op2' }
+      { Name: 'op1', Parameter: [], IsBound: 'true' },
+      { Name: 'op2', Parameter: [{ Type: 'ns.op2' }], IsBound: 'true' }
     ] as any;
     const joined = filterAndTransformOperations(imports, operations, true);
-    expect(joined).toEqual([{ operationName: 'op2' }]);
+    expect(joined).toEqual([
+      {
+        operationName: 'op2',
+        entitySetName: 'op2',
+        IsBound: true,
+        Parameter: []
+      }
+    ]);
   });
 
   it('removes bound operations with no binding entity set name', () => {
@@ -67,11 +76,18 @@ describe('action-import', () => {
       { operationName: 'op2' }
     ] as any;
     const operations: EdmxOperation[] = [
-      { Name: 'op1', Parameter: [{ Type: 'noEntitySet' }], IsBound: true },
-      { Name: 'op2' }
+      { Name: 'op1', Parameter: [{ Type: 'noEntitySet' }], IsBound: 'true' },
+      { Name: 'op2', IsBound: 'true', Parameter: [{ Type: 'ns.op2' }] }
     ] as any;
     const joined = filterAndTransformOperations(imports, operations, true);
-    expect(joined).toEqual([{ operationName: 'op2' }]);
+    expect(joined).toEqual([
+      {
+        operationName: 'op2',
+        IsBound: true,
+        Parameter: [],
+        entitySetName: 'op2'
+      }
+    ]);
   });
 
   it('considers bound operations', () => {
@@ -80,16 +96,15 @@ describe('action-import', () => {
       { operationName: 'op2' }
     ] as any;
     const operations: EdmxOperation[] = [
-      { Name: 'op1', Parameter: [{ Type: 'ns.Entity' }], IsBound: true },
-      { Name: 'op2' }
+      { Name: 'op1', Parameter: [{ Type: 'ns.Entity' }], IsBound: 'true' },
+      { Name: 'op2', IsBound: 'true', Parameter: [] }
     ] as any;
     const joined = filterAndTransformOperations(imports, operations, true);
     expect(joined).toEqual([
-      { operationName: 'op2' },
       {
         IsBound: true,
         operationName: 'op1',
-        Paramater: expect.any(Array),
+        Parameter: [],
         entitySetName: 'Entity'
       }
     ]);
@@ -98,7 +113,7 @@ describe('action-import', () => {
   it('considers isBound filter removing bound operations', () => {
     const imports: EdmxOperationImport[] = [{ operationName: 'op1' }] as any;
     const operations: EdmxOperation[] = [
-      { Name: 'op1', Parameter: [{ Type: 'ns.Entity' }], IsBound: true }
+      { Name: 'op1', Parameter: [{ Type: 'ns.Entity' }], IsBound: 'true' }
     ] as any;
     const joined = filterAndTransformOperations(imports, operations, false);
     expect(joined).toEqual([]);
@@ -110,7 +125,7 @@ describe('action-import', () => {
       {
         Name: 'op1',
         Parameter: [{ Type: 'ns.Entity' }, { Type: 'para1' }],
-        IsBound: true
+        IsBound: 'true'
       }
     ] as any;
     const joined = filterAndTransformOperations(imports, operations, true);
@@ -273,7 +288,7 @@ function createAction(
           Nullable: 'false'
         }
       : undefined,
-    IsBound: false,
+    IsBound: 'false',
     Namespace: namespace
   };
 }

@@ -82,7 +82,9 @@ const returnType: VdmOperationReturnType = {
   returnType: 'string',
   isCollection: false,
   isNullable: false,
-  returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE
+  returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
+  builderFunction:
+    "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.String', deSerializers)"
 };
 
 const getPriceFunction: VdmOperation = {

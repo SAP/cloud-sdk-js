@@ -67,7 +67,7 @@ export class TestEntityWithMultipleKeys<
    */
   boundFunctionWithoutArgumentsWithMultipleKeys(
     parameters: BoundFunctionWithoutArgumentsWithMultipleKeysParameters<T>,
-    deSerializers: T = defaultDeSerializers as any
+    deSerializers?: T
   ): BoundFunctionImportRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
@@ -82,10 +82,14 @@ export class TestEntityWithMultipleKeys<
       'boundFunctionWithoutArgumentsWithMultipleKeys',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers
+      deSerializers || defaultDeSerializers
     );
   }
 
@@ -96,7 +100,7 @@ export class TestEntityWithMultipleKeys<
    */
   boundFunctionWithArgumentsWithMultipleKeys(
     parameters: BoundFunctionWithArgumentsWithMultipleKeysParameters<T>,
-    deSerializers: T = defaultDeSerializers as any
+    deSerializers?: T
   ): BoundFunctionImportRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
@@ -122,10 +126,14 @@ export class TestEntityWithMultipleKeys<
       'boundFunctionWithArgumentsWithMultipleKeys',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers
+      deSerializers || defaultDeSerializers
     );
   }
 
@@ -136,7 +144,7 @@ export class TestEntityWithMultipleKeys<
    */
   boundActionWithoutArgumentsWithMultipleKeys(
     parameters: BoundActionWithoutArgumentsWithMultipleKeysParameters<T>,
-    deSerializers: T = defaultDeSerializers as any
+    deSerializers?: T
   ): BoundActionImportRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
@@ -151,10 +159,14 @@ export class TestEntityWithMultipleKeys<
       'boundActionWithoutArgumentsWithMultipleKeys',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers
+      deSerializers || defaultDeSerializers
     );
   }
 }

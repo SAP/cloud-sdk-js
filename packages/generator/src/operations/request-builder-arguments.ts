@@ -9,23 +9,21 @@ export function getRequestBuilderArgumentsBase(
   operation: VdmOperation,
   service: VdmServiceMetadata
 ): string[] {
-  const sharedParameters = [
-    getTransformer(operation),
-    'params',
-    'deSerializers'
-  ];
+  const sharedParameters = [getTransformer(operation), 'params'];
   if (!operation.isBound) {
     return [
       `'${service.servicePath}'`,
       `'${operation.originalName}'`,
-      ...sharedParameters
+      ...sharedParameters,
+      'deSerializers'
     ];
   }
   return [
     'this._entityApi',
     'this',
     `'${operation.originalName}'`,
-    ...sharedParameters
+    ...sharedParameters,
+    'deSerializers || defaultDeSerializers'
   ];
 }
 

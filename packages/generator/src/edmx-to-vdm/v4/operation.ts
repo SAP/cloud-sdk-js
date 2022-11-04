@@ -291,7 +291,8 @@ function generateOperations(
         entities,
         complexTypes,
         extractResponse,
-        serviceName
+        serviceName,
+        operation.IsBound
       )
     };
   });

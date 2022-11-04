@@ -113,7 +113,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundFunctionWithoutArguments(
     parameters: BoundFunctionWithoutArgumentsParameters<T>,
-    deSerializers: T = defaultDeSerializers as any
+    deSerializers?: T
   ): BoundFunctionImportRequestBuilder<
     TestEntity<T>,
     T,
@@ -128,10 +128,14 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
       'boundFunctionWithoutArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers
+      deSerializers || defaultDeSerializers
     );
   }
 
@@ -142,7 +146,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundActionWithoutArguments(
     parameters: BoundActionWithoutArgumentsParameters<T>,
-    deSerializers: T = defaultDeSerializers as any
+    deSerializers?: T
   ): BoundActionImportRequestBuilder<
     TestEntity<T>,
     T,
@@ -157,10 +161,14 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
       'boundActionWithoutArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers
+      deSerializers || defaultDeSerializers
     );
   }
 }

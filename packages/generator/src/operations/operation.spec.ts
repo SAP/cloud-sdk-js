@@ -8,7 +8,7 @@ import {
 import { operationFunction } from './operation';
 
 describe('function', () => {
-  it('test for bound operations', () => {
+  it('creates statement for bound operations', () => {
     const actual = operationFunction(
       {
         ...orderBreakfast,
@@ -23,8 +23,8 @@ describe('function', () => {
       parameters: [
         { name: 'parameters', type: 'Params<T>' },
         {
-          initializer: 'defaultDeSerializers as any',
-          name: 'deSerializers',
+          initializer: undefined,
+          name: 'deSerializers?',
           type: 'T'
         }
       ],
@@ -34,7 +34,7 @@ describe('function', () => {
         `order a breakfast ${unixEOL}@param parameters - Object containing all parameters for the function.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
       ],
       isExported: true,
-      statements: `const params = {${unixEOL}withHoneyToast: new FunctionImportParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new BoundFunctionImportRequestBuilder(this._entityApi, this, 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers);`
+      statements: `const params = {${unixEOL}withHoneyToast: new FunctionImportParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new BoundFunctionImportRequestBuilder(this._entityApi, this, 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers || defaultDeSerializers);`
     });
   });
 

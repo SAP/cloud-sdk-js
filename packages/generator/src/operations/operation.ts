@@ -34,9 +34,9 @@ export function operationFunctionBase(
         }>`
       },
       {
-        name: 'deSerializers',
+        name: isBound ? 'deSerializers?' : 'deSerializers',
         type: isBound ? 'T' : 'DeSerializersT',
-        initializer: 'defaultDeSerializers as any'
+        initializer: isBound ? undefined : 'defaultDeSerializers as any'
       }
     ],
     returnType: operationReturnType(operation, operation.bindingEntitySetName),

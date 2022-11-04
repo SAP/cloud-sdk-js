@@ -20,18 +20,18 @@ class TestEntity extends odata_v4_1.Entity {
      * @param parameters - Object containing all parameters for the function.
      * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
      */
-    boundFunctionWithoutArguments(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
+    boundFunctionWithoutArguments(parameters, deSerializers) {
         const params = {};
-        return new odata_v4_1.BoundFunctionImportRequestBuilder(this._entityApi, this, 'boundFunctionWithoutArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers)), params, deSerializers);
+        return new odata_v4_1.BoundFunctionImportRequestBuilder(this._entityApi, this, 'boundFunctionWithoutArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers || odata_v4_1.defaultDeSerializers)), params, deSerializers || odata_v4_1.defaultDeSerializers);
     }
     /**
      * Bound Action Without Arguments.
      * @param parameters - Object containing all parameters for the action.
      * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
      */
-    boundActionWithoutArguments(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
+    boundActionWithoutArguments(parameters, deSerializers) {
         const params = {};
-        return new odata_v4_1.BoundActionImportRequestBuilder(this._entityApi, this, 'boundActionWithoutArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers)), params, deSerializers);
+        return new odata_v4_1.BoundActionImportRequestBuilder(this._entityApi, this, 'boundActionWithoutArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers || odata_v4_1.defaultDeSerializers)), params, deSerializers || odata_v4_1.defaultDeSerializers);
     }
 }
 exports.TestEntity = TestEntity;

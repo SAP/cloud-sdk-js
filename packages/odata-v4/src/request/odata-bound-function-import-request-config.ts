@@ -14,7 +14,7 @@ import { ODataFunctionImportRequestConfig } from './odata-function-import-reques
  * @typeParam DeSerializersT - Type of the deserializer use on the request
  * @typeParam ParametersT - Type of the parameter to setup a request with
  */
-export class ODataBoundFunctionRequestConfig<
+export class OdataBoundFunctionImportRequestConfig<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
     ParametersT

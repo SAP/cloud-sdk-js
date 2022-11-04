@@ -11,7 +11,7 @@ import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   VdmComplexType,
   VdmEntity,
-  VdmEntityInConstruction,
+  VdmPartialEntity,
   VdmEnumType,
   VdmNavigationProperty
 } from '../../vdm-types';
@@ -43,7 +43,7 @@ export function generateEntitiesV4(
   );
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
-  const entities: VdmEntityInConstruction[] = entitiesMetadata.map(
+  const entities: VdmPartialEntity[] = entitiesMetadata.map(
     ({ entityType, entitySet }) => ({
       entityTypeName: entityType.Name,
       className: classNames[entitySet.Name],

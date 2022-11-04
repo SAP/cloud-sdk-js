@@ -5,7 +5,7 @@ import { isNullableProperty } from '../../generator-utils';
 import { getApiName } from '../../generator-without-ts-morph/service';
 import {
   VdmComplexType,
-  VdmEntityInConstruction,
+  VdmPartialEntity,
   VdmOperationReturnType,
   VdmReturnTypeCategory,
   VdmUnsupportedReason
@@ -21,7 +21,7 @@ import {
  */
 export function parseOperationReturnType(
   returnType: EdmxReturnType | undefined,
-  entities: VdmEntityInConstruction[],
+  entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
   serviceName: string
@@ -72,8 +72,8 @@ function findEdmType(returnType: string): string | undefined {
 
 function findEntityTypes(
   returnType: string,
-  entities: VdmEntityInConstruction[]
-): VdmEntityInConstruction[] {
+  entities: VdmPartialEntity[]
+): VdmPartialEntity[] {
   returnType = parseTypeName(returnType);
   return entities.filter(
     e => `${e.entityTypeNamespace}.${e.entityTypeName}` === returnType
@@ -122,7 +122,7 @@ function getEdmReturnType(
 function getEntityReturnType(
   isCollection: boolean,
   isNullable: boolean,
-  entities: VdmEntityInConstruction[],
+  entities: VdmPartialEntity[],
   serviceName: string
 ): VdmOperationReturnType {
   if (!entities.length) {

@@ -16,7 +16,7 @@ import {
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import {
   VdmComplexType,
-  VdmEntityInConstruction,
+  VdmPartialEntity,
   VdmOperation
 } from '../../vdm-types';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
@@ -201,7 +201,7 @@ export function generateUnboundOperations(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
   operationType: 'function' | 'action',
-  entities: VdmEntityInConstruction[],
+  entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
 ): VdmOperation[] {
@@ -222,7 +222,7 @@ export function generateBoundOperations(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
   operationType: 'function' | 'action',
-  entities: VdmEntityInConstruction[],
+  entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
   bindingEntitySetName: string
@@ -245,7 +245,7 @@ function generateOperations(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
   operationType: 'function' | 'action',
-  entities: VdmEntityInConstruction[],
+  entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
   bindingEntitySetName?: string

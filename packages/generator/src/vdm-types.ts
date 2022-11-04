@@ -142,7 +142,7 @@ export interface VdmEntity {
  * But the properties included here are needed for generating the functions and actions.
  * @internal
  */
-export type VdmEntityInConstruction = Pick<
+export type VdmPartialEntity = Pick<
   VdmEntity,
   'entityTypeName' | 'entityTypeNamespace' | 'className'
 >;
@@ -321,7 +321,7 @@ export interface VdmOperationBase {
   isBound: boolean;
   /**
    * @internal
-   * only set for bound entites
+   * only set for bound entities.
    */
   bindingEntitySetName?: string;
 }

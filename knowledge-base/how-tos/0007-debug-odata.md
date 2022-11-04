@@ -19,7 +19,7 @@ yarn run e2e-tests start:service-server
 ```
 
 :warning: The `deploy` step makes changes to `test-packages/e2e-tests/package.json` which should not be committed.
-Also the `test-packages/e2e-tests/db.sqlite` file should not be added to the git repo.
+Also, the `test-packages/e2e-tests/db.sqlite` file should not be added to the git repo.
 
 ```
 Changes not staged for commit:

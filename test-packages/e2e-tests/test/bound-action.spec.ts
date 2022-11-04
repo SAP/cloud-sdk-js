@@ -15,15 +15,11 @@ describe('bound actions', () => {
     });
 
     it('bound action returns expected string', async () => {
-      const expected = {
-        '@odata.context': '../$metadata#Edm.String',
-        value: 'abc'
-      };
       const entity: TestEntity = await request.execute(destination);
       const actionResult = await entity
         .boundActionWithoutArguments({})
         .execute(destination);
-      expect(actionResult).toEqual(expected);
+      expect(actionResult).toEqual('abc');
     });
 
     it('bound action of entity with multiple keys returns expected string', async () => {
@@ -33,15 +29,11 @@ describe('bound actions', () => {
           .requestBuilder()
           .getByKey(101, 'a', true)
           .execute(destination);
-      const expected = {
-        '@odata.context': '../$metadata#Edm.String',
-        value: 'abc'
-      };
 
       const actionResult = await entity
         .boundActionWithoutArgumentsWithMultipleKeys({})
         .execute(destination);
-      expect(actionResult).toEqual(expected);
+      expect(actionResult).toEqual('abc');
     });
   });
 });

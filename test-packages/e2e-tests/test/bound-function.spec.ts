@@ -16,35 +16,26 @@ describe('bound functions', () => {
 
     it('bound function returns expected string', async () => {
       // http://localhost:4004/odata/test-service/TestEntity(KeyTestEntity=1)/TestService.boundFunctionWithoutArguments()
-      const expected = {
-        '@odata.context': '../$metadata#Edm.String',
-        value: 'xyz'
-      };
       const entity: TestEntity = await request.execute(destination);
       const functionResult = await entity
         .boundFunctionWithoutArguments({})
         .execute(destination);
-      expect(functionResult).toEqual(expected);
+      expect(functionResult).toEqual('xyz');
     });
 
     it('bound function of entity with multiple keys returns expected string', async () => {
       // http://localhost:4004/odata/test-service/TestEntityWithMultipleKeys(KeyTestEntityWithMultipleKeys=101,StringPropertyWithMultipleKeys='a',BooleanPropertyWithMultipleKeys=true)/TestService.boundFunctionWithoutArgumentsWithMultipleKeys()
-
       const { testEntityWithMultipleKeysApi } = testService();
       const entity: TestEntityWithMultipleKeys =
         await testEntityWithMultipleKeysApi
           .requestBuilder()
           .getByKey(101, 'a', true)
           .execute(destination);
-      const expected = {
-        '@odata.context': '../$metadata#Edm.String',
-        value: 'xyz'
-      };
 
       const functionResult = await entity
         .boundFunctionWithoutArgumentsWithMultipleKeys({})
         .execute(destination);
-      expect(functionResult).toEqual(expected);
+      expect(functionResult).toEqual('xyz');
     });
   });
 });

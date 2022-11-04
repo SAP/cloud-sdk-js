@@ -15,6 +15,7 @@ yarn-error.log
 documentation
 .npmrc
 .turbo
+test-packages/e2e-tests/db.sqlite
 
 test-results.xml
 test-packages/type-tests/report.*.json

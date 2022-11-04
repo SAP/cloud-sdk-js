@@ -1,7 +1,8 @@
 import { webEOL } from '@sap-cloud-sdk/util';
 import {
   multiChangesetRequest,
-  singleChangesetRequest
+  singleChangesetRequest,
+  singleChangesetRequestWithCustomUrl
 } from './changeset-request';
 import { getAllRequest, getByKeyRequest } from './retrieve-request';
 
@@ -20,6 +21,8 @@ export const multiChangesetBatchRequest = () =>
     ...singleChangesetRequest,
     '--batch_.*',
     ...multiChangesetRequest,
+    '--batch_.*',
+    ...singleChangesetRequestWithCustomUrl,
     '--batch_.*'
   ].join(webEOL);
 

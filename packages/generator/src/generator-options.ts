@@ -25,6 +25,10 @@ export interface GeneratorOptions {
    */
   serviceMapping?: PathLike;
   /**
+   * Specify the path to the prettier config. If not given a default config will be used for the generated sources.
+   */
+  prettierConfig?: PathLike;
+  /**
    * If set to true `.JSON` files i.e. Swagger definitions are used for generation.
    */
   useSwagger: boolean;
@@ -135,6 +139,14 @@ export const generatorOptionsCli: KeysToOptions = {
     alias: 's',
     describe:
       'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. Will be generated if not existent. By default it will be saved to/read from the input directory as "service-mapping.json".',
+    type: 'string',
+    coerce: coercePathArg,
+    normalize: true
+  },
+  prettierConfig: {
+    alias: 'p',
+    describe:
+      'Configuration file to the prettier config relative to the generator config file',
     type: 'string',
     coerce: coercePathArg,
     normalize: true
@@ -259,7 +271,12 @@ export const generatorOptionsCli: KeysToOptions = {
  */
 export function createOptionsFromConfig(configPath: string): GeneratorOptions {
   const file = readFileSync(configPath, 'utf-8');
-  const pathLikeKeys = ['inputDir', 'outputDir', 'serviceMapping'];
+  const pathLikeKeys = [
+    'inputDir',
+    'outputDir',
+    'serviceMapping',
+    'prettierConfig'
+  ];
   return pathLikeKeys.reduce(
     (json, pathLikeKey) =>
       typeof json[pathLikeKey] === 'undefined'

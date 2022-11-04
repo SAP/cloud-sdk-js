@@ -2,6 +2,7 @@ import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
 import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
+import prettier from 'prettier';
 import { emptyDocument } from '../test/test-util';
 import { generate, getInputFilePaths } from './generator';
 
@@ -88,6 +89,8 @@ describe('generator', () => {
   });
 
   describe('creation of files', () => {
+    const prettierSpy = jest.spyOn(prettier, 'format');
+
     beforeEach(async () => {
       mock.restore();
       const inputFile = resolve(
@@ -99,6 +102,7 @@ describe('generator', () => {
       });
       const rootNodeModules = resolve(__dirname, '../../../node_modules');
       mock({
+        ['/prettier/config']: JSON.stringify({ printWidth: 66 }),
         root: {
           inputDir: { 'mySpec.json': serviceSpec },
           additionalFiles: {
@@ -116,6 +120,7 @@ describe('generator', () => {
         skipValidation: true,
         transpile: true,
         metadata: true,
+        prettierConfig: '/prettier/config',
         include: 'root/additionalFiles/*',
         readme: true,
         packageJson: true,
@@ -130,6 +135,13 @@ describe('generator', () => {
     afterEach(() => {
       jest.clearAllMocks();
       mock.restore();
+    });
+
+    it('reads custom prettier configuration', () => {
+      expect(prettierSpy).toHaveBeenCalledWith(expect.any(String), {
+        parser: expect.any(String),
+        printWidth: 66
+      });
     });
 
     it('should transpile the generated sources', async () => {

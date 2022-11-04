@@ -72,3 +72,14 @@ export const deleteRequest = testEntityApi
       .build()
   )
   .ignoreVersionIdentifier();
+
+export const createRequestWithAppendPath = testEntityApi
+  .requestBuilder()
+  .create(
+    testEntityApi
+      .entityBuilder()
+      .stringProperty('stringProp')
+      .withCustomFields({ customPropKey: 'customPropVal' })
+      .build()
+  )
+  .appendPath('/$links', '/to_MultiLink');

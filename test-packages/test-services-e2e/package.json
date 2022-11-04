@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-services-e2e",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "description": "Custom Services for testing",
   "files": [
     "**/*.js",
@@ -17,8 +17,7 @@
     "generate": "ts-node generate-e2e-services.ts",
     "check:dependencies": "depcheck .",
     "lint": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
-    "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
-    "postgenerate": "yarn lint:fix"
+    "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
   },
   "license": "Apache-2.0",
   "dependencies": {

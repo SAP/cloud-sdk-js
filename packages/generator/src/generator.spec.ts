@@ -2,6 +2,7 @@ import { join, resolve } from 'path';
 import { promises } from 'fs';
 import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
+import prettier from 'prettier';
 import { createOptions } from '../test/test-util/create-generator-options';
 import {
   checkStaticProperties,
@@ -20,21 +21,27 @@ import * as csnGeneration from './service/csn';
 const pathTestResources = resolve(__dirname, '../../../test-resources');
 const pathTestService = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
 const pathToGeneratorCommon = resolve(__dirname, '../../generator-common');
+const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
 
 describe('generator', () => {
+  const prettierSpy = jest.spyOn(prettier, 'format');
+
   describe('common', () => {
     let project;
     beforeAll(async () => {
       mock({
         common: {},
+        ['/prettier/config']: JSON.stringify({ printWidth: 66 }),
         [pathTestResources]: mock.load(pathTestResources),
-        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon)
+        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
+        [pathRootNodeModules]: mock.load(pathRootNodeModules)
       });
 
       const options = createOptions({
         inputDir: pathTestService,
         outputDir: 'common',
         forceOverwrite: true,
+        prettierConfig: '/prettier/config',
         generateSdkMetadata: true,
         include: join(pathTestResources, '*.md')
       });
@@ -44,6 +51,13 @@ describe('generator', () => {
     });
 
     afterAll(() => mock.restore());
+
+    it('reads custom prettier configuration', () => {
+      expect(prettierSpy).toHaveBeenCalledWith(expect.any(String), {
+        parser: expect.any(String),
+        printWidth: 66
+      });
+    });
 
     it('recommends to install odata packages', async () => {
       expect(getInstallODataErrorMessage(project!)).toMatchInlineSnapshot(

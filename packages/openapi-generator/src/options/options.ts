@@ -45,6 +45,14 @@ export const generatorOptions = {
     coerce: (input: string): string =>
       typeof input !== 'undefined' ? resolve(input) : ''
   },
+  prettierConfig: {
+    string: true,
+    alias: 'p',
+    description:
+      'Specify the path to the prettier config. If not given a default config will be used for the generated sources.',
+    coerce: (input: string): string =>
+      typeof input !== 'undefined' ? resolve(input) : ''
+  },
   transpile: {
     boolean: true,
     alias: 't',

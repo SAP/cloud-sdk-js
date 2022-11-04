@@ -14,6 +14,9 @@ import {
   readIncludeExcludeWithDefaults,
   transpileDirectory
 } from './compiler';
+import { CreateFileOptions, defaultPrettierConfig } from './file-writer';
+
+const { readFile, readdir } = promises;
 
 describe('compiler options', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
@@ -103,20 +106,30 @@ describe('compiler options', () => {
 });
 
 describe('compilation', () => {
-  beforeEach(async () => {
+  const createFileOptions: CreateFileOptions = {
+    overwrite: true,
+    prettierOptions: defaultPrettierConfig
+  };
+
+  beforeAll(async () => {
     const rootNodeModules = resolve(__dirname, '../../../node_modules');
     const packageNodeModules = resolve(__dirname, '../node_modules');
     mock({
-      'test-src/file-1.ts': "export type someOtherType = 'A' | 'B'",
+      'test-src/file-1.ts': "export type someOtherType='A'|'B'",
       'test-src/index.ts': "export * from './file-1'",
-      'test-src/sub-folder/file-2.ts': "export type someType = 'A' | 'B'",
+      'test-src/sub-folder/file-2.ts': "export type someType= 'A' | 'B'",
       'test-src/test-file.spec.ts': 'This should be excluded per default',
       'test-src/sub-folder/index.ts': "export * from './file-2'",
       'broken-src/file.ts': `const foo = 1;${EOL}const bar = 1;${EOL}   foo = 2;`,
       [rootNodeModules]: mock.load(rootNodeModules),
       [packageNodeModules]: mock.load(packageNodeModules)
     });
+    await transpileDirectory('test-src', {
+      compilerOptions: compilerConfig('test-dist'),
+      createFileOptions
+    });
   });
+
   function compilerConfig(outFolder): CompilerOptions {
     return {
       outDir: outFolder,
@@ -130,13 +143,12 @@ describe('compilation', () => {
     };
   }
 
-  afterEach(() => {
+  afterAll(() => {
     mock.restore();
   });
 
   it('compiles all files', async () => {
-    await transpileDirectory('test-src', compilerConfig('test-dist'));
-    const files = await promises.readdir('test-dist');
+    const files = await readdir('test-dist');
     expect(files.includes('test-file.spec.js')).toBe(false);
     expect(files).toEqual([
       'file-1.d.ts',
@@ -149,7 +161,7 @@ describe('compilation', () => {
       'index.js.map',
       'sub-folder'
     ]);
-    const filesSubfolder = await promises.readdir('test-dist/sub-folder');
+    const filesSubfolder = await readdir('test-dist/sub-folder');
     expect(filesSubfolder).toEqual([
       'file-2.d.ts',
       'file-2.d.ts.map',
@@ -162,11 +174,36 @@ describe('compilation', () => {
     ]);
   });
 
+  it('does NOT run prettier on emitted .js files to keep source maps intact', async () => {
+    await expect(
+      readFile('test-dist/file-1.js', { encoding: 'utf-8' })
+    ).resolves.toContain('"'); // double quotes get await with prettier
+  });
+
+  it('does NOT runs prettier on emitted .map files to keep them minimal', async () => {
+    await expect(
+      readFile('test-dist/file-1.js.map', { encoding: 'utf-8' })
+    ).resolves.toContain('"version":3,'); // no spacing after
+    await expect(
+      readFile('test-dist/file-1.d.ts.map', { encoding: 'utf-8' })
+    ).resolves.toContain('"version":3,'); // no spacing after
+  });
+
+  it('runs prettier on emitted .d.ts files', async () => {
+    await expect(
+      readFile('test-dist/file-1.d.ts', { encoding: 'utf-8' })
+    ).resolves.toContain('someOtherType = '); // spacing after = added by prettier
+  });
+
   it('considers includes correctly', async () => {
-    await transpileDirectory('test-src', compilerConfig('test-dist-1'), {
-      include: ['file-1.ts', '**/file-2.ts'],
-      exclude: []
-    });
+    await transpileDirectory(
+      'test-src',
+      { compilerOptions: compilerConfig('test-dist-1'), createFileOptions },
+      {
+        include: ['file-1.ts', '**/file-2.ts'],
+        exclude: []
+      }
+    );
     const files = new GlobSync('**/*.js', {
       cwd: 'test-dist-1'
     }).found;
@@ -174,10 +211,14 @@ describe('compilation', () => {
   });
 
   it('considers exclude correctly', async () => {
-    await transpileDirectory('test-src', compilerConfig('test-dist-2'), {
-      include: ['**/*.ts'],
-      exclude: ['**/index.ts', 'test-file.spec.ts']
-    });
+    await transpileDirectory(
+      'test-src',
+      { compilerOptions: compilerConfig('test-dist-2'), createFileOptions },
+      {
+        include: ['**/*.ts'],
+        exclude: ['**/index.ts', 'test-file.spec.ts']
+      }
+    );
     const files = new GlobSync('**/*.js', {
       cwd: 'test-dist-2'
     }).found;
@@ -186,18 +227,23 @@ describe('compilation', () => {
 
   it('throws error with file information on broken source file', async () => {
     await expect(
-      transpileDirectory('broken-src', compilerConfig('broken-dist'))
+      transpileDirectory('broken-src', {
+        compilerOptions: compilerConfig('broken-dist'),
+        createFileOptions
+      })
     ).rejects.toThrowError(
       "error TS2588: Cannot assign to 'foo' because it is a constant"
     );
   });
 
   it('throws error general information on broken module', async () => {
+    const compilerOptions = {
+      ...compilerConfig,
+      outDir: 'test-non-existing-lib',
+      lib: ['non-existing-lib']
+    };
     await expect(
-      transpileDirectory('test-src', {
-        ...compilerConfig,
-        lib: ['non-existing-lib']
-      })
+      transpileDirectory('test-src', { compilerOptions, createFileOptions })
     ).rejects.toThrowError(
       /error TS6231: Could not resolve the path .* with the extensions: '\.ts', '\.tsx', '\.d\.ts'\.*/
     );

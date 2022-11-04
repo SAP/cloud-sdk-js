@@ -37,8 +37,8 @@ export {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   UpdateRequestBuilder,
-  BoundActionRequestBuilder,
-  BoundFunctionRequestBuilder
+  BoundActionImportRequestBuilder,
+  BoundFunctionImportRequestBuilder
 } from './request-builder';
 
 export { ODataBatchRequestBuilder } from './request-builder';

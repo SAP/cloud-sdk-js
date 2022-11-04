@@ -12,6 +12,37 @@ import {
 import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 
 describe('edmx-edmx-parser', () => {
+  it('parses IsBound  with default false', () => {
+    const metadataEdmx = readEdmxFile(
+      resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV', 'API_TEST_SRV.edmx')
+    );
+    expect(parseOperations(metadataEdmx.root, 'function')[0].IsBound).toEqual(
+      'false'
+    );
+  });
+
+  it('parses IsBound  with true and false values', () => {
+    const metadataEdmx = readEdmxFile(
+      resolve(
+        oDataServiceSpecs,
+        '../odata-service-specs-e2e',
+        'v4',
+        'API_TEST_SRV',
+        'API-TEST_SRV.edmx'
+      )
+    );
+    expect(
+      parseOperations(metadataEdmx.root, 'function').map(
+        operation => operation.IsBound
+      )
+    ).toContain('false');
+    expect(
+      parseOperations(metadataEdmx.root, 'function').map(
+        operation => operation.IsBound
+      )
+    ).toContain('true');
+  });
+
   it('v4: parses EDMX file to JSON and coerces properties to arrays', () => {
     const metadataEdmx = readEdmxFile(
       resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV', 'API_TEST_SRV.edmx')

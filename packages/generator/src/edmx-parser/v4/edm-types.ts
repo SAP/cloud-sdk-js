@@ -106,7 +106,7 @@ export interface EdmxOperation extends EdmxNamed, EdmxNamespaced {
   /**
    * @internal
    */
-  IsBound: boolean;
+  IsBound: string;
 }
 /**
  * @internal

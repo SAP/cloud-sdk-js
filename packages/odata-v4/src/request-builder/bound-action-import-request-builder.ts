@@ -2,35 +2,35 @@ import {
   ActionFunctionImportRequestBuilderBase,
   EntityApi,
   EntityBase,
-  FunctionImportParameters
+  FunctionImportParameters // fixme(fwilhe): clarify if it is an issue to re-use this type or do we need a separate type for ActionImportParameter? Seems no issue so far.
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
-import { ODataBoundFunctionRequestConfig } from '../request';
+import { ODataBoundActionImportRequestConfig } from '../request';
 import { createODataUri } from '../uri-conversion';
 
-export class BoundFunctionRequestBuilder<
+export class BoundActionImportRequestBuilder<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
   ParametersT,
   ReturnT
 > extends ActionFunctionImportRequestBuilderBase<
   ReturnT,
-  ODataBoundFunctionRequestConfig<EntityT, DeSerializersT, ParametersT>
+  ODataBoundActionImportRequestConfig<EntityT, DeSerializersT, ParametersT>
 > {
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
     entity: EntityT,
-    functionImportName: string,
+    actionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
     parameters: FunctionImportParameters<ParametersT>,
     deSerializers: DeSerializersT
   ) {
     super(
       responseTransformer,
-      new ODataBoundFunctionRequestConfig(
+      new ODataBoundActionImportRequestConfig(
         'get',
         entityApi,
-        functionImportName,
+        actionImportName,
         parameters,
         createODataUri(deSerializers)
       )

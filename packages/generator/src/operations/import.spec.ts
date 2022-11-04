@@ -15,6 +15,18 @@ describe('import declarations for operations', () => {
     expect(actual).toEqual([]);
   });
 
+  it('returns import declarations with correct request builder for a bound function', () => {
+    const service = {};
+    const actual = operationImportDeclarations(
+      service as VdmServiceMetadata,
+      'function',
+      [{ ...orderBreakfast, isBound: true }]
+    );
+    expect(actual[0].namedImports).toContain(
+      'BoundFunctionImportRequestBuilder'
+    );
+  });
+
   it('returns correct import declarations for a function with an EDM return type', () => {
     const service = {};
 

@@ -8,6 +8,36 @@ import {
 import { operationFunction } from './operation';
 
 describe('function', () => {
+  it('test for bound operations', () => {
+    const actual = operationFunction(
+      {
+        ...orderBreakfast,
+        isBound: true,
+        bindingEntitySetName: 'BreakfaseEntity'
+      },
+      { ...foodService, oDataVersion: 'v4' }
+    );
+    expect(actual).toEqual({
+      kind: StructureKind.Function,
+      name: 'orderBreakfast',
+      parameters: [
+        { name: 'parameters', type: 'Params<T>' },
+        {
+          initializer: 'defaultDeSerializers as any',
+          name: 'deSerializers',
+          type: 'T'
+        }
+      ],
+      returnType:
+        'BoundFunctionImportRequestBuilder<BreakfaseEntity<T>, T, Params<T>, string>',
+      docs: [
+        `order a breakfast ${unixEOL}@param parameters - Object containing all parameters for the function.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
+      ],
+      isExported: true,
+      statements: `const params = {${unixEOL}withHoneyToast: new FunctionImportParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new BoundFunctionImportRequestBuilder(this._entityApi, this, 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers);`
+    });
+  });
+
   it('functionImportFunction', () => {
     const actual = operationFunction(orderBreakfast, foodService);
     expect(actual).toEqual({

@@ -22,7 +22,7 @@ describe('bound functions', () => {
       };
       const entity: TestEntity = await request.execute(destination);
       const functionResult = await entity
-        .boundFunctionWithoutArguments()
+        .boundFunctionWithoutArguments({})
         .execute(destination);
       expect(functionResult).toEqual(expected);
     });
@@ -42,7 +42,7 @@ describe('bound functions', () => {
       };
 
       const functionResult = await entity
-        .boundFunctionWithoutArgumentsWithMultipleKeys()
+        .boundFunctionWithoutArgumentsWithMultipleKeys({})
         .execute(destination);
       expect(functionResult).toEqual(expected);
     });

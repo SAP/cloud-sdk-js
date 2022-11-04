@@ -47,7 +47,7 @@ function splitMissingOperation(
           operationName: curr.operationName,
           Parameter: operation.Parameter,
           ReturnType: operation.ReturnType,
-          IsBound: operation.IsBound,
+          IsBound: operation.IsBound.toLowerCase() === 'true',
           operationType: curr.operationType
         });
       } else {
@@ -101,7 +101,7 @@ export function filterAndTransformOperations(
   isBound: boolean
 ): EdmxJoinedOperation[] {
   const filteredByBoundOperations = operations.filter(
-    operation => operation.IsBound === isBound
+    operation => (operation.IsBound.toLowerCase() === 'true') === isBound
   );
 
   const [withoutOperation, withOperation] = splitMissingOperation(
@@ -263,7 +263,7 @@ function generateOperations(
     .filter(
       operation =>
         !bindingEntitySetName ||
-        bindingEntitySetName === operation.operationName
+        bindingEntitySetName === operation.entitySetName
     )
     // TODO 1571 remove when supporting entity type as parameter
     .filter(operation => !hasUnsupportedParameterTypes(operation));

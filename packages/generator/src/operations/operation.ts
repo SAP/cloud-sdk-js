@@ -20,21 +20,26 @@ export function operationFunctionBase(
   operation: VdmOperation,
   service: VdmServiceMetadata
 ): FunctionLikeDeclarationStructure & { name: string } {
+  const { isBound } = operation;
   return {
-    name: `${operation.name}<DeSerializersT extends DeSerializers = DefaultDeSerializers>`,
-
+    name: isBound
+      ? operation.name
+      : `${operation.name}<DeSerializersT extends DeSerializers = DefaultDeSerializers>`,
+    // boundActionWithoutArguments(parameters: BoundActionWithoutArgumentsParameters<T>, deSerializers: T):
     parameters: [
       {
         name: parameterName,
-        type: `${operation.parametersTypeName}<DeSerializersT>`
+        type: `${operation.parametersTypeName}<${
+          isBound ? 'T' : 'DeSerializersT'
+        }>`
       },
       {
         name: 'deSerializers',
-        type: 'DeSerializersT',
+        type: isBound ? 'T' : 'DeSerializersT',
         initializer: 'defaultDeSerializers as any'
       }
     ],
-    returnType: operationReturnType(operation),
+    returnType: operationReturnType(operation, operation.bindingEntitySetName),
     statements: getOperationStatements(operation, service),
     docs: [
       [

@@ -47,6 +47,7 @@ export function transformOperationBase(
       operation.originalName
     ),
     type,
-    isBound: !!bindingEntitySetName
+    isBound: !!bindingEntitySetName,
+    bindingEntitySetName
   };
 }

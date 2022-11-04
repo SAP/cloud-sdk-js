@@ -166,7 +166,7 @@ export interface GetByKeyWithMultipleKeysParameters<
 
 /**
  * Get By Key With Multiple Keys.
- * @param parameters - Object containing all parameters for the function import.
+ * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function getByKeyWithMultipleKeys<

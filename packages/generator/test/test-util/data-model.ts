@@ -103,7 +103,8 @@ const getPriceFunction: VdmOperation = {
   ],
   parametersTypeName: 'GetPriceParameters',
   name: 'getPrice',
-  description: 'Get the price of a meal'
+  description: 'Get the price of a meal',
+  isBound: false
 };
 
 const payMealAction: VdmOperation = {
@@ -132,6 +133,7 @@ const payMealAction: VdmOperation = {
     }
   ],
   parametersTypeName: 'PayMealParameters',
+  isBound: false,
   name: 'payMeal',
   description:
     'Pay for a meal, with a certain amount of cash. Returns the amount of change.'
@@ -319,6 +321,7 @@ const orderBreakfastBuilder = (isNullable: boolean): VdmOperation => ({
   httpMethod: 'post',
   originalName: 'OrderBreakfast',
   type: 'function',
+  isBound: false,
   parameters: [
     {
       originalName: 'WithHoneyToast',
@@ -349,6 +352,7 @@ export const entityNotDeserializable: VdmOperation = {
   httpMethod: 'get',
   originalName: 'entityNotDeserializable',
   parameters: [],
+  isBound: false,
   parametersTypeName: 'Params',
   type: 'function',
   returnType: {

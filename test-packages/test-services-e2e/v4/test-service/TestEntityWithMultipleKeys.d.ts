@@ -2,7 +2,9 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  BoundActionImportRequestBuilder,
+  BoundFunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 /**
@@ -41,6 +43,48 @@ export declare class TestEntityWithMultipleKeys<
    */
   booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>;
   constructor(_entityApi: TestEntityWithMultipleKeysApi<T>);
+  /**
+   * Bound Function Without Arguments With Multiple Keys.
+   * @param parameters - Object containing all parameters for the function.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundFunctionWithoutArgumentsWithMultipleKeys(
+    parameters: BoundFunctionWithoutArgumentsWithMultipleKeysParameters<T>,
+    deSerializers?: T
+  ): BoundFunctionImportRequestBuilder<
+    TestEntityWithMultipleKeys<T>,
+    T,
+    BoundFunctionWithoutArgumentsWithMultipleKeysParameters<T>,
+    string | null
+  >;
+  /**
+   * Bound Function With Arguments With Multiple Keys.
+   * @param parameters - Object containing all parameters for the function.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundFunctionWithArgumentsWithMultipleKeys(
+    parameters: BoundFunctionWithArgumentsWithMultipleKeysParameters<T>,
+    deSerializers?: T
+  ): BoundFunctionImportRequestBuilder<
+    TestEntityWithMultipleKeys<T>,
+    T,
+    BoundFunctionWithArgumentsWithMultipleKeysParameters<T>,
+    string | null
+  >;
+  /**
+   * Bound Action Without Arguments With Multiple Keys.
+   * @param parameters - Object containing all parameters for the action.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundActionWithoutArgumentsWithMultipleKeys(
+    parameters: BoundActionWithoutArgumentsWithMultipleKeysParameters<T>,
+    deSerializers?: T
+  ): BoundActionImportRequestBuilder<
+    TestEntityWithMultipleKeys<T>,
+    T,
+    BoundActionWithoutArgumentsWithMultipleKeysParameters<T>,
+    string | null
+  >;
 }
 export interface TestEntityWithMultipleKeysType<
   T extends DeSerializers = DefaultDeSerializers
@@ -49,4 +93,31 @@ export interface TestEntityWithMultipleKeysType<
   stringPropertyWithMultipleKeys: DeserializedType<T, 'Edm.String'>;
   booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>;
 }
+/**
+ * Type of the parameters to be passed to {@link boundFunctionWithoutArgumentsWithMultipleKeys}.
+ */
+export interface BoundFunctionWithoutArgumentsWithMultipleKeysParameters<
+  DeSerializersT extends DeSerializers
+> {}
+/**
+ * Type of the parameters to be passed to {@link boundFunctionWithArgumentsWithMultipleKeys}.
+ */
+export interface BoundFunctionWithArgumentsWithMultipleKeysParameters<
+  DeSerializersT extends DeSerializers
+> {
+  /**
+   * Param 1.
+   */
+  param1?: string | null;
+  /**
+   * Param 2.
+   */
+  param2?: string | null;
+}
+/**
+ * Type of the parameters to be passed to {@link boundActionWithoutArgumentsWithMultipleKeys}.
+ */
+export interface BoundActionWithoutArgumentsWithMultipleKeysParameters<
+  DeSerializersT extends DeSerializers
+> {}
 //# sourceMappingURL=TestEntityWithMultipleKeys.d.ts.map

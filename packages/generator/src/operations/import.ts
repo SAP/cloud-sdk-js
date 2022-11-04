@@ -97,6 +97,11 @@ export function operationImportDeclarations(
   const parameters = operations.flatMap(({ parameters: params }) => params);
   const returnTypes = operations.map(({ returnType }) => returnType);
 
+  const includesBound = !!operations.filter(operation => operation.isBound)
+    .length;
+  const includesUnbound = !!operations.filter(operation => !operation.isBound)
+    .length;
+
   return [
     ...externalImportDeclarations(parameters),
     odataImportDeclaration(
@@ -109,7 +114,12 @@ export function operationImportDeclarations(
         'defaultDeSerializers',
         ...propertyTypeImportNames(parameters),
         `${voca.capitalize(type)}ImportParameter`,
-        `${voca.capitalize(type)}ImportRequestBuilder`
+        ...(includesUnbound
+          ? [`${voca.capitalize(type)}ImportRequestBuilder`]
+          : []),
+        ...(includesBound
+          ? [`Bound${voca.capitalize(type)}ImportRequestBuilder`]
+          : [])
       ],
       oDataVersion
     ),

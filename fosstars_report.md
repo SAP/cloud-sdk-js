@@ -1,6 +1,6 @@
 **Rating**: **GOOD**
 
-**Score**: **6.57**, max score value is 10.0
+**Score**: **6.83**, max score value is 10.0
 
 **Confidence**: High (9.65, max confidence value is 10.0)
 
@@ -45,7 +45,7 @@ It used the following sub-scores:
         
 1.  **[Security awareness](#security-awareness)**: **3.5** (weight is 0.9)
     
-1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **8.0** (weight is 0.6)
+1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **10.0** (weight is 0.6)
     1.  **[Security testing](#security-testing)**: **8.86** (weight is 1.0)
         1.  **[Static analysis](#static-analysis)**: **9.5** (weight is 1.0)
             1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
@@ -218,7 +218,7 @@ This sub-score is based on 19 features:
 
 ### Vulnerability discovery and security testing
 
-Score: **8.0**, confidence is 10.0 (max), weight is 0.6 (medium)
+Score: **10.0**, confidence is 10.0 (max), weight is 0.6 (medium)
 
 The scores checks how security testing is done and how many vulnerabilities were recently discovered. If testing is good, and there are no recent vulnerabilities, then the score value is max. If there are vulnerabilities, then the score value is high. If testing is bad, and there are no recent vulnerabilities, then the score value is low. If there are vulnerabilities, then the score is min.
 

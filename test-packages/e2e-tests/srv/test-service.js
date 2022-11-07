@@ -53,18 +53,7 @@ module.exports = async srv => {
     'TestEntity',
     async oRequest => {
       oRequest.reply({
-        someMessage: 'xyz',
-        someId: 42
-      });
-    }
-  );
-
-  srv.on(
-    'boundFunctionWithComplexArgumentsComplexReturnType',
-    'TestEntity',
-    async oRequest => {
-      oRequest.reply({
-        someMessage: 'xyz' + oRequest.data.param1 + oRequest.data.param2,
+        someMessage: 'boundFunctionWithoutArgumentsComplexReturnType Result Value',
         someId: 42
       });
     }

@@ -133,7 +133,7 @@
             </Function>
             <Function Name="boundFunctionWithoutArgumentsComplexReturnType" IsBound="true" IsComposable="false">
                 <Parameter Name="param" Type="TestService.TestEntity" Nullable="false"/>
-                <ReturnType Type="MyComplexReturnType"/>
+                <ReturnType Type="TestService.MyComplexReturnType"/>
             </Function>
             <Function Name="boundFunctionWithArguments" IsBound="true" IsComposable="false">
                 <Parameter Name="param" Type="TestService.TestEntity" Nullable="false"/>

@@ -11,6 +11,7 @@ export * from './TestEntityRequestBuilder';
 export * from './TestEntityWithMultipleKeysRequestBuilder';
 export * from './TestEntityLinkRequestBuilder';
 export * from './TestEntity50PropRequestBuilder';
+export * from './MyComplexReturnType';
 export * from './function-imports';
 export * from './action-imports';
 export * from './BatchRequest';

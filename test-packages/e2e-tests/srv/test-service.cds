@@ -13,6 +13,7 @@ service TestService {
       function getStringProperty() returns String;
 
       function boundFunctionWithoutArguments() returns String;
+      function boundFunctionWithoutArgumentsComplexReturnType() returns MyComplexReturnType;
       function boundFunctionWithArguments(param1:String, param2:String) returns String;
 
       action deleteEntity() returns Integer;

@@ -27,6 +27,7 @@ __exportStar(require("./TestEntityRequestBuilder"), exports);
 __exportStar(require("./TestEntityWithMultipleKeysRequestBuilder"), exports);
 __exportStar(require("./TestEntityLinkRequestBuilder"), exports);
 __exportStar(require("./TestEntity50PropRequestBuilder"), exports);
+__exportStar(require("./MyComplexReturnType"), exports);
 __exportStar(require("./function-imports"), exports);
 __exportStar(require("./action-imports"), exports);
 __exportStar(require("./BatchRequest"), exports);

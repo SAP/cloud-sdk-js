@@ -12,6 +12,7 @@ import {
   BoundFunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityApi } from './TestEntityApi';
+import { MyComplexReturnType } from './MyComplexReturnType';
 import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
 /**
  * This class represents the entity "TestEntity" of service "TestService".
@@ -114,6 +115,20 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     string | null
   >;
   /**
+   * Bound Function Without Arguments Complex Return Type.
+   * @param parameters - Object containing all parameters for the function.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundFunctionWithoutArgumentsComplexReturnType(
+    parameters: BoundFunctionWithoutArgumentsComplexReturnTypeParameters<T>,
+    deSerializers?: T
+  ): BoundFunctionImportRequestBuilder<
+    TestEntity<T>,
+    T,
+    BoundFunctionWithoutArgumentsComplexReturnTypeParameters<T>,
+    MyComplexReturnType | null
+  >;
+  /**
    * Bound Function With Arguments.
    * @param parameters - Object containing all parameters for the function.
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
@@ -168,6 +183,12 @@ export interface TestEntityType<
  * Type of the parameters to be passed to {@link boundFunctionWithoutArguments}.
  */
 export interface BoundFunctionWithoutArgumentsParameters<
+  DeSerializersT extends DeSerializers
+> {}
+/**
+ * Type of the parameters to be passed to {@link boundFunctionWithoutArgumentsComplexReturnType}.
+ */
+export interface BoundFunctionWithoutArgumentsComplexReturnTypeParameters<
   DeSerializersT extends DeSerializers
 > {}
 /**

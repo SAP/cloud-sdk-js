@@ -30,6 +30,17 @@ describe('bound functions', () => {
       expect(functionResult).toEqual('boundFunctionWithArguments foo bar Result Value');
     });
 
+    it('bound function without arguments returns expected complex object', async () => {
+      const entity: TestEntity = await request.execute(destination);
+      const functionResult = await entity
+        .boundFunctionWithoutArgumentsComplexReturnType({})
+        .execute(destination);
+      expect(functionResult).toEqual({
+        someMessage: 'boundFunctionWithoutArgumentsComplexReturnType Result Value',
+        someId: 42
+      });
+    });
+
     it('bound function of entity with multiple keys returns expected string', async () => {
       const { testEntityWithMultipleKeysApi } = testService();
       const entity: TestEntityWithMultipleKeys =

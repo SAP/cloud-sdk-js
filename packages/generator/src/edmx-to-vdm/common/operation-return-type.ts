@@ -169,7 +169,7 @@ function getComplexReturnType(
     returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
     builderFunction: `(data) => entityDeserializer(
-          deSerializers
+        deSerializers || defaultDeSerializers
         ).deserializeComplexType(data, ${complexType.typeName})`,
     isNullable,
     isCollection

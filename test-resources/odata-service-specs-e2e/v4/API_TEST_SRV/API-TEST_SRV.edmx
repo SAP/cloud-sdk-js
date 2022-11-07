@@ -28,6 +28,10 @@
                 <FunctionImport Name="returnKey" Function="TestService.returnKey"/>
                 <FunctionImport Name="returnSapCloudSdk" Function="TestService.returnSapCloudSdk"/>
             </EntityContainer>
+            <ComplexType Name="MyComplexReturnType">
+                <Property Name="someMessage" Type="Edm.String"/>
+                <Property Name="someId" Type="Edm.Int32"/>
+            </ComplexType>
             <EntityType Name="TestEntity">
                 <Key>
                     <PropertyRef Name="KeyTestEntity"/>
@@ -129,7 +133,7 @@
             </Function>
             <Function Name="boundFunctionWithoutArgumentsComplexReturnType" IsBound="true" IsComposable="false">
                 <Parameter Name="param" Type="TestService.TestEntity" Nullable="false"/>
-                <ReturnType Type="asdfasdf"/>
+                <ReturnType Type="MyComplexReturnType"/>
             </Function>
             <Function Name="boundFunctionWithArguments" IsBound="true" IsComposable="false">
                 <Parameter Name="param" Type="TestService.TestEntity" Nullable="false"/>

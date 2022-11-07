@@ -2,6 +2,12 @@ using { cloudsdk.test as cloudsdk } from '../db/schema';
 
 @path : 'test-service'
 service TestService {
+
+  define type MyComplexReturnType {
+    someMessage: String;
+    someId: Integer;
+  }
+
   entity TestEntity as projection on cloudsdk.TestEntity
     actions {
       function getStringProperty() returns String;

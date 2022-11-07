@@ -1,11 +1,13 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
+import { v4 as uuid } from 'uuid';
 import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { ODataDeleteRequestConfig } from '../request/odata-delete-request-config';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
+import { BatchReference } from '../request/odata-request-traits';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4.
@@ -28,11 +30,13 @@ export abstract class DeleteRequestBuilderBase<
    * @param _entityApi - Entity API for building and executing the request.
    * @param oDataUri - URI conversion functions.
    * @param keysOrEntity - Entity or key-value pairs of key properties for the given entity.
+   * @param batchReference - Identifier for the batch request.
    */
   constructor(
     readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     oDataUri: ODataUri<DeSerializersT>,
-    keysOrEntity: Record<string, any> | EntityBase
+    keysOrEntity: Record<string, any> | EntityBase,
+    private batchReference: BatchReference = { id: uuid() }
   ) {
     super(new ODataDeleteRequestConfig(_entityApi, oDataUri));
     if (keysOrEntity instanceof EntityBase) {
@@ -44,6 +48,14 @@ export abstract class DeleteRequestBuilderBase<
     } else {
       this.requestConfig.keys = keysOrEntity;
     }
+  }
+
+  /**
+   * Sets user-defined identifier for the batch reference.
+   * @param id - User-defined batch reuest identifier.
+   */
+  setBatchId(id: string): void {
+    this.batchReference.id = id;
   }
 
   /**

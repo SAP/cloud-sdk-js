@@ -1,15 +1,17 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
+import { v4 as uuid } from 'uuid';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion';
-import type { EntityBase, EntityIdentifiable } from '../entity-base';
+import { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request/odata-create-request-config';
 import { Link } from '../selectable';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
+import { BatchReference } from '../request/odata-request-traits';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -35,6 +37,7 @@ export abstract class CreateRequestBuilderBase<
    * @param serializer - Entity serializer.
    * @param deserializer - Entity deserializer.
    * @param responseDataAccessor - Object access functions for get requests.
+   * @param batchReference - Identifier for the batch request.
    */
   constructor(
     readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
@@ -42,7 +45,8 @@ export abstract class CreateRequestBuilderBase<
     readonly oDataUri: ODataUri<DeSerializersT>,
     readonly serializer: EntitySerializer,
     readonly deserializer: EntityDeserializer,
-    readonly responseDataAccessor: ResponseDataAccessor
+    readonly responseDataAccessor: ResponseDataAccessor,
+    private batchReference: BatchReference = { id: uuid() }
   ) {
     super(new ODataCreateRequestConfig(_entityApi, oDataUri));
     this.requestConfig.payload = serializer.serializeEntity(
@@ -53,6 +57,24 @@ export abstract class CreateRequestBuilderBase<
 
   get entity(): EntityT {
     return this._entity;
+  }
+
+  /**
+   * Gets identifier for the batch request.
+   * @returns Batch request identifier.
+   */
+  getBatchReference(): BatchReference {
+    return {
+      id: this.batchReference.id
+    };
+  }
+
+  /**
+   * Sets user-defined identifier for the batch reference.
+   * @param id - User-defined batch reuest identifier.
+   */
+  setBatchId(id: string): void {
+    this.batchReference.id = id;
   }
 
   /**

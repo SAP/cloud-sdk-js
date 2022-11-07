@@ -3,6 +3,7 @@ import {
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
+import { v4 as uuid } from 'uuid';
 import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { EntitySerializer } from '../entity-serializer';
@@ -12,6 +13,7 @@ import { ODataUri } from '../uri-conversion';
 import { Selectable } from '../selectable';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
+import { BatchReference } from '../request/odata-request-traits';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -39,6 +41,7 @@ export abstract class UpdateRequestBuilderBase<
    * @param entitySerializer - Entity serializer.
    * @param extractODataEtag - Extractor for ETag from payload.
    * @param payloadManipulator - Manipulator for the payload.
+   * @param batchReference - Identifier for the batch request.
    */
   constructor(
     readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
@@ -50,7 +53,8 @@ export abstract class UpdateRequestBuilderBase<
     ) => string | undefined,
     readonly payloadManipulator: (
       body: Record<string, any>
-    ) => Record<string, any>
+    ) => Record<string, any>,
+    private batchReference: BatchReference = { id: uuid() }
   ) {
     super(new ODataUpdateRequestConfig(_entityApi, oDataUri));
     this.requestConfig.eTag = _entity.versionIdentifier;
@@ -67,6 +71,24 @@ export abstract class UpdateRequestBuilderBase<
 
   get entity(): EntityT {
     return this._entity;
+  }
+
+  /**
+   * Gets identifier for the batch request.
+   * @returns Batch request identifier.
+   */
+  getBatchReference(): BatchReference {
+    return {
+      id: this.batchReference.id
+    };
+  }
+
+  /**
+   * Sets user-defined identifier for the batch reference.
+   * @param id - User-defined batch reuest identifier.
+   */
+  setBatchId(id: string): void {
+    this.batchReference.id = id;
   }
 
   /**

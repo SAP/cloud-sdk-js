@@ -1,6 +1,5 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
-import { v4 as uuid } from 'uuid';
 import { ODataRequest } from '../../request/odata-request';
 import { ODataRequestConfig } from '../../request/odata-request-config';
 import { MethodRequestBuilder } from '../request-builder-base';
@@ -65,7 +64,7 @@ export function serializeRequest(
   return [
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
-    ...(method !== 'GET' ? [`Content-Id: ${uuid()}`] : []),
+    ...(method !== 'GET' ? [`Content-Id: ${this.getBatchReference.id}`] : []),
     '',
     `${method} ${getUrl(odataRequest, options.subRequestPathType)} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),

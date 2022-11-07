@@ -12,6 +12,7 @@ import {
   transformReturnValueForEdmType,
   defaultDeSerializers,
   BoundActionImportRequestBuilder,
+  FunctionImportParameter,
   BoundFunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityApi } from './TestEntityApi';
@@ -140,6 +141,50 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   }
 
   /**
+   * Bound Function With Arguments.
+   * @param parameters - Object containing all parameters for the function.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundFunctionWithArguments(
+    parameters: BoundFunctionWithArgumentsParameters<T>,
+    deSerializers?: T
+  ): BoundFunctionImportRequestBuilder<
+    TestEntity<T>,
+    T,
+    BoundFunctionWithArgumentsParameters<T>,
+    string | null
+  > {
+    const params = {
+      param1: new FunctionImportParameter(
+        'param1',
+        'Edm.String',
+        parameters.param1
+      ),
+      param2: new FunctionImportParameter(
+        'param2',
+        'Edm.String',
+        parameters.param2
+      )
+    };
+
+    return new BoundFunctionImportRequestBuilder(
+      this._entityApi,
+      this,
+      'boundFunctionWithArguments',
+      data =>
+        transformReturnValueForEdmType(data, val =>
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
+        ),
+      params,
+      deSerializers || defaultDeSerializers
+    );
+  }
+
+  /**
    * Bound Action Without Arguments.
    * @param parameters - Object containing all parameters for the action.
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
@@ -202,6 +247,22 @@ export interface TestEntityType<
 export interface BoundFunctionWithoutArgumentsParameters<
   DeSerializersT extends DeSerializers
 > {}
+
+/**
+ * Type of the parameters to be passed to {@link boundFunctionWithArguments}.
+ */
+export interface BoundFunctionWithArgumentsParameters<
+  DeSerializersT extends DeSerializers
+> {
+  /**
+   * Param 1.
+   */
+  param1?: string | null;
+  /**
+   * Param 2.
+   */
+  param2?: string | null;
+}
 
 /**
  * Type of the parameters to be passed to {@link boundActionWithoutArguments}.

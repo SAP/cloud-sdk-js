@@ -20,7 +20,7 @@ module.exports = async srv => {
     'boundFunctionWithoutArgumentsWithMultipleKeys',
     'TestEntityWithMultipleKeys',
     async oRequest => {
-      oRequest.reply('xyz');
+      oRequest.reply('boundFunctionWithoutArgumentsWithMultipleKeys Result Value');
     }
   );
 
@@ -28,23 +28,23 @@ module.exports = async srv => {
     'boundActionWithoutArgumentsWithMultipleKeys',
     'TestEntityWithMultipleKeys',
     async oRequest => {
-      oRequest.reply('abc');
+      oRequest.reply('boundActionWithoutArgumentsWithMultipleKeys Result Value');
     }
   );
 
   srv.on('boundFunctionWithoutArguments', 'TestEntity', async oRequest => {
-    oRequest.reply('xyz');
+    oRequest.reply('boundFunctionWithoutArguments Result Value');
   });
 
   srv.on('boundFunctionWithArguments', 'TestEntity', async oRequest => {
-    oRequest.reply('xyz' + oRequest.data.param1 + oRequest.data.param2);
+    oRequest.reply(`boundFunctionWithArguments ${oRequest.data.param1} ${oRequest.data.param2} Result Value`);
   });
 
   srv.on(
     'boundFunctionWithArgumentsWithMultipleKeys',
     'TestEntityWithMultipleKeys',
     async oRequest => {
-      oRequest.reply('xyz' + oRequest.data.param1 + oRequest.data.param2);
+      oRequest.reply(`boundFunctionWithArgumentsWithMultipleKeys ${oRequest.data.param1} ${oRequest.data.param2} Result Value`);
     }
   );
 
@@ -82,7 +82,7 @@ module.exports = async srv => {
   });
 
   srv.on('boundActionWithoutArguments', 'TestEntity', async oRequest => {
-    oRequest.reply('abc');
+    oRequest.reply('boundActionWithoutArguments Result Value');
   });
 
   // unbound function

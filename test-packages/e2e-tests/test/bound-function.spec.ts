@@ -15,16 +15,22 @@ describe('bound functions', () => {
     });
 
     it('bound function returns expected string', async () => {
-      // http://localhost:4004/odata/test-service/TestEntity(KeyTestEntity=1)/TestService.boundFunctionWithoutArguments()
       const entity: TestEntity = await request.execute(destination);
       const functionResult = await entity
         .boundFunctionWithoutArguments({})
         .execute(destination);
-      expect(functionResult).toEqual('xyz');
+      expect(functionResult).toEqual('boundFunctionWithoutArguments Result Value');
+    });
+
+    it('bound function with arguments returns expected string', async () => {
+      const entity: TestEntity = await request.execute(destination);
+      const functionResult = await entity
+        .boundFunctionWithArguments({ param1: 'foo', param2: 'bar' })
+        .execute(destination);
+      expect(functionResult).toEqual('boundFunctionWithArguments foo bar Result Value');
     });
 
     it('bound function of entity with multiple keys returns expected string', async () => {
-      // http://localhost:4004/odata/test-service/TestEntityWithMultipleKeys(KeyTestEntityWithMultipleKeys=101,StringPropertyWithMultipleKeys='a',BooleanPropertyWithMultipleKeys=true)/TestService.boundFunctionWithoutArgumentsWithMultipleKeys()
       const { testEntityWithMultipleKeysApi } = testService();
       const entity: TestEntityWithMultipleKeys =
         await testEntityWithMultipleKeysApi
@@ -35,7 +41,20 @@ describe('bound functions', () => {
       const functionResult = await entity
         .boundFunctionWithoutArgumentsWithMultipleKeys({})
         .execute(destination);
-      expect(functionResult).toEqual('xyz');
+      expect(functionResult).toEqual('boundFunctionWithoutArgumentsWithMultipleKeys Result Value');
     });
+  });
+  it('bound function with arguments of entity with multiple keys returns expected string', async () => {
+    const { testEntityWithMultipleKeysApi } = testService();
+    const entity: TestEntityWithMultipleKeys =
+      await testEntityWithMultipleKeysApi
+        .requestBuilder()
+        .getByKey(101, 'a', true)
+        .execute(destination);
+
+    const functionResult = await entity
+      .boundFunctionWithArgumentsWithMultipleKeys({ param1: 'foo', param2: 'bar' })
+      .execute(destination);
+    expect(functionResult).toEqual('boundFunctionWithArgumentsWithMultipleKeys foo bar Result Value');
   });
 });

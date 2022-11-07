@@ -19,7 +19,7 @@ describe('bound actions', () => {
       const actionResult = await entity
         .boundActionWithoutArguments({})
         .execute(destination);
-      expect(actionResult).toEqual('abc');
+      expect(actionResult).toEqual('boundActionWithoutArguments Result Value');
     });
 
     it('bound action of entity with multiple keys returns expected string', async () => {
@@ -33,7 +33,7 @@ describe('bound actions', () => {
       const actionResult = await entity
         .boundActionWithoutArgumentsWithMultipleKeys({})
         .execute(destination);
-      expect(actionResult).toEqual('abc');
+      expect(actionResult).toEqual('boundActionWithoutArgumentsWithMultipleKeys Result Value');
     });
   });
 });

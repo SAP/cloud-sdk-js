@@ -11,6 +11,8 @@
                 <EntitySet Name="TestEntity50Prop" EntityType="TestService.TestEntity50Prop"/>
                 <FunctionImport Name="concatStrings" Function="TestService.concatStrings"/>
                 <FunctionImport Name="boundFunctionWithoutArguments" Function="TestService.boundFunctionWithoutArguments"/>
+                <FunctionImport Name="boundFunctionWithoutArgumentsComplexReturnType" Function="TestService.boundFunctionWithoutArgumentsComplexReturnType"/>
+                <FunctionImport Name="boundFunctionWithArguments" Function="TestService.boundFunctionWithArguments"/>
                 <ActionImport Name="boundActionWithoutArguments" Action="TestService.boundActionWithoutArguments"/>
                 <FunctionImport Name="boundFunctionWithoutArgumentsWithMultipleKeys" Function="TestService.boundFunctionWithoutArgumentsWithMultipleKeys"/>
                 <ActionImport Name="boundActionWithoutArgumentsWithMultipleKeys" Action="TestService.boundActionWithoutArgumentsWithMultipleKeys"/>
@@ -123,6 +125,16 @@
             </EntityType>
             <Function Name="boundFunctionWithoutArguments" IsBound="true" IsComposable="false">
                 <Parameter Name="param" Type="TestService.TestEntity" Nullable="false"/>
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Function Name="boundFunctionWithoutArgumentsComplexReturnType" IsBound="true" IsComposable="false">
+                <Parameter Name="param" Type="TestService.TestEntity" Nullable="false"/>
+                <ReturnType Type="asdfasdf"/>
+            </Function>
+            <Function Name="boundFunctionWithArguments" IsBound="true" IsComposable="false">
+                <Parameter Name="param" Type="TestService.TestEntity" Nullable="false"/>
+                <Parameter Name="param1" Type="Edm.String"/>
+                <Parameter Name="param2" Type="Edm.String"/>
                 <ReturnType Type="Edm.String"/>
             </Function>
             <Action Name="boundActionWithoutArguments" IsBound="true">

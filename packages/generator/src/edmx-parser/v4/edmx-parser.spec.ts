@@ -1,6 +1,7 @@
 import { resolve } from 'path';
-import { readEdmxFile } from '../edmx-file-reader';
+import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 import { parseComplexTypesBase } from '../common';
+import { readEdmxFile } from '../edmx-file-reader';
 import {
   parseComplexTypesV4,
   parseEntitySetsV4,
@@ -9,7 +10,6 @@ import {
   parseOperationImports,
   parseOperations
 } from '../v4';
-import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 
 describe('edmx-edmx-parser', () => {
   it('parses IsBound  with default false', () => {
@@ -21,7 +21,7 @@ describe('edmx-edmx-parser', () => {
     );
   });
 
-  it('parses IsBound  with true and false values', () => {
+  it('parses IsBound with true and false values', () => {
     const metadataEdmx = readEdmxFile(
       resolve(
         oDataServiceSpecs,
@@ -31,16 +31,17 @@ describe('edmx-edmx-parser', () => {
         'API-TEST_SRV.edmx'
       )
     );
-    expect(
-      parseOperations(metadataEdmx.root, 'function').map(
-        operation => operation.IsBound
-      )
-    ).toContain('false');
-    expect(
-      parseOperations(metadataEdmx.root, 'function').map(
-        operation => operation.IsBound
-      )
-    ).toContain('true');
+
+    const isBoundValues: string[] = parseOperations(
+      metadataEdmx.root,
+      'function'
+    ).map(operation => operation.IsBound);
+    expect(isBoundValues.length).not.toEqual(0);
+
+    const isBoundValuesWithTrueAndFalseRemoved = isBoundValues
+      .filter(isBound => isBound === 'true')
+      .filter(isBound => isBound === 'false');
+    expect(isBoundValuesWithTrueAndFalseRemoved.length).toEqual(0);
   });
 
   it('v4: parses EDMX file to JSON and coerces properties to arrays', () => {

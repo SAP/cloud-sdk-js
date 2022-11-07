@@ -19,7 +19,9 @@ describe('bound functions', () => {
       const functionResult = await entity
         .boundFunctionWithoutArguments({})
         .execute(destination);
-      expect(functionResult).toEqual('boundFunctionWithoutArguments Result Value');
+      expect(functionResult).toEqual(
+        'boundFunctionWithoutArguments Result Value'
+      );
     });
 
     it('bound function with arguments returns expected string', async () => {
@@ -27,7 +29,9 @@ describe('bound functions', () => {
       const functionResult = await entity
         .boundFunctionWithArguments({ param1: 'foo', param2: 'bar' })
         .execute(destination);
-      expect(functionResult).toEqual('boundFunctionWithArguments foo bar Result Value');
+      expect(functionResult).toEqual(
+        'boundFunctionWithArguments foo bar Result Value'
+      );
     });
 
     it('bound function without arguments returns expected complex object', async () => {
@@ -36,7 +40,8 @@ describe('bound functions', () => {
         .boundFunctionWithoutArgumentsComplexReturnType({})
         .execute(destination);
       expect(functionResult).toEqual({
-        someMessage: 'boundFunctionWithoutArgumentsComplexReturnType Result Value',
+        someMessage:
+          'boundFunctionWithoutArgumentsComplexReturnType Result Value',
         someId: 42
       });
     });
@@ -52,7 +57,9 @@ describe('bound functions', () => {
       const functionResult = await entity
         .boundFunctionWithoutArgumentsWithMultipleKeys({})
         .execute(destination);
-      expect(functionResult).toEqual('boundFunctionWithoutArgumentsWithMultipleKeys Result Value');
+      expect(functionResult).toEqual(
+        'boundFunctionWithoutArgumentsWithMultipleKeys Result Value'
+      );
     });
   });
   it('bound function with arguments of entity with multiple keys returns expected string', async () => {
@@ -64,8 +71,13 @@ describe('bound functions', () => {
         .execute(destination);
 
     const functionResult = await entity
-      .boundFunctionWithArgumentsWithMultipleKeys({ param1: 'foo', param2: 'bar' })
+      .boundFunctionWithArgumentsWithMultipleKeys({
+        param1: 'foo',
+        param2: 'bar'
+      })
       .execute(destination);
-    expect(functionResult).toEqual('boundFunctionWithArgumentsWithMultipleKeys foo bar Result Value');
+    expect(functionResult).toEqual(
+      'boundFunctionWithArgumentsWithMultipleKeys foo bar Result Value'
+    );
   });
 });

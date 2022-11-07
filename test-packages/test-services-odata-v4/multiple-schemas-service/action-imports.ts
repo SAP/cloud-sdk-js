@@ -44,10 +44,9 @@ export function testActionImportNoParameterComplexReturnType1<
     'TestActionImportNoParameterComplexReturnType1',
     data =>
       transformReturnValueForComplexType(data, data =>
-        entityDeserializer(deSerializers).deserializeComplexType(
-          data,
-          TestComplexType1
-        )
+        entityDeserializer(
+          deSerializers || defaultDeSerializers
+        ).deserializeComplexType(data, TestComplexType1)
       ),
     params,
     deSerializers
@@ -83,10 +82,9 @@ export function testActionImportNoParameterComplexReturnType2<
     'TestActionImportNoParameterComplexReturnType2',
     data =>
       transformReturnValueForComplexType(data, data =>
-        entityDeserializer(deSerializers).deserializeComplexType(
-          data,
-          TestComplexType2
-        )
+        entityDeserializer(
+          deSerializers || defaultDeSerializers
+        ).deserializeComplexType(data, TestComplexType2)
       ),
     params,
     deSerializers

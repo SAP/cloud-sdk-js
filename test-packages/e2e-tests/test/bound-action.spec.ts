@@ -33,7 +33,9 @@ describe('bound actions', () => {
       const actionResult = await entity
         .boundActionWithoutArgumentsWithMultipleKeys({})
         .execute(destination);
-      expect(actionResult).toEqual('boundActionWithoutArgumentsWithMultipleKeys Result Value');
+      expect(actionResult).toEqual(
+        'boundActionWithoutArgumentsWithMultipleKeys Result Value'
+      );
     });
   });
 });

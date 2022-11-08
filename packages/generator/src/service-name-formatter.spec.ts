@@ -284,13 +284,21 @@ describe('name-formatter', () => {
     it('should generate bound parameter name', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToBoundParameterName('A_SomeEntity', 'MyFn', 'MyParam');
-      expect(formatter['parameterNameGenerators']['A_SomeEntity.MyFn']['usedNames'].pop()).toEqual('myParam');
+      expect(
+        formatter['parameterNameGenerators']['A_SomeEntity.MyFn'][
+          'usedNames'
+        ].pop()
+      ).toEqual('myParam');
     });
 
     it('should generate bound operation name', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToBoundOperationName('A_SomeEntity', 'MyFn');
-      expect(formatter['instancePropertyNameGenerators']['A_SomeEntity']['usedNames'].pop()).toEqual('myFn');
+      expect(
+        formatter['instancePropertyNameGenerators']['A_SomeEntity'][
+          'usedNames'
+        ].pop()
+      ).toEqual('myFn');
     });
   });
 });

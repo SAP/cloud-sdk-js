@@ -59,15 +59,31 @@ describe('entity class generator generates a class', () => {
   });
 
   it('has expected parameters for bound function', () => {
-    const fn = classDeclaration.methods?.find(
-      ({ name }) => name.startsWith('getPrice')
+    const fn = classDeclaration.methods?.find(({ name }) =>
+      name.startsWith('getPrice')
     );
 
-    expect(fn?.parameters?.map(({ name }) => name)).toEqual(['parameters', 'deSerializers']);
+    expect(fn?.parameters?.map(({ name }) => name)).toEqual([
+      'parameters',
+      'deSerializers'
+    ]);
+
+    const parameters = fn?.parameters?.filter(p => p.name === 'parameters');
+    expect(parameters.length).toEqual(1);
+    expect(parameters[0].type).toEqual('GetPriceParameters<DeSerializersT>');
   });
 
   it('has expected parameters for bound action', () => {
-    const fn = classDeclaration.methods?.find(({ name }) => name.startsWith('payMeal'));
-    expect(fn?.parameters?.map(({ name }) => name)).toEqual(['parameters', 'deSerializers']);
+    const fn = classDeclaration.methods?.find(({ name }) =>
+      name.startsWith('payMeal')
+    );
+    expect(fn?.parameters?.map(({ name }) => name)).toEqual([
+      'parameters',
+      'deSerializers'
+    ]);
+
+    const parameters = fn?.parameters?.filter(p => p.name === 'parameters');
+    expect(parameters.length).toEqual(1);
+    expect(parameters[0].type).toEqual('PayMealParameters<DeSerializersT>');
   });
 });

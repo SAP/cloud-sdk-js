@@ -7,10 +7,6 @@ import {
 import { parametersInterface } from './parameters-interface';
 
 describe('parameters-interface', () => {
-  it('function parameter interface for bound function', () => {
-    // (parameters: BoundActionWithoutArgumentsParameters<T>, deSerializers: T): BoundActionImportRequestBuilder<TestEntity<T>,T,BoundActionWithoutArgumentsParameters<T>,string>
-  });
-
   it('function parameter interface with non nullable parameter', () => {
     expect(parametersInterface(orderBreakfast)).toEqual({
       kind: StructureKind.Interface,

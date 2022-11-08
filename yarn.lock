@@ -1151,9 +1151,9 @@
     axios ">=0.27.2"
 
 "@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.2.3", "@sap/cds@^6.3.0":
-  version "6.3.0"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.3.0.tgz#22108ac47a729ef7d9e88c3d535717017b33f2b8"
-  integrity sha512-7naMViPWD9UxFPsGYnG2j2LmwLf9NxINZOUVgbC4lFxkVMxCqhQWfdmtrtAXbrFmhFcapmoNp0GThKAGAJuQAA==
+  version "6.3.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.3.1.tgz#ae810595fd14706a94e01a3efc05da60be7fea97"
+  integrity sha512-EywUoV16yfYMMEgpY5M4NdNrdjw7dPcIK5c+pAVjio+16PDa7l2x81AhO/JNWD7g7j/POsNUc2ry+LtRxUuceQ==
   dependencies:
     "@sap/cds-compiler" "^3.2.0"
     "@sap/cds-foss" "^4"

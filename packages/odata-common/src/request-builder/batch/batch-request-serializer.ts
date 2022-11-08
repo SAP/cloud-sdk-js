@@ -4,12 +4,19 @@ import { ODataRequest } from '../../request/odata-request';
 import { ODataRequestConfig } from '../../request/odata-request-config';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { DeSerializers } from '../../de-serializers';
-import { BatchChangeSet } from './batch-change-set';
+import { UpdateRequestBuilderBase } from '../update-request-builder-base';
+import { EntityBase } from '../../entity-base';
+import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
+import { CreateRequestBuilderBase } from '../create-request-builder-base';
+import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
+import { ODataFunctionImportRequestConfig } from '../../internal';
+import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
+import type { BatchRequestBuilder } from './batch-request-builder';
 import {
   BatchRequestSerializationOptions,
   BatchSubRequestPathType
 } from './batch-request-options';
-import type { BatchRequestBuilder } from './batch-request-builder';
+import { BatchChangeSet } from './batch-change-set';
 
 /**
  * Serialize change set to string.
@@ -42,8 +49,13 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
  * @returns The serialized string representation of a multipart request, including the multipart headers.
  * @internal
  */
-export function serializeRequest(
-  request: Omit<MethodRequestBuilder, 'execute'>,
+export function serializeRequest<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  ParametersT
+>(
+  request: AllBuilderTypes<EntityT, DeSerializersT, ReturnT, ParametersT>,
   options: BatchRequestSerializationOptions = {}
 ): string {
   const odataRequest = new ODataRequest(
@@ -64,7 +76,9 @@ export function serializeRequest(
   return [
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
-    ...(method !== 'GET' ? [`Content-Id: ${this.getBatchReference.id}`] : []),
+    ...(method !== 'GET' && hasGetBatchReference(request)
+      ? [`Content-Id: ${request.getBatchReference().id}`]
+      : []),
     '',
     `${method} ${getUrl(odataRequest, options.subRequestPathType)} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),
@@ -72,6 +86,60 @@ export function serializeRequest(
     ...getPayload(request),
     ''
   ].join(unixEOL);
+}
+
+type AllBuilderTypes<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  ParametersT
+> =
+  | Omit<MethodRequestBuilder, 'execute'>
+  | ActionFunctionImportRequestBuilderBase<
+      ReturnT,
+      ODataFunctionImportRequestConfig<DeSerializersT, ParametersT>
+    >
+  | CreateRequestBuilderBase<EntityT, DeSerializersT>
+  | DeleteRequestBuilderBase<EntityT, DeSerializersT>
+  | GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
+  | UpdateRequestBuilderBase<EntityT, DeSerializersT>;
+
+type ExcludeMethodRequestBuilderType<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  ParametersT
+> =
+  | ActionFunctionImportRequestBuilderBase<
+      ReturnT,
+      ODataFunctionImportRequestConfig<DeSerializersT, ParametersT>
+    >
+  | CreateRequestBuilderBase<EntityT, DeSerializersT>
+  | DeleteRequestBuilderBase<EntityT, DeSerializersT>
+  | GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
+  | UpdateRequestBuilderBase<EntityT, DeSerializersT>;
+
+function hasGetBatchReference<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  ParametersT
+>(
+  request: AllBuilderTypes<EntityT, DeSerializersT, ReturnT, ParametersT>
+): request is ExcludeMethodRequestBuilderType<
+  EntityT,
+  DeSerializersT,
+  ReturnT,
+  ParametersT
+> {
+  return !!(
+    request as ExcludeMethodRequestBuilderType<
+      EntityT,
+      DeSerializersT,
+      ReturnT,
+      ParametersT
+    >
+  ).getBatchReference;
 }
 
 function getUrl<ConfigT extends ODataRequestConfig>(

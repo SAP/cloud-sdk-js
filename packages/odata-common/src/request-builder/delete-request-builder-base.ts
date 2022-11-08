@@ -51,6 +51,16 @@ export abstract class DeleteRequestBuilderBase<
   }
 
   /**
+   * Gets identifier for the batch request.
+   * @returns Batch request identifier.
+   */
+  getBatchReference(): BatchReference {
+    return {
+      id: this.batchReference.id
+    };
+  }
+
+  /**
    * Sets user-defined identifier for the batch reference.
    * @param id - User-defined batch reuest identifier.
    */

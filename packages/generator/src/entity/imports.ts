@@ -1,12 +1,12 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { operationImportDeclarations } from '../operations';
 import {
   complexTypeImportDeclarations,
   enumTypeImportDeclarations,
   mergeImportDeclarations,
   odataImportDeclaration
 } from '../imports';
+import { operationImportDeclarations } from '../operations';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
 /**
@@ -30,7 +30,7 @@ export function entityImportDeclarations(
         kind: StructureKind.ImportDeclaration,
         isTypeOnly: true
       },
-      ...operationImportDeclarations(service, 'action', entity.actions), // fixme(fwilhe) need to filter here
+      ...operationImportDeclarations(service, 'action', entity.actions),
       ...operationImportDeclarations(service, 'function', entity.functions),
       ...enumTypeImportDeclarations(entity.properties)
     ]);

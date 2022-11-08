@@ -58,18 +58,16 @@ describe('entity class generator generates a class', () => {
     expect(classDeclaration.methods?.length).toEqual(2);
   });
 
-  // TODO decide if list of parameters func(p1,p2,...) or like for unbound and currently implemented func({paramsObj},
-  xit('has expected parameters for bound function', () => {
+  it('has expected parameters for bound function', () => {
     const fn = classDeclaration.methods?.find(
-      ({ name }) => name === 'getPrice'
+      ({ name }) => name.startsWith('getPrice')
     );
 
-    expect(fn?.parameters?.map(({ name }) => name)).toEqual(['meal']);
+    expect(fn?.parameters?.map(({ name }) => name)).toEqual(['parameters', 'deSerializers']);
   });
 
-  // TODO decide if list of parameters func(p1,p2,...) or like for unbound and currently implemented func({paramsObj},
-  xit('has expected parameters for bound action', () => {
-    const fn = classDeclaration.methods?.find(({ name }) => name === 'payMeal');
-    expect(fn?.parameters?.map(({ name }) => name)).toEqual(['meal', 'cash']);
+  it('has expected parameters for bound action', () => {
+    const fn = classDeclaration.methods?.find(({ name }) => name.startsWith('payMeal'));
+    expect(fn?.parameters?.map(({ name }) => name)).toEqual(['parameters', 'deSerializers']);
   });
 });

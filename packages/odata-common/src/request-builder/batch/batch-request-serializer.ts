@@ -9,7 +9,7 @@ import { EntityBase } from '../../entity-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { CreateRequestBuilderBase } from '../create-request-builder-base';
 import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
-import { ODataFunctionImportRequestConfig } from '../../internal';
+import { ODataFunctionImportRequestConfig } from '../../request/odata-function-import-request-config';
 import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
 import type { BatchRequestBuilder } from './batch-request-builder';
 import {

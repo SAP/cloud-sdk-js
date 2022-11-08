@@ -41,7 +41,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    * Sets user-defined identifier for the batch reference.
    * @param id - User-defined batch reuest identifier.
    */
-   setBatchId(id: string): void {
+  setBatchId(id: string): void {
     this.batchReference.id = id;
   }
 

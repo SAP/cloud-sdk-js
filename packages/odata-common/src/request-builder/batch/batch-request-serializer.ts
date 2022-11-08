@@ -8,6 +8,8 @@ import { UpdateRequestBuilderBase } from '../update-request-builder-base';
 import { EntityBase } from '../../entity-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { CreateRequestBuilderBase } from '../create-request-builder-base';
+import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
+import { ODataFunctionImportRequestConfig } from '../../internal';
 import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
 import type { BatchRequestBuilder } from './batch-request-builder';
 import {
@@ -49,9 +51,11 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
  */
 export function serializeRequest<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  ParametersT
 >(
-  request: AllBuilderTypes<EntityT, DeSerializersT>,
+  request: AllBuilderTypes<EntityT, DeSerializersT, ReturnT, ParametersT>,
   options: BatchRequestSerializationOptions = {}
 ): string {
   const odataRequest = new ODataRequest(
@@ -86,9 +90,15 @@ export function serializeRequest<
 
 type AllBuilderTypes<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  ParametersT
 > =
   | Omit<MethodRequestBuilder, 'execute'>
+  | ActionFunctionImportRequestBuilderBase<
+      ReturnT,
+      ODataFunctionImportRequestConfig<DeSerializersT, ParametersT>
+    >
   | CreateRequestBuilderBase<EntityT, DeSerializersT>
   | DeleteRequestBuilderBase<EntityT, DeSerializersT>
   | GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
@@ -96,8 +106,14 @@ type AllBuilderTypes<
 
 type ExcludeMethodRequestBuilderType<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  ParametersT
 > =
+  | ActionFunctionImportRequestBuilderBase<
+      ReturnT,
+      ODataFunctionImportRequestConfig<DeSerializersT, ParametersT>
+    >
   | CreateRequestBuilderBase<EntityT, DeSerializersT>
   | DeleteRequestBuilderBase<EntityT, DeSerializersT>
   | GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
@@ -105,12 +121,25 @@ type ExcludeMethodRequestBuilderType<
 
 function hasGetBatchReference<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  ParametersT
 >(
-  request: AllBuilderTypes<EntityT, DeSerializersT>
-): request is ExcludeMethodRequestBuilderType<EntityT, DeSerializersT> {
-  return !!(request as ExcludeMethodRequestBuilderType<EntityT, DeSerializersT>)
-    .getBatchReference;
+  request: AllBuilderTypes<EntityT, DeSerializersT, ReturnT, ParametersT>
+): request is ExcludeMethodRequestBuilderType<
+  EntityT,
+  DeSerializersT,
+  ReturnT,
+  ParametersT
+> {
+  return !!(
+    request as ExcludeMethodRequestBuilderType<
+      EntityT,
+      DeSerializersT,
+      ReturnT,
+      ParametersT
+    >
+  ).getBatchReference;
 }
 
 function getUrl<ConfigT extends ODataRequestConfig>(

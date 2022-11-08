@@ -8,6 +8,6 @@
     "compile": "rm -rf transpiled && tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@actions/core": "^1.10.0"
+    "@actions/core": "^1.9.1"
   }
 }

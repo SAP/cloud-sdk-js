@@ -53,7 +53,7 @@ HTTP/1.1 200 OK
 
   const baseUrl = 'https://some.sdk.test.url.com';
 
-  it('batch works with funciton imports', async () => {
+  it('batch works with function imports', async () => {
     const body = [
       `--batch_${regexUuid}`,
       'Content-Type: application/http',

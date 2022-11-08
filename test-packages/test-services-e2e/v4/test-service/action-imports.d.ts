@@ -1,7 +1,12 @@
+/*
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
 import {
-  ActionImportRequestBuilder,
   DeSerializers,
-  DefaultDeSerializers
+  DefaultDeSerializers,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 /**
@@ -17,8 +22,7 @@ export interface CreateTestEntityByIdParameters<
 }
 /**
  * Create Test Entity By Id.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function createTestEntityById<
@@ -44,8 +48,7 @@ export interface CreateTestEntityByIdReturnIdParameters<
 }
 /**
  * Create Test Entity By Id Return Id.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function createTestEntityByIdReturnId<

@@ -1,7 +1,12 @@
+/*
+ * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
 import {
-  ActionImportRequestBuilder,
   DeSerializers,
-  DefaultDeSerializers
+  DefaultDeSerializers,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType1 } from './TestComplexType1';
 import { TestComplexType2 } from './TestComplexType2';
@@ -13,8 +18,7 @@ export interface TestActionImportNoParameterComplexReturnType1Parameters<
 > {}
 /**
  * Test Action Import No Parameter Complex Return Type 1.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportNoParameterComplexReturnType1<
@@ -35,8 +39,7 @@ export interface TestActionImportNoParameterComplexReturnType2Parameters<
 > {}
 /**
  * Test Action Import No Parameter Complex Return Type 2.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportNoParameterComplexReturnType2<

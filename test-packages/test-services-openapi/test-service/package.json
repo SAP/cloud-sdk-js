@@ -12,17 +12,12 @@
     "type": "git",
     "url": ""
   },
-  "files": [
-    "**/*.js",
-    "**/*.js.map",
-    "**/*.d.ts",
-    "**/d.ts.map"
-  ],
+  "files": ["**/*.js", "**/*.js.map", "**/*.d.ts", "**/d.ts.map"],
   "scripts": {
     "compile": "npx tsc"
   },
   "dependencies": {
-    "@sap-cloud-sdk/openapi": "^2.9.0"
+    "@sap-cloud-sdk/openapi": "^2.10.0"
   },
   "devDependencies": {
     "typescript": "~4.1.2"

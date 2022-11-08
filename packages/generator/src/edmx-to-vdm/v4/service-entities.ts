@@ -1,10 +1,9 @@
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmServiceEntities } from '../../vdm-types';
-import { generateFunctionImportsV4 } from './function-import';
+import { generateOperations } from './operation';
 import { generateComplexTypesV4 } from './complex-type';
 import { generateEntitiesV4 } from './entity';
-import { generateActionImportsV4 } from './action-import';
 import { generateEnumTypesV4 } from './enum-type';
 
 /**
@@ -28,16 +27,18 @@ export function getServiceEntitiesV4(
     enumTypes,
     formatter
   );
-  const actionsImports = generateActionImportsV4(
+  const actionImports = generateOperations(
     serviceMetadata,
     serviceName,
+    'action',
     entities,
     complexTypes,
     formatter
   );
-  const functionImports = generateFunctionImportsV4(
+  const functionImports = generateOperations(
     serviceMetadata,
     serviceName,
+    'function',
     entities,
     complexTypes,
     formatter
@@ -48,6 +49,6 @@ export function getServiceEntitiesV4(
     enumTypes,
     entities,
     functionImports,
-    actionImports: actionsImports
+    actionImports
   };
 }

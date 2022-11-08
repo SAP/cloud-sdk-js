@@ -21,23 +21,26 @@ export function checkStaticProperties(entityClass: ClassDeclaration): void {
 }
 
 export async function getGeneratedFiles(
-  oDataVersion: ODataVersion
+  oDataVersion: ODataVersion,
+  outputDir: string
 ): Promise<SourceFile[]> {
   const project = await generateProject(
     createOptions({
       inputDir: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
-      useSwagger: false
+      useSwagger: false,
+      outputDir
     })
   );
   return project!.project.getSourceFiles();
 }
 
-export function getFunctionImportDeclarations(
-  files: SourceFile[]
+export function getOperationFunctionDeclarations(
+  files: SourceFile[],
+  type: 'function' | 'action'
 ): FunctionDeclaration[] {
   const functionImportsFile = files.find(
-    file => file.getBaseName() === 'function-imports.ts'
+    file => file.getBaseName() === `${type}-imports.ts`
   );
 
-  return functionImportsFile!.getFunctions();
+  return functionImportsFile?.getFunctions() || [];
 }

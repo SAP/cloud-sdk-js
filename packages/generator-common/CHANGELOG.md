@@ -1,5 +1,12 @@
 # @sap-cloud-sdk/generator-common
 
+## 2.10.0
+
+### Patch Changes
+
+- f76da3060: [Fixed Issue] Show detailed error message of compilation errors instead of `[object Object]`.
+  - @sap-cloud-sdk/util@2.10.0
+
 ## 2.9.0
 
 ### Patch Changes

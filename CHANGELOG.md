@@ -28,6 +28,25 @@
 
 -
 
+# 2.10.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.10.0
+
+## Compatibility Notes
+
+- [odata-common, odata-v2, odata-v4] Changed constructor argument of class `EntityBase` from `schema` to `_entityApi`. (144ff66f4)
+
+## Improvements
+
+- [openapi-generator] Add `force` option to`rm` commands, when setting `clearOutputDir` to true. (f76da3060)
+
+## Fixed Issues
+
+- [odata-v2, odata-v4] Fix the "entity generic type" of the "delete request builder". (f76da3060)
+- [generator, openapi-generator] Show detailed error message of compilation errors instead of `[object Object]`. (f76da3060)
+- [generator-common] Show detailed error message of compilation errors instead of `[object Object]`.
+  - @sap-cloud-sdk/util@2.10.0 (f76da3060)
+
 # 2.9.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.9.0

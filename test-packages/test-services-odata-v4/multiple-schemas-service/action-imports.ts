@@ -5,12 +5,12 @@
  */
 import {
   entityDeserializer,
-  ActionImportRequestBuilder,
-  ActionImportParameter,
   transformReturnValueForComplexType,
   DeSerializers,
   DefaultDeSerializers,
-  defaultDeSerializers
+  defaultDeSerializers,
+  ActionImportParameter,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { multipleSchemasService } from './service';
 import { TestComplexType1 } from './TestComplexType1';
@@ -25,8 +25,7 @@ export interface TestActionImportNoParameterComplexReturnType1Parameters<
 
 /**
  * Test Action Import No Parameter Complex Return Type 1.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportNoParameterComplexReturnType1<
@@ -65,8 +64,7 @@ export interface TestActionImportNoParameterComplexReturnType2Parameters<
 
 /**
  * Test Action Import No Parameter Complex Return Type 2.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportNoParameterComplexReturnType2<

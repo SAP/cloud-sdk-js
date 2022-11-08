@@ -1,5 +1,8 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
-import { Import, serializeImports } from '../../generator-common';
+import {
+  serializeImports,
+  Import
+} from '@sap-cloud-sdk/generator-common/internal';
 import { hasEntities } from '../../generator-utils';
 import { VdmServiceMetadata } from '../../vdm-types';
 import { serviceBuilder, serviceClass } from './class';

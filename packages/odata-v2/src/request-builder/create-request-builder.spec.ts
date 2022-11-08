@@ -227,6 +227,36 @@ describe('CreateRequestBuilder', () => {
     testPostRequestOutcome(actual, childEntity.setOrInitializeRemoteState());
   });
 
+  it('should build append custom URLs', async () => {
+    const stringProp = 'str';
+    const customPropKey = 'customPropKey';
+    const customPropVal = 'customPropVal';
+
+    const testEntity = testEntityApi
+      .entityBuilder()
+      .stringProperty(stringProp)
+      .withCustomFields({ [customPropKey]: customPropVal })
+      .build();
+
+    const body = { StringProperty: stringProp, customPropKey: customPropVal };
+
+    mockCreateRequest(
+      {
+        body,
+        path: 'A_TestEntity/$links/to_MultiLink'
+      },
+      testEntityApi
+    );
+
+    const actual = await testEntityApi
+      .requestBuilder()
+      .create(testEntity)
+      .appendPath('/$links', '/to_MultiLink')
+      .executeRaw(defaultDestination);
+
+    expect(actual.data.d.customPropKey).toEqual(customPropVal);
+  });
+
   it('throws an error when request execution fails', async () => {
     mockCreateRequest(
       {

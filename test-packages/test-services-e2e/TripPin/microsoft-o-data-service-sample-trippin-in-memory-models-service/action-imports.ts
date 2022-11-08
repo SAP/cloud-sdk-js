@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  ActionImportRequestBuilder,
-  ActionImportParameter,
   transformReturnValueForUndefined,
   DeSerializers,
   DefaultDeSerializers,
-  defaultDeSerializers
+  defaultDeSerializers,
+  ActionImportParameter,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { microsoftODataServiceSampleTrippinInMemoryModelsService } from './service';
 
@@ -22,8 +22,7 @@ export interface ResetDataSourceParameters<
 
 /**
  * Reset Data Source.
- *
- * @param parameters - Object containing all parameters for the action import.
+ * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function resetDataSource<

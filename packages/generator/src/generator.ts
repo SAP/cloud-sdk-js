@@ -1,4 +1,4 @@
-import { PathLike } from 'fs';
+import { existsSync, PathLike, promises as fsPromises } from 'fs';
 import { resolve, dirname, sep, posix } from 'path';
 import {
   createLogger,
@@ -7,7 +7,6 @@ import {
 } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
-  Directory,
   IndentationText,
   ModuleResolutionKind,
   Project,
@@ -24,12 +23,15 @@ import {
   readCompilerOptions,
   copyFiles,
   getSdkVersion,
-  packageDescription
+  packageDescription,
+  createFile,
+  readPrettierConfig,
+  CreateFileOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';
-import { otherFile, sourceFile } from './file-generator';
+import { sourceFile } from './file-generator';
 import {
   defaultValueProcessesJsGeneration,
   GeneratorOptions
@@ -44,15 +46,13 @@ import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
 import { VdmServiceMetadata } from './vdm-types';
-import {
-  actionImportSourceFile,
-  functionImportSourceFile
-} from './action-function-import/file';
+import { operationsSourceFile } from './operations/file';
 import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetadata } from './sdk-metadata';
-import { createFile } from './generator-common/create-file';
 import { entityApiFile } from './generator-without-ts-morph';
 import { serviceFile } from './generator-without-ts-morph/service/file';
+
+const { mkdir, readdir } = fsPromises;
 
 const logger = createLogger({
   package: 'generator',
@@ -69,24 +69,27 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   if (!projectAndServices) {
     throw Error('The project is undefined.');
   }
-  const project = projectAndServices.project;
   const services = projectAndServices.services;
-
-  await project.save();
 
   await generateFilesWithoutTsMorph(services, options);
 
   if (options.generateJs) {
-    const directories = project
-      .getDirectories()
-      .filter(dir => !!dir.getSourceFile('tsconfig.json'));
+    const directories = services
+      .filter(async service => {
+        const files = await readdir(
+          resolvePath(service.directoryName, options)
+        );
+        return files.includes('tsconfig.json');
+      })
+      .map(service => resolvePath(service.directoryName, options));
+
     const chunks = splitInChunks(
       directories,
       options.processesJsGeneration || defaultValueProcessesJsGeneration
     );
     try {
       await chunks.reduce(
-        (all, chunk) => all.then(() => transpileDirectories(chunk)),
+        (all, chunk) => all.then(() => transpileDirectories(chunk, options)),
         Promise.resolve()
       );
     } catch (err) {
@@ -128,15 +131,23 @@ export function getInstallODataErrorMessage(
  * @internal
  */
 export async function transpileDirectories(
-  directories: Directory[]
+  directories: string[],
+  options: GeneratorOptions
 ): Promise<void[]> {
   return Promise.all(
     directories.map(async directory => {
-      const compilerOptions = await readCompilerOptions(directory.getPath());
-      return transpileDirectory(directory.getPath(), compilerOptions);
+      const [compilerOptions, createFileOptions] = await Promise.all([
+        readCompilerOptions(directory),
+        getFileCreationOptions(options)
+      ]);
+      return transpileDirectory(directory, {
+        compilerOptions,
+        createFileOptions
+      });
     })
   );
 }
+
 /**
  * @internal
  */
@@ -201,6 +212,17 @@ async function generateFilesWithoutTsMorph(
   await Promise.all(promises);
 }
 
+async function getFileCreationOptions(
+  options: GeneratorOptions
+): Promise<CreateFileOptions> {
+  return {
+    prettierOptions: await readPrettierConfig(
+      options.prettierConfig?.toString()
+    ),
+    overwrite: options.forceOverwrite
+  };
+}
+
 async function generateIncludes(
   service: VdmServiceMetadata,
   options: GeneratorOptions
@@ -220,11 +242,12 @@ async function generateServiceFile(
   options: GeneratorOptions
 ): Promise<void> {
   const serviceDir = resolvePath(service.directoryName, options);
+  const createFileOptions = await getFileCreationOptions(options);
   await createFile(
     serviceDir,
     'service.ts',
     serviceFile(service),
-    options.forceOverwrite
+    createFileOptions
   );
 }
 
@@ -232,14 +255,14 @@ async function generateEntityApis(
   service: VdmServiceMetadata,
   options: GeneratorOptions
 ): Promise<void> {
-  const serviceDir = resolvePath(service.directoryName, options);
+  const createFileOptions = await getFileCreationOptions(options);
   await Promise.all(
     service.entities.map(entity =>
       createFile(
-        serviceDir,
+        resolvePath(service.directoryName, options),
         `${entity.className}Api.ts`,
         entityApiFile(entity, service),
-        options.forceOverwrite
+        createFileOptions
       )
     )
   );
@@ -253,56 +276,70 @@ export async function generateSourcesForService(
   project: Project,
   options: GeneratorOptions
 ): Promise<void> {
-  const serviceDir = project.createDirectory(
-    resolvePath(service.directoryName, options)
-  );
+  const serviceDirPath = resolvePath(service.directoryName, options);
+  const serviceDir = project.createDirectory(serviceDirPath);
+  const createFileOptions = await getFileCreationOptions(options);
 
+  if (!existsSync(serviceDirPath)) {
+    await mkdir(serviceDirPath, { recursive: true });
+  }
+  const filePromises: Promise<any>[] = [];
   logger.info(`[${service.originalFileName}] Generating entities ...`);
 
   if (options.generatePackageJson) {
-    otherFile(
-      serviceDir,
-      'package.json',
-      await packageJson({
-        npmPackageName: service.npmPackageName,
-        version: await getVersionForClient(options.versionInPackageJson),
-        sdkVersion: await getSdkVersion(),
-        description: packageDescription(service.speakingModuleName),
-        sdkAfterVersionScript: options.sdkAfterVersionScript,
-        oDataVersion: service.oDataVersion,
-        license: options.licenseInPackageJson
-      }),
-      options.forceOverwrite
+    filePromises.push(
+      createFile(
+        serviceDirPath,
+        'package.json',
+        await packageJson({
+          npmPackageName: service.npmPackageName,
+          version: await getVersionForClient(options.versionInPackageJson),
+          sdkVersion: await getSdkVersion(),
+          description: packageDescription(service.speakingModuleName),
+          sdkAfterVersionScript: options.sdkAfterVersionScript,
+          oDataVersion: service.oDataVersion,
+          license: options.licenseInPackageJson
+        }),
+        createFileOptions
+      )
     );
   }
 
-  otherFile(serviceDir, 'tsconfig.json', tsConfig(), options.forceOverwrite);
+  filePromises.push(
+    createFile(serviceDirPath, 'tsconfig.json', tsConfig(), createFileOptions)
+  );
 
   if (hasEntities(service)) {
     logger.info(
       `[${service.originalFileName}] Generating batch request builder ...`
     );
-    sourceFile(
-      serviceDir,
-      'BatchRequest',
-      batchSourceFile(service),
-      options.forceOverwrite
+    filePromises.push(
+      sourceFile(
+        serviceDir,
+        'BatchRequest',
+        batchSourceFile(service),
+        createFileOptions
+      )
     );
   }
 
   service.entities.forEach(entity => {
     logger.info(`Generating entity: ${entity.className}...`);
-    sourceFile(
-      serviceDir,
-      entity.className,
-      entitySourceFile(entity, service),
-      options.forceOverwrite
+    filePromises.push(
+      sourceFile(
+        serviceDir,
+        entity.className,
+        entitySourceFile(entity, service),
+        createFileOptions
+      )
     );
-    sourceFile(
-      serviceDir,
-      `${entity.className}RequestBuilder`,
-      requestBuilderSourceFile(entity, service.oDataVersion),
-      options.forceOverwrite
+    filePromises.push(
+      sourceFile(
+        serviceDir,
+        `${entity.className}RequestBuilder`,
+        requestBuilderSourceFile(entity, service.oDataVersion),
+        createFileOptions
+      )
     );
   });
 
@@ -310,11 +347,13 @@ export async function generateSourcesForService(
     logger.info(
       `[${service.originalFileName}] Generating enum type ${enumType.originalName} ...`
     );
-    sourceFile(
-      serviceDir,
-      enumType.typeName,
-      enumTypeSourceFile(enumType),
-      options.forceOverwrite
+    filePromises.push(
+      sourceFile(
+        serviceDir,
+        enumType.typeName,
+        enumTypeSourceFile(enumType),
+        createFileOptions
+      )
     );
   });
 
@@ -322,45 +361,55 @@ export async function generateSourcesForService(
     logger.info(
       `[${service.originalFileName}] Generating complex type ${complexType.originalName} ...`
     );
-    sourceFile(
-      serviceDir,
-      complexType.typeName,
-      complexTypeSourceFile(complexType, service.oDataVersion),
-      options.forceOverwrite
+    filePromises.push(
+      sourceFile(
+        serviceDir,
+        complexType.typeName,
+        complexTypeSourceFile(complexType, service.oDataVersion),
+        createFileOptions
+      )
     );
   });
 
-  if (service.functionImports && service.functionImports.length) {
+  if (service.functionImports?.length) {
     logger.info(
       `[${service.originalFileName}] Generating function imports ...`
     );
-    sourceFile(
-      serviceDir,
-      'function-imports',
-      functionImportSourceFile(service),
-      options.forceOverwrite
+    filePromises.push(
+      sourceFile(
+        serviceDir,
+        'function-imports',
+        operationsSourceFile(service, 'function'),
+        createFileOptions
+      )
     );
   }
 
-  if (service.actionImports && service.actionImports.length) {
+  if (service.actionImports?.length) {
     logger.info(`[${service.originalFileName}] Generating action imports ...`);
-    sourceFile(
-      serviceDir,
-      'action-imports',
-      actionImportSourceFile(service),
-      options.forceOverwrite
+    filePromises.push(
+      sourceFile(
+        serviceDir,
+        'action-imports',
+        operationsSourceFile(service, 'action'),
+        createFileOptions
+      )
     );
   }
 
-  sourceFile(serviceDir, 'index', indexFile(service), options.forceOverwrite);
+  filePromises.push(
+    sourceFile(serviceDir, 'index', indexFile(service), createFileOptions)
+  );
 
   if (options.writeReadme) {
     logger.info(`[${service.originalFileName}] Generating readme ...`);
-    otherFile(
-      serviceDir,
-      'README.md',
-      readme(service, options.s4hanaCloud),
-      options.forceOverwrite
+    filePromises.push(
+      createFile(
+        serviceDirPath,
+        'README.md',
+        readme(service, options.s4hanaCloud),
+        createFileOptions
+      )
     );
   }
 
@@ -369,11 +418,13 @@ export async function generateSourcesForService(
       logger.info(
         `[${service.originalFileName}] Generating ${service.directoryName}-csn.json ...`
       );
-      otherFile(
-        serviceDir,
-        `${service.directoryName}-csn.json`,
-        await csn(service),
-        options.forceOverwrite
+      filePromises.push(
+        createFile(
+          serviceDirPath,
+          `${service.directoryName}-csn.json`,
+          await csn(service),
+          createFileOptions
+        )
       );
     } catch (e) {
       logger.error(
@@ -387,17 +438,22 @@ export async function generateSourcesForService(
       service.originalFileName
     );
     logger.info(`Generating sdk client metadata ${clientFileName}...`);
-    const metadataDir = project.createDirectory(
-      resolve(dirname(service.edmxPath.toString()), 'sdk-metadata')
-    );
 
-    otherFile(
-      metadataDir,
-      clientFileName,
-      JSON.stringify(await sdkMetadata(service), null, 2),
-      options.forceOverwrite
+    const path = resolve(dirname(service.edmxPath.toString()), 'sdk-metadata');
+    if (!existsSync(path)) {
+      await mkdir(path);
+    }
+
+    filePromises.push(
+      createFile(
+        path,
+        clientFileName,
+        JSON.stringify(await sdkMetadata(service), null, 2),
+        createFileOptions
+      )
     );
   }
+  await Promise.all(filePromises);
 }
 
 function projectOptions(): ProjectOptions {

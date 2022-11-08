@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/openapi
 
+## 2.10.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@2.10.0
+- @sap-cloud-sdk/http-client@2.10.0
+- @sap-cloud-sdk/util@2.10.0
+
 ## 2.9.0
 
 ### Patch Changes

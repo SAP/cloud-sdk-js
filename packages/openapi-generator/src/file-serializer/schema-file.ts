@@ -1,8 +1,11 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
+import {
+  serializeImports,
+  Import
+} from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiPersistedSchema } from '../openapi-types';
 import { collectRefs, getSchemaPropertiesDocumentation } from '../schema-util';
 import { serializeSchema } from './schema';
-import { Import, serializeImports } from './imports';
 
 /**
  * Serialize a schema representation to a string representing the according schema file contents.

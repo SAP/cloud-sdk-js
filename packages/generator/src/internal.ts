@@ -1,4 +1,4 @@
-export * from './action-function-import';
+export * from './operations';
 export * from './aggregator-package';
 export * from './batch';
 export * from './complex-type';
@@ -27,5 +27,4 @@ export * from './typedoc';
 export * from './vdm-types';
 
 // Had to be added for public API check
-export * from './generator-common';
 export * from './generator-without-ts-morph';

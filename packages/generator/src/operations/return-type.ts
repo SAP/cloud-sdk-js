@@ -42,6 +42,9 @@ export function operationReturnType(
       `For bound operations the entity set name needs to be provided: ${name}`
     );
   }
+  if (boundEntitySetName?.startsWith('A_')) {
+    boundEntitySetName = boundEntitySetName.substring(2);
+  }
   type = isBound
     ? wrapRequestBuilderAroundTypeBound(
         boundEntitySetName!,

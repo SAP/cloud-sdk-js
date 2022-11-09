@@ -52,11 +52,11 @@ describe('edmx-edmx-parser', () => {
     expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(14);
     expect(parseEntityType(metadataEdmx.root).length).toBe(14);
     expect(parseOperationImports(metadataEdmx.root, 'function').length).toBe(
-      11
+      13
     );
-    expect(parseOperations(metadataEdmx.root, 'function').length).toBe(11);
-    expect(parseOperationImports(metadataEdmx.root, 'action').length).toBe(9);
-    expect(parseOperations(metadataEdmx.root, 'action').length).toBe(8);
+    expect(parseOperations(metadataEdmx.root, 'function').length).toBe(13);
+    expect(parseOperationImports(metadataEdmx.root, 'action').length).toBe(10);
+    expect(parseOperations(metadataEdmx.root, 'action').length).toBe(9);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
     expect(parseEnumTypes(metadataEdmx.root).length).toBe(3);
 

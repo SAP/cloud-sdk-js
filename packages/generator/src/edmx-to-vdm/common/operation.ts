@@ -32,6 +32,8 @@ export function transformOperationBase(
     parametersTypeName: pascalCase(`${name}Parameters`)
   };
 
+  // fixme formatter
+
   const parameters = getOperationParameters(
     edmxOperation,
     edmxParameters,

@@ -59,7 +59,7 @@ function splitMissingOperation(
   );
 }
 
-function splitMissingParameter(
+function splitMissingParameter( //fixme name
   operations: EdmxJoinedOperation[]
 ): [EdmxJoinedOperation[], EdmxJoinedOperation[]] {
   return operations.reduce<[EdmxJoinedOperation[], EdmxJoinedOperation[]]>(
@@ -72,7 +72,7 @@ function splitMissingParameter(
         return [validOperations, [...withoutParameter, curr]];
       }
 
-      const entitySetName = curr.Parameter[0].Type.split('.')[1];
+      const entitySetName = curr.Parameter[0].Type.split('.')[1]; //fixme index 1; 
       if (entitySetName) {
         const bound = {
           ...curr,
@@ -92,7 +92,7 @@ function splitMissingParameter(
  * @internal
  * Joins the operation and operation Import.
  * Filters out all operations which do not have a OperationImport
- * Filters out all bound operations without a parameter and extracts the entityset name from the frist parameter
+ * Filters out all bound operations without a parameter and extracts the entityset name from the first parameter
  * It also removes the first parameter which contains only the entity information
  */
 export function filterAndTransformOperations(

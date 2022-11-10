@@ -13,7 +13,7 @@ describe('function', () => {
       {
         ...orderBreakfast,
         isBound: true,
-        bindingEntitySetName: 'BreakfaseEntity'
+        entityClassName: 'BreakfastEntity'
       },
       { ...foodService, oDataVersion: 'v4' }
     );
@@ -29,7 +29,7 @@ describe('function', () => {
         }
       ],
       returnType:
-        'BoundFunctionImportRequestBuilder<BreakfaseEntity<T>, T, Params<T>, string>',
+        'BoundFunctionImportRequestBuilder<BreakfastEntity<T>, T, Params<T>, string>',
       docs: [
         `order a breakfast ${unixEOL}@param parameters - Object containing all parameters for the function.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
       ],

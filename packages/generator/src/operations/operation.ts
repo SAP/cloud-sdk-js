@@ -4,8 +4,8 @@ import {
   StructureKind
 } from 'ts-morph';
 import voca from 'voca';
-import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
+import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 import { operationReturnType } from './return-type';
 
@@ -39,7 +39,7 @@ export function operationFunctionBase(
         initializer: isBound ? undefined : 'defaultDeSerializers as any'
       }
     ],
-    returnType: operationReturnType(operation, operation.bindingEntitySetName),
+    returnType: operationReturnType(operation),
     statements: getOperationStatements(operation, service),
     docs: [
       [

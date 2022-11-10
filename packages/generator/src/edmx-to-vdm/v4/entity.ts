@@ -72,7 +72,8 @@ export function generateEntitiesV4(
       entities,
       complexTypes,
       formatter,
-      entityMetadata.entitySet.Name
+      entityMetadata.entitySet.Name,
+      classNames[entityMetadata.entitySet.Name]
     ),
     actions: generateBoundOperations(
       serviceMetadata,
@@ -81,7 +82,8 @@ export function generateEntitiesV4(
       entities,
       complexTypes,
       formatter,
-      entityMetadata.entitySet.Name
+      entityMetadata.entitySet.Name,
+      classNames[entityMetadata.entitySet.Name]
     )
   }));
 }

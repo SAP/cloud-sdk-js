@@ -321,9 +321,9 @@ export interface VdmOperationBase {
   isBound: boolean;
   /**
    * @internal
-   * only set for bound entities.
+   * only set for bound operations
    */
-  bindingEntitySetName?: string;
+  entityClassName?: string;
 }
 
 /**

@@ -4,16 +4,14 @@ import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 /**
  * @internal
  */
-export function operationReturnType(
-  {
-    returnType,
-    parametersTypeName,
-    type: operationType,
-    isBound,
-    name
-  }: VdmOperation,
-  boundEntitySetName?: string
-): string {
+export function operationReturnType({
+  returnType,
+  parametersTypeName,
+  type: operationType,
+  isBound,
+  name,
+  entityClassName
+}: VdmOperation): string {
   let type = returnType.returnType;
   const requestBuilderName = `${isBound ? 'Bound' : ''}${voca.capitalize(
     operationType
@@ -37,17 +35,14 @@ export function operationReturnType(
     type = `${type} | null`;
   }
 
-  if (isBound && !boundEntitySetName) {
+  if (isBound && !entityClassName) {
     throw new Error(
       `For bound operations the entity set name needs to be provided: ${name}`
     );
   }
-  if (boundEntitySetName?.startsWith('A_')) {
-    boundEntitySetName = boundEntitySetName.substring(2);
-  }
   type = isBound
     ? wrapRequestBuilderAroundTypeBound(
-        boundEntitySetName!,
+        entityClassName!,
         requestBuilderName,
         parametersTypeName,
         type

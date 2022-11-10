@@ -26,12 +26,10 @@ describe('bound function import request builder', () => {
       )
       .reply(200, { value: 'returnValue' });
 
-    const entity = testEntityApi
-      .entityBuilder()
-      .fromJson({
-        keyPropertyGuid: '12345678-aaaa-bbbb-cccc-ddddeeeeffff',
-        keyPropertyString: 'abc'
-      });
+    const entity = testEntityApi.entityBuilder().fromJson({
+      keyPropertyGuid: '12345678-aaaa-bbbb-cccc-ddddeeeeffff',
+      keyPropertyString: 'abc'
+    });
     const response = await entity
       .boundFunctionWithoutArguments({})
       .execute(destination);
@@ -45,12 +43,10 @@ describe('bound function import request builder', () => {
       )
       .reply(200, { value: 'returnValue' });
 
-    const entity = testEntityApi
-      .entityBuilder()
-      .fromJson({
-        keyPropertyGuid: '12345678-aaaa-bbbb-cccc-ddddeeeeffff',
-        keyPropertyString: 'abc'
-      });
+    const entity = testEntityApi.entityBuilder().fromJson({
+      keyPropertyGuid: '12345678-aaaa-bbbb-cccc-ddddeeeeffff',
+      keyPropertyString: 'abc'
+    });
     const response = await entity
       .boundFunctionWithArguments({ param1: 'foo', param2: 'bar' })
       .execute(destination);

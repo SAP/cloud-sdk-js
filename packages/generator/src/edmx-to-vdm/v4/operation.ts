@@ -59,7 +59,7 @@ function splitMissingOperation(
   );
 }
 
-function splitMissingParameter( //fixme name
+function splitMissingParameter( // fixme name
   operations: EdmxJoinedOperation[]
 ): [EdmxJoinedOperation[], EdmxJoinedOperation[]] {
   return operations.reduce<[EdmxJoinedOperation[], EdmxJoinedOperation[]]>(
@@ -72,7 +72,7 @@ function splitMissingParameter( //fixme name
         return [validOperations, [...withoutParameter, curr]];
       }
 
-      const entitySetName = curr.Parameter[0].Type.split('.')[1]; //fixme index 1; 
+      const entitySetName = curr.Parameter[0].Type.split('.')[1]; // fixme index 1;
       if (entitySetName) {
         const bound = {
           ...curr,
@@ -225,7 +225,8 @@ export function generateBoundOperations(
   entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
-  bindingEntitySetName: string
+  edmxBindingEntitySetName: string,
+  bindingEntityClassName: string
 ): VdmOperation[] {
   return generateOperations(
     serviceMetadata,
@@ -234,7 +235,8 @@ export function generateBoundOperations(
     entities,
     complexTypes,
     formatter,
-    bindingEntitySetName
+    edmxBindingEntitySetName,
+    bindingEntityClassName
   );
 }
 
@@ -248,7 +250,8 @@ function generateOperations(
   entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
-  bindingEntitySetName?: string
+  edmxBindingEntitySetName?: string,
+  className?: string
 ): VdmOperation[] {
   const operations = parseOperations(serviceMetadata.edmx.root, operationType);
   const operationImports = parseOperationImports(
@@ -258,12 +261,12 @@ function generateOperations(
   const joinedOperationData = filterAndTransformOperations(
     operationImports,
     operations,
-    !!bindingEntitySetName
+    !!edmxBindingEntitySetName
   )
     .filter(
       operation =>
-        !bindingEntitySetName ||
-        bindingEntitySetName === operation.entitySetName
+        !edmxBindingEntitySetName ||
+        edmxBindingEntitySetName === operation.entitySetName
     )
     // TODO 1571 remove when supporting entity type as parameter
     .filter(operation => !hasUnsupportedParameterTypes(operation));
@@ -283,7 +286,7 @@ function generateOperations(
         operation.operationType,
         swaggerDefinition,
         formatter,
-        bindingEntitySetName
+        edmxBindingEntitySetName
       ),
       httpMethod,
       returnType: parseOperationReturnType(
@@ -293,7 +296,8 @@ function generateOperations(
         extractResponse,
         serviceName,
         operation.IsBound
-      )
+      ),
+      entityClassName: className
     };
   });
 }

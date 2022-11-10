@@ -70,26 +70,6 @@ describe('action-import', () => {
     ]);
   });
 
-  it('removes bound operations with no binding entity set name', () => {
-    const imports: EdmxOperationImport[] = [
-      { operationName: 'op1' },
-      { operationName: 'op2' }
-    ] as any;
-    const operations: EdmxOperation[] = [
-      { Name: 'op1', Parameter: [{ Type: 'noEntitySet' }], IsBound: 'true' },
-      { Name: 'op2', IsBound: 'true', Parameter: [{ Type: 'ns.op2' }] }
-    ] as any;
-    const joined = filterAndTransformOperations(imports, operations, true);
-    expect(joined).toEqual([
-      {
-        operationName: 'op2',
-        IsBound: true,
-        Parameter: [],
-        entitySetName: 'op2'
-      }
-    ]);
-  });
-
   it('considers bound operations', () => {
     const imports: EdmxOperationImport[] = [
       { operationName: 'op1' },
@@ -97,6 +77,30 @@ describe('action-import', () => {
     ] as any;
     const operations: EdmxOperation[] = [
       { Name: 'op1', Parameter: [{ Type: 'ns.Entity' }], IsBound: 'true' },
+      { Name: 'op2', IsBound: 'true', Parameter: [] }
+    ] as any;
+    const joined = filterAndTransformOperations(imports, operations, true);
+    expect(joined).toEqual([
+      {
+        IsBound: true,
+        operationName: 'op1',
+        Parameter: [],
+        entitySetName: 'Entity'
+      }
+    ]);
+  });
+
+  it('handles bound operations with multiple dots in the name', () => {
+    const imports: EdmxOperationImport[] = [
+      { operationName: 'op1' },
+      { operationName: 'op2' }
+    ] as any;
+    const operations: EdmxOperation[] = [
+      {
+        Name: 'op1',
+        Parameter: [{ Type: 'ns.foo.bar.baz.Entity' }],
+        IsBound: 'true'
+      },
       { Name: 'op2', IsBound: 'true', Parameter: [] }
     ] as any;
     const joined = filterAndTransformOperations(imports, operations, true);

@@ -1,13 +1,4 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { transformOperationBase } from '../common/operation';
-import { parseOperationReturnType } from '../common/operation-return-type';
-import { getSwaggerDefinitionForOperation } from '../../swagger-parser/swagger-parser';
-import type {
-  EdmxOperation,
-  EdmxOperationImport,
-  EdmxReturnType
-} from '../../edmx-parser/v4/edm-types';
 import {
   EdmxParameter,
   parseOperationImports,
@@ -15,12 +6,21 @@ import {
 } from '../../edmx-parser';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import type {
+  EdmxOperation,
+  EdmxOperationImport,
+  EdmxReturnType
+} from '../../edmx-parser/v4/edm-types';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { getSwaggerDefinitionForOperation } from '../../swagger-parser/swagger-parser';
+import type {
   VdmComplexType,
-  VdmPartialEntity,
-  VdmOperation
+  VdmOperation,
+  VdmPartialEntity
 } from '../../vdm-types';
+import { transformOperationBase } from '../common/operation';
+import { parseOperationReturnType } from '../common/operation-return-type';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
-import { findOperationByImportName as findOperationByImportName } from './operation-util';
+import { findOperationByImportName } from './operation-util';
 
 const logger = createLogger({
   package: 'generator',
@@ -59,6 +59,11 @@ function splitMissingOperation(
   );
 }
 
+function extractEntitySetName(type: string): string {
+  const components = type.split('.');
+  return components.pop()!;
+}
+
 function splitMissingParameter( // fixme name
   operations: EdmxJoinedOperation[]
 ): [EdmxJoinedOperation[], EdmxJoinedOperation[]] {
@@ -72,7 +77,7 @@ function splitMissingParameter( // fixme name
         return [validOperations, [...withoutParameter, curr]];
       }
 
-      const entitySetName = curr.Parameter[0].Type.split('.')[1]; // fixme index 1;
+      const entitySetName = extractEntitySetName(curr.Parameter[0].Type);
       if (entitySetName) {
         const bound = {
           ...curr,

@@ -77,11 +77,11 @@ function splitMissingParameter(
         return [validOperations, [...withoutParameter, curr]];
       }
 
-      const entitySetName = extractEntitySetName(curr.Parameter[0].Type);
-      if (entitySetName) {
+      const edmxEntitySetName = extractEntitySetName(curr.Parameter[0].Type);
+      if (edmxEntitySetName) {
         const bound = {
           ...curr,
-          entitySetName,
+          entitySetName: edmxEntitySetName,
           Parameter: curr.Parameter.slice(1)
         };
         return [[...validOperations, bound], withoutParameter];

@@ -14,14 +14,13 @@ describe('imports', () => {
     ).toEqual(expectedEntityImports);
   });
 
-  // todo
-  // it('importDeclarations oData v4', () => {
-  //   const actual = entityImportDeclarations(breakfastEntity, foodService, 'v4');
+  it('importDeclarations oData v4', () => {
+    const actual = entityImportDeclarations(breakfastEntity, foodService, 'v4');
 
-  //   expect(
-  //     actual.map(imports => imports.namedImports)
-  //   ).toEqual(expectedEntityImportsV4.namedImports);
-  // });
+    expect(
+      actual.map(imports => imports.namedImports)
+    ).toEqual(expectedEntityImportsV4[0].namedImports);
+  });
 
   it('otherEntityImports', () => {
     const actual = otherEntityImports(breakfastEntity, foodService);
@@ -56,10 +55,29 @@ const expectedEntityImportsV4 = [
   {
     moduleSpecifier: '@sap-cloud-sdk/odata-v4',
     namedImports: [
-      'Entity',
-      'DefaultDeSerializers',
-      'DeSerializers',
-      'DeserializedType'
+      [
+        'Entity',
+        'DefaultDeSerializers',
+        'DeSerializers',
+        'DeserializedType'
+      ],
+      [
+        'BreakfastApi'
+      ],
+      [
+        'edmToTs',
+        'transformReturnValueForEdmType',
+        'DeSerializers',
+        'DefaultDeSerializers',
+        'defaultDeSerializers',
+        'ActionImportParameter',
+        'ActionImportRequestBuilder',
+        'FunctionImportParameter',
+        'FunctionImportRequestBuilder',
+      ],
+      [
+        'foodService'
+      ]
     ],
     isTypeOnly: false
   },

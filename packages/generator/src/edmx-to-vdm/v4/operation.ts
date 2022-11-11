@@ -64,7 +64,7 @@ function extractEntitySetName(type: string): string {
   return components.pop()!;
 }
 
-function splitMissingParameter( // fixme name
+function splitMissingParameter(
   operations: EdmxJoinedOperation[]
 ): [EdmxJoinedOperation[], EdmxJoinedOperation[]] {
   return operations.reduce<[EdmxJoinedOperation[], EdmxJoinedOperation[]]>(

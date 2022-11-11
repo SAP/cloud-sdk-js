@@ -60,7 +60,6 @@ function wrapRequestBuilderAroundType(
   parameterName: string,
   type: string
 ) {
-  // BoundActionImportRequestBuilder<TestEntity<T>,T,BoundActionWithoutArgumentsParameters<T>,string>
   return `${requestBuilderName}<DeSerializersT, ${parameterName}<DeSerializersT>, ${type}>`;
 }
 
@@ -70,6 +69,5 @@ function wrapRequestBuilderAroundTypeBound(
   parameterName: string,
   type: string
 ) {
-  // BoundActionImportRequestBuilder<TestEntity<T>,T,BoundActionWithoutArgumentsParameters<T>,string>
   return `${requestBuilderName}<${entityName}<T>, T, ${parameterName}<T>, ${type}>`;
 }

@@ -1,10 +1,12 @@
-import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { ODataVersion } from '@sap-cloud-sdk/util';
+import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import {
   complexTypeImportDeclarations,
-  odataImportDeclaration,
-  enumTypeImportDeclarations
+  enumTypeImportDeclarations,
+  mergeImportDeclarations,
+  odataImportDeclaration
 } from '../imports';
+import { operationImportDeclarations } from '../operations';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
 /**
@@ -12,8 +14,28 @@ import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
  */
 export function entityImportDeclarations(
   entity: VdmEntity,
+  service: VdmServiceMetadata,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
+  if (oDataVersion === 'v4') {
+    return mergeImportDeclarations([
+      odataImportDeclaration(
+        ['Entity', 'DefaultDeSerializers', 'DeSerializers', 'DeserializedType'],
+        oDataVersion
+      ),
+      ...complexTypeImportDeclarations(entity.properties),
+      {
+        namedImports: [`${entity.className}Api`],
+        moduleSpecifier: `./${entity.className}Api`,
+        kind: StructureKind.ImportDeclaration,
+        isTypeOnly: true
+      },
+      ...operationImportDeclarations(service, 'action', entity.actions),
+      ...operationImportDeclarations(service, 'function', entity.functions),
+      ...enumTypeImportDeclarations(entity.properties)
+    ]);
+  }
+
   return [
     odataImportDeclaration(
       ['Entity', 'DefaultDeSerializers', 'DeSerializers', 'DeserializedType'],

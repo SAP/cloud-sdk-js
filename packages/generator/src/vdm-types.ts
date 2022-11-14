@@ -126,7 +126,26 @@ export interface VdmEntity {
    * @internal
    */
   entityTypeNamespace: string;
+  /**
+   * @internal
+   */
+  functions: VdmOperation[];
+  /**
+   * @internal
+   */
+  actions: VdmOperation[];
 }
+
+/**
+ * Subset of Entity required for generating bound actions and functions.
+ * This is required because at the time of generating bound actions and functions the full list of entities is not yet available.
+ * But the properties included here are needed for generating the functions and actions.
+ * @internal
+ */
+export type VdmPartialEntity = Pick<
+  VdmEntity,
+  'entityTypeName' | 'entityTypeNamespace' | 'className'
+>;
 
 /**
  * Properties
@@ -296,6 +315,15 @@ export interface VdmOperationBase {
    * @internal
    */
   type: 'function' | 'action';
+  /**
+   * @internal
+   */
+  isBound: boolean;
+  /**
+   * @internal
+   * only set for bound operations
+   */
+  entityClassName?: string;
 }
 
 /**

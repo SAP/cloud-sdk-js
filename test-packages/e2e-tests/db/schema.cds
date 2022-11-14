@@ -23,6 +23,12 @@ entity TestEntity {
   ToMultiLink: Composition of many TestEntityLink on KeyTestEntity=ToMultiLink.KeyToTestEntity;
 };
 
+entity TestEntityWithMultipleKeys {
+  key KeyTestEntityWithMultipleKeys: Integer;
+  key StringPropertyWithMultipleKeys: String(111);
+  key BooleanPropertyWithMultipleKeys: Boolean;
+}
+
 entity TestEntity50Prop {
   key KeyTestEntity50Prop: Integer;
   StringProperty1: String(111);

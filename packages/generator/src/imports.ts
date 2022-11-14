@@ -29,6 +29,7 @@ export function externalImportDeclarations(
       declaration => declaration.namedImports && declaration.namedImports.length
     );
 }
+
 /**
  * @internal
  */
@@ -45,6 +46,7 @@ export function externalImportDeclaration(
     )
   };
 }
+
 /**
  * @internal
  */
@@ -62,6 +64,7 @@ export function odataImportDeclaration(
     namedImports: unique(namedImports)
   };
 }
+
 /**
  * @internal
  */
@@ -70,6 +73,7 @@ export function propertyTypeImportNames(
 ): string[] {
   return properties.map(prop => prop.jsType).includes('Time') ? ['Time'] : [];
 }
+
 /**
  * @internal
  */
@@ -82,6 +86,7 @@ export function propertyFieldTypeImportNames(
       .map(prop => prop.fieldType)
   );
 }
+
 /**
  * @internal
  */
@@ -91,6 +96,7 @@ export function navPropertyFieldTypeImportNames(
 ): string[] {
   return unique(navProperties.map(navProp => linkClass(navProp, oDataVersion)));
 }
+
 /**
  * @internal
  */
@@ -103,6 +109,7 @@ export function complexTypeImportDeclarations(
       .map(prop => complexTypeImportDeclaration(prop))
   );
 }
+
 /**
  * @internal
  */
@@ -128,7 +135,8 @@ export function mergeImportDeclarations(
       (mergedDeclarations: ImportDeclarationStructure[], importDeclaration) => {
         const sameModuleSpecifier = mergedDeclarations.find(
           declaration =>
-            declaration.moduleSpecifier === importDeclaration.moduleSpecifier
+            declaration.moduleSpecifier === importDeclaration.moduleSpecifier &&
+            declaration.isTypeOnly === importDeclaration.isTypeOnly
         );
         if (sameModuleSpecifier) {
           if (!sameModuleSpecifier.namedImports) {

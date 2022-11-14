@@ -325,10 +325,9 @@ export function testFunctionImportComplexReturnType<
     'TestFunctionImportComplexReturnType',
     data =>
       transformReturnValueForComplexType(data, data =>
-        entityDeserializer(deSerializers).deserializeComplexType(
-          data,
-          TestComplexType
-        )
+        entityDeserializer(
+          deSerializers || defaultDeSerializers
+        ).deserializeComplexType(data, TestComplexType)
       ),
     params,
     deSerializers
@@ -417,10 +416,9 @@ export function testFunctionImportComplexReturnTypeCollection<
     'TestFunctionImportComplexReturnTypeCollection',
     data =>
       transformReturnValueForComplexTypeList(data, data =>
-        entityDeserializer(deSerializers).deserializeComplexType(
-          data,
-          TestComplexType
-        )
+        entityDeserializer(
+          deSerializers || defaultDeSerializers
+        ).deserializeComplexType(data, TestComplexType)
       ),
     params,
     deSerializers
@@ -614,10 +612,9 @@ export function createTestComplexType<
     'CreateTestComplexType',
     data =>
       transformReturnValueForComplexType(data, data =>
-        entityDeserializer(deSerializers).deserializeComplexType(
-          data,
-          TestComplexType
-        )
+        entityDeserializer(
+          deSerializers || defaultDeSerializers
+        ).deserializeComplexType(data, TestComplexType)
       ),
     params,
     deSerializers

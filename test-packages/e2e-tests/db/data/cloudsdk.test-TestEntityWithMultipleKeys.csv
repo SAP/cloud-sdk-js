@@ -1,0 +1,5 @@
+KeyTestEntityWithMultipleKeys;StringPropertyWithMultipleKeys;BooleanPropertyWithMultipleKeys
+101;a;true
+102;b;false
+103;c;true
+104;d;false

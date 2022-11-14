@@ -7,7 +7,9 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  BoundActionImportRequestBuilder,
+  BoundFunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType } from './TestComplexType';
 import type { TestEntityApi } from './TestEntityApi';
@@ -190,6 +192,48 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   toSingleLink?: TestEntitySingleLink<T> | null;
   constructor(_entityApi: TestEntityApi<T>);
+  /**
+   * Bound Function Without Arguments.
+   * @param parameters - Object containing all parameters for the function.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundFunctionWithoutArguments(
+    parameters: BoundFunctionWithoutArgumentsParameters<T>,
+    deSerializers?: T
+  ): BoundFunctionImportRequestBuilder<
+    TestEntity<T>,
+    T,
+    BoundFunctionWithoutArgumentsParameters<T>,
+    string | null
+  >;
+  /**
+   * Bound Function With Arguments.
+   * @param parameters - Object containing all parameters for the function.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundFunctionWithArguments(
+    parameters: BoundFunctionWithArgumentsParameters<T>,
+    deSerializers?: T
+  ): BoundFunctionImportRequestBuilder<
+    TestEntity<T>,
+    T,
+    BoundFunctionWithArgumentsParameters<T>,
+    string | null
+  >;
+  /**
+   * Bound Action Without Arguments.
+   * @param parameters - Object containing all parameters for the action.
+   * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+   */
+  boundActionWithoutArguments(
+    parameters: BoundActionWithoutArgumentsParameters<T>,
+    deSerializers?: T
+  ): BoundActionImportRequestBuilder<
+    TestEntity<T>,
+    T,
+    BoundActionWithoutArgumentsParameters<T>,
+    string | null
+  >;
 }
 export interface TestEntityType<
   T extends DeSerializers = DefaultDeSerializers
@@ -225,4 +269,31 @@ export interface TestEntityType<
   toOtherMultiLink: TestEntityMultiLinkType<T>[];
   toSingleLink?: TestEntitySingleLinkType<T> | null;
 }
+/**
+ * Type of the parameters to be passed to {@link boundFunctionWithoutArguments}.
+ */
+export interface BoundFunctionWithoutArgumentsParameters<
+  DeSerializersT extends DeSerializers
+> {}
+/**
+ * Type of the parameters to be passed to {@link boundFunctionWithArguments}.
+ */
+export interface BoundFunctionWithArgumentsParameters<
+  DeSerializersT extends DeSerializers
+> {
+  /**
+   * Param 1.
+   */
+  param1?: string | null;
+  /**
+   * Param 2.
+   */
+  param2?: string | null;
+}
+/**
+ * Type of the parameters to be passed to {@link boundActionWithoutArguments}.
+ */
+export interface BoundActionWithoutArgumentsParameters<
+  DeSerializersT extends DeSerializers
+> {}
 //# sourceMappingURL=TestEntity.d.ts.map

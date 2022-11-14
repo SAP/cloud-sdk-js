@@ -7,10 +7,13 @@ import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 export function operationReturnType({
   returnType,
   parametersTypeName,
-  type: operationType
+  type: operationType,
+  isBound,
+  name,
+  entityClassName
 }: VdmOperation): string {
   let type = returnType.returnType;
-  const requestBuilderName = `${voca.capitalize(
+  const requestBuilderName = `${isBound ? 'Bound' : ''}${voca.capitalize(
     operationType
   )}ImportRequestBuilder`;
 
@@ -31,11 +34,24 @@ export function operationReturnType({
   if (returnType.isNullable) {
     type = `${type} | null`;
   }
-  type = wrapRequestBuilderAroundType(
-    requestBuilderName,
-    parametersTypeName,
-    type
-  );
+
+  if (isBound && !entityClassName) {
+    throw new Error(
+      `For bound operations the entity set name needs to be provided: ${name}`
+    );
+  }
+  type = isBound
+    ? wrapRequestBuilderAroundTypeBound(
+        entityClassName!,
+        requestBuilderName,
+        parametersTypeName,
+        type
+      )
+    : wrapRequestBuilderAroundType(
+        requestBuilderName,
+        parametersTypeName,
+        type
+      );
   return type;
 }
 
@@ -45,4 +61,13 @@ function wrapRequestBuilderAroundType(
   type: string
 ) {
   return `${requestBuilderName}<DeSerializersT, ${parameterName}<DeSerializersT>, ${type}>`;
+}
+
+function wrapRequestBuilderAroundTypeBound(
+  entityName: string,
+  requestBuilderName: string,
+  parameterName: string,
+  type: string
+) {
+  return `${requestBuilderName}<${entityName}<T>, T, ${parameterName}<T>, ${type}>`;
 }

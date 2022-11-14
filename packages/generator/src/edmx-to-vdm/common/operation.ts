@@ -1,11 +1,11 @@
 import { pascalCase } from '@sap-cloud-sdk/util';
+import type { EdmxParameter } from '../../edmx-parser/common';
+import type { EdmxFunctionImportV2 } from '../../edmx-parser/v2';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmOperationBase } from '../../vdm-types';
 import { SwaggerPath } from '../../swagger-parser';
+import type { VdmOperationBase } from '../../vdm-types';
 import { functionImportDescription } from '../description-util';
-import { EdmxParameter } from '../../edmx-parser/common';
-import { EdmxFunctionImportV2 } from '../../edmx-parser/v2';
-import { EdmxOperationImport } from '../../edmx-parser/v4';
+import type { EdmxJoinedOperation } from '../v4';
 import { getOperationParameters } from './operation-parameter';
 
 /**
@@ -13,17 +13,23 @@ import { getOperationParameters } from './operation-parameter';
  * This transforms an EDMX operation (function or action) to its representation for the VDM.
  */
 export function transformOperationBase(
-  edmxOperation: EdmxFunctionImportV2 | EdmxOperationImport,
+  edmxOperation: EdmxFunctionImportV2 | EdmxJoinedOperation,
   edmxParameters: EdmxParameter[],
   type: 'function' | 'action',
   swaggerDefinition: SwaggerPath | undefined,
-  formatter: ServiceNameFormatter
+  formatter: ServiceNameFormatter,
+  edmxBindingEntitySetName?: string
 ): VdmOperationBase {
-  const name = formatter.originalToOperationName(edmxOperation.Name);
+  const operationName = edmxBindingEntitySetName
+    ? formatter.originalToBoundOperationName(
+        edmxBindingEntitySetName,
+        edmxOperation.Name
+      )
+    : formatter.originalToOperationName(edmxOperation.Name);
   const operation = {
     originalName: edmxOperation.Name,
-    name,
-    parametersTypeName: pascalCase(`${name}Parameters`)
+    name: operationName,
+    parametersTypeName: pascalCase(`${operationName}Parameters`)
   };
 
   const parameters = getOperationParameters(
@@ -40,6 +46,7 @@ export function transformOperationBase(
       swaggerDefinition,
       operation.originalName
     ),
-    type
+    type,
+    isBound: !!edmxBindingEntitySetName
   };
 }

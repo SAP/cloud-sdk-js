@@ -20,18 +20,19 @@
     "test:e2e": "jest",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
-    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
+    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'",
+    "generate-edmx": "cds compile srv -s TestService -2 edmx > TestService.edmx"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^10.0.2",
-    "@sap-cloud-sdk/generator": "^2.10.0",
-    "@sap-cloud-sdk/odata-common": "^2.10.0",
-    "@sap-cloud-sdk/odata-v4": "^2.10.0",
     "@sap-cloud-sdk/connectivity": "^2.10.0",
+    "@sap-cloud-sdk/generator": "^2.10.0",
     "@sap-cloud-sdk/http-client": "^2.10.0",
     "@sap-cloud-sdk/mail-client": "^2.10.0",
-    "@sap-cloud-sdk/test-services-openapi": "^2.10.0",
+    "@sap-cloud-sdk/odata-common": "^2.10.0",
+    "@sap-cloud-sdk/odata-v4": "^2.10.0",
     "@sap-cloud-sdk/test-services-e2e": "^2.10.0",
+    "@sap-cloud-sdk/test-services-openapi": "^2.10.0",
     "@sap-cloud-sdk/util": "^2.10.0",
     "@sap/cds": "^6.3.1",
     "@sap/cds-dk": "6.3.1",
@@ -55,7 +56,9 @@
     "requires": {
       "db": {
         "kind": "sqlite",
-        "model": "*"
+        "credentials": {
+          "database": "db.sqlite"
+        }
       }
     }
   }

@@ -2,6 +2,8 @@ import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { ODataRequestConfig } from '../request/odata-request-config';
 import { MethodRequestBuilder } from './request-builder-base';
+import {BatchReference, WithBatchReference} from "../request";
+import {v4 as uuid} from "uuid";
 
 /**
  * Create OData request to execute a action or function import.
@@ -10,7 +12,9 @@ import { MethodRequestBuilder } from './request-builder-base';
 export abstract class ActionFunctionImportRequestBuilderBase<
   ReturnT,
   RequestConfigT extends ODataRequestConfig
-> extends MethodRequestBuilder<RequestConfigT> {
+> extends MethodRequestBuilder<RequestConfigT>  implements WithBatchReference{
+
+  private _batchReference: BatchReference = { id: uuid() };
   /**
    * Base class for function  and actions imports.
    * @param responseTransformer - Transformation function for the response.
@@ -49,5 +53,21 @@ export abstract class ActionFunctionImportRequestBuilderBase<
     destination: DestinationOrFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
+  }
+
+  /**
+   * Gets identifier for the batch request.
+   * @returns Batch request identifier.
+   */
+  getBatchReference(): BatchReference {
+    return this._batchReference;
+  }
+
+  /**
+   * Sets user-defined identifier for the batch reference.
+   * @param id - User-defined batch reuest identifier.
+   */
+  setBatchId(id: string): void {
+    this._batchReference = { id };
   }
 }

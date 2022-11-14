@@ -19,8 +19,6 @@ export class BoundFunctionImportRequestBuilder<
   ReturnT,
   OdataBoundFunctionImportRequestConfig<EntityT, DeSerializersT, ParametersT>
 > {
-  private _batchReference: BatchReference = { id: uuid() };
-
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
     entity: EntityT,
@@ -44,21 +42,5 @@ export class BoundFunctionImportRequestBuilder<
       entity,
       entityApi
     );
-  }
-
-  /**
-   * Gets identifier for the batch request.
-   * @returns Batch request identifier.
-   */
-  getBatchReference(): BatchReference {
-    return this._batchReference;
-  }
-
-  /**
-   * Sets user-defined identifier for the batch reference.
-   * @param id - User-defined batch reuest identifier.
-   */
-  setBatchId(id: string): void {
-    this._batchReference = { id };
   }
 }

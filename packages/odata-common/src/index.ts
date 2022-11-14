@@ -4,6 +4,7 @@
  * @module @sap-cloud-sdk/odata-common
  */
 
+export { WithBatchReference } from './request/odata-request-traits';
 export {
   and,
   or,

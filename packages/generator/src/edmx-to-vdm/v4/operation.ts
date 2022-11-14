@@ -64,30 +64,45 @@ function extractEntitySetName(type: string): string {
   return components.pop()!;
 }
 
+function buildBoundOperation(
+  currentOperation: EdmxJoinedOperation,
+  edmxEntitySetName: string
+): EdmxJoinedOperation {
+  return {
+    ...currentOperation,
+    entitySetName: edmxEntitySetName,
+    Parameter: currentOperation.Parameter.slice(1)
+  };
+}
+
 function splitMissingParameter(
   operations: EdmxJoinedOperation[]
 ): [EdmxJoinedOperation[], EdmxJoinedOperation[]] {
   return operations.reduce<[EdmxJoinedOperation[], EdmxJoinedOperation[]]>(
-    ([validOperations, withoutParameter], curr) => {
+    ([validOperations, operationsWithoutRequiredParameters], curr) => {
       if (!curr.IsBound) {
-        return [[...validOperations, curr], withoutParameter];
+        return [
+          [...validOperations, curr],
+          operationsWithoutRequiredParameters
+        ];
       }
 
       if (!curr.Parameter.length) {
-        return [validOperations, [...withoutParameter, curr]];
+        return [
+          validOperations,
+          [...operationsWithoutRequiredParameters, curr]
+        ];
       }
 
       const edmxEntitySetName = extractEntitySetName(curr.Parameter[0].Type);
       if (edmxEntitySetName) {
-        const bound = {
-          ...curr,
-          entitySetName: edmxEntitySetName,
-          Parameter: curr.Parameter.slice(1)
-        };
-        return [[...validOperations, bound], withoutParameter];
+        return [
+          [...validOperations, buildBoundOperation(curr, edmxEntitySetName)],
+          operationsWithoutRequiredParameters
+        ];
       }
 
-      return [validOperations, [...withoutParameter, curr]];
+      return [validOperations, [...operationsWithoutRequiredParameters, curr]];
     },
     [[], []]
   );
@@ -114,12 +129,12 @@ export function filterAndTransformOperations(
     filteredByBoundOperations
   );
 
-  const [validOperations, withoutParameter] =
+  const [validOperations, operationsWithoutRequiredParameters] =
     splitMissingParameter(withOperation);
 
-  if (withoutParameter.length) {
+  if (operationsWithoutRequiredParameters.length) {
     logger.warn(
-      `No parameter for bound operation which is needed to find the related entity. Skipping code generation: ${withoutParameter
+      `No parameter for bound operation which is needed to find the related entity. Skipping code generation: ${operationsWithoutRequiredParameters
         .map(operation => operation.operationName)
         .join(', \n')}`
     );

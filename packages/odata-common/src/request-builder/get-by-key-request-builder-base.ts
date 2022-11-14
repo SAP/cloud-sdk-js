@@ -12,7 +12,7 @@ import { Selectable } from '../selectable';
 import { ODataUri } from '../uri-conversion';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
-import { BatchReference } from '../request/odata-request-traits';
+import { BatchReference, WithBatchReference } from '../request/odata-request-traits';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
@@ -25,7 +25,9 @@ export abstract class GetByKeyRequestBuilderBase<
   EntityT,
   DeSerializersT,
   ODataGetByKeyRequestConfig<EntityT, DeSerializersT>
-> {
+> implements WithBatchReference{
+  private _batchReference: BatchReference = { id: uuid() };
+
   /**
    * Creates an instance of GetByKeyRequestBuilder.
    * @param entityApi - Entity API for building and executing the request.
@@ -40,8 +42,7 @@ export abstract class GetByKeyRequestBuilderBase<
     keys: Record<string, any>,
     oDataUri: ODataUri<DeSerializersT>,
     readonly entityDeserializer: EntityDeserializer,
-    readonly dataAccessor: ResponseDataAccessor,
-    private batchReference: BatchReference = { id: uuid() }
+    readonly dataAccessor: ResponseDataAccessor
   ) {
     super(entityApi, new ODataGetByKeyRequestConfig(entityApi, oDataUri));
     this.requestConfig.keys = keys;
@@ -52,9 +53,15 @@ export abstract class GetByKeyRequestBuilderBase<
    * @returns Batch request identifier.
    */
   getBatchReference(): BatchReference {
-    return {
-      id: this.batchReference.id
-    };
+    return this._batchReference;
+  }
+
+  /**
+   * Sets user-defined identifier for the batch reference.
+   * @param id - User-defined batch reuest identifier.
+   */
+  setBatchId(id: string): void {
+    this._batchReference = { id };
   }
 
   /**

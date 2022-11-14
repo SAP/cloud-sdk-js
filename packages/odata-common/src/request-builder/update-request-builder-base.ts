@@ -13,7 +13,7 @@ import { ODataUri } from '../uri-conversion';
 import { Selectable } from '../selectable';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
-import { BatchReference } from '../request/odata-request-traits';
+import { BatchReference, WithBatchReference } from '../request/odata-request-traits';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -27,11 +27,12 @@ export abstract class UpdateRequestBuilderBase<
   extends MethodRequestBuilder<
     ODataUpdateRequestConfig<EntityT, DeSerializersT>
   >
-  implements EntityIdentifiable<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>, WithBatchReference
 {
   readonly _deSerializers: DeSerializersT;
   private ignored: Set<string>;
   private required: Set<string>;
+  private _batchReference: BatchReference = { id: uuid() };
 
   /**
    * Creates an instance of UpdateRequestBuilder.
@@ -53,8 +54,7 @@ export abstract class UpdateRequestBuilderBase<
     ) => string | undefined,
     readonly payloadManipulator: (
       body: Record<string, any>
-    ) => Record<string, any>,
-    private batchReference: BatchReference = { id: uuid() }
+    ) => Record<string, any>
   ) {
     super(new ODataUpdateRequestConfig(_entityApi, oDataUri));
     this.requestConfig.eTag = _entity.versionIdentifier;
@@ -78,9 +78,7 @@ export abstract class UpdateRequestBuilderBase<
    * @returns Batch request identifier.
    */
   getBatchReference(): BatchReference {
-    return {
-      id: this.batchReference.id
-    };
+    return this._batchReference;
   }
 
   /**
@@ -88,7 +86,7 @@ export abstract class UpdateRequestBuilderBase<
    * @param id - User-defined batch reuest identifier.
    */
   setBatchId(id: string): void {
-    this.batchReference.id = id;
+    this._batchReference = { id };
   }
 
   /**

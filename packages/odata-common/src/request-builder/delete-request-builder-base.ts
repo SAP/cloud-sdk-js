@@ -7,7 +7,7 @@ import { ODataUri } from '../uri-conversion';
 import { ODataDeleteRequestConfig } from '../request/odata-delete-request-config';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
-import { BatchReference } from '../request/odata-request-traits';
+import { BatchReference, WithBatchReference } from '../request/odata-request-traits';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4.
@@ -20,10 +20,11 @@ export abstract class DeleteRequestBuilderBase<
   extends MethodRequestBuilder<
     ODataDeleteRequestConfig<EntityT, DeSerializersT>
   >
-  implements EntityIdentifiable<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>, WithBatchReference
 {
   readonly _entity: EntityT;
   readonly _deSerializers: DeSerializersT;
+  private _batchReference: BatchReference = { id: uuid() };
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
@@ -35,8 +36,7 @@ export abstract class DeleteRequestBuilderBase<
   constructor(
     readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     oDataUri: ODataUri<DeSerializersT>,
-    keysOrEntity: Record<string, any> | EntityBase,
-    private batchReference: BatchReference = { id: uuid() }
+    keysOrEntity: Record<string, any> | EntityBase
   ) {
     super(new ODataDeleteRequestConfig(_entityApi, oDataUri));
     if (keysOrEntity instanceof EntityBase) {
@@ -55,9 +55,7 @@ export abstract class DeleteRequestBuilderBase<
    * @returns Batch request identifier.
    */
   getBatchReference(): BatchReference {
-    return {
-      id: this.batchReference.id
-    };
+    return this._batchReference;
   }
 
   /**
@@ -65,7 +63,7 @@ export abstract class DeleteRequestBuilderBase<
    * @param id - User-defined batch reuest identifier.
    */
   setBatchId(id: string): void {
-    this.batchReference.id = id;
+    this._batchReference = { id };
   }
 
   /**

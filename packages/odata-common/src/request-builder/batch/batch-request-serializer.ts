@@ -8,8 +8,6 @@ import { UpdateRequestBuilderBase } from '../update-request-builder-base';
 import { EntityBase } from '../../entity-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { CreateRequestBuilderBase } from '../create-request-builder-base';
-import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
-import { ODataFunctionImportRequestConfig } from '../../request/odata-function-import-request-config';
 import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
 import type { BatchRequestBuilder } from './batch-request-builder';
 import {
@@ -55,7 +53,7 @@ export function serializeRequest<
   ReturnT,
   ParametersT
 >(
-  request: AllBuilderTypes<EntityT, DeSerializersT, ReturnT, ParametersT>,
+  request: AllRequestBuilders<EntityT ,DeSerializersT>,
   options: BatchRequestSerializationOptions = {}
 ): string {
   const odataRequest = new ODataRequest(
@@ -76,7 +74,7 @@ export function serializeRequest<
   return [
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
-    ...(method !== 'GET' && hasGetBatchReference(request)
+    ...(method !== 'GET' && isRequestBuilderWithBatchReference(request)
       ? [`Content-Id: ${request.getBatchReference().id}`]
       : []),
     '',
@@ -88,56 +86,28 @@ export function serializeRequest<
   ].join(unixEOL);
 }
 
-type AllBuilderTypes<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  ReturnT,
-  ParametersT
-> =
-  | Omit<MethodRequestBuilder, 'execute'>
-  | ActionFunctionImportRequestBuilderBase<
-      ReturnT,
-      ODataFunctionImportRequestConfig<DeSerializersT, ParametersT>
-    >
-  | CreateRequestBuilderBase<EntityT, DeSerializersT>
-  | DeleteRequestBuilderBase<EntityT, DeSerializersT>
-  | GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
-  | UpdateRequestBuilderBase<EntityT, DeSerializersT>;
+type RequestBuildersWithBatchReference<  EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers> =
+    | CreateRequestBuilderBase<EntityT, DeSerializersT>
+    | DeleteRequestBuilderBase<EntityT, DeSerializersT>
+    | GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
+    | UpdateRequestBuilderBase<EntityT, DeSerializersT>;
 
-type ExcludeMethodRequestBuilderType<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  ReturnT,
-  ParametersT
-> =
-  | ActionFunctionImportRequestBuilderBase<
-      ReturnT,
-      ODataFunctionImportRequestConfig<DeSerializersT, ParametersT>
-    >
-  | CreateRequestBuilderBase<EntityT, DeSerializersT>
-  | DeleteRequestBuilderBase<EntityT, DeSerializersT>
-  | GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
-  | UpdateRequestBuilderBase<EntityT, DeSerializersT>;
+type AllRequestBuilders<EntityT extends EntityBase, DeSerializersT extends DeSerializers> = Omit<MethodRequestBuilder, 'execute'> | RequestBuildersWithBatchReference<EntityT, DeSerializersT>;
 
-function hasGetBatchReference<
+function isRequestBuilderWithBatchReference<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  ReturnT,
-  ParametersT
 >(
-  request: AllBuilderTypes<EntityT, DeSerializersT, ReturnT, ParametersT>
-): request is ExcludeMethodRequestBuilderType<
+  request: AllRequestBuilders<EntityT, DeSerializersT>
+): request is RequestBuildersWithBatchReference<
   EntityT,
-  DeSerializersT,
-  ReturnT,
-  ParametersT
+  DeSerializersT
 > {
   return !!(
-    request as ExcludeMethodRequestBuilderType<
+    request as RequestBuildersWithBatchReference<
       EntityT,
-      DeSerializersT,
-      ReturnT,
-      ParametersT
+      DeSerializersT
     >
   ).getBatchReference;
 }

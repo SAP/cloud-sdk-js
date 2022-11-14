@@ -1,8 +1,6 @@
 import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { v4 as uuid } from 'uuid';
 import { ODataRequestConfig } from '../request/odata-request-config';
-import { BatchReference } from '../request/odata-request-traits';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -21,22 +19,10 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    */
   protected constructor(
     readonly responseTransformer: (data: any) => ReturnT,
-    requestConfig: RequestConfigT,
-    private batchReference: BatchReference = { id: uuid() }
+    requestConfig: RequestConfigT
   ) {
     super(requestConfig);
   }
-
-  /**
-   * Gets identifier for the batch request.
-   * @returns Batch request identifier.
-   */
-  getBatchReference(): BatchReference {
-    return {
-      id: this.batchReference.id
-    };
-  }
-
   /**
    * Execute request.
    * @param destination - Destination or DestinationFetchOptions to execute the request against.

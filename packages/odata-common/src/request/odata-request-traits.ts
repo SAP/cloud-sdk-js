@@ -68,13 +68,21 @@ export interface WithETag {
 }
 
 /**
- * Interface implemented by OData requests needing identifier to reference an entity for a batch request like `create`, `delete`, `getByKey`, `update` or `bound/unbound actions/functions`.
+ * Interface implemented by OData requests needing identifier to reference an entity for a batch request like `create`, `delete`, `getByKey`, `update` or `bound actions/functions`.
  */
 export interface BatchReference {
   /**
    * Batch reference identifier.
    */
   id: string;
+}
+
+/**
+ *
+ */
+export interface WithBatchReference{
+  getBatchReference: () => BatchReference;
+  setBatchId: (id: string) => void;
 }
 
 /**

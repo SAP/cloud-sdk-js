@@ -3,5 +3,5 @@
 ---
 
 [New Functionality] Add `getBatchReference()` and `setBatchId()` in request builders to use the batch ID as a reference to an entity in a batch request changeset.
-- add `getBatchReference()` in request builders: `create`, `delete`, `getByKey`, `update` and `bound/unbound actions/functions` 
-- add `setBatchId()` in request builders: `create`, `delete` and `update`
+Batch reference are available in `create`, `delete`, `getByKey`, `update` and `bound actions/functions` request builder. 
+

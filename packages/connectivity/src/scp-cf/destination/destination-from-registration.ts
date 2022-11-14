@@ -95,9 +95,16 @@ export async function searchRegisteredDestination(
   if (destination?.forwardAuthToken) {
     destination.authTokens = destinationAuthToken(options.jwt);
   }
-  logger.info(
-    `Successfully retrieved destination '${options.destinationName}' from registered destinations.`
-  );
+
+  if(destination) {
+    logger.info(
+      `Successfully retrieved destination '${options.destinationName}' from registered destinations.`
+    );
+  } else {
+    logger.debug(
+      `Could not retrieve '${options.destinationName}' from registered destinations.`
+    );
+  }
 
   return destination &&
     (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||

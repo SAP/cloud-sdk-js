@@ -11,7 +11,10 @@ import { ODataCreateRequestConfig } from '../request/odata-create-request-config
 import { Link } from '../selectable';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
-import { BatchReference, WithBatchReference } from '../request/odata-request-traits';
+import {
+  BatchReference,
+  WithBatchReference
+} from '../request/odata-request-traits';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -28,7 +31,7 @@ export abstract class CreateRequestBuilderBase<
   implements EntityIdentifiable<EntityT, DeSerializersT>, WithBatchReference
 {
   readonly _deSerializers: DeSerializersT;
-  private _batchReference: BatchReference = { id:uuid() };
+  private _batchReference: BatchReference = { id: uuid() };
 
   /**
    * Creates an instance of CreateRequestBuilder.
@@ -38,7 +41,6 @@ export abstract class CreateRequestBuilderBase<
    * @param serializer - Entity serializer.
    * @param deserializer - Entity deserializer.
    * @param responseDataAccessor - Object access functions for get requests.
-   * @param batchReference - Identifier for the batch request.
    */
   constructor(
     readonly _entityApi: EntityApi<EntityT, DeSerializersT>,

@@ -4,11 +4,8 @@ import { ODataRequest } from '../../request/odata-request';
 import { ODataRequestConfig } from '../../request/odata-request-config';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { DeSerializers } from '../../de-serializers';
-import { UpdateRequestBuilderBase } from '../update-request-builder-base';
 import { EntityBase } from '../../entity-base';
-import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
-import { CreateRequestBuilderBase } from '../create-request-builder-base';
-import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
+import { WithBatchReference } from '../../request';
 import type { BatchRequestBuilder } from './batch-request-builder';
 import {
   BatchRequestSerializationOptions,
@@ -53,7 +50,7 @@ export function serializeRequest<
   ReturnT,
   ParametersT
 >(
-  request: AllRequestBuilders<EntityT ,DeSerializersT>,
+  request: AllRequestBuilders<EntityT, DeSerializersT>,
   options: BatchRequestSerializationOptions = {}
 ): string {
   const odataRequest = new ODataRequest(
@@ -86,30 +83,21 @@ export function serializeRequest<
   ].join(unixEOL);
 }
 
-type RequestBuildersWithBatchReference<  EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers> =
-    | CreateRequestBuilderBase<EntityT, DeSerializersT>
-    | DeleteRequestBuilderBase<EntityT, DeSerializersT>
-    | GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
-    | UpdateRequestBuilderBase<EntityT, DeSerializersT>;
+type RequestBuildersWithBatchReference = Omit<MethodRequestBuilder, 'execute'> &
+  WithBatchReference;
 
-type AllRequestBuilders<EntityT extends EntityBase, DeSerializersT extends DeSerializers> = Omit<MethodRequestBuilder, 'execute'> | RequestBuildersWithBatchReference<EntityT, DeSerializersT>;
+type AllRequestBuilders<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> = RequestBuildersWithBatchReference | Omit<MethodRequestBuilder, 'execute'>;
 
 function isRequestBuilderWithBatchReference<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
+  DeSerializersT extends DeSerializers
 >(
   request: AllRequestBuilders<EntityT, DeSerializersT>
-): request is RequestBuildersWithBatchReference<
-  EntityT,
-  DeSerializersT
-> {
-  return !!(
-    request as RequestBuildersWithBatchReference<
-      EntityT,
-      DeSerializersT
-    >
-  ).getBatchReference;
+): request is RequestBuildersWithBatchReference {
+  return !!(request as WithBatchReference).getBatchReference;
 }
 
 function getUrl<ConfigT extends ODataRequestConfig>(

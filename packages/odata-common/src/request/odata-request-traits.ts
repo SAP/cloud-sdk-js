@@ -78,10 +78,17 @@ export interface BatchReference {
 }
 
 /**
- *
+ * Interface implemented by OData requests defining the getter and setter for the batch reference.
+ * @internal
  */
-export interface WithBatchReference{
+export interface WithBatchReference {
+  /**
+   * @internal
+   */
   getBatchReference: () => BatchReference;
+  /**
+   * @internal
+   */
   setBatchId: (id: string) => void;
 }
 

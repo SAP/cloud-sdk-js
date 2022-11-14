@@ -15,7 +15,6 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    * Base class for function  and actions imports.
    * @param responseTransformer - Transformation function for the response.
    * @param requestConfig - Request config for a action or function import.
-   * @param batchReference - Identifier for the batch request.
    */
   protected constructor(
     readonly responseTransformer: (data: any) => ReturnT,

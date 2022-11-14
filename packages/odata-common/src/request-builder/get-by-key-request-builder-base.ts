@@ -12,20 +12,26 @@ import { Selectable } from '../selectable';
 import { ODataUri } from '../uri-conversion';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
-import { BatchReference, WithBatchReference } from '../request/odata-request-traits';
+import {
+  BatchReference,
+  WithBatchReference
+} from '../request/odata-request-traits';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
  * @typeParam EntityT - Type of the entity to be requested
  */
 export abstract class GetByKeyRequestBuilderBase<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
-> extends GetRequestBuilderBase<
-  EntityT,
-  DeSerializersT,
-  ODataGetByKeyRequestConfig<EntityT, DeSerializersT>
-> implements WithBatchReference{
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
+  extends GetRequestBuilderBase<
+    EntityT,
+    DeSerializersT,
+    ODataGetByKeyRequestConfig<EntityT, DeSerializersT>
+  >
+  implements WithBatchReference
+{
   private _batchReference: BatchReference = { id: uuid() };
 
   /**
@@ -35,7 +41,6 @@ export abstract class GetByKeyRequestBuilderBase<
    * @param oDataUri - URI conversion functions.
    * @param entityDeserializer - Entity deserializer.
    * @param dataAccessor - Object access functions for get requests.
-   * @param batchReference - Identifier for the batch request.
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,

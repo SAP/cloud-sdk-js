@@ -2,8 +2,10 @@ import {
   ActionFunctionImportRequestBuilderBase,
   EntityApi,
   EntityBase,
-  FunctionImportParameters
+  FunctionImportParameters,
+  BatchReference
 } from '@sap-cloud-sdk/odata-common/internal';
+import { v4 as uuid } from 'uuid';
 import { DeSerializers } from '../de-serializers';
 import { OdataBoundFunctionImportRequestConfig } from '../request';
 import { createODataUri } from '../uri-conversion';
@@ -17,6 +19,8 @@ export class BoundFunctionImportRequestBuilder<
   ReturnT,
   OdataBoundFunctionImportRequestConfig<EntityT, DeSerializersT, ParametersT>
 > {
+  private _batchReference: BatchReference = { id: uuid() };
+
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
     entity: EntityT,
@@ -40,5 +44,21 @@ export class BoundFunctionImportRequestBuilder<
       entity,
       entityApi
     );
+  }
+
+  /**
+   * Gets identifier for the batch request.
+   * @returns Batch request identifier.
+   */
+  getBatchReference(): BatchReference {
+    return this._batchReference;
+  }
+
+  /**
+   * Sets user-defined identifier for the batch reference.
+   * @param id - User-defined batch reuest identifier.
+   */
+  setBatchId(id: string): void {
+    this._batchReference = { id };
   }
 }

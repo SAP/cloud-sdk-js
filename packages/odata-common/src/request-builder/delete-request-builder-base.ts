@@ -7,7 +7,10 @@ import { ODataUri } from '../uri-conversion';
 import { ODataDeleteRequestConfig } from '../request/odata-delete-request-config';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
-import { BatchReference, WithBatchReference } from '../request/odata-request-traits';
+import {
+  BatchReference,
+  WithBatchReference
+} from '../request/odata-request-traits';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4.
@@ -31,7 +34,6 @@ export abstract class DeleteRequestBuilderBase<
    * @param _entityApi - Entity API for building and executing the request.
    * @param oDataUri - URI conversion functions.
    * @param keysOrEntity - Entity or key-value pairs of key properties for the given entity.
-   * @param batchReference - Identifier for the batch request.
    */
   constructor(
     readonly _entityApi: EntityApi<EntityT, DeSerializersT>,

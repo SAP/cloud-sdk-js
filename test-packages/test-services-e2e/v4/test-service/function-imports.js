@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.functionImports = exports.returnSapCloudSdk = exports.returnInt = exports.returnCollection = exports.getByKey = exports.getAll = exports.concatStrings = void 0;
+exports.functionImports = exports.returnSapCloudSdk = exports.returnInt = exports.returnCollection = exports.getByKeyWithMultipleKeys = exports.getByKey = exports.getAll = exports.concatStrings = void 0;
 /*
  * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -44,6 +44,20 @@ function getByKey(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
 }
 exports.getByKey = getByKey;
 /**
+ * Get By Key With Multiple Keys.
+ * @param parameters - Object containing all parameters for the function.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+function getByKeyWithMultipleKeys(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
+    const params = {
+        keyTestEntityWithMultipleKeys: new odata_v4_1.FunctionImportParameter('KeyTestEntityWithMultipleKeys', 'Edm.Int32', parameters.keyTestEntityWithMultipleKeys),
+        stringPropertyWithMultipleKeys: new odata_v4_1.FunctionImportParameter('StringPropertyWithMultipleKeys', 'Edm.String', parameters.stringPropertyWithMultipleKeys),
+        booleanPropertyWithMultipleKeys: new odata_v4_1.FunctionImportParameter('BooleanPropertyWithMultipleKeys', 'Edm.Boolean', parameters.booleanPropertyWithMultipleKeys)
+    };
+    return new odata_v4_1.FunctionImportRequestBuilder('/odata/test-service', 'getByKeyWithMultipleKeys', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityWithMultipleKeysApi), params, deSerializers);
+}
+exports.getByKeyWithMultipleKeys = getByKeyWithMultipleKeys;
+/**
  * Return Collection.
  * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
@@ -81,6 +95,7 @@ exports.functionImports = {
     concatStrings,
     getAll,
     getByKey,
+    getByKeyWithMultipleKeys,
     returnCollection,
     returnInt,
     returnSapCloudSdk

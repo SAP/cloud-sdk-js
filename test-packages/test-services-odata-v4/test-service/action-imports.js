@@ -31,7 +31,7 @@ function testActionImportMultipleParameterComplexReturnType(parameters, deSerial
         nullableBooleanParam: new odata_v4_1.ActionImportParameter('NullableBooleanParam', 'Edm.Boolean', parameters.nullableBooleanParam),
         nullableGeographyPointParam: new odata_v4_1.ActionImportParameter('NullableGeographyPointParam', 'Edm.Any', parameters.nullableGeographyPointParam)
     };
-    return new odata_v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers);
+    return new odata_v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers);
 }
 exports.testActionImportMultipleParameterComplexReturnType = testActionImportMultipleParameterComplexReturnType;
 /**
@@ -87,7 +87,7 @@ function testActionImportNullableTest(parameters, deSerializers = odata_v4_1.def
         nullableExplicit: new odata_v4_1.ActionImportParameter('NullableExplicit', 'Edm.String', parameters.nullableExplicit),
         nonNullable: new odata_v4_1.ActionImportParameter('NonNullable', 'Edm.String', parameters.nonNullable)
     };
-    return new odata_v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNullableTest', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers);
+    return new odata_v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNullableTest', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers);
 }
 exports.testActionImportNullableTest = testActionImportNullableTest;
 exports.actionImports = {

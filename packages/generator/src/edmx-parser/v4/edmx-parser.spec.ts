@@ -1,6 +1,7 @@
 import { resolve } from 'path';
-import { readEdmxFile } from '../edmx-file-reader';
+import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 import { parseComplexTypesBase } from '../common';
+import { readEdmxFile } from '../edmx-file-reader';
 import {
   parseComplexTypesV4,
   parseEntitySetsV4,
@@ -9,9 +10,40 @@ import {
   parseOperationImports,
   parseOperations
 } from '../v4';
-import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 
 describe('edmx-edmx-parser', () => {
+  it('parses IsBound  with default false', () => {
+    const metadataEdmx = readEdmxFile(
+      resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV', 'API_TEST_SRV.edmx')
+    );
+    expect(parseOperations(metadataEdmx.root, 'function')[0].IsBound).toEqual(
+      'false'
+    );
+  });
+
+  it('parses IsBound with true and false values', () => {
+    const metadataEdmx = readEdmxFile(
+      resolve(
+        oDataServiceSpecs,
+        '../odata-service-specs-e2e',
+        'v4',
+        'API_TEST_SRV',
+        'API-TEST_SRV.edmx'
+      )
+    );
+
+    const isBoundValues: string[] = parseOperations(
+      metadataEdmx.root,
+      'function'
+    ).map(operation => operation.IsBound);
+    expect(isBoundValues.length).not.toEqual(0);
+
+    const isBoundValuesWithTrueAndFalseRemoved = isBoundValues
+      .filter(isBound => isBound === 'true')
+      .filter(isBound => isBound === 'false');
+    expect(isBoundValuesWithTrueAndFalseRemoved.length).toEqual(0);
+  });
+
   it('v4: parses EDMX file to JSON and coerces properties to arrays', () => {
     const metadataEdmx = readEdmxFile(
       resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV', 'API_TEST_SRV.edmx')
@@ -20,11 +52,11 @@ describe('edmx-edmx-parser', () => {
     expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(14);
     expect(parseEntityType(metadataEdmx.root).length).toBe(14);
     expect(parseOperationImports(metadataEdmx.root, 'function').length).toBe(
-      11
+      13
     );
-    expect(parseOperations(metadataEdmx.root, 'function').length).toBe(11);
-    expect(parseOperationImports(metadataEdmx.root, 'action').length).toBe(9);
-    expect(parseOperations(metadataEdmx.root, 'action').length).toBe(8);
+    expect(parseOperations(metadataEdmx.root, 'function').length).toBe(13);
+    expect(parseOperationImports(metadataEdmx.root, 'action').length).toBe(10);
+    expect(parseOperations(metadataEdmx.root, 'action').length).toBe(9);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
     expect(parseEnumTypes(metadataEdmx.root).length).toBe(3);
 

@@ -1,26 +1,28 @@
+import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import {
+  EdmxEntitySet,
+  EdmxEntityTypeV4
+} from '../../edmx-parser/v4/edm-types';
+import {
+  parseEntitySetsV4,
+  parseEntityType
+} from '../../edmx-parser/v4/edmx-parser';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import {
+  VdmComplexType,
+  VdmEntity,
+  VdmPartialEntity,
+  VdmEnumType,
+  VdmNavigationProperty
+} from '../../vdm-types';
 import {
   createEntityClassNames,
   joinEntityMetadata,
   navigationPropertyBase,
   transformEntityBase
 } from '../common/entity';
-import {
-  VdmComplexType,
-  VdmEntity,
-  VdmEnumType,
-  VdmNavigationProperty
-} from '../../vdm-types';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
-  parseEntitySetsV4,
-  parseEntityType
-} from '../../edmx-parser/v4/edmx-parser';
-import {
-  EdmxEntitySet,
-  EdmxEntityTypeV4
-} from '../../edmx-parser/v4/edm-types';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { isCollectionType } from '../edmx-to-vdm-util';
+import { generateBoundOperations } from './operation';
 
 /**
  * @internal
@@ -41,6 +43,14 @@ export function generateEntitiesV4(
   );
   const classNames = createEntityClassNames(entitiesMetadata, formatter);
 
+  const entities: VdmPartialEntity[] = entitiesMetadata.map(
+    ({ entityType, entitySet }) => ({
+      entityTypeName: entityType.Name,
+      className: classNames[entitySet.Name],
+      entityTypeNamespace: entityType.Namespace
+    })
+  );
+
   return entitiesMetadata.map(entityMetadata => ({
     ...transformEntityBase(
       entityMetadata,
@@ -54,6 +64,26 @@ export function generateEntitiesV4(
       entityMetadata.entitySet,
       classNames,
       formatter
+    ),
+    functions: generateBoundOperations(
+      serviceMetadata,
+      entityMetadata.entityType.Namespace,
+      'function',
+      entities,
+      complexTypes,
+      formatter,
+      entityMetadata.entitySet.Name,
+      classNames[entityMetadata.entitySet.Name]
+    ),
+    actions: generateBoundOperations(
+      serviceMetadata,
+      entityMetadata.entityType.Namespace,
+      'action',
+      entities,
+      complexTypes,
+      formatter,
+      entityMetadata.entitySet.Name,
+      classNames[entityMetadata.entitySet.Name]
     )
   }));
 }

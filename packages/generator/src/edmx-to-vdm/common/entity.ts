@@ -1,4 +1,10 @@
 import {
+  EdmxEntitySetBase,
+  EdmxEntityTypeBase,
+  EdmxNamed,
+  JoinedEntityMetadata
+} from '../../edmx-parser/common';
+import {
   edmToFieldType,
   edmToTsType,
   getFallbackEdmTypeIfNeeded,
@@ -7,23 +13,18 @@ import {
   isNullableProperty,
   isUpdatable
 } from '../../generator-utils';
+import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
 import {
   VdmComplexType,
   VdmEntity,
-  VdmNavigationProperty,
-  VdmProperty,
+  VdmEnumType,
   VdmMappedEdmType,
-  VdmEnumType
+  VdmNavigationProperty,
+  VdmProperty
 } from '../../vdm-types';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
 import { entityDescription, propertyDescription } from '../description-util';
-import {
-  EdmxEntitySetBase,
-  EdmxEntityTypeBase,
-  EdmxNamed,
-  JoinedEntityMetadata
-} from '../../edmx-parser/common';
 import {
   checkCollectionKind,
   complexTypeFieldForName,
@@ -36,7 +37,6 @@ import {
   parseCollectionTypeName,
   typesForCollection
 } from '../edmx-to-vdm-util';
-import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
 
 /**
  * @internal
@@ -47,7 +47,7 @@ export function transformEntityBase(
   complexTypes: VdmComplexType[],
   enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
-): Omit<VdmEntity, 'navigationProperties'> {
+): Omit<VdmEntity, 'navigationProperties' | 'functions' | 'actions'> {
   const entity = {
     entitySetName: entityMetadata.entitySet.Name,
     entityTypeName: entityMetadata.entityType.Name,
@@ -125,6 +125,7 @@ function properties(
     };
   });
 }
+
 /**
  * @internal
  */

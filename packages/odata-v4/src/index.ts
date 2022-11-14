@@ -36,7 +36,9 @@ export {
   FunctionImportRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  UpdateRequestBuilder
+  UpdateRequestBuilder,
+  BoundActionImportRequestBuilder,
+  BoundFunctionImportRequestBuilder
 } from './request-builder';
 
 export { ODataBatchRequestBuilder } from './request-builder';
@@ -68,5 +70,8 @@ export type {
 } from './de-serializers';
 
 export type { BatchResponse } from './batch-response';
+
+export type { ODataBoundActionImportRequestConfig } from './request/odata-bound-action-request-config';
+export type { OdataBoundFunctionImportRequestConfig } from './request/odata-bound-function-import-request-config';
 
 export * from './common';

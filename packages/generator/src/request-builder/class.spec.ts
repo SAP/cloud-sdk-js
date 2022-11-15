@@ -1,5 +1,5 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { breakfastEntity } from '../../test/test-util/data-model';
+import { breakfastEntity, brunchEntity } from '../../test/test-util/data-model';
 import { VdmProperty } from '../vdm-types';
 import { requestBuilderClass } from './class';
 
@@ -43,6 +43,62 @@ describe('request builder class', () => {
     };
 
     [getByKey, getAll, create, update].forEach(method => {
+      expect(requestBuilder).toContain(method.name);
+      expect(requestBuilder).toContain(method.returnType);
+      expect(requestBuilder).toContain(method.statements);
+    });
+  });
+
+  xit('should generate request builder correctly with delete', () => {
+    const requestBuilder = requestBuilderClass(brunchEntity);
+    expect(requestBuilder).toContain(
+      'BrunchRequestBuilder<T extends DeSerializers = DefaultDeSerializers>'
+    );
+    expect(requestBuilder).toContain('RequestBuilder<Brunch<T>, T>');
+
+    const getByKey = {
+      name: 'getByKey',
+      returnType: 'GetByKeyRequestBuilder<Brunch<T>, T>',
+      statements: 'return new GetByKeyRequestBuilder<Brunch<T>, T>(this.entityApi, {EntityName: entityName});',
+      parameters: [
+        { name: 'entityName', type: "DeserializedType<T, 'Edm.String'>" },
+        { name: 'BrunchTime', type: "DeserializedType<T, 'Edm.DateTime'>" }
+      ]
+    };
+    const getAll = {
+      name: 'getAll',
+      returnType: 'GetAllRequestBuilder<Brunch<T>, T>',
+      statements:
+        'return new GetAllRequestBuilder<Brunch<T>, T>(this.entityApi);',
+      parameters: undefined
+    };
+    const create = {
+      name: 'create',
+      returnType: 'CreateRequestBuilder<Brunch<T>, T>',
+      statements:
+        'return new CreateRequestBuilder<Brunch<T>, T>(this.entityApi, entity);',
+      parameters: [{ name: 'entity', type: 'Brunch<T>' }]
+    };
+    const update = {
+      name: 'update',
+      returnType: 'UpdateRequestBuilder<Brunch<T>, T>',
+      statements:
+        'return new UpdateRequestBuilder<Brunch<T>, T>(this.entityApi, entity);',
+      parameters: [{ name: 'entity', type: 'Brunch<T>' }]
+    };
+    const deleteParams = [
+      { name: 'entityNameOrEntity', type: 'any', hasQuestionToken: false },
+      { name: 'brunchTime', type: 'Time', hasQuestionToken: true },
+      { name: 'pWith', type: 'string', hasQuestionToken: true }
+    ];
+    const deleteRequestBuilder = {
+      name: 'delete',
+      returnType: 'DeleteRequestBuilder<Brunch<T>, T>',
+      statements: `return new DeleteRequestBuilder<Brunch<T>, T>(this.entityApi, entityNameOrEntity instanceof Brunch ? entityNameOrEntity : {EntityName: entityNameOrEntity!,${unixEOL}        BrunchTime: brunchTime!,${unixEOL}        With: pWith!});`,
+      parameters: deleteParams
+    };
+
+    [getByKey, getAll, create, update, deleteRequestBuilder].forEach(method => {
       expect(requestBuilder).toContain(method.name);
       expect(requestBuilder).toContain(method.returnType);
       expect(requestBuilder).toContain(method.statements);

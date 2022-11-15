@@ -1,6 +1,5 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import {
-  addLeadingNewline,
   getFunctionDoc,
   getRequestBuilderDescription
 } from '../typedoc';
@@ -10,9 +9,9 @@ import { VdmEntity } from '../vdm-types';
  * @internal
  */
 export function requestBuilderClass(entity: VdmEntity): string {
-  return (
-    documentationBlock`${getRequestBuilderDescription(entity)}` +
-    codeBlock`export declare class ${
+  return (unixEOL +
+    documentationBlock`${getRequestBuilderDescription(entity)}` + unixEOL +
+    codeBlock`export class ${
       entity.className
     }RequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<${
       entity.className
@@ -58,13 +57,13 @@ function getByKeyRequestBuilder(entity: VdmEntity): string {
           description: `Key property. See {@link ${entity.className}.${key.instancePropertyName}}.`
         }))
       }
-    )}` +
+    )}` + unixEOL +
     codeBlock`getByKey(${entity.keys
       .map(
         key =>
           `${key.propertyNameAsParam}: DeserializedType<T, '${key.edmType}'>`
       )
-      .join(', ')}) {
+      .join(', ')}): GetByKeyRequestBuilder<${entity.className}<T>, T> {
         ${buildParametrizedStatements(entity, 'GetByKeyRequestBuilder')}
   }`
   );
@@ -80,7 +79,7 @@ function getAllRequestBuilder(entity: VdmEntity): string {
           description: `A request builder for creating requests to retrieve all \`${entity.className}\` entities.`
         }
       }
-    )}` +
+    )}` + unixEOL +
     codeBlock`getAll(): GetAllRequestBuilder<${entity.className}<T>, T> {
     return new GetAllRequestBuilder<${entity.className}<T>, T>(this.entityApi);
   }`
@@ -104,7 +103,7 @@ function createRequestBuilder(entity: VdmEntity): string {
           }
         ]
       }
-    )}` +
+    )}` + unixEOL +
     codeBlock`create(entity: ${entity.className}<T>): CreateRequestBuilder<${entity.className}<T>, T>{
     return new CreateRequestBuilder<${entity.className}<T>, T>(this.entityApi, entity);
   }`
@@ -113,7 +112,7 @@ function createRequestBuilder(entity: VdmEntity): string {
 
 function updateRequestBuilder(entity: VdmEntity): string {
   return (
-    documentationBlock`${addLeadingNewline(
+    documentationBlock`${
       getFunctionDoc(
         `Returns a request builder for updating an entity of type \`${entity.className}\`.`,
         {
@@ -130,7 +129,7 @@ function updateRequestBuilder(entity: VdmEntity): string {
           ]
         }
       )
-    )}` +
+      }` + unixEOL +
     codeBlock`update(entity: ${entity.className}<T>): UpdateRequestBuilder<${entity.className}<T>, T>{
     return new UpdateRequestBuilder<${entity.className}<T>, T>(this.entityApi, entity);
   }`
@@ -138,26 +137,14 @@ function updateRequestBuilder(entity: VdmEntity): string {
 }
 
 function deleteRequestBuilder(entity: VdmEntity): string {
-  return codeBlock`${entity.keys
-    .map(
-      key =>
-        documentationBlock`${getFunctionDoc(
-          `Returns a request builder for deleting an entity of type \`${entity.className}\`.`,
-          {
-            returns: {
-              type: `DeleteRequestBuilder<${entity.className}>`,
-              description: `A request builder for creating requests that delete an entity of type \`${entity.className}\`.`
-            },
-            params: entity.keys.map(k => ({
-              name: k.propertyNameAsParam,
-              type: k.jsType,
-              description: `Key property. See {@link ${entity.className}.${k.instancePropertyName}}.`
-            }))
-          }
-        )}\n` +
-        `delete(${key.propertyNameAsParam}: ${key.jsType}): DeleteRequestBuilder<${entity.className}<T>, T>`
-    )
-    .join(';\n')}{
+  const parameters = entity.keys.map(key => `${key.propertyNameAsParam}: ${key.jsType}`);
+
+  return codeBlock`
+  delete(${parameters}): DeleteRequestBuilder<${entity.className}<T>, T>;
+  delete(entity: ${entity.className}<T>): DeleteRequestBuilder<${entity.className}<T>, T>;
+  delete(
+    ${deleteRequestBuilderParameters(entity).map(p => `${p.name}${p.hasQuestionToken ? '?' : ''}: ${p.type}`).join(', ')}
+  ): DeleteRequestBuilder<${entity.className}<T>, T> {
     ${deleteRequestBuilderStatements(entity)}
   }`;
 }
@@ -203,6 +190,73 @@ function deleteRequestBuilderStatements(entity: VdmEntity): string {
     .map((key, index) => `${key.originalName}: ${params[index]}!`)
     .join(`,${unixEOL}`);
   return `return new DeleteRequestBuilder<${entity.className}<T>, T>(this.entityApi, ${params[0]} instanceof ${entity.className} ? ${params[0]} : {${keys}});`;
+}
+
+function deleteRequestBuilderOverload(
+  entity: VdmEntity
+): string[] {
+  const parameters = entity.keys.map(key => `${key.propertyNameAsParam}: ${key.jsType}`);
+  return [
+    `delete(${parameters}): DeleteRequestBuilder<${entity.className}<T>, T>;`,
+    `delete(entity: ${entity.className}<T>): DeleteRequestBuilder<${entity.className}<T>, T>;`
+
+    // {
+    //   kind: StructureKind.MethodOverload,
+    //   returnType: `DeleteRequestBuilder<${entity.className}<T>, T>`,
+    //   parameters: entity.keys.map(key => ({
+    //     name: key.propertyNameAsParam,
+    //     type: key.jsType
+    //   })),
+    //   docs: [
+    //     addLeadingNewline(
+    //       getFunctionDoc(
+    //         `Returns a request builder for deleting an entity of type \`${entity.className}\`.`,
+    //         {
+    //           returns: {
+    //             type: `DeleteRequestBuilder<${entity.className}>`,
+    //             description: `A request builder for creating requests that delete an entity of type \`${entity.className}\`.`
+    //           },
+    //           params: entity.keys.map(key => ({
+    //             name: key.propertyNameAsParam,
+    //             type: key.jsType,
+    //             description: `Key property. See {@link ${entity.className}.${key.instancePropertyName}}.`
+    //           }))
+    //         }
+    //       )
+    //     )
+    //   ]
+    // },
+    // {
+    //   kind: StructureKind.MethodOverload,
+    //   returnType: `DeleteRequestBuilder<${entity.className}<T>, T>`,
+    //   parameters: [
+    //     {
+    //       name: 'entity',
+    //       type: `${entity.className}<T>`
+    //     }
+    //   ],
+    //   docs: [
+    //     addLeadingNewline(
+    //       getFunctionDoc(
+    //         `Returns a request builder for deleting an entity of type \`${entity.className}\`.`,
+    //         {
+    //           returns: {
+    //             type: `DeleteRequestBuilder<${entity.className}>`,
+    //             description: `A request builder for creating requests that delete an entity of type \`${entity.className}\` by taking the entity as a parameter.`
+    //           },
+    //           params: [
+    //             {
+    //               name: 'entity',
+    //               type: entity.className,
+    //               description: 'Pass the entity to be deleted.'
+    //             }
+    //           ]
+    //         }
+    //       )
+    //     )
+    //   ]
+    // }
+  ];
 }
 
 function buildParametrizedStatements(

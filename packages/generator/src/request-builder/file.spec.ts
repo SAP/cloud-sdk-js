@@ -4,7 +4,8 @@ import { requestBuilderSourceFile } from './file';
 describe('imports', () => {
   it('importDeclarations', () => {
     // todo: test without ts-morph
-    // const actual = requestBuilderSourceFile(breakfastEntity, 'v2');
+    const actual = requestBuilderSourceFile(breakfastEntity, 'v2');
+    console.log(actual)
     // expect(actual.kind).toBe(StructureKind.SourceFile);
 
     // const imports = (actual.statements as any[]).filter(

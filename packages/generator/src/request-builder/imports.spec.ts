@@ -7,9 +7,8 @@ describe('imports', () => {
     const actual = requestBuilderImportDeclarations(breakfastEntity, 'v2');
     expect(actual).toEqual([
       {
-        kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-v2',
-        namedImports: [
+        moduleIdentifier: '@sap-cloud-sdk/odata-v2',
+        names: [
           'DefaultDeSerializers',
           'DeSerializers',
           'GetAllRequestBuilder',
@@ -22,9 +21,8 @@ describe('imports', () => {
         ]
       },
       {
-        kind: StructureKind.ImportDeclaration,
-        namedImports: ['Breakfast'],
-        moduleSpecifier: './Breakfast'
+        names: ['Breakfast'],
+        moduleIdentifier: './Breakfast'
       }
     ]);
   });

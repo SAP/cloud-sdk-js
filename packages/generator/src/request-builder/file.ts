@@ -1,5 +1,5 @@
-import { SourceFileStructure, StructureKind } from 'ts-morph';
-import { ODataVersion } from '@sap-cloud-sdk/util';
+import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
+import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
 import { VdmEntity } from '../vdm-types';
 import { requestBuilderClass } from './class';
 import { requestBuilderImportDeclarations } from './imports';
@@ -10,12 +10,8 @@ import { requestBuilderImportDeclarations } from './imports';
 export function requestBuilderSourceFile(
   entity: VdmEntity,
   oDataVersion: ODataVersion
-): SourceFileStructure {
-  return {
-    kind: StructureKind.SourceFile,
-    statements: [
-      ...requestBuilderImportDeclarations(entity, oDataVersion),
-      requestBuilderClass(entity)
-    ]
-  };
+): string {
+  const imports = serializeImports(requestBuilderImportDeclarations(entity, oDataVersion));
+  const content = requestBuilderClass(entity);
+  return [imports, content].join(unixEOL);
 }

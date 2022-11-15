@@ -96,7 +96,7 @@ export async function searchRegisteredDestination(
     destination.authTokens = destinationAuthToken(options.jwt);
   }
 
-  if(destination) {
+  if (destination) {
     logger.info(
       `Successfully retrieved destination '${options.destinationName}' from registered destinations.`
     );

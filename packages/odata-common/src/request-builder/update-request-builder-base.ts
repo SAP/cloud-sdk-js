@@ -35,7 +35,7 @@ export abstract class UpdateRequestBuilderBase<
   readonly _deSerializers: DeSerializersT;
   private ignored: Set<string>;
   private required: Set<string>;
-  private _batchReference: BatchReference = { id: uuid() };
+  private _batchReference: BatchReference;
 
   /**
    * Creates an instance of UpdateRequestBuilder.
@@ -80,6 +80,9 @@ export abstract class UpdateRequestBuilderBase<
    * @returns Batch request identifier.
    */
   getBatchReference(): BatchReference {
+    if(!this._batchReference){
+      this.setBatchId(uuid())
+    }
     return this._batchReference;
   }
 

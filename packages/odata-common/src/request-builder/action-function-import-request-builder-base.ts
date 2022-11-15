@@ -14,7 +14,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
   RequestConfigT extends ODataRequestConfig
 > extends MethodRequestBuilder<RequestConfigT>  implements WithBatchReference{
 
-  private _batchReference: BatchReference = { id: uuid() };
+  private _batchReference: BatchReference;
   /**
    * Base class for function  and actions imports.
    * @param responseTransformer - Transformation function for the response.
@@ -60,6 +60,9 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    * @returns Batch request identifier.
    */
   getBatchReference(): BatchReference {
+    if(!this._batchReference){
+      this.setBatchId(uuid())
+    }
     return this._batchReference;
   }
 

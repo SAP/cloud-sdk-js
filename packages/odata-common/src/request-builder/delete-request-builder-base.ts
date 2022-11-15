@@ -27,7 +27,7 @@ export abstract class DeleteRequestBuilderBase<
 {
   readonly _entity: EntityT;
   readonly _deSerializers: DeSerializersT;
-  private _batchReference: BatchReference = { id: uuid() };
+  private _batchReference: BatchReference;
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
@@ -57,6 +57,9 @@ export abstract class DeleteRequestBuilderBase<
    * @returns Batch request identifier.
    */
   getBatchReference(): BatchReference {
+    if(!this._batchReference){
+      this.setBatchId(uuid())
+    }
     return this._batchReference;
   }
 

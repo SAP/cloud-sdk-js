@@ -31,7 +31,7 @@ export abstract class CreateRequestBuilderBase<
   implements EntityIdentifiable<EntityT, DeSerializersT>, WithBatchReference
 {
   readonly _deSerializers: DeSerializersT;
-  private _batchReference: BatchReference = { id: uuid() };
+  private _batchReference: BatchReference;
 
   /**
    * Creates an instance of CreateRequestBuilder.
@@ -66,6 +66,9 @@ export abstract class CreateRequestBuilderBase<
    * @returns Batch request identifier.
    */
   getBatchReference(): BatchReference {
+    if(!this._batchReference){
+      this.setBatchId(uuid())
+    }
     return this._batchReference;
   }
 

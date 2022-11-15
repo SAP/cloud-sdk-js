@@ -32,7 +32,7 @@ export abstract class GetByKeyRequestBuilderBase<
   >
   implements WithBatchReference
 {
-  private _batchReference: BatchReference = { id: uuid() };
+  private _batchReference: BatchReference;
 
   /**
    * Creates an instance of GetByKeyRequestBuilder.
@@ -58,6 +58,9 @@ export abstract class GetByKeyRequestBuilderBase<
    * @returns Batch request identifier.
    */
   getBatchReference(): BatchReference {
+    if(!this._batchReference){
+      this.setBatchId(uuid())
+    }
     return this._batchReference;
   }
 

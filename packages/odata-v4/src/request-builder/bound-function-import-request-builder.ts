@@ -2,7 +2,7 @@ import {
   ActionFunctionImportRequestBuilderBase,
   EntityApi,
   EntityBase,
-  FunctionImportParameters,
+  FunctionImportParameters
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
 import { OdataBoundFunctionImportRequestConfig } from '../request';

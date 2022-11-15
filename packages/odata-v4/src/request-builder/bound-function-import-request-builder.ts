@@ -3,9 +3,7 @@ import {
   EntityApi,
   EntityBase,
   FunctionImportParameters,
-  BatchReference
 } from '@sap-cloud-sdk/odata-common/internal';
-import { v4 as uuid } from 'uuid';
 import { DeSerializers } from '../de-serializers';
 import { OdataBoundFunctionImportRequestConfig } from '../request';
 import { createODataUri } from '../uri-conversion';

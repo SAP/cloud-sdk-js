@@ -1,11 +1,8 @@
 import {
   ActionFunctionImportRequestBuilderBase,
   EntityApi,
-  EntityBase,
-  BatchReference,
-  WithBatchReference
+  EntityBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { v4 as uuid } from 'uuid';
 import { DeSerializers } from '../de-serializers';
 import {
   ActionImportParameters,

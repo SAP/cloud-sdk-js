@@ -11,16 +11,14 @@ import {
 import { createODataUri } from '../uri-conversion';
 
 export class BoundActionImportRequestBuilder<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers,
-    ParametersT,
-    ReturnT
-  >
-  extends ActionFunctionImportRequestBuilderBase<
-    ReturnT,
-    ODataBoundActionImportRequestConfig<EntityT, DeSerializersT, ParametersT>
-  >
-{
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  ParametersT,
+  ReturnT
+> extends ActionFunctionImportRequestBuilderBase<
+  ReturnT,
+  ODataBoundActionImportRequestConfig<EntityT, DeSerializersT, ParametersT>
+> {
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
     entity: EntityT,

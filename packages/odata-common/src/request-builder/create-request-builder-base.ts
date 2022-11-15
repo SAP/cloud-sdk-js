@@ -66,8 +66,8 @@ export abstract class CreateRequestBuilderBase<
    * @returns Batch request identifier.
    */
   getBatchReference(): BatchReference {
-    if(!this._batchReference){
-      this.setBatchId(uuid())
+    if (!this._batchReference) {
+      this.setBatchId(uuid());
     }
     return this._batchReference;
   }

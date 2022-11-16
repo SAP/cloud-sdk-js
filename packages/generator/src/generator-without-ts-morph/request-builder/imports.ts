@@ -1,10 +1,8 @@
 import { Import } from '@sap-cloud-sdk/generator-common/internal';
 import { ODataVersion, unique } from '@sap-cloud-sdk/util';
-import {
-  externalImportDeclarations2,
-  odataImportDeclaration2, propertyTypeImportNames
-} from '../imports';
-import { VdmEntity, VdmProperty } from '../vdm-types';
+import { propertyTypeImportNames } from '../../imports';
+import { VdmEntity, VdmProperty } from '../../vdm-types';
+import { externalImportDeclarations, odataImportDeclaration } from '../imports';
 
 /**
  * @internal
@@ -14,8 +12,8 @@ export function requestBuilderImportDeclarations(
   oDataVersion: ODataVersion
 ): Import[] {
   return [
-    ...externalImportDeclarations2(entity.keys),
-    odataImportDeclaration2(
+    ...externalImportDeclarations(entity.keys),
+    odataImportDeclaration(
       [
         ...requestBuilderImports(entity),
         'DeserializedType',
@@ -52,18 +50,14 @@ function requestBuilderImports(entity: VdmEntity) {
   return imports;
 }
 
-function entityImportDeclaration(
-  entity: VdmEntity
-): Import {
+function entityImportDeclaration(entity: VdmEntity): Import {
   return {
     names: [entity.className],
     moduleIdentifier: `./${entity.className}`
   };
 }
 
-function entityKeyImportDeclaration(
-  properties: VdmProperty[]
-): Import[] {
+function entityKeyImportDeclaration(properties: VdmProperty[]): Import[] {
   return unique(
     properties
       .filter(property => property.isEnum)

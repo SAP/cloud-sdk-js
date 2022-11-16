@@ -1,44 +1,49 @@
 import { existsSync, PathLike, promises as fsPromises } from 'fs';
-import { resolve, dirname, sep, posix } from 'path';
+import { dirname, posix, resolve, sep } from 'path';
+import {
+  copyFiles,
+  createFile,
+  CreateFileOptions,
+  getSdkMetadataFileNames,
+  getSdkVersion,
+  getVersionForClient,
+  packageDescription,
+  readCompilerOptions,
+  readPrettierConfig,
+  transpileDirectory
+} from '@sap-cloud-sdk/generator-common/internal';
 import {
   createLogger,
   ErrorWithCause,
   splitInChunks
 } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
+import { GlobSync } from 'glob';
 import {
   IndentationText,
+  ModuleKind,
   ModuleResolutionKind,
   Project,
   ProjectOptions,
-  ModuleKind,
   QuoteKind,
   ScriptTarget
 } from 'ts-morph';
-import { GlobSync } from 'glob';
-import {
-  getSdkMetadataFileNames,
-  getVersionForClient,
-  transpileDirectory,
-  readCompilerOptions,
-  copyFiles,
-  getSdkVersion,
-  packageDescription,
-  createFile,
-  readPrettierConfig,
-  CreateFileOptions
-} from '@sap-cloud-sdk/generator-common/internal';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';
+import { enumTypeSourceFile } from './enum-type/file';
 import { sourceFile } from './file-generator';
 import {
   defaultValueProcessesJsGeneration,
   GeneratorOptions
 } from './generator-options';
 import { hasEntities } from './generator-utils';
+import { entityApiFile } from './generator-without-ts-morph';
+import { requestBuilderSourceFile } from './generator-without-ts-morph/request-builder/file';
+import { serviceFile } from './generator-without-ts-morph/service/file';
+import { operationsSourceFile } from './operations/file';
+import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
-import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';
 import { indexFile } from './service/index-file';
@@ -46,11 +51,6 @@ import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
 import { VdmServiceMetadata } from './vdm-types';
-import { operationsSourceFile } from './operations/file';
-import { enumTypeSourceFile } from './enum-type/file';
-import { sdkMetadata } from './sdk-metadata';
-import { entityApiFile } from './generator-without-ts-morph';
-import { serviceFile } from './generator-without-ts-morph/service/file';
 
 const { mkdir, readdir } = fsPromises;
 

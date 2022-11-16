@@ -1,16 +1,15 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
-import {
-  getFunctionDoc,
-  getRequestBuilderDescription
-} from '../typedoc';
-import { VdmEntity } from '../vdm-types';
+import { getFunctionDoc, getRequestBuilderDescription } from '../../typedoc';
+import { VdmEntity } from '../../vdm-types';
 
 /**
  * @internal
  */
 export function requestBuilderClass(entity: VdmEntity): string {
-  return (unixEOL +
-    documentationBlock`${getRequestBuilderDescription(entity)}` + unixEOL +
+  return (
+    unixEOL +
+    documentationBlock`${getRequestBuilderDescription(entity)}` +
+    unixEOL +
     codeBlock`export class ${
       entity.className
     }RequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<${
@@ -57,7 +56,8 @@ function getByKeyRequestBuilder(entity: VdmEntity): string {
           description: `Key property. See {@link ${entity.className}.${key.instancePropertyName}}.`
         }))
       }
-    )}` + unixEOL +
+    )}` +
+    unixEOL +
     codeBlock`getByKey(${entity.keys
       .map(
         key =>
@@ -79,7 +79,8 @@ function getAllRequestBuilder(entity: VdmEntity): string {
           description: `A request builder for creating requests to retrieve all \`${entity.className}\` entities.`
         }
       }
-    )}` + unixEOL +
+    )}` +
+    unixEOL +
     codeBlock`getAll(): GetAllRequestBuilder<${entity.className}<T>, T> {
     return new GetAllRequestBuilder<${entity.className}<T>, T>(this.entityApi);
   }`
@@ -103,7 +104,8 @@ function createRequestBuilder(entity: VdmEntity): string {
           }
         ]
       }
-    )}` + unixEOL +
+    )}` +
+    unixEOL +
     codeBlock`create(entity: ${entity.className}<T>): CreateRequestBuilder<${entity.className}<T>, T>{
     return new CreateRequestBuilder<${entity.className}<T>, T>(this.entityApi, entity);
   }`
@@ -112,24 +114,23 @@ function createRequestBuilder(entity: VdmEntity): string {
 
 function updateRequestBuilder(entity: VdmEntity): string {
   return (
-    documentationBlock`${
-      getFunctionDoc(
-        `Returns a request builder for updating an entity of type \`${entity.className}\`.`,
-        {
-          returns: {
-            type: `UpdateRequestBuilder<${entity.className}>`,
-            description: `A request builder for creating requests that update an entity of type \`${entity.className}\`.`
-          },
-          params: [
-            {
-              name: 'entity',
-              type: entity.className,
-              description: 'The entity to be updated'
-            }
-          ]
-        }
-      )
-      }` + unixEOL +
+    documentationBlock`${getFunctionDoc(
+      `Returns a request builder for updating an entity of type \`${entity.className}\`.`,
+      {
+        returns: {
+          type: `UpdateRequestBuilder<${entity.className}>`,
+          description: `A request builder for creating requests that update an entity of type \`${entity.className}\`.`
+        },
+        params: [
+          {
+            name: 'entity',
+            type: entity.className,
+            description: 'The entity to be updated'
+          }
+        ]
+      }
+    )}` +
+    unixEOL +
     codeBlock`update(entity: ${entity.className}<T>): UpdateRequestBuilder<${entity.className}<T>, T>{
     return new UpdateRequestBuilder<${entity.className}<T>, T>(this.entityApi, entity);
   }`
@@ -137,7 +138,9 @@ function updateRequestBuilder(entity: VdmEntity): string {
 }
 
 function deleteRequestBuilder(entity: VdmEntity): string {
-  const parameters = entity.keys.map(key => `${key.propertyNameAsParam}: ${key.jsType}`);
+  const parameters = entity.keys.map(
+    key => `${key.propertyNameAsParam}: ${key.jsType}`
+  );
 
   return codeBlock`
     ${documentationBlock`${getFunctionDoc(
@@ -169,10 +172,15 @@ function deleteRequestBuilder(entity: VdmEntity): string {
             description: 'Pass the entity to be deleted.'
           }
         ]
-      })}`}
-    delete(entity: ${entity.className}<T>): DeleteRequestBuilder<${entity.className}<T>, T>;
+      }
+    )}`}
+    delete(entity: ${entity.className}<T>): DeleteRequestBuilder<${
+    entity.className
+  }<T>, T>;
     delete(
-      ${deleteRequestBuilderParameters(entity).map(p => `${p.name}${p.hasQuestionToken ? '?' : ''}: ${p.type}`).join(', ')}
+      ${deleteRequestBuilderParameters(entity)
+        .map(p => `${p.name}${p.hasQuestionToken ? '?' : ''}: ${p.type}`)
+        .join(', ')}
     ): DeleteRequestBuilder<${entity.className}<T>, T> {
       ${deleteRequestBuilderStatements(entity)}
     }`;

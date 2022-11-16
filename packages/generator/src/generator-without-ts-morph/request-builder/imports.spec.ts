@@ -1,5 +1,4 @@
-import { StructureKind } from 'ts-morph';
-import { breakfastEntity } from '../../test/test-util/data-model';
+import { breakfastEntity } from '../../../test/test-util/data-model';
 import { requestBuilderImportDeclarations } from './imports';
 
 describe('imports', () => {

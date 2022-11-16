@@ -1,4 +1,3 @@
-import { Import } from '@sap-cloud-sdk/generator-common/internal';
 import { unique, ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { linkClass } from './generator-utils';
@@ -31,18 +30,6 @@ export function externalImportDeclarations(
     );
 }
 
-export function externalImportDeclarations2(
-  properties: VdmMappedEdmType[]
-): Import[] {
-  return potentialExternalImportDeclarations
-    .map(([moduleIdentifier, ...names]) =>
-      externalImportDeclaration2(properties, moduleIdentifier, names)
-    )
-    .filter(
-      declaration => declaration.names && declaration.names.length
-    );
-}
-
 /**
  * @internal
  */
@@ -55,19 +42,6 @@ export function externalImportDeclaration(
     kind: StructureKind.ImportDeclaration,
     moduleSpecifier,
     namedImports: namedImports.filter(namedImport =>
-      properties.map(prop => prop.jsType).includes(namedImport)
-    )
-  };
-}
-
-export function externalImportDeclaration2(
-  properties: VdmMappedEdmType[],
-  moduleIdentifier: string,
-  names: string[]
-): Import {
-  return {
-    moduleIdentifier,
-    names: names.filter(namedImport =>
       properties.map(prop => prop.jsType).includes(namedImport)
     )
   };
@@ -88,20 +62,6 @@ export function odataImportDeclaration(
         ? '@sap-cloud-sdk/odata-v2' + (internal ? '/internal' : '')
         : '@sap-cloud-sdk/odata-v4' + (internal ? '/internal' : ''),
     namedImports: unique(namedImports)
-  };
-}
-
-export function odataImportDeclaration2(
-  namedImports: string[],
-  odataVersion: ODataVersion,
-  internal = false
-): Import {
-  return {
-    moduleIdentifier:
-      odataVersion === 'v2'
-        ? '@sap-cloud-sdk/odata-v2' + (internal ? '/internal' : '')
-        : '@sap-cloud-sdk/odata-v4' + (internal ? '/internal' : ''),
-    names: unique(namedImports)
   };
 }
 

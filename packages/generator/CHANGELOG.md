@@ -1,5 +1,24 @@
 # @sap-cloud-sdk/generator
 
+## 2.11.0
+
+### Minor Changes
+
+- 8ea28151b: [New Functionality] Support parsing and generating OData bound functions and actions in OData v4
+- 74e14427a: [New Functionality] Generated sources are formatted using prettier with default config. Use the CLI option `prettierConfigPath` to provide a custom config.
+
+### Patch Changes
+
+- Updated dependencies [79e0fe811]
+- Updated dependencies [8ea28151b]
+- Updated dependencies [74e14427a]
+- Updated dependencies [79e0fe811]
+  - @sap-cloud-sdk/odata-common@2.11.0
+  - @sap-cloud-sdk/odata-v4@2.11.0
+  - @sap-cloud-sdk/generator-common@2.11.0
+  - @sap-cloud-sdk/odata-v2@2.11.0
+  - @sap-cloud-sdk/util@2.11.0
+
 ## 2.10.0
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "private": true,
   "sideEffects": false,
   "packageManager": "yarn@1.22.18",
@@ -89,8 +89,8 @@
     "@types/node": "^14.18.33",
     "@types/uuid": "^8.0.0",
     "@types/voca": "^1.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.42.1",
-    "@typescript-eslint/parser": "^5.42.1",
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
     "axios": "^0.27.1",
     "compare-versions": "^5.0.1",
     "depcheck": "^1.0.0",

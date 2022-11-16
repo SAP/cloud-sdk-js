@@ -28,6 +28,21 @@
 
 -
 
+# 2.11.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.11.0
+
+## New Functionalities
+
+- [odata-common] Add `getBatchReference()` and `setBatchId()` in request builders to use the batch ID as a reference to an entity in a batch request changeset.
+  Batch reference are available in `create`, `delete`, `getByKey`, `update` and `actions/functions` request builder. (79e0fe811)
+- [odata-v4, generator] Support parsing and generating OData bound functions and actions in OData v4 (8ea28151b)
+- [generator, openapi-generator, generator-common] Generated sources are formatted using prettier with default config. Use the CLI option `prettierConfigPath` to provide a custom config. (74e14427a)
+
+## Improvements
+
+- [odata-common] Change the place where batch ID is generated from on serialization to request creation. (79e0fe811)
+
 # 2.10.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.10.0

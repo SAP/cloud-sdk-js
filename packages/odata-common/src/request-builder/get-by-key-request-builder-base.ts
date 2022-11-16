@@ -3,6 +3,7 @@ import {
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
 import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import { v4 as uuid } from 'uuid';
 import { EntityBase } from '../entity-base';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
@@ -11,19 +12,28 @@ import { Selectable } from '../selectable';
 import { ODataUri } from '../uri-conversion';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { EntityApi } from '../entity-api';
+import {
+  BatchReference,
+  WithBatchReference
+} from '../request/odata-request-traits';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
  * @typeParam EntityT - Type of the entity to be requested
  */
 export abstract class GetByKeyRequestBuilderBase<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
-> extends GetRequestBuilderBase<
-  EntityT,
-  DeSerializersT,
-  ODataGetByKeyRequestConfig<EntityT, DeSerializersT>
-> {
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
+  extends GetRequestBuilderBase<
+    EntityT,
+    DeSerializersT,
+    ODataGetByKeyRequestConfig<EntityT, DeSerializersT>
+  >
+  implements WithBatchReference
+{
+  private _batchReference: BatchReference;
+
   /**
    * Creates an instance of GetByKeyRequestBuilder.
    * @param entityApi - Entity API for building and executing the request.
@@ -41,6 +51,25 @@ export abstract class GetByKeyRequestBuilderBase<
   ) {
     super(entityApi, new ODataGetByKeyRequestConfig(entityApi, oDataUri));
     this.requestConfig.keys = keys;
+  }
+
+  /**
+   * Gets identifier for the batch request.
+   * @returns Batch request identifier.
+   */
+  getBatchReference(): BatchReference {
+    if (!this._batchReference) {
+      this.setBatchId(uuid());
+    }
+    return this._batchReference;
+  }
+
+  /**
+   * Sets user-defined identifier for the batch reference.
+   * @param id - User-defined batch reuest identifier.
+   */
+  setBatchId(id: string): void {
+    this._batchReference = { id };
   }
 
   /**

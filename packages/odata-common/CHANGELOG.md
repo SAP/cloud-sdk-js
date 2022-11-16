@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/odata-common
 
+## 2.11.0
+
+### Minor Changes
+
+- 79e0fe811: [Improvement] Change the place where batch ID is generated from on serialization to request creation.
+- 79e0fe811: [New Functionality] Add `getBatchReference()` and `setBatchId()` in request builders to use the batch ID as a reference to an entity in a batch request changeset.
+  Batch reference are available in `create`, `delete`, `getByKey`, `update` and `actions/functions` request builder.
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@2.11.0
+- @sap-cloud-sdk/http-client@2.11.0
+- @sap-cloud-sdk/util@2.11.0
+
 ## 2.10.0
 
 ### Minor Changes

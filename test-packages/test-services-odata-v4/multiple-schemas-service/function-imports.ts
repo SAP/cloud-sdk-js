@@ -8,7 +8,6 @@ import {
   DeSerializers,
   DefaultDeSerializers,
   defaultDeSerializers,
-  FunctionImportParameter,
   FunctionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { multipleSchemasService } from './service';

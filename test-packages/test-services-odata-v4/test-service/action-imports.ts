@@ -122,10 +122,9 @@ export function testActionImportMultipleParameterComplexReturnType<
     'TestActionImportMultipleParameterComplexReturnType',
     data =>
       transformReturnValueForComplexType(data, data =>
-        entityDeserializer(deSerializers).deserializeComplexType(
-          data,
-          TestComplexType
-        )
+        entityDeserializer(
+          deSerializers || defaultDeSerializers
+        ).deserializeComplexType(data, TestComplexType)
       ),
     params,
     deSerializers
@@ -354,10 +353,9 @@ export function testActionImportNullableTest<
     'TestActionImportNullableTest',
     data =>
       transformReturnValueForComplexType(data, data =>
-        entityDeserializer(deSerializers).deserializeComplexType(
-          data,
-          TestComplexType
-        )
+        entityDeserializer(
+          deSerializers || defaultDeSerializers
+        ).deserializeComplexType(data, TestComplexType)
       ),
     params,
     deSerializers

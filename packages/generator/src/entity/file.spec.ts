@@ -25,8 +25,8 @@ describe('file', () => {
     const interfaces = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.Interface
     );
-
-    expect(interfaces.length).toBe(1);
+    // One interface for the entity and one for each bound operation (methods)
+    expect(interfaces.length).toBe(1 + entities[0].methods.length);
 
     const namespaces = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.Module

@@ -1,7 +1,7 @@
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmServiceEntities } from '../../vdm-types';
-import { generateOperations } from './operation';
+import { generateUnboundOperations } from './operation';
 import { generateComplexTypesV4 } from './complex-type';
 import { generateEntitiesV4 } from './entity';
 import { generateEnumTypesV4 } from './enum-type';
@@ -27,7 +27,7 @@ export function getServiceEntitiesV4(
     enumTypes,
     formatter
   );
-  const actionImports = generateOperations(
+  const actionImports = generateUnboundOperations(
     serviceMetadata,
     serviceName,
     'action',
@@ -35,7 +35,7 @@ export function getServiceEntitiesV4(
     complexTypes,
     formatter
   );
-  const functionImports = generateOperations(
+  const functionImports = generateUnboundOperations(
     serviceMetadata,
     serviceName,
     'function',

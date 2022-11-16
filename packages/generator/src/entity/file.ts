@@ -1,4 +1,5 @@
 import { SourceFileStructure, StructureKind } from 'ts-morph';
+import { parametersInterface } from '../operations';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 import { entityClass } from './class';
 import { entityImportDeclarations, otherEntityImports } from './imports';
@@ -14,10 +15,13 @@ export function entitySourceFile(
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...entityImportDeclarations(entity, service.oDataVersion),
+      ...entityImportDeclarations(entity, service, service.oDataVersion),
       ...otherEntityImports(entity, service),
       entityClass(entity, service),
-      entityTypeInterface(entity, service)
+      entityTypeInterface(entity, service),
+      ...[...entity.functions, ...entity.actions].map(operation =>
+        parametersInterface(operation)
+      )
     ]
   };
 }

@@ -1,18 +1,21 @@
 import {
   ClassDeclarationStructure,
+  MethodDeclarationStructure,
   PropertyDeclarationStructure,
   StructureKind
 } from 'ts-morph';
 import { prependPrefix } from '../internal-prefix';
+import { operationFunctionBase } from '../operations';
 import {
+  addLeadingNewline,
   getEntityDescription,
   getNavPropertyDescription,
-  getPropertyDescription,
-  addLeadingNewline
+  getPropertyDescription
 } from '../typedoc';
 import {
   VdmEntity,
   VdmNavigationProperty,
+  VdmOperation,
   VdmProperty,
   VdmServiceMetadata
 } from '../vdm-types';
@@ -45,6 +48,10 @@ export function entityClass(
       ...staticProperties(entity, service),
       ...properties(entity),
       ...navProperties(entity, service)
+    ],
+    methods: [
+      ...boundOperations(entity.functions, service),
+      ...boundOperations(entity.actions, service)
     ],
     isExported: true,
     docs: [addLeadingNewline(getEntityDescription(entity, service))]
@@ -96,6 +103,16 @@ function keys(entity: VdmEntity): PropertyDeclarationStructure {
 
 function properties(entity: VdmEntity): PropertyDeclarationStructure[] {
   return entity.properties.map(prop => property(prop));
+}
+
+function boundOperations(
+  operations: VdmOperation[],
+  service: VdmServiceMetadata
+): MethodDeclarationStructure[] {
+  return operations.map(operation => ({
+    kind: StructureKind.Method,
+    ...operationFunctionBase(operation, service)
+  }));
 }
 
 function property(prop: VdmProperty): PropertyDeclarationStructure {

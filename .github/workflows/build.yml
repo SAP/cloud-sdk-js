@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [12, 14, 16, 18]
+        node-version: [14, 16, 18]
     steps:
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
@@ -74,6 +74,8 @@ jobs:
         name: Self tests for tools
       - run: yarn check:circular
         name: Circular dependency Check
+      - run: yarn doc
+        name: API Doc Check
       - run: yarn check:license
         name: License Check
   e2e-tests:
@@ -167,7 +169,7 @@ jobs:
           yarn changeset pre enter "beta-${date}"
           yarn changeset version
           yarn changeset pre exit
-          yarn changeset publish --tag canary
+          yarn changeset publish --tag next
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
   draft-github-release:

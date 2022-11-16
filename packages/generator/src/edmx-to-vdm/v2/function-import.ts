@@ -40,7 +40,8 @@ export function generateFunctionImportsV2(
             f.Parameter,
             'function',
             swaggerDefinition,
-            formatter
+            formatter,
+            undefined // oData v2 does not have bound funcitons
           ),
           httpMethod,
           returnType: parseOperationReturnType(
@@ -50,7 +51,8 @@ export function generateFunctionImportsV2(
             entities,
             complexTypes,
             extractResponse(f.Name),
-            serviceName
+            serviceName,
+            false
           )
         };
       })

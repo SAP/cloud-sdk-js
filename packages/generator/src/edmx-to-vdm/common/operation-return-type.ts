@@ -1,8 +1,11 @@
 import { first } from '@sap-cloud-sdk/util';
 import voca from 'voca';
+import { EdmxReturnType } from '../../edmx-parser/v4';
+import { isNullableProperty } from '../../generator-utils';
+import { getApiName } from '../../generator-without-ts-morph/service';
 import {
   VdmComplexType,
-  VdmEntity,
+  VdmPartialEntity,
   VdmOperationReturnType,
   VdmReturnTypeCategory,
   VdmUnsupportedReason
@@ -12,19 +15,17 @@ import {
   isCollectionType,
   parseTypeName
 } from '../edmx-to-vdm-util';
-import { EdmxReturnType } from '../../edmx-parser/v4';
-import { isNullableProperty } from '../../generator-utils';
-import { getApiName } from '../../generator-without-ts-morph/service';
 
 /**
  * @internal
  */
 export function parseOperationReturnType(
   returnType: EdmxReturnType | undefined,
-  entities: VdmEntity[],
+  entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
-  serviceName: string
+  serviceName: string,
+  isBound: boolean
 ): VdmOperationReturnType {
   if (!returnType) {
     return getVoidReturnType();
@@ -36,7 +37,13 @@ export function parseOperationReturnType(
 
   const edmType = findEdmType(returnType.Type);
   if (edmType) {
-    return getEdmReturnType(isCollection, isNullable, edmType, extractResponse);
+    return getEdmReturnType(
+      isCollection,
+      isNullable,
+      edmType,
+      extractResponse,
+      isBound
+    );
   }
 
   const filteredEntities = findEntityTypes(returnType.Type, entities);
@@ -55,7 +62,11 @@ export function parseOperationReturnType(
   }
 
   throw Error(
-    `Unable to find a return type for name ${JSON.stringify(returnType)}.`
+    `Unable to find a return type for name ${JSON.stringify(
+      returnType
+    )} in entities ${entities
+      .map(e => `${e.entityTypeNamespace}.${e.entityTypeName}`)
+      .join(', ')}.`
   );
 }
 
@@ -68,8 +79,8 @@ function findEdmType(returnType: string): string | undefined {
 
 function findEntityTypes(
   returnType: string,
-  entities: VdmEntity[]
-): VdmEntity[] {
+  entities: VdmPartialEntity[]
+): VdmPartialEntity[] {
   returnType = parseTypeName(returnType);
   return entities.filter(
     e => `${e.entityTypeNamespace}.${e.entityTypeName}` === returnType
@@ -101,7 +112,8 @@ function getEdmReturnType(
   isCollection: boolean,
   isNullable: boolean,
   edmType: string,
-  extractResponse: ExtractResponse
+  extractResponse: ExtractResponse,
+  isBound: boolean
 ): VdmOperationReturnType {
   const typeMapping = getTypeMappingActionFunction(edmType);
   const valueAlias = 'val';
@@ -109,7 +121,9 @@ function getEdmReturnType(
   return {
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
     returnType: typeMapping.jsType,
-    builderFunction: `(${valueAlias}) => edmToTs(${extracted}, '${typeMapping.edmType}', deSerializers)`,
+    builderFunction: `(${valueAlias}) => edmToTs(${extracted}, '${
+      typeMapping.edmType
+    }', deSerializers${isBound ? ' || defaultDeSerializers' : ''})`,
     isNullable,
     isCollection
   };
@@ -118,7 +132,7 @@ function getEdmReturnType(
 function getEntityReturnType(
   isCollection: boolean,
   isNullable: boolean,
-  entities: VdmEntity[],
+  entities: VdmPartialEntity[],
   serviceName: string
 ): VdmOperationReturnType {
   if (!entities.length) {
@@ -155,7 +169,7 @@ function getComplexReturnType(
     returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
     builderFunction: `(data) => entityDeserializer(
-          deSerializers
+        deSerializers || defaultDeSerializers
         ).deserializeComplexType(data, ${complexType.typeName})`,
     isNullable,
     isCollection

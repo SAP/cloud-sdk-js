@@ -144,6 +144,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       const query = Object.entries(parameters)
         .map(([key, value]) => `${key}=${value}`)
         .join('&');
+
       return query.length ? `?${query}` : '';
     }
     return '';

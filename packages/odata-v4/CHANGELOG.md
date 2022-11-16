@@ -1,5 +1,20 @@
 # @sap-cloud-sdk/odata-v4
 
+## 2.11.0
+
+### Minor Changes
+
+- 8ea28151b: [New Functionality] Support parsing and generating OData bound functions and actions in OData v4
+
+### Patch Changes
+
+- Updated dependencies [79e0fe811]
+- Updated dependencies [79e0fe811]
+  - @sap-cloud-sdk/odata-common@2.11.0
+  - @sap-cloud-sdk/connectivity@2.11.0
+  - @sap-cloud-sdk/http-client@2.11.0
+  - @sap-cloud-sdk/util@2.11.0
+
 ## 2.10.0
 
 ### Minor Changes

@@ -1,5 +1,18 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 2.11.0
+
+### Minor Changes
+
+- 74e14427a: [New Functionality] Generated sources are formatted using prettier with default config. Use the CLI option `prettierConfigPath` to provide a custom config.
+
+### Patch Changes
+
+- Updated dependencies [74e14427a]
+  - @sap-cloud-sdk/generator-common@2.11.0
+  - @sap-cloud-sdk/openapi@2.11.0
+  - @sap-cloud-sdk/util@2.11.0
+
 ## 2.10.0
 
 ### Patch Changes

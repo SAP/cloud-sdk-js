@@ -13,3 +13,7 @@ rm -r node_modules/ && yarn install --ignore-engines       //contains state of p
 rm sqlite.db && yarn deploy && yarn stop && yarn start     //recreate DB
 //execute your tests
 ```
+
+## Generate EDMX
+
+To generate an EDMX file from the test service, run `yarn run generate-edmx`.

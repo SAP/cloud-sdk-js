@@ -4,6 +4,7 @@
  * @module @sap-cloud-sdk/odata-common
  */
 
+export { WithBatchReference } from './request/odata-request-traits';
 export {
   and,
   or,
@@ -106,7 +107,8 @@ export {
   WithSelection,
   ODataFunctionImportRequestConfig,
   ODataRequest,
-  ODataRequestConfig
+  ODataRequestConfig,
+  BatchReference
 } from './request';
 export type { RequestMethodType, FunctionImportParameters } from './request';
 export { throwErrorWhenReturnTypeIsUnionType } from './response-transformer';

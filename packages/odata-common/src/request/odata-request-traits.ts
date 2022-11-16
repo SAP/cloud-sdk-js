@@ -68,6 +68,30 @@ export interface WithETag {
 }
 
 /**
+ * Interface implemented by OData requests needing identifier to reference an entity for a batch request like `create`, `delete`, `getByKey`, `update` or `bound actions/functions`.
+ */
+export interface BatchReference {
+  /**
+   * Batch reference identifier.
+   */
+  id: string;
+}
+
+/**
+ * Interface implemented by OData requests defining the getter and setter for the batch reference.
+ */
+export interface WithBatchReference {
+  /**
+   * Getter for the batch reference.
+   */
+  getBatchReference: () => BatchReference;
+  /**
+   * Setter for the batch reference.
+   */
+  setBatchId: (id: string) => void;
+}
+
+/**
  * Typeguard for the WithETag config.
  * @param config - Config to be checked
  * @returns boolean

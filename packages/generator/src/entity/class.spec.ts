@@ -8,12 +8,19 @@ import {
 } from '../../test/test-util/data-model';
 import { entityClass } from './class';
 
-describe('entity class generator', () => {
-  it('creates a class', () => {
-    const classDeclaration = entityClass(breakfastEntity, foodService);
+describe('entity class generator generates a class', () => {
+  let classDeclaration;
+  beforeAll(() => {
+    classDeclaration = entityClass(breakfastEntity, foodService);
+  });
+
+  it('has expected name', () => {
     expect(classDeclaration.name).toBe(
       `${breakfastEntity.className}<T extends DeSerializers = DefaultDeSerializers>`
     );
+  });
+
+  it('has expected static properties', () => {
     const staticProperties = classDeclaration.properties!.filter(
       prop => prop.isStatic
     );
@@ -24,6 +31,9 @@ describe('entity class generator', () => {
         ['_keys', "['EntityName','BreakfastTime']"]
       ]
     );
+  });
+
+  it('has expected instance properties', () => {
     const instanceProperties = classDeclaration.properties!.filter(
       prop => !prop.isStatic
     );
@@ -42,5 +52,38 @@ describe('entity class generator', () => {
       ],
       [`${toBrunch.instancePropertyName}?`, 'Brunch<T> | null']
     ]);
+  });
+
+  it('has expected number of methods', () => {
+    expect(classDeclaration.methods?.length).toEqual(2);
+  });
+
+  it('has expected parameters for bound function', () => {
+    const fn = classDeclaration.methods?.find(({ name }) =>
+      name.startsWith('getPrice')
+    );
+
+    expect(fn?.parameters?.map(({ name }) => name)).toEqual([
+      'parameters',
+      'deSerializers'
+    ]);
+
+    const parameters = fn?.parameters?.filter(p => p.name === 'parameters');
+    expect(parameters.length).toEqual(1);
+    expect(parameters[0].type).toEqual('GetPriceParameters<DeSerializersT>');
+  });
+
+  it('has expected parameters for bound action', () => {
+    const fn = classDeclaration.methods?.find(({ name }) =>
+      name.startsWith('payMeal')
+    );
+    expect(fn?.parameters?.map(({ name }) => name)).toEqual([
+      'parameters',
+      'deSerializers'
+    ]);
+
+    const parameters = fn?.parameters?.filter(p => p.name === 'parameters');
+    expect(parameters.length).toEqual(1);
+    expect(parameters[0].type).toEqual('PayMealParameters<DeSerializersT>');
   });
 });

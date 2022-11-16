@@ -157,6 +157,6 @@ export function parseOperations(
   ).map(operation => ({
     ...operation,
     Parameter: forceArray(operation.Parameter),
-    IsBound: false
+    IsBound: operation.IsBound || 'false'
   }));
 }

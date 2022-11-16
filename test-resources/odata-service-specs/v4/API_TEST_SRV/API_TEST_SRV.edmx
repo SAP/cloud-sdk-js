@@ -269,6 +269,22 @@
         <ReturnType Type="Collection(Edm.String)"/>
       </Function>
 
+      <Function Name="boundFunctionWithoutArguments" IsBound="true" IsComposable="false">
+        <Parameter Name="param" Type="API_TEST_SRV.A_TestEntity" Nullable="false" />
+        <ReturnType Type="Edm.String"/>
+      </Function>
+    <Function Name="boundFunctionWithArguments" IsBound="true" IsComposable="false">
+      <Parameter Name="param" Type="API_TEST_SRV.A_TestEntity" Nullable="false" />
+        <Parameter Name="param1" Type="Edm.String"/>
+        <Parameter Name="param2" Type="Edm.String"/>
+        <ReturnType Type="Edm.String"/>
+    </Function>
+    <Action Name="boundActionWithoutArguments" IsBound="true">
+      <Parameter Name="in" Type="API_TEST_SRV.A_TestEntity" />
+        <ReturnType Type="Edm.String"/>
+    </Action>
+
+
       <EntityContainer Name="API_TEST_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
         <EntitySet Name="A_TestEntity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1">
           <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityMultiLink"/>
@@ -376,9 +392,15 @@
         <FunctionImport Name="TestFunctionImportWithDifferentName" Function="API_TEST_SRV.TestFunctionImportNoReturnType">
         </FunctionImport>
 
+        <FunctionImport Name="boundFunctionWithoutArguments" Function="boundFunctionWithoutArguments" />
+        <FunctionImport Name="boundFunctionWithArguments" Function="boundFunctionWithArguments"/>
+        <ActionImport Name="boundActionWithoutArguments" Action="boundActionWithoutArguments"/>
+
       </EntityContainer>
       <atom:link rel="self" href="https://host:port/sap/opu/odata/sap/API_TEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
       <atom:link rel="latest-version" href="https://host:port/sap/opu/odata/sap/API_TEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+
+
     </Schema>
   </edmx:DataServices>
 </edmx:Edmx>

@@ -3,7 +3,7 @@ name: build
 on:
   pull_request: ~
   push:
-    branches: ['main']
+    branches: ['v2-main']
     tags: ['v*']
     paths-ignore:
       - 'docs/**'
@@ -130,7 +130,7 @@ jobs:
       - id: date-check
         name: Check if latest commit is within 24 hrs
         run: |
-          lastCommitDate=$(git --no-pager log -n 1 main --pretty=format:"%at")
+          lastCommitDate=$(git --no-pager log -n 1 v2-main --pretty=format:"%at")
           curDate=$(date +%s)
           dateDiff=$(expr $curDate - $lastCommitDate)
           echo $lastCommitDate, $curDate, $dateDiff

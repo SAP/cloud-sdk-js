@@ -35,6 +35,7 @@ export interface UserAccessTokens {
   subscriber: string;
   iasProvider: string;
   iasSubscriber: string;
+  refreshToken: string;
 }
 
 export interface Systems {
@@ -63,6 +64,7 @@ export interface Systems {
     providerOauth2JWTBearerCommonTokenURL: string;
     providerOauth2UserTokenExchange: string;
     providerOauth2UserTokenExchangeCommonTokenURL: string;
+    providerOauth2RefreshToken: string;
     providerBasicPrivateLink: string;
     providerTrustStore: string;
     providerOauth2ClientCredentialsWithoutJKU: string;

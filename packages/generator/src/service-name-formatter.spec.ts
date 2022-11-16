@@ -112,6 +112,7 @@ describe('name-formatter', () => {
       expect(formatter.originalToComplexTypeName('BigNumber')).toBe(
         'BigNumber_1'
       );
+      expect(formatter.originalToEntityClassName('Service')).toBe('Service_1');
     });
 
     it('properties', () => {

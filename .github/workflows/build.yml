@@ -166,7 +166,7 @@ jobs:
           date=`date +%Y%m%d%H%M%S`
           rm -f .changeset/*.md
           cp canary-release-changeset.md .changeset
-          yarn changeset pre enter "beta-${date}"
+          yarn changeset pre enter ${date}
           yarn changeset version
           yarn changeset pre exit
           yarn changeset publish --tag next

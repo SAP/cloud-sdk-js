@@ -7,7 +7,7 @@ import type { CyclicParent } from './cyclic-parent';
 /**
  * Representation of the 'CyclicChild' schema.
  */
-export declare type CyclicChild =
+export type CyclicChild =
   | {
       parent?: CyclicParent;
     }

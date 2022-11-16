@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [12, 14, 16, 18]
+        node-version: [14, 16, 18]
     steps:
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
@@ -169,7 +169,7 @@ jobs:
           yarn changeset pre enter ${date}
           yarn changeset version
           yarn changeset pre exit
-          yarn changeset publish --tag canary
+          yarn changeset publish --tag next
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
   draft-github-release:

@@ -69,70 +69,70 @@ function getByKeyRequestBuilder(entity: VdmEntity): string {
   );
 }
 
-function getAllRequestBuilder(entity: VdmEntity): string {
+function getAllRequestBuilder({ className }: VdmEntity): string {
   return (
     documentationBlock`${getFunctionDoc(
-      `Returns a request builder for querying all \`${entity.className}\` entities.`,
+      `Returns a request builder for querying all \`${className}\` entities.`,
       {
         returns: {
-          type: `GetAllRequestBuilder<${entity.className}>`,
-          description: `A request builder for creating requests to retrieve all \`${entity.className}\` entities.`
+          type: `GetAllRequestBuilder<${className}>`,
+          description: `A request builder for creating requests to retrieve all \`${className}\` entities.`
         }
       }
     )}` +
     unixEOL +
-    codeBlock`getAll(): GetAllRequestBuilder<${entity.className}<T>, T> {
-    return new GetAllRequestBuilder<${entity.className}<T>, T>(this.entityApi);
+    codeBlock`getAll(): GetAllRequestBuilder<${className}<T>, T> {
+    return new GetAllRequestBuilder<${className}<T>, T>(this.entityApi);
   }`
   );
 }
 
-function createRequestBuilder(entity: VdmEntity): string {
+function createRequestBuilder({ className }: VdmEntity): string {
   return (
     documentationBlock`${getFunctionDoc(
-      `Returns a request builder for creating a \`${entity.className}\` entity.`,
+      `Returns a request builder for creating a \`${className}\` entity.`,
       {
         returns: {
-          type: `CreateRequestBuilder<${entity.className}>`,
-          description: `A request builder for creating requests that create an entity of type \`${entity.className}\`.`
+          type: `CreateRequestBuilder<${className}>`,
+          description: `A request builder for creating requests that create an entity of type \`${className}\`.`
         },
         params: [
           {
             name: 'entity',
-            type: entity.className,
+            type: className,
             description: 'The entity to be created'
           }
         ]
       }
     )}` +
     unixEOL +
-    codeBlock`create(entity: ${entity.className}<T>): CreateRequestBuilder<${entity.className}<T>, T>{
-    return new CreateRequestBuilder<${entity.className}<T>, T>(this.entityApi, entity);
+    codeBlock`create(entity: ${className}<T>): CreateRequestBuilder<${className}<T>, T>{
+    return new CreateRequestBuilder<${className}<T>, T>(this.entityApi, entity);
   }`
   );
 }
 
-function updateRequestBuilder(entity: VdmEntity): string {
+function updateRequestBuilder({ className }: VdmEntity): string {
   return (
     documentationBlock`${getFunctionDoc(
-      `Returns a request builder for updating an entity of type \`${entity.className}\`.`,
+      `Returns a request builder for updating an entity of type \`${className}\`.`,
       {
         returns: {
-          type: `UpdateRequestBuilder<${entity.className}>`,
-          description: `A request builder for creating requests that update an entity of type \`${entity.className}\`.`
+          type: `UpdateRequestBuilder<${className}>`,
+          description: `A request builder for creating requests that update an entity of type \`${className}\`.`
         },
         params: [
           {
             name: 'entity',
-            type: entity.className,
+            type: className,
             description: 'The entity to be updated'
           }
         ]
       }
     )}` +
     unixEOL +
-    codeBlock`update(entity: ${entity.className}<T>): UpdateRequestBuilder<${entity.className}<T>, T>{
-    return new UpdateRequestBuilder<${entity.className}<T>, T>(this.entityApi, entity);
+    codeBlock`update(entity: ${className}<T>): UpdateRequestBuilder<${className}<T>, T>{
+    return new UpdateRequestBuilder<${className}<T>, T>(this.entityApi, entity);
   }`
   );
 }
@@ -175,7 +175,7 @@ function deleteRequestBuilder(entity: VdmEntity): string {
       }
     )}`}
     delete(entity: ${entity.className}<T>): DeleteRequestBuilder<${
-    entity.className
+      entity.className
   }<T>, T>;
     delete(
       ${deleteRequestBuilderParameters(entity)
@@ -186,7 +186,7 @@ function deleteRequestBuilder(entity: VdmEntity): string {
     }`;
 }
 
-interface deleteRequestBuilderParameter {
+interface DeleteRequestBuilderParameter {
   name: string;
   type: string;
   hasQuestionToken?: boolean;
@@ -194,7 +194,7 @@ interface deleteRequestBuilderParameter {
 
 function deleteRequestBuilderParameters(
   entity: VdmEntity
-): deleteRequestBuilderParameter[] {
+): DeleteRequestBuilderParameter[] {
   if (entity.keys.length) {
     return entity.keys.map((key, index) => {
       if (index === 0) {

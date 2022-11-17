@@ -175,7 +175,7 @@ function deleteRequestBuilder(entity: VdmEntity): string {
       }
     )}`}
     delete(entity: ${entity.className}<T>): DeleteRequestBuilder<${
-      entity.className
+    entity.className
   }<T>, T>;
     delete(
       ${deleteRequestBuilderParameters(entity)

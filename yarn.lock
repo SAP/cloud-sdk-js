@@ -6753,10 +6753,10 @@ ono@^4.0.11:
   dependencies:
     format-util "^1.0.3"
 
-openapi-backend@^5.5.0:
-  version "5.5.0"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.5.0.tgz#0cc53b8c850200f125fb2538365b455223e9a955"
-  integrity sha512-gbA2gQHYXG42/PQZWnb1YWEpErkNE9RAJM4RgxT2J0kaNY65T9oXGKrjYgFxRGhLFYuHTnKBYmJe4Lv8qCPLzA==
+openapi-backend@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.6.0.tgz#6a8b2da56521b0efa95eeff92f0636527de5dd20"
+  integrity sha512-viyzYxUjU8QGGSG13qH9LmTD1rl3kY1IEtoLjn8pDEwQiDuyVWHeqH/l3VOUojA2rr55at/4GldqSApqZKy76w==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^9.0.7"
     ajv "^8.6.2"
@@ -6765,7 +6765,7 @@ openapi-backend@^5.5.0:
     lodash "^4.17.15"
     mock-json-schema "^1.0.7"
     openapi-schema-validator "^12.0.0"
-    openapi-types "^10.0.0"
+    openapi-types "^12.0.2"
     qs "^6.9.3"
 
 openapi-schema-validator@^12.0.0:
@@ -6777,11 +6777,6 @@ openapi-schema-validator@^12.0.0:
     ajv-formats "^2.0.2"
     lodash.merge "^4.6.1"
     openapi-types "^12.0.2"
-
-openapi-types@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-10.0.0.tgz#0debbf663b2feed0322030b5b7c9080804076934"
-  integrity sha512-Y8xOCT2eiKGYDzMW9R4x5cmfc3vGaaI4EL2pwhDmodWw1HlK18YcZ4uJxc7Rdp7/gGzAygzH9SXr6GKYIXbRcQ==
 
 openapi-types@^12.0.2:
   version "12.0.2"

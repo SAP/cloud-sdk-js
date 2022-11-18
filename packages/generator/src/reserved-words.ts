@@ -19,7 +19,8 @@ export const reservedServiceKeywords = [
   'BooleanField',
   'Link',
   'Time',
-  'TimeField'
+  'TimeField',
+  'Service'
 ] as const;
 /**
  * @internal

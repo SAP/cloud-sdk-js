@@ -39,6 +39,7 @@ import {
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
 import { buildCsrfHeaders } from './csrf-token-header';
+import { wrapFunctionWithMiddleware } from './middleware/middleware-type';
 
 const logger = createLogger({
   package: 'http-client',
@@ -78,6 +79,7 @@ export async function buildHttpRequest(
  * @internal
  */
 export async function addDestinationToRequestConfig<
+  ReturnType,
   T extends HttpRequestConfig
 >(
   destination: DestinationOrFetchOptions,
@@ -97,12 +99,12 @@ export async function addDestinationToRequestConfig<
  * @returns A function expecting destination and a request.
  * @internal
  */
-export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
+export function execute(executeFn: ExecuteHttpRequestFn) {
   return async function <T extends HttpRequestConfigWithOrigin>(
     destination: DestinationOrFetchOptions,
     requestConfig: T,
     options?: HttpRequestOptions
-  ): Promise<ReturnT> {
+  ): Promise<HttpResponse> {
     const resolvedDestination = await resolveDestination(destination);
     if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
       throw Error(
@@ -122,7 +124,19 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
 
     request.headers = await addCsrfTokenToHeader(destination, request, options);
     logRequestInformation(request);
-    return executeFn(request);
+    const wrappedFunction = wrapFunctionWithMiddleware(
+      requestConfig.middleware,
+      {
+        fn: () => executeFn(request),
+        context: {
+          jwt: destination.jwt,
+          args: [request],
+          category: 'user-defined',
+          destination: resolvedDestination
+        }
+      }
+    );
+    return wrappedFunction();
   };
 }
 
@@ -429,7 +443,7 @@ async function buildHeaders(
   }
 }
 
-function merge<T extends HttpRequestConfig>(
+function merge<ReturnType, T extends HttpRequestConfig>(
   destinationRequestConfig: DestinationHttpRequestConfig,
   customRequestConfig: T
 ): T & DestinationHttpRequestConfig {
@@ -450,11 +464,6 @@ function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest {
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
   return axios.request(mergeRequestWithAxiosDefaults(request));
 }
-
-/**
- * @internal
- */
-export const defaultTimeoutTarget = 10000;
 
 /**
  * Builds an Axios config with default configuration i.e. no_proxy, default http and https agent and GET as request method.
@@ -479,7 +488,7 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     proxy: false,
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
-    timeout: defaultTimeoutTarget,
+    timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config
     paramsSerializer: (params = {}) =>
       Object.entries(params)
         .map(([key, value]) => `${key}=${value}`)

@@ -1,4 +1,5 @@
 import * as http from 'http';
+import { Middleware } from './middleware/middleware-type';
 
 /**
  * Represents the request configuration, that was inferred from a destination.
@@ -88,9 +89,9 @@ export interface HttpRequestConfigBase {
    */
   data?: any;
   /**
-   * The number of milliseconds before the request times out.
+   * Middleware to be applied to the call.
    */
-  timeout?: number;
+  middleware?: Middleware<HttpResponse>[];
   /**
    * The max size of the http response content in bytes.
    */
@@ -121,9 +122,9 @@ export type HttpRequest = DestinationHttpRequestConfig & HttpRequestConfig;
 /**
  * @internal
  */
-export type ExecuteHttpRequestFn<ReturnT> = (
+export type ExecuteHttpRequestFn = (
   request: HttpRequest
-) => Promise<ReturnT>;
+) => Promise<HttpResponse>;
 
 interface KnownHttpResponseFields {
   data: any;

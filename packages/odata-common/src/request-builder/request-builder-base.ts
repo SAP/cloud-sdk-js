@@ -4,6 +4,7 @@ import {
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
 import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
+import { Middleware, HttpResponse } from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
 
@@ -50,12 +51,12 @@ export abstract class MethodRequestBuilder<
   }
 
   /**
-   * Set timeout for requests towards the target system given in the destination.
-   * @param timeout - Value is in milliseconds and default value is 10000 (10 seconds).
+   * Set middleware for requests towards the target system given in the destination.
+   * @param middleware - Middlewares to be applied to the executeHttprequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
-  timeout(timeout: number): this {
-    this.requestConfig.timeout = timeout;
+  middleware(middleware: Middleware<HttpResponse>[]): this {
+    this.requestConfig.middleware = middleware;
     return this;
   }
 

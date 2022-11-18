@@ -5,7 +5,9 @@ import {
 } from '@sap-cloud-sdk/util';
 import {
   encodeTypedClientRequest,
-  ParameterEncoder
+  ParameterEncoder,
+  Middleware,
+  HttpResponse
 } from '@sap-cloud-sdk/http-client/internal';
 
 /**
@@ -37,7 +39,7 @@ export abstract class ODataRequestConfig {
   private _customRequestConfiguration: Record<string, string> = {};
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
-  private _timeout: number | undefined = undefined;
+  private _middleware: Middleware<HttpResponse>[] = [];
 
   constructor(
     method: RequestMethodType,
@@ -68,12 +70,12 @@ export abstract class ODataRequestConfig {
     }
   }
 
-  set timeout(timeout: number | undefined) {
-    this._timeout = timeout;
+  set middleware(middleWare: Middleware<HttpResponse>[]) {
+    this._middleware = middleWare;
   }
 
-  get timeout(): number | undefined {
-    return this._timeout;
+  get middleware(): Middleware<HttpResponse>[] {
+    return this._middleware;
   }
 
   set customHeaders(headers: Record<string, string>) {

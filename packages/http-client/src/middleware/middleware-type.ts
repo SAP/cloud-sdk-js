@@ -25,10 +25,22 @@ export type Middleware<T> = (options: MiddlewareInOut<T>) => MiddlewareInOut<T>;
 /**
  * Context of the middleware.
  */
-interface Context {
+export interface Context {
+  /**
+   * Request category.
+   */
   category: 'xsuaa' | 'destination' | 'user-defined';
+  /**
+   * Destination used in the request.
+   */
   destination: Destination;
+  /**
+   * JWT used in the request.
+   */
   jwt?: string;
+  /**
+   * Arguments used in the request.
+   */
   args: any[];
 }
 

@@ -27,4 +27,9 @@ We recommend updating your applications in one commit or pull request and making
 
 ## Generator CLI
 
-Be sure to check if you're using any removed CLI options in one of the generators and adapt to the new parameters.
+<!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit. -->
+
+The SAP Cloud SDK includes two "generator" cli applications for OData and for OpenAPI clients.
+For historic reasons the command-line arguments of both applications were different in cases where this does not make sense.
+In version 3, the arguments are aligned and deprecated arguments have been removed.
+Please see (insert link here) for the current documentation on the cli arguments.

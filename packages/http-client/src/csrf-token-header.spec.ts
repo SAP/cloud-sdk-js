@@ -42,7 +42,8 @@ describe('buildCsrfHeaders', () => {
     };
     const headers = await buildCsrfHeaders(request.destination!, {
       headers: standardHeaders,
-      url: request.relativeServiceUrl()
+      url: request.relativeServiceUrl(),
+      method: 'head'
     });
     expect(headers).toEqual(expected);
   });
@@ -62,7 +63,8 @@ describe('buildCsrfHeaders', () => {
 
     const headers = await buildCsrfHeaders(request.destination!, {
       headers: standardHeaders,
-      url: request.relativeServiceUrl()
+      url: request.relativeServiceUrl(),
+      method: 'head'
     });
     expect('x-csrf-token' in headers).toBeFalsy();
     expect(warnSpy).toBeCalledWith(
@@ -75,7 +77,7 @@ describe('buildCsrfHeaders', () => {
     await expect(
       executeHttpRequest(
         { url: 'http://foo.bar' },
-        { method: 'post', timeout: 123 }
+        { method: 'post', url: '/api/entity', timeout: 123 }
       )
     ).rejects.toThrow();
 
@@ -89,7 +91,10 @@ describe('buildCsrfHeaders', () => {
   it('considers default timeout on csrf token fetching', async () => {
     jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
     await expect(
-      executeHttpRequest({ url: 'http://foo.bar' }, { method: 'post' })
+      executeHttpRequest(
+        { url: 'http://foo.bar' },
+        { method: 'post', url: '/api/entity' }
+      )
     ).rejects.toThrow();
 
     expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalledWith(
@@ -112,7 +117,8 @@ describe('buildCsrfHeaders', () => {
 
     const headers = await buildCsrfHeaders(request.destination!, {
       headers: standardHeaders,
-      url: request.relativeServiceUrl()
+      url: request.relativeServiceUrl(),
+      method: 'head'
     });
 
     expect('cookie' in headers).toBeFalsy();
@@ -140,7 +146,8 @@ describe('buildCsrfHeaders', () => {
     };
     const headers = await buildCsrfHeaders(request.destination!, {
       headers: standardHeaders,
-      url: request.relativeServiceUrl()
+      url: request.relativeServiceUrl(),
+      method: 'head'
     });
     expect(headers).toEqual(expected);
   });
@@ -168,7 +175,8 @@ describe('buildCsrfHeaders', () => {
     };
     const headers = await buildCsrfHeaders(request.destination!, {
       headers: standardHeaders,
-      url: request.relativeServiceUrl()
+      url: request.relativeServiceUrl(),
+      method: 'head'
     });
     expect(headers).toEqual(expected);
   });

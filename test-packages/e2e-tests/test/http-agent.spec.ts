@@ -72,7 +72,7 @@ ZH+EmGNgQbWNQV96abqUFGju68IIxz1ycGj0372Ko53CRKMG8GH5oA48qpP0xw==
       };
 
       await expect(
-        executeHttpRequest(destination, { method: 'get' })
+        executeHttpRequest(destination, { method: 'get', url: '/' })
       ).rejects.toThrow('self signed certificate');
     });
 
@@ -82,7 +82,10 @@ ZH+EmGNgQbWNQV96abqUFGju68IIxz1ycGj0372Ko53CRKMG8GH5oA48qpP0xw==
         isTrustingAllCertificates: true
       };
 
-      const response = await executeHttpRequest(destination, { method: 'get' });
+      const response = await executeHttpRequest(destination, {
+        method: 'get',
+        url: '/'
+      });
       expect(response.data).toBe('Hello World.');
     });
 
@@ -92,7 +95,10 @@ ZH+EmGNgQbWNQV96abqUFGju68IIxz1ycGj0372Ko53CRKMG8GH5oA48qpP0xw==
         trustStoreCertificate: destinationCertificate
       };
 
-      const response = await executeHttpRequest(destination, { method: 'get' });
+      const response = await executeHttpRequest(destination, {
+        method: 'get',
+        url: '/'
+      });
       expect(response.data).toBe('Hello World.');
     });
   });

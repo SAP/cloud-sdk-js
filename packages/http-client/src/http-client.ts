@@ -464,6 +464,7 @@ export const defaultTimeoutTarget = 10000;
 export function getAxiosConfigWithDefaults(): HttpRequestConfig {
   return {
     ...getAxiosConfigWithDefaultsWithoutMethod(),
+    url: '/',
     method: 'get'
   };
 }
@@ -473,7 +474,7 @@ export function getAxiosConfigWithDefaults(): HttpRequestConfig {
  */
 export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   HttpRequestConfig,
-  'method'
+  'method' | 'url'
 > {
   return {
     proxy: false,
@@ -531,6 +532,7 @@ async function getCsrfHeaders(
     : buildCsrfHeaders(destination, {
         params: request.params,
         headers: request.headers,
+        method: 'head',
         url: request.url,
         timeout: request.timeout || defaultResilienceBTPServices.timeout,
         proxy: request.proxy,

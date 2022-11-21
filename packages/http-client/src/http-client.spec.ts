@@ -208,16 +208,11 @@ describe('generic http client', () => {
       jest.restoreAllMocks();
     });
 
-    it('attaches a middleware', async () => {
-      nock('https://example.com')
-        .get(/.*/)
-        .reply(200, { data: 'Initial value.' });
-      const myMiddleware: Middleware<HttpResponse> = (
-        options: MiddlewareInOut<HttpResponse>
-      ) => {
+    function middleWareBuilder(appendedText: string): Middleware<HttpResponse> {
+      return (options: MiddlewareInOut<HttpResponse>) => {
         const wrapped = () =>
           options.fn().then(res => {
-            res.data = 'Changed by middleware.';
+            res.data = res.data + appendedText;
             return res;
           });
 
@@ -226,12 +221,31 @@ describe('generic http client', () => {
           fn: wrapped
         };
       };
+    }
+
+    it('attaches one middleware', async () => {
+      nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
+      const myMiddleware = middleWareBuilder('Middleware One.');
 
       const response = await executeHttpRequest(httpsDestination, {
         middleware: [myMiddleware],
         method: 'get'
       });
-      expect(response.data).toEqual('Changed by middleware.');
+      expect(response.data).toEqual('Initial value.Middleware One.');
+    });
+
+    it('attaches multiple middleware in the expected order', async () => {
+      nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
+      const myMiddlewareOne = middleWareBuilder('Middleware One.');
+      const myMiddlewareTwo = middleWareBuilder('Middleware Two.');
+
+      const response = await executeHttpRequest(httpsDestination, {
+        middleware: [myMiddlewareOne, myMiddlewareTwo],
+        method: 'get'
+      });
+      expect(response.data).toEqual(
+        'Initial value.Middleware One.Middleware Two.'
+      );
     });
 
     // The base-agent dependency coming in via the http-proxy-agent did mess with the node https.

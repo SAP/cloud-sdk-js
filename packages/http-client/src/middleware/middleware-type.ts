@@ -49,6 +49,7 @@ export interface Context {
  * @param middleWares - Middlewares to be layered around the function.
  * @param initial - Input for the layering process.
  * @returns Function with middles wares layered around it.
+ * @internal
  */
 export function wrapFunctionWithMiddleware<T>(
   middleWares: Middleware<T>[] | undefined,

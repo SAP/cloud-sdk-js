@@ -11,7 +11,7 @@ import {
 export async function sourceFile(
   directory: Directory,
   relativePath: string,
-  content: SourceFileStructure,
+  content: SourceFileStructure | string,
   options: CreateFileOptions
 ): Promise<SourceFile> {
   const file = directory.createSourceFile(`${relativePath}.ts`, content, {

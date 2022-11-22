@@ -13,10 +13,13 @@ Add sections to the document as you see fit.
 
 # How to upgrade to version 3 of the SAP Cloud SDK for JavaScript
 
-This document collects information on how to upgrade Cloud SDK version 2 to version 3.
-If you encounter issues with the documentation or while upgrading, please [open an issue in our GitHub repository](https://github.com/SAP/cloud-sdk-js/issues/new/choose).
+## Overview
 
-## Update your project dependencies
+This document will guide you through the steps necessary to upgrade to version 3 of the SAP Cloud SDK. Depending on your project, some steps might not be applicable. The To-Do list is:
+
+- [Update your project dependencies](#update-your-project-dependencies)
+
+### Update your project dependencies
 
 Search for occurrences of `@sap-cloud-sdk/[some module]` in your `package.json` files.
 Replace the version numbers with `^3`.
@@ -27,7 +30,7 @@ We recommend updating your applications in one commit or pull request and making
 
 <!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
 
-## Generator CLI
+### Generator CLI
 
 The SAP Cloud SDK includes two "generator" cli applications for OData and for OpenAPI clients.
 For historic reasons the command-line arguments of both applications were different in cases where this does not make sense.

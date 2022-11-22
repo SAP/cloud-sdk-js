@@ -114,18 +114,20 @@ describe('openapi-request-builder', () => {
       .delay(delayInResponse)
       .reply(200);
 
-    const timeoutBelowDelay = new OpenApiRequestBuilder('get', '/with-delay')
-      .middleware([timeout(delayInResponse * 0.5)])
-      .execute(slowDestintaion);
+    const timeoutBelowDelay = () =>
+      new OpenApiRequestBuilder('get', '/with-delay')
+        .middleware([timeout(delayInResponse * 0.5)])
+        .execute(slowDestintaion);
 
-    await expect(timeoutBelowDelay).rejects.toThrow(
+    await expect(timeoutBelowDelay()).rejects.toThrow(
       'Request to https://example.com ran into timeout after 5ms.'
     );
 
-    const timeoutAboveDelay = new OpenApiRequestBuilder('get', '/with-delay')
-      .middleware([timeout(delayInResponse * 2)])
-      .execute(slowDestintaion);
-    await expect(timeoutAboveDelay).resolves.not.toThrow();
+    const timeoutAboveDelay = () =>
+      new OpenApiRequestBuilder('get', '/with-delay')
+        .middleware([timeout(delayInResponse * 2)])
+        .execute(slowDestintaion);
+    await expect(timeoutAboveDelay()).resolves.not.toThrow();
   });
 
   it('executes a request using the (iss) to build a token instead of a user JWT', async () => {

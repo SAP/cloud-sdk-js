@@ -11,7 +11,7 @@ Add sections to the document as you see fit.
 
 <!-- Everything below this line should be written in the style of enduser documentation. If you need to add hints for SDK developers, to that above. -->
 
-## How to upgrade SAP Cloud SDK for JavaScript to Version 3
+# How to upgrade to version 3 of the SAP Cloud SDK for JavaScript
 
 This document collects information on how to upgrade Cloud SDK version 2 to version 3.
 If you encounter issues with the documentation or while upgrading, please [open an issue in our GitHub repository](https://github.com/SAP/cloud-sdk-js/issues/new/choose).
@@ -25,11 +25,12 @@ Depending on if you're using `npm` or `yarn`, run `npm install` or `yarn` in the
 Running your tests or deploying your application might fail at this point in time if you need to adapt to any breaking changes.
 We recommend updating your applications in one commit or pull request and making sure everything still works using your existing test suite.
 
-## Generator CLI
+<!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
 
-<!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit. -->
+## Generator CLI
 
 The SAP Cloud SDK includes two "generator" cli applications for OData and for OpenAPI clients.
 For historic reasons the command-line arguments of both applications were different in cases where this does not make sense.
 In version 3, the arguments are aligned and deprecated arguments have been removed.
 Please see (insert link here) for the current documentation on the cli arguments.
+-->

@@ -1,5 +1,6 @@
 import type { Destination } from '@sap-cloud-sdk/connectivity';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { HttpRequestConfig } from '../http-client-types';
 
 const logger = createLogger('middleware');
 
@@ -39,6 +40,10 @@ export interface Context {
    */
   jwt?: string;
   /**
+   * Request config.
+   */
+  requestConfig?: HttpRequestConfig;
+  /**
    * Arguments used in the request.
    */
   args: any[];
@@ -46,21 +51,21 @@ export interface Context {
 
 /**
  * Helper function to join a list of middlewares given an initial input.
- * @param middleWares - Middlewares to be layered around the function.
+ * @param middlewares - Middlewares to be layered around the function.
  * @param initial - Input for the layering process.
  * @returns Function with middles wares layered around it.
  * @internal
  */
-export function wrapFunctionWithMiddleware<T>(
-  middleWares: Middleware<T>[] | undefined,
+export function executeWithMiddleware<T>(
+  middlewares: Middleware<T>[] | undefined,
   initial: MiddlewareInOut<T>
-): () => Promise<T> {
-  if (!middleWares || middleWares.length === 0) {
-    return initial.fn;
+): Promise<T> {
+  if (!middlewares || middlewares.length === 0) {
+    return initial.fn();
   }
-  const functionWithMiddlware = middleWares.reduce<MiddlewareInOut<T>>(
+  const functionWithMiddlware = middlewares.reduce<MiddlewareInOut<T>>(
     (prev, curr) => curr(prev),
     initial
   );
-  return functionWithMiddlware.fn;
+  return functionWithMiddlware.fn();
 }

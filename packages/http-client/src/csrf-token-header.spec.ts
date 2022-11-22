@@ -5,13 +5,13 @@ import {
   CommonEntity,
   commonEntityApi
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
-import { timeout } from '@sap-cloud-sdk/http-client/dist/middleware/timeout';
 import {
   defaultBasicCredentials,
   defaultDestination,
   defaultHost,
   mockHeaderRequest
 } from '../../../test-resources/test/test-util';
+import { timeout } from './middleware';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 import * as csrfHeaders from './csrf-token-header';
 import { executeHttpRequest } from './http-client';
@@ -88,14 +88,14 @@ describe('buildCsrfHeaders', () => {
 
   it('considers timeout via middleware on csrf token fetching', async () => {
     const delayInResponse = 1000;
-    nock('http://foo.bar', {})
+    nock('http://example.com', {})
       .post(/with-delay/)
       .delay(delayInResponse)
       .reply(200);
 
     await expect(
       executeHttpRequest(
-        { url: 'http://foo.bar' },
+        { url: 'http://example.com' },
         {
           method: 'post',
           url: 'with-delay',
@@ -103,7 +103,7 @@ describe('buildCsrfHeaders', () => {
         }
       )
     ).rejects.toThrow(
-      'Request to http://foo.bar ran into timeout after 500ms.'
+      'Request to http://example.com ran into timeout after 5ms.'
     );
   });
 

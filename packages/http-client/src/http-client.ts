@@ -38,7 +38,7 @@ import {
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
 import { buildCsrfHeaders } from './csrf-token-header';
-import { wrapFunctionWithMiddleware } from './middleware/middleware-type';
+import { executeWithMiddleware } from './middleware/middleware-type';
 
 const logger = createLogger({
   package: 'http-client',
@@ -98,7 +98,7 @@ export async function addDestinationToRequestConfig<
  * @returns A function expecting destination and a request.
  * @internal
  */
-export function execute(executeFn: ExecuteHttpRequestFn) {
+export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
   return async function <T extends HttpRequestConfigWithOrigin>(
     destination: DestinationOrFetchOptions,
     requestConfig: T,
@@ -123,19 +123,16 @@ export function execute(executeFn: ExecuteHttpRequestFn) {
 
     request.headers = await addCsrfTokenToHeader(destination, request, options);
     logRequestInformation(request);
-    const wrappedFunction = wrapFunctionWithMiddleware(
-      requestConfig.middleware,
-      {
-        fn: () => executeFn(request),
-        context: {
-          jwt: destination.jwt,
-          args: [request],
-          category: 'user-defined',
-          destination: resolvedDestination
-        }
+    return executeWithMiddleware(requestConfig.middleware, {
+      fn: () => executeFn(request),
+      context: {
+        jwt: destination.jwt,
+        args: [request],
+        requestConfig: request,
+        category: 'user-defined',
+        destination: resolvedDestination
       }
-    );
-    return wrappedFunction();
+    });
   };
 }
 

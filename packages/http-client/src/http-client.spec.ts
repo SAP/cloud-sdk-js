@@ -208,7 +208,7 @@ describe('generic http client', () => {
       jest.restoreAllMocks();
     });
 
-    function middleWareBuilder(appendedText: string): Middleware<HttpResponse> {
+    function middlewareBuilder(appendedText: string): Middleware<HttpResponse> {
       return (options: MiddlewareInOut<HttpResponse>) => {
         const wrapped = () =>
           options.fn().then(res => {
@@ -225,7 +225,7 @@ describe('generic http client', () => {
 
     it('attaches one middleware', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
-      const myMiddleware = middleWareBuilder('Middleware One.');
+      const myMiddleware = middlewareBuilder('Middleware One.');
 
       const response = await executeHttpRequest(httpsDestination, {
         middleware: [myMiddleware],
@@ -236,8 +236,8 @@ describe('generic http client', () => {
 
     it('attaches multiple middleware in the expected order', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
-      const myMiddlewareOne = middleWareBuilder('Middleware One.');
-      const myMiddlewareTwo = middleWareBuilder('Middleware Two.');
+      const myMiddlewareTwo = middlewareBuilder('Middleware Two.');
+      const myMiddlewareOne = middlewareBuilder('Middleware One.');
 
       const response = await executeHttpRequest(httpsDestination, {
         middleware: [myMiddlewareOne, myMiddlewareTwo],
@@ -536,10 +536,9 @@ sap-client:001`);
     });
 
     it('uses no timeout if no timeout middleware given', async () => {
-      const delayInResponse = 10000 + 1; // typical default timeouts of http clients are 10 seconds
       nock('https://example.com', {})
         .get('/with-delay')
-        .delay(delayInResponse)
+        .delay(10000 + 1) // typical default timeouts of http clients are 10 seconds
         .reply(200);
       const promise = executeHttpRequest(httpsDestination, {
         method: 'get',
@@ -549,7 +548,7 @@ sap-client:001`);
     }, 60000);
 
     it('uses a custom timeout if given', async () => {
-      const delayInResponse = 1000;
+      const delayInResponse = 10;
       nock('https://example.com', {})
         .get('/with-delay')
         .times(2)
@@ -563,7 +562,7 @@ sap-client:001`);
           middleware: [timeout(delayInResponse * 0.5)]
         })
       ).rejects.toThrow(
-        'Request to https://example.com ran into timeout after 500ms.'
+        'Request to https://example.com ran into timeout after 5ms.'
       );
 
       await expect(

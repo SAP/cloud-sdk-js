@@ -104,9 +104,10 @@ describe('openapi-request-builder', () => {
       { fetchCsrfToken: true }
     );
   });
+
   it('executes a request using the timeout', async () => {
-    const delayInResponse = 1000;
-    const slowDestintaion = { url: 'https://slow-server.com' };
+    const delayInResponse = 10;
+    const slowDestintaion = { url: 'https://exmple.com' };
     nock(slowDestintaion.url, {})
       .get('/with-delay')
       .times(2)
@@ -118,7 +119,7 @@ describe('openapi-request-builder', () => {
       .execute(slowDestintaion);
 
     await expect(timeoutBelowDelay).rejects.toThrow(
-      'Request to https://slow-server.com ran into timeout after 500ms.'
+      'Request to https://example.com ran into timeout after 5ms.'
     );
 
     const timeoutAboveDelay = new OpenApiRequestBuilder('get', '/with-delay')

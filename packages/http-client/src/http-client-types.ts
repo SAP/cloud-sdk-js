@@ -122,9 +122,9 @@ export type HttpRequest = DestinationHttpRequestConfig & HttpRequestConfig;
 /**
  * @internal
  */
-export type ExecuteHttpRequestFn = (
+export type ExecuteHttpRequestFn<ReturnT> = (
   request: HttpRequest
-) => Promise<HttpResponse>;
+) => Promise<ReturnT>;
 
 interface KnownHttpResponseFields {
   data: any;

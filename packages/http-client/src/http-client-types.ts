@@ -1,5 +1,5 @@
 import * as http from 'http';
-import {
+import type {
   HttpMiddlewareContext,
   Middleware
 } from './middleware/middleware-type';

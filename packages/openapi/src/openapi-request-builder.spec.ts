@@ -125,7 +125,7 @@ describe('openapi-request-builder', () => {
 
     const timeoutAboveDelay = () =>
       new OpenApiRequestBuilder('get', '/with-delay')
-        .middleware([timeout(delayInResponse * 2)])
+        .middleware([timeout(delayInResponse * 10)])
         .execute(slowDestintaion);
     await expect(timeoutAboveDelay()).resolves.not.toThrow();
   });

@@ -577,7 +577,7 @@ sap-client:001`);
         executeHttpRequest(httpsDestination, {
           method: 'get',
           url: '/with-delay',
-          middleware: [timeout(delayInResponse * 2)]
+          middleware: [timeout(delayInResponse * 10)]
         })
       ).resolves.not.toThrow();
     });

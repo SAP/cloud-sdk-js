@@ -322,7 +322,7 @@ describe('destination service', () => {
     });
 
     it('returns undefined for failing service call', async () => {
-      return nock(destinationServiceUri)
+      nock(destinationServiceUri)
         .get('/destination-configuration/v1/subaccountCertificates/*')
         .reply(500);
 

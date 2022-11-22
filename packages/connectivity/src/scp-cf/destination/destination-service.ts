@@ -172,6 +172,10 @@ export interface AuthAndExchangeTokens {
    * @internal
    */
   exchangeTenant?: string;
+  /**
+   * @internal
+   */
+  refreshToken?: string;
 }
 
 /**
@@ -255,6 +259,10 @@ async function fetchDestinationByTokens(
 
   authHeader = tokens.exchangeTenant
     ? { ...authHeader, 'X-tenant': tokens.exchangeTenant }
+    : authHeader;
+
+  authHeader = tokens.refreshToken
+    ? { ...authHeader, 'X-refresh-token': tokens.refreshToken }
     : authHeader;
 
   return callDestinationEndpoint(targetUri, authHeader, options)

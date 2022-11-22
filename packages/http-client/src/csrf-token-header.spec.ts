@@ -1,11 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { defaultResilienceBTPServices } from '@sap-cloud-sdk/connectivity/internal';
 import { createRequestBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import {
   CommonEntity,
   commonEntityApi
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import { timeout } from '@sap-cloud-sdk/http-client/dist/middleware/timeout';
 import {
   defaultBasicCredentials,
   defaultDestination,
@@ -70,7 +70,7 @@ describe('buildCsrfHeaders', () => {
     );
   });
 
-  it('considers custom timeout on csrf token fetching', async () => {
+  it('has no timeout per default', async () => {
     jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
     await expect(
       executeHttpRequest(
@@ -81,22 +81,30 @@ describe('buildCsrfHeaders', () => {
 
     expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalledWith(
       expect.anything(),
-      expect.objectContaining({ timeout: 123 })
+      expect.objectContaining({ middleware: undefined, timeout: 0 })
     );
     jest.restoreAllMocks();
   });
 
-  it('considers default timeout on csrf token fetching', async () => {
-    jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
-    await expect(
-      executeHttpRequest({ url: 'http://foo.bar' }, { method: 'post' })
-    ).rejects.toThrow();
+  it('considers timeout via middleware on csrf token fetching', async () => {
+    const delayInResponse = 1000;
+    nock('http://foo.bar', {})
+      .post(/with-delay/)
+      .delay(delayInResponse)
+      .reply(200);
 
-    expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.objectContaining({ timeout: defaultResilienceBTPServices.timeout })
+    await expect(
+      executeHttpRequest(
+        { url: 'http://foo.bar' },
+        {
+          method: 'post',
+          url: 'with-delay',
+          middleware: [timeout(delayInResponse * 0.5)]
+        }
+      )
+    ).rejects.toThrow(
+      'Request to http://foo.bar ran into timeout after 500ms.'
     );
-    jest.restoreAllMocks();
   });
 
   it('"cookie" should not be defined in header when not defined in CSRF headers response.', async () => {

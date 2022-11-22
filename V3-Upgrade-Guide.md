@@ -19,7 +19,7 @@ If you encounter issues with the documentation or while upgrading, please [open 
 ## Update your project dependencies
 
 Search for occurrences of `@sap-cloud-sdk/[some module]` in your `package.json` files.
-Replace the `2.x.y` version numbers with the [most recent `3.x.y` version number](https://github.com/SAP/cloud-sdk-js/releases).
+Replace the version numbers with `^3`.
 Depending on if you're using `npm` or `yarn`, run `npm install` or `yarn` in the directories of your `package.json` files to update the `package-lock.json` or `yarn.lock` file.
 
 Running your tests or deploying your application might fail at this point in time if you need to adapt to any breaking changes.

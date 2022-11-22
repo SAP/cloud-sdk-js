@@ -3,7 +3,10 @@ import {
   mergeIgnoreCase,
   VALUE_IS_UNDEFINED
 } from '@sap-cloud-sdk/util';
-import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
+import {
+  encodeTypedClientRequest,
+  HttpMiddlewareContext
+} from '@sap-cloud-sdk/http-client/internal';
 import type {
   ParameterEncoder,
   Middleware,
@@ -39,7 +42,7 @@ export abstract class ODataRequestConfig {
   private _customRequestConfiguration: Record<string, string> = {};
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
-  private _middleware: Middleware<HttpResponse>[] = [];
+  private _middleware: Middleware<HttpResponse, HttpMiddlewareContext>[] = [];
 
   constructor(
     method: RequestMethodType,
@@ -70,11 +73,13 @@ export abstract class ODataRequestConfig {
     }
   }
 
-  set middleware(middleWare: Middleware<HttpResponse>[]) {
+  set middleware(
+    middleWare: Middleware<HttpResponse, HttpMiddlewareContext>[]
+  ) {
     this._middleware = middleWare;
   }
 
-  get middleware(): Middleware<HttpResponse>[] {
+  get middleware(): Middleware<HttpResponse, HttpMiddlewareContext>[] {
     return this._middleware;
   }
 

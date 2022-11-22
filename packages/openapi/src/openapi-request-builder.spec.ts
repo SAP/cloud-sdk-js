@@ -107,7 +107,7 @@ describe('openapi-request-builder', () => {
 
   it('executes a request using the timeout', async () => {
     const delayInResponse = 10;
-    const slowDestintaion = { url: 'https://exmple.com' };
+    const slowDestintaion = { url: 'https://example.com' };
     nock(slowDestintaion.url, {})
       .get('/with-delay')
       .times(2)

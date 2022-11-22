@@ -123,14 +123,14 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
 
     request.headers = await addCsrfTokenToHeader(destination, request, options);
     logRequestInformation(request);
+
     return executeWithMiddleware(requestConfig.middleware, {
       fn: () => executeFn(request),
       context: {
         jwt: destination.jwt,
         args: [request],
         requestConfig: request,
-        category: 'user-defined',
-        destination: resolvedDestination
+        uri: resolvedDestination.url
       }
     });
   };

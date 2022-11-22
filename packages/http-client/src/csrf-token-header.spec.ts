@@ -87,7 +87,7 @@ describe('buildCsrfHeaders', () => {
   });
 
   it('considers timeout via middleware on csrf token fetching', async () => {
-    const delayInResponse = 1000;
+    const delayInResponse = 10;
     nock('http://example.com', {})
       .post(/with-delay/)
       .delay(delayInResponse)

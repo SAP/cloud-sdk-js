@@ -1,5 +1,8 @@
 import * as http from 'http';
-import { Middleware } from './middleware/middleware-type';
+import {
+  HttpMiddlewareContext,
+  Middleware
+} from './middleware/middleware-type';
 
 /**
  * Represents the request configuration, that was inferred from a destination.
@@ -91,7 +94,7 @@ export interface HttpRequestConfigBase {
   /**
    * Middleware to be applied to the call.
    */
-  middleware?: Middleware<HttpResponse>[];
+  middleware?: Middleware<HttpResponse, HttpMiddlewareContext>[];
   /**
    * The max size of the http response content in bytes.
    */

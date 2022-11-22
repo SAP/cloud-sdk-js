@@ -1,4 +1,4 @@
-import { Middleware, MiddlewareInOut } from './middleware-type';
+import { Context, Middleware, MiddlewareInOut } from './middleware-type';
 
 const defaultTimeout = 10000;
 
@@ -7,13 +7,17 @@ const defaultTimeout = 10000;
  * @internal
  * @param timeoutValue - in miliseconds
  */
-export function timeout<T>(
+export function timeout<ReturnType, ContextType extends Context>(
   timeoutValue: number = defaultTimeout
-): Middleware<T> {
-  return function (options: MiddlewareInOut<T>): MiddlewareInOut<T> {
-    const url = options.context?.destination.url;
+): Middleware<ReturnType, ContextType> {
+  return function (
+    options: MiddlewareInOut<ReturnType, ContextType>
+  ): MiddlewareInOut<ReturnType, ContextType> {
     const wrapped = () =>
-      Promise.race([timeoutPromise<T>(timeoutValue, url), options.fn()]);
+      Promise.race([
+        timeoutPromise<ReturnType>(timeoutValue, options.context.uri),
+        options.fn()
+      ]);
     return {
       ...options,
       fn: wrapped
@@ -21,13 +25,16 @@ export function timeout<T>(
   };
 }
 
-function timeoutPromise<T>(timeoutValue: number, url: string): Promise<T> {
-  return new Promise<T>((resolve, reject) =>
+function timeoutPromise<ReturnType>(
+  timeoutValue: number,
+  uri: string
+): Promise<ReturnType> {
+  return new Promise<ReturnType>((resolve, reject) =>
     setTimeout(
       () =>
         reject(
           new Error(
-            `Request to ${url} ran into timeout after ${timeoutValue}ms.`
+            `Request to ${uri} ran into timeout after ${timeoutValue}ms.`
           )
         ),
       timeoutValue

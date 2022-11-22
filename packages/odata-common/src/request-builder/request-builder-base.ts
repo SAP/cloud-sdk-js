@@ -4,7 +4,11 @@ import {
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
 import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
-import { Middleware, HttpResponse } from '@sap-cloud-sdk/http-client/internal';
+import {
+  Middleware,
+  HttpResponse,
+  HttpMiddlewareContext
+} from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
 
@@ -55,7 +59,9 @@ export abstract class MethodRequestBuilder<
    * @param middleware - Middlewares to be applied to the executeHttprequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
-  middleware(middleware: Middleware<HttpResponse>[]): this {
+  middleware(
+    middleware: Middleware<HttpResponse, HttpMiddlewareContext>[]
+  ): this {
     this.requestConfig.middleware = middleware;
     return this;
   }

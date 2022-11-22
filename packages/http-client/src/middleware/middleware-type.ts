@@ -1,4 +1,3 @@
-import type { Destination } from '@sap-cloud-sdk/connectivity';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { HttpRequestConfig } from '../http-client-types';
 
@@ -7,34 +6,42 @@ const logger = createLogger('middleware');
 /**
  * In/out parameter in the chain of middlewares.
  */
-export interface MiddlewareInOut<T> {
+export interface MiddlewareInOut<ReturnType, ContextType extends Context> {
   /**
    * Function execute inside the middleware.
    */
-  fn: () => Promise<T>;
+  fn: () => Promise<ReturnType>;
   /**
    * Context of the execution.
    */
-  context: Context;
+  context: ContextType;
+}
+
+/**
+ * Minimal Context of the middleware.
+ */
+export interface Context {
+  /**
+   * Arguments used in the request.
+   */
+  args: any[];
+  /**
+   * URI of the request wrapped in the middleware.
+   */
+  uri: string;
 }
 
 /**
  * Middleware type.
  */
-export type Middleware<T> = (options: MiddlewareInOut<T>) => MiddlewareInOut<T>;
+export type Middleware<ReturnType, ContextType extends Context> = (
+  options: MiddlewareInOut<ReturnType, ContextType>
+) => MiddlewareInOut<ReturnType, ContextType>;
 
 /**
- * Context of the middleware.
+ * Context for HttpRequests of the middleware.
  */
-export interface Context {
-  /**
-   * Request category.
-   */
-  category: 'xsuaa' | 'destination' | 'user-defined';
-  /**
-   * Destination used in the request.
-   */
-  destination: Destination;
+export interface HttpMiddlewareContext extends Context {
   /**
    * JWT used in the request.
    */
@@ -42,11 +49,7 @@ export interface Context {
   /**
    * Request config.
    */
-  requestConfig?: HttpRequestConfig;
-  /**
-   * Arguments used in the request.
-   */
-  args: any[];
+  requestConfig: HttpRequestConfig;
 }
 
 /**
@@ -56,16 +59,15 @@ export interface Context {
  * @returns Function with middles wares layered around it.
  * @internal
  */
-export function executeWithMiddleware<T>(
-  middlewares: Middleware<T>[] | undefined,
-  initial: MiddlewareInOut<T>
-): Promise<T> {
+export function executeWithMiddleware<ReturnType, ContextType extends Context>(
+  middlewares: Middleware<ReturnType, ContextType>[] | undefined,
+  initial: MiddlewareInOut<ReturnType, ContextType>
+): Promise<ReturnType> {
   if (!middlewares || middlewares.length === 0) {
     return initial.fn();
   }
-  const functionWithMiddlware = middlewares.reduce<MiddlewareInOut<T>>(
-    (prev, curr) => curr(prev),
-    initial
-  );
+  const functionWithMiddlware = middlewares.reduce<
+    MiddlewareInOut<ReturnType, ContextType>
+  >((prev, curr) => curr(prev), initial);
   return functionWithMiddlware.fn();
 }

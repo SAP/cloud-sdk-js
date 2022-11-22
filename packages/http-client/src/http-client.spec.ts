@@ -32,7 +32,11 @@ import {
   executeHttpRequestWithOrigin,
   buildHttpRequestConfigWithOrigin
 } from './http-client';
-import { Middleware, MiddlewareInOut } from './middleware/middleware-type';
+import type {
+  Middleware,
+  MiddlewareInOut,
+  HttpMiddlewareContext
+} from './middleware/middleware-type';
 import { timeout } from './middleware/timeout';
 
 describe('generic http client', () => {
@@ -208,8 +212,12 @@ describe('generic http client', () => {
       jest.restoreAllMocks();
     });
 
-    function middlewareBuilder(appendedText: string): Middleware<HttpResponse> {
-      return (options: MiddlewareInOut<HttpResponse>) => {
+    function middlewareBuilder(
+      appendedText: string
+    ): Middleware<HttpResponse, HttpMiddlewareContext> {
+      return (
+        options: MiddlewareInOut<HttpResponse, HttpMiddlewareContext>
+      ) => {
         const wrapped = () =>
           options.fn().then(res => {
             res.data = res.data + appendedText;

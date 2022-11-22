@@ -357,6 +357,15 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0]!.error).toBeNull();
   }, 60000);
 
+  xit('DummyOAuth2RefreshToken: Provider Destination  (dedicated token service URL)', async () => {
+    const destination = await getDestination({
+      destinationName: systems.destination.providerOauth2RefreshToken,
+      jwt: accessToken.provider,
+      refreshToken: accessToken.refreshToken
+    });
+    expect(destination!.authTokens![0]!.error).toBeNull();
+  }, 60000);
+
   xit('OAuth2JWTBearer: Provider Destination (dedicated token service URL)', async () => {
     let destination = await getDestination({
       destinationName: systems.destination.providerOauth2JWTBearer,

@@ -36,6 +36,8 @@ import {
   oauthMultipleResponse,
   oauthPasswordMultipleResponse,
   oauthPasswordSingleResponse,
+  oauthRefreshTokenMultipleResponse,
+  oauthRefreshTokenSingleResponse,
   oauthSingleResponse,
   oauthUserTokenExchangeMultipleResponse,
   oauthUserTokenExchangeSingleResponse,
@@ -368,6 +370,71 @@ describe('authentication types', () => {
     });
   });
 
+  describe('authentication type OAuth2RefreshToken', () => {
+    it('returns a destination with auth token if authentication type is OAuth2RefreshToken', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          oauthRefreshTokenMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockSingleDestinationCall(
+          nock,
+          oauthRefreshTokenSingleResponse,
+          200,
+          destinationName,
+          {
+            ...wrapJwtInHeader(subscriberServiceToken).headers,
+            'X-refresh-token': 'dummy-refresh-token'
+          },
+          { badheaders: [] }
+        )
+      ];
+
+      const expected = parseDestination(oauthRefreshTokenSingleResponse);
+      const actual = await getDestination({
+        destinationName,
+        jwt: iasToken,
+        refreshToken: 'dummy-refresh-token'
+      });
+      expect(actual).toMatchObject(expected);
+      expectAllMocksUsed(httpMocks);
+    });
+
+    it('fails if refresh token is not provided', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          oauthRefreshTokenMultipleResponse,
+          200,
+          subscriberServiceToken
+        )
+      ];
+      await expect(
+        getDestination({ destinationName, jwt: iasToken })
+      ).rejects.toThrowError(/No refresh token has been provided./);
+      expectAllMocksUsed(httpMocks);
+    });
+  });
   describe('authentication type OAuth2UserTokenExchange', () => {
     it('should use the userApprovedProviderServiceToken as auth header and no exchange header for provider destination and provider jwt', async () => {
       mockServiceBindings();
@@ -562,10 +629,6 @@ describe('authentication types', () => {
   });
 
   describe('authentication type BasicAuthentication', () => {
-    beforeEach(() => {
-      clientCredentialsTokenCache.clear();
-    });
-
     it('returns a destination with OnPrem connectivity and basic auth', async () => {
       mockServiceBindings();
       mockVerifyJwt();
@@ -746,10 +809,6 @@ describe('authentication types', () => {
   });
 
   describe('authentication type OAuth2Password', () => {
-    beforeEach(() => {
-      clientCredentialsTokenCache.clear();
-    });
-
     it('returns a destination with auth token if authentication type is OAuth2Password', async () => {
       mockServiceBindings();
       mockVerifyJwt();

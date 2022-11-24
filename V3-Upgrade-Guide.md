@@ -18,6 +18,7 @@ Add sections to the document as you see fit.
 This document will guide you through the steps necessary to upgrade to version 3 of the SAP Cloud SDK. Depending on your project, some steps might not be applicable. The To-Do list is:
 
 - [Update your project dependencies](#update-your-project-dependencies)
+- [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
 
 ### Update your project dependencies
 
@@ -27,6 +28,24 @@ Depending on if you're using `npm` or `yarn`, run `npm install` or `yarn` in the
 
 Running your tests or deploying your application might fail at this point in time if you need to adapt to any breaking changes.
 We recommend updating your applications in one commit or pull request and making sure everything still works using your existing test suite.
+
+### Check for removed deprecated functions and replace them if required
+
+While the SAP Cloud SDK maintains backwards compatibility within a major version where possible, a new major release breaks compatibility where required to simplify the programming interface.
+Most of the removed functions had been deprecated before, so ideally they are not used anymore.
+The following sub-sections describe affected modules, functions and interfaces with instructions on how to replace them.
+
+#### HTTP Client
+
+The overload, that accepted `HttpRequestConfigWithOrigin` as a parameter, is removed and replaced by the function `executeHttpRequestWithOrigin`.
+
+#### Logger
+
+The field `logger` on the interface `LoggerOptions` was not used and is removed from the interface.
+
+#### Array Utils
+
+The function `variadicArgumentToArray` is replaced by the function `transformVariadicArgumentToArray`.
 
 <!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
 

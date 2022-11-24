@@ -111,6 +111,7 @@ export class EntityBuilder<
     const customFields = customEntries.reduce(
       (customFieldsObj, [key, value]) => {
         if (key === '_customFields') {
+          //todo(fwilhe): should we remove the option to only set the content type in v3?
           logger.warn(
             "Setting custom fields in 'fromJson' through '_customFields' is deprecated and will soon be removed. Add properties to your JSON instead. (Deprecated since v1.38.1)"
           );

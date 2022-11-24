@@ -249,6 +249,7 @@ export function readPropertyWithWarn(
 export type JwtKeyMapping<InterfaceT, JwtKeysT> = {
   [key in keyof InterfaceT]: {
     // This second part of the conditional type is deprecated and should be removed in version 2.0.
+    //todo(fwilhe): relevant for v3?
     keyInJwt: JwtKeysT extends string ? JwtKeysT : keyof JwtKeysT;
     extractorFunction: (jwtPayload: JwtPayload) => any;
   };

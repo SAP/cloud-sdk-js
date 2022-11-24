@@ -58,6 +58,7 @@ export abstract class ODataRequestConfig {
     if (defaultServicePath === VALUE_IS_UNDEFINED) {
       logger.warn('The service path is undefined in "_defaultServicePath".');
     }
+    //todo(fwilhe): should we remove the option to only set the content type in v3?
     if (typeof defaultHeadersOrContentType === 'string') {
       this.defaultHeaders['content-type'] = defaultHeadersOrContentType;
     } else {

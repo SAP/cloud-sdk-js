@@ -1,5 +1,7 @@
 import { readFileSync } from 'fs';
 
+//todo(fwilhe): should this be removed as part of v3? Seems like non-user facing anyway.
+
 /**
  * @deprecated Use `getPackageVersion` in "get-package-version.ts" instead.
  * This function relies on the `process.cmd()` for searching the `package.json`.

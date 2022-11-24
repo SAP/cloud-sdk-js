@@ -34,7 +34,8 @@ import { entitySourceFile } from './entity/file';
 import { sourceFile } from './file-generator';
 import {
   defaultValueProcessesJsGeneration,
-  GeneratorOptions
+  GeneratorOptions,
+  warnIfDeprecated
 } from './generator-options';
 import { hasEntities } from './generator-utils';
 import { parseAllServices } from './service-generator';
@@ -65,6 +66,18 @@ const logger = createLogger({
  * @param options - Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
+  warnIfDeprecated(Object.keys(options), false);
+  return generateWithParsedOptions(options);
+}
+
+/**
+ * @internal
+ * This is the main entry point for generation, after options were parsed - either from the CLI or from the programmatically passed configuration.
+ * TODO: Actually split the parsing of options between CLI and programmatic options. Currently users have to provide everything.
+ */
+export async function generateWithParsedOptions(
+  options: GeneratorOptions
+): Promise<void> {
   const projectAndServices = await generateProject(options);
   if (!projectAndServices) {
     throw Error('The project is undefined.');

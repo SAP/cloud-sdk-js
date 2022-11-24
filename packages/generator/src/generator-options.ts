@@ -54,7 +54,7 @@ export interface GeneratorOptions {
    * Generate a `.npmrc` file specifying a registry for `@sap` scoped dependencies.
    * @deprecated
    */
-  generateNpmrc: boolean;
+  generateNpmrc?: boolean;
   /**
    * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
    */
@@ -185,15 +185,9 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false
   },
   generateNpmrc: {
-    deprecated: 'Since v2.8.0. This option does not have an effect anymore.',
+    deprecated: 'Since v2.8.0. This option does not have any effect anymore.',
     type: 'boolean',
-    default: false,
-    coerce: (input: string): string => {
-      logger.warn(
-        "The option 'generateNpmrc' is deprecated since v2.8.0. It has no effect anymore. Please remove it from your script."
-      );
-      return input;
-    }
+    default: false
   },
   generatePackageJson: {
     describe:
@@ -216,7 +210,7 @@ export const generatorOptionsCli: KeysToOptions = {
   },
   licenseInPackageJson: {
     describe:
-      "License to be used on the generated package.json. Only considered is 'generatePackageJson' is enabled.",
+      "License to be used on the generated package.json. Only considered if 'generatePackageJson' is enabled.",
     type: 'string',
     requiresArg: false
   },
@@ -264,7 +258,7 @@ export const generatorOptionsCli: KeysToOptions = {
     type: 'boolean',
     default: false
   }
-};
+} as const;
 
 /**
  * @internal
@@ -287,4 +281,37 @@ export function createOptionsFromConfig(configPath: string): GeneratorOptions {
           },
     JSON.parse(file)
   );
+}
+
+/**
+ * @internal
+ */
+export function warnIfDeprecated(
+  argv: string[],
+  isCli: boolean,
+  options = generatorOptionsCli
+): void {
+  const deprecatedOptions = Object.entries(options).filter(
+    ([, config]) => config.deprecated
+  );
+
+  const deprecatedOptionsInUse = deprecatedOptions.filter(([name, config]) => {
+    const names = isCli ? getCliOptionNames(name, config.alias) : [name];
+    return names.some(optionName => argv.includes(optionName));
+  });
+
+  if (deprecatedOptionsInUse.length) {
+    logger.warn('Deprecated options found:');
+    deprecatedOptionsInUse.forEach(([name, config]) => {
+      logger.warn(`--${name}: ${config.deprecated}`);
+    });
+  }
+}
+
+function getCliOptionNames(
+  name: string,
+  alias: string | readonly string[] = []
+): string[] {
+  alias = Array.isArray(alias) ? alias : [alias];
+  return [`--${name}`, ...alias.map(a => `-${a}`)];
 }

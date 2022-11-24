@@ -47,6 +47,10 @@ The field `logger` on the interface `LoggerOptions` was not used and is removed 
 
 The function `variadicArgumentToArray` is replaced by the function `transformVariadicArgumentToArray`.
 
+#### JWT
+
+The generic types of `JwtKeyMapping` is simplified so the second type argument `JwtKeysT` are always strings.
+
 <!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
 
 ### Generator CLI

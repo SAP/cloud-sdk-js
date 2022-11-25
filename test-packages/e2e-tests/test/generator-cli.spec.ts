@@ -122,7 +122,7 @@ describe('generator-cli', () => {
         '--generateNpmrc'
       ])
     ).rejects.toThrow(
-      /Deprecated options used.*\n\t--versionInPackageJson:.*\n\t--generateNpmrc:/
+      /Deprecated options used.*\n\t--generateNpmrc:.*\n\t--versionInPackageJson:/
     );
   }, 60000);
 });

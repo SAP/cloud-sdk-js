@@ -51,6 +51,27 @@ The function `variadicArgumentToArray` is replaced by the function `transformVar
 
 The generic types of `JwtKeyMapping` is simplified so the second type argument `JwtKeysT` are always strings.
 
+#### OData
+
+Setting custom fields in `fromJson` through the `_customFields` property has been removed.
+Add custom properties to your JSON object instead.
+
+Old example, not working anymore:
+```json
+{
+  "_customFields": {
+    "myCustomField": "myCustomValue"
+  }
+}
+```
+
+New example:
+```json
+{
+  "myCustomField": "myCustomValue"
+}
+```
+
 <!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
 
 ### Generator CLI

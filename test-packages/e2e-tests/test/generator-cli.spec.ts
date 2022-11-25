@@ -127,10 +127,5 @@ describe('generator-cli', () => {
       );
     }
     );
-    // } catch (err) {
-    //   expect(err.stdout).toContain(
-    //     "The option 'versionInPackageJson' is deprecated since v2.6.0."
-    //   );
-    // }
   }, 60000);
 });

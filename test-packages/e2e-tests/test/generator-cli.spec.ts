@@ -21,7 +21,7 @@ describe('generator-cli', () => {
     __dirname,
     '../../../packages/generator-common'
   );
-  const outputDirVerionPackageJson = resolve(
+  const outputDirVersionPackageJson = resolve(
     __dirname,
     '../generation-e2e-test-version-in-package-json'
   );
@@ -34,7 +34,7 @@ describe('generator-cli', () => {
       [pathToConfig]: mock.load(pathToConfig),
       [rootNodeModules]: mock.load(rootNodeModules),
       [outputDirGenerateAll]: {},
-      [outputDirVerionPackageJson]: {}
+      [outputDirVersionPackageJson]: {}
     });
   });
 
@@ -83,18 +83,18 @@ describe('generator-cli', () => {
     await generate(
       createOptions({
         inputDir,
-        outputDir: outputDirVerionPackageJson,
+        outputDir: outputDirVersionPackageJson,
         generateJs: true,
         generatePackageJson: true,
         versionInPackageJson: '42.23'
       })
     );
-    const services = fs.readdirSync(outputDirVerionPackageJson);
+    const services = fs.readdirSync(outputDirVersionPackageJson);
     const actualPackageJson = JSON.parse(
       fs
         .readFileSync(
           path.resolve(
-            outputDirVerionPackageJson.toString(),
+            outputDirVersionPackageJson.toString(),
             services[0],
             'package.json'
           )
@@ -124,10 +124,5 @@ describe('generator-cli', () => {
     ).rejects.toThrow(
       /Deprecated options used.*\n\t--versionInPackageJson:.*\n\t--generateNpmrc:/
     );
-    // } catch (err) {
-    //   expect(err.stdout).toContain(
-    //     "The option 'versionInPackageJson' is deprecated since v2.6.0."
-    //   );
-    // }
   }, 60000);
 });

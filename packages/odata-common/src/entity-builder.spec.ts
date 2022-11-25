@@ -158,7 +158,7 @@ describe('EntityBuilder', () => {
       const logger = createLogger('entity-builder');
       const warnSpy = jest.spyOn(logger, 'warn');
       const entityJson = {
-          customField: 'customField'
+        customField: 'customField'
       };
       const entity = commonEntityApi.entityBuilder().fromJson(entityJson);
       const expectedEntity = commonEntityApi

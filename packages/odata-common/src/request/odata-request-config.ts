@@ -1,12 +1,12 @@
 import {
+  encodeTypedClientRequest,
+  ParameterEncoder
+} from '@sap-cloud-sdk/http-client/internal';
+import {
   createLogger,
   mergeIgnoreCase,
   VALUE_IS_UNDEFINED
 } from '@sap-cloud-sdk/util';
-import {
-  encodeTypedClientRequest,
-  ParameterEncoder
-} from '@sap-cloud-sdk/http-client/internal';
 
 /**
  * Set of possible request methods.
@@ -39,34 +39,21 @@ export abstract class ODataRequestConfig {
   private _fetchCsrfToken = true;
   private _timeout: number | undefined = undefined;
 
-  constructor(
-    method: RequestMethodType,
-    defaultServicePath: string,
-    defaultHeaders?: Record<string, any>
-  );
   /**
    * Creates an instance of ODataRequest.
    * @param method - HTTP method of the request.
    * @param defaultServicePath - Default path of the according service.
-   * @param defaultHeadersOrContentType - The default headers of the given request as an object. When passing a string only set the content type header will be set. Setting the content type only is deprecated since v1.30.0.
+   * @param defaultHeaders - The default headers of the given request as an object.
    */
   constructor(
     public method: RequestMethodType,
     readonly defaultServicePath: string,
-    defaultHeadersOrContentType?: Record<string, any> | string
+    defaultHeaders?: Record<string, any>
   ) {
     if (defaultServicePath === VALUE_IS_UNDEFINED) {
       logger.warn('The service path is undefined in "_defaultServicePath".');
     }
-    //todo(fwilhe): should we remove the option to only set the content type in v3?
-    if (typeof defaultHeadersOrContentType === 'string') {
-      this.defaultHeaders['content-type'] = defaultHeadersOrContentType;
-    } else {
-      this.defaultHeaders = mergeIgnoreCase(
-        this.defaultHeaders,
-        defaultHeadersOrContentType
-      );
-    }
+    this.defaultHeaders = mergeIgnoreCase(this.defaultHeaders, defaultHeaders);
   }
 
   set timeout(timeout: number | undefined) {

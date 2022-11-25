@@ -53,6 +53,8 @@ The generic types of `JwtKeyMapping` is simplified so the second type argument `
 
 #### OData
 
+##### fromJson
+
 Setting custom fields in `fromJson` through the `_customFields` property has been removed.
 Add custom properties to your JSON object instead.
 
@@ -71,6 +73,12 @@ New example:
   "myCustomField": "myCustomValue"
 }
 ```
+
+##### ODataRequestConfig
+
+The constructor of `ODataRequestConfig` was changed so that the third parameter cannot be a `string` anymore.
+Passing in a string which was then interpreted as the value for the `Content-Type` HTTP header was deprecated.
+The type of the parameter is now `Record<string, any>`, and if only want to set the `Content-Type` HTTP header you can do so by passing `{'content-type': 'some-value'}` to the constructor.
 
 <!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
 

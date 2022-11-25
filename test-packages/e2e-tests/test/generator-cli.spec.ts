@@ -122,7 +122,15 @@ describe('generator-cli', () => {
         '--generateNpmrc'
       ])
     ).rejects.toThrow(
-      /Deprecated options used.*\n\t--generateNpmrc:.*\n\t--versionInPackageJson:/
+      expect(err.stdout).toContain(
+        "The option 'generateNpmrc' is deprecated since v2.8.0."
+      );
+    }
     );
+    // } catch (err) {
+    //   expect(err.stdout).toContain(
+    //     "The option 'versionInPackageJson' is deprecated since v2.6.0."
+    //   );
+    // }
   }, 60000);
 });

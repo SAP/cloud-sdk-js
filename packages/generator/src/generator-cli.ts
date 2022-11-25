@@ -47,7 +47,7 @@ export function parseCmdArgs(): GeneratorOptions {
     .alias('version', 'v')
     .alias('help', 'h')
     .middleware(() => {
-      warnIfDeprecated(process.argv, true);
+      warnIfDeprecated(process.argv);
     })
     .strict(true)
     .recommendCommands().argv as unknown as GeneratorOptions;

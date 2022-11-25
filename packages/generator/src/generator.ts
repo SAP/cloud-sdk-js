@@ -66,7 +66,7 @@ const logger = createLogger({
  * @param options - Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
-  warnIfDeprecated(Object.keys(options), false);
+  warnIfDeprecated(Object.keys(options));
   return generateWithParsedOptions(options);
 }
 

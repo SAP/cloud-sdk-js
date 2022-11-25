@@ -104,10 +104,11 @@ describe('generator-cli', () => {
     expect(actualPackageJson.version).toEqual('42.23');
   });
 
-  it('should throw a warning message for a deprecated option even when the generation is failed', async () => {
+  it('should throw a warning message for deprecated options, even when the generation is failed', async () => {
     // Use a broken service to stop the service generation early - we are only interested in the log statement
-    try {
-      await execa('npx', [
+    // try {
+    await expect(
+      execa('npx', [
         'ts-node',
         pathToGenerator,
         '-i',
@@ -117,34 +118,16 @@ describe('generator-cli', () => {
         ),
         '-o',
         'doesNotMatter',
-        '--versionInPackageJson=42.23'
-      ]);
-    } catch (err) {
-      expect(err.stdout).toContain(
-        "The option 'versionInPackageJson' is deprecated since v2.6.0."
-      );
-    }
-  }, 60000);
-
-  it('should throw a warning message for a deprecated option even when the generation is failed', async () => {
-    // Use a broken service to stop the service generation early - we are only interested in the log statement
-    try {
-      await execa('npx', [
-        'ts-node',
-        pathToGenerator,
-        '-i',
-        path.resolve(
-          __dirname,
-          '../../../test-resources/generator/resources/faulty-edmx'
-        ),
-        '-o',
-        'doesNotMatter',
+        '--versionInPackageJson=42.23',
         '--generateNpmrc'
-      ]);
-    } catch (err) {
-      expect(err.stdout).toContain(
-        "The option 'generateNpmrc' is deprecated since v2.8.0."
-      );
-    }
+      ])
+    ).rejects.toThrow(
+      /Deprecated options used.*\n\t--versionInPackageJson:.*\n\t--generateNpmrc:/
+    );
+    // } catch (err) {
+    //   expect(err.stdout).toContain(
+    //     "The option 'versionInPackageJson' is deprecated since v2.6.0."
+    //   );
+    // }
   }, 60000);
 });

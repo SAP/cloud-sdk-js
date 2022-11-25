@@ -29,7 +29,15 @@ describe('generator options', () => {
   it('shows a warning if a deprecated option name was used in the CLI', () => {
     warnIfDeprecated(
       ['command', '--otherOption', '--deprecatedOption'],
-      true,
+      options
+    );
+
+    expect(warnSpy).toHaveBeenCalled();
+  });
+
+  it('shows a warning if a deprecated option name and `=` was used in the CLI', () => {
+    warnIfDeprecated(
+      ['command', '--otherOption', '--deprecatedOption=value'],
       options
     );
 
@@ -37,27 +45,26 @@ describe('generator options', () => {
   });
 
   it('shows a warning if a deprecated option alias was used in the CLI', () => {
-    warnIfDeprecated(['command', '-d', '--otherOption'], true, options);
+    warnIfDeprecated(['command', '-d', '--otherOption'], options);
 
     expect(warnSpy).toHaveBeenCalled();
   });
 
   it('shows a warning if a deprecated option with multiple alias was used in the CLI', () => {
-    warnIfDeprecated(['command', '-x', '--otherOption'], true, options);
+    warnIfDeprecated(['command', '-x', '--otherOption'], options);
 
     expect(warnSpy).toHaveBeenCalled();
   });
 
   it('does not show a warning if no deprecated option was used in the CLI', () => {
-    warnIfDeprecated(['command', '--otherOption'], true, options);
+    warnIfDeprecated(['command', '--otherOption'], options);
 
     expect(warnSpy).not.toHaveBeenCalled();
   });
 
   it('shows a warning if a deprecated option name was used programmatically', () => {
     warnIfDeprecated(
-      ['command', 'otherOption', 'deprecatedOption'],
-      false,
+      { otherOption: 3, deprecatedOption: 'Since vX.' },
       options
     );
 
@@ -65,7 +72,7 @@ describe('generator options', () => {
   });
 
   it('does not show a warning if no deprecated option was used programmatically', () => {
-    warnIfDeprecated(['command', 'otherOption'], false, options);
+    warnIfDeprecated({ otherOption: 3 }, options);
 
     expect(warnSpy).not.toHaveBeenCalled();
   });

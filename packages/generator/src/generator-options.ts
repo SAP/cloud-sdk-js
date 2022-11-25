@@ -200,13 +200,7 @@ export const generatorOptionsCli: KeysToOptions = {
       'By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version.',
     type: 'string',
     deprecated:
-      "Since v2.6.0. Use the 'include' option to add your own package.json file instead.",
-    coerce: (input: string): string => {
-      logger.warn(
-        "The option 'versionInPackageJson' is deprecated since v2.6.0. Use the 'include' option to add your own package.json file instead."
-      );
-      return input;
-    }
+      "Since v2.6.0. Use the 'include' option to add your own package.json file instead."
   },
   licenseInPackageJson: {
     describe:
@@ -285,26 +279,38 @@ export function createOptionsFromConfig(configPath: string): GeneratorOptions {
 
 /**
  * @internal
+ * Logs a warning if deprecated options are used.
+ * @param argvOrConfig - Either the command line arguments or the config passed for programmatic use. An array implicates command line arguments, while objects represent the programmatic config.
+ * @param options - Available generator options.
  */
 export function warnIfDeprecated(
-  argv: string[],
-  isCli: boolean,
+  argvOrConfig: string[] | Record<string, any>,
   options = generatorOptionsCli
 ): void {
+  const isCli = Array.isArray(argvOrConfig);
+  const usedOptions = isCli ? argvOrConfig : Object.keys(argvOrConfig);
+
   const deprecatedOptions = Object.entries(options).filter(
     ([, config]) => config.deprecated
   );
 
   const deprecatedOptionsInUse = deprecatedOptions.filter(([name, config]) => {
     const names = isCli ? getCliOptionNames(name, config.alias) : [name];
-    return names.some(optionName => argv.includes(optionName));
+    return names.some(optionName =>
+      usedOptions.some(usedOptionName =>
+        usedOptionName.match(new RegExp(`^${optionName}=?`))
+      )
+    );
   });
 
   if (deprecatedOptionsInUse.length) {
-    logger.warn('Deprecated options found:');
-    deprecatedOptionsInUse.forEach(([name, config]) => {
-      logger.warn(`--${name}: ${config.deprecated}`);
-    });
+    const logs = deprecatedOptionsInUse
+      .map(([name, config]) => `\t--${name}: ${config.deprecated}`)
+      .join('\n');
+
+    logger.warn(
+      `Deprecated options used. The following options will be removed in the next major version:\n${logs}`
+    );
   }
 }
 

@@ -78,7 +78,7 @@ export interface HttpRequestConfigBase {
    * Server URL that will be used for the request.
    * Relative `url` can be used together with {@link DestinationHttpRequestConfig#baseURL}.
    */
-  url: string;
+  url?: string;
   /**
    * The request method used when making the request.
    */

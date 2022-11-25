@@ -130,7 +130,6 @@ describe('generic http client', () => {
         a: '1',
         b: '2',
         baseURL: 'https://example.com',
-        url: '/api/entity',
         headers: {
           a: '1',
           authorization: 'CUSTOM',
@@ -140,7 +139,6 @@ describe('generic http client', () => {
 
       const actual = await addDestinationToRequestConfig(httpsDestination, {
         method: 'get',
-        url: '/api/entity',
         a: '1',
         b: '2',
         headers: {
@@ -166,7 +164,6 @@ describe('generic http client', () => {
 
       const actual = await addDestinationToRequestConfig(httpsDestination, {
         method: 'get',
-        url: '/',
         baseURL: 'https://custom.example.com',
         headers: {
           a: '1',
@@ -478,17 +475,14 @@ sap-client:001`);
       };
 
       await expect(
-        executeHttpRequest(destination, { method: 'get', url: '/api/entity' })
+        executeHttpRequest(destination, { method: 'get' })
       ).rejects.toThrowErrorMatchingSnapshot();
     });
 
     it('includes the default axios config in request', async () => {
       const destination: Destination = { url: 'https://destinationUrl' };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
-      await executeHttpRequest(destination, {
-        method: 'get',
-        url: '/api/entity'
-      });
+      await executeHttpRequest(destination, { method: 'get' });
       expect(requestSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           proxy: false,
@@ -506,7 +500,7 @@ sap-client:001`);
       };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await expect(
-        executeHttpRequest(destination, { method: 'get', url: '/api/entity' })
+        executeHttpRequest(destination, { method: 'get' })
       ).resolves.not.toThrow();
       expect(requestSpy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -521,11 +515,7 @@ sap-client:001`);
       };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await expect(
-        executeHttpRequest(destination, {
-          method: 'get',
-          url: '/api/entity',
-          timeout: 123
-        })
+        executeHttpRequest(destination, { method: 'get', timeout: 123 })
       ).resolves.not.toThrow();
       expect(requestSpy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -545,7 +535,7 @@ sap-client:001`);
       };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await expect(
-        executeHttpRequest(destination, { method: 'get', url: '/api/entity' })
+        executeHttpRequest(destination, { method: 'get' })
       ).resolves.not.toThrow();
       expect(requestSpy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -563,7 +553,7 @@ sap-client:001`);
       await expect(
         executeHttpRequest(
           destination,
-          { method: 'post', url: 'api' },
+          { method: 'post' },
           { fetchCsrfToken: false }
         )
       ).resolves.not.toThrow();
@@ -582,10 +572,7 @@ sap-client:001`);
         isTrustingAllCertificates: true
       };
 
-      await executeHttpRequest(destination, {
-        method: 'get',
-        url: '/api/entity'
-      });
+      await executeHttpRequest(destination, { method: 'get' });
       const expectedJsonHttpsAgent = {
         httpsAgent: expect.objectContaining({
           options: expect.objectContaining({ rejectUnauthorized: false })
@@ -602,10 +589,7 @@ sap-client:001`);
         url: 'https://example.com',
         isTrustingAllCertificates: false
       };
-      await executeHttpRequest(destination, {
-        method: 'get',
-        url: '/api/entity'
-      });
+      await executeHttpRequest(destination, { method: 'get' });
       const expectedJsonHttpsAgent = {
         httpsAgent: expect.objectContaining({
           options: expect.objectContaining({ rejectUnauthorized: true })
@@ -625,10 +609,7 @@ sap-client:001`);
         authentication: 'NoAuthentication'
       };
 
-      await executeHttpRequest(destination, {
-        method: 'get',
-        url: '/api/entity'
-      });
+      await executeHttpRequest(destination, { method: 'get' });
       expect(axios.request).toHaveBeenCalledWith(
         expect.objectContaining(expectedConfigEntry)
       );
@@ -642,10 +623,7 @@ sap-client:001`);
         authentication: 'NoAuthentication'
       };
 
-      await executeHttpRequest(destination, {
-        method: 'get',
-        url: '/api/entity'
-      });
+      await executeHttpRequest(destination, { method: 'get' });
 
       expect(axios.request).toHaveBeenCalledWith(
         expect.objectContaining(expectedConfigEntry)
@@ -796,7 +774,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
     it('uses authTokens if present on a destination', async () => {
       const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
         method: 'get',
-        url: '/api/entity',
         headers: {
           requestConfig: {}
         }
@@ -824,7 +801,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       );
       const expected = {
         method: 'get',
-        url: '/api/entity',
         headers: {
           authorization: 'Bearer some.token',
           'sap-client': '123'
@@ -979,7 +955,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
     it('should add location id headers to the headers if there is a cloudConnectorLocationId in the destination', async () => {
       const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
         method: 'get',
-        url: '/api/entity',
         headers: {
           requestConfig: {}
         }
@@ -995,7 +970,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       );
       const expected = {
         method: 'get',
-        url: '/api/entity',
         headers: {
           'SAP-Connectivity-SCC-Location_ID': 'Potsdam'
         },
@@ -1010,7 +984,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       };
       const httpRequestConfigWithOrigin: HttpRequestConfigWithOrigin = {
         method: 'get',
-        url: '/api/entity',
         headers: {
           requestConfig: {}
         }
@@ -1031,7 +1004,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       );
       const expected = {
         method: 'get',
-        url: '/api/entity',
         headers: {
           'Proxy-Authorization': 'Bearer jwt',
           'SAP-Connectivity-Authentication': 'Bearer jwt'
@@ -1066,7 +1038,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
     it('should return the original object, when the parameter is typed as HttpRequestConfigWithOrigin', () => {
       const requestConfig: HttpRequestConfigWithOrigin = {
         method: 'get',
-        url: '/api/entity',
         headers: {
           requestConfig: {
             k1: 'v1'
@@ -1092,7 +1063,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
     it('should return the original object, when the parameter contains requestConfig or custom', () => {
       const requestConfig: HttpRequestConfigWithOrigin = {
         method: 'get',
-        url: '/api/entity',
         headers: {
           requestConfig: {
             k1: 'v1'
@@ -1112,7 +1082,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
     it('should build an object typed as HttpRequestConfigWithOrigin, when the parameter is typed as HttpRequestConfig', () => {
       const requestConfig: HttpRequestConfig = {
         method: 'get',
-        url: '/api/entity',
         headers: {
           k1: 'v1'
         },
@@ -1122,7 +1091,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       };
       const expected: HttpRequestConfigWithOrigin = {
         method: 'get',
-        url: '/api/entity',
         headers: {
           requestConfig: {},
           custom: {

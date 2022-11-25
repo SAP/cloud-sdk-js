@@ -247,9 +247,9 @@ describe('OAuth flows', () => {
     });
     expect(destination!.authTokens![0].error).toBeNull();
 
+    destination!.url = destination!.url + '/v1/workflow-definitions';
     const response = await executeHttpRequest(destination!, {
-      method: 'get',
-      url: '/v1/workflow-definitions'
+      method: 'get'
     });
 
     expect(response.status).toBe(200);
@@ -262,9 +262,10 @@ describe('OAuth flows', () => {
     });
 
     expect(destination!.authTokens![0].error).toBeNull();
+
+    destination!.url = destination!.url + '/v1/workflow-definitions';
     const response = await executeHttpRequest(destination!, {
-      method: 'get',
-      url: '/v1/workflow-definitions'
+      method: 'get'
     });
 
     expect(response.status).toBe(200);
@@ -295,11 +296,10 @@ describe('OAuth flows', () => {
 
     const response = await executeHttpRequest(
       {
-        url: 'https://destination-configuration.cfapps.sap.hana.ondemand.com'
+        url: 'https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations'
       },
       {
         method: 'get',
-        url: '/destination-configuration/v1/subaccountDestinations',
         headers: {
           custom: wrapJwtInHeader(destination!.authTokens![0].value).headers,
           requestConfig: {}
@@ -334,10 +334,9 @@ describe('OAuth flows', () => {
 
     expect(destination!.authTokens![0].error).toBeNull();
 
-    destination!.url = destination!.url;
+    destination!.url = destination!.url + '/v1/workflow-definitions';
     const response = await executeHttpRequest(destination!, {
-      method: 'get',
-      url: '/v1/workflow-definitions'
+      method: 'get'
     });
 
     expect(response.status).toBe(200);
@@ -523,9 +522,9 @@ describe('OAuth flows', () => {
     );
     expect(destination.authTokens![0].error).toBeNull();
 
+    destination.url = destination.url + '/v1/workflow-definitions';
     const response = await executeHttpRequest(destination! as any, {
-      method: 'get',
-      url: '/v1/workflow-definitions'
+      method: 'get'
     });
 
     expect(response.status).toBe(200);

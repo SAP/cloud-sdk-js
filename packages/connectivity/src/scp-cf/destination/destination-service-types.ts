@@ -257,7 +257,8 @@ export type AuthenticationType =
   | 'OAuth2UserTokenExchange'
   | 'ClientCertificateAuthentication'
   | 'OAuth2JWTBearer'
-  | 'OAuth2Password';
+  | 'OAuth2Password'
+  | 'OAuth2RefreshToken';
 
 /**
  * The destinations endpoint distinguished between destinations maintained on service level (instance) and account level (subaccount).

@@ -225,6 +225,7 @@ async function getAuthenticationRelatedHeaders(
     case 'OAuth2JWTBearer':
     case 'OAuth2ClientCredentials':
     case 'OAuth2Password':
+    case 'OAuth2RefreshToken':
       if (destination.authentication === 'SAMLAssertion') {
         logger.warn(
           "Destination authentication flow is 'SamlAssertion' and the auth header contains the SAML assertion. In most cases you want to translate the assertion to a Bearer token using the 'OAuth2SAMLBearerAssertion' flow."

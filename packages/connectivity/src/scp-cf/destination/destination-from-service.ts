@@ -206,6 +206,12 @@ export class DestinationFromServiceRetriever {
       );
     }
 
+    if (destination.authentication === 'OAuth2RefreshToken') {
+      destination = await da.fetchDestinationWithRefreshTokenFlow(
+        destinationResult
+      );
+    }
+
     const withProxySetting = await da.addProxyConfiguration(destination);
     const withTrustStore = await da.addTrustStoreConfiguration(
       withProxySetting,
@@ -469,6 +475,23 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     };
   }
 
+  private async getAuthTokenForOAuth2RefreshToken(
+    destinationResult: DestinationSearchResult
+  ): Promise<AuthAndExchangeTokens> {
+    const { destination, origin } = destinationResult;
+    const { refreshToken } = this.options;
+    if (!refreshToken) {
+      throw Error(
+        `No refresh token has been provided. This is strictly necessary for '${destination.authentication}'.`
+      );
+    }
+    const clientGrant =
+      origin === 'provider'
+        ? this.providerServiceToken.encoded
+        : this.subscriberToken!.serviceJwt!.encoded;
+    return { authHeaderJwt: clientGrant, refreshToken };
+  }
+
   /**
    * @internal
    * This method calls the 'find destination by name' endpoint of the destination service using a client credentials grant.
@@ -490,6 +513,15 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
     const token = await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
+      destinationResult
+    );
+    return this.fetchDestinationByToken(token);
+  }
+
+  private async fetchDestinationWithRefreshTokenFlow(
+    destinationResult: DestinationSearchResult
+  ): Promise<Destination> {
+    const token = await this.getAuthTokenForOAuth2RefreshToken(
       destinationResult
     );
     return this.fetchDestinationByToken(token);

@@ -94,7 +94,7 @@ export const samlAssertionMultipleResponse: DestinationConfiguration[] = [
   destinationWithAuthType('SAMLAssertion')
 ];
 export const samlAssertionSingleResponse = destinationSingleResponse(
-  oauthPasswordMultipleResponse
+  samlAssertionMultipleResponse
 );
 
 export const oauthJwtBearerResponse: DestinationConfiguration[] = [
@@ -102,6 +102,13 @@ export const oauthJwtBearerResponse: DestinationConfiguration[] = [
 ];
 export const oauthJwtBearerSingleResponse = destinationSingleResponse(
   oauthJwtBearerResponse
+);
+
+export const oauthRefreshTokenMultipleResponse: DestinationConfiguration[] = [
+  destinationWithAuthType('OAuth2RefreshToken')
+];
+export const oauthRefreshTokenSingleResponse = destinationSingleResponse(
+  oauthRefreshTokenMultipleResponse
 );
 
 export const oauthClientCredentialsMultipleResponse: DestinationConfiguration[] =

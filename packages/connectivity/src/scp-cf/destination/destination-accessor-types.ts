@@ -51,6 +51,14 @@ export interface DestinationAccessorOptions {
   jwt?: string;
 
   /**
+   * The token is used to request an access token from an OAuth server.
+   * The value is mandatory for authentication type `OAuth2RefreshToken` and is ignored for other authentication types.
+   * The value must be provided in a refresh token format.
+   * @see https://datatracker.ietf.org/doc/html/rfc6749#section-6.
+   */
+  refreshToken?: string;
+
+  /**
    * Option to enable/disable the IAS token to XSUAA token exchange.
    */
   iasToXsuaaTokenExchange?: boolean;

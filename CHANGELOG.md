@@ -22,9 +22,7 @@
 
 ### Signature changed
 
-- [http-client] Remove `timeout` option from the request config, use the `timeout` middleware instead.
-- [odata] Remove the `timeout` option from the request builder, user the `timeout` middleware instead
-- [openapi] Remove the `timeout` option from the request builder, user the `timeout` middleware instead
+-
 
 ### Implementation changed
 

@@ -1,4 +1,8 @@
-import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import {
+  DestinationOrFetchOptions, DestinationWithName,
+  getDestinationFromDestinationService,
+  registerDestination, retrieveJwt
+} from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityBase } from '../entity-base';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';

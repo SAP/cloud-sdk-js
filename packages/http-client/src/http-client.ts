@@ -126,6 +126,7 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
 
     return executeWithMiddleware(requestConfig.middleware, {
       fn: () => executeFn(request),
+      exitChain: false,
       context: {
         jwt: destination.jwt,
         args: [request],

@@ -15,6 +15,10 @@ export interface MiddlewareInOut<ReturnType, ContextType extends Context> {
    * Context of the execution.
    */
   context: ContextType;
+  /**
+   * Exit the middleware chain.
+   */
+  exitChain: boolean;
 }
 
 /**

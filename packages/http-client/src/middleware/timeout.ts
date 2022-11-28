@@ -13,6 +13,9 @@ export function timeout<ReturnType, ContextType extends Context>(
   return function (
     options: MiddlewareInOut<ReturnType, ContextType>
   ): MiddlewareInOut<ReturnType, ContextType> {
+    if (options.exitChain) {
+      return options;
+    }
     const wrapped = () =>
       Promise.race([
         timeoutPromise<ReturnType>(timeoutValue, options.context.uri),

@@ -262,7 +262,7 @@ describe('generic http client', () => {
       );
     });
 
-    it('stops middleware chain if chain is exited.', async () => {
+    it('stops middleware chain if exitChain is set to true.', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
       const myMiddlewareTwo = middlewareBuilder('Middleware Two.');
       const myMiddlewareOne = middlewareBuilder('Middleware One.', true);

@@ -46,7 +46,9 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
  */
 export function serializeRequest<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  ParametersT
 >(
   request: AllRequestBuilders<EntityT, DeSerializersT>,
   options: BatchRequestSerializationOptions = {}

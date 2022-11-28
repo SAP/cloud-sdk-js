@@ -51,9 +51,11 @@ So we have something for circuit breaker and timeout.
 
 |     Option      | On target<br/>avail/default | On BTP<br/>avail/default |   Remarks   |
 | :-------------: | :-------------------------: | :----------------------: | :---------: |
-| circuit breaker |            ❌/❌             |          ✅/✅           | via options |
-|     timeout     |            ✅/✅             |          ✅/✅           | via options |
-|      retry      |            ❌/❌             |          ❌/❌           |    n.a.     |
+| circuit breaker |            ❌/❌            |          ✅/✅           | via options |
+|     timeout     |            ✅/✅            |          ✅/✅           | via options |
+|      retry      |            ❌/❌            |          ❌/❌           |    n.a.     |
+
+Tab: Situation in version 2.
 
 ## Decision
 
@@ -65,12 +67,14 @@ So we have something for circuit breaker and timeout.
 - All resilience related options (timeout, circuit breaker) are removed in version 3.
 - We consider adding a retry for one destination service find by name -> can be introduced after version 3
 
-|     Option      | On target<br/>avail/default | On BTP<br/>avail/default |                   Remarks                    |
-| :-------------: | :-------------------------: | :----------------------: | :------------------------------------------: |
-| circuit breaker |            ❌/❌            |          ✅/✅           |                  no options                  |
-|     timeout     |            ❌/❌            |          ✅/✅           |                  no options                  |
-|      retry      |            ❌/❌            |          ✅/❌           | no options only for destination find by name |
-|   middleware    |            ✅/❌            |          ❌/❌           |            default no middleware             |
+|     Option      | On target<br/>avail/default | On BTP<br/>avail/default |                      Remarks                       |
+| :-------------: | :-------------------------: | :----------------------: | :------------------------------------------------: |
+| circuit breaker |            ❌/❌            |          ✅/✅           |                     no options                     |
+|     timeout     |            ❌/❌            |          ✅/✅           |                     no options                     |
+|      retry      |            ❌/❌            |          ✅/❌           | no options <br/> only for destination find by name |
+|   middleware    |            ✅/❌            |          ❌/❌           |               default no middleware                |
+
+Tab: Situation in version 3 after the middle ware was introduced.
 
 ## Consequences
 

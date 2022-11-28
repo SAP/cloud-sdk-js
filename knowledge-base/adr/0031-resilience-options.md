@@ -51,9 +51,9 @@ So we have something for circuit breaker and timeout.
 
 |     Option      | On target<br/>avail/default | On BTP<br/>avail/default |   Remarks   |
 | :-------------: | :-------------------------: | :----------------------: | :---------: |
-| circuit breaker |            ❌/❌            |          ✅/✅           | via options |
-|     timeout     |            ✅/✅            |          ✅/✅           | via options |
-|      retry      |            ❌/❌            |          ❌/❌           |    n.a.     |
+| circuit breaker |            ❌/❌             |          ✅/✅           | via options |
+|     timeout     |            ✅/✅             |          ✅/✅           | via options |
+|      retry      |            ❌/❌             |          ❌/❌           |    n.a.     |
 
 ## Decision
 

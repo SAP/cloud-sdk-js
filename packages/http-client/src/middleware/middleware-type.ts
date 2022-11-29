@@ -60,14 +60,14 @@ export interface HttpMiddlewareContext extends Context {
  * Helper function to join a list of middlewares given an initial input.
  * @param middlewares - Middlewares to be layered around the function.
  * @param initial - Input for the layering process.
- * @returns Function with middles wares layered around it.
+ * @returns Function with middlewares layered around it.
  * @internal
  */
 export function executeWithMiddleware<ReturnType, ContextType extends Context>(
   middlewares: Middleware<ReturnType, ContextType>[] | undefined,
   initial: MiddlewareInOut<ReturnType, ContextType>
 ): Promise<ReturnType> {
-  if (!middlewares || middlewares.length === 0) {
+  if (!middlewares || !middlewares.length) {
     return initial.fn();
   }
   const functionWithMiddlware = middlewares.reduce<

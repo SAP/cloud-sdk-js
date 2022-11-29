@@ -92,7 +92,7 @@ export interface HttpRequestConfigBase {
    */
   data?: any;
   /**
-   * Middleware to be applied to the call.
+   * Middleware to be applied to the request.
    */
   middleware?: Middleware<HttpResponse, HttpMiddlewareContext>[];
   /**

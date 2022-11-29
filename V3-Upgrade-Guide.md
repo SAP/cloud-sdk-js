@@ -18,6 +18,7 @@ Add sections to the document as you see fit.
 This document will guide you through the steps necessary to upgrade to version 3 of the SAP Cloud SDK. Depending on your project, some steps might not be applicable. The To-Do list is:
 
 - [Update your project dependencies](#update-your-project-dependencies)
+- [Replace Timeout](#timeout)
 
 ### Update your project dependencies
 

@@ -1,14 +1,6 @@
 import * as http from 'http';
 import * as https from 'https';
 import {
-  createLogger,
-  ErrorWithCause,
-  pickIgnoreCase,
-  sanitizeRecord,
-  unixEOL
-} from '@sap-cloud-sdk/util';
-import axios from 'axios';
-import {
   buildHeadersForDestination,
   Destination,
   DestinationOrFetchOptions,
@@ -16,13 +8,22 @@ import {
   toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
 import {
-  resolveDestination,
   defaultResilienceBTPServices,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
-  getAuthHeader
+  getAuthHeader,
+  resolveDestination
 } from '@sap-cloud-sdk/connectivity/internal';
+import {
+  createLogger,
+  ErrorWithCause,
+  pickIgnoreCase,
+  sanitizeRecord,
+  unixEOL
+} from '@sap-cloud-sdk/util';
+import axios from 'axios';
+import { buildCsrfHeaders } from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
@@ -38,7 +39,6 @@ import {
   ParameterEncoder
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
-import { buildCsrfHeaders } from './csrf-token-header';
 
 const logger = createLogger({
   package: 'http-client',
@@ -346,14 +346,6 @@ function logRequestInformation(request: HttpRequestConfig) {
  * @returns A promise resolving to an {@link HttpResponse}.
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(
-  destination: DestinationOrFetchOptions,
-  requestConfig: T,
-  options?: HttpRequestOptions
-): Promise<HttpResponse>;
-// eslint-disable-next-line jsdoc/require-jsdoc
-export function executeHttpRequest<
-  T extends HttpRequestConfig | HttpRequestConfigWithOrigin
->(
   destination: DestinationOrFetchOptions,
   requestConfig: T,
   options?: HttpRequestOptions

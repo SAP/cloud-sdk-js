@@ -1,4 +1,3 @@
-import { createLogger } from '@sap-cloud-sdk/util';
 import {
   CommonEntity,
   commonEntityApi,
@@ -152,23 +151,6 @@ describe('EntityBuilder', () => {
         .collectionProperty(entityJson.collectionProperty)
         .build();
       expect(entity).toStrictEqual(expectedEntity);
-    });
-
-    it('should build an entity from json with custom fields', () => {
-      const logger = createLogger('entity-builder');
-      const warnSpy = jest.spyOn(logger, 'warn');
-      const entityJson = {
-        customField: 'customField'
-      };
-      const entity = commonEntityApi.entityBuilder().fromJson(entityJson);
-      const expectedEntity = commonEntityApi
-        .entityBuilder()
-        .withCustomFields(entityJson)
-        .build();
-      expect(entity.getCustomFields()).toEqual(
-        expectedEntity.getCustomFields()
-      );
-      expect(warnSpy).toHaveBeenCalled();
     });
   });
 });

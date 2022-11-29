@@ -14,6 +14,13 @@ class TestEntityWithSharedEntityType1Api {
         this.entityConstructor = TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1;
         this.deSerializers = deSerializers;
     }
+    /**
+     * Do not use this method or the constructor directly.
+     *   Use the service object to get a API instance.
+     */
+    static _privateFactory(deSerializers = odata_v4_1.defaultDeSerializers) {
+        return new TestEntityWithSharedEntityType1Api(deSerializers);
+    }
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;

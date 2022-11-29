@@ -69,7 +69,7 @@ describe('EntityBuilder', () => {
         .entityBuilder()
         .stringProperty(stringProperty)
         .toSingleLink(
-          new CommonEntitySingleLinkApi()
+          CommonEntitySingleLinkApi._privateFactory()
             .entityBuilder()
             .stringProperty('singleLinkedValue')
             .build()
@@ -92,7 +92,7 @@ describe('EntityBuilder', () => {
         .entityBuilder()
         .stringProperty(stringProperty)
         .toSingleLink(
-          new CommonEntitySingleLinkApi()
+          CommonEntitySingleLinkApi._privateFactory()
             .entityBuilder()
             .stringProperty('singleLinkedValue')
             .withCustomFields({ customField: 'customField' })

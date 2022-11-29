@@ -14,6 +14,13 @@ class AirlinesApi {
         this.entityConstructor = Airlines_1.Airlines;
         this.deSerializers = deSerializers;
     }
+    /**
+     * Do not use this method or the constructor directly.
+     *   Use the service object to get a API instance.
+     */
+    static _privateFactory(deSerializers = odata_v4_1.defaultDeSerializers) {
+        return new AirlinesApi(deSerializers);
+    }
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;

@@ -14,6 +14,13 @@ class TestEntityCircularLinkParentApi {
         this.entityConstructor = TestEntityCircularLinkParent_1.TestEntityCircularLinkParent;
         this.deSerializers = deSerializers;
     }
+    /**
+     * Do not use this method or the constructor directly.
+     *   Use the service object to get a API instance.
+     */
+    static _privateFactory(deSerializers = odata_v4_1.defaultDeSerializers) {
+        return new TestEntityCircularLinkParentApi(deSerializers);
+    }
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {
             TO_FIRST_CHILD: new odata_v4_1.OneToOneLink('to_FirstChild', this, linkedApis[0]),

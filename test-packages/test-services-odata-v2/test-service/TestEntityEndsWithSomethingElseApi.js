@@ -14,6 +14,13 @@ class TestEntityEndsWithSomethingElseApi {
         this.entityConstructor = TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse;
         this.deSerializers = deSerializers;
     }
+    /**
+     * Do not use this method or the constructor directly.
+     *   Use the service object to get a API instance.
+     */
+    static _privateFactory(deSerializers = odata_v2_1.defaultDeSerializers) {
+        return new TestEntityEndsWithSomethingElseApi(deSerializers);
+    }
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;

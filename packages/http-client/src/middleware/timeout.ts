@@ -4,8 +4,8 @@ const defaultTimeout = 10000;
 
 /**
  * Helper method to build a timout middleware.
- * @internal
- * @param timeoutValue - in miliseconds
+ * @param timeoutValue - Timeout in milliseconds default value are 10 seconds.
+ * @returns The middleware adding a timeout.
  */
 export function timeout<ReturnType, ContextType extends Context>(
   timeoutValue: number = defaultTimeout

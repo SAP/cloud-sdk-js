@@ -28,5 +28,6 @@ export {
   Middleware,
   MiddlewareInOut,
   Context,
+  timeout,
   HttpMiddlewareContext
 } from './middleware';

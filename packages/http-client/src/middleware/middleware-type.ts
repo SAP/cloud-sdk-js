@@ -28,7 +28,7 @@ export interface Context {
   /**
    * Arguments used in the request.
    */
-  args: any[];
+  args: unknown[];
   /**
    * URI of the request wrapped in the middleware.
    */

@@ -2,11 +2,12 @@
 
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import yargs from 'yargs';
-import { generate } from './generator';
+import { generateWithParsedOptions } from './generator';
 import {
   GeneratorOptions,
   generatorOptionsCli,
-  createOptionsFromConfig
+  createOptionsFromConfig,
+  warnIfDeprecated
 } from './generator-options';
 
 const logger = createLogger({
@@ -16,7 +17,7 @@ const logger = createLogger({
 
 logger.info('Parsing args...');
 
-generate(parseCmdArgs())
+generateWithParsedOptions(parseCmdArgs())
   .then(() => logger.info('Generation of services finished successfully.'))
   .catch(err => {
     logger.error(new ErrorWithCause('Generation of services failed.', err));
@@ -38,13 +39,16 @@ export function parseCmdArgs(): GeneratorOptions {
   return command
     .config(
       'config',
-      'Instead of specifying the options on the command line, you can also provide a path to single .json file holding these options. ' +
-        'The file must be a valid .json file where the keys correspond to the command line flags without dashes. Paths will be interpreted relative to the config file.',
+      'Instead of specifying the options on the command line, you can also provide a path to a .json file holding these options. ' +
+        'The file must be a valid .json file, where the keys correspond to the command line flags without dashes. Paths will be interpreted relative to the config file.',
       configPath => createOptionsFromConfig(configPath)
     )
     .alias('config', 'c')
     .alias('version', 'v')
     .alias('help', 'h')
+    .middleware(() => {
+      warnIfDeprecated(process.argv);
+    })
     .strict(true)
     .recommendCommands().argv as unknown as GeneratorOptions;
 }

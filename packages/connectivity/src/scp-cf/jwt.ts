@@ -47,6 +47,7 @@ export function retrieveJwt(req: IncomingMessage): string | undefined {
   if (validateAuthHeader(header)) {
     return header!.split(' ')[1];
   }
+  return undefined;
 }
 
 /**

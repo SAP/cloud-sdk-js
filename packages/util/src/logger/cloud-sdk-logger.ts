@@ -150,6 +150,7 @@ export function getLogger(
   if (container.has(messageContext)) {
     return container.get(messageContext);
   }
+  return undefined;
 }
 
 /**

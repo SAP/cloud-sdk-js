@@ -1105,12 +1105,12 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.3.1":
-  version "6.3.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.3.1.tgz#91ca75c027fa3ea14b918c3b78b820e41036e773"
-  integrity sha512-kK0WP1O+Vaz7qbvLYkEjichRrsvyt6KJ/oAlvG59NsK/UWy+V99V+pGg6XGjwvMSEVeDc4xnuaPM2bVuGGkJIg==
+"@sap/cds-dk@6.3.2":
+  version "6.3.2"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.3.2.tgz#c54bf238e59d459d945ff23bc0548d60ced11094"
+  integrity sha512-T5B2Rs2nBaMY3b/H5Yx0JqzQiKjPyOe4kCMYZ65ZQmxpVXku6D6w7fbMreQEmR3GwOQg4WSY/hf3f6jqYLvoXg==
   dependencies:
-    "@sap/cds" "^6.3.0"
+    "@sap/cds" "^6.3.2"
     "@sap/cds-foss" "^4"
     "@sap/eslint-plugin-cds" "^2.6.0"
     axios ">=0.21"
@@ -1150,7 +1150,7 @@
     "@sap/instance-manager" "^3"
     axios ">=0.27.2"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.3.0", "@sap/cds@^6.3.2":
+"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.3.2":
   version "6.3.2"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.3.2.tgz#5e2c8a3e5efc04e1000ea96a7ab1357ab966db92"
   integrity sha512-cR3mMnnlsss2l8FMXiBjcfQHcG5X7Nc8JZR7t6K3Cd/rc94XPPUyGOSVOyI25H5rTM3J2dSGcYneX3PCOCl8aw==
@@ -9302,7 +9302,7 @@ write-file-atomic@^3.0.0:
     signal-exit "^3.0.2"
     typedarray-to-buffer "^3.1.5"
 
-ws@8.10.0:
+ws@8.10.0, ws@^8.4.2:
   version "8.10.0"
   resolved "https://registry.npmjs.org/ws/-/ws-8.10.0.tgz#00a28c09dfb76eae4eb45c3b565f771d6951aa51"
   integrity sha512-+s49uSmZpvtAsd2h37vIPy1RBusaLawVe8of+GyEPsaJTCMpj/2v8NpeK1SHXjBlQ95lQTmQofOJnFiLoaN3yw==
@@ -9311,11 +9311,6 @@ ws@^7.0.0, ws@^7.4.6:
   version "7.5.9"
   resolved "https://registry.npmjs.org/ws/-/ws-7.5.9.tgz#54fa7db29f4c7cec68b1ddd3a89de099942bb591"
   integrity sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==
-
-ws@^8.4.2:
-  version "8.9.0"
-  resolved "https://registry.npmjs.org/ws/-/ws-8.9.0.tgz#2a994bb67144be1b53fe2d23c53c028adeb7f45e"
-  integrity sha512-Ja7nszREasGaYUYCI2k4lCKIRTt+y7XuqVoHR44YpI49TtryyqbqvDMn5eqfW7e6HzTukDRIsXqzVHScqRcafg==
 
 ws@~7.4.0:
   version "7.4.6"

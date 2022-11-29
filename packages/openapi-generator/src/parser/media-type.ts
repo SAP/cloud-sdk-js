@@ -100,4 +100,5 @@ function getMediaTypeObject(
       ([key]) => key === contentType
     )?.[1];
   }
+  return undefined;
 }

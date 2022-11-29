@@ -187,6 +187,7 @@ export function parseProxyEnv(
     logger.warn(
       `Could not parse proxy configuration from environment variable. Reason: ${err.message}`
     );
+    return undefined;
   }
 }
 

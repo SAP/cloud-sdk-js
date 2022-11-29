@@ -135,6 +135,7 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
     }
 
     logger.warn('Could not parse constructor from response body.');
+    return undefined;
   }
 }
 

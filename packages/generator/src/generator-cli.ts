@@ -6,9 +6,9 @@ import { generateWithParsedOptions } from './generator';
 import {
   GeneratorOptions,
   generatorOptionsCli,
-  createOptionsFromConfig,
-  warnIfDeprecated
+  createOptionsFromConfig
 } from './generator-options';
+import { OptionsParser } from './options-parser';
 
 const logger = createLogger({
   package: 'generator',
@@ -32,11 +32,14 @@ export function parseCmdArgs(): GeneratorOptions {
     '$0',
     'OData Client Code Generator for OData v2 and v4. Generates TypeScript code from `.edmx`/`.xml` files for usage with the SAP Cloud SDK for JavaScript.'
   );
-  for (const key in generatorOptionsCli) {
-    command.option(key, generatorOptionsCli[key]);
+
+  const parser = new OptionsParser(generatorOptionsCli);
+  const optionsWithoutDefaults = parser.getOptionsWithoutDefaults();
+  for (const key in optionsWithoutDefaults) {
+    command.option(key, optionsWithoutDefaults[key]);
   }
 
-  return command
+  const parsedOptions = command
     .config(
       'config',
       'Instead of specifying the options on the command line, you can also provide a path to a .json file holding these options. ' +
@@ -46,9 +49,20 @@ export function parseCmdArgs(): GeneratorOptions {
     .alias('config', 'c')
     .alias('version', 'v')
     .alias('help', 'h')
-    .middleware(() => {
-      warnIfDeprecated(process.argv);
-    })
     .strict(true)
-    .recommendCommands().argv as unknown as GeneratorOptions;
+    .parserConfiguration({
+      'strip-aliased': true,
+      'strip-dashed': true
+    })
+    .recommendCommands();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _, $0, ...userOptions } = parsedOptions.argv as any;
+
+  const a = parser.parseOptionsWithDefaults(
+    userOptions
+  ) as unknown as GeneratorOptions;
+
+  console.log(a);
+  return a;
 }

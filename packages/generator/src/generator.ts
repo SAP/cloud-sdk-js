@@ -34,8 +34,7 @@ import { entitySourceFile } from './entity/file';
 import { sourceFile } from './file-generator';
 import {
   defaultValueProcessesJsGeneration,
-  GeneratorOptions,
-  warnIfDeprecated
+  GeneratorOptions
 } from './generator-options';
 import { hasEntities } from './generator-utils';
 import { parseAllServices } from './service-generator';
@@ -66,7 +65,7 @@ const logger = createLogger({
  * @param options - Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
-  warnIfDeprecated(Object.keys(options));
+  // warnIfDeprecated(Object.keys(options));
   return generateWithParsedOptions(options);
 }
 

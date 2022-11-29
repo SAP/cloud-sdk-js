@@ -26,7 +26,8 @@ export type {
 export { defaultDisallowedKeys } from './http-request-config';
 export {
   Middleware,
-  MiddlewareInOut,
+  MiddlewareIn,
+  MiddlewareOut,
   Context,
   timeout,
   HttpMiddlewareContext

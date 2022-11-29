@@ -42,7 +42,7 @@ export abstract class ODataRequestConfig {
   private _customRequestConfiguration: Record<string, string> = {};
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
-  private _middleware: Middleware<HttpResponse, HttpMiddlewareContext>[] = [];
+  private _middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[] = [];
 
   constructor(
     method: RequestMethodType,
@@ -73,14 +73,14 @@ export abstract class ODataRequestConfig {
     }
   }
 
-  set middleware(
-    middleWare: Middleware<HttpResponse, HttpMiddlewareContext>[]
+  set middlewares(
+    middleWares: Middleware<HttpResponse, HttpMiddlewareContext>[]
   ) {
-    this._middleware = middleWare;
+    this._middlewares = middleWares;
   }
 
-  get middleware(): Middleware<HttpResponse, HttpMiddlewareContext>[] {
-    return this._middleware;
+  get middlewares(): Middleware<HttpResponse, HttpMiddlewareContext>[] {
+    return this._middlewares;
   }
 
   set customHeaders(headers: Record<string, string>) {

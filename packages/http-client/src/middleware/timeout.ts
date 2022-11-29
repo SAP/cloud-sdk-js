@@ -1,30 +1,33 @@
-import { Context, Middleware, MiddlewareInOut } from './middleware-type';
+import {
+  Context,
+  Middleware,
+  MiddlewareIn,
+  MiddlewareOut
+} from './middleware-type';
 
 const defaultTimeout = 10000;
 
 /**
  * Helper method to build a timout middleware.
  * @param timeoutValue - Timeout in milliseconds default value are 10 seconds.
- * @returns The middleware adding a timeout.
+ * @returns The middleware adding a timeout to the function.
  */
 export function timeout<ReturnType, ContextType extends Context>(
   timeoutValue: number = defaultTimeout
 ): Middleware<ReturnType, ContextType> {
   return function (
-    options: MiddlewareInOut<ReturnType, ContextType>
-  ): MiddlewareInOut<ReturnType, ContextType> {
-    if (options.exitChain) {
-      return options;
+    options: MiddlewareIn<ReturnType, ContextType>,
+    skip: boolean
+  ): MiddlewareOut<ReturnType> {
+    if (skip) {
+      return options.fn;
     }
     const wrapped = () =>
       Promise.race([
         timeoutPromise<ReturnType>(timeoutValue, options.context.uri),
         options.fn()
       ]);
-    return {
-      ...options,
-      fn: wrapped
-    };
+    return wrapped;
   };
 }
 

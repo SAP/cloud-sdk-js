@@ -56,13 +56,13 @@ export abstract class MethodRequestBuilder<
 
   /**
    * Set middleware for requests towards the target system given in the destination.
-   * @param middleware - Middlewares to be applied to the executeHttprequest().
+   * @param middlewares - Middlewares to be applied to the executeHttprequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
   middleware(
-    middleware: Middleware<HttpResponse, HttpMiddlewareContext>[]
+    middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[]
   ): this {
-    this.requestConfig.middleware = middleware;
+    this.requestConfig.middlewares = middlewares;
     return this;
   }
 

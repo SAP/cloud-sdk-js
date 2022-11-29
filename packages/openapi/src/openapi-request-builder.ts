@@ -33,7 +33,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: Record<string, string> = {};
   private _fetchCsrfToken = true;
-  private _middleware: Middleware<HttpResponse, HttpMiddlewareContext>[] = [];
+  private _middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[] = [];
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -85,13 +85,13 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   /**
    * Set middleware for requests towards the target system given in the destination.
-   * @param middleware - Middlewares to be applied to the executeHttprequest().
+   * @param middlewares - Middlewares to be applied to the executeHttprequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
   middleware(
-    middleware: Middleware<HttpResponse, HttpMiddlewareContext>[]
+    middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[]
   ): this {
-    this._middleware = middleware;
+    this._middlewares = middlewares;
     return this;
   }
 
@@ -145,7 +145,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
       url: this.getPath(),
       headers: this.getHeaders(),
       params: this.getParameters(),
-      middleware: this._middleware,
+      middleware: this._middlewares,
       parameterEncoder: encodeTypedClientRequest,
       data: this.parameters?.body
     };

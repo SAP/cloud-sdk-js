@@ -246,7 +246,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       url: this.relativeUrl(true, false),
       method: this.config.method,
       parameterEncoder: this.config.parameterEncoder,
-      middleware: this.config.middleware,
+      middleware: this.config.middlewares,
       data: this.config.payload
     };
     return {

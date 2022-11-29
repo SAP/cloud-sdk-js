@@ -6,20 +6,25 @@ const logger = createLogger('middleware');
 /**
  * In/out parameter in the chain of middlewares.
  */
-export interface MiddlewareInOut<ReturnType, ContextType extends Context> {
+export interface MiddlewareIn<ReturnT, ContextT extends Context> {
   /**
-   * Function execute inside the middleware.
+   * Function executed inside the middleware.
    */
-  fn: () => Promise<ReturnType>;
+  fn: () => Promise<ReturnT>;
   /**
    * Context of the execution.
    */
-  context: ContextType;
+  context: ContextT;
   /**
-   * Exit the middleware chain.
+   * Call this method to disable all following middlewares.
    */
-  exitChain: boolean;
+  skipNext: () => void;
 }
+
+/**
+ * Function wrapped in the middleware.
+ */
+export type MiddlewareOut<ReturnT> = () => Promise<ReturnT>;
 
 /**
  * Minimal Context of the middleware.
@@ -36,11 +41,13 @@ export interface Context {
 }
 
 /**
- * Middleware type.
+ * Middleware type. The input is the MiddlewareIn and a boolean called skip.
+ * The implementation should return the unchanged function if skip is true.
  */
-export type Middleware<ReturnType, ContextType extends Context> = (
-  options: MiddlewareInOut<ReturnType, ContextType>
-) => MiddlewareInOut<ReturnType, ContextType>;
+export type Middleware<ReturnT, ContextT extends Context> = (
+  options: MiddlewareIn<ReturnT, ContextT>,
+  skip: boolean
+) => MiddlewareOut<ReturnT>;
 
 /**
  * Context for HttpRequests of the middleware.
@@ -63,15 +70,22 @@ export interface HttpMiddlewareContext extends Context {
  * @returns Function with middlewares layered around it.
  * @internal
  */
-export function executeWithMiddleware<ReturnType, ContextType extends Context>(
-  middlewares: Middleware<ReturnType, ContextType>[] | undefined,
-  initial: MiddlewareInOut<ReturnType, ContextType>
-): Promise<ReturnType> {
+export function executeWithMiddleware<ReturnT, ContextT extends Context>(
+  middlewares: Middleware<ReturnT, ContextT>[] | undefined,
+  context: ContextT,
+  fn: () => Promise<ReturnT>
+): Promise<ReturnT> {
   if (!middlewares || !middlewares.length) {
-    return initial.fn();
+    return fn();
   }
-  const functionWithMiddlware = middlewares.reduce<
-    MiddlewareInOut<ReturnType, ContextType>
-  >((prev, curr) => curr(prev), initial);
-  return functionWithMiddlware.fn();
+  let skip = false;
+  const skipNext = () => {
+    skip = true;
+  };
+  const initial = { context, fn, skipNext };
+  const withAllMiddlewares = middlewares.reduce((prev, curr) => {
+    const wrapped = curr(prev, skip);
+    return { fn: wrapped, context, skipNext };
+  }, initial);
+  return withAllMiddlewares.fn();
 }

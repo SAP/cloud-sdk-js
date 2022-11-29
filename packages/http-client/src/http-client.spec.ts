@@ -34,7 +34,7 @@ import {
 } from './http-client';
 import type {
   Middleware,
-  MiddlewareInOut,
+  MiddlewareIn,
   HttpMiddlewareContext
 } from './middleware/middleware-type';
 import { timeout } from './middleware/timeout';
@@ -212,15 +212,19 @@ describe('generic http client', () => {
       jest.restoreAllMocks();
     });
 
-    function middlewareBuilder(
+    function buildMiddleware(
       appendedText: string,
       exitChain = false
     ): Middleware<HttpResponse, HttpMiddlewareContext> {
       return (
-        options: MiddlewareInOut<HttpResponse, HttpMiddlewareContext>
+        options: MiddlewareIn<HttpResponse, HttpMiddlewareContext>,
+        skip
       ) => {
-        if (options.exitChain) {
-          return options;
+        if (skip) {
+          return options.fn;
+        }
+        if (exitChain) {
+          options.skipNext();
         }
 
         const wrapped = () =>
@@ -229,17 +233,13 @@ describe('generic http client', () => {
             return res;
           });
 
-        return {
-          ...options,
-          exitChain,
-          fn: wrapped
-        };
+        return wrapped;
       };
     }
 
     it('attaches one middleware', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
-      const myMiddleware = middlewareBuilder('Middleware One.');
+      const myMiddleware = buildMiddleware('Middleware One.');
 
       const response = await executeHttpRequest(httpsDestination, {
         middleware: [myMiddleware],
@@ -250,8 +250,8 @@ describe('generic http client', () => {
 
     it('attaches multiple middleware in the expected order', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
-      const myMiddlewareTwo = middlewareBuilder('Middleware Two.');
-      const myMiddlewareOne = middlewareBuilder('Middleware One.');
+      const myMiddlewareTwo = buildMiddleware('Middleware Two.');
+      const myMiddlewareOne = buildMiddleware('Middleware One.');
 
       const response = await executeHttpRequest(httpsDestination, {
         middleware: [myMiddlewareOne, myMiddlewareTwo],
@@ -264,8 +264,8 @@ describe('generic http client', () => {
 
     it('stops middleware chain if exitChain is set to true.', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
-      const myMiddlewareTwo = middlewareBuilder('Middleware Two.');
-      const myMiddlewareOne = middlewareBuilder('Middleware One.', true);
+      const myMiddlewareTwo = buildMiddleware('Middleware Two.');
+      const myMiddlewareOne = buildMiddleware('Middleware One.', true);
 
       const response = await executeHttpRequest(httpsDestination, {
         middleware: [myMiddlewareOne, myMiddlewareTwo],

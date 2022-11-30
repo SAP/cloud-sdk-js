@@ -407,11 +407,11 @@ export function executeHttpRequestWithOrigin<
   requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
-  const requestConfigWithOrigin =
+  const requestConfigWithDefaults =
     requestConfig ?? getDefaultHttpRequestConfigOptions();
   return execute(executeWithAxios)(
     destination,
-    requestConfigWithOrigin,
+    requestConfigWithDefaults,
     options
   );
 }

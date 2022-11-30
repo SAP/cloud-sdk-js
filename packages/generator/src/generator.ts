@@ -98,7 +98,7 @@ export async function generateWithParsedOptions(
 
     const chunks = splitInChunks(
       directories,
-      options.processesJsGeneration || defaultValueProcessesJsGeneration
+      options.transpilationProcesses || defaultValueProcessesJsGeneration
     );
     try {
       await chunks.reduce(
@@ -232,7 +232,7 @@ async function getFileCreationOptions(
     prettierOptions: await readPrettierConfig(
       options.prettierConfig?.toString()
     ),
-    overwrite: options.forceOverwrite
+    overwrite: options.overwrite
   };
 }
 
@@ -246,7 +246,7 @@ async function generateIncludes(
       .join(posix.sep);
     const serviceDir = resolvePath(service.directoryName, options);
     const files = new GlobSync(includeDir).found;
-    await copyFiles(files, serviceDir, options.forceOverwrite);
+    await copyFiles(files, serviceDir, options.overwrite);
   }
 }
 
@@ -299,7 +299,7 @@ export async function generateSourcesForService(
   const filePromises: Promise<any>[] = [];
   logger.info(`[${service.originalFileName}] Generating entities ...`);
 
-  if (options.generatePackageJson) {
+  if (options.packageJson) {
     filePromises.push(
       createFile(
         serviceDirPath,
@@ -414,7 +414,7 @@ export async function generateSourcesForService(
     sourceFile(serviceDir, 'index', indexFile(service), createFileOptions)
   );
 
-  if (options.writeReadme) {
+  if (options.readme) {
     logger.info(`[${service.originalFileName}] Generating readme ...`);
     filePromises.push(
       createFile(

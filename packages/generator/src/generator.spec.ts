@@ -40,7 +40,7 @@ describe('generator', () => {
       const options = createOptions({
         inputDir: pathTestService,
         outputDir: 'common',
-        forceOverwrite: true,
+        overwrite: true,
         prettierConfig: '/prettier/config',
         generateSdkMetadata: true,
         include: join(pathTestResources, '*.md')

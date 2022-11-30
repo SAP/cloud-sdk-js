@@ -32,20 +32,32 @@ export interface GeneratorOptions {
    * If set to true `.JSON` files i.e. Swagger definitions are used for generation.
    */
   useSwagger: boolean;
+  // TODO remove writeReadme in version 3.0
   /**
    * Generate default `README.md` files in the client directories.
    */
   writeReadme: boolean;
   /**
+   * Generate default `README.md` files in the client directories.
+   */
+  readme: boolean;
+  /**
    * Include files matching the given glob into the root of each generated client directory.
    */
   include?: string;
+  // TODO remove forceOverwrite in version 3.0
   /**
    * Exit when encountering a file that already exists.
    * When set to true, it will be overwritten instead.
    * Please note that compared to the `clearOutputDir` option, this will not delete outdated files.
    */
   forceOverwrite: boolean;
+  /**
+   * Exit when encountering a file that already exists.
+   * When set to true, it will be overwritten instead.
+   * Please note that compared to the `clearOutputDir` option, this will not delete outdated files.
+   */
+  overwrite: boolean;
   /**
    * Delete EVERYTHING in the specified output directory before generating code.
    */
@@ -55,15 +67,21 @@ export interface GeneratorOptions {
    * @deprecated
    */
   generateNpmrc?: boolean;
+  // TODO remove generatePackageJson in version 3.0
   /**
    * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
    */
   generatePackageJson: boolean;
   /**
+   * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
+   */
+  packageJson: boolean;
+  /**
    * By default, when generating `package.json` file, the generator will set a version by using the generator version.
    * It can also be set to a specific version.
    */
   versionInPackageJson?: string;
+  // TODO remove licenseInPackageJson in version 3.0
   /**
    * License name to be used on the generated package.json. Only considered if 'packageJson' is enabled.
    */
@@ -76,10 +94,15 @@ export interface GeneratorOptions {
    * Hidden option only for internal usage - generate metadata for API hub integration.
    */
   generateSdkMetadata?: boolean;
+  // TODO remove processesJsGeneration in version 3.0
   /**
    * Number of node processes used for transpilation of JavaScript files.
    */
   processesJsGeneration?: number;
+  /**
+   * Number of node processes used for transpilation of JavaScript files.
+   */
+  transpilationProcesses?: number;
   /**
    * When set to true, the `package.json` of generated services will have the after-version script to internally keep the versions in sync.
    */
@@ -89,6 +112,7 @@ export interface GeneratorOptions {
    * Internal option used to adjust the description for S/4HANA cloud systems. Will not be used in the future.
    */
   s4hanaCloud: boolean;
+  // TODO remove generateCSN in version 3.0
   /**
    * Generate A CSN file for each service definition in the output directory.
    */
@@ -158,12 +182,20 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false,
     hidden: true
   },
-  writeReadme: {
+  readme: {
     describe:
       'When set to true, the generator will write a README.md file into the root folder of every package. This option does not make that much sense without also set useSwagger to "true".',
     type: 'boolean',
     default: false,
     hidden: true
+  },
+  writeReadme: {
+    describe:
+      'When set to true, the generator will write a README.md file into the root folder of every package. This option does not make that much sense without also set useSwagger to "true".',
+    type: 'boolean',
+    default: false,
+    hidden: true,
+    deprecated: "Since v2.12.0. Use 'readme' option to set if the generator will write README.md file instead."
   },
   include: {
     describe:
@@ -172,11 +204,18 @@ export const generatorOptionsCli: KeysToOptions = {
     coerce: coercePathArg,
     normalize: true
   },
-  forceOverwrite: {
+  overwrite: {
     describe:
       'By default, the generator will exit when encountering a file that already exists. When set to true, it will be overwritten instead. Please note that compared to the --clearOutputDir option, this will not delete outdated files.',
     type: 'boolean',
     default: false
+  },
+  forceOverwrite: {
+    describe:
+      'By default, the generator will exit when encountering a file that already exists. When set to true, it will be overwritten instead. Please note that compared to the --clearOutputDir option, this will not delete outdated files.',
+    type: 'boolean',
+    default: false,
+    deprecated: "Since v2.12.0. Use 'overwrite' option to set if the generator will overwrite existing files instead."
   },
   clearOutputDir: {
     describe:
@@ -189,11 +228,18 @@ export const generatorOptionsCli: KeysToOptions = {
     type: 'boolean',
     default: false
   },
+  packageJson: {
+    describe:
+      'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
+    type: 'boolean',
+    default: true,
+  },
   generatePackageJson: {
     describe:
       'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
     type: 'boolean',
-    default: true
+    default: true,
+    deprecated: "Since v2.12.0. Use 'packageJson' option to set if the generator will generate a package.json file instead."
   },
   versionInPackageJson: {
     describe:
@@ -206,7 +252,8 @@ export const generatorOptionsCli: KeysToOptions = {
     describe:
       "License to be used on the generated package.json. Only considered if 'generatePackageJson' is enabled.",
     type: 'string',
-    requiresArg: false
+    requiresArg: false,
+    deprecated: "Since v2.12.0. Use the 'include' option to add your own package.json file instead."
   },
   generateJs: {
     describe:
@@ -214,11 +261,19 @@ export const generatorOptionsCli: KeysToOptions = {
     type: 'boolean',
     default: true
   },
+  transpilationProcesses: {
+    describe: 'Number of processes used for generation of javascript files.',
+    alias: 'np',
+    type: 'number',
+    default: defaultValueProcessesJsGeneration,
+    hidden: true
+  },
   processesJsGeneration: {
     describe: 'Number of processes used for generation of javascript files.',
     alias: 'np',
     type: 'number',
-    default: defaultValueProcessesJsGeneration
+    default: defaultValueProcessesJsGeneration,
+    deprecated: "Since v2.12.0. Use 'transpilationProcesses' option to set number of processes for generation instead."
   },
   sdkAfterVersionScript: {
     describe:
@@ -250,7 +305,8 @@ export const generatorOptionsCli: KeysToOptions = {
     describe:
       'When set to true a CSN file will be generated for each service definition in the output directory.',
     type: 'boolean',
-    default: false
+    default: false,
+    deprecated: "Since v2.12.0."
   }
 } as const;
 

@@ -195,7 +195,8 @@ export const generatorOptionsCli: KeysToOptions = {
     type: 'boolean',
     default: false,
     hidden: true,
-    deprecated: "Since v2.12.0. Use 'readme' option to set if the generator will write README.md file instead."
+    deprecated:
+      "Since v2.12.0. Use 'readme' option to set if the generator will write README.md file instead."
   },
   include: {
     describe:
@@ -215,7 +216,8 @@ export const generatorOptionsCli: KeysToOptions = {
       'By default, the generator will exit when encountering a file that already exists. When set to true, it will be overwritten instead. Please note that compared to the --clearOutputDir option, this will not delete outdated files.',
     type: 'boolean',
     default: false,
-    deprecated: "Since v2.12.0. Use 'overwrite' option to set if the generator will overwrite existing files instead."
+    deprecated:
+      "Since v2.12.0. Use 'overwrite' option to set if the generator will overwrite existing files instead."
   },
   clearOutputDir: {
     describe:
@@ -232,14 +234,15 @@ export const generatorOptionsCli: KeysToOptions = {
     describe:
       'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
     type: 'boolean',
-    default: true,
+    default: true
   },
   generatePackageJson: {
     describe:
       'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
     type: 'boolean',
     default: true,
-    deprecated: "Since v2.12.0. Use 'packageJson' option to set if the generator will generate a package.json file instead."
+    deprecated:
+      "Since v2.12.0. Use 'packageJson' option to set if the generator will generate a package.json file instead."
   },
   versionInPackageJson: {
     describe:
@@ -253,7 +256,8 @@ export const generatorOptionsCli: KeysToOptions = {
       "License to be used on the generated package.json. Only considered if 'generatePackageJson' is enabled.",
     type: 'string',
     requiresArg: false,
-    deprecated: "Since v2.12.0. Use the 'include' option to add your own package.json file instead."
+    deprecated:
+      "Since v2.12.0. Use the 'include' option to add your own package.json file instead."
   },
   generateJs: {
     describe:
@@ -273,7 +277,8 @@ export const generatorOptionsCli: KeysToOptions = {
     alias: 'np',
     type: 'number',
     default: defaultValueProcessesJsGeneration,
-    deprecated: "Since v2.12.0. Use 'transpilationProcesses' option to set number of processes for generation instead."
+    deprecated:
+      "Since v2.12.0. Use 'transpilationProcesses' option to set number of processes for generation instead."
   },
   sdkAfterVersionScript: {
     describe:
@@ -306,7 +311,7 @@ export const generatorOptionsCli: KeysToOptions = {
       'When set to true a CSN file will be generated for each service definition in the output directory.',
     type: 'boolean',
     default: false,
-    deprecated: "Since v2.12.0."
+    deprecated: 'Since v2.12.0.'
   }
 } as const;
 

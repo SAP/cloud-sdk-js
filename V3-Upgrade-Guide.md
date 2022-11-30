@@ -51,7 +51,7 @@ The generic types of `JwtKeyMapping` is simplified so the second type argument `
 
 #### Package `@sap-cloud-sdk/odata-common`
 
-##### fromJson
+##### `fromJson` function
 
 Setting custom fields in `fromJson` through the `_customFields` property has been removed.
 Add custom properties to your JSON object instead.
@@ -72,7 +72,7 @@ New example:
 }
 ```
 
-##### ODataRequestConfig
+##### `ODataRequestConfig` class
 
 The constructor of `ODataRequestConfig` was changed so that the third parameter cannot be a `string` anymore.
 Passing in a string which was then interpreted as the value for the `Content-Type` HTTP header was deprecated.

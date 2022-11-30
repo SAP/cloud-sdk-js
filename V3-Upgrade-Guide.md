@@ -35,23 +35,21 @@ While the SAP Cloud SDK maintains backwards compatibility within a major version
 Most of the removed functions had been deprecated before, so ideally they are not used anymore.
 The following sub-sections describe affected modules, functions and interfaces with instructions on how to replace them.
 
-#### HTTP Client
+#### Package `@sap-cloud-sdk/http-client`
 
 The overload, that accepted `HttpRequestConfigWithOrigin` as a parameter, is removed and replaced by the function `executeHttpRequestWithOrigin`.
 
-#### Logger
+#### Package `@sap-cloud-sdk/util`
 
 The field `logger` on the interface `LoggerOptions` was not used and is removed from the interface.
 
-#### Array Utils
-
 The function `variadicArgumentToArray` is replaced by the function `transformVariadicArgumentToArray`.
 
-#### JWT
+#### Package `@sap-cloud-sdk/connectivity`
 
 The generic types of `JwtKeyMapping` is simplified so the second type argument `JwtKeysT` are always strings.
 
-#### OData
+#### Package `@sap-cloud-sdk/odata-common`
 
 ##### fromJson
 

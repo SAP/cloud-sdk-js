@@ -33,7 +33,7 @@ export class TestEntityLvl2MultiLinkApi<
 
   /**
    * Do not use this method or the constructor directly.
-   *   Use the service object to get a API instance.
+   * Use the service object to get a API instance.
    */
   public static _privateFactory<
     DeSerializersT extends DeSerializers = DefaultDeSerializers

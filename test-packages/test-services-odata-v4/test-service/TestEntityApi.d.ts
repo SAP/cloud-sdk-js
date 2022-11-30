@@ -34,7 +34,7 @@ export declare class TestEntityApi<
   private constructor();
   /**
    * Do not use this method or the constructor directly.
-   *   Use the service object to get a API instance.
+   * Use the service object to get a API instance.
    */
   static _privateFactory<
     DeSerializersT extends DeSerializers = DefaultDeSerializers

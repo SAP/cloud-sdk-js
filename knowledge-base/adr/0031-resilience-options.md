@@ -49,29 +49,32 @@ executeHttpRequest(
 
 So we have something for circuit breaker and timeout.
 
-|     Option      | On target | On BTP | Default target | Default BTP |
-| :-------------: | :-------: | :----: | :------------: | :---------: |
-| circuit breaker |    ❌     |   ✅   |      n.a.      |   enabled   |
-|     timeout     |    ✅     |   ✅   |    enabled     |   enabled   |
-|      retry      |    ❌     |   ❌   |      n.a.      |    n.a.     |
-|   rate limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |
-|   bulk limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |
+|     Option      | On target<br/>avail/default | On BTP<br/>avail/default |   Remarks   |
+| :-------------: | :-------------------------: | :----------------------: | :---------: |
+| circuit breaker |            ❌/❌            |          ✅/✅           | via options |
+|     timeout     |            ✅/✅            |          ✅/✅           | via options |
+|      retry      |            ❌/❌            |          ❌/❌           |    n.a.     |
+
+Tab: Situation in version 2.
 
 ## Decision
 
 - Rate limit and bulk limit we will not be done -> no user request.
-- We will implement an [extendable middleware approach](#api).
-- Per default the resilience middleware is off.
+- We will implement an [extendable middleware approach](#api) to add resilience to the target system.
+- Per default there is no (resilience) middleware.
+- There is circuit breaker and timeout on BTP services which is on and can not be configured.
 - This is a breaking change and therefore will be included in a future major version upgrade.
-- All resilience related options (timeout, circuitbreaker) are deprecated in version 2.
+- All resilience related options (timeout, circuit breaker) are removed in version 3.
+- We consider adding a retry for one destination service find by name -> can be introduced after version 3
 
-|     Option      | On target | On BTP | Default target | Default BTP | Remarks                                                    |
-| :-------------: | :-------: | :----: | :------------: | :---------: | ---------------------------------------------------------- |
-| circuit breaker |    ❌     |   ❌   |    enabled     |   enabled   | tenant aware                                               |
-|     timeout     |    ❌     |   ❌   |    enabled     |   enabled   |                                                            |
-|      retry      |    ❌     |   ❌   |    disabled    |  disabled   | no retry: circuit breaker open, response status 401 or 403 |
-|   rate limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |                                                            |
-|   bulk limit    |    ❌     |   ❌   |      n.a.      |    n.a.     |                                                            |
+|     Option      | On target<br/>avail/default | On BTP<br/>avail/default |                      Remarks                       |
+| :-------------: | :-------------------------: | :----------------------: | :------------------------------------------------: |
+| circuit breaker |            ❌/❌            |          ✅/✅           |                     no options                     |
+|     timeout     |            ❌/❌            |          ✅/✅           |                     no options                     |
+|      retry      |            ❌/❌            |          ✅/❌           | no options <br/> only for destination find by name |
+|   middleware    |            ✅/❌            |          ❌/❌           |               default no middleware                |
+
+Tab: Situation in version 3 after the middle ware was introduced.
 
 ## Consequences
 
@@ -79,6 +82,7 @@ The user has the option to switch-on resilience with very basic options.
 We simplify our code base by removing all resilience related options.
 We introduce a middleware approach for which users can provide their own implementations.
 This is not limited to resilience.
+We provide resilience implementation and will use this pattern also for the BTP default.
 
 ## Implementation Details
 
@@ -96,7 +100,7 @@ type MiddlewareInOut<T> = {
 type Middleware<T> = <T>(options: MiddlewareInOut) => MiddlewareInOut;
 ```
 
-In our code, we will pass a middleware array and wrap it around every HTTP call at the very end:
+In our code, we will pass a middleware array and wrap it around the HTTP call at the very end:
 
 ```ts
 async function someHttpSdkMethod(middlewares: Middleware[]): Promise<any> {
@@ -117,7 +121,6 @@ The context will be a minimal but guaranteed amount of information:
 
 ```ts
 export interface Context {
-  category: 'xsuaa' | 'destination' | 'user-defined';
   destination: Destination; //only url is mandatory
   tenantId: string;
   args: any[]; //arguments passed to the method
@@ -170,17 +173,15 @@ This is done the follwing way:
 ```ts
 const [timeout, circuitBreaker] = resilience();
 function myTimeout(inOut: MiddlewareInOut) {
-  if (inOut.context.category === 'user-defined') {
-    const wrapped = (args: any[]) =>
-      exitChain
-        ? fn(args)
-        : Promise.race([fn(args), timeoutPromise<T>(longerTimeout)]); //custom super long timeout
-    return {
-      fn: wrapped,
-      context,
-      exitChain
-    };
-  }
+  const wrapped = (args: any[]) =>
+    exitChain
+      ? fn(args)
+      : Promise.race([fn(args), timeoutPromise<T>(longerTimeout)]); //custom super long timeout
+  return {
+    fn: wrapped,
+    context,
+    exitChain
+  };
   return timeout;
 }
 
@@ -221,6 +222,7 @@ In practice, it could be desirable to enable resilience globally for all request
 - Implementation checks if global config is present and uses them in the request
 
 There should be methods to:
+
 - Set multiple middlewares globally
 - Remove all globally set middlewares
 - [Optional] Remove one particular global middleware by an identifier.

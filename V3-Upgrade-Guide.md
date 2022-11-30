@@ -41,10 +41,12 @@ Please see (insert link here) for the current documentation on the cli arguments
 
 ### Timeout 
 
-The `timeout` option on the request builder as well as the http-client was removed. 
+The `timeout()` method was removed from the request builder and the `timeout` option was removed from the `executeHttpRequest()` function. 
 If you want to set a timeout for a request use the new timeout middleware:
 
 ```ts
+import { timeout} from '@sap-cloud-sdk/resilience'
+
  executeHttpRequest(myDestination, {
           method: 'get',          
           middleware: [timeout()]

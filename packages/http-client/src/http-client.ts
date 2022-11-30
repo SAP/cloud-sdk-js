@@ -133,8 +133,11 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
  * @internal
  */
 export function buildHttpRequestConfigWithOrigin(
-  requestConfig: HttpRequestConfigWithOrigin | HttpRequestConfig
+  requestConfig: HttpRequestConfigWithOrigin | HttpRequestConfig | undefined
 ): HttpRequestConfigWithOrigin {
+  if (!requestConfig) {
+    return getDefaultHttpRequestConfigOptions();
+  }
   if (isHttpRequestConfigWithOrigin(requestConfig)) {
     return requestConfig;
   }
@@ -348,7 +351,7 @@ function logRequestInformation(request: HttpRequestConfig) {
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(
   destination: DestinationOrFetchOptions,
-  requestConfig: T,
+  requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse>;
 // eslint-disable-next-line jsdoc/require-returns-check
@@ -362,7 +365,7 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
  */
 export function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
   destination: DestinationOrFetchOptions,
-  requestConfig: T,
+  requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse>;
 // eslint-disable-next-line jsdoc/require-jsdoc
@@ -370,7 +373,7 @@ export function executeHttpRequest<
   T extends HttpRequestConfig | HttpRequestConfigWithOrigin
 >(
   destination: DestinationOrFetchOptions,
-  requestConfig: T,
+  requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
   // eslint-disable-next-line jsdoc/require-jsdoc
@@ -401,10 +404,16 @@ export function executeHttpRequestWithOrigin<
   T extends HttpRequestConfigWithOrigin
 >(
   destination: DestinationOrFetchOptions,
-  requestConfig: T,
+  requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
-  return execute(executeWithAxios)(destination, requestConfig, options);
+  const requestConfigWithDefaults =
+    requestConfig ?? getDefaultHttpRequestConfigOptions();
+  return execute(executeWithAxios)(
+    destination,
+    requestConfigWithDefaults,
+    options
+  );
 }
 
 function buildDestinationHttpRequestConfig(
@@ -484,6 +493,15 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
       Object.entries(params)
         .map(([key, value]) => `${key}=${value}`)
         .join('&')
+  };
+}
+
+/**
+ * @internal
+ */
+export function getDefaultHttpRequestConfigOptions(): HttpRequestConfigWithOrigin {
+  return {
+    method: 'get'
   };
 }
 

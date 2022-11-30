@@ -1,14 +1,15 @@
 {
-  "name": "@sap-cloud-sdk/middlewares",
+  "name": "@sap-cloud-sdk/resilience",
   "version": "2.11.0",
-  "description": "SAP Cloud SDK for JavaScript middlewares",
+  "description": "SAP Cloud SDK for JavaScript resilience",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
     "cloud-sdk",
     "sap-cloud-platform",
-    "middlewares"
+    "middlewares",
+    "resilience"
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

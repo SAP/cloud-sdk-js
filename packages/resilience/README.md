@@ -5,13 +5,13 @@
 
 # @sap-cloud-sdk/http-client
 
-This package contains implementations for the middleware like a timeout or circuit breaker middleware. 
-This concept of middlewares is totally generic and you can use it for non-resilience use cases.
+This package contains implementations for the resilience middlewares like a timeout or circuit breaker middleware. 
+This concept of middlewares is totally generic, and you can use it for non-resilience use cases.
 
 ## Installation
 
 ```
-$ npm install @sap-cloud-sdk/middlewares
+$ npm install @sap-cloud-sdk/resilience
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ Add a timeout middleware to a request.
 executeHttpRequest(destination, {middleware:[timeout()], httpRequestOptions);
 ```
 <!-- TODO v3 put better link when documentation is done -->
-For more detailed overview visit our [middleware documentation](https://sap.github.io/cloud-sdk/docs/js/).
+For more detailed overview visit our [resilience documentation](https://sap.github.io/cloud-sdk/docs/js/).
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->

@@ -7,7 +7,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
-import { timeout } from '@sap-cloud-sdk/http-client/dist/middleware/timeout';
+import { timeout } from '@sap-cloud-sdk/resilience';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,

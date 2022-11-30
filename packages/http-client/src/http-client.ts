@@ -8,7 +8,6 @@ import {
   toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
 import {
-  defaultResilienceBTPServices,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,

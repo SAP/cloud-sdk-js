@@ -28,7 +28,7 @@
     "packages/openapi-generator",
     "packages/generator-common",
     "packages/temporal-de-serializers",
-    "packages/middlewares",
+    "packages/resilience",
     "test-packages/integration-tests",
     "test-packages/e2e-tests",
     "test-packages/test-services-odata-common",

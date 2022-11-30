@@ -3,16 +3,12 @@ import {
   mergeIgnoreCase,
   VALUE_IS_UNDEFINED
 } from '@sap-cloud-sdk/util';
-import {
-  encodeTypedClientRequest,
-  ParameterEncoder,
-  encodeTypedClientRequest,
-  HttpMiddlewareContext
-} from '@sap-cloud-sdk/http-client/internal';
+import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
 import type {
-  ParameterEncoder,
   Middleware,
-  HttpResponse
+  HttpResponse,
+  ParameterEncoder,
+  HttpMiddlewareContext
 } from '@sap-cloud-sdk/http-client/internal';
 
 /**

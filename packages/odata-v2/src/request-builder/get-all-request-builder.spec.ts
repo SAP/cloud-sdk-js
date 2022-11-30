@@ -3,7 +3,7 @@ import * as httpClient from '@sap-cloud-sdk/http-client';
 import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { asc, desc } from '@sap-cloud-sdk/odata-common';
-import { timeout } from '@sap-cloud-sdk/http-client/dist/middleware/timeout';
+import { timeout } from '@sap-cloud-sdk/resilience';
 import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,

@@ -11,7 +11,6 @@ import {
   defaultHost,
   mockHeaderRequest
 } from '../../../test-resources/test/test-util';
-import { timeout } from './middleware';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 import * as csrfHeaders from './csrf-token-header';
 import { executeHttpRequest } from './http-client';
@@ -84,27 +83,6 @@ describe('buildCsrfHeaders', () => {
       expect.objectContaining({ middleware: undefined, timeout: 0 })
     );
     jest.restoreAllMocks();
-  });
-
-  it('considers timeout via middleware on csrf token fetching', async () => {
-    const delayInResponse = 10;
-    nock('http://example.com', {})
-      .post(/with-delay/)
-      .delay(delayInResponse)
-      .reply(200);
-
-    await expect(
-      executeHttpRequest(
-        { url: 'http://example.com' },
-        {
-          method: 'post',
-          url: 'with-delay',
-          middleware: [timeout(delayInResponse * 0.5)]
-        }
-      )
-    ).rejects.toThrow(
-      'Request to http://example.com ran into timeout after 5ms.'
-    );
   });
 
   it('"cookie" should not be defined in header when not defined in CSRF headers response.', async () => {

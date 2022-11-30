@@ -1,4 +1,4 @@
-import { currentSdkVersion } from './current-sdk-version';
+import { getPackageVersion } from './get-package-version';
 import { readFileSync, writeFileSync } from 'fs';
 
 const unixEOL = '\n';
@@ -7,7 +7,7 @@ function openFile(filePath: string): string {
   return readFileSync(filePath, { encoding: 'utf8' });
 }
 
-function getChangelogWithVersion(v = currentSdkVersion): string {
+function getChangelogWithVersion(v = getPackageVersion): string {
   const changelog = openFile('CHANGELOG.md');
   const [, olderLogs] = changelog.split(`${unixEOL}# ${v}`);
   let logs = olderLogs.split(`${unixEOL}# `)[0];

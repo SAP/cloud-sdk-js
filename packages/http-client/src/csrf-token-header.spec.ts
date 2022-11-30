@@ -180,6 +180,31 @@ describe('buildCsrfHeaders', () => {
     });
     expect(headers).toEqual(expected);
   });
+
+  it('should try csrf request with destination url when request config url is not set', async () => {
+    const request = await createRequestBuilder({
+      payload: new CommonEntity(commonEntityApi)
+    })['build'](defaultDestination);
+    const mockedHeaders = {
+      'x-csrf-token': 'mocked-x-csrf-token',
+      'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
+    };
+
+    nock(defaultHost)
+      .head(request.serviceUrl() + '/')
+      .reply(200, undefined, mockedHeaders);
+
+    const expected = {
+      cookie: 'mocked-cookie-0;mocked-cookie-2',
+      'x-csrf-token': mockedHeaders['x-csrf-token']
+    };
+
+    request.destination!.url = request.serviceUrl();
+    const headers = await buildCsrfHeaders(request.destination!, {
+      headers: standardHeaders
+    });
+    expect(headers).toEqual(expected);
+  });
 });
 
 describe('buildCsrfFetchHeaders', () => {

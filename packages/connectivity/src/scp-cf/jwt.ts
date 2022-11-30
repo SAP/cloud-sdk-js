@@ -1,11 +1,11 @@
 import { IncomingMessage } from 'http';
-import * as xssec from '@sap/xssec';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import * as xssec from '@sap/xssec';
 import { decode } from 'jsonwebtoken';
-import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
-import { getXsuaaServiceCredentials } from './environment-accessor';
-import { TokenKey } from './xsuaa-service-types';
 import { Cache } from './cache';
+import { getXsuaaServiceCredentials } from './environment-accessor';
+import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
+import { TokenKey } from './xsuaa-service-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -247,10 +247,9 @@ export function readPropertyWithWarn(
 /**
  * @internal
  */
-export type JwtKeyMapping<InterfaceT, JwtKeysT> = {
+export type JwtKeyMapping<InterfaceT, JwtKeysT extends string> = {
   [key in keyof InterfaceT]: {
-    // This second part of the conditional type is deprecated and should be removed in version 2.0.
-    keyInJwt: JwtKeysT extends string ? JwtKeysT : keyof JwtKeysT;
+    keyInJwt: JwtKeysT;
     extractorFunction: (jwtPayload: JwtPayload) => any;
   };
 };
@@ -262,7 +261,7 @@ export type JwtKeyMapping<InterfaceT, JwtKeysT> = {
  * @param jwtPayload - JWT payload to check fo the given key.
  * @internal
  */
-export function checkMandatoryValue<InterfaceT, JwtKeysT>(
+export function checkMandatoryValue<InterfaceT, JwtKeysT extends string>(
   key: keyof InterfaceT,
   mapping: JwtKeyMapping<InterfaceT, JwtKeysT>,
   jwtPayload: JwtPayload
@@ -270,9 +269,7 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT>(
   const value = mapping[key].extractorFunction(jwtPayload);
   if (!value) {
     throw new Error(
-      `Property '${mapping[
-        key
-      ].keyInJwt.toString()}' is missing in JWT payload.`
+      `Property '${mapping[key].keyInJwt}' is missing in JWT payload.`
     );
   }
 }

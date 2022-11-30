@@ -109,15 +109,7 @@ export class EntityBuilder<
     });
 
     const customFields = customEntries.reduce(
-      (customFieldsObj, [key, value]) => {
-        if (key === '_customFields') {
-          logger.warn(
-            "Setting custom fields in 'fromJson' through '_customFields' is deprecated and will soon be removed. Add properties to your JSON instead. (Deprecated since v1.38.1)"
-          );
-          return { ...customFieldsObj, ...value };
-        }
-        return { ...customFieldsObj, [key]: value };
-      },
+      (customFieldsObj, [key, value]) => ({ ...customFieldsObj, [key]: value }),
       {}
     );
     entityBuilder.withCustomFields(customFields);

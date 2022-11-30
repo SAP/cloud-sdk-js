@@ -377,11 +377,6 @@ export interface LoggerOptions {
    * The log level of the logger.
    */
   level?: LogLevel;
-  /**
-   * Unused option passed to the winston logger options.
-   * @deprecated
-   */
-  logger?: string;
 }
 
 /**

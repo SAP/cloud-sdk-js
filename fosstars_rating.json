@@ -258,7 +258,7 @@
         }
       }
     },
-    "value" : 7.007369439071566,
+    "value" : 7.0080786589297235,
     "weight" : 1.0,
     "confidence" : 10.0,
     "usedValues" : [ {
@@ -1196,7 +1196,34 @@
           "name" : "Info about vulnerabilities in open-source project"
         },
         "vulnerabilities" : {
-          "entries" : [ ]
+          "entries" : [ {
+            "id" : "CVE-2021-41251",
+            "cvss" : {
+              "type" : "CVSS$V3",
+              "value" : 5.9,
+              "confidentialityImpact" : "HIGH",
+              "integrityImpact" : "NONE",
+              "availabilityImpact" : "NONE"
+            },
+            "references" : [ {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1770",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1770"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32",
+              "url" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1769",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1769"
+            } ],
+            "resolution" : "PATCHED",
+            "introduced" : null,
+            "fixed" : null,
+            "published" : "2021-11-05",
+            "vulnerableVersions" : [ {
+              "versionStart" : null,
+              "versionEnd" : null
+            } ]
+          } ]
         },
         "explanation" : [ ]
       } ],
@@ -1263,7 +1290,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 219,
+        "number" : 220,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1274,7 +1301,7 @@
         "number" : 4,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "219 commits in the last 3 months results to 10.00 points", "4 contributors increase the score value from 10.00 to 11.00" ],
+      "explanation" : [ "220 commits in the last 3 months results to 10.00 points", "4 contributors increase the score value from 10.00 to 11.00" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
@@ -1481,7 +1508,7 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 1.842,
+      "value" : 1.8486666666666667,
       "weight" : 0.5,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -1506,7 +1533,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of projects on GitHub that use an open source project"
         },
-        "number" : 2519,
+        "number" : 2529,
         "explanation" : [ ]
       } ],
       "explanation" : [ ],
@@ -1630,7 +1657,34 @@
           "name" : "Info about vulnerabilities in open-source project"
         },
         "vulnerabilities" : {
-          "entries" : [ ]
+          "entries" : [ {
+            "id" : "CVE-2021-41251",
+            "cvss" : {
+              "type" : "CVSS$V3",
+              "value" : 5.9,
+              "confidentialityImpact" : "HIGH",
+              "integrityImpact" : "NONE",
+              "availabilityImpact" : "NONE"
+            },
+            "references" : [ {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1770",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1770"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32",
+              "url" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1769",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1769"
+            } ],
+            "resolution" : "PATCHED",
+            "introduced" : null,
+            "fixed" : null,
+            "published" : "2021-11-05",
+            "vulnerableVersions" : [ {
+              "versionStart" : null,
+              "versionEnd" : null
+            } ]
+          } ]
         },
         "explanation" : [ ]
       }, {

@@ -1,9 +1,9 @@
-import {
+import type {
   Context,
   Middleware,
   MiddlewareIn,
   MiddlewareOut
-} from './middleware-type';
+} from '@sap-cloud-sdk/http-client';
 
 const defaultTimeout = 10000;
 

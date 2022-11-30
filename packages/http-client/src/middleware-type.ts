@@ -1,7 +1,4 @@
-import { createLogger } from '@sap-cloud-sdk/util';
-import { HttpRequestConfig } from '../http-client-types';
-
-const logger = createLogger('middleware');
+import { HttpRequestConfig } from './http-client-types';
 
 /**
  * In/out parameter in the chain of middlewares.
@@ -66,7 +63,8 @@ export interface HttpMiddlewareContext extends Context {
 /**
  * Helper function to join a list of middlewares given an initial input.
  * @param middlewares - Middlewares to be layered around the function.
- * @param initial - Input for the layering process.
+ * @param context - Context for the middleware execution.
+ * @param fn - Function around which the middlewares are added.
  * @returns Function with middlewares layered around it.
  * @internal
  */

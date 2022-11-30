@@ -38,7 +38,7 @@ import {
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
 import { buildCsrfHeaders } from './csrf-token-header';
-import { executeWithMiddleware } from './middleware/middleware-type';
+import { executeWithMiddleware } from './middleware-type';
 
 const logger = createLogger({
   package: 'http-client',

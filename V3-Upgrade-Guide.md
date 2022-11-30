@@ -55,6 +55,6 @@ myRequestBuilder
     .middleware([timeout()])
     .execute(myDestination);
 ```
-<!-- TODO: put better link when documentation is done -->
+<!-- TODO v3 put better link when documentation is done -->
 A detailed guide on the middleware concept is presented on the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/overview).
 

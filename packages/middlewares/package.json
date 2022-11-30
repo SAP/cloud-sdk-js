@@ -1,0 +1,47 @@
+{
+  "name": "@sap-cloud-sdk/middlewares",
+  "version": "2.11.0",
+  "description": "SAP Cloud SDK for JavaScript middlewares",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "license": "Apache-2.0",
+  "keywords": [
+    "sap-cloud-sdk",
+    "cloud-sdk",
+    "sap-cloud-platform",
+    "middlewares"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "internal.js",
+    "internal.d.ts"
+  ],
+  "repository": "github:SAP/cloud-sdk-js",
+  "scripts": {
+    "compile": "tsc -b",
+    "prepublishOnly": "yarn compile && yarn readme",
+    "test": "yarn test:unit",
+    "test:unit": "jest",
+    "coverage": "jest --coverage",
+    "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
+    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
+    "check:dependencies": "depcheck .",
+    "check:public-api": "ts-node ../../scripts/check-public-api-cli.ts",
+    "readme": "ts-node ../../scripts/replace-common-readme.ts"
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/http-client": "^2.11.0"
+  },
+  "devDependencies": {
+    "@sap-cloud-sdk/connectivity": "^2.11.0",
+    "nock": "^13.2.9",
+    "typescript": "~4.8.4"
+  }
+}

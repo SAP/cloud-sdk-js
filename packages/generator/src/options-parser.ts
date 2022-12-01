@@ -40,7 +40,7 @@ export function getOptionsWithoutDefaults<
  * @internal
  * Parse options for programmatic and CLI use.
  * Warn, if deprecated options are used or duplicate.
- * Adds defaults if unset.
+ * Adds defaults for options not set by the user.
  * @param options - Available CLI options along with their configuration.
  * @param userOptions - Options as set by user, either through the CLI or programmatically.
  * @returns Parsed options with default values.
@@ -83,19 +83,19 @@ class OptionsParser<
     return parsedOptions;
   }
 
-  private getDeprecatedOptionsInUse(
-    userOptions: Record<string, any>
-  ): string[] {
+  private getDeprecatedOptionsInUse(): string[] {
     return Object.keys(this.options)
       .filter(name => this.options[name].deprecated)
-      .filter(name => Object.keys(userOptions).includes(name));
+      .filter(name => Object.keys(this.userOptions).includes(name));
   }
 
-  private getReplacedOptionsUsed(userOptions: Record<string, any>): string[] {
+  private getReplacedOptionsUsed(): string[] {
     return Object.keys(this.options)
       .filter(name => this.options[name].replacedBy)
       .filter(name =>
-        Object.keys(userOptions).includes(this.getReplacingOptionName(name))
+        Object.keys(this.userOptions).includes(
+          this.getReplacingOptionName(name)
+        )
       );
   }
 
@@ -109,10 +109,8 @@ class OptionsParser<
     return replacingOptionName;
   }
 
-  private getDuplicateOptionsUsed(
-    userOptions: Record<string, any>
-  ): { oldName: string; newName: string }[] {
-    const oldOptionsUsed = this.getReplacedOptionsUsed(userOptions);
+  private getDuplicateOptionsUsed(): { oldName: string; newName: string }[] {
+    const oldOptionsUsed = this.getReplacedOptionsUsed();
 
     if (oldOptionsUsed.length) {
       const oldNewNames = oldOptionsUsed.map(name => ({
@@ -121,7 +119,7 @@ class OptionsParser<
       }));
 
       return oldNewNames.filter(({ newName }) =>
-        Object.keys(userOptions).includes(newName)
+        Object.keys(this.userOptions).includes(newName)
       );
     }
 
@@ -135,9 +133,7 @@ class OptionsParser<
    * @param options - Available generator options.
    */
   private warnIfDeprecatedOptionsUsed(): void {
-    const deprecatedOptionsInUse = this.getDeprecatedOptionsInUse(
-      this.userOptions
-    );
+    const deprecatedOptionsInUse = this.getDeprecatedOptionsInUse();
 
     if (deprecatedOptionsInUse.length) {
       const logs = deprecatedOptionsInUse
@@ -149,7 +145,7 @@ class OptionsParser<
   }
 
   private warnIfDuplicateOptionsUsed(): void {
-    const duplicateOptionsUsed = this.getDuplicateOptionsUsed(this.userOptions);
+    const duplicateOptionsUsed = this.getDuplicateOptionsUsed();
 
     if (duplicateOptionsUsed.length) {
       const log = duplicateOptionsUsed
@@ -166,7 +162,7 @@ class OptionsParser<
     GeneratorOptionsT,
     CliOptionsT
   > {
-    const replacedOptionsUsed = this.getReplacedOptionsUsed(this.userOptions);
+    const replacedOptionsUsed = this.getReplacedOptionsUsed();
 
     return Object.entries(this.userOptions).reduce((opts, [name, value]) => {
       if (replacedOptionsUsed.includes(name)) {

@@ -15,7 +15,16 @@ export interface MiddlewareIn<ReturnT, ContextT extends Context> {
   /**
    * Call this method to disable all following middlewares.
    */
-  skipNext: () => void;
+  skipNext: SkipNext;
+}
+
+/**
+ * Type of the skip next method. Initially the called is false.
+ */
+interface SkipNext {
+  (): void;
+
+  called: boolean;
 }
 
 /**
@@ -78,10 +87,10 @@ export function executeWithMiddleware<ReturnT, ContextT extends Context>(
   }
 
   // The skipNext function is called in the middleware to skip the next middlewares
-  const skipNext = () => {
-    this.state = true;
+  const skipNext = function () {
+    skipNext.called = true;
   };
-  skipNext.state = false;
+  skipNext.called = false;
 
   const initial = { context, fn, skipNext };
   const functionWithMiddlewares = addMiddlewaresToInitialFunction(
@@ -107,8 +116,9 @@ function addMiddlewaresToInitialFunction<ReturnT, ContextT extends Context>(
   initial: MiddlewareIn<ReturnT, ContextT>
 ): MiddlewareOut<ReturnT> {
   const { context, skipNext } = initial;
+
   const functionWithMiddlewares = middlewares.reduce((prev, curr) => {
-    const middlewareAdded = initial.skipNext['state'] ? prev.fn : curr(prev);
+    const middlewareAdded = skipNext.called ? prev.fn : curr(prev);
     return { fn: middlewareAdded, context, skipNext };
   }, initial);
   return functionWithMiddlewares.fn;

@@ -6,7 +6,7 @@
 /**
  * SimpleTestEntity schema
  */
-export declare type SimpleTestEntity =
+export type SimpleTestEntity =
   | {
       /**
        * @example "Example string"

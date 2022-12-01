@@ -1,7 +1,6 @@
 import { PathLike } from 'fs';
 import { resolve, dirname } from 'path';
 import { readFileSync } from 'fs-extra';
-import { Options } from 'yargs';
 
 /**
  * Options to configure the client generation when using the generator programmatically.
@@ -102,21 +101,42 @@ export interface GeneratorOptions {
  */
 export const defaultValueProcessesJsGeneration = 16;
 
-type KeysToOptions = {
-  [optionName in keyof GeneratorOptions]: Options & {
-    replacedBy?: string;
-    describe: string;
-  };
-};
-
 function coercePathArg(arg?: string): string | undefined {
   return arg ? resolve(arg) : arg;
 }
 
 /**
+ * Union type of the deprecated option names.
+ * @typeParam T - Options configuration.
+ */
+type DeprecatedOptionNames<T> = {
+  [K in keyof T]: T[K] extends { deprecated: string } ? K : never;
+}[keyof T];
+
+/**
+ * @internal
+ * Helper to represent parsed options based on a public generator options type and a CLI options configuration.
+ * @typeParam GeneratorOptionsOptionsT - Public generator options.
+ * @typeParam CliOptionsT - Configuration of CLI options.
+ */
+export type ParsedOptions<GeneratorOptionsOptionsT, CliOptionsT> = Omit<
+  Required<GeneratorOptionsOptionsT>,
+  DeprecatedOptionNames<CliOptionsT>
+>;
+
+/**
+ * @internal
+ * Represents the parsed generator options.
+ */
+export type ParsedGeneratorOptions = ParsedOptions<
+  GeneratorOptions,
+  typeof generatorOptionsCli
+>;
+
+/**
  * @internal
  */
-export const generatorOptionsCli: KeysToOptions = {
+export const generatorOptionsCli = {
   inputDir: {
     alias: 'i',
     describe:

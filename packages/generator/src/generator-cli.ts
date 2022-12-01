@@ -2,13 +2,13 @@
 
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import yargs from 'yargs';
-import { generateWithParsedOptions } from './generator';
+import { generate } from './generator';
 import {
   GeneratorOptions,
   generatorOptionsCli,
   createOptionsFromConfig
 } from './generator-options';
-import { OptionsParser } from './options-parser';
+import { getOptionsWithoutDefaults } from './options-parser';
 
 const logger = createLogger({
   package: 'generator',
@@ -17,7 +17,7 @@ const logger = createLogger({
 
 logger.info('Parsing args...');
 
-generateWithParsedOptions(parseCmdArgs())
+generate(parseCmdArgs())
   .then(() => logger.info('Generation of services finished successfully.'))
   .catch(err => {
     logger.error(new ErrorWithCause('Generation of services failed.', err));
@@ -33,8 +33,7 @@ export function parseCmdArgs(): GeneratorOptions {
     'OData Client Code Generator for OData v2 and v4. Generates TypeScript code from `.edmx`/`.xml` files for usage with the SAP Cloud SDK for JavaScript.'
   );
 
-  const parser = new OptionsParser(generatorOptionsCli);
-  const optionsWithoutDefaults = parser.getOptionsWithoutDefaults();
+  const optionsWithoutDefaults = getOptionsWithoutDefaults(generatorOptionsCli);
   for (const key in optionsWithoutDefaults) {
     command.option(key, optionsWithoutDefaults[key]);
   }
@@ -59,10 +58,5 @@ export function parseCmdArgs(): GeneratorOptions {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { _, $0, ...userOptions } = parsedOptions.argv as any;
 
-  const a = parser.parseOptionsWithDefaults(
-    userOptions
-  ) as unknown as GeneratorOptions;
-
-  console.log(a);
-  return a;
+  return userOptions;
 }

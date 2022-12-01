@@ -1,69 +1,84 @@
-/* eslint-disable jsdoc/require-jsdoc */
-
 import { createLogger } from '@sap-cloud-sdk/util';
-
+import { Options } from 'yargs';
+import { ParsedOptions } from './generator-options';
 const logger = createLogger('generator-options');
 
-export class OptionsParser {
+type Option = Options & {
+  replacedBy?: string;
+  describe: string;
+};
+
+/**
+ * @internal
+ * Remove defaults from CLI options. This is necessary to handle default setting on our own.
+ * @param options - CLI options, record mapping option name to option config
+ * @returns CLI options without default values
+ */
+export function getOptionsWithoutDefaults<
+  CliOptionsT extends Record<string, Option>
+>(options: CliOptionsT): CliOptionsT {
+  return Object.entries(options).reduce((opts, [name, option]) => {
+    const { default: def, ...optionWithoutDefault } = option;
+    const describe =
+      def === undefined
+        ? optionWithoutDefault.describe
+        : `${optionWithoutDefault.describe}\n[Default: ${def}]`;
+    return {
+      ...opts,
+      [name]: {
+        ...optionWithoutDefault,
+        describe
+      }
+    };
+  }, {} as CliOptionsT);
+}
+
+/**
+ * @internal
+ * Parse options for programmatic and CLI use.
+ * Warn, if deprecated options are used or duplicate.
+ * Adds defaults if unset.
+ * @param options - Available CLI options along with their configuration.
+ * @param userOptions - Options as set by user.
+ * @returns Parsed options with default values.
+ */
+export function parseOptionsWithDefaults<
+  CliOptionsT extends Record<string, Option>,
+  GeneratorOptionsT extends Record<string, any>
+>(
+  options: CliOptionsT,
+  userOptions: GeneratorOptionsT
+): ParsedOptions<GeneratorOptionsT, CliOptionsT> {
+  return new OptionsParser(options, userOptions).parseOptionsWithDefaults();
+}
+
+class OptionsParser<
+  CliOptionsT extends Record<string, Option>,
+  GeneratorOptionsT extends Record<string, any>
+> {
   constructor(
-    private options: Record<string, Record<string, any>> // private userOptions: Record<string, any>
+    private options: CliOptionsT,
+    private userOptions: GeneratorOptionsT
   ) {}
 
-  getOptionsWithoutDefaults(): Record<string, Record<string, any>> {
-    return Object.entries(this.options).reduce((opts, [name, option]) => {
-      const { default: def, ...optionWithoutDefault } = option;
-      const describe =
-        def === undefined
-          ? optionWithoutDefault.describe
-          : `${optionWithoutDefault.describe}\n[Default: ${def}]`;
-      return {
-        ...opts,
-        [name]: {
-          ...optionWithoutDefault,
-          describe
-        }
-      };
-    }, {});
+  parseOptionsWithDefaults(): ParsedOptions<GeneratorOptionsT, CliOptionsT> {
+    this.warnIfDeprecatedOptionsUsed();
+    this.warnIfDuplicateOptionsUsed();
+    const parsedOptions = this.sanitizeIfReplacedOptionsUsed();
+    return this.setDefaults(parsedOptions);
   }
 
-  parseOptionsWithDefaults(
-    userOptions: Record<string, any>
-  ): Record<string, any> {
-    this.warnIfDeprecatedOptionsUsed(userOptions);
-    this.warnIfDuplicateOptionsUsed(userOptions);
-    // it is important to set defaults after sanitizing, otherwise we don't know whether a set value was set by a user or by default
-    return this.setDefaults(this.sanitizeIfReplacedOptionsUsed(userOptions));
-  }
-
-  private setDefaults(userOptions: Record<string, any>): Record<string, any> {
+  private setDefaults(
+    parsedOptions: ParsedOptions<GeneratorOptionsT, CliOptionsT>
+  ): ParsedOptions<GeneratorOptionsT, CliOptionsT> {
     Object.entries(this.options).forEach(([name, option]) => {
       if ('default' in option) {
-        userOptions[name] = userOptions[name] ?? option.default;
+        parsedOptions[name] = parsedOptions[name] ?? option.default;
       }
     });
 
-    return userOptions;
+    return parsedOptions;
   }
-
-  // private getCliOptionAlias(name: string): string[] {
-  //   const alias = this.options[name].alias || [];
-  //   const aliasAsArray = Array.isArray(alias) ? alias : [alias];
-  //   return aliasAsArray.map(a => `-${a}`);
-  // }
-
-  // private getValidOptionNameAndAlias(name: string): string[] {
-  //   // if CLI: [--optionName, -a (alias)], if programmatically: [optionName]
-  //   return this.isCli ? [`--${name}`, ...this.getCliOptionAlias(name)] : [name];
-  // }
-
-  // private formatOptionNameAndAlias(name: string): string {
-  //   const [optionName, ...alias] = this.getValidOptionNameAndAlias(name);
-  //   return alias.length ? `${optionName}(${alias.join(', ')})` : optionName;
-  // }
-
-  // private formatOptionName(name: string): string {
-  //   return this.getValidOptionNameAndAlias(name)[0];
-  // }
 
   private getDeprecatedOptionsInUse(
     userOptions: Record<string, any>
@@ -79,6 +94,16 @@ export class OptionsParser {
       .filter(name => Object.keys(userOptions).includes(name));
   }
 
+  private getReplacingOptionName(replacedOptionName: string): string {
+    const replacingOptionName = this.options[replacedOptionName].replacedBy;
+    if (!replacingOptionName) {
+      throw new Error(
+        `Cannot get replaced option for deprecated option ${replacedOptionName}.`
+      );
+    }
+    return replacingOptionName;
+  }
+
   private getDuplicateOptionsUsed(
     userOptions: Record<string, any>
   ): [oldName: string, newName: string][] {
@@ -87,7 +112,7 @@ export class OptionsParser {
     if (oldOptionsUsed.length) {
       const oldNewNames: [string, string][] = oldOptionsUsed.map(name => [
         name,
-        this.options[name].replacedBy
+        this.getReplacingOptionName(name)
       ]);
 
       return oldNewNames.filter(([, newName]) =>
@@ -104,22 +129,22 @@ export class OptionsParser {
    * @param args - Either the command line arguments or the config passed for programmatic use. An array implicates command line arguments, while objects represent the programmatic config.
    * @param options - Available generator options.
    */
-  private warnIfDeprecatedOptionsUsed(userOptions: Record<string, any>): void {
-    const deprecatedOptionsInUse = this.getDeprecatedOptionsInUse(userOptions);
+  private warnIfDeprecatedOptionsUsed(): void {
+    const deprecatedOptionsInUse = this.getDeprecatedOptionsInUse(
+      this.userOptions
+    );
 
     if (deprecatedOptionsInUse.length) {
       const logs = deprecatedOptionsInUse
         .map(name => `\t${name}: ${this.options[name].deprecated}`)
         .join('\n');
 
-      logger.warn(
-        `Deprecated options used. The following options will be removed in the next major version:\n${logs}`
-      );
+      logger.warn(`Deprecated options used:\n${logs}`);
     }
   }
 
-  private warnIfDuplicateOptionsUsed(userOptions: Record<string, any>): void {
-    const duplicateOptionsUsed = this.getDuplicateOptionsUsed(userOptions);
+  private warnIfDuplicateOptionsUsed(): void {
+    const duplicateOptionsUsed = this.getDuplicateOptionsUsed(this.userOptions);
 
     if (duplicateOptionsUsed.length) {
       const log = duplicateOptionsUsed
@@ -130,19 +155,20 @@ export class OptionsParser {
     }
   }
 
-  private sanitizeIfReplacedOptionsUsed(
-    userOptions: Record<string, any>
-  ): Record<string, any> {
-    const replacedOptionsUsed = this.getReplacedOptionsUsed(userOptions);
+  private sanitizeIfReplacedOptionsUsed(): ParsedOptions<
+    GeneratorOptionsT,
+    CliOptionsT
+  > {
+    const replacedOptionsUsed = this.getReplacedOptionsUsed(this.userOptions);
 
-    return Object.entries(userOptions).reduce((opts, [name, value]) => {
+    return Object.entries(this.userOptions).reduce((opts, [name, value]) => {
       if (replacedOptionsUsed.includes(name)) {
-        const replacedByName = this.options[name].replacedBy;
-        return replacedByName in userOptions
+        const replacedByName = this.getReplacingOptionName(name);
+        return replacedByName in this.userOptions
           ? opts
           : { ...opts, [replacedByName]: value };
       }
       return { ...opts, [name]: value };
-    }, {});
+    }, {} as ParsedOptions<GeneratorOptionsT, CliOptionsT>);
   }
 }

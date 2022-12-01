@@ -34,7 +34,9 @@ import { entitySourceFile } from './entity/file';
 import { sourceFile } from './file-generator';
 import {
   defaultValueProcessesJsGeneration,
-  GeneratorOptions
+  GeneratorOptions,
+  generatorOptionsCli,
+  ParsedGeneratorOptions
 } from './generator-options';
 import { hasEntities } from './generator-utils';
 import { parseAllServices } from './service-generator';
@@ -51,6 +53,7 @@ import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetadata } from './sdk-metadata';
 import { entityApiFile } from './generator-without-ts-morph';
 import { serviceFile } from './generator-without-ts-morph/service/file';
+import { parseOptionsWithDefaults } from './options-parser';
 
 const { mkdir, readdir } = fsPromises;
 
@@ -65,8 +68,8 @@ const logger = createLogger({
  * @param options - Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
-  // warnIfDeprecated(Object.keys(options));
-  return generateWithParsedOptions(options);
+  const parsedOptions = parseOptionsWithDefaults(generatorOptionsCli, options);
+  return generateWithParsedOptions(parsedOptions);
 }
 
 /**
@@ -75,25 +78,27 @@ export async function generate(options: GeneratorOptions): Promise<void> {
  * TODO: Actually split the parsing of options between CLI and programmatic options. Currently users have to provide everything.
  */
 export async function generateWithParsedOptions(
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<void> {
-  const projectAndServices = await generateProject(options);
+  const projectAndServices = await generateProject(options as GeneratorOptions);
   if (!projectAndServices) {
     throw Error('The project is undefined.');
   }
   const services = projectAndServices.services;
 
-  await generateFilesWithoutTsMorph(services, options);
+  await generateFilesWithoutTsMorph(services, options as GeneratorOptions);
 
   if (options.generateJs) {
     const directories = services
       .filter(async service => {
         const files = await readdir(
-          resolvePath(service.directoryName, options)
+          resolvePath(service.directoryName, options as GeneratorOptions)
         );
         return files.includes('tsconfig.json');
       })
-      .map(service => resolvePath(service.directoryName, options));
+      .map(service =>
+        resolvePath(service.directoryName, options as GeneratorOptions)
+      );
 
     const chunks = splitInChunks(
       directories,
@@ -101,7 +106,10 @@ export async function generateWithParsedOptions(
     );
     try {
       await chunks.reduce(
-        (all, chunk) => all.then(() => transpileDirectories(chunk, options)),
+        (all, chunk) =>
+          all.then(() =>
+            transpileDirectories(chunk, options as GeneratorOptions)
+          ),
         Promise.resolve()
       );
     } catch (err) {

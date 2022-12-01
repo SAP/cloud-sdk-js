@@ -19,6 +19,7 @@ This document will guide you through the steps necessary to upgrade to version 3
 
 - [Update your project dependencies](#update-your-project-dependencies)
 - [Adjust operation names in generated clients](#adjust-operation-names-in-odata-generated-clients)
+- [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
 
 ### Update your project dependencies
 
@@ -36,6 +37,55 @@ This applies to bound and unbound operations.
 If an operation begins with an `underscore` symbol, the `_` will be removed from the resulting generated client code.
 To adjust the names, search in `function-import.ts` and `action-import.ts` files in your generated client code for any operation starting with `_`.
 Similarly, to adjust the names of bound operations of an entity, search in the respective entity's `.ts` file, e.g., `TestEntity.ts`.
+
+### Check for removed deprecated functions and replace them if required
+
+While the SAP Cloud SDK maintains backwards compatibility within a major version where possible, a new major release breaks compatibility where required to simplify the programming interface.
+Most of the removed functions had been deprecated before, so ideally they are not used anymore.
+The following sub-sections describe affected modules, functions and interfaces with instructions on how to replace them.
+
+#### Package `@sap-cloud-sdk/http-client`
+
+The overload, that accepted `HttpRequestConfigWithOrigin` as a parameter, is removed and replaced by the function `executeHttpRequestWithOrigin`.
+
+#### Package `@sap-cloud-sdk/util`
+
+The field `logger` on the interface `LoggerOptions` was not used and is removed from the interface.
+
+The function `variadicArgumentToArray` is replaced by the function `transformVariadicArgumentToArray`.
+
+#### Package `@sap-cloud-sdk/connectivity`
+
+The generic types of `JwtKeyMapping` is simplified so the second type argument `JwtKeysT` are always strings.
+
+#### Package `@sap-cloud-sdk/odata-common`
+
+##### `fromJson` function
+
+Setting custom fields in `fromJson` through the `_customFields` property has been removed.
+Add custom properties to your JSON object instead.
+
+Old example, not working anymore:
+```json
+{
+  "_customFields": {
+    "myCustomField": "myCustomValue"
+  }
+}
+```
+
+New example:
+```json
+{
+  "myCustomField": "myCustomValue"
+}
+```
+
+##### `ODataRequestConfig` class
+
+The constructor of `ODataRequestConfig` was changed so that the third parameter cannot be a `string` anymore.
+Passing in a string which was then interpreted as the value for the `Content-Type` HTTP header was deprecated.
+The type of the parameter is now `Record<string, any>`, and if only want to set the `Content-Type` HTTP header you can do so by passing `{'content-type': 'some-value'}` to the constructor.
 
 <!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
 

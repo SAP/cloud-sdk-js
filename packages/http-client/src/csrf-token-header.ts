@@ -126,7 +126,9 @@ function getResponseHeadersFromError(error: any): Record<string, any> {
 }
 
 function appendSlash<T extends HttpRequestConfigBase>(requestConfig: T): T {
-  if (!requestConfig.url!.endsWith('/')) {
+  if (!requestConfig.url) {
+    requestConfig.url = '/';
+  } else if (!requestConfig.url.endsWith('/')) {
     requestConfig.url = `${requestConfig.url}/`;
   }
   return requestConfig;

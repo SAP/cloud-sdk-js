@@ -29,7 +29,7 @@ setLogLevel('debug', 'destination-accessor');
 ## Support
 
 The recommended way to get in touch with us is to create an issue on [GitHub](https://github.com/SAP/cloud-sdk-js/issues).
-Select the issue category `Bug`, `Feature` or `Question` depending on the nature of your request.
+Select the issue category **Bug**, **Feature**, or **Question** depending on the nature of your request.
 We try to provide fixes, features and answers as soon as possible.
 
 ## Contribute
@@ -45,7 +45,7 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 
 <br>
 
-- [SAP Cloud SDK Documentation portal](https://sap.github.io/cloud-sdk/api)
+- [SAP Cloud SDK Documentation portal](https://sap.github.io/cloud-sdk)
 - [SAP Cloud SDK Documentation portal - Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
 - [SAP Cloud SDK Documentation portal - API documentation](https://sap.github.io/cloud-sdk/api/latest)
 - [SAP Cloud SDK Documentation portal - Error handling](https://sap.github.io/cloud-sdk/docs/js/features/error-handling)
@@ -53,7 +53,7 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 
 <br>
 
-- [Sample repository](https://github.com/SAP-samples/cloud-sdk-js))
+- [Sample repository](https://github.com/SAP-samples/cloud-sdk-js)
 
 ## License
 

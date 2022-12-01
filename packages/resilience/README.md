@@ -29,8 +29,8 @@ For more detailed overview visit our [resilience documentation](https://sap.gith
 ## Support
 
 The recommended way to get in touch with us is to create an issue on [GitHub](https://github.com/SAP/cloud-sdk-js/issues).
-Select the issue category `Bug`, `Feature` or `Question` depending on the nature of your request.
-We try to provide fixes, features, and answers as soon as possible.
+Select the issue category **Bug**, **Feature**, or **Question** depending on the nature of your request.
+We try to provide fixes, features and answers as soon as possible.
 
 ## Contribute
 

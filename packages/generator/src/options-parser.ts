@@ -111,16 +111,16 @@ class OptionsParser<
 
   private getDuplicateOptionsUsed(
     userOptions: Record<string, any>
-  ): [oldName: string, newName: string][] {
+  ): { oldName: string; newName: string }[] {
     const oldOptionsUsed = this.getReplacedOptionsUsed(userOptions);
 
     if (oldOptionsUsed.length) {
-      const oldNewNames: [string, string][] = oldOptionsUsed.map(name => [
-        name,
-        this.getReplacingOptionName(name)
-      ]);
+      const oldNewNames = oldOptionsUsed.map(name => ({
+        oldName: name,
+        newName: this.getReplacingOptionName(name)
+      }));
 
-      return oldNewNames.filter(([, newName]) =>
+      return oldNewNames.filter(({ newName }) =>
         Object.keys(userOptions).includes(newName)
       );
     }
@@ -153,7 +153,9 @@ class OptionsParser<
 
     if (duplicateOptionsUsed.length) {
       const log = duplicateOptionsUsed
-        .map(([oldName, newName]) => `\t${oldName} was replaced by ${newName}.`)
+        .map(
+          ({ oldName, newName }) => `\t${oldName} was replaced by ${newName}.`
+        )
         .join('\n');
 
       logger.warn(`Duplicate options used:\n${log}`);

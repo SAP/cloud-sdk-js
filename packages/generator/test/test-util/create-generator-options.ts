@@ -12,6 +12,7 @@ export function createOptions(
     inputDir: '',
     outputDir: '',
     clearOutputDir: false,
+    serviceMapping: 'service-mapping.json',
     s4hanaCloud: false,
     generatePackageJson: false,
     generateJs: false,

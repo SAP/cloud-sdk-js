@@ -270,7 +270,7 @@ export const generatorOptionsCli = {
   generateCSN: {
     describe:
       'When set to true a CSN file will be generated for each service definition in the output directory.',
-    type: 'boolean'
+    type: 'boolean',
     default: false
   }
 } as const;

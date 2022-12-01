@@ -60,9 +60,9 @@ export abstract class ODataRequestConfig {
   }
 
   set middlewares(
-    middleWares: Middleware<HttpResponse, HttpMiddlewareContext>[]
+    middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[]
   ) {
-    this._middlewares = middleWares;
+    this._middlewares = middlewares;
   }
 
   get middlewares(): Middleware<HttpResponse, HttpMiddlewareContext>[] {

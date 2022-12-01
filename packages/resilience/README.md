@@ -19,7 +19,7 @@ $ npm install @sap-cloud-sdk/resilience
 Add a timeout middleware to a request.
 
 ```
-executeHttpRequest(destination, {middleware:[timeout()], httpRequestOptions);
+executeHttpRequest(destination, { middleware: [ timeout() ] }, httpRequestOptions);
 ```
 <!-- TODO v3 put better link when documentation is done -->
 For more detailed overview visit our [resilience documentation](https://sap.github.io/cloud-sdk/docs/js/).
@@ -30,7 +30,7 @@ For more detailed overview visit our [resilience documentation](https://sap.gith
 
 The recommended way to get in touch with us is to create an issue on [GitHub](https://github.com/SAP/cloud-sdk-js/issues).
 Select the issue category `Bug`, `Feature` or `Question` depending on the nature of your request.
-We try to provide fixes, features and answers as soon as possible.
+We try to provide fixes, features, and answers as soon as possible.
 
 ## Contribute
 

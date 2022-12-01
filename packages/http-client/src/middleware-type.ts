@@ -38,7 +38,10 @@ export interface Context {
 }
 
 /**
- * Middleware type. The input is the MiddlewareIn and a boolean called skip.
+ * Middleware type - This function takes some function and returns a function.
+ * The input is the MiddlewareIn containing the initial function and some context information e.g. axios request and the request context.
+ * It returns a functions with some additional feature e.g. timeout.
+ * There is also a boolean input argument called skip.
  * The implementation should return the unchanged function if skip is true.
  */
 export type Middleware<ReturnT, ContextT extends Context> = (
@@ -76,14 +79,40 @@ export function executeWithMiddleware<ReturnT, ContextT extends Context>(
   if (!middlewares || !middlewares.length) {
     return fn();
   }
-  let skip = false;
+
+  // The skipNext function is called in the middleware to skip the next middlewares
   const skipNext = () => {
-    skip = true;
+    this.state = true;
   };
+  skipNext.state = false;
+
   const initial = { context, fn, skipNext };
-  const withAllMiddlewares = middlewares.reduce((prev, curr) => {
-    const wrapped = curr(prev, skip);
-    return { fn: wrapped, context, skipNext };
+  const functionWithMiddlewares = addMiddlewaresToInitialFunction(
+    middlewares,
+    initial
+  );
+  return functionWithMiddlewares();
+}
+
+/**
+ * .
+ *
+ * This functions adds the middlewares to the initial functions.
+ * You start with a function (axios request function) and add a timout, circuit-breaker etc..
+ * The result is new a function containing a timeout, circuit-breaker etc..
+ * Note that the actual function is not executed.
+ * @param middlewares - Middlwares added to the function.
+ * @param initial - Initial function and context.
+ * @returns The funciton with the middlewares added.
+ */
+function addMiddlewaresToInitialFunction<ReturnT, ContextT extends Context>(
+  middlewares: Middleware<ReturnT, ContextT>[],
+  initial: MiddlewareIn<ReturnT, ContextT>
+): MiddlewareOut<ReturnT> {
+  const { context, skipNext } = initial;
+  const functionWithMiddlewares = middlewares.reduce((prev, curr) => {
+    const middlewareAdded = curr(prev, initial.skipNext['state']);
+    return { fn: middlewareAdded, context, skipNext };
   }, initial);
-  return withAllMiddlewares.fn();
+  return functionWithMiddlewares.fn;
 }

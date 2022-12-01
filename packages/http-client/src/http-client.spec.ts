@@ -213,27 +213,32 @@ describe('generic http client', () => {
 
     function buildMiddleware(
       appendedText: string,
-      exitChain = false
+      skipNext = false
     ): Middleware<HttpResponse, HttpMiddlewareContext> {
-      return (
-        options: MiddlewareIn<HttpResponse, HttpMiddlewareContext>,
-        skip
-      ) => {
-        if (skip) {
-          return options.fn;
-        }
-        if (exitChain) {
-          options.skipNext();
-        }
+      // We want to add a name to the function for debugging which is not easy to set.
+      // Doing the dummy object the name of the key is taken as function name.
+      const dummy = {
+        [appendedText](
+          options: MiddlewareIn<HttpResponse, HttpMiddlewareContext>,
+          skip
+        ) {
+          if (skip) {
+            return options.fn;
+          }
+          if (skipNext) {
+            options.skipNext();
+          }
 
-        const wrapped = () =>
-          options.fn().then(res => {
-            res.data = res.data + appendedText;
-            return res;
-          });
+          const wrapped = () =>
+            options.fn().then(res => {
+              res.data = res.data + appendedText;
+              return res;
+            });
 
-        return wrapped;
+          return wrapped;
+        }
       };
+      return dummy[appendedText];
     }
 
     it('attaches one middleware', async () => {

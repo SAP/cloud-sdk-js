@@ -1,1 +1,1 @@
-export * from './timeout';
+export {timeout} from './timeout';

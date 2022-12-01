@@ -25,59 +25,59 @@ export interface GeneratorOptions {
    */
   prettierConfig?: PathLike;
   /**
-   * If set to true `.JSON` files i.e. Swagger definitions are used for generation.
+   * If set to true, swagger definitions (JSON) are used for generation.
    */
-  useSwagger: boolean;
-  // TODO remove writeReadme in version 3.0
+  useSwagger?: boolean;
+  /**
+   * @deprecated Since v2.12.0. Use `readme` instead.
+   * Generate default `README.md` files in the client directories.
+   */
+  writeReadme?: boolean;
   /**
    * Generate default `README.md` files in the client directories.
    */
-  writeReadme: boolean;
-  /**
-   * Generate default `README.md` files in the client directories.
-   */
-  readme: boolean;
+  readme?: boolean;
   /**
    * Include files matching the given glob into the root of each generated client directory.
    */
   include?: string;
-  // TODO remove forceOverwrite in version 3.0
   /**
+   * @deprecated Since v2.12.0. Use `overwrite` instead.
    * Exit when encountering a file that already exists.
    * When set to true, it will be overwritten instead.
    * Please note that compared to the `clearOutputDir` option, this will not delete outdated files.
    */
-  forceOverwrite: boolean;
+  forceOverwrite?: boolean;
   /**
    * Exit when encountering a file that already exists.
    * When set to true, it will be overwritten instead.
    * Note, that compared to the `clearOutputDir` option, this will not delete outdated files.
    */
-  overwrite: boolean;
+  overwrite?: boolean;
   /**
    * Delete EVERYTHING in the specified output directory before generating code.
    */
-  clearOutputDir: boolean;
+  clearOutputDir?: boolean;
   /**
-   * Generate a `.npmrc` file specifying a registry for `@sap` scoped dependencies.
    * @deprecated
+   * Generate a `.npmrc` file specifying a registry for `@sap` scoped dependencies.
    */
   generateNpmrc?: boolean;
-  // TODO remove generatePackageJson in version 3.0
+  /**
+   * @deprecated Since v2.12.0. Use `packageJson` instead.
+   * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
+   */
+  generatePackageJson?: boolean;
   /**
    * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
    */
-  generatePackageJson: boolean;
+  packageJson?: boolean;
   /**
-   * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
-   */
-  packageJson: boolean;
-  /**
+   * @deprecated Since v2.12.0.
    * By default, when generating `package.json` file, the generator will set a version by using the generator version.
    * It can also be set to a specific version.
    */
   versionInPackageJson?: string;
-  // TODO remove licenseInPackageJson in version 3.0
   /**
    * License name to be used on the generated package.json. Only considered if 'packageJson' is enabled.
    */
@@ -85,13 +85,13 @@ export interface GeneratorOptions {
   /**
    * Generates transpiled `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. When set to `false`, the generator will only generate `.ts` files.
    */
-  generateJs: boolean;
+  generateJs?: boolean;
   /**
    * Hidden option only for internal usage - generate metadata for API hub integration.
    */
   generateSdkMetadata?: boolean;
-  // TODO remove processesJsGeneration in version 3.0
   /**
+   * @deprecated Since v2.12.0.
    * Number of node processes used for transpilation of JavaScript files.
    */
   processesJsGeneration?: number;
@@ -100,19 +100,20 @@ export interface GeneratorOptions {
    */
   transpilationProcesses?: number;
   /**
+   * @deprecated Since v2.12.0.
    * When set to true, the `package.json` of generated services will have the after-version script to internally keep the versions in sync.
    */
-  sdkAfterVersionScript: boolean;
-  // TODO remove s4hanaCloud in version 3.0
+  sdkAfterVersionScript?: boolean;
   /**
+   * @deprecated Since v2.12.0.
    * Internal option used to adjust the description for S/4HANA cloud systems. Will not be used in the future.
    */
-  s4hanaCloud: boolean;
-  // TODO remove generateCSN in version 3.0
+  s4hanaCloud?: boolean;
   /**
+   * @deprecated Since v2.12.0.
    * Generate A CSN file for each service definition in the output directory.
    */
-  generateCSN: boolean;
+  generateCSN?: boolean;
   // TODO: remove packageVersion in version 3.0
   /**
    * Internal option used to adjust the version in the generated `package.json`. Will not be used in the future.
@@ -133,8 +134,10 @@ function coercePathArg(arg?: string): string | undefined {
  * Union type of the deprecated option names.
  * @typeParam T - Options configuration.
  */
-type DeprecatedOptionNames<T> = {
-  [K in keyof T]: T[K] extends { deprecated: string } ? K : never;
+type DeprecatedOptionNamesWithReplacements<T> = {
+  [K in keyof T]: T[K] extends { deprecated: string; replacedBy: string }
+    ? K
+    : never;
 }[keyof T];
 
 /**
@@ -145,7 +148,7 @@ type DeprecatedOptionNames<T> = {
  */
 export type ParsedOptions<GeneratorOptionsOptionsT, CliOptionsT> = Omit<
   Required<GeneratorOptionsOptionsT>,
-  DeprecatedOptionNames<CliOptionsT>
+  DeprecatedOptionNamesWithReplacements<CliOptionsT>
 >;
 
 /**
@@ -214,8 +217,7 @@ export const generatorOptionsCli = {
     type: 'boolean',
     default: false,
     hidden: true,
-    deprecated:
-      "Since v2.12.0. Use 'readme' option to set if the generator will write README.md file instead."
+    deprecated: "Since v2.12.0. Use 'readme' instead."
   },
   include: {
     describe:
@@ -235,8 +237,7 @@ export const generatorOptionsCli = {
       'By default, the generator will exit when encountering a file that already exists. When set to true, it will be overwritten instead. Please note that compared to the --clearOutputDir option, this will not delete outdated files.',
     type: 'boolean',
     default: false,
-    deprecated:
-      "Since v2.12.0. Use 'overwrite' option to set if the generator will overwrite existing files instead."
+    deprecated: "Since v2.12.0. Use 'overwrite' instead."
   },
   clearOutputDir: {
     describe:
@@ -261,8 +262,7 @@ export const generatorOptionsCli = {
       'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
     type: 'boolean',
     default: true,
-    deprecated:
-      "Since v2.12.0. Use 'packageJson' option to set if the generator will generate a package.json file instead."
+    deprecated: "Since v2.12.0. Use 'packageJson' instead."
   },
   versionInPackageJson: {
     describe:
@@ -276,9 +276,7 @@ export const generatorOptionsCli = {
     describe:
       "License to be used on the generated package.json. Only considered if 'generatePackageJson' is enabled.",
     type: 'string',
-    requiresArg: false,
-    deprecated:
-      "Since v2.12.0. Use the 'include' option to add your own package.json file instead."
+    requiresArg: false
   },
   generateJs: {
     describe:
@@ -332,7 +330,7 @@ export const generatorOptionsCli = {
       'When set to true a CSN file will be generated for each service definition in the output directory.',
     type: 'boolean',
     default: false,
-    deprecated: 'Since v2.12.0.'
+    deprecated: 'Since v2.12.0. This functionality will be discontinued.'
   }
 } as const;
 

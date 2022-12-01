@@ -6,17 +6,14 @@ import {
 import { parseOptions } from '../../src/options-parser';
 
 export function createOptions(
-  options?: Partial<GeneratorOptions>
+  options?: GeneratorOptions
 ): ParsedGeneratorOptions {
   return parseOptions(generatorOptionsCli, {
     inputDir: '',
     outputDir: '',
     serviceMapping: 'service-mapping.json',
-    s4hanaCloud: false,
     generatePackageJson: false,
     generateJs: false,
-    sdkAfterVersionScript: false,
-    generateCSN: false,
     ...options
   });
 }

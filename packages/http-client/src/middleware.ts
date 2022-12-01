@@ -19,11 +19,14 @@ export interface MiddlewareIn<ReturnT, ContextT extends Context> {
 }
 
 /**
- * Type of the skip next method. Initially the called is false.
+ * Type of the skip next method.
  */
-interface SkipNext {
+export interface SkipNext {
   (): void;
 
+  /**
+   * Initially the called property is false and becomes true after invocation.
+   */
   called: boolean;
 }
 

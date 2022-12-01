@@ -124,6 +124,12 @@ describe('name-formatter', () => {
         formatter.originalToInstancePropertyName('A_SomeEntity', 'someProperty')
       ).toBe('someProperty_1');
       expect(
+        formatter.originalToInstancePropertyName(
+          'A_SomeEntity',
+          '_SomeProperty'
+        )
+      ).toBe('someProperty_2');
+      expect(
         formatter.originalToInstancePropertyName('A_SomeEntity', '_entity')
       ).toBe('entity');
       expect(

@@ -264,7 +264,7 @@ export const generatorOptionsCli = {
     describe:
       'When set to true, the description of the generated packages will be specific to S/4HANA Cloud.',
     type: 'boolean',
-    // default: false,
+    default: false,
     hidden: true
   },
   generateCSN: {

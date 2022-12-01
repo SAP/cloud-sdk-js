@@ -18,7 +18,6 @@ export function createOptions(
     generateJs: false,
     sdkAfterVersionScript: false,
     generateCSN: false,
-    packageVersion: '1.0.0',
     ...options
   });
 }

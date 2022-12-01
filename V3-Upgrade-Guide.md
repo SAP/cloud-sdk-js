@@ -35,6 +35,7 @@ Rules for naming of OData operations (actions or functions) in the generated cli
 This applies to bound and unbound operations.
 If an operation begins with an `underscore` symbol, the `_` will be removed from the resulting generated client code.
 To adjust the names, search in `function-import.ts` and `action-import.ts` files in your generated client code for any operation starting with `_`.
+Similarly, to adjust the names of bound operations of an entity, search in the respective entity's `.ts` file, e.g., `TestEntity.ts`.
 
 <!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
 

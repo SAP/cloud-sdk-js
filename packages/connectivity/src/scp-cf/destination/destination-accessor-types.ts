@@ -47,6 +47,10 @@ export interface DestinationAccessorOptions {
 
   /**
    * The user token of the current request.
+   *
+   * ATTENTION: The property is mandatory in the following cases:
+   * - User-dependent authentication flow is used, e.g., `OAuth2UserTokenExchange`, `OAuth2JWTBearer`, `OAuth2SAMLBearerAssertion`, and `SAMLAssertion`.
+   * - Value of `selectionStrategy` is set to `alwaysSubscriber`.
    */
   jwt?: string;
 

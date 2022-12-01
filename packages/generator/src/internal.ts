@@ -19,6 +19,7 @@ export * from './input-path-provider';
 export * from './internal-prefix';
 export * from './name-formatting-strategies';
 export * from './operations';
+export * from './options-parser';
 export * from './reserved-words';
 export * from './sdk-metadata';
 export * from './service';

@@ -195,7 +195,6 @@ export const generatorOptionsCli = {
     describe:
       'By default, the generator will exit when encountering a file that already exists. When set to true, it will be overwritten instead. Please note that compared to the --clearOutputDir option, this will not delete outdated files.',
     type: 'boolean',
-    deprecated: 'Since now. Use overwrite instead.',
     default: false
   },
   clearOutputDir: {

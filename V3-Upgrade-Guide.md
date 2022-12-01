@@ -29,7 +29,7 @@ Depending on if you're using `npm` or `yarn`, run `npm install` or `yarn` in the
 Running your tests or deploying your application might fail at this point in time if you need to adapt to any breaking changes.
 We recommend updating your applications in one commit or pull request and making sure everything still works using your existing test suite.
 
-### Adjust Operation Names in Odata Generated Clients
+### Adjust Operation Names in OData Generated Clients
 
 Rules for naming of functions (bound or otherwise) in the generated client have been changed.
 If a function/actions begins with an `underscore` symbol, the `_` will be removed from the resulting generated client code.

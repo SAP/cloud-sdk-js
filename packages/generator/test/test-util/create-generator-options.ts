@@ -6,7 +6,7 @@ import {
 import { parseOptions } from '../../src/options-parser';
 
 export function createOptions(
-  options?: GeneratorOptions
+  options?: Partial<GeneratorOptions>
 ): ParsedGeneratorOptions {
   return parseOptions(generatorOptionsCli, {
     inputDir: '',

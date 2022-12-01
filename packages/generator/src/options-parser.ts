@@ -11,26 +11,29 @@ type Option = Options & {
 /**
  * @internal
  * Remove defaults from CLI options. This is necessary to handle default setting on our own.
- * @param options - CLI options, record mapping option name to option config
- * @returns CLI options without default values
+ * @param options - CLI options, record, that maps option name to option config.
+ * @returns CLI options without default values.
  */
 export function getOptionsWithoutDefaults<
   CliOptionsT extends Record<string, Option>
 >(options: CliOptionsT): CliOptionsT {
-  return Object.entries(options).reduce((opts, [name, option]) => {
-    const { default: def, ...optionWithoutDefault } = option;
-    const describe =
-      def === undefined
-        ? optionWithoutDefault.describe
-        : `${optionWithoutDefault.describe}\n[Default: ${def}]`;
-    return {
-      ...opts,
-      [name]: {
-        ...optionWithoutDefault,
-        describe
-      }
-    };
-  }, {} as CliOptionsT);
+  return Object.entries(options).reduce(
+    (optionsWithoutDefaults, [name, option]) => {
+      const { default: def, ...optionWithoutDefault } = option;
+      const describe =
+        def === undefined
+          ? optionWithoutDefault.describe
+          : `${optionWithoutDefault.describe}\n[Default: ${def}]`;
+      return {
+        ...optionsWithoutDefaults,
+        [name]: {
+          ...optionWithoutDefault,
+          describe
+        }
+      };
+    },
+    {} as CliOptionsT
+  );
 }
 
 /**
@@ -39,17 +42,17 @@ export function getOptionsWithoutDefaults<
  * Warn, if deprecated options are used or duplicate.
  * Adds defaults if unset.
  * @param options - Available CLI options along with their configuration.
- * @param userOptions - Options as set by user.
+ * @param userOptions - Options as set by user, either through the CLI or programmatically.
  * @returns Parsed options with default values.
  */
-export function parseOptionsWithDefaults<
+export function parseOptions<
   CliOptionsT extends Record<string, Option>,
   GeneratorOptionsT extends Record<string, any>
 >(
   options: CliOptionsT,
   userOptions: GeneratorOptionsT
 ): ParsedOptions<GeneratorOptionsT, CliOptionsT> {
-  return new OptionsParser(options, userOptions).parseOptionsWithDefaults();
+  return new OptionsParser(options, userOptions).parseOptions();
 }
 
 class OptionsParser<
@@ -61,14 +64,14 @@ class OptionsParser<
     private userOptions: GeneratorOptionsT
   ) {}
 
-  parseOptionsWithDefaults(): ParsedOptions<GeneratorOptionsT, CliOptionsT> {
+  parseOptions(): ParsedOptions<GeneratorOptionsT, CliOptionsT> {
     this.warnIfDeprecatedOptionsUsed();
     this.warnIfDuplicateOptionsUsed();
     const parsedOptions = this.sanitizeIfReplacedOptionsUsed();
-    return this.setDefaults(parsedOptions);
+    return this.addDefaults(parsedOptions);
   }
 
-  private setDefaults(
+  private addDefaults(
     parsedOptions: ParsedOptions<GeneratorOptionsT, CliOptionsT>
   ): ParsedOptions<GeneratorOptionsT, CliOptionsT> {
     Object.entries(this.options).forEach(([name, option]) => {

@@ -53,7 +53,7 @@ import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetadata } from './sdk-metadata';
 import { entityApiFile } from './generator-without-ts-morph';
 import { serviceFile } from './generator-without-ts-morph/service/file';
-import { parseOptionsWithDefaults } from './options-parser';
+import { parseOptions } from './options-parser';
 
 const { mkdir, readdir } = fsPromises;
 
@@ -68,7 +68,7 @@ const logger = createLogger({
  * @param options - Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
-  const parsedOptions = parseOptionsWithDefaults(generatorOptionsCli, options);
+  const parsedOptions = parseOptions(generatorOptionsCli, options);
   return generateWithParsedOptions(parsedOptions);
 }
 

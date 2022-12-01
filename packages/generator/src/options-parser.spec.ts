@@ -1,8 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import {
-  getOptionsWithoutDefaults,
-  parseOptionsWithDefaults
-} from './options-parser';
+import { getOptionsWithoutDefaults, parseOptions } from './options-parser';
 const logger = createLogger('generator-options');
 
 describe('options parser', () => {
@@ -39,10 +36,10 @@ describe('options parser', () => {
     });
   });
 
-  describe('parseOptionsWithDefaults', () => {
+  describe('parseOptions', () => {
     it('adds default values if not set', () => {
       expect(
-        parseOptionsWithDefaults(options, {
+        parseOptions(options, {
           otherOption: 'test'
         })
       ).toEqual({
@@ -53,7 +50,7 @@ describe('options parser', () => {
 
     it('does not add default values if set', () => {
       expect(
-        parseOptionsWithDefaults(options, {
+        parseOptions(options, {
           newOption: true
         })
       ).toEqual({
@@ -63,7 +60,7 @@ describe('options parser', () => {
 
     it('moves replaced values to new options', () => {
       expect(
-        parseOptionsWithDefaults(options, {
+        parseOptions(options, {
           deprecatedOption: true
         })
       ).toEqual({
@@ -72,7 +69,7 @@ describe('options parser', () => {
     });
 
     it('warns if deprecated options are used', () => {
-      parseOptionsWithDefaults(options, {
+      parseOptions(options, {
         deprecatedOption: true,
         otherOption: 'test'
       });
@@ -86,7 +83,7 @@ describe('options parser', () => {
     });
 
     it('does not warn if no deprecated option was used', () => {
-      parseOptionsWithDefaults(options, {
+      parseOptions(options, {
         otherOption: 'test'
       });
 
@@ -94,7 +91,7 @@ describe('options parser', () => {
     });
 
     it('warns if a replaced option and the replacing option are used', () => {
-      parseOptionsWithDefaults(options, {
+      parseOptions(options, {
         deprecatedOption: true,
         newOption: 'test'
       });
@@ -114,7 +111,7 @@ describe('options parser', () => {
     });
 
     it('does not warn if a replacing option, but not the replaced option, is used', () => {
-      parseOptionsWithDefaults(options, {
+      parseOptions(options, {
         otherOption: 'test',
         newOption: 'test'
       });

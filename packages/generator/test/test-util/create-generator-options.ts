@@ -1,25 +1,22 @@
-import { GeneratorOptions } from '../../src/generator-options';
+import {
+  GeneratorOptions,
+  generatorOptionsCli,
+  ParsedGeneratorOptions
+} from '../../src/generator-options';
+import { parseOptions } from '../../src/options-parser';
 
 export function createOptions(
   options?: Partial<GeneratorOptions>
-): GeneratorOptions {
-  return {
+): ParsedGeneratorOptions {
+  return parseOptions(generatorOptionsCli, {
     inputDir: '',
     outputDir: '',
-    useSwagger: false,
-    readme: false,
-    writeReadme: false,
     serviceMapping: 'service-mapping.json',
-    overwrite: false,
-    forceOverwrite: false,
-    clearOutputDir: false,
     s4hanaCloud: false,
-    generateNpmrc: false,
-    packageJson: false,
     generatePackageJson: false,
     generateJs: false,
     sdkAfterVersionScript: false,
     generateCSN: false,
     ...options
-  };
+  });
 }

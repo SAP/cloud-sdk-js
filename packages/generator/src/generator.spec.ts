@@ -15,7 +15,6 @@ import {
   generateProject,
   getInstallODataErrorMessage
 } from './generator';
-import { GeneratorOptions } from './generator-options';
 import * as csnGeneration from './service/csn';
 
 const pathTestResources = resolve(__dirname, '../../../test-resources');
@@ -90,7 +89,7 @@ describe('generator', () => {
   });
 
   describe('edmx-to-csn', () => {
-    const testGeneratorOptions: GeneratorOptions = createOptions({
+    const testGeneratorOptions = createOptions({
       inputDir: resolve(
         oDataServiceSpecs,
         'v2',

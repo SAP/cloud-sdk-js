@@ -55,7 +55,7 @@ export interface GeneratorOptions {
   /**
    * Exit when encountering a file that already exists.
    * When set to true, it will be overwritten instead.
-   * Please note that compared to the `clearOutputDir` option, this will not delete outdated files.
+   * Note, that compared to the `clearOutputDir` option, this will not delete outdated files.
    */
   overwrite: boolean;
   /**

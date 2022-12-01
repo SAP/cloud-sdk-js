@@ -75,7 +75,6 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 /**
  * @internal
  * This is the main entry point for generation, after options were parsed - either from the CLI or from the programmatically passed configuration.
- * TODO: Actually split the parsing of options between CLI and programmatic options. Currently users have to provide everything.
  */
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions

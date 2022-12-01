@@ -6,4 +6,5 @@
 
 
 - [Compatibility Note] Remove `timeout()`  method from the request builders and the `timeout` options from the `executeHttpRequest()` function.
-Use the `timeout` middleware instead.
+Visit the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/guides/resilience) to see how to add a timeout via middlewares.
+

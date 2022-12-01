@@ -1,15 +1,15 @@
 import { HttpRequestConfig } from './http-client-types';
 
 /**
- * In/out parameter in the chain of middlewares.
+ * Input parameter of a middleware.
  */
 export interface MiddlewareIn<ReturnT, ContextT extends Context> {
   /**
-   * Function executed inside the middleware.
+   * Initial function enriched by the middleware e.g. axios request getting a timeout.
    */
   fn: () => Promise<ReturnT>;
   /**
-   * Context of the execution.
+   * Context of the execution e.g. the request context or URL.
    */
   context: ContextT;
   /**
@@ -19,7 +19,7 @@ export interface MiddlewareIn<ReturnT, ContextT extends Context> {
 }
 
 /**
- * Function wrapped in the middleware.
+ * Return type of middlewares.
  */
 export type MiddlewareOut<ReturnT> = () => Promise<ReturnT>;
 
@@ -28,25 +28,22 @@ export type MiddlewareOut<ReturnT> = () => Promise<ReturnT>;
  */
 export interface Context {
   /**
-   * Arguments used in the request.
+   * Arguments used in the function.
    */
   args: unknown[];
   /**
-   * URI of the request wrapped in the middleware.
+   * URI of the function passed to the middleware.
    */
   uri: string;
 }
 
 /**
- * Middleware type - This function takes some function and returns a function.
+ * Middleware type - This function takes some initial function and returns a function.
  * The input is the MiddlewareIn containing the initial function and some context information e.g. axios request and the request context.
- * It returns a functions with some additional feature e.g. timeout.
- * There is also a boolean input argument called skip.
- * The implementation should return the unchanged function if skip is true.
+ * It returns a new functions with some additional feature e.g. timeout.
  */
 export type Middleware<ReturnT, ContextT extends Context> = (
-  options: MiddlewareIn<ReturnT, ContextT>,
-  skip: boolean
+  options: MiddlewareIn<ReturnT, ContextT>
 ) => MiddlewareOut<ReturnT>;
 
 /**
@@ -76,7 +73,7 @@ export function executeWithMiddleware<ReturnT, ContextT extends Context>(
   context: ContextT,
   fn: () => Promise<ReturnT>
 ): Promise<ReturnT> {
-  if (!middlewares || !middlewares.length) {
+  if (!middlewares?.length) {
     return fn();
   }
 
@@ -111,7 +108,7 @@ function addMiddlewaresToInitialFunction<ReturnT, ContextT extends Context>(
 ): MiddlewareOut<ReturnT> {
   const { context, skipNext } = initial;
   const functionWithMiddlewares = middlewares.reduce((prev, curr) => {
-    const middlewareAdded = curr(prev, initial.skipNext['state']);
+    const middlewareAdded = initial.skipNext['state'] ? prev.fn : curr(prev);
     return { fn: middlewareAdded, context, skipNext };
   }, initial);
   return functionWithMiddlewares.fn;

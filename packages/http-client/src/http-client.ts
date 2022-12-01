@@ -38,7 +38,7 @@ import {
   ParameterEncoder
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
-import { executeWithMiddleware } from './middleware-type';
+import { executeWithMiddleware } from './middleware';
 
 const logger = createLogger({
   package: 'http-client',

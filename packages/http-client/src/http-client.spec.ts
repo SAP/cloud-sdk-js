@@ -36,7 +36,7 @@ import type {
   Middleware,
   MiddlewareIn,
   HttpMiddlewareContext
-} from './middleware-type';
+} from './middleware';
 
 describe('generic http client', () => {
   const httpsDestination: Destination = {
@@ -219,12 +219,8 @@ describe('generic http client', () => {
       // Doing the dummy object the name of the key is taken as function name.
       const dummy = {
         [appendedText](
-          options: MiddlewareIn<HttpResponse, HttpMiddlewareContext>,
-          skip
+          options: MiddlewareIn<HttpResponse, HttpMiddlewareContext>
         ) {
-          if (skip) {
-            return options.fn;
-          }
           if (skipNext) {
             options.skipNext();
           }

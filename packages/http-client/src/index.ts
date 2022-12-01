@@ -30,4 +30,4 @@ export {
   MiddlewareOut,
   Context,
   HttpMiddlewareContext
-} from './middleware-type';
+} from './middleware';

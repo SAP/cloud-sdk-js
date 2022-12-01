@@ -1,5 +1,5 @@
 import * as http from 'http';
-import type { HttpMiddlewareContext, Middleware } from './middleware-type';
+import type { HttpMiddlewareContext, Middleware } from './middleware';
 
 /**
  * Represents the request configuration, that was inferred from a destination.

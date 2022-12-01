@@ -92,11 +92,7 @@ class OptionsParser<
   private getReplacedOptionsUsed(): string[] {
     return Object.keys(this.options)
       .filter(name => this.options[name].replacedBy)
-      .filter(name =>
-        Object.keys(this.userOptions).includes(
-          this.getReplacingOptionName(name)
-        )
-      );
+      .filter(name => Object.keys(this.userOptions).includes(name));
   }
 
   private getReplacingOptionName(replacedOptionName: string): string {
@@ -168,8 +164,10 @@ class OptionsParser<
       if (replacedOptionsUsed.includes(name)) {
         const replacedByName = this.getReplacingOptionName(name);
         return replacedByName in this.userOptions
-          ? opts
-          : { ...opts, [replacedByName]: value };
+          ? // ignore the deprecated value => it will be set by the correct option
+            opts
+          : // set the replaced value for the new name
+            { ...opts, [replacedByName]: value };
       }
       return { ...opts, [name]: value };
     }, {} as ParsedOptions<GeneratorOptionsT, CliOptionsT>);

@@ -31,9 +31,10 @@ We recommend updating your applications in one commit or pull request and making
 
 ### Adjust Operation Names in OData Generated Clients
 
-Rules for naming of functions (bound or otherwise) in the generated client have been changed.
-If a function/actions begins with an `underscore` symbol, the `_` will be removed from the resulting generated client code.
-To adjust the names, search in `function-import.ts` and `action-import.ts` files for any operation starting with `_`.
+Rules for naming of OData operations (actions or functions) in the generated client have been changed.
+This applies to bound and unbound operations.
+If an operation begins with an `underscore` symbol, the `_` will be removed from the resulting generated client code.
+To adjust the names, search in `function-import.ts` and `action-import.ts` files in your generated client code for any operation starting with `_`.
 
 <!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
 

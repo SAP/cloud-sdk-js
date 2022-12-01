@@ -215,7 +215,7 @@ export function parseTypeDefinitionFile(
     const regex =
       objectType === 'interface'
         ? new RegExp(`export ${objectType} (\\w+)`, 'g')
-        : new RegExp(`export declare ${objectType} (\\w+)`, 'g');
+        : new RegExp(`export (?:declare )?${objectType} (\\w+)`, 'g');
     const exported = captureGroupsFromGlobalRegex(regex, normalized).map(
       element => ({ name: element, type: objectType })
     );

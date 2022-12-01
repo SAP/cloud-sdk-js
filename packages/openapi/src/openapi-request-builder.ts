@@ -85,7 +85,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   /**
    * Set middleware for requests towards the target system given in the destination.
-   * @param middlewares - Middlewares to be applied to the executeHttprequest().
+   * @param middlewares - Middlewares to be applied to the executeHttpRequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
   middleware(

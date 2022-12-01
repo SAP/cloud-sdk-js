@@ -3,7 +3,7 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
-# @sap-cloud-sdk/http-client
+# @sap-cloud-sdk/resilience
 
 This package contains implementations for the resilience middlewares like a timeout or circuit breaker middleware. 
 This concept of middlewares is totally generic, and you can use it for non-resilience use cases.

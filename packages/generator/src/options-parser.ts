@@ -91,7 +91,9 @@ class OptionsParser<
   private getReplacedOptionsUsed(userOptions: Record<string, any>): string[] {
     return Object.keys(this.options)
       .filter(name => this.options[name].replacedBy)
-      .filter(name => Object.keys(userOptions).includes(name));
+      .filter(name =>
+        Object.keys(userOptions).includes(this.getReplacingOptionName(name))
+      );
   }
 
   private getReplacingOptionName(replacedOptionName: string): string {

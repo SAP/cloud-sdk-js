@@ -24,3 +24,11 @@ export type {
   ParameterEncoder
 } from './http-client-types';
 export { defaultDisallowedKeys } from './http-request-config';
+export {
+  Middleware,
+  MiddlewareIn,
+  MiddlewareOut,
+  Context,
+  SkipNext,
+  HttpMiddlewareContext
+} from './middleware';

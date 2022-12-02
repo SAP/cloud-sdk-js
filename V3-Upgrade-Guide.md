@@ -20,6 +20,7 @@ This document will guide you through the steps necessary to upgrade to version 3
 - [Update your project dependencies](#update-your-project-dependencies)
 - [Adjust operation names in generated clients](#adjust-operation-names-in-odata-generated-clients)
 - [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
+- [Replace Timeout](#timeout)
 
 ### Update your project dependencies
 
@@ -96,3 +97,25 @@ For historic reasons the command-line arguments of both applications were differ
 In version 3, the arguments are aligned and deprecated arguments have been removed.
 Please see (insert link here) for the current documentation on the cli arguments.
 -->
+
+### Timeout 
+
+The `timeout()` method was removed from the request builder and the `timeout` option was removed from the `executeHttpRequest()` function. 
+If you want to set a timeout for a request use the new timeout middleware:
+
+```ts
+import { timeout} from '@sap-cloud-sdk/resilience'
+
+ executeHttpRequest(myDestination, {
+          method: 'get',          
+          middleware: [timeout()]
+        })
+
+myRequestBuilder
+    .getAll()
+    .middleware([timeout()])
+    .execute(myDestination);
+```
+<!-- TODO v3 put better link when documentation is done -->
+A detailed guide on the middleware concept is presented on the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/overview).
+

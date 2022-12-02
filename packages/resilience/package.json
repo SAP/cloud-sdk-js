@@ -1,14 +1,15 @@
 {
-  "name": "@sap-cloud-sdk/odata-v2",
+  "name": "@sap-cloud-sdk/resilience",
   "version": "2.11.0",
-  "description": "SAP Cloud SDK for JavaScript common functions of OData client generator and OpenAPI clint generator.",
+  "description": "SAP Cloud SDK for JavaScript resilience",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
     "cloud-sdk",
     "sap-cloud-platform",
-    "odata-v2"
+    "middlewares",
+    "resilience"
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -37,18 +38,11 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^2.11.0",
-    "@sap-cloud-sdk/http-client": "^2.11.0",
-    "@sap-cloud-sdk/odata-common": "^2.11.0",
-    "@sap-cloud-sdk/util": "^2.11.0",
-    "bignumber.js": "^9.1.0",
-    "moment": "^2.29.4",
-    "uuid": "^9.0.0"
+    "@sap-cloud-sdk/http-client": "^2.11.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-services-odata-v2": "^2.11.0",
-    "@sap-cloud-sdk/resilience": "^2.11.0",
+    "@sap-cloud-sdk/connectivity": "^2.11.0",
     "nock": "^13.2.9",
-    "typescript": "~4.9.3"
+    "typescript": "~4.8.4"
   }
 }

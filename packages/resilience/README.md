@@ -3,27 +3,26 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
-# @sap-cloud-sdk/http-client
+# @sap-cloud-sdk/resilience
 
-This package contains the generic http-client functionality of the SAP Cloud SDK as well as the Cloud Platform abstractions.
-
-The generic http-client adds SAP infrastructure specific functionality on top of a standard HTTP Client. The client handles connectivity related issues such as destination lookup, connections to SAP S/4HANA On-premise and web proxies.
+This package contains implementations for the resilience middlewares like a timeout or circuit breaker middleware. 
+This concept of middlewares is totally generic, and you can use it for non-resilience use cases.
 
 ## Installation
 
 ```
-$ npm install @sap-cloud-sdk/http-client
+$ npm install @sap-cloud-sdk/resilience
 ```
 
 ## Usage
 
-To make a request, use the executeHttpRequest function.
+Add a timeout middleware to a request.
 
 ```
-executeHttpRequest(destination, requestConfig, httpRequestOptions);
+executeHttpRequest(destination, { middleware: [ timeout() ] }, httpRequestOptions);
 ```
-
-For more detailed overview visit our [Generic HTTP Client documentation](https://sap.github.io/cloud-sdk/docs/js/features/connectivity/generic-http-client).
+<!-- TODO v3 put better link when documentation is done -->
+For more detailed overview visit our [resilience documentation](https://sap.github.io/cloud-sdk/docs/js/).
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->

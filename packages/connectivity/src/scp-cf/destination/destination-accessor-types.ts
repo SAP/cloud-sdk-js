@@ -68,7 +68,7 @@ export interface DestinationAccessorOptions {
   iasToXsuaaTokenExchange?: boolean;
 
   /**
-   * This property is only considered in case no JWT is provided.
+   * This property is only considered in case no `jwt` is provided.
    * It is meant for situations where you do not have a token e.g. background processes.
    * The value for iss is the issuer field of a JWT e.g. https://<your-subdomain>.localhost:8080/uaa/oauth/token'.
    *

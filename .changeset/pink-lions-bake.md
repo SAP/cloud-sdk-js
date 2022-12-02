@@ -1,7 +1,7 @@
 ---
-'@sap-cloud-sdk/http-client': patch
-'@sap-cloud-sdk/odata-common': patch
-'@sap-cloud-sdk/openapi': patch
+'@sap-cloud-sdk/http-client': major
+'@sap-cloud-sdk/odata-common': major
+'@sap-cloud-sdk/openapi': major
 ---
 
 

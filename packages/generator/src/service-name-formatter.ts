@@ -99,7 +99,7 @@ export class ServiceNameFormatter {
   }
 
   originalToOperationName(originalName: string): string {
-    const transformedName = voca.camelCase(originalName);
+    const transformedName = voca.camelCase(stripPrefix(originalName));
     const newName =
       this.serviceWideNameGenerator.generateAndSaveUniqueName(transformedName);
 
@@ -110,13 +110,10 @@ export class ServiceNameFormatter {
     entityName: string,
     functionName: string
   ): string {
-    const generator = this.getOrInitGenerator(
-      this.instancePropertyNameGenerators,
-      entityName
+    const newName = this.originalToInstancePropertyName(
+      entityName,
+      functionName
     );
-    const transformedName = voca.camelCase(functionName);
-    const newName = generator.generateAndSaveUniqueName(transformedName);
-
     return applyPrefixOnJsConflictFunctionImports(newName);
   }
 

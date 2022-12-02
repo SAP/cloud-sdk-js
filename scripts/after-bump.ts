@@ -1,9 +1,9 @@
 import { add, commit, tag } from '@changesets/git';
-import { currentSdkVersion } from './current-sdk-version';
+import { getPackageVersion } from './get-package-version';
 import { mergeChangelogs } from './merge-changelogs';
 
 async function commitAndTag() {
-  const version = currentSdkVersion;
+  const version = getPackageVersion;
   const cwd = process.cwd();
 
   await add('-A', cwd);

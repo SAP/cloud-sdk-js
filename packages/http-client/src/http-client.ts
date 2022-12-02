@@ -1,14 +1,6 @@
 import * as http from 'http';
 import * as https from 'https';
 import {
-  createLogger,
-  ErrorWithCause,
-  pickIgnoreCase,
-  sanitizeRecord,
-  unixEOL
-} from '@sap-cloud-sdk/util';
-import axios from 'axios';
-import {
   buildHeadersForDestination,
   Destination,
   DestinationOrFetchOptions,
@@ -16,13 +8,22 @@ import {
   toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
 import {
-  resolveDestination,
   defaultResilienceBTPServices,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
-  getAuthHeader
+  getAuthHeader,
+  resolveDestination
 } from '@sap-cloud-sdk/connectivity/internal';
+import {
+  createLogger,
+  ErrorWithCause,
+  pickIgnoreCase,
+  sanitizeRecord,
+  unixEOL
+} from '@sap-cloud-sdk/util';
+import axios from 'axios';
+import { buildCsrfHeaders } from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
@@ -38,7 +39,6 @@ import {
   ParameterEncoder
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
-import { buildCsrfHeaders } from './csrf-token-header';
 
 const logger = createLogger({
   package: 'http-client',
@@ -133,8 +133,11 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
  * @internal
  */
 export function buildHttpRequestConfigWithOrigin(
-  requestConfig: HttpRequestConfigWithOrigin | HttpRequestConfig
+  requestConfig: HttpRequestConfigWithOrigin | HttpRequestConfig | undefined
 ): HttpRequestConfigWithOrigin {
+  if (!requestConfig) {
+    return getDefaultHttpRequestConfigOptions();
+  }
   if (isHttpRequestConfigWithOrigin(requestConfig)) {
     return requestConfig;
   }
@@ -340,7 +343,6 @@ function logRequestInformation(request: HttpRequestConfig) {
 // eslint-disable-next-line jsdoc/require-returns-check
 /**
  * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given `requestConfig` and executes it (using Axios).
- * The overload, that accepts {@link HttpRequestConfigWithOrigin} as a parameter, is deprecated and replaced the function {@link executeHttpRequestWithOrigin}.
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
  * @param options - An {@link HttpRequestOptions} of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.
@@ -348,29 +350,7 @@ function logRequestInformation(request: HttpRequestConfig) {
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(
   destination: DestinationOrFetchOptions,
-  requestConfig: T,
-  options?: HttpRequestOptions
-): Promise<HttpResponse>;
-// eslint-disable-next-line jsdoc/require-returns-check
-/**
- * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given `requestConfig` and executes it (using Axios).
- * @deprecated This overload is replaced by the function {@link executeHttpRequestWithOrigin}.
- * @param destination - A destination or a destination name and a JWT.
- * @param requestConfig - Any object representing an HTTP request.
- * @param options - An {@link HttpRequestOptions} of the HTTP request for configuring e.g., CSRF token delegation. By default, the SDK will fetch the CSRF token.
- * @returns A promise resolving to an {@link HttpResponse}.
- */
-export function executeHttpRequest<T extends HttpRequestConfigWithOrigin>(
-  destination: DestinationOrFetchOptions,
-  requestConfig: T,
-  options?: HttpRequestOptions
-): Promise<HttpResponse>;
-// eslint-disable-next-line jsdoc/require-jsdoc
-export function executeHttpRequest<
-  T extends HttpRequestConfig | HttpRequestConfigWithOrigin
->(
-  destination: DestinationOrFetchOptions,
-  requestConfig: T,
+  requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
   // eslint-disable-next-line jsdoc/require-jsdoc
@@ -401,10 +381,16 @@ export function executeHttpRequestWithOrigin<
   T extends HttpRequestConfigWithOrigin
 >(
   destination: DestinationOrFetchOptions,
-  requestConfig: T,
+  requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
-  return execute(executeWithAxios)(destination, requestConfig, options);
+  const requestConfigWithDefaults =
+    requestConfig ?? getDefaultHttpRequestConfigOptions();
+  return execute(executeWithAxios)(
+    destination,
+    requestConfigWithDefaults,
+    options
+  );
 }
 
 function buildDestinationHttpRequestConfig(
@@ -484,6 +470,15 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
       Object.entries(params)
         .map(([key, value]) => `${key}=${value}`)
         .join('&')
+  };
+}
+
+/**
+ * @internal
+ */
+export function getDefaultHttpRequestConfigOptions(): HttpRequestConfigWithOrigin {
+  return {
+    method: 'get'
   };
 }
 

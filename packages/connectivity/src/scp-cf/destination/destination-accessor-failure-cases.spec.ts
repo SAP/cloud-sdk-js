@@ -27,12 +27,14 @@ import {
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import * as jwt from '../jwt';
 import { getDestination } from './destination-accessor';
+import { circuitBreaker } from './destination-service';
 
 const { wrapJwtInHeader } = jwt;
 
 describe('Failure cases', () => {
   beforeEach(() => {
     clientCredentialsTokenCache.clear();
+    circuitBreaker?.clearCache();
   });
 
   it('fails if no destination service is bound', async () => {
@@ -100,7 +102,6 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberServiceToken,
-        enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });
@@ -145,7 +146,6 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberUserJwt,
-        enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });

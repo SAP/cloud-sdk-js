@@ -20,7 +20,6 @@ import {
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { serviceToken } from './token-accessor';
-import { defaultResilienceBTPServices } from './resilience-options';
 import * as resilience from './resilience-options';
 
 describe('token accessor', () => {
@@ -49,34 +48,6 @@ describe('token accessor', () => {
       expect(actual).toBe(expected);
     });
 
-    it('considers custom timeout for client credentials token', async () => {
-      const jwt = signedJwt({
-        iss: 'https://testeroni.example.com'
-      });
-      async function doDelayTest(enableCircuitBreaker: boolean) {
-        mockClientCredentialsGrantCall(
-          'https://testeroni.example.com',
-          { access_token: '' },
-          200,
-          destinationBindingClientSecretMock.credentials,
-          100
-        );
-        await expect(
-          serviceToken('destination', {
-            jwt,
-            timeout: 10,
-            enableCircuitBreaker
-          })
-        ).rejects.toMatchObject({
-          cause: {
-            message: 'Token retrieval ran into timeout.'
-          }
-        });
-      }
-      await doDelayTest(false);
-      await doDelayTest(true);
-    });
-
     it('considers default timeout for client credentials token', async () => {
       jest.spyOn(resilience, 'timeoutPromise');
 
@@ -92,9 +63,7 @@ describe('token accessor', () => {
 
       await serviceToken('destination', { jwt });
 
-      expect(resilience.timeoutPromise).toHaveBeenCalledWith(
-        defaultResilienceBTPServices.timeout
-      );
+      expect(resilience.timeoutPromise).toHaveBeenCalledWith(10000);
     });
 
     it("uses the JWT's issuer as tenant", async () => {

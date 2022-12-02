@@ -1,18 +1,18 @@
 import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
-import axios, { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
-import { defaultResilienceBTPServices } from '../resilience-options';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
   fetchInstanceDestinations,
   fetchSubaccountDestinations,
-  fetchCertificate
+  fetchCertificate,
+  circuitBreaker
 } from './destination-service';
 
 const jwt = jwt123.sign(
@@ -93,9 +93,7 @@ describe('destination service', () => {
         .reply(200, response);
 
       const instanceDestinations: Destination[] =
-        await fetchInstanceDestinations(destinationServiceUri, jwt, {
-          enableCircuitBreaker: false
-        });
+        await fetchInstanceDestinations(destinationServiceUri, jwt);
       expected.forEach((e, index) => {
         expect(instanceDestinations[index]).toMatchObject(e);
       });
@@ -122,9 +120,7 @@ describe('destination service', () => {
       });
       const debugSpy = jest.spyOn(logger, 'debug');
       const instanceDestinations: Destination[] =
-        await fetchInstanceDestinations(destinationServiceUri, jwt, {
-          enableCircuitBreaker: false
-        });
+        await fetchInstanceDestinations(destinationServiceUri, jwt);
       expect(instanceDestinations.length).toBe(2);
       expect(debugSpy).toHaveBeenCalledWith(
         'Parsing of destination with name "BrokenDestination" failed - skip this destination in parsing.'
@@ -145,9 +141,7 @@ describe('destination service', () => {
         .reply(400, response);
 
       await expect(
-        fetchInstanceDestinations(destinationServiceUri, jwt, {
-          enableCircuitBreaker: false
-        })
+        fetchInstanceDestinations(destinationServiceUri, jwt)
       ).rejects.toThrowError();
     });
 
@@ -161,9 +155,7 @@ describe('destination service', () => {
         .reply(500);
 
       await expect(
-        fetchInstanceDestinations(destinationServiceUri, jwt, {
-          enableCircuitBreaker: false
-        })
+        fetchInstanceDestinations(destinationServiceUri, jwt)
       ).rejects.toThrowError();
     });
   });
@@ -203,9 +195,7 @@ describe('destination service', () => {
         .reply(200, response);
 
       const subaccountDestinations: Destination[] =
-        await fetchSubaccountDestinations(destinationServiceUri, jwt, {
-          enableCircuitBreaker: false
-        });
+        await fetchSubaccountDestinations(destinationServiceUri, jwt);
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
       });
@@ -232,9 +222,7 @@ describe('destination service', () => {
       });
       const debugSpy = jest.spyOn(logger, 'debug');
       const subaccountDestinations: Destination[] =
-        await fetchSubaccountDestinations(destinationServiceUri, jwt, {
-          enableCircuitBreaker: false
-        });
+        await fetchSubaccountDestinations(destinationServiceUri, jwt);
       expect(subaccountDestinations.length).toBe(2);
       expect(debugSpy).toHaveBeenCalledWith(
         'Parsing of destination with name "BrokenDestination" failed - skip this destination in parsing.'
@@ -255,9 +243,7 @@ describe('destination service', () => {
         .reply(400, response);
 
       await expect(
-        fetchSubaccountDestinations(destinationServiceUri, jwt, {
-          enableCircuitBreaker: false
-        })
+        fetchSubaccountDestinations(destinationServiceUri, jwt)
       ).rejects.toThrowError();
     });
   });
@@ -403,12 +389,9 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
 
-      const actual = await fetchDestination(
-        destinationServiceUri,
-        jwt,
-
-        { destinationName, enableCircuitBreaker: false }
-      );
+      const actual = await fetchDestination(destinationServiceUri, jwt, {
+        destinationName
+      });
       expect(actual).toMatchObject(expected);
     });
 
@@ -441,17 +424,16 @@ describe('destination service', () => {
       })
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
-      const spy = jest.spyOn(axios, 'request');
-      await fetchDestination(destinationServiceUri, jwt, {
-        destinationName,
-        enableCircuitBreaker: false
+      const spy = jest.spyOn(circuitBreaker, 'fire');
+      const result = await fetchDestination(destinationServiceUri, jwt, {
+        destinationName
       });
       const expectedConfig: AxiosRequestConfig = {
         baseURL:
           'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         method: 'get',
         proxy: false,
-        timeout: defaultResilienceBTPServices.timeout,
+        timeout: 10000,
         headers: {
           Authorization: `Bearer ${jwt}`
         },
@@ -466,33 +448,6 @@ describe('destination service', () => {
       delete process.env.HTTPS_PROXY;
     });
 
-    it('considers the custom timeout for destination service', async () => {
-      async function doDelayTest(enableCircuitBreaker: boolean) {
-        nock(destinationServiceUri, {
-          reqheaders: {
-            authorization: `Bearer ${jwt}`
-          }
-        })
-          .get('/destination-configuration/v1/destinations/TIMEOUT-TEST')
-          .delay(100)
-          .reply(200, {});
-        await expect(
-          fetchDestination(destinationServiceUri, jwt, {
-            destinationName: 'TIMEOUT-TEST',
-            enableCircuitBreaker,
-            timeout: 10
-          })
-        ).rejects.toMatchObject({
-          cause: {
-            message: 'timeout of 10ms exceeded'
-          }
-        });
-      }
-
-      await doDelayTest(true);
-      await doDelayTest(false);
-    });
-
     it('considers the default timeout for destination service', async () => {
       const response = {
         URL: 'someDestinationUrl'
@@ -505,14 +460,13 @@ describe('destination service', () => {
       })
         .get('/destination-configuration/v1/destinations/timeoutTest')
         .reply(200, response);
-      const spy = jest.spyOn(axios, 'request');
+      const spy = jest.spyOn(circuitBreaker, 'fire');
       await fetchDestination(destinationServiceUri, jwt, {
-        destinationName: 'timeoutTest',
-        enableCircuitBreaker: false
+        destinationName: 'timeoutTest'
       });
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          timeout: defaultResilienceBTPServices.timeout
+          timeout: 10000
         })
       );
     });
@@ -548,10 +502,9 @@ describe('destination service', () => {
       })
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
-      const spy = jest.spyOn(axios, 'request');
+      const spy = jest.spyOn(circuitBreaker, 'fire');
       await fetchDestination(destinationServiceUri, jwt, {
-        destinationName,
-        enableCircuitBreaker: false
+        destinationName
       });
       const expectedConfig: AxiosRequestConfig = {
         baseURL:
@@ -564,7 +517,7 @@ describe('destination service', () => {
         // The jest matchers have problems to match two  instances of an httpsAgent.
         // As a workaround I wanted to assert on proxy:undefined but was not able to achieve this.
         // The "_events" property is only present for the httpAgent and not the httpProxyAgent so this works as an implicit test.
-        timeout: defaultResilienceBTPServices.timeout,
+        timeout: 10000,
         httpsAgent: expect.objectContaining({
           _events: expect.anything(),
           options: expect.objectContaining({ rejectUnauthorized: true })
@@ -649,7 +602,7 @@ describe('destination service', () => {
         destinationServiceUri,
         jwt,
 
-        { destinationName, enableCircuitBreaker: false }
+        { destinationName }
       );
       expect(actual).toMatchObject(expected);
     });
@@ -667,8 +620,7 @@ describe('destination service', () => {
 
       await expect(
         fetchDestination(destinationServiceUri, jwt, {
-          destinationName,
-          enableCircuitBreaker: false
+          destinationName
         })
       ).rejects.toThrowError();
     });
@@ -690,8 +642,7 @@ describe('destination service', () => {
 
       await expect(() =>
         fetchDestination(destinationServiceUri, jwt, {
-          destinationName,
-          enableCircuitBreaker: false
+          destinationName
         })
       ).rejects.toThrowError();
     });

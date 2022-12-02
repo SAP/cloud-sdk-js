@@ -8,7 +8,6 @@ import {
   toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
 import {
-  defaultResilienceBTPServices,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
@@ -527,7 +526,7 @@ async function getCsrfHeaders(
         params: request.params,
         headers: request.headers,
         url: request.url,
-        timeout: request.timeout || defaultResilienceBTPServices.timeout,
+        timeout: request.timeout || 10000,
         proxy: request.proxy,
         httpAgent: request.httpAgent,
         httpsAgent: request.httpsAgent

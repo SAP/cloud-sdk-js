@@ -7,11 +7,7 @@ import {
 import CircuitBreaker from 'opossum';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import {
-  circuitBreakerDefaultOptions,
-  defaultResilienceBTPServices,
-  ResilienceOptions
-} from '../resilience-options';
+import { circuitBreakerDefaultOptions } from '../resilience-options';
 import { urlAndAgent } from '../../http-agent';
 import {
   DestinationConfiguration,
@@ -39,14 +35,25 @@ type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
   AxiosResponse<ResponseType>
 >;
 
-type DestinationsServiceOptions = ResilienceOptions &
-  Pick<DestinationFetchOptions, 'useCache'>;
-type DestinationServiceOptions = ResilienceOptions &
-  Pick<DestinationFetchOptions, 'destinationName'>;
-
-let circuitBreaker: DestinationCircuitBreaker<
-  DestinationCertificateJson | DestinationConfiguration | DestinationJson
+type DestinationsServiceOptions = Pick<DestinationFetchOptions, 'useCache'>;
+type DestinationServiceOptions = Pick<
+  DestinationFetchOptions,
+  'destinationName'
 >;
+
+const request: (
+  config: AxiosRequestConfig
+) => Promise<
+  AxiosResponse<
+    DestinationCertificateJson | DestinationConfiguration | DestinationJson
+  >
+> = axios.request;
+/**
+ * @internal
+ */
+export const circuitBreaker: DestinationCircuitBreaker<
+  DestinationCertificateJson | DestinationConfiguration | DestinationJson
+> = new CircuitBreaker(request, circuitBreakerDefaultOptions);
 
 /**
  * Fetches all instance destinations from the given URI.
@@ -131,7 +138,7 @@ async function fetchDestinations(
 
   const headers = wrapJwtInHeader(jwt).headers;
 
-  return callDestinationEndpoint(targetUri, headers, options)
+  return callDestinationEndpoint(targetUri, headers)
     .then(response => {
       const destinations: Destination[] = response.data
         .filter(isParsable)
@@ -265,7 +272,7 @@ async function fetchDestinationByTokens(
     ? { ...authHeader, 'X-refresh-token': tokens.refreshToken }
     : authHeader;
 
-  return callDestinationEndpoint(targetUri, authHeader, options)
+  return callDestinationEndpoint(targetUri, authHeader)
     .then(response => {
       const destination: Destination = parseDestination(response.data);
       return destination;
@@ -298,74 +305,49 @@ type DestinationCertificateJson = {
 
 async function callCertificateEndpoint(
   uri: string,
-  headers: Record<string, any>,
-  options?: ResilienceOptions
+  headers: Record<string, any>
 ): Promise<AxiosResponse<DestinationCertificateJson>> {
   if (!uri.includes('Certificates')) {
     throw new Error(
       `callCertificateEndpoint was called with illegal arrgument: ${uri}. URL must be certificate endpoint of destination service.`
     );
   }
-  return callDestinationService(uri, headers, options) as Promise<
+  return callDestinationService(uri, headers) as Promise<
     AxiosResponse<DestinationCertificateJson>
   >;
 }
 
 async function callDestinationEndpoint(
   uri: string,
-  headers: Record<string, any>,
-  options?: ResilienceOptions
+  headers: Record<string, any>
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
   if (!uri.match(/[instance|subaccount]Destinations|v1\/destinations/)) {
     throw new Error(
       `callDestinationEndpoint was called with illegal arrgument: ${uri}. URL must be destination(s) endpoint of destination service.`
     );
   }
-  return callDestinationService(uri, headers, options) as Promise<
+  return callDestinationService(uri, headers) as Promise<
     AxiosResponse<DestinationConfiguration | DestinationJson>
   >;
 }
 
 async function callDestinationService(
   uri: string,
-  headers: Record<string, any>,
-  options?: ResilienceOptions
+  headers: Record<string, any>
 ): Promise<
   AxiosResponse<
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
-  const { enableCircuitBreaker, timeout } = {
-    ...defaultResilienceBTPServices,
-    ...options
-  };
   const config: AxiosRequestConfig = {
     ...urlAndAgent(uri),
     proxy: false,
     method: 'get',
-    timeout,
+    timeout: 10000, // TODO: Use middleware
     headers
   };
 
-  if (enableCircuitBreaker) {
-    return getCircuitBreaker().fire(config);
-  }
-
-  return axios.request(config);
-}
-
-function getCircuitBreaker(): DestinationCircuitBreaker<
-  DestinationCertificateJson | DestinationConfiguration | DestinationJson
-> {
-  const request: (
-    config: AxiosRequestConfig
-  ) => Promise<
-    AxiosResponse<
-      DestinationCertificateJson | DestinationConfiguration | DestinationJson
-    >
-  > = axios.request;
-  if (!circuitBreaker) {
-    circuitBreaker = new CircuitBreaker(request, circuitBreakerDefaultOptions);
-  }
-  return circuitBreaker;
+  // TODO: Use middleware
+  return circuitBreaker.fire(config);
+  // return axios.request(config);
 }

@@ -1,6 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { defaultResilienceBTPServices } from '@sap-cloud-sdk/connectivity/internal';
 import { createRequestBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import {
   CommonEntity,
@@ -94,7 +93,7 @@ describe('buildCsrfHeaders', () => {
 
     expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalledWith(
       expect.anything(),
-      expect.objectContaining({ timeout: defaultResilienceBTPServices.timeout })
+      expect.objectContaining({ timeout: 10000 })
     );
     jest.restoreAllMocks();
   });

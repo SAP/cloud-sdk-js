@@ -8,7 +8,6 @@ import {
   resolveService
 } from './environment-accessor';
 import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
-import { ResilienceOptions } from './resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 
@@ -25,12 +24,11 @@ import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
  */
 export async function serviceToken(
   service: string | Service,
-  options?: CachingOptions &
-    ResilienceOptions & {
-      jwt?: string | JwtPayload;
-      // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
-      xsuaaCredentials?: XsuaaServiceCredentials;
-    }
+  options?: CachingOptions & {
+    jwt?: string | JwtPayload;
+    // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
+    xsuaaCredentials?: XsuaaServiceCredentials;
+  }
 ): Promise<string> {
   const opts = {
     useCache: true,
@@ -55,11 +53,7 @@ export async function serviceToken(
   }
 
   try {
-    const token = await getClientCredentialsToken(
-      service,
-      options?.jwt,
-      options
-    );
+    const token = await getClientCredentialsToken(service, options?.jwt);
 
     if (opts.useCache) {
       const xsuaa = multiTenantXsuaaCredentials(options);
@@ -87,22 +81,15 @@ export async function serviceToken(
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
  * @param jwt - The JWT of the user for whom the access token should be fetched.
  * @param service - The type of the service or an instance of {@link Service}.
- * @param options - Options to influence resilience behavior (see {@link ResilienceOptions}). By default, usage of a circuit breaker is enabled.
  * @returns A jwt bearer token.
  */
 export async function jwtBearerToken(
   jwt: string,
-  service: string | Service,
-  options?: ResilienceOptions
+  service: string | Service
 ): Promise<string> {
   const resolvedService = resolveService(service);
 
-  const opts: ResilienceOptions = {
-    enableCircuitBreaker: true,
-    ...options
-  };
-
-  return getUserToken(resolvedService, jwt, opts);
+  return getUserToken(resolvedService, jwt);
 }
 
 function multiTenantXsuaaCredentials(

@@ -6,8 +6,6 @@ import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
-  defaultResilienceBTPServices,
-  ResilienceOptions,
   timeoutPromise
 } from './resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
@@ -15,11 +13,8 @@ import { resolveService } from './environment-accessor';
 
 let circuitBreaker: any;
 
-async function wrapInTimeout<T>(
-  promise: Promise<T>,
-  timeout: number
-): Promise<T> {
-  return Promise.race([promise, timeoutPromise<T>(timeout)]);
+async function wrapInTimeout<T>(promise: Promise<T>): Promise<T> {
+  return Promise.race([promise, timeoutPromise<T>(10000)]);
 }
 
 function executeFunction<T extends (...args: any[]) => any>(
@@ -87,24 +82,12 @@ export function getSubdomainAndZoneId(
  * Make a user token request against the XSUAA service.
  * @param service - Service as it is defined in the environment variable.
  * @param userJwt - User JWT.
- * @param options - Options to influence resilience behavior (see {@link ResilienceOptions}). By default, usage of a circuit breaker is enabled.
  * @returns Client credentials token.
  */
 export async function getClientCredentialsToken(
   service: string | Service,
-  userJwt?: string | JwtPayload,
-  options?: ResilienceOptions
+  userJwt?: string | JwtPayload
 ): Promise<ClientCredentialsResponse> {
-  const { enableCircuitBreaker, timeout } = {
-    ...defaultResilienceBTPServices,
-    ...options
-  };
-  if (enableCircuitBreaker) {
-    return wrapInCircuitBreaker(getClientCredentialsToken)(service, userJwt, {
-      enableCircuitBreaker: false,
-      timeout
-    });
-  }
   const serviceCredentials = resolveService(service).credentials;
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
@@ -137,32 +120,23 @@ export async function getClientCredentialsToken(
       );
     }
   );
-
-  return wrapInTimeout(xssecPromise, timeout);
+  // TODO: Use middleware
+  return wrapInCircuitBreaker((ser, jwt) => wrapInTimeout(xssecPromise))(
+    service,
+    userJwt
+  );
 }
 
 /**
  * Make a user token request against the XSUAA service.
  * @param service - Service as it is defined in the environment variable.
  * @param userJwt - User JWT.
- * @param options - Options to influence resilience behavior (see {@link ResilienceOptions}). By default, usage of a circuit breaker is enabled.
  * @returns User token.
  */
 export function getUserToken(
   service: Service,
-  userJwt: string,
-  options?: ResilienceOptions
+  userJwt: string
 ): Promise<string> {
-  const { enableCircuitBreaker, timeout } = {
-    ...defaultResilienceBTPServices,
-    ...options
-  };
-  if (enableCircuitBreaker) {
-    return wrapInCircuitBreaker(getUserToken)(service, userJwt, {
-      enableCircuitBreaker: false,
-      timeout
-    });
-  }
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
   const xssecPromise = new Promise((resolve: (token: string) => void, reject) =>
@@ -176,5 +150,9 @@ export function getUserToken(
       (err: Error, token: string) => (err ? reject(err) : resolve(token))
     )
   );
-  return wrapInTimeout(xssecPromise, timeout);
+  // TODO: Use middleware
+  return wrapInCircuitBreaker((ser, jwt) => wrapInTimeout(xssecPromise))(
+    service,
+    userJwt
+  );
 }

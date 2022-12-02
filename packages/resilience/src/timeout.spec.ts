@@ -56,4 +56,35 @@ describe('timeout', () => {
       })
     ).resolves.not.toThrow();
   });
+
+  it('uses 10 seconds default timeout', async () => {
+    const oneSecond = 1000;
+    nock('https://example.com', {})
+      .get('/with-delay')
+      .times(1)
+      .delay(oneSecond)
+      .reply(200)
+      .get('/with-delay')
+      .times(1)
+      .delay(11 * oneSecond)
+      .reply(200);
+
+    const response = await executeHttpRequest(httpsDestination, {
+      method: 'get',
+      url: '/with-delay',
+      middleware: [timeout()]
+    });
+
+    expect(response.status).toEqual(200);
+
+    await expect(
+      executeHttpRequest(httpsDestination, {
+        method: 'get',
+        url: '/with-delay',
+        middleware: [timeout()]
+      })
+    ).rejects.toThrow(
+      'Request to https://example.com ran into timeout after 10000ms'
+    );
+  }, 15000);
 });

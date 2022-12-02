@@ -28,6 +28,7 @@ export async function getGeneratedFiles(
     createOptions({
       inputDir: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
       useSwagger: false,
+      packageJson: false,
       outputDir
     })
   );

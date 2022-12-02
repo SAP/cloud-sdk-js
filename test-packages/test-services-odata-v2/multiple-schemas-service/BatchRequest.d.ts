@@ -43,7 +43,7 @@ export declare function changeset<DeSerializersT extends DeSerializers>(
   requests: Array<WriteMultipleSchemasServiceRequestBuilder<DeSerializersT>>
 ): BatchChangeSet<DeSerializersT>;
 export declare const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
-export declare type ReadMultipleSchemasServiceRequestBuilder<
+export type ReadMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | GetAllRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
@@ -51,7 +51,7 @@ export declare type ReadMultipleSchemasServiceRequestBuilder<
       MultiSchemaTestEntity<DeSerializersT>,
       DeSerializersT
     >;
-export declare type WriteMultipleSchemasServiceRequestBuilder<
+export type WriteMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | CreateRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>

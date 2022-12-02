@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "nock": "^13.2.9",
-    "typescript": "~4.8.4",
+    "typescript": "~4.9.3",
     "mock-fs": "^5.2.0"
   }
 }

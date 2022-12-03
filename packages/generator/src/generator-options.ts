@@ -1,13 +1,9 @@
 import { PathLike } from 'fs';
 import { resolve, dirname } from 'path';
 import { readFileSync } from 'fs-extra';
-import { Options } from 'yargs';
-import { createLogger } from '@sap-cloud-sdk/util';
-
-const logger = createLogger('generator-options');
 
 /**
- * Options that can be used to configure the generation when using the generator programmatically.
+ * Options to configure the client generation when using the generator programmatically.
  */
 export interface GeneratorOptions {
   /**
@@ -93,34 +89,58 @@ export interface GeneratorOptions {
    * Generate A CSN file for each service definition in the output directory.
    */
   generateCSN: boolean;
-  // TODO remove packageVersion in version 3.0
+  // TODO: remove packageVersion in version 3.0
   /**
    * Internal option used to adjust the version in the generated `package.json`. Will not be used in the future.
    */
   packageVersion?: string;
 }
+
 /**
  * @internal
  */
 export const defaultValueProcessesJsGeneration = 16;
-
-type KeysToOptions = {
-  [optionName in keyof GeneratorOptions]: Options;
-};
 
 function coercePathArg(arg?: string): string | undefined {
   return arg ? resolve(arg) : arg;
 }
 
 /**
+ * Union type of the deprecated option names.
+ * @typeParam T - Options configuration.
+ */
+type DeprecatedOptionNames<T> = {
+  [K in keyof T]: T[K] extends { deprecated: string } ? K : never;
+}[keyof T];
+
+/**
+ * @internal
+ * Helper to represent parsed options based on a public generator options type and a CLI options configuration.
+ * @typeParam GeneratorOptionsOptionsT - Public generator options.
+ * @typeParam CliOptionsT - Configuration of CLI options.
+ */
+export type ParsedOptions<GeneratorOptionsOptionsT, CliOptionsT> = Omit<
+  Required<GeneratorOptionsOptionsT>,
+  DeprecatedOptionNames<CliOptionsT>
+>;
+
+/**
+ * @internal
+ * Represents the parsed generator options.
+ */
+export type ParsedGeneratorOptions = ParsedOptions<
+  GeneratorOptions,
+  typeof generatorOptionsCli
+>;
+
+/**
  * @internal
  */
-export const generatorOptionsCli: KeysToOptions = {
+export const generatorOptionsCli = {
   inputDir: {
     alias: 'i',
     describe:
       'This directory will be recursively searched for `.edmx`/`.xml` files.',
-    normalize: true,
     coerce: coercePathArg,
     type: 'string',
     demandOption: true,
@@ -129,7 +149,6 @@ export const generatorOptionsCli: KeysToOptions = {
   outputDir: {
     alias: 'o',
     describe: 'Directory to save the generated code in.',
-    normalize: true,
     coerce: coercePathArg,
     type: 'string',
     demandOption: true,
@@ -185,6 +204,7 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false
   },
   generateNpmrc: {
+    describe: 'Has no effect.',
     deprecated: 'Since v2.8.0. This option does not have any effect anymore.',
     type: 'boolean',
     default: false
@@ -200,7 +220,8 @@ export const generatorOptionsCli: KeysToOptions = {
       'By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version.',
     type: 'string',
     deprecated:
-      "Since v2.6.0. Use the 'include' option to add your own package.json file instead."
+      "Since v2.6.0. Use the 'include' option to add your own package.json file instead.",
+    replacedBy: 'packageVersion'
   },
   licenseInPackageJson: {
     describe:
@@ -275,49 +296,4 @@ export function createOptionsFromConfig(configPath: string): GeneratorOptions {
           },
     JSON.parse(file)
   );
-}
-
-/**
- * @internal
- * Logs a warning if deprecated options are used.
- * @param argvOrConfig - Either the command line arguments or the config passed for programmatic use. An array implicates command line arguments, while objects represent the programmatic config.
- * @param options - Available generator options.
- */
-export function warnIfDeprecated(
-  argvOrConfig: string[] | Record<string, any>,
-  options = generatorOptionsCli
-): void {
-  const isCli = Array.isArray(argvOrConfig);
-  const usedOptions = isCli ? argvOrConfig : Object.keys(argvOrConfig);
-
-  const deprecatedOptions = Object.entries(options).filter(
-    ([, config]) => config.deprecated
-  );
-
-  const deprecatedOptionsInUse = deprecatedOptions.filter(([name, config]) => {
-    const names = isCli ? getCliOptionNames(name, config.alias) : [name];
-    return names.some(optionName =>
-      usedOptions.some(usedOptionName =>
-        usedOptionName.match(new RegExp(`^${optionName}=?`))
-      )
-    );
-  });
-
-  if (deprecatedOptionsInUse.length) {
-    const logs = deprecatedOptionsInUse
-      .map(([name, config]) => `\t--${name}: ${config.deprecated}`)
-      .join('\n');
-
-    logger.warn(
-      `Deprecated options used. The following options will be removed in the next major version:\n${logs}`
-    );
-  }
-}
-
-function getCliOptionNames(
-  name: string,
-  alias: string | readonly string[] = []
-): string[] {
-  alias = Array.isArray(alias) ? alias : [alias];
-  return [`--${name}`, ...alias.map(a => `-${a}`)];
 }

@@ -1,8 +1,10 @@
 import { setOutput, setFailed } from '@actions/core';
 import { context } from '@actions/github';
 
-console.log(context.payload.pull_request.title);
+console.log(JSON.stringify(context.payload.pull_request, null, 2));
 
-if (!context.payload.pull_request.title.startsWith('chore:')) {
-  setFailed('No chore:');
+function checkChangeLogExists(title: string) {
+  if (!title.startsWith('chore:')) {
+    setFailed('No chore:');
+  }
 }

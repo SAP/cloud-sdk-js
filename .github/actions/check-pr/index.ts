@@ -75,7 +75,7 @@ async function validateChangelog(allowedBumps: string[]): Promise<void> {
 }
 
 async function validateBody() {
-  const body = context.payload.pull_request.body;
+  const body = context.payload.pull_request.body.replace(/\r\n/g, '\n');
   const prTemplate = await readFile(
     resolve('.github', 'PULL_REQUEST_TEMPLATE.md'),
     'utf-8'

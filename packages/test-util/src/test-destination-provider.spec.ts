@@ -259,7 +259,7 @@ describe('getDestinationByAlias', () => {
 
     expect(() => getTestDestinationByAlias('NOPE'))
       .toThrowErrorMatchingInlineSnapshot(`
-      "Couldn't find destination that matches the provided name \\"NOPE\\".
+      "Couldn't find destination that matches the provided name "NOPE".
             The following destinations could be found: SYS_001, SYS_002"
     `);
   });

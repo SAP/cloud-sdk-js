@@ -30,8 +30,7 @@ function validatePreamble(preamble: string | undefined): void {
       )}`
     );
   } else {
-    info('test');
-    notice('test');
+    info('✓ Preamble: OK');
   }
 }
 
@@ -46,32 +45,51 @@ function validateTitle(title: string | undefined): void {
     setFailed(
       `PR title title should be capitalized (after conventional commit preamble).`
     );
+  } else {
+    info('✓ Title: OK');
   }
 }
 
-function getAllowedBumps(commitType: string, isBreaking: boolean): string[] {
+function getAllowedBumps(preamble: string, isBreaking: boolean): string[] {
   if (isBreaking) {
     return ['major'];
   }
-  if (commitType === 'feat') {
+  if (preamble === 'feat') {
     return ['minor'];
   }
-  if (commitType === 'fix') {
+  if (preamble === 'fix') {
     return ['minor', 'patch'];
   }
   return [];
 }
 
-async function validateChangelog(allowedBumps: string[]): Promise<void> {
-  const changedFiles = getInput('changed-files').split(' ');
-  const fileContents = await Promise.all(
-    changedFiles.map(file => readFile(file, 'utf-8'))
-  );
-  fileContents.some(fileContent =>
-    allowedBumps.some(bump =>
-      new RegExp(`'@sap-cloud-sdk\/\w+': ${bump}/`).test(fileContent)
-    )
-  );
+async function validateChangelog(
+  preamble: string,
+  isBreaking: boolean
+): Promise<void> {
+  let ok = true;
+  const allowedBumps = getAllowedBumps(preamble, isBreaking);
+  if (allowedBumps.length) {
+    const changedFiles = getInput('changed-files').split(' ');
+    const fileContents = await Promise.all(
+      changedFiles.map(file => readFile(file, 'utf-8'))
+    );
+    ok = fileContents.some(fileContent =>
+      allowedBumps.some(bump =>
+        new RegExp(`'@sap-cloud-sdk\/\w+': ${bump}/`).test(fileContent)
+      )
+    );
+  }
+
+  if (!ok) {
+    setFailed(
+      `Preamble '${preamble}' requires a changelog file with bump ${allowedBumps.join(
+        ' or '
+      )}.`
+    );
+  } else {
+    info('✓ Changelog: OK');
+  }
 }
 
 async function validateBody() {
@@ -83,20 +101,9 @@ async function validateBody() {
 
   if (!body || body === prTemplate) {
     setFailed('PR should have a description');
+  } else {
+    info('✓ Body: OK');
   }
-
-  // let i = 0;
-  // while (i < prTemplate.length) {
-  //   if (prTemplate[i] !== body[i]) {
-  //     break;
-  //   }
-  // }
-
-  console.log(prTemplate.trim() === body.trim());
-  console.log(prTemplate.length);
-  console.log(body.length);
-  // console.log(i);
-  console.log(context.payload.pull_request);
 }
 
 try {
@@ -106,7 +113,7 @@ try {
 
   validatePreamble(preamble);
   validateTitle(description);
-  validateChangelog(getAllowedBumps(preamble, isBreaking));
+  validateChangelog(preamble, isBreaking);
   validateBody();
 } catch (err) {
   setFailed(err);

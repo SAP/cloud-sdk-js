@@ -66,8 +66,7 @@ function validatePreamble(preamble) {
         (0, core_1.setFailed)("PR title does not adhere to conventional commit guidelines. Commit type found: ".concat(preamble, ". Should be one of ").concat(validPreambles.join(', ')));
     }
     else {
-        (0, core_1.info)('test');
-        (0, core_1.notice)('test');
+        (0, core_1.info)('✓ Preamble: OK');
     }
 }
 function validateTitle(title) {
@@ -77,34 +76,48 @@ function validateTitle(title) {
     if (title[0] === title[0].toLowerCase()) {
         (0, core_1.setFailed)("PR title title should be capitalized (after conventional commit preamble).");
     }
+    else {
+        (0, core_1.info)('✓ Title: OK');
+    }
 }
-function getAllowedBumps(commitType, isBreaking) {
+function getAllowedBumps(preamble, isBreaking) {
     if (isBreaking) {
         return ['major'];
     }
-    if (commitType === 'feat') {
+    if (preamble === 'feat') {
         return ['minor'];
     }
-    if (commitType === 'fix') {
+    if (preamble === 'fix') {
         return ['minor', 'patch'];
     }
     return [];
 }
-function validateChangelog(allowedBumps) {
+function validateChangelog(preamble, isBreaking) {
     return __awaiter(this, void 0, void 0, function () {
-        var changedFiles, fileContents;
+        var ok, allowedBumps, changedFiles, fileContents;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    ok = true;
+                    allowedBumps = getAllowedBumps(preamble, isBreaking);
+                    if (!allowedBumps.length) return [3 /*break*/, 2];
                     changedFiles = (0, core_1.getInput)('changed-files').split(' ');
                     return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
                 case 1:
                     fileContents = _a.sent();
-                    fileContents.some(function (fileContent) {
+                    ok = fileContents.some(function (fileContent) {
                         return allowedBumps.some(function (bump) {
                             return new RegExp("'@sap-cloud-sdk/w+': ".concat(bump, "/")).test(fileContent);
                         });
                     });
+                    _a.label = 2;
+                case 2:
+                    if (!ok) {
+                        (0, core_1.setFailed)("Preamble '".concat(preamble, "' requires a changelog file with bump ").concat(allowedBumps.join(' or '), "."));
+                    }
+                    else {
+                        (0, core_1.info)('✓ Changelog: OK');
+                    }
                     return [2 /*return*/];
             }
         });
@@ -123,17 +136,9 @@ function validateBody() {
                     if (!body || body === prTemplate) {
                         (0, core_1.setFailed)('PR should have a description');
                     }
-                    // let i = 0;
-                    // while (i < prTemplate.length) {
-                    //   if (prTemplate[i] !== body[i]) {
-                    //     break;
-                    //   }
-                    // }
-                    console.log(prTemplate.trim() === body.trim());
-                    console.log(prTemplate.length);
-                    console.log(body.length);
-                    // console.log(i);
-                    console.log(github_1.context.payload.pull_request);
+                    else {
+                        (0, core_1.info)('✓ Body: OK');
+                    }
                     return [2 /*return*/];
             }
         });
@@ -143,7 +148,7 @@ try {
     var _a = parseTitle(github_1.context.payload.pull_request.title), preamble = _a.preamble, isBreaking = _a.isBreaking, description = _a.description;
     validatePreamble(preamble);
     validateTitle(description);
-    validateChangelog(getAllowedBumps(preamble, isBreaking));
+    validateChangelog(preamble, isBreaking);
     validateBody();
 }
 catch (err) {

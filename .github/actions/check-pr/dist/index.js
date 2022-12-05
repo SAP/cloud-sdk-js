@@ -50,9 +50,10 @@ exports.__esModule = true;
 var core_1 = require("@actions/core");
 var github_1 = require("@actions/github");
 var promises_1 = require("node:fs/promises");
-var validCommitTypes = ['feat', 'fix', 'chore'];
+var node_path_1 = require("node:path");
+var validPreambles = ['feat', 'fix', 'chore'];
 function parseTitle(title) {
-    var groups = title.match(/(?<commitType>\w+)(\((?<topic>\w+)\))?(?<isBreaking>!)?: (?<description>.*)/).groups;
+    var groups = title.match(/(?<preamble>\w+)(\((?<topic>\w+)\))?(?<isBreaking>!)?: (?<description>.*)/).groups;
     if (groups) {
         return __assign(__assign({}, groups), { isBreaking: !!groups.isBreaking });
     }
@@ -60,18 +61,30 @@ function parseTitle(title) {
         throw new Error('Could not parse PR title');
     }
 }
-function validateCommitType(commitType) {
-    if (!commitType || !validCommitTypes.includes(commitType)) {
-        (0, core_1.setFailed)("PR title does not adhere to conventional commit guidelines. Commit type found: ".concat(commitType, ". Should be one of ").concat(validCommitTypes.join(', ')));
+function validatePreamble(preamble) {
+    if (!preamble || !validPreambles.includes(preamble)) {
+        (0, core_1.setFailed)("PR title does not adhere to conventional commit guidelines. Commit type found: ".concat(preamble, ". Should be one of ").concat(validPreambles.join(', ')));
     }
 }
-function validateDescription(description) {
-    if (!description) {
-        (0, core_1.setFailed)("PR title does not include a description.");
+function validateTitle(title) {
+    if (!title) {
+        (0, core_1.setFailed)("PR title does not have a title (after conventional commit preamble).");
     }
-    if (description[0] === description[0].toLowerCase()) {
-        (0, core_1.setFailed)("PR title description should be capitalized.");
+    if (title[0] === title[0].toLowerCase()) {
+        (0, core_1.setFailed)("PR title title should be capitalized (after conventional commit preamble).");
     }
+}
+function getAllowedBumps(commitType, isBreaking) {
+    if (isBreaking) {
+        return ['major'];
+    }
+    if (commitType === 'feat') {
+        return ['minor'];
+    }
+    if (commitType === 'fix') {
+        return ['minor', 'patch'];
+    }
+    return [];
 }
 function validateChangelog(allowedBumps) {
     return __awaiter(this, void 0, void 0, function () {
@@ -93,23 +106,34 @@ function validateChangelog(allowedBumps) {
         });
     });
 }
-function getAllowedBumps(commitType, isBreaking) {
-    if (isBreaking) {
-        return ['major'];
-    }
-    if (commitType === 'feat') {
-        return ['minor'];
-    }
-    if (commitType === 'fix') {
-        return ['minor', 'patch'];
-    }
-    return [];
+function validateBody() {
+    return __awaiter(this, void 0, void 0, function () {
+        var body, prTemplate;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    body = github_1.context.payload.pull_request.body;
+                    if (!body) {
+                        (0, core_1.setFailed)('PR should have a description');
+                    }
+                    return [4 /*yield*/, (0, promises_1.readFile)((0, node_path_1.resolve)('.github', 'PULL_REQUEST_TEMPLATE.md'), 'utf-8')];
+                case 1:
+                    prTemplate = _a.sent();
+                    console.log(prTemplate);
+                    console.log(body);
+                    if (!body) {
+                        (0, core_1.setFailed)('PR should have a description');
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
 }
 try {
-    var _a = parseTitle(github_1.context.payload.pull_request.title), commitType = _a.commitType, isBreaking = _a.isBreaking, description = _a.description;
-    validateCommitType(commitType);
-    validateDescription(description);
-    validateChangelog(getAllowedBumps(commitType, isBreaking));
+    var _a = parseTitle(github_1.context.payload.pull_request.title), preamble = _a.preamble, isBreaking = _a.isBreaking, description = _a.description;
+    validatePreamble(preamble);
+    validateTitle(description);
+    validateChangelog(getAllowedBumps(preamble, isBreaking));
 }
 catch (err) {
     (0, core_1.setFailed)(err);

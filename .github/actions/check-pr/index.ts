@@ -3,9 +3,9 @@ import { context } from '@actions/github';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
-const validCommitTypes = ['feat', 'fix', 'chore'];
+const validPreambles = ['feat', 'fix', 'chore'];
 interface ParsedTitle {
-  commitType?: string;
+  preamble?: string;
   topic?: string;
   isBreaking: boolean;
   description?: string;
@@ -13,7 +13,7 @@ interface ParsedTitle {
 
 function parseTitle(title: string): ParsedTitle {
   const groups = title.match(
-    /(?<commitType>\w+)(\((?<topic>\w+)\))?(?<isBreaking>!)?: (?<description>.*)/
+    /(?<preamble>\w+)(\((?<topic>\w+)\))?(?<isBreaking>!)?: (?<description>.*)/
   ).groups;
   if (groups) {
     return { ...groups, isBreaking: !!groups.isBreaking };
@@ -22,36 +22,28 @@ function parseTitle(title: string): ParsedTitle {
   }
 }
 
-function validateCommitType(commitType: string | undefined): void {
-  if (!commitType || !validCommitTypes.includes(commitType)) {
+function validatePreamble(preamble: string | undefined): void {
+  if (!preamble || !validPreambles.includes(preamble)) {
     setFailed(
-      `PR title does not adhere to conventional commit guidelines. Commit type found: ${commitType}. Should be one of ${validCommitTypes.join(
+      `PR title does not adhere to conventional commit guidelines. Commit type found: ${preamble}. Should be one of ${validPreambles.join(
         ', '
       )}`
     );
   }
 }
 
-function validateDescription(description: string | undefined): void {
-  if (!description) {
-    setFailed(`PR title does not include a description.`);
+function validateTitle(title: string | undefined): void {
+  if (!title) {
+    setFailed(
+      `PR title does not have a title (after conventional commit preamble).`
+    );
   }
 
-  if (description[0] === description[0].toLowerCase()) {
-    setFailed(`PR title description should be capitalized.`);
+  if (title[0] === title[0].toLowerCase()) {
+    setFailed(
+      `PR title title should be capitalized (after conventional commit preamble).`
+    );
   }
-}
-
-async function validateChangelog(allowedBumps: string[]): Promise<void> {
-  const changedFiles = getInput('changed-files').split(' ');
-  const fileContents = await Promise.all(
-    changedFiles.map(file => readFile(file, 'utf-8'))
-  );
-  fileContents.some(fileContent =>
-    allowedBumps.some(bump =>
-      new RegExp(`'@sap-cloud-sdk\/\w+': ${bump}/`).test(fileContent)
-    )
-  );
 }
 
 function getAllowedBumps(commitType: string, isBreaking: boolean): string[] {
@@ -67,14 +59,43 @@ function getAllowedBumps(commitType: string, isBreaking: boolean): string[] {
   return [];
 }
 
+async function validateChangelog(allowedBumps: string[]): Promise<void> {
+  const changedFiles = getInput('changed-files').split(' ');
+  const fileContents = await Promise.all(
+    changedFiles.map(file => readFile(file, 'utf-8'))
+  );
+  fileContents.some(fileContent =>
+    allowedBumps.some(bump =>
+      new RegExp(`'@sap-cloud-sdk\/\w+': ${bump}/`).test(fileContent)
+    )
+  );
+}
+
+async function validateBody() {
+  const body = context.payload.pull_request.body;
+  if (!body) {
+    setFailed('PR should have a description');
+  }
+
+  const prTemplate = await readFile(
+    resolve('.github', 'PULL_REQUEST_TEMPLATE.md'),
+    'utf-8'
+  );
+  console.log(prTemplate);
+  console.log(body);
+  if (!body) {
+    setFailed('PR should have a description');
+  }
+}
+
 try {
-  const { commitType, isBreaking, description } = parseTitle(
+  const { preamble, isBreaking, description } = parseTitle(
     context.payload.pull_request.title
   );
 
-  validateCommitType(commitType);
-  validateDescription(description);
-  validateChangelog(getAllowedBumps(commitType, isBreaking));
+  validatePreamble(preamble);
+  validateTitle(description);
+  validateChangelog(getAllowedBumps(preamble, isBreaking));
 } catch (err) {
   setFailed(err);
 }

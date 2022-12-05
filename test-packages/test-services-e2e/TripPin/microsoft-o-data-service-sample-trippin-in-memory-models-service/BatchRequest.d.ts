@@ -57,7 +57,7 @@ export declare function changeset<DeSerializersT extends DeSerializers>(
 ): BatchChangeSet<DeSerializersT>;
 export declare const defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath =
   'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
-export declare type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
+export type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | GetAllRequestBuilder<Photos<DeSerializersT>, DeSerializersT>
@@ -73,7 +73,7 @@ export declare type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceR
       GetNearestAirportParameters<DeSerializersT>,
       Airports
     >;
-export declare type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
+export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | CreateRequestBuilder<Photos<DeSerializersT>, DeSerializersT>

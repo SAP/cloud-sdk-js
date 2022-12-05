@@ -69,6 +69,7 @@ jobs:
       - uses: amannn/action-semantic-pull-request@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - run: yarn check:dependencies
         name: Undeclared dependency Check
       - run: yarn check:public-api

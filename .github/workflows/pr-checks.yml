@@ -18,7 +18,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: tj-actions/changed-files@v34
+        id: changed-files
+        with:
+          files: |
+            .changeset/**
+      - name: Run step if any file(s) in the docs folder change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          echo "One or more files in the docs folder has changed."
+          echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
       - uses: ./.github/actions/check-pr
+        with:
+          changed-files: ${{ steps.changed-files-specific.outputs.added_files }}
       # - uses: amannn/action-semantic-pull-request@v5
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

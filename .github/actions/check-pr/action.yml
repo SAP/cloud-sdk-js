@@ -1,5 +1,9 @@
 name: 'Check PR'
 description: 'Checks the current PR for semantical correctness and appropriate changelog.'
+inputs:
+  changed-files:
+    description: 'Changed files in the .changeset directory on the current PR.'
+    required: true
 runs:
   using: 'node16'
   main: 'dist/index.js'

@@ -1,4 +1,5 @@
 import * as http from 'http';
+import type { HttpMiddlewareContext, Middleware } from './middleware';
 
 /**
  * Represents the request configuration, that was inferred from a destination.
@@ -88,9 +89,9 @@ export interface HttpRequestConfigBase {
    */
   data?: any;
   /**
-   * The number of milliseconds before the request times out.
+   * Middleware to be applied to the request.
    */
-  timeout?: number;
+  middleware?: Middleware<HttpResponse, HttpMiddlewareContext>[];
   /**
    * The max size of the http response content in bytes.
    */

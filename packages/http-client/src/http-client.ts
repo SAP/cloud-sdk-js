@@ -38,6 +38,7 @@ import {
   ParameterEncoder
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
+import { executeWithMiddleware } from './middleware';
 
 const logger = createLogger({
   package: 'http-client',
@@ -77,6 +78,7 @@ export async function buildHttpRequest(
  * @internal
  */
 export async function addDestinationToRequestConfig<
+  ReturnType,
   T extends HttpRequestConfig
 >(
   destination: DestinationOrFetchOptions,
@@ -96,12 +98,12 @@ export async function addDestinationToRequestConfig<
  * @returns A function expecting destination and a request.
  * @internal
  */
-export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
+export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
   return async function <T extends HttpRequestConfigWithOrigin>(
     destination: DestinationOrFetchOptions,
     requestConfig: T,
     options?: HttpRequestOptions
-  ): Promise<ReturnT> {
+  ): Promise<HttpResponse> {
     const resolvedDestination = await resolveDestination(destination);
     if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
       throw Error(
@@ -121,7 +123,17 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
 
     request.headers = await addCsrfTokenToHeader(destination, request, options);
     logRequestInformation(request);
-    return executeFn(request);
+
+    return executeWithMiddleware(
+      requestConfig.middleware,
+      {
+        jwt: destination.jwt,
+        args: [request],
+        requestConfig: request,
+        uri: resolvedDestination.url
+      },
+      () => executeFn(request)
+    );
   };
 }
 
@@ -437,11 +449,6 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
 }
 
 /**
- * @internal
- */
-export const defaultTimeoutTarget = 10000;
-
-/**
  * Builds an Axios config with default configuration i.e. no_proxy, default http and https agent and GET as request method.
  * @returns AxiosRequestConfig with default parameters
  * @internal
@@ -464,7 +471,7 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     proxy: false,
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
-    timeout: defaultTimeoutTarget,
+    timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config
     paramsSerializer: (params = {}) =>
       Object.entries(params)
         .map(([key, value]) => `${key}=${value}`)
@@ -526,7 +533,8 @@ async function getCsrfHeaders(
         params: request.params,
         headers: request.headers,
         url: request.url,
-        timeout: request.timeout || 10000,
+        middleware: request.middleware,
+        timeout: 0, // zero means no timeout
         proxy: request.proxy,
         httpAgent: request.httpAgent,
         httpsAgent: request.httpsAgent

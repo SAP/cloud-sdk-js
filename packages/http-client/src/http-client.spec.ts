@@ -24,7 +24,6 @@ import {
   addDestinationToRequestConfig,
   buildHttpRequest,
   buildRequestWithMergedHeadersAndQueryParameters,
-  defaultTimeoutTarget,
   encodeAllParameters,
   executeHttpRequest,
   getDefaultHttpRequestOptions,
@@ -33,6 +32,11 @@ import {
   executeHttpRequestWithOrigin,
   buildHttpRequestConfigWithOrigin
 } from './http-client';
+import type {
+  Middleware,
+  MiddlewareIn,
+  HttpMiddlewareContext
+} from './middleware';
 
 describe('generic http client', () => {
   const httpsDestination: Destination = {
@@ -205,6 +209,69 @@ describe('generic http client', () => {
   describe('executeHttpRequest', () => {
     afterEach(() => {
       jest.restoreAllMocks();
+    });
+
+    function buildMiddleware(
+      appendedText: string,
+      skipNext = false
+    ): Middleware<HttpResponse, HttpMiddlewareContext> {
+      // We want to add a name to the function for debugging which is not easy to set.
+      // Doing the dummy object the name of the key is taken as function name.
+      const dummy = {
+        [appendedText](
+          options: MiddlewareIn<HttpResponse, HttpMiddlewareContext>
+        ) {
+          if (skipNext) {
+            options.skipNext();
+          }
+
+          const wrapped = () =>
+            options.fn().then(res => {
+              res.data = res.data + appendedText;
+              return res;
+            });
+
+          return wrapped;
+        }
+      };
+      return dummy[appendedText];
+    }
+
+    it('attaches one middleware', async () => {
+      nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
+      const myMiddleware = buildMiddleware('Middleware One.');
+
+      const response = await executeHttpRequest(httpsDestination, {
+        middleware: [myMiddleware],
+        method: 'get'
+      });
+      expect(response.data).toEqual('Initial value.Middleware One.');
+    });
+
+    it('attaches multiple middleware in the expected order', async () => {
+      nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
+      const myMiddlewareTwo = buildMiddleware('Middleware Two.');
+      const myMiddlewareOne = buildMiddleware('Middleware One.');
+
+      const response = await executeHttpRequest(httpsDestination, {
+        middleware: [myMiddlewareOne, myMiddlewareTwo],
+        method: 'get'
+      });
+      expect(response.data).toEqual(
+        'Initial value.Middleware One.Middleware Two.'
+      );
+    });
+
+    it('stops middleware chain if exitChain is set to true.', async () => {
+      nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
+      const myMiddlewareTwo = buildMiddleware('Middleware Two.');
+      const myMiddlewareOne = buildMiddleware('Middleware One.', true);
+
+      const response = await executeHttpRequest(httpsDestination, {
+        middleware: [myMiddlewareOne, myMiddlewareTwo],
+        method: 'get'
+      });
+      expect(response.data).toEqual('Initial value.Middleware One.');
     });
 
     // The base-agent dependency coming in via the http-proxy-agent did mess with the node https.
@@ -494,35 +561,17 @@ sap-client:001`);
       requestSpy.mockRestore();
     });
 
-    it('uses the default timeout if not given', async () => {
-      const destination: Destination = {
-        url: 'https://destinationUrl'
-      };
-      const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
-      await expect(
-        executeHttpRequest(destination, { method: 'get' })
-      ).resolves.not.toThrow();
-      expect(requestSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          timeout: defaultTimeoutTarget
-        })
-      );
-    });
-
-    it('uses a custom timeout if given', async () => {
-      const destination: Destination = {
-        url: 'https://destinationUrl'
-      };
-      const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
-      await expect(
-        executeHttpRequest(destination, { method: 'get', timeout: 123 })
-      ).resolves.not.toThrow();
-      expect(requestSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          timeout: 123
-        })
-      );
-    });
+    it('uses no timeout if no timeout middleware given', async () => {
+      nock('https://example.com', {})
+        .get('/with-delay')
+        .delay(10000 + 1) // typical default timeouts of http clients are 10 seconds
+        .reply(200);
+      const promise = executeHttpRequest(httpsDestination, {
+        method: 'get',
+        url: '/with-delay'
+      });
+      await expect(promise).resolves.not.toThrow();
+    }, 60000);
 
     it('overwrites the default axios config with destination related request config', async () => {
       const destination: Destination = {

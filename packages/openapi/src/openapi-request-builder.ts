@@ -16,7 +16,9 @@ import {
 import {
   filterCustomRequestConfig,
   OriginOptions,
-  encodeTypedClientRequest
+  encodeTypedClientRequest,
+  Middleware,
+  HttpMiddlewareContext
 } from '@sap-cloud-sdk/http-client/internal';
 
 /**
@@ -31,7 +33,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: Record<string, string> = {};
   private _fetchCsrfToken = true;
-  private _timeout: number | undefined = undefined;
+  private _middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[] = [];
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -82,12 +84,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Set timeout for requests towards the target system given in the destination.
-   * @param timeout - Value is in milliseconds and default value is 10000 (10 seconds).
+   * Set middleware for requests towards the target system given in the destination.
+   * @param middlewares - Middlewares to be applied to the executeHttpRequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
-  timeout(timeout: number): this {
-    this._timeout = timeout;
+  middleware(
+    middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[]
+  ): this {
+    this._middlewares = middlewares;
     return this;
   }
 
@@ -141,7 +145,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
       url: this.getPath(),
       headers: this.getHeaders(),
       params: this.getParameters(),
-      timeout: this._timeout,
+      middleware: this._middlewares,
       parameterEncoder: encodeTypedClientRequest,
       data: this.parameters?.body
     };
@@ -166,9 +170,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     const pathParameters = this.parameters?.pathParameters || {};
 
     // Get the innermost curly bracket pairs with non-empty and legal content as placeholders.
-    const placeholders = this.pathPattern.match(/{[^/?#{}]+}/g) || [];
+    const placeholders: string[] = this.pathPattern.match(/{[^/?#{}]+}/g) || [];
 
-    return placeholders.reduce((path, placeholder) => {
+    return placeholders.reduce((path: string, placeholder: string) => {
       const strippedPlaceholder = placeholder.slice(1, -1);
       const parameterValue = pathParameters[strippedPlaceholder];
       return path.replace(placeholder, encodeURIComponent(parameterValue));

@@ -6,7 +6,7 @@
 /**
  * Representation of the 'TestEntity' schema.
  */
-export declare type TestEntity =
+export type TestEntity =
   | {
       /**
        * A string property

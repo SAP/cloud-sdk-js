@@ -3,6 +3,7 @@ import * as httpClient from '@sap-cloud-sdk/http-client';
 import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { asc, desc } from '@sap-cloud-sdk/odata-common';
+import { timeout } from '@sap-cloud-sdk/resilience';
 import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
@@ -229,9 +230,14 @@ describe('GetAllRequestBuilder', () => {
       );
 
       try {
-        await requestBuilder.top(1).timeout(10).execute(defaultDestination);
+        await requestBuilder
+          .top(1)
+          .middleware([timeout(10)])
+          .execute(defaultDestination);
       } catch (err) {
-        expect(err.cause.message).toBe('timeout of 10ms exceeded');
+        expect(err.message).toBe(
+          'Request to /testination ran into timeout after 10ms.'
+        );
         return;
       }
       throw new Error('Should not reach here.');
@@ -359,6 +365,7 @@ describe('GetAllRequestBuilder', () => {
           },
           url: 'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
           method: 'get',
+          middleware: [],
           data: undefined
         },
         { fetchCsrfToken: true }

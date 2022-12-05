@@ -69,31 +69,18 @@ describe('buildCsrfHeaders', () => {
     );
   });
 
-  it('considers custom timeout on csrf token fetching', async () => {
+  it('has no timeout per default', async () => {
     jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
     await expect(
-      executeHttpRequest(
-        { url: 'http://foo.bar' },
-        { method: 'post', timeout: 123 }
-      )
+        executeHttpRequest(
+            { url: 'http://foo.bar' },
+            { method: 'post' }
+        )
     ).rejects.toThrow();
 
     expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.objectContaining({ timeout: 123 })
-    );
-    jest.restoreAllMocks();
-  });
-
-  it('considers default timeout on csrf token fetching', async () => {
-    jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
-    await expect(
-      executeHttpRequest({ url: 'http://foo.bar' }, { method: 'post' })
-    ).rejects.toThrow();
-
-    expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.objectContaining({ timeout: 10000 })
+        expect.anything(),
+        expect.objectContaining({ middleware: undefined, timeout: 0 })
     );
     jest.restoreAllMocks();
   });

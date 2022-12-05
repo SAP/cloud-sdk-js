@@ -279,7 +279,9 @@ export const generatorOptionsCli = {
     describe:
       "License to be used on the generated package.json. Only considered if 'generatePackageJson' is enabled.",
     type: 'string',
-    requiresArg: false
+    requiresArg: false,
+    deprecated:
+      "Since v2.6.0. Use the 'include' option to add your own package.json file instead."
   },
   generateJs: {
     describe:
@@ -292,7 +294,8 @@ export const generatorOptionsCli = {
     alias: 'np',
     type: 'number',
     default: defaultValueProcessesJsGeneration,
-    hidden: true
+    hidden: true,
+    replacedBy: 'processesJsGeneration'
   },
   processesJsGeneration: {
     describe: 'Number of processes used for generation of javascript files.',

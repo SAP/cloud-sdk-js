@@ -1,4 +1,4 @@
-import { GeneratorOptions } from './generator-options';
+import { ParsedGeneratorOptions } from './generator-options';
 import { npmCompliantName } from './generator-utils';
 import { GlobalNameFormatter } from './global-name-formatter';
 import { inputPaths, ServiceDefinitionPaths } from './input-path-provider';
@@ -20,7 +20,7 @@ class ServiceGenerator {
   private globalNameFormatter: GlobalNameFormatter;
   private serviceMapping: VdmMapping;
 
-  constructor(readonly options: GeneratorOptions) {
+  constructor(readonly options: ParsedGeneratorOptions) {
     this.serviceMapping = readServiceMapping(options);
     this.globalNameFormatter = new GlobalNameFormatter(this.serviceMapping);
   }
@@ -125,7 +125,7 @@ class ServiceGenerator {
  * @internal
  */
 export function parseAllServices(
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): VdmServiceMetadata[] {
   return new ServiceGenerator(options).generateAllServices();
 }
@@ -140,7 +140,7 @@ export function parseAllServices(
  */
 export function parseService(
   serviceDefinitionPaths: ServiceDefinitionPaths,
-  options: GeneratorOptions,
+  options: ParsedGeneratorOptions,
   mappings: VdmMapping,
   globalNameFormatter: GlobalNameFormatter
 ): VdmServiceMetadata {

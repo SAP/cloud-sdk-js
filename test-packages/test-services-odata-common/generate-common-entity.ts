@@ -20,7 +20,7 @@ export async function generateCommonEntity() {
       inputDir: resolve(__dirname, 'COMMON_SRV.edmx'),
       outputDir: resolve(__dirname),
       serviceMapping: resolve(__dirname, 'service-mapping.json'),
-      forceOverwrite: true
+      overwrite: true
     })
   );
 

@@ -85,17 +85,17 @@ async function validateBody() {
     setFailed('PR should have a description');
   }
 
-  let i = 0;
-  while (i < prTemplate.length) {
-    if (prTemplate[i] !== body[i]) {
-      break;
-    }
-  }
+  // let i = 0;
+  // while (i < prTemplate.length) {
+  //   if (prTemplate[i] !== body[i]) {
+  //     break;
+  //   }
+  // }
 
   console.log(prTemplate.trim() === body.trim());
   console.log(prTemplate.length);
   console.log(body.length);
-  console.log(i);
+  // console.log(i);
   console.log(context.payload.pull_request);
 }
 

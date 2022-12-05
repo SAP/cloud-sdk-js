@@ -57,7 +57,7 @@ export declare function changeset<DeSerializersT extends DeSerializers>(
 ): BatchChangeSet<DeSerializersT>;
 export declare const defaultMultipleSchemasServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
-export type ReadMultipleSchemasServiceRequestBuilder<
+export declare type ReadMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | GetAllRequestBuilder<TestEntity1<DeSerializersT>, DeSerializersT>
@@ -78,7 +78,7 @@ export type ReadMultipleSchemasServiceRequestBuilder<
       TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
       TestEntity2
     >;
-export type WriteMultipleSchemasServiceRequestBuilder<
+export declare type WriteMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | CreateRequestBuilder<TestEntity1<DeSerializersT>, DeSerializersT>

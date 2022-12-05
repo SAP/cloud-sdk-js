@@ -72,15 +72,12 @@ describe('buildCsrfHeaders', () => {
   it('has no timeout per default', async () => {
     jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
     await expect(
-        executeHttpRequest(
-            { url: 'http://foo.bar' },
-            { method: 'post' }
-        )
+      executeHttpRequest({ url: 'http://foo.bar' }, { method: 'post' })
     ).rejects.toThrow();
 
     expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalledWith(
-        expect.anything(),
-        expect.objectContaining({ middleware: undefined, timeout: 0 })
+      expect.anything(),
+      expect.objectContaining({ middleware: undefined, timeout: 0 })
     );
     jest.restoreAllMocks();
   });

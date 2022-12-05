@@ -27,15 +27,10 @@ import {
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import * as jwt from '../jwt';
 import { getDestination } from './destination-accessor';
-import { circuitBreaker } from './destination-service';
 
 const { wrapJwtInHeader } = jwt;
 
 describe('Failure cases', () => {
-  beforeEach(() => {
-    clientCredentialsTokenCache.clear();
-    circuitBreaker?.clearCache();
-  });
 
   it('fails if no destination service is bound', async () => {
     process.env['VCAP_SERVICES'] = JSON.stringify({

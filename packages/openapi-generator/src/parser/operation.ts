@@ -75,7 +75,7 @@ export function parsePathPattern(
   pathParameters: OpenApiParameter[]
 ): string {
   // Get the innermost curly bracket pairs with non-empty and legal content as placeholders
-  const placeholders = pathPattern.match(/{[^/?#{}]+}/g) || [];
+  const placeholders: string[] = pathPattern.match(/{[^/?#{}]+}/g) || [];
   // Get the non-parameter strings as static parts
   const staticParts = pathPattern.split(/{[^/?#{}]+}/);
 

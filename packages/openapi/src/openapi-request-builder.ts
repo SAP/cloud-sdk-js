@@ -166,7 +166,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     const pathParameters = this.parameters?.pathParameters || {};
 
     // Get the innermost curly bracket pairs with non-empty and legal content as placeholders.
-    const placeholders = this.pathPattern.match(/{[^/?#{}]+}/g) || [];
+    const placeholders: string[] = this.pathPattern.match(/{[^/?#{}]+}/g) || [];
 
     return placeholders.reduce((path, placeholder) => {
       const strippedPlaceholder = placeholder.slice(1, -1);

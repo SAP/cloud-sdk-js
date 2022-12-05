@@ -6,7 +6,7 @@
 /**
  * Representation of the 'Schema123456' schema.
  */
-export declare type Schema123456 =
+export type Schema123456 =
   | {
       /**
        * @example "Schema name only integers"

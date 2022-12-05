@@ -217,7 +217,8 @@ export const generatorOptionsCli = {
     type: 'boolean',
     default: false,
     hidden: true,
-    deprecated: "Since v2.12.0. Use 'readme' instead."
+    deprecated: "Since v2.12.0. Use 'readme' instead.",
+    replacedBy: 'readme'
   },
   include: {
     describe:
@@ -237,7 +238,8 @@ export const generatorOptionsCli = {
       'By default, the generator will exit when encountering a file that already exists. When set to true, it will be overwritten instead. Please note that compared to the --clearOutputDir option, this will not delete outdated files.',
     type: 'boolean',
     default: false,
-    deprecated: "Since v2.12.0. Use 'overwrite' instead."
+    deprecated: "Since v2.12.0. Use 'overwrite' instead.",
+    replacedBy: 'overwrite'
   },
   clearOutputDir: {
     describe:

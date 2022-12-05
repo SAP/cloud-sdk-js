@@ -262,7 +262,8 @@ export const generatorOptionsCli = {
       'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
     type: 'boolean',
     default: true,
-    deprecated: "Since v2.12.0. Use 'packageJson' instead."
+    deprecated: "Since v2.12.0. Use 'packageJson' instead.",
+    replacedBy: 'packageJson'
   },
   versionInPackageJson: {
     describe:

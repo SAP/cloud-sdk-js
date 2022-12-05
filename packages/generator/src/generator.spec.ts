@@ -97,7 +97,6 @@ describe('generator', () => {
         'API_TEST_SRV.edmx'
       ),
       outputDir: 'csn-test',
-      packageJson: false,
       generateCSN: true
     });
 

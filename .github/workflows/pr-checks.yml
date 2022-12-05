@@ -23,6 +23,7 @@ jobs:
         with:
           files: |
             .changeset/**
+          json: true
 
       - uses: ./.github/actions/check-pr
         with:

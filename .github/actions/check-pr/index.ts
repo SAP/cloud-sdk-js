@@ -1,7 +1,7 @@
 import { setOutput, getInput, setFailed } from '@actions/core';
 import { context } from '@actions/github';
 
-const changedFiles = getInput('changed-files').split(' ');
+const changedFiles = getInput('changed-files'); //.split(' ');
 console.log('here', changedFiles);
 // console.log(JSON.stringify(context.payload.pull_request, null, 2));
 

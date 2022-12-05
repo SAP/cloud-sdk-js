@@ -79,6 +79,7 @@ export interface GeneratorOptions {
    */
   versionInPackageJson?: string;
   /**
+   * @deprecated Since v2.12.0.
    * License name to be used on the generated package.json. Only considered if 'packageJson' is enabled.
    */
   licenseInPackageJson?: string;
@@ -116,6 +117,7 @@ export interface GeneratorOptions {
   generateCSN?: boolean;
   // TODO: remove packageVersion in version 3.0
   /**
+   * @deprecated Since v2.12.0.
    * Internal option used to adjust the version in the generated `package.json`. Will not be used in the future.
    */
   packageVersion?: string;
@@ -281,7 +283,7 @@ export const generatorOptionsCli = {
     type: 'string',
     requiresArg: false,
     deprecated:
-      "Since v2.6.0. Use the 'include' option to add your own package.json file instead."
+      "Since v2.12.0. Use the 'include' option to add your own package.json file instead."
   },
   generateJs: {
     describe:

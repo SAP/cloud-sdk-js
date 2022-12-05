@@ -117,17 +117,13 @@ function validateBody() {
             switch (_a.label) {
                 case 0:
                     body = github_1.context.payload.pull_request.body;
-                    if (!body) {
-                        (0, core_1.setFailed)('PR should have a description');
-                    }
                     return [4 /*yield*/, (0, promises_1.readFile)((0, node_path_1.resolve)('.github', 'PULL_REQUEST_TEMPLATE.md'), 'utf-8')];
                 case 1:
                     prTemplate = _a.sent();
-                    console.log(prTemplate);
-                    console.log(body);
-                    if (!body) {
+                    if (!body || body === prTemplate) {
                         (0, core_1.setFailed)('PR should have a description');
                     }
+                    console.log(prTemplate === body);
                     return [2 /*return*/];
             }
         });

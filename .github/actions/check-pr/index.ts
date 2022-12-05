@@ -76,19 +76,16 @@ async function validateChangelog(allowedBumps: string[]): Promise<void> {
 
 async function validateBody() {
   const body = context.payload.pull_request.body;
-  if (!body) {
-    setFailed('PR should have a description');
-  }
-
   const prTemplate = await readFile(
     resolve('.github', 'PULL_REQUEST_TEMPLATE.md'),
     'utf-8'
   );
-  console.log(prTemplate);
-  console.log(body);
-  if (!body) {
+
+  if (!body || body === prTemplate) {
     setFailed('PR should have a description');
   }
+
+  console.log(prTemplate === body);
 }
 
 try {

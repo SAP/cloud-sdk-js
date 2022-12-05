@@ -1,17 +1,21 @@
 import { resolve, join } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate } from '@sap-cloud-sdk/generator';
+import { transformEnumTypesBase } from '@sap-cloud-sdk/generator/internal';
 
 const logger = createLogger('generate-odata-services');
 
 const generatorConfigOData = {
   forceOverwrite: true,
+  overwrite: true,
   generateJs: false,
   useSwagger: false,
   writeReadme: false,
+  readme: false,
   clearOutputDir: false,
   generateNpmrc: false,
   generatePackageJson: false,
+  packageJson: false,
   generateCSN: false,
   generateSdkMetadata: false,
   // Unnecessary options

@@ -19,7 +19,7 @@ import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
  *
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
  * @param service - The type of the service or an instance of {@link Service}.
- * @param options - Options to influence caching and resilience behavior (see {@link CachingOptions} and {@link ResilienceOptions}, respectively) and a JWT. By default, caching and usage of a circuit breaker are enabled.
+ * @param options - Options to influence caching behavior (see {@link CachingOptions}) and a JWT. By default, caching and usage of a circuit breaker are enabled.
  * @returns Access token.
  */
 export async function serviceToken(

@@ -222,7 +222,7 @@ export interface DestinationCertificate {
 }
 
 /**
- * Options to use while fetching destinations. Encompasses both {@link CachingOptions} and {@link ResilienceOptions} interfaces.
+ * Options to use while fetching destinations. Encompasses both {@link CachingOptions} and isolation strategy.
  */
 export type DestinationRetrievalOptions = CachingOptions & {
   /**

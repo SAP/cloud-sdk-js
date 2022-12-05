@@ -1,4 +1,4 @@
-import { setOutput, getInput, setFailed } from '@actions/core';
+import { setOutput, getInput, setFailed, info, notice } from '@actions/core';
 import { context } from '@actions/github';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -29,6 +29,9 @@ function validatePreamble(preamble: string | undefined): void {
         ', '
       )}`
     );
+  } else {
+    info('test');
+    notice('test');
   }
 }
 
@@ -96,6 +99,7 @@ try {
   validatePreamble(preamble);
   validateTitle(description);
   validateChangelog(getAllowedBumps(preamble, isBreaking));
+  validateBody();
 } catch (err) {
   setFailed(err);
 }

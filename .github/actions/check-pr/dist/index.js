@@ -65,6 +65,10 @@ function validatePreamble(preamble) {
     if (!preamble || !validPreambles.includes(preamble)) {
         (0, core_1.setFailed)("PR title does not adhere to conventional commit guidelines. Commit type found: ".concat(preamble, ". Should be one of ").concat(validPreambles.join(', ')));
     }
+    else {
+        (0, core_1.info)('test');
+        (0, core_1.notice)('test');
+    }
 }
 function validateTitle(title) {
     if (!title) {
@@ -134,6 +138,7 @@ try {
     validatePreamble(preamble);
     validateTitle(description);
     validateChangelog(getAllowedBumps(preamble, isBreaking));
+    validateBody();
 }
 catch (err) {
     (0, core_1.setFailed)(err);

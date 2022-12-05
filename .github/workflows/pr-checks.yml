@@ -23,7 +23,7 @@ jobs:
         with:
           files: |
             .changeset/**
-          json: true
+          # json: true
       - uses: ./.github/actions/check-pr
         with:
           changed-files: ${{ steps.changed-files.outputs.added_files }}

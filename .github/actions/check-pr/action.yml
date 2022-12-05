@@ -1,8 +1,5 @@
 name: 'Check PR'
 description: 'Checks the current PR for semantical correctness and appropriate changelog.'
-outputs:
-  changelog:
-    description: 'The current changelog'
 runs:
   using: 'node18'
-  main: 'dist/.github/actions/get-changelog/index.js'
+  main: 'dist/.github/actions/check-pr/index.js'

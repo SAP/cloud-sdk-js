@@ -101,7 +101,7 @@ describe('destination loading precedence', () => {
         cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not fetch client credentials token for service of type \\"destination\\"."'
+      '"Could not fetch client credentials token for service of type "destination"."'
     );
   });
 });

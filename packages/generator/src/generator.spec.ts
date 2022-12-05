@@ -60,7 +60,7 @@ describe('generator', () => {
 
     it('recommends to install odata packages', async () => {
       expect(getInstallODataErrorMessage(project!)).toMatchInlineSnapshot(
-        '"Did you forget to install \\"@sap-cloud-sdk/odata-v2\\"?"'
+        '"Did you forget to install "@sap-cloud-sdk/odata-v2"?"'
       );
     });
 

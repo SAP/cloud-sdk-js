@@ -27,8 +27,8 @@ describe('ErrorWithCause', () => {
       JSON.stringify(new ErrorWithCause('error', new Error('cause')), null, 2)
     ).toMatchInlineSnapshot(`
       "{
-        \\"cause\\": {},
-        \\"name\\": \\"ErrorWithCause\\"
+        "cause": {},
+        "name": "ErrorWithCause"
       }"
     `);
   });

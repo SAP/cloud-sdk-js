@@ -293,7 +293,7 @@ describe('token accessor', () => {
       await expect(
         serviceToken('destination')
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Could not fetch client credentials token for service of type \\"destination\\"."'
+        '"Could not fetch client credentials token for service of type "destination"."'
       );
     });
 
@@ -315,7 +315,7 @@ describe('token accessor', () => {
       await expect(
         serviceToken('destination')
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Unable to get access token for \\"destination\\" service. No service instance of type \\"destination\\" found."'
+        '"Unable to get access token for "destination" service. No service instance of type "destination" found."'
       );
     });
 

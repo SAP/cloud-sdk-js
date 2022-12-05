@@ -116,7 +116,7 @@ describe('parseDestination', () => {
         Name: 'DEST'
       } as any)
     ).toThrowErrorMatchingInlineSnapshot(
-      '"Property \'URL\' of destination configuration must not be undefined, but destination with name \\"DEST\\" has no property \'URL\'."'
+      '"Property \'URL\' of destination configuration must not be undefined, but destination with name "DEST" has no property \'URL\'."'
     );
   });
 

@@ -79,7 +79,7 @@ function validateChangelog(allowedBumps) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    changedFiles = JSON.parse((0, core_1.getInput)('changed-files'));
+                    changedFiles = (0, core_1.getInput)('changed-files').split(' ');
                     return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
                 case 1:
                     fileContents = _a.sent();

@@ -43,7 +43,7 @@ function validateDescription(description: string | undefined): void {
 }
 
 async function validateChangelog(allowedBumps: string[]): Promise<void> {
-  const changedFiles = JSON.parse(getInput('changed-files'));
+  const changedFiles = getInput('changed-files').split(' ');
   const fileContents = await Promise.all(
     changedFiles.map(file => readFile(file, 'utf-8'))
   );

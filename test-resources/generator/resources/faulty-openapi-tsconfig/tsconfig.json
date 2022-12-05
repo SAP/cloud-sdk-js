@@ -7,7 +7,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "diagnostics": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     "esModuleInterop": true,
     "inlineSources": false,
     "strict": true

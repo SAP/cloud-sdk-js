@@ -112,7 +112,7 @@ function validateChangelog(allowedBumps) {
 }
 function validateBody() {
     return __awaiter(this, void 0, void 0, function () {
-        var body, prTemplate, i;
+        var body, prTemplate;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -123,16 +123,16 @@ function validateBody() {
                     if (!body || body === prTemplate) {
                         (0, core_1.setFailed)('PR should have a description');
                     }
-                    i = 0;
-                    while (i < prTemplate.length) {
-                        if (prTemplate[i] !== body[i]) {
-                            break;
-                        }
-                    }
+                    // let i = 0;
+                    // while (i < prTemplate.length) {
+                    //   if (prTemplate[i] !== body[i]) {
+                    //     break;
+                    //   }
+                    // }
                     console.log(prTemplate.trim() === body.trim());
                     console.log(prTemplate.length);
                     console.log(body.length);
-                    console.log(i);
+                    // console.log(i);
                     console.log(github_1.context.payload.pull_request);
                     return [2 /*return*/];
             }

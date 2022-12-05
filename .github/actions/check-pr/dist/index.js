@@ -123,9 +123,9 @@ function validateBody() {
                     if (!body || body === prTemplate) {
                         (0, core_1.setFailed)('PR should have a description');
                     }
-                    console.log(prTemplate === body);
-                    console.log(prTemplate);
-                    console.log(body);
+                    console.log(prTemplate.trim() === body.trim());
+                    console.log(prTemplate.length);
+                    console.log(body.length);
                     return [2 /*return*/];
             }
         });

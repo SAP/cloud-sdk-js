@@ -85,9 +85,9 @@ async function validateBody() {
     setFailed('PR should have a description');
   }
 
-  console.log(prTemplate === body);
-  console.log(prTemplate);
-  console.log(body);
+  console.log(prTemplate.trim() === body.trim());
+  console.log(prTemplate.length);
+  console.log(body.length);
 }
 
 try {

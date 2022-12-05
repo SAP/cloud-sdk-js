@@ -2,4 +2,4 @@ name: 'Check PR'
 description: 'Checks the current PR for semantical correctness and appropriate changelog.'
 runs:
   using: 'node16'
-  main: 'dist/.github/actions/check-pr/index.js'
+  main: 'dist/index.js'

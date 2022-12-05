@@ -124,6 +124,8 @@ function validateBody() {
                         (0, core_1.setFailed)('PR should have a description');
                     }
                     console.log(prTemplate === body);
+                    console.log(prTemplate);
+                    console.log(body);
                     return [2 /*return*/];
             }
         });

@@ -86,6 +86,8 @@ async function validateBody() {
   }
 
   console.log(prTemplate === body);
+  console.log(prTemplate);
+  console.log(body);
 }
 
 try {

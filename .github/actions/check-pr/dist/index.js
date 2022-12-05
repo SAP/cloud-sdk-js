@@ -133,6 +133,7 @@ function validateBody() {
                     console.log(prTemplate.length);
                     console.log(body.length);
                     console.log(i);
+                    console.log(github_1.context.payload.pull_request);
                     return [2 /*return*/];
             }
         });

@@ -96,6 +96,7 @@ async function validateBody() {
   console.log(prTemplate.length);
   console.log(body.length);
   console.log(i);
+  console.log(context.payload.pull_request);
 }
 
 try {

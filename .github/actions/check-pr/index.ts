@@ -38,7 +38,7 @@ function validateDescription(description: string | undefined): void {
   }
 
   if (description[0] === description[0].toLowerCase()) {
-    setFailed(`PR title description should start with capital case.`);
+    setFailed(`PR title description should be capitalized.`);
   }
 }
 
@@ -67,10 +67,14 @@ function getAllowedBumps(commitType: string, isBreaking: boolean): string[] {
   return [];
 }
 
-const { commitType, isBreaking, description } = parseTitle(
-  context.payload.pull_request.title
-);
+try {
+  const { commitType, isBreaking, description } = parseTitle(
+    context.payload.pull_request.title
+  );
 
-validateCommitType(commitType);
-validateDescription(description);
-validateChangelog(getAllowedBumps(commitType, isBreaking));
+  validateCommitType(commitType);
+  validateDescription(description);
+  validateChangelog(getAllowedBumps(commitType, isBreaking));
+} catch (err) {
+  setFailed(err);
+}

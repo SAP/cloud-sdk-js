@@ -70,7 +70,7 @@ function validateDescription(description) {
         (0, core_1.setFailed)("PR title does not include a description.");
     }
     if (description[0] === description[0].toLowerCase()) {
-        (0, core_1.setFailed)("PR title description should start with capital case.");
+        (0, core_1.setFailed)("PR title description should be capitalized.");
     }
 }
 function validateChangelog(allowedBumps) {
@@ -105,7 +105,12 @@ function getAllowedBumps(commitType, isBreaking) {
     }
     return [];
 }
-var _a = parseTitle(github_1.context.payload.pull_request.title), commitType = _a.commitType, isBreaking = _a.isBreaking, description = _a.description;
-validateCommitType(commitType);
-validateDescription(description);
-validateChangelog(getAllowedBumps(commitType, isBreaking));
+try {
+    var _a = parseTitle(github_1.context.payload.pull_request.title), commitType = _a.commitType, isBreaking = _a.isBreaking, description = _a.description;
+    validateCommitType(commitType);
+    validateDescription(description);
+    validateChangelog(getAllowedBumps(commitType, isBreaking));
+}
+catch (err) {
+    (0, core_1.setFailed)(err);
+}

@@ -33,8 +33,8 @@ import {
   OneToOneLink,
   OrderableEdmTypeField,
   PropertyMetadata,
-  Time
-} from '../../packages/odata-common/src/internal';
+  Time, nonEnumerable
+} from "../../packages/odata-common/src/internal";
 import { customTestDeSerializers } from '../../test-resources/test/test-util';
 
 /*
@@ -360,6 +360,7 @@ export class CommonEntity<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: CommonEntityApi<T>) {
     super(_entityApi);
+    nonEnumerable(this, '_entityApi');
   }
 }
 

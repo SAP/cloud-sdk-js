@@ -51,6 +51,8 @@ export abstract class EntityBase {
   static _entityName: string;
   static _defaultServicePath: string;
 
+  readonly _oDataVersion: any;
+
   /**
    * The remote state of the entity.
    * Remote state refers to the last known state of the entity on the remote system from which it has been retrieved or to which it has been posted.
@@ -71,8 +73,6 @@ export abstract class EntityBase {
    * A custom field can be added or updated using {@link setCustomField} method.
    */
   protected _customFields: Record<string, any>;
-
-  readonly _oDataVersion: any;
 
   /**
    * @internal

@@ -46,11 +46,9 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
  */
 export function serializeRequest<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  ReturnT,
-  ParametersT
+  DeSerializersT extends DeSerializers
 >(
-  request: AllRequestBuilders<EntityT, DeSerializersT>,
+  request: AllRequestBuilders,
   options: BatchRequestSerializationOptions = {}
 ): string {
   const odataRequest = new ODataRequest(
@@ -86,17 +84,14 @@ export function serializeRequest<
 type RequestBuildersWithBatchReference = Omit<MethodRequestBuilder, 'execute'> &
   WithBatchReference;
 
-type AllRequestBuilders<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
-> = RequestBuildersWithBatchReference | Omit<MethodRequestBuilder, 'execute'>;
+type AllRequestBuilders =
+  | RequestBuildersWithBatchReference
+  | Omit<MethodRequestBuilder, 'execute'>;
 
 function isRequestBuilderWithBatchReference<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
->(
-  request: AllRequestBuilders<EntityT, DeSerializersT>
-): request is RequestBuildersWithBatchReference {
+>(request: AllRequestBuilders): request is RequestBuildersWithBatchReference {
   return !!(request as WithBatchReference).getBatchReference;
 }
 

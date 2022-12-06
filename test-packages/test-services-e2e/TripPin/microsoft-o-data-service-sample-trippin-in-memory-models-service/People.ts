@@ -7,7 +7,8 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  nonEnumerable
 } from '@sap-cloud-sdk/odata-v4';
 import { Location } from './Location';
 import type { PeopleApi } from './PeopleApi';
@@ -76,6 +77,7 @@ export class People<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: PeopleApi<T>) {
     super(_entityApi);
+    nonEnumerable(this, '_entityApi');
   }
 }
 

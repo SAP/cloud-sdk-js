@@ -148,3 +148,4 @@ export {
   ReadResponse,
   WriteResponse
 } from './batch-response';
+export { nonEnumerable } from './properties-util';

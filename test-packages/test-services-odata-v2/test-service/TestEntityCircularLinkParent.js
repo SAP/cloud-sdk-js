@@ -35,6 +35,7 @@ class TestEntityCircularLinkParent extends odata_v2_1.Entity {
     constructor(_entityApi) {
         super(_entityApi);
         this._entityApi = _entityApi;
+        (0, odata_v2_1.nonEnumerable)(this, '_entityApi');
     }
 }
 exports.TestEntityCircularLinkParent = TestEntityCircularLinkParent;

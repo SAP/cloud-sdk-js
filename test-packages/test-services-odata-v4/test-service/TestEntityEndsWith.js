@@ -32,6 +32,7 @@ class TestEntityEndsWith extends odata_v4_1.Entity {
     constructor(_entityApi) {
         super(_entityApi);
         this._entityApi = _entityApi;
+        (0, odata_v4_1.nonEnumerable)(this, '_entityApi');
     }
 }
 exports.TestEntityEndsWith = TestEntityEndsWith;

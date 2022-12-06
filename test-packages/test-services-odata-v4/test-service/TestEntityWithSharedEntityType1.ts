@@ -7,7 +7,8 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  nonEnumerable
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithSharedEntityType1Api } from './TestEntityWithSharedEntityType1Api';
 
@@ -40,6 +41,7 @@ export class TestEntityWithSharedEntityType1<
 
   constructor(readonly _entityApi: TestEntityWithSharedEntityType1Api<T>) {
     super(_entityApi);
+    nonEnumerable(this, '_entityApi');
   }
 }
 

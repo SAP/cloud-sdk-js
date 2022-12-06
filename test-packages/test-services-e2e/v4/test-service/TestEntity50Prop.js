@@ -286,6 +286,7 @@ class TestEntity50Prop extends odata_v4_1.Entity {
     constructor(_entityApi) {
         super(_entityApi);
         this._entityApi = _entityApi;
+        (0, odata_v4_1.nonEnumerable)(this, '_entityApi');
     }
 }
 exports.TestEntity50Prop = TestEntity50Prop;

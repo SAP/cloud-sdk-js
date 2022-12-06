@@ -7,7 +7,8 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  nonEnumerable
 } from '@sap-cloud-sdk/odata-v2';
 import type { MultiSchemaTestEntityApi } from './MultiSchemaTestEntityApi';
 
@@ -39,6 +40,7 @@ export class MultiSchemaTestEntity<
 
   constructor(readonly _entityApi: MultiSchemaTestEntityApi<T>) {
     super(_entityApi);
+    nonEnumerable(this, '_entityApi');
   }
 }
 

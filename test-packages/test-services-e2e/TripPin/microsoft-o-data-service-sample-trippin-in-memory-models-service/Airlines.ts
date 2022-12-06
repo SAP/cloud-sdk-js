@@ -7,7 +7,8 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType
+  DeserializedType,
+  nonEnumerable
 } from '@sap-cloud-sdk/odata-v4';
 import type { AirlinesApi } from './AirlinesApi';
 
@@ -42,6 +43,7 @@ export class Airlines<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: AirlinesApi<T>) {
     super(_entityApi);
+    nonEnumerable(this, '_entityApi');
   }
 }
 

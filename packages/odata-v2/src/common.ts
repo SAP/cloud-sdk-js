@@ -34,5 +34,6 @@ export {
   WriteResponses as WriteResponsesCommon,
   ReadResponse as ReadResponseCommon,
   WriteResponse as WriteResponseCommon,
-  ErrorResponse
+  ErrorResponse,
+  nonEnumerable
 } from '@sap-cloud-sdk/odata-common';

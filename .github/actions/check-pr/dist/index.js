@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -51,34 +40,63 @@ var core_1 = require("@actions/core");
 var github_1 = require("@actions/github");
 var promises_1 = require("node:fs/promises");
 var node_path_1 = require("node:path");
-var validPreambles = ['feat', 'fix', 'chore'];
-function parseTitle(title) {
-    var groups = title.match(/(?<preamble>\w+)(\((?<topic>\w+)\))?(?<isBreaking>!)?: (?<description>.*)/).groups;
-    if (groups) {
-        return __assign(__assign({}, groups), { isBreaking: !!groups.isBreaking });
-    }
-    else {
-        throw new Error('Could not parse PR title');
-    }
+var validCommitTypes = ['feat', 'fix', 'chore'];
+// Expected format: preamble(topic)!: Title text
+function validateTitle() {
+    return __awaiter(this, void 0, void 0, function () {
+        var title, _a, preamble, postamble;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    title = github_1.context.payload.pull_request.title;
+                    if (!title.includes(':')) {
+                        throw new Error("PR title does not adhere to conventional commit guidelines. No preamble found.");
+                    }
+                    _a = title.split(':'), preamble = _a[0], postamble = _a[1];
+                    return [4 /*yield*/, validatePreamble(preamble)];
+                case 1:
+                    _b.sent();
+                    validatePostamble(postamble);
+                    return [2 /*return*/];
+            }
+        });
+    });
 }
 function validatePreamble(preamble) {
-    if (!preamble || !validPreambles.includes(preamble)) {
-        (0, core_1.setFailed)("PR title does not adhere to conventional commit guidelines. Commit type found: ".concat(preamble, ". Should be one of ").concat(validPreambles.join(', ')));
-    }
-    else {
-        (0, core_1.info)('✓ Preamble: OK');
-    }
+    var _a;
+    return __awaiter(this, void 0, void 0, function () {
+        var groups, commitType, isBreaking;
+        return __generator(this, function (_b) {
+            groups = (_a = preamble.match(/(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/)) === null || _a === void 0 ? void 0 : _a.groups;
+            if (groups) {
+                commitType = groups.commitType, isBreaking = groups.isBreaking;
+                validateCommitType(commitType);
+                validateChangelog(commitType, !!isBreaking);
+            }
+            else {
+                throw new Error('Could not parse preamble. Ensure it follows the conventional commit guidelines.');
+            }
+            return [2 /*return*/];
+        });
+    });
 }
-function validateTitle(title) {
-    if (!title) {
-        (0, core_1.setFailed)("PR title does not have a title (after conventional commit preamble).");
+function validateCommitType(commitType) {
+    if (!commitType || !validCommitTypes.includes(commitType)) {
+        throw new Error("PR title does not adhere to conventional commit guidelines. Commit type found: ".concat(commitType, ". Must be one of ").concat(validCommitTypes.join(', ')));
+    }
+    (0, core_1.info)('✓ Commit type: OK');
+}
+function validatePostamble(title) {
+    if (!title || !title.trim().length) {
+        throw new Error("PR title does not have a title after conventional commit preamble.");
+    }
+    if (title[0] !== ' ') {
+        throw new Error("Space missing after conventional commit preamble.");
     }
     if (title[0] === title[0].toLowerCase()) {
-        (0, core_1.setFailed)("PR title title should be capitalized (after conventional commit preamble).");
+        throw new Error("PR title title must be capitalized (after conventional commit preamble).");
     }
-    else {
-        (0, core_1.info)('✓ Title: OK');
-    }
+    (0, core_1.info)('✓ Title: OK');
 }
 function getAllowedBumps(preamble, isBreaking) {
     if (isBreaking) {
@@ -92,32 +110,40 @@ function getAllowedBumps(preamble, isBreaking) {
     }
     return [];
 }
-function validateChangelog(preamble, isBreaking) {
+function hasMatchingChangelog(allowedBumps) {
     return __awaiter(this, void 0, void 0, function () {
-        var ok, allowedBumps, changedFiles, fileContents;
+        var changedFiles, fileContents;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    ok = true;
-                    allowedBumps = getAllowedBumps(preamble, isBreaking);
                     if (!allowedBumps.length) return [3 /*break*/, 2];
                     changedFiles = (0, core_1.getInput)('changed-files').split(' ');
                     return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
                 case 1:
                     fileContents = _a.sent();
-                    ok = fileContents.some(function (fileContent) {
-                        return allowedBumps.some(function (bump) {
-                            return new RegExp("'@sap-cloud-sdk/w+': ".concat(bump, "/")).test(fileContent);
-                        });
-                    });
-                    _a.label = 2;
-                case 2:
-                    if (!ok) {
-                        (0, core_1.setFailed)("Preamble '".concat(preamble, "' requires a changelog file with bump ").concat(allowedBumps.join(' or '), "."));
+                    return [2 /*return*/, fileContents.some(function (fileContent) {
+                            return allowedBumps.some(function (bump) {
+                                return new RegExp("'@sap-cloud-sdk/w+': ".concat(bump, "/")).test(fileContent);
+                            });
+                        })];
+                case 2: return [2 /*return*/, true];
+            }
+        });
+    });
+}
+function validateChangelog(commitType, isBreaking) {
+    return __awaiter(this, void 0, void 0, function () {
+        var allowedBumps;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    allowedBumps = getAllowedBumps(commitType, isBreaking);
+                    return [4 /*yield*/, hasMatchingChangelog(allowedBumps)];
+                case 1:
+                    if (!(_a.sent())) {
+                        throw new Error("Preamble '".concat(commitType, "' requires a changelog file with bump ").concat(allowedBumps.join(' or '), "."));
                     }
-                    else {
-                        (0, core_1.info)('✓ Changelog: OK');
-                    }
+                    (0, core_1.info)('✓ Changelog: OK');
                     return [2 /*return*/];
             }
         });
@@ -125,16 +151,16 @@ function validateChangelog(preamble, isBreaking) {
 }
 function validateBody() {
     return __awaiter(this, void 0, void 0, function () {
-        var body, prTemplate;
+        var body, template;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     body = github_1.context.payload.pull_request.body.replace(/\r\n/g, '\n');
                     return [4 /*yield*/, (0, promises_1.readFile)((0, node_path_1.resolve)('.github', 'PULL_REQUEST_TEMPLATE.md'), 'utf-8')];
                 case 1:
-                    prTemplate = _a.sent();
-                    if (!body || body === prTemplate) {
-                        (0, core_1.setFailed)('PR should have a description');
+                    template = _a.sent();
+                    if (!body || body === template) {
+                        (0, core_1.setFailed)('PR must have a description');
                     }
                     else {
                         (0, core_1.info)('✓ Body: OK');
@@ -145,10 +171,7 @@ function validateBody() {
     });
 }
 try {
-    var _a = parseTitle(github_1.context.payload.pull_request.title), preamble = _a.preamble, isBreaking = _a.isBreaking, description = _a.description;
-    validatePreamble(preamble);
-    validateTitle(description);
-    validateChangelog(preamble, isBreaking);
+    validateTitle();
     validateBody();
 }
 catch (err) {

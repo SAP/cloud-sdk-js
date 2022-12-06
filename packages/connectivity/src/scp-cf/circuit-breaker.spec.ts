@@ -6,9 +6,8 @@ import {
   xsuaaBindingMock
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../test-resources/test/test-util/keys';
-import { circuitBreakerDefaultOptions } from './resilience-options';
 import { getClientCredentialsToken } from './xsuaa-service';
-import { fetchDestination } from './destination';
+import { circuitBreaker, fetchDestination } from './destination';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -18,9 +17,18 @@ const jwt = jwt123.sign(
   }
 );
 
-const attempts = circuitBreakerDefaultOptions.volumeThreshold!;
-
 describe('circuit breaker', () => {
+  afterEach(() => {
+    circuitBreaker.enable();
+    nock.cleanAll();
+    // nock.restore()
+  });
+  beforeEach(() => {
+    circuitBreaker.enable();
+    nock.cleanAll();
+    // nock.restore()
+  });
+
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for destination service', async () => {
     const request = () =>
       fetchDestination(destinationServiceUri, jwt, {
@@ -31,24 +39,29 @@ describe('circuit breaker', () => {
       .get(/.*/)
       .times(1)
       .reply(200, JSON.stringify({ URL: 'test' }));
-    nock(destinationServiceUri).get(/.*/).times(attempts).reply(400);
+    nock(destinationServiceUri).get(/.*/).times(99).reply(400);
 
     // First attempt should succeed
     await expect(request()).resolves.toBeDefined();
 
-    // Following attempts should fail
-    for (let i = 0; i < attempts - 1; i++) {
-      await expectToThrowWithRootCause(
-        request,
-        ({ message }) => message === 'Request failed with status code 400'
-      );
+    let keepCalling = true;
+    let failedCalls = 0;
+    // hit until breaker opens
+    while (keepCalling) {
+      try {
+        await request();
+        await sleep(50);
+      } catch (e) {
+        if (e.cause.message === 'Request failed with status code 400') {
+          failedCalls++;
+        }
+        if (e.cause.message === 'Breaker is open') {
+          keepCalling = false;
+        }
+      }
     }
-
-    // Last attempt should open the circuit breaker
-    await expectToThrowWithRootCause(
-      request,
-      ({ message }) => message === 'Breaker is open'
-    );
+    // Since we exit the loop breaker opened.
+    expect(failedCalls).toBeGreaterThan(0);
   });
 
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for xsuaa service', async () => {
@@ -59,33 +72,40 @@ describe('circuit breaker', () => {
       .times(1)
       .reply(200, { access_token: 'token' });
 
-    nock(providerXsuaaUrl).post('/oauth/token').times(attempts).reply(400);
+    const mock = nock(providerXsuaaUrl)
+      .post('/oauth/token')
+      .times(99)
+      .reply(400);
 
     // First attempt should succeed
-    expect(await request()).toBeDefined();
+    await expect(request()).resolves.toBeDefined();
 
-    // Following attempts should fail
-    for (let i = 0; i < attempts - 1; i++) {
-      await expectToThrowWithRootCause(request, rootCause =>
-        expect(rootCause).toBeUndefined()
-      );
+    let keepCalling = true;
+    let failedCalls = 0;
+    // hit until breaker opens
+    while (keepCalling) {
+      try {
+        await request();
+        await sleep(50);
+      } catch (e) {
+        if (
+          e ===
+          'Error in fetching the token for service my-xsuaa: Request failed with status code 400'
+        ) {
+          failedCalls++;
+        }
+        if (e.message === 'Breaker is open') {
+          keepCalling = false;
+        }
+      }
     }
-
-    // Last attempt should open the circuit breaker
-    await expectToThrowWithRootCause(
-      request,
-      ({ message }) => message === 'Breaker is open'
-    );
-  });
+    // Since we exit the loop breaker opened.
+    expect(failedCalls).toBeGreaterThan(0);
+  }, 99999);
 });
 
-async function expectToThrowWithRootCause(
-  fn: () => any,
-  expectation: (rootCause: Error) => void
-): Promise<void> {
-  await expect(fn())
-    .rejects.toThrowError()
-    .catch(err => {
-      expectation(err.rootCause);
-    });
+function sleep(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
 }

@@ -22,7 +22,7 @@ import {
   unixEOL
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { executeWithMiddleware } from '../../resilience/src/middleware';
+import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { buildCsrfHeaders } from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,

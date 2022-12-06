@@ -85,7 +85,7 @@ export async function getClientCredentialsToken(
   const serviceCredentials = resolveService(service).credentials;
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  const xssecPromise: Promise<ClientCredentialsResponse> = new Promise(
+  const xssecPromise: () => Promise<ClientCredentialsResponse> = ()=>new Promise(
     (resolve, reject) => {
       xssec.requests.requestClientCredentialsToken(
         subdomainAndZoneId.subdomain,
@@ -117,7 +117,7 @@ export async function getClientCredentialsToken(
 
   // TODO: Use middleware
   return wrapInCircuitBreaker((ser, jwt) =>
-    wrapInTimeout(xssecPromise, 10000, 'Token retrieval ran into timeout.')
+     wrapInTimeout(xssecPromise(), 10000, 'Token retrieval ran into timeout.'),
   )(service, userJwt);
 }
 

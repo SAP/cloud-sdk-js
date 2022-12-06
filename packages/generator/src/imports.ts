@@ -23,7 +23,11 @@ export function externalImportDeclarationsTsMorph(
 ): ImportDeclarationStructure[] {
   return potentialExternalImportDeclarations
     .map(([moduleSpecifier, ...namedImports]) =>
-      externalImportDeclarationTsMorph(properties, moduleSpecifier, namedImports)
+      externalImportDeclarationTsMorph(
+        properties,
+        moduleSpecifier,
+        namedImports
+      )
     )
     .filter(
       declaration => declaration.namedImports && declaration.namedImports.length

@@ -25,8 +25,6 @@ export class GetByKeyRequestBuilder<
   extends GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
-  readonly _entity: EntityT;
-
   /**
    * Creates an instance of GetByKeyRequestBuilder.
    * @param entityApi - Entity API for building and executing the request.

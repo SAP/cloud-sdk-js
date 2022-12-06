@@ -55,7 +55,8 @@ describe('imports', () => {
   describe('external import declarations', () => {
     it('are empty when properties do not have external types', () => {
       expect(
-        externalImportDeclarationsTsMorph([stringProperty, numberProperty]).length
+        externalImportDeclarationsTsMorph([stringProperty, numberProperty])
+          .length
       ).toBe(0);
     });
 

@@ -18,12 +18,12 @@ export const potentialExternalImportDeclarations = [
 /**
  * @internal
  */
-export function externalImportDeclarations(
+export function externalImportDeclarationsTsMorph(
   properties: VdmMappedEdmType[]
 ): ImportDeclarationStructure[] {
   return potentialExternalImportDeclarations
     .map(([moduleSpecifier, ...namedImports]) =>
-      externalImportDeclaration(properties, moduleSpecifier, namedImports)
+      externalImportDeclarationTsMorph(properties, moduleSpecifier, namedImports)
     )
     .filter(
       declaration => declaration.namedImports && declaration.namedImports.length
@@ -33,7 +33,7 @@ export function externalImportDeclarations(
 /**
  * @internal
  */
-export function externalImportDeclaration(
+export function externalImportDeclarationTsMorph(
   properties: VdmMappedEdmType[],
   moduleSpecifier: string,
   namedImports: string[]
@@ -50,7 +50,7 @@ export function externalImportDeclaration(
 /**
  * @internal
  */
-export function odataImportDeclaration(
+export function odataImportDeclarationTsMorph(
   namedImports: string[],
   odataVersion: ODataVersion,
   internal = false

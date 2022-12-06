@@ -9,7 +9,7 @@ import {
   navPropertyFieldTypeImportNames,
   propertyFieldTypeImportNames,
   propertyTypeImportNames,
-  externalImportDeclarations,
+  externalImportDeclarationsTsMorph,
   mergeImportDeclarations
 } from './imports';
 
@@ -55,13 +55,13 @@ describe('imports', () => {
   describe('external import declarations', () => {
     it('are empty when properties do not have external types', () => {
       expect(
-        externalImportDeclarations([stringProperty, numberProperty]).length
+        externalImportDeclarationsTsMorph([stringProperty, numberProperty]).length
       ).toBe(0);
     });
 
     it('contain all imports when properties have all external types', () => {
       expect(
-        externalImportDeclarations([
+        externalImportDeclarationsTsMorph([
           stringProperty,
           momentProperty,
           numberProperty,
@@ -72,7 +72,7 @@ describe('imports', () => {
 
     it('do not contain duplicates when multiple properties have the same external types', () => {
       expect(
-        externalImportDeclarations([
+        externalImportDeclarationsTsMorph([
           stringProperty,
           momentProperty,
           momentProperty,

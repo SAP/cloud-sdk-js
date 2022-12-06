@@ -228,16 +228,13 @@ export abstract class EntityBase {
    * @returns EntityBase with all properties that changed.
    */
   getUpdatedPropertyNames(): string[] {
-    // Object.getOwnPropertyDescriptor(this, '_entityApi')
-    const ks = Object.keys(this);
     const currentState = this.asObject();
     const names = Object.keys(currentState).filter(
       key => this.propertyIsEnumerable(key) && !this.hasCustomField(key)
     );
-    const ret =  !this.remoteState
+    return !this.remoteState
       ? names
       : names.filter(key => !equal(this.remoteState[key], currentState[key]));
-    return ret;
   }
 
   /**

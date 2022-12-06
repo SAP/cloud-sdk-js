@@ -77,17 +77,6 @@ function adjustCustomField(str: string): string {
   );
 }
 
-function addODataVersion(str: string): string {
-  if (str.match(/static _entityName =.*/)) {
-    const nameString = str.match(/static _entityName =.*/)![0];
-    return str.replace(
-      nameString,
-      [nameString, 'readonly _oDataVersion: any;'].join(unixEOL)
-    );
-  }
-  return str;
-}
-
 function removeJsDoc(str: string): string {
   return str.replace(/\/\*\*\n(?:\s+\*\s+.+\n)+\s+\*\/\n/g, '');
 }
@@ -132,8 +121,7 @@ async function generateCommonTestEntity() {
     .map(str => removeJsDoc(str))
     .map(str => reduceGenericArguments(str))
     .map(str => replaceRequestBuilder(str))
-    .map(str => adjustCustomField(str))
-    .map(str => addODataVersion(str));
+    .map(str => adjustCustomField(str));
 
   const allParts = [
     disableEslint,

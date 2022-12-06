@@ -117,10 +117,12 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     logger.info(`Check package: ${pathToPackage}`);
     const { pathToSource, pathCompiled } = paths(pathToPackage);
     mockFileSystem(pathToPackage);
+    const opts = await getCompilerOptions(pathToPackage);
+    console.log(JSON.stringify(opts))
     await transpileDirectory(
       pathToSource,
         {
-          compilerOptions: await getCompilerOptions(pathToPackage),
+          compilerOptions: opts,
           //We have things in our sources like  #!/usr/bin/env node in CLI .js files which is not working with parser of prettier.
           createFileOptions:{overwrite:true,prettierOptions:defaultPrettierConfig,usePrettier:false}
         }

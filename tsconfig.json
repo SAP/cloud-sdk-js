@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "strictNullChecks": true,
 
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
 
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

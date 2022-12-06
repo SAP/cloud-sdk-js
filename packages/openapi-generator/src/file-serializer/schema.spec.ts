@@ -23,6 +23,7 @@ describe('serializeSchema for object schemas', () => {
               minimum: 8
             }
           },
+
           {
             name: 'nested-property',
             required: false,
@@ -38,6 +39,7 @@ describe('serializeSchema for object schemas', () => {
                 }
               ]
             },
+
             schemaProperties: {}
           }
         ]
@@ -50,7 +52,7 @@ describe('serializeSchema for object schemas', () => {
             'simpleProperty': number;
             'nested-property'?: {
                   /**
-                   * Pattern: \\"^[p{L}-.^_|~d]+$\\".
+                   * Pattern: "^[p{L}-.^_|~d]+$".
                    */
                   'stringProperty'?: string;
                 };

@@ -217,9 +217,17 @@ export async function readCompilerOptions(
 }
 
 function parseModuleResolutionKind(input: string): ModuleResolutionKind {
-  return input.includes('node')
-    ? ModuleResolutionKind.NodeJs
-    : ModuleResolutionKind.Classic;
+  const moduleResolution = input.toLowerCase();
+  if (moduleResolution === 'node') {
+    return ModuleResolutionKind.NodeJs;
+  }
+  if (moduleResolution === 'node16') {
+    return ModuleResolutionKind.Node16;
+  }
+  if (moduleResolution === 'nodenext') {
+    return ModuleResolutionKind.NodeNext;
+  }
+  return ModuleResolutionKind.Classic;
 }
 
 function parseScriptTarget(input: string): ScriptTarget {

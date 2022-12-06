@@ -356,7 +356,7 @@ describe('getAuthHeaders', () => {
       await expect(
         getAuthHeaders(destination)
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"AuthenticationType is \\"BasicAuthentication\\", but \\"username\\" and / or \\"password\\" are missing!"'
+        '"AuthenticationType is "BasicAuthentication", but "username" and / or "password" are missing!"'
       );
     });
 
@@ -370,7 +370,7 @@ describe('getAuthHeaders', () => {
       await expect(
         getAuthHeaders(destination)
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"AuthenticationType is \\"BasicAuthentication\\", but \\"username\\" and / or \\"password\\" are missing!"'
+        '"AuthenticationType is "BasicAuthentication", but "username" and / or "password" are missing!"'
       );
     });
   });

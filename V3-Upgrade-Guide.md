@@ -18,6 +18,7 @@ Add sections to the document as you see fit.
 This document will guide you through the steps necessary to upgrade to version 3 of the SAP Cloud SDK. Depending on your project, some steps might not be applicable. The To-Do list is:
 
 - [Update your project dependencies](#update-your-project-dependencies)
+- [Important Dependency Updates](#important-dependency-updates)
 - [Adjust operation names in generated clients](#adjust-operation-names-in-odata-generated-clients)
 - [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
 - [Replace Timeout](#timeout)
@@ -30,6 +31,10 @@ Depending on if you're using `npm` or `yarn`, run `npm install` or `yarn` in the
 
 Running your tests or deploying your application might fail at this point in time if you need to adapt to any breaking changes.
 We recommend updating your applications in one commit or pull request and making sure everything still works using your existing test suite.
+
+### Important Dependency Updates
+
+The [axios HTTP client](https://github.com/axios/axios) has been updated from version 0.27 to 1.2.
 
 ### Adjust Operation Names in OData Generated Clients
 

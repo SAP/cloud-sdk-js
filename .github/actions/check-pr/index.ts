@@ -43,7 +43,7 @@ function validateTitle(title: string | undefined): void {
 
   if (title[0] === title[0].toLowerCase()) {
     setFailed(
-      `PR title title should be capitalized (after conventional commit preamble).`
+      `PR title title must be capitalized (after conventional commit preamble).`
     );
   } else {
     info('✓ Title: OK');

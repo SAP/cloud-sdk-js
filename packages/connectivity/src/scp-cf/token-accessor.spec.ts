@@ -1,4 +1,5 @@
 import nock from 'nock';
+import * as resilience from '@sap-cloud-sdk/resilience/internal';
 import {
   destinationBindingClientSecretMock,
   destinationBindingCertMock,
@@ -20,7 +21,6 @@ import {
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { serviceToken } from './token-accessor';
-import * as resilience from './resilience-options';
 
 describe('token accessor', () => {
   describe('serviceToken', () => {
@@ -49,7 +49,7 @@ describe('token accessor', () => {
     });
 
     it('considers default timeout for client credentials token', async () => {
-      jest.spyOn(resilience, 'timeoutPromise');
+      jest.spyOn(resilience, 'wrapInTimeout');
 
       const jwt = signedJwt({
         iss: 'https://testeroni.example.com'
@@ -63,7 +63,11 @@ describe('token accessor', () => {
 
       await serviceToken('destination', { jwt });
 
-      expect(resilience.timeoutPromise).toHaveBeenCalledWith(10000);
+      expect(resilience.wrapInTimeout).toHaveBeenCalledWith(
+        expect.anything(),
+        10000,
+        'Token retrieval ran into timeout.'
+      );
     });
 
     it("uses the JWT's issuer as tenant", async () => {

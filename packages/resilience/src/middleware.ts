@@ -1,5 +1,3 @@
-import { HttpRequestConfig } from './http-client-types';
-
 /**
  * Input parameter of a middleware.
  */
@@ -57,20 +55,6 @@ export interface Context {
 export type Middleware<ReturnT, ContextT extends Context> = (
   options: MiddlewareIn<ReturnT, ContextT>
 ) => MiddlewareOut<ReturnT>;
-
-/**
- * Context for HttpRequests of the middleware.
- */
-export interface HttpMiddlewareContext extends Context {
-  /**
-   * JWT used in the request.
-   */
-  jwt?: string;
-  /**
-   * Request config.
-   */
-  requestConfig: HttpRequestConfig;
-}
 
 /**
  * Helper function to join a list of middlewares given an initial input.

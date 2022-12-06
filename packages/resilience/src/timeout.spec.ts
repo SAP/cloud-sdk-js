@@ -1,34 +1,14 @@
 import nock from 'nock';
-import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
-import type { Destination } from '@sap-cloud-sdk/connectivity';
+// import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
+import axios from 'axios';
 import { timeout } from './timeout';
+import { executeWithMiddleware } from './middleware';
 
 describe('timeout', () => {
-  const httpsDestination: Destination = {
+  const httpsDestination = {
     name: 'httpsDestination',
     url: 'https://example.com'
   };
-
-  it('considers timeout via middleware on csrf token fetching', async () => {
-    const delayInResponse = 10;
-    nock('http://example.com', {})
-      .post(/with-delay/)
-      .delay(delayInResponse)
-      .reply(200);
-
-    await expect(
-      executeHttpRequest(
-        { url: 'http://example.com' },
-        {
-          method: 'post',
-          url: 'with-delay',
-          middleware: [timeout(delayInResponse * 0.5)]
-        }
-      )
-    ).rejects.toThrow(
-      'Request to http://example.com ran into timeout after 5ms.'
-    );
-  });
 
   it('uses a custom timeout if given', async () => {
     const delayInResponse = 10;
@@ -38,22 +18,29 @@ describe('timeout', () => {
       .delay(delayInResponse)
       .reply(200);
 
-    await expect(
-      executeHttpRequest(httpsDestination, {
+    const request = () =>
+      axios.request({
+        baseURL: 'https://example.com',
         method: 'get',
-        url: '/with-delay',
-        middleware: [timeout(delayInResponse * 0.5)]
-      })
+        url: '/with-delay'
+      });
+
+    await expect(
+      executeWithMiddleware(
+        [timeout(delayInResponse * 0.5)],
+        { uri: 'https://example.com', args: [] },
+        request
+      )
     ).rejects.toThrow(
-      'Request to https://example.com ran into timeout after 5ms.'
+      'Request to URL: https://example.com ran into a timeout after 5ms.'
     );
 
     await expect(
-      executeHttpRequest(httpsDestination, {
-        method: 'get',
-        url: '/with-delay',
-        middleware: [timeout(delayInResponse * 10)]
-      })
+      executeWithMiddleware(
+        [timeout(delayInResponse * 2)],
+        { uri: 'https://example.com', args: [] },
+        request
+      )
     ).resolves.not.toThrow();
   });
 
@@ -69,22 +56,28 @@ describe('timeout', () => {
       .delay(11 * oneSecond)
       .reply(200);
 
-    const response = await executeHttpRequest(httpsDestination, {
-      method: 'get',
-      url: '/with-delay',
-      middleware: [timeout()]
-    });
+    const request = () =>
+      axios.request({
+        baseURL: 'https://example.com',
+        method: 'get',
+        url: '/with-delay'
+      });
+    const response = await executeWithMiddleware(
+      [timeout()],
+      { uri: 'https://example.com', args: [] },
+      request
+    );
 
     expect(response.status).toEqual(200);
 
     await expect(
-      executeHttpRequest(httpsDestination, {
-        method: 'get',
-        url: '/with-delay',
-        middleware: [timeout()]
-      })
+      executeWithMiddleware(
+        [timeout()],
+        { uri: 'https://example.com', args: [] },
+        request
+      )
     ).rejects.toThrow(
-      'Request to https://example.com ran into timeout after 10000ms'
+      'Request to URL: https://example.com ran into a timeout after 10000ms'
     );
   }, 15000);
 });

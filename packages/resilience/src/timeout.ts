@@ -1,9 +1,4 @@
-import type {
-  Context,
-  Middleware,
-  MiddlewareIn,
-  MiddlewareOut
-} from '@sap-cloud-sdk/http-client';
+import { Context, Middleware, MiddlewareIn, MiddlewareOut } from './middleware';
 
 const defaultTimeout = 10000;
 
@@ -18,28 +13,48 @@ export function timeout<ReturnType, ContextType extends Context>(
   return function (
     options: MiddlewareIn<ReturnType, ContextType>
   ): MiddlewareOut<ReturnType> {
-    const wrapped = () =>
-      Promise.race([
-        timeoutPromise<ReturnType>(timeoutValue, options.context.uri),
-        options.fn()
-      ]);
-    return wrapped;
+    const message = `Request to URL: ${options.context.uri} ran into a timeout after ${timeoutValue}ms.`;
+    return () => wrapInTimeout(options.fn(), timeoutValue, message);
   };
 }
 
-function timeoutPromise<ReturnType>(
+/**
+ * Creates a promise for a timeout race.
+ * @internal
+ * @param timeoutValue - Value for the timeout in milliseconds.
+ * message: string - Error message thrown when timeout is exceeded.
+ * @returns A promise which times out after the given time and the node timout instance to clear the timeout if not needed anymore.
+ */
+function getTimeoutPromise<T>(
   timeoutValue: number,
-  uri: string
-): Promise<ReturnType> {
-  return new Promise<ReturnType>((resolve, reject) =>
-    setTimeout(
-      () =>
-        reject(
-          new Error(
-            `Request to ${uri} ran into timeout after ${timeoutValue}ms.`
-          )
-        ),
-      timeoutValue
-    )
+  message: string
+): [Promise<T>, NodeJS.Timeout | undefined] {
+  let timeoutNode: NodeJS.Timeout | undefined;
+  const promise = new Promise<T>((resolve, reject) => {
+    timeoutNode = setTimeout(() => reject(new Error(message)), timeoutValue);
+  });
+  return [promise, timeoutNode];
+}
+
+/**
+ * TODO make non public once change to middleware is complete.
+ * @param promise - Promise
+ * @param timeoutValue - Value for the timeout in milliseconds.
+ * @internal
+ */
+export async function wrapInTimeout<T>(
+  promise: Promise<T>,
+  timeoutValue: number,
+  message: string
+): Promise<T> {
+  const [timeoutPromise, timeoutInstance] = getTimeoutPromise<T>(
+    timeoutValue,
+    message
   );
+  // Clear the timeout if the original promise is resolve or reject to avoid open handlers.
+  const withClearTimeout = promise.finally(() => {
+    clearTimeout(timeoutInstance);
+  });
+
+  return Promise.race([withClearTimeout, timeoutPromise]);
 }

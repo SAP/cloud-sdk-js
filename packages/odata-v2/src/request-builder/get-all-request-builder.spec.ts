@@ -236,7 +236,7 @@ describe('GetAllRequestBuilder', () => {
           .execute(defaultDestination);
       } catch (err) {
         expect(err.message).toBe(
-          'Request to /testination ran into timeout after 10ms.'
+          'Request to URL: /testination ran into a timeout after 10ms.'
         );
         return;
       }

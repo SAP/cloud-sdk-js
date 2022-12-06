@@ -1,21 +1,15 @@
 import * as xssec from '@sap/xssec';
 import CircuitBreaker from 'opossum';
+import { wrapInTimeout } from '@sap-cloud-sdk/resilience/internal';
 import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';
-import {
-  circuitBreakerDefaultOptions,
-  timeoutPromise
-} from './resilience-options';
+import { circuitBreakerDefaultOptions } from './resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
 
 let circuitBreaker: any;
-
-async function wrapInTimeout<T>(promise: Promise<T>): Promise<T> {
-  return Promise.race([promise, timeoutPromise<T>(10000)]);
-}
 
 function executeFunction<T extends (...args: any[]) => any>(
   fn: T,
@@ -120,11 +114,11 @@ export async function getClientCredentialsToken(
       );
     }
   );
+
   // TODO: Use middleware
-  return wrapInCircuitBreaker((ser, jwt) => wrapInTimeout(xssecPromise))(
-    service,
-    userJwt
-  );
+  return wrapInCircuitBreaker((ser, jwt) =>
+    wrapInTimeout(xssecPromise, 10000, 'Token retrieval ran into timeout.')
+  )(service, userJwt);
 }
 
 /**
@@ -151,8 +145,7 @@ export function getUserToken(
     )
   );
   // TODO: Use middleware
-  return wrapInCircuitBreaker((ser, jwt) => wrapInTimeout(xssecPromise))(
-    service,
-    userJwt
-  );
+  return wrapInCircuitBreaker((ser, jwt) =>
+    wrapInTimeout(xssecPromise, 10000, 'Token retrieval ran into timeout.')
+  )(service, userJwt);
 }

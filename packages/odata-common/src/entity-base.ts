@@ -51,7 +51,7 @@ export abstract class EntityBase {
   static _entityName: string;
   static _defaultServicePath: string;
 
-  readonly _oDataVersion: any;
+  abstract readonly _oDataVersion: any;
 
   /**
    * The remote state of the entity.
@@ -228,13 +228,16 @@ export abstract class EntityBase {
    * @returns EntityBase with all properties that changed.
    */
   getUpdatedPropertyNames(): string[] {
+    // Object.getOwnPropertyDescriptor(this, '_entityApi')
+    const ks = Object.keys(this);
     const currentState = this.asObject();
     const names = Object.keys(currentState).filter(
       key => this.propertyIsEnumerable(key) && !this.hasCustomField(key)
     );
-    return !this.remoteState
+    const ret =  !this.remoteState
       ? names
       : names.filter(key => !equal(this.remoteState[key], currentState[key]));
+    return ret;
   }
 
   /**

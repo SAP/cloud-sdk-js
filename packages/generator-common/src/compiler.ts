@@ -219,7 +219,7 @@ export async function readCompilerOptions(
 function parseModuleResolutionKind(input: string): ModuleResolutionKind {
   return input.includes('node')
     ? ModuleResolutionKind.NodeJs
-    : ModuleResolutionKind.Node16; //fixme(fwilhe) support classic, node and node16
+    : ModuleResolutionKind.Node16; // fixme(fwilhe) support classic, node and node16
 }
 
 function parseScriptTarget(input: string): ScriptTarget {

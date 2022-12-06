@@ -1,6 +1,7 @@
 import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
-import { AxiosRequestConfig } from 'axios';
+// eslint-disable-next-line import/named
+import axios, { AxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';

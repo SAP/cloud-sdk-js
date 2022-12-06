@@ -172,7 +172,7 @@ describe('vcap-service-destination', () => {
     await expect(() =>
       destinationForServiceBinding('non-existent-service')
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"No service with the name: \\"non-existent-service\\" was found."'
+      '"No service with the name: "non-existent-service" was found."'
     );
   });
 

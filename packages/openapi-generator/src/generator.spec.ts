@@ -102,7 +102,7 @@ describe('generator', () => {
       });
       const rootNodeModules = resolve(__dirname, '../../../node_modules');
       mock({
-        ['/prettier/config']: JSON.stringify({ printWidth: 66 }),
+        '/prettier/config': JSON.stringify({ printWidth: 66 }),
         root: {
           inputDir: { 'mySpec.json': serviceSpec },
           additionalFiles: {
@@ -326,11 +326,9 @@ describe('generator', () => {
           input: 'specs',
           outputDir: 'out'
         })
-      ).rejects.toThrowErrorMatchingInlineSnapshot(`
-              "Could not generate client. Errors: [
-              	ErrorWithCause: Could not write file \\"test.ts\\". File already exists. If you want to allow overwriting files, enable the \`overwrite\` flag.
-              ]"
-            `);
+      ).rejects.toThrowError(
+        /File already exists. If you want to allow overwriting files/
+      );
     });
 
     it('does not fail when overwrite is enabled', async () => {

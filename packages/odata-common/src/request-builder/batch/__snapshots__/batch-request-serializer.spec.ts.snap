@@ -13,7 +13,7 @@ POST /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 
-{\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"StringProperty\\":\\"value\\"}
+{"KeyPropertyGuid":"guidId","KeyPropertyString":"strId","StringProperty":"value"}
 
 --changeSet_boundary--
 --batch_fixed_boundary_for_testing
@@ -37,7 +37,7 @@ PATCH /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=guidId,Ke
 Content-Type: application/json
 Accept: application/json
 
-{\\"StringProperty\\":\\"value\\"}
+{"StringProperty":"value"}
 
 --changeSet_boundary
 Content-Type: application/http
@@ -76,7 +76,7 @@ PATCH /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=guidId,Ke
 Content-Type: application/json
 Accept: application/json
 
-{\\"StringProperty\\":\\"value\\"}
+{"StringProperty":"value"}
 
 --changeSet_boundary
 Content-Type: application/http
@@ -87,7 +87,7 @@ POST /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 
-{\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"StringProperty\\":\\"value\\"}
+{"KeyPropertyGuid":"guidId","KeyPropertyString":"strId","StringProperty":"value"}
 
 --changeSet_boundary--"
 `;
@@ -104,7 +104,7 @@ POST /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 
-{\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"StringProperty\\":\\"value\\"}
+{"KeyPropertyGuid":"guidId","KeyPropertyString":"strId","StringProperty":"value"}
 
 --changeSet_boundary--"
 `;
@@ -118,7 +118,7 @@ POST /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 
-{\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"StringProperty\\":\\"value\\"}
+{"KeyPropertyGuid":"guidId","KeyPropertyString":"strId","StringProperty":"value"}
 "
 `;
 
@@ -238,7 +238,7 @@ PATCH /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=guidId,Ke
 Content-Type: application/json
 Accept: application/json
 
-{\\"StringProperty\\":\\"value\\"}
+{"StringProperty":"value"}
 "
 `;
 
@@ -251,6 +251,6 @@ PUT /sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity(KeyPropertyGuid=guidId,KeyP
 Content-Type: application/json
 Accept: application/json
 
-{\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"StringProperty\\":\\"value\\"}
+{"KeyPropertyGuid":"guidId","KeyPropertyString":"strId","StringProperty":"value"}
 "
 `;

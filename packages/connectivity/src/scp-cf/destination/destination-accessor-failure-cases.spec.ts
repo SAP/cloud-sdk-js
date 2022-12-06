@@ -49,7 +49,7 @@ describe('Failure cases', () => {
         iasToXsuaaTokenExchange: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Unable to get access token for \\"destination\\" service. No service instance of type \\"destination\\" found."'
+      '"Unable to get access token for "destination" service. No service instance of type "destination" found."'
     );
   }, 50000);
 

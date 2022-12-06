@@ -163,7 +163,7 @@ describe('connectivity-service', () => {
         type: 'MAIL',
         proxyConfiguration: {
           ...connectivitySocksProxyConfigMock,
-          ['proxy-authorization']: providerServiceToken
+          'proxy-authorization': providerServiceToken
         }
       };
 

@@ -770,7 +770,7 @@ describe('destination cache', () => {
     });
 
     it('should return undefined when the destination is expired with default expiration time', async () => {
-      jest.useFakeTimers('modern');
+      jest.useFakeTimers();
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
       await destinationCache.cacheRetrievedDestination(
         dummyJwt,
@@ -797,7 +797,7 @@ describe('destination cache', () => {
     });
 
     it('should return undefined when the destination is expired with token defined expiration time', async () => {
-      jest.useFakeTimers('modern');
+      jest.useFakeTimers();
       const sixMinutesTokenLifetime = 6 * 60;
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
       const destination = {

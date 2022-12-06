@@ -105,7 +105,7 @@ describe('register-destination', () => {
   });
 
   it('caches with unlimited time', async () => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
     registerDestination(testDestination);
     const minutesToExpire = 9999;
     // Shift time to expire the set item

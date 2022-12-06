@@ -11,22 +11,37 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
 class TestEntity3 extends odata_v4_1.Entity {
+    _entityApi;
+    /**
+     * Technical entity name for TestEntity3.
+     */
+    static _entityName = 'A_TestEntity3';
+    /**
+     * Default url path for the according service.
+     */
+    static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+    /**
+     * All key fields of the TestEntity3 entity
+     */
+    static _keys = ['KeyPropertyString'];
+    /**
+     * Key Property String.
+     */
+    keyPropertyString;
+    /**
+     * Enum Property.
+     * @nullable
+     */
+    enumProperty;
+    /**
+     * Complex Type Property.
+     * @nullable
+     */
+    complexTypeProperty;
     constructor(_entityApi) {
         super(_entityApi);
         this._entityApi = _entityApi;
     }
 }
 exports.TestEntity3 = TestEntity3;
-/**
- * Technical entity name for TestEntity3.
- */
-TestEntity3._entityName = 'A_TestEntity3';
-/**
- * Default url path for the according service.
- */
-TestEntity3._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-/**
- * All key fields of the TestEntity3 entity
- */
-TestEntity3._keys = ['KeyPropertyString'];
 //# sourceMappingURL=TestEntity3.js.map

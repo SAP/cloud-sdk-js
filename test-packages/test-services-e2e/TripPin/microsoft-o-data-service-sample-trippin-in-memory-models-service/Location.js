@@ -13,6 +13,17 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
  * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 class LocationField extends odata_v4_1.ComplexTypeField {
+    _fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
+    /**
+     * Representation of the {@link Location.address} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    address = this._fieldBuilder.buildEdmTypeField('Address', 'Edm.String', false);
+    /**
+     * Representation of the {@link Location.city} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    city = this._fieldBuilder.buildComplexTypeField('City', City_1.CityField, false);
     /**
      * Creates an instance of LocationField.
      * @param fieldName - Actual name of the field as used in the OData request.
@@ -20,17 +31,6 @@ class LocationField extends odata_v4_1.ComplexTypeField {
      */
     constructor(fieldName, fieldOf, deSerializers, fieldOptions) {
         super(fieldName, fieldOf, deSerializers, Location, fieldOptions);
-        this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
-        /**
-         * Representation of the {@link Location.address} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.address = this._fieldBuilder.buildEdmTypeField('Address', 'Edm.String', false);
-        /**
-         * Representation of the {@link Location.city} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.city = this._fieldBuilder.buildComplexTypeField('City', City_1.CityField, false);
     }
 }
 exports.LocationField = LocationField;

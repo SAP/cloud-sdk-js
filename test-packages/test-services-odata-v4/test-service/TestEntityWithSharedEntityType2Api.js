@@ -10,14 +10,16 @@ const TestEntityWithSharedEntityType2_1 = require("./TestEntityWithSharedEntityT
 const TestEntityWithSharedEntityType2RequestBuilder_1 = require("./TestEntityWithSharedEntityType2RequestBuilder");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class TestEntityWithSharedEntityType2Api {
+    deSerializers;
     constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
-        this.entityConstructor = TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2;
         this.deSerializers = deSerializers;
     }
+    navigationPropertyFields;
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;
     }
+    entityConstructor = TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2;
     requestBuilder() {
         return new TestEntityWithSharedEntityType2RequestBuilder_1.TestEntityWithSharedEntityType2RequestBuilder(this);
     }
@@ -27,12 +29,14 @@ class TestEntityWithSharedEntityType2Api {
     customField(fieldName, isNullable = false) {
         return new odata_v4_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
+    _fieldBuilder;
     get fieldBuilder() {
         if (!this._fieldBuilder) {
             this._fieldBuilder = new odata_v4_1.FieldBuilder(TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2, this.deSerializers);
         }
         return this._fieldBuilder;
     }
+    _schema;
     get schema() {
         if (!this._schema) {
             const fieldBuilder = this.fieldBuilder;

@@ -91,7 +91,7 @@ function validatePostamble(title) {
     if (title[0] !== ' ') {
         return (0, core_1.setFailed)("Space missing after conventional commit preamble.");
     }
-    if (title[0] === title[0].toLowerCase()) {
+    if (title[1] === title[1].toLowerCase()) {
         return (0, core_1.setFailed)("PR title title must be capitalized (after conventional commit preamble).");
     }
     (0, core_1.info)('✓ Title: OK');

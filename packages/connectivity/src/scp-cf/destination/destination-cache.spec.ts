@@ -476,8 +476,15 @@ describe('destination cache', () => {
         parseDestination(certificateSingleResponse)
       );
       expect(destinationFromCache).toEqual(destinationFromService);
-      expect(retrieveFromCacheSpy).toHaveReturnedWith(
-        Promise.resolve(destinationFromCache)
+      expect(retrieveFromCacheSpy).toHaveBeenCalled();
+      expect(retrieveFromCacheSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          iss: 'https://provider.example.com',
+          user_id: 'user-prov',
+          zid: 'provider'
+        }),
+        destinationFromCache?.name,
+        IsolationStrategy.Tenant_User
       );
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
@@ -530,8 +537,15 @@ describe('destination cache', () => {
         parseDestination(oauthSingleResponse)
       );
       expect(destinationFromCache).toEqual(destinationFromService);
-      expect(retrieveFromCacheSpy).toHaveReturnedWith(
-        Promise.resolve(destinationFromCache)
+      expect(retrieveFromCacheSpy).toHaveBeenCalled();
+      expect(retrieveFromCacheSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          iss: 'https://provider.example.com',
+          user_id: 'user-prov',
+          zid: 'provider'
+        }),
+        expected.name,
+        IsolationStrategy.Tenant_User
       );
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
@@ -589,10 +603,16 @@ describe('destination cache', () => {
 
       expect(destinationFromFirstCall).toEqual(expected);
       expect(destinationFromCache).toEqual(destinationFromFirstCall);
-      expect(retrieveFromCacheSpy).toHaveReturnedWith(
-        Promise.resolve(destinationFromCache)
+      expect(retrieveFromCacheSpy).toHaveBeenCalled();
+      expect(retrieveFromCacheSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          iss: 'https://provider.example.com',
+          user_id: 'user-prov',
+          zid: 'provider'
+        }),
+        expected.name,
+        IsolationStrategy.Tenant_User
       );
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
 
     it('retrieves subscriber cached destination', async () => {

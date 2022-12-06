@@ -72,7 +72,7 @@ export abstract class EntityBase {
    */
   protected _customFields: Record<string, any>;
 
-  abstract readonly _oDataVersion: any;
+  readonly _oDataVersion: any;
 
   /**
    * @internal

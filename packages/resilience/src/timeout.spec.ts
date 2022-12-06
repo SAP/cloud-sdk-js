@@ -11,7 +11,7 @@ describe('timeout', () => {
   };
 
   it('uses a custom timeout if given', async () => {
-    const delayInResponse = 10;
+    const delayInResponse = 100;
     nock('https://example.com', {})
       .get('/with-delay')
       .times(2)
@@ -32,7 +32,7 @@ describe('timeout', () => {
         request
       )
     ).rejects.toThrow(
-      'Request to URL: https://example.com ran into a timeout after 5ms.'
+      'Request to URL: https://example.com ran into a timeout after 50ms.'
     );
 
     await expect(

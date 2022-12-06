@@ -82,7 +82,7 @@ function addODataVersion(str: string): string {
     const nameString = str.match(/static _entityName =.*/)![0];
     return str.replace(
       nameString,
-      [nameString, 'readonly _oDataVersion: any;'].join(unixEOL)
+      [nameString, 'declare readonly _oDataVersion: any;'].join(unixEOL)
     );
   }
   return str;

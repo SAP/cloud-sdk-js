@@ -211,7 +211,7 @@ export class CommonEntitySingleLink<
   implements CommonEntitySingleLinkType<T>
 {
   static _entityName = 'A_CommonEntitySingleLink';
-  readonly _oDataVersion: any;
+  declare readonly _oDataVersion: any;
   static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
   static _keys = ['KeyProperty'];
   keyProperty!: DeserializedType<T, 'Edm.String'>;
@@ -351,7 +351,7 @@ export class CommonEntity<T extends DeSerializers = DefaultDeSerializers>
   implements CommonEntityType<T>
 {
   static _entityName = 'A_CommonEntity';
-  readonly _oDataVersion: any;
+  declare readonly _oDataVersion: any;
   static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
   static _keys = ['KeyPropertyGuid', 'KeyPropertyString'];
   keyPropertyGuid!: DeserializedType<T, 'Edm.Guid'>;

@@ -8,9 +8,9 @@ import {
   HttpResponse,
   HttpMiddlewareContext
 } from '@sap-cloud-sdk/http-client/internal';
+import { Middleware } from '@sap-cloud-sdk/resilience';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
-import {Middleware} from "@sap-cloud-sdk/resilience";
 
 /**
  * Base class for all request builders.

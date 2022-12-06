@@ -54,7 +54,6 @@ export async function wrapInTimeout<T>(
   // Clear the timeout if the original promise is resolve or reject to avoid open handlers.
   const withClearTimeout = promise.finally(() => {
     clearTimeout(timeoutInstance);
-    timeoutPromise.catch(()=>{}); // disarm timeout promise
   });
 
   return Promise.race([withClearTimeout, timeoutPromise]);

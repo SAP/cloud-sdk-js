@@ -19,7 +19,7 @@ import {
   encodeTypedClientRequest,
   HttpMiddlewareContext
 } from '@sap-cloud-sdk/http-client/internal';
-import {Middleware} from "@sap-cloud-sdk/resilience";
+import { Middleware } from '@sap-cloud-sdk/resilience';
 
 /**
  * Request builder for OpenAPI requests.

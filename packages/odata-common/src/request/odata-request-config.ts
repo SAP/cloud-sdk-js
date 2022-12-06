@@ -9,7 +9,7 @@ import type {
   ParameterEncoder,
   HttpMiddlewareContext
 } from '@sap-cloud-sdk/http-client/internal';
-import {Middleware} from "@sap-cloud-sdk/resilience";
+import { Middleware } from '@sap-cloud-sdk/resilience';
 
 /**
  * Set of possible request methods.

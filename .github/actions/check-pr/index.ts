@@ -100,7 +100,7 @@ async function validateBody() {
   );
 
   if (!body || body === prTemplate) {
-    setFailed('PR should have a description');
+    setFailed('PR must have a description');
   } else {
     info('✓ Body: OK');
   }

@@ -81,6 +81,8 @@ export abstract class EntityBase {
     nonEnumerable(this, '_oDataVersion');
     nonEnumerable(this, '_customFields');
     nonEnumerable(this, '_entityApi');
+    nonEnumerable(this, '_versionIdentifier');
+    nonEnumerable(this, 'remoteState');
     this._customFields = {};
   }
 

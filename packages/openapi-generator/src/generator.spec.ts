@@ -102,7 +102,7 @@ describe('generator', () => {
       });
       const rootNodeModules = resolve(__dirname, '../../../node_modules');
       mock({
-        ['/prettier/config']: JSON.stringify({ printWidth: 66 }),
+        '/prettier/config': JSON.stringify({ printWidth: 66 }),
         root: {
           inputDir: { 'mySpec.json': serviceSpec },
           additionalFiles: {

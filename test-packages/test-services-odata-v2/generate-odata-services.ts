@@ -6,12 +6,15 @@ const logger = createLogger('generate-odata-services');
 
 const generatorConfigOData = {
   forceOverwrite: true,
+  overwrite: true,
   generateJs: false,
   useSwagger: false,
   writeReadme: false,
+  readme: false,
   clearOutputDir: false,
   generateNpmrc: false,
   generatePackageJson: false,
+  packageJson: false,
   generateCSN: false,
   generateSdkMetadata: false,
   // Unnecessary options

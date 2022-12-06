@@ -58,7 +58,7 @@ describe('generator-cli', () => {
         inputDir,
         outputDir: outputDirGenerateAll,
         generateJs: true,
-        generatePackageJson: true
+        packageJson: true
       })
     );
     const services = fs.readdirSync(outputDirGenerateAll);
@@ -85,7 +85,7 @@ describe('generator-cli', () => {
         inputDir,
         outputDir: outputDirVersionPackageJson,
         generateJs: true,
-        generatePackageJson: true,
+        packageJson: true,
         versionInPackageJson: '42.23'
       })
     );

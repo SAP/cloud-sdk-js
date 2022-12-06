@@ -50,7 +50,7 @@ function validateTitle() {
                 case 0:
                     title = github_1.context.payload.pull_request.title;
                     if (!title.includes(':')) {
-                        throw new Error("PR title does not adhere to conventional commit guidelines. No preamble found.");
+                        return [2 /*return*/, (0, core_1.setFailed)("PR title does not adhere to conventional commit guidelines. No preamble found.")];
                     }
                     _a = title.split(':'), preamble = _a[0], postamble = _a[1];
                     return [4 /*yield*/, validatePreamble(preamble)];
@@ -68,33 +68,31 @@ function validatePreamble(preamble) {
         var groups, commitType, isBreaking;
         return __generator(this, function (_b) {
             groups = (_a = preamble.match(/(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/)) === null || _a === void 0 ? void 0 : _a.groups;
-            if (groups) {
-                commitType = groups.commitType, isBreaking = groups.isBreaking;
-                validateCommitType(commitType);
-                validateChangelog(commitType, !!isBreaking);
+            if (!groups) {
+                return [2 /*return*/, (0, core_1.setFailed)('Could not parse preamble. Ensure it follows the conventional commit guidelines.')];
             }
-            else {
-                throw new Error('Could not parse preamble. Ensure it follows the conventional commit guidelines.');
-            }
+            commitType = groups.commitType, isBreaking = groups.isBreaking;
+            validateCommitType(commitType);
+            validateChangelog(commitType, !!isBreaking);
             return [2 /*return*/];
         });
     });
 }
 function validateCommitType(commitType) {
     if (!commitType || !validCommitTypes.includes(commitType)) {
-        throw new Error("PR title does not adhere to conventional commit guidelines. Commit type found: ".concat(commitType, ". Must be one of ").concat(validCommitTypes.join(', ')));
+        return (0, core_1.setFailed)("PR title does not adhere to conventional commit guidelines. Commit type found: ".concat(commitType, ". Must be one of ").concat(validCommitTypes.join(', ')));
     }
     (0, core_1.info)('✓ Commit type: OK');
 }
 function validatePostamble(title) {
     if (!title || !title.trim().length) {
-        throw new Error("PR title does not have a title after conventional commit preamble.");
+        return (0, core_1.setFailed)("PR title does not have a title after conventional commit preamble.");
     }
     if (title[0] !== ' ') {
-        throw new Error("Space missing after conventional commit preamble.");
+        return (0, core_1.setFailed)("Space missing after conventional commit preamble.");
     }
     if (title[0] === title[0].toLowerCase()) {
-        throw new Error("PR title title must be capitalized (after conventional commit preamble).");
+        return (0, core_1.setFailed)("PR title title must be capitalized (after conventional commit preamble).");
     }
     (0, core_1.info)('✓ Title: OK');
 }
@@ -141,7 +139,7 @@ function validateChangelog(commitType, isBreaking) {
                     return [4 /*yield*/, hasMatchingChangelog(allowedBumps)];
                 case 1:
                     if (!(_a.sent())) {
-                        throw new Error("Preamble '".concat(commitType, "' requires a changelog file with bump ").concat(allowedBumps.join(' or '), "."));
+                        return [2 /*return*/, (0, core_1.setFailed)("Preamble '".concat(commitType, "' requires a changelog file with bump ").concat(allowedBumps.join(' or '), "."))];
                     }
                     (0, core_1.info)('✓ Changelog: OK');
                     return [2 /*return*/];
@@ -160,11 +158,9 @@ function validateBody() {
                 case 1:
                     template = _a.sent();
                     if (!body || body === template) {
-                        (0, core_1.setFailed)('PR must have a description');
+                        return [2 /*return*/, (0, core_1.setFailed)('PR must have a description')];
                     }
-                    else {
-                        (0, core_1.info)('✓ Body: OK');
-                    }
+                    (0, core_1.info)('✓ Body: OK');
                     return [2 /*return*/];
             }
         });

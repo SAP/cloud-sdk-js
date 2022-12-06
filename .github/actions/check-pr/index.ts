@@ -9,11 +9,10 @@ const validCommitTypes = ['feat', 'fix', 'chore'];
 async function validateTitle(): Promise<void> {
   const title = context.payload.pull_request.title;
   if (!title.includes(':')) {
-    throw new Error(
+    return setFailed(
       `PR title does not adhere to conventional commit guidelines. No preamble found.`
     );
   }
-
   const [preamble, postamble] = title.split(':');
 
   await validatePreamble(preamble);
@@ -25,21 +24,21 @@ async function validatePreamble(preamble: string): Promise<void> {
     /(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/
   )?.groups;
 
-  if (groups) {
-    const { commitType, isBreaking } = groups;
-
-    validateCommitType(commitType);
-    validateChangelog(commitType, !!isBreaking);
-  } else {
-    throw new Error(
+  if (!groups) {
+    return setFailed(
       'Could not parse preamble. Ensure it follows the conventional commit guidelines.'
     );
   }
+
+  const { commitType, isBreaking } = groups;
+
+  validateCommitType(commitType);
+  validateChangelog(commitType, !!isBreaking);
 }
 
 function validateCommitType(commitType) {
   if (!commitType || !validCommitTypes.includes(commitType)) {
-    throw new Error(
+    return setFailed(
       `PR title does not adhere to conventional commit guidelines. Commit type found: ${commitType}. Must be one of ${validCommitTypes.join(
         ', '
       )}`
@@ -50,20 +49,21 @@ function validateCommitType(commitType) {
 
 function validatePostamble(title: string | undefined): void {
   if (!title || !title.trim().length) {
-    throw new Error(
+    return setFailed(
       `PR title does not have a title after conventional commit preamble.`
     );
   }
 
   if (title[0] !== ' ') {
-    throw new Error(`Space missing after conventional commit preamble.`);
+    return setFailed(`Space missing after conventional commit preamble.`);
   }
 
   if (title[0] === title[0].toLowerCase()) {
-    throw new Error(
+    return setFailed(
       `PR title title must be capitalized (after conventional commit preamble).`
     );
   }
+
   info('✓ Title: OK');
 }
 
@@ -102,12 +102,13 @@ async function validateChangelog(
 ): Promise<void> {
   const allowedBumps = getAllowedBumps(commitType, isBreaking);
   if (!(await hasMatchingChangelog(allowedBumps))) {
-    throw new Error(
+    return setFailed(
       `Preamble '${commitType}' requires a changelog file with bump ${allowedBumps.join(
         ' or '
       )}.`
     );
   }
+
   info('✓ Changelog: OK');
 }
 
@@ -119,10 +120,9 @@ async function validateBody() {
   );
 
   if (!body || body === template) {
-    setFailed('PR must have a description');
-  } else {
-    info('✓ Body: OK');
+    return setFailed('PR must have a description');
   }
+  info('✓ Body: OK');
 }
 
 try {

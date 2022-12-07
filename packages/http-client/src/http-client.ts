@@ -1,5 +1,3 @@
-import * as http from 'http';
-import * as https from 'https';
 import {
   buildHeadersForDestination,
   Destination,
@@ -21,7 +19,9 @@ import {
   sanitizeRecord,
   unixEOL
 } from '@sap-cloud-sdk/util';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+import * as http from 'http';
+import * as https from 'https';
 import { buildCsrfHeaders } from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
@@ -471,10 +471,12 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
     timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config
-    paramsSerializer: (params = {}) =>
+    paramsSerializer: {
+      serialize: (params = {}) =>
       Object.entries(params)
         .map(([key, value]) => `${key}=${value}`)
         .join('&')
+    }
   };
 }
 

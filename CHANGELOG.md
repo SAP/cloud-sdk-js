@@ -28,6 +28,32 @@
 
 -
 
+# 2.12.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.12.0
+
+## Compatibility Notes
+
+- [generator] Deprecate the `processesJsGeneration` option. (0f1056817)
+- [generator] Deprecate the `generatePackageJson` option. Use `packageJson` instead. (0f1056817)
+- [generator] Make options in `GeneratorOptions` optional, if they are not mandatory. (0f1056817)
+- [generator] Deprecate `generateCSN` option. (0f1056817)
+- [generator] Deprecate the `licenseInPackageJson` option. Use `include` instead. (0f1056817)
+- [generator] Deprecate the `forceOverwrite` option. Use `overwrite` instead. (0f1056817)
+
+## Improvements
+
+- [generator] Show warnings for deprecated options only if options where used.
+  - @sap-cloud-sdk/generator-common@2.12.0
+  - @sap-cloud-sdk/odata-common@2.12.0
+  - @sap-cloud-sdk/odata-v2@2.12.0
+  - @sap-cloud-sdk/odata-v4@2.12.0
+  - @sap-cloud-sdk/util@2.12.0 (0f1056817)
+
+## Fixed Issues
+
+- [generator] Allow OData service to contain an entity name 'Service'. (0f1056817)
+
 # 2.11.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.11.0

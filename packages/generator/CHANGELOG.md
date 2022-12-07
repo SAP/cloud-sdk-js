@@ -1,5 +1,26 @@
 # @sap-cloud-sdk/generator
 
+## 2.12.0
+
+### Minor Changes
+
+- 0f1056817: [Compatibility Note] Deprecate the `processesJsGeneration` option.
+- 0f1056817: [Compatibility Note] Deprecate the `generatePackageJson` option. Use `packageJson` instead.
+- 0f1056817: [Compatibility Note] Make options in `GeneratorOptions` optional, if they are not mandatory.
+- 0f1056817: [Fixed Issue] Allow OData service to contain an entity name 'Service'.
+- 0f1056817: [Compatibility Note] Deprecate `generateCSN` option.
+- 0f1056817: [Compatibility Note] Deprecate the `licenseInPackageJson` option. Use `include` instead.
+- 0f1056817: [Compatibility Note] Deprecate the `forceOverwrite` option. Use `overwrite` instead.
+
+### Patch Changes
+
+- 0f1056817: [Improvement] Show warnings for deprecated options only if options where used.
+  - @sap-cloud-sdk/generator-common@2.12.0
+  - @sap-cloud-sdk/odata-common@2.12.0
+  - @sap-cloud-sdk/odata-v2@2.12.0
+  - @sap-cloud-sdk/odata-v4@2.12.0
+  - @sap-cloud-sdk/util@2.12.0
+
 ## 2.11.0
 
 ### Minor Changes

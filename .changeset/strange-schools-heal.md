@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/generator': minor
 ---
 
-[Compatibility Notes] Deprecate the `licenseInPackageJson` option. Use `include` instead.
+[Compatibility Note] Deprecate the `licenseInPackageJson` option. Use `include` instead.

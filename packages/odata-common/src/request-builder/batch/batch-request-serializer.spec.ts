@@ -25,7 +25,7 @@ jest.mock('uuid', () => ({
 }));
 
 function commonEntity(): CommonEntity {
-  return new CommonEntityApi()
+  return CommonEntityApi._privateFactory()
     .entityBuilder()
     .keyPropertyGuid('guidId')
     .keyPropertyString('strId')

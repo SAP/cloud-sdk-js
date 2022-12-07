@@ -22,7 +22,14 @@ export declare class TestEntityLvl2MultiLinkApi<
 > implements EntityApi<TestEntityLvl2MultiLink<DeSerializersT>, DeSerializersT>
 {
   deSerializers: DeSerializersT;
-  constructor(deSerializers?: DeSerializersT);
+  private constructor();
+  /**
+   * Do not use this method or the constructor directly.
+   * Use the service object to get a API instance.
+   */
+  static _privateFactory<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(deSerializers?: DeSerializersT): TestEntityLvl2MultiLinkApi<DeSerializersT>;
   private navigationPropertyFields;
   _addNavigationProperties(
     linkedApis: [TestEntityLvl3MultiLinkApi<DeSerializersT>]

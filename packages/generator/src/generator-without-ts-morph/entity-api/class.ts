@@ -1,4 +1,4 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import {
   addNavigationPropertyFieldsFunction,
@@ -25,9 +25,17 @@ export function classContent(
     > {
   public deSerializers: DeSerializersT;
 
-  constructor(
+  private constructor(
     deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
+  }
+  
+  ${documentationBlock`Do not use this method or the constructor directly.
+Use the service object to get a API instance.`}  
+  public static _privateFactory<DeSerializersT extends DeSerializers = DefaultDeSerializers>(  deSerializers: DeSerializersT = defaultDeSerializers as any):${
+    entity.className
+  }Api<DeSerializersT> {
+    return new ${entity.className}Api(deSerializers)
   }
 
   ${navigationPropertyFieldsVariable(entity, service)}

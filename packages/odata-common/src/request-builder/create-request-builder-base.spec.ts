@@ -9,7 +9,7 @@ jest.mock('uuid', () => ({
 }));
 describe('CreateRequestBuilder', () => {
   function commonEntity(): CommonEntity {
-    return new CommonEntityApi().entityBuilder().build();
+    return CommonEntityApi._privateFactory().entityBuilder().build();
   }
   it('should generate batch ID when the request builder instantiated', () => {
     const batchId = createRequestBuilder({

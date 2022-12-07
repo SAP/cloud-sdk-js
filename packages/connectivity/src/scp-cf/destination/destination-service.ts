@@ -344,11 +344,11 @@ async function callDestinationService(
     ...urlAndAgent(uri),
     proxy: false,
     method: 'get',
-    timeout: 10000, // TODO: Use middleware
+    timeout: 10000, // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
     headers
   };
 
-  // TODO: Use middleware
+  // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
   return circuitBreaker.fire(config);
   // return axios.request(config);
 }

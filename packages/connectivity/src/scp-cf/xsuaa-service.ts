@@ -114,7 +114,7 @@ export async function getClientCredentialsToken(
       );
     });
 
-  // TODO: Use middleware
+  // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
   return wrapInCircuitBreaker((ser, jwt) =>
     wrapInTimeout(xssecPromise(), 10000, 'Token retrieval ran into timeout.')
   )(service, userJwt);
@@ -143,7 +143,7 @@ export function getUserToken(
       (err: Error, token: string) => (err ? reject(err) : resolve(token))
     )
   );
-  // TODO: Use middleware
+  // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
   return wrapInCircuitBreaker((ser, jwt) =>
     wrapInTimeout(xssecPromise, 10000, 'Token retrieval ran into timeout.')
   )(service, userJwt);

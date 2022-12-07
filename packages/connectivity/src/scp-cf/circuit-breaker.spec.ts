@@ -26,7 +26,6 @@ describe('circuit breaker', () => {
   beforeEach(() => {
     circuitBreaker.enable();
     nock.cleanAll();
-    // nock.restore()
   });
 
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for destination service', async () => {
@@ -39,10 +38,12 @@ describe('circuit breaker', () => {
       .get(/.*/)
       .times(1)
       .reply(200, JSON.stringify({ URL: 'test' }));
-    nock(destinationServiceUri).get(/.*/).times(99).reply(400);
 
     // First attempt should succeed
     await expect(request()).resolves.toBeDefined();
+
+    //All following requests will fail to open the breaker
+    nock(destinationServiceUri).persist().get(/.*/).reply(400);
 
     let keepCalling = true;
     let failedCalls = 0;
@@ -72,13 +73,14 @@ describe('circuit breaker', () => {
       .times(1)
       .reply(200, { access_token: 'token' });
 
-    const mock = nock(providerXsuaaUrl)
-      .post('/oauth/token')
-      .times(99)
-      .reply(400);
-
     // First attempt should succeed
     await expect(request()).resolves.toBeDefined();
+
+    //All following requests will fail to open the breaker
+    const mock = nock(providerXsuaaUrl)
+        .persist()
+        .post('/oauth/token')
+        .reply(400);
 
     let keepCalling = true;
     let failedCalls = 0;

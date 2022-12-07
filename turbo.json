@@ -10,7 +10,9 @@
   ],
   "pipeline": {
     "compile": {
-      "dependsOn": ["^compile", "check:dependencies"]
+      "dependsOn": [
+        "^compile"
+      ]
     },
     "test": {
       "dependsOn": ["^compile", "^generate"]

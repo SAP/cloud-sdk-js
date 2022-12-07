@@ -82,7 +82,7 @@ function addODataVersion(str: string): string {
     const nameString = str.match(/static _entityName =.*/)![0];
     return str.replace(
       nameString,
-      [nameString, 'declare readonly _oDataVersion: any;'].join(unixEOL)
+      [nameString, 'readonly _oDataVersion: any;'].join(unixEOL)
     );
   }
   return str;
@@ -160,7 +160,7 @@ The idea behind this entity is to use only odata-common imports and use it in th
 const imports = `
   import { Moment } from "moment";
   import { BigNumber } from "bignumber.js";
-  import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time, nonEnumerable } from '../../packages/odata-common/src/internal';
+  import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time } from '../../packages/odata-common/src/internal';
   import { customTestDeSerializers } from '../../test-resources/test/test-util';
   `;
 const disableEslint = '/* eslint-disable */';

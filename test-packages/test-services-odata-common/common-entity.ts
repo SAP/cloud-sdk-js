@@ -33,8 +33,7 @@ import {
   OneToOneLink,
   OrderableEdmTypeField,
   PropertyMetadata,
-  Time,
-  nonEnumerable
+  Time
 } from '../../packages/odata-common/src/internal';
 import { customTestDeSerializers } from '../../test-resources/test/test-util';
 
@@ -211,7 +210,7 @@ export class CommonEntitySingleLink<
   implements CommonEntitySingleLinkType<T>
 {
   static _entityName = 'A_CommonEntitySingleLink';
-  declare readonly _oDataVersion: any;
+  readonly _oDataVersion: any;
   static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
   static _keys = ['KeyProperty'];
   keyProperty!: DeserializedType<T, 'Edm.String'>;
@@ -360,7 +359,7 @@ export class CommonEntity<T extends DeSerializers = DefaultDeSerializers>
   implements CommonEntityType<T>
 {
   static _entityName = 'A_CommonEntity';
-  declare readonly _oDataVersion: any;
+  readonly _oDataVersion: any;
   static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
   static _keys = ['KeyPropertyGuid', 'KeyPropertyString'];
   keyPropertyGuid!: DeserializedType<T, 'Edm.Guid'>;

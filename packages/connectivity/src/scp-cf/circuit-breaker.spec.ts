@@ -21,7 +21,6 @@ describe('circuit breaker', () => {
   afterEach(() => {
     circuitBreaker.enable();
     nock.cleanAll();
-    // nock.restore()
   });
   beforeEach(() => {
     circuitBreaker.enable();

@@ -4,7 +4,6 @@ import { ODataRequest } from '../../request/odata-request';
 import { ODataRequestConfig } from '../../request/odata-request-config';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { DeSerializers } from '../../de-serializers';
-import { EntityBase } from '../../entity-base';
 import { WithBatchReference } from '../../request';
 import type { BatchRequestBuilder } from './batch-request-builder';
 import {
@@ -44,10 +43,7 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
  * @returns The serialized string representation of a multipart request, including the multipart headers.
  * @internal
  */
-export function serializeRequest<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
->(
+export function serializeRequest(
   request: AllRequestBuilders,
   options: BatchRequestSerializationOptions = {}
 ): string {
@@ -88,10 +84,9 @@ type AllRequestBuilders =
   | RequestBuildersWithBatchReference
   | Omit<MethodRequestBuilder, 'execute'>;
 
-function isRequestBuilderWithBatchReference<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
->(request: AllRequestBuilders): request is RequestBuildersWithBatchReference {
+function isRequestBuilderWithBatchReference(
+  request: AllRequestBuilders
+): request is RequestBuildersWithBatchReference {
   return !!(request as WithBatchReference).getBatchReference;
 }
 

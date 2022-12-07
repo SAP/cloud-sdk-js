@@ -73,7 +73,7 @@ ZH+EmGNgQbWNQV96abqUFGju68IIxz1ycGj0372Ko53CRKMG8GH5oA48qpP0xw==
 
       await expect(
         executeHttpRequest(destination, { method: 'get' })
-      ).rejects.toThrow('self signed certificate');
+      ).rejects.toThrow('self-signed certificate');
     });
 
     it('resolves for a server using self-signed certificate if trustAll is set.', async () => {

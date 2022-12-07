@@ -51,8 +51,6 @@ export abstract class EntityBase {
   static _entityName: string;
   static _defaultServicePath: string;
 
-  abstract readonly _oDataVersion: any;
-
   /**
    * The remote state of the entity.
    * Remote state refers to the last known state of the entity on the remote system from which it has been retrieved or to which it has been posted.
@@ -74,6 +72,8 @@ export abstract class EntityBase {
    */
   protected _customFields: Record<string, any>;
 
+  abstract readonly _oDataVersion: any;
+
   /**
    * @internal
    */
@@ -81,8 +81,6 @@ export abstract class EntityBase {
     nonEnumerable(this, '_oDataVersion');
     nonEnumerable(this, '_customFields');
     nonEnumerable(this, '_entityApi');
-    nonEnumerable(this, '_versionIdentifier');
-    nonEnumerable(this, 'remoteState');
     this._customFields = {};
   }
 

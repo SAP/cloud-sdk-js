@@ -20,7 +20,14 @@ export declare class TestEntityEndsWithApi<
 > implements EntityApi<TestEntityEndsWith<DeSerializersT>, DeSerializersT>
 {
   deSerializers: DeSerializersT;
-  constructor(deSerializers?: DeSerializersT);
+  private constructor();
+  /**
+   * Do not use this method or the constructor directly.
+   * Use the service object to get a API instance.
+   */
+  static _privateFactory<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(deSerializers?: DeSerializersT): TestEntityEndsWithApi<DeSerializersT>;
   private navigationPropertyFields;
   _addNavigationProperties(linkedApis: []): this;
   entityConstructor: typeof TestEntityEndsWith;

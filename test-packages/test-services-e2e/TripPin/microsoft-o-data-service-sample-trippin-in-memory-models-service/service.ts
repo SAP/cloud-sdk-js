@@ -104,9 +104,9 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
     this.deSerializers = deSerializers;
   }
 
-  private initApi(key: string, ctor: new (...args: any[]) => any): any {
+  private initApi(key: string, entityApi: any): any {
     if (!this.apis[key]) {
-      this.apis[key] = new ctor(this.deSerializers);
+      this.apis[key] = entityApi._privateFactory(this.deSerializers);
     }
     return this.apis[key];
   }

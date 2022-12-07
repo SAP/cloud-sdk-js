@@ -20,7 +20,9 @@ describe('Header-Builder', () => {
     expect(headers.custom!.authorization).toBe(authString);
   });
 
-  const commonEntity = new CommonEntityApi().entityBuilder().build();
+  const commonEntity = CommonEntityApi._privateFactory()
+    .entityBuilder()
+    .build();
   describe('update request header with ETag', () => {
     it('if-match should not be set when no ETag is specified', async () => {
       const request = new ODataRequest(

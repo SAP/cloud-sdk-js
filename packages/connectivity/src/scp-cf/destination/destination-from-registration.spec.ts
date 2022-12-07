@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { JwtHeader, JwtPayload } from 'jsonwebtoken';
 import base64url from 'base64url';
+import { JwtHeader, JwtPayload } from 'jsonwebtoken';
 import {
   mockServiceBindings,
   providerServiceToken,
@@ -9,14 +9,14 @@ import {
   unmockDestinationsEnv,
   xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util';
+import { getDestination } from './destination-accessor';
+import { IsolationStrategy } from './destination-cache';
 import {
   DestinationWithName,
   registerDestination,
   registerDestinationCache,
   searchRegisteredDestination
 } from './destination-from-registration';
-import { getDestination } from './destination-accessor';
-import { IsolationStrategy } from './destination-cache';
 
 const testDestination: DestinationWithName = {
   name: 'RegisteredDestination',

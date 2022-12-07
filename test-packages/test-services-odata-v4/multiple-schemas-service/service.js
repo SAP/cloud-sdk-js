@@ -23,9 +23,9 @@ class MultipleSchemasService {
         this.apis = {};
         this.deSerializers = deSerializers;
     }
-    initApi(key, ctor) {
+    initApi(key, entityApi) {
         if (!this.apis[key]) {
-            this.apis[key] = new ctor(this.deSerializers);
+            this.apis[key] = entityApi._privateFactory(this.deSerializers);
         }
         return this.apis[key];
     }

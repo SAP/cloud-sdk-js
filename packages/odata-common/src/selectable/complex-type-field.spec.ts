@@ -5,7 +5,7 @@ import {
 import { getEdmType, getEntityConstructor } from './complex-type-field';
 
 describe('complex-type-field', () => {
-  const { COMPLEX_TYPE_PROPERTY } = new CommonEntityApi().schema;
+  const { COMPLEX_TYPE_PROPERTY } = CommonEntityApi._privateFactory().schema;
   describe('getEntityConstructor', () => {
     it('should get entity constructor from entity constructor', () => {
       expect(getEntityConstructor(CommonEntity)).toBe(CommonEntity);

@@ -242,8 +242,18 @@ export class CommonEntitySingleLinkApi<
 {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  private constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ) {
     this.deSerializers = deSerializers;
+  }
+
+  public static _privateFactory<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ): CommonEntitySingleLinkApi<DeSerializersT> {
+    return new CommonEntitySingleLinkApi(deSerializers);
   }
 
   private navigationPropertyFields!: {};
@@ -392,8 +402,18 @@ export class CommonEntityApi<
 {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  private constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ) {
     this.deSerializers = deSerializers;
+  }
+
+  public static _privateFactory<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ): CommonEntityApi<DeSerializersT> {
+    return new CommonEntityApi(deSerializers);
   }
 
   private navigationPropertyFields!: {
@@ -609,9 +629,9 @@ class CommonService<
     this.deSerializers = deSerializers;
   }
 
-  private initApi(key: string, ctor: new (...args: any[]) => any): any {
+  private initApi(key: string, entityApi: any): any {
     if (!this.apis[key]) {
-      this.apis[key] = new ctor(this.deSerializers);
+      this.apis[key] = entityApi._privateFactory(this.deSerializers);
     }
     return this.apis[key];
   }

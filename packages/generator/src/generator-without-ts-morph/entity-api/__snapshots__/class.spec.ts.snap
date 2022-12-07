@@ -10,9 +10,17 @@ exports[`entity api class gets proper class content 1`] = `
     > {
   public deSerializers: DeSerializersT;
 
-  constructor(
+  private constructor(
     deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
+  }
+  
+  /**
+   * Do not use this method or the constructor directly.
+   * Use the service object to get a API instance.
+   */  
+  public static _privateFactory<DeSerializersT extends DeSerializers = DefaultDeSerializers>(  deSerializers: DeSerializersT = defaultDeSerializers as any):BreakfastApi<DeSerializersT> {
+    return new BreakfastApi(deSerializers)
   }
 
   private navigationPropertyFields!: {

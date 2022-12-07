@@ -24,8 +24,22 @@ export class TestEntityLvl2SingleLinkApi<
 {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  private constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ) {
     this.deSerializers = deSerializers;
+  }
+
+  /**
+   * Do not use this method or the constructor directly.
+   * Use the service object to get a API instance.
+   */
+  public static _privateFactory<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ): TestEntityLvl2SingleLinkApi<DeSerializersT> {
+    return new TestEntityLvl2SingleLinkApi(deSerializers);
   }
 
   private navigationPropertyFields!: {};

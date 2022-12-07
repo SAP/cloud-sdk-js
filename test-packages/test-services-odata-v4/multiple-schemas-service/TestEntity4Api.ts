@@ -23,8 +23,22 @@ export class TestEntity4Api<
 {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  private constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ) {
     this.deSerializers = deSerializers;
+  }
+
+  /**
+   * Do not use this method or the constructor directly.
+   * Use the service object to get a API instance.
+   */
+  public static _privateFactory<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >(
+    deSerializers: DeSerializersT = defaultDeSerializers as any
+  ): TestEntity4Api<DeSerializersT> {
+    return new TestEntity4Api(deSerializers);
   }
 
   private navigationPropertyFields!: {};

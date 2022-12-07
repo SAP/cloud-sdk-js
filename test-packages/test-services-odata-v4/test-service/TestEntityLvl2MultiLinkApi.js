@@ -14,6 +14,13 @@ class TestEntityLvl2MultiLinkApi {
         this.entityConstructor = TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink;
         this.deSerializers = deSerializers;
     }
+    /**
+     * Do not use this method or the constructor directly.
+     * Use the service object to get a API instance.
+     */
+    static _privateFactory(deSerializers = odata_v4_1.defaultDeSerializers) {
+        return new TestEntityLvl2MultiLinkApi(deSerializers);
+    }
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {
             TO_MULTI_LINK_2: new odata_v4_1.OneToManyLink('to_MultiLink2', this, linkedApis[0])

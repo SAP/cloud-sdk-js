@@ -12,22 +12,6 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
  * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 class CityField extends odata_v4_1.ComplexTypeField {
-    _fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
-    /**
-     * Representation of the {@link City.countryRegion} property for query construction.
-     * Use to reference this property in query operations such as 'filter' in the fluent request API.
-     */
-    countryRegion = this._fieldBuilder.buildEdmTypeField('CountryRegion', 'Edm.String', false);
-    /**
-     * Representation of the {@link City.name} property for query construction.
-     * Use to reference this property in query operations such as 'filter' in the fluent request API.
-     */
-    name = this._fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
-    /**
-     * Representation of the {@link City.region} property for query construction.
-     * Use to reference this property in query operations such as 'filter' in the fluent request API.
-     */
-    region = this._fieldBuilder.buildEdmTypeField('Region', 'Edm.String', false);
     /**
      * Creates an instance of CityField.
      * @param fieldName - Actual name of the field as used in the OData request.
@@ -35,6 +19,22 @@ class CityField extends odata_v4_1.ComplexTypeField {
      */
     constructor(fieldName, fieldOf, deSerializers, fieldOptions) {
         super(fieldName, fieldOf, deSerializers, City, fieldOptions);
+        this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
+        /**
+         * Representation of the {@link City.countryRegion} property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        this.countryRegion = this._fieldBuilder.buildEdmTypeField('CountryRegion', 'Edm.String', false);
+        /**
+         * Representation of the {@link City.name} property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        this.name = this._fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
+        /**
+         * Representation of the {@link City.region} property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        this.region = this._fieldBuilder.buildEdmTypeField('Region', 'Edm.String', false);
     }
 }
 exports.CityField = CityField;

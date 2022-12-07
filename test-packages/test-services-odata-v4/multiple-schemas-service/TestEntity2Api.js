@@ -10,16 +10,14 @@ const TestEntity2_1 = require("./TestEntity2");
 const TestEntity2RequestBuilder_1 = require("./TestEntity2RequestBuilder");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class TestEntity2Api {
-    deSerializers;
     constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
+        this.entityConstructor = TestEntity2_1.TestEntity2;
         this.deSerializers = deSerializers;
     }
-    navigationPropertyFields;
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;
     }
-    entityConstructor = TestEntity2_1.TestEntity2;
     requestBuilder() {
         return new TestEntity2RequestBuilder_1.TestEntity2RequestBuilder(this);
     }
@@ -29,14 +27,12 @@ class TestEntity2Api {
     customField(fieldName, isNullable = false) {
         return new odata_v4_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
-    _fieldBuilder;
     get fieldBuilder() {
         if (!this._fieldBuilder) {
             this._fieldBuilder = new odata_v4_1.FieldBuilder(TestEntity2_1.TestEntity2, this.deSerializers);
         }
         return this._fieldBuilder;
     }
-    _schema;
     get schema() {
         if (!this._schema) {
             const fieldBuilder = this.fieldBuilder;

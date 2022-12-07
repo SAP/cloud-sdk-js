@@ -11,27 +11,6 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
 class Airlines extends odata_v4_1.Entity {
-    _entityApi;
-    /**
-     * Technical entity name for Airlines.
-     */
-    static _entityName = 'Airlines';
-    /**
-     * Default url path for the according service.
-     */
-    static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
-    /**
-     * All key fields of the Airlines entity
-     */
-    static _keys = ['AirlineCode'];
-    /**
-     * Airline Code.
-     */
-    airlineCode;
-    /**
-     * Name.
-     */
-    name;
     constructor(_entityApi) {
         super(_entityApi);
         this._entityApi = _entityApi;
@@ -39,4 +18,16 @@ class Airlines extends odata_v4_1.Entity {
     }
 }
 exports.Airlines = Airlines;
+/**
+ * Technical entity name for Airlines.
+ */
+Airlines._entityName = 'Airlines';
+/**
+ * Default url path for the according service.
+ */
+Airlines._defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+/**
+ * All key fields of the Airlines entity
+ */
+Airlines._keys = ['AirlineCode'];
 //# sourceMappingURL=Airlines.js.map

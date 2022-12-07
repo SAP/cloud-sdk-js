@@ -13,17 +13,6 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
  * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 class TestNestedComplexTypeField extends odata_v2_1.ComplexTypeField {
-    _fieldBuilder = new odata_v2_1.FieldBuilder(this, this.deSerializers);
-    /**
-     * Representation of the {@link TestNestedComplexType.stringProperty} property for query construction.
-     * Use to reference this property in query operations such as 'filter' in the fluent request API.
-     */
-    stringProperty = this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
-    /**
-     * Representation of the {@link TestNestedComplexType.complexTypeProperty} property for query construction.
-     * Use to reference this property in query operations such as 'filter' in the fluent request API.
-     */
-    complexTypeProperty = this._fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestLvl2NestedComplexType_1.TestLvl2NestedComplexTypeField, true);
     /**
      * Creates an instance of TestNestedComplexTypeField.
      * @param fieldName - Actual name of the field as used in the OData request.
@@ -31,6 +20,17 @@ class TestNestedComplexTypeField extends odata_v2_1.ComplexTypeField {
      */
     constructor(fieldName, fieldOf, deSerializers, fieldOptions) {
         super(fieldName, fieldOf, deSerializers, TestNestedComplexType, fieldOptions);
+        this._fieldBuilder = new odata_v2_1.FieldBuilder(this, this.deSerializers);
+        /**
+         * Representation of the {@link TestNestedComplexType.stringProperty} property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        this.stringProperty = this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
+        /**
+         * Representation of the {@link TestNestedComplexType.complexTypeProperty} property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        this.complexTypeProperty = this._fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestLvl2NestedComplexType_1.TestLvl2NestedComplexTypeField, true);
     }
 }
 exports.TestNestedComplexTypeField = TestNestedComplexTypeField;

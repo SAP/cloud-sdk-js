@@ -11,33 +11,6 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
  * This class represents the entity "TestEntityLink" of service "TestService".
  */
 class TestEntityLink extends odata_v4_1.Entity {
-    _entityApi;
-    /**
-     * Technical entity name for TestEntityLink.
-     */
-    static _entityName = 'TestEntityLink';
-    /**
-     * Default url path for the according service.
-     */
-    static _defaultServicePath = '/odata/test-service';
-    /**
-     * All key fields of the TestEntityLink entity
-     */
-    static _keys = ['KeyTestEntityLink', 'KeyToTestEntity'];
-    /**
-     * Key Test Entity Link.
-     */
-    keyTestEntityLink;
-    /**
-     * Key To Test Entity.
-     */
-    keyToTestEntity;
-    /**
-     * String Property.
-     * Maximum length: 111.
-     * @nullable
-     */
-    stringProperty;
     constructor(_entityApi) {
         super(_entityApi);
         this._entityApi = _entityApi;
@@ -45,4 +18,16 @@ class TestEntityLink extends odata_v4_1.Entity {
     }
 }
 exports.TestEntityLink = TestEntityLink;
+/**
+ * Technical entity name for TestEntityLink.
+ */
+TestEntityLink._entityName = 'TestEntityLink';
+/**
+ * Default url path for the according service.
+ */
+TestEntityLink._defaultServicePath = '/odata/test-service';
+/**
+ * All key fields of the TestEntityLink entity
+ */
+TestEntityLink._keys = ['KeyTestEntityLink', 'KeyToTestEntity'];
 //# sourceMappingURL=TestEntityLink.js.map

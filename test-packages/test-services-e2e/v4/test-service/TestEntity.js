@@ -12,78 +12,6 @@ const MyComplexReturnType_1 = require("./MyComplexReturnType");
  * This class represents the entity "TestEntity" of service "TestService".
  */
 class TestEntity extends odata_v4_1.Entity {
-    _entityApi;
-    /**
-     * Technical entity name for TestEntity.
-     */
-    static _entityName = 'TestEntity';
-    /**
-     * Default url path for the according service.
-     */
-    static _defaultServicePath = '/odata/test-service';
-    /**
-     * All key fields of the TestEntity entity
-     */
-    static _keys = ['KeyTestEntity'];
-    /**
-     * Key Test Entity.
-     */
-    keyTestEntity;
-    /**
-     * String Property.
-     * Maximum length: 111.
-     * @nullable
-     */
-    stringProperty;
-    /**
-     * Guid Property.
-     * @nullable
-     */
-    guidProperty;
-    /**
-     * Boolean Property.
-     * @nullable
-     */
-    booleanProperty;
-    /**
-     * Int 64 Property.
-     * @nullable
-     */
-    int64Property;
-    /**
-     * Double Property.
-     * @nullable
-     */
-    doubleProperty;
-    /**
-     * Decimal Property.
-     * @nullable
-     */
-    decimalProperty;
-    /**
-     * Date Property.
-     * @nullable
-     */
-    dateProperty;
-    /**
-     * Time Of Day Property.
-     * @nullable
-     */
-    timeOfDayProperty;
-    /**
-     * Data Time Offset Data Time Property.
-     * @nullable
-     */
-    dataTimeOffsetDataTimeProperty;
-    /**
-     * Data Time Offset Timestamp Property.
-     * @nullable
-     */
-    dataTimeOffsetTimestampProperty;
-    /**
-     * One-to-many navigation property to the {@link TestEntityLink} entity.
-     */
-    toMultiLink;
     constructor(_entityApi) {
         super(_entityApi);
         this._entityApi = _entityApi;
@@ -130,4 +58,16 @@ class TestEntity extends odata_v4_1.Entity {
     }
 }
 exports.TestEntity = TestEntity;
+/**
+ * Technical entity name for TestEntity.
+ */
+TestEntity._entityName = 'TestEntity';
+/**
+ * Default url path for the according service.
+ */
+TestEntity._defaultServicePath = '/odata/test-service';
+/**
+ * All key fields of the TestEntity entity
+ */
+TestEntity._keys = ['KeyTestEntity'];
 //# sourceMappingURL=TestEntity.js.map

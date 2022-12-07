@@ -10,16 +10,14 @@ const TestEntityEndsWithSomethingElse_1 = require("./TestEntityEndsWithSomething
 const TestEntityEndsWithSomethingElseRequestBuilder_1 = require("./TestEntityEndsWithSomethingElseRequestBuilder");
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 class TestEntityEndsWithSomethingElseApi {
-    deSerializers;
     constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
+        this.entityConstructor = TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse;
         this.deSerializers = deSerializers;
     }
-    navigationPropertyFields;
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;
     }
-    entityConstructor = TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse;
     requestBuilder() {
         return new TestEntityEndsWithSomethingElseRequestBuilder_1.TestEntityEndsWithSomethingElseRequestBuilder(this);
     }
@@ -29,14 +27,12 @@ class TestEntityEndsWithSomethingElseApi {
     customField(fieldName, isNullable = false) {
         return new odata_v2_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
-    _fieldBuilder;
     get fieldBuilder() {
         if (!this._fieldBuilder) {
             this._fieldBuilder = new odata_v2_1.FieldBuilder(TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse, this.deSerializers);
         }
         return this._fieldBuilder;
     }
-    _schema;
     get schema() {
         if (!this._schema) {
             const fieldBuilder = this.fieldBuilder;

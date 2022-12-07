@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "include": [
     "./packages/util/**/*",
+    "./packages/resilience/**/*",
     "./packages/odata-common/**/*",
     "./packages/odata-v2/**/*",
     "./packages/odata-v4/**/*",
@@ -20,6 +21,9 @@
   "references": [
     {
       "path": "./packages/util"
+    },
+    {
+      "path": "./packages/resilience"
     },
     {
       "path": "./packages/odata-common"
@@ -59,6 +63,7 @@
     "out": "docs/api/2.11.0",
     "entryPoints": [
       "packages/util/src/index.ts",
+      "packages/resilience/src/index.ts",
       "packages/connectivity/src/index.ts",
       "packages/http-client/src/index.ts",
       "packages/mail-client/src/index.ts",

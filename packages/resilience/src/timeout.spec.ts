@@ -1,15 +1,9 @@
 import nock from 'nock';
-// import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import axios from 'axios';
 import { timeout } from './timeout';
 import { executeWithMiddleware } from './middleware';
 
 describe('timeout', () => {
-  const httpsDestination = {
-    name: 'httpsDestination',
-    url: 'https://example.com'
-  };
-
   it('uses a custom timeout if given', async () => {
     const delayInResponse = 100;
     nock('https://example.com', {})

@@ -2,56 +2,58 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import { signedJwt } from '../../../../../test-resources/test/test-util';
 import {
-    mockInstanceDestinationsCall,
-    mockSingleDestinationCall,
-    mockSubaccountDestinationsCall,
-    mockVerifyJwt
+  mockInstanceDestinationsCall,
+  mockSingleDestinationCall,
+  mockSubaccountDestinationsCall,
+  mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
-    connectivityProxyConfigMock,
-    mockServiceBindings,
-    onlyIssuerXsuaaUrl,
-    TestTenants
+  connectivityProxyConfigMock,
+  mockServiceBindings,
+  onlyIssuerXsuaaUrl,
+  TestTenants
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
-    certificateMultipleResponse,
-    certificateSingleResponse,
-    destinationName,
-    oauthMultipleResponse,
-    oauthSingleResponse,
-    onPremisePrincipalPropagationMultipleResponse
+  certificateMultipleResponse,
+  certificateSingleResponse,
+  destinationName,
+  oauthMultipleResponse,
+  oauthSingleResponse,
+  onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import {
-    providerJwtBearerToken,
-    providerServiceToken,
-    providerUserJwt,
-    providerUserPayload,
-    subscriberServiceToken,
-    subscriberUserJwt
+  providerJwtBearerToken,
+  providerServiceToken,
+  providerUserJwt,
+  providerUserPayload,
+  subscriberServiceToken,
+  subscriberUserJwt
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import { TestCache } from '../../../../../test-resources/test/test-util/test-cache';
 import {
-    mockJwtBearerToken,
-    mockServiceToken
+  mockJwtBearerToken,
+  mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { parseDestination } from './destination';
 import { getDestination } from './destination-accessor';
 import {
-    destinationCache, getDestinationCacheKey,
-    IsolationStrategy, setDestinationCache
+  destinationCache,
+  getDestinationCacheKey,
+  IsolationStrategy,
+  setDestinationCache
 } from './destination-cache';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import {
-    alwaysProvider,
-    alwaysSubscriber,
-    subscriberFirst
+  alwaysProvider,
+  alwaysSubscriber,
+  subscriberFirst
 } from './destination-selection-strategies';
 import { destinationServiceCache } from './destination-service-cache';
 import {
-    AuthenticationType,
-    Destination,
-    DestinationAuthToken
+  AuthenticationType,
+  Destination,
+  DestinationAuthToken
 } from './destination-service-types';
 
 const destinationOne: Destination = {

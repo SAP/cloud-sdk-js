@@ -42,7 +42,7 @@ describe('circuit breaker', () => {
     // First attempt should succeed
     await expect(request()).resolves.toBeDefined();
 
-    //All following requests will fail to open the breaker
+    // All following requests will fail to open the breaker
     nock(destinationServiceUri).persist().get(/.*/).reply(400);
 
     let keepCalling = true;
@@ -76,11 +76,11 @@ describe('circuit breaker', () => {
     // First attempt should succeed
     await expect(request()).resolves.toBeDefined();
 
-    //All following requests will fail to open the breaker
+    // All following requests will fail to open the breaker
     const mock = nock(providerXsuaaUrl)
-        .persist()
-        .post('/oauth/token')
-        .reply(400);
+      .persist()
+      .post('/oauth/token')
+      .reply(400);
 
     let keepCalling = true;
     let failedCalls = 0;

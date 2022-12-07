@@ -15,7 +15,6 @@ import {
   generateProject,
   getInstallODataErrorMessage
 } from './generator';
-import { GeneratorOptions } from './generator-options';
 import * as csnGeneration from './service/csn';
 
 const pathTestResources = resolve(__dirname, '../../../test-resources');
@@ -31,7 +30,7 @@ describe('generator', () => {
     beforeAll(async () => {
       mock({
         common: {},
-        ['/prettier/config']: JSON.stringify({ printWidth: 66 }),
+        '/prettier/config': JSON.stringify({ printWidth: 66 }),
         [pathTestResources]: mock.load(pathTestResources),
         [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
         [pathRootNodeModules]: mock.load(pathRootNodeModules)
@@ -40,7 +39,7 @@ describe('generator', () => {
       const options = createOptions({
         inputDir: pathTestService,
         outputDir: 'common',
-        forceOverwrite: true,
+        overwrite: true,
         prettierConfig: '/prettier/config',
         generateSdkMetadata: true,
         include: join(pathTestResources, '*.md')
@@ -61,7 +60,7 @@ describe('generator', () => {
 
     it('recommends to install odata packages', async () => {
       expect(getInstallODataErrorMessage(project!)).toMatchInlineSnapshot(
-        '"Did you forget to install \\"@sap-cloud-sdk/odata-v2\\"?"'
+        '"Did you forget to install "@sap-cloud-sdk/odata-v2"?"'
       );
     });
 
@@ -90,7 +89,7 @@ describe('generator', () => {
   });
 
   describe('edmx-to-csn', () => {
-    const testGeneratorOptions: GeneratorOptions = createOptions({
+    const testGeneratorOptions = createOptions({
       inputDir: resolve(
         oDataServiceSpecs,
         'v2',
@@ -103,7 +102,7 @@ describe('generator', () => {
 
     it('should invoke csn', async () => {
       mock({
-        ['csn-test']: {},
+        'csn-test': {},
         [pathTestResources]: mock.load(pathTestResources)
       });
 
@@ -118,7 +117,7 @@ describe('generator', () => {
     let files: SourceFile[];
     beforeAll(async () => {
       mock({
-        ['v2-test']: {},
+        'v2-test': {},
         [pathTestResources]: mock.load(pathTestResources)
       });
       files = await getGeneratedFiles('v2', 'v2-test');
@@ -160,7 +159,7 @@ describe('generator', () => {
     let files: SourceFile[];
     beforeAll(async () => {
       mock({
-        ['v4-test']: {},
+        'v4-test': {},
         [pathTestResources]: mock.load(pathTestResources)
       });
       files = await getGeneratedFiles('v4', 'v4-test');

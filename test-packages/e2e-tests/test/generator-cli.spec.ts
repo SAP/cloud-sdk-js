@@ -58,7 +58,7 @@ describe('generator-cli', () => {
         inputDir,
         outputDir: outputDirGenerateAll,
         generateJs: true,
-        generatePackageJson: true
+        packageJson: true
       })
     );
     const services = fs.readdirSync(outputDirGenerateAll);
@@ -85,7 +85,7 @@ describe('generator-cli', () => {
         inputDir,
         outputDir: outputDirVersionPackageJson,
         generateJs: true,
-        generatePackageJson: true,
+        packageJson: true,
         versionInPackageJson: '42.23'
       })
     );
@@ -104,7 +104,7 @@ describe('generator-cli', () => {
     expect(actualPackageJson.version).toEqual('42.23');
   });
 
-  it('should throw a warning message for deprecated options, even when the generation is failed', async () => {
+  it('should warn if deprecated options are used, even when generation failed', async () => {
     // Use a broken service to stop the service generation early - we are only interested in the log statement
     // try {
     await expect(
@@ -122,7 +122,7 @@ describe('generator-cli', () => {
         '--generateNpmrc'
       ])
     ).rejects.toThrow(
-      /Deprecated options used.*\n\t--generateNpmrc:.*\n\t--versionInPackageJson:/
+      /Deprecated options used.*\n\tgenerateNpmrc:.*\n\tversionInPackageJson:/
     );
   }, 60000);
 });

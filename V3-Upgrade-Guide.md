@@ -18,7 +18,10 @@ Add sections to the document as you see fit.
 This document will guide you through the steps necessary to upgrade to version 3 of the SAP Cloud SDK. Depending on your project, some steps might not be applicable. The To-Do list is:
 
 - [Update your project dependencies](#update-your-project-dependencies)
+- [Important Dependency Updates](#important-dependency-updates)
+- [Adjust operation names in generated clients](#adjust-operation-names-in-odata-generated-clients)
 - [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
+- [Replace Timeout](#timeout)
 
 ### Update your project dependencies
 
@@ -28,6 +31,18 @@ Depending on if you're using `npm` or `yarn`, run `npm install` or `yarn` in the
 
 Running your tests or deploying your application might fail at this point in time if you need to adapt to any breaking changes.
 We recommend updating your applications in one commit or pull request and making sure everything still works using your existing test suite.
+
+### Important Dependency Updates
+
+The [axios HTTP client](https://github.com/axios/axios) has been updated from version 0.27 to 1.2.
+
+### Adjust Operation Names in OData Generated Clients
+
+Rules for naming of OData operations (actions or functions) in the generated client have been changed.
+This applies to bound and unbound operations.
+If an operation begins with an `underscore` symbol, the `_` will be removed from the resulting generated client code.
+To adjust the names, search in `function-import.ts` and `action-import.ts` files in your generated client code for any operation starting with `_`.
+Similarly, to adjust the names of bound operations of an entity, search in the respective entity's `.ts` file, e.g., `TestEntity.ts`.
 
 ### Check for removed deprecated functions and replace them if required
 
@@ -87,3 +102,25 @@ For historic reasons the command-line arguments of both applications were differ
 In version 3, the arguments are aligned and deprecated arguments have been removed.
 Please see (insert link here) for the current documentation on the cli arguments.
 -->
+
+### Timeout 
+
+The `timeout()` method was removed from the request builder and the `timeout` option was removed from the `executeHttpRequest()` function. 
+If you want to set a timeout for a request use the new timeout middleware:
+
+```ts
+import { timeout} from '@sap-cloud-sdk/resilience'
+
+ executeHttpRequest(myDestination, {
+          method: 'get',          
+          middleware: [timeout()]
+        })
+
+myRequestBuilder
+    .getAll()
+    .middleware([timeout()])
+    .execute(myDestination);
+```
+<!-- TODO v3 put better link when documentation is done -->
+A detailed guide on the middleware concept is presented on the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/overview).
+

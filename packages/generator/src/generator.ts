@@ -36,7 +36,8 @@ import { sourceFile } from './file-generator';
 import {
   defaultValueProcessesJsGeneration,
   GeneratorOptions,
-  warnIfDeprecated
+  generatorOptionsCli,
+  ParsedGeneratorOptions
 } from './generator-options';
 import { hasEntities } from './generator-utils';
 import { entityApiFile } from './generator-without-ts-morph';
@@ -52,6 +53,7 @@ import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
 import { VdmServiceMetadata } from './vdm-types';
+import { parseOptions } from './options-parser';
 
 const { mkdir, readdir } = fsPromises;
 
@@ -66,43 +68,52 @@ const logger = createLogger({
  * @param options - Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
-  warnIfDeprecated(Object.keys(options));
-  return generateWithParsedOptions(options);
+  const parsedOptions = parseOptions(generatorOptionsCli, options);
+  return generateWithParsedOptions(parsedOptions);
 }
 
 /**
  * @internal
  * This is the main entry point for generation, after options were parsed - either from the CLI or from the programmatically passed configuration.
- * TODO: Actually split the parsing of options between CLI and programmatic options. Currently users have to provide everything.
  */
 export async function generateWithParsedOptions(
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<void> {
-  const projectAndServices = await generateProject(options);
+  const projectAndServices = await generateProject(
+    options as ParsedGeneratorOptions
+  );
   if (!projectAndServices) {
     throw Error('The project is undefined.');
   }
   const services = projectAndServices.services;
 
-  await generateFilesWithoutTsMorph(services, options);
+  await generateFilesWithoutTsMorph(
+    services,
+    options as ParsedGeneratorOptions
+  );
 
   if (options.generateJs) {
     const directories = services
       .filter(async service => {
         const files = await readdir(
-          resolvePath(service.directoryName, options)
+          resolvePath(service.directoryName, options as ParsedGeneratorOptions)
         );
         return files.includes('tsconfig.json');
       })
-      .map(service => resolvePath(service.directoryName, options));
+      .map(service =>
+        resolvePath(service.directoryName, options as ParsedGeneratorOptions)
+      );
 
     const chunks = splitInChunks(
       directories,
-      options.processesJsGeneration || defaultValueProcessesJsGeneration
+      options.transpilationProcesses || defaultValueProcessesJsGeneration
     );
     try {
       await chunks.reduce(
-        (all, chunk) => all.then(() => transpileDirectories(chunk, options)),
+        (all, chunk) =>
+          all.then(() =>
+            transpileDirectories(chunk, options as ParsedGeneratorOptions)
+          ),
         Promise.resolve()
       );
     } catch (err) {
@@ -145,7 +156,7 @@ export function getInstallODataErrorMessage(
  */
 export async function transpileDirectories(
   directories: string[],
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<void[]> {
   return Promise.all(
     directories.map(async directory => {
@@ -165,7 +176,7 @@ export async function transpileDirectories(
  * @internal
  */
 export async function generateProject(
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<ProjectAndServices | undefined> {
   options = sanitizeOptions(options);
   const services = parseServices(options);
@@ -215,7 +226,7 @@ export interface ProjectAndServices {
 
 async function generateFilesWithoutTsMorph(
   services: VdmServiceMetadata[],
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   const promises = services.flatMap(service => [
     generateEntityApis(service, options),
@@ -226,19 +237,19 @@ async function generateFilesWithoutTsMorph(
 }
 
 async function getFileCreationOptions(
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<CreateFileOptions> {
   return {
     prettierOptions: await readPrettierConfig(
       options.prettierConfig?.toString()
     ),
-    overwrite: options.forceOverwrite
+    overwrite: options.overwrite
   };
 }
 
 async function generateIncludes(
   service: VdmServiceMetadata,
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   if (options.include) {
     const includeDir = resolve(options.inputDir.toString(), options.include)
@@ -246,13 +257,13 @@ async function generateIncludes(
       .join(posix.sep);
     const serviceDir = resolvePath(service.directoryName, options);
     const files = new GlobSync(includeDir).found;
-    await copyFiles(files, serviceDir, options.forceOverwrite);
+    await copyFiles(files, serviceDir, options.overwrite);
   }
 }
 
 async function generateServiceFile(
   service: VdmServiceMetadata,
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   const serviceDir = resolvePath(service.directoryName, options);
   const createFileOptions = await getFileCreationOptions(options);
@@ -266,7 +277,7 @@ async function generateServiceFile(
 
 async function generateEntityApis(
   service: VdmServiceMetadata,
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   const createFileOptions = await getFileCreationOptions(options);
   await Promise.all(
@@ -287,7 +298,7 @@ async function generateEntityApis(
 export async function generateSourcesForService(
   service: VdmServiceMetadata,
   project: Project,
-  options: GeneratorOptions
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   const serviceDirPath = resolvePath(service.directoryName, options);
   const serviceDir = project.createDirectory(serviceDirPath);
@@ -299,14 +310,14 @@ export async function generateSourcesForService(
   const filePromises: Promise<any>[] = [];
   logger.info(`[${service.originalFileName}] Generating entities ...`);
 
-  if (options.generatePackageJson) {
+  if (options.packageJson) {
     filePromises.push(
       createFile(
         serviceDirPath,
         'package.json',
         await packageJson({
           npmPackageName: service.npmPackageName,
-          version: await getVersionForClient(options.versionInPackageJson),
+          version: await getVersionForClient(options.packageVersion),
           sdkVersion: await getSdkVersion(),
           description: packageDescription(service.speakingModuleName),
           sdkAfterVersionScript: options.sdkAfterVersionScript,
@@ -414,7 +425,7 @@ export async function generateSourcesForService(
     sourceFile(serviceDir, 'index', indexFile(service), createFileOptions)
   );
 
-  if (options.writeReadme) {
+  if (options.readme) {
     logger.info(`[${service.originalFileName}] Generating readme ...`);
     filePromises.push(
       createFile(
@@ -492,7 +503,7 @@ function projectOptions(): ProjectOptions {
   };
 }
 
-function parseServices(options: GeneratorOptions): VdmServiceMetadata[] {
+function parseServices(options: ParsedGeneratorOptions): VdmServiceMetadata[] {
   const services = parseAllServices(options);
   if (!services.length) {
     logger.warn('No service definition files found.');
@@ -501,13 +512,15 @@ function parseServices(options: GeneratorOptions): VdmServiceMetadata[] {
   return services;
 }
 
-function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
+function sanitizeOptions(
+  options: ParsedGeneratorOptions
+): ParsedGeneratorOptions {
   options.serviceMapping =
     options.serviceMapping ||
     resolve(options.inputDir.toString(), 'service-mapping.json');
   return options;
 }
 
-function resolvePath(path: PathLike, options: GeneratorOptions): string {
+function resolvePath(path: PathLike, options: ParsedGeneratorOptions): string {
   return resolve(options.outputDir.toString(), path.toString());
 }

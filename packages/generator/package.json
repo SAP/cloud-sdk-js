@@ -45,18 +45,18 @@
     "@sap-cloud-sdk/odata-v2": "^2.11.0",
     "@sap-cloud-sdk/odata-v4": "^2.11.0",
     "@sap-cloud-sdk/util": "^2.11.0",
-    "@sap/edm-converters": "~1.0.42",
+    "@sap/edm-converters": "~1.0.43",
     "@types/fs-extra": "^9.0.1",
     "fast-xml-parser": "^4.0.12",
     "fs-extra": "^11.1.0",
     "glob": "^8.0.1",
     "ts-morph": "^17.0.1",
-    "typescript": "~4.8.4",
+    "typescript": "~4.9.3",
     "voca": "^1.4.0",
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "@types/yargs": "^17.0.15",
+    "@types/yargs": "^17.0.16",
     "execa": "^5.0.0",
     "mock-fs": "^5.2.0",
     "prettier": "^2.8.0"

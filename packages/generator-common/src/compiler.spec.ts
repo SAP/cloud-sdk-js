@@ -41,6 +41,12 @@ describe('compiler options', () => {
       'config6/tsconfig.json': JSON.stringify({
         exclude: ['def'],
         include: ['abc']
+      }),
+      'config7/tsconfig.json': JSON.stringify({
+        compilerOptions: { moduleResolution: 'node16' }
+      }),
+      'config8/tsconfig.json': JSON.stringify({
+        compilerOptions: { moduleResolution: 'nodenext' }
       })
     });
   });
@@ -83,6 +89,12 @@ describe('compiler options', () => {
     });
     await expect(readCompilerOptions('config2')).resolves.toEqual({
       moduleResolution: ModuleResolutionKind.Classic
+    });
+    await expect(readCompilerOptions('config7')).resolves.toEqual({
+      moduleResolution: ModuleResolutionKind.Node16
+    });
+    await expect(readCompilerOptions('config8')).resolves.toEqual({
+      moduleResolution: ModuleResolutionKind.NodeNext
     });
   });
 

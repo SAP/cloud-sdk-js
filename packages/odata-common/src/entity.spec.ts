@@ -127,7 +127,7 @@ describe('entity', () => {
       expect(() =>
         entity.setCustomField('StringProperty', 'ERROR!')
       ).toThrowErrorMatchingInlineSnapshot(
-        '"The field name \\"StringProperty\\" is already defined in the entity and cannot be set as custom field."'
+        '"The field name "StringProperty" is already defined in the entity and cannot be set as custom field."'
       );
     });
 

@@ -1,12 +1,15 @@
 import {
-  encodeTypedClientRequest,
-  ParameterEncoder
-} from '@sap-cloud-sdk/http-client/internal';
-import {
   createLogger,
   mergeIgnoreCase,
   VALUE_IS_UNDEFINED
 } from '@sap-cloud-sdk/util';
+import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
+import type {
+  Middleware,
+  HttpResponse,
+  ParameterEncoder,
+  HttpMiddlewareContext
+} from '@sap-cloud-sdk/http-client/internal';
 
 /**
  * Set of possible request methods.
@@ -37,7 +40,7 @@ export abstract class ODataRequestConfig {
   private _customRequestConfiguration: Record<string, string> = {};
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
-  private _timeout: number | undefined = undefined;
+  private _middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[] = [];
 
   /**
    * Creates an instance of ODataRequest.
@@ -56,12 +59,14 @@ export abstract class ODataRequestConfig {
     this.defaultHeaders = mergeIgnoreCase(this.defaultHeaders, defaultHeaders);
   }
 
-  set timeout(timeout: number | undefined) {
-    this._timeout = timeout;
+  set middlewares(
+    middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[]
+  ) {
+    this._middlewares = middlewares;
   }
 
-  get timeout(): number | undefined {
-    return this._timeout;
+  get middlewares(): Middleware<HttpResponse, HttpMiddlewareContext>[] {
+    return this._middlewares;
   }
 
   set customHeaders(headers: Record<string, string>) {

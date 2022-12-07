@@ -47,6 +47,10 @@ export interface DestinationAccessorOptions {
 
   /**
    * The user token of the current request.
+   *
+   * ATTENTION: The property is mandatory in the following cases:
+   * - User-dependent authentication flow is used, e.g., `OAuth2UserTokenExchange`, `OAuth2JWTBearer`, `OAuth2SAMLBearerAssertion`, `SAMLAssertion` or `PrincipalPropagation`.
+   * - Multi-tenant scenarios with destinations maintained in the subscriber account. This case is implied if the `selectionStrategy` is set to `alwaysSubscriber`.
    */
   jwt?: string;
 
@@ -64,11 +68,11 @@ export interface DestinationAccessorOptions {
   iasToXsuaaTokenExchange?: boolean;
 
   /**
-   * This property is only considered in case no userJwt is provided.
+   * This property is only considered in case no `jwt` is provided.
    * It is meant for situations where you do not have a token e.g. background processes.
    * The value for iss is the issuer field of a JWT e.g. https://<your-subdomain>.localhost:8080/uaa/oauth/token'.
    *
-   * ATTENTION: If this property is used, no validation of the provided subdomain value is done. This is differs from how the `userJwt` is handled.
+   * ATTENTION: If this property is used, no validation of the provided subdomain value is done. This is differs from how the `jwt` is handled.
    * So be careful that the used value is not manipulated and breaks the tenant isolation of your application.
    */
   iss?: string;

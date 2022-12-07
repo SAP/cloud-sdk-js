@@ -75,7 +75,7 @@ export declare function changeset<DeSerializersT extends DeSerializers>(
   requests: Array<WriteTestServiceRequestBuilder<DeSerializersT>>
 ): BatchChangeSet<DeSerializersT>;
 export declare const defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-export declare type ReadTestServiceRequestBuilder<
+export type ReadTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | GetAllRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
@@ -225,7 +225,7 @@ export declare type ReadTestServiceRequestBuilder<
       FContinueParameters<DeSerializersT>,
       boolean
     >;
-export declare type WriteTestServiceRequestBuilder<
+export type WriteTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | CreateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>

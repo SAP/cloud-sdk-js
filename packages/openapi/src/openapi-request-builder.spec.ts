@@ -7,6 +7,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
+import { timeout } from '@sap-cloud-sdk/resilience';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,
@@ -45,6 +46,7 @@ describe('openapi-request-builder', () => {
       sanitizeDestination(destination),
       {
         method: 'get',
+        middleware: [],
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
@@ -67,6 +69,7 @@ describe('openapi-request-builder', () => {
       sanitizeDestination(destination),
       {
         method: 'get',
+        middleware: [],
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: { limit: 100 } },
@@ -89,6 +92,7 @@ describe('openapi-request-builder', () => {
       sanitizeDestination(destination),
       {
         method: 'post',
+        middleware: [],
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
@@ -99,6 +103,31 @@ describe('openapi-request-builder', () => {
       },
       { fetchCsrfToken: true }
     );
+  });
+
+  it('executes a request using the timeout', async () => {
+    const delayInResponse = 10;
+    const slowDestintaion = { url: 'https://example.com' };
+    nock(slowDestintaion.url, {})
+      .get('/with-delay')
+      .times(2)
+      .delay(delayInResponse)
+      .reply(200);
+
+    const timeoutBelowDelay = () =>
+      new OpenApiRequestBuilder('get', '/with-delay')
+        .middleware([timeout(delayInResponse * 0.5)])
+        .execute(slowDestintaion);
+
+    await expect(timeoutBelowDelay()).rejects.toThrow(
+      'Request to https://example.com ran into timeout after 5ms.'
+    );
+
+    const timeoutAboveDelay = () =>
+      new OpenApiRequestBuilder('get', '/with-delay')
+        .middleware([timeout(delayInResponse * 10)])
+        .execute(slowDestintaion);
+    await expect(timeoutAboveDelay()).resolves.not.toThrow();
   });
 
   it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
@@ -145,6 +174,7 @@ describe('openapi-request-builder', () => {
       sanitizeDestination(parseDestination(certificateSingleResponse)),
       {
         method: 'get',
+        middleware: [],
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
@@ -171,6 +201,7 @@ describe('openapi-request-builder', () => {
       sanitizeDestination(destinationWithAuth),
       {
         method: 'get',
+        middleware: [],
         url: '/test',
         parameterEncoder: encodeTypedClientRequest,
         headers: {
@@ -194,6 +225,7 @@ describe('openapi-request-builder', () => {
       sanitizeDestination(destination),
       {
         method: 'get',
+        middleware: [],
         url: '/test/%5Etest',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
@@ -214,6 +246,7 @@ describe('openapi-request-builder', () => {
       sanitizeDestination(destination),
       {
         method: 'get',
+        middleware: [],
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
@@ -236,6 +269,7 @@ describe('openapi-request-builder', () => {
       sanitizeDestination(destination),
       {
         method: 'post',
+        middleware: [],
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },

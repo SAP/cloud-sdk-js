@@ -1,13 +1,9 @@
 import { PathLike } from 'fs';
 import { resolve, dirname } from 'path';
 import { readFileSync } from 'fs-extra';
-import { Options } from 'yargs';
-import { createLogger } from '@sap-cloud-sdk/util';
-
-const logger = createLogger('generator-options');
 
 /**
- * Options that can be used to configure the generation when using the generator programmatically.
+ * Options to configure the client generation when using the generator programmatically.
  */
 export interface GeneratorOptions {
   /**
@@ -29,98 +25,151 @@ export interface GeneratorOptions {
    */
   prettierConfig?: PathLike;
   /**
-   * If set to true `.JSON` files i.e. Swagger definitions are used for generation.
+   * If set to true, swagger definitions (JSON) are used for generation.
    */
-  useSwagger: boolean;
+  useSwagger?: boolean;
+  /**
+   * @deprecated Since v2.12.0. Use `readme` instead.
+   * Generate default `README.md` files in the client directories.
+   */
+  writeReadme?: boolean;
   /**
    * Generate default `README.md` files in the client directories.
    */
-  writeReadme: boolean;
+  readme?: boolean;
   /**
    * Include files matching the given glob into the root of each generated client directory.
    */
   include?: string;
   /**
+   * @deprecated Since v2.12.0. Use `overwrite` instead.
    * Exit when encountering a file that already exists.
    * When set to true, it will be overwritten instead.
    * Please note that compared to the `clearOutputDir` option, this will not delete outdated files.
    */
-  forceOverwrite: boolean;
+  forceOverwrite?: boolean;
+  /**
+   * Exit when encountering a file that already exists.
+   * When set to true, it will be overwritten instead.
+   * Note, that compared to the `clearOutputDir` option, this will not delete outdated files.
+   */
+  overwrite?: boolean;
   /**
    * Delete EVERYTHING in the specified output directory before generating code.
    */
-  clearOutputDir: boolean;
+  clearOutputDir?: boolean;
   /**
-   * Generate a `.npmrc` file specifying a registry for `@sap` scoped dependencies.
    * @deprecated
+   * Generate a `.npmrc` file specifying a registry for `@sap` scoped dependencies.
    */
   generateNpmrc?: boolean;
   /**
+   * @deprecated Since v2.12.0. Use `packageJson` instead.
    * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
    */
-  generatePackageJson: boolean;
+  generatePackageJson?: boolean;
   /**
+   * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
+   */
+  packageJson?: boolean;
+  /**
+   * @deprecated Since v2.12.0.
    * By default, when generating `package.json` file, the generator will set a version by using the generator version.
    * It can also be set to a specific version.
    */
   versionInPackageJson?: string;
   /**
+   * @deprecated Since v2.12.0.
    * License name to be used on the generated package.json. Only considered if 'packageJson' is enabled.
    */
   licenseInPackageJson?: string;
   /**
    * Generates transpiled `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. When set to `false`, the generator will only generate `.ts` files.
    */
-  generateJs: boolean;
+  generateJs?: boolean;
   /**
    * Hidden option only for internal usage - generate metadata for API hub integration.
    */
   generateSdkMetadata?: boolean;
   /**
+   * @deprecated Since v2.12.0.
    * Number of node processes used for transpilation of JavaScript files.
    */
   processesJsGeneration?: number;
   /**
+   * Number of node processes used for transpilation of JavaScript files.
+   */
+  transpilationProcesses?: number;
+  /**
+   * @deprecated Since v2.12.0.
    * When set to true, the `package.json` of generated services will have the after-version script to internally keep the versions in sync.
    */
-  sdkAfterVersionScript: boolean;
-  // TODO remove s4hanaCloud in version 3.0
+  sdkAfterVersionScript?: boolean;
   /**
+   * @deprecated Since v2.12.0.
    * Internal option used to adjust the description for S/4HANA cloud systems. Will not be used in the future.
    */
-  s4hanaCloud: boolean;
+  s4hanaCloud?: boolean;
   /**
+   * @deprecated Since v2.12.0.
    * Generate A CSN file for each service definition in the output directory.
    */
-  generateCSN: boolean;
-  // TODO remove packageVersion in version 3.0
+  generateCSN?: boolean;
+  // TODO: remove packageVersion in version 3.0
   /**
+   * @deprecated Since v2.12.0.
    * Internal option used to adjust the version in the generated `package.json`. Will not be used in the future.
    */
   packageVersion?: string;
 }
+
 /**
  * @internal
  */
 export const defaultValueProcessesJsGeneration = 16;
-
-type KeysToOptions = {
-  [optionName in keyof GeneratorOptions]: Options;
-};
 
 function coercePathArg(arg?: string): string | undefined {
   return arg ? resolve(arg) : arg;
 }
 
 /**
+ * Union type of the deprecated option names.
+ * @typeParam T - Options configuration.
+ */
+type DeprecatedOptionNamesWithReplacements<T> = {
+  [K in keyof T]: T[K] extends { deprecated: string; replacedBy: string }
+    ? K
+    : never;
+}[keyof T];
+
+/**
+ * @internal
+ * Helper to represent parsed options based on a public generator options type and a CLI options configuration.
+ * @typeParam GeneratorOptionsOptionsT - Public generator options.
+ * @typeParam CliOptionsT - Configuration of CLI options.
+ */
+export type ParsedOptions<GeneratorOptionsOptionsT, CliOptionsT> = Omit<
+  Required<GeneratorOptionsOptionsT>,
+  DeprecatedOptionNamesWithReplacements<CliOptionsT>
+>;
+
+/**
+ * @internal
+ * Represents the parsed generator options.
+ */
+export type ParsedGeneratorOptions = ParsedOptions<
+  GeneratorOptions,
+  typeof generatorOptionsCli
+>;
+
+/**
  * @internal
  */
-export const generatorOptionsCli: KeysToOptions = {
+export const generatorOptionsCli = {
   inputDir: {
     alias: 'i',
     describe:
       'This directory will be recursively searched for `.edmx`/`.xml` files.',
-    normalize: true,
     coerce: coercePathArg,
     type: 'string',
     demandOption: true,
@@ -129,7 +178,6 @@ export const generatorOptionsCli: KeysToOptions = {
   outputDir: {
     alias: 'o',
     describe: 'Directory to save the generated code in.',
-    normalize: true,
     coerce: coercePathArg,
     type: 'string',
     demandOption: true,
@@ -158,12 +206,21 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false,
     hidden: true
   },
-  writeReadme: {
+  readme: {
     describe:
       'When set to true, the generator will write a README.md file into the root folder of every package. This option does not make that much sense without also set useSwagger to "true".',
     type: 'boolean',
     default: false,
     hidden: true
+  },
+  writeReadme: {
+    describe:
+      'When set to true, the generator will write a README.md file into the root folder of every package. This option does not make that much sense without also set useSwagger to "true".',
+    type: 'boolean',
+    default: false,
+    hidden: true,
+    deprecated: "Since v2.12.0. Use 'readme' instead.",
+    replacedBy: 'readme'
   },
   include: {
     describe:
@@ -172,11 +229,19 @@ export const generatorOptionsCli: KeysToOptions = {
     coerce: coercePathArg,
     normalize: true
   },
-  forceOverwrite: {
+  overwrite: {
     describe:
       'By default, the generator will exit when encountering a file that already exists. When set to true, it will be overwritten instead. Please note that compared to the --clearOutputDir option, this will not delete outdated files.',
     type: 'boolean',
     default: false
+  },
+  forceOverwrite: {
+    describe:
+      'By default, the generator will exit when encountering a file that already exists. When set to true, it will be overwritten instead. Please note that compared to the --clearOutputDir option, this will not delete outdated files.',
+    type: 'boolean',
+    default: false,
+    deprecated: "Since v2.12.0. Use 'overwrite' instead.",
+    replacedBy: 'overwrite'
   },
   clearOutputDir: {
     describe:
@@ -185,28 +250,40 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false
   },
   generateNpmrc: {
+    describe: 'Has no effect.',
     deprecated: 'Since v2.8.0. This option does not have any effect anymore.',
     type: 'boolean',
     default: false
+  },
+  packageJson: {
+    describe:
+      'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
+    type: 'boolean',
+    default: true
   },
   generatePackageJson: {
     describe:
       'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
     type: 'boolean',
-    default: true
+    default: true,
+    deprecated: "Since v2.12.0. Use 'packageJson' instead.",
+    replacedBy: 'packageJson'
   },
   versionInPackageJson: {
     describe:
       'By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version.',
     type: 'string',
     deprecated:
-      "Since v2.6.0. Use the 'include' option to add your own package.json file instead."
+      "Since v2.6.0. Use the 'include' option to add your own package.json file instead.",
+    replacedBy: 'packageVersion'
   },
   licenseInPackageJson: {
     describe:
       "License to be used on the generated package.json. Only considered if 'generatePackageJson' is enabled.",
     type: 'string',
-    requiresArg: false
+    requiresArg: false,
+    deprecated:
+      "Since v2.12.0. Use the 'include' option to add your own package.json file instead."
   },
   generateJs: {
     describe:
@@ -214,11 +291,21 @@ export const generatorOptionsCli: KeysToOptions = {
     type: 'boolean',
     default: true
   },
+  transpilationProcesses: {
+    describe: 'Number of processes used for generation of javascript files.',
+    alias: 'np',
+    type: 'number',
+    default: defaultValueProcessesJsGeneration,
+    hidden: true,
+    replacedBy: 'processesJsGeneration'
+  },
   processesJsGeneration: {
     describe: 'Number of processes used for generation of javascript files.',
     alias: 'np',
     type: 'number',
-    default: defaultValueProcessesJsGeneration
+    default: defaultValueProcessesJsGeneration,
+    deprecated:
+      "Since v2.12.0. Use 'transpilationProcesses' option to set number of processes for generation instead."
   },
   sdkAfterVersionScript: {
     describe:
@@ -250,7 +337,8 @@ export const generatorOptionsCli: KeysToOptions = {
     describe:
       'When set to true a CSN file will be generated for each service definition in the output directory.',
     type: 'boolean',
-    default: false
+    default: false,
+    deprecated: 'Since v2.12.0. This functionality will be discontinued.'
   }
 } as const;
 
@@ -275,49 +363,4 @@ export function createOptionsFromConfig(configPath: string): GeneratorOptions {
           },
     JSON.parse(file)
   );
-}
-
-/**
- * @internal
- * Logs a warning if deprecated options are used.
- * @param argvOrConfig - Either the command line arguments or the config passed for programmatic use. An array implicates command line arguments, while objects represent the programmatic config.
- * @param options - Available generator options.
- */
-export function warnIfDeprecated(
-  argvOrConfig: string[] | Record<string, any>,
-  options = generatorOptionsCli
-): void {
-  const isCli = Array.isArray(argvOrConfig);
-  const usedOptions = isCli ? argvOrConfig : Object.keys(argvOrConfig);
-
-  const deprecatedOptions = Object.entries(options).filter(
-    ([, config]) => config.deprecated
-  );
-
-  const deprecatedOptionsInUse = deprecatedOptions.filter(([name, config]) => {
-    const names = isCli ? getCliOptionNames(name, config.alias) : [name];
-    return names.some(optionName =>
-      usedOptions.some(usedOptionName =>
-        usedOptionName.match(new RegExp(`^${optionName}=?`))
-      )
-    );
-  });
-
-  if (deprecatedOptionsInUse.length) {
-    const logs = deprecatedOptionsInUse
-      .map(([name, config]) => `\t--${name}: ${config.deprecated}`)
-      .join('\n');
-
-    logger.warn(
-      `Deprecated options used. The following options will be removed in the next major version:\n${logs}`
-    );
-  }
-}
-
-function getCliOptionNames(
-  name: string,
-  alias: string | readonly string[] = []
-): string[] {
-  alias = Array.isArray(alias) ? alias : [alias];
-  return [`--${name}`, ...alias.map(a => `-${a}`)];
 }

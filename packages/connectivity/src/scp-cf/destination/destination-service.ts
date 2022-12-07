@@ -5,6 +5,7 @@ import {
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
 import CircuitBreaker from 'opossum';
+// eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {

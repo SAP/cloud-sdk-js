@@ -59,7 +59,7 @@ export declare function changeset<DeSerializersT extends DeSerializers>(
   requests: Array<WriteTestServiceRequestBuilder<DeSerializersT>>
 ): BatchChangeSet<DeSerializersT>;
 export declare const defaultTestServicePath = '/odata/test-service';
-export declare type ReadTestServiceRequestBuilder<
+export type ReadTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | GetAllRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
@@ -111,7 +111,7 @@ export declare type ReadTestServiceRequestBuilder<
       ReturnSapCloudSdkParameters<DeSerializersT>,
       string
     >;
-export declare type WriteTestServiceRequestBuilder<
+export type WriteTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =
   | CreateRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>

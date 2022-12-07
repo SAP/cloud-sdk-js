@@ -24,13 +24,13 @@ export async function getGeneratedFiles(
   oDataVersion: ODataVersion,
   outputDir: string
 ): Promise<SourceFile[]> {
-  const project = await generateProject(
-    createOptions({
-      inputDir: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
-      useSwagger: false,
-      outputDir
-    })
-  );
+  const opt = createOptions({
+    inputDir: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
+    useSwagger: false,
+    packageJson: false,
+    outputDir
+  });
+  const project = await generateProject(opt);
   return project!.project.getSourceFiles();
 }
 

@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/generator': minor
 ---
 
-[Compatibility Notes] Deprecate `generateCSN` option.
+[Compatibility Note] Deprecate `generateCSN` option.

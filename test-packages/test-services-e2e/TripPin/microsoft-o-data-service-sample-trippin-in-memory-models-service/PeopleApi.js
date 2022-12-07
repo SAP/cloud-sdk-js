@@ -16,6 +16,13 @@ class PeopleApi {
         this.entityConstructor = People_1.People;
         this.deSerializers = deSerializers;
     }
+    /**
+     * Do not use this method or the constructor directly.
+     * Use the service object to get a API instance.
+     */
+    static _privateFactory(deSerializers = odata_v4_1.defaultDeSerializers) {
+        return new PeopleApi(deSerializers);
+    }
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {
             FRIENDS: new odata_v4_1.OneToManyLink('Friends', this, linkedApis[0]),

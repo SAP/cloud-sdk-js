@@ -1,29 +1,18 @@
-import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
-import {
-  providerJwtBearerToken,
-  providerServiceToken,
-  providerUserJwt,
-  providerUserPayload,
-  subscriberServiceToken,
-  subscriberUserJwt
-} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
-import {
-  connectivityProxyConfigMock,
-  mockServiceBindings,
-  onlyIssuerXsuaaUrl,
-  TestTenants
-} from '../../../../../test-resources/test/test-util/environment-mocks';
-import {
-  mockJwtBearerToken,
-  mockServiceToken
-} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+import nock from 'nock';
+import { signedJwt } from '../../../../../test-resources/test/test-util';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
+import {
+  connectivityProxyConfigMock,
+  mockServiceBindings,
+  onlyIssuerXsuaaUrl,
+  TestTenants
+} from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   certificateMultipleResponse,
   certificateSingleResponse,
@@ -32,29 +21,40 @@ import {
   oauthSingleResponse,
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
-import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import { signedJwt } from '../../../../../test-resources/test/test-util';
+import {
+  providerJwtBearerToken,
+  providerServiceToken,
+  providerUserJwt,
+  providerUserPayload,
+  subscriberServiceToken,
+  subscriberUserJwt
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import { TestCache } from '../../../../../test-resources/test/test-util/test-cache';
-import { destinationServiceCache } from './destination-service-cache';
+import {
+  mockJwtBearerToken,
+  mockServiceToken
+} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+import { decodeJwt, wrapJwtInHeader } from '../jwt';
+import { parseDestination } from './destination';
 import { getDestination } from './destination-accessor';
+import {
+  destinationCache,
+  getDestinationCacheKey,
+  IsolationStrategy,
+  setDestinationCache
+} from './destination-cache';
+import { getDestinationFromDestinationService } from './destination-from-service';
 import {
   alwaysProvider,
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import {
-  destinationCache,
-  setDestinationCache,
-  getDestinationCacheKey,
-  IsolationStrategy
-} from './destination-cache';
+import { destinationServiceCache } from './destination-service-cache';
 import {
   AuthenticationType,
   Destination,
   DestinationAuthToken
 } from './destination-service-types';
-import { getDestinationFromDestinationService } from './destination-from-service';
-import { parseDestination } from './destination';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',
@@ -790,7 +790,7 @@ describe('destination cache', () => {
     });
 
     it('should return undefined when the destination is expired with default expiration time', async () => {
-      jest.useFakeTimers('modern');
+      jest.useFakeTimers();
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
       await destinationCache.cacheRetrievedDestination(
         dummyJwt,
@@ -817,7 +817,7 @@ describe('destination cache', () => {
     });
 
     it('should return undefined when the destination is expired with token defined expiration time', async () => {
-      jest.useFakeTimers('modern');
+      jest.useFakeTimers();
       const sixMinutesTokenLifetime = 6 * 60;
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
       const destination = {

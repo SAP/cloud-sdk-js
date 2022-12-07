@@ -5,7 +5,7 @@ const oneHourInSeconds = 60 * 60;
 
 describe('ClientCredentialsTokenCache', () => {
   it('should return token if a valid token is cached', () => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
 
     const validToken = {
       access_token: '1234567890',
@@ -32,7 +32,7 @@ describe('ClientCredentialsTokenCache', () => {
   });
 
   it('should return undefined if expired token is cached', () => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
 
     const expiredToken = {
       access_token: '1234567890',

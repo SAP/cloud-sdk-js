@@ -1,7 +1,7 @@
 import { CommonEntityApi } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { asc, desc } from './orderable';
 
-const api = new CommonEntityApi();
+const api = CommonEntityApi._privateFactory();
 describe('order type', () => {
   it('should be ascending', () => {
     const order = asc(api.schema.STRING_PROPERTY);

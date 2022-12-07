@@ -219,7 +219,6 @@ export class CommonEntitySingleLink<
 
   constructor(readonly _entityApi: CommonEntitySingleLinkApi<T>) {
     super(_entityApi);
-    nonEnumerable(this, '_entityApi');
   }
 }
 
@@ -374,7 +373,6 @@ export class CommonEntity<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: CommonEntityApi<T>) {
     super(_entityApi);
-    nonEnumerable(this, '_entityApi');
   }
 }
 

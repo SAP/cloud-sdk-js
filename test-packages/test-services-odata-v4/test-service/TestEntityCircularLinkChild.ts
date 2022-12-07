@@ -7,8 +7,7 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType,
-  nonEnumerable
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
 import {
@@ -49,7 +48,6 @@ export class TestEntityCircularLinkChild<
 
   constructor(readonly _entityApi: TestEntityCircularLinkChildApi<T>) {
     super(_entityApi);
-    nonEnumerable(this, '_entityApi');
   }
 }
 

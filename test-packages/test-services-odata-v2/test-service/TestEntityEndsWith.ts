@@ -7,8 +7,7 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType,
-  nonEnumerable
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v2';
 import type { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
 
@@ -38,7 +37,6 @@ export class TestEntityEndsWith<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: TestEntityEndsWithApi<T>) {
     super(_entityApi);
-    nonEnumerable(this, '_entityApi');
   }
 }
 

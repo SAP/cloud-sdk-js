@@ -7,8 +7,7 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType,
-  nonEnumerable
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v2';
 import type { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
 
@@ -62,7 +61,6 @@ export class TestEntityLvl2SingleLink<
 
   constructor(readonly _entityApi: TestEntityLvl2SingleLinkApi<T>) {
     super(_entityApi);
-    nonEnumerable(this, '_entityApi');
   }
 }
 

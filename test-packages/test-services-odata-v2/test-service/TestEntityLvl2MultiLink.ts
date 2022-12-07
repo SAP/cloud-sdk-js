@@ -7,8 +7,7 @@ import {
   Entity,
   DefaultDeSerializers,
   DeSerializers,
-  DeserializedType,
-  nonEnumerable
+  DeserializedType
 } from '@sap-cloud-sdk/odata-v2';
 import type { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';
 
@@ -62,7 +61,6 @@ export class TestEntityLvl2MultiLink<
 
   constructor(readonly _entityApi: TestEntityLvl2MultiLinkApi<T>) {
     super(_entityApi);
-    nonEnumerable(this, '_entityApi');
   }
 }
 

@@ -8,7 +8,6 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   DeserializedType,
-  nonEnumerable,
   edmToTs,
   transformReturnValueForEdmType,
   defaultDeSerializers,
@@ -199,7 +198,6 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(readonly _entityApi: TestEntityApi<T>) {
     super(_entityApi);
-    nonEnumerable(this, '_entityApi');
   }
 
   /**

@@ -32,6 +32,5 @@ export {
   EntityBase,
   Constructable,
   EntityBuilder,
-  CustomOrDefaultType as CustomOrDefaultTypeCommon,
-  nonEnumerable
+  CustomOrDefaultType as CustomOrDefaultTypeCommon
 } from '@sap-cloud-sdk/odata-common';

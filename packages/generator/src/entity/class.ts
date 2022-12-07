@@ -39,7 +39,7 @@ export function entityClass(
             isReadonly: true
           }
         ],
-        statements: ['super(_entityApi);', "nonEnumerable(this, '_entityApi');"]
+        statements: ['super(_entityApi);']
       }
     ],
     extends: 'Entity',

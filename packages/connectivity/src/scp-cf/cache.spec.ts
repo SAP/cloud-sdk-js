@@ -1,4 +1,3 @@
-import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { Cache } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import {
@@ -6,6 +5,7 @@ import {
   Destination,
   destinationCache
 } from './destination';
+import { ClientCredentialsResponse } from './xsuaa-service-types';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',
@@ -49,7 +49,7 @@ describe('Cache', () => {
   });
 
   it('retrieving expired item should return undefined', () => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
     cacheOne.set('one', { entry: destinationOne });
 
     expect(cacheOne.get('one')).toBeDefined();
@@ -60,7 +60,7 @@ describe('Cache', () => {
   });
 
   it('retrieving expired item with custom expire time should return undefined', () => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
     const timeToExpire = 5000;
 
     cacheOne.set('expireTest', {

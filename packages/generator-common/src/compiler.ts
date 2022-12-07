@@ -247,9 +247,9 @@ function parseScriptTarget(input: string): ScriptTarget {
     return mapping[input.toLowerCase()];
   }
   logger.warn(
-    `The selected ES target ${input} is not found - Fallback es2022 used`
+    `The selected ES target ${input} is not found - Fallback es2020 used`
   );
-  return ScriptTarget.ES2022;
+  return ScriptTarget.ES2020;
 }
 
 function parseModuleKind(input: string): ModuleKind {

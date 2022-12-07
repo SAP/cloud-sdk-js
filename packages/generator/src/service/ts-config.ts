@@ -8,7 +8,7 @@ export function tsConfig(): string {
     JSON.stringify(
       {
         compilerOptions: {
-          target: 'es2022',
+          target: 'es2020',
           module: 'commonjs',
           lib: ['esnext'],
           declaration: true,

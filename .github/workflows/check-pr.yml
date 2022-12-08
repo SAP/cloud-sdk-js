@@ -1,0 +1,27 @@
+name: 'pr-check'
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+jobs:
+  check-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: tj-actions/changed-files@v34
+        id: changed-files
+        with:
+          files: |
+            .changeset/**
+      - uses: ./.github/actions/check-pr
+        with:
+          changed-files: ${{ steps.changed-files.outputs.added_files }}

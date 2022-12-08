@@ -32,7 +32,7 @@ export class TestEntityWithEnumKeyApi<
 
   /**
    * Do not use this method or the constructor directly.
-   * Use the service object to get a API instance.
+   * Use the service function as described in the documentation to get an API instance.
    */
   public static _privateFactory<
     DeSerializersT extends DeSerializers = DefaultDeSerializers

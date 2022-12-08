@@ -1,6 +1,6 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { unique } from '@sap-cloud-sdk/util';
-import { odataImportDeclaration } from '../imports';
+import { odataImportDeclarationTsMorph } from '../imports';
 import { VdmReturnTypeCategory, VdmServiceMetadata } from '../vdm-types';
 
 /**
@@ -10,7 +10,7 @@ export function importBatchDeclarations(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
   return [
-    odataImportDeclaration(
+    odataImportDeclarationTsMorph(
       [
         'CreateRequestBuilder',
         'DeleteRequestBuilder',

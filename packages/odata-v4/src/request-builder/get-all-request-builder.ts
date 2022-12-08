@@ -26,8 +26,6 @@ export class GetAllRequestBuilder<
   extends GetAllRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
-  readonly _entity: EntityT;
-
   /**
    * Creates an instance of GetAllRequestBuilder.
    * @param entityApi - Entity API for building and executing the request.

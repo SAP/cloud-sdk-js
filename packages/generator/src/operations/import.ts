@@ -7,9 +7,9 @@ import {
   VdmServiceMetadata
 } from '../vdm-types';
 import {
-  odataImportDeclaration,
+  odataImportDeclarationTsMorph,
   propertyTypeImportNames,
-  externalImportDeclarations,
+  externalImportDeclarationsTsMorph,
   mergeImportDeclarations
 } from '../imports';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
@@ -121,8 +121,8 @@ export function operationImportDeclarations(
       ];
 
   return [
-    ...externalImportDeclarations(parameters),
-    odataImportDeclaration(
+    ...externalImportDeclarationsTsMorph(parameters),
+    odataImportDeclarationTsMorph(
       [
         ...edmRelatedImports(returnTypes),
         ...complexTypeRelatedImports(returnTypes),

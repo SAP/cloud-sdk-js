@@ -1,7 +1,7 @@
 import { upperCaseSnakeCase } from '@sap-cloud-sdk/util';
 
 /**
- * Make property non enumerable
+ * Make property non enumerable.
  * @param target - Object to be adjusted
  * @param propertyKey - property key which is adjusted.
  * @internal

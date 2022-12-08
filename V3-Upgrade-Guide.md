@@ -19,9 +19,12 @@ This document will guide you through the steps necessary to upgrade to version 3
 
 - [Update your project dependencies](#update-your-project-dependencies)
 - [Important Dependency Updates](#important-dependency-updates)
+- [Support Node 18](#support-node-18)
+- [Update EcmaScript Runtime](#update-ecmascript-runtime)
 - [Adjust operation names in generated clients](#adjust-operation-names-in-odata-generated-clients)
 - [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
 - [Replace Timeout](#timeout)
+- [Direct API Constructor Usage](#direct-api-constructor-usage)
 
 ### Update your project dependencies
 
@@ -35,6 +38,18 @@ We recommend updating your applications in one commit or pull request and making
 ### Important Dependency Updates
 
 The [axios HTTP client](https://github.com/axios/axios) has been updated from version 0.27 to 1.2.
+
+### Support Node 18
+Node 18 is the current long term support (LTS) version. 
+Previous node versions will reach their end of life within the next year (see [node.js release schedule](https://github.com/nodejs/Release#release-schedule)). 
+Therefore, all SAP Cloud SDK for JavaScript libraries will switch to node 18 as the **minimum** supported node version.
+If you run an older (<18) node version, please update to a newer version.
+You can find a list of breaking changes in the news section of the node.js [website](https://nodejs.org/en/blog/).
+
+### Update EcmaScript Runtime
+
+We changed the compilation target of our source code from `es2019` to `es2021`.
+Depending on your configuration this may lead to compilation errors (TypeScript) or runtime errors in (JavaScript).
 
 ### Adjust Operation Names in OData Generated Clients
 
@@ -124,3 +139,26 @@ myRequestBuilder
 <!-- TODO v3 put better link when documentation is done -->
 A detailed guide on the middleware concept is presented on the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/overview).
 
+### Direct API Constructor Usage
+
+You should use the [service function](https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-request#general-request-structure) to get an instance of your API object:
+
+```ts
+import { myEntityService } from './outputDir/my-service';
+
+const { myEntityApi } = myEntityService();
+return myEntityApi.requestBuilder()
+  .getAll()  
+  .execute(destination);
+```
+
+This way a getter initializes references to navigation properties of the API.
+If you call the API constructor directly like:
+
+```ts
+const myEntityApi = new MyEntityApi()
+```
+
+the navigation properties are not correctly initialized leading to potential errors.
+To avoid this unintended usage of the constructor the visibility was changed to `private`.
+If you used the constructor directly please change your code to use the service function e.g. `myEntityService()` in the example above.

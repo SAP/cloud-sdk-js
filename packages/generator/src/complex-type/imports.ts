@@ -2,7 +2,7 @@ import { ImportDeclarationStructure } from 'ts-morph';
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
-  odataImportDeclaration,
+  odataImportDeclarationTsMorph,
   enumTypeImportDeclarations
 } from '../imports';
 import { VdmComplexType } from '../vdm-types';
@@ -17,7 +17,7 @@ export function importDeclarations(
   return [
     ...complexTypeImportDeclarations(complexType.properties),
     ...enumTypeImportDeclarations(complexType.properties),
-    odataImportDeclaration(
+    odataImportDeclarationTsMorph(
       [
         'DefaultDeSerializers',
         'DeSerializers',

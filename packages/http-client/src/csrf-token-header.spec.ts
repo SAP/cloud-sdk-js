@@ -1,18 +1,18 @@
-import { createLogger } from '@sap-cloud-sdk/util';
-import nock from 'nock';
-import { createRequestBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import {
   CommonEntity,
   commonEntityApi
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import { createRequestBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
+import { createLogger } from '@sap-cloud-sdk/util';
+import nock from 'nock';
 import {
   defaultBasicCredentials,
   defaultDestination,
   defaultHost,
   mockHeaderRequest
 } from '../../../test-resources/test/test-util';
-import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 import * as csrfHeaders from './csrf-token-header';
+import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 import { executeHttpRequest } from './http-client';
 
 const standardHeaders = {
@@ -20,6 +20,18 @@ const standardHeaders = {
   authorization: defaultBasicCredentials,
   'content-type': 'application/json'
 };
+
+function buildNockUrl(relativeServiceUrl: string, endWithSlash = true): string {
+  if (relativeServiceUrl.startsWith('/')) {
+    return `${relativeServiceUrl}${
+      !relativeServiceUrl.endsWith('/') && endWithSlash ? '/' : ''
+    }`;
+  }
+
+  return `/${relativeServiceUrl}${
+    !relativeServiceUrl.endsWith('/') && endWithSlash ? '/' : ''
+  }`;
+}
 
 describe('buildCsrfHeaders', () => {
   const logger = createLogger('csrf-token-header');
@@ -41,7 +53,7 @@ describe('buildCsrfHeaders', () => {
     };
     const headers = await buildCsrfHeaders(request.destination!, {
       headers: standardHeaders,
-      url: request.relativeServiceUrl()
+      url: request.serviceUrl()
     });
     expect(headers).toEqual(expected);
   });
@@ -61,7 +73,7 @@ describe('buildCsrfHeaders', () => {
 
     const headers = await buildCsrfHeaders(request.destination!, {
       headers: standardHeaders,
-      url: request.relativeServiceUrl()
+      url: request.serviceUrl()
     });
     expect('x-csrf-token' in headers).toBeFalsy();
     expect(warnSpy).toBeCalledWith(
@@ -98,7 +110,7 @@ describe('buildCsrfHeaders', () => {
 
     const headers = await buildCsrfHeaders(request.destination!, {
       headers: standardHeaders,
-      url: request.relativeServiceUrl()
+      url: request.serviceUrl()
     });
 
     expect('cookie' in headers).toBeFalsy();
@@ -117,7 +129,7 @@ describe('buildCsrfHeaders', () => {
     };
 
     nock(defaultHost)
-      .head(request.serviceUrl() + '/')
+      .head(buildNockUrl(request.relativeServiceUrl()))
       .reply(200, undefined, mockedHeaders);
 
     const expected = {
@@ -126,7 +138,7 @@ describe('buildCsrfHeaders', () => {
     };
     const headers = await buildCsrfHeaders(request.destination!, {
       headers: standardHeaders,
-      url: request.relativeServiceUrl()
+      url: request.serviceUrl()
     });
     expect(headers).toEqual(expected);
   });
@@ -141,11 +153,11 @@ describe('buildCsrfHeaders', () => {
     };
 
     nock(defaultHost)
-      .head(request.serviceUrl() + '/')
+      .head(buildNockUrl(request.relativeServiceUrl()))
       .reply(500, undefined, mockedHeaders);
 
     nock(defaultHost)
-      .get(request.serviceUrl())
+      .get(buildNockUrl(request.relativeServiceUrl(), false))
       .reply(200, undefined, mockedHeaders);
 
     const expected = {
@@ -154,7 +166,7 @@ describe('buildCsrfHeaders', () => {
     };
     const headers = await buildCsrfHeaders(request.destination!, {
       headers: standardHeaders,
-      url: request.relativeServiceUrl()
+      url: request.serviceUrl()
     });
     expect(headers).toEqual(expected);
   });
@@ -169,7 +181,7 @@ describe('buildCsrfHeaders', () => {
     };
 
     nock(defaultHost)
-      .head(request.serviceUrl() + '/')
+      .head(buildNockUrl(request.relativeServiceUrl()))
       .reply(200, undefined, mockedHeaders);
 
     const expected = {

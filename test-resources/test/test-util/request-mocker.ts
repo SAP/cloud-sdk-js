@@ -14,7 +14,6 @@ import { createODataUri as createODataUriV4 } from '@sap-cloud-sdk/odata-v4/inte
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 
-export const defaultHost = 'http://localhost';
 const defaultCsrfToken = 'mocked-x-csrf-token';
 
 const mockedBuildHeaderResponse = {
@@ -36,13 +35,15 @@ export const defaultDestinationName = 'Testination';
 
 export const defaultDestination: Destination = {
   name: defaultDestinationName,
-  url: '/testination',
+  url: 'http://example.com',
   username: 'username',
   password: 'password',
   sapClient: '123',
   authTokens: [],
   originalProperties: {}
 };
+
+export const defaultHost = defaultDestination.url;
 
 export function mockDestinationsEnv(...destinations) {
   process.env.destinations = JSON.stringify([...destinations]);
@@ -172,7 +173,7 @@ export function mockHeaderRequest({
   path
 }: MockHeaderRequestParams) {
   return nock(host)
-    .head(path ? `${request.serviceUrl()}/${path}` : request.serviceUrl())
+    .head(path ? `${request.relativeServiceUrl()}/${path}` : '/' + request.relativeServiceUrl())
     .reply(200, undefined, responseHeaders);
 }
 

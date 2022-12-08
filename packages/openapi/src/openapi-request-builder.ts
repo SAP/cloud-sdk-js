@@ -1,4 +1,5 @@
 /* eslint-disable max-classes-per-file */
+// eslint-disable-next-line import/named
 import { AxiosResponse } from 'axios';
 import { isNullish } from '@sap-cloud-sdk/util';
 import {

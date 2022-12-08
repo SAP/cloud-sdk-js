@@ -78,7 +78,6 @@ export async function buildHttpRequest(
  * @internal
  */
 export async function addDestinationToRequestConfig<
-  ReturnType,
   T extends HttpRequestConfig
 >(
   destination: DestinationOrFetchOptions,

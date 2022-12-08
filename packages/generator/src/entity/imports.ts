@@ -4,7 +4,7 @@ import {
   complexTypeImportDeclarations,
   enumTypeImportDeclarations,
   mergeImportDeclarations,
-  odataImportDeclaration
+  odataImportDeclarationTsMorph
 } from '../imports';
 import { operationImportDeclarations } from '../operations';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
@@ -19,7 +19,7 @@ export function entityImportDeclarations(
 ): ImportDeclarationStructure[] {
   if (oDataVersion === 'v4') {
     return mergeImportDeclarations([
-      odataImportDeclaration(
+      odataImportDeclarationTsMorph(
         ['Entity', 'DefaultDeSerializers', 'DeSerializers', 'DeserializedType'],
         oDataVersion
       ),
@@ -37,7 +37,7 @@ export function entityImportDeclarations(
   }
 
   return [
-    odataImportDeclaration(
+    odataImportDeclarationTsMorph(
       ['Entity', 'DefaultDeSerializers', 'DeSerializers', 'DeserializedType'],
       oDataVersion
     ),

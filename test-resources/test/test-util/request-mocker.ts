@@ -166,6 +166,18 @@ interface MockHeaderRequestParams {
   path?: string;
 }
 
+export function buildNockUrl(relativeServiceUrl: string, endWithSlash = true): string {
+  if (relativeServiceUrl.startsWith('/')) {
+    return `${relativeServiceUrl}${
+      !relativeServiceUrl.endsWith('/') && endWithSlash ? '/' : ''
+    }`;
+  }
+
+  return `/${relativeServiceUrl}${
+    !relativeServiceUrl.endsWith('/') && endWithSlash ? '/' : ''
+  }`;
+}
+
 export function mockHeaderRequest({
   request,
   host = defaultHost,
@@ -173,7 +185,7 @@ export function mockHeaderRequest({
   path
 }: MockHeaderRequestParams) {
   return nock(host)
-    .head(path ? `${request.relativeServiceUrl()}/${path}` : '/' + request.relativeServiceUrl())
+    .head(path ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`) : buildNockUrl(request.relativeServiceUrl()))
     .reply(200, undefined, responseHeaders);
 }
 
@@ -200,7 +212,7 @@ export function mockRequest(
 
   return nock(host, getRequestHeaders(method, additionalHeaders, headers))
     [method](
-      path ? `${request.serviceUrl()}/${path}` : request.resourceUrl(),
+      path ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`) : buildNockUrl(request.relativeServiceUrl()),
       body
     )
     .query(query)

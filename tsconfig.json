@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2021",
-    "module": "node16",
+    "module": "commonjs",
     "lib": ["esnext"],
     "sourceMap": true,
     "declaration": true,
@@ -9,6 +9,8 @@
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
+
+    "moduleResolution": "Node16",
 
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

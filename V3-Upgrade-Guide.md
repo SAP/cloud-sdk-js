@@ -22,6 +22,7 @@ This document will guide you through the steps necessary to upgrade to version 3
 - [Adjust operation names in generated clients](#adjust-operation-names-in-odata-generated-clients)
 - [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
 - [Replace Timeout](#timeout)
+- [Direct API Constructor Usage](#direct-api-constructor-usage)
 
 ### Update your project dependencies
 
@@ -124,3 +125,26 @@ myRequestBuilder
 <!-- TODO v3 put better link when documentation is done -->
 A detailed guide on the middleware concept is presented on the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/overview).
 
+### Direct API Constructor Usage
+
+You should use the [service function](https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-request#general-request-structure) to get an instance of your API object:
+
+```ts
+import { myEntityService } from './outputDir/my-service';
+
+const { myEntityApi } = myEntityService();
+return myEntityApi.requestBuilder()
+  .getAll()  
+  .execute(destination);
+```
+
+This way a getter initializes references to navigation properties of the API.
+If you call the API constructor directly like:
+
+```ts
+const myEntityApi = new MyEntityApi()
+```
+
+the navigation properties are not correctly initialized leading to potential errors.
+To avoid this unintended usage of the constructor the visibility was changed to `private`.
+If you used the constructor directly please change your code to use the service function e.g. `myEntityService()` in the example above.

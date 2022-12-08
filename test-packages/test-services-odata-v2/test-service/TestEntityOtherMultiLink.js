@@ -11,22 +11,27 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
  */
 class TestEntityOtherMultiLink extends odata_v2_1.Entity {
+    _entityApi;
+    /**
+     * Technical entity name for TestEntityOtherMultiLink.
+     */
+    static _entityName = 'A_TestEntityOtherMultiLink';
+    /**
+     * Default url path for the according service.
+     */
+    static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+    /**
+     * All key fields of the TestEntityOtherMultiLink entity
+     */
+    static _keys = ['KeyProperty'];
+    /**
+     * Key Property.
+     */
+    keyProperty;
     constructor(_entityApi) {
         super(_entityApi);
         this._entityApi = _entityApi;
     }
 }
 exports.TestEntityOtherMultiLink = TestEntityOtherMultiLink;
-/**
- * Technical entity name for TestEntityOtherMultiLink.
- */
-TestEntityOtherMultiLink._entityName = 'A_TestEntityOtherMultiLink';
-/**
- * Default url path for the according service.
- */
-TestEntityOtherMultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-/**
- * All key fields of the TestEntityOtherMultiLink entity
- */
-TestEntityOtherMultiLink._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntityOtherMultiLink.js.map

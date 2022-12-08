@@ -10,8 +10,8 @@ const CaseTest_1 = require("./CaseTest");
 const CaseTestRequestBuilder_1 = require("./CaseTestRequestBuilder");
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 class CaseTestApi {
+    deSerializers;
     constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
-        this.entityConstructor = CaseTest_1.CaseTest;
         this.deSerializers = deSerializers;
     }
     /**
@@ -21,10 +21,12 @@ class CaseTestApi {
     static _privateFactory(deSerializers = odata_v2_1.defaultDeSerializers) {
         return new CaseTestApi(deSerializers);
     }
+    navigationPropertyFields;
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;
     }
+    entityConstructor = CaseTest_1.CaseTest;
     requestBuilder() {
         return new CaseTestRequestBuilder_1.CaseTestRequestBuilder(this);
     }
@@ -34,12 +36,14 @@ class CaseTestApi {
     customField(fieldName, isNullable = false) {
         return new odata_v2_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
+    _fieldBuilder;
     get fieldBuilder() {
         if (!this._fieldBuilder) {
             this._fieldBuilder = new odata_v2_1.FieldBuilder(CaseTest_1.CaseTest, this.deSerializers);
         }
         return this._fieldBuilder;
     }
+    _schema;
     get schema() {
         if (!this._schema) {
             const fieldBuilder = this.fieldBuilder;

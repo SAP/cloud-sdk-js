@@ -10,8 +10,8 @@ const TestEntityLink_1 = require("./TestEntityLink");
 const TestEntityLinkRequestBuilder_1 = require("./TestEntityLinkRequestBuilder");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class TestEntityLinkApi {
+    deSerializers;
     constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
-        this.entityConstructor = TestEntityLink_1.TestEntityLink;
         this.deSerializers = deSerializers;
     }
     /**
@@ -21,10 +21,12 @@ class TestEntityLinkApi {
     static _privateFactory(deSerializers = odata_v4_1.defaultDeSerializers) {
         return new TestEntityLinkApi(deSerializers);
     }
+    navigationPropertyFields;
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;
     }
+    entityConstructor = TestEntityLink_1.TestEntityLink;
     requestBuilder() {
         return new TestEntityLinkRequestBuilder_1.TestEntityLinkRequestBuilder(this);
     }
@@ -34,12 +36,14 @@ class TestEntityLinkApi {
     customField(fieldName, isNullable = false) {
         return new odata_v4_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
+    _fieldBuilder;
     get fieldBuilder() {
         if (!this._fieldBuilder) {
             this._fieldBuilder = new odata_v4_1.FieldBuilder(TestEntityLink_1.TestEntityLink, this.deSerializers);
         }
         return this._fieldBuilder;
     }
+    _schema;
     get schema() {
         if (!this._schema) {
             const fieldBuilder = this.fieldBuilder;

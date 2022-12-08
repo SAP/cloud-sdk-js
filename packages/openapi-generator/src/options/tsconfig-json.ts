@@ -8,7 +8,7 @@ const { readFile, lstat } = promises;
  */
 export const defaultTsConfig = {
   compilerOptions: {
-    target: 'es2021',
+    target: 'es2022',
     module: 'commonjs',
     lib: ['esnext'],
     declaration: true,

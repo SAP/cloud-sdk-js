@@ -489,7 +489,7 @@ function projectOptions(): ProjectOptions {
       quoteKind: QuoteKind.Single
     },
     compilerOptions: {
-      target: ScriptTarget.ES2021,
+      target: ScriptTarget.ES2022,
       module: ModuleKind.CommonJS,
       declaration: true,
       declarationMap: true,

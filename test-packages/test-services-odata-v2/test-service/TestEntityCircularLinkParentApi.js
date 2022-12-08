@@ -10,8 +10,8 @@ const TestEntityCircularLinkParent_1 = require("./TestEntityCircularLinkParent")
 const TestEntityCircularLinkParentRequestBuilder_1 = require("./TestEntityCircularLinkParentRequestBuilder");
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 class TestEntityCircularLinkParentApi {
+    deSerializers;
     constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
-        this.entityConstructor = TestEntityCircularLinkParent_1.TestEntityCircularLinkParent;
         this.deSerializers = deSerializers;
     }
     /**
@@ -21,12 +21,14 @@ class TestEntityCircularLinkParentApi {
     static _privateFactory(deSerializers = odata_v2_1.defaultDeSerializers) {
         return new TestEntityCircularLinkParentApi(deSerializers);
     }
+    navigationPropertyFields;
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {
             TO_CHILD: new odata_v2_1.Link('to_Child', this, linkedApis[0])
         };
         return this;
     }
+    entityConstructor = TestEntityCircularLinkParent_1.TestEntityCircularLinkParent;
     requestBuilder() {
         return new TestEntityCircularLinkParentRequestBuilder_1.TestEntityCircularLinkParentRequestBuilder(this);
     }
@@ -36,12 +38,14 @@ class TestEntityCircularLinkParentApi {
     customField(fieldName, isNullable = false) {
         return new odata_v2_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
+    _fieldBuilder;
     get fieldBuilder() {
         if (!this._fieldBuilder) {
             this._fieldBuilder = new odata_v2_1.FieldBuilder(TestEntityCircularLinkParent_1.TestEntityCircularLinkParent, this.deSerializers);
         }
         return this._fieldBuilder;
     }
+    _schema;
     get schema() {
         if (!this._schema) {
             const fieldBuilder = this.fieldBuilder;

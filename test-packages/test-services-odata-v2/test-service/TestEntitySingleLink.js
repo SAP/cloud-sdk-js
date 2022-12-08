@@ -11,22 +11,57 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
  */
 class TestEntitySingleLink extends odata_v2_1.Entity {
+    _entityApi;
+    /**
+     * Technical entity name for TestEntitySingleLink.
+     */
+    static _entityName = 'A_TestEntitySingleLink';
+    /**
+     * Default url path for the according service.
+     */
+    static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+    /**
+     * All key fields of the TestEntitySingleLink entity
+     */
+    static _keys = ['KeyProperty'];
+    /**
+     * Key Property.
+     * Maximum length: 10.
+     */
+    keyProperty;
+    /**
+     * String Property.
+     * Maximum length: 10.
+     * @nullable
+     */
+    stringProperty;
+    /**
+     * Boolean Property.
+     * @nullable
+     */
+    booleanProperty;
+    /**
+     * Guid Property.
+     * @nullable
+     */
+    guidProperty;
+    /**
+     * Int 16 Property.
+     * @nullable
+     */
+    int16Property;
+    /**
+     * One-to-many navigation property to the {@link TestEntityLvl2MultiLink} entity.
+     */
+    toMultiLink;
+    /**
+     * One-to-one navigation property to the {@link TestEntityLvl2SingleLink} entity.
+     */
+    toSingleLink;
     constructor(_entityApi) {
         super(_entityApi);
         this._entityApi = _entityApi;
     }
 }
 exports.TestEntitySingleLink = TestEntitySingleLink;
-/**
- * Technical entity name for TestEntitySingleLink.
- */
-TestEntitySingleLink._entityName = 'A_TestEntitySingleLink';
-/**
- * Default url path for the according service.
- */
-TestEntitySingleLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-/**
- * All key fields of the TestEntitySingleLink entity
- */
-TestEntitySingleLink._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntitySingleLink.js.map

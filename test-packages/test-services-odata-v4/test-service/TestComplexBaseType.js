@@ -12,6 +12,12 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
  * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 class TestComplexBaseTypeField extends odata_v4_1.ComplexTypeField {
+    _fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
+    /**
+     * Representation of the {@link TestComplexBaseType.baseStringProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    baseStringProperty = this._fieldBuilder.buildEdmTypeField('BaseStringProperty', 'Edm.String', true);
     /**
      * Creates an instance of TestComplexBaseTypeField.
      * @param fieldName - Actual name of the field as used in the OData request.
@@ -19,12 +25,6 @@ class TestComplexBaseTypeField extends odata_v4_1.ComplexTypeField {
      */
     constructor(fieldName, fieldOf, deSerializers, fieldOptions) {
         super(fieldName, fieldOf, deSerializers, TestComplexBaseType, fieldOptions);
-        this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
-        /**
-         * Representation of the {@link TestComplexBaseType.baseStringProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.baseStringProperty = this._fieldBuilder.buildEdmTypeField('BaseStringProperty', 'Edm.String', true);
     }
 }
 exports.TestComplexBaseTypeField = TestComplexBaseTypeField;

@@ -10,8 +10,8 @@ const Photos_1 = require("./Photos");
 const PhotosRequestBuilder_1 = require("./PhotosRequestBuilder");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class PhotosApi {
+    deSerializers;
     constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
-        this.entityConstructor = Photos_1.Photos;
         this.deSerializers = deSerializers;
     }
     /**
@@ -21,10 +21,12 @@ class PhotosApi {
     static _privateFactory(deSerializers = odata_v4_1.defaultDeSerializers) {
         return new PhotosApi(deSerializers);
     }
+    navigationPropertyFields;
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;
     }
+    entityConstructor = Photos_1.Photos;
     requestBuilder() {
         return new PhotosRequestBuilder_1.PhotosRequestBuilder(this);
     }
@@ -34,12 +36,14 @@ class PhotosApi {
     customField(fieldName, isNullable = false) {
         return new odata_v4_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
+    _fieldBuilder;
     get fieldBuilder() {
         if (!this._fieldBuilder) {
             this._fieldBuilder = new odata_v4_1.FieldBuilder(Photos_1.Photos, this.deSerializers);
         }
         return this._fieldBuilder;
     }
+    _schema;
     get schema() {
         if (!this._schema) {
             const fieldBuilder = this.fieldBuilder;

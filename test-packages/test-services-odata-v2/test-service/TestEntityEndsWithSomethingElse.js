@@ -11,22 +11,27 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
 class TestEntityEndsWithSomethingElse extends odata_v2_1.Entity {
+    _entityApi;
+    /**
+     * Technical entity name for TestEntityEndsWithSomethingElse.
+     */
+    static _entityName = 'A_TestEntityEndsWithSomethingElse';
+    /**
+     * Default url path for the according service.
+     */
+    static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+    /**
+     * All key fields of the TestEntityEndsWithSomethingElse entity
+     */
+    static _keys = ['KeyProperty'];
+    /**
+     * Key Property.
+     */
+    keyProperty;
     constructor(_entityApi) {
         super(_entityApi);
         this._entityApi = _entityApi;
     }
 }
 exports.TestEntityEndsWithSomethingElse = TestEntityEndsWithSomethingElse;
-/**
- * Technical entity name for TestEntityEndsWithSomethingElse.
- */
-TestEntityEndsWithSomethingElse._entityName = 'A_TestEntityEndsWithSomethingElse';
-/**
- * Default url path for the according service.
- */
-TestEntityEndsWithSomethingElse._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-/**
- * All key fields of the TestEntityEndsWithSomethingElse entity
- */
-TestEntityEndsWithSomethingElse._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntityEndsWithSomethingElse.js.map

@@ -283,7 +283,7 @@ describe('CreateRequestBuilder', () => {
 
     nock(defaultHost)
       .post(
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
+        '/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
         postBody
       )
       .reply(200, { d: postBody }, {});

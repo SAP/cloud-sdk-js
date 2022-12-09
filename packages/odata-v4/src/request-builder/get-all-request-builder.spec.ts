@@ -1,22 +1,20 @@
 import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import {
-  defaultDestination,
-  mockCountRequest,
-  mockGetRequest,
-  unmockDestinationsEnv,
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
-  createOriginalTestEntityDataWithLinks
+  createOriginalTestEntityDataWithLinks, defaultDestination,
+  mockCountRequest,
+  mockGetRequest,
+  unmockDestinationsEnv
 } from '../../../../test-resources/test/test-util';
-import { any } from '../filter';
-import { DefaultDeSerializers } from '../de-serializers';
 import {
-  testEntityApi,
+  createTestEntity, testEntityApi,
   testEntityLvl2MultiLinkApi,
   testEntityMultiLinkApi,
-  testEntitySingleLinkApi,
-  createTestEntity
+  testEntitySingleLinkApi
 } from '../../test/test-util';
+import { DefaultDeSerializers } from '../de-serializers';
+import { any } from '../filter';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
 describe('GetAllRequestBuilder', () => {
@@ -33,14 +31,14 @@ describe('GetAllRequestBuilder', () => {
   describe('url', () => {
     it('is built correctly', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity';
+        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity';
       const actual = await requestBuilder.url(defaultDestination);
       expect(actual).toBe(expected);
     });
 
     it('is built correctly for nested expands', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$expand=to_MultiLink($expand=to_MultiLink1($expand=to_MultiLink2))';
+        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$expand=to_MultiLink($expand=to_MultiLink1($expand=to_MultiLink2))';
       const actual = await requestBuilder
         .expand(
           testEntityApi.schema.TO_MULTI_LINK.expand(
@@ -56,7 +54,7 @@ describe('GetAllRequestBuilder', () => {
 
   it('is built correctly for selects inside of an expand', async () => {
     const expected =
-      '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$expand=to_SingleLink($select=BooleanProperty)';
+      'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$expand=to_SingleLink($select=BooleanProperty)';
     const actual = await requestBuilder
       .expand(
         testEntityApi.schema.TO_SINGLE_LINK.select(

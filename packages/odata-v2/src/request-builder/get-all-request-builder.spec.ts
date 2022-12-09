@@ -138,7 +138,8 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           query: { $select: 'SomethingTheSDKDoesNotSupport' },
-          responseBody: { d: { results: [entityData1] } }
+          responseBody: { d: { results: [entityData1] } },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -155,7 +156,8 @@ describe('GetAllRequestBuilder', () => {
 
       mockGetRequest(
         {
-          responseBody: { d: { results: [entityData1, entityData2] } }
+          responseBody: { d: { results: [entityData1, entityData2] } },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -172,7 +174,8 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           query: { $top: 1 },
-          responseBody: { d: { results: [entityData1] } }
+          responseBody: { d: { results: [entityData1] } },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -186,7 +189,8 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           query: { $skip: 1 },
-          responseBody: { d: { results: [entityData2] } }
+          responseBody: { d: { results: [entityData2] } },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -224,7 +228,8 @@ describe('GetAllRequestBuilder', () => {
         {
           query: { $top: 1 },
           responseBody: { d: { results: [entityData1] } },
-          delay: 100
+          delay: 100,
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -236,7 +241,7 @@ describe('GetAllRequestBuilder', () => {
           .execute(defaultDestination);
       } catch (err) {
         expect(err.message).toBe(
-          'Request to /testination ran into timeout after 10ms.'
+          'Request to http://example.com ran into timeout after 10ms.'
         );
         return;
       }
@@ -249,7 +254,8 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           headers: customAuthHeader,
-          responseBody: { d: { results: [entityData] } }
+          responseBody: { d: { results: [entityData] } },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -280,7 +286,8 @@ describe('GetAllRequestBuilder', () => {
 
       mockGetRequest(
         {
-          responseBody: { d: { results: [entityData] } }
+          responseBody: { d: { results: [entityData] } },
+          path: 'A_TestEntity'
         },
         testEntityApiCustom
       );
@@ -303,7 +310,8 @@ describe('GetAllRequestBuilder', () => {
 
       mockGetRequest(
         {
-          responseBody: rawResponse
+          responseBody: rawResponse,
+          path: 'A_TestEntity'
         },
         testEntityApi
       );

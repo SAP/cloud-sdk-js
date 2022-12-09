@@ -120,12 +120,12 @@ function hasMatchingChangeset(allowedBumps) {
                 case 1:
                     fileContents = _a.sent();
                     (0, core_1.info)('fileContents');
-                    b = new RegExp("'@sap-cloud-sdk/.*': major/").test(fileContents[0]);
+                    b = new RegExp("'@sap-cloud-sdk/.*': major").test(fileContents[0]);
                     c = b ? 'true' : 'false';
                     (0, core_1.info)(c);
                     return [2 /*return*/, fileContents.some(function (fileContent) {
                             return allowedBumps.some(function (bump) {
-                                return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump, "/")).test(fileContent);
+                                return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump)).test(fileContent);
                             });
                         })];
                 case 2: return [2 /*return*/, true];

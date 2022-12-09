@@ -2,13 +2,15 @@ import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
-  createOriginalTestEntityDataWithLinks, defaultDestination,
+  createOriginalTestEntityDataWithLinks,
+  defaultDestination,
   mockCountRequest,
   mockGetRequest,
   unmockDestinationsEnv
 } from '../../../../test-resources/test/test-util';
 import {
-  createTestEntity, testEntityApi,
+  createTestEntity,
+  testEntityApi,
   testEntityLvl2MultiLinkApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi

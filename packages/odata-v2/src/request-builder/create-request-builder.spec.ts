@@ -282,10 +282,7 @@ describe('CreateRequestBuilder', () => {
     const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
 
     nock(defaultHost)
-      .post(
-        '/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
-        postBody
-      )
+      .post('/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity', postBody)
       .reply(200, { d: postBody }, {});
 
     const entity = testEntityApi

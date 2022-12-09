@@ -86,6 +86,7 @@ async function hasMatchingChangeset(allowedBumps: string[]): Promise<boolean> {
     const fileContents = await Promise.all(
       changedFiles.map(file => readFile(file, 'utf-8'))
     );
+    console.log('fileContents', fileContents)
     return fileContents.some(fileContent =>
       allowedBumps.some(bump =>
         new RegExp(`'@sap-cloud-sdk\/\w+': ${bump}/`).test(fileContent)

@@ -33,7 +33,7 @@ async function validatePreamble(preamble: string): Promise<void> {
   const { commitType, isBreaking } = groups;
 
   validateCommitType(commitType);
-  validateChangelog(commitType, !!isBreaking);
+  validateChangesets(preamble, commitType, !!isBreaking);
 }
 
 function validateCommitType(commitType) {
@@ -80,7 +80,7 @@ function getAllowedBumps(preamble: string, isBreaking: boolean): string[] {
   return [];
 }
 
-async function hasMatchingChangelog(allowedBumps: string[]): Promise<boolean> {
+async function hasMatchingChangeset(allowedBumps: string[]): Promise<boolean> {
   if (allowedBumps.length) {
     const changedFiles = getInput('changed-files').split(' ');
     const fileContents = await Promise.all(
@@ -88,7 +88,7 @@ async function hasMatchingChangelog(allowedBumps: string[]): Promise<boolean> {
     );
     return fileContents.some(fileContent =>
       allowedBumps.some(bump =>
-        new RegExp(`'@sap-cloud-sdk\/\w+': ${bump}/`).test(fileContent)
+        new RegExp(`'@sap-cloud-sdk\/.*': ${bump}`).test(fileContent)
       )
     );
   }
@@ -96,20 +96,21 @@ async function hasMatchingChangelog(allowedBumps: string[]): Promise<boolean> {
   return true;
 }
 
-async function validateChangelog(
+async function validateChangesets(
+  preamble: string,
   commitType: string,
   isBreaking: boolean
 ): Promise<void> {
   const allowedBumps = getAllowedBumps(commitType, isBreaking);
-  if (!(await hasMatchingChangelog(allowedBumps))) {
+  if (!(await hasMatchingChangeset(allowedBumps))) {
     return setFailed(
-      `Preamble '${commitType}' requires a changelog file with bump ${allowedBumps.join(
-        ' or '
-      )}.`
+      `Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
+        .map(bump => `'${bump}'`)
+        .join(' or ')}.`
     );
   }
 
-  info('✓ Changelog: OK');
+  info('✓ Changesets: OK');
 }
 
 async function validateBody() {
@@ -120,7 +121,10 @@ async function validateBody() {
   );
 
   if (!body || body === template) {
-    return setFailed('PR must have a description');
+    return setFailed('PR must have a description.');
+  }
+  if (body.includes(template)) {
+    return setFailed('PR template must not be ignored.');
   }
   info('✓ Body: OK');
 }

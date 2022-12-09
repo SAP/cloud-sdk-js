@@ -212,7 +212,7 @@ export function mockRequest(
 
   return nock(host, getRequestHeaders(method, additionalHeaders, headers))
     [method](
-      path ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`) : buildNockUrl(request.relativeServiceUrl()),
+      path ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`, false) : buildNockUrl(request.relativeServiceUrl()),
       body
     )
     .query(query)

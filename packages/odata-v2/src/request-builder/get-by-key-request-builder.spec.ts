@@ -21,7 +21,7 @@ describe('GetByKeyRequestBuilder', () => {
         KeyPropertyString: 'DEV?TEST06'
       });
       const expected =
-        /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='DEV%3FTEST06'\)$/;
+        /^http:\/\/example.com\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='DEV%3FTEST06'\)$/;
 
       const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: entity.keyPropertyGuid,

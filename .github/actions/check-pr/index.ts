@@ -106,7 +106,7 @@ async function validateChangesets(
   const allowedBumps = getAllowedBumps(commitType, isBreaking);
   if (!(await hasMatchingChangeset(allowedBumps))) {
     return setFailed(
-      `Preamble '${preamble}' requires a changeset file with bump ${allowedBumps.join(
+      `Preamble '${preamble}' requires a changeset file with bump ${allowedBumps.map(bump=>`'${bump}'`).join(
         ' or '
       )}.`
     );

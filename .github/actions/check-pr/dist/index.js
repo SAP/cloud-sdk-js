@@ -141,7 +141,7 @@ function validateChangesets(preamble, commitType, isBreaking) {
                     return [4 /*yield*/, hasMatchingChangeset(allowedBumps)];
                 case 1:
                     if (!(_a.sent())) {
-                        return [2 /*return*/, (0, core_1.setFailed)("Preamble '".concat(preamble, "' requires a changeset file with bump ").concat(allowedBumps.join(' or '), "."))];
+                        return [2 /*return*/, (0, core_1.setFailed)("Preamble '".concat(preamble, "' requires a changeset file with bump ").concat(allowedBumps.map(function (bump) { return "'".concat(bump, "'"); }).join(' or '), "."))];
                     }
                     (0, core_1.info)('✓ Changesets: OK');
                     return [2 /*return*/];

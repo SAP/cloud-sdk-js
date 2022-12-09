@@ -72,7 +72,8 @@ describe('GetAllRequestBuilder', () => {
 
       mockGetRequest(
         {
-          responseBody: { value: [testEntity1, testEntity2] }
+          responseBody: { value: [testEntity1, testEntity2] },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -91,7 +92,8 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           query: { $top: 1 },
-          responseBody: { value: [testEntity1] }
+          responseBody: { value: [testEntity1] },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -105,7 +107,8 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           query: { $skip: 1 },
-          responseBody: { value: [testEntity2] }
+          responseBody: { value: [testEntity2] },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );

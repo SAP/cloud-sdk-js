@@ -1,0 +1,14 @@
+{
+  "name": "check-pr",
+  "version": "1.0.0",
+  "description": "Checks the current PR for semantical correctness and appropriate changelog.",
+  "main": "dist/.github/actions/check-pr/index.js",
+  "license": "Apache 2.0",
+  "scripts": {
+    "compile": "rm -rf transpiled && tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1"
+  }
+}

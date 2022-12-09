@@ -139,7 +139,7 @@ export function mockCountRequest(
     getAllRequest._entityApi.entityConstructor._defaultServicePath;
   const entityName = getAllRequest._entityApi.entityConstructor._entityName;
   return nock(defaultHost)
-    .get(`${destination.url}${servicePath}/${entityName}/$count`)
+    .get(`${servicePath}/${entityName}/$count`)
     .reply(200, count.toString());
 }
 

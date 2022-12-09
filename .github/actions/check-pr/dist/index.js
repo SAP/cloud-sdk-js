@@ -110,7 +110,7 @@ function getAllowedBumps(preamble, isBreaking) {
 }
 function hasMatchingChangeset(allowedBumps) {
     return __awaiter(this, void 0, void 0, function () {
-        var changedFiles, fileContents, b;
+        var changedFiles, fileContents, b, c;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -121,8 +121,8 @@ function hasMatchingChangeset(allowedBumps) {
                     fileContents = _a.sent();
                     (0, core_1.info)('fileContents');
                     b = new RegExp("'@sap-cloud-sdk/.*': major/").test(fileContents[0]);
-                    (0, core_1.info)(b ? 'true' : 'false');
-                    (0, core_1.info)(fileContents[0]);
+                    c = b ? 'true' : 'false';
+                    (0, core_1.info)(c);
                     return [2 /*return*/, fileContents.some(function (fileContent) {
                             return allowedBumps.some(function (bump) {
                                 return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump, "/")).test(fileContent);
@@ -143,7 +143,9 @@ function validateChangesets(preamble, commitType, isBreaking) {
                     return [4 /*yield*/, hasMatchingChangeset(allowedBumps)];
                 case 1:
                     if (!(_a.sent())) {
-                        return [2 /*return*/, (0, core_1.setFailed)("Preamble '".concat(preamble, "' requires a changeset file with bump ").concat(allowedBumps.map(function (bump) { return "'".concat(bump, "'"); }).join(' or '), "."))];
+                        return [2 /*return*/, (0, core_1.setFailed)("Preamble '".concat(preamble, "' requires a changeset file with bump ").concat(allowedBumps
+                                .map(function (bump) { return "'".concat(bump, "'"); })
+                                .join(' or '), "."))];
                     }
                     (0, core_1.info)('✓ Changesets: OK');
                     return [2 /*return*/];

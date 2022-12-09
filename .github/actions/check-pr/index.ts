@@ -87,9 +87,9 @@ async function hasMatchingChangeset(allowedBumps: string[]): Promise<boolean> {
       changedFiles.map(file => readFile(file, 'utf-8'))
     );
     info('fileContents');
-    const b =new RegExp(`'@sap-cloud-sdk\/.*': major/`).test(fileContents[0]);
-    info(b? 'true' : 'false');
-    info(fileContents[0]);
+    const b = new RegExp(`'@sap-cloud-sdk\/.*': major/`).test(fileContents[0]);
+    const c = b ? 'true' : 'false';
+    info(c);
     return fileContents.some(fileContent =>
       allowedBumps.some(bump =>
         new RegExp(`'@sap-cloud-sdk\/.*': ${bump}/`).test(fileContent)
@@ -101,16 +101,16 @@ async function hasMatchingChangeset(allowedBumps: string[]): Promise<boolean> {
 }
 
 async function validateChangesets(
-  preamble: string, 
+  preamble: string,
   commitType: string,
   isBreaking: boolean
 ): Promise<void> {
   const allowedBumps = getAllowedBumps(commitType, isBreaking);
   if (!(await hasMatchingChangeset(allowedBumps))) {
     return setFailed(
-      `Preamble '${preamble}' requires a changeset file with bump ${allowedBumps.map(bump=>`'${bump}'`).join(
-        ' or '
-      )}.`
+      `Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
+        .map(bump => `'${bump}'`)
+        .join(' or ')}.`
     );
   }
 

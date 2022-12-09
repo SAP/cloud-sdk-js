@@ -195,7 +195,7 @@ describe('Request Builder', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd%3F1234%27)`
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd%3F1234')`
       )
       .reply(200, response);
 
@@ -242,7 +242,7 @@ describe('Request Builder', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)?$select=to_SingleLink/*&$expand=to_SingleLink`
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')?$select=to_SingleLink/*&$expand=to_SingleLink`
       )
       .reply(200, response);
 
@@ -292,7 +292,7 @@ describe('Request Builder', () => {
 
   it('should resolve when creating a child entity of another entity', async () => {
     mockCsrfTokenRequest(
-      `${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)/to_MultiLink`
+      `${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')/to_MultiLink`
     );
 
     nock(destination.url, {
@@ -305,7 +305,7 @@ describe('Request Builder', () => {
       }
     })
       .post(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)/to_MultiLink`,
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')/to_MultiLink`,
         {
           StringProperty: 'prop'
         }
@@ -329,7 +329,7 @@ describe('Request Builder', () => {
 
   it('should resolve for update request', async () => {
     mockCsrfTokenRequest(
-      `${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+      `${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`
     );
 
     nock(destination.url, {
@@ -342,7 +342,7 @@ describe('Request Builder', () => {
       }
     })
       .patch(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`,
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`,
         {
           StringProperty: 'newStringProp'
         }
@@ -381,7 +381,7 @@ describe('Request Builder', () => {
 
   it('should resolve for delete with keys', async () => {
     mockCsrfTokenRequest(
-      'A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)'
+      'A_TestEntity(KeyPropertyGuid=guid\'aaaabbbb-cccc-dddd-eeee-ffff00001111\',KeyPropertyString=\'abcd1234\')'
     );
 
     nock(destination.url, {
@@ -394,7 +394,7 @@ describe('Request Builder', () => {
       }
     })
       .delete(
-        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`
       )
       .reply(204);
 
@@ -408,7 +408,7 @@ describe('Request Builder', () => {
 
   it('should resolve for delete with entity', async () => {
     mockCsrfTokenRequest(
-      'A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)'
+      'A_TestEntity(KeyPropertyGuid=guid\'aaaabbbb-cccc-dddd-eeee-ffff00001111\',KeyPropertyString=\'abcd1234\')'
     );
 
     const entity = testEntityApi
@@ -429,7 +429,7 @@ describe('Request Builder', () => {
       }
     })
       .delete(
-        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`
       )
       .reply(204);
 

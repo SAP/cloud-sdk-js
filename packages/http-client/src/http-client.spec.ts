@@ -9,13 +9,16 @@ import {
   Protocol,
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
+import { timeout } from '@sap-cloud-sdk/resilience';
 import {
   connectivityProxyConfigMock,
   defaultDestination
 } from '../../../test-resources/test/test-util';
+import type { Middleware, MiddlewareIn } from '../../resilience/src/middleware';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
+  HttpMiddlewareContext,
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
   HttpResponse
@@ -32,11 +35,6 @@ import {
   executeHttpRequestWithOrigin,
   buildHttpRequestConfigWithOrigin
 } from './http-client';
-import type {
-  Middleware,
-  MiddlewareIn,
-  HttpMiddlewareContext
-} from './middleware';
 
 describe('generic http client', () => {
   const httpsDestination: Destination = {
@@ -236,6 +234,58 @@ describe('generic http client', () => {
       };
       return dummy[appendedText];
     }
+
+    it('considers timeout on http-request', async () => {
+      const oneSecond = 1000;
+      nock('https://example.com', {})
+        .get('/with-delay')
+        .times(1)
+        .delay(oneSecond)
+        .reply(200)
+        .get('/with-delay')
+        .times(1)
+        .delay(11 * oneSecond)
+        .reply(200);
+
+      const response = await executeHttpRequest(httpsDestination, {
+        method: 'get',
+        url: '/with-delay',
+        middleware: [timeout()]
+      });
+
+      expect(response.status).toEqual(200);
+
+      await expect(
+        executeHttpRequest(httpsDestination, {
+          method: 'get',
+          url: '/with-delay',
+          middleware: [timeout()]
+        })
+      ).rejects.toThrow(
+        'Request to URL: https://example.com ran into a timeout after 10000ms'
+      );
+    }, 15000);
+
+    it('considers timeout via middleware on csrf token fetching', async () => {
+      const delayInResponse = 10;
+      nock('http://example.com', {})
+        .post(/with-delay/)
+        .delay(delayInResponse)
+        .reply(200);
+
+      await expect(
+        executeHttpRequest(
+          { url: 'http://example.com' },
+          {
+            method: 'post',
+            url: 'with-delay',
+            middleware: [timeout(delayInResponse * 0.5)]
+          }
+        )
+      ).rejects.toThrow(
+        'Request to URL: http://example.com ran into a timeout after 5ms.'
+      );
+    });
 
     it('attaches one middleware', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');

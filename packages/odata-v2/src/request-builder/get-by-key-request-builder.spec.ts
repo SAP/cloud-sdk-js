@@ -34,7 +34,7 @@ describe('GetByKeyRequestBuilder', () => {
       const entityData = createOriginalTestEntityData1();
       const entity = createTestEntity(entityData);
       const expected =
-      /^http:\/\/example.com\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='ABCDE'\)\/to_SingleLink\/to_MultiLink\/$/;
+        /^http:\/\/example.com\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='ABCDE'\)\/to_SingleLink\/to_MultiLink\/$/;
 
       const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: entity.keyPropertyGuid,

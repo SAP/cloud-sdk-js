@@ -381,7 +381,7 @@ describe('Request Builder', () => {
 
   it('should resolve for delete with keys', async () => {
     mockCsrfTokenRequest(
-      'A_TestEntity(KeyPropertyGuid=guid\'aaaabbbb-cccc-dddd-eeee-ffff00001111\',KeyPropertyString=\'abcd1234\')'
+      "A_TestEntity(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')"
     );
 
     nock(destination.url, {
@@ -408,7 +408,7 @@ describe('Request Builder', () => {
 
   it('should resolve for delete with entity', async () => {
     mockCsrfTokenRequest(
-      'A_TestEntity(KeyPropertyGuid=guid\'aaaabbbb-cccc-dddd-eeee-ffff00001111\',KeyPropertyString=\'abcd1234\')'
+      "A_TestEntity(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')"
     );
 
     const entity = testEntityApi

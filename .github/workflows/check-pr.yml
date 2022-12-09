@@ -1,11 +1,6 @@
 name: 'pr-check'
 
 on:
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
   pull_request:
     types:
       - opened

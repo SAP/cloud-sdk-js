@@ -121,7 +121,10 @@ async function validateBody() {
   );
 
   if (!body || body === template) {
-    return setFailed('PR must have a description');
+    return setFailed('PR must have a description.');
+  }
+  if (body.includes(template)) {
+    return setFailed('PR template must not be ignored.');
   }
   info('✓ Body: OK');
 }

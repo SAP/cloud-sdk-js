@@ -4,11 +4,9 @@ import {
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
 import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
-import {
-  HttpResponse,
-  HttpMiddlewareContext
-} from '@sap-cloud-sdk/http-client/internal';
+import { HttpResponse } from '@sap-cloud-sdk/http-client/internal';
 import { Middleware } from '@sap-cloud-sdk/resilience';
+import { HttpMiddlewareContext } from '@sap-cloud-sdk/resilience/internal';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
 

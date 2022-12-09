@@ -37,7 +37,10 @@
     "check:public-api": "ts-node ../../scripts/check-public-api-cli.ts",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/opossum": "^6.2.2",
+    "opossum": "^7.0.1"
+  },
   "devDependencies": {
     "axios": "^0.27.1",
     "nock": "^13.2.9",

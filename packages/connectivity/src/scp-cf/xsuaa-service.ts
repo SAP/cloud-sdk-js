@@ -1,44 +1,15 @@
 import * as xssec from '@sap/xssec';
-import CircuitBreaker from 'opossum';
-import { wrapInTimeout } from '@sap-cloud-sdk/resilience/internal';
+import {
+  executeWithMiddleware,
+  circuitbreakerXSUAA,
+  timeout
+} from '@sap-cloud-sdk/resilience/internal';
 import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';
-import { circuitBreakerDefaultOptions } from './resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
-
-let circuitBreaker: any;
-
-function executeFunction<T extends (...args: any[]) => any>(
-  fn: T,
-  ...parameters: Parameters<T>
-): ReturnType<T> {
-  return fn(...parameters);
-}
-
-function getCircuitBreaker() {
-  if (!circuitBreaker) {
-    circuitBreaker = new CircuitBreaker(
-      executeFunction,
-      circuitBreakerDefaultOptions
-    );
-  }
-  return circuitBreaker;
-}
-
-/**
- * Wrap a function in a circuit breaker. Important if you trigger this recursively you have to adjust the parameters to avoid an infinite stack.
- * @param fn - Function to wrap.
- * @returns A function to be called with the original parameters.
- */
-function wrapInCircuitBreaker<T extends (...args: any[]) => any>(
-  fn: T
-): (...parameters: Parameters<T>) => ReturnType<T> {
-  return (...parameters: Parameters<T>) =>
-    getCircuitBreaker().fire(fn, ...parameters);
-}
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
@@ -114,10 +85,11 @@ export async function getClientCredentialsToken(
       );
     });
 
-  // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
-  return wrapInCircuitBreaker((ser, jwt) =>
-    wrapInTimeout(xssecPromise(), 10000, 'Token retrieval ran into timeout.')
-  )(service, userJwt);
+  return executeWithMiddleware(
+    [circuitbreakerXSUAA(), timeout()],
+    {},
+    xssecPromise
+  );
 }
 
 /**
@@ -143,8 +115,10 @@ export function getUserToken(
       (err: Error, token: string) => (err ? reject(err) : resolve(token))
     )
   );
-  // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
-  return wrapInCircuitBreaker((ser, jwt) =>
-    wrapInTimeout(xssecPromise, 10000, 'Token retrieval ran into timeout.')
-  )(service, userJwt);
+
+  return executeWithMiddleware(
+    [circuitbreakerXSUAA(), timeout()],
+    {},
+    xssecPromise
+  );
 }

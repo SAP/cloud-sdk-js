@@ -1,102 +1,216 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
-import nock from "nock";
-import {executeWithMiddleware} from "../dist/middleware";
-import {
-    circuitbreakerHttp,
-    circuitBreakers,
-    getCircuitBreaker,
-    httpKeyBuilder,
-    HttpMiddlewareContext
-} from "./circuitbreaker";
+// eslint-disable-next-line import/named
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import nock from 'nock';
+import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
+import { circuitbreakerHttp, circuitBreakers } from './circuitbreaker';
+import { timeout } from './timeout';
 
-describe('circuit-breaker',()=>{
-    beforeEach(()=>{
-        Object.keys(circuitBreakers).forEach(key=>delete circuitBreakers[key])
-        nock.cleanAll()
-    })
+describe('circuit-breaker', () => {
+  beforeEach(() => {
+    Object.keys(circuitBreakers).forEach(key => delete circuitBreakers[key]);
+    nock.cleanAll();
+  });
 
-    const host = 'http://example.com'
-    it('opens breaker',async ()=>{
-        nock(host, {})
-            .persist()
-            .get(/failing-500/)
-            .reply(500);
+  const host = 'http://example.com';
+  it('opens breaker', async () => {
+    nock(host, {})
+      .persist()
+      .get(/failing-500/)
+      .reply(500);
 
-        const requestConfig:AxiosRequestConfig = {method:"get",baseURL:host,url:'failing-500'}
-        const context:HttpMiddlewareContext = {requestConfig,url:host,tenantId:'myTestTenant'}
-        const request = ()=>axios.request(requestConfig)
-        let keepCalling = true
-        while (keepCalling){
-            await executeWithMiddleware<AxiosResponse,HttpMiddlewareContext>(circuitbreakerHttp(),context,request)
-            const breaker = circuitBreakers[httpKeyBuilder(context)]
-            if(breaker.opened){
-                break;
-            }
-        }
-        await expect(executeWithMiddleware<AxiosResponse,HttpMiddlewareContext>(circuitbreakerHttp(),context,request)).rejects.toThrow('Breaker is open')
+    const requestConfig: AxiosRequestConfig = {
+      method: 'get',
+      baseURL: host,
+      url: 'failing-500'
+    };
+    const context: HttpMiddlewareContext = {
+      requestConfig,
+      uri: host,
+      tenantId: 'myTestTenant'
+    };
+    const request = () => axios.request(requestConfig);
+    const keepCalling = true;
+    while (keepCalling) {
+      await expect(
+        executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+          [circuitbreakerHttp()],
+          context,
+          request
+        )
+      ).rejects.toThrow();
+      const breaker = circuitBreakers[`${host}::failing-500::myTestTenant`];
+      if (breaker.opened) {
+        break;
+      }
+    }
+    await expect(
+      executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+        [circuitbreakerHttp()],
+        context,
+        request
+      )
+    ).rejects.toThrow('Breaker is open');
+  });
 
-    })
+  it('does not open for 401, 403 or 404 responses', async () => {
+    const mock = nock(host, {})
+      .get(/failing-ignore/)
+      .times(10)
+      .reply(401)
+      .get(/failing-ignore/)
+      .times(10)
+      .reply(403)
+      .get(/failing-ignore/)
+      .times(10)
+      .reply(404);
 
-    it('does not open for 401, 403 or 404 responses',async ()=>{
-        const mock = nock(host, {})
-            .get(/failing-ignore/)
-            .times(10)
-            .reply(401)
-            .get(/failing-ignore/)
-            .times(10)
-            .reply(403)
-            .get(/failing-ignore/)
-             .times(10)
-            .reply(404);
+    const requestConfig: AxiosRequestConfig = {
+      method: 'get',
+      baseURL: host,
+      url: 'failing-ignore'
+    };
+    const context: HttpMiddlewareContext = {
+      requestConfig,
+      uri: host,
+      tenantId: 'myTestTenant'
+    };
+    const request = () => axios.request(requestConfig);
+    let keepCalling = !mock.isDone();
+    while (keepCalling) {
+      await expect(
+        executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+          [circuitbreakerHttp()],
+          context,
+          request
+        )
+      ).rejects.toThrow();
 
-        const requestConfig:AxiosRequestConfig = {method:"get",baseURL:host,url:'failing-ignore'}
-        const context:HttpMiddlewareContext = {requestConfig,url:host,tenantId:'myTestTenant'}
-        const request = ()=>axios.request(requestConfig)
-        let keepCalling = !mock.isDone()
-        while (keepCalling){
-            await executeWithMiddleware<AxiosResponse,HttpMiddlewareContext>(circuitbreakerHttp(),context,request)
-            keepCalling = !mock.isDone()
-        }
-        expect(circuitBreakers[httpKeyBuilder(context)].opened).toBe(false)
+      keepCalling = !mock.isDone();
+    }
+    expect(
+      circuitBreakers[`${host}::failing-ignore::myTestTenant`].opened
+    ).toBe(false);
+  });
 
+  it('creates circuit breaker for each tenant', async () => {
+    nock(host, {}).get(/ok/).times(2).reply(200);
 
-    })
+    const requestConfig: AxiosRequestConfig = {
+      method: 'get',
+      baseURL: host,
+      url: 'ok'
+    };
+    const request = () => axios.request(requestConfig);
+    const context: HttpMiddlewareContext = {
+      requestConfig,
+      uri: host,
+      tenantId: 'tenant1'
+    };
 
-    it('creates circuit breaker for each tenant',async()=>{
-        nock(host, {})
-            .get(/ok/)
-            .times(2)
-            .reply(200);
+    await executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+      [circuitbreakerHttp()],
+      context,
+      request
+    );
+    await executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+      [circuitbreakerHttp()],
+      { ...context, tenantId: 'tenant2' },
+      request
+    );
 
-        const requestConfig:AxiosRequestConfig = {method:"get",baseURL:host,url:'ok'}
-        const request = ()=>axios.request(requestConfig)
-        const context:HttpMiddlewareContext = {requestConfig,url:host,tenantId:'tenant1'}
+    expect(Object.keys(circuitBreakers)).toEqual([
+      `${host}::ok::tenant1`,
+      `${host}::ok::tenant2`
+    ]);
+  });
 
-        await executeWithMiddleware<AxiosResponse,HttpMiddlewareContext>(circuitbreakerHttp(),context,request())
-        await executeWithMiddleware<AxiosResponse,HttpMiddlewareContext>(circuitbreakerHttp(),{...context,tenantId:'tenant2'},request())
+  it('creates circuit breaker for each service', async () => {
+    nock(host, {})
+      .get(/path-1/)
+      .reply(200)
+      .get(/path-2/)
+      .reply(200);
 
-        expect(Object.keys(circuitBreakers)).toEqual(['${host}::tenant1::ok','${host}::tenant2::ok'])
-    })
+    const requestConfigPath1: AxiosRequestConfig = {
+      method: 'get',
+      baseURL: host,
+      url: 'path-1'
+    };
+    const requestConfigPath2: AxiosRequestConfig = {
+      method: 'get',
+      baseURL: host,
+      url: 'path-2'
+    };
+    const request = requestConfig => () => axios.request(requestConfig);
+    const context: (
+      requestConfig: AxiosRequestConfig
+    ) => HttpMiddlewareContext = requestConfig => ({
+      requestConfig,
+      uri: host,
+      tenantId: 'tenant1'
+    });
 
-    it('creates circuit breaker for each service',async()=>{
-        nock(host, {})
-            .get(/path-1/)
-            .reply(200)
-                .get(/path-1/)
-                    .reply(200)
+    await executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+      [circuitbreakerHttp()],
+      context(requestConfigPath1),
+      request(requestConfigPath1)
+    );
+    await executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+      [circuitbreakerHttp()],
+      context(requestConfigPath2),
+      request(requestConfigPath2)
+    );
 
-        const requestConfigPath1:AxiosRequestConfig = {method:"get",baseURL:host,url:'path-1'}
-        const requestConfigPath2:AxiosRequestConfig = {method:"get",baseURL:host,url:'path-2'}
-        const request = (requestConfig)=>axios.request(requestConfig)
-        const context:HttpMiddlewareContext = {requestConfig,url:host,tenantId:'tenant1'}
+    expect(Object.keys(circuitBreakers)).toEqual([
+      `${host}::path-1::tenant1`,
+      `${host}::path-2::tenant1`
+    ]);
+  });
 
-        await executeWithMiddleware<AxiosResponse,HttpMiddlewareContext>(circuitbreakerHttp(),context,request(requestConfigPath1))
-        await executeWithMiddleware<AxiosResponse,HttpMiddlewareContext>(circuitbreakerHttp(),context,request(requestConfigPath2))
+  it('reacts correctly on xsuaa failures', () => {
+    throw new Error('Add a error filter also for XSUAA errors.');
+  });
 
-        expect(Object.keys(circuitBreakers)).toEqual(['${host}::tenant1::path-1','${host}::tenant2::path-2'])
-    })
+  it('works together with a timeout', async () => {
+    const delay = 100;
+    nock(host, {})
+      .persist()
+      .get(/with-delay/)
+      .delay(delay)
+      .reply(200);
 
-    it('reacts correctly on xsuaa failures',()=>{
+    const requestConfig: AxiosRequestConfig = {
+      method: 'get',
+      baseURL: host,
+      url: 'with-delay'
+    };
+    const context: HttpMiddlewareContext = {
+      requestConfig,
+      uri: host,
+      tenantId: 'myTestTenant'
+    };
+    const request = () => axios.request(requestConfig);
+    const keepCalling = true;
+    while (keepCalling) {
+      await expect(
+        executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+          [timeout(delay * 0.5), circuitbreakerHttp()],
+          context,
+          request
+        )
+      ).rejects.toThrow();
 
-    })
-})
+      const breaker = circuitBreakers[`${host}::with-delay::myTestTenant`];
+      if (breaker.opened) {
+        break;
+      }
+    }
+    await expect(
+      executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+        [circuitbreakerHttp()],
+        context,
+        request
+      )
+    ).rejects.toThrow('Breaker is open');
+  });
+});

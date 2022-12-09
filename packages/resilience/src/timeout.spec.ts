@@ -22,7 +22,7 @@ describe('timeout', () => {
     await expect(
       executeWithMiddleware(
         [timeout(delayInResponse * 0.5)],
-        { uri: 'https://example.com', args: [] },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
         request
       )
     ).rejects.toThrow(
@@ -32,7 +32,7 @@ describe('timeout', () => {
     await expect(
       executeWithMiddleware(
         [timeout(delayInResponse * 2)],
-        { uri: 'https://example.com', args: [] },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
         request
       )
     ).resolves.not.toThrow();
@@ -58,7 +58,7 @@ describe('timeout', () => {
       });
     const response = await executeWithMiddleware(
       [timeout()],
-      { uri: 'https://example.com', args: [] },
+      { uri: 'https://example.com', tenantId: 'dummy-tenant' },
       request
     );
 
@@ -67,7 +67,7 @@ describe('timeout', () => {
     await expect(
       executeWithMiddleware(
         [timeout()],
-        { uri: 'https://example.com', args: [] },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
         request
       )
     ).rejects.toThrow(

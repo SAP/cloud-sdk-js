@@ -121,7 +121,8 @@ describe('GetAllRequestBuilder', () => {
             $select: '*',
             $expand: 'to_SingleLink,to_MultiLink'
           },
-          responseBody: { value: [testEntity] }
+          responseBody: { value: [testEntity] },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -143,7 +144,8 @@ describe('GetAllRequestBuilder', () => {
             $expand:
               "to_SingleLink,to_MultiLink($filter=((to_MultiLink1/any(a0:(a0/StringProperty ne 'test')))))"
           },
-          responseBody: { value: [testEntity] }
+          responseBody: { value: [testEntity] },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );

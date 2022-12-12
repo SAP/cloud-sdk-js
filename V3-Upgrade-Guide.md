@@ -46,9 +46,6 @@ Therefore, all SAP Cloud SDK for JavaScript libraries will switch to node 18 as 
 If you run an older (<18) node version, please update to a newer version.
 You can find a list of breaking changes in the news section of the node.js [website](https://nodejs.org/en/blog/).
 
-Please note, in the `tsconfig.json`, we updated the configuration, so it looks like `"module": "Node16"`.
-As `Node18` is not a valid value of `module` for the time being, we might update it later.
-
 ### Update EcmaScript Runtime
 
 We changed the compilation target of our source code from `es2019` to `es2021`.

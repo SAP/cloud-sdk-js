@@ -17,4 +17,4 @@
 ---
 
 
-- [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules.([handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html))
+- [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.

@@ -97,7 +97,7 @@ describe('Custom Fields', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}?$filter=(MyCustomField%20eq%20%27ToMatch%27)`
+        `${servicePath}/${entityName}?$filter=(MyCustomField%20eq%20'ToMatch')`
       )
       .reply(200, getAllResponseWithCustomField);
 
@@ -116,7 +116,7 @@ describe('Custom Fields', () => {
     mockCsrfTokenRequest(
       destination.url,
       destination.sapClient!,
-      `${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+      `${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`
     );
 
     nock(destination.url, {
@@ -144,7 +144,7 @@ describe('Custom Fields', () => {
       }
     })
       .patch(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`,
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`,
         {
           MyCustomField: 'NewValue'
         }

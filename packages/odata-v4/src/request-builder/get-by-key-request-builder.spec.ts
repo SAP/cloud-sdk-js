@@ -73,7 +73,8 @@ describe('GetByKeyRequestBuilder', () => {
     mockGetRequest(
       {
         query: { $select: 'SomethingTheSDKDoesNotSupport' },
-        responseBody: { value: [entityData1] }
+        responseBody: { value: [entityData1] },
+        path: 'A_TestEntity'
       },
       testEntityApi
     );

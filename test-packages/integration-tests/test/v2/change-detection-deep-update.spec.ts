@@ -85,7 +85,7 @@ describe('deep-update and change detection', () => {
       destination.url,
       testBasicHeader,
       csrfToken,
-      `A_TestEntity(KeyPropertyGuid=guid%27${testEntityKeyPropGuid}%27,KeyPropertyString=%27${testEntityKeyPropString}%27)`,
+      `A_TestEntity(KeyPropertyGuid=guid'${testEntityKeyPropGuid}',KeyPropertyString='${testEntityKeyPropString}')`,
       {
         StringProperty: 'yes'
       }
@@ -124,7 +124,7 @@ describe('deep-update and change detection', () => {
       destination.url,
       basicHeader(destination.username, destination.password),
       csrfToken,
-      `A_TestEntity(KeyPropertyGuid=guid%27${testEntityKeyPropGuid}%27,KeyPropertyString=%27${testEntityKeyPropString}%27)`
+      `A_TestEntity(KeyPropertyGuid=guid'${testEntityKeyPropGuid}',KeyPropertyString='${testEntityKeyPropString}')`
     );
 
     nock(destination.url, {
@@ -137,7 +137,7 @@ describe('deep-update and change detection', () => {
       }
     })
       .patch(
-        `${TestEntity._defaultServicePath}/A_TestEntity(KeyPropertyGuid=guid%27${testEntityKeyPropGuid}%27,KeyPropertyString=%27${testEntityKeyPropString}%27)`,
+        `${TestEntity._defaultServicePath}/A_TestEntity(KeyPropertyGuid=guid'${testEntityKeyPropGuid}',KeyPropertyString='${testEntityKeyPropString}')`,
         {
           StringProperty: 'no',
           to_SingleLink: { StringProperty: 'abc' },

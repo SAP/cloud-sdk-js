@@ -51,7 +51,7 @@ describe('GetAllRequestBuilder', () => {
   describe('url', () => {
     it('should set ascending order', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc';
+        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc';
       const request = await testEntityApi
         .requestBuilder()
         .getAll()
@@ -62,7 +62,7 @@ describe('GetAllRequestBuilder', () => {
 
     it('should set descending order', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20desc';
+        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20desc';
       const request = await testEntityApi
         .requestBuilder()
         .getAll()
@@ -75,7 +75,7 @@ describe('GetAllRequestBuilder', () => {
 
     it('should set ascending order as default if no order is specified', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc';
+        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc';
       const request = await testEntityApi
         .requestBuilder()
         .getAll()
@@ -86,7 +86,7 @@ describe('GetAllRequestBuilder', () => {
 
     it('should set the correct order when both default ascending order and descending order are passed', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc,ComplexTypeProperty/DateTimeProperty%20desc';
+        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc,ComplexTypeProperty/DateTimeProperty%20desc';
       const stringProperty =
         testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty;
       const dateTimeProperty =
@@ -101,14 +101,14 @@ describe('GetAllRequestBuilder', () => {
 
     it('is built correctly', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity';
+        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity';
       const actual = await requestBuilder.url(defaultDestination);
       expect(actual).toBe(expected);
     });
 
     it('is built correctly with URI encoding', async () => {
       const expected =
-        "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$filter=(StringProperty%20eq%20'%C3%A4%20%C3%B6%2B%20''c')";
+        "http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$filter=(StringProperty%20eq%20'%C3%A4%20%C3%B6%2B%20''c')";
       const actual = await requestBuilder
         .filter(testEntityApi.schema.STRING_PROPERTY.equals("ä ö+ 'c"))
         .url(defaultDestination);
@@ -117,7 +117,7 @@ describe('GetAllRequestBuilder', () => {
 
     it('adds expand for nested selects', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink';
+        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink';
       const actual = await requestBuilder
         .select(
           testEntityApi.schema.TO_SINGLE_LINK.select(
@@ -138,7 +138,8 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           query: { $select: 'SomethingTheSDKDoesNotSupport' },
-          responseBody: { d: { results: [entityData1] } }
+          responseBody: { d: { results: [entityData1] } },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -155,7 +156,8 @@ describe('GetAllRequestBuilder', () => {
 
       mockGetRequest(
         {
-          responseBody: { d: { results: [entityData1, entityData2] } }
+          responseBody: { d: { results: [entityData1, entityData2] } },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -172,7 +174,8 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           query: { $top: 1 },
-          responseBody: { d: { results: [entityData1] } }
+          responseBody: { d: { results: [entityData1] } },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -186,7 +189,8 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           query: { $skip: 1 },
-          responseBody: { d: { results: [entityData2] } }
+          responseBody: { d: { results: [entityData2] } },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -224,7 +228,8 @@ describe('GetAllRequestBuilder', () => {
         {
           query: { $top: 1 },
           responseBody: { d: { results: [entityData1] } },
-          delay: 100
+          delay: 100,
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -236,7 +241,7 @@ describe('GetAllRequestBuilder', () => {
           .execute(defaultDestination);
       } catch (err) {
         expect(err.message).toBe(
-          'Request to URL: /testination ran into a timeout after 10ms.'
+          'Request to URL: http://example.com ran into a timeout after 10ms.'
         );
         return;
       }
@@ -249,7 +254,8 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           headers: customAuthHeader,
-          responseBody: { d: { results: [entityData] } }
+          responseBody: { d: { results: [entityData] } },
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
@@ -280,7 +286,8 @@ describe('GetAllRequestBuilder', () => {
 
       mockGetRequest(
         {
-          responseBody: { d: { results: [entityData] } }
+          responseBody: { d: { results: [entityData] } },
+          path: 'A_TestEntity'
         },
         testEntityApiCustom
       );
@@ -303,7 +310,8 @@ describe('GetAllRequestBuilder', () => {
 
       mockGetRequest(
         {
-          responseBody: rawResponse
+          responseBody: rawResponse,
+          path: 'A_TestEntity'
         },
         testEntityApi
       );

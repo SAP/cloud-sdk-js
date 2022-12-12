@@ -19,7 +19,7 @@ import {
 } from '../../../../test-resources/test/test-util';
 import { testEntityApi } from '../../test/test-util';
 
-const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
+const serviceUrl = '/sap/opu/odata/sap/API_TEST_SRV';
 
 const mockedBuildHeaderResponse = {
   'x-csrf-token': 'mocked-x-csrf-token',

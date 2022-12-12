@@ -37,12 +37,11 @@ function getTimeoutPromise<T>(
 }
 
 /**
- * TODO make non public once change to middleware is complete.
  * @param promise - Promise
  * @param timeoutValue - Value for the timeout in milliseconds.
  * @internal
  */
-export async function wrapInTimeout<T>(
+async function wrapInTimeout<T>(
   promise: Promise<T>,
   timeoutValue: number,
   message: string

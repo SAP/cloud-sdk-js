@@ -7,7 +7,8 @@ import {
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../test-resources/test/test-util/keys';
 import { getClientCredentialsToken } from './xsuaa-service';
-import { circuitBreaker, fetchDestination } from './destination';
+import { fetchDestination } from './destination';
+import {circuitBreakers} from "@sap-cloud-sdk/resilience/dist/circuitbreaker";
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -19,30 +20,30 @@ const jwt = jwt123.sign(
 
 describe('circuit breaker', () => {
   afterEach(() => {
-    circuitBreaker.enable();
+    Object.values(circuitBreakers).forEach(cb=>cb.close());
     nock.cleanAll();
   });
   beforeEach(() => {
-    circuitBreaker.enable();
+    Object.values(circuitBreakers).forEach(cb=>cb.close());
     nock.cleanAll();
   });
 
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for destination service', async () => {
     const request = () =>
-      fetchDestination(destinationServiceUri, jwt, {
-        destinationName: 'FINAL-DESTINATION'
-      });
+        fetchDestination(destinationServiceUri, jwt, {
+          destinationName: 'FINAL-DESTINATION'
+        });
 
     nock(destinationServiceUri)
-      .get(/.*/)
-      .times(1)
-      .reply(200, JSON.stringify({ URL: 'test' }));
+        .get(/.*/)
+        .times(1)
+        .reply(200, JSON.stringify({ URL: 'test' }));
 
-    // First attempt should succeed
+    // First attempt should succeed inits the breaker
     await expect(request()).resolves.toBeDefined();
 
     // All following requests will fail to open the breaker
-    nock(destinationServiceUri).persist().get(/.*/).reply(400);
+    nock(destinationServiceUri).persist().get(/.*/).reply(500);
 
     let keepCalling = true;
     let failedCalls = 0;
@@ -52,7 +53,7 @@ describe('circuit breaker', () => {
         await request();
         await sleep(50);
       } catch (e) {
-        if (e.cause.message === 'Request failed with status code 400') {
+        if (e.cause.message === 'Request failed with status code 500') {
           failedCalls++;
         }
         if (e.cause.message === 'Breaker is open') {
@@ -79,7 +80,7 @@ describe('circuit breaker', () => {
     const mock = nock(providerXsuaaUrl)
       .persist()
       .post('/oauth/token')
-      .reply(400);
+      .reply(500);
 
     let keepCalling = true;
     let failedCalls = 0;
@@ -91,7 +92,7 @@ describe('circuit breaker', () => {
       } catch (e) {
         if (
           e ===
-          'Error in fetching the token for service my-xsuaa: Request failed with status code 400'
+          'Error in fetching the token for service my-xsuaa: Request failed with status code 500'
         ) {
           failedCalls++;
         }

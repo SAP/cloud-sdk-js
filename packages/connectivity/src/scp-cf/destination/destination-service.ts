@@ -13,6 +13,7 @@ import {
 import { Context, timeout } from '@sap-cloud-sdk/resilience';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
+import { parseSubdomain } from '../subdomain-replacer';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -244,8 +245,32 @@ export async function fetchCertificate(
   }
 }
 
-function getTenantFromTokens(tokens: AuthAndExchangeTokens | string): string {
-  throw new Error('Need to implement tenant from token.');
+function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
+  if (typeof token === 'string') {
+    const decoded = decodeJwt(token);
+    if (decoded.zid) {
+      return decoded.zid;
+    }
+    if (decoded.iss) {
+      return parseSubdomain(decoded.iss);
+    }
+    throw new Error('Could not obtain tenant identifier from jwt.');
+  }
+
+  if (token.exchangeTenant) {
+    //represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+    return token.exchangeTenant;
+  }
+
+  if (token.exchangeHeaderJwt) {
+    return getTenantFromTokens(token.exchangeHeaderJwt);
+  }
+
+  if (token.refreshToken) {
+    return getTenantFromTokens(token.refreshToken);
+  }
+
+  return getTenantFromTokens(token.authHeaderJwt);
 }
 
 async function fetchDestinationByTokens(

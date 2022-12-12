@@ -14,7 +14,7 @@ type KeyBuilder<ContextT extends Context> = (context: ContextT) => string;
 function httpErrorFilter(error: AxiosError): boolean {
   if (
     error.response?.status &&
-    [401, 403, 404].includes(error.response.status)
+    [400, 401, 403, 404].includes(error.response.status)
   ) {
     return true;
   }
@@ -22,7 +22,10 @@ function httpErrorFilter(error: AxiosError): boolean {
 }
 
 function httpKeyBuilder(context: HttpMiddlewareContext): string {
-  return `${context.uri}::${context.requestConfig.url}::${context.tenantId}`;
+  // TODO should add http method there e.g. slow getAll, deletion fail.
+  return `${context.uri}::${context.requestConfig.url || '/'}::${
+    context.tenantId
+  }`;
 }
 
 function xsuaaKeyBuilder(context: Context): string {

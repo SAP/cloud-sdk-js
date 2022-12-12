@@ -49,7 +49,7 @@ describe('token accessor', () => {
     });
 
     it('considers default timeout for client credentials token', async () => {
-      jest.spyOn(resilience, 'wrapInTimeout');
+      const spy = jest.spyOn(resilience, 'timeout');
 
       const jwt = signedJwt({
         iss: 'https://testeroni.example.com'
@@ -63,11 +63,8 @@ describe('token accessor', () => {
 
       await serviceToken('destination', { jwt });
 
-      expect(resilience.wrapInTimeout).toHaveBeenCalledWith(
-        expect.anything(),
-        10000,
-        'Token retrieval ran into timeout.'
-      );
+      //no argument is default timeout
+      expect(spy).toHaveBeenCalledWith();
     });
 
     it("uses the JWT's issuer as tenant", async () => {

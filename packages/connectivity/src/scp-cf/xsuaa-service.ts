@@ -86,7 +86,7 @@ export async function getClientCredentialsToken(
     });
 
   return executeWithMiddleware(
-    [circuitbreakerXSUAA(), timeout()],
+    [timeout(), circuitbreakerXSUAA()],
     {},
     xssecPromise
   );
@@ -117,7 +117,7 @@ export function getUserToken(
   );
 
   return executeWithMiddleware(
-    [circuitbreakerXSUAA(), timeout()],
+    [timeout(), circuitbreakerXSUAA()],
     {},
     xssecPromise
   );

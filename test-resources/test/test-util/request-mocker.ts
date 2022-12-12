@@ -14,7 +14,6 @@ import { createODataUri as createODataUriV4 } from '@sap-cloud-sdk/odata-v4/inte
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 
-export const defaultHost = 'http://localhost';
 const defaultCsrfToken = 'mocked-x-csrf-token';
 
 const mockedBuildHeaderResponse = {
@@ -36,13 +35,15 @@ export const defaultDestinationName = 'Testination';
 
 export const defaultDestination: Destination = {
   name: defaultDestinationName,
-  url: '/testination',
+  url: 'http://example.com',
   username: 'username',
   password: 'password',
   sapClient: '123',
   authTokens: [],
   originalProperties: {}
 };
+
+export const defaultHost = defaultDestination.url;
 
 export function mockDestinationsEnv(...destinations) {
   process.env.destinations = JSON.stringify([...destinations]);
@@ -138,7 +139,7 @@ export function mockCountRequest(
     getAllRequest._entityApi.entityConstructor._defaultServicePath;
   const entityName = getAllRequest._entityApi.entityConstructor._entityName;
   return nock(defaultHost)
-    .get(`${destination.url}${servicePath}/${entityName}/$count`)
+    .get(`${servicePath}/${entityName}/$count`)
     .reply(200, count.toString());
 }
 
@@ -165,6 +166,18 @@ interface MockHeaderRequestParams {
   path?: string;
 }
 
+export function buildNockUrl(relativeServiceUrl: string, endWithSlash = true): string {
+  if (relativeServiceUrl.startsWith('/')) {
+    return `${relativeServiceUrl}${
+      !relativeServiceUrl.endsWith('/') && endWithSlash ? '/' : ''
+    }`;
+  }
+
+  return `/${relativeServiceUrl}${
+    !relativeServiceUrl.endsWith('/') && endWithSlash ? '/' : ''
+  }`;
+}
+
 export function mockHeaderRequest({
   request,
   host = defaultHost,
@@ -172,7 +185,7 @@ export function mockHeaderRequest({
   path
 }: MockHeaderRequestParams) {
   return nock(host)
-    .head(path ? `${request.serviceUrl()}/${path}` : request.serviceUrl())
+    .head(path ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`) : buildNockUrl(request.relativeServiceUrl()))
     .reply(200, undefined, responseHeaders);
 }
 
@@ -199,7 +212,7 @@ export function mockRequest(
 
   return nock(host, getRequestHeaders(method, additionalHeaders, headers))
     [method](
-      path ? `${request.serviceUrl()}/${path}` : request.resourceUrl(),
+      path ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`, false) : buildNockUrl(request.relativeServiceUrl()),
       body
     )
     .query(query)

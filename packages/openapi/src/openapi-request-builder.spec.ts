@@ -120,7 +120,7 @@ describe('openapi-request-builder', () => {
         .execute(slowDestintaion);
 
     await expect(timeoutBelowDelay()).rejects.toThrow(
-      'Request to https://example.com ran into timeout after 5ms.'
+      'Request to URL: https://example.com ran into a timeout after 5ms.'
     );
 
     const timeoutAboveDelay = () =>

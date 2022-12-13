@@ -123,7 +123,7 @@ export interface GeneratorOptions {
   packageVersion?: string;
   /**
    * By default, only errors, warnings and important info logs will be displayed.
-   * If set to true, all logs will be displayed. 
+   * If set to true, all logs will be displayed.
    */
   verbose?: boolean;
 }

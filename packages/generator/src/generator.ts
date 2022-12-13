@@ -80,7 +80,6 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
 ): Promise<void> {
-
   if (options.verbose) {
     setLogLevel('verbose', logger);
   }
@@ -416,7 +415,9 @@ export async function generateSourcesForService(
   }
 
   if (service.actionImports?.length) {
-    logger.verbose(`[${service.originalFileName}] Generating action imports ...`);
+    logger.verbose(
+      `[${service.originalFileName}] Generating action imports ...`
+    );
     filePromises.push(
       sourceFile(
         serviceDir,

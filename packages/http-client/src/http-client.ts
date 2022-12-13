@@ -471,10 +471,12 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
     timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config
-    paramsSerializer: (params = {}) =>
-      Object.entries(params)
-        .map(([key, value]) => `${key}=${value}`)
-        .join('&')
+    paramsSerializer: {
+      serialize: (params = {}) =>
+        Object.entries(params)
+          .map(([key, value]) => `${key}=${value}`)
+          .join('&')
+    }
   };
 }
 

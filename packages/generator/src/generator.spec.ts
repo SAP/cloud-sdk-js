@@ -3,7 +3,6 @@ import { promises } from 'fs';
 import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
-import { createLogger } from '@sap-cloud-sdk/util';
 import { createOptions } from '../test/test-util/create-generator-options';
 import {
   checkStaticProperties,
@@ -25,14 +24,9 @@ const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
 
 describe('generator', () => {
   const prettierSpy = jest.spyOn(prettier, 'format');
-  const logger = createLogger({
-    package: 'generator',
-    messageContext: 'generator'
-  });
-  const verboseSpy = jest.spyOn(logger, 'verbose');
+
   describe('common', () => {
     let project;
-
     beforeAll(async () => {
       mock({
         common: {},
@@ -48,20 +42,14 @@ describe('generator', () => {
         overwrite: true,
         prettierConfig: '/prettier/config',
         generateSdkMetadata: true,
-        include: join(pathTestResources, '*.md'),
-        verbose: false
+        include: join(pathTestResources, '*.md')
       });
-
       // TODO the first call will go away once ts-morph is removed
       project = await generateProject(options);
       await generate(options);
     });
 
     afterAll(() => mock.restore());
-
-    it('should not display verbose log by default', () => {
-      expect(verboseSpy).not.toBeCalled();
-    });
 
     it('reads custom prettier configuration', () => {
       expect(prettierSpy).toHaveBeenCalledWith(expect.any(String), {
@@ -99,45 +87,6 @@ describe('generator', () => {
       expect(clientFile).toBeDefined();
     }, 10000);
   });
-
-  // describe('common', () => {
-  //   let project;
-
-  //   beforeAll(async () => {
-  //     mock({
-  //       common: {},
-  //       '/prettier/config': JSON.stringify({ printWidth: 66 }),
-  //       [pathTestResources]: mock.load(pathTestResources),
-  //       [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
-  //       [pathRootNodeModules]: mock.load(pathRootNodeModules)
-  //     });
-  //   });
-
-  //   afterAll(() => mock.restore());
-
-  //   it('should not display verbose log by default', async () => {
-  //     const logger = createLogger({
-  //       package: 'generator',
-  //       messageContext: 'generator'
-  //     });
-  //     const verboseSpy = jest.spyOn(logger, 'verbose');
-
-  //     const options = createOptions({
-  //       inputDir: pathTestService,
-  //       outputDir: 'common',
-  //       overwrite: true,
-  //       prettierConfig: '/prettier/config',
-  //       generateSdkMetadata: true,
-  //       include: join(pathTestResources, '*.md'),
-  //       verbose: false
-  //     });
-
-  //     // TODO the first call will go away once ts-morph is removed
-  //     project = await generateProject(options);
-  //     await generate(options);
-  //     expect(verboseSpy).not.toBeCalled();
-  //   });
-  // });
 
   describe('edmx-to-csn', () => {
     const testGeneratorOptions = createOptions({

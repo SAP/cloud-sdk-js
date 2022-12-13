@@ -19,7 +19,8 @@ const generatorConfigOData = {
   generateSdkMetadata: false,
   // Unnecessary options
   sdkAfterVersionScript: false,
-  s4hanaCloud: false
+  s4hanaCloud: false,
+  verbose: false
 };
 
 async function generateOdata(): Promise<void> {

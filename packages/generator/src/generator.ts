@@ -15,6 +15,7 @@ import {
 import {
   createLogger,
   ErrorWithCause,
+  setLogLevel,
   splitInChunks
 } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
@@ -79,6 +80,11 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
 ): Promise<void> {
+
+  if (options.verbose) {
+    setLogLevel('verbose', logger);
+  }
+
   const projectAndServices = await generateProject(
     options as ParsedGeneratorOptions
   );
@@ -308,7 +314,7 @@ export async function generateSourcesForService(
     await mkdir(serviceDirPath, { recursive: true });
   }
   const filePromises: Promise<any>[] = [];
-  logger.info(`[${service.originalFileName}] Generating entities ...`);
+  logger.verbose(`[${service.originalFileName}] Generating entities ...`);
 
   if (options.packageJson) {
     filePromises.push(
@@ -334,7 +340,7 @@ export async function generateSourcesForService(
   );
 
   if (hasEntities(service)) {
-    logger.info(
+    logger.verbose(
       `[${service.originalFileName}] Generating batch request builder ...`
     );
     filePromises.push(
@@ -348,7 +354,7 @@ export async function generateSourcesForService(
   }
 
   service.entities.forEach(entity => {
-    logger.info(`Generating entity: ${entity.className}...`);
+    logger.verbose(`Generating entity: ${entity.className}...`);
     filePromises.push(
       sourceFile(
         serviceDir,
@@ -368,7 +374,7 @@ export async function generateSourcesForService(
   });
 
   service.enumTypes.forEach(enumType => {
-    logger.info(
+    logger.verbose(
       `[${service.originalFileName}] Generating enum type ${enumType.originalName} ...`
     );
     filePromises.push(
@@ -382,7 +388,7 @@ export async function generateSourcesForService(
   });
 
   service.complexTypes.forEach(complexType => {
-    logger.info(
+    logger.verbose(
       `[${service.originalFileName}] Generating complex type ${complexType.originalName} ...`
     );
     filePromises.push(
@@ -396,7 +402,7 @@ export async function generateSourcesForService(
   });
 
   if (service.functionImports?.length) {
-    logger.info(
+    logger.verbose(
       `[${service.originalFileName}] Generating function imports ...`
     );
     filePromises.push(
@@ -410,7 +416,7 @@ export async function generateSourcesForService(
   }
 
   if (service.actionImports?.length) {
-    logger.info(`[${service.originalFileName}] Generating action imports ...`);
+    logger.verbose(`[${service.originalFileName}] Generating action imports ...`);
     filePromises.push(
       sourceFile(
         serviceDir,
@@ -426,7 +432,7 @@ export async function generateSourcesForService(
   );
 
   if (options.readme) {
-    logger.info(`[${service.originalFileName}] Generating readme ...`);
+    logger.verbose(`[${service.originalFileName}] Generating readme ...`);
     filePromises.push(
       createFile(
         serviceDirPath,
@@ -439,7 +445,7 @@ export async function generateSourcesForService(
 
   if (options.generateCSN) {
     try {
-      logger.info(
+      logger.verbose(
         `[${service.originalFileName}] Generating ${service.directoryName}-csn.json ...`
       );
       filePromises.push(
@@ -461,7 +467,7 @@ export async function generateSourcesForService(
     const { clientFileName } = getSdkMetadataFileNames(
       service.originalFileName
     );
-    logger.info(`Generating sdk client metadata ${clientFileName}...`);
+    logger.verbose(`Generating sdk client metadata ${clientFileName}...`);
 
     const path = resolve(dirname(service.edmxPath.toString()), 'sdk-metadata');
     if (!existsSync(path)) {

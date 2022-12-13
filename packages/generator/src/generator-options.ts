@@ -121,6 +121,11 @@ export interface GeneratorOptions {
    * Internal option used to adjust the version in the generated `package.json`. Will not be used in the future.
    */
   packageVersion?: string;
+  /**
+   * By default, only errors, warnings and important info logs will be displayed.
+   * If set to true, all logs will be displayed. 
+   */
+  verbose?: boolean;
 }
 
 /**
@@ -339,6 +344,12 @@ export const generatorOptionsCli = {
     type: 'boolean',
     default: false,
     deprecated: 'Since v2.12.0. This functionality will be discontinued.'
+  },
+  verbose: {
+    describe:
+      'By default, only errors, warnings and important info logs will be displayed. If set to true, all logs will be displayed.',
+    type: 'boolean',
+    default: false
   }
 } as const;
 

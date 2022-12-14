@@ -63,7 +63,7 @@ describe('token accessor', () => {
 
       await serviceToken('destination', { jwt });
 
-      //no argument is default timeout
+      // no argument is default timeout
       expect(spy).toHaveBeenCalledWith();
     });
 
@@ -237,16 +237,15 @@ describe('token accessor', () => {
       expect(retrieveFromCacheSpy).toHaveBeenCalledTimes(0);
     });
 
-    it('throws an error with only the cause property', async () => {
+    it('throws an error with the cause property', async () => {
       mockClientCredentialsGrantCall(
         providerXsuaaUrl,
         { access_token: signedJwt({ dummy: 'content' }) },
         401,
         destinationBindingClientSecretMock.credentials
       );
-      const promise = serviceToken('destination');
-      await expect(promise).rejects.toHaveProperty('cause');
-      await expect(promise).rejects.not.toHaveProperty('cause.config');
+        const promise = serviceToken('destination');
+        await expect(promise).rejects.toHaveProperty('cause.config');
     });
 
     it('throws an error if the client credentials request fails', async () => {

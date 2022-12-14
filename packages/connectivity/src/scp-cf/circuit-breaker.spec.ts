@@ -1,5 +1,6 @@
 import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
+import { circuitBreakers } from '@sap-cloud-sdk/resilience/dist/circuitbreaker';
 import {
   destinationServiceUri,
   providerXsuaaUrl,
@@ -8,7 +9,6 @@ import {
 import { privateKey } from '../../../../test-resources/test/test-util/keys';
 import { getClientCredentialsToken } from './xsuaa-service';
 import { fetchDestination } from './destination';
-import {circuitBreakers} from "@sap-cloud-sdk/resilience/dist/circuitbreaker";
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -20,24 +20,24 @@ const jwt = jwt123.sign(
 
 describe('circuit breaker', () => {
   afterEach(() => {
-    Object.values(circuitBreakers).forEach(cb=>cb.close());
+    Object.values(circuitBreakers).forEach(cb => cb.close());
     nock.cleanAll();
   });
   beforeEach(() => {
-    Object.values(circuitBreakers).forEach(cb=>cb.close());
+    Object.values(circuitBreakers).forEach(cb => cb.close());
     nock.cleanAll();
   });
 
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for destination service', async () => {
     const request = () =>
-        fetchDestination(destinationServiceUri, jwt, {
-          destinationName: 'FINAL-DESTINATION'
-        });
+      fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'FINAL-DESTINATION'
+      });
 
     nock(destinationServiceUri)
-        .get(/.*/)
-        .times(1)
-        .reply(200, JSON.stringify({ URL: 'test' }));
+      .get(/.*/)
+      .times(1)
+      .reply(200, JSON.stringify({ URL: 'test' }));
 
     // First attempt should succeed inits the breaker
     await expect(request()).resolves.toBeDefined();
@@ -90,10 +90,7 @@ describe('circuit breaker', () => {
         await request();
         await sleep(50);
       } catch (e) {
-        if (
-          e ===
-          'Error in fetching the token for service my-xsuaa: Request failed with status code 500'
-        ) {
+        if (e.message === 'Request failed with status code 500') {
           failedCalls++;
         }
         if (e.message === 'Breaker is open') {
@@ -103,6 +100,16 @@ describe('circuit breaker', () => {
     }
     // Since we exit the loop breaker opened.
     expect(failedCalls).toBeGreaterThan(0);
+  }, 99999);
+
+  it('does not open the breaker for a failed attempt (e.g. missing credentials) for xsuaa service', async () => {
+    const invalidXsuaaBindingMock = xsuaaBindingMock;
+    invalidXsuaaBindingMock.credentials.clientsecret = '';
+    const request = () => getClientCredentialsToken(invalidXsuaaBindingMock, jwt);
+    expect(request()).rejects.toThrowError(
+      /Invalid config: Missing clientsecret./
+    );
+    expect(circuitBreakers[`${providerXsuaaUrl}::tenant`].opened).toBe(false);
   }, 99999);
 });
 

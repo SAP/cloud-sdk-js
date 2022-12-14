@@ -103,5 +103,5 @@ describe('destination loading precedence', () => {
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Could not fetch client credentials token for service of type "destination"."'
     );
-  });
+  }, 99999);
 });

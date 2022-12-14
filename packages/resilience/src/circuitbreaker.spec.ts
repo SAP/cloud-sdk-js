@@ -2,7 +2,11 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import nock from 'nock';
 import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
-import { circuitbreakerHttp, circuitBreakers } from './circuitbreaker';
+import {
+  circuitbreakerHttp,
+  circuitBreakers,
+  circuitbreakerXSUAA
+} from './circuitbreaker';
 import { timeout } from './timeout';
 
 describe('circuit-breaker', () => {
@@ -38,7 +42,7 @@ describe('circuit-breaker', () => {
           request
         )
       ).rejects.toThrow();
-      const breaker = circuitBreakers[`${host}::failing-500::myTestTenant`];
+      const breaker = circuitBreakers[`${host}::failing-500::get::myTestTenant`];
       if (breaker.opened) {
         break;
       }
@@ -88,7 +92,7 @@ describe('circuit-breaker', () => {
       keepCalling = !mock.isDone();
     }
     expect(
-      circuitBreakers[`${host}::failing-ignore::myTestTenant`].opened
+      circuitBreakers[`${host}::failing-ignore::get::myTestTenant`].opened
     ).toBe(false);
   });
 
@@ -119,8 +123,8 @@ describe('circuit-breaker', () => {
     );
 
     expect(Object.keys(circuitBreakers)).toEqual([
-      `${host}::ok::tenant1`,
-      `${host}::ok::tenant2`
+      `${host}::ok::get::tenant1`,
+      `${host}::ok::get::tenant2`
     ]);
   });
 
@@ -162,13 +166,43 @@ describe('circuit-breaker', () => {
     );
 
     expect(Object.keys(circuitBreakers)).toEqual([
-      `${host}::path-1::tenant1`,
-      `${host}::path-2::tenant1`
+      `${host}::path-1::get::tenant1`,
+      `${host}::path-2::get::tenant1`
     ]);
   });
 
-  it('reacts correctly on xsuaa failures', () => {
-    throw new Error('Add a error filter also for XSUAA errors.');
+  it('does not open breaker for 401 xsuaa failures', async () => {
+    nock(host, {})
+      .post(/oauth\/token/)
+      .reply(401);
+
+    const requestConfig: AxiosRequestConfig = {
+      method: 'post',
+      baseURL: host,
+      url: '/oauth/token',
+      data: {
+        client_id: 'client_id',
+        client_secret: 'wrong_client_secret',
+        grant_type: 'client_credentials'
+      }
+    };
+    const context: HttpMiddlewareContext = {
+      requestConfig,
+      uri: host,
+      tenantId: 'myTestTenant'
+    };
+    const request = () => axios.request(requestConfig);
+    await expect(
+      executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+        [circuitbreakerXSUAA()],
+        context,
+        request
+      )
+    ).rejects.toThrowError(/Request failed with status code 401/);
+
+    expect(
+      circuitBreakers[`${host}::myTestTenant`].opened
+    ).toBe(false);
   });
 
   it('works together with a timeout', async () => {
@@ -200,7 +234,7 @@ describe('circuit-breaker', () => {
         )
       ).rejects.toThrow();
 
-      const breaker = circuitBreakers[`${host}::with-delay::myTestTenant`];
+      const breaker = circuitBreakers[`${host}::with-delay::get::myTestTenant`];
       if (breaker.opened) {
         break;
       }

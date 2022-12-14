@@ -76,18 +76,14 @@ export async function getClientCredentialsToken(
             ? service.name
             : service;
 
-          return err
-            ? reject(
-                `Error in fetching the token for service ${serviceName}: ${err.message}`
-              )
-            : resolve(tokenResponse);
+          return err ? reject(err) : resolve(tokenResponse);
         }
       );
     });
 
   return executeWithMiddleware(
     [timeout(), circuitbreakerXSUAA()],
-    {},
+    { uri: serviceCredentials.url, tenantId: subdomainAndZoneId.zoneId },
     xssecPromise
   );
 }

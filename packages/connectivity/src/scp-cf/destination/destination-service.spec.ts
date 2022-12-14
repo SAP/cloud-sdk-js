@@ -225,7 +225,11 @@ describe('destination service', () => {
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
       });
-      expect(circuitBreakers['https://destination.example.com/destination-configuration/v1/subaccountDestinations::/::tenant']).toBeDefined()
+      expect(
+        circuitBreakers[
+          'https://destination.example.com/destination-configuration/v1/subaccountDestinations::/::tenant'
+        ]
+      ).toBeDefined();
     });
 
     it('fetches subaccount destinations and returns them as Destination array', async () => {
@@ -409,7 +413,13 @@ describe('destination service', () => {
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName
       });
-      expect(Object.keys(circuitBreakers['https://destination.example.com/destination-configuration/v1/destinations/HTTP-BASIC::/::tenant'])).toBeDefined();
+      expect(
+        Object.keys(
+          circuitBreakers[
+            'https://destination.example.com/destination-configuration/v1/destinations/HTTP-BASIC::/::tenant'
+          ]
+        )
+      ).toBeDefined();
     });
 
     it('fetches a destination including authTokens', async () => {

@@ -21,11 +21,26 @@ function httpErrorFilter(error: AxiosError): boolean {
   return false;
 }
 
+function isAxiosError(err: AxiosError | Error): err is AxiosError {
+  return err['isAxiosError'] === true;
+}
+
+function xsuaaErrorFilter(error: AxiosError | Error): boolean {
+  if (isAxiosError(error)) {
+    if (
+      error.response?.status &&
+      [400, 401, 403, 404].includes(error.response.status)
+    ) {
+      return true;
+    }
+  } else if (error['statuscode'] && error['statuscode'] === 500) {
+    return true;
+  }
+  return false;
+}
+
 function httpKeyBuilder(context: HttpMiddlewareContext): string {
-  // TODO should add http method there e.g. slow getAll, deletion fail.
-  return `${context.uri}::${context.requestConfig.url || '/'}::${
-    context.tenantId
-  }`;
+  return `${context.uri}::${context.requestConfig.url || '/'}::${context.requestConfig.method}::${context.tenantId}`;
 }
 
 function xsuaaKeyBuilder(context: Context): string {
@@ -49,7 +64,10 @@ export function circuitbreakerXSUAA<ContextT extends Context>(): Middleware<
   AxiosResponse,
   ContextT
 > {
-  return circuitbreaker<AxiosResponse, ContextT>(xsuaaKeyBuilder, () => false);
+  return circuitbreaker<AxiosResponse, ContextT>(
+    xsuaaKeyBuilder,
+    xsuaaErrorFilter
+  );
 }
 
 function circuitbreaker<ReturnT, ContextT extends Context>(

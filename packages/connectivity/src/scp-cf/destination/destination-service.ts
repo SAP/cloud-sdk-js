@@ -258,16 +258,12 @@ function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
   }
 
   if (token.exchangeTenant) {
-    //represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+    // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     return token.exchangeTenant;
   }
 
   if (token.exchangeHeaderJwt) {
     return getTenantFromTokens(token.exchangeHeaderJwt);
-  }
-
-  if (token.refreshToken) {
-    return getTenantFromTokens(token.refreshToken);
   }
 
   return getTenantFromTokens(token.authHeaderJwt);
@@ -376,7 +372,7 @@ async function callDestinationService(
   };
 
   return executeWithMiddleware(
-    [circuitbreakerHttp(), timeout()],
+    [timeout(), circuitbreakerHttp()],
     { requestConfig: config, ...context },
     () => axios.request(config)
   );

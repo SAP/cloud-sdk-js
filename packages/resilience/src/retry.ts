@@ -9,11 +9,23 @@ const defaultRetryCount = 3;
  * @returns The middleware adding a retry to the function.
  */
 export function retry<ReturnType, ContextType extends Context>(
-    retryCount: number = defaultRetryCount
+  retryCount: number = defaultRetryCount
 ): Middleware<ReturnType, ContextType> {
-    return function (
-        options: MiddlewareIn<ReturnType, ContextType>
-    ): MiddlewareOut<ReturnType> {
-        return () => asyncRetry.default(options.fn, { retries: retryCount });
-    };
+  return function (
+    options: MiddlewareIn<ReturnType, ContextType>
+  ): MiddlewareOut<ReturnType> {
+    return () =>
+      asyncRetry.default(
+        async bail => {
+          const response: any = await options.fn();
+          if (response.status === 401 || response.status === 403) {
+            bail(
+              new Error('Request failed with status code ' + response.status)
+            );
+          }
+          return response;
+        },
+        { retries: retryCount }
+      );
+  };
 }

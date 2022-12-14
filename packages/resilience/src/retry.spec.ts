@@ -95,5 +95,3 @@ describe('retry', () => {
     ).rejects.toThrowError('Request failed with status code 403');
   });
 });
-
-// todo: timeout retry combination

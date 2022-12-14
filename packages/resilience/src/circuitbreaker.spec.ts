@@ -42,7 +42,8 @@ describe('circuit-breaker', () => {
           request
         )
       ).rejects.toThrow();
-      const breaker = circuitBreakers[`${host}::failing-500::get::myTestTenant`];
+      const breaker =
+        circuitBreakers[`${host}::failing-500::get::myTestTenant`];
       if (breaker.opened) {
         break;
       }
@@ -200,9 +201,7 @@ describe('circuit-breaker', () => {
       )
     ).rejects.toThrowError(/Request failed with status code 401/);
 
-    expect(
-      circuitBreakers[`${host}::myTestTenant`].opened
-    ).toBe(false);
+    expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
   });
 
   it('works together with a timeout', async () => {

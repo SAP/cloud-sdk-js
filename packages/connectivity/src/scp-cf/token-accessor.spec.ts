@@ -244,8 +244,8 @@ describe('token accessor', () => {
         401,
         destinationBindingClientSecretMock.credentials
       );
-        const promise = serviceToken('destination');
-        await expect(promise).rejects.toHaveProperty('cause.config');
+      const promise = serviceToken('destination');
+      await expect(promise).rejects.toHaveProperty('cause.config');
     });
 
     it('throws an error if the client credentials request fails', async () => {

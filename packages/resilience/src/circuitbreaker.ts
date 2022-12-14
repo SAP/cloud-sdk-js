@@ -40,7 +40,9 @@ function xsuaaErrorFilter(error: AxiosError | Error): boolean {
 }
 
 function httpKeyBuilder(context: HttpMiddlewareContext): string {
-  return `${context.uri}::${context.requestConfig.url || '/'}::${context.requestConfig.method}::${context.tenantId}`;
+  return `${context.uri}::${context.requestConfig.url || '/'}::${
+    context.requestConfig.method
+  }::${context.tenantId}`;
 }
 
 function xsuaaKeyBuilder(context: Context): string {

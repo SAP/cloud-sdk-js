@@ -105,7 +105,8 @@ describe('circuit breaker', () => {
   it('does not open the breaker for a failed attempt (e.g. missing credentials) for xsuaa service', async () => {
     const invalidXsuaaBindingMock = xsuaaBindingMock;
     invalidXsuaaBindingMock.credentials.clientsecret = '';
-    const request = () => getClientCredentialsToken(invalidXsuaaBindingMock, jwt);
+    const request = () =>
+      getClientCredentialsToken(invalidXsuaaBindingMock, jwt);
     expect(request()).rejects.toThrowError(
       /Invalid config: Missing clientsecret./
     );

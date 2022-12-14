@@ -64,15 +64,7 @@ describe('retry', () => {
       axios.request({
         baseURL: 'https://example.com',
         method: 'get',
-        url: '/retry',
-        validateStatus(status) {
-          // fixme: this should not have to be configured by the user
-          return (
-            (status >= 200 && status < 300) ||
-            status === HTTP_STATUS.FORBIDDEN ||
-            status === HTTP_STATUS.UNAUTHORIZED
-          );
-        }
+        url: '/retry'
       });
 
     await expect(
@@ -91,15 +83,7 @@ describe('retry', () => {
       axios.request({
         baseURL: 'https://example.com',
         method: 'get',
-        url: '/retry',
-        validateStatus(status) {
-          // fixme: this should not have to be configured by the user
-          return (
-            (status >= 200 && status < 300) ||
-            status === HTTP_STATUS.FORBIDDEN ||
-            status === HTTP_STATUS.UNAUTHORIZED
-          );
-        }
+        url: '/retry'
       });
 
     await expect(
@@ -111,3 +95,5 @@ describe('retry', () => {
     ).rejects.toThrowError('Request failed with status code 403');
   });
 });
+
+// todo: timeout retry combination

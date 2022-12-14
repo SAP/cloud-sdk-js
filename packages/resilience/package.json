@@ -39,10 +39,10 @@
   },
   "dependencies": {
     "@types/async-retry": "^1.4.5",
-    "async-retry": "^1.3.3"
+    "async-retry": "^1.3.3",
+    "axios": "^1.2.1"
   },
   "devDependencies": {
-    "axios": "^0.27.1",
     "nock": "^13.2.9",
     "typescript": "~4.9.4"
   }

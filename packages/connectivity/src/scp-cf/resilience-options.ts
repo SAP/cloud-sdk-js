@@ -1,18 +1,18 @@
 /**
  * Options to configure resilience when fetching destinations.
- * @Deprecated The resilience configuration will be removed in version 3.0 of the SDK and is switched on per default.
+ * @deprecated The resilience configuration will be removed in version 3.0 of the SDK and is switched on per default.
  */
 export interface ResilienceOptions {
   /**
    * A boolean value that indicates whether to execute request to SCP-CF services using circuit breaker.
    * ResilienceOptions.
-   * @Deprecated Option will be removed in version 3.0 of the SDK. Circuit breaker is enabled per default and always on.
+   * @deprecated Option will be removed in version 3.0 of the SDK. Circuit breaker is enabled per default and always on.
    */
   enableCircuitBreaker?: boolean;
 
   /**
    * Timeout in milliseconds to retrieve the destination.
-   * @Deprecated Option will be removed in version 3.0 of the SDK.  Timeout is enabled per default with a value of 10seconds
+   * @deprecated Option will be removed in version 3.0 of the SDK.  Timeout is enabled per default with a value of 10seconds.
    */
   timeout?: number;
 }

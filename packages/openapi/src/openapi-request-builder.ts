@@ -85,7 +85,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * Set timeout for requests towards the target system given in the destination.
    * @param timeout - Value is in milliseconds and default value is 10000 (10 seconds).
    * @returns The request builder itself, to facilitate method chaining.
-   * @Deprecated Options is replaced by the more general {@link https://sap.github.io/cloud-sdk/docs/js/guides/resilience middleware approach} in version 3.0 of the SDK.
+   * @deprecated Options is replaced by the more general {@link https://sap.github.io/cloud-sdk/docs/js/guides/resilience middleware approach} in version 3.0 of the SDK.
    */
   timeout(timeout: number): this {
     this._timeout = timeout;

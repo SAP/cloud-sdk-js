@@ -9,18 +9,14 @@ import {
   Protocol,
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
-import { timeout } from '@sap-cloud-sdk/resilience';
+import { timeout, Middleware, MiddlewareIn } from '@sap-cloud-sdk/resilience';
 import * as jwt123 from 'jsonwebtoken';
+import type { HttpMiddlewareContext } from '@sap-cloud-sdk/resilience/internal';
 import {
   connectivityProxyConfigMock,
   defaultDestination,
   privateKey
 } from '../../../test-resources/test/test-util';
-import type {
-  HttpMiddlewareContext,
-  Middleware,
-  MiddlewareIn
-} from '../../resilience/src/middleware';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,

@@ -33,7 +33,7 @@ export function retry<ReturnType, ContextType extends Context>(
                 'HTTP request failed but error did not contain a response status field as expected. Rethrowing error.'
               );
             }
-            if (status === 401 || status === 403) {
+            if (status.toString().startsWith('4')) {
               bail(new Error(`Request failed with status code ${status}`));
             }
 

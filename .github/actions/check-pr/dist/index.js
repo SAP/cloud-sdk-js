@@ -110,13 +110,14 @@ function getAllowedBumps(preamble, isBreaking) {
 }
 function hasMatchingChangeset(allowedBumps) {
     return __awaiter(this, void 0, void 0, function () {
-        var changedFilesStr, changedFiles, fileContents;
+        var changedFiles, fileContents;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!allowedBumps.length) return [3 /*break*/, 2];
-                    changedFilesStr = (0, core_1.getInput)('changed-files');
-                    changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
+                    changedFiles = (0, core_1.getInput)('changed-files').split(' ');
+                    (0, core_1.warning)('original string' + (0, core_1.getInput)('changed-files').length);
+                    (0, core_1.warning)('split string' + changedFiles.length);
                     return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
                 case 1:
                     fileContents = _a.sent();

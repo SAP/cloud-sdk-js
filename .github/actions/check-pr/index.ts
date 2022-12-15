@@ -1,4 +1,4 @@
-import { getInput, setFailed, info } from '@actions/core';
+import { getInput, setFailed, info, warning } from '@actions/core';
 import { context } from '@actions/github';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -82,8 +82,9 @@ function getAllowedBumps(preamble: string, isBreaking: boolean): string[] {
 
 async function hasMatchingChangeset(allowedBumps: string[]): Promise<boolean> {
   if (allowedBumps.length) {
-    const changedFilesStr = getInput('changed-files');
-    const changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
+    const changedFiles = getInput('changed-files').split(' ');
+    warning('original string' + getInput('changed-files').length);
+    warning('split string' + changedFiles.length);
     const fileContents = await Promise.all(
       changedFiles.map(file => readFile(file, 'utf-8'))
     );

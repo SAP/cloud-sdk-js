@@ -85,6 +85,7 @@ function circuitBreaker<ReturnT, ContextT extends Context>(
 /**
  * Map of all existing circuit breakers.
  * Entries are added in a lazy way.
+ * @internal
  */
 export const circuitBreakers: Record<string, CircuitBreaker> = {};
 

@@ -4,5 +4,6 @@ export {
   MiddlewareIn,
   MiddlewareOut,
   Context,
+  HttpMiddlewareContext,
   SkipNext
 } from './middleware';

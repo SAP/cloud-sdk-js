@@ -4,7 +4,7 @@ import * as jwt123 from 'jsonwebtoken';
 import axios, { AxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { circuitBreakers } from '@sap-cloud-sdk/resilience/dist/circuit-breaker';
+import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';

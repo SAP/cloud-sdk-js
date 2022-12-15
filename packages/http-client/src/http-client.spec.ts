@@ -9,9 +9,8 @@ import {
   Protocol,
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
-import { timeout, Middleware, MiddlewareIn } from '@sap-cloud-sdk/resilience';
+import { timeout, Middleware, MiddlewareIn, HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
 import * as jwt123 from 'jsonwebtoken';
-import type { HttpMiddlewareContext } from '@sap-cloud-sdk/resilience/internal';
 import {
   connectivityProxyConfigMock,
   defaultDestination,

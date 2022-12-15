@@ -110,19 +110,17 @@ function getAllowedBumps(preamble, isBreaking) {
 }
 function hasMatchingChangeset(allowedBumps) {
     return __awaiter(this, void 0, void 0, function () {
-        var changedFiles, fileContents, b, c;
+        var changedFiles, fileContents;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!allowedBumps.length) return [3 /*break*/, 2];
                     changedFiles = (0, core_1.getInput)('changed-files').split(' ');
+                    (0, core_1.warning)('original string' + (0, core_1.getInput)('changed-files'));
+                    (0, core_1.warning)('split string' + changedFiles);
                     return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
                 case 1:
                     fileContents = _a.sent();
-                    (0, core_1.info)('fileContents');
-                    b = new RegExp("'@sap-cloud-sdk/.*': major").test(fileContents[0]);
-                    c = b ? 'true' : 'false';
-                    (0, core_1.info)(c);
                     return [2 /*return*/, fileContents.some(function (fileContent) {
                             return allowedBumps.some(function (bump) {
                                 return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump)).test(fileContent);

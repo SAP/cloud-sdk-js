@@ -116,8 +116,8 @@ function hasMatchingChangeset(allowedBumps) {
                 case 0:
                     if (!allowedBumps.length) return [3 /*break*/, 2];
                     changedFiles = (0, core_1.getInput)('changed-files').split(' ');
-                    (0, core_1.warning)('original string' + (0, core_1.getInput)('changed-files'));
-                    (0, core_1.warning)('split string' + changedFiles);
+                    (0, core_1.warning)('original string' + (0, core_1.getInput)('changed-files').length);
+                    (0, core_1.warning)('split string' + changedFiles.length);
                     return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
                 case 1:
                     fileContents = _a.sent();

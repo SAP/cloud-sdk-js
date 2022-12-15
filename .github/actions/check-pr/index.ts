@@ -82,8 +82,7 @@ function getAllowedBumps(preamble: string, isBreaking: boolean): string[] {
 
 async function hasMatchingChangeset(allowedBumps: string[]): Promise<boolean> {
   if (allowedBumps.length) {
-    const changedFilesStr = getInput('changed-files');
-    info(changedFilesStr)
+    const changedFilesStr = getInput('changed-files').trim();
     const changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
     const fileContents = await Promise.all(
       changedFiles.map(file => readFile(file, 'utf-8'))

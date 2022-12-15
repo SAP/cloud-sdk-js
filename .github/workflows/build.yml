@@ -135,7 +135,7 @@ jobs:
           dateDiff=$(expr $curDate - $lastCommitDate)
           echo $lastCommitDate, $curDate, $dateDiff
 
-          if [[ inputs.canary-release != true && $dateDiff -gt 86400 ]]
+          if [[ ${{ inputs.canary-release }} != true && $dateDiff -gt 86400 ]]
           then
               echo 'No new commit found on ${{ github.ref }} within the last 24 hrs.'
               echo '::set-output name=skip::true'

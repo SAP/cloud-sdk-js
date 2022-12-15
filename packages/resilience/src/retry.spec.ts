@@ -11,7 +11,11 @@ describe('retry', () => {
     SERVICE_UNAVAILABLE: 504
   };
 
-  it('No retry needed', async () => {
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
+  it('needs no retry', async () => {
     nock('https://example.com', {}).get('/retry').reply(HTTP_STATUS.OK);
 
     const request = () =>
@@ -30,7 +34,7 @@ describe('retry', () => {
     ).resolves.not.toThrow();
   });
 
-  it('Needs to retry twice', async () => {
+  it('needs to retry twice', async () => {
     nock('https://example.com', {})
       .get('/retry')
       .reply(HTTP_STATUS.SERVICE_UNAVAILABLE)
@@ -53,12 +57,14 @@ describe('retry', () => {
         request
       )
     ).resolves.not.toThrow();
-  });
+  }, 10000);
 
-  it('Does not retry on HTTP Status 401', async () => {
+  it('must not retry on HTTP Status 401', async () => {
     nock('https://example.com', {})
       .get('/retry')
-      .reply(HTTP_STATUS.UNAUTHORIZED);
+      .reply(HTTP_STATUS.UNAUTHORIZED)
+      .get('/retry')
+      .reply(HTTP_STATUS.OK);
 
     const request = () =>
       axios.request({
@@ -69,15 +75,21 @@ describe('retry', () => {
 
     await expect(
       executeWithMiddleware(
-        [retry(2)],
+        [retry(7)],
         { uri: 'https://example.com', args: [] },
         request
       )
     ).rejects.toThrowError('Request failed with status code 401');
+
+    expect(nock.isDone()).toBeFalsy();
   });
 
-  it('Does not retry on HTTP Status 403', async () => {
-    nock('https://example.com', {}).get('/retry').reply(HTTP_STATUS.FORBIDDEN);
+  it('must not retry on HTTP Status 403', async () => {
+    nock('https://example.com', {})
+      .get('/retry')
+      .reply(HTTP_STATUS.FORBIDDEN)
+      .get('/retry')
+      .reply(HTTP_STATUS.OK);
 
     const request = () =>
       axios.request({
@@ -88,10 +100,12 @@ describe('retry', () => {
 
     await expect(
       executeWithMiddleware(
-        [retry(2)],
+        [retry(7)],
         { uri: 'https://example.com', args: [] },
         request
       )
     ).rejects.toThrowError('Request failed with status code 403');
+
+    expect(nock.isDone()).toBeFalsy();
   });
 });

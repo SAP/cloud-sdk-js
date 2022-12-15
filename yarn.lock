@@ -1251,6 +1251,19 @@
   optionalDependencies:
     npmlog "2 || ^3.1.0 || ^4.0.0"
 
+"@sap-cloud-sdk/util@^2.12.0":
+  version "2.12.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-2.12.0.tgz#f356ddbca4702051146caf568236fbf371e5a244"
+  integrity sha512-TZtPlBCKAKATyXeHh6ogmsStt3mCyePiiqTfc9VUCAxwuCi8kcNfHMetYG0zjp5pWqsU69ONAxx2lcHwGLd36g==
+  dependencies:
+    axios "^0.27.1"
+    chalk "^4.1.0"
+    logform "^2.4.2"
+    promise.allsettled "^1.0.6"
+    voca "^1.4.0"
+    winston "^3.8.2"
+    winston-transport "^4.5.0"
+
 "@sap/cds-compiler@^3.2.0":
   version "3.3.2"
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-3.3.2.tgz#1072ecffd70e3e97377f28a0d60dd34ffd6cdd9b"

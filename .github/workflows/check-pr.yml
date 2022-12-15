@@ -20,4 +20,4 @@ jobs:
             .changeset/**
       - uses: ./.github/actions/check-pr
         with:
-          changed-files: ${{ steps.changed-files.outputs.added_files }}
+          changed-files: ${{ steps.changed-files.outputs.added_files }} + " " + ${{ steps.changed-files.outputs.modified_files }}

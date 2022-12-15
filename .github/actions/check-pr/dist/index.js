@@ -73,7 +73,7 @@ function validatePreamble(preamble) {
             }
             commitType = groups.commitType, isBreaking = groups.isBreaking;
             validateCommitType(commitType);
-            validateChangelog(commitType, !!isBreaking);
+            validateChangesets(preamble, commitType, !!isBreaking);
             return [2 /*return*/];
         });
     });
@@ -108,20 +108,21 @@ function getAllowedBumps(preamble, isBreaking) {
     }
     return [];
 }
-function hasMatchingChangelog(allowedBumps) {
+function hasMatchingChangeset(allowedBumps) {
     return __awaiter(this, void 0, void 0, function () {
-        var changedFiles, fileContents;
+        var changedFilesStr, changedFiles, fileContents;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!allowedBumps.length) return [3 /*break*/, 2];
-                    changedFiles = (0, core_1.getInput)('changed-files').split(' ');
+                    changedFilesStr = (0, core_1.getInput)('changed-files');
+                    changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
                     return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
                 case 1:
                     fileContents = _a.sent();
                     return [2 /*return*/, fileContents.some(function (fileContent) {
                             return allowedBumps.some(function (bump) {
-                                return new RegExp("'@sap-cloud-sdk/w+': ".concat(bump, "/")).test(fileContent);
+                                return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump)).test(fileContent);
                             });
                         })];
                 case 2: return [2 /*return*/, true];
@@ -129,19 +130,21 @@ function hasMatchingChangelog(allowedBumps) {
         });
     });
 }
-function validateChangelog(commitType, isBreaking) {
+function validateChangesets(preamble, commitType, isBreaking) {
     return __awaiter(this, void 0, void 0, function () {
         var allowedBumps;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     allowedBumps = getAllowedBumps(commitType, isBreaking);
-                    return [4 /*yield*/, hasMatchingChangelog(allowedBumps)];
+                    return [4 /*yield*/, hasMatchingChangeset(allowedBumps)];
                 case 1:
                     if (!(_a.sent())) {
-                        return [2 /*return*/, (0, core_1.setFailed)("Preamble '".concat(commitType, "' requires a changelog file with bump ").concat(allowedBumps.join(' or '), "."))];
+                        return [2 /*return*/, (0, core_1.setFailed)("Preamble '".concat(preamble, "' requires a changeset file with bump ").concat(allowedBumps
+                                .map(function (bump) { return "'".concat(bump, "'"); })
+                                .join(' or '), "."))];
                     }
-                    (0, core_1.info)('✓ Changelog: OK');
+                    (0, core_1.info)('✓ Changesets: OK');
                     return [2 /*return*/];
             }
         });
@@ -158,7 +161,10 @@ function validateBody() {
                 case 1:
                     template = _a.sent();
                     if (!body || body === template) {
-                        return [2 /*return*/, (0, core_1.setFailed)('PR must have a description')];
+                        return [2 /*return*/, (0, core_1.setFailed)('PR must have a description.')];
+                    }
+                    if (body.includes(template)) {
+                        return [2 /*return*/, (0, core_1.setFailed)('PR template must not be ignored.')];
                     }
                     (0, core_1.info)('✓ Body: OK');
                     return [2 /*return*/];

@@ -1,4 +1,5 @@
 /* eslint-disable max-classes-per-file */
+// eslint-disable-next-line import/named
 import { AxiosResponse } from 'axios';
 import { isNullish } from '@sap-cloud-sdk/util';
 import {
@@ -17,9 +18,9 @@ import {
   filterCustomRequestConfig,
   OriginOptions,
   encodeTypedClientRequest,
-  Middleware,
   HttpMiddlewareContext
 } from '@sap-cloud-sdk/http-client/internal';
+import { Middleware } from '@sap-cloud-sdk/resilience';
 
 /**
  * Request builder for OpenAPI requests.

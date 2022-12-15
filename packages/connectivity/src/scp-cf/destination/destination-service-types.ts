@@ -1,6 +1,5 @@
 import type { CachingOptions } from '../cache';
 import type { ProxyConfiguration } from '../connectivity-service-types';
-import type { ResilienceOptions } from '../resilience-options';
 import type { IsolationStrategy } from './destination-cache';
 
 /**
@@ -223,16 +222,15 @@ export interface DestinationCertificate {
 }
 
 /**
- * Options to use while fetching destinations. Encompasses both {@link CachingOptions} and {@link ResilienceOptions} interfaces.
+ * Options to use while fetching destinations. Encompasses both {@link CachingOptions} and isolation strategy.
  */
-export type DestinationRetrievalOptions = CachingOptions &
-  ResilienceOptions & {
-    /**
-     * The isolation strategy used for caching destinations. For the available options, see {@link IsolationStrategy}.
-     * By default, IsolationStrategy.Tenant_User is set.
-     */
-    isolationStrategy?: IsolationStrategy;
-  };
+export type DestinationRetrievalOptions = CachingOptions & {
+  /**
+   * The isolation strategy used for caching destinations. For the available options, see {@link IsolationStrategy}.
+   * By default, IsolationStrategy.Tenant_User is set.
+   */
+  isolationStrategy?: IsolationStrategy;
+};
 
 /**
  * Typeguard to find if object is a Destination.

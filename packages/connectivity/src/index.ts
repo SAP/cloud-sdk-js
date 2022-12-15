@@ -32,7 +32,6 @@ export {
   JwtPayload,
   ProxyConfiguration,
   ProxyConfigurationHeaders,
-  ResilienceOptions,
   Service,
   VerifyJwtOptions,
   buildHeadersForDestination,

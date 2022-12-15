@@ -24,17 +24,12 @@ import {
   destinationName,
   oauthMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
-import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import * as jwt from '../jwt';
 import { getDestination } from './destination-accessor';
 
 const { wrapJwtInHeader } = jwt;
 
 describe('Failure cases', () => {
-  beforeEach(() => {
-    clientCredentialsTokenCache.clear();
-  });
-
   it('fails if no destination service is bound', async () => {
     process.env['VCAP_SERVICES'] = JSON.stringify({
       xsuaa: [xsuaaBindingMock]
@@ -100,7 +95,6 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberServiceToken,
-        enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });
@@ -145,7 +139,6 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberUserJwt,
-        enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });

@@ -455,8 +455,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       return {
         authHeaderJwt: await jwtBearerToken(
           this.subscriberToken.userJwt.encoded,
-          getDestinationService(),
-          this.options
+          getDestinationService()
         )
       };
     }

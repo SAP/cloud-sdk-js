@@ -22,7 +22,7 @@ describe('bound function import request builder', () => {
   it('executes a bound function without arguments', async () => {
     nock(host)
       .get(
-        `${servicePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString=%27abc%27)/boundFunctionWithoutArguments()`
+        `${servicePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString='abc')/boundFunctionWithoutArguments()`
       )
       .reply(200, { value: 'returnValue' });
 
@@ -39,7 +39,7 @@ describe('bound function import request builder', () => {
   it('executes a bound function with arguments', async () => {
     nock(host)
       .get(
-        `${servicePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString=%27abc%27)/boundFunctionWithArguments(param1=%27foo%27,param2=%27bar%27)`
+        `${servicePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString='abc')/boundFunctionWithArguments(param1='foo',param2='bar')`
       )
       .reply(200, { value: 'returnValue' });
 

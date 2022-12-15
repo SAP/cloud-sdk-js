@@ -107,7 +107,7 @@ describe('Request Builder', () => {
 
   it('should resolve for update request', async () => {
     mockCsrfTokenRequest(
-      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
+      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`
     );
 
     nock(destination.url, {
@@ -120,7 +120,7 @@ describe('Request Builder', () => {
       }
     })
       .patch(
-        `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`,
+        `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`,
         {
           StringProperty: 'newStringProp'
         }
@@ -144,7 +144,7 @@ describe('Request Builder', () => {
 
   it('should resolve for delete request using key fields', async () => {
     mockCsrfTokenRequest(
-      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
+      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`
     );
 
     const entity = testEntityApi
@@ -166,7 +166,7 @@ describe('Request Builder', () => {
       }
     })
       .delete(
-        `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
+        `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`
       )
       .reply(200, entityJson);
 

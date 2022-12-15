@@ -1,7 +1,7 @@
 import * as xssec from '@sap/xssec';
 import {
   executeWithMiddleware,
-  circuitbreakerXSUAA,
+  circuitBreakerXSUAA,
   timeout
 } from '@sap-cloud-sdk/resilience/internal';
 import { JwtPayload } from './jsonwebtoken-type';
@@ -63,17 +63,17 @@ export async function getClientCredentialsToken(
         serviceCredentials,
         null,
         subdomainAndZoneId.zoneId,
-        (
-          err: Error,
-          token: string,
-          tokenResponse: ClientCredentialsResponse
-        ) => err ? reject(err) : resolve(tokenResponse)
+        (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
+          err ? reject(err) : resolve(tokenResponse)
       );
     });
 
   return executeWithMiddleware(
-    [timeout(), circuitbreakerXSUAA()],
-    { uri: serviceCredentials.url, tenantId: subdomainAndZoneId.zoneId },
+    [timeout(), circuitBreakerXSUAA()],
+    {
+      uri: serviceCredentials.url,
+      tenantId: subdomainAndZoneId.zoneId ?? serviceCredentials.tenantid
+    },
     xssecPromise
   );
 }
@@ -90,22 +90,25 @@ export function getUserToken(
 ): Promise<string> {
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  const xssecPromise: () => Promise<string> = ()  =>
-  new Promise((resolve: (token: string) => void, reject) =>
-    xssec.requests.requestUserToken(
-      userJwt,
-      service.credentials,
-      null,
-      null,
-      subdomainAndZoneId.subdomain,
-      subdomainAndZoneId.zoneId,
-      (err: Error, token: string) => (err ? reject(err) : resolve(token))
-    )
-  );
+  const xssecPromise: () => Promise<string> = () =>
+    new Promise((resolve: (token: string) => void, reject) =>
+      xssec.requests.requestUserToken(
+        userJwt,
+        service.credentials,
+        null,
+        null,
+        subdomainAndZoneId.subdomain,
+        subdomainAndZoneId.zoneId,
+        (err: Error, token: string) => (err ? reject(err) : resolve(token))
+      )
+    );
 
   return executeWithMiddleware(
-    [timeout(), circuitbreakerXSUAA()],
-    { uri: service.credentials.url, tenantId: subdomainAndZoneId.zoneId },
+    [timeout(), circuitBreakerXSUAA()],
+    {
+      uri: service.credentials.url,
+      tenantId: subdomainAndZoneId.zoneId ?? service.credentials.tenantid
+    },
     xssecPromise
   );
 }

@@ -8,7 +8,8 @@ import {
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import {
   executeWithMiddleware,
-  circuitbreakerHttp
+  circuitBreakerHttp,
+  HttpMiddlewareContext
 } from '@sap-cloud-sdk/resilience/internal';
 import { Context, timeout } from '@sap-cloud-sdk/resilience';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
@@ -372,8 +373,8 @@ async function callDestinationService(
   };
 
   return executeWithMiddleware(
-    [timeout(), circuitbreakerHttp()],
-    { requestConfig: config, ...context },
+    [timeout(), circuitBreakerHttp()],
+    { requestConfig: config, ...context } as HttpMiddlewareContext,
     () => axios.request(config)
   );
 }

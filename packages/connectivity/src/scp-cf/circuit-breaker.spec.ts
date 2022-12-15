@@ -1,6 +1,6 @@
 import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
-import { circuitBreakers } from '@sap-cloud-sdk/resilience/dist/circuitbreaker';
+import { circuitBreakers } from '@sap-cloud-sdk/resilience/dist/circuit-breaker';
 import {
   destinationServiceUri,
   providerXsuaaUrl,

@@ -1,3 +1,3 @@
 export * from './timeout';
 export * from './middleware';
-export * from './circuitbreaker';
+export * from './circuit-breaker';

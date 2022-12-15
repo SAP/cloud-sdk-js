@@ -1,6 +1,6 @@
 import CircuitBreaker from 'opossum';
 // eslint-disable-next-line import/named
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import {
   Context,
   HttpMiddlewareContext,
@@ -52,27 +52,24 @@ function xsuaaKeyBuilder(context: Context): string {
 /**
  *  @internal
  */
-export function circuitbreakerHttp(): Middleware<
-  AxiosResponse,
+export function circuitBreakerHttp<ReturnT>(): Middleware<
+  ReturnT,
   HttpMiddlewareContext
 > {
-  return circuitbreaker(httpKeyBuilder, httpErrorFilter);
+  return circuitBreaker(httpKeyBuilder, httpErrorFilter);
 }
 
 /**
  * @internal
  */
-export function circuitbreakerXSUAA<ContextT extends Context>(): Middleware<
-  AxiosResponse,
-  ContextT
-> {
-  return circuitbreaker<AxiosResponse, ContextT>(
-    xsuaaKeyBuilder,
-    xsuaaErrorFilter
-  );
+export function circuitBreakerXSUAA<
+  ReturnT,
+  ContextT extends Context
+>(): Middleware<ReturnT, ContextT> {
+  return circuitBreaker<ReturnT, ContextT>(xsuaaKeyBuilder, xsuaaErrorFilter);
 }
 
-function circuitbreaker<ReturnT, ContextT extends Context>(
+function circuitBreaker<ReturnT, ContextT extends Context>(
   keyBuilder: KeyBuilder<ContextT>,
   errorFilter: ErrorFilter
 ): Middleware<ReturnT, ContextT> {

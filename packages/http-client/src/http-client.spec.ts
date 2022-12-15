@@ -10,15 +10,20 @@ import {
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
 import { timeout } from '@sap-cloud-sdk/resilience';
+import * as jwt123 from 'jsonwebtoken';
 import {
   connectivityProxyConfigMock,
-  defaultDestination
+  defaultDestination,
+  privateKey
 } from '../../../test-resources/test/test-util';
-import type { Middleware, MiddlewareIn } from '../../resilience/src/middleware';
+import type {
+  HttpMiddlewareContext,
+  Middleware,
+  MiddlewareIn
+} from '../../resilience/src/middleware';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
-  HttpMiddlewareContext,
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
   HttpResponse
@@ -33,7 +38,8 @@ import {
   encodeTypedClientRequest,
   shouldHandleCsrfToken,
   executeHttpRequestWithOrigin,
-  buildHttpRequestConfigWithOrigin
+  buildHttpRequestConfigWithOrigin,
+  getTenantIdForMiddleware
 } from './http-client';
 
 describe('generic http client', () => {
@@ -312,7 +318,7 @@ describe('generic http client', () => {
       );
     });
 
-    it('stops middleware chain if exitChain is set to true.', async () => {
+    it('stops middleware chain if skipNext is set to true.', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
       const myMiddlewareTwo = buildMiddleware('Middleware Two.');
       const myMiddlewareOne = buildMiddleware('Middleware One.', true);
@@ -322,6 +328,21 @@ describe('generic http client', () => {
         method: 'get'
       });
       expect(response.data).toEqual('Initial value.Middleware One.');
+    });
+
+    it('returns a tenantid from provided jwt', () => {
+      const jwt = jwt123.sign(
+        JSON.stringify({ user_id: 'user', zid: 'tenant' }),
+        privateKey,
+        {
+          algorithm: 'RS512'
+        }
+      );
+      expect(getTenantIdForMiddleware(jwt)).toEqual('tenant');
+    });
+
+    it('return a string constant for tenantid if jwt is not provided and not throw if xsuaa binding does not exist', () => {
+      expect(getTenantIdForMiddleware()).toEqual('tenant_id');
     });
 
     // The base-agent dependency coming in via the http-proxy-agent did mess with the node https.

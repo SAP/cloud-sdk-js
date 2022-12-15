@@ -8,11 +8,13 @@ import {
   toDestinationNameUrl
 } from '@sap-cloud-sdk/connectivity';
 import {
+  decodedJwtOrZid,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
   getAuthHeader,
-  resolveDestination
+  resolveDestination,
+  tenantId
 } from '@sap-cloud-sdk/connectivity/internal';
 import {
   createLogger,
@@ -44,6 +46,8 @@ const logger = createLogger({
   package: 'http-client',
   messageContext: 'http-client'
 });
+
+const TENANT_ID = 'tenant_id';
 
 /**
  * Builds a {@link DestinationHttpRequestConfig} for the given destination.
@@ -127,9 +131,9 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
       requestConfig.middleware,
       {
         jwt: destination.jwt,
-        args: [request],
         requestConfig: request,
-        uri: resolvedDestination.url
+        uri: resolvedDestination.url,
+        tenantId: getTenantIdForMiddleware(destination.jwt)
       },
       () => executeFn(request)
     );
@@ -569,3 +573,21 @@ export const encodeAllParameters: ParameterEncoder = function (
     ])
   );
 };
+
+/**
+ * @internal
+ * Return the tenantid based on the given conditions:
+ * - If jwt is provided and contains zid, return the value of zid.
+ * - If a binding for XSUAA exists, return the tenantid from credentials.
+ * - Return a default string value.
+ * @param jwt - JWT.
+ * @returns String with tenantid information.
+ */
+export function getTenantIdForMiddleware(jwt?: string): string {
+  try {
+    const zid = tenantId(decodedJwtOrZid({ jwt }));
+    return zid!;
+  } catch (_) {
+    return TENANT_ID;
+  }
+}

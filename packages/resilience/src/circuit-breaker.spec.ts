@@ -3,10 +3,10 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import nock from 'nock';
 import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
 import {
-  circuitbreakerHttp,
+  circuitBreakerHttp,
   circuitBreakers,
-  circuitbreakerXSUAA
-} from './circuitbreaker';
+  circuitBreakerXSUAA
+} from './circuit-breaker';
 import { timeout } from './timeout';
 
 describe('circuit-breaker', () => {
@@ -37,7 +37,7 @@ describe('circuit-breaker', () => {
     while (keepCalling) {
       await expect(
         executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-          [circuitbreakerHttp()],
+          [circuitBreakerHttp()],
           context,
           request
         )
@@ -50,7 +50,7 @@ describe('circuit-breaker', () => {
     }
     await expect(
       executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-        [circuitbreakerHttp()],
+        [circuitBreakerHttp()],
         context,
         request
       )
@@ -84,7 +84,7 @@ describe('circuit-breaker', () => {
     while (keepCalling) {
       await expect(
         executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-          [circuitbreakerHttp()],
+          [circuitBreakerHttp()],
           context,
           request
         )
@@ -113,12 +113,12 @@ describe('circuit-breaker', () => {
     };
 
     await executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-      [circuitbreakerHttp()],
+      [circuitBreakerHttp()],
       context,
       request
     );
     await executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-      [circuitbreakerHttp()],
+      [circuitBreakerHttp()],
       { ...context, tenantId: 'tenant2' },
       request
     );
@@ -156,12 +156,12 @@ describe('circuit-breaker', () => {
     });
 
     await executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-      [circuitbreakerHttp()],
+      [circuitBreakerHttp()],
       context(requestConfigPath1),
       request(requestConfigPath1)
     );
     await executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-      [circuitbreakerHttp()],
+      [circuitBreakerHttp()],
       context(requestConfigPath2),
       request(requestConfigPath2)
     );
@@ -195,7 +195,7 @@ describe('circuit-breaker', () => {
     const request = () => axios.request(requestConfig);
     await expect(
       executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-        [circuitbreakerXSUAA()],
+        [circuitBreakerXSUAA()],
         context,
         request
       )
@@ -227,7 +227,7 @@ describe('circuit-breaker', () => {
     while (keepCalling) {
       await expect(
         executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-          [timeout(delay * 0.5), circuitbreakerHttp()],
+          [timeout(delay * 0.5), circuitBreakerHttp()],
           context,
           request
         )
@@ -240,7 +240,7 @@ describe('circuit-breaker', () => {
     }
     await expect(
       executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-        [circuitbreakerHttp()],
+        [circuitBreakerHttp()],
         context,
         request
       )

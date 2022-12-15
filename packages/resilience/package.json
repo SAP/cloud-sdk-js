@@ -38,7 +38,6 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/http-client": "^2.12.0",
     "@sap-cloud-sdk/util": "^2.12.0",
     "@types/async-retry": "^1.4.5",
     "async-retry": "^1.3.3",

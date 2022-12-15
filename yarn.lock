@@ -1251,29 +1251,6 @@
   optionalDependencies:
     npmlog "2 || ^3.1.0 || ^4.0.0"
 
-"@sap-cloud-sdk/connectivity@^2.12.0":
-  version "2.12.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/connectivity/-/connectivity-2.12.0.tgz#3cee815361791b16a27a66dbb7e274c092b4f5fe"
-  integrity sha512-p8o55dMJJktCAsXFvzjOeiux0Is5xYXLI+cfTI4FXBPTBBdfaikDWI26KElpPpOcxfFl1lZqPK2kcsvcdS9zBA==
-  dependencies:
-    "@sap-cloud-sdk/util" "^2.12.0"
-    "@sap/xsenv" "^3.4.0"
-    "@sap/xssec" "^3.2.14"
-    axios "^0.27.1"
-    http-proxy-agent "^5.0.0"
-    https-proxy-agent "^5.0.0"
-    jsonwebtoken "^8.5.1"
-    opossum "^7.0.1"
-
-"@sap-cloud-sdk/http-client@^2.12.0":
-  version "2.12.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/http-client/-/http-client-2.12.0.tgz#635484cb02d78f25c659c26d1b3fe779bdff05e7"
-  integrity sha512-qs+l4EQY/p3iYDnIhVDDEjsRGCP2bFxx5pBl8TCTkpx3zqKeapRe5m5bhFQzil9Eb3u9U5wrc2kKDQ7VaSOT2Q==
-  dependencies:
-    "@sap-cloud-sdk/connectivity" "^2.12.0"
-    "@sap-cloud-sdk/util" "^2.12.0"
-    axios "^0.27.1"
-
 "@sap-cloud-sdk/util@^2.12.0":
   version "2.12.0"
   resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-2.12.0.tgz#f356ddbca4702051146caf568236fbf371e5a244"

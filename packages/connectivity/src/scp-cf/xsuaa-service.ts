@@ -67,17 +67,7 @@ export async function getClientCredentialsToken(
           err: Error,
           token: string,
           tokenResponse: ClientCredentialsResponse
-        ) => {
-          const isServiceInterface = (
-            serviceInterface: Service | string
-          ): serviceInterface is Service =>
-            !!(serviceInterface as Service).name;
-          const serviceName = isServiceInterface(service)
-            ? service.name
-            : service;
-
-          return err ? reject(err) : resolve(tokenResponse);
-        }
+        ) => err ? reject(err) : resolve(tokenResponse)
       );
     });
 
@@ -100,7 +90,8 @@ export function getUserToken(
 ): Promise<string> {
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  const xssecPromise = new Promise((resolve: (token: string) => void, reject) =>
+  const xssecPromise: () => Promise<string> = ()  =>
+  new Promise((resolve: (token: string) => void, reject) =>
     xssec.requests.requestUserToken(
       userJwt,
       service.credentials,
@@ -114,7 +105,7 @@ export function getUserToken(
 
   return executeWithMiddleware(
     [timeout(), circuitbreakerXSUAA()],
-    {},
+    { uri: service.credentials.url, tenantId: subdomainAndZoneId.zoneId },
     xssecPromise
   );
 }

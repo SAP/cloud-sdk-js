@@ -365,6 +365,9 @@ describe('generic http client', () => {
               method: 'post',
               url: 'test-cb',
               middleware: [circuitBreakerHttp()]
+            },
+            {
+              fetchCsrfToken: false
             }
           )
         ).rejects.toThrow();

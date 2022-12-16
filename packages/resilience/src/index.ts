@@ -6,10 +6,7 @@
 
 export { timeout } from './timeout';
 export { retry } from './retry';
-export type {
-  Middleware,
-  MiddlewareOut
-} from './middleware';
+export type { Middleware, MiddlewareOut } from './middleware';
 export {
   MiddlewareIn,
   Context,

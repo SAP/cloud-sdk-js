@@ -21,24 +21,6 @@ function httpErrorFilter(error: AxiosError): boolean {
   return false;
 }
 
-function isAxiosError(err: AxiosError | Error): err is AxiosError {
-  return err['isAxiosError'] === true;
-}
-
-function xsuaaErrorFilter(error: AxiosError | Error): boolean {
-  if (isAxiosError(error)) {
-    if (
-      error.response?.status &&
-      error.response.status.toString().startsWith('4')
-    ) {
-      return true;
-    }
-  } else if (error['statuscode'] && error['statuscode'] === 500) {
-    return true;
-  }
-  return false;
-}
-
 function circuitBreakerKeyBuilder<ContextT extends Context>(
   context: ContextT
 ): string {
@@ -64,7 +46,7 @@ export function circuitBreakerXSUAA<
 >(): Middleware<ReturnT, ContextT> {
   return circuitBreaker<ReturnT, ContextT>(
     circuitBreakerKeyBuilder,
-    xsuaaErrorFilter
+    httpErrorFilter
   );
 }
 

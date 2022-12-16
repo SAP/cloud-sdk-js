@@ -53,7 +53,8 @@ export async function getClientCredentialsToken(
   service: string | Service,
   userJwt?: string | JwtPayload
 ): Promise<ClientCredentialsResponse> {
-  const serviceCredentials = resolveService(service).credentials;
+  const resolvedService = resolveService(service);
+  const serviceCredentials = resolvedService.credentials;
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
   const xssecPromise: () => Promise<ClientCredentialsResponse> = () =>
@@ -75,7 +76,11 @@ export async function getClientCredentialsToken(
       tenantId: subdomainAndZoneId.zoneId ?? serviceCredentials.tenantid
     },
     xssecPromise
-  );
+  ).catch(err => {
+    throw new Error(
+      `Could not fetch client credentials token for service of type ${resolvedService.label}: ${err.message}`
+    );
+  });
 }
 
 /**
@@ -110,5 +115,9 @@ export function getUserToken(
       tenantId: subdomainAndZoneId.zoneId ?? service.credentials.tenantid
     },
     xssecPromise
-  );
+  ).catch(err => {
+    throw new Error(
+      `Could not fetch JWT bearer token for service of type ${service.label}: ${err.message}`
+    );
+  });
 }

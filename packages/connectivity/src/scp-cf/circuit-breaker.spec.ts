@@ -23,10 +23,6 @@ describe('circuit breaker', () => {
     Object.values(circuitBreakers).forEach(cb => cb.close());
     nock.cleanAll();
   });
-  beforeEach(() => {
-    Object.values(circuitBreakers).forEach(cb => cb.close());
-    nock.cleanAll();
-  });
 
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for destination service', async () => {
     const request = () =>
@@ -77,10 +73,7 @@ describe('circuit breaker', () => {
     await expect(request()).resolves.toBeDefined();
 
     // All following requests will fail to open the breaker
-    const mock = nock(providerXsuaaUrl)
-      .persist()
-      .post('/oauth/token')
-      .reply(500);
+    nock(providerXsuaaUrl).persist().post('/oauth/token').reply(500);
 
     let keepCalling = true;
     let failedCalls = 0;
@@ -100,18 +93,7 @@ describe('circuit breaker', () => {
     }
     // Since we exit the loop breaker opened.
     expect(failedCalls).toBeGreaterThan(0);
-  }, 99999);
-
-  it('does not open the breaker for a failed attempt (e.g. missing credentials) for xsuaa service', async () => {
-    const invalidXsuaaBindingMock = xsuaaBindingMock;
-    invalidXsuaaBindingMock.credentials.clientsecret = '';
-    const request = () =>
-      getClientCredentialsToken(invalidXsuaaBindingMock, jwt);
-    expect(request()).rejects.toThrowError(
-      /Invalid config: Missing clientsecret./
-    );
-    expect(circuitBreakers[`${providerXsuaaUrl}::tenant`].opened).toBe(false);
-  }, 99999);
+  }, 15000);
 });
 
 function sleep(ms) {

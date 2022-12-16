@@ -335,8 +335,8 @@ describe('generic http client', () => {
       expect(response.data).toEqual('Initial value.Middleware One.');
     });
 
-    it('returns a tenantid from provided jwt', () => {
-      const jwt = jwt123.sign(
+    it('returns a tenantid from jwt containing either zid or iss', () => {
+      let jwt = jwt123.sign(
         JSON.stringify({ user_id: 'user', zid: 'tenant' }),
         privateKey,
         {
@@ -344,9 +344,25 @@ describe('generic http client', () => {
         }
       );
       expect(getTenantIdForMiddleware(jwt)).toEqual('tenant');
+
+      jwt = jwt123.sign(
+        JSON.stringify({ user_id: 'user', iss: 'http://dummy-iss.com' }),
+        privateKey,
+        {
+          algorithm: 'RS512'
+        }
+      );
+      expect(getTenantIdForMiddleware(jwt)).toEqual('dummy-iss');
     });
 
-    it('return a string constant for tenantid if jwt is not provided and not throw if xsuaa binding does not exist', () => {
+    it('returns a string constant for tenantid if custom jwt contains neither zid or iss', () => {
+      const jwt = jwt123.sign(JSON.stringify({ user_id: 'user' }), privateKey, {
+        algorithm: 'RS512'
+      });
+      expect(getTenantIdForMiddleware(jwt)).toEqual('tenant_id');
+    });
+
+    it('return a string constant for tenantid if neither jwt or xsuaa binding is present', () => {
       expect(getTenantIdForMiddleware()).toEqual('tenant_id');
     });
 

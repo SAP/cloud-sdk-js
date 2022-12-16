@@ -13,8 +13,8 @@ import {
   getAdditionalHeaders,
   getAdditionalQueryParameters,
   getAuthHeader,
-  resolveDestination,
-  tenantId
+  getSubdomainAndZoneId,
+  resolveDestination
 } from '@sap-cloud-sdk/connectivity/internal';
 import {
   createLogger,
@@ -585,8 +585,9 @@ export const encodeAllParameters: ParameterEncoder = function (
  */
 export function getTenantIdForMiddleware(jwt?: string): string {
   try {
-    const zid = tenantId(decodedJwtOrZid({ jwt }));
-    return zid!;
+    const decodedJwt = decodedJwtOrZid({ jwt });
+    const { subdomain, zoneId } = getSubdomainAndZoneId(decodedJwt);
+    return zoneId || subdomain || TENANT_ID;
   } catch (_) {
     return TENANT_ID;
   }

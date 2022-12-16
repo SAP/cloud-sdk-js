@@ -230,6 +230,11 @@ export type DestinationRetrievalOptions = CachingOptions & {
    * By default, IsolationStrategy.Tenant_User is set.
    */
   isolationStrategy?: IsolationStrategy;
+  /**
+   * Sometimes the destination/{name} calls are flaky. This parameter enables 3 retires on the destintaion/{name} calls/
+   * By default the retry is disabled.
+   */
+  retry?: boolean;
 };
 
 /**

@@ -15,6 +15,7 @@ import {
   fetchCertificate,
   circuitBreaker
 } from './destination-service';
+import { DestinationConfiguration, parseDestination } from './destination';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -33,7 +34,7 @@ const basicDestination = {
   TrustAll: 'TRUE',
   User: 'USER_NAME',
   Password: 'password'
-};
+} satisfies DestinationConfiguration;
 
 const oauth2SamlBearerDestination = {
   Name: 'HTTP-OAUTH',
@@ -50,7 +51,7 @@ const oauth2SamlBearerDestination = {
   tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
   userIdSource: 'email',
   tokenServicePassword: 'password'
-};
+} satisfies DestinationConfiguration;
 
 const brokenDestination = {
   Name: 'BrokenDestination',
@@ -529,6 +530,94 @@ describe('destination service', () => {
       expect(spy).toHaveBeenCalledWith(expectedConfig);
       delete process.env.HTTPS_PROXY;
       delete process.env.no_proxy;
+    });
+
+    it('does a retry if request fails', async () => {
+      const response = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: null
+        },
+        destinationConfiguration: oauth2SamlBearerDestination,
+        authTokens: [
+          {
+            type: 'Bearer',
+            error: 'error'
+          }
+        ]
+      };
+      nock(destinationServiceUri)
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .reply(200, response)
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .reply(200, {
+          ...response,
+          authTokens: [
+            {
+              type: 'Bearer',
+              value: 'token',
+              expires_in: '3600',
+              http_header: {
+                key: 'Authorization',
+                value: 'Bearer token'
+              }
+            }
+          ]
+        });
+
+      const actual = await fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'HTTP-BASIC',
+        retry: true
+      });
+      expect(actual.authTokens![0].value).toEqual('token');
+    });
+
+    it('returns the destination with auth token errors after the retries', async () => {
+      const response = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: null
+        },
+        destinationConfiguration: oauth2SamlBearerDestination,
+        authTokens: [
+          {
+            type: 'Bearer',
+            error: 'error'
+          }
+        ]
+      };
+      const mock = nock(destinationServiceUri)
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .times(3)
+        .reply(200, response);
+
+      const actual = await fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'HTTP-BASIC',
+        retry: true
+      });
+      expect(actual.authTokens![0].error).toEqual('error');
+      expect(mock.isDone()).toBe(true);
+    }, 10000);
+
+    it('does a retry if auth token contains errors', async () => {
+      const response = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: null
+        },
+        destinationConfiguration: oauth2SamlBearerDestination
+      };
+      nock(destinationServiceUri)
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .reply(200)
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .reply(200, response);
+
+      const actual = await fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'HTTP-BASIC',
+        retry: true
+      });
+      expect(actual).toMatchObject(parseDestination(response));
     });
 
     it('fetches a destination and returns 200 but authTokens are failing', async () => {

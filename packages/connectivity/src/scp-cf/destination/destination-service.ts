@@ -7,9 +7,17 @@ import {
 import CircuitBreaker from 'opossum';
 // eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
+import {
+  Context,
+  MiddlewareIn,
+  MiddlewareOut
+} from '@sap-cloud-sdk/resilience';
+import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { circuitBreakerDefaultOptions } from '../resilience-options';
 import { urlAndAgent } from '../../http-agent';
+import { buildAuthorizationHeaders } from '../authorization-header';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -39,7 +47,7 @@ type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
 type DestinationsServiceOptions = Pick<DestinationFetchOptions, 'useCache'>;
 type DestinationServiceOptions = Pick<
   DestinationFetchOptions,
-  'destinationName'
+  'destinationName' | 'retry'
 >;
 
 const request: (
@@ -273,21 +281,26 @@ async function fetchDestinationByTokens(
     ? { ...authHeader, 'X-refresh-token': tokens.refreshToken }
     : authHeader;
 
-  return callDestinationEndpoint(targetUri, authHeader)
-    .then(response => {
+  const destCall = () =>
+    callDestinationEndpoint(targetUri, authHeader).then(response => {
       const destination: Destination = parseDestination(response.data);
       return destination;
-    })
-    .catch(error => {
-      {
-        throw new ErrorWithCause(
-          `Failed to fetch destination ${
-            options.destinationName
-          }.${errorMessageFromResponse(error)}`,
-          error
-        );
-      }
     });
+  const middleware = options.retry ? [retryDestination] : [];
+  try {
+    return await executeWithMiddleware(
+      middleware,
+      { uri: targetUri, args: [], destinationName: options.destinationName },
+      destCall
+    );
+  } catch (error) {
+    throw new ErrorWithCause(
+      `Failed to fetch destination ${
+        options.destinationName
+      }.${errorMessageFromResponse(error)}`,
+      error
+    );
+  }
 }
 
 function errorMessageFromResponse(
@@ -296,6 +309,36 @@ function errorMessageFromResponse(
   return propertyExists(error, 'response', 'data', 'ErrorMessage')
     ? ` ${error.response!.data.ErrorMessage}`
     : '';
+}
+
+interface DestinationRetryContext extends Context {
+  destinationName: string;
+}
+
+function retryDestination(
+  options: MiddlewareIn<Destination, DestinationRetryContext>
+): MiddlewareOut<Destination> {
+  return (): Promise<Destination> => {
+    let retryCount = 0;
+    return asyncRetry.default(
+      async bail => {
+        const destination = await options.fn();
+        retryCount++;
+        if (retryCount < 3) {
+          // this will throw if the destination does not contain valid auth headers and a second try is done to get a destination with valid tokens.
+          await buildAuthorizationHeaders(destination);
+        }
+        return destination;
+      },
+      {
+        retries: 3,
+        onRetry: err =>
+          logger.warn(
+            `Failed to retrieve destination ${options.context.destinationName} - doing a retry. Original Error ${err.message}`
+          )
+      }
+    );
+  };
 }
 
 type DestinationCertificateJson = {

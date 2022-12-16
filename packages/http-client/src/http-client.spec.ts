@@ -352,8 +352,8 @@ describe('generic http client', () => {
 
     it('considers circuit breaker for 5xx errors', async () => {
       const mock = nock('http://example.com', {})
-        .persist()
         .post(/test-cb/)
+        .times(10)
         .reply(500);
 
       let keepCalling = !mock.isDone();

@@ -1,9 +1,9 @@
 import * as http from 'http';
 import type {
-  Middleware,
-  HttpMiddlewareContext
-} from '@sap-cloud-sdk/resilience/';
-
+  Middleware
+} from '@sap-cloud-sdk/resilience';
+import {  HttpMiddlewareContext
+} from '@sap-cloud-sdk/resilience';
 /**
  * Represents the request configuration, that was inferred from a destination.
  */
@@ -92,7 +92,8 @@ export interface HttpRequestConfigBase {
    */
   data?: any;
   /**
-   * Middleware to be applied to the request {@link HttpMiddlewareContext}.
+   * Middleware {@link @sap-cloud-sdk/resilience!Middleware} to be applied to the request.
+   * The request context is set using {@link @sap-cloud-sdk/resilience!HttpMiddlewareContext}.
    */
   middleware?: Middleware<HttpResponse, HttpMiddlewareContext>[];
   /**

@@ -126,7 +126,7 @@ describe('circuit-breaker', () => {
     ]);
   });
 
-  it('creates circuit breaker for each service', async () => {
+  it('creates one circuit breaker for all requests against the same host', async () => {
     nock(host, {})
       .get(/path-1/)
       .reply(200)
@@ -168,8 +168,8 @@ describe('circuit-breaker', () => {
 
   it('does not open breaker for 401 xsuaa failures', async () => {
     const mock = nock(host, {})
-      .persist()
       .post(/oauth\/token/)
+      .times(10)
       .reply(401);
 
     const requestConfig: AxiosRequestConfig = {

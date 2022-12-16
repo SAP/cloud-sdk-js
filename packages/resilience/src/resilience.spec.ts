@@ -32,7 +32,7 @@ describe('combined resilience features', () => {
     await expect(
       executeWithMiddleware(
         [timeout(600), retry(2)],
-        { uri: 'https://example.com', args: [] },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
         request
       )
     ).resolves.not.toThrow();
@@ -55,7 +55,7 @@ describe('combined resilience features', () => {
 
     const response = await executeWithMiddleware(
       [timeout(200), retry(2)],
-      { uri: 'https://example.com', args: [] },
+      { uri: 'https://example.com', tenantId: 'dummy-tenant' },
       request
     );
 

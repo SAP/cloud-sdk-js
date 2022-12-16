@@ -14,7 +14,7 @@ type KeyBuilder<ContextT extends Context> = (context: ContextT) => string;
 function httpErrorFilter(error: AxiosError): boolean {
   if (
     error.response?.status &&
-    error.response.status.toString().match(/4\d{2}/)
+    error.response.status.toString().startsWith('4')
   ) {
     return true;
   }
@@ -29,7 +29,7 @@ function xsuaaErrorFilter(error: AxiosError | Error): boolean {
   if (isAxiosError(error)) {
     if (
       error.response?.status &&
-      error.response.status.toString().match(/4\d{2}/)
+      error.response.status.toString().startsWith('4')
     ) {
       return true;
     }

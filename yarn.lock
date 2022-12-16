@@ -1150,10 +1150,10 @@
     "@sap/instance-manager" "^3"
     axios ">=0.27.2"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.3.1", "@sap/cds@^6.3.2":
-  version "6.3.2"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.3.2.tgz#5e2c8a3e5efc04e1000ea96a7ab1357ab966db92"
-  integrity sha512-cR3mMnnlsss2l8FMXiBjcfQHcG5X7Nc8JZR7t6K3Cd/rc94XPPUyGOSVOyI25H5rTM3J2dSGcYneX3PCOCl8aw==
+"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.3.2", "@sap/cds@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.4.0.tgz#e4a5b1ba5677ab0a5609c3b403107e1b102e1c6e"
+  integrity sha512-Z19veNd0lf+W3Q97Xzxi7cJ50NsYx42wiiRs+44Xp7DArQuose4XkrN3iZ7DdX+FxcJSYojPnuDdN22QnZPZbA==
   dependencies:
     "@sap/cds-compiler" "^3.2.0"
     "@sap/cds-foss" "^4"

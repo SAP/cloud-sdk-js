@@ -42,8 +42,7 @@ describe('circuit-breaker', () => {
           request
         )
       ).rejects.toThrow();
-      const breaker =
-        circuitBreakers[`${host}::failing-500::get::myTestTenant`];
+      const breaker = circuitBreakers[`${host}::myTestTenant`];
       if (breaker.opened) {
         break;
       }
@@ -92,9 +91,7 @@ describe('circuit-breaker', () => {
 
       keepCalling = !mock.isDone();
     }
-    expect(
-      circuitBreakers[`${host}::failing-ignore::get::myTestTenant`].opened
-    ).toBe(false);
+    expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
   });
 
   it('creates circuit breaker for each tenant', async () => {
@@ -124,8 +121,8 @@ describe('circuit-breaker', () => {
     );
 
     expect(Object.keys(circuitBreakers)).toEqual([
-      `${host}::ok::get::tenant1`,
-      `${host}::ok::get::tenant2`
+      `${host}::tenant1`,
+      `${host}::tenant2`
     ]);
   });
 
@@ -166,14 +163,12 @@ describe('circuit-breaker', () => {
       request(requestConfigPath2)
     );
 
-    expect(Object.keys(circuitBreakers)).toEqual([
-      `${host}::path-1::get::tenant1`,
-      `${host}::path-2::get::tenant1`
-    ]);
+    expect(Object.keys(circuitBreakers)).toEqual([`${host}::tenant1`]);
   });
 
   it('does not open breaker for 401 xsuaa failures', async () => {
-    nock(host, {})
+    const mock = nock(host, {})
+      .persist()
       .post(/oauth\/token/)
       .reply(401);
 
@@ -193,14 +188,17 @@ describe('circuit-breaker', () => {
       tenantId: 'myTestTenant'
     };
     const request = () => axios.request(requestConfig);
-    await expect(
-      executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-        [circuitBreakerXSUAA()],
-        context,
-        request
-      )
-    ).rejects.toThrowError(/Request failed with status code 401/);
-
+    let keepCalling = !mock.isDone();
+    while (keepCalling) {
+      await expect(
+        executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+          [circuitBreakerXSUAA()],
+          context,
+          request
+        )
+      ).rejects.toThrowError(/Request failed with status code 401/);
+      keepCalling = !mock.isDone();
+    }
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
   });
 
@@ -233,7 +231,7 @@ describe('circuit-breaker', () => {
         )
       ).rejects.toThrow();
 
-      const breaker = circuitBreakers[`${host}::with-delay::get::myTestTenant`];
+      const breaker = circuitBreakers[`${host}::myTestTenant`];
       if (breaker.opened) {
         break;
       }

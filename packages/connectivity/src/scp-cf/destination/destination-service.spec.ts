@@ -89,7 +89,7 @@ describe('destination service', () => {
         expect(subaccountDestinations[index]).toMatchObject(e);
       });
       expect(Object.keys(circuitBreakers)).toEqual([
-        'https://destination.example.com/destination-configuration/v1/instanceDestinations::/::get::tenant'
+        'https://destination.example.com/destination-configuration/v1/instanceDestinations::tenant'
       ]);
     });
 
@@ -227,7 +227,7 @@ describe('destination service', () => {
       });
       expect(
         circuitBreakers[
-          'https://destination.example.com/destination-configuration/v1/subaccountDestinations::/::get::tenant'
+          'https://destination.example.com/destination-configuration/v1/subaccountDestinations::tenant'
         ]
       ).toBeDefined();
     });
@@ -416,7 +416,7 @@ describe('destination service', () => {
       expect(
         Object.keys(
           circuitBreakers[
-            'https://destination.example.com/destination-configuration/v1/destinations/HTTP-BASIC::/::get::tenant'
+            'https://destination.example.com/destination-configuration/v1/destinations/HTTP-BASIC::tenant'
           ]
         )
       ).toBeDefined();

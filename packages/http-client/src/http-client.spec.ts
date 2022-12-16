@@ -9,8 +9,17 @@ import {
   Protocol,
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
-import { timeout, Middleware, MiddlewareIn, HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
+import {
+  timeout,
+  Middleware,
+  MiddlewareIn,
+  HttpMiddlewareContext
+} from '@sap-cloud-sdk/resilience';
 import * as jwt123 from 'jsonwebtoken';
+import {
+  circuitBreakerHttp,
+  circuitBreakers
+} from '@sap-cloud-sdk/resilience/internal';
 import {
   connectivityProxyConfigMock,
   defaultDestination,
@@ -281,7 +290,8 @@ describe('generic http client', () => {
             method: 'post',
             url: 'with-delay',
             middleware: [timeout(delayInResponse * 0.5)]
-          }
+          },
+          { fetchCsrfToken: false }
         )
       ).rejects.toThrow(
         'Request to URL: http://example.com ran into a timeout after 5ms.'
@@ -338,6 +348,33 @@ describe('generic http client', () => {
 
     it('return a string constant for tenantid if jwt is not provided and not throw if xsuaa binding does not exist', () => {
       expect(getTenantIdForMiddleware()).toEqual('tenant_id');
+    });
+
+    it('considers circuit breaker for 5xx errors', async () => {
+      const mock = nock('http://example.com', {})
+        .persist()
+        .post(/test-cb/)
+        .reply(500);
+
+      let keepCalling = !mock.isDone();
+      while (keepCalling) {
+        await expect(
+          executeHttpRequest(
+            { url: 'http://example.com' },
+            {
+              method: 'post',
+              url: 'test-cb',
+              middleware: [circuitBreakerHttp()]
+            }
+          )
+        ).rejects.toThrow();
+        keepCalling = !mock.isDone();
+      }
+
+      expect(circuitBreakers['http://example.com::tenant_id'].opened).toBe(
+        true
+      );
+      Object.keys(circuitBreakers).forEach(key => delete circuitBreakers[key]);
     });
 
     // The base-agent dependency coming in via the http-proxy-agent did mess with the node https.

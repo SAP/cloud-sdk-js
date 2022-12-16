@@ -14,7 +14,7 @@ type KeyBuilder<ContextT extends Context> = (context: ContextT) => string;
 function httpErrorFilter(error: AxiosError): boolean {
   if (
     error.response?.status &&
-    [400, 401, 403, 404].includes(error.response.status)
+    error.response.status.toString().match(/4\d{2}/)
   ) {
     return true;
   }
@@ -29,7 +29,7 @@ function xsuaaErrorFilter(error: AxiosError | Error): boolean {
   if (isAxiosError(error)) {
     if (
       error.response?.status &&
-      [400, 401, 403, 404].includes(error.response.status)
+      error.response.status.toString().match(/4\d{2}/)
     ) {
       return true;
     }
@@ -39,13 +39,9 @@ function xsuaaErrorFilter(error: AxiosError | Error): boolean {
   return false;
 }
 
-function httpKeyBuilder(context: HttpMiddlewareContext): string {
-  return `${context.uri}::${context.requestConfig.url || '/'}::${
-    context.requestConfig.method
-  }::${context.tenantId}`;
-}
-
-function xsuaaKeyBuilder(context: Context): string {
+function circuitBreakerKeyBuilder<ContextT extends Context>(
+  context: ContextT
+): string {
   return `${context.uri}::${context.tenantId}`;
 }
 
@@ -56,7 +52,7 @@ export function circuitBreakerHttp<ReturnT>(): Middleware<
   ReturnT,
   HttpMiddlewareContext
 > {
-  return circuitBreaker(httpKeyBuilder, httpErrorFilter);
+  return circuitBreaker(circuitBreakerKeyBuilder, httpErrorFilter);
 }
 
 /**
@@ -66,7 +62,10 @@ export function circuitBreakerXSUAA<
   ReturnT,
   ContextT extends Context
 >(): Middleware<ReturnT, ContextT> {
-  return circuitBreaker<ReturnT, ContextT>(xsuaaKeyBuilder, xsuaaErrorFilter);
+  return circuitBreaker<ReturnT, ContextT>(
+    circuitBreakerKeyBuilder,
+    xsuaaErrorFilter
+  );
 }
 
 function circuitBreaker<ReturnT, ContextT extends Context>(

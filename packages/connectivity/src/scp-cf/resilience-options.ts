@@ -12,7 +12,7 @@ export interface ResilienceOptions {
 
   /**
    * Timeout in milliseconds to retrieve the destination.
-   * @deprecated Option will be removed in version 3.0 of the SDK.  Timeout is enabled per default with a value of 10seconds.
+   * @deprecated Option will be removed in version 3.0 of the SDK. Timeout is enabled per default with a value of 10 seconds.
    */
   timeout?: number;
 }

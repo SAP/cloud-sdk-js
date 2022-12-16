@@ -3,7 +3,7 @@ import { Context, Middleware, MiddlewareIn, MiddlewareOut } from './middleware';
 const defaultTimeout = 10000;
 
 /**
- * Helper method to build a timout middleware.
+ * Helper method to build a timeout middleware.
  * @param timeoutValue - Timeout in milliseconds. Default value are 10 seconds.
  * @returns The middleware adding a timeout to the function.
  */

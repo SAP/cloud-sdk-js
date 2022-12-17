@@ -258,9 +258,9 @@
         }
       }
     },
-    "value" : 7.01183752417795,
+    "value" : 5.5554996776273375,
     "weight" : 1.0,
-    "confidence" : 10.0,
+    "confidence" : 9.921599845612004,
     "usedValues" : [ {
       "type" : "ScoreValue",
       "score" : {
@@ -361,9 +361,9 @@
           }
         }
       },
-      "value" : 8.863636363636363,
+      "value" : 6.8181818181818175,
       "weight" : 1.0,
-      "confidence" : 10.0,
+      "confidence" : 9.71655328798186,
       "usedValues" : [ {
         "type" : "ScoreValue",
         "score" : {
@@ -626,9 +626,9 @@
             }
           }
         },
-        "value" : 9.5,
+        "value" : 5.0,
         "weight" : 1.0,
-        "confidence" : 10.0,
+        "confidence" : 8.80952380952381,
         "usedValues" : [ {
           "type" : "ScoreValue",
           "score" : {
@@ -686,16 +686,15 @@
             "type" : "LgtmScore",
             "name" : "How a project addresses issues reported by LGTM"
           },
-          "value" : 9.0,
+          "value" : 0.0,
           "weight" : 1.0,
-          "confidence" : 10.0,
+          "confidence" : 5.0,
           "usedValues" : [ {
-            "type" : "LgtmGradeValue",
+            "type" : "UnknownValue",
             "feature" : {
               "type" : "LgtmGradeFeature",
               "name" : "The worst LGTM grade of a project"
             },
-            "value" : "A",
             "explanation" : [ ]
           }, {
             "type" : "LanguagesValue",
@@ -1290,7 +1289,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 203,
+        "number" : 207,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1301,7 +1300,7 @@
         "number" : 3,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "203 commits in the last 3 months results to 10.00 points", "3 contributors increase the score value from 10.00 to 11.00" ],
+      "explanation" : [ "207 commits in the last 3 months results to 10.00 points", "3 contributors increase the score value from 10.00 to 11.00" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
@@ -1508,7 +1507,7 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 1.8840000000000001,
+      "value" : 1.8853333333333333,
       "weight" : 0.5,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -1533,7 +1532,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of projects on GitHub that use an open source project"
         },
-        "number" : 2579,
+        "number" : 2581,
         "explanation" : [ ]
       } ],
       "explanation" : [ ],
@@ -1647,9 +1646,9 @@
         },
         "name" : "Assesses security testing and vulnerability discovery"
       },
-      "value" : 10.0,
+      "value" : 2.0,
       "weight" : 0.6,
-      "confidence" : 10.0,
+      "confidence" : 9.85827664399093,
       "usedValues" : [ {
         "type" : "VulnerabilitiesValue",
         "feature" : {
@@ -1787,9 +1786,9 @@
             }
           }
         },
-        "value" : 8.863636363636363,
+        "value" : 6.8181818181818175,
         "weight" : 1.0,
-        "confidence" : 10.0,
+        "confidence" : 9.71655328798186,
         "usedValues" : [ {
           "type" : "ScoreValue",
           "score" : {
@@ -2052,9 +2051,9 @@
               }
             }
           },
-          "value" : 9.5,
+          "value" : 5.0,
           "weight" : 1.0,
-          "confidence" : 10.0,
+          "confidence" : 8.80952380952381,
           "usedValues" : [ {
             "type" : "ScoreValue",
             "score" : {
@@ -2112,16 +2111,15 @@
               "type" : "LgtmScore",
               "name" : "How a project addresses issues reported by LGTM"
             },
-            "value" : 9.0,
+            "value" : 0.0,
             "weight" : 1.0,
-            "confidence" : 10.0,
+            "confidence" : 5.0,
             "usedValues" : [ {
-              "type" : "LgtmGradeValue",
+              "type" : "UnknownValue",
               "feature" : {
                 "type" : "LgtmGradeFeature",
                 "name" : "The worst LGTM grade of a project"
               },
-              "value" : "A",
               "explanation" : [ ]
             }, {
               "type" : "LanguagesValue",

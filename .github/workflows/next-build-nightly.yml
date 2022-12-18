@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          - ref: 'main'
+          ref: 'main'
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
         with:
@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          - ref: 'main'
+          ref: 'main'
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
         with:
@@ -75,7 +75,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          - ref: 'main'
+          ref: 'main'
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
         with:
@@ -97,7 +97,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          - ref: 'main'
+          ref: 'main'
       - run: git fetch --depth=1
       - id: date-check
         name: Check if latest commit is within 24 hrs
@@ -109,7 +109,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          - ref: 'main'
+          ref: 'main'
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
         with:

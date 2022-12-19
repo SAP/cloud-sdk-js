@@ -249,7 +249,7 @@ describe('token accessor', () => {
       await expect(promise).rejects.not.toHaveProperty('cause.config');
     });
 
-    it('jwtBearerToken should throw an error without  cause.config property', async () => {
+    it('jwtBearerToken should throw an error without cause.config property', async () => {
       mockUserTokenGrantCall(
         providerXsuaaUrl,
         1,

@@ -1,3 +1,20 @@
+// eslint-disable-next-line import/named
+import { AxiosRequestConfig } from 'axios';
+
+/**
+ * Context for HttpRequests of the middleware.
+ */
+export interface HttpMiddlewareContext extends Context {
+  /**
+   * JWT used in the request.
+   */
+  jwt?: string;
+  /**
+   * Request config.
+   */
+  requestConfig: AxiosRequestConfig;
+}
+
 /**
  * Input parameter of a middleware.
  */
@@ -38,13 +55,13 @@ export type MiddlewareOut<ReturnT> = () => Promise<ReturnT>;
  */
 export interface Context {
   /**
-   * Arguments used in the function.
-   */
-  args: unknown[];
-  /**
    * URI of the function passed to the middleware.
    */
   uri: string;
+  /**
+   * Tenant identifier.
+   */
+  tenantId: string;
 }
 
 /**

@@ -1,9 +1,10 @@
 import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
 // eslint-disable-next-line import/named
-import { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
@@ -12,8 +13,7 @@ import {
   fetchDestination,
   fetchInstanceDestinations,
   fetchSubaccountDestinations,
-  fetchCertificate,
-  circuitBreaker
+  fetchCertificate
 } from './destination-service';
 import { DestinationConfiguration, parseDestination } from './destination';
 
@@ -60,6 +60,40 @@ const brokenDestination = {
 
 describe('destination service', () => {
   describe('fetchInstanceDestinations', () => {
+    it('uses a circuit breaker', async () => {
+      const response = [basicDestination];
+      const expected: Destination[] = [
+        {
+          name: 'HTTP-BASIC',
+          url: 'https://my.system.com',
+          authentication: 'BasicAuthentication',
+          proxyType: 'Internet',
+          password: 'password',
+          username: 'USER_NAME',
+          isTrustingAllCertificates: true,
+          originalProperties: basicDestination,
+          authTokens: []
+        }
+      ];
+
+      nock(destinationServiceUri, {
+        reqheaders: {
+          authorization: `Bearer ${jwt}`
+        }
+      })
+        .get('/destination-configuration/v1/instanceDestinations')
+        .reply(200, response);
+
+      const subaccountDestinations: Destination[] =
+        await fetchInstanceDestinations(destinationServiceUri, jwt);
+      expected.forEach((e, index) => {
+        expect(subaccountDestinations[index]).toMatchObject(e);
+      });
+      expect(Object.keys(circuitBreakers)).toEqual([
+        'https://destination.example.com/destination-configuration/v1/instanceDestinations::tenant'
+      ]);
+    });
+
     it('fetches instance destinations and returns them as Destination array', async () => {
       const response = [basicDestination, oauth2SamlBearerDestination];
 
@@ -163,6 +197,42 @@ describe('destination service', () => {
   });
 
   describe('fetchSubaccountDestinations', () => {
+    it('uses a circuit breaker', async () => {
+      const response = [basicDestination];
+      const expected: Destination[] = [
+        {
+          name: 'HTTP-BASIC',
+          url: 'https://my.system.com',
+          authentication: 'BasicAuthentication',
+          proxyType: 'Internet',
+          password: 'password',
+          username: 'USER_NAME',
+          isTrustingAllCertificates: true,
+          originalProperties: basicDestination,
+          authTokens: []
+        }
+      ];
+
+      nock(destinationServiceUri, {
+        reqheaders: {
+          authorization: `Bearer ${jwt}`
+        }
+      })
+        .get('/destination-configuration/v1/subaccountDestinations')
+        .reply(200, response);
+
+      const subaccountDestinations: Destination[] =
+        await fetchSubaccountDestinations(destinationServiceUri, jwt);
+      expected.forEach((e, index) => {
+        expect(subaccountDestinations[index]).toMatchObject(e);
+      });
+      expect(
+        circuitBreakers[
+          'https://destination.example.com/destination-configuration/v1/subaccountDestinations::tenant'
+        ]
+      ).toBeDefined();
+    });
+
     it('fetches subaccount destinations and returns them as Destination array', async () => {
       const response = [basicDestination, oauth2SamlBearerDestination];
       const expected: Destination[] = [
@@ -324,6 +394,35 @@ describe('destination service', () => {
   });
 
   describe('fetchDestination', () => {
+    it('uses a circuit breaker', async () => {
+      const destinationName = 'HTTP-BASIC';
+      const response = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: null
+        },
+        destinationConfiguration: basicDestination
+      };
+      nock(destinationServiceUri, {
+        reqheaders: {
+          authorization: `Bearer ${jwt}`
+        }
+      })
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .reply(200, response);
+
+      await fetchDestination(destinationServiceUri, jwt, {
+        destinationName
+      });
+      expect(
+        Object.keys(
+          circuitBreakers[
+            'https://destination.example.com/destination-configuration/v1/destinations/HTTP-BASIC::tenant'
+          ]
+        )
+      ).toBeDefined();
+    });
+
     it('fetches a destination including authTokens', async () => {
       const destinationName = 'HTTP-OAUTH';
       const response = {
@@ -426,7 +525,8 @@ describe('destination service', () => {
       })
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
-      const spy = jest.spyOn(circuitBreaker, 'fire');
+
+      const spy = jest.spyOn(axios, 'request');
       const result = await fetchDestination(destinationServiceUri, jwt, {
         destinationName
       });
@@ -462,7 +562,7 @@ describe('destination service', () => {
       })
         .get('/destination-configuration/v1/destinations/timeoutTest')
         .reply(200, response);
-      const spy = jest.spyOn(circuitBreaker, 'fire');
+      const spy = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName: 'timeoutTest'
       });
@@ -504,7 +604,7 @@ describe('destination service', () => {
       })
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
-      const spy = jest.spyOn(circuitBreaker, 'fire');
+      const spy = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName
       });

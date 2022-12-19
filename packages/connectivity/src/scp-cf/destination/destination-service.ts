@@ -4,19 +4,20 @@ import {
   propertyExists,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import CircuitBreaker from 'opossum';
 // eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
+  executeWithMiddleware,
+  HttpMiddlewareContext,
+  circuitBreakerHttp,
   Context,
+    timeout,
   MiddlewareIn,
   MiddlewareOut
-} from '@sap-cloud-sdk/resilience';
-import * as asyncRetry from 'async-retry';
+} from '@sap-cloud-sdk/resilience/internal';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import { circuitBreakerDefaultOptions } from '../resilience-options';
 import { urlAndAgent } from '../../http-agent';
+import { getSubdomainAndZoneId } from '../xsuaa-service';
 import { buildAuthorizationHeaders } from '../authorization-header';
 import {
   DestinationConfiguration,
@@ -39,30 +40,11 @@ const logger = createLogger({
   messageContext: 'destination-service'
 });
 
-type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
-  [requestConfig: AxiosRequestConfig],
-  AxiosResponse<ResponseType>
->;
-
 type DestinationsServiceOptions = Pick<DestinationFetchOptions, 'useCache'>;
 type DestinationServiceOptions = Pick<
   DestinationFetchOptions,
   'destinationName' | 'retry'
 >;
-
-const request: (
-  config: AxiosRequestConfig
-) => Promise<
-  AxiosResponse<
-    DestinationCertificateJson | DestinationConfiguration | DestinationJson
-  >
-> = axios.request;
-/**
- * @internal
- */
-export const circuitBreaker: DestinationCircuitBreaker<
-  DestinationCertificateJson | DestinationConfiguration | DestinationJson
-> = new CircuitBreaker(request, circuitBreakerDefaultOptions);
 
 /**
  * Fetches all instance destinations from the given URI.
@@ -147,7 +129,10 @@ async function fetchDestinations(
 
   const headers = wrapJwtInHeader(jwt).headers;
 
-  return callDestinationEndpoint(targetUri, headers)
+  return callDestinationEndpoint(
+    { uri: targetUri, tenantId: getTenantFromTokens(jwt) },
+    headers
+  )
     .then(response => {
       const destinations: Destination[] = response.data
         .filter(isParsable)
@@ -247,8 +232,17 @@ export async function fetchCertificate(
   const header = wrapJwtInHeader(token).headers;
 
   try {
-    const response = await callCertificateEndpoint(accountUri, header).catch(
-      () => callCertificateEndpoint(instanceUri, header)
+    const response = await callCertificateEndpoint(
+      { uri: accountUri, tenantId: getTenantFromTokens(token) },
+      header
+    ).catch(() =>
+      callCertificateEndpoint(
+        {
+          uri: instanceUri,
+          tenantId: getTenantFromTokens(token)
+        },
+        header
+      )
     );
     return parseCertificate(response.data);
   } catch (err) {
@@ -256,6 +250,30 @@ export async function fetchCertificate(
       `Failed to fetch truststore certificate ${certificateName} - Continuing without certificate. This may cause failing requests`,
       err
     );
+  }
+}
+
+function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
+  let tenant: string | undefined;
+  if (typeof token === 'string') {
+    tenant = getTenantId(token);
+  } else {
+    tenant =
+      token.exchangeTenant || // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+      getTenantId(token.exchangeHeaderJwt) ||
+      getTenantId(token.authHeaderJwt);
+  }
+
+  if (!tenant) {
+    throw new Error('Could not obtain tenant identifier from jwt.');
+  }
+  return tenant;
+}
+
+function getTenantId(token: string | undefined): string | undefined {
+  if (token) {
+    const { zoneId, subdomain } = getSubdomainAndZoneId(token);
+    return zoneId || subdomain || undefined;
   }
 }
 
@@ -281,26 +299,25 @@ async function fetchDestinationByTokens(
     ? { ...authHeader, 'X-refresh-token': tokens.refreshToken }
     : authHeader;
 
-  const destCall = () =>
-    callDestinationEndpoint(targetUri, authHeader).then(response => {
+  const middleware = options.retry ? [retryDestination] : [];
+  return callDestinationEndpoint(
+    { uri: targetUri, tenantId: getTenantFromTokens(tokens) },
+    authHeader
+  )
+    .then(response => {
       const destination: Destination = parseDestination(response.data);
       return destination;
+    })
+    .catch(error => {
+      {
+        throw new ErrorWithCause(
+          `Failed to fetch destination ${
+            options.destinationName
+          }.${errorMessageFromResponse(error)}`,
+          error
+        );
+      }
     });
-  const middleware = options.retry ? [retryDestination] : [];
-  try {
-    return await executeWithMiddleware(
-      middleware,
-      { uri: targetUri, args: [], destinationName: options.destinationName },
-      destCall
-    );
-  } catch (error) {
-    throw new ErrorWithCause(
-      `Failed to fetch destination ${
-        options.destinationName
-      }.${errorMessageFromResponse(error)}`,
-      error
-    );
-  }
 }
 
 function errorMessageFromResponse(
@@ -348,35 +365,37 @@ type DestinationCertificateJson = {
 };
 
 async function callCertificateEndpoint(
-  uri: string,
+  context: Context,
   headers: Record<string, any>
 ): Promise<AxiosResponse<DestinationCertificateJson>> {
-  if (!uri.includes('Certificates')) {
+  if (!context.uri.includes('Certificates')) {
     throw new Error(
-      `callCertificateEndpoint was called with illegal arrgument: ${uri}. URL must be certificate endpoint of destination service.`
+      `callCertificateEndpoint was called with illegal arrgument: ${context.uri}. URL must be certificate endpoint of destination service.`
     );
   }
-  return callDestinationService(uri, headers) as Promise<
+  return callDestinationService(context, headers) as Promise<
     AxiosResponse<DestinationCertificateJson>
   >;
 }
 
 async function callDestinationEndpoint(
-  uri: string,
+  context: Context,
   headers: Record<string, any>
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
-  if (!uri.match(/[instance|subaccount]Destinations|v1\/destinations/)) {
+  if (
+    !context.uri.match(/[instance|subaccount]Destinations|v1\/destinations/)
+  ) {
     throw new Error(
-      `callDestinationEndpoint was called with illegal arrgument: ${uri}. URL must be destination(s) endpoint of destination service.`
+      `callDestinationEndpoint was called with illegal arrgument: ${context.uri}. URL must be destination(s) endpoint of destination service.`
     );
   }
-  return callDestinationService(uri, headers) as Promise<
+  return callDestinationService(context, headers) as Promise<
     AxiosResponse<DestinationConfiguration | DestinationJson>
   >;
 }
 
 async function callDestinationService(
-  uri: string,
+  context: Context,
   headers: Record<string, any>
 ): Promise<
   AxiosResponse<
@@ -384,14 +403,16 @@ async function callDestinationService(
   >
 > {
   const config: AxiosRequestConfig = {
-    ...urlAndAgent(uri),
+    ...urlAndAgent(context.uri),
     proxy: false,
     method: 'get',
     timeout: 10000, // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
     headers
   };
 
-  // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
-  return circuitBreaker.fire(config);
-  // return axios.request(config);
+  return executeWithMiddleware(
+    [timeout(), circuitBreakerHttp()],
+    { requestConfig: config, ...context } as HttpMiddlewareContext,
+    () => axios.request(config)
+  );
 }

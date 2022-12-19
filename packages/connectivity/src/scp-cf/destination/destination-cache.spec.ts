@@ -319,7 +319,7 @@ describe('destination cache', () => {
       await expect(
         getDestination({ destinationName: destName })
       ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
-    });
+    }, 15000);
 
     it('uses cache with isolation strategy Tenant if no JWT is provided', async () => {
       await destinationCache.cacheRetrievedDestination(
@@ -408,7 +408,7 @@ describe('destination cache', () => {
       expect(warn).toBeCalledWith(
         'Cannot get cache key. Isolation strategy Tenant is used, but tenant id is undefined.'
       );
-    });
+    }, 15000);
 
     it('ignores cache if isolation requires user JWT but the JWT is not provided', async () => {
       const logger = createLogger('destination-cache');
@@ -425,7 +425,7 @@ describe('destination cache', () => {
       expect(warn).toBeCalledWith(
         'Cannot get cache key. Isolation strategy TenantUser is used, but tenant id or user id is undefined.'
       );
-    });
+    }, 15000);
   });
 
   describe('caching of destinations with special information (e.g. authTokens, certificates)', () => {

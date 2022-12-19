@@ -21,7 +21,6 @@ export type {
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
   Method,
-  ParameterEncoder,
-  HttpMiddlewareContext
+  ParameterEncoder
 } from './http-client-types';
 export { defaultDisallowedKeys } from './http-request-config';

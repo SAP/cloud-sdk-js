@@ -1,44 +1,15 @@
 import * as xssec from '@sap/xssec';
-import CircuitBreaker from 'opossum';
-import { wrapInTimeout } from '@sap-cloud-sdk/resilience/internal';
+import {
+  executeWithMiddleware,
+  circuitBreakerHttp,
+  timeout
+} from '@sap-cloud-sdk/resilience/internal';
 import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
 import { Service } from './environment-accessor-types';
-import { circuitBreakerDefaultOptions } from './resilience-options';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
-
-let circuitBreaker: any;
-
-function executeFunction<T extends (...args: any[]) => any>(
-  fn: T,
-  ...parameters: Parameters<T>
-): ReturnType<T> {
-  return fn(...parameters);
-}
-
-function getCircuitBreaker() {
-  if (!circuitBreaker) {
-    circuitBreaker = new CircuitBreaker(
-      executeFunction,
-      circuitBreakerDefaultOptions
-    );
-  }
-  return circuitBreaker;
-}
-
-/**
- * Wrap a function in a circuit breaker. Important if you trigger this recursively you have to adjust the parameters to avoid an infinite stack.
- * @param fn - Function to wrap.
- * @returns A function to be called with the original parameters.
- */
-function wrapInCircuitBreaker<T extends (...args: any[]) => any>(
-  fn: T
-): (...parameters: Parameters<T>) => ReturnType<T> {
-  return (...parameters: Parameters<T>) =>
-    getCircuitBreaker().fire(fn, ...parameters);
-}
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
@@ -82,7 +53,8 @@ export async function getClientCredentialsToken(
   service: string | Service,
   userJwt?: string | JwtPayload
 ): Promise<ClientCredentialsResponse> {
-  const serviceCredentials = resolveService(service).credentials;
+  const resolvedService = resolveService(service);
+  const serviceCredentials = resolvedService.credentials;
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
   const xssecPromise: () => Promise<ClientCredentialsResponse> = () =>
@@ -92,32 +64,22 @@ export async function getClientCredentialsToken(
         serviceCredentials,
         null,
         subdomainAndZoneId.zoneId,
-        (
-          err: Error,
-          token: string,
-          tokenResponse: ClientCredentialsResponse
-        ) => {
-          const isServiceInterface = (
-            serviceInterface: Service | string
-          ): serviceInterface is Service =>
-            !!(serviceInterface as Service).name;
-          const serviceName = isServiceInterface(service)
-            ? service.name
-            : service;
-
-          return err
-            ? reject(
-                `Error in fetching the token for service ${serviceName}: ${err.message}`
-              )
-            : resolve(tokenResponse);
-        }
+        (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
+          err ? reject(err) : resolve(tokenResponse)
       );
     });
-
-  // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
-  return wrapInCircuitBreaker((ser, jwt) =>
-    wrapInTimeout(xssecPromise(), 10000, 'Token retrieval ran into timeout.')
-  )(service, userJwt);
+  return executeWithMiddleware(
+    [timeout(), circuitBreakerHttp()],
+    {
+      uri: serviceCredentials.url,
+      tenantId: subdomainAndZoneId.zoneId ?? serviceCredentials.tenantid
+    },
+    xssecPromise
+  ).catch(err => {
+    throw new Error(
+      `Could not fetch client credentials token for service of type ${resolvedService.label}: ${err.message}`
+    );
+  });
 }
 
 /**
@@ -132,19 +94,31 @@ export function getUserToken(
 ): Promise<string> {
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  const xssecPromise = new Promise((resolve: (token: string) => void, reject) =>
-    xssec.requests.requestUserToken(
-      userJwt,
-      service.credentials,
-      null,
-      null,
-      subdomainAndZoneId.subdomain,
-      subdomainAndZoneId.zoneId,
-      (err: Error, token: string) => (err ? reject(err) : resolve(token))
-    )
-  );
-  // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
-  return wrapInCircuitBreaker((ser, jwt) =>
-    wrapInTimeout(xssecPromise, 10000, 'Token retrieval ran into timeout.')
-  )(service, userJwt);
+  const xssecPromise: () => Promise<string> = () =>
+    new Promise((resolve: (token: string) => void, reject) =>
+      xssec.requests.requestUserToken(
+        userJwt,
+        service.credentials,
+        null,
+        null,
+        subdomainAndZoneId.subdomain,
+        subdomainAndZoneId.zoneId,
+        (err: Error, token: string) => (err ? reject(err) : resolve(token))
+      )
+    );
+
+  return executeWithMiddleware(
+    [timeout(), circuitBreakerHttp()],
+    {
+      uri: service.credentials.url,
+      tenantId: subdomainAndZoneId.zoneId ?? service.credentials.tenantid
+    },
+    xssecPromise
+  )
+    .then(data => data)
+    .catch(err => {
+      throw new Error(
+        `Could not fetch JWT bearer token for service of type ${service.label}: ${err.message}`
+      );
+    });
 }

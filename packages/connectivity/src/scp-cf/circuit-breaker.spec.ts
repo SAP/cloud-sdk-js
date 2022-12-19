@@ -1,5 +1,6 @@
 import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
+import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 import {
   destinationServiceUri,
   providerXsuaaUrl,
@@ -7,7 +8,7 @@ import {
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../test-resources/test/test-util/keys';
 import { getClientCredentialsToken } from './xsuaa-service';
-import { circuitBreaker, fetchDestination } from './destination';
+import { fetchDestination } from './destination';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -19,11 +20,11 @@ const jwt = jwt123.sign(
 
 describe('circuit breaker', () => {
   afterEach(() => {
-    circuitBreaker.enable();
+    Object.values(circuitBreakers).forEach(cb => cb.close());
     nock.cleanAll();
   });
   beforeEach(() => {
-    circuitBreaker.enable();
+    Object.values(circuitBreakers).forEach(cb => cb.close());
     nock.cleanAll();
   });
 
@@ -38,11 +39,11 @@ describe('circuit breaker', () => {
       .times(1)
       .reply(200, JSON.stringify({ URL: 'test' }));
 
-    // First attempt should succeed
+    // First attempt should succeed inits the breaker
     await expect(request()).resolves.toBeDefined();
 
     // All following requests will fail to open the breaker
-    nock(destinationServiceUri).persist().get(/.*/).reply(400);
+    nock(destinationServiceUri).persist().get(/.*/).reply(500);
 
     let keepCalling = true;
     let failedCalls = 0;
@@ -52,7 +53,7 @@ describe('circuit breaker', () => {
         await request();
         await sleep(50);
       } catch (e) {
-        if (e.cause.message === 'Request failed with status code 400') {
+        if (e.cause.message === 'Request failed with status code 500') {
           failedCalls++;
         }
         if (e.cause.message === 'Breaker is open') {
@@ -76,10 +77,7 @@ describe('circuit breaker', () => {
     await expect(request()).resolves.toBeDefined();
 
     // All following requests will fail to open the breaker
-    const mock = nock(providerXsuaaUrl)
-      .persist()
-      .post('/oauth/token')
-      .reply(400);
+    nock(providerXsuaaUrl).persist().post('/oauth/token').reply(500);
 
     let keepCalling = true;
     let failedCalls = 0;
@@ -89,20 +87,17 @@ describe('circuit breaker', () => {
         await request();
         await sleep(50);
       } catch (e) {
-        if (
-          e ===
-          'Error in fetching the token for service my-xsuaa: Request failed with status code 400'
-        ) {
+        if (e.message.match(/Request failed with status code 500/)) {
           failedCalls++;
         }
-        if (e.message === 'Breaker is open') {
+        if (e.message.match(/Breaker is open/)) {
           keepCalling = false;
         }
       }
     }
     // Since we exit the loop breaker opened.
     expect(failedCalls).toBeGreaterThan(0);
-  }, 99999);
+  }, 15000);
 });
 
 function sleep(ms) {

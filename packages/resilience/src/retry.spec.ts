@@ -28,7 +28,7 @@ describe('retry', () => {
     await expect(
       executeWithMiddleware(
         [retry(0)],
-        { uri: 'https://example.com', args: [] },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
         request
       )
     ).resolves.not.toThrow();
@@ -53,7 +53,7 @@ describe('retry', () => {
     await expect(
       executeWithMiddleware(
         [retry(2)],
-        { uri: 'https://example.com', args: [] },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
         request
       )
     ).resolves.not.toThrow();
@@ -76,7 +76,7 @@ describe('retry', () => {
     await expect(
       executeWithMiddleware(
         [retry(7)],
-        { uri: 'https://example.com', args: [] },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
         request
       )
     ).rejects.toThrowError('Request failed with status code 401');
@@ -101,7 +101,7 @@ describe('retry', () => {
     await expect(
       executeWithMiddleware(
         [retry(7)],
-        { uri: 'https://example.com', args: [] },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
         request
       )
     ).rejects.toThrowError('Request failed with status code 403');

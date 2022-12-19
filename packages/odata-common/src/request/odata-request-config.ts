@@ -6,10 +6,9 @@ import {
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
 import type {
   HttpResponse,
-  ParameterEncoder,
-  HttpMiddlewareContext
+  ParameterEncoder
 } from '@sap-cloud-sdk/http-client/internal';
-import { Middleware } from '@sap-cloud-sdk/resilience';
+import { Middleware, HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
 
 /**
  * Set of possible request methods.

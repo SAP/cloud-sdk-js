@@ -17,10 +17,11 @@ import {
 } from '../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockClientCredentialsGrantCall,
-  mockClientCredentialsGrantWithCertCall
+  mockClientCredentialsGrantWithCertCall,
+  mockUserTokenGrantCall
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
-import { serviceToken } from './token-accessor';
+import { jwtBearerToken, serviceToken } from './token-accessor';
 
 describe('token accessor', () => {
   describe('serviceToken', () => {
@@ -49,7 +50,7 @@ describe('token accessor', () => {
     });
 
     it('considers default timeout for client credentials token', async () => {
-      jest.spyOn(resilience, 'wrapInTimeout');
+      const spy = jest.spyOn(resilience, 'timeout');
 
       const jwt = signedJwt({
         iss: 'https://testeroni.example.com'
@@ -63,11 +64,8 @@ describe('token accessor', () => {
 
       await serviceToken('destination', { jwt });
 
-      expect(resilience.wrapInTimeout).toHaveBeenCalledWith(
-        expect.anything(),
-        10000,
-        'Token retrieval ran into timeout.'
-      );
+      // no argument is default timeout
+      expect(spy).toHaveBeenCalledWith();
     });
 
     it("uses the JWT's issuer as tenant", async () => {
@@ -240,7 +238,7 @@ describe('token accessor', () => {
       expect(retrieveFromCacheSpy).toHaveBeenCalledTimes(0);
     });
 
-    it('throws an error with only the cause property', async () => {
+    it('serviceToken throws an error without cause.config property', async () => {
       mockClientCredentialsGrantCall(
         providerXsuaaUrl,
         { access_token: signedJwt({ dummy: 'content' }) },
@@ -248,7 +246,22 @@ describe('token accessor', () => {
         destinationBindingClientSecretMock.credentials
       );
       const promise = serviceToken('destination');
-      await expect(promise).rejects.toHaveProperty('cause');
+      await expect(promise).rejects.not.toHaveProperty('cause.config');
+    });
+
+    it('jwtBearerToken should throw an error without cause.config property', async () => {
+      mockUserTokenGrantCall(
+        providerXsuaaUrl,
+        1,
+        '',
+        '',
+        destinationBindingClientSecretMock.credentials,
+        401
+      );
+      const promise = jwtBearerToken(
+        signedJwt({ dummy: 'content' }),
+        destinationBindingClientSecretMock
+      );
       await expect(promise).rejects.not.toHaveProperty('cause.config');
     });
 

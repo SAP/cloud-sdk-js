@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import nock from 'nock';
-import { circuitBreakerHttp, circuitBreakers } from './circuit-breaker';
+import { circuitBreakers } from './circuit-breaker';
 import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
+import { resilience } from './resilience';
 import { retry } from './retry';
 import { timeout } from './timeout';
 
@@ -64,7 +65,7 @@ describe('combined resilience features', () => {
 
     expect(response.status).toBe(HTTP_STATUS.OK);
   }, 10000);
-  it('circuit breaker works together with a timeout', async () => {
+  it('uses circuit breaker and timeout with resilience()', async () => {
     const delay = 100;
     nock(host, {})
       .persist()
@@ -87,7 +88,7 @@ describe('combined resilience features', () => {
     while (keepCalling) {
       await expect(
         executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-          [timeout(delay * 0.5), circuitBreakerHttp()],
+          resilience({ timeout: delay * 0.5 }),
           context,
           request
         )
@@ -100,7 +101,7 @@ describe('combined resilience features', () => {
     }
     await expect(
       executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-        [circuitBreakerHttp()],
+        resilience({ timeout: false }),
         context,
         request
       )

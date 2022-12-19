@@ -1,7 +1,7 @@
 import * as xssec from '@sap/xssec';
 import {
   executeWithMiddleware,
-  circuitBreakerXSUAA,
+  circuitBreakerHttp,
   timeout
 } from '@sap-cloud-sdk/resilience/internal';
 import { JwtPayload } from './jsonwebtoken-type';
@@ -68,9 +68,8 @@ export async function getClientCredentialsToken(
           err ? reject(err) : resolve(tokenResponse)
       );
     });
-
   return executeWithMiddleware(
-    [timeout(), circuitBreakerXSUAA()],
+    [timeout(), circuitBreakerHttp()],
     {
       uri: serviceCredentials.url,
       tenantId: subdomainAndZoneId.zoneId ?? serviceCredentials.tenantid
@@ -109,15 +108,17 @@ export function getUserToken(
     );
 
   return executeWithMiddleware(
-    [timeout(), circuitBreakerXSUAA()],
+    [timeout(), circuitBreakerHttp()],
     {
       uri: service.credentials.url,
       tenantId: subdomainAndZoneId.zoneId ?? service.credentials.tenantid
     },
     xssecPromise
-  ).catch(err => {
-    throw new Error(
-      `Could not fetch JWT bearer token for service of type ${service.label}: ${err.message}`
-    );
-  });
+  )
+    .then(data => data)
+    .catch(err => {
+      throw new Error(
+        `Could not fetch JWT bearer token for service of type ${service.label}: ${err.message}`
+      );
+    });
 }

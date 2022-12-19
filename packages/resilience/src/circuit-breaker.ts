@@ -1,12 +1,7 @@
 import CircuitBreaker from 'opossum';
 // eslint-disable-next-line import/named
 import { AxiosError } from 'axios';
-import {
-  Context,
-  HttpMiddlewareContext,
-  Middleware,
-  MiddlewareIn
-} from './middleware';
+import { Context, Middleware, MiddlewareIn } from './middleware';
 
 type ErrorFilter = (err) => boolean;
 type KeyBuilder<ContextT extends Context> = (context: ContextT) => string;
@@ -28,19 +23,9 @@ function circuitBreakerKeyBuilder<ContextT extends Context>(
 }
 
 /**
- *  @internal
- */
-export function circuitBreakerHttp<ReturnT>(): Middleware<
-  ReturnT,
-  HttpMiddlewareContext
-> {
-  return circuitBreaker(circuitBreakerKeyBuilder, httpErrorFilter);
-}
-
-/**
  * @internal
  */
-export function circuitBreakerXSUAA<
+export function circuitBreakerHttp<
   ReturnT,
   ContextT extends Context
 >(): Middleware<ReturnT, ContextT> {

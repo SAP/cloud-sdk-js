@@ -17,8 +17,8 @@ import {
 } from '@sap-cloud-sdk/resilience';
 import * as jwt123 from 'jsonwebtoken';
 import {
-  circuitBreakerHttp,
-  circuitBreakers
+  circuitBreakers,
+  circuitBreakerHttp
 } from '@sap-cloud-sdk/resilience/internal';
 import {
   connectivityProxyConfigMock,

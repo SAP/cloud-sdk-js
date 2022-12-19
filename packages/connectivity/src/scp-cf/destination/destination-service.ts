@@ -8,13 +8,13 @@ import {
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import {
   executeWithMiddleware,
-  circuitBreakerHttp,
-  HttpMiddlewareContext
+  HttpMiddlewareContext,
+  circuitBreakerHttp
 } from '@sap-cloud-sdk/resilience/internal';
 import { Context, timeout } from '@sap-cloud-sdk/resilience';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
-import { parseSubdomain } from '../subdomain-replacer';
+import { getSubdomainAndZoneId } from '../xsuaa-service';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -233,7 +233,10 @@ export async function fetchCertificate(
       header
     ).catch(() =>
       callCertificateEndpoint(
-        { uri: instanceUri, tenantId: getTenantFromTokens(token) },
+        {
+          uri: instanceUri,
+          tenantId: getTenantFromTokens(token)
+        },
         header
       )
     );
@@ -247,27 +250,27 @@ export async function fetchCertificate(
 }
 
 function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
+  let tenant: string | undefined;
   if (typeof token === 'string') {
-    const decoded = decodeJwt(token);
-    if (decoded.zid) {
-      return decoded.zid;
-    }
-    if (decoded.iss) {
-      return parseSubdomain(decoded.iss);
-    }
+    tenant = getTenantId(token);
+  } else {
+    tenant =
+      token.exchangeTenant || // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+      getTenantId(token.exchangeHeaderJwt) ||
+      getTenantId(token.authHeaderJwt);
+  }
+
+  if (!tenant) {
     throw new Error('Could not obtain tenant identifier from jwt.');
   }
+  return tenant;
+}
 
-  if (token.exchangeTenant) {
-    // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
-    return token.exchangeTenant;
+function getTenantId(token: string | undefined): string | undefined {
+  if (token) {
+    const { zoneId, subdomain } = getSubdomainAndZoneId(token);
+    return zoneId || subdomain || undefined;
   }
-
-  if (token.exchangeHeaderJwt) {
-    return getTenantFromTokens(token.exchangeHeaderJwt);
-  }
-
-  return getTenantFromTokens(token.authHeaderJwt);
 }
 
 async function fetchDestinationByTokens(

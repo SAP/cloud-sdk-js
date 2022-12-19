@@ -2,11 +2,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import nock from 'nock';
 import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
-import {
-  circuitBreakerHttp,
-  circuitBreakers,
-  circuitBreakerXSUAA
-} from './circuit-breaker';
+import { circuitBreakerHttp, circuitBreakers } from './circuit-breaker';
 import { timeout } from './timeout';
 
 describe('circuit-breaker', () => {
@@ -92,7 +88,7 @@ describe('circuit-breaker', () => {
       keepCalling = !mock.isDone();
     }
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
-  });
+  }, 15000);
 
   it('creates circuit breaker for each tenant', async () => {
     nock(host, {}).get(/ok/).times(2).reply(200);
@@ -192,7 +188,7 @@ describe('circuit-breaker', () => {
     while (keepCalling) {
       await expect(
         executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-          [circuitBreakerXSUAA()],
+          [circuitBreakerHttp()],
           context,
           request
         )

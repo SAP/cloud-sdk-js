@@ -23,6 +23,10 @@ describe('circuit breaker', () => {
     Object.values(circuitBreakers).forEach(cb => cb.close());
     nock.cleanAll();
   });
+  beforeEach(() => {
+    Object.values(circuitBreakers).forEach(cb => cb.close());
+    nock.cleanAll();
+  });
 
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for destination service', async () => {
     const request = () =>
@@ -83,17 +87,17 @@ describe('circuit breaker', () => {
         await request();
         await sleep(50);
       } catch (e) {
-        if (e.message === 'Request failed with status code 500') {
+        if (e.message.match(/Request failed with status code 500/)) {
           failedCalls++;
         }
-        if (e.message === 'Breaker is open') {
+        if (e.message.match(/Breaker is open/)) {
           keepCalling = false;
         }
       }
     }
     // Since we exit the loop breaker opened.
     expect(failedCalls).toBeGreaterThan(0);
-  }, 15000);
+  }, 999999);
 });
 
 function sleep(ms) {

@@ -231,8 +231,8 @@ export type DestinationRetrievalOptions = CachingOptions & {
    */
   isolationStrategy?: IsolationStrategy;
   /**
-   * Sometimes the destination/{name} calls are flaky. This parameter enables 3 retires on the destintaion/{name} calls/
-   * By default the retry is disabled.
+   * Sometimes the `destination/{name}` calls are flaky. This parameter enables 3 retires on the destination by name calls.
+   * By default, the retry is disabled.
    */
   retry?: boolean;
 };

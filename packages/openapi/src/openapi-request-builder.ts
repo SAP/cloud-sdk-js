@@ -17,10 +17,9 @@ import {
 import {
   filterCustomRequestConfig,
   OriginOptions,
-  encodeTypedClientRequest,
-  HttpMiddlewareContext
+  encodeTypedClientRequest
 } from '@sap-cloud-sdk/http-client/internal';
-import { Middleware } from '@sap-cloud-sdk/resilience';
+import { Middleware, HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
 
 /**
  * Request builder for OpenAPI requests.

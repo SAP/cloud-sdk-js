@@ -49,9 +49,10 @@ export function mockUserTokenGrantCall(
   times: number,
   accessTokenResponse: string,
   accessTokenAssertion: string,
-  creds: ServiceCredentials
+  creds: ServiceCredentials,
+  responseCode = 200,
 ) {
-  return nock(uri, {})
+  return nock(uri)
     .post('/oauth/token', {
       client_id: creds.clientid,
       client_secret: creds.clientsecret,
@@ -60,7 +61,7 @@ export function mockUserTokenGrantCall(
       response_type: 'token'
     })
     .times(times)
-    .reply(200, accessTokenResponse);
+    .reply(responseCode, accessTokenResponse);
 }
 
 export function mockRefreshTokenGrantCall(

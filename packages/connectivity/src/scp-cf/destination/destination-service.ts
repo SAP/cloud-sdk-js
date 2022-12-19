@@ -6,10 +6,12 @@ import {
 } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
-  executeWithMiddleware
-} from '@sap-cloud-sdk/resilience/internal';
-import { Context, resilience, HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
+  Context,
+  resilience,
+  HttpMiddlewareContext
+} from '@sap-cloud-sdk/resilience';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { getSubdomainAndZoneId } from '../xsuaa-service';

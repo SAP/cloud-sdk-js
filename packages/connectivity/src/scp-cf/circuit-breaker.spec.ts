@@ -97,7 +97,7 @@ describe('circuit breaker', () => {
     }
     // Since we exit the loop breaker opened.
     expect(failedCalls).toBeGreaterThan(0);
-  }, 999999);
+  }, 15000);
 });
 
 function sleep(ms) {

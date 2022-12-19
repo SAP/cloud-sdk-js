@@ -3,6 +3,23 @@ import CircuitBreaker from 'opossum';
 import { AxiosError } from 'axios';
 import { Context, Middleware, MiddlewareIn } from './middleware';
 
+/**
+ * Map of all existing circuit breakers.
+ * Entries are added in a lazy way.
+ * @internal
+ */
+export const circuitBreakers: Record<string, CircuitBreaker> = {};
+
+/**
+ * @internal
+ */
+export const circuitBreakerDefaultOptions: CircuitBreakerOptions = {
+  timeout: false,
+  errorThresholdPercentage: 50,
+  volumeThreshold: 10,
+  resetTimeout: 30000,
+  cache: false
+};
 type ErrorFilter = (err) => boolean;
 type KeyBuilder<ContextT extends Context> = (context: ContextT) => string;
 
@@ -48,13 +65,6 @@ function circuitBreaker<ReturnT, ContextT extends Context>(
     ).fire(options.fn);
 }
 
-/**
- * Map of all existing circuit breakers.
- * Entries are added in a lazy way.
- * @internal
- */
-export const circuitBreakers: Record<string, CircuitBreaker> = {};
-
 function getCircuitBreaker(
   key: string,
   errorFilter: ErrorFilter
@@ -74,17 +84,6 @@ function executeFunction<T extends (...args: any[]) => any>(
 ): ReturnType<T> {
   return fn(...parameters);
 }
-
-/**
- * @internal
- */
-export const circuitBreakerDefaultOptions: CircuitBreakerOptions = {
-  timeout: false,
-  errorThresholdPercentage: 50,
-  volumeThreshold: 10,
-  resetTimeout: 30000,
-  cache: false
-};
 
 /**
  * This is partially copied from CircuitBreaker.Options of `@types/opossum`.

@@ -11,10 +11,10 @@ import {
   HttpMiddlewareContext,
   circuitBreakerHttp,
   Context,
-    timeout,
-  MiddlewareIn,
-  MiddlewareOut
+  timeout
 } from '@sap-cloud-sdk/resilience/internal';
+import * as asyncRetry from 'async-retry';
+import { Middleware } from '@sap-cloud-sdk/resilience';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
@@ -299,10 +299,10 @@ async function fetchDestinationByTokens(
     ? { ...authHeader, 'X-refresh-token': tokens.refreshToken }
     : authHeader;
 
-  const middleware = options.retry ? [retryDestination] : [];
   return callDestinationEndpoint(
     { uri: targetUri, tenantId: getTenantFromTokens(tokens) },
-    authHeader
+    authHeader,
+    options
   )
     .then(response => {
       const destination: Destination = parseDestination(response.data);
@@ -328,30 +328,36 @@ function errorMessageFromResponse(
     : '';
 }
 
-interface DestinationRetryContext extends Context {
-  destinationName: string;
-}
-
 function retryDestination(
-  options: MiddlewareIn<Destination, DestinationRetryContext>
-): MiddlewareOut<Destination> {
-  return (): Promise<Destination> => {
+  destinationName: string
+): Middleware<AxiosResponse<DestinationJson>, HttpMiddlewareContext> {
+  return options => () => {
     let retryCount = 0;
     return asyncRetry.default(
       async bail => {
-        const destination = await options.fn();
-        retryCount++;
-        if (retryCount < 3) {
-          // this will throw if the destination does not contain valid auth headers and a second try is done to get a destination with valid tokens.
-          await buildAuthorizationHeaders(destination);
+        try {
+          const destination = await options.fn();
+          if (retryCount < 3) {
+            // this will throw if the destination does not contain valid auth headers and a second try is done to get a destination with valid tokens.
+            await buildAuthorizationHeaders(parseDestination(destination.data));
+          }
+          return destination;
+        } catch (error) {
+          const status = error?.response?.status;
+          if (status.toString().startsWith('4')) {
+            bail(new Error(`Request failed with status code ${status}`));
+            // We need to return something here but the actual value does not matter
+            return undefined as any;
+          }
+          throw error;
         }
-        return destination;
+        retryCount++;
       },
       {
         retries: 3,
         onRetry: err =>
           logger.warn(
-            `Failed to retrieve destination ${options.context.destinationName} - doing a retry. Original Error ${err.message}`
+            `Failed to retrieve destination ${destinationName} - doing a retry. Original Error ${err.message}`
           )
       }
     );
@@ -380,7 +386,8 @@ async function callCertificateEndpoint(
 
 async function callDestinationEndpoint(
   context: Context,
-  headers: Record<string, any>
+  headers: Record<string, any>,
+  options?: DestinationServiceOptions
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
   if (
     !context.uri.match(/[instance|subaccount]Destinations|v1\/destinations/)
@@ -389,14 +396,19 @@ async function callDestinationEndpoint(
       `callDestinationEndpoint was called with illegal arrgument: ${context.uri}. URL must be destination(s) endpoint of destination service.`
     );
   }
-  return callDestinationService(context, headers) as Promise<
+  return callDestinationService(context, headers, options) as Promise<
     AxiosResponse<DestinationConfiguration | DestinationJson>
   >;
 }
 
+type fpp = AxiosResponse<
+  DestinationCertificateJson | DestinationConfiguration | DestinationJson
+>;
+
 async function callDestinationService(
   context: Context,
-  headers: Record<string, any>
+  headers: Record<string, any>,
+  options?: DestinationServiceOptions
 ): Promise<
   AxiosResponse<
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
@@ -410,8 +422,20 @@ async function callDestinationService(
     headers
   };
 
+  let resilience = [
+    timeout<fpp, HttpMiddlewareContext>(),
+    circuitBreakerHttp<fpp, HttpMiddlewareContext>()
+  ];
+  // Do a retry only for the get destination by Name calls which are somethimes flaky for the token retrieval
+  if (options?.destinationName && options.retry) {
+    resilience = [
+      timeout(),
+      circuitBreakerHttp(),
+      retryDestination(options.destinationName)
+    ];
+  }
   return executeWithMiddleware(
-    [timeout(), circuitBreakerHttp()],
+    resilience,
     { requestConfig: config, ...context } as HttpMiddlewareContext,
     () => axios.request(config)
   );

@@ -3,7 +3,6 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import nock from 'nock';
 import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
 import { circuitBreakerHttp, circuitBreakers } from './circuit-breaker';
-import { timeout } from './timeout';
 
 describe('circuit-breaker', () => {
   beforeEach(() => {
@@ -196,48 +195,5 @@ describe('circuit-breaker', () => {
       keepCalling = !mock.isDone();
     }
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
-  });
-
-  it('works together with a timeout', async () => {
-    const delay = 100;
-    nock(host, {})
-      .persist()
-      .get(/with-delay/)
-      .delay(delay)
-      .reply(200);
-
-    const requestConfig: AxiosRequestConfig = {
-      method: 'get',
-      baseURL: host,
-      url: 'with-delay'
-    };
-    const context: HttpMiddlewareContext = {
-      requestConfig,
-      uri: host,
-      tenantId: 'myTestTenant'
-    };
-    const request = () => axios.request(requestConfig);
-    const keepCalling = true;
-    while (keepCalling) {
-      await expect(
-        executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-          [timeout(delay * 0.5), circuitBreakerHttp()],
-          context,
-          request
-        )
-      ).rejects.toThrow();
-
-      const breaker = circuitBreakers[`${host}::myTestTenant`];
-      if (breaker.opened) {
-        break;
-      }
-    }
-    await expect(
-      executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-        [circuitBreakerHttp()],
-        context,
-        request
-      )
-    ).rejects.toThrow('Breaker is open');
   });
 });

@@ -155,8 +155,8 @@ The options are super basic - if you need them either create a feature request o
 
 ```ts
 type ResilienceOptions = {
-  retry?: boolean; // default false
-  timeout?: boolean; // default true
+  retry?: boolean | number; // default false if true 3 tries
+  timeout?: boolean | number; // default true 10 sec
   circuitBreaker?: boolean; // default true
 };
 
@@ -164,6 +164,19 @@ const [timeout, circuitBreaker] = resilience();
 const [timeout, circuitBreaker, retry] = resilience({ retry: true });
 const [timeout, retry] = resilience({ circuitBreaker: false, retry: true });
 ```
+
+Decisions on options and internal implementation 15th December:
+
+- Options on circuit breaker (CB) are dangerous => we do not consider in first version.
+  Since a CB records some state you run into a timing issue: What if options change after the instance is there?
+  Options per request are particularly problematic but also global setters are no guarantee.
+  Even if you say: Only allow setting options if there is no recorded state in the CB, you could start to see warnings when your system gets more load.
+- Only Retry option is number of retires. This makes alignment with CB options possible.
+- We will not consider 400-499 HTTP status codes for retry and CB.
+  These codes indicate a situation where a retry is pointless and also the system is healthy and does not need CB protection.
+- We will use the `destination.url`.
+- A cache middleware is considered useful but not done in the first version.
+- The `executeWithMiddlewares` function remains internal in first version, and we wait for customer demand.
 
 ### Adjusting/Replacing Provided Implementations
 

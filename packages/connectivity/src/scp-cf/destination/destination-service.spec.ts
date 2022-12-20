@@ -718,6 +718,37 @@ describe('destination service', () => {
       expect(actual).toMatchObject(parseDestination(responseValidToken));
     });
 
+    it('does a retry if auth tokens are failing but returns the destination with errors in the end', async () => {
+      const response = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: null
+        },
+        destinationConfiguration: oauth2SamlBearerDestination,
+        authTokens: [
+          {
+            error: 'ERROR'
+          }
+        ]
+      };
+
+      const mock = nock(destinationServiceUri, {
+        reqheaders: {
+          authorization: `Bearer ${jwt}`
+        }
+      })
+        .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
+        .times(3)
+        .reply(200, response);
+
+      const actual = await fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'HTTP-OAUTH',
+        retry: true
+      });
+      expect(actual.authTokens![0].error).toEqual('ERROR');
+      expect(mock.isDone()).toBe(true);
+    }, 10000);
+
     it('fetches a destination and returns 200 but authTokens are failing', async () => {
       const destinationName = 'FINAL-DESTINATION';
 

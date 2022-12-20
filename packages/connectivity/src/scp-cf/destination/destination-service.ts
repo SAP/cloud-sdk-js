@@ -332,12 +332,13 @@ function retryDestination(
   destinationName: string
 ): Middleware<AxiosResponse<DestinationJson>, HttpMiddlewareContext> {
   return options => () => {
-    let retryCount = 0;
+    let retryCount = 1;
     return asyncRetry.default(
       async bail => {
         try {
           const destination = await options.fn();
           if (retryCount < 3) {
+            retryCount++;
             // this will throw if the destination does not contain valid auth headers and a second try is done to get a destination with valid tokens.
             await buildAuthorizationHeaders(parseDestination(destination.data));
           }
@@ -351,7 +352,6 @@ function retryDestination(
           }
           throw error;
         }
-        retryCount++;
       },
       {
         retries: 3,

@@ -8,13 +8,15 @@ import {
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import {
   executeWithMiddleware,
-  HttpMiddlewareContext,
-  circuitBreakerHttp,
-  Context,
-  timeout
+  circuitBreakerHttp
 } from '@sap-cloud-sdk/resilience/internal';
+import {
+  HttpMiddlewareContext,
+  Context,
+  timeout,
+  Middleware
+} from '@sap-cloud-sdk/resilience';
 import * as asyncRetry from 'async-retry';
-import { Middleware } from '@sap-cloud-sdk/resilience';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { getSubdomainAndZoneId } from '../xsuaa-service';

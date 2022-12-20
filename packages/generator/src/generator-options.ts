@@ -123,11 +123,6 @@ export interface GeneratorOptions {
   packageVersion?: string;
 }
 
-/**
- * @internal
- */
-export const defaultValueProcessesJsGeneration = 16;
-
 function coercePathArg(arg?: string): string | undefined {
   return arg ? resolve(arg) : arg;
 }
@@ -295,7 +290,7 @@ export const generatorOptionsCli = {
     describe: 'Number of processes used for generation of javascript files.',
     alias: 'np',
     type: 'number',
-    default: defaultValueProcessesJsGeneration,
+    default: 16,
     hidden: true,
     replacedBy: 'processesJsGeneration'
   },
@@ -303,7 +298,7 @@ export const generatorOptionsCli = {
     describe: 'Number of processes used for generation of javascript files.',
     alias: 'np',
     type: 'number',
-    default: defaultValueProcessesJsGeneration,
+    default: 16,
     deprecated:
       "Since v2.12.0. Use 'transpilationProcesses' option to set number of processes for generation instead."
   },

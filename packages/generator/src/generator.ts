@@ -34,7 +34,6 @@ import { entitySourceFile } from './entity/file';
 import { enumTypeSourceFile } from './enum-type/file';
 import { sourceFile } from './file-generator';
 import {
-  defaultValueProcessesJsGeneration,
   GeneratorOptions,
   generatorOptionsCli,
   ParsedGeneratorOptions
@@ -79,41 +78,28 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  const projectAndServices = await generateProject(
-    options as ParsedGeneratorOptions
-  );
+  const projectAndServices = await generateProject(options);
   if (!projectAndServices) {
     throw Error('The project is undefined.');
   }
   const services = projectAndServices.services;
 
-  await generateFilesWithoutTsMorph(
-    services,
-    options as ParsedGeneratorOptions
-  );
+  await generateFilesWithoutTsMorph(services, options);
 
   if (options.generateJs) {
     const directories = services
       .filter(async service => {
         const files = await readdir(
-          resolvePath(service.directoryName, options as ParsedGeneratorOptions)
+          resolvePath(service.directoryName, options)
         );
         return files.includes('tsconfig.json');
       })
-      .map(service =>
-        resolvePath(service.directoryName, options as ParsedGeneratorOptions)
-      );
+      .map(service => resolvePath(service.directoryName, options));
 
-    const chunks = splitInChunks(
-      directories,
-      options.transpilationProcesses || defaultValueProcessesJsGeneration
-    );
+    const chunks = splitInChunks(directories, options.transpilationProcesses);
     try {
       await chunks.reduce(
-        (all, chunk) =>
-          all.then(() =>
-            transpileDirectories(chunk, options as ParsedGeneratorOptions)
-          ),
+        (all, chunk) => all.then(() => transpileDirectories(chunk, options)),
         Promise.resolve()
       );
     } catch (err) {

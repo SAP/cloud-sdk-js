@@ -231,7 +231,7 @@ export type DestinationRetrievalOptions = CachingOptions & {
    */
   isolationStrategy?: IsolationStrategy;
   /**
-   *  The call to `destination/{name}` sometimes also performs a token exchange. Such calls can be flaky due to an unstable token exchange endpoint.
+   * The call to `destination/{name}` sometimes also performs a token exchange. Such calls can be flaky due to an unstable token exchange endpoint.
    * This parameter enables 3 retries on the destination by name calls.
    * By default, the retry is disabled.
    */

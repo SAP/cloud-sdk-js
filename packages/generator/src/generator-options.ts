@@ -203,14 +203,14 @@ export const generatorOptionsCli = {
   },
   readme: {
     describe:
-      'When set to true, the generator will write a README.md file into the root folder of every package. This option does not make that much sense without also set useSwagger to "true".',
+      "When set to true, the generator will write a README.md file into the root folder of every package. The information in the readme are mostly derived from accompanying Swagger or OpenAPI files. Therefore it is recommended to use the 'readme' option in combination with 'useSwagger'.",
     type: 'boolean',
     default: false,
     hidden: true
   },
   writeReadme: {
     describe:
-      'When set to true, the generator will write a README.md file into the root folder of every package. This option does not make that much sense without also set useSwagger to "true".',
+      "When set to true, the generator will write a README.md file into the root folder of every package. The information in the readme are mostly derived from accompanying Swagger or OpenAPI files. Therefore it is recommended to use the 'writeReadme' option in combination with 'useSwagger'.",
     type: 'boolean',
     default: false,
     hidden: true,

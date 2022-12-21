@@ -4,12 +4,12 @@
   "description": "Checks the current PR for semantical correctness and appropriate changelog.",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "compile": "tsc -p tsconfig.json",
     "format": "prettier --write '**/*.ts'",
     "format-check": "prettier --check '**/*.ts'",
     "lint": "eslint --ignore-pattern '!index.ts'",
     "package": "ncc build lib/index.js --source-map --license licenses.txt",
-    "all": "yarn && yarn run build && yarn run format && yarn run lint && yarn run package"
+    "all": "yarn && yarn run compile && yarn run format && yarn run lint && yarn run package"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",

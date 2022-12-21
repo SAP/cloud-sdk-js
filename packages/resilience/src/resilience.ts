@@ -10,13 +10,13 @@ export interface ResilienceOptions {
   /**
    * Option for Retry Middleware.
    * False by default. If set to true, the number of retries is 3.
-   * Assign a numeric value to set custom number of reties.
+   * Assign a different value to set custom number of reties.
    */
   retry?: boolean | number;
   /**
    * Option for Timeout Middleware.
-   * True by default with a 10 sec timeout.
-   * Assign a numeric value to set a custom timeout.
+   * True by default, with a 10000 milliseconds timeout.
+   * Assign a different value to set a custom timeout.
    */
   timeout?: boolean | number;
   /**

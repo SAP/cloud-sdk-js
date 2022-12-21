@@ -1,10 +1,10 @@
 node_modules
-!.github/actions/**/node_modules
 .vscode
 build/**
 dist
 .next/**
 !.github/actions/**/dist
+.github/actions/**/lib
 .DS_Store
 coverage
 yarn-error.log

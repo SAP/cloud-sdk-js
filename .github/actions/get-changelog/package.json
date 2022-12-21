@@ -3,11 +3,29 @@
   "version": "1.0.0",
   "description": "Gets the current changelog",
   "main": "dist/.github/actions/get-changelog/index.js",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "scripts": {
-    "compile": "rm -rf transpiled && tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "format": "prettier --write '**/*.ts'",
+    "format-check": "prettier --check '**/*.ts'",
+    "lint": "eslint --ignore-pattern '!index.ts'",
+    "package": "ncc build lib/.github/actions/get-changelog/index.js --source-map --license licenses.txt",
+    "all": "yarn run build && yarn run format && yarn run lint && yarn run package"
   },
   "dependencies": {
     "@actions/core": "^1.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "16",
+    "@typescript-eslint/parser": "^5.47.0",
+    "@vercel/ncc": "^0.36.0",
+    "eslint": "^8.30.0",
+    "eslint-plugin-github": "^4.6.0",
+    "eslint-plugin-jest": "^27.1.7",
+    "jest": "^28.1.1",
+    "js-yaml": "^4.1.0",
+    "prettier": "^2.8.1",
+    "ts-jest": "^28.0.8",
+    "typescript": "^4.9.4"
   }
 }

@@ -25,7 +25,7 @@ jobs:
       matrix:
         node-version: [18]
     steps:
-      - name: Show input from user
+      - name: Show input from dispatch event
         run: echo "Canary release flag ${{ github.event.inputs.canary-release }}"
       - uses: actions/checkout@v3
       - run: git fetch --depth=1

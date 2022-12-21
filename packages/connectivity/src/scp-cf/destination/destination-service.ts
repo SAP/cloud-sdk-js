@@ -428,7 +428,7 @@ async function callDestinationService(
     timeout<fpp, HttpMiddlewareContext>(),
     circuitBreakerHttp<fpp, HttpMiddlewareContext>()
   ];
-  // Do a retry only for the get destination by Name calls which are somethimes flaky for the token retrieval
+  // Do a retry only for the get destination by Name calls which are sometimes flaky for the token retrieval
   if (options?.destinationName && options.retry) {
     resilience = [
       timeout(),

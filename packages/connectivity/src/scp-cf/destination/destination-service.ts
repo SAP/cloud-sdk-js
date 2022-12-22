@@ -10,9 +10,8 @@ import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   HttpMiddlewareContext,
   Context,
-  timeout,
   Middleware,
-  circuitBreakerHttp
+  resilience
 } from '@sap-cloud-sdk/resilience';
 import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
@@ -422,20 +421,13 @@ async function callDestinationService(
     headers
   };
 
-  let resilience = [
-    timeout<fpp, HttpMiddlewareContext>(),
-    circuitBreakerHttp<fpp, HttpMiddlewareContext>()
-  ];
+  const middlewares = resilience<fpp, HttpMiddlewareContext>();
   // Do a retry only for `getDestination({destinationName})` calls which are sometimes flaky for the token retrieval
   if (options?.destinationName && options.retry) {
-    resilience = [
-      timeout(),
-      circuitBreakerHttp(),
-      retryDestination(options.destinationName)
-    ];
+    middlewares.push(retryDestination(options.destinationName));
   }
   return executeWithMiddleware(
-    resilience,
+    middlewares,
     { requestConfig: config, ...context } as HttpMiddlewareContext,
     () => axios.request(config)
   );

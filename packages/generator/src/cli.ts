@@ -7,12 +7,12 @@ import {
   generatorOptionsCli,
   createOptionsFromConfig,
   GeneratorOptions
-} from './generator-options';
-import { getOptionsWithoutDefaults } from './options-parser';
+} from './options';
+import { getOptionsWithoutDefaults } from './options/options-parser';
 
 const logger = createLogger({
   package: 'generator',
-  messageContext: 'generator-cli'
+  messageContext: 'cli'
 });
 
 logger.info('Parsing args...');

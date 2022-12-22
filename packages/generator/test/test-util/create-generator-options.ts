@@ -3,7 +3,7 @@ import {
   generatorOptionsCli,
   ParsedGeneratorOptions
 } from '../../src/generator-options';
-import { parseOptions } from '../../src/options-parser';
+import { parseOptions } from '../../src/options/options-parser';
 
 export function createOptions(
   options?: Partial<GeneratorOptions>

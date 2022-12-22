@@ -1,6 +1,7 @@
 import { PathLike } from 'fs';
 import { resolve, dirname } from 'path';
 import { readFileSync } from 'fs-extra';
+import { Option, ParsedOptions } from './options-parser';
 
 /**
  * Options to configure the client generation when using the generator programmatically.
@@ -128,27 +129,6 @@ function coercePathArg(arg?: string): string | undefined {
 }
 
 /**
- * Union type of the deprecated option names.
- * @typeParam T - Options configuration.
- */
-type DeprecatedOptionNamesWithReplacements<T> = {
-  [K in keyof T]: T[K] extends { deprecated: string; replacedBy: string }
-    ? K
-    : never;
-}[keyof T];
-
-/**
- * @internal
- * Helper to represent parsed options based on a public generator options type and a CLI options configuration.
- * @typeParam GeneratorOptionsOptionsT - Public generator options.
- * @typeParam CliOptionsT - Configuration of CLI options.
- */
-export type ParsedOptions<GeneratorOptionsOptionsT, CliOptionsT> = Omit<
-  Required<GeneratorOptionsOptionsT>,
-  DeprecatedOptionNamesWithReplacements<CliOptionsT>
->;
-
-/**
  * @internal
  * Represents the parsed generator options.
  */
@@ -164,8 +144,8 @@ export const generatorOptionsCli = {
   inputDir: {
     alias: 'i',
     describe:
-      'This directory will be recursively searched for `.edmx`/`.xml` files.',
-    coerce: coercePathArg,
+      'This directory will be recursively searched for EDMX and XML files.',
+    coerce: resolve,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -173,7 +153,7 @@ export const generatorOptionsCli = {
   outputDir: {
     alias: 'o',
     describe: 'Directory to save the generated code in.',
-    coerce: coercePathArg,
+    coerce: resolve,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -183,8 +163,7 @@ export const generatorOptionsCli = {
     describe:
       'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. Will be generated if not existent. By default it will be saved to/read from the input directory as "service-mapping.json".',
     type: 'string',
-    coerce: coercePathArg,
-    normalize: true
+    coerce: coercePathArg
   },
   prettierConfig: {
     alias: 'p',
@@ -192,7 +171,7 @@ export const generatorOptionsCli = {
       'Configuration file to the prettier config relative to the generator config file',
     type: 'string',
     coerce: coercePathArg,
-    normalize: true
+    requiresArg: true
   },
   useSwagger: {
     describe:
@@ -222,7 +201,7 @@ export const generatorOptionsCli = {
       'Glob describing additional files to be added to the each generated service directory - relative to the inputDir.',
     type: 'string',
     coerce: coercePathArg,
-    normalize: true
+    requiresArg: true
   },
   overwrite: {
     describe:
@@ -335,7 +314,7 @@ export const generatorOptionsCli = {
     default: false,
     deprecated: 'Since v2.12.0. This functionality will be discontinued.'
   }
-} as const;
+} as const satisfies Record<keyof GeneratorOptions, Option>;
 
 /**
  * @internal

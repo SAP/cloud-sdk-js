@@ -1,12 +1,79 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Options } from 'yargs';
-import { ParsedOptions } from './generator-options';
 const logger = createLogger('generator-options');
 
-type Option = Options & {
+/**
+ * @internal
+ * Option for SAP Cloud SDK generators
+ */
+export type Option = Options & {
+  /**
+   * Name of the option the current option was replaced with.
+   */
   replacedBy?: string;
+
+  /**
+   * Mandatory description.
+   */
   describe: string;
+
+  /**
+   * Only required options should set `demandOption`. Other options are not required by default.
+   */
+  demandOption?: true;
 };
+
+/**
+ * @internal
+ * Helper to represent parsed options based on a public generator options type and a CLI options configuration.
+ * - Makes all properties required.
+ * - Removes deprecated and replaced options.
+ * - Replaces input types with coerced types.
+ * @typeParam GeneratorOptionsOptionsT - Public generator options.
+ * @typeParam CliOptionsT - Configuration of CLI options.
+ */
+export type ParsedOptions<
+  GeneratorOptionsT,
+  CliOptionsT extends Record<keyof GeneratorOptionsT, Option>
+> = Omit<
+  Required<GeneratorOptionsT>,
+  | OptionsWith<'deprecated' | 'replacedBy', CliOptionsT>
+  | OptionsWith<'coerce', CliOptionsT>
+> &
+  CoercedTypes<CliOptionsT>;
+
+/**
+ * Union type of the options that specify the given property name.
+ * @typeParam OptionPropertyT - The literal name of the property in each option.
+ * @typeParam CliOptionsT - Configuration of CLI options.
+ */
+type OptionsWith<
+  OptionPropertyT extends keyof Option,
+  CliOptionsT extends Record<string, Option>
+> = {
+  [K in keyof CliOptionsT]: CliOptionsT[K] extends Record<OptionPropertyT, any>
+    ? K
+    : never;
+}[keyof CliOptionsT];
+
+/**
+ * Represents an object with all properties that have a `coerce()` function after coercion.
+ * @typeParam CliOptionsT - Configuration of CLI options.
+ */
+type CoercedTypes<CliOptionsT extends Record<string, Option>> = {
+  [K in keyof Pick<
+    CliOptionsT,
+    OptionsWith<'coerce', CliOptionsT>
+  >]: CoercedType<CliOptionsT[K]>;
+};
+
+/**
+ * Infer the return type of the `coerce()` function for a given option.
+ * @typeParam OptionT - Type of the option.
+ */
+type CoercedType<OptionT extends Option> = OptionT extends { coerce: any }
+  ? ReturnType<OptionT['coerce']>
+  : undefined;
 
 /**
  * @internal
@@ -19,7 +86,7 @@ export function getOptionsWithoutDefaults<
 >(options: CliOptionsT): CliOptionsT {
   return Object.entries(options).reduce(
     (optionsWithoutDefaults, [name, option]) => {
-      const { default: def, ...optionWithoutDefault } = option;
+      const { default: def, coerce, ...optionWithoutDefault } = option;
       const describe =
         def === undefined
           ? optionWithoutDefault.describe
@@ -46,17 +113,20 @@ export function getOptionsWithoutDefaults<
  * @returns Parsed options with default values.
  */
 export function parseOptions<
-  CliOptionsT extends Record<string, Option>,
+  CliOptionsT extends Record<keyof GeneratorOptionsT, Option>,
   GeneratorOptionsT extends Record<string, any>
 >(
   options: CliOptionsT,
-  userOptions: GeneratorOptionsT
+  userOptions: GeneratorOptionsT,
+  sanitize?: (
+    options: ParsedOptions<GeneratorOptionsT, CliOptionsT>
+  ) => ParsedOptions<GeneratorOptionsT, CliOptionsT>
 ): ParsedOptions<GeneratorOptionsT, CliOptionsT> {
-  return new OptionsParser(options, userOptions).parseOptions();
+  return new OptionsParser(options, userOptions).parseOptions(sanitize);
 }
 
 class OptionsParser<
-  CliOptionsT extends Record<string, Option>,
+  CliOptionsT extends Record<keyof GeneratorOptionsT, Option>,
   GeneratorOptionsT extends Record<string, any>
 > {
   constructor(
@@ -64,11 +134,16 @@ class OptionsParser<
     private userOptions: GeneratorOptionsT
   ) {}
 
-  parseOptions(): ParsedOptions<GeneratorOptionsT, CliOptionsT> {
+  parseOptions(
+    sanitize?: (
+      options: ParsedOptions<GeneratorOptionsT, CliOptionsT>
+    ) => ParsedOptions<GeneratorOptionsT, CliOptionsT>
+  ): ParsedOptions<GeneratorOptionsT, CliOptionsT> {
     this.warnIfDeprecatedOptionsUsed();
     this.warnIfDuplicateOptionsUsed();
-    const parsedOptions = this.sanitizeIfReplacedOptionsUsed();
-    return this.addDefaults(parsedOptions);
+    let parsedOptions = this.sanitizeIfReplacedOptionsUsed();
+    parsedOptions = this.addDefaults(parsedOptions);
+    return sanitize ? sanitize(parsedOptions) : parsedOptions;
   }
 
   private addDefaults(
@@ -78,10 +153,16 @@ class OptionsParser<
       if ('default' in option) {
         parsedOptions[name] = parsedOptions[name] ?? option.default;
       }
+      if ('coerce' in option) {
+        parsedOptions[name] =
+          parsedOptions[name] ?? option.coerce?.(parseOptions[name]);
+      }
     });
 
     return parsedOptions;
   }
+
+  // private resolvePaths() {}
 
   private getDeprecatedOptionsInUse(): string[] {
     return Object.keys(this.options)

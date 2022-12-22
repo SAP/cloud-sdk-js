@@ -8,7 +8,7 @@
     "compile": "tsc -p tsconfig.json",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check '**/*.ts'",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write '**/*.ts'",
-    "check:dependencies": "depcheck .",
+    "check:dependencies": "depcheck --skip-missing=true .",
     "package": "ncc build lib/index.js --out ../../.github/actions/check-pr/",
     "all": "yarn && yarn run compile && yarn run lint && yarn run package"
   },

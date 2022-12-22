@@ -5,4 +5,4 @@ outputs:
     description: 'The current changelog'
 runs:
   using: 'node16'
-  main: 'dist/.github/actions/get-changelog/index.js'
+  main: 'index.js'

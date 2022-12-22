@@ -25,6 +25,8 @@ jobs:
       matrix:
         node-version: [18]
     steps:
+      - name: Show input from dispatch event
+        run: echo "Canary release flag ${{ github.event.inputs.canary-release }}"
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
@@ -119,7 +121,7 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   canary-release-pre-check:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.canary-release == true || github.event_name == 'schedule' }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'true' || github.event_name == 'schedule' }}
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.date-check.outputs.skip }}

@@ -12,6 +12,6 @@ yarn run all
 
 This will compile, lint and package the actions.
 
-Changes in the `dist` folder need to be committed to the git repository as this is the code which is being run by GitHub.
+Changes in the `.github/actions` folder need to be committed to the git repository as this is the code which is being run by GitHub.
 
 The configuration of the actions is loosely based on [GitHub's template repo for TypeScript actions](https://github.com/actions/typescript-action).

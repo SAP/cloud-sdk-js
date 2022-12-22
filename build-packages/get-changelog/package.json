@@ -13,9 +13,7 @@
     "all": "yarn && yarn run compile && yarn run lint && yarn run package"
   },
   "dependencies": {
-    "@actions/core": "^1.9.1",
-    "@changesets/get-release-plan": "^3.0.16",
-    "semver": "^7.3.8"
+    "@actions/core": "^1.9.1"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.36.0",

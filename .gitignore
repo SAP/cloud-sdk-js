@@ -3,7 +3,6 @@ node_modules
 build/**
 dist
 .next/**
-!build-packages/**/dist
 build-packages/**/lib
 .DS_Store
 coverage

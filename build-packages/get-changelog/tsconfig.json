@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "../../../",
+    "rootDir": "../../",
     "outDir": "./lib",
     "tsBuildInfoFile": "./lib/.tsbuildinfo",
     "composite": false,
@@ -10,8 +10,8 @@
   },
   "files": [
     "index.ts",
-    "../../../scripts/get-changelog.ts",
-    "../../../scripts/util.ts"
+    "../../scripts/get-changelog.ts",
+    "../../scripts/util.ts"
   ],
   "exclude": []
 }

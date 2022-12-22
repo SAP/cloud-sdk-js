@@ -1,5 +1,5 @@
-import { getChangelog } from '../../../scripts/get-changelog';
 import { setOutput, setFailed } from '@actions/core';
+import { getChangelog } from '../../scripts/get-changelog';
 
 try {
   setOutput('changelog', getChangelog());

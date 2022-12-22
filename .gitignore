@@ -3,8 +3,8 @@ node_modules
 build/**
 dist
 .next/**
-!.github/actions/**/dist
-.github/actions/**/lib
+!build-packages/**/dist
+build-packages/**/lib
 .DS_Store
 coverage
 yarn-error.log

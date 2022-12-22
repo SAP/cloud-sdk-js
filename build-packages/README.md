@@ -1,4 +1,4 @@
-# Actions
+# Build Packages
 
 This directory contains code for GitHub Actions that are used in this repo's workflow.
 
@@ -7,7 +7,6 @@ The actions are built with yarn like the rest of this repo.
 To build / update the actions, run this inside the action's directory:
 
 ```
-yarn
 yarn run all
 ```
 

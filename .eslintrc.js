@@ -14,6 +14,8 @@ module.exports = {
         'test-packages/test-services-e2e/**/*',
         'test-packages/memory-tests/sdk-v1/test-service/*',
         'test-packages/memory-tests/sdk-canary/test-service/*',
+        'build-packages/check-pr/lib/**',
+        'build-packages/get-changelog/lib/**',
         'packages/rest-generator/test/test-services/**/*',
         'test-resources/cli/**/*',
         '**/test-output/**',

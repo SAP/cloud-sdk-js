@@ -6,9 +6,9 @@ import { generate } from './generator';
 import {
   generatorOptionsCli,
   createOptionsFromConfig,
-  GeneratorOptions
+  GeneratorOptions,
+  getOptionsWithoutDefaults
 } from './options';
-import { getOptionsWithoutDefaults } from './options/options-parser';
 
 const logger = createLogger({
   package: 'generator',

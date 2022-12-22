@@ -36,7 +36,8 @@ import { sourceFile } from './file-generator';
 import {
   GeneratorOptions,
   generatorOptionsCli,
-  ParsedGeneratorOptions
+  ParsedGeneratorOptions,
+  parseOptions
 } from './options';
 import { hasEntities } from './generator-utils';
 import { entityApiFile } from './generator-without-ts-morph';
@@ -52,7 +53,6 @@ import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
 import { VdmServiceMetadata } from './vdm-types';
-import { parseOptions } from './options/options-parser';
 
 const { mkdir, readdir } = fsPromises;
 

@@ -1,5 +1,5 @@
 import nock from 'nock';
-import * as resilience from '@sap-cloud-sdk/resilience/internal';
+import * as resilience from '@sap-cloud-sdk/resilience';
 import {
   destinationBindingClientSecretMock,
   destinationBindingCertMock,
@@ -49,8 +49,8 @@ describe('token accessor', () => {
       expect(actual).toBe(expected);
     });
 
-    it('considers default timeout for client credentials token', async () => {
-      const spy = jest.spyOn(resilience, 'timeout');
+    it('considers default resilience middlewares for client credentials token', async () => {
+      const spy = jest.spyOn(resilience, 'resilience');
 
       const jwt = signedJwt({
         iss: 'https://testeroni.example.com'

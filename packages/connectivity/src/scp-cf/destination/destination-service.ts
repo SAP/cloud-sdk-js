@@ -6,15 +6,13 @@ import {
 } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import {
-  executeWithMiddleware,
-  circuitBreakerHttp
-} from '@sap-cloud-sdk/resilience/internal';
+import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   HttpMiddlewareContext,
   Context,
   timeout,
-  Middleware
+  Middleware,
+  circuitBreakerHttp
 } from '@sap-cloud-sdk/resilience';
 import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';

@@ -2,6 +2,7 @@ import nock from 'nock';
 import axios from 'axios';
 import { timeout } from './timeout';
 import { executeWithMiddleware } from './middleware';
+import { resilience } from './resilience';
 
 describe('timeout', () => {
   it('uses a custom timeout if given', async () => {
@@ -31,7 +32,7 @@ describe('timeout', () => {
 
     await expect(
       executeWithMiddleware(
-        [timeout(delayInResponse * 2)],
+        resilience({ timeout: delayInResponse * 2, circuitBreaker: false }),
         { uri: 'https://example.com', tenantId: 'dummy-tenant' },
         request
       )

@@ -17,6 +17,10 @@ const defaultRetryCount = 3;
 export function retry<ReturnType, ContextType extends Context>(
   retryCount: number = defaultRetryCount
 ): Middleware<ReturnType, ContextType> {
+  if (retryCount < 0) {
+    throw new Error('Retry count value is invalid.');
+  }
+
   return function (
     options: MiddlewareIn<ReturnType, ContextType>
   ): MiddlewareOut<ReturnType> {

@@ -344,7 +344,7 @@ function retryDestination(
           return destination;
         } catch (error) {
           const status = error?.response?.status;
-          if (status.toString().startsWith('4')) {
+          if (status >= 400 && status < 500) {
             bail(new Error(`Request failed with status code ${status}`));
             // We need to return something here but the actual value does not matter
             return undefined as any;

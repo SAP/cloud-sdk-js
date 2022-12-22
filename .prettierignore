@@ -10,3 +10,5 @@ test-packages/**/*.js
 test-packages/test-services-openapi/no-schema-service/package.json
 test-packages/test-services-openapi/swagger-yaml-service/package.json
 test-packages/test-services-openapi/test-service/package.json
+build-packages/check-pr/lib/
+build-packages/get-changelog/lib

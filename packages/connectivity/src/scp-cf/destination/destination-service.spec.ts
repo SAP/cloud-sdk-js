@@ -2,6 +2,7 @@ import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
 // eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig } from 'axios';
+import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
@@ -535,7 +536,6 @@ describe('destination service', () => {
           'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         method: 'get',
         proxy: false,
-        timeout: 10000,
         headers: {
           Authorization: `Bearer ${jwt}`
         },
@@ -562,14 +562,15 @@ describe('destination service', () => {
       })
         .get('/destination-configuration/v1/destinations/timeoutTest')
         .reply(200, response);
-      const spy = jest.spyOn(axios, 'request');
+      const spy = jest.spyOn(resilienceMethods, 'executeWithMiddleware');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName: 'timeoutTest'
       });
+      // Assertion for two anonymous functions in the middleware one of them is timeout the other CB.
       expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          timeout: 10000
-        })
+        [expect.any(Function), expect.any(Function)],
+        expect.anything(),
+        expect.anything()
       );
     });
 
@@ -619,7 +620,6 @@ describe('destination service', () => {
         // The jest matchers have problems to match two  instances of an httpsAgent.
         // As a workaround I wanted to assert on proxy:undefined but was not able to achieve this.
         // The "_events" property is only present for the httpAgent and not the httpProxyAgent so this works as an implicit test.
-        timeout: 10000,
         httpsAgent: expect.objectContaining({
           _events: expect.anything(),
           options: expect.objectContaining({ rejectUnauthorized: true })

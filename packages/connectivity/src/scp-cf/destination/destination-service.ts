@@ -300,7 +300,8 @@ async function fetchDestinationByTokens(
 
   return callDestinationEndpoint(
     { uri: targetUri, tenantId: getTenantFromTokens(tokens) },
-    authHeader
+    authHeader,
+    options
   )
     .then(response => {
       const destination: Destination = parseDestination(response.data);

@@ -105,6 +105,8 @@ describe('combined resilience features', () => {
         break;
       }
     }
+    expect(circuitBreakers[`${host}::myTestTenant`].stats.failures).toBe(10);
+    expect(circuitBreakers[`${host}::myTestTenant`].stats.fires).toBe(10);
     await expect(
       executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
         resilience({ timeout: false }),
@@ -112,6 +114,9 @@ describe('combined resilience features', () => {
         request
       )
     ).rejects.toThrow('Breaker is open');
+
+    expect(circuitBreakers[`${host}::myTestTenant`].stats.failures).toBe(10);
+    expect(circuitBreakers[`${host}::myTestTenant`].stats.fires).toBe(11);
   });
 
   it('retry and circuit breaker are not used for 4xx error', async () => {
@@ -138,9 +143,11 @@ describe('combined resilience features', () => {
       )
     ).rejects.toThrowError(/Request failed with status code 401/);
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
+    expect(circuitBreakers[`${host}::myTestTenant`].stats.failures).toBe(0);
+    expect(circuitBreakers[`${host}::myTestTenant`].stats.fires).toBe(1);
   });
 
-  it('does x number of retries and doesnt open the circuit breaker for few server errors', async () => {
+  it('does 3 retries and doesnt open the circuit breaker for few server errors', async () => {
     nock(host, {})
       .get(/with-retry/)
       .times(3)
@@ -161,13 +168,16 @@ describe('combined resilience features', () => {
     const request = () => axios.request(requestConfig);
     await expect(
       executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-        resilience({ timeout: false, retry: 3 }),
+        resilience({ timeout: false, retry: true }),
         context,
         request
       )
     ).resolves.not.toThrowError();
 
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
+    expect(circuitBreakers[`${host}::myTestTenant`].stats.failures).toBe(3);
+    expect(circuitBreakers[`${host}::myTestTenant`].stats.successes).toBe(1);
+    expect(circuitBreakers[`${host}::myTestTenant`].stats.fires).toBe(4);
   }, 15000);
 
   it('throws an error when retry is less than 1', async () => {

@@ -10,11 +10,14 @@ import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   Context,
   resilience,
-  HttpMiddlewareContext
+  HttpMiddlewareContext,
+  Middleware
 } from '@sap-cloud-sdk/resilience';
+import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { buildAuthorizationHeaders } from '../authorization-header';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -39,7 +42,7 @@ const logger = createLogger({
 type DestinationsServiceOptions = Pick<DestinationFetchOptions, 'useCache'>;
 type DestinationServiceOptions = Pick<
   DestinationFetchOptions,
-  'destinationName'
+  'destinationName' | 'retry'
 >;
 
 /**
@@ -297,7 +300,8 @@ async function fetchDestinationByTokens(
 
   return callDestinationEndpoint(
     { uri: targetUri, tenantId: getTenantFromTokens(tokens) },
-    authHeader
+    authHeader,
+    options
   )
     .then(response => {
       const destination: Destination = parseDestination(response.data);
@@ -323,6 +327,42 @@ function errorMessageFromResponse(
     : '';
 }
 
+function retryDestination(
+  destinationName: string
+): Middleware<AxiosResponse<DestinationJson>, HttpMiddlewareContext> {
+  return options => () => {
+    let retryCount = 1;
+    return asyncRetry.default(
+      async bail => {
+        try {
+          const destination = await options.fn();
+          if (retryCount < 3) {
+            retryCount++;
+            // this will throw if the destination does not contain valid auth headers and a second try is done to get a destination with valid tokens.
+            await buildAuthorizationHeaders(parseDestination(destination.data));
+          }
+          return destination;
+        } catch (error) {
+          const status = error?.response?.status;
+          if (status.toString().startsWith('4')) {
+            bail(new Error(`Request failed with status code ${status}`));
+            // We need to return something here but the actual value does not matter
+            return undefined as any;
+          }
+          throw error;
+        }
+      },
+      {
+        retries: 3,
+        onRetry: err =>
+          logger.warn(
+            `Failed to retrieve destination ${destinationName} - doing a retry. Original Error ${err.message}`
+          )
+      }
+    );
+  };
+}
+
 type DestinationCertificateJson = {
   [Property in keyof DestinationCertificate as `${Capitalize<
     string & Property
@@ -345,7 +385,8 @@ async function callCertificateEndpoint(
 
 async function callDestinationEndpoint(
   context: Context,
-  headers: Record<string, any>
+  headers: Record<string, any>,
+  options?: DestinationServiceOptions
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
   if (
     !context.uri.match(/[instance|subaccount]Destinations|v1\/destinations/)
@@ -354,29 +395,39 @@ async function callDestinationEndpoint(
       `callDestinationEndpoint was called with illegal arrgument: ${context.uri}. URL must be destination(s) endpoint of destination service.`
     );
   }
-  return callDestinationService(context, headers) as Promise<
+  return callDestinationService(context, headers, options) as Promise<
     AxiosResponse<DestinationConfiguration | DestinationJson>
   >;
 }
 
 async function callDestinationService(
   context: Context,
-  headers: Record<string, any>
+  headers: Record<string, any>,
+  options?: DestinationServiceOptions
 ): Promise<
   AxiosResponse<
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
+  const { destinationName, retry } = options || {};
+
   const config: AxiosRequestConfig = {
     ...urlAndAgent(context.uri),
     proxy: false,
     method: 'get',
-    timeout: 10000, // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
     headers
   };
 
+  const resilienceMiddleware =
+    destinationName && retry
+      ? [
+          ...resilience<AxiosResponse, HttpMiddlewareContext>(),
+          retryDestination(destinationName)
+        ]
+      : resilience<AxiosResponse, HttpMiddlewareContext>();
+
   return executeWithMiddleware(
-    resilience(),
+    resilienceMiddleware,
     { requestConfig: config, ...context } as HttpMiddlewareContext,
     () => axios.request(config)
   );

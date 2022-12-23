@@ -2,6 +2,7 @@ import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
 // eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig } from 'axios';
+import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
@@ -15,6 +16,7 @@ import {
   fetchSubaccountDestinations,
   fetchCertificate
 } from './destination-service';
+import { DestinationConfiguration, parseDestination } from './destination';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -33,7 +35,7 @@ const basicDestination = {
   TrustAll: 'TRUE',
   User: 'USER_NAME',
   Password: 'password'
-};
+} satisfies DestinationConfiguration;
 
 const oauth2SamlBearerDestination = {
   Name: 'HTTP-OAUTH',
@@ -50,7 +52,7 @@ const oauth2SamlBearerDestination = {
   tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
   userIdSource: 'email',
   tokenServicePassword: 'password'
-};
+} satisfies DestinationConfiguration;
 
 const brokenDestination = {
   Name: 'BrokenDestination',
@@ -534,7 +536,6 @@ describe('destination service', () => {
           'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         method: 'get',
         proxy: false,
-        timeout: 10000,
         headers: {
           Authorization: `Bearer ${jwt}`
         },
@@ -561,14 +562,15 @@ describe('destination service', () => {
       })
         .get('/destination-configuration/v1/destinations/timeoutTest')
         .reply(200, response);
-      const spy = jest.spyOn(axios, 'request');
+      const spy = jest.spyOn(resilienceMethods, 'executeWithMiddleware');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName: 'timeoutTest'
       });
+      // Assertion for two anonymous functions in the middleware one of them is timeout the other CB.
       expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          timeout: 10000
-        })
+        [expect.any(Function), expect.any(Function)],
+        expect.anything(),
+        expect.anything()
       );
     });
 
@@ -618,7 +620,6 @@ describe('destination service', () => {
         // The jest matchers have problems to match two  instances of an httpsAgent.
         // As a workaround I wanted to assert on proxy:undefined but was not able to achieve this.
         // The "_events" property is only present for the httpAgent and not the httpProxyAgent so this works as an implicit test.
-        timeout: 10000,
         httpsAgent: expect.objectContaining({
           _events: expect.anything(),
           options: expect.objectContaining({ rejectUnauthorized: true })
@@ -630,6 +631,123 @@ describe('destination service', () => {
       delete process.env.HTTPS_PROXY;
       delete process.env.no_proxy;
     });
+
+    it('does a retry if request fails with 500 error', async () => {
+      const response = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: null
+        },
+        destinationConfiguration: basicDestination
+      };
+      nock(destinationServiceUri)
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .reply(500)
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .reply(200, response);
+
+      const actual = await fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'HTTP-BASIC',
+        retry: true
+      });
+      expect(actual).toEqual(parseDestination(response));
+    });
+
+    it('does no retry if request fails with 401 error', async () => {
+      const response = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: null
+        },
+        destinationConfiguration: basicDestination
+      };
+      const mock = nock(destinationServiceUri)
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .reply(401)
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .reply(200, response);
+
+      await expect(
+        fetchDestination(destinationServiceUri, jwt, {
+          destinationName: 'HTTP-BASIC',
+          retry: true
+        })
+      ).rejects.toThrow();
+      expect(mock.isDone()).toBe(false);
+      nock.cleanAll();
+    });
+
+    it('does a retry if auth token contains errors', async () => {
+      const responseErrorInToken = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: null
+        },
+        destinationConfiguration: oauth2SamlBearerDestination,
+        authTokens: [
+          {
+            error: 'ERROR'
+          }
+        ]
+      };
+      const responseValidToken = {
+        ...responseErrorInToken,
+        authTokens: [
+          {
+            type: 'Bearer',
+            value: 'some.token',
+            expires_in: '3600',
+            error: '',
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer some.token'
+            } as any // TODO fix the authTokens type in DestinationJson
+          }
+        ]
+      };
+      nock(destinationServiceUri)
+        .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
+        .reply(200, responseErrorInToken)
+        .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
+        .reply(200, responseValidToken);
+
+      const actual = await fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'HTTP-OAUTH',
+        retry: true
+      });
+      expect(actual).toMatchObject(parseDestination(responseValidToken));
+    });
+
+    it('does a retry if auth tokens are failing but returns the destination with errors in the end', async () => {
+      const response = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: null
+        },
+        destinationConfiguration: oauth2SamlBearerDestination,
+        authTokens: [
+          {
+            error: 'ERROR'
+          }
+        ]
+      };
+
+      const mock = nock(destinationServiceUri, {
+        reqheaders: {
+          authorization: `Bearer ${jwt}`
+        }
+      })
+        .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
+        .times(3)
+        .reply(200, response);
+
+      const actual = await fetchDestination(destinationServiceUri, jwt, {
+        destinationName: 'HTTP-OAUTH',
+        retry: true
+      });
+      expect(actual.authTokens![0].error).toEqual('ERROR');
+      expect(mock.isDone()).toBe(true);
+    }, 10000);
 
     it('fetches a destination and returns 200 but authTokens are failing', async () => {
       const destinationName = 'FINAL-DESTINATION';

@@ -230,6 +230,12 @@ export type DestinationRetrievalOptions = CachingOptions & {
    * By default, IsolationStrategy.Tenant_User is set.
    */
   isolationStrategy?: IsolationStrategy;
+  /**
+   * The call to `destination/{name}` sometimes also performs a token exchange. Such calls can be flaky due to an unstable token exchange endpoint.
+   * This parameter enables 3 retries on the destination by name calls.
+   * By default, the retry is disabled.
+   */
+  retry?: boolean;
 };
 
 /**

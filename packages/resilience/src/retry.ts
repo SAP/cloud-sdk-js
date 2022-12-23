@@ -37,7 +37,7 @@ export function retry<ReturnType, ContextType extends Context>(
                 'HTTP request failed but error did not contain a response status field as expected. Rethrowing error.'
               );
             }
-            if (status >= 400 && status < 500) {
+            if (status.toString().startsWith('4')) {
               bail(new Error(`Request failed with status code ${status}`));
               // We need to return something here but the actual value does not matter
               return undefined as ReturnType;

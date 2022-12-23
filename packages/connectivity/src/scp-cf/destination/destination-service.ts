@@ -10,8 +10,10 @@ import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   Context,
   resilience,
-  HttpMiddlewareContext
+  HttpMiddlewareContext,
+  Middleware
 } from '@sap-cloud-sdk/resilience';
+import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
@@ -406,28 +408,25 @@ async function callDestinationService(
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
+  const { destinationName, retry } = options || {};
+
   const config: AxiosRequestConfig = {
     ...urlAndAgent(context.uri),
     proxy: false,
     method: 'get',
-    timeout: 10000, // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
     headers
   };
 
-  let resilience = [
-    timeout<fpp, HttpMiddlewareContext>(),
-    circuitBreakerHttp<fpp, HttpMiddlewareContext>()
-  ];
-  // Do a retry only for the get destination by Name calls which are somethimes flaky for the token retrieval
-  if (options?.destinationName && options.retry) {
-    resilience = [
-      timeout(),
-      circuitBreakerHttp(),
-      retryDestination(options.destinationName)
-    ];
-  }
+  const resilienceMiddleware =
+    destinationName && retry
+      ? [
+          ...resilience<AxiosResponse, HttpMiddlewareContext>(),
+          retryDestination(destinationName)
+        ]
+      : resilience<AxiosResponse, HttpMiddlewareContext>();
+
   return executeWithMiddleware(
-    [timeout(), circuitBreakerHttp()],
+    resilienceMiddleware,
     { requestConfig: config, ...context } as HttpMiddlewareContext,
     () => axios.request(config)
   );

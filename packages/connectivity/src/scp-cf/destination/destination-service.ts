@@ -6,17 +6,12 @@ import {
 } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
-  executeWithMiddleware,
-  circuitBreakerHttp
-} from '@sap-cloud-sdk/resilience/internal';
-import {
-  HttpMiddlewareContext,
   Context,
-  timeout,
-  Middleware
+  resilience,
+  HttpMiddlewareContext
 } from '@sap-cloud-sdk/resilience';
-import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
@@ -303,8 +298,7 @@ async function fetchDestinationByTokens(
 
   return callDestinationEndpoint(
     { uri: targetUri, tenantId: getTenantFromTokens(tokens) },
-    authHeader,
-    options
+    authHeader
   )
     .then(response => {
       const destination: Destination = parseDestination(response.data);
@@ -403,10 +397,6 @@ async function callDestinationEndpoint(
   >;
 }
 
-type fpp = AxiosResponse<
-  DestinationCertificateJson | DestinationConfiguration | DestinationJson
->;
-
 async function callDestinationService(
   context: Context,
   headers: Record<string, any>,
@@ -437,7 +427,7 @@ async function callDestinationService(
     ];
   }
   return executeWithMiddleware(
-    resilience,
+    [timeout(), circuitBreakerHttp()],
     { requestConfig: config, ...context } as HttpMiddlewareContext,
     () => axios.request(config)
   );

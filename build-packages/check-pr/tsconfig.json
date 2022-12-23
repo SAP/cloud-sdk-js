@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib",
+    "tsBuildInfoFile": "./lib/.tsbuildinfo",
+    "composite": false,
+    "incremental": true,
+    "declaration": false,
+    "esModuleInterop": true
+  },
+  "files": ["index.ts"],
+  "exclude": []
+}

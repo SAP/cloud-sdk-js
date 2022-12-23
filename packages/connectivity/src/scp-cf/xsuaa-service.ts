@@ -1,9 +1,6 @@
 import * as xssec from '@sap/xssec';
-import {
-  executeWithMiddleware,
-  circuitBreakerHttp,
-  timeout
-} from '@sap-cloud-sdk/resilience/internal';
+import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
+import { resilience, Context } from '@sap-cloud-sdk/resilience';
 import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
@@ -68,8 +65,8 @@ export async function getClientCredentialsToken(
           err ? reject(err) : resolve(tokenResponse)
       );
     });
-  return executeWithMiddleware(
-    [timeout(), circuitBreakerHttp()],
+  return executeWithMiddleware<ClientCredentialsResponse, Context>(
+    resilience(),
     {
       uri: serviceCredentials.url,
       tenantId: subdomainAndZoneId.zoneId ?? serviceCredentials.tenantid
@@ -107,8 +104,8 @@ export function getUserToken(
       )
     );
 
-  return executeWithMiddleware(
-    [timeout(), circuitBreakerHttp()],
+  return executeWithMiddleware<string, Context>(
+    resilience(),
     {
       uri: service.credentials.url,
       tenantId: subdomainAndZoneId.zoneId ?? service.credentials.tenantid

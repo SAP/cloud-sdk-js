@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import nock from 'nock';
-import { circuitBreakerHttp, circuitBreakers } from './circuit-breaker';
+import { circuitBreakers } from './circuit-breaker';
 import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
+import { resilience } from './resilience';
 import { retry } from './retry';
 import { timeout } from './timeout';
 
@@ -12,9 +13,14 @@ describe('combined resilience features', () => {
     NO_CONTENT: 204,
     UNAUTHORIZED: 401,
     FORBIDDEN: 403,
-    SERVICE_UNAVAILABLE: 504
+    SERVICE_UNAVAILABLE: 503
   };
   const host = 'http://example.com';
+
+  beforeEach(() => {
+    Object.keys(circuitBreakers).forEach(key => delete circuitBreakers[key]);
+    nock.cleanAll();
+  });
 
   it('needs to retry with delay below timeout', async () => {
     nock('https://example.com', {})
@@ -40,6 +46,7 @@ describe('combined resilience features', () => {
       )
     ).resolves.not.toThrow();
   }, 10000);
+
   it('needs to retry with delay above timeout and gets status code of the response with small delay', async () => {
     nock('https://example.com', {})
       .get('/retry')
@@ -64,7 +71,7 @@ describe('combined resilience features', () => {
 
     expect(response.status).toBe(HTTP_STATUS.OK);
   }, 10000);
-  it('circuit breaker works together with a timeout', async () => {
+  it('uses circuit breaker and timeout by default with resilience()', async () => {
     const delay = 100;
     nock(host, {})
       .persist()
@@ -87,7 +94,7 @@ describe('combined resilience features', () => {
     while (keepCalling) {
       await expect(
         executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-          [timeout(delay * 0.5), circuitBreakerHttp()],
+          resilience({ timeout: delay * 0.5 }),
           context,
           request
         )
@@ -100,10 +107,78 @@ describe('combined resilience features', () => {
     }
     await expect(
       executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
-        [circuitBreakerHttp()],
+        resilience({ timeout: false }),
         context,
         request
       )
     ).rejects.toThrow('Breaker is open');
+  });
+
+  it('retry and circuit breaker are not used for 4xx error', async () => {
+    nock(host, {})
+      .get(/with-retry/)
+      .reply(HTTP_STATUS.UNAUTHORIZED);
+
+    const requestConfig: AxiosRequestConfig = {
+      method: 'get',
+      baseURL: host,
+      url: 'with-retry'
+    };
+    const context: HttpMiddlewareContext = {
+      requestConfig,
+      uri: host,
+      tenantId: 'myTestTenant'
+    };
+    const request = () => axios.request(requestConfig);
+    await expect(
+      executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+        resilience({ retry: true }),
+        context,
+        request
+      )
+    ).rejects.toThrowError(/Request failed with status code 401/);
+    expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
+  });
+
+  it('does x number of retries and doesnt open the circuit breaker for few server errors', async () => {
+    nock(host, {})
+      .get(/with-retry/)
+      .times(3)
+      .reply(HTTP_STATUS.SERVICE_UNAVAILABLE)
+      .get(/with-retry/)
+      .reply(HTTP_STATUS.OK);
+
+    const requestConfig: AxiosRequestConfig = {
+      method: 'get',
+      baseURL: host,
+      url: 'with-retry'
+    };
+    const context: HttpMiddlewareContext = {
+      requestConfig,
+      uri: host,
+      tenantId: 'myTestTenant'
+    };
+    const request = () => axios.request(requestConfig);
+    await expect(
+      executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+        resilience({ timeout: false, retry: 3 }),
+        context,
+        request
+      )
+    ).resolves.not.toThrowError();
+
+    expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
+  }, 15000);
+
+  it('throws an error when retry is less than 1', async () => {
+    expect(() => resilience({ retry: -2 })).toThrowError(
+      'Retry count value is invalid.'
+    );
+  });
+
+  it('throws an error when timeout is less or equal to 0', async () => {
+    expect(() => resilience({ timeout: 0 })).toThrowError(
+      'Timeout value is invalid.'
+    );
   });
 });

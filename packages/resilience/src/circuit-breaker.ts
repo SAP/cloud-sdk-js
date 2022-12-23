@@ -40,7 +40,8 @@ function circuitBreakerKeyBuilder<ContextT extends Context>(
 }
 
 /**
- * @internal
+ * Helper method to build a circuit breaker middleware.
+ * @returns The middleware adding a circuit breaker to the function.
  */
 export function circuitBreakerHttp<
   ReturnT,

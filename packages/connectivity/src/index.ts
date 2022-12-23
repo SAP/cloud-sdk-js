@@ -25,6 +25,7 @@ export {
   jwtBearerToken,
   serviceToken,
   Destination,
+  HttpDestination,
   DestinationFetchOptions,
   ServiceBindingTransformFunction,
   DestinationAccessorOptions,

@@ -10,6 +10,7 @@ import {
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 import {
   addProxyConfigurationInternet,
+  assertHttpDestination,
   proxyAgent,
   proxyStrategy,
   ProxyStrategy
@@ -204,6 +205,7 @@ export function urlAndAgent(targetUri: string): {
   if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
     destination = addProxyConfigurationInternet(destination);
   }
+  assertHttpDestination(destination);
   return {
     baseURL: destination.url,
     ...getAgentConfig(destination)

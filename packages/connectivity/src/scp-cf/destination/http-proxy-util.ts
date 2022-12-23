@@ -11,7 +11,10 @@ import {
   HttpsAgentConfig
 } from '../../http-agent/agent-config';
 import { getProtocolOrDefault } from '../get-protocol';
-import { Destination } from './destination-service-types';
+import {
+  Destination,
+  assertHttpDestination
+} from './destination-service-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -47,6 +50,7 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
     );
     return ProxyStrategy.NO_PROXY;
   }
+  assertHttpDestination(destination);
 
   if (getNoProxyEnvValue().includes(destination.url)) {
     logger.debug(
@@ -197,7 +201,9 @@ export function parseProxyEnv(
  * @returns Destination containing the configuration for web proxy.
  * @internal
  */
-export function addProxyConfigurationInternet(destination: any): Destination {
+export function addProxyConfigurationInternet(
+  destination: Destination
+): Destination {
   const proxyEnvValue = getProxyEnvValue(getProtocolOrDefault(destination));
   if (proxyEnvValue) {
     const proxyConfiguration = parseProxyEnv(proxyEnvValue);

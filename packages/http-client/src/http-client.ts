@@ -4,16 +4,17 @@ import {
   buildHeadersForDestination,
   Destination,
   DestinationOrFetchOptions,
-  getAgentConfig,
-  toDestinationNameUrl
+  getAgentConfig
 } from '@sap-cloud-sdk/connectivity';
 import {
+  assertHttpDestination,
   decodedJwtOrZid,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
   getAuthHeader,
   getSubdomainAndZoneId,
+  HttpDestination,
   resolveDestination
 } from '@sap-cloud-sdk/connectivity/internal';
 import {
@@ -59,13 +60,7 @@ export async function buildHttpRequest(
   destination: DestinationOrFetchOptions
 ): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
-  if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
-    throw Error(
-      `The type of the destination '${toDestinationNameUrl(
-        destination
-      )}' has to be 'HTTP', but is '${destination.type}'.`
-    );
-  }
+  assertHttpDestination(resolvedDestination);
 
   const headers = await buildHeaders(resolvedDestination);
 
@@ -108,13 +103,7 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
     options?: HttpRequestOptions
   ): Promise<HttpResponse> {
     const resolvedDestination = await resolveDestination(destination);
-    if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
-      throw Error(
-        `The type of the destination '${toDestinationNameUrl(
-          destination
-        )}' has to be 'HTTP', but is '${destination.type}'.`
-      );
-    }
+    assertHttpDestination(resolvedDestination);
 
     const destinationRequestConfig = await buildHttpRequest(destination);
     logCustomHeadersWarning(requestConfig.headers);
@@ -408,7 +397,7 @@ export function executeHttpRequestWithOrigin<
 }
 
 function buildDestinationHttpRequestConfig(
-  destination: Destination,
+  destination: HttpDestination,
   headers: Record<string, string>
 ): DestinationHttpRequestConfig {
   return {

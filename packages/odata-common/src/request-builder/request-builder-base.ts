@@ -3,7 +3,10 @@ import {
   DestinationOrFetchOptions,
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
-import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
+import {
+  assertHttpDestination,
+  noDestinationErrorMessage
+} from '@sap-cloud-sdk/connectivity/internal';
 import { HttpResponse } from '@sap-cloud-sdk/http-client/internal';
 import { Middleware, HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
 import { ODataRequest } from '../request/odata-request';
@@ -136,6 +139,7 @@ export abstract class MethodRequestBuilder<
           if (!dest) {
             throw Error(noDestinationErrorMessage(destination));
           }
+          assertHttpDestination(dest);
           return new ODataRequest(this.requestConfig, dest);
         })
         .catch(error => {

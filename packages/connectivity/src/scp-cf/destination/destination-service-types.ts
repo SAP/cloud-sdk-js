@@ -19,7 +19,7 @@ export interface Destination {
    * The URL has to define the protocol, like `http://` or `https://`, and a host.
    * The path for requests against this destination will be appended to the path defined in the URL as a new path segment.
    */
-  url: string;
+  url?: string;
 
   /**
    * Type of authentication to use.
@@ -239,13 +239,28 @@ export type DestinationRetrievalOptions = CachingOptions & {
 };
 
 /**
- * Typeguard to find if object is a Destination.
- * @param destination - Destination to be checked
- * @returns boolean
+ * Destination for HTTP request where the URL is mandatory.
+ */
+export type HttpDestination = Destination & { url: string };
+
+/**
+ * Assertion that the Destination has a URL.
+ * @param destination
  * @internal
  */
-export function isDestination(destination: any): destination is Destination {
-  return destination.url !== undefined;
+export function assertHttpDestination(
+  destination: Destination | HttpDestination
+): asserts destination is HttpDestination {
+  if (destination.type && destination.type !== 'HTTP') {
+    throw new Error(
+      `The 'type' property is  ${destination.type} instead of  HTTP for destiantion ${destination.name} which is mandatory if you use it as an 'HTTP destination`
+    );
+  }
+  if (!destination.url) {
+    throw new Error(
+      `The 'url' property is not set for destination ${destination.name} which is mandatory if you use it as an 'HTTP destination`
+    );
+  }
 }
 
 /**

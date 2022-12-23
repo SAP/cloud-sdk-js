@@ -24,10 +24,8 @@ type ErrorFilter = (err) => boolean;
 type KeyBuilder<ContextT extends Context> = (context: ContextT) => string;
 
 function httpErrorFilter(error: AxiosError): boolean {
-  if (
-    error.response?.status &&
-    error.response.status.toString().startsWith('4')
-  ) {
+  const status = error?.response?.status;
+  if (status && status >= 400 && status < 500) {
     return true;
   }
   return false;

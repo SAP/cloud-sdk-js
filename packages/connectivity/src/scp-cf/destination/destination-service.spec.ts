@@ -632,7 +632,7 @@ describe('destination service', () => {
       delete process.env.no_proxy;
     });
 
-    it('does a retry if request fails wit 500 error', async () => {
+    it('does a retry if request fails with 500 error', async () => {
       const response = {
         owner: {
           SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
@@ -653,7 +653,7 @@ describe('destination service', () => {
       expect(actual).toEqual(parseDestination(response));
     });
 
-    it('does a no retry if request fails with 401 error', async () => {
+    it('does no retry if request fails with 401 error', async () => {
       const response = {
         owner: {
           SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',

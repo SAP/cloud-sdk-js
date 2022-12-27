@@ -6,6 +6,7 @@ import {
   HttpDestination
 } from '@sap-cloud-sdk/connectivity';
 import { sendMail } from '@sap-cloud-sdk/mail-client';
+import { assertHttpDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { executeHttpRequest } from '../../../../packages/http-client/src';
 import {
   getService,
@@ -100,7 +101,7 @@ describe('OAuth flows', () => {
       destinationName: systems.s4.providerBasic,
       jwt: accessToken.provider
     });
-
+    assertHttpDestination(destination!);
     const result = await businessPartnerApi
       .requestBuilder()
       .getAll()
@@ -127,7 +128,7 @@ describe('OAuth flows', () => {
       destinationName: systems.s4.providerBasic,
       jwt: accessToken.provider
     });
-
+    assertHttpDestination(destination!);
     const buPa = businessPartnerApi
       .entityBuilder()
       .businessPartnerCategory('1')
@@ -154,7 +155,7 @@ describe('OAuth flows', () => {
       destinationName: systems.s4.subscriberBasic,
       jwt: accessToken.subscriber
     });
-
+    assertHttpDestination(destination!);
     const result = await businessPartnerApi
       .requestBuilder()
       .getAll()
@@ -196,7 +197,7 @@ describe('OAuth flows', () => {
       jwt: accessToken.provider
     });
     expect(destination!.authTokens![0].error).toBeNull();
-
+    assertHttpDestination(destination!);
     const result = await businessPartnerApi
       .requestBuilder()
       .getAll()
@@ -250,7 +251,7 @@ describe('OAuth flows', () => {
       jwt: accessToken.provider
     });
     expect(destination!.authTokens![0].error).toBeNull();
-
+    assertHttpDestination(destination!);
     destination!.url = destination!.url + '/v1/workflow-definitions';
     const response = await executeHttpRequest(destination!, {
       method: 'get'
@@ -264,7 +265,7 @@ describe('OAuth flows', () => {
       destinationName: systems.workflow.providerOAuth2UserTokenExchange,
       jwt: accessToken.provider
     });
-
+    assertHttpDestination(destination!);
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
@@ -335,7 +336,7 @@ describe('OAuth flows', () => {
       destinationName: systems.workflow.providerOauth2JWTBearer,
       jwt: accessToken.provider
     });
-
+    assertHttpDestination(destination!);
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
@@ -387,12 +388,13 @@ describe('OAuth flows', () => {
     const destination = await getDestination({
       destinationName: systems.s4.providerClientCert
     });
+    assertHttpDestination(destination!);
     expect(destination!.certificates!.length).toBe(1);
     const bps = await businessPartnerApi
       .requestBuilder()
       .getAll()
       .top(5)
-      .execute(destination!);
+      .execute(destination);
     expect(bps.length).toBeGreaterThan(0);
   }, 10000);
 
@@ -406,6 +408,7 @@ describe('OAuth flows', () => {
     const destination = await getDestination({
       destinationName: systems.s4.providerClientCert
     });
+    assertHttpDestination(destination!);
     expect(destination!.certificates!.length).toBe(1);
     const bps = await businessPartnerApi
       .requestBuilder()

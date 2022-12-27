@@ -132,15 +132,12 @@ function coercePathArg(arg?: string): string | undefined {
  * @internal
  * Represents the parsed generator options.
  */
-export type ParsedGeneratorOptions = ParsedOptions<
-  GeneratorOptions,
-  typeof generatorOptionsCli
->;
+export type ParsedGeneratorOptions = ParsedOptions<typeof cliOptions>;
 
 /**
  * @internal
  */
-export const generatorOptionsCli = {
+export const cliOptions = {
   inputDir: {
     alias: 'i',
     describe:

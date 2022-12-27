@@ -35,7 +35,7 @@ import { enumTypeSourceFile } from './enum-type/file';
 import { sourceFile } from './file-generator';
 import {
   GeneratorOptions,
-  generatorOptionsCli,
+  cliOptions,
   ParsedGeneratorOptions,
   parseOptions
 } from './options';
@@ -67,7 +67,7 @@ const logger = createLogger({
  * @param options - Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
-  const parsedOptions = parseOptions(generatorOptionsCli, options, opt => ({
+  const parsedOptions = parseOptions(cliOptions, options, opt => ({
     ...opt,
     serviceMapping:
       opt.serviceMapping ||

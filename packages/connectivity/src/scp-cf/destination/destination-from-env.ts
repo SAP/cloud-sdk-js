@@ -11,6 +11,7 @@ import {
   ProxyStrategy,
   proxyStrategy
 } from './http-proxy-util';
+import { isHttpDestination } from './destination-service-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -70,10 +71,14 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
     );
   }
   const destination = matchingDestinations[0];
-  return proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
-    proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY
-    ? addProxyConfigurationInternet(destination)
-    : destination;
+  if (
+    isHttpDestination(destination) &&
+    (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
+      proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
+  ) {
+    return addProxyConfigurationInternet(destination);
+  }
+  return destination;
 }
 
 /**

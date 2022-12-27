@@ -4,19 +4,19 @@ import {
   proxyAgent,
   Protocol,
   ProxyConfiguration,
-  Destination,
   DestinationCertificate
 } from '../scp-cf';
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
+import { HttpDestination } from '../scp-cf/destination';
 import { getAgentConfig } from './http-agent';
 
 describe('createAgent', () => {
-  const baseDestination: Destination = {
+  const baseDestination: HttpDestination = {
     url: 'https://destination.example.com',
     authentication: 'NoAuthentication'
   };
 
-  const proxyDestination: Destination = {
+  const proxyDestination: HttpDestination = {
     ...baseDestination,
     proxyConfiguration: {
       ...connectivityProxyConfigMock,
@@ -26,7 +26,7 @@ describe('createAgent', () => {
     }
   };
 
-  const trustAllDestination: Destination = {
+  const trustAllDestination: HttpDestination = {
     ...baseDestination,
     isTrustingAllCertificates: true
   };
@@ -88,7 +88,7 @@ describe('createAgent', () => {
       port: 4711,
       protocol: Protocol.HTTPS
     };
-    const destHttpWithProxy: Destination = {
+    const destHttpWithProxy: HttpDestination = {
       url: 'http://example.com',
       proxyConfiguration
     };
@@ -97,7 +97,7 @@ describe('createAgent', () => {
     );
 
     proxyConfiguration.protocol = Protocol.HTTP;
-    const destHttpsWithProxy: Destination = {
+    const destHttpsWithProxy: HttpDestination = {
       url: 'https://example.com',
       proxyConfiguration
     };
@@ -113,7 +113,7 @@ describe('createAgent', () => {
       type: 'CERTIFICATE'
     };
 
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'https://some.foo.bar',
       trustStoreCertificate: destinationCertificate
     };
@@ -129,7 +129,7 @@ describe('createAgent', () => {
   });
 
   it('returns an agent with certificate and passphrase set for a destination with authentication type ClientCertificateAuthentication', () => {
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
       keyStoreName: 'cert.p12',
@@ -155,7 +155,7 @@ describe('createAgent', () => {
   });
 
   it('throws an error if the format is not supported', () => {
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
       keyStoreName: 'cert.jks',
@@ -175,7 +175,7 @@ describe('createAgent', () => {
   });
 
   it('throws an error if no certificate with the given name can be found', () => {
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
       keyStoreName: 'cert.pfx',
@@ -199,7 +199,7 @@ describe('createAgent', () => {
 
 describe('getAgentConfig', () => {
   it('returns an object with key "httpsAgent" for destinations with protocol HTTPS', () => {
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'https://example.com'
     };
 
@@ -207,7 +207,7 @@ describe('getAgentConfig', () => {
   });
 
   it('returns an object with key "httpAgent" for destinations with protocol HTTP', () => {
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'http://example.com'
     };
 
@@ -215,7 +215,7 @@ describe('getAgentConfig', () => {
   });
 
   it('returns an object with key "httpsAgent" for destinations without protocol', () => {
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'example.com'
     };
 
@@ -223,7 +223,7 @@ describe('getAgentConfig', () => {
   });
 
   it('throws an error for unsupported protocols', () => {
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'rpc://example.com'
     };
 

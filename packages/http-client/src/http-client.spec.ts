@@ -6,6 +6,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import {
   Destination,
+  HttpDestination,
   Protocol,
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
@@ -47,7 +48,7 @@ import {
 } from './http-client';
 
 describe('generic http client', () => {
-  const httpsDestination: Destination = {
+  const httpsDestination: HttpDestination = {
     name: 'httpsDestination',
     url: 'https://example.com',
     authentication: 'BasicAuthentication',
@@ -58,7 +59,7 @@ describe('generic http client', () => {
 
   const proxyAuthorization = 'youmaypass';
 
-  const proxyDestination: Destination = {
+  const proxyDestination: HttpDestination = {
     name: 'proxyDestination',
     url: 'http://example.com',
     authentication: 'BasicAuthentication',

@@ -110,24 +110,6 @@ describe('parseDestination', () => {
     expect(destination).not.toHaveProperty('queryParameters');
   });
 
-  it('throws an error if there is no `URL` given with `Name`', () => {
-    expect(() =>
-      parseDestination({
-        Name: 'DEST'
-      } as any)
-    ).toThrowErrorMatchingInlineSnapshot(
-      '"Property \'URL\' of destination configuration must not be undefined, but destination with name "DEST" has no property \'URL\'."'
-    );
-  });
-
-  it('throws an error if there is no `URL` given without `Name`', () => {
-    expect(() =>
-      parseDestination({} as any)
-    ).toThrowErrorMatchingInlineSnapshot(
-      '"Property \'URL\' of destination configuration must not be undefined."'
-    );
-  });
-
   it("does not throw when there is no `URL` for destinations with type other than 'HTTP' or undefined", () => {
     expect(() =>
       parseDestination({ Type: 'RFC' } as DestinationConfiguration)
@@ -164,18 +146,6 @@ describe('sanitizeDestination', () => {
       authTokens: []
     };
     expect(actual).toMatchObject(expected);
-  });
-
-  it('throws an error if there is no `url` given', () => {
-    expect(() =>
-      sanitizeDestination({
-        username: 'username',
-        password: 'password',
-        name: 'DEST'
-      })
-    ).toThrowErrorMatchingInlineSnapshot(
-      '"Property \'url\' of destination input must not be undefined."'
-    );
   });
 
   it("does not throw when there is no `url` for destinations with type other than 'HTTP' or undefined", () => {

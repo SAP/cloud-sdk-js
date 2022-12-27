@@ -3,16 +3,15 @@ import { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt } from '../jwt';
 import { Service } from '../environment-accessor-types';
 import { getServiceByInstanceName } from '../environment-accessor';
-import {
-  addProxyConfigurationInternet,
-  ProxyStrategy,
-  proxyStrategy
-} from './http-proxy-util';
-import { Destination } from './destination-service-types';
+import { Destination, isHttpDestination } from './destination-service-types';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import { destinationCache, IsolationStrategy } from './destination-cache';
 import { decodedJwtOrZid } from './destination-from-registration';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
+import {
+  addProxyConfigurationInternet,
+  needsInternetProxy
+} from './http-proxy-util';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -63,10 +62,8 @@ export async function destinationForServiceBinding(
     : await transform(selected, options);
 
   const destWithProxy =
-    destination &&
-    (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
-      proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
-      ? addProxyConfigurationInternet(destination)
+    isHttpDestination(destination) && needsInternetProxy(destination)
+      ? await addProxyConfigurationInternet(destination)
       : destination;
 
   if (options.useCache) {

@@ -1,8 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import {
-  Destination,
-  assertHttpDestination
-} from './destination/destination-service-types';
+import { HttpDestination } from './destination/destination-service-types';
 import { Protocol, getProtocol } from './protocol';
 
 const logger = createLogger({
@@ -17,9 +14,8 @@ const logger = createLogger({
  * @returns The protocol, either https or http.
  * @internal
  */
-export function getProtocolOrDefault(destination: Destination): Protocol {
-  assertHttpDestination(destination);
-  const protocol = destination?.url?.toLowerCase()?.split('://');
+export function getProtocolOrDefault(destination: HttpDestination): Protocol {
+  const protocol = destination.url.toLowerCase()?.split('://');
 
   if (!protocol || protocol.length === 1) {
     logger.warn(

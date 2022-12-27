@@ -79,7 +79,7 @@ export async function buildHttpRequest(
 export async function addDestinationToRequestConfig<
   T extends HttpRequestConfig
 >(
-  destination: DestinationOrFetchOptions,
+  destination: HttpDestination,
   requestConfig: T
 ): Promise<T & DestinationHttpRequestConfig> {
   const destinationConfig = await buildHttpRequest(destination);
@@ -105,7 +105,9 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
     const resolvedDestination = await resolveDestination(destination);
     assertHttpDestination(resolvedDestination);
 
-    const destinationRequestConfig = await buildHttpRequest(destination);
+    const destinationRequestConfig = await buildHttpRequest(
+      resolvedDestination
+    );
     logCustomHeadersWarning(requestConfig.headers);
     const request = await buildRequestWithMergedHeadersAndQueryParameters(
       requestConfig,

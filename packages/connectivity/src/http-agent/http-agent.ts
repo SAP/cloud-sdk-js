@@ -10,7 +10,7 @@ import {
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 import {
   addProxyConfigurationInternet,
-  assertHttpDestination,
+  HttpDestination,
   proxyAgent,
   proxyStrategy,
   ProxyStrategy
@@ -30,7 +30,7 @@ const logger = createLogger({
  * @returns The http or http-agent configuration.
  */
 export function getAgentConfig(
-  destination: Destination
+  destination: HttpDestination
 ): HttpAgentConfig | HttpsAgentConfig {
   const agentType = destination.proxyConfiguration
     ? AgentType.PROXY
@@ -52,7 +52,7 @@ enum AgentType {
 }
 
 function createProxyAgent(
-  destination: Destination,
+  destination: HttpDestination,
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   if (!destination.proxyConfiguration) {
@@ -70,7 +70,9 @@ function createProxyAgent(
  * @param destination - Destination object
  * @returns Options, which can be used later the http client.
  */
-function getTrustStoreOptions(destination: Destination): Record<string, any> {
+function getTrustStoreOptions(
+  destination: HttpDestination
+): Record<string, any> {
   // http case: no certificate needed
   if (getProtocolOrDefault(destination) === Protocol.HTTP) {
     if (destination.isTrustingAllCertificates) {
@@ -180,7 +182,7 @@ function selectCertificate(destination): DestinationCertificate {
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
  */
 function createDefaultAgent(
-  destination: Destination,
+  destination: HttpDestination,
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   if (getProtocolOrDefault(destination) === Protocol.HTTPS) {
@@ -201,11 +203,10 @@ export function urlAndAgent(targetUri: string): {
   httpAgent?: http.Agent;
   httpsAgent?: http.Agent;
 } {
-  let destination: Destination = { url: targetUri, proxyType: 'Internet' };
+  let destination: HttpDestination = { url: targetUri, proxyType: 'Internet' };
   if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
     destination = addProxyConfigurationInternet(destination);
   }
-  assertHttpDestination(destination);
   return {
     baseURL: destination.url,
     ...getAgentConfig(destination)

@@ -1,7 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { decodeJwt } from '../jwt';
 import { getXsuaaServiceCredentials } from '../environment-accessor';
-import { Destination, DestinationAuthToken } from './destination-service-types';
+import {
+  Destination,
+  DestinationAuthToken,
+  isHttpDestination
+} from './destination-service-types';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
   DefaultDestinationCache,
@@ -11,8 +15,7 @@ import {
 } from './destination-cache';
 import {
   addProxyConfigurationInternet,
-  ProxyStrategy,
-  proxyStrategy
+  needsInternetProxy
 } from './http-proxy-util';
 
 const logger = createLogger({
@@ -47,10 +50,8 @@ export async function registerDestination(
   destination: DestinationWithName,
   options?: RegisterDestinationOptions
 ): Promise<void> {
-  if (!destination.name || !destination.url) {
-    throw Error(
-      'Registering destinations requires a destination name and url.'
-    );
+  if (!destination.name) {
+    throw Error('Registering destinations requires a destination name.');
   }
 
   await registerDestinationCache.cacheRetrievedDestination(
@@ -106,9 +107,7 @@ export async function searchRegisteredDestination(
     );
   }
 
-  return destination &&
-    (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
-      proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
+  return isHttpDestination(destination) && needsInternetProxy(destination)
     ? addProxyConfigurationInternet(destination)
     : destination;
 }

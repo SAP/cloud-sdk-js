@@ -1,6 +1,10 @@
 import { businessPartnerService } from '@sap/cloud-sdk-vdm-business-partner-service';
 import * as xssec from '@sap/xssec';
-import { Destination, getAgentConfig } from '@sap-cloud-sdk/connectivity';
+import {
+  Destination,
+  getAgentConfig,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity';
 import { sendMail } from '@sap-cloud-sdk/mail-client';
 import { executeHttpRequest } from '../../../../packages/http-client/src';
 import {
@@ -182,7 +186,7 @@ describe('OAuth flows', () => {
     });
     expect(destination?.trustStoreCertificate).toBeDefined();
     expect(destination?.trustStoreCertificate?.content).toBeDefined();
-    const agent = getAgentConfig(destination!);
+    const agent = getAgentConfig(destination! as HttpDestination);
     expect(agent['httpsAgent'].options.ca[0]).toMatch(/BEGIN CERTIFICATE/);
   }, 60000);
 
@@ -472,7 +476,7 @@ describe('OAuth flows', () => {
     expect(myDestination?.proxyType).toEqual('PrivateLink');
   });
 
-  xit('Mail: Provider cloud basic auth', async () => {
+  it('Mail: Provider cloud basic auth', async () => {
     const destination = await getDestinationFromDestinationService({
       destinationName: systems.email.providerCloudBasic
     });

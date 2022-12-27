@@ -11,10 +11,7 @@ import {
   HttpsAgentConfig
 } from '../../http-agent/agent-config';
 import { getProtocolOrDefault } from '../get-protocol';
-import {
-  Destination,
-  assertHttpDestination
-} from './destination-service-types';
+import { HttpDestination } from './destination-service-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -28,7 +25,7 @@ const logger = createLogger({
  * @returns ProxyStrategy possible values are noProxy, internetProxy or onPremProxy.
  * @internal
  */
-export function proxyStrategy(destination: Destination): ProxyStrategy {
+export function proxyStrategy(destination: HttpDestination): ProxyStrategy {
   if (destination.proxyType === 'OnPremise') {
     logger.debug(
       'OnPrem destination proxy settings from connectivity service will be used.'
@@ -50,7 +47,6 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
     );
     return ProxyStrategy.NO_PROXY;
   }
-  assertHttpDestination(destination);
 
   if (getNoProxyEnvValue().includes(destination.url)) {
     logger.debug(
@@ -196,14 +192,28 @@ export function parseProxyEnv(
 }
 
 /**
+ * TODO can be more elegant once the proxy strategy is not an enum anymore
+ * @internal
+ * @param destination
+ * @returns true if the  proxy strategy is INTERNET_PROXY or PRIVATELINK_PROXY
+ */
+export function needsInternetProxy(destination: HttpDestination): boolean {
+  const type = proxyStrategy(destination);
+  return (
+    type === ProxyStrategy.INTERNET_PROXY ||
+    type === ProxyStrategy.PRIVATELINK_PROXY
+  );
+}
+
+/**
  * Adds the proxy configuration to a destination based on web proxies defined in environment variables. See {@link ProxyConfiguration} and {@link proxyStrategy} for details.
  * @param destination - to which the proxy configuration is added.
  * @returns Destination containing the configuration for web proxy.
  * @internal
  */
 export function addProxyConfigurationInternet(
-  destination: Destination
-): Destination {
+  destination: HttpDestination
+): HttpDestination {
   const proxyEnvValue = getProxyEnvValue(getProtocolOrDefault(destination));
   if (proxyEnvValue) {
     const proxyConfiguration = parseProxyEnv(proxyEnvValue);
@@ -228,7 +238,7 @@ export function addProxyConfigurationInternet(
  * @internal
  */
 export function proxyAgent(
-  destination: Destination,
+  destination: HttpDestination,
   options?: AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   const targetProtocol = getProtocolOrDefault(destination);
@@ -274,6 +284,7 @@ export function proxyAgent(
 }
 
 /**
+ * TODO change this in version 3 to be a union type 'NO_PROXY' | 'ON_PREMISE_PROXY'....
  * Enum representing the different strategies for proxies on requests. Possible situations are "NO_PROXY", use the connectivity service proxy for On-Premise connection or a usual web proxy.
  * See also {@link ProxyConfiguration} for more details.
  * @internal

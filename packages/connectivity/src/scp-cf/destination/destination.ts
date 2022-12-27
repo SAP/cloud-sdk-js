@@ -19,7 +19,6 @@ import {
 export function sanitizeDestination(
   destination: Record<string, any>
 ): Destination {
-  validateDestinationInput(destination);
   const destAuthToken = parseAuthTokens(destination);
   let parsedDestination = parseCertificates(destAuthToken) as Destination;
 
@@ -41,7 +40,6 @@ export function parseDestination(
   destinationJson: DestinationJson | DestinationConfiguration
 ): Destination {
   const destinationConfig = getDestinationConfig(destinationJson);
-  validateDestinationConfig(destinationConfig);
 
   const destination = Object.entries(destinationConfig).reduce(
     (dest, [originalKey, value]) => {
@@ -181,43 +179,6 @@ export function getDestinationConfig(
     ? destinationJson.destinationConfiguration
     : destinationJson;
 }
-/**
-  @internal
- */
-export function validateDestinationConfig(
-  destinationConfig: DestinationConfiguration
-): void {
-  if (
-    isHttpDestination(destinationConfig) &&
-    typeof destinationConfig.URL === 'undefined'
-  ) {
-    const detailedMessage = destinationConfig.Name
-      ? `, but destination with name "${destinationConfig.Name}" has no property 'URL'`
-      : '';
-
-    throw Error(
-      `Property 'URL' of destination configuration must not be undefined${detailedMessage}.`
-    );
-  }
-}
-
-function validateDestinationInput(destinationInput: Record<string, any>): void {
-  if (
-    isHttpDestination(destinationInput) &&
-    typeof destinationInput.url === 'undefined'
-  ) {
-    throw Error("Property 'url' of destination input must not be undefined.");
-  }
-}
-
-function isHttpDestination(destinationInput: Record<string, any>): boolean {
-  return (
-    destinationInput.Type === 'HTTP' ||
-    destinationInput.type === 'HTTP' ||
-    (typeof destinationInput.type === 'undefined' &&
-      typeof destinationInput.Type === 'undefined')
-  );
-}
 
 /**
  * Transform Destination to strings containing destination information.
@@ -341,7 +302,7 @@ export interface DestinationConfiguration {
   /**
    * `URL` of the destination.
    */
-  URL: string;
+  URL?: string;
   /**
    * `Name` of the destination.
    */

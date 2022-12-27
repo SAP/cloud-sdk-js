@@ -4,16 +4,16 @@ import execa from 'execa';
 import * as fs from 'fs-extra';
 import mock from 'mock-fs';
 import { generate } from '../../../packages/generator/src/generator';
-import { createOptionsFromConfig } from '../../../packages/generator/src/generator-options';
+import { createOptionsFromConfig } from '../../../packages/generator/src/options';
 import { createOptions } from '../../../packages/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 
 const pathToGenerator = path.resolve(
   __dirname,
-  '../../../packages/generator/src/generator-cli.ts'
+  '../../../packages/generator/src/cli.ts'
 );
 
-describe('generator-cli', () => {
+describe('generator CLI', () => {
   const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
   const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
   const pathToConfig = path.resolve(__dirname, 'generator.config.json');

@@ -4,6 +4,7 @@ import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
 import { createOptions } from '../test/test-util/create-generator-options';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   checkStaticProperties,
   getOperationFunctionDeclarations,
@@ -228,6 +229,71 @@ describe('generator', () => {
           'testActionImportMultipleParameterComplexReturnType'
         ])
       );
+    });
+  });
+
+  describe('logger', () => {
+    let project;
+    beforeAll(async () => {
+      mock({
+        common: {},
+        '/prettier/config': JSON.stringify({ printWidth: 66 }),
+        [pathTestResources]: mock.load(pathTestResources),
+        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
+        [pathRootNodeModules]: mock.load(pathRootNodeModules)
+      });
+
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'logger',
+        overwrite: true,
+        prettierConfig: '/prettier/config',
+        generateSdkMetadata: true,
+        include: join(pathTestResources, '*.md')
+      });
+      project = await generateProject(options);
+      await generate(options);
+    });
+
+    afterAll(() => mock.restore());
+
+    it('logger level is info by default', async () => {
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'logger',
+        overwrite: true,
+        prettierConfig: '/prettier/config',
+        generateSdkMetadata: true,
+        include: join(pathTestResources, '*.md')
+      });
+      project = await generateProject(options);
+      await generate(options);
+
+      const logger = createLogger({
+        package: 'generator',
+        messageContext: 'generator'
+      });
+      expect(logger.level).toBe('info');
+    });
+
+    it('logger level is verbose when verbose option is set to true', async () => {
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'logger',
+        overwrite: true,
+        prettierConfig: '/prettier/config',
+        generateSdkMetadata: true,
+        include: join(pathTestResources, '*.md'),
+        verbose: true
+      });
+      project = await generateProject(options);
+      await generate(options);
+
+      const logger = createLogger({
+        package: 'generator',
+        messageContext: 'generator'
+      });
+      expect(logger.level).toBe('verbose');
     });
   });
 });

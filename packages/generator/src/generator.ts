@@ -330,9 +330,16 @@ export async function generateSourcesForService(
     );
   }
 
-  if(options.transpile || options.tsConfig) {
+  if (options.transpile || options.tsConfig) {
     filePromises.push(
-      createFile(serviceDirPath, 'tsconfig.json', options.tsConfig ? await readCustomTsConfig(options.tsConfig) : formatTsConfig() , createFileOptions)
+      createFile(
+        serviceDirPath,
+        'tsconfig.json',
+        options.tsConfig
+          ? await readCustomTsConfig(options.tsConfig)
+          : formatTsConfig(),
+        createFileOptions
+      )
     );
   }
 

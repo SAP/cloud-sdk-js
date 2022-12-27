@@ -93,7 +93,7 @@ export interface GeneratorOptions {
    * By default, a `tsconfig.json` is only generated when transpilation is enabled (`transpile`).
    * If a directory is passed, a `tsconfig.json` file is read from this directory.
    */
-   tsConfig?: string;
+  tsConfig?: string;
   /**
    * Hidden option only for internal usage - generate metadata for API hub integration.
    */

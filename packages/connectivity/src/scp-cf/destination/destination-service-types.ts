@@ -244,29 +244,30 @@ export type DestinationRetrievalOptions = CachingOptions & {
 export type HttpDestination = Destination & { url: string };
 
 /**
- * Assertion that the Destination has a URL.
- * @param destination
- * @internal
+ * Assertion that the Destination is a HttpDestination.
+ * This method comes in handy when you retrieved a destination from the destination service and need to check if it is a HttpDestination.
+ * @param destination - Destination or HttpDestination.
  */
 export function assertHttpDestination(
   destination: Destination | HttpDestination
 ): asserts destination is HttpDestination {
-  if (destination.type && destination.type !== 'HTTP') {
+  if (!isHttpDestination(destination)) {
+    if (!destination.url) {
+      throw new Error(
+        `The 'url' property is not set for destination ${destination.name} which is mandatory if you use it as an 'HTTP destination`
+      );
+    }
     throw new Error(
       `The 'type' property is  ${destination.type} instead of  HTTP for destination '${destination.name}' which is mandatory if you use it as an 'HTTP destination`
-    );
-  }
-  if (!isHttpDestination(destination)) {
-    throw new Error(
-      `The 'url' property is not set for destination ${destination.name} which is mandatory if you use it as an 'HTTP destination`
     );
   }
 }
 
 /**
- * Typeguard that the Destination is HTTP destination.
- * @param destination
- * @internal
+ * Type guard that the Destination is HTTP destination.
+ * This method comes in handy when you retrieved a destination from the destination service and need to check if it is a HttpDestination.
+ * @param destination - Destination or HttpDestination.
+ * @returns True if the destination is a HTTP destination.
  */
 export function isHttpDestination(
   destination: HttpDestination | Destination | null

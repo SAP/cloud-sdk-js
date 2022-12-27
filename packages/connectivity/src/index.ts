@@ -26,6 +26,8 @@ export {
   serviceToken,
   Destination,
   HttpDestination,
+  isHttpDestination,
+  assertHttpDestination,
   DestinationFetchOptions,
   ServiceBindingTransformFunction,
   DestinationAccessorOptions,

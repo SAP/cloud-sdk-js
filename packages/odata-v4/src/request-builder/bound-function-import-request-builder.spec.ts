@@ -1,4 +1,4 @@
-import {Destination, HttpDestination} from '@sap-cloud-sdk/connectivity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import {
   TestEntity,
   testService

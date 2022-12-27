@@ -84,9 +84,16 @@ export interface GeneratorOptions {
    */
   licenseInPackageJson?: string;
   /**
-   * Generates transpiled `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. When set to `false`, the generator will only generate `.ts` files.
+   * When enabled, generates transpiled `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files.
+   * By default, only `.ts` files are generated.
    */
-  generateJs?: boolean;
+  transpile?: boolean;
+  /**
+   * Replace the default `tsconfig.json` by passing a path to a custom configuration.
+   * By default, a `tsconfig.json` is only generated when transpilation is enabled (`transpile`).
+   * If a directory is passed, a `tsconfig.json` file is read from this directory.
+   */
+   tsConfig?: string;
   /**
    * Hidden option only for internal usage - generate metadata for API hub integration.
    */
@@ -285,11 +292,17 @@ export const generatorOptionsCli = {
     deprecated:
       "Since v2.12.0. Use the 'include' option to add your own package.json file instead."
   },
-  generateJs: {
+  transpile: {
     describe:
-      'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When set to false, the generator will only generate .ts files.',
+      'Transpile the generated TypeScript code. When enabled a default `tsconfig.json` will be generated and used. It emits `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. To configure transpilation set `--tsconfig`.',
     type: 'boolean',
-    default: true
+    default: false
+  },
+  tsConfig: {
+    string: true,
+    describe:
+      'Replace the default `tsconfig.json` by passing a path to a custom config. By default, a `tsconfig.json` is only generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file is read from this directory.',
+    coerce: coercePathArg
   },
   transpilationProcesses: {
     describe: 'Number of processes used for generation of javascript files.',

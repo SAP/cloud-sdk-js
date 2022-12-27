@@ -8,7 +8,7 @@ const logger = createLogger('generate-odata-services');
 const generatorConfigOData = {
   forceOverwrite: true,
   overwrite: true,
-  generateJs: false,
+  transpile: false,
   useSwagger: false,
   writeReadme: false,
   readme: false,
@@ -28,7 +28,7 @@ async function generateOdata(): Promise<void> {
     ...generatorConfigOData,
     inputDir: join('..', '..', 'test-resources', 'odata-service-specs', 'v4'),
     outputDir: resolve('.'),
-    generateJs: true
+    transpile: true
   }).catch(reason => {
     logger.error(`[v4] Unhandled rejection at: ${reason}`);
     process.exit(1);

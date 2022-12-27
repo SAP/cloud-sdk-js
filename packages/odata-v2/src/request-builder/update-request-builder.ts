@@ -1,5 +1,8 @@
 import { createLogger, isNullish } from '@sap-cloud-sdk/util';
-import {DestinationOrFetchOptions, HttpDestination} from '@sap-cloud-sdk/connectivity';
+import {
+  DestinationOrFetchOptions,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   EntityIdentifiable,
@@ -56,7 +59,9 @@ export class UpdateRequestBuilder<
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to the entity once it was updated.
    */
-  async execute(destination: DestinationOrFetchOptions<HttpDestination>): Promise<EntityT> {
+  async execute(
+    destination: DestinationOrFetchOptions<HttpDestination>
+  ): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
     }

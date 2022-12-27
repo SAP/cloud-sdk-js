@@ -1,4 +1,7 @@
-import {DestinationOrFetchOptions, HttpDestination} from '@sap-cloud-sdk/connectivity';
+import {
+  DestinationOrFetchOptions,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { first } from '@sap-cloud-sdk/util';
 import { MethodRequestBuilder } from '../request-builder-base';

@@ -8,7 +8,7 @@ import {
   AuthenticationType,
   Destination,
   DestinationAuthToken,
-  DestinationCertificate, HttpDestination
+  DestinationCertificate
 } from './destination-service-types';
 
 /**
@@ -190,7 +190,9 @@ export function toDestinationNameUrl(
 ): string {
   return isDestinationFetchOptions(destination)
     ? `name: ${destination.destinationName}`
-    : `name: ${destination.name} ${destination.url ? ', url: ' : ''}${destination.url}`;
+    : `name: ${destination.name} ${destination.url ? ', url: ' : ''}${
+        destination.url
+      }`;
 }
 
 function setOriginalProperties(destination: Destination): Destination {

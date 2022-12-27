@@ -1,7 +1,11 @@
 import nock from 'nock';
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
-import { Protocol } from '@sap-cloud-sdk/connectivity';
+import {
+  DestinationWithName,
+  Protocol,
+  registerDestination
+} from '@sap-cloud-sdk/connectivity';
 import { DestinationConfiguration } from '@sap-cloud-sdk/connectivity/internal';
 import * as tokenAccessor from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
 import {
@@ -38,7 +42,7 @@ describe('mail client', () => {
     verify: jest.fn()
   };
 
-  it('should work with the destination service', async () => {
+  it('should work with destination from service', async () => {
     jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
@@ -70,7 +74,7 @@ describe('mail client', () => {
       }
     ];
     mockServiceBindings();
-    // the mockServiceToken() methoc does not work outside connectivity module.
+    // the mockServiceToken() method does not work outside connectivity module.
     jest
       .spyOn(tokenAccessor, 'serviceToken')
       .mockImplementation((_, options) =>
@@ -84,6 +88,49 @@ describe('mail client', () => {
       providerServiceToken
     );
 
+    await expect(
+      sendMail(
+        { destinationName: 'MyMailDestination' },
+        [mailOptions1],
+        mailClientOptions
+      )
+    ).resolves.not.toThrow();
+  });
+
+  it('should work with registered destination', async () => {
+    jest
+      .spyOn(nodemailer, 'createTransport')
+      .mockReturnValue(mockTransport as any);
+    const mailOptions1: MailConfig = {
+      from: 'from2@example.com',
+      to: 'to2@example.com'
+    };
+
+    const mailClientOptions: MailClientOptions = {
+      secure: true,
+      proxy: 'http://my.proxy.com:25',
+      tls: {
+        rejectUnauthorized: false
+      }
+    };
+
+    mockServiceBindings();
+    const mailDestination: DestinationWithName = {
+      name: 'MyMailDestination',
+      type: 'MAIL',
+      authentication: 'BasicAuthentication',
+      proxyType: 'Internet',
+      username: 'user',
+      password: 'password',
+      originalProperties: {
+        'mail.password': 'password',
+        'mail.user': 'user',
+        'mail.smtp.host': 'smtp.gmail.com',
+        'mail.smtp.port': '587'
+      }
+    };
+
+    registerDestination(mailDestination);
     await expect(
       sendMail(
         { destinationName: 'MyMailDestination' },

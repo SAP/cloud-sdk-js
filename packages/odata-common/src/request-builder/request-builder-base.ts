@@ -1,6 +1,7 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
-  DestinationOrFetchOptions, HttpDestination,
+  DestinationOrFetchOptions,
+  HttpDestination,
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
 import {
@@ -31,7 +32,9 @@ export abstract class MethodRequestBuilder<
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns Promise resolving to the URL for the request.
    */
-  async url(destination: DestinationOrFetchOptions<HttpDestination>): Promise<string> {
+  async url(
+    destination: DestinationOrFetchOptions<HttpDestination>
+  ): Promise<string> {
     const request = await this.build(destination);
     return request.url();
   }

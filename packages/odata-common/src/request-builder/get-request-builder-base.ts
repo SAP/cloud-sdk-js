@@ -1,5 +1,8 @@
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
-import {DestinationOrFetchOptions, HttpDestination} from '@sap-cloud-sdk/connectivity';
+import {
+  DestinationOrFetchOptions,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, EntityIdentifiable, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';

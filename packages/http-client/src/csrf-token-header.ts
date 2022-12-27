@@ -7,7 +7,10 @@ import {
   pickValueIgnoreCase,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import {DestinationOrFetchOptions, HttpDestination} from '@sap-cloud-sdk/connectivity';
+import {
+  DestinationOrFetchOptions,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity';
 import {
   HttpRequestConfig,
   HttpRequestConfigBase,

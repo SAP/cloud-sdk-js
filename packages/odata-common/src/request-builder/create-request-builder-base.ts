@@ -1,5 +1,8 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import {DestinationOrFetchOptions, HttpDestination} from '@sap-cloud-sdk/connectivity';
+import {
+  DestinationOrFetchOptions,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { v4 as uuid } from 'uuid';
 import type { EntitySerializer } from '../entity-serializer';
@@ -103,7 +106,9 @@ export abstract class CreateRequestBuilderBase<
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to the created entity.
    */
-  async execute(destination: DestinationOrFetchOptions<HttpDestination>): Promise<EntityT> {
+  async execute(
+    destination: DestinationOrFetchOptions<HttpDestination>
+  ): Promise<EntityT> {
     return this.executeRaw(destination)
       .then(response =>
         this.deserializer.deserializeEntity(

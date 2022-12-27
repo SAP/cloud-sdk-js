@@ -21,8 +21,7 @@ Add a timeout middleware to a request.
 ```
 executeHttpRequest(destination, { middleware: [ timeout() ] }, httpRequestOptions);
 ```
-<!-- TODO v3 put better link when documentation is done -->
-For more detailed overview visit our [resilience documentation](https://sap.github.io/cloud-sdk/docs/js/).
+For more detailed overview visit our [resilience documentation](https://sap.github.io/cloud-sdk/docs/js/guides/resilience).
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->

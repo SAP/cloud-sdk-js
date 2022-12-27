@@ -6,14 +6,17 @@ describe('options parser', () => {
   const options = {
     deprecatedOption: {
       describe: 'deprecated option',
+      type: 'string',
       deprecated: 'Since vX.',
       replacedBy: 'newOption'
     },
     otherOption: {
-      describe: 'other option'
+      describe: 'other option',
+      type: 'string'
     },
     newOption: {
       describe: 'new option',
+      type: 'boolean',
       default: false
     }
   } as const;

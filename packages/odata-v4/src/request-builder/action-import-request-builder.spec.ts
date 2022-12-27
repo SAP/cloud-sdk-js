@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType,
@@ -12,7 +12,7 @@ import { defaultDeSerializers } from '../de-serializers';
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const host = 'https://example.com';
 
-const destination: Destination = {
+const destination: HttpDestination = {
   url: host,
   username: 'username',
   password: 'password',

@@ -1,7 +1,7 @@
 import {
   Destination,
   ProxyConfiguration,
-  Protocol
+  Protocol, HttpDestination
 } from '@sap-cloud-sdk/connectivity';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
@@ -17,7 +17,7 @@ const {
   proxyPassword
 } = require('./proxy-server-config');
 
-const onPremDestination: Destination = {
+const onPremDestination: HttpDestination = {
   url: e2eDestination?.url,
   proxyType: 'OnPremise',
   // NoAuthentication is not possible with OnPremise proxy type.
@@ -33,7 +33,7 @@ const onPremDestination: Destination = {
     }
   }
 };
-const internetDestination: Destination = {
+const internetDestination: HttpDestination = {
   url: e2eDestination?.url,
   proxyType: 'Internet',
   authentication: 'NoAuthentication',

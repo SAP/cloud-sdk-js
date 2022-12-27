@@ -476,7 +476,7 @@ describe('OAuth flows', () => {
     expect(myDestination?.proxyType).toEqual('PrivateLink');
   });
 
-  it('Mail: Provider cloud basic auth', async () => {
+  xit('Mail: Provider cloud basic auth', async () => {
     const destination = await getDestinationFromDestinationService({
       destinationName: systems.email.providerCloudBasic
     });

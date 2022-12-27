@@ -1,4 +1,7 @@
-import { formatTsConfig, readCustomTsConfig } from '@sap-cloud-sdk/generator-common/internal';
+import {
+  formatTsConfig,
+  readCustomTsConfig
+} from '@sap-cloud-sdk/generator-common/internal';
 import { ParsedGeneratorOptions } from './generator-options';
 
 /**
@@ -13,8 +16,6 @@ export async function tsconfigJson({
   tsConfig
 }: ParsedGeneratorOptions): Promise<string | undefined> {
   if (transpile || tsConfig) {
-    return tsConfig
-      ? readCustomTsConfig(tsConfig)
-      : formatTsConfig();
+    return tsConfig ? readCustomTsConfig(tsConfig) : formatTsConfig();
   }
 }

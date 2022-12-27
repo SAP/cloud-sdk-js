@@ -175,9 +175,6 @@ describe('combined resilience features', () => {
     ).resolves.not.toThrowError();
 
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
-    expect(circuitBreakers[`${host}::myTestTenant`].stats.failures).toBe(3);
-    expect(circuitBreakers[`${host}::myTestTenant`].stats.successes).toBe(1);
-    expect(circuitBreakers[`${host}::myTestTenant`].stats.fires).toBe(4);
   }, 15000);
 
   it('throws an error when retry is less than 1', async () => {

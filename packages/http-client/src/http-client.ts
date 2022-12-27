@@ -358,7 +358,6 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
   requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
-  // eslint-disable-next-line jsdoc/require-jsdoc
   const requestConfigWithOrigin =
     buildHttpRequestConfigWithOrigin(requestConfig);
   return execute(executeWithAxios)(

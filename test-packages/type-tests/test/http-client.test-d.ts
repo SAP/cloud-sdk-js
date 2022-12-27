@@ -20,6 +20,15 @@ expectType<Promise<HttpResponse>>(
   )
 );
 
+//Url must be given
+expectError<any>(
+    executeHttpRequest(
+        { name: 'somevalue'},
+        { method: 'get' }
+    )
+);
+
+
 const serviceBindingTransformFn: ServiceBindingTransformFunction =
   async serviceBinding => ({
     url: serviceBinding.credentials.sys

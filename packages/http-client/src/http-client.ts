@@ -57,7 +57,7 @@ const TENANT_ID = 'tenant_id';
  * @returns A {@link DestinationHttpRequestConfig}.
  */
 export async function buildHttpRequest(
-  destination: DestinationOrFetchOptions
+  destination: DestinationOrFetchOptions<HttpDestination>
 ): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
   assertHttpDestination(resolvedDestination);
@@ -98,7 +98,7 @@ export async function addDestinationToRequestConfig<
  */
 export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
   return async function <T extends HttpRequestConfigWithOrigin>(
-    destination: DestinationOrFetchOptions,
+    destination: DestinationOrFetchOptions<HttpDestination>,
     requestConfig: T,
     options?: HttpRequestOptions
   ): Promise<HttpResponse> {
@@ -354,7 +354,7 @@ function logRequestInformation(request: HttpRequestConfig) {
  * @returns A promise resolving to an {@link HttpResponse}.
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(
-  destination: DestinationOrFetchOptions,
+  destination: DestinationOrFetchOptions<HttpDestination>,
   requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
@@ -384,7 +384,7 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
 export function executeHttpRequestWithOrigin<
   T extends HttpRequestConfigWithOrigin
 >(
-  destination: DestinationOrFetchOptions,
+  destination: DestinationOrFetchOptions<HttpDestination>,
   requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
@@ -518,7 +518,7 @@ export function shouldHandleCsrfToken(
 }
 
 async function getCsrfHeaders(
-  destination: DestinationOrFetchOptions,
+  destination: DestinationOrFetchOptions<HttpDestination>,
   request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
   const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
@@ -537,7 +537,7 @@ async function getCsrfHeaders(
 }
 
 async function addCsrfTokenToHeader(
-  destination: DestinationOrFetchOptions,
+  destination: DestinationOrFetchOptions<HttpDestination>,
   request: HttpRequestConfig & DestinationHttpRequestConfig,
   httpRequestOptions?: HttpRequestOptions
 ): Promise<Record<string, string>> {

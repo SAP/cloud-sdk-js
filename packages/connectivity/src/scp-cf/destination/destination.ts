@@ -8,7 +8,7 @@ import {
   AuthenticationType,
   Destination,
   DestinationAuthToken,
-  DestinationCertificate
+  DestinationCertificate, HttpDestination
 } from './destination-service-types';
 
 /**
@@ -186,11 +186,11 @@ export function getDestinationConfig(
  * @returns String containing information on the destination.
  */
 export function toDestinationNameUrl(
-  destination: DestinationOrFetchOptions
+  destination: DestinationOrFetchOptions<Destination>
 ): string {
   return isDestinationFetchOptions(destination)
     ? `name: ${destination.destinationName}`
-    : `name: ${destination.name}, url: ${destination.url}`;
+    : `name: ${destination.name} ${destination.url ? ', url: ' : ''}${destination.url}`;
 }
 
 function setOriginalProperties(destination: Destination): Destination {
@@ -420,7 +420,7 @@ const configMapping: Record<string, keyof Destination> = {
  * @internal
  */
 export function noDestinationErrorMessage(
-  destination: DestinationOrFetchOptions
+  destination: DestinationOrFetchOptions<Destination>
 ): string {
   return isDestinationFetchOptions(destination)
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
@@ -430,7 +430,7 @@ export function noDestinationErrorMessage(
 /**
  * Type that is either a {@link Destination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
  */
-export type DestinationOrFetchOptions = Xor<
-  Destination,
+export type DestinationOrFetchOptions<T extends Destination> = Xor<
+  T,
   DestinationFetchOptions & DestinationForServiceBindingOptions
 >;

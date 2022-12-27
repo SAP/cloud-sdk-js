@@ -282,7 +282,7 @@ function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
  * @see https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination#referencing-destinations-by-name
  */
 export async function sendMail<T extends MailConfig>(
-  destination: DestinationOrFetchOptions,
+  destination: DestinationOrFetchOptions<Destination>,
   mailConfigs: T | T[],
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {

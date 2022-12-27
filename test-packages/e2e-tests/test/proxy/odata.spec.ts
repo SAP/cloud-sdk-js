@@ -1,7 +1,7 @@
 import {
-  Destination,
   ProxyConfiguration,
-  Protocol, HttpDestination
+  Protocol,
+  HttpDestination
 } from '@sap-cloud-sdk/connectivity';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';

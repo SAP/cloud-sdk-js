@@ -15,10 +15,7 @@ const logger = createLogger({
  * Enumerator that selects the isolation type of destination in cache.
  * The used isolation strategy is either `Tenant` or `Tenant_User` because we want to get results for subaccount and provider tenants which rules out no-isolation or user isolation.
  */
-export enum IsolationStrategy {
-  Tenant = 'Tenant',
-  Tenant_User = 'TenantUser'
-}
+export type IsolationStrategy = 'tenant' | 'tenant-user';
 
 /**
  * Interface to implement custom destination caching.
@@ -171,33 +168,46 @@ export const DestinationCache = (
 export function getDestinationCacheKey(
   decodedJwt: Record<string, any>,
   destinationName: string,
-  isolationStrategy = IsolationStrategy.Tenant_User
+  isolationStrategy: IsolationStrategy = 'tenant-user'
 ): string | undefined {
-  const tenant = tenantId(decodedJwt);
-  const user = userId(decodedJwt);
-  switch (isolationStrategy) {
-    case IsolationStrategy.Tenant:
-      if (tenant) {
-        return `${tenant}::${destinationName}`;
-      }
-      logger.warn(
-        `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id is undefined.`
-      );
-      return;
-    case IsolationStrategy.Tenant_User:
-      if (tenant && user) {
-        return `${user}:${tenant}:${destinationName}`;
-      }
-      logger.warn(
-        `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id or user id is undefined.`
-      );
-      return;
-    default:
-      logger.warn(
-        `Cannot get cache key. Isolation strategy ${isolationStrategy} is not supported.`
-      );
-      return;
+  if (isolationStrategy === 'tenant') {
+    return getTenantCacheKey(destinationName, tenantId(decodedJwt));
   }
+  if (isolationStrategy === 'tenant-user') {
+    return getTenantUserCacheKey(
+      destinationName,
+      tenantId(decodedJwt),
+      userId(decodedJwt)
+    );
+  }
+  logger.warn(
+    `Could not build destination cache key. Isolation strategy '${isolationStrategy}' is not supported.`
+  );
+}
+
+function getTenantCacheKey(
+  destinationName: string,
+  tenant: string | undefined
+): string | undefined {
+  if (tenant) {
+    return `${tenant}::${destinationName}`;
+  }
+  logger.warn(
+    "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant id is undefined."
+  );
+}
+
+function getTenantUserCacheKey(
+  destinationName: string,
+  tenant: string | undefined,
+  user: string | undefined
+): string | undefined {
+  if (tenant && user) {
+    return `${user}:${tenant}:${destinationName}`;
+  }
+  logger.warn(
+    "Could not build destination cache key. Isolation strategy 'user-tenant' is used, but tenant id or user id is undefined in JWT."
+  );
 }
 
 async function cacheRetrievedDestination<T extends DestinationCacheInterface>(
@@ -242,7 +252,5 @@ export let destinationCache: DestinationCacheType = DestinationCache();
 export function getDefaultIsolationStrategy(
   jwt: JwtPayload | undefined
 ): IsolationStrategy {
-  return jwt && userId(jwt)
-    ? IsolationStrategy.Tenant_User
-    : IsolationStrategy.Tenant;
+  return jwt && userId(jwt) ? 'tenant-user' : 'tenant';
 }

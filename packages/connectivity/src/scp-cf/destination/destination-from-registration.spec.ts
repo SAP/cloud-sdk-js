@@ -10,7 +10,6 @@ import {
   xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util';
 import { getDestination } from './destination-accessor';
-import { IsolationStrategy } from './destination-cache';
 import {
   DestinationWithName,
   registerDestination,
@@ -95,7 +94,7 @@ describe('register-destination', () => {
   it('cache if tenant if you want', async () => {
     await registerDestination(testDestination, {
       jwt: subscriberUserJwt,
-      isolationStrategy: IsolationStrategy.Tenant
+      isolationStrategy: 'tenant'
     });
     await expect(
       registerDestinationCache
@@ -141,7 +140,7 @@ describe('register-destination', () => {
     const actual = await getDestination({
       destinationName: 'FORWARD-TOKEN-DESTINATION',
       jwt: fullToken,
-      isolationStrategy: IsolationStrategy.Tenant
+      isolationStrategy: 'tenant'
     });
     expect(actual?.authTokens![0].expiresIn).toEqual('1234');
     expect(actual?.authTokens![0].value).toEqual(fullToken);

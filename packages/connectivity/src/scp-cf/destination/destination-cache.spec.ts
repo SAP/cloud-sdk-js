@@ -166,7 +166,7 @@ describe('destination cache', () => {
         destinationName: 'ProviderDest',
         jwt: providerUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant_User,
+        isolationStrategy: 'tenant-user',
         iasToXsuaaTokenExchange: false
       });
       const cacheKeys = Object.keys(
@@ -176,7 +176,7 @@ describe('destination cache', () => {
         getDestinationCacheKey(
           providerUserPayload,
           'ProviderDest',
-          IsolationStrategy.Tenant_User
+          'tenant-user'
         )
       );
     });
@@ -190,10 +190,10 @@ describe('destination cache', () => {
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = await getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = await getProviderCache(IsolationStrategy.Tenant);
-      const c5 = await getSubscriberCache(IsolationStrategy.Tenant_User);
-      const c6 = await getProviderCache(IsolationStrategy.Tenant_User);
+      const c1 = await getSubscriberCache('tenant');
+      const c2 = await getProviderCache('tenant');
+      const c5 = await getSubscriberCache('tenant-user');
+      const c6 = await getProviderCache('tenant-user');
 
       expect(c1).toBeUndefined();
       expect(c2).toBeUndefined();
@@ -207,13 +207,13 @@ describe('destination cache', () => {
         destinationName: 'SubscriberDest',
         jwt: subscriberUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant,
+        isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = await getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = await getProviderCache(IsolationStrategy.Tenant);
+      const c1 = await getSubscriberCache('tenant');
+      const c2 = await getProviderCache('tenant');
 
       expect(c1!.url).toBe('https://subscriber.example');
       expect(c2).toBeUndefined();
@@ -224,14 +224,14 @@ describe('destination cache', () => {
         destinationName: 'ProviderDest',
         jwt: subscriberUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant,
+        isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysProvider,
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = await getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = await getProviderCache(IsolationStrategy.Tenant);
+      const c1 = await getSubscriberCache('tenant');
+      const c2 = await getProviderCache('tenant');
 
       expect(c1).toBeUndefined();
       expect(c2!.url).toBe('https://provider.example');
@@ -243,14 +243,14 @@ describe('destination cache', () => {
         destinationName: 'SubscriberDest',
         jwt: subscriberUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant,
+        isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber,
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = await getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = await getProviderCache(IsolationStrategy.Tenant);
+      const c1 = await getSubscriberCache('tenant');
+      const c2 = await getProviderCache('tenant');
 
       expect(c1!.url).toBe('https://subscriber.example');
       expect(c2).toBeUndefined();
@@ -262,14 +262,14 @@ describe('destination cache', () => {
         destinationName: 'ANY',
         jwt: subscriberUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant,
+        isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber,
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = await getSubscriberCache(IsolationStrategy.Tenant);
-      const c2 = await getProviderCache(IsolationStrategy.Tenant);
+      const c1 = await getSubscriberCache('tenant');
+      const c2 = await getProviderCache('tenant');
 
       expect(c1).toBeUndefined();
       expect(c2).toBeUndefined();
@@ -281,20 +281,14 @@ describe('destination cache', () => {
         destinationName: 'SubscriberDest2',
         jwt: subscriberUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant,
+        isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber,
         iasToXsuaaTokenExchange: false
       });
 
-      const c1 = await getSubscriberCache(
-        IsolationStrategy.Tenant,
-        'SubscriberDest'
-      );
-      const c2 = await getSubscriberCache(
-        IsolationStrategy.Tenant,
-        'SubscriberDest2'
-      );
+      const c1 = await getSubscriberCache('tenant', 'SubscriberDest');
+      const c2 = await getSubscriberCache('tenant', 'SubscriberDest2');
 
       expect(c1).toBeUndefined();
       expect(c2!.url).toBe('https://subscriber2.example');
@@ -314,7 +308,7 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         { user_id: 'user', zid: 'tenant' },
         destinationOne,
-        IsolationStrategy.Tenant
+        'tenant'
       );
       await expect(
         getDestination({ destinationName: destName })
@@ -325,7 +319,7 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         destinationOne,
-        IsolationStrategy.Tenant
+        'tenant'
       );
       const actual = await getDestination({
         destinationName: destName,
@@ -353,7 +347,7 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),
         destinationOne,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
       const actual = await getDestination({
         destinationName: destName,
@@ -368,11 +362,11 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         destinationOne,
-        IsolationStrategy.Tenant
+        'tenant'
       );
       const actual = await getDestination({
         destinationName: destName,
-        isolationStrategy: IsolationStrategy.Tenant,
+        isolationStrategy: 'tenant',
         iasToXsuaaTokenExchange: false
       });
       expect(actual).toEqual(destinationOne);
@@ -382,11 +376,11 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),
         destinationOne,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
       const actual = await getDestination({
         destinationName: destName,
-        isolationStrategy: IsolationStrategy.Tenant_User,
+        isolationStrategy: 'tenant-user',
         jwt: subscriberUserJwt,
         iasToXsuaaTokenExchange: false
       });
@@ -400,7 +394,7 @@ describe('destination cache', () => {
       await expect(
         getDestination({
           destinationName: destName,
-          isolationStrategy: IsolationStrategy.Tenant,
+          isolationStrategy: 'tenant',
           jwt: signedJwt({ user_id: 'onlyUserInJwt' }),
           iasToXsuaaTokenExchange: false
         })
@@ -417,7 +411,7 @@ describe('destination cache', () => {
       await expect(
         getDestination({
           destinationName: destName,
-          isolationStrategy: IsolationStrategy.Tenant_User,
+          isolationStrategy: 'tenant-user',
           jwt: subscriberServiceToken,
           iasToXsuaaTokenExchange: false
         })
@@ -484,7 +478,7 @@ describe('destination cache', () => {
           zid: 'provider'
         }),
         destinationFromCache?.name,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
@@ -545,7 +539,7 @@ describe('destination cache', () => {
           zid: 'provider'
         }),
         expected.name,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
@@ -611,7 +605,7 @@ describe('destination cache', () => {
           zid: 'provider'
         }),
         expected.name,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
     });
 
@@ -631,14 +625,14 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         decodeJwt(subscriberUserJwt),
         parsedDestination,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
 
       const actual = await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant_User,
+        isolationStrategy: 'tenant-user',
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });
@@ -662,14 +656,14 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         parsedDestination,
-        IsolationStrategy.Tenant
+        'tenant'
       );
 
       const actual = await getDestination({
         destinationName: 'ProviderDest',
         jwt: providerUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant,
+        isolationStrategy: 'tenant',
         selectionStrategy: alwaysProvider,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
@@ -694,7 +688,7 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerUserJwt),
         parsedDestination,
-        IsolationStrategy.Tenant
+        'tenant'
       );
 
       const httpMocks = [
@@ -706,7 +700,7 @@ describe('destination cache', () => {
         destinationName: 'ProviderDest',
         jwt: subscriberUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant,
+        isolationStrategy: 'tenant',
         selectionStrategy: subscriberFirst,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
@@ -723,18 +717,18 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destinationOne,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
 
       const actual1 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
       const actual2 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.Tenant
+        'tenant'
       );
 
       const expected = [destinationOne, undefined];
@@ -747,18 +741,18 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destinationOne,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
 
       const actual1 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.Tenant
+        'tenant'
       );
       const actual2 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
 
       const expected = [undefined, undefined];
@@ -771,17 +765,17 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destinationOne,
-        IsolationStrategy.Tenant
+        'tenant'
       );
       const actual1 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.Tenant
+        'tenant'
       );
       const actual2 = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
 
       const expected = [undefined, undefined];
@@ -795,13 +789,13 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destinationOne,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
       const minutesToExpire = 6;
       const actualBefore = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
       expect(actualBefore).toBeDefined();
 
@@ -810,7 +804,7 @@ describe('destination cache', () => {
       const actualAfter = await destinationCache.retrieveDestinationFromCache(
         dummyJwt,
         'destToCache1',
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
 
       expect(actualAfter).toBeUndefined();
@@ -831,13 +825,13 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         dummyJwt,
         destination,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
       const retrieveDestination = () =>
         destinationCache.retrieveDestinationFromCache(
           dummyJwt,
           destination.name!,
-          IsolationStrategy.Tenant_User
+          'tenant-user'
         );
 
       await expect(retrieveDestination()).resolves.toEqual(destination);
@@ -862,7 +856,7 @@ describe('destination cache', () => {
       await destinationCache.cacheRetrievedDestination(
         { user_id: 'user', zid: 'tenant' },
         destinationOne,
-        IsolationStrategy.Tenant_User
+        'tenant-user'
       );
 
       expect(setSpy).toHaveBeenCalled();
@@ -871,7 +865,7 @@ describe('destination cache', () => {
         destinationCache.retrieveDestinationFromCache(
           { user_id: 'user', zid: 'tenant' },
           'destToCache1',
-          IsolationStrategy.Tenant_User
+          'tenant-user'
         );
 
       await expect(retrieveDestination()).resolves.toEqual(destinationOne);

@@ -16,5 +16,5 @@ function changeset(first, ...rest) {
     return new odata_v4_1.BatchChangeSet((0, util_1.transformVariadicArgumentToArray)(first, rest));
 }
 exports.changeset = changeset;
-exports.defaultTestServicePath = '/odata/test-service';
+exports.defaultTestServicePath = 'VALUE_IS_UNDEFINED';
 //# sourceMappingURL=BatchRequest.js.map

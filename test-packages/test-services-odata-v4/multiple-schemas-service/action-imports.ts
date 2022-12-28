@@ -40,7 +40,7 @@ export function testActionImportNoParameterComplexReturnType1<
   const params = {};
 
   return new ActionImportRequestBuilder(
-    '/sap/opu/odata/sap/API_TEST_SRV',
+    'VALUE_IS_UNDEFINED',
     'TestActionImportNoParameterComplexReturnType1',
     data =>
       transformReturnValueForComplexType(data, data =>
@@ -78,7 +78,7 @@ export function testActionImportNoParameterComplexReturnType2<
   const params = {};
 
   return new ActionImportRequestBuilder(
-    '/sap/opu/odata/sap/API_TEST_SRV',
+    'VALUE_IS_UNDEFINED',
     'TestActionImportNoParameterComplexReturnType2',
     data =>
       transformReturnValueForComplexType(data, data =>

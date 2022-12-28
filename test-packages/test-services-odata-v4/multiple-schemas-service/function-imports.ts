@@ -41,7 +41,7 @@ export function testFunctionImportEntityReturnType1<
   const params = {};
 
   return new FunctionImportRequestBuilder(
-    '/sap/opu/odata/sap/API_TEST_SRV',
+    'VALUE_IS_UNDEFINED',
     'TestFunctionImportEntityReturnType1',
     data =>
       transformReturnValueForEntity(
@@ -78,7 +78,7 @@ export function testFunctionImportEntityReturnType2<
   const params = {};
 
   return new FunctionImportRequestBuilder(
-    '/sap/opu/odata/sap/API_TEST_SRV',
+    'VALUE_IS_UNDEFINED',
     'TestFunctionImportEntityReturnType2',
     data =>
       transformReturnValueForEntity(

@@ -16,5 +16,5 @@ function changeset(first, ...rest) {
     return new odata_v4_1.BatchChangeSet((0, util_1.transformVariadicArgumentToArray)(first, rest));
 }
 exports.changeset = changeset;
-exports.defaultMultipleSchemasServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+exports.defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
 //# sourceMappingURL=BatchRequest.js.map

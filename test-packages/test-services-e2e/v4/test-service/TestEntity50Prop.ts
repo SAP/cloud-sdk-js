@@ -25,7 +25,7 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = '/odata/test-service';
+  static _defaultServicePath = 'VALUE_IS_UNDEFINED';
   /**
    * All key fields of the TestEntity50Prop entity
    */

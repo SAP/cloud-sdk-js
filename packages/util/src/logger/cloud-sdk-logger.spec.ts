@@ -375,10 +375,15 @@ describe('Cloud SDK Logger', () => {
         [rootNodeModules]: mock.load(rootNodeModules)
       });
     });
+    afterEach(() => {
+      resetCustomLogLevels();
+      
+    });
 
     it('should display no verbose logs by default', async () => {
       const fileTransport = new transports.File({
         filename: 'test.log',
+        level: 'info'
       });
       setGlobalTransports(fileTransport);
 
@@ -434,6 +439,7 @@ describe('Cloud SDK Logger', () => {
         /logs verbose in test.log because the level is equal to verbose/
       );
       mock.restore();
+
     });
   });
 

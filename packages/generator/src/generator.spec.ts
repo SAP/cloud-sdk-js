@@ -242,17 +242,6 @@ describe('generator', () => {
         [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
         [pathRootNodeModules]: mock.load(pathRootNodeModules)
       });
-
-      const options = createOptions({
-        inputDir: pathTestService,
-        outputDir: 'logger',
-        overwrite: true,
-        prettierConfig: '/prettier/config',
-        generateSdkMetadata: true,
-        include: join(pathTestResources, '*.md')
-      });
-      project = await generateProject(options);
-      await generate(options);
     });
 
     afterAll(() => mock.restore());

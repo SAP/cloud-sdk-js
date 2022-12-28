@@ -157,8 +157,8 @@ export const DestinationCache = (
 
 /**
  * Calculates a cache key based on the jwt and destination name for the given isolation strategy.
- * Cache keys for strategies are non-overlapping, i.e. using a cache key for strategy {@link IsolationStrategy.Tenant}
- * will not result in a cache hit for a destination that has been cached with strategy {@link IsolationStrategy.Tenant_User}.
+ * Cache keys for strategies are non-overlapping, i.e. using a cache key for strategy {@link 'tenant'}
+ * will not result in a cache hit for a destination that has been cached with strategy {@link 'tenant-user'}.
  * @param decodedJwt - The decoded JWT of the current request.
  * @param destinationName - The name of the destination.
  * @param isolationStrategy - The strategy used to isolate cache entries.

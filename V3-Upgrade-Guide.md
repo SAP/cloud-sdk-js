@@ -25,6 +25,7 @@ This document will guide you through the steps necessary to upgrade to version 3
 - [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
 - [Replace Timeout](#timeout)
 - [Direct API Constructor Usage](#direct-api-constructor-usage)
+- [Update transpilation options in OData client generator](#update-transpilation-options-in-odata-client-generator)
 
 ### Update your project dependencies
 
@@ -164,3 +165,12 @@ const myEntityApi = new MyEntityApi()
 the navigation properties are not correctly initialized leading to potential errors.
 To avoid this unintended usage of the constructor the visibility was changed to `private`.
 If you used the constructor directly please change your code to use the service function e.g. `myEntityService()` in the example above.
+
+### Update Transpilation options in Odata client generator
+
+The old `generateJs` option has been removed and instead replaced by `transpile`.
+By default, the OData generator will only generate TypeScript code.
+To generate JavaScript code, enable transpilation using the `--transpile` option.
+
+A new option, `tsConfig`, can be used to either pass a custom tsConfig configuration file or use a default config from the SDK.
+This flag should be used together with `transpile`. 

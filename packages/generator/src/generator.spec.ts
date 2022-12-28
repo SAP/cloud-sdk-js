@@ -3,8 +3,8 @@ import { promises } from 'fs';
 import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
-import { createOptions } from '../test/test-util/create-generator-options';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { createOptions } from '../test/test-util/create-generator-options';
 import {
   checkStaticProperties,
   getOperationFunctionDeclarations,

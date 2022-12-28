@@ -10,11 +10,11 @@ import {
 /**
  * @internal
  */
-export function parseCmdArgs(): GeneratorOptions {
+export function parseCmdArgs(): GeneratorOptions & { config?: string } {
   const command = yargs
     .command(
       '$0',
-      'OData Client Code Generator for OData v2 and v4. Generates TypeScript code from EDMX and XML files for usage with the SAP Cloud SDK for JavaScript.'
+      'OData Client Code Generator for OData v2 and v4. Generates typed clients from EDMX and XML files for usage with the SAP Cloud SDK for JavaScript.'
     )
     .options(getOptionsWithoutDefaults(cliOptions))
     .config

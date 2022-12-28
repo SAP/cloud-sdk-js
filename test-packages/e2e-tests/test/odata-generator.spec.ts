@@ -3,9 +3,11 @@ import { resolve } from 'path';
 import execa from 'execa';
 import * as fs from 'fs-extra';
 import mock from 'mock-fs';
-import { generate } from '../../../packages/generator/src/generator';
-import { createOptionsFromConfig } from '../../../packages/generator/src/options';
-import { createOptions } from '../../../packages/generator/test/test-util/create-generator-options';
+import {
+  createOptionsFromConfig,
+  generate
+} from '@sap-cloud-sdk/generator/internal';
+import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 
 const pathToGenerator = path.resolve(
@@ -13,7 +15,7 @@ const pathToGenerator = path.resolve(
   '../../../packages/generator/src/cli.ts'
 );
 
-describe('generator CLI', () => {
+describe('OData generator CLI', () => {
   const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
   const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
   const pathToConfig = path.resolve(__dirname, 'generator.config.json');
@@ -52,7 +54,7 @@ describe('generator CLI', () => {
     }
   }, 60000);
 
-  it('should generate VDM if all arguments are there', async () => {
+  it('should generate client if all arguments are there', async () => {
     await generate(
       createOptions({
         inputDir,

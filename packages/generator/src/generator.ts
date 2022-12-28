@@ -66,13 +66,10 @@ const logger = createLogger({
  * Generates models and API files.
  * @param options - Options to configure generation.
  */
-export async function generate(options: GeneratorOptions): Promise<void> {
-  const parsedOptions = parseOptions(cliOptions, options, opt => ({
-    ...opt,
-    serviceMapping:
-      opt.serviceMapping ||
-      resolve(opt.inputDir.toString(), 'service-mapping.json')
-  }));
+export async function generate(
+  options: GeneratorOptions & { config?: string }
+): Promise<void> {
+  const parsedOptions = parseOptions(cliOptions, options);
   return generateWithParsedOptions(parsedOptions);
 }
 

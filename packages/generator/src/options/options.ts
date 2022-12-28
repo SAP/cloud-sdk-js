@@ -124,8 +124,20 @@ export interface GeneratorOptions {
   packageVersion?: string;
 }
 
-function coercePathArg(arg?: string): string | undefined {
-  return arg ? resolve(arg) : arg;
+function coerceRequiredPathArg(
+  arg: string,
+  options: GeneratorOptions & { config?: string }
+): string {
+  return options.config ? resolve(dirname(options.config), arg) : resolve(arg);
+}
+
+function coercePathArg(
+  arg: string | undefined,
+  options: GeneratorOptions & { config?: string }
+): string | undefined {
+  if (arg) {
+    return coerceRequiredPathArg(arg, options);
+  }
 }
 
 /**
@@ -142,7 +154,7 @@ export const cliOptions = {
     alias: 'i',
     describe:
       'This directory will be recursively searched for EDMX and XML files.',
-    coerce: resolve,
+    coerce: coerceRequiredPathArg,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -150,7 +162,7 @@ export const cliOptions = {
   outputDir: {
     alias: 'o',
     describe: 'Directory to save the generated code in.',
-    coerce: resolve,
+    coerce: coerceRequiredPathArg,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -160,7 +172,13 @@ export const cliOptions = {
     describe:
       'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. Will be generated if not existent. By default it will be saved to/read from the input directory as "service-mapping.json".',
     type: 'string',
-    coerce: coercePathArg
+    coerce: (
+      arg: string | undefined,
+      options: GeneratorOptions & { config?: string }
+    ) =>
+      arg
+        ? resolve(arg)
+        : resolve(options.inputDir.toString(), 'service-mapping.json')
   },
   prettierConfig: {
     alias: 'p',

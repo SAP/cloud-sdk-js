@@ -1,7 +1,7 @@
-import { parseOptions } from '@sap-cloud-sdk/generator/internal';
+import { cliOptions, parseOptions } from '@sap-cloud-sdk/generator/internal';
 import { expectError, expectType } from 'tsd';
 
-const cliOptions = {
+const options = {
   deprecated: {
     describe: 'replaced',
     type: 'string',
@@ -26,26 +26,14 @@ const cliOptions = {
   coercedOptional: {
     describe: 'coercedOptional',
     type: 'string',
-    coerce: (val?: string) => (val ? (1 as number) : undefined)
+    coerce: (val: string | undefined) => (val ? (1 as number) : undefined)
   }
 } as const;
 
-// type s = ParsedOptions<
-//   {
-//     deprecatedOption?: any;
-//     replacingOption: any;
-//   },
-//   typeof cliOptions
-// >;
-// type x = s['deprecatedOption'];
-// type y = s['replacingOption'];
-
-const parsedOptions = parseOptions(cliOptions, {
+const parsedOptions = parseOptions(options, {
   replacing: 'x',
   deprecated: 'y'
 });
-
-// parsedOptions.
 
 /**
  * Parses required option type.
@@ -71,3 +59,20 @@ expectType<number>(parsedOptions.coerced);
  * Uses coerced optional type.
  */
 expectType<number | undefined>(parsedOptions.coercedOptional);
+
+const realParsedOptions = parseOptions(cliOptions, {});
+
+/**
+ * `inputDir` is required.
+ */
+expectType<string>(realParsedOptions.inputDir);
+
+/**
+ * `serviceMapping` is required because it has a default.
+ */
+expectType<string>(realParsedOptions.serviceMapping);
+
+/**
+ * `prettierConfig` is optional because it has no default value.
+ */
+expectType<string | undefined>(realParsedOptions.prettierConfig);

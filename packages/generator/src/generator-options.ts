@@ -264,9 +264,9 @@ export const generatorOptionsCli = {
   },
   packageJson: {
     describe:
-      'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
+      'When enabled, a `package.json` that specifies dependencies and scripts for transpilation and documentation generation is generated.',
     type: 'boolean',
-    default: true
+    default: false
   },
   generatePackageJson: {
     describe:

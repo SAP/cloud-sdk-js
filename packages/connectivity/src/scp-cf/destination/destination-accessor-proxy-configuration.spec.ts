@@ -64,7 +64,7 @@ describe('proxy configuration', () => {
     });
     expect(actual?.proxyConfiguration).toEqual({
       host: 'some.proxy.com',
-      protocol: Protocol.HTTP,
+      protocol: 'http',
       port: 1234
     });
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));

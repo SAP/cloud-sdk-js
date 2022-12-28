@@ -120,7 +120,7 @@ describe('connectivity-service', () => {
     const expected = {
       host: 'proxy.example.com',
       port: 54321,
-      protocol: Protocol.HTTP
+      protocol: 'http'
     };
 
     const hostAndPort = httpProxyHostAndPort();

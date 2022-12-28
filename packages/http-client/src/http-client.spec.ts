@@ -4,11 +4,7 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import {
-  Destination,
-  Protocol,
-  ProxyConfiguration
-} from '@sap-cloud-sdk/connectivity';
+import { Destination, ProxyConfiguration } from '@sap-cloud-sdk/connectivity';
 import {
   timeout,
   Middleware,
@@ -72,7 +68,7 @@ describe('generic http client', () => {
       },
       host: 'proxy.host',
       port: 1234,
-      protocol: Protocol.HTTP
+      protocol: 'http'
     }
   };
 
@@ -701,7 +697,7 @@ sap-client:001`);
         proxyConfiguration: {
           host: 'dummy',
           port: 1234,
-          protocol: Protocol.HTTP
+          protocol: 'http'
         }
       };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
@@ -811,7 +807,7 @@ sap-client:001`);
       const proxyConfiguration: ProxyConfiguration = {
         host: 'localhost',
         port: 8080,
-        protocol: Protocol.HTTP
+        protocol: 'http'
       };
       // A fake proxy server
       http

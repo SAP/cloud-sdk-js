@@ -14,7 +14,6 @@ import {
   addProxyConfigurationOnPrem,
   httpProxyHostAndPort
 } from './connectivity-service';
-import { Protocol } from './protocol';
 import { Destination } from './destination';
 
 describe('connectivity-service', () => {

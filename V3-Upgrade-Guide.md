@@ -136,8 +136,10 @@ myRequestBuilder
     .middleware([timeout()])
     .execute(myDestination);
 ```
-<!-- TODO v3 put better link when documentation is done -->
-A detailed guide on the middleware concept is presented on the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/overview).
+
+You find a detailed guide on the general [middleware concept](https://sap.github.io/cloud-sdk/docs/js/v3/features/middleware)  and the [resilience middlewares](https://sap.github.io/cloud-sdk/docs/js/v3/guides/resilience) in particular on the documentation portal.
+
+
 
 ### Direct API Constructor Usage
 

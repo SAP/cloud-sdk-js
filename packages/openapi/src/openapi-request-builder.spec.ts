@@ -107,8 +107,8 @@ describe('openapi-request-builder', () => {
 
   it('executes a request using the timeout', async () => {
     const delayInResponse = 10;
-    const slowDestintaion = { url: 'https://example.com' };
-    nock(slowDestintaion.url, {})
+    const slowDestination = { url: 'https://example.com' };
+    nock(slowDestination.url, {})
       .get('/with-delay')
       .times(2)
       .delay(delayInResponse)
@@ -117,7 +117,7 @@ describe('openapi-request-builder', () => {
     const timeoutBelowDelay = () =>
       new OpenApiRequestBuilder('get', '/with-delay')
         .middleware([timeout(delayInResponse * 0.5)])
-        .execute(slowDestintaion);
+        .execute(slowDestination);
 
     await expect(timeoutBelowDelay()).rejects.toThrow(
       'Request to URL: https://example.com ran into a timeout after 5ms.'
@@ -126,7 +126,7 @@ describe('openapi-request-builder', () => {
     const timeoutAboveDelay = () =>
       new OpenApiRequestBuilder('get', '/with-delay')
         .middleware([timeout(delayInResponse * 10)])
-        .execute(slowDestintaion);
+        .execute(slowDestination);
     await expect(timeoutAboveDelay()).resolves.not.toThrow();
   });
 
@@ -286,8 +286,8 @@ describe('openapi-request-builder', () => {
       requestBuilder.addCustomRequestConfiguration({
         method: 'merge'
       });
-      const reqeustConfig = await requestBuilder['requestConfig']();
-      expect(reqeustConfig['method']).toBe('merge');
+      const requestConfig = await requestBuilder['requestConfig']();
+      expect(requestConfig['method']).toBe('merge');
     });
   });
 });

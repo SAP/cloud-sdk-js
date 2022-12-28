@@ -7,7 +7,7 @@ import nock from 'nock';
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
 import { DefaultDeSerializers } from '../de-serializers';
 const regexUuid = '\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}';
-const responseBoudary = 'responseBoundary';
+const responseBoundary = 'responseBoundary';
 
 describe('batch request', () => {
   const { batch, testEntityApi, functionImports } = testService();
@@ -23,22 +23,22 @@ sap-metadata-last-modified: Wed, 22 Dec 2021 22:29:24 GMT
 cache-control: no-store, no-cache
 dataserviceversion: 2.0`;
 
-  const getAllResponse = `--${responseBoudary}
+  const getAllResponse = `--${responseBoundary}
 ${getHeader('application/http')}
 
 {"d":{"results":[{"StringProperty":"4711"}]}}
---${responseBoudary}--
+--${responseBoundary}--
 `;
 
-  const functionImportResponse = `--${responseBoudary}
+  const functionImportResponse = `--${responseBoundary}
 ${getHeader('application/http')}
 
 {"d": {"TestFunctionImportGET":"MyText"}}
 
---${responseBoudary}--
+--${responseBoundary}--
 `;
 
-  const postResponse = `--${responseBoudary}
+  const postResponse = `--${responseBoundary}
 ${getHeader('multipart/mixed; boundary=batchId')}
 
 --batchId
@@ -48,7 +48,7 @@ HTTP/1.1 200 OK
 {"d": {"TestFunctionImportPOST":true}}
 --batchId
 
---${responseBoudary}--
+--${responseBoundary}--
 `;
 
   const baseUrl = 'https://some.sdk.test.url.com';
@@ -71,7 +71,7 @@ HTTP/1.1 200 OK
     nock(baseUrl)
       .post('/sap/opu/odata/sap/API_TEST_SRV/$batch', new RegExp(body))
       .reply(202, functionImportResponse, {
-        'content-type': `multipart/mixed; boundary=${responseBoudary}`
+        'content-type': `multipart/mixed; boundary=${responseBoundary}`
       });
     const response = await batch(
       functionImports.testFunctionImportGet({} as any)
@@ -109,7 +109,7 @@ HTTP/1.1 200 OK
     nock(baseUrl)
       .post('/sap/opu/odata/sap/API_TEST_SRV/$batch', new RegExp(body))
       .reply(202, postResponse, {
-        'content-type': `multipart/mixed; boundary=${responseBoudary}`
+        'content-type': `multipart/mixed; boundary=${responseBoundary}`
       });
 
     const requestBuilder = testFunctionImportPost({
@@ -133,7 +133,7 @@ HTTP/1.1 200 OK
     nock(baseUrl)
       .post('/sap/opu/odata/sap/API_TEST_SRV/$batch')
       .reply(202, getAllResponse, {
-        'content-type': `multipart/mixed; boundary=${responseBoudary}`
+        'content-type': `multipart/mixed; boundary=${responseBoundary}`
       });
     const response = await batch(
       testEntityApi.requestBuilder().getAll()

@@ -30,7 +30,7 @@
 
 ### Minor Changes
 
-- f62eb0d3: [Improvement] Make OderBy() set in asscending order by defalt.
+- f62eb0d3: [Improvement] Make OderBy() set in ascending order by default.
 
 ### Patch Changes
 

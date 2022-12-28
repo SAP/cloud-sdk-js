@@ -804,7 +804,7 @@ sap-client:001`);
     /* eslint-disable no-console */
     /**
      * BLI: https://github.com/SAP/cloud-sdk-backlog/issues/560.
-     * Actual: request is successfull.
+     * Actual: request is successful.
      * Expected: Axios requests should pass via the proxy and hence result in a redirect loop.
      * */
     xit('test axios proxy redirect', () => {
@@ -1215,6 +1215,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         requestConfig
       );
     });
+
     it('should return the original object, when the parameter is typed as HttpRequestConfigWithOrigin', () => {
       const requestConfig: HttpRequestConfigWithOrigin = {
         method: 'get',

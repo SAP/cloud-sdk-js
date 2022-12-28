@@ -62,7 +62,7 @@ const formatCredentials = `Format of credentials.json is:
   {
     alias:     A unique identifier. Used for matching a system and credentials.
     username:  The username used for basic authentication.
-    password: The password used for basic autentication.
+    password: The password used for basic authentication.
   },...
   ]
 }`;
@@ -203,13 +203,13 @@ function findFileSearchingUpwards(
 }
 
 function readSystems(filePath: string): SystemsFile {
-  const systemfile = readJson(filePath) as SystemsFile;
-  if (!systemfile.systems || systemfile.systems.length === 0) {
+  const sysFile = readJson(filePath) as SystemsFile;
+  if (!sysFile.systems || sysFile.systems.length === 0) {
     throw new Error(`No systems provided in ${filePath}.
                      If you do not want to define systems just remove the file. ${formatSystemJson}`);
   }
 
-  systemfile.systems.forEach(system => {
+  sysFile.systems.forEach(system => {
     if (!system.alias || !system.uri) {
       throw new Error(`A system in ${filePath} is not valid - Mandatory alias or url missing.
                        Broken entry is: ${JSON.stringify(
@@ -217,7 +217,7 @@ function readSystems(filePath: string): SystemsFile {
                        )}. ${formatSystemJson}`);
     }
   });
-  return systemfile;
+  return sysFile;
 }
 
 function readCredentials(filePath: string): CredentialsFile {

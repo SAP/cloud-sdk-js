@@ -138,7 +138,7 @@ describe('check-public-api', () => {
       ]);
     });
 
-    it('parses barrelfile file without matching', () => {
+    it('parses barrel file file without matching', () => {
       const exportedObjects = parseBarrelFile(
         'some non matching',
         regexExportedIndex

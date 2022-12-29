@@ -103,7 +103,7 @@ export interface DestinationFetchOptions extends DestinationOptions {
 }
 
 /**
- * Typeguard to find if object is DestinationFetchOptions.
+ * Type guard to find if object is DestinationFetchOptions.
  * @param destination - Destination to be checked
  * @returns boolean
  * @internal

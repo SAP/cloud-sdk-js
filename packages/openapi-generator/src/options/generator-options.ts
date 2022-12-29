@@ -142,7 +142,7 @@ export interface ParsedGeneratorOptions {
   /**
    * @internal
    */
-  tsConfig?: string;
+  tsconfig?: string;
   /**
    * @internal
    */

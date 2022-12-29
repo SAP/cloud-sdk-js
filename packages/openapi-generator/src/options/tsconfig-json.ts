@@ -13,7 +13,7 @@ import { ParsedGeneratorOptions } from './generator-options';
  */
 export async function tsconfigJson({
   transpile,
-  tsConfig
+  tsconfig: tsConfig
 }: ParsedGeneratorOptions): Promise<string | undefined> {
   if (transpile || tsConfig) {
     return tsConfig ? readCustomTsConfig(tsConfig) : formatTsConfig();

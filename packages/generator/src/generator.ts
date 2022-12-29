@@ -4,11 +4,13 @@ import {
   copyFiles,
   createFile,
   CreateFileOptions,
+  formatTsConfig,
   getSdkMetadataFileNames,
   getSdkVersion,
   getVersionForClient,
   packageDescription,
   readCompilerOptions,
+  readCustomTsConfig,
   readPrettierConfig,
   transpileDirectory
 } from '@sap-cloud-sdk/generator-common/internal';
@@ -51,7 +53,6 @@ import { csn } from './service/csn';
 import { indexFile } from './service/index-file';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
-import { tsConfig } from './service/ts-config';
 import { VdmServiceMetadata } from './vdm-types';
 import { parseOptions } from './options-parser';
 
@@ -92,7 +93,7 @@ export async function generateWithParsedOptions(
     options as ParsedGeneratorOptions
   );
 
-  if (options.generateJs) {
+  if (options.transpile) {
     const directories = services
       .filter(async service => {
         const files = await readdir(
@@ -329,9 +330,18 @@ export async function generateSourcesForService(
     );
   }
 
-  filePromises.push(
-    createFile(serviceDirPath, 'tsconfig.json', tsConfig(), createFileOptions)
-  );
+  if (options.transpile || options.tsconfig) {
+    filePromises.push(
+      createFile(
+        serviceDirPath,
+        'tsconfig.json',
+        options.tsconfig
+          ? await readCustomTsConfig(options.tsconfig)
+          : formatTsConfig(),
+        createFileOptions
+      )
+    );
+  }
 
   if (hasEntities(service)) {
     logger.info(

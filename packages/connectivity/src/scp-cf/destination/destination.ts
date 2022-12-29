@@ -220,8 +220,8 @@ function isHttpDestination(destinationInput: Record<string, any>): boolean {
 }
 
 /**
- * Transform Destination to strings containing destination information.
- * @param destination - Either destiatnation object or destinationName and Jwt.
+ * Transform destination to string containing destination information.
+ * @param destination - Either destination object or destinationName and Jwt.
  * @returns String containing information on the destination.
  */
 export function toDestinationNameUrl(
@@ -315,7 +315,7 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
 }
 
 /**
- * Destination configuration alongside authtokens and certificates.
+ * Destination configuration alongside auth tokens and certificates.
  */
 export interface DestinationJson {
   [key: string]: any;

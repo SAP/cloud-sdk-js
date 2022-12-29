@@ -74,6 +74,7 @@ describe('OData generator CLI', () => {
   });
 
   it('should create options from a config file', () => {
+    
     const outputDir = path.resolve(__dirname, 'generator-test-output');
     expect(createOptionsFromConfig(pathToConfig)).toEqual({
       inputDir,

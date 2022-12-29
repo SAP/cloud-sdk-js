@@ -69,7 +69,7 @@ export interface GeneratorOptions {
    */
   generatePackageJson?: boolean;
   /**
-   * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
+   * Generate a `package.json` file, specifying dependencies and scripts for compiling.
    */
   packageJson?: boolean;
   /**
@@ -264,7 +264,7 @@ export const generatorOptionsCli = {
   },
   packageJson: {
     describe:
-      'When enabled, a `package.json` that specifies dependencies and scripts for transpilation and documentation generation is generated.',
+      'When enabled, a `package.json` that specifies dependencies and scripts for transpilation is generated.',
     type: 'boolean',
     default: false
   },

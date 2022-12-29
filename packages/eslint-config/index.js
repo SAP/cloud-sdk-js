@@ -27,12 +27,13 @@ module.exports = {
     }
   ],
   rules: {
-    "regex/invalid": [
-      "error", [
+    'regex/invalid': [
+      'error',
+      [
         {
-          "id": "regexLowerCaseInternal",
-          "regex": "\\@Internal",
-          "message": "You are not allowed to use @Internal. Please use @internal.",
+          id: 'regexLowerCaseInternal',
+          regex: '\\@Internal',
+          message: 'You are not allowed to use @Internal. Please use @internal.'
         }
       ]
     ],
@@ -188,7 +189,10 @@ module.exports = {
     'jsdoc/check-alignment': 'error',
     'jsdoc/check-indentation': 'error',
     'jsdoc/check-param-names': 'error',
-    'jsdoc/check-tag-names' : ['error',{ 'definedTags': ['packageDocumentation', 'typeParam', 'experimental'] }],
+    'jsdoc/check-tag-names': [
+      'error',
+      { definedTags: ['packageDocumentation', 'typeParam', 'experimental'] }
+    ],
     'jsdoc/check-syntax': 'error',
     'jsdoc/multiline-blocks': 'error',
     'jsdoc/newline-after-description': ['error', 'never'],

@@ -94,7 +94,7 @@ function insertCopyrightAndTracking() {
       '<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>';
     transformFile(filePath, file => {
       const lines = file.split(unixEOL);
-      // Inplace insert the copyright div before the line including </footer> #yikes
+      // Insert the copyright div before the line including </footer> #yikes
       lines.splice(
         lines.findIndex(line => line.includes('</footer>')),
         0,

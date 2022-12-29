@@ -12,7 +12,7 @@ import {
   externalImportDeclarationsTsMorph,
   mergeImportDeclarations
 } from '../imports';
-import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
+import { cannotDeserialize } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 function complexTypeRelatedImports(returnTypes: VdmOperationReturnType[]) {
@@ -35,7 +35,7 @@ function edmRelatedImports(returnTypes: VdmOperationReturnType[]) {
 
 function responseTransformerImports(returnTypes: VdmOperationReturnType[]) {
   return returnTypes.map(returnType =>
-    isEntityNotDeserializable(returnType)
+    cannotDeserialize(returnType)
       ? 'throwErrorWhenReturnTypeIsUnionType'
       : responseTransformerFunctionName(returnType)
   );

@@ -4,7 +4,7 @@ import {
   StructureKind
 } from 'ts-morph';
 import voca from 'voca';
-import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
+import { cannotDeserialize } from '../edmx-to-vdm/common';
 import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 import { operationReturnType } from './return-type';
@@ -68,8 +68,8 @@ export function operationFunction(
 
 function getDocDescription({ description, returnType, type }: VdmOperation) {
   return `${description} ${
-    isEntityNotDeserializable(returnType)
-      ? `The 'execute' method does not exist when using this ${type} import. Please use the 'executeRaw' for getting the raw response.`
+    cannotDeserialize(returnType)
+      ? `The 'execute' method does not exist for this ${type} import. Please use the 'executeRaw' to get the raw response.`
       : ''
   }`;
 }

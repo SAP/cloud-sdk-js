@@ -365,10 +365,6 @@ export interface VdmOperationReturnType {
    * @internal
    */
   returnTypeCategory: VdmReturnTypeCategory;
-  /**
-   * @internal
-   */
-  unsupportedReason?: VdmUnsupportedReason;
 }
 /**
  * @internal
@@ -380,12 +376,7 @@ export enum VdmReturnTypeCategory {
   VOID,
   NEVER
 }
-/**
- * @internal
- */
-export enum VdmUnsupportedReason {
-  ENTITY_NOT_DESERIALIZABLE
-}
+
 /**
  * @internal
  */

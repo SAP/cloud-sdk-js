@@ -8,7 +8,6 @@ import {
   VdmReturnTypeCategory,
   VdmServiceMetadata,
   VdmParameter,
-  VdmUnsupportedReason,
   VdmOperationReturnType
 } from '../../src/vdm-types';
 
@@ -362,7 +361,6 @@ export const entityNotDeserializable: VdmOperation = {
     returnType: 'never',
     isCollection: false,
     isNullable: false,
-    returnTypeCategory: VdmReturnTypeCategory.NEVER,
-    unsupportedReason: VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
+    returnTypeCategory: VdmReturnTypeCategory.NEVER
   }
 };

@@ -7,8 +7,7 @@ import {
   VdmComplexType,
   VdmPartialEntity,
   VdmOperationReturnType,
-  VdmReturnTypeCategory,
-  VdmUnsupportedReason
+  VdmReturnTypeCategory
 } from '../../vdm-types';
 import {
   getTypeMappingActionFunction,
@@ -155,8 +154,7 @@ function getEntityReturnType(
         returnTypeCategory: VdmReturnTypeCategory.NEVER,
         returnType: 'never',
         isNullable,
-        isCollection,
-        unsupportedReason: VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
+        isCollection
       };
 }
 
@@ -178,14 +176,8 @@ function getComplexReturnType(
 /**
  * @internal
  */
-export function isEntityNotDeserializable(
-  returnType: VdmOperationReturnType
-): boolean {
-  return (
-    returnType.returnTypeCategory === VdmReturnTypeCategory.NEVER &&
-    returnType.unsupportedReason ===
-      VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
-  );
+export function cannotDeserialize(returnType: VdmOperationReturnType): boolean {
+  return returnType.returnTypeCategory === VdmReturnTypeCategory.NEVER;
 }
 /**
  * @internal

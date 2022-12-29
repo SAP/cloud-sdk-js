@@ -4,12 +4,12 @@ const protocols = {
   http: 'http',
   https: 'https',
   socks: 'socks'
-};
+} satisfies Record<Protocol, Protocol>;
 
 /**
  * Supported web protocols for requests made by the SAP Cloud SDK.
  */
-export type Protocol = keyof typeof protocols;
+export type Protocol = 'http' | 'https' | 'socks';
 
 /**
  * @internal

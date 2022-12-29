@@ -12,8 +12,8 @@ const logger = createLogger({
 });
 
 /**
- * Enumerator that selects the isolation type of destination in cache.
- * The used isolation strategy is either `Tenant` or `Tenant_User` because we want to get results for subaccount and provider tenants which rules out no-isolation or user isolation.
+ * Represents the isolation strategy in the destination cache.
+ * The available strategies are isolation by tenant or isolation by tenant and user.
  */
 export type IsolationStrategy = 'tenant' | 'tenant-user';
 
@@ -193,7 +193,7 @@ function getTenantCacheKey(
     return `${tenant}::${destinationName}`;
   }
   logger.warn(
-    "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant id is undefined."
+    "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant id is undefined in JWT."
   );
 }
 
@@ -206,7 +206,7 @@ function getTenantUserCacheKey(
     return `${user}:${tenant}:${destinationName}`;
   }
   logger.warn(
-    "Could not build destination cache key. Isolation strategy 'user-tenant' is used, but tenant id or user id is undefined in JWT."
+    "Could not build destination cache key. Isolation strategy 'tenant-user' is used, but tenant id or user id is undefined in JWT."
   );
 }
 

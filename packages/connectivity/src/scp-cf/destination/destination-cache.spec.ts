@@ -181,7 +181,7 @@ describe('destination cache', () => {
       );
     });
 
-    it('retrieved subscriber destinations are cached with tenant id using "Tenant_User" isolation type by default ', async () => {
+    it("retrieved subscriber destinations are cached with tenant id using 'tenant-user' isolation type by default", async () => {
       await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserJwt,
@@ -315,7 +315,7 @@ describe('destination cache', () => {
       ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
     }, 15000);
 
-    it('uses cache with isolation strategy Tenant if no JWT is provided', async () => {
+    it("uses cache with isolation strategy 'tenant' if no JWT is provided", async () => {
       await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         destinationOne,
@@ -328,7 +328,7 @@ describe('destination cache', () => {
       expect(actual).toEqual(destinationOne);
     });
 
-    it('uses cache with isolation strategy Tenant and iss ', async () => {
+    it("uses cache with isolation strategy 'tenant' and 'iss' set", async () => {
       await destinationCache
         .getCacheInstance()
         .set(`${TestTenants.SUBSCRIBER_ONLY_ISS}::${destinationOne.name}`, {
@@ -358,7 +358,7 @@ describe('destination cache', () => {
       expect(actual).toEqual(destinationOne);
     });
 
-    it('enables cache if isolation strategy Tenant is provided', async () => {
+    it("enables cache if isolation strategy 'tenant' is provided", async () => {
       await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         destinationOne,
@@ -400,7 +400,7 @@ describe('destination cache', () => {
         })
       ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
       expect(warn).toBeCalledWith(
-        'Cannot get cache key. Isolation strategy Tenant is used, but tenant id is undefined.'
+        "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant id is undefined in JWT."
       );
     }, 15000);
 
@@ -417,7 +417,7 @@ describe('destination cache', () => {
         })
       ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
       expect(warn).toBeCalledWith(
-        'Cannot get cache key. Isolation strategy TenantUser is used, but tenant id or user id is undefined.'
+        "Could not build destination cache key. Isolation strategy 'tenant-user' is used, but tenant id or user id is undefined in JWT."
       );
     }, 15000);
   });
@@ -672,7 +672,7 @@ describe('destination cache', () => {
       expect(actual).toEqual(parsedDestination);
     });
 
-    it('should return cached provider destination from cache after checking for remote subscriber destination when subscriberFirst is specified and destinations are Tenant isolated', async () => {
+    it('should return cached provider destination from cache after checking for remote subscriber destination when subscriberFirst is specified and destinations are tenant isolated', async () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
@@ -736,7 +736,7 @@ describe('destination cache', () => {
       expect([actual1, actual2]).toEqual(expected);
     });
 
-    it('should not hit cache when Tenant_User is chosen but user id is missing', async () => {
+    it("should not hit cache when 'tenant-user' is chosen but user id is missing", async () => {
       const dummyJwt = { zid: 'tenant' };
       await destinationCache.cacheRetrievedDestination(
         dummyJwt,
@@ -760,7 +760,7 @@ describe('destination cache', () => {
       expect([actual1, actual2]).toEqual(expected);
     });
 
-    it('should not hit cache when Tenant is chosen but tenant id is missing', async () => {
+    it("should not hit cache when 'tenant' is chosen but tenant id is missing", async () => {
       const dummyJwt = { user_id: 'user' };
       await destinationCache.cacheRetrievedDestination(
         dummyJwt,
@@ -879,13 +879,13 @@ describe('destination cache', () => {
 });
 
 describe('get destination cache key', () => {
-  it('should shown warning, when Tenant_User is chosen, but user id is missing', () => {
+  it("should shown warning, when 'tenant-user' is chosen, but user id is missing", () => {
     const logger = createLogger('destination-cache');
     const warn = jest.spyOn(logger, 'warn');
 
     getDestinationCacheKey({ zid: 'tenant' }, 'dest');
     expect(warn).toBeCalledWith(
-      'Cannot get cache key. Isolation strategy TenantUser is used, but tenant id or user id is undefined.'
+      "Could not build destination cache key. Isolation strategy 'tenant-user' is used, but tenant id or user id is undefined in JWT."
     );
   });
 });

@@ -18,6 +18,11 @@ describe('options parser', () => {
       describe: 'new option',
       type: 'boolean',
       default: false
+    },
+    coercedOption: {
+      describe: 'coerced option',
+      type: 'string',
+      coerce: (val, opt) => (val ? 'test' : opt.otherOption)
     }
   } as const;
   let warnSpy: jest.SpyInstance;
@@ -58,6 +63,29 @@ describe('options parser', () => {
         })
       ).toEqual({
         newOption: true
+      });
+    });
+
+    it('coerces value', () => {
+      expect(
+        parseOptions(options, {
+          coercedOption: 'will disappear'
+        })
+      ).toEqual({
+        coercedOption: 'test',
+        newOption: false
+      });
+    });
+
+    it('coerces value even if unset, using other options', () => {
+      expect(
+        parseOptions(options, {
+          otherOption: 'other option value'
+        })
+      ).toEqual({
+        otherOption: 'other option value',
+        coercedOption: 'other option value',
+        newOption: false
       });
     });
 

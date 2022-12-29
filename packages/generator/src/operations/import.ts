@@ -3,7 +3,6 @@ import voca from 'voca';
 import {
   VdmOperationReturnType,
   VdmOperation,
-  VdmReturnTypeCategory,
   VdmServiceMetadata
 } from '../vdm-types';
 import {
@@ -17,8 +16,7 @@ import { responseTransformerFunctionName } from './response-transformer-function
 
 function complexTypeRelatedImports(returnTypes: VdmOperationReturnType[]) {
   return returnTypes.some(
-    returnType =>
-      returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
+    returnType => returnType.returnTypeCategory === 'complex-type'
   )
     ? ['entityDeserializer']
     : [];
@@ -26,8 +24,7 @@ function complexTypeRelatedImports(returnTypes: VdmOperationReturnType[]) {
 
 function edmRelatedImports(returnTypes: VdmOperationReturnType[]) {
   return returnTypes.some(
-    returnType =>
-      returnType.returnTypeCategory === VdmReturnTypeCategory.EDM_TYPE
+    returnType => returnType.returnTypeCategory === 'edm-type'
   )
     ? ['edmToTs']
     : [];
@@ -48,9 +45,9 @@ function returnTypeImports(
     returnTypes
       .filter(
         returnType =>
-          returnType.returnTypeCategory !== VdmReturnTypeCategory.EDM_TYPE &&
-          returnType.returnTypeCategory !== VdmReturnTypeCategory.VOID &&
-          returnType.returnTypeCategory !== VdmReturnTypeCategory.NEVER
+          returnType.returnTypeCategory !== 'edm-type' &&
+          returnType.returnTypeCategory !== 'void' &&
+          returnType.returnTypeCategory !== 'never'
       )
       .reduce(
         (imports, returnType) => [...imports, ...returnTypeImport(returnType)],
@@ -69,7 +66,7 @@ function returnTypeImport(
       moduleSpecifier: `./${returnType.returnType}`
     }
   ];
-  if (returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY) {
+  if (returnType.returnTypeCategory === 'entity') {
     return [
       ...typeImports,
       {

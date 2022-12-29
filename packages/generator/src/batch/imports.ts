@@ -1,7 +1,7 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { unique } from '@sap-cloud-sdk/util';
 import { odataImportDeclarationTsMorph } from '../imports';
-import { VdmReturnTypeCategory, VdmServiceMetadata } from '../vdm-types';
+import { VdmServiceMetadata } from '../vdm-types';
 
 /**
  * @internal
@@ -49,8 +49,7 @@ function getNamedImports(service: VdmServiceMetadata): string[] {
   ];
   const complexReturnTypesOfActionImports = actionsAndFunctions
     .filter(
-      ({ returnType }) =>
-        returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
+      ({ returnType }) => returnType.returnTypeCategory === 'complex-type'
     )
     .map(withComplex => withComplex.returnType.returnType);
 

@@ -364,17 +364,7 @@ export interface VdmOperationReturnType {
   /**
    * @internal
    */
-  returnTypeCategory: VdmReturnTypeCategory;
-}
-/**
- * @internal
- */
-export enum VdmReturnTypeCategory {
-  ENTITY,
-  COMPLEX_TYPE,
-  EDM_TYPE,
-  VOID,
-  NEVER
+  returnTypeCategory: 'entity' | 'complex-type' | 'edm-type' | 'void' | 'never';
 }
 
 /**

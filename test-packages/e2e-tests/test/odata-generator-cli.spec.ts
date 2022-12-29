@@ -3,10 +3,7 @@ import { resolve } from 'path';
 import execa from 'execa';
 import * as fs from 'fs-extra';
 import mock from 'mock-fs';
-import {
-  createOptionsFromConfig,
-  generate
-} from '@sap-cloud-sdk/generator/internal';
+import { generate } from '@sap-cloud-sdk/generator/internal';
 import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 
@@ -45,13 +42,15 @@ describe('OData generator CLI', () => {
   });
 
   it('should fail if mandatory parameters are not there', async () => {
-    try {
-      await execa('npx', ['ts-node', pathToGenerator]);
-    } catch (err) {
-      expect(err.stderr).toContain(
-        'Missing required arguments: inputDir, outputDir'
-      );
-    }
+    await expect(() =>
+      execa.command(`npx ts-node ${pathToGenerator}`)
+    ).rejects.toThrowError(/Missing required arguments: inputDir, outputDir/);
+  }, 60000);
+
+  it('should read config', async () => {
+    await expect(
+      execa.command(`npx ts-node ${pathToGenerator} -c ${pathToConfig}`)
+    ).resolves.not.toThrow();
   }, 60000);
 
   it('should generate client if all arguments are there', async () => {
@@ -71,15 +70,6 @@ describe('OData generator CLI', () => {
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('TestEntity.js');
     expect(entities).toContain('package.json');
-  });
-
-  it('should create options from a config file', () => {
-    
-    const outputDir = path.resolve(__dirname, 'generator-test-output');
-    expect(createOptionsFromConfig(pathToConfig)).toEqual({
-      inputDir,
-      outputDir
-    });
   });
 
   it('should set version when versionInPackageJson option is used', async () => {

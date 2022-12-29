@@ -11,7 +11,7 @@ const logger = createLogger({
 
 logger.info('Parsing args...');
 
-generate(parseCmdArgs())
+generate(parseCmdArgs(process.argv.slice(2)))
   .then(() => logger.info('Generation of services finished successfully.'))
   .catch(err => {
     logger.error(new ErrorWithCause('Generation of services failed.', err));

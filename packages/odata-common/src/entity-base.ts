@@ -316,7 +316,7 @@ export interface EntityIdentifiable<
    */
   readonly _entity: T;
   /**
-   * Dummy property to include also the deserializer type in the structure of the entity type.
+   * Dummy property to also include the deserializer type in the structure of the entity type.
    */
   readonly _deSerializers: DeSerializersT;
 }

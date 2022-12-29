@@ -3,28 +3,28 @@ import { getOptionsWithoutDefaults, parseOptions } from './options-parser';
 const logger = createLogger('generator-options');
 
 describe('options parser', () => {
-  const options = {
-    deprecatedOption: {
-      describe: 'deprecated option',
-      type: 'string',
-      deprecated: 'Since vX.',
-      replacedBy: 'newOption'
-    },
-    otherOption: {
-      describe: 'other option',
-      type: 'string'
-    },
-    newOption: {
-      describe: 'new option',
-      type: 'boolean',
-      default: false
-    },
-    coercedOption: {
-      describe: 'coerced option',
-      type: 'string',
-      coerce: (val, opt) => (val ? 'test' : opt.otherOption)
-    }
+  const deprecatedOption = {
+    describe: 'deprecated option',
+    type: 'string',
+    deprecated: 'Since vX.',
+    replacedBy: 'newOption'
   } as const;
+  const otherOption = {
+    describe: 'other option',
+    type: 'string'
+  } as const;
+  const newOption = {
+    describe: 'new option',
+    type: 'boolean',
+    default: false
+  } as const;
+  const coercedOption = {
+    describe: 'coerced option',
+    type: 'string',
+    coerce: (val, opt) => (val ? 'test' : opt.otherOption)
+  } as const;
+  const options = { deprecatedOption, otherOption, newOption } as const;
+
   let warnSpy: jest.SpyInstance;
 
   beforeEach(() => {
@@ -66,29 +66,6 @@ describe('options parser', () => {
       });
     });
 
-    it('coerces value', () => {
-      expect(
-        parseOptions(options, {
-          coercedOption: 'will disappear'
-        })
-      ).toEqual({
-        coercedOption: 'test',
-        newOption: false
-      });
-    });
-
-    it('coerces value even if unset, using other options', () => {
-      expect(
-        parseOptions(options, {
-          otherOption: 'other option value'
-        })
-      ).toEqual({
-        otherOption: 'other option value',
-        coercedOption: 'other option value',
-        newOption: false
-      });
-    });
-
     it('moves replaced values to new options', () => {
       expect(
         parseOptions(options, {
@@ -96,6 +73,27 @@ describe('options parser', () => {
         })
       ).toEqual({
         newOption: true
+      });
+    });
+
+    it('coerces value', () => {
+      expect(
+        parseOptions({ otherOption, coercedOption } as const, {
+          coercedOption: 'will disappear'
+        })
+      ).toEqual({
+        coercedOption: 'test'
+      });
+    });
+
+    it('coerces value even if unset, using other options', () => {
+      expect(
+        parseOptions({ otherOption, coercedOption } as const, {
+          otherOption: 'other option value'
+        })
+      ).toEqual({
+        otherOption: 'other option value',
+        coercedOption: 'other option value'
       });
     });
 

@@ -433,10 +433,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
       );
     }
-    // This covers OAuth to user dependant auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+    // This covers OAuth to user-dependent auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     // Which is the same for: OAuth2UserTokenExchange, OAuth2JWTBearer and OAuth2SAMLBearerAssertion
 
-    // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as wll. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
+    // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as well. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
     if (this.subscriberToken.type === 'custom') {
       DestinationFromServiceRetriever.checkDestinationForCustomJwt(destination);
     }

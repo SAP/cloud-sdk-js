@@ -220,7 +220,7 @@ function isHttpDestination(destinationInput: Record<string, any>): boolean {
 }
 
 /**
- * Transform Destination to strings containing destination information.
+ * Transform destination to string containing destination information.
  * @param destination - Either destination object or destinationName and Jwt.
  * @returns String containing information on the destination.
  */

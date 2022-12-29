@@ -1,10 +1,6 @@
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import {
-  Destination,
-  getDestination,
-  IsolationStrategy
-} from '@sap-cloud-sdk/connectivity';
+import { Destination, getDestination } from '@sap-cloud-sdk/connectivity';
 import {
   destinationCache,
   destinationServiceCache,
@@ -120,14 +116,14 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
     const destinationRequestTenantUser = await getDestination({
       destinationName: 'FINAL-DESTINATION',
       useCache: true,
-      isolationStrategy: IsolationStrategy.Tenant_User
+      isolationStrategy: 'tenant-user'
     });
     expect(destinationRequestTenantUser).not.toBeNull();
 
     const destinationRequestTenant = await getDestination({
       destinationName: 'FINAL-DESTINATION',
       useCache: true,
-      isolationStrategy: IsolationStrategy.Tenant
+      isolationStrategy: 'tenant'
     });
     expect(destinationRequestTenant).not.toBeNull();
   });
@@ -147,7 +143,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
       useCache: true,
       jwt: providerUserToken,
-      isolationStrategy: IsolationStrategy.Tenant_User
+      isolationStrategy: 'tenant-user'
     });
     expect(cache).not.toBeNull();
     expect(cache).toEqual(directCall);
@@ -157,7 +153,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
         destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
         useCache: true,
         jwt: providerUserToken,
-        isolationStrategy: IsolationStrategy.Tenant_User
+        isolationStrategy: 'tenant-user'
       })
     ).rejects.toThrowError(/Nock: No match for request/);
   }, 600000);
@@ -167,7 +163,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
     await getDestination({
       destinationName: 'FINAL-DESTINATION',
       useCache: true,
-      isolationStrategy: IsolationStrategy.Tenant
+      isolationStrategy: 'tenant'
     });
   }
 
@@ -193,7 +189,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
       useCache: true,
       jwt: providerUserToken,
-      isolationStrategy: IsolationStrategy.Tenant_User
+      isolationStrategy: 'tenant-user'
     });
   }
 });

@@ -263,13 +263,3 @@ export type AuthenticationType =
   | 'OAuth2JWTBearer'
   | 'OAuth2Password'
   | 'OAuth2RefreshToken';
-
-/**
- * The destinations endpoint distinguished between destinations maintained on service level (instance) and account level (subaccount).
- * This enum is used as a switch in the {@link fetchInstanceDestinations}, {@link fetchSubaccountDestinations}  and {@link destinationServiceCache}
- * @internal
- */
-export enum DestinationType {
-  Instance = 'instance',
-  Subaccount = 'subaccount'
-}

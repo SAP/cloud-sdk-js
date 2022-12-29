@@ -37,7 +37,9 @@
     "test-packages/test-services-openapi",
     "test-packages/test-services-e2e",
     "test-packages/type-tests",
-    "test-packages/self-tests"
+    "test-packages/self-tests",
+    "build-packages/check-pr",
+    "build-packages/get-changelog"
   ],
   "tsd": {
     "directory": "test-packages/type-tests/test-new"
@@ -83,24 +85,24 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.25.2",
+    "@changesets/cli": "^2.26.0",
     "@types/jest": "^29.2.4",
-    "@types/jsonwebtoken": "^8.5.9",
+    "@types/jsonwebtoken": "^9.0.0",
     "@types/license-checker": "^25.0.1",
     "@types/mock-fs": "^4.13.0",
-    "@types/node": "^18.11.13",
+    "@types/node": "^18.11.18",
     "@types/uuid": "^9.0.0",
     "@types/voca": "^1.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.46.1",
-    "@typescript-eslint/parser": "^5.46.1",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
     "axios": "^1.2.1",
-    "compare-versions": "^5.0.1",
+    "compare-versions": "^5.0.3",
     "depcheck": "^1.0.0",
-    "eslint": "^8.29.0",
+    "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jest": "^27.1.6",
+    "eslint-plugin-jest": "^27.1.7",
     "eslint-plugin-jsdoc": "^39.6.4",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-regex": "^1.10.0",
@@ -112,12 +114,12 @@
     "license-checker": "^25.0.1",
     "madge": "^5.0.0",
     "prettier": "^2.8.1",
-    "puppeteer": "^19.4.0",
+    "puppeteer": "^19.4.1",
     "semver": "^7.3.8",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "turbo": "^1.6.3",
-    "typedoc": "^0.23.22",
+    "typedoc": "^0.23.23",
     "typescript": "~4.9.4"
   },
   "resolutions": {

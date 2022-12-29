@@ -4,12 +4,20 @@ import {
   propertyExists,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import CircuitBreaker from 'opossum';
 // eslint-disable-next-line import/named
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
+import {
+  Context,
+  resilience,
+  HttpMiddlewareContext,
+  Middleware
+} from '@sap-cloud-sdk/resilience';
+import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import { circuitBreakerDefaultOptions } from '../resilience-options';
 import { urlAndAgent } from '../../http-agent';
+import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { buildAuthorizationHeaders } from '../authorization-header';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -31,30 +39,11 @@ const logger = createLogger({
   messageContext: 'destination-service'
 });
 
-type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
-  [requestConfig: AxiosRequestConfig],
-  AxiosResponse<ResponseType>
->;
-
 type DestinationsServiceOptions = Pick<DestinationFetchOptions, 'useCache'>;
 type DestinationServiceOptions = Pick<
   DestinationFetchOptions,
-  'destinationName'
+  'destinationName' | 'retry'
 >;
-
-const request: (
-  config: AxiosRequestConfig
-) => Promise<
-  AxiosResponse<
-    DestinationCertificateJson | DestinationConfiguration | DestinationJson
-  >
-> = axios.request;
-/**
- * @internal
- */
-export const circuitBreaker: DestinationCircuitBreaker<
-  DestinationCertificateJson | DestinationConfiguration | DestinationJson
-> = new CircuitBreaker(request, circuitBreakerDefaultOptions);
 
 /**
  * Fetches all instance destinations from the given URI.
@@ -139,7 +128,10 @@ async function fetchDestinations(
 
   const headers = wrapJwtInHeader(jwt).headers;
 
-  return callDestinationEndpoint(targetUri, headers)
+  return callDestinationEndpoint(
+    { uri: targetUri, tenantId: getTenantFromTokens(jwt) },
+    headers
+  )
     .then(response => {
       const destinations: Destination[] = response.data
         .filter(isParsable)
@@ -226,7 +218,7 @@ export async function fetchCertificate(
   const filetype = certificateName.split('.')[1];
   if (filetype.toLowerCase() !== 'pem') {
     logger.warn(
-      `The provided truststore ${certificateName} is not in 'pem' format which is currently the only supported format. Trustore is ignored.`
+      `The provided truststore ${certificateName} is not in 'pem' format which is currently the only supported format. Truststore is ignored.`
     );
     return;
   }
@@ -239,8 +231,17 @@ export async function fetchCertificate(
   const header = wrapJwtInHeader(token).headers;
 
   try {
-    const response = await callCertificateEndpoint(accountUri, header).catch(
-      () => callCertificateEndpoint(instanceUri, header)
+    const response = await callCertificateEndpoint(
+      { uri: accountUri, tenantId: getTenantFromTokens(token) },
+      header
+    ).catch(() =>
+      callCertificateEndpoint(
+        {
+          uri: instanceUri,
+          tenantId: getTenantFromTokens(token)
+        },
+        header
+      )
     );
     return parseCertificate(response.data);
   } catch (err) {
@@ -248,6 +249,30 @@ export async function fetchCertificate(
       `Failed to fetch truststore certificate ${certificateName} - Continuing without certificate. This may cause failing requests`,
       err
     );
+  }
+}
+
+function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
+  let tenant: string | undefined;
+  if (typeof token === 'string') {
+    tenant = getTenantId(token);
+  } else {
+    tenant =
+      token.exchangeTenant || // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+      getTenantId(token.exchangeHeaderJwt) ||
+      getTenantId(token.authHeaderJwt);
+  }
+
+  if (!tenant) {
+    throw new Error('Could not obtain tenant identifier from jwt.');
+  }
+  return tenant;
+}
+
+function getTenantId(token: string | undefined): string | undefined {
+  if (token) {
+    const { zoneId, subdomain } = getSubdomainAndZoneId(token);
+    return zoneId || subdomain || undefined;
   }
 }
 
@@ -273,7 +298,11 @@ async function fetchDestinationByTokens(
     ? { ...authHeader, 'X-refresh-token': tokens.refreshToken }
     : authHeader;
 
-  return callDestinationEndpoint(targetUri, authHeader)
+  return callDestinationEndpoint(
+    { uri: targetUri, tenantId: getTenantFromTokens(tokens) },
+    authHeader,
+    options
+  )
     .then(response => {
       const destination: Destination = parseDestination(response.data);
       return destination;
@@ -298,6 +327,42 @@ function errorMessageFromResponse(
     : '';
 }
 
+function retryDestination(
+  destinationName: string
+): Middleware<AxiosResponse<DestinationJson>, HttpMiddlewareContext> {
+  return options => () => {
+    let retryCount = 1;
+    return asyncRetry.default(
+      async bail => {
+        try {
+          const destination = await options.fn();
+          if (retryCount < 3) {
+            retryCount++;
+            // this will throw if the destination does not contain valid auth headers and a second try is done to get a destination with valid tokens.
+            await buildAuthorizationHeaders(parseDestination(destination.data));
+          }
+          return destination;
+        } catch (error) {
+          const status = error?.response?.status;
+          if (status.toString().startsWith('4')) {
+            bail(new Error(`Request failed with status code ${status}`));
+            // We need to return something here but the actual value does not matter
+            return undefined as any;
+          }
+          throw error;
+        }
+      },
+      {
+        retries: 3,
+        onRetry: err =>
+          logger.warn(
+            `Failed to retrieve destination ${destinationName} - doing a retry. Original Error ${err.message}`
+          )
+      }
+    );
+  };
+}
+
 type DestinationCertificateJson = {
   [Property in keyof DestinationCertificate as `${Capitalize<
     string & Property
@@ -305,50 +370,65 @@ type DestinationCertificateJson = {
 };
 
 async function callCertificateEndpoint(
-  uri: string,
+  context: Context,
   headers: Record<string, any>
 ): Promise<AxiosResponse<DestinationCertificateJson>> {
-  if (!uri.includes('Certificates')) {
+  if (!context.uri.includes('Certificates')) {
     throw new Error(
-      `callCertificateEndpoint was called with illegal arrgument: ${uri}. URL must be certificate endpoint of destination service.`
+      `callCertificateEndpoint was called with illegal argument: ${context.uri}. URL must be certificate endpoint of destination service.`
     );
   }
-  return callDestinationService(uri, headers) as Promise<
+  return callDestinationService(context, headers) as Promise<
     AxiosResponse<DestinationCertificateJson>
   >;
 }
 
 async function callDestinationEndpoint(
-  uri: string,
-  headers: Record<string, any>
+  context: Context,
+  headers: Record<string, any>,
+  options?: DestinationServiceOptions
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
-  if (!uri.match(/[instance|subaccount]Destinations|v1\/destinations/)) {
+  if (
+    !context.uri.match(/[instance|subaccount]Destinations|v1\/destinations/)
+  ) {
     throw new Error(
-      `callDestinationEndpoint was called with illegal arrgument: ${uri}. URL must be destination(s) endpoint of destination service.`
+      `callDestinationEndpoint was called with illegal argument: ${context.uri}. URL must be destination(s) endpoint of destination service.`
     );
   }
-  return callDestinationService(uri, headers) as Promise<
+  return callDestinationService(context, headers, options) as Promise<
     AxiosResponse<DestinationConfiguration | DestinationJson>
   >;
 }
 
 async function callDestinationService(
-  uri: string,
-  headers: Record<string, any>
+  context: Context,
+  headers: Record<string, any>,
+  options?: DestinationServiceOptions
 ): Promise<
   AxiosResponse<
     DestinationCertificateJson | DestinationConfiguration | DestinationJson
   >
 > {
+  const { destinationName, retry } = options || {};
+
   const config: AxiosRequestConfig = {
-    ...urlAndAgent(uri),
+    ...urlAndAgent(context.uri),
     proxy: false,
     method: 'get',
-    timeout: 10000, // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
     headers
   };
 
-  // TODO: Use middleware https://github.com/SAP/cloud-sdk-backlog/issues/667
-  return circuitBreaker.fire(config);
-  // return axios.request(config);
+  const resilienceMiddleware =
+    destinationName && retry
+      ? [
+          ...resilience<AxiosResponse, HttpMiddlewareContext>(),
+          retryDestination(destinationName)
+        ]
+      : resilience<AxiosResponse, HttpMiddlewareContext>();
+
+  return executeWithMiddleware(
+    resilienceMiddleware,
+    { requestConfig: config, ...context } as HttpMiddlewareContext,
+    () => axios.request(config)
+  );
 }

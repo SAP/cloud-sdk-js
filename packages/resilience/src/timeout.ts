@@ -1,15 +1,29 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { Context, Middleware, MiddlewareIn, MiddlewareOut } from './middleware';
 
 const defaultTimeout = 10000;
 
+const logger = createLogger({
+  package: 'resilience',
+  messageContext: 'timeout'
+});
+
 /**
- * Helper method to build a timout middleware.
- * @param timeoutValue - Timeout in milliseconds. Default value are 10 seconds.
+ * Helper method to build a timeout middleware.
+ * @param timeoutValue - Timeout in milliseconds. Default value is 10000.
  * @returns The middleware adding a timeout to the function.
  */
 export function timeout<ReturnType, ContextType extends Context>(
   timeoutValue: number = defaultTimeout
 ): Middleware<ReturnType, ContextType> {
+  if (timeoutValue <= 0) {
+    throw new Error('Timeout value is invalid.');
+  }
+  if (timeoutValue < 10) {
+    logger.warn(
+      `The timeout of ${timeoutValue} ms is too low. Make sure this is not intentional.`
+    );
+  }
   return function (
     options: MiddlewareIn<ReturnType, ContextType>
   ): MiddlewareOut<ReturnType> {
@@ -37,12 +51,11 @@ function getTimeoutPromise<T>(
 }
 
 /**
- * TODO make non public once change to middleware is complete.
  * @param promise - Promise
  * @param timeoutValue - Value for the timeout in milliseconds.
  * @internal
  */
-export async function wrapInTimeout<T>(
+async function wrapInTimeout<T>(
   promise: Promise<T>,
   timeoutValue: number,
   message: string

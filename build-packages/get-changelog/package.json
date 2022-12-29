@@ -1,0 +1,26 @@
+{
+  "name": "get-changelog",
+  "version": "2.12.0",
+  "description": "Gets the current changelog",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "postcompile": "ncc build lib/build-packages/get-changelog/index.js --out ../../.github/actions/get-changelog/",
+    "lint": "eslint --ignore-pattern '!index.ts' && prettier --check '**/*.ts'",
+    "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write '**/*.ts'",
+    "check:dependencies": "depcheck --skip-missing=true .",
+    
+    "all": "yarn && yarn run lint && yarn run compile"
+  },
+  "dependencies": {
+    "@actions/core": "^1.9.1"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.36.0",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.30.0",
+    "prettier": "^2.8.1",
+    "typescript": "^4.9.4"
+  }
+}

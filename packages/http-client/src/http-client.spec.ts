@@ -9,16 +9,25 @@ import {
   Protocol,
   ProxyConfiguration
 } from '@sap-cloud-sdk/connectivity';
-import { timeout } from '@sap-cloud-sdk/resilience';
+import {
+  timeout,
+  Middleware,
+  MiddlewareIn,
+  HttpMiddlewareContext
+} from '@sap-cloud-sdk/resilience';
+import * as jwt123 from 'jsonwebtoken';
+import {
+  circuitBreakers,
+  circuitBreakerHttp
+} from '@sap-cloud-sdk/resilience/internal';
 import {
   connectivityProxyConfigMock,
-  defaultDestination
+  defaultDestination,
+  privateKey
 } from '../../../test-resources/test/test-util';
-import type { Middleware, MiddlewareIn } from '../../resilience/src/middleware';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
-  HttpMiddlewareContext,
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
   HttpResponse
@@ -33,7 +42,8 @@ import {
   encodeTypedClientRequest,
   shouldHandleCsrfToken,
   executeHttpRequestWithOrigin,
-  buildHttpRequestConfigWithOrigin
+  buildHttpRequestConfigWithOrigin,
+  getTenantIdForMiddleware
 } from './http-client';
 
 describe('generic http client', () => {
@@ -280,7 +290,8 @@ describe('generic http client', () => {
             method: 'post',
             url: 'with-delay',
             middleware: [timeout(delayInResponse * 0.5)]
-          }
+          },
+          { fetchCsrfToken: false }
         )
       ).rejects.toThrow(
         'Request to URL: http://example.com ran into a timeout after 5ms.'
@@ -312,7 +323,7 @@ describe('generic http client', () => {
       );
     });
 
-    it('stops middleware chain if exitChain is set to true.', async () => {
+    it('stops middleware chain if skipNext is set to true.', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
       const myMiddlewareTwo = buildMiddleware('Middleware Two.');
       const myMiddlewareOne = buildMiddleware('Middleware One.', true);
@@ -322,6 +333,67 @@ describe('generic http client', () => {
         method: 'get'
       });
       expect(response.data).toEqual('Initial value.Middleware One.');
+    });
+
+    it('returns a tenantid from jwt containing either zid or iss', () => {
+      let jwt = jwt123.sign(
+        JSON.stringify({ user_id: 'user', zid: 'tenant' }),
+        privateKey,
+        {
+          algorithm: 'RS512'
+        }
+      );
+      expect(getTenantIdForMiddleware(jwt)).toEqual('tenant');
+
+      jwt = jwt123.sign(
+        JSON.stringify({ user_id: 'user', iss: 'http://dummy-iss.com' }),
+        privateKey,
+        {
+          algorithm: 'RS512'
+        }
+      );
+      expect(getTenantIdForMiddleware(jwt)).toEqual('dummy-iss');
+    });
+
+    it('returns a string constant for tenantid if custom jwt contains neither zid or iss', () => {
+      const jwt = jwt123.sign(JSON.stringify({ user_id: 'user' }), privateKey, {
+        algorithm: 'RS512'
+      });
+      expect(getTenantIdForMiddleware(jwt)).toEqual('tenant_id');
+    });
+
+    it('return a string constant for tenantid if neither jwt or xsuaa binding is present', () => {
+      expect(getTenantIdForMiddleware()).toEqual('tenant_id');
+    });
+
+    it('considers circuit breaker for 5xx errors', async () => {
+      const mock = nock('http://example.com', {})
+        .post(/test-cb/)
+        .times(10)
+        .reply(500);
+
+      let keepCalling = !mock.isDone();
+      while (keepCalling) {
+        await expect(
+          executeHttpRequest(
+            { url: 'http://example.com' },
+            {
+              method: 'post',
+              url: 'test-cb',
+              middleware: [circuitBreakerHttp()]
+            },
+            {
+              fetchCsrfToken: false
+            }
+          )
+        ).rejects.toThrow();
+        keepCalling = !mock.isDone();
+      }
+
+      expect(circuitBreakers['http://example.com::tenant_id'].opened).toBe(
+        true
+      );
+      Object.keys(circuitBreakers).forEach(key => delete circuitBreakers[key]);
     });
 
     // The base-agent dependency coming in via the http-proxy-agent did mess with the node https.

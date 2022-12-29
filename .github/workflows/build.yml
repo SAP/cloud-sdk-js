@@ -25,6 +25,8 @@ jobs:
       matrix:
         node-version: [18]
     steps:
+      - name: Show input from dispatch event
+        run: echo "Canary release flag ${{ github.event.inputs.canary-release }}"
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
@@ -119,7 +121,7 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   canary-release-pre-check:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.canary-release == true || github.event_name == 'schedule' }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'true' || github.event_name == 'schedule' }}
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.date-check.outputs.skip }}
@@ -129,19 +131,7 @@ jobs:
       - run: git fetch --depth=1
       - id: date-check
         name: Check if latest commit is within 24 hrs
-        run: |
-          lastCommitDate=$(git --no-pager log -n 1 main --pretty=format:"%at")
-          curDate=$(date +%s)
-          dateDiff=$(expr $curDate - $lastCommitDate)
-          echo $lastCommitDate, $curDate, $dateDiff
-
-          if [[ $dateDiff -gt 86400 ]]
-          then
-              echo 'No new commit found on ${{ github.ref }} within the last 24 hrs.'
-              echo '::set-output name=skip::true'
-          else
-              echo '::set-output name=skip::false'
-          fi
+        run: echo '::set-output name=skip::false'
   canary-release:
     if: ${{ needs.canary-release-pre-check.outputs.skip == 'false' }}
     runs-on: ubuntu-latest
@@ -165,7 +155,10 @@ jobs:
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           date=`date +%Y%m%d%H%M%S`
           rm -f .changeset/*.md
-          cp canary-release-changeset.md .changeset
+          project_version=$(cat package.json | jq '.version' | tr -d '"')
+          echo The project version is: $project_version
+          [[ $project_version == 3* ]] && cp canary-release-changeset.md .changeset          
+          [[ $project_version == 2* ]] && cp major-release-changeset.md .changeset
           yarn changeset pre enter ${date}
           yarn changeset version
           yarn changeset pre exit

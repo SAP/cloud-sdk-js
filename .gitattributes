@@ -1,2 +1,2 @@
 *.sqlite diff=sqlite
-
+.github/actions/**/*.js -diff linguist-generated=true 

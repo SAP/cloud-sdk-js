@@ -120,7 +120,7 @@ export interface DestinationCacheType {
 
 /**
  * DestinationCache constructor.
- * @param cache - Cache object which is used in DestiantionCache
+ * @param cache - Cache object which is used in DestinationCache
  * @returns A destination cache object.
  * @internal
  */
@@ -234,7 +234,7 @@ export function setDestinationCache(cache: DestinationCacheInterface): void {
  */
 export let destinationCache: DestinationCacheType = DestinationCache();
 /**
- * Determin the default Isolation strategy if not given as option.
+ * Determine the default Isolation strategy if not given as option.
  * @param jwt - JWT to determine the default isolation strategy
  * @returns The isolation strategy based on the JWT. If no JWT is given it defaults to Tenant isolation
  * @internal

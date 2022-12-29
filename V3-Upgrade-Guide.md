@@ -166,11 +166,11 @@ the navigation properties are not correctly initialized leading to potential err
 To avoid this unintended usage of the constructor the visibility was changed to `private`.
 If you used the constructor directly please change your code to use the service function e.g. `myEntityService()` in the example above.
 
-### Update Transpilation options in Odata client generator
+### Update Transpilation options in OData client generator
 
-The old `generateJs` option has been removed and instead replaced by `transpile`.
+The `generateJs` option has been replaced with the `transpile` option.
 By default, the OData generator will only generate TypeScript code.
 To generate JavaScript code, enable transpilation using the `--transpile` option.
 
-A new option, `tsConfig`, can be used to either pass a custom tsConfig configuration file or use a default config from the SDK.
+A new option, `tsConfig`, can be used to either pass a custom `tsconfig.json` configuration file or use a default config from the SDK.
 This flag should be used together with `transpile`. 

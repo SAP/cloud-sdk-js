@@ -30,15 +30,23 @@ const logger = createLogger({
 export function getAgentConfig(
   destination: Destination
 ): HttpAgentConfig | HttpsAgentConfig {
+  const agentType = destination.proxyConfiguration
+    ? AgentType.PROXY
+    : AgentType.DEFAULT;
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOption(destination)
   };
-  if (destination.proxyConfiguration) {
+  if (agentType === AgentType.PROXY) {
     return createProxyAgent(destination, certificateOptions);
   }
   return createDefaultAgent(destination, certificateOptions);
+}
+
+enum AgentType {
+  DEFAULT,
+  PROXY
 }
 
 function createProxyAgent(

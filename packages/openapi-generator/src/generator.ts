@@ -41,7 +41,7 @@ import {
   getRelPathWithPosixSeparator
 } from './options/options-per-service';
 import { sdkMetadata } from './sdk-metadata';
-import { tsconfigJson } from './options/tsconfig-json';
+import { tsconfigJson } from './options';
 
 const { mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');

@@ -7,7 +7,7 @@ const logger = createLogger('generate-odata-services');
 const generatorConfigOData = {
   forceOverwrite: true,
   overwrite: true,
-  transpile: false,
+  transpile: true,
   useSwagger: false,
   writeReadme: false,
   readme: false,

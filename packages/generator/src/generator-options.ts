@@ -84,7 +84,7 @@ export interface GeneratorOptions {
    */
   licenseInPackageJson?: string;
   /**
-   * When enabled, generates transpiled `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files.
+   * When enabled, generates transpiled `.js`, `.js.map`, and `.d.ts` files.
    * By default, only `.ts` files are generated.
    */
   transpile?: boolean;
@@ -294,7 +294,7 @@ export const generatorOptionsCli = {
   },
   transpile: {
     describe:
-      'Transpile the generated TypeScript code. When enabled a default `tsconfig.json` will be generated and used. It emits `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. To configure transpilation set `--tsconfig`.',
+      'Transpile the generated TypeScript code. When enabled a default `tsconfig.json` will be generated and used. It emits `.js`, `.js.map`, and `.d.ts` files. To configure transpilation set `--tsconfig`.',
     type: 'boolean',
     default: false
   },

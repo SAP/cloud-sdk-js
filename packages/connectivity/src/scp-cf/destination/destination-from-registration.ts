@@ -98,7 +98,7 @@ export async function searchRegisteredDestination(
     return null;
   }
 
-  logger.debug(
+  logger.info(
     `Successfully retrieved destination '${options.destinationName}' from registered destinations.`
   );
 

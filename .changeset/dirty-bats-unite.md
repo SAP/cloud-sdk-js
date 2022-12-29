@@ -3,4 +3,4 @@
 '@sap-cloud-sdk/generator': major
 ---
 
-[New Functionality] Introduced options `transpile` and `tsconfig` to configure transpilation for a generated OData client
+[New Functionality] Introduced options `transpile` and `tsconfig` to configure transpilation for generated OData clients.

@@ -172,5 +172,5 @@ By default, the OData generator will only generate TypeScript code.
 The `generateJs` option has been replaced with the `transpile` option.
 To generate JavaScript code, enable transpilation using the `transpile` option.
 
-A new option, `tsConfig`, can be used to either pass a custom `tsconfig.json` configuration file or use a default config from the SDK.
+A new option, `tsconfig`, can be used to either pass a custom `tsconfig.json` configuration file or use a default config from the SDK.
 This flag should be used together with `transpile`. 

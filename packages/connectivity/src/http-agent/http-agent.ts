@@ -36,22 +36,9 @@ export function getAgentConfig(
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOption(destination)
   };
-  if (destination.proxyConfiguration) {
-    return createProxyAgent(destination, certificateOptions);
-  }
-  return createDefaultAgent(destination, certificateOptions);
-}
-
-function createProxyAgent(
-  destination: Destination,
-  options: https.AgentOptions
-): HttpAgentConfig | HttpsAgentConfig {
-  if (!destination.proxyConfiguration) {
-    throw new Error(
-      `The destination proxy configuration: ${destination.proxyConfiguration} is undefined.`
-    );
-  }
-  return proxyAgent(destination, options);
+  return destination.proxyConfiguration
+    ? proxyAgent(destination, certificateOptions)
+    : createDefaultAgent(destination, certificateOptions);
 }
 
 /**

@@ -11,8 +11,7 @@ import {
 import {
   addProxyConfigurationInternet,
   proxyAgent,
-  proxyStrategy,
-  ProxyStrategy
+  proxyStrategy
 } from '../scp-cf/destination';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
@@ -180,7 +179,7 @@ export function urlAndAgent(targetUri: string): {
   httpsAgent?: http.Agent;
 } {
   let destination: Destination = { url: targetUri, proxyType: 'Internet' };
-  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
+  if (proxyStrategy(destination) === 'internet') {
     destination = addProxyConfigurationInternet(destination);
   }
   return {

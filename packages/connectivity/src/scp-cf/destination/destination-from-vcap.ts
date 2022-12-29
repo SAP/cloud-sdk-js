@@ -5,7 +5,6 @@ import { Service } from '../environment-accessor-types';
 import { getServiceByInstanceName } from '../environment-accessor';
 import {
   addProxyConfigurationInternet,
-  ProxyStrategy,
   proxyStrategy
 } from './http-proxy-util';
 import { Destination } from './destination-service-types';
@@ -64,8 +63,7 @@ export async function destinationForServiceBinding(
 
   const destWithProxy =
     destination &&
-    (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
-      proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
+    ['internet', 'private-link'].includes(proxyStrategy(destination))
       ? addProxyConfigurationInternet(destination)
       : destination;
 

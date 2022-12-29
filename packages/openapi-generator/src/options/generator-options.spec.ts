@@ -6,7 +6,6 @@ import {
   parseGeneratorOptions,
   parseOptionsFromConfig
 } from './generator-options';
-
 describe('parseGeneratorOptions', () => {
   beforeEach(() => {
     mock({
@@ -25,7 +24,7 @@ describe('parseGeneratorOptions', () => {
     include: undefined,
     clearOutputDir: false,
     skipValidation: false,
-    tsConfig: undefined,
+    tsconfig: undefined,
     packageJson: false,
     optionsPerService: undefined,
     packageVersion: '1.0.0',
@@ -111,10 +110,10 @@ describe('parseGeneratorOptions', () => {
       parseGeneratorOptions({
         input: 'inputDir',
         outputDir: 'outputDir',
-        tsConfig: 'someDir'
+        tsconfig: 'someDir'
       })
     ).toMatchObject({
-      tsConfig: join(process.cwd(), 'someDir')
+      tsconfig: join(process.cwd(), 'someDir')
     });
   });
 

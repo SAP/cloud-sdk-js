@@ -61,7 +61,7 @@ export interface GeneratorOptions {
    * By default, a `tsconfig.json` is only generated when transpilation is enabled (`transpile`).
    * If a directory is passed, a `tsconfig.json` file is read from this directory.
    */
-  tsConfig?: string;
+  tsconfig?: string;
   /**
    * When enabled, a `package.json` containing dependencies and scripts for transpilation and documentation generation, is generated.
    */

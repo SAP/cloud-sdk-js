@@ -507,7 +507,7 @@ describe('Cloud SDK Logger', () => {
       expect(allTransportsAreSilent(logger2, true)).toBe(true);
     });
 
-    it('unsilences existing and new loggers', () => {
+    it('unmutes existing and new loggers', () => {
       const logger1 = createLogger('logger1');
 
       muteLoggers();

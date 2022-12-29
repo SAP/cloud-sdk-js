@@ -2,7 +2,7 @@
   "name": "@sap-cloud-sdk/memory-tests-canary",
   "version": "0.0.1",
   "description": "Memory usage tests of the SAP Cloud SDK for JavaScript",
-  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
   "private": true,
   "repository": "github:SAP/cloud-sdk-js",

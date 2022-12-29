@@ -25,7 +25,7 @@ export class TestEntity4<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = 'VALUE_IS_UNDEFINED';
+  static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntity4 entity
    */

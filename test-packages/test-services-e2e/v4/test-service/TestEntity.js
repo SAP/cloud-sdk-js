@@ -64,7 +64,7 @@ TestEntity._entityName = 'TestEntity';
 /**
  * Default url path for the according service.
  */
-TestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
+TestEntity._defaultServicePath = '/odata/test-service';
 /**
  * All key fields of the TestEntity entity
  */

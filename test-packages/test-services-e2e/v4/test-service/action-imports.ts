@@ -49,7 +49,7 @@ export function createTestEntityById<
   };
 
   return new ActionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/odata/test-service',
     'createTestEntityById',
     data =>
       transformReturnValueForEntity(
@@ -93,7 +93,7 @@ export function createTestEntityByIdReturnId<
   };
 
   return new ActionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/odata/test-service',
     'createTestEntityByIdReturnId',
     data =>
       transformReturnValueForEdmType(data, val =>

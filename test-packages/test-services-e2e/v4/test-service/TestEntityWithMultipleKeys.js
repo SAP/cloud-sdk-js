@@ -54,7 +54,7 @@ TestEntityWithMultipleKeys._entityName = 'TestEntityWithMultipleKeys';
 /**
  * Default url path for the according service.
  */
-TestEntityWithMultipleKeys._defaultServicePath = 'VALUE_IS_UNDEFINED';
+TestEntityWithMultipleKeys._defaultServicePath = '/odata/test-service';
 /**
  * All key fields of the TestEntityWithMultipleKeys entity
  */

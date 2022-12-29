@@ -15,7 +15,7 @@ const service_1 = require("./service");
  */
 function testFunctionImportEntityReturnType1(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v4_1.FunctionImportRequestBuilder('VALUE_IS_UNDEFINED', 'TestFunctionImportEntityReturnType1', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.multipleSchemasService)(deSerializers).testEntity1Api), params, deSerializers);
+    return new odata_v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.multipleSchemasService)(deSerializers).testEntity1Api), params, deSerializers);
 }
 exports.testFunctionImportEntityReturnType1 = testFunctionImportEntityReturnType1;
 /**
@@ -25,7 +25,7 @@ exports.testFunctionImportEntityReturnType1 = testFunctionImportEntityReturnType
  */
 function testFunctionImportEntityReturnType2(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v4_1.FunctionImportRequestBuilder('VALUE_IS_UNDEFINED', 'TestFunctionImportEntityReturnType2', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.multipleSchemasService)(deSerializers).testEntity2Api), params, deSerializers);
+    return new odata_v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.multipleSchemasService)(deSerializers).testEntity2Api), params, deSerializers);
 }
 exports.testFunctionImportEntityReturnType2 = testFunctionImportEntityReturnType2;
 exports.functionImports = {

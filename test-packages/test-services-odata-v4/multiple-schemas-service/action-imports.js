@@ -16,7 +16,7 @@ const TestComplexType2_1 = require("./TestComplexType2");
  */
 function testActionImportNoParameterComplexReturnType1(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v4_1.ActionImportRequestBuilder('VALUE_IS_UNDEFINED', 'TestActionImportNoParameterComplexReturnType1', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType1_1.TestComplexType1)), params, deSerializers);
+    return new odata_v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType1', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType1_1.TestComplexType1)), params, deSerializers);
 }
 exports.testActionImportNoParameterComplexReturnType1 = testActionImportNoParameterComplexReturnType1;
 /**
@@ -26,7 +26,7 @@ exports.testActionImportNoParameterComplexReturnType1 = testActionImportNoParame
  */
 function testActionImportNoParameterComplexReturnType2(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v4_1.ActionImportRequestBuilder('VALUE_IS_UNDEFINED', 'TestActionImportNoParameterComplexReturnType2', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType2_1.TestComplexType2)), params, deSerializers);
+    return new odata_v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType2', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType2_1.TestComplexType2)), params, deSerializers);
 }
 exports.testActionImportNoParameterComplexReturnType2 = testActionImportNoParameterComplexReturnType2;
 exports.actionImports = {

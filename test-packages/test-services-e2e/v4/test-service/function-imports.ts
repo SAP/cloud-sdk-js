@@ -56,7 +56,7 @@ export function concatStrings<
   };
 
   return new FunctionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/odata/test-service',
     'concatStrings',
     data =>
       transformReturnValueForEdmType(data, val =>
@@ -90,7 +90,7 @@ export function getAll<
   const params = {};
 
   return new FunctionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/odata/test-service',
     'getAll',
     data =>
       transformReturnValueForEntityList(
@@ -132,7 +132,7 @@ export function getByKey<
   };
 
   return new FunctionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/odata/test-service',
     'getByKey',
     data =>
       transformReturnValueForEntity(
@@ -198,7 +198,7 @@ export function getByKeyWithMultipleKeys<
   };
 
   return new FunctionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/odata/test-service',
     'getByKeyWithMultipleKeys',
     data =>
       transformReturnValueForEntity(
@@ -242,7 +242,7 @@ export function returnCollection<
   };
 
   return new FunctionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/odata/test-service',
     'returnCollection',
     data =>
       transformReturnValueForEdmTypeList(data, val =>
@@ -283,7 +283,7 @@ export function returnInt<
   };
 
   return new FunctionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/odata/test-service',
     'returnInt',
     data =>
       transformReturnValueForEdmType(data, val =>
@@ -319,7 +319,7 @@ export function returnSapCloudSdk<
   const params = {};
 
   return new FunctionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/odata/test-service',
     'returnSapCloudSdk',
     data =>
       transformReturnValueForEdmType(data, val =>

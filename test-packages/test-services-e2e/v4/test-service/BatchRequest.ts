@@ -90,7 +90,7 @@ export function changeset<DeSerializersT extends DeSerializers>(
   return new BatchChangeSet(transformVariadicArgumentToArray(first, rest));
 }
 
-export const defaultTestServicePath = 'VALUE_IS_UNDEFINED';
+export const defaultTestServicePath = '/odata/test-service';
 export type ReadTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =

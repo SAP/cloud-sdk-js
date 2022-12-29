@@ -58,7 +58,7 @@ export declare function changeset<DeSerializersT extends DeSerializers>(
 export declare function changeset<DeSerializersT extends DeSerializers>(
   requests: Array<WriteTestServiceRequestBuilder<DeSerializersT>>
 ): BatchChangeSet<DeSerializersT>;
-export declare const defaultTestServicePath = 'VALUE_IS_UNDEFINED';
+export declare const defaultTestServicePath = '/odata/test-service';
 export type ReadTestServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =

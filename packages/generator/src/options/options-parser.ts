@@ -132,9 +132,10 @@ class OptionsParser<
         parsedOptions[name] = parsedOptions[name] ?? option.default;
       }
       if ('coerce' in option) {
-        parsedOptions[name] =
-          parsedOptions[name] ??
-          option.coerce?.(parseOptions[name], this.options);
+        parsedOptions[name] = option.coerce?.(
+          parsedOptions[name],
+          parsedOptions
+        );
       }
     });
 

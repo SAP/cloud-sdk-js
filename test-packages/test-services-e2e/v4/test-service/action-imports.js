@@ -17,7 +17,7 @@ function createTestEntityById(parameters, deSerializers = odata_v4_1.defaultDeSe
     const params = {
         id: new odata_v4_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
     };
-    return new odata_v4_1.ActionImportRequestBuilder('VALUE_IS_UNDEFINED', 'createTestEntityById', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers);
+    return new odata_v4_1.ActionImportRequestBuilder('/odata/test-service', 'createTestEntityById', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers);
 }
 exports.createTestEntityById = createTestEntityById;
 /**
@@ -29,7 +29,7 @@ function createTestEntityByIdReturnId(parameters, deSerializers = odata_v4_1.def
     const params = {
         id: new odata_v4_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
     };
-    return new odata_v4_1.ActionImportRequestBuilder('VALUE_IS_UNDEFINED', 'createTestEntityByIdReturnId', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32', deSerializers)), params, deSerializers);
+    return new odata_v4_1.ActionImportRequestBuilder('/odata/test-service', 'createTestEntityByIdReturnId', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32', deSerializers)), params, deSerializers);
 }
 exports.createTestEntityByIdReturnId = createTestEntityByIdReturnId;
 exports.actionImports = {

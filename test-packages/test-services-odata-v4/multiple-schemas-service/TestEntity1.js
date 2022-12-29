@@ -24,7 +24,7 @@ TestEntity1._entityName = 'A_TestEntity1';
 /**
  * Default url path for the according service.
  */
-TestEntity1._defaultServicePath = 'VALUE_IS_UNDEFINED';
+TestEntity1._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntity1 entity
  */

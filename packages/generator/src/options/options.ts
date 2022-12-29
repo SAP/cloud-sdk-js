@@ -1,5 +1,5 @@
 import { PathLike } from 'fs';
-import { resolve, dirname } from 'path';
+import { resolve, dirname, join } from 'path';
 import { readFileSync } from 'fs-extra';
 import { Option, ParsedOptions } from './options-parser';
 
@@ -176,9 +176,10 @@ export const cliOptions = {
       arg: string | undefined,
       options: GeneratorOptions & { config?: string }
     ) =>
-      arg
-        ? resolve(arg)
-        : resolve(options.inputDir.toString(), 'service-mapping.json')
+      coerceRequiredPathArg(
+        arg ? arg : join(options.inputDir.toString(), 'service-mapping.json'),
+        options
+      )
   },
   prettierConfig: {
     alias: 'p',

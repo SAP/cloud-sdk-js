@@ -69,8 +69,7 @@ const logger = createLogger({
 export async function generate(
   options: GeneratorOptions & { config?: string }
 ): Promise<void> {
-  const parsedOptions = parseOptions(cliOptions, options);
-  return generateWithParsedOptions(parsedOptions);
+  return generateWithParsedOptions(parseOptions(cliOptions, options));
 }
 
 /**

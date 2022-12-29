@@ -1,6 +1,5 @@
 import { PathLike } from 'fs';
 import { resolve, dirname, join } from 'path';
-import { readFileSync } from 'fs-extra';
 import { Option, ParsedOptions } from './options-parser';
 
 /**
@@ -331,26 +330,3 @@ export const cliOptions = {
     deprecated: 'Since v2.12.0. This functionality will be discontinued.'
   }
 } as const satisfies Record<keyof GeneratorOptions, Option>;
-
-/**
- * @internal
- */
-export function createOptionsFromConfig(configPath: string): GeneratorOptions {
-  const file = readFileSync(configPath, 'utf-8');
-  const pathLikeKeys = [
-    'inputDir',
-    'outputDir',
-    'serviceMapping',
-    'prettierConfig'
-  ];
-  return pathLikeKeys.reduce(
-    (json, pathLikeKey) =>
-      typeof json[pathLikeKey] === 'undefined'
-        ? json
-        : {
-            ...json,
-            [pathLikeKey]: resolve(dirname(configPath), json[pathLikeKey])
-          },
-    JSON.parse(file)
-  );
-}

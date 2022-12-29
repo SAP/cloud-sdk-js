@@ -239,7 +239,7 @@ export type DestinationRetrievalOptions = CachingOptions & {
 };
 
 /**
- * Typeguard to find if object is a Destination.
+ * Type guard to find if object is a Destination.
  * @param destination - Destination to be checked
  * @returns boolean
  * @internal

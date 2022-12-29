@@ -9,6 +9,7 @@ We try to provide fixes, features and answers as soon as possible.
 If you would like to contribute to the SAP Cloud SDK, please make yourself familiar with our [contributing guidelines](https://github.com/SAP/cloud-sdk-js/blob/main/CONTRIBUTING.md) and follow the given instructions.
 
 ## Links
+
 - [Official support channel](https://github.com/SAP/cloud-sdk-js/issues/new/choose)
 
 <br>
@@ -21,7 +22,7 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 - [SAP Cloud SDK Documentation portal - Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
 - [SAP Cloud SDK Documentation portal - API documentation](https://sap.github.io/cloud-sdk/api/latest)
 - [SAP Cloud SDK Documentation portal - Error handling](https://sap.github.io/cloud-sdk/docs/js/features/error-handling)
-- [SAP Cloud SDK Documentation portal - Release notes](https://sap.github.io/cloud-sdk/docs/js/release-notes-sap-cloud-sdk-for-javascript-and-typescript)
+- [SAP Cloud SDK Documentation portal - Release notes](https://sap.github.io/cloud-sdk/docs/js/release-notes)
 
 <br>
 

@@ -18,7 +18,7 @@ $ npm install @sap-cloud-sdk/connectivity
 The connectivity package is not intended for direct usage. 
 The handles the platform abstractions for the connectivity e.g. connectivity service.
 
-For more detailed overview visit our [OData client documentation](https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript).
+For more detailed overview visit the documentation on [destinations and connectivity](https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destinations).
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
@@ -45,7 +45,7 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 - [SAP Cloud SDK Documentation portal - Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
 - [SAP Cloud SDK Documentation portal - API documentation](https://sap.github.io/cloud-sdk/api/latest)
 - [SAP Cloud SDK Documentation portal - Error handling](https://sap.github.io/cloud-sdk/docs/js/features/error-handling)
-- [SAP Cloud SDK Documentation portal - Release notes](https://sap.github.io/cloud-sdk/docs/js/release-notes-sap-cloud-sdk-for-javascript-and-typescript)
+- [SAP Cloud SDK Documentation portal - Release notes](https://sap.github.io/cloud-sdk/docs/js/release-notes)
 
 <br>
 

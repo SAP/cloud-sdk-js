@@ -77,7 +77,7 @@ describe('function', () => {
       returnType:
         "Omit<FunctionImportRequestBuilder<DeSerializersT, Params<DeSerializersT>, never>, 'execute'>",
       docs: [
-        "entityNotDeserializable The 'execute' method does not exist when using this function import. Please use the 'executeRaw' for getting the raw response.\n@param parameters - Object containing all parameters for the function.\n@returns A request builder that allows to overwrite some of the values and execute the resulting request."
+        "entityNotDeserializable The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.\n@param parameters - Object containing all parameters for the function.\n@returns A request builder that allows to overwrite some of the values and execute the resulting request."
       ],
       isExported: true,
       statements:

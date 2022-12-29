@@ -69,7 +69,7 @@ export function operationFunction(
 function getDocDescription({ description, returnType, type }: VdmOperation) {
   return `${description} ${
     cannotDeserialize(returnType)
-      ? `The 'execute' method does not exist for this ${type} import. Please use the 'executeRaw' to get the raw response.`
+      ? `The 'execute' method does not exist for this ${type} import. Please use 'executeRaw' to get the raw response.`
       : ''
   }`;
 }

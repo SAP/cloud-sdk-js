@@ -25,7 +25,7 @@ businessPartnerApi
   )
   .build();
 ```
-For more detailed overview visit our [Temporal middleware documentation](https://sap.github.io/cloud-sdk/docs/js/features/odata/v4-client#using-default-temporal-middleware).
+For more detailed overview visit the [Temporal middleware documentation](https://sap.github.io/cloud-sdk/docs/js/features/odata/v4-client#using-de-serializers-for-temporal).
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->

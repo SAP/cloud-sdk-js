@@ -25,7 +25,7 @@ export class BooleanFilterFunction<
 }
 
 /**
- * Typeguard for the BooleanFilterFunction
+ * Type guard for the BooleanFilterFunction
  * @param filterable - Object to be checked.
  * @returns boolean
  * @internal

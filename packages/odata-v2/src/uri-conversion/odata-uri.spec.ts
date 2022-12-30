@@ -127,7 +127,7 @@ describe('getFilter', () => {
     );
   });
 
-  it('transforms guids to string', () => {
+  it('transforms GUIDs to string', () => {
     expect(
       oDataUri.getFilter(testFilterGuid.filter, testEntityApi).filter
     ).toBe(encodeURIComponent(testFilterGuid.odataStr));

@@ -111,9 +111,9 @@ export function executeWithMiddleware<ReturnT, ContextT extends Context>(
  * You start with a function (axios request function) and add a timeout, circuit-breaker etc..
  * The result is new a function containing a timeout, circuit-breaker etc..
  * Note that the actual function is not executed.
- * @param middlewares - Middlwares added to the function.
+ * @param middlewares - Middlewares added to the function.
  * @param initial - Initial function and context.
- * @returns The funciton with the middlewares added.
+ * @returns The function with the middlewares added.
  */
 function addMiddlewaresToInitialFunction<ReturnT, ContextT extends Context>(
   middlewares: Middleware<ReturnT, ContextT>[],

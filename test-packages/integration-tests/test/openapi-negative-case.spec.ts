@@ -50,7 +50,7 @@ describe('openapi negative tests', () => {
     );
   }, 120000);
 
-  it('should fail on transpilation on faulty tsconfig - this also checks that --tsConfig switches on transpile', async () => {
+  it('should fail on transpilation on faulty tsconfig - this also checks that --tsconfig switches on transpile', async () => {
     const output = join(testDir, 'transpilation-failed-1');
     await promises.mkdir(output);
     await expect(
@@ -67,7 +67,7 @@ describe('openapi negative tests', () => {
           output,
           '--skipValidation',
           '--clearOutputDir',
-          '--tsConfig',
+          '--tsconfig',
           resolve(testResourcesDir, 'faulty-openapi-tsconfig', 'tsconfig.json')
         ],
         { cwd: __dirname }

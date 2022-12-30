@@ -267,7 +267,7 @@ export interface MailDestination {
  */
 export interface SDKOptions {
   /**
-   * Option to define the strategy of sending emails. The emails will be sent in parallel when setting to true, otherwise in sequential. The default value is true.
+   * Option to define the strategy of sending emails. The emails will be sent in parallel when set to `true`, otherwise in sequential. The default value is `true`.
    */
   parallel?: boolean;
 }
@@ -277,7 +277,7 @@ export interface SDKOptions {
  */
 export interface MailClientOptions extends SmtpTransportOptions {
   /**
-   * Defines the SDK behaviours, for example whether the mails are sent in parallel.
+   * Defines whether mails are sent in parallel.
    */
   sdkOptions?: SDKOptions;
 }
@@ -289,11 +289,11 @@ export interface MailClientOptions extends SmtpTransportOptions {
  */
 export interface SmtpTransportOptions {
   /**
-   * Defines if the connection should use SSL (if true) or not (if false).
+   * Defines if the connection should use SSL (if `true`) or not (if `false`).
    */
   secure?: boolean | undefined;
   /**
-   * Turns off STARTTLS support if true.
+   * Turns off STARTTLS support if `true`.
    */
   ignoreTLS?: boolean | undefined;
   /**
@@ -317,13 +317,13 @@ export interface SmtpTransportOptions {
    */
   socketTimeout?: number | undefined;
   /**
-   * If set to true, then logs SMTP traffic and message content, otherwise logs only transaction events.
+   * If set to `true`, then logs SMTP traffic and message content, otherwise logs only transaction events.
    */
   debug?: boolean | undefined;
   /**
    * Defines additional options to be passed to the socket constructor.
    * @example
-   * { rejectUnauthorized: true }
+   * { rejectUnauthorized: `true` }
    */
   tls?: ConnectionOptions | undefined;
   /**
@@ -331,7 +331,7 @@ export interface SmtpTransportOptions {
    */
   socket?: net.Socket | undefined;
   /**
-   * Connected socket to use instead of creating and connecting a new one. If secure option is true, then socket is upgraded from plaintext to ciphertext.
+   * Connected socket to use instead of creating and connecting a new one. If secure option is true, then socket is upgraded from plain text to cipher text.
    */
   connection?: net.Socket | undefined;
   /**

@@ -18,7 +18,7 @@ export class UnaryFilter<
 }
 
 /**
- * Typeguard for the UnaryFilter object.
+ * Type guard for the UnaryFilter object.
  * @param filterable - Variable to be checked
  * @returns boolean
  * @internal

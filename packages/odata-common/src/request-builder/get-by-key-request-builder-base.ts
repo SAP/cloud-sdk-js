@@ -66,7 +66,7 @@ export abstract class GetByKeyRequestBuilderBase<
 
   /**
    * Sets user-defined identifier for the batch reference.
-   * @param id - User-defined batch reuest identifier.
+   * @param id - User-defined batch request identifier.
    */
   setBatchId(id: string): void {
     this._batchReference = { id };

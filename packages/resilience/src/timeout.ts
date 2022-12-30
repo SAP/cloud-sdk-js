@@ -37,7 +37,7 @@ export function timeout<ReturnType, ContextType extends Context>(
  * @internal
  * @param timeoutValue - Value for the timeout in milliseconds.
  * message: string - Error message thrown when timeout is exceeded.
- * @returns A promise which times out after the given time and the node timout instance to clear the timeout if not needed anymore.
+ * @returns A promise which times out after the given time and the node timeout instance to clear the timeout if not needed anymore.
  */
 function getTimeoutPromise<T>(
   timeoutValue: number,

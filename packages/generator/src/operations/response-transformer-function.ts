@@ -1,4 +1,4 @@
-import { VdmOperationReturnType, VdmReturnTypeCategory } from '../vdm-types';
+import { VdmOperationReturnType } from '../vdm-types';
 
 /**
  * @internal
@@ -16,11 +16,11 @@ function singleTransformationFunction(
   returnType: VdmOperationReturnType
 ): string {
   switch (returnType.returnTypeCategory) {
-    case VdmReturnTypeCategory.VOID:
+    case 'void':
       return 'transformReturnValueForUndefined';
-    case VdmReturnTypeCategory.ENTITY:
+    case 'entity':
       return 'transformReturnValueForEntity';
-    case VdmReturnTypeCategory.COMPLEX_TYPE:
+    case 'complex-type':
       return 'transformReturnValueForComplexType';
     default:
       return 'transformReturnValueForEdmType';

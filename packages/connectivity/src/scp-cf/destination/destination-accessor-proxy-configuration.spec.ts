@@ -26,7 +26,6 @@ import {
   onPremiseMultipleResponse,
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
-import { Protocol } from '../protocol';
 import { getDestination } from './destination-accessor';
 import { parseDestination } from './destination';
 import * as ProxyUtil from './http-proxy-util';
@@ -65,7 +64,7 @@ describe('proxy configuration', () => {
     });
     expect(actual?.proxyConfiguration).toEqual({
       host: 'some.proxy.com',
-      protocol: Protocol.HTTP,
+      protocol: 'http',
       port: 1234
     });
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));

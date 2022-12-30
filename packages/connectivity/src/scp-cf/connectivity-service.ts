@@ -68,7 +68,7 @@ export function httpProxyHostAndPort(): HostAndPort {
     port:
       service.credentials.onpremise_proxy_http_port ||
       service.credentials.onpremise_proxy_port,
-    protocol: Protocol.HTTP
+    protocol: 'http'
   };
 }
 
@@ -85,7 +85,7 @@ export async function socksProxyHostAndPort(): Promise<ProxyConfiguration> {
   return {
     host: service.credentials.onpremise_proxy_host,
     port: parseInt(service.credentials.onpremise_socks5_proxy_port),
-    protocol: Protocol.SOCKS,
+    protocol: 'socks',
     'proxy-authorization': connectivityServiceToken
   };
 }

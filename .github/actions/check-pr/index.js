@@ -43,10 +43,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var core_1 = __nccwpck_require__(7117);
-var github_1 = __nccwpck_require__(4005);
 var promises_1 = __nccwpck_require__(3977);
 var node_path_1 = __nccwpck_require__(9411);
+var core_1 = __nccwpck_require__(7117);
+var github_1 = __nccwpck_require__(4005);
 var validCommitTypes = ['feat', 'fix', 'chore'];
 // Expected format: preamble(topic)!: Title text
 function validateTitle() {
@@ -57,7 +57,7 @@ function validateTitle() {
                 case 0:
                     title = github_1.context.payload.pull_request.title;
                     if (!title.includes(':')) {
-                        return [2 /*return*/, (0, core_1.setFailed)("PR title does not adhere to conventional commit guidelines. No preamble found.")];
+                        return [2 /*return*/, (0, core_1.setFailed)('PR title does not adhere to conventional commit guidelines. No preamble found.')];
                     }
                     _a = title.split(':'), preamble = _a[0], postamble = _a[1];
                     return [4 /*yield*/, validatePreamble(preamble)];
@@ -93,13 +93,10 @@ function validateCommitType(commitType) {
 }
 function validatePostamble(title) {
     if (!title || !title.trim().length) {
-        return (0, core_1.setFailed)("PR title does not have a title after conventional commit preamble.");
+        return (0, core_1.setFailed)('PR title does not have a title after conventional commit preamble.');
     }
     if (title[0] !== ' ') {
-        return (0, core_1.setFailed)("Space missing after conventional commit preamble.");
-    }
-    if (title[1] === title[1].toLowerCase()) {
-        return (0, core_1.setFailed)("PR title title must be capitalized (after conventional commit preamble).");
+        return (0, core_1.setFailed)('Space missing after conventional commit preamble.');
     }
     (0, core_1.info)('✓ Title: OK');
 }

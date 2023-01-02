@@ -11,25 +11,19 @@ Add sections to the document as you see fit.
 
 <!-- Everything below this line should be written in the style of end user documentation. If you need to add hints for SDK developers, to that above. -->
 
-# How to upgrade to version 3 of the SAP Cloud SDK for JavaScript <!-- omit from toc -->
+# How to Upgrade to Version 3 of the SAP Cloud SDK for JavaScript <!-- omit from toc -->
 
 This document will guide you through the steps necessary to upgrade to version 3 of the SAP Cloud SDK. Depending on your project, some steps might not be applicable. The To-Do list is:
 
-- [Update your Project Dependencies](#update-your-project-dependencies)
-- [Update to Node.js 18 or Newer](#update-to-nodejs-18-or-newer)
-- [Adjust Operation Names in OData Generated Clients](#adjust-operation-names-in-odata-generated-clients)
-- [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
-  - [Package `@sap-cloud-sdk/http-client`](#package-sap-cloud-sdkhttp-client)
-  - [Package `@sap-cloud-sdk/util`](#package-sap-cloud-sdkutil)
-  - [Package `@sap-cloud-sdk/connectivity`](#package-sap-cloud-sdkconnectivity)
-  - [Package `@sap-cloud-sdk/odata-common`](#package-sap-cloud-sdkodata-common)
-    - [`fromJson` function](#fromjson-function)
-    - [`ODataRequestConfig` class](#odatarequestconfig-class)
-- [Timeout](#timeout)
-- [Direct API Constructor Usage](#direct-api-constructor-usage)
-- [Update Transpilation options in OData client generator](#update-transpilation-options-in-odata-client-generator)
+- [Update Your Project Dependencies](#update-your-project-dependencies)
+- [Update to Node 18 or Newer](#update-to-node-18-or-newer)
+- [Replace Removed Functionality](#replace-removed-functionality)
+- [Switch to Middlewares for Timeouts](#switch-to-middlewares-for-timeouts)
+- [Update Transpilation Options in OData Client Generator](#update-transpilation-options-in-odata-client-generator)
+- [Use Service Function instead of API Constructor](#use-service-function-instead-of-api-constructor)
+- [Adjust Operation Names Starting With `_` in Generated OData Clients](#adjust-operation-names-starting-with-_-in-generated-odata-clients)
 
-## Update your Project Dependencies
+## Update Your Project Dependencies
 
 Search for occurrences of `@sap-cloud-sdk/[some module]` in your `package.json` files.
 Replace the version numbers with `^3`.
@@ -42,53 +36,33 @@ We recommend updating your applications in one commit or pull request and making
 
 The [axios HTTP client](https://github.com/axios/axios) has been updated from version 0.27 to 1.2.
 
-## Update to Node.js 18 or Newer
+## Update to Node 18 or Newer
 
-Node.js 18 is the current long term support (LTS) version.
-Previous node versions will reach their end of life within the next year (see [node.js release schedule](https://github.com/nodejs/Release#release-schedule)).
-Therefore, all SAP Cloud SDK for JavaScript libraries will switch to node 18 as the **minimum** supported node version.
-If you run an older (<18) node version, update to a newer version.
-You can find a list of breaking changes in the news section of the node.js [website](https://nodejs.org/en/blog/).
+All SAP Cloud SDK for JavaScript libraries now support node 18 (LTS) as the **minimum** node version.
+If you are using a node version older than 18, update your runtime environment to a newer version.
+Note, that the transpilation target of the SDK changed from `es2019` to `es2021`.
 
-### Update ECMAScript Runtime <!-- omit from toc -->
+## Replace Removed Functionality
 
-The compilation target of the SAP Cloud SDK changed from `es2019` to `es2021`.
-Depending on your configuration this may lead to compilation errors (TypeScript) or runtime errors in (JavaScript).
-
-## Adjust Operation Names in OData Generated Clients
-
-Rules for naming of OData operations (actions or functions) in the generated client have been changed.
-This applies to bound and unbound operations.
-If an operation begins with an `underscore` symbol, the `_` will be removed from the resulting generated client code.
-To adjust the names, search in `function-import.ts` and `action-import.ts` files in your generated client code for any operation starting with `_`.
-Similarly, to adjust the names of bound operations of an entity, search in the respective entity's `.ts` file, e.g., `TestEntity.ts`.
-
-## Check for removed deprecated functions and replace them if required
-
-While the SAP Cloud SDK maintains backwards compatibility within a major version where possible, a new major release breaks compatibility where required to simplify the programming interface.
-Most of the removed functions had been deprecated before, so ideally they are not used anymore.
+Most of the removed functionality had been deprecated in version 2, so ideally they are not used anymore.
 The following sub-sections describe affected modules, functions and interfaces with instructions on how to replace them.
 
-### Package `@sap-cloud-sdk/http-client`
+### Package `@sap-cloud-sdk/http-client` <!-- omit from toc -->
 
-The overload, that accepted `HttpRequestConfigWithOrigin` as a parameter, is removed and replaced by the function `executeHttpRequestWithOrigin`.
+- The `executeHttpRequest()` function overload, that accepted `HttpRequestConfigWithOrigin` as a parameter, is removed. Use `executeHttpRequestWithOrigin()` instead.
 
-### Package `@sap-cloud-sdk/util`
+### Package `@sap-cloud-sdk/util` <!-- omit from toc -->
 
-The field `logger` on the interface `LoggerOptions` was not used and is removed from the interface.
+- The field `logger` on the interface `LoggerOptions` was not used and is removed from the interface. There is no replacement.
+- The function `variadicArgumentToArray` is replaced by the function `transformVariadicArgumentToArray`.
 
-The function `variadicArgumentToArray` is replaced by the function `transformVariadicArgumentToArray`.
+### Package `@sap-cloud-sdk/connectivity` <!-- omit from toc -->
 
-### Package `@sap-cloud-sdk/connectivity`
+- The generic type of `JwtKeyMapping` was improved, so that the second type argument `JwtKeysT` extends string.
 
-The generic types of `JwtKeyMapping` is simplified so the second type argument `JwtKeysT` are always strings.
+### Package `@sap-cloud-sdk/odata-common` <!-- omit from toc -->
 
-### Package `@sap-cloud-sdk/odata-common`
-
-#### `fromJson` function
-
-Setting custom fields in `fromJson` through the `_customFields` property has been removed.
-Add custom properties to your JSON object instead.
+- When creating entities with the `fromJson()` method, the `_customFields` property is no longer considered. Add custom properties as root level properties in your object instead.
 
 Old example, not working anymore:
 
@@ -108,23 +82,9 @@ New example:
 }
 ```
 
-#### `ODataRequestConfig` class
+- "Content-type" HTTP headers cannot be passed as a string in the constructor of `ODataRequestConfig` anymore. Instead pass an object with "content-type" as a key and the header value as a value, e.g. `{ 'content-type': 'some-value' }` to the constructor.
 
-The constructor of `ODataRequestConfig` was changed so that the third parameter cannot be a `string` anymore.
-Passing in a string which was then interpreted as the value for the `Content-Type` HTTP header was deprecated.
-The type of the parameter is now `Record<string, any>`, and if only want to set the `Content-Type` HTTP header you can do so by passing `{'content-type': 'some-value'}` to the constructor.
-
-<!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
-
-## Generator CLI
-
-The SAP Cloud SDK includes two "generator" cli applications for OData and for OpenAPI clients.
-For historic reasons the command-line arguments of both applications were different in cases where this does not make sense.
-In version 3, the arguments are aligned and deprecated arguments have been removed.
-Please see (insert link here) for the current documentation on the cli arguments.
--->
-
-## Timeout
+## Switch to Middlewares for Timeouts
 
 The `timeout()` method was removed from the request builder and the `timeout` option was removed from the `executeHttpRequest()` function.
 If you want to set a timeout for a request use the new timeout middleware:
@@ -142,7 +102,16 @@ myRequestBuilder.getAll().middleware([timeout()]).execute(myDestination);
 
 You find a detailed guide on the general [middleware concept](https://sap.github.io/cloud-sdk/docs/js/v3/features/middleware) and the [resilience middlewares](https://sap.github.io/cloud-sdk/docs/js/v3/guides/resilience) in particular on the documentation portal.
 
-## Direct API Constructor Usage
+## Update Transpilation Options in OData Client Generator
+
+By default, the OData generator will only generate TypeScript code.
+The `generateJs` option has been replaced with the `transpile` option.
+To generate JavaScript code, enable transpilation using the `transpile` option.
+
+A new option, `tsconfig`, can be used to either pass a custom `tsconfig.json` configuration file or use a default config from the SDK.
+This flag should be used together with `transpile`.
+
+## Use Service Function instead of API Constructor
 
 You should use the [service function](https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-request#general-request-structure) to get an instance of your API object:
 
@@ -162,13 +131,12 @@ const myEntityApi = new MyEntityApi();
 
 the navigation properties are not correctly initialized leading to potential errors.
 To avoid this unintended usage of the constructor the visibility was changed to `private`.
-If you used the constructor directly please change your code to use the service function e.g. `myEntityService()` in the example above.
+If you used the constructor directly change your code to use the service function e.g. `myEntityService()` in the example above.
 
-## Update Transpilation options in OData client generator
+## Adjust Operation Names Starting With `_` in Generated OData Clients
 
-By default, the OData generator will only generate TypeScript code.
-The `generateJs` option has been replaced with the `transpile` option.
-To generate JavaScript code, enable transpilation using the `transpile` option.
+Rules for naming OData operations (actions or functions) when generating clients have changed slightly.
+If an operation begins with an underscore symbol(`_`), it is removed in the generated client code.
 
-A new option, `tsconfig`, can be used to either pass a custom `tsconfig.json` configuration file or use a default config from the SDK.
-This flag should be used together with `transpile`.
+To adjust the names for unbound operations, search in `function-import.ts` and `action-import.ts` files in your generated client code for operations starting with `_`.
+Similarly, to adjust the names of bound operations of an entity, search in the respective entity's `.ts` file, e.g., `BusinessPartner.ts`.

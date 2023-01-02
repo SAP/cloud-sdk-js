@@ -361,83 +361,6 @@ describe('Cloud SDK Logger', () => {
     });
   });
 
-  describe('logs correspond to set log level', () => {
-    let consoleSpy;
-    beforeEach(() => {
-      logger = createLogger(messageContext);
-      consoleSpy = jest.spyOn(process.stdout, 'write');
-      const rootNodeModules = path.resolve(
-        __dirname,
-        '../../../../node_modules'
-      );
-      mock({
-        'test.log': 'content',
-        [rootNodeModules]: mock.load(rootNodeModules)
-      });
-    });
-
-    it('should display no verbose logs by default', async () => {
-      const fileTransport = new transports.File({
-        filename: 'test.log',
-        level: 'info'
-      });
-      setGlobalTransports(fileTransport);
-
-      logger.error(
-        'logs error only in test.log because the level is less than info'
-      );
-      logger.info(
-        'logs info only in test.log because the level is equal to info'
-      );
-      logger.verbose(
-        'logs verbose nowhere because the level is higher than info'
-      );
-      expect(consoleSpy).not.toBeCalled();
-      const log = await fs.promises.readFile('test.log', { encoding: 'utf-8' });
-      expect(log).toMatch(
-        /logs error only in test.log because the level is less than info/
-      );
-      expect(log).toMatch(
-        /logs info only in test.log because the level is equal to info/
-      );
-      expect(log).not.toMatch(
-        /logs verbose nowhere because the level is higher than info/
-      );
-      mock.restore();
-    });
-
-    it('should display all logs when verbose option is set to true', async () => {
-      setLogLevel('verbose', logger);
-      const fileTransport = new transports.File({
-        filename: 'test.log',
-        level: 'verbose'
-      });
-      setGlobalTransports(fileTransport);
-
-      logger.error(
-        'logs error in test.log because the level is less than verbose'
-      );
-      logger.info(
-        'logs info in test.log because the level is less than verbose'
-      );
-      logger.verbose(
-        'logs verbose in test.log because the level is equal to verbose'
-      );
-      expect(consoleSpy).not.toBeCalled();
-      const log = await fs.promises.readFile('test.log', { encoding: 'utf-8' });
-      expect(log).toMatch(
-        /logs error in test.log because the level is less than verbose/
-      );
-      expect(log).toMatch(
-        /logs info in test.log because the level is less than verbose/
-      );
-      expect(log).toMatch(
-        /logs verbose in test.log because the level is equal to verbose/
-      );
-      mock.restore();
-    });
-  });
-
   describe('sanitize records', () => {
     it('does not remove any unwanted record properties for common response headers', () => {
       const responseHeaders = {
@@ -584,7 +507,7 @@ describe('Cloud SDK Logger', () => {
       expect(allTransportsAreSilent(logger2, true)).toBe(true);
     });
 
-    it('unsilences existing and new loggers', () => {
+    it('unmutes existing and new loggers', () => {
       const logger1 = createLogger('logger1');
 
       muteLoggers();

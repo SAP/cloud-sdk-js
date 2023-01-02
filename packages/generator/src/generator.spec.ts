@@ -268,20 +268,16 @@ describe('generator', () => {
       expect(consoleSpy).not.toBeCalled();
     });
 
-    it('should display verbose logs when verbose option is set to true', done => {
-      const transportsConsole = new transports.Stream({
-        stream: createWriteStream('test.log')
-      });
-      transportsConsole.once('logged', data => {
-        expect(JSON.stringify(data)).toMatch(/Generating entities .../);
-        done();
+    it('should display verbose logs when verbose option is set to true', async () => {
+      const fileTransport = new transports.File({
+        filename: 'test.log'
       });
 
       const logger = createLogger({
         package: 'generator',
         messageContext: 'generator'
       });
-      logger.add(transportsConsole);
+      logger.add(fileTransport);
       const options = createOptions({
         inputDir: pathTestService,
         outputDir: 'logger',
@@ -292,14 +288,11 @@ describe('generator', () => {
         verbose: true
       });
 
-      generateProject(options)
-        .then(res => {
-          project = res;
-          return generate(options);
-        })
-        .then(() => {
-          expect(logger.level).toBe('verbose');
-        });
+      await generateProject(options);
+      await generate(options);
+      expect(logger.level).toBe('verbose');
+      const log = await promises.readFile('test.log', { encoding: 'utf-8' });
+      expect(log).toMatch(/Generating entities .../);
     });
   });
 });

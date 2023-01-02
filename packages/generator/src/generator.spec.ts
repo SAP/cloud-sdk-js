@@ -1,5 +1,5 @@
 import { join, resolve } from 'path';
-import { promises, createWriteStream } from 'fs';
+import { promises } from 'fs';
 import { transports } from 'winston';
 import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
@@ -234,7 +234,6 @@ describe('generator', () => {
   });
 
   describe('logger', () => {
-    let project;
     beforeAll(() => {
       mock({
         common: {},

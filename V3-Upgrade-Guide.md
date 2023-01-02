@@ -1,4 +1,4 @@
-# SAP Cloud SDK for JavaScript Version 3 Upgrade Guide
+# SAP Cloud SDK for JavaScript Version 3 Upgrade Guide <!-- omit from toc -->
 
 The purpose of this document is to collect information on Cloud SDK version 2 to version 3 migration information.
 It should include information on all steps a user needs to take when updating the SDK version from 2 to 3.
@@ -9,25 +9,27 @@ It will eventually end up in the SDK docs portal and release notes for version 3
 Please add you items below when creating a change which will involve manual tasks for the user when performing the upgrade.
 Add sections to the document as you see fit.
 
-<!-- Everything below this line should be written in the style of enduser documentation. If you need to add hints for SDK developers, to that above. -->
+<!-- Everything below this line should be written in the style of end user documentation. If you need to add hints for SDK developers, to that above. -->
 
-# How to upgrade to version 3 of the SAP Cloud SDK for JavaScript
-
-## Overview
+# How to upgrade to version 3 of the SAP Cloud SDK for JavaScript <!-- omit from toc -->
 
 This document will guide you through the steps necessary to upgrade to version 3 of the SAP Cloud SDK. Depending on your project, some steps might not be applicable. The To-Do list is:
 
-- [Update your project dependencies](#update-your-project-dependencies)
-- [Important Dependency Updates](#important-dependency-updates)
-- [Support Node 18](#support-node-18)
-- [Update EcmaScript Runtime](#update-ecmascript-runtime)
-- [Adjust operation names in generated clients](#adjust-operation-names-in-odata-generated-clients)
+- [Update your Project Dependencies](#update-your-project-dependencies)
+- [Update to Node.js 18 or Newer](#update-to-nodejs-18-or-newer)
+- [Adjust Operation Names in OData Generated Clients](#adjust-operation-names-in-odata-generated-clients)
 - [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
-- [Replace Timeout](#timeout)
+  - [Package `@sap-cloud-sdk/http-client`](#package-sap-cloud-sdkhttp-client)
+  - [Package `@sap-cloud-sdk/util`](#package-sap-cloud-sdkutil)
+  - [Package `@sap-cloud-sdk/connectivity`](#package-sap-cloud-sdkconnectivity)
+  - [Package `@sap-cloud-sdk/odata-common`](#package-sap-cloud-sdkodata-common)
+    - [`fromJson` function](#fromjson-function)
+    - [`ODataRequestConfig` class](#odatarequestconfig-class)
+- [Timeout](#timeout)
 - [Direct API Constructor Usage](#direct-api-constructor-usage)
-- [Update transpilation options in OData client generator](#update-transpilation-options-in-odata-client-generator)
+- [Update Transpilation options in OData client generator](#update-transpilation-options-in-odata-client-generator)
 
-### Update your project dependencies
+## Update your Project Dependencies
 
 Search for occurrences of `@sap-cloud-sdk/[some module]` in your `package.json` files.
 Replace the version numbers with `^3`.
@@ -36,23 +38,24 @@ Depending on if you're using `npm` or `yarn`, run `npm install` or `yarn` in the
 Running your tests or deploying your application might fail at this point in time if you need to adapt to any breaking changes.
 We recommend updating your applications in one commit or pull request and making sure everything still works using your existing test suite.
 
-### Important Dependency Updates
+### Important Dependency Updates <!-- omit from toc -->
 
 The [axios HTTP client](https://github.com/axios/axios) has been updated from version 0.27 to 1.2.
 
-### Support Node 18
-Node 18 is the current long term support (LTS) version. 
-Previous node versions will reach their end of life within the next year (see [node.js release schedule](https://github.com/nodejs/Release#release-schedule)). 
+## Update to Node.js 18 or Newer
+
+Node.js 18 is the current long term support (LTS) version.
+Previous node versions will reach their end of life within the next year (see [node.js release schedule](https://github.com/nodejs/Release#release-schedule)).
 Therefore, all SAP Cloud SDK for JavaScript libraries will switch to node 18 as the **minimum** supported node version.
-If you run an older (<18) node version, please update to a newer version.
+If you run an older (<18) node version, update to a newer version.
 You can find a list of breaking changes in the news section of the node.js [website](https://nodejs.org/en/blog/).
 
-### Update EcmaScript Runtime
+### Update ECMAScript Runtime <!-- omit from toc -->
 
-We changed the compilation target of our source code from `es2019` to `es2021`.
+The compilation target of the SAP Cloud SDK changed from `es2019` to `es2021`.
 Depending on your configuration this may lead to compilation errors (TypeScript) or runtime errors in (JavaScript).
 
-### Adjust Operation Names in OData Generated Clients
+## Adjust Operation Names in OData Generated Clients
 
 Rules for naming of OData operations (actions or functions) in the generated client have been changed.
 This applies to bound and unbound operations.
@@ -60,34 +63,35 @@ If an operation begins with an `underscore` symbol, the `_` will be removed from
 To adjust the names, search in `function-import.ts` and `action-import.ts` files in your generated client code for any operation starting with `_`.
 Similarly, to adjust the names of bound operations of an entity, search in the respective entity's `.ts` file, e.g., `TestEntity.ts`.
 
-### Check for removed deprecated functions and replace them if required
+## Check for removed deprecated functions and replace them if required
 
 While the SAP Cloud SDK maintains backwards compatibility within a major version where possible, a new major release breaks compatibility where required to simplify the programming interface.
 Most of the removed functions had been deprecated before, so ideally they are not used anymore.
 The following sub-sections describe affected modules, functions and interfaces with instructions on how to replace them.
 
-#### Package `@sap-cloud-sdk/http-client`
+### Package `@sap-cloud-sdk/http-client`
 
 The overload, that accepted `HttpRequestConfigWithOrigin` as a parameter, is removed and replaced by the function `executeHttpRequestWithOrigin`.
 
-#### Package `@sap-cloud-sdk/util`
+### Package `@sap-cloud-sdk/util`
 
 The field `logger` on the interface `LoggerOptions` was not used and is removed from the interface.
 
 The function `variadicArgumentToArray` is replaced by the function `transformVariadicArgumentToArray`.
 
-#### Package `@sap-cloud-sdk/connectivity`
+### Package `@sap-cloud-sdk/connectivity`
 
 The generic types of `JwtKeyMapping` is simplified so the second type argument `JwtKeysT` are always strings.
 
-#### Package `@sap-cloud-sdk/odata-common`
+### Package `@sap-cloud-sdk/odata-common`
 
-##### `fromJson` function
+#### `fromJson` function
 
 Setting custom fields in `fromJson` through the `_customFields` property has been removed.
 Add custom properties to your JSON object instead.
 
 Old example, not working anymore:
+
 ```json
 {
   "_customFields": {
@@ -97,13 +101,14 @@ Old example, not working anymore:
 ```
 
 New example:
+
 ```json
 {
   "myCustomField": "myCustomValue"
 }
 ```
 
-##### `ODataRequestConfig` class
+#### `ODataRequestConfig` class
 
 The constructor of `ODataRequestConfig` was changed so that the third parameter cannot be a `string` anymore.
 Passing in a string which was then interpreted as the value for the `Content-Type` HTTP header was deprecated.
@@ -111,7 +116,7 @@ The type of the parameter is now `Record<string, any>`, and if only want to set 
 
 <!-- TODO: This is only meant as an example for sections in the upgrade guide. Improve this section and add new sections as you see fit.
 
-### Generator CLI
+## Generator CLI
 
 The SAP Cloud SDK includes two "generator" cli applications for OData and for OpenAPI clients.
 For historic reasons the command-line arguments of both applications were different in cases where this does not make sense.
@@ -119,30 +124,25 @@ In version 3, the arguments are aligned and deprecated arguments have been remov
 Please see (insert link here) for the current documentation on the cli arguments.
 -->
 
-### Timeout 
+## Timeout
 
-The `timeout()` method was removed from the request builder and the `timeout` option was removed from the `executeHttpRequest()` function. 
+The `timeout()` method was removed from the request builder and the `timeout` option was removed from the `executeHttpRequest()` function.
 If you want to set a timeout for a request use the new timeout middleware:
 
 ```ts
-import { timeout} from '@sap-cloud-sdk/resilience'
+import { timeout } from '@sap-cloud-sdk/resilience';
 
- executeHttpRequest(myDestination, {
-          method: 'get',          
-          middleware: [timeout()]
-        })
+executeHttpRequest(myDestination, {
+  method: 'get',
+  middleware: [timeout()]
+});
 
-myRequestBuilder
-    .getAll()
-    .middleware([timeout()])
-    .execute(myDestination);
+myRequestBuilder.getAll().middleware([timeout()]).execute(myDestination);
 ```
 
-You find a detailed guide on the general [middleware concept](https://sap.github.io/cloud-sdk/docs/js/v3/features/middleware)  and the [resilience middlewares](https://sap.github.io/cloud-sdk/docs/js/v3/guides/resilience) in particular on the documentation portal.
+You find a detailed guide on the general [middleware concept](https://sap.github.io/cloud-sdk/docs/js/v3/features/middleware) and the [resilience middlewares](https://sap.github.io/cloud-sdk/docs/js/v3/guides/resilience) in particular on the documentation portal.
 
-
-
-### Direct API Constructor Usage
+## Direct API Constructor Usage
 
 You should use the [service function](https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-request#general-request-structure) to get an instance of your API object:
 
@@ -150,27 +150,25 @@ You should use the [service function](https://sap.github.io/cloud-sdk/docs/js/fe
 import { myEntityService } from './outputDir/my-service';
 
 const { myEntityApi } = myEntityService();
-return myEntityApi.requestBuilder()
-  .getAll()  
-  .execute(destination);
+return myEntityApi.requestBuilder().getAll().execute(destination);
 ```
 
 This way a getter initializes references to navigation properties of the API.
 If you call the API constructor directly like:
 
 ```ts
-const myEntityApi = new MyEntityApi()
+const myEntityApi = new MyEntityApi();
 ```
 
 the navigation properties are not correctly initialized leading to potential errors.
 To avoid this unintended usage of the constructor the visibility was changed to `private`.
 If you used the constructor directly please change your code to use the service function e.g. `myEntityService()` in the example above.
 
-### Update Transpilation options in OData client generator
+## Update Transpilation options in OData client generator
 
 By default, the OData generator will only generate TypeScript code.
 The `generateJs` option has been replaced with the `transpile` option.
 To generate JavaScript code, enable transpilation using the `transpile` option.
 
 A new option, `tsconfig`, can be used to either pass a custom `tsconfig.json` configuration file or use a default config from the SDK.
-This flag should be used together with `transpile`. 
+This flag should be used together with `transpile`.

@@ -1,5 +1,6 @@
 import { join, resolve } from 'path';
-import { promises } from 'fs';
+import { promises, createWriteStream } from 'fs';
+import { transports } from 'winston';
 import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
@@ -234,7 +235,7 @@ describe('generator', () => {
 
   describe('logger', () => {
     let project;
-    beforeAll(async () => {
+    beforeAll(() => {
       mock({
         common: {},
         '/prettier/config': JSON.stringify({ printWidth: 66 }),
@@ -246,7 +247,12 @@ describe('generator', () => {
 
     afterAll(() => mock.restore());
 
-    it('logger level is info by default', async () => {
+    it('should display no verbose logs by default', async () => {
+      const consoleSpy = jest.spyOn(process.stdout, 'write');
+      const logger = createLogger({
+        package: 'generator',
+        messageContext: 'generator'
+      });
       const options = createOptions({
         inputDir: pathTestService,
         outputDir: 'logger',
@@ -255,17 +261,27 @@ describe('generator', () => {
         generateSdkMetadata: true,
         include: join(pathTestResources, '*.md')
       });
-      project = await generateProject(options);
+
+      await generateProject(options);
       await generate(options);
+      expect(logger.level).toBe('info');
+      expect(consoleSpy).not.toBeCalled();
+    });
+
+    it('should display verbose logs when verbose option is set to true', done => {
+      const transportsConsole = new transports.Stream({
+        stream: createWriteStream('test.log')
+      });
+      transportsConsole.once('logged', data => {
+        expect(JSON.stringify(data)).toMatch(/Generating entities .../);
+        done();
+      });
 
       const logger = createLogger({
         package: 'generator',
         messageContext: 'generator'
       });
-      expect(logger.level).toBe('info');
-    });
-
-    it('logger level is verbose when verbose option is set to true', async () => {
+      logger.add(transportsConsole);
       const options = createOptions({
         inputDir: pathTestService,
         outputDir: 'logger',
@@ -275,14 +291,15 @@ describe('generator', () => {
         include: join(pathTestResources, '*.md'),
         verbose: true
       });
-      project = await generateProject(options);
-      await generate(options);
 
-      const logger = createLogger({
-        package: 'generator',
-        messageContext: 'generator'
-      });
-      expect(logger.level).toBe('verbose');
+      generateProject(options)
+        .then(res => {
+          project = res;
+          return generate(options);
+        })
+        .then(() => {
+          expect(logger.level).toBe('verbose');
+        });
     });
   });
 });

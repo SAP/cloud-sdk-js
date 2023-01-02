@@ -227,7 +227,7 @@ export interface DestinationCertificate {
 export type DestinationRetrievalOptions = CachingOptions & {
   /**
    * The isolation strategy used for caching destinations. For the available options, see {@link IsolationStrategy}.
-   * By default, IsolationStrategy.Tenant_User is set.
+   * By default, 'tenant-user' is set.
    */
   isolationStrategy?: IsolationStrategy;
   /**

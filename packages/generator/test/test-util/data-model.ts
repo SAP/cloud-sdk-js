@@ -5,10 +5,8 @@ import {
   VdmOperation,
   VdmNavigationProperty,
   VdmProperty,
-  VdmReturnTypeCategory,
   VdmServiceMetadata,
   VdmParameter,
-  VdmUnsupportedReason,
   VdmOperationReturnType
 } from '../../src/vdm-types';
 
@@ -82,7 +80,7 @@ const returnType: VdmOperationReturnType = {
   returnType: 'string',
   isCollection: false,
   isNullable: false,
-  returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
+  returnTypeCategory: 'edm-type',
   builderFunction:
     "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.String', deSerializers)"
 };
@@ -168,7 +166,7 @@ function getFunctionImport(
     parameters: [{ description: 'local test parameter' }] as VdmParameter[],
     returnType: {
       returnType: 'string',
-      returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
+      returnTypeCategory: 'edm-type',
       builderFunction:
         "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.String', deSerializers)"
     }
@@ -341,7 +339,7 @@ const orderBreakfastBuilder = (isNullable: boolean): VdmOperation => ({
     returnType: 'string',
     isCollection: false,
     isNullable: false,
-    returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE
+    returnTypeCategory: 'edm-type'
   }
 });
 
@@ -362,7 +360,6 @@ export const entityNotDeserializable: VdmOperation = {
     returnType: 'never',
     isCollection: false,
     isNullable: false,
-    returnTypeCategory: VdmReturnTypeCategory.NEVER,
-    unsupportedReason: VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
+    returnTypeCategory: 'never'
   }
 };

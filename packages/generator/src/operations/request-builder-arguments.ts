@@ -1,5 +1,5 @@
 import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
-import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
+import { cannotDeserialize } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 /**
@@ -28,7 +28,7 @@ export function getRequestBuilderArgumentsBase(
 }
 
 function getTransformer(operation: VdmOperation): string {
-  if (isEntityNotDeserializable(operation.returnType)) {
+  if (cannotDeserialize(operation.returnType)) {
     return `(data) => throwErrorWhenReturnTypeIsUnionType(data, '${operation.originalName}')`;
   }
   if (operation.returnType.builderFunction) {

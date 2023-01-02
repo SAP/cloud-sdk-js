@@ -1,5 +1,5 @@
 import { orderBreakfast } from '../../test/test-util/data-model';
-import { VdmOperationReturnType, VdmReturnTypeCategory } from '../vdm-types';
+import { VdmOperationReturnType } from '../vdm-types';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 const returnTypeEntity: VdmOperationReturnType = {
@@ -7,7 +7,7 @@ const returnTypeEntity: VdmOperationReturnType = {
   returnType: 'Entity',
   isCollection: false,
   isNullable: false,
-  returnTypeCategory: VdmReturnTypeCategory.ENTITY
+  returnTypeCategory: 'entity'
 };
 
 const returnTypeComplexType: VdmOperationReturnType = {
@@ -15,7 +15,7 @@ const returnTypeComplexType: VdmOperationReturnType = {
   returnType: 'ComplexType',
   isCollection: true,
   isNullable: false,
-  returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE
+  returnTypeCategory: 'complex-type'
 };
 
 describe('response-transformer-function', () => {

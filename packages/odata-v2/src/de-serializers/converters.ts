@@ -25,11 +25,11 @@ export function deserializeToTime(value: string): Time {
 export function serializeFromTime(value: Time): string {
   return (
     'PT' +
-    leftpad(value.hours, 2) +
+    leftPad(value.hours, 2) +
     'H' +
-    leftpad(value.minutes, 2) +
+    leftPad(value.minutes, 2) +
     'M' +
-    leftpad(value.seconds, 2) +
+    leftPad(value.seconds, 2) +
     'S'
   );
 }
@@ -73,13 +73,13 @@ export function serializeFromMoment(momentInstance: moment.Moment): string {
   if (momentInstance['_isUTC']) {
     const offset = Math.abs(momentInstance.utcOffset());
     const operator = momentInstance.utcOffset() >= 0 ? '+' : '-';
-    return `/Date(${timestamp}${operator}${leftpad(offset, 4)})/`;
+    return `/Date(${timestamp}${operator}${leftPad(offset, 4)})/`;
   }
 
   return `/Date(${timestamp})/`;
 }
 
-function leftpad(value: any, targetLength: number): string {
+function leftPad(value: any, targetLength: number): string {
   const str = value.toString();
   if (str.length >= targetLength) {
     return str;

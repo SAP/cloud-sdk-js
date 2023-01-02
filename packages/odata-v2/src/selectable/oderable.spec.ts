@@ -1,11 +1,11 @@
 import moment from 'moment';
 import { testEntityApi } from '../../test/test-util';
 
-describe('oderable', () => {
+describe('orderable', () => {
   describe('DateTime and DateTimeOffset fields', () => {
     const dateFilterValue = moment(1425427200000);
-    const datetimefieldName = 'DateTimeProperty';
-    const datetimeOffsetfieldName = 'DateTimeOffSetProperty';
+    const datetimeFieldName = 'DateTimeProperty';
+    const datetimeoffsetFieldName = 'DateTimeOffSetProperty';
 
     it('should create filter for type DateTimeOffset by passing moment() ', () => {
       const filter = testEntityApi.schema.DATE_TIME_OFF_SET_PROPERTY.equals(
@@ -18,7 +18,7 @@ describe('oderable', () => {
       const filter = testEntityApi.schema.DATE_TIME_PROPERTY.equals(
         moment(1425427200000)
       );
-      expect(filter.field).toBe(datetimefieldName);
+      expect(filter.field).toBe(datetimeFieldName);
       expect(filter.operator).toBe('eq');
       expect(filter.value).toEqual(dateFilterValue);
     });
@@ -27,7 +27,7 @@ describe('oderable', () => {
       const filter = testEntityApi.schema.DATE_TIME_OFF_SET_PROPERTY.equals(
         moment(1425427200000)
       );
-      expect(filter.field).toBe(datetimeOffsetfieldName);
+      expect(filter.field).toBe(datetimeoffsetFieldName);
       expect(filter.operator).toBe('eq');
       expect(filter.value).toEqual(dateFilterValue);
     });

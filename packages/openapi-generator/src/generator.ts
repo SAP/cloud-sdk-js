@@ -40,8 +40,8 @@ import {
   getOriginalOptionsPerService,
   getRelPathWithPosixSeparator
 } from './options/options-per-service';
-import { tsconfigJson } from './options/tsconfig-json';
 import { sdkMetadata } from './sdk-metadata';
+import { tsconfigJson } from './options';
 
 const { mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');

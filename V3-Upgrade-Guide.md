@@ -58,7 +58,7 @@ The following sub-sections describe affected modules, functions and interfaces w
 
 ### Package `@sap-cloud-sdk/connectivity` <!-- omit from toc -->
 
-- The generic type of `JwtKeyMapping` was improved, so that the second type argument `JwtKeysT` extends string.
+- The generic type parameter `JwtKeysT` in `JwtKeyMapping` is now narrowed to extend `string`.
 
 ### Package `@sap-cloud-sdk/odata-common` <!-- omit from toc -->
 

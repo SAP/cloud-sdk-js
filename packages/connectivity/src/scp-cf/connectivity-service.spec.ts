@@ -14,7 +14,6 @@ import {
   addProxyConfigurationOnPrem,
   httpProxyHostAndPort
 } from './connectivity-service';
-import { Protocol } from './protocol';
 import { Destination } from './destination';
 
 describe('connectivity-service', () => {
@@ -121,7 +120,7 @@ describe('connectivity-service', () => {
     const expected = {
       host: 'proxy.example.com',
       port: 54321,
-      protocol: Protocol.HTTP
+      protocol: 'http'
     };
 
     const hostAndPort = httpProxyHostAndPort();

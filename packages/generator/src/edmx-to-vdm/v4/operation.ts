@@ -112,7 +112,7 @@ function splitMissingParameter(
  * @internal
  * Joins the operation and operation Import.
  * Filters out all operations which do not have a OperationImport
- * Filters out all bound operations without a parameter and extracts the entityset name from the first parameter
+ * Filters out all bound operations without a parameter and extracts the entity set name from the first parameter
  * It also removes the first parameter which contains only the entity information
  */
 export function filterAndTransformOperations(
@@ -207,12 +207,6 @@ export type EdmxJoinedOperationBound = EdmxJoinedOperation & {
    */
   entitySetName: string;
 };
-
-function isBoundOperation(
-  operation: EdmxJoinedOperation | EdmxJoinedOperationBound
-): operation is EdmxJoinedOperationBound {
-  return operation.IsBound;
-}
 
 /**
  * @internal

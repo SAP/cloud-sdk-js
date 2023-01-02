@@ -1,5 +1,4 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Protocol } from '../protocol';
 import { basicHeader } from '../authorization-header';
 import {
   addProxyConfigurationInternet,
@@ -48,7 +47,7 @@ describe('proxy-util', () => {
     expect(addProxyConfigurationInternet(onPremDestination)).toStrictEqual({
       ...onPremDestination,
       proxyConfiguration: {
-        protocol: Protocol.HTTPS,
+        protocol: 'https',
         host: 'some.proxy.com',
         port: 443
       }
@@ -61,7 +60,7 @@ describe('proxy-util', () => {
     expect(addProxyConfigurationInternet(httpsDestination)).toStrictEqual({
       ...httpsDestination,
       proxyConfiguration: {
-        protocol: Protocol.HTTPS,
+        protocol: 'https',
         host: 'some.proxy.com',
         port: 4711
       }
@@ -97,7 +96,7 @@ describe('proxy-util', () => {
     expect(addProxyConfigurationInternet(httpsDestination)).toStrictEqual({
       ...httpsDestination,
       proxyConfiguration: {
-        protocol: Protocol.HTTP,
+        protocol: 'http',
         host: 'some.https.proxy',
         port: 1234
       }
@@ -105,7 +104,7 @@ describe('proxy-util', () => {
     expect(addProxyConfigurationInternet(httpDestination)).toStrictEqual({
       ...httpDestination,
       proxyConfiguration: {
-        protocol: Protocol.HTTP,
+        protocol: 'http',
         host: 'some.http.com',
         port: 80
       }
@@ -118,7 +117,7 @@ describe('proxy-util', () => {
     expect(addProxyConfigurationInternet(httpsDestination)).toStrictEqual({
       ...httpsDestination,
       proxyConfiguration: {
-        protocol: Protocol.HTTPS,
+        protocol: 'https',
         host: 'some.proxy.com',
         port: 443,
         headers: { 'Proxy-Authorization': userPwdEncoded }
@@ -129,7 +128,7 @@ describe('proxy-util', () => {
     expect(addProxyConfigurationInternet(httpsDestination)).toStrictEqual({
       ...httpsDestination,
       proxyConfiguration: {
-        protocol: Protocol.HTTP,
+        protocol: 'http',
         host: 'some.proxy.com',
         port: 80,
         headers: { 'Proxy-Authorization': userPwdEncoded }
@@ -149,7 +148,7 @@ describe('proxy-util', () => {
     expect(addProxyConfigurationInternet(httpsDestination)).toStrictEqual({
       ...httpsDestination,
       proxyConfiguration: {
-        protocol: Protocol.HTTPS,
+        protocol: 'https',
         host: 'some.proxy.com',
         port: 443,
         headers: { 'Proxy-Authorization': userPwdEncoded }
@@ -170,7 +169,7 @@ describe('proxy-util', () => {
     expect(addProxyConfigurationInternet(httpsDestination)).toStrictEqual({
       ...httpsDestination,
       proxyConfiguration: {
-        protocol: Protocol.HTTPS,
+        protocol: 'https',
         host: 'some.proxy.com',
         port: 443
       }

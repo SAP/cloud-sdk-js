@@ -41,7 +41,7 @@ export function generateFunctionImportsV2(
             'function',
             swaggerDefinition,
             formatter,
-            undefined // oData v2 does not have bound funcitons
+            undefined // oData v2 does not have bound functions
           ),
           httpMethod,
           returnType: parseOperationReturnType(

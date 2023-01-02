@@ -27,11 +27,11 @@ describe('apiFile', () => {
         }
       ]
     };
-    expect(apiFile(api, 'MyserviceName')).toMatchInlineSnapshot(`
+    expect(apiFile(api, 'MyServiceName')).toMatchInlineSnapshot(`
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
       /**
        * Representation of the 'TestApi'.
-       * This API is part of the 'MyserviceName' service.
+       * This API is part of the 'MyServiceName' service.
        */
       export const TestApi = {
         /**
@@ -110,12 +110,12 @@ describe('apiFile', () => {
         }
       ]
     };
-    expect(apiFile(api, 'MyserviceName')).toMatchInlineSnapshot(`
+    expect(apiFile(api, 'MyServiceName')).toMatchInlineSnapshot(`
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
       import type { QueryParameterType, RefType, ResponseType } from './schema';
       /**
        * Representation of the 'TestApi'.
-       * This API is part of the 'MyserviceName' service.
+       * This API is part of the 'MyServiceName' service.
        */
       export const TestApi = {
         /**

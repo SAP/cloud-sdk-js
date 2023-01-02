@@ -1,6 +1,7 @@
+import { defaultTsConfig } from '@sap-cloud-sdk/generator-common/internal';
 import mock from 'mock-fs';
 import { ParsedGeneratorOptions } from './generator-options';
-import { defaultTsConfig, tsconfigJson } from './tsconfig-json';
+import { tsconfigJson } from './tsconfig-json';
 
 describe('tsconfigJson', () => {
   afterEach(() => {
@@ -29,7 +30,7 @@ describe('tsconfigJson', () => {
       }
     });
     const tsConfig = await tsconfigJson({
-      tsConfig: './path/customConfig.json'
+      tsconfig: './path/customConfig.json'
     } as ParsedGeneratorOptions);
     expect(JSON.parse(tsConfig!)).toEqual(customConfig);
   });
@@ -42,7 +43,7 @@ describe('tsconfigJson', () => {
       }
     });
     const tsConfig = await tsconfigJson({
-      tsConfig: './path'
+      tsconfig: './path'
     } as ParsedGeneratorOptions);
     expect(JSON.parse(tsConfig!)).toEqual(customConfig);
   });
@@ -51,7 +52,7 @@ describe('tsconfigJson', () => {
     mock({});
     await expect(() =>
       tsconfigJson({
-        tsConfig: './path'
+        tsconfig: './path'
       } as ParsedGeneratorOptions)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Could not read tsconfig.json at ./path."'

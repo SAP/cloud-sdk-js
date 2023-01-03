@@ -188,11 +188,17 @@ export function getDestinationConfig(
 export function toDestinationNameUrl(
   destination: DestinationOrFetchOptions<Destination>
 ): string {
-  return isDestinationFetchOptions(destination)
-    ? `name: ${destination.destinationName}`
-    : `name: ${destination.name} ${destination.url ? ', url: ' : ''}${
-        destination.url
-      }`;
+  if (isDestinationFetchOptions(destination)) {
+    return `name: ${destination.destinationName}`;
+  }
+
+  const text = ['name', 'url']
+    .filter(key => destination[key])
+    .map(key => `${key}: ${destination[key]}`);
+
+  return text.length > 0
+    ? text.join(',')
+    : "Destination does not have a 'name' or 'url' property.";
 }
 
 function setOriginalProperties(destination: Destination): Destination {

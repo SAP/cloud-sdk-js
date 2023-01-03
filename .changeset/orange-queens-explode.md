@@ -2,7 +2,7 @@
 '@sap-cloud-sdk/connectivity': patch
 ---
 
-Update `jsonwebtoken` to 9.0.0 due to several security vulnerabilities:
+[Improvement] Update `jsonwebtoken` to 9.0.0 due to several security vulnerabilities:
 
 - [CVE-2022-23529 (CVSS 9.8)](https://github.com/advisories/GHSA-27h2-hvpr-p74q)
 - [CVE-2022-23539 (CVSS 8.1)](https://github.com/advisories/GHSA-8cf7-32gw-wr33)

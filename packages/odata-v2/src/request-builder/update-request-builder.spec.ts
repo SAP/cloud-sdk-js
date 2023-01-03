@@ -236,25 +236,33 @@ describe('UpdateRequestBuilder', () => {
     expect(actual).toEqual(entity);
   });
 
-  // fixme: unclear how to handle this test case
-  // it('update request excludes ignored properties', async () => {
-  //   const entity = createTestEntity();
+  it('update request excludes ignored properties', async () => {
+    const keyPropGuid = uuid();
+    const keyPropString = 'stringId';
 
-  //   const scope = nock(/.*/).patch(/.*/).reply(500);
+    const entity = testEntityApi
+      .entityBuilder()
+      .keyPropertyGuid(keyPropGuid)
+      .keyPropertyString(keyPropString)
+      .build();
 
-  //   const actual = await new UpdateRequestBuilder(testEntityApi, entity)
-  //     .setIgnoredFields(testEntityApi.schema.INT_32_PROPERTY)
-  //     .execute(defaultDestination);
+    const scope = nock(/.*/).patch(/.*/).reply(500);
 
-  //   expect(scope.isDone()).toBe(false);
-  //   expect(actual).toEqual(entity);
-  // });
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
+      .setIgnoredFields(testEntityApi.schema.INT_32_PROPERTY)
+      .execute(defaultDestination);
+
+    expect(scope.isDone()).toBe(false);
+    expect(actual).toEqual(entity);
+  });
 
   it('update request should contain version identifier when set on entity', async () => {
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
-    const requestBody = { Int32Property: entity.int32Property,
+    const requestBody = {
+      Int32Property: entity.int32Property,
       StringProperty: null,
-      BooleanProperty: null };
+      BooleanProperty: null
+    };
 
     mockUpdateRequest(
       {
@@ -277,9 +285,11 @@ describe('UpdateRequestBuilder', () => {
 
   it('update request should contain version identifier when set on request', async () => {
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
-    const requestBody = { Int32Property: entity.int32Property,
+    const requestBody = {
+      Int32Property: entity.int32Property,
       StringProperty: null,
-      BooleanProperty: null };
+      BooleanProperty: null
+    };
     const customVersionIdentifier = 'custom-version-identifier';
 
     mockUpdateRequest(
@@ -304,9 +314,11 @@ describe('UpdateRequestBuilder', () => {
 
   it('should ignore version identifier', async () => {
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
-    const requestBody = { Int32Property: entity.int32Property,
+    const requestBody = {
+      Int32Property: entity.int32Property,
       StringProperty: null,
-      BooleanProperty: null };
+      BooleanProperty: null
+    };
 
     mockUpdateRequest(
       {
@@ -354,9 +366,11 @@ describe('UpdateRequestBuilder', () => {
     const eTag = 'someEtag';
 
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
-    const requestBody = { Int32Property: entity.int32Property,
+    const requestBody = {
+      Int32Property: entity.int32Property,
       StringProperty: null,
-      BooleanProperty: null };
+      BooleanProperty: null
+    };
 
     mockUpdateRequest(
       {

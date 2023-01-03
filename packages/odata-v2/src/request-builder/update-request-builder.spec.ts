@@ -1,6 +1,6 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { createLogger } from '@sap-cloud-sdk/util';
 import {
   defaultDestination,
   mockUpdateRequest
@@ -138,6 +138,35 @@ describe('UpdateRequestBuilder', () => {
       entity
     ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
+  });
+
+  it('update request is executed when nullable string is set to null', async () => {
+    const entity = createTestEntity();
+
+    const requestBody = {
+      Int32Property: 125,
+      StringProperty: null
+    };
+
+    const scope = mockUpdateRequest(
+      {
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString
+        )
+      },
+      testEntityApi
+    );
+
+    entity.stringProperty = null;
+
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
+    expect(actual).toEqual(entity.setOrInitializeRemoteState());
+    expect(scope.isDone()).toBe(true);
   });
 
   it('update request sends the whole entity when using PUT', async () => {

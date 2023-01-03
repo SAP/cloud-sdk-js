@@ -272,11 +272,7 @@ export function assertHttpDestination(
 export function isHttpDestination(
   destination: HttpDestination | Destination | null
 ): destination is HttpDestination {
-  if (destination?.type && destination.type !== 'HTTP') {
-    return false;
-  }
-
-  return !!destination?.url;
+return destination?.type === 'HTTP' && destination?.url;
 }
 
 /**

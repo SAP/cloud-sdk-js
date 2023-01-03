@@ -27,7 +27,7 @@ const logger = createLogger({
  * If the destination contains a proxy configuration, the agent will be a proxy-agent.
  * If not it will be the default http-agent coming from node.
  * @param destination - Determining which kind of configuration is returned.
- * @returns The http or http-agent configuration.
+ * @returns The HTTP or HTTPS agent configuration.
  */
 export function getAgentConfig(
   destination: HttpDestination

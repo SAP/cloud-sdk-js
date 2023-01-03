@@ -107,7 +107,7 @@ export async function getDestination(
  * Creates comprehensive log messages from a destinations array and their origin.
  * @param origin - Origin of the destination.
  * @param destinations - Array of destinations.
- * @returns Logs of the retrival of destinations.
+ * @returns Logs of the retrieval of destinations.
  */
 function createDestinationFetchLogs(
   origin: string,

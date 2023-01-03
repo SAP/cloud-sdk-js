@@ -57,7 +57,7 @@ describe('generator-cli', () => {
       createOptions({
         inputDir,
         outputDir: outputDirGenerateAll,
-        generateJs: true,
+        transpile: true,
         packageJson: true
       })
     );
@@ -84,7 +84,7 @@ describe('generator-cli', () => {
       createOptions({
         inputDir,
         outputDir: outputDirVersionPackageJson,
-        generateJs: true,
+        transpile: true,
         packageJson: true,
         versionInPackageJson: '42.23'
       })

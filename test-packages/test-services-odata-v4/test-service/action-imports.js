@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.actionImports = exports.testActionImportNullableTest = exports.testActionImportSharedEntityReturnTypeCollection = exports.testActionImportSharedEntityReturnType = exports.testActionImportNoParameterEntityReturnType = exports.testActionImportUnsupportedEdmTypes = exports.testActionImportMultipleParameterComplexReturnType = exports.testActionImportNoParameterNoReturnType = void 0;
 /*
- * Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -57,7 +57,7 @@ function testActionImportNoParameterEntityReturnType(parameters, deSerializers =
 }
 exports.testActionImportNoParameterEntityReturnType = testActionImportNoParameterEntityReturnType;
 /**
- * Test Action Import Shared Entity Return Type. The 'execute' method does not exist when using this action import. Please use the 'executeRaw' for getting the raw response.
+ * Test Action Import Shared Entity Return Type. The 'execute' method does not exist for this action import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -67,7 +67,7 @@ function testActionImportSharedEntityReturnType(parameters, deSerializers = odat
 }
 exports.testActionImportSharedEntityReturnType = testActionImportSharedEntityReturnType;
 /**
- * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this action import. Please use the 'executeRaw' for getting the raw response.
+ * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist for this action import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */

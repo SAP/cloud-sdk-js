@@ -201,7 +201,7 @@ export async function fetchCertificate(
   const filetype = certificateName.split('.')[1];
   if (filetype.toLowerCase() !== 'pem') {
     logger.warn(
-      `The provided truststore ${certificateName} is not in 'pem' format which is currently the only supported format. Trustore is ignored.`
+      `The provided truststore ${certificateName} is not in 'pem' format which is currently the only supported format. Truststore is ignored.`
     );
     return;
   }
@@ -358,7 +358,7 @@ async function callCertificateEndpoint(
 ): Promise<AxiosResponse<DestinationCertificateJson>> {
   if (!context.uri.includes('Certificates')) {
     throw new Error(
-      `callCertificateEndpoint was called with illegal arrgument: ${context.uri}. URL must be certificate endpoint of destination service.`
+      `callCertificateEndpoint was called with illegal argument: ${context.uri}. URL must be certificate endpoint of destination service.`
     );
   }
   return callDestinationService(context, headers) as Promise<
@@ -375,7 +375,7 @@ async function callDestinationEndpoint(
     !context.uri.match(/[instance|subaccount]Destinations|v1\/destinations/)
   ) {
     throw new Error(
-      `callDestinationEndpoint was called with illegal arrgument: ${context.uri}. URL must be destination(s) endpoint of destination service.`
+      `callDestinationEndpoint was called with illegal argument: ${context.uri}. URL must be destination(s) endpoint of destination service.`
     );
   }
   return callDestinationService(context, headers, options) as Promise<

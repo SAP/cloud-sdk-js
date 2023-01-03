@@ -219,7 +219,7 @@ describe('mail client', () => {
       proxyConfiguration: {
         host: 'smtp.gmail.com',
         port: 587,
-        protocol: Protocol.SOCKS,
+        protocol: 'socks',
         'proxy-authorization': 'jwt'
       }
     };
@@ -277,7 +277,7 @@ describe('buildSocksProxy', () => {
       proxyConfiguration: {
         host: 'www.proxy.com',
         port: 12345,
-        protocol: Protocol.SOCKS,
+        protocol: 'socks',
         'proxy-authorization': 'jwt'
       }
     };

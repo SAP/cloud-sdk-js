@@ -15,20 +15,19 @@ const logger = createLogger({
  * @internal
  */
 export function getProtocolOrDefault(destination: HttpDestination): Protocol {
-  const protocol = destination.url.toLowerCase()?.split('://');
+  const urlParts = destination.url.toLowerCase()?.split('://');
 
-  if (!protocol || protocol.length === 1) {
+  if (!urlParts || urlParts.length === 1) {
     logger.warn(
       `URL of the provided destination (${destination.url}) has no protocol specified! Assuming HTTPS.`
     );
-    return Protocol.HTTPS;
+    return 'https';
   }
-  const casted = getProtocol(protocol[0]);
-  if (casted) {
-    return casted;
+  const protocol = getProtocol(urlParts[0]);
+  if (!protocol) {
+    throw new Error(
+      `Protocol of the provided destination (${destination.url}) is not supported! Currently only HTTP and HTTPS are supported.`
+    );
   }
-
-  throw new Error(
-    `Protocol of the provided destination (${destination.url}) is not supported! Currently only HTTP and HTTPS are supported.`
-  );
+  return protocol;
 }

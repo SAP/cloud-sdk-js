@@ -1,6 +1,5 @@
 import {
   ProxyConfiguration,
-  Protocol,
   HttpDestination
 } from '@sap-cloud-sdk/connectivity';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
@@ -27,7 +26,7 @@ const onPremDestination: HttpDestination = {
   proxyConfiguration: {
     host: proxyHost,
     port: proxyPort,
-    protocol: Protocol.HTTP,
+    protocol: 'http',
     headers: {
       'Proxy-Authorization': proxyBearAuth
     }
@@ -40,7 +39,7 @@ const internetDestination: HttpDestination = {
   proxyConfiguration: {
     host: proxyHost,
     port: proxyPort,
-    protocol: Protocol.HTTP,
+    protocol: 'http',
     headers: {
       'Proxy-Authorization': basicHeader(proxyUser, proxyPassword)
     }

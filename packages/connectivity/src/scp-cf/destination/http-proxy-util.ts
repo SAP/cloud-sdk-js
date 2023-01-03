@@ -73,14 +73,10 @@ function getProxyEnvValue(protocol: Protocol): string | undefined {
     process.env[proxyEnvKey.toLowerCase()] ||
     process.env[proxyEnvKey.toUpperCase()];
   logger.debug(
-    `Tried to read ${proxyEnvKey.toLowerCase()} or ${proxyEnvKey.toUpperCase()} from the environment variables. Found value is ${proxyEnvValue}.`
+    `Tried to read ${proxyEnvKey.toLowerCase()} or ${proxyEnvKey.toUpperCase()} from the environment variables. Value is ${proxyEnvValue}.`
   );
 
-  if (!proxyEnvValue) {
-    return undefined;
-  }
-
-  return proxyEnvValue;
+  return proxyEnvValue || undefined;
 }
 
 function getNoProxyEnvValue(): string[] {
@@ -241,7 +237,6 @@ export function proxyAgent(
   destination: HttpDestination,
   options?: AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
-  const targetProtocol = getProtocolOrDefault(destination);
   const proxyConfig = destination.proxyConfiguration;
 
   if (!proxyConfig) {
@@ -267,20 +262,23 @@ export function proxyAgent(
     ...options
   };
 
-  switch (targetProtocol) {
-    case Protocol.HTTP:
-      return {
-        httpAgent: new HttpProxyAgent(agentConfig)
-      };
-    case Protocol.HTTPS:
-      return {
-        httpsAgent: new HttpsProxyAgent(agentConfig)
-      };
-    default:
-      throw new Error(
-        `The target protocol: ${targetProtocol} has to be either http or https.`
-      );
+  const targetProtocol = getProtocolOrDefault(destination);
+
+  if (targetProtocol === 'http') {
+    return {
+      httpAgent: new HttpProxyAgent(agentConfig)
+    };
   }
+
+  if (targetProtocol === 'https') {
+    return {
+      httpsAgent: new HttpsProxyAgent(agentConfig)
+    };
+  }
+
+  throw new Error(
+    `The target protocol: ${targetProtocol} has to be either https or http.`
+  );
 }
 
 /**

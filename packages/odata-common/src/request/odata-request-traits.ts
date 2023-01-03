@@ -92,7 +92,7 @@ export interface WithBatchReference {
 }
 
 /**
- * Typeguard for the WithETag config.
+ * Type guard for the WithETag config.
  * @param config - Config to be checked
  * @returns boolean
  * @internal

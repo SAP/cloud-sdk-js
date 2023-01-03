@@ -5,7 +5,7 @@ import { Service } from '../environment-accessor-types';
 import { getServiceByInstanceName } from '../environment-accessor';
 import { Destination, isHttpDestination } from './destination-service-types';
 import type { DestinationFetchOptions } from './destination-accessor-types';
-import { destinationCache, IsolationStrategy } from './destination-cache';
+import { destinationCache } from './destination-cache';
 import { decodedJwtOrZid } from './destination-from-registration';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
 import {
@@ -49,7 +49,7 @@ export async function destinationForServiceBinding(
     const fromCache = await destinationCache.retrieveDestinationFromCache(
       options.jwt || decodedJwtOrZid().subaccountid,
       serviceInstanceName,
-      IsolationStrategy.Tenant
+      'tenant'
     );
     if (fromCache) {
       return fromCache;
@@ -71,7 +71,7 @@ export async function destinationForServiceBinding(
     await destinationCache.cacheRetrievedDestination(
       options.jwt || decodedJwtOrZid().subaccountid,
       destWithProxy,
-      IsolationStrategy.Tenant
+      'tenant'
     );
   }
 

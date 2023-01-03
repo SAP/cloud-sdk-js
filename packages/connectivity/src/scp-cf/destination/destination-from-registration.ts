@@ -68,7 +68,7 @@ export type DestinationWithName = Destination & { name: string };
 
 /**
  * @internal
- * @param options - The options for searching the cahce
+ * @param options - The options for searching the cache
  * @returns Destination - the destination from cache
  */
 export async function searchRegisteredDestination(
@@ -114,7 +114,7 @@ export async function searchRegisteredDestination(
 
 /**
  * If a explicit isolation strategy is given by the user this is used. If not the isolation strategy is determined in the following way:
- * If a JWT is given and it contains a user_id the isolation is 'TenantUser'. If no JWT is given or it does not contian a user the isolation is 'Tenant'.
+ * If a JWT is given and it contains a user_id the isolation is 'TenantUser'. If no JWT is given or it does not contain a user the isolation is 'Tenant'.
  * @param options - Options passed to register the destination containing the jwt.
  * @returns The isolation strategy.
  */

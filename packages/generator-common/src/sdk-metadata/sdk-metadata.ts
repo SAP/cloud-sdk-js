@@ -1,4 +1,4 @@
-import levenstein from 'fast-levenshtein';
+import levenshtein from 'fast-levenshtein';
 import { getSdkVersion } from './util';
 import { Client, MultiLineText, ServiceStatus } from './sdk-metadata-types';
 
@@ -65,11 +65,8 @@ export function getLevenshteinClosest<T>(
   }
 }
 
-function getLevenshteinDistance(stringA: string, stringB: string): number {
-  return levenstein.get(
-    getSanitizedString(stringA),
-    getSanitizedString(stringB)
-  );
+function getLevenshteinDistance(a: string, b: string): number {
+  return levenshtein.get(getSanitizedString(a), getSanitizedString(b));
 }
 
 function getSanitizedString(text: string): string {

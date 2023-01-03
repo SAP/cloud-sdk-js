@@ -69,7 +69,7 @@ export interface GeneratorOptions {
    */
   generatePackageJson?: boolean;
   /**
-   * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
+   * Generate a `package.json` file, specifying dependencies and scripts for compiling.
    */
   packageJson?: boolean;
   /**
@@ -84,9 +84,16 @@ export interface GeneratorOptions {
    */
   licenseInPackageJson?: string;
   /**
-   * Generates transpiled `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. When set to `false`, the generator will only generate `.ts` files.
+   * When enabled, generates transpiled `.js`, `.js.map`, and `.d.ts` files.
+   * By default, only `.ts` files are generated.
    */
-  generateJs?: boolean;
+  transpile?: boolean;
+  /**
+   * Replace the default `tsconfig.json` by passing a path to a custom configuration.
+   * By default, a `tsconfig.json` is only generated when transpilation is enabled (`transpile`).
+   * If a directory is passed, a `tsconfig.json` file is read from this directory.
+   */
+  tsconfig?: string;
   /**
    * Hidden option only for internal usage - generate metadata for API hub integration.
    */
@@ -121,6 +128,11 @@ export interface GeneratorOptions {
    * Internal option used to adjust the version in the generated `package.json`. Will not be used in the future.
    */
   packageVersion?: string;
+  /**
+   * By default, only errors, warnings and important info logs will be displayed.
+   * If set to true, all logs will be displayed.
+   */
+  verbose?: boolean;
 }
 
 /**
@@ -257,9 +269,9 @@ export const generatorOptionsCli = {
   },
   packageJson: {
     describe:
-      'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
+      'When enabled, a `package.json` that specifies dependencies and scripts for transpilation is generated.',
     type: 'boolean',
-    default: true
+    default: false
   },
   generatePackageJson: {
     describe:
@@ -285,11 +297,17 @@ export const generatorOptionsCli = {
     deprecated:
       "Since v2.12.0. Use the 'include' option to add your own package.json file instead."
   },
-  generateJs: {
+  transpile: {
     describe:
-      'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When set to false, the generator will only generate .ts files.',
+      'Transpile the generated TypeScript code. When enabled a default `tsconfig.json` will be generated and used. It emits `.js`, `.js.map`, and `.d.ts` files. To configure transpilation set `--tsconfig`.',
     type: 'boolean',
-    default: true
+    default: false
+  },
+  tsconfig: {
+    string: true,
+    describe:
+      'Replace the default `tsconfig.json` by passing a path to a custom config. By default, a `tsconfig.json` is only generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file is read from this directory.',
+    coerce: coercePathArg
   },
   transpilationProcesses: {
     describe: 'Number of processes used for generation of javascript files.',
@@ -339,6 +357,12 @@ export const generatorOptionsCli = {
     type: 'boolean',
     default: false,
     deprecated: 'Since v2.12.0. This functionality will be discontinued.'
+  },
+  verbose: {
+    describe:
+      'By default, only errors, warnings and important info logs will be displayed. If set to true, all logs will be displayed.',
+    type: 'boolean',
+    default: false
   }
 } as const;
 

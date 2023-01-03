@@ -2,7 +2,6 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import {
   proxyAgent,
-  Protocol,
   ProxyConfiguration,
   DestinationCertificate
 } from '../scp-cf';
@@ -82,11 +81,11 @@ describe('createAgent', () => {
     );
   });
 
-  it('should return a proxy-agent with the same protocol as the destination.', () => {
+  it('should return a proxy-agent with the same protocol as the destination (https).', () => {
     const proxyConfiguration: ProxyConfiguration = {
       host: 'some.host.com',
       port: 4711,
-      protocol: Protocol.HTTPS
+      protocol: 'https'
     };
     const destHttpWithProxy: HttpDestination = {
       url: 'http://example.com',
@@ -95,8 +94,14 @@ describe('createAgent', () => {
     expect(proxyAgent(destHttpWithProxy)['httpAgent']).toStrictEqual(
       new HttpProxyAgent(proxyConfiguration)
     );
+  });
 
-    proxyConfiguration.protocol = Protocol.HTTP;
+  it('should return a proxy-agent with the same protocol as the destination (http).', () => {
+    const proxyConfiguration: ProxyConfiguration = {
+      host: 'some.host.com',
+      port: 4711,
+      protocol: 'http'
+    };
     const destHttpsWithProxy: HttpDestination = {
       url: 'https://example.com',
       proxyConfiguration

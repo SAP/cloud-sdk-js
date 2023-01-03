@@ -1,6 +1,6 @@
 import voca from 'voca';
 import { VdmOperation } from '../vdm-types';
-import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
+import { cannotDeserialize } from '../edmx-to-vdm/common';
 /**
  * @internal
  */
@@ -17,7 +17,7 @@ export function operationReturnType({
     operationType
   )}ImportRequestBuilder`;
 
-  if (isEntityNotDeserializable(returnType)) {
+  if (cannotDeserialize(returnType)) {
     type = wrapRequestBuilderAroundType(
       requestBuilderName,
       parametersTypeName,

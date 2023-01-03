@@ -227,7 +227,7 @@ export interface DestinationCertificate {
 export type DestinationRetrievalOptions = CachingOptions & {
   /**
    * The isolation strategy used for caching destinations. For the available options, see {@link IsolationStrategy}.
-   * By default, IsolationStrategy.Tenant_User is set.
+   * By default, 'tenant-user' is set.
    */
   isolationStrategy?: IsolationStrategy;
   /**
@@ -264,10 +264,10 @@ export function assertHttpDestination(
 }
 
 /**
- * Type guard that the Destination is HTTP destination.
- * This method comes in handy when you retrieved a destination from the destination service and need to check if it is a HttpDestination.
- * @param destination - Destination or HttpDestination.
- * @returns True if the destination is a HTTP destination.
+ * Type guard to find if object is a Destination.
+ * @param destination - Destination to be checked
+ * @returns boolean
+ * @internal
  */
 export function isHttpDestination(
   destination: HttpDestination | Destination | null

@@ -265,9 +265,8 @@ export function assertHttpDestination(
 
 /**
  * Type guard to find if object is a Destination.
- * @param destination - Destination to be checked
- * @returns boolean
- * @internal
+ * @param destination - Destination to be checked.
+ * @returns Boolean.
  */
 export function isHttpDestination(
   destination: HttpDestination | Destination | null

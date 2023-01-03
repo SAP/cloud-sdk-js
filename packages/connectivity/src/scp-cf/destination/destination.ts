@@ -436,17 +436,18 @@ export function noDestinationErrorMessage(
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
 
-type FetchOptionsOr<T extends Destination> = Xor<
-  T,
+/**
+ * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
+ */
+export type DestinationOrFetchOptions = Xor<
+  Destination,
   DestinationFetchOptions & DestinationForServiceBindingOptions
 >;
 
 /**
  * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
  */
-export type DestinationOrFetchOptions = FetchOptionsOr<Destination>;
-
-/**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
- */
-export type HttpDestinationOrFetchOptions = FetchOptionsOr<HttpDestination>;
+export type HttpDestinationOrFetchOptions = Xor<
+  HttpDestination,
+  DestinationFetchOptions & DestinationForServiceBindingOptions
+>;

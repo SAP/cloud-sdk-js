@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 2.12.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@2.12.1
+- @sap-cloud-sdk/openapi@2.12.1
+- @sap-cloud-sdk/util@2.12.1
+
 ## 2.12.0
 
 ### Patch Changes

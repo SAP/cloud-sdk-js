@@ -141,16 +141,23 @@ describe('UpdateRequestBuilder', () => {
   });
 
   it('update request is executed when nullable string is set to null', async () => {
-    const entity = createTestEntity();
+    // Given: Entity with only key properties and one nullable string property which has non-null value
+    const keyPropGuid = uuid();
+    const keyPropString = 'stringId';
+    const stringProp = 'some value';
 
-    const requestBody = {
-      Int32Property: 125,
-      StringProperty: null
-    };
+    const entity = testEntityApi
+      .entityBuilder()
+      .keyPropertyGuid(keyPropGuid)
+      .keyPropertyString(keyPropString)
+      .stringProperty(stringProp)
+      .build();
 
     const scope = mockUpdateRequest(
       {
-        body: requestBody,
+        body: {
+          StringProperty: null
+        },
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
           entity.keyPropertyString
@@ -159,13 +166,17 @@ describe('UpdateRequestBuilder', () => {
       testEntityApi
     );
 
+    // When: We update the nullable string property value to null
     entity.stringProperty = null;
 
     const actual = await new UpdateRequestBuilder(
       testEntityApi,
       entity
     ).execute(defaultDestination);
+
+    // Then: We expect the update to happen (http request is sent) and the value of the property to be null
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
+    expect(actual.stringProperty).toBeNull();
     expect(scope.isDone()).toBe(true);
   });
 

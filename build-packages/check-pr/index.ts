@@ -1,7 +1,7 @@
-import { getInput, setFailed, info } from '@actions/core';
-import { context } from '@actions/github';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { getInput, setFailed, info } from '@actions/core';
+import { context } from '@actions/github';
 
 const validCommitTypes = ['feat', 'fix', 'chore'];
 
@@ -10,7 +10,7 @@ async function validateTitle(): Promise<void> {
   const title = context.payload.pull_request.title;
   if (!title.includes(':')) {
     return setFailed(
-      `PR title does not adhere to conventional commit guidelines. No preamble found.`
+      'PR title does not adhere to conventional commit guidelines. No preamble found.'
     );
   }
   const [preamble, postamble] = title.split(':');
@@ -50,18 +50,12 @@ function validateCommitType(commitType) {
 function validatePostamble(title: string | undefined): void {
   if (!title || !title.trim().length) {
     return setFailed(
-      `PR title does not have a title after conventional commit preamble.`
+      'PR title does not have a title after conventional commit preamble.'
     );
   }
 
   if (title[0] !== ' ') {
-    return setFailed(`Space missing after conventional commit preamble.`);
-  }
-
-  if (title[1] === title[1].toLowerCase()) {
-    return setFailed(
-      `PR title title must be capitalized (after conventional commit preamble).`
-    );
+    return setFailed('Space missing after conventional commit preamble.');
   }
 
   info('✓ Title: OK');

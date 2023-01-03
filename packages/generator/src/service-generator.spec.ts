@@ -3,7 +3,7 @@ import { createOptions } from '../test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import { GlobalNameFormatter } from './global-name-formatter';
 import { ServiceMapping } from './service-mapping';
-import { VdmReturnTypeCategory, VdmProperty } from './vdm-types';
+import { VdmProperty } from './vdm-types';
 import { parseAllServices, parseService } from './service-generator';
 
 describe('service-generator', () => {
@@ -320,7 +320,7 @@ describe('service-generator', () => {
         const complexTypeName = 'TestComplexType';
         const functionImportName = 'createTestComplexType';
         const expectedReturnType = {
-          returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
+          returnTypeCategory: 'complex-type',
           returnType: 'TestComplexType',
           builderFunction:
             '(data) => entityDeserializer(\n        deSerializers || defaultDeSerializers\n        ).deserializeComplexType(data, TestComplexType)',

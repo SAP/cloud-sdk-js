@@ -58,7 +58,7 @@ describe('OData generator CLI', () => {
       createOptions({
         inputDir,
         outputDir: outputDirGenerateAll,
-        generateJs: true,
+        transpile: true,
         packageJson: true
       })
     );
@@ -77,7 +77,7 @@ describe('OData generator CLI', () => {
       createOptions({
         inputDir,
         outputDir: outputDirVersionPackageJson,
-        generateJs: true,
+        transpile: true,
         packageJson: true,
         versionInPackageJson: '42.23'
       })

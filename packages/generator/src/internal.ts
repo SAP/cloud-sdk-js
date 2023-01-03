@@ -1,4 +1,3 @@
-export * from './aggregator-package';
 export * from './batch';
 export * from './cli-parser';
 export * from './complex-type';

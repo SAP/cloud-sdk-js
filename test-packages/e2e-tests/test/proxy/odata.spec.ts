@@ -1,8 +1,4 @@
-import {
-  Destination,
-  ProxyConfiguration,
-  Protocol
-} from '@sap-cloud-sdk/connectivity';
+import { Destination, ProxyConfiguration } from '@sap-cloud-sdk/connectivity';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
@@ -27,7 +23,7 @@ const onPremDestination: Destination = {
   proxyConfiguration: {
     host: proxyHost,
     port: proxyPort,
-    protocol: Protocol.HTTP,
+    protocol: 'http',
     headers: {
       'Proxy-Authorization': proxyBearAuth
     }
@@ -40,7 +36,7 @@ const internetDestination: Destination = {
   proxyConfiguration: {
     host: proxyHost,
     port: proxyPort,
-    protocol: Protocol.HTTP,
+    protocol: 'http',
     headers: {
       'Proxy-Authorization': basicHeader(proxyUser, proxyPassword)
     }

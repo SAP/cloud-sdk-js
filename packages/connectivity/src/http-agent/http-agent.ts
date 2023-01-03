@@ -4,8 +4,7 @@ import { createLogger, last } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationCertificate,
-  getProtocolOrDefault,
-  Protocol
+  getProtocolOrDefault
 } from '../scp-cf';
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 import {
@@ -71,7 +70,7 @@ function createProxyAgent(
  */
 function getTrustStoreOptions(destination: Destination): Record<string, any> {
   // http case: no certificate needed
-  if (getProtocolOrDefault(destination) === Protocol.HTTP) {
+  if (getProtocolOrDefault(destination) === 'http') {
     if (destination.isTrustingAllCertificates) {
       logger.warn('"isTrustingAllCertificates" is not available for HTTP.');
     }
@@ -182,7 +181,7 @@ function createDefaultAgent(
   destination: Destination,
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
-  if (getProtocolOrDefault(destination) === Protocol.HTTPS) {
+  if (getProtocolOrDefault(destination) === 'https') {
     return { httpsAgent: new https.Agent(options) };
   }
   return { httpAgent: new http.Agent(options) };

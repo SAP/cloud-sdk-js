@@ -40,6 +40,7 @@ The [axios HTTP client](https://github.com/axios/axios) has been updated from ve
 
 All SAP Cloud SDK for JavaScript libraries now support node 18 (LTS) as the **minimum** node version.
 If you are using a node version older than 18, update your runtime environment to a newer version.
+On Cloud Foundry you can do this by [setting the node engine in your `package.json`](https://docs.cloudfoundry.org/buildpacks/node/index.html#runtime).
 Note, that the transpilation target of the SDK changed from `es2019` to `es2021`.
 
 ## Replace Removed Functionality

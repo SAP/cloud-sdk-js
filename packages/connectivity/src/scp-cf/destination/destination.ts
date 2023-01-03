@@ -8,7 +8,8 @@ import {
   AuthenticationType,
   Destination,
   DestinationAuthToken,
-  DestinationCertificate, HttpDestination
+  DestinationCertificate,
+  HttpDestination
 } from './destination-service-types';
 
 /**
@@ -186,7 +187,7 @@ export function getDestinationConfig(
  * @returns String containing information on the destination.
  */
 export function toDestinationNameUrl(
-  destination: DestinationOrFetchOptions<Destination>
+  destination: DestinationOrFetchOptions
 ): string {
   if (isDestinationFetchOptions(destination)) {
     return `name: ${destination.destinationName}`;
@@ -428,19 +429,24 @@ const configMapping: Record<string, keyof Destination> = {
  * @internal
  */
 export function noDestinationErrorMessage(
-  destination: DestinationOrFetchOptions<Destination>
+  destination: DestinationOrFetchOptions
 ): string {
   return isDestinationFetchOptions(destination)
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
 
-/**
- * Type that is either a {@link Destination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
- */
-export type DestinationOrFetchOptions<T extends Destination> = Xor<
+type FetchOptionsOr<T extends Destination> = Xor<
   T,
   DestinationFetchOptions & DestinationForServiceBindingOptions
 >;
 
-export type HttpDestinationOrFetchOption = DestinationOrFetchOptions<Destination>
+/**
+ * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
+ */
+export type DestinationOrFetchOptions = FetchOptionsOr<Destination>;
+
+/**
+ * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
+ */
+export type HttpDestinationOrFetchOptions = FetchOptionsOr<HttpDestination>;

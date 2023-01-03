@@ -27,6 +27,7 @@ export {
   Destination,
   HttpDestination,
   isHttpDestination,
+  HttpDestinationOrFetchOptions,
   assertHttpDestination,
   DestinationFetchOptions,
   ServiceBindingTransformFunction,

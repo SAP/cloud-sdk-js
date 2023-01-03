@@ -47,7 +47,7 @@ const logger = createLogger({
  * @returns A promise resolving to the requested destination on success.
  */
 export async function useOrFetchDestination(
-  destination: DestinationOrFetchOptions<Destination>
+  destination: DestinationOrFetchOptions
 ): Promise<Destination | null> {
   return isDestinationFetchOptions(destination)
     ? getDestination(destination)
@@ -64,7 +64,7 @@ export async function useOrFetchDestination(
  * @internal
  */
 export async function resolveDestination(
-  destination: DestinationOrFetchOptions<Destination>
+  destination: DestinationOrFetchOptions
 ): Promise<Destination> {
   const resolvedDestination = await useOrFetchDestination(destination).catch(
     error => {

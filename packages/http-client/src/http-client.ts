@@ -3,7 +3,7 @@ import * as https from 'https';
 import {
   buildHeadersForDestination,
   Destination,
-  DestinationOrFetchOptions,
+  HttpDestinationOrFetchOptions,
   getAgentConfig
 } from '@sap-cloud-sdk/connectivity';
 import {
@@ -57,7 +57,7 @@ const TENANT_ID = 'tenant_id';
  * @returns A {@link DestinationHttpRequestConfig}.
  */
 export async function buildHttpRequest(
-  destination: HttpDestinationOrFetchOption
+  destination: HttpDestinationOrFetchOptions
 ): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
   assertHttpDestination(resolvedDestination);
@@ -98,7 +98,7 @@ export async function addDestinationToRequestConfig<
  */
 export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
   return async function <T extends HttpRequestConfigWithOrigin>(
-    destination: HttpDestinationOrFetchOption,
+    destination: HttpDestinationOrFetchOptions,
     requestConfig: T,
     options?: HttpRequestOptions
   ): Promise<HttpResponse> {
@@ -354,7 +354,7 @@ function logRequestInformation(request: HttpRequestConfig) {
  * @returns A promise resolving to an {@link HttpResponse}.
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(
-  destination: HttpDestinationOrFetchOption,
+  destination: HttpDestinationOrFetchOptions,
   requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
@@ -384,7 +384,7 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
 export function executeHttpRequestWithOrigin<
   T extends HttpRequestConfigWithOrigin
 >(
-  destination: HttpDestinationOrFetchOption,
+  destination: HttpDestinationOrFetchOptions,
   requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
@@ -518,7 +518,7 @@ export function shouldHandleCsrfToken(
 }
 
 async function getCsrfHeaders(
-  destination: HttpDestinationOrFetchOption,
+  destination: HttpDestinationOrFetchOptions,
   request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
   const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
@@ -537,7 +537,7 @@ async function getCsrfHeaders(
 }
 
 async function addCsrfTokenToHeader(
-  destination: HttpDestinationOrFetchOption,
+  destination: HttpDestinationOrFetchOptions,
   request: HttpRequestConfig & DestinationHttpRequestConfig,
   httpRequestOptions?: HttpRequestOptions
 ): Promise<Record<string, string>> {

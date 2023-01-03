@@ -1,8 +1,5 @@
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
-import {
-  DestinationOrFetchOptions,
-  HttpDestination
-} from '@sap-cloud-sdk/connectivity';
+import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, EntityIdentifiable, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
@@ -64,7 +61,7 @@ export abstract class GetRequestBuilderBase<
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
-    destination: HttpDestinationOrFetchOption
+    destination: HttpDestinationOrFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

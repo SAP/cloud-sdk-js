@@ -116,5 +116,8 @@ function warnIfNavigation<
 function removeNavPropsAndComplexTypes(
   body: Record<string, any>
 ): Record<string, any> {
-  return removePropertyOnCondition(([, val]) => typeof val === 'object', body);
+  return removePropertyOnCondition(
+    ([, val]) => val !== null && typeof val === 'object',
+    body
+  );
 }

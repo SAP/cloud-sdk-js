@@ -99,7 +99,7 @@ export abstract class GetByKeyRequestBuilderBase<
    * @returns A promise resolving to the requested entity.
    */
   async execute(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<EntityT> {
     return this.executeRaw(destination)
       .then(response =>

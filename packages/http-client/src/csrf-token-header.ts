@@ -32,7 +32,7 @@ const logger = createLogger({
  * @internal
  */
 export async function buildCsrfHeaders<T extends HttpRequestConfig>(
-  destination: DestinationOrFetchOptions<HttpDestination>,
+  destination: HttpDestinationOrFetchOption,
   requestConfig: Partial<T>
 ): Promise<Record<string, any>> {
   const csrfHeaders = await makeCsrfRequest(destination, requestConfig);
@@ -67,7 +67,7 @@ export function buildCsrfFetchHeaders(headers: any): Record<string, any> {
 }
 
 function makeCsrfRequest<T extends HttpRequestConfig>(
-  destination: DestinationOrFetchOptions<HttpDestination>,
+  destination: HttpDestinationOrFetchOption,
   requestConfig: Partial<T>
 ): Promise<Record<string, any>> {
   const axiosConfig: HttpRequestConfigWithOrigin = {

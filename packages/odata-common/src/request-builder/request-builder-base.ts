@@ -33,7 +33,7 @@ export abstract class MethodRequestBuilder<
    * @returns Promise resolving to the URL for the request.
    */
   async url(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<string> {
     const request = await this.build(destination);
     return request.url();
@@ -126,7 +126,7 @@ export abstract class MethodRequestBuilder<
 
   protected build(): ODataRequest<RequestConfigT>;
   protected build(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<ODataRequest<RequestConfigT>>;
   /**
    * Build an ODataRequest that holds essential configuration for the service request and executes it.
@@ -134,7 +134,7 @@ export abstract class MethodRequestBuilder<
    * @returns The OData request executor including the destination configuration, if one was given.
    */
   protected build(
-    destination?: DestinationOrFetchOptions<HttpDestination>
+    destination?: HttpDestinationOrFetchOption
   ): ODataRequest<RequestConfigT> | Promise<ODataRequest<RequestConfigT>> {
     if (destination) {
       return useOrFetchDestination(destination)

@@ -29,7 +29,7 @@ export class ODataBatchRequestBuilder<
    * @returns Promise resolving to the requested data.
    */
   async execute(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<BatchResponse<DeSerializersT>[]> {
     return this.executeRaw(destination)
       .then(response => parseBatchResponse(response))

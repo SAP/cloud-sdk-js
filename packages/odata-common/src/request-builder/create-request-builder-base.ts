@@ -107,7 +107,7 @@ export abstract class CreateRequestBuilderBase<
    * @returns A promise resolving to the created entity.
    */
   async execute(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<EntityT> {
     return this.executeRaw(destination)
       .then(response =>
@@ -128,7 +128,7 @@ export abstract class CreateRequestBuilderBase<
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

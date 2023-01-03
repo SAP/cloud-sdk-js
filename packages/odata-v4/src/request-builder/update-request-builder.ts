@@ -51,7 +51,7 @@ export class UpdateRequestBuilder<
    * @returns A promise resolving to the entity once it was updated.
    */
   async execute(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
@@ -66,7 +66,7 @@ export class UpdateRequestBuilder<
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<HttpResponse> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       throw new Error('Cannot execute an update request with empty payload.');

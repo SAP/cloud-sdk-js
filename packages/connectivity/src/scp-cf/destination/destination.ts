@@ -8,7 +8,7 @@ import {
   AuthenticationType,
   Destination,
   DestinationAuthToken,
-  DestinationCertificate
+  DestinationCertificate, HttpDestination
 } from './destination-service-types';
 
 /**
@@ -442,3 +442,5 @@ export type DestinationOrFetchOptions<T extends Destination> = Xor<
   T,
   DestinationFetchOptions & DestinationForServiceBindingOptions
 >;
+
+export type HttpDestinationOrFetchOption = DestinationOrFetchOptions<Destination>

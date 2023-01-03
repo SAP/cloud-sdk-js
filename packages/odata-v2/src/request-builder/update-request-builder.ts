@@ -60,7 +60,7 @@ export class UpdateRequestBuilder<
    * @returns A promise resolving to the entity once it was updated.
    */
   async execute(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
@@ -78,7 +78,7 @@ export class UpdateRequestBuilder<
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse} when the request is executed or `undefined` otherwise.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<HttpResponse | undefined> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       logger.info(

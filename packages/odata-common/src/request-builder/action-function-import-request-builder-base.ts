@@ -38,7 +38,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    * @returns A promise resolving to the requested return type.
    */
   async execute(
-    destination: DestinationOrFetchOptions<HttpDestination>,
+    destination: HttpDestinationOrFetchOption,
     dataAccessor?: (data: any) => any
   ): Promise<ReturnT> {
     return this.executeRaw(destination).then(response => {
@@ -55,7 +55,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

@@ -89,7 +89,7 @@ export abstract class DeleteRequestBuilderBase<
    * @returns A promise resolving once the entity was deleted.
    */
   async execute(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<void> {
     return (
       this.executeRaw(destination)
@@ -107,7 +107,7 @@ export abstract class DeleteRequestBuilderBase<
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

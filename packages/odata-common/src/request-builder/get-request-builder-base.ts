@@ -64,7 +64,7 @@ export abstract class GetRequestBuilderBase<
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

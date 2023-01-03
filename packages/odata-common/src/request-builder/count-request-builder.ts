@@ -36,7 +36,7 @@ export class CountRequestBuilder<
    * @returns A promise resolving to the number of entities.
    */
   async execute(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<number> {
     return this.executeRaw(destination).then(response => {
       if (typeof response.data !== 'number') {
@@ -52,7 +52,7 @@ export class CountRequestBuilder<
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

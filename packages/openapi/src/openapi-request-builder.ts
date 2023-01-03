@@ -105,7 +105,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<HttpResponse> {
     const fetchCsrfToken =
       this._fetchCsrfToken &&
@@ -128,7 +128,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns A promise resolving to the requested return type.
    */
   async execute(
-    destination: DestinationOrFetchOptions<HttpDestination>
+    destination: HttpDestinationOrFetchOption
   ): Promise<ResponseT> {
     const response = await this.executeRaw(destination);
     if (isAxiosResponse(response)) {

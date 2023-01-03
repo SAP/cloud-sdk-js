@@ -45,7 +45,7 @@ Note, that the transpilation target of the SDK changed from `es2019` to `es2021`
 
 ## Replace Removed Functionality
 
-Most of the removed functionality had been deprecated in version 2, so ideally they are not used anymore.
+Most of the removed functionality had been deprecated in version 2.
 The following sub-sections describe affected modules, functions and interfaces with instructions on how to replace them.
 
 ### Package `@sap-cloud-sdk/http-client` <!-- omit from toc -->

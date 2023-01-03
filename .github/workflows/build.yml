@@ -41,6 +41,7 @@ jobs:
       - run: yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
+          DEBUG: nock.*
       - run: yarn test:integration
       - run: yarn test:self
       - run: yarn test:type

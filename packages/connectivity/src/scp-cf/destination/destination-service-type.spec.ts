@@ -13,7 +13,7 @@ describe('destination service type', () => {
       expect(isHttpDestination({ name: 'abc' })).toBe(false);
     });
 
-    it('checks destination with type url', () => {
+    it('checks destination with type HTTP', () => {
       expect(isHttpDestination({ url: 'abc', type: 'HTTP' })).toBe(true);
     });
 
@@ -35,7 +35,7 @@ describe('destination service type', () => {
       );
     });
 
-    it('checks destination with type url', () => {
+    it('checks destination with type HTTP', () => {
       assertHttpDestination({ url: 'abc', type: 'HTTP' });
     });
 

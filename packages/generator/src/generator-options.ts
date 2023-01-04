@@ -135,7 +135,7 @@ export interface GeneratorOptions {
   verbose?: boolean;
   /**
    * Generation will stop if objects need renaming due to non-unique conditions or conflicts to JavaScript keywords.
-   * If you enable this options unique names or non-conflicting names are created by appending postfixes like '_1".
+   * If you enable this option, conflicts are resolved by appending postfixes like '_1".
    */
   skipValidation?: boolean;
 }
@@ -371,7 +371,7 @@ export const generatorOptionsCli = {
   },
   skipValidation: {
     describe:
-      "Generation will stop if objects need renaming due to non-unique conditions or conflicts to JavaScript keywords. If you enable this options unique names or non-conflicting names are created by appending postfixes like '_1'",
+      "Generation will stop if objects need renaming due to non-unique conditions or conflicts to JavaScript keywords. If you enable this option, conflicts are resolved by appending postfixes like '_1'",
     type: 'boolean',
     default: false
   }

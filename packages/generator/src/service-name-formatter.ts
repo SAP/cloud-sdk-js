@@ -124,8 +124,8 @@ export class ServiceNameFormatter {
   }): string {
     if (uniqueName !== transformedName) {
       throw new Error(`A name change was necessary for service ${this.serviceName} in container ${originalContainerTypeName}.
-      The intended name ${transformedName} would change to ${uniqueName}.
-      If you are ok with this change execute the generator with the '--skipValidation' option.`);
+The intended name ${transformedName} would change to ${uniqueName}.
+If you are ok with this change execute the generator with the '--skipValidation' option.`);
     }
     return uniqueName;
   }

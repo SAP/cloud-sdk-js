@@ -53,6 +53,25 @@ describe('generator', () => {
 
     afterAll(() => mock.restore());
 
+    it('fails if skip validation is not enabled', async () => {
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'failing',
+        overwrite: true,
+        skipValidation: false
+      });
+      try {
+        // TODO the first call will go away once ts-morph is removed
+        project = await generateProject(options);
+        await generate(options);
+        throw new Error('Should not go here.');
+      } catch (e) {
+        expect(e.message).toMatch(
+          /A name change was necessary for service TestService/
+        );
+      }
+    });
+
     it('reads custom prettier configuration', () => {
       expect(prettierSpy).toHaveBeenCalledWith(expect.any(String), {
         parser: expect.any(String),
@@ -99,6 +118,7 @@ describe('generator', () => {
         'API_TEST_SRV.edmx'
       ),
       outputDir: 'csn-test',
+      skipValidation: true,
       generateCSN: true
     });
 
@@ -258,6 +278,7 @@ describe('generator', () => {
         overwrite: true,
         prettierConfig: '/prettier/config',
         generateSdkMetadata: true,
+        skipValidation: true,
         include: join(pathTestResources, '*.md')
       });
 
@@ -281,6 +302,7 @@ describe('generator', () => {
         inputDir: pathTestService,
         outputDir: 'logger',
         overwrite: true,
+        skipValidation: true,
         prettierConfig: '/prettier/config',
         generateSdkMetadata: true,
         include: join(pathTestResources, '*.md'),

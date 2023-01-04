@@ -11,6 +11,7 @@ export function createOptions(
   return parseOptions(generatorOptionsCli, {
     inputDir: '',
     outputDir: '',
+    skipValidation: true,
     serviceMapping: 'service-mapping.json',
     generatePackageJson: false,
     ...options

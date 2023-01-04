@@ -133,6 +133,11 @@ export interface GeneratorOptions {
    * If set to true, all logs will be displayed.
    */
   verbose?: boolean;
+  /**
+   * Generation will stop if objects need renaming due to non-unique conditions or conflicts to JavaScript keywords.
+   * If you enable this options unique names or non-conflicting names are created by appending postfixes like '_1".
+   */
+  skipValidation?: boolean;
 }
 
 /**
@@ -361,6 +366,12 @@ export const generatorOptionsCli = {
   verbose: {
     describe:
       'By default, only errors, warnings and important info logs will be displayed. If set to true, all logs will be displayed.',
+    type: 'boolean',
+    default: false
+  },
+  skipValidation: {
+    describe:
+      "Generation will stop if objects need renaming due to non-unique conditions or conflicts to JavaScript keywords. If you enable this options unique names or non-conflicting names are created by appending postfixes like '_1'",
     type: 'boolean',
     default: false
   }

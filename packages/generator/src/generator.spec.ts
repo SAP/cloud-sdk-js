@@ -67,7 +67,7 @@ describe('generator', () => {
         throw new Error('Should not go here.');
       } catch (e) {
         expect(e.message).toMatch(
-          /A name change was necessary for service TestService/
+          /A naming conflict appears for service TestServic/
         );
       }
     });

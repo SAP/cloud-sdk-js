@@ -60,6 +60,13 @@ If an operation begins with an `underscore` symbol, the `_` will be removed from
 To adjust the names, search in `function-import.ts` and `action-import.ts` files in your generated client code for any operation starting with `_`.
 Similarly, to adjust the names of bound operations of an entity, search in the respective entity's `.ts` file, e.g., `TestEntity.ts`.
 
+### Adjust Default Behavior in OData Client Generation
+
+In the past, object names changed to resolve conflicts with protected JavaScript keywords or non-unique names.
+This has changed and the generation process will now fail with an error message indicating the changed name.
+You can still generate in such a case by enabling the `skipValidation` option.
+The generator will add postfixes like `_1` to resolve the conflict if the option is enabled.  
+
 ### Check for removed deprecated functions and replace them if required
 
 While the SAP Cloud SDK maintains backwards compatibility within a major version where possible, a new major release breaks compatibility where required to simplify the programming interface.

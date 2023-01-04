@@ -1,8 +1,10 @@
 import { join, resolve } from 'path';
 import { promises } from 'fs';
+import { transports } from 'winston';
 import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { createOptions } from '../test/test-util/create-generator-options';
 import {
   checkStaticProperties,
@@ -202,6 +204,68 @@ describe('generator', () => {
           'testActionImportMultipleParameterComplexReturnType'
         ])
       );
+    });
+  });
+
+  describe('logger', () => {
+    beforeAll(() => {
+      mock({
+        common: {},
+        '/prettier/config': JSON.stringify({ printWidth: 66 }),
+        [pathTestResources]: mock.load(pathTestResources),
+        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
+        [pathRootNodeModules]: mock.load(pathRootNodeModules)
+      });
+    });
+
+    afterAll(() => mock.restore());
+
+    it('should display no verbose logs by default', async () => {
+      const consoleSpy = jest.spyOn(process.stdout, 'write');
+      const logger = createLogger({
+        package: 'generator',
+        messageContext: 'generator'
+      });
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'logger',
+        overwrite: true,
+        prettierConfig: '/prettier/config',
+        generateSdkMetadata: true,
+        include: join(pathTestResources, '*.md')
+      });
+
+      await generateProject(options);
+      await generate(options);
+      expect(logger.level).toBe('info');
+      expect(consoleSpy).not.toBeCalled();
+    });
+
+    it('should display verbose logs when verbose option is set to true', async () => {
+      const fileTransport = new transports.File({
+        filename: 'test.log'
+      });
+
+      const logger = createLogger({
+        package: 'generator',
+        messageContext: 'generator'
+      });
+      logger.add(fileTransport);
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'logger',
+        overwrite: true,
+        prettierConfig: '/prettier/config',
+        generateSdkMetadata: true,
+        include: join(pathTestResources, '*.md'),
+        verbose: true
+      });
+
+      await generateProject(options);
+      await generate(options);
+      expect(logger.level).toBe('verbose');
+      const log = await promises.readFile('test.log', { encoding: 'utf-8' });
+      expect(log).toMatch(/Generating entities .../);
     });
   });
 });

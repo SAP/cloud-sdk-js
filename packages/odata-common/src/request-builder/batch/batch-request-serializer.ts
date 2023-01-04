@@ -111,7 +111,7 @@ function getPayload(request: Omit<MethodRequestBuilder, 'execute'>): string[] {
 }
 
 function validateOptions(options: BatchRequestSerializationOptions): void {
-  // This should never happen. Can only occur if requestbuilder.build() was called which will be removed.
+  // This should never happen. Can only occur if requestBuilder.build() was called, which will be removed.
   if (options.subRequestPathType === 'absolute' && !options.destination?.url) {
     throw new Error(
       "Cannot serialize batch request. Invalid destination provided for sub request path type 'absolute'"

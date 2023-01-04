@@ -60,7 +60,7 @@ function testFunctionImportEntityReturnTypeCollection(parameters, deSerializers 
 }
 exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
 /**
- * Test Function Import Shared Entity Return Type. The 'execute' method does not exist when using this function import. Please use the 'executeRaw' for getting the raw response.
+ * Test Function Import Shared Entity Return Type. The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -70,7 +70,7 @@ function testFunctionImportSharedEntityReturnType(parameters, deSerializers = od
 }
 exports.testFunctionImportSharedEntityReturnType = testFunctionImportSharedEntityReturnType;
 /**
- * Test Function Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this function import. Please use the 'executeRaw' for getting the raw response.
+ * Test Function Import Shared Entity Return Type Collection. The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the function.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */

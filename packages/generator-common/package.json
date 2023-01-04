@@ -2,7 +2,7 @@
   "name": "@sap-cloud-sdk/generator-common",
   "version": "2.11.0",
   "description": "SAP Cloud SDK for JavaScript common functions of OData client generator and OpenAPI clint generator.",
-  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",

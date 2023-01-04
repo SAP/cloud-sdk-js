@@ -2,7 +2,7 @@
   "name": "@sap-cloud-sdk/util",
   "version": "2.11.0",
   "description": "SAP Cloud SDK for JavaScript general utilities",
-  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
@@ -34,7 +34,7 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "axios": "^1.2.1",
+    "axios": "^1.2.2",
     "chalk": "^4.1.0",
     "logform": "^2.4.2",
     "promise.allsettled": "^1.0.6",

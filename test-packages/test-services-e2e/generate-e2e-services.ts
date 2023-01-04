@@ -6,7 +6,6 @@ const logger = createLogger('generate-e2e-services');
 const generatorConfigOData = {
   forceOverwrite: true,
   overwrite: true,
-  generateJs: false,
   useSwagger: false,
   writeReadme: false,
   readme: false,
@@ -31,7 +30,7 @@ async function generateE2E() {
       'v4'
     ),
     outputDir: resolve('v4'),
-    generateJs: true
+    transpile: true
   });
 
   await generate({
@@ -44,7 +43,7 @@ async function generateE2E() {
       'TripPin'
     ),
     outputDir: resolve('TripPin'),
-    generateJs: true
+    transpile: true
   });
 }
 

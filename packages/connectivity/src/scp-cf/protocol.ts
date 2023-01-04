@@ -1,13 +1,16 @@
 /* eslint-disable  import/export */
 
+const protocols = {
+  http: 'http',
+  https: 'https',
+  socks: 'socks'
+} satisfies Record<Protocol, Protocol>;
+
 /**
  * Supported web protocols for requests made by the SAP Cloud SDK.
  */
-export enum Protocol {
-  HTTP = 'http',
-  HTTPS = 'https',
-  SOCKS = 'socks'
-}
+export type Protocol = 'http' | 'https' | 'socks';
+
 /**
  * @internal
  * Get {@link Protocol} from its string representation.
@@ -15,13 +18,7 @@ export enum Protocol {
  * @returns Either the matching protocol or undefined.
  */
 export function getProtocol(protocol: string): Protocol | undefined {
-  if (protocol.endsWith(':')) {
-    return getProtocol(protocol.slice(0, -1));
-  }
-  if (protocol.toLowerCase() === Protocol.HTTP) {
-    return Protocol.HTTP;
-  }
-  if (protocol.toLowerCase() === Protocol.HTTPS) {
-    return Protocol.HTTPS;
-  }
+  return protocol.endsWith(':')
+    ? getProtocol(protocol.slice(0, -1))
+    : protocols[protocol];
 }

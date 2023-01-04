@@ -4,11 +4,7 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import {
-  Destination,
-  Protocol,
-  ProxyConfiguration
-} from '@sap-cloud-sdk/connectivity';
+import { Destination, ProxyConfiguration } from '@sap-cloud-sdk/connectivity';
 import {
   timeout,
   Middleware,
@@ -72,7 +68,7 @@ describe('generic http client', () => {
       },
       host: 'proxy.host',
       port: 1234,
-      protocol: Protocol.HTTP
+      protocol: 'http'
     }
   };
 
@@ -701,7 +697,7 @@ sap-client:001`);
         proxyConfiguration: {
           host: 'dummy',
           port: 1234,
-          protocol: Protocol.HTTP
+          protocol: 'http'
         }
       };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
@@ -804,14 +800,14 @@ sap-client:001`);
     /* eslint-disable no-console */
     /**
      * BLI: https://github.com/SAP/cloud-sdk-backlog/issues/560.
-     * Actual: request is successfull.
+     * Actual: request is successful.
      * Expected: Axios requests should pass via the proxy and hence result in a redirect loop.
      * */
     xit('test axios proxy redirect', () => {
       const proxyConfiguration: ProxyConfiguration = {
         host: 'localhost',
         port: 8080,
-        protocol: Protocol.HTTP
+        protocol: 'http'
       };
       // A fake proxy server
       http
@@ -1215,6 +1211,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         requestConfig
       );
     });
+
     it('should return the original object, when the parameter is typed as HttpRequestConfigWithOrigin', () => {
       const requestConfig: HttpRequestConfigWithOrigin = {
         method: 'get',

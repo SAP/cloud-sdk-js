@@ -2,7 +2,7 @@
   "name": "@sap-cloud-sdk/openapi",
   "version": "2.11.0",
   "description": "SAP Cloud SDK for JavaScript openapi",
-  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
   "keywords": [
     "sap-cloud-sdk",
@@ -41,7 +41,7 @@
     "@sap-cloud-sdk/http-client": "^2.11.0",
     "@sap-cloud-sdk/resilience": "^2.11.0",
     "@sap-cloud-sdk/util": "^2.11.0",
-    "axios": "^1.2.1"
+    "axios": "^1.2.2"
   },
   "devDependencies": {
     "nock": "^13.2.9",

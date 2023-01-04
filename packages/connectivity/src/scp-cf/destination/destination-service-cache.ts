@@ -1,16 +1,14 @@
 import { JwtPayload } from '../jsonwebtoken-type';
 import { Cache } from '../cache';
 import { Destination } from './destination-service-types';
-import { getDestinationCacheKey, IsolationStrategy } from './destination-cache';
+import { getDestinationCacheKey } from './destination-cache';
 
 const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
   retrieveDestinationsFromCache: (
     targetUrl: string,
     decodedJwt: JwtPayload
   ): Destination[] | undefined =>
-    cache.get(
-      getDestinationCacheKey(decodedJwt, targetUrl, IsolationStrategy.Tenant)
-    ),
+    cache.get(getDestinationCacheKey(decodedJwt, targetUrl, 'tenant')),
   cacheRetrievedDestinations: (
     destinationServiceUri: string,
     decodedJwt: JwtPayload,
@@ -19,7 +17,7 @@ const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
     const key = getDestinationCacheKey(
       decodedJwt,
       destinationServiceUri,
-      IsolationStrategy.Tenant
+      'tenant'
     );
     cache.set(key, { entry: destinations });
   },

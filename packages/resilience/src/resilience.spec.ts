@@ -147,7 +147,7 @@ describe('combined resilience features', () => {
     expect(circuitBreakers[`${host}::myTestTenant`].stats.fires).toBe(1);
   });
 
-  it('does 3 retries and doesnt open the circuit breaker for few server errors', async () => {
+  it('does 3 retries and does not open the circuit breaker for few server errors', async () => {
     nock(host, {})
       .get(/with-retry/)
       .times(3)

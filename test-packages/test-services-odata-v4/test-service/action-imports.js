@@ -57,7 +57,7 @@ function testActionImportNoParameterEntityReturnType(parameters, deSerializers =
 }
 exports.testActionImportNoParameterEntityReturnType = testActionImportNoParameterEntityReturnType;
 /**
- * Test Action Import Shared Entity Return Type. The 'execute' method does not exist when using this action import. Please use the 'executeRaw' for getting the raw response.
+ * Test Action Import Shared Entity Return Type. The 'execute' method does not exist for this action import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -67,7 +67,7 @@ function testActionImportSharedEntityReturnType(parameters, deSerializers = odat
 }
 exports.testActionImportSharedEntityReturnType = testActionImportSharedEntityReturnType;
 /**
- * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this action import. Please use the 'executeRaw' for getting the raw response.
+ * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist for this action import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the action.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */

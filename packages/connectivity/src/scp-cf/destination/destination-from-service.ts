@@ -112,7 +112,7 @@ const emptyDestinationByType: DestinationsByType = {
 };
 
 /**
- * Utility function to get destination service credentails, including error handling.
+ * Utility function to get destination service credentials, including error handling.
  * @internal
  */
 export function getDestinationServiceCredentials(): DestinationServiceCredentials {
@@ -389,7 +389,7 @@ export class DestinationFromServiceRetriever {
     return subdomainSubscriber || subdomainProvider || undefined;
   }
 
-  private async getAuthTokenForOAuth2ClientCrendentials(
+  private async getAuthTokenForOAuth2ClientCredentials(
     destinationResult: DestinationSearchResult
   ): Promise<AuthAndExchangeTokens> {
     const { destination, origin } = destinationResult;
@@ -433,10 +433,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
       );
     }
-    // This covers OAuth to user dependend auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+    // This covers OAuth to user-dependent auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     // Which is the same for: OAuth2UserTokenExchange, OAuth2JWTBearer and OAuth2SAMLBearerAssertion
 
-    // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as wll. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
+    // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as well. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
     if (this.subscriberToken.type === 'custom') {
       DestinationFromServiceRetriever.checkDestinationForCustomJwt(destination);
     }
@@ -495,13 +495,13 @@ Possible alternatives for such technical user authentication are BasicAuthentica
    * @internal
    * This method calls the 'find destination by name' endpoint of the destination service using a client credentials grant.
    * For the find by name endpoint, the destination service will take care of OAuth flows and include the token in the destination.
-   * @param destinationResult - Result of the getDestinations call for which the exchange flow is triggred
+   * @param destinationResult - Result of the getDestinations call for which the exchange flow is triggered.
    * @returns Destination containing the auth token.
    */
   private async fetchDestinationWithNonUserExchangeFlows(
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
-    const token = await this.getAuthTokenForOAuth2ClientCrendentials(
+    const token = await this.getAuthTokenForOAuth2ClientCredentials(
       destinationResult
     );
 

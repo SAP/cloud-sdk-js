@@ -227,7 +227,7 @@ export interface DestinationCertificate {
 export type DestinationRetrievalOptions = CachingOptions & {
   /**
    * The isolation strategy used for caching destinations. For the available options, see {@link IsolationStrategy}.
-   * By default, IsolationStrategy.Tenant_User is set.
+   * By default, 'tenant-user' is set.
    */
   isolationStrategy?: IsolationStrategy;
   /**
@@ -239,7 +239,7 @@ export type DestinationRetrievalOptions = CachingOptions & {
 };
 
 /**
- * Typeguard to find if object is a Destination.
+ * Type guard to find if object is a Destination.
  * @param destination - Destination to be checked
  * @returns boolean
  * @internal

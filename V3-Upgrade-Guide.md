@@ -25,6 +25,7 @@ This document will guide you through the steps necessary to upgrade to version 3
 - [Check for removed deprecated functions and replace them if required](#check-for-removed-deprecated-functions-and-replace-them-if-required)
 - [Replace Timeout](#timeout)
 - [Direct API Constructor Usage](#direct-api-constructor-usage)
+- [Update transpilation options in OData client generator](#update-transpilation-options-in-odata-client-generator)
 
 ### Update your project dependencies
 
@@ -140,8 +141,10 @@ myRequestBuilder
     .middleware([timeout()])
     .execute(myDestination);
 ```
-<!-- TODO v3 put better link when documentation is done -->
-A detailed guide on the middleware concept is presented on the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/overview).
+
+You find a detailed guide on the general [middleware concept](https://sap.github.io/cloud-sdk/docs/js/v3/features/middleware)  and the [resilience middlewares](https://sap.github.io/cloud-sdk/docs/js/v3/guides/resilience) in particular on the documentation portal.
+
+
 
 ### Direct API Constructor Usage
 
@@ -166,3 +169,12 @@ const myEntityApi = new MyEntityApi()
 the navigation properties are not correctly initialized leading to potential errors.
 To avoid this unintended usage of the constructor the visibility was changed to `private`.
 If you used the constructor directly please change your code to use the service function e.g. `myEntityService()` in the example above.
+
+### Update Transpilation options in OData client generator
+
+By default, the OData generator will only generate TypeScript code.
+The `generateJs` option has been replaced with the `transpile` option.
+To generate JavaScript code, enable transpilation using the `transpile` option.
+
+A new option, `tsconfig`, can be used to either pass a custom `tsconfig.json` configuration file or use a default config from the SDK.
+This flag should be used together with `transpile`. 

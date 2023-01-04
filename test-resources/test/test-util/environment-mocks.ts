@@ -71,13 +71,13 @@ export const destinationBindingCertMock: Service = {
 export const connectivityProxyConfigMock: ProxyConfiguration = {
   host: 'proxy.example.com',
   port: 12345,
-  protocol: Protocol.HTTP
+  protocol: 'http'
 };
 
 export const connectivitySocksProxyConfigMock: ProxyConfiguration = {
   host: 'proxy.example.com',
   port: 54321,
-  protocol: Protocol.SOCKS
+  protocol: 'socks'
 };
 
 export const connectivityBindingMock: Service = {

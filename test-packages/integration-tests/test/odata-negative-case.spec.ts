@@ -64,7 +64,8 @@ describe('odata negative tests', () => {
             'faulty-typescript',
             'faulty-typescript.ts'
           ),
-          '--clearOutputDir'
+          '--clearOutputDir',
+          '--transpile'
         ],
         { cwd: __dirname }
       )

@@ -1,3 +1,4 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from './service-name-formatter';
 
 describe('name-formatter', () => {
@@ -108,6 +109,21 @@ describe('name-formatter', () => {
   });
 
   describe('enforces unique names for', () => {
+    it('logs if names are changes', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        skipValidation: true
+      });
+      const logger = createLogger('service-name-formatter');
+      const logSpy = jest.spyOn(logger, 'info');
+      formatter.originalToEntityClassName('SomeEntity');
+      formatter.originalToEntityClassName('SomeEntity');
+      expect(logSpy).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /A naming conflict appears for service MyServiceName/
+        )
+      );
+    });
+
     it('entities - skip validation', () => {
       const formatter = new ServiceNameFormatter('MyServiceName', {
         skipValidation: true,
@@ -130,7 +146,7 @@ describe('name-formatter', () => {
       );
       expect(() =>
         formatter.originalToEntityClassName('SomeEntity')
-      ).toThrowError(/A name change was necessary for/);
+      ).toThrowError(/A naming conflict appears for/);
     });
 
     it('entities, function imports and complex types vs external imports - skip validation', () => {
@@ -147,13 +163,13 @@ describe('name-formatter', () => {
     it('entities, function imports and complex types vs external imports - no skip validation', () => {
       const formatter = new ServiceNameFormatter('MyServiceName');
       expect(() => formatter.originalToEntityClassName('Time')).toThrow(
-        /A name change was necessary for/
+        /A naming conflict appears for/
       );
       expect(() => formatter.originalToComplexTypeName('BigNumber')).toThrow(
-        /A name change was necessary for/
+        /A naming conflict appears for/
       );
       expect(() => formatter.originalToEntityClassName('Service')).toThrow(
-        /A name change was necessary for/
+        /A naming conflict appears for/
       );
     });
 
@@ -194,18 +210,18 @@ describe('name-formatter', () => {
 
       expect(() =>
         formatter.originalToInstancePropertyName('A_SomeEntity', 'someProperty')
-      ).toThrow(/A name change was necessary for/);
+      ).toThrow(/A naming conflict appears for/);
       expect(() =>
         formatter.originalToInstancePropertyName(
           'A_SomeEntity',
           '_SomeProperty'
         )
-      ).toThrow(/A name change was necessary for/);
+      ).toThrow(/A naming conflict appears for/);
 
       formatter.originalToStaticPropertyName('A_SomeEntity', 'SomeProperty');
       expect(() =>
         formatter.originalToStaticPropertyName('A_SomeEntity', 'someProperty')
-      ).toThrow(/A name change was necessary for/);
+      ).toThrow(/A naming conflict appears for/);
     });
 
     it('nav properties - skip validation', () => {
@@ -248,13 +264,13 @@ describe('name-formatter', () => {
           'A_SomeEntity',
           'toSomeEntity'
         )
-      ).toThrow(/A name change was necessary for/);
+      ).toThrow(/A naming conflict appears for/);
 
       formatter.originalToStaticPropertyName('A_SomeEntity', 'to_SomeEntity');
 
       expect(() =>
         formatter.originalToStaticPropertyName('A_SomeEntity', 'toSomeEntity')
-      ).toThrow(/A name change was necessary for/);
+      ).toThrow(/A naming conflict appears for/);
     });
 
     it('complex types - skip validation', () => {
@@ -274,7 +290,7 @@ describe('name-formatter', () => {
       });
       formatter.originalToComplexTypeName('My_Struct');
       expect(() => formatter.originalToComplexTypeName('MyStruct')).toThrow(
-        /A name change was necessary for/
+        /A naming conflict appears for/
       );
     });
 
@@ -297,7 +313,7 @@ describe('name-formatter', () => {
       });
       formatter.originalToOperationName('FunctionImport');
       expect(() => formatter.originalToOperationName('functionImport')).toThrow(
-        /A name change was necessary for/
+        /A naming conflict appears for/
       );
     });
 
@@ -322,7 +338,7 @@ describe('name-formatter', () => {
       formatter.originalToParameterName('FunctionImport', 'SomeParam');
       expect(() =>
         formatter.originalToParameterName('FunctionImport', 'someParam')
-      ).toThrow(/A name change was necessary for/);
+      ).toThrow(/A naming conflict appears for/);
     });
 
     it('entities and interfaces - skip validation', () => {
@@ -348,7 +364,7 @@ describe('name-formatter', () => {
 
       expect(() =>
         formatter.originalToEntityClassName('SomeEntityType')
-      ).toThrow(/A name change was necessary for/);
+      ).toThrow(/A naming conflict appears for/);
     });
   });
 

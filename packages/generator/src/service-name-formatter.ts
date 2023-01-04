@@ -1,5 +1,6 @@
 import {
   camelCase,
+  createLogger,
   UniqueNameGenerator,
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
@@ -11,6 +12,7 @@ import {
   reservedServiceKeywords
 } from './reserved-words';
 
+const logger = createLogger('service-name-formatter');
 /**
  * @internal
  */
@@ -103,13 +105,11 @@ export class ServiceNameFormatter {
     );
 
     const uniqueName = generator.generateAndSaveUniqueName(transformedName);
-    if (!this.skipValidation) {
-      this.assertNameChange({
-        originalContainerTypeName,
-        transformedName,
-        uniqueName
-      });
-    }
+    this.assertNameChange({
+      originalContainerTypeName,
+      transformedName,
+      uniqueName
+    });
     return uniqueName;
   }
 
@@ -121,13 +121,17 @@ export class ServiceNameFormatter {
     originalContainerTypeName: string;
     transformedName: string;
     uniqueName: string;
-  }): string {
+  }): void {
     if (uniqueName !== transformedName) {
-      throw new Error(`A name change was necessary for service ${this.serviceName} in container ${originalContainerTypeName}.
-The intended name ${transformedName} would change to ${uniqueName}.
+      const message = `A naming conflict appears for service ${this.serviceName} in container '${originalContainerTypeName}'.
+The conflict resolution is: ${transformedName} -> ${uniqueName}.`;
+      if (this.skipValidation) {
+        logger.info(message);
+      } else {
+        throw new Error(`${message}
 If you are ok with this change execute the generator with the '--skipValidation' option.`);
+      }
     }
-    return uniqueName;
   }
 
   originalToInstancePropertyName(
@@ -142,13 +146,11 @@ If you are ok with this change execute the generator with the '--skipValidation'
     );
 
     const uniqueName = generator.generateAndSaveUniqueName(transformedName);
-    if (!this.skipValidation) {
-      this.assertNameChange({
-        originalContainerTypeName: 'action/function operation name',
-        transformedName,
-        uniqueName
-      });
-    }
+    this.assertNameChange({
+      originalContainerTypeName: 'action/function operation name',
+      transformedName,
+      uniqueName
+    });
     return uniqueName;
   }
 
@@ -159,13 +161,12 @@ If you are ok with this change execute the generator with the '--skipValidation'
 
     const uniqueName = applyPrefixOnJsConflictFunctionImports(newName);
 
-    if (!this.skipValidation) {
-      this.assertNameChange({
-        originalContainerTypeName: 'action/function operation name',
-        transformedName,
-        uniqueName
-      });
-    }
+    this.assertNameChange({
+      originalContainerTypeName: 'action/function operation name',
+      transformedName,
+      uniqueName
+    });
+
     return uniqueName;
   }
 
@@ -179,13 +180,12 @@ If you are ok with this change execute the generator with the '--skipValidation'
     );
     const uniqueName = applyPrefixOnJsConflictFunctionImports(transformedName);
 
-    if (!this.skipValidation) {
-      this.assertNameChange({
-        originalContainerTypeName: 'bound action/function operation name',
-        transformedName,
-        uniqueName
-      });
-    }
+    this.assertNameChange({
+      originalContainerTypeName: 'bound action/function operation name',
+      transformedName,
+      uniqueName
+    });
+
     return uniqueName;
   }
 
@@ -208,13 +208,13 @@ If you are ok with this change execute the generator with the '--skipValidation'
       entitySetName
     );
     const uniqueName = generator.generateAndSaveUniqueName(transformedName);
-    if (!this.skipValidation) {
-      this.assertNameChange({
-        originalContainerTypeName: entitySetName,
-        transformedName,
-        uniqueName
-      });
-    }
+
+    this.assertNameChange({
+      originalContainerTypeName: entitySetName,
+      transformedName,
+      uniqueName
+    });
+
     return uniqueName;
   }
 
@@ -230,13 +230,13 @@ If you are ok with this change execute the generator with the '--skipValidation'
     );
 
     const uniqueName = generator.generateAndSaveUniqueName(transformedName);
-    if (!this.skipValidation) {
-      this.assertNameChange({
-        originalContainerTypeName: 'action/function parameter name',
-        transformedName,
-        uniqueName
-      });
-    }
+
+    this.assertNameChange({
+      originalContainerTypeName: 'action/function parameter name',
+      transformedName,
+      uniqueName
+    });
+
     return uniqueName;
   }
 
@@ -254,13 +254,12 @@ If you are ok with this change execute the generator with the '--skipValidation'
 
     const uniqueName = generator.generateAndSaveUniqueName(transformedName);
 
-    if (!this.skipValidation) {
-      this.assertNameChange({
-        originalContainerTypeName: 'bound action/function parameter name',
-        transformedName,
-        uniqueName
-      });
-    }
+    this.assertNameChange({
+      originalContainerTypeName: 'bound action/function parameter name',
+      transformedName,
+      uniqueName
+    });
+
     return uniqueName;
   }
 
@@ -279,13 +278,12 @@ If you are ok with this change execute the generator with the '--skipValidation'
         false
       )[0];
 
-    if (!this.skipValidation) {
-      this.assertNameChange({
-        originalContainerTypeName: 'entity set name',
-        transformedName,
-        uniqueName
-      });
-    }
+    this.assertNameChange({
+      originalContainerTypeName: 'entity set name',
+      transformedName,
+      uniqueName
+    });
+
     return uniqueName;
   }
 
@@ -302,13 +300,12 @@ If you are ok with this change execute the generator with the '--skipValidation'
       false
     );
 
-    if (!this.skipValidation) {
-      this.assertNameChange({
-        originalContainerTypeName,
-        transformedName,
-        uniqueName
-      });
-    }
+    this.assertNameChange({
+      originalContainerTypeName,
+      transformedName,
+      uniqueName
+    });
+
     return uniqueName;
   }
 

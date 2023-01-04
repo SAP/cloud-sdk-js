@@ -110,11 +110,6 @@ export interface GeneratorOptions {
    * Internal option used to adjust the description for S/4HANA cloud systems. Will not be used in the future.
    */
   s4hanaCloud?: boolean;
-  /**
-   * @deprecated Since v2.12.0.
-   * Generate A CSN file for each service definition in the output directory.
-   */
-  generateCSN?: boolean;
   // TODO: remove packageVersion in version 3.0
   /**
    * @deprecated Since v2.12.0.
@@ -332,13 +327,6 @@ export const generatorOptionsCli = {
     type: 'boolean',
     default: false,
     hidden: true
-  },
-  generateCSN: {
-    describe:
-      'When set to true a CSN file will be generated for each service definition in the output directory.',
-    type: 'boolean',
-    default: false,
-    deprecated: 'Since v2.12.0. This functionality will be discontinued.'
   }
 } as const;
 

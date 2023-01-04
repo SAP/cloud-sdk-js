@@ -79,6 +79,10 @@ The function `variadicArgumentToArray` is replaced by the function `transformVar
 
 The generic types of `JwtKeyMapping` is simplified so the second type argument `JwtKeysT` are always strings.
 
+#### Package `@sap-cloud-sdk/generator`
+
+The deprecated option `generateCSN` is removed. There is no replacement.
+
 #### Package `@sap-cloud-sdk/odata-common`
 
 ##### `fromJson` function

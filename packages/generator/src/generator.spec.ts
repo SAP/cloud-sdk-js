@@ -15,7 +15,6 @@ import {
   generateProject,
   getInstallODataErrorMessage
 } from './generator';
-import * as csnGeneration from './service/csn';
 
 const pathTestResources = resolve(__dirname, '../../../test-resources');
 const pathTestService = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
@@ -86,31 +85,6 @@ describe('generator', () => {
 
       expect(clientFile).toBeDefined();
     }, 10000);
-  });
-
-  describe('edmx-to-csn', () => {
-    const testGeneratorOptions = createOptions({
-      inputDir: resolve(
-        oDataServiceSpecs,
-        'v2',
-        'API_TEST_SRV',
-        'API_TEST_SRV.edmx'
-      ),
-      outputDir: 'csn-test',
-      generateCSN: true
-    });
-
-    it('should invoke csn', async () => {
-      mock({
-        'csn-test': {},
-        [pathTestResources]: mock.load(pathTestResources)
-      });
-
-      jest.spyOn(csnGeneration, 'csn');
-      await generateProject(testGeneratorOptions);
-      expect(csnGeneration.csn).toHaveBeenCalled();
-      mock.restore();
-    });
   });
 
   describe('v2', () => {

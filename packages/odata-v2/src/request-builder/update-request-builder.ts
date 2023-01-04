@@ -117,6 +117,8 @@ function removeNavPropsAndComplexTypes(
   body: Record<string, any>
 ): Record<string, any> {
   return removePropertyOnCondition(
+    // Special handling for null values because 'typeof null' is 'object', but we don't want to filter null values here.
+    // See this issue for more info: https://github.com/SAP/cloud-sdk-js/issues/3204
     ([, val]) => val !== null && typeof val === 'object',
     body
   );

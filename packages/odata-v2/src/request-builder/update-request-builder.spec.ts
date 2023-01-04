@@ -143,7 +143,7 @@ describe('UpdateRequestBuilder', () => {
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
-  it('update request is executed when nullable string is set to null', async () => {
+  it('executes the update when nullable string is set to null', async () => {
     // Given: Entity with only key properties and one nullable string property which has non-null value
     const keyPropGuid = uuid();
     const keyPropString = 'stringId';
@@ -180,6 +180,46 @@ describe('UpdateRequestBuilder', () => {
     // Then: We expect the update to happen (http request is sent) and the value of the property to be null
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
     expect(actual.stringProperty).toBeNull();
+    expect(scope.isDone()).toBe(true);
+  });
+
+  it('executes the update when nullable string is set to undefined', async () => {
+    // Given: Entity with only key properties and one nullable string property which has non-null value
+    const keyPropGuid = uuid();
+    const keyPropString = 'stringId';
+    const stringProp = 'some value';
+
+    const entity = testEntityApi
+      .entityBuilder()
+      .keyPropertyGuid(keyPropGuid)
+      .keyPropertyString(keyPropString)
+      .stringProperty(stringProp)
+      .build();
+
+    const scope = mockUpdateRequest(
+      {
+        body: {
+          StringProperty: null
+        },
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString
+        )
+      },
+      testEntityApi
+    );
+
+    // When: We update the nullable string property value to undefined
+    entity.stringProperty = undefined;
+
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
+
+    // Then: We expect the update to happen (http request is sent) and the value of the property to be null
+    expect(actual).toEqual(entity.setOrInitializeRemoteState());
+    expect(actual.stringProperty).toBeUndefined();
     expect(scope.isDone()).toBe(true);
   });
 

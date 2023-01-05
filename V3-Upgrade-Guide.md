@@ -82,9 +82,9 @@ The generic types of `JwtKeyMapping` is simplified so the second type argument `
 
 #### Package `@sap-cloud-sdk/generator`
 
-The deprecated generator options `versionInPackageJson` and `licenseInPackageJson` are removed.
-In a generated `package.json` the version `1.0.0` and license `Apache-2.0` are used. 
-Use the `include` option to add a `package.json` with custom values.
+The options `versionInPackageJson` and `licenseInPackageJson`, that allowed setting custom values in generated `package.json` files are removed.
+When the `packageJson` option is enabled, a `package.json` file with version `1.0.0` and license `Apache-2.0` is created. 
+If you want to set custom values, use the `include` option to add a custom `package.json`.
 
 #### Package `@sap-cloud-sdk/openapi-generator`
 

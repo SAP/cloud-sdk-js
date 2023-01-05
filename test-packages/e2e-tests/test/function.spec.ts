@@ -1,11 +1,3 @@
-// import {
-//   returnSapCloudSdk,
-//   concatStrings,
-//   getByKey,
-//   getAll,
-//   returnCollection
-// } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/function-imports';
-
 import { testService } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 
 const url = 'http://localhost:4004/';

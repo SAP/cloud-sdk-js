@@ -153,5 +153,3 @@ If an operation begins with an underscore symbol(`_`), it is removed in the gene
 
 To adjust the names for unbound operations, search in `function-import.ts` and `action-import.ts` files in your generated client code for operations starting with `_`.
 Similarly, to adjust the names of bound operations of an entity, search in the respective entity's `.ts` file, e.g., `BusinessPartner.ts`.
-
-- When creating entities with the `fromJson()` method, the `_customFields` property is no longer considered. Add custom properties as root level properties in your object instead.

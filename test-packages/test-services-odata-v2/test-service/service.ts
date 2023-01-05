@@ -256,6 +256,9 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     return this.initApi('casetest_1Api', Casetest_1Api);
   }
 
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get functionImports() {
     return {
       testFunctionImportNoReturnType: (
@@ -320,6 +323,13 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
       fContinue: (parameter: FContinueParameters<DeSerializersT>) =>
         fContinue(parameter, this.deSerializers)
     };
+  }
+
+  /**
+   * Get unbound functions and actions.
+   */
+  get operations() {
+    return { ...this.functionImports };
   }
 
   get batch(): typeof batch {

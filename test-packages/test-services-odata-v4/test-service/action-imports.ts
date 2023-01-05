@@ -362,6 +362,9 @@ export function testActionImportNullableTest<
   );
 }
 
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 export const actionImports = {
   testActionImportNoParameterNoReturnType,
   testActionImportMultipleParameterComplexReturnType,

@@ -146,6 +146,9 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     return this.initApi('testEntity50PropApi', TestEntity50PropApi);
   }
 
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get functionImports() {
     return {
       concatStrings: (parameter: ConcatStringsParameters<DeSerializersT>) =>
@@ -168,6 +171,9 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     };
   }
 
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get actionImports() {
     return {
       createTestEntityById: (
@@ -177,6 +183,13 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
         parameter: CreateTestEntityByIdReturnIdParameters<DeSerializersT>
       ) => createTestEntityByIdReturnId(parameter, this.deSerializers)
     };
+  }
+
+  /**
+   * Get unbound functions and actions.
+   */
+  get operations() {
+    return { ...this.functionImports, ...this.actionImports };
   }
 
   get batch(): typeof batch {

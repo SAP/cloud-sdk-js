@@ -109,6 +109,9 @@ class TestService {
     get casetest_1Api() {
         return this.initApi('casetest_1Api', Casetest_1Api_1.Casetest_1Api);
     }
+    /**
+     * @deprecated Since v2.13.0. Use {@link operations} instead.
+     */
     get functionImports() {
         return {
             testFunctionImportNoReturnType: (parameter) => (0, function_imports_1.testFunctionImportNoReturnType)(parameter, this.deSerializers),
@@ -127,6 +130,12 @@ class TestService {
             createTestComplexType: (parameter) => (0, function_imports_1.createTestComplexType)(parameter, this.deSerializers),
             fContinue: (parameter) => (0, function_imports_1.fContinue)(parameter, this.deSerializers)
         };
+    }
+    /**
+     * Get unbound functions and actions.
+     */
+    get operations() {
+        return { ...this.functionImports };
     }
     get batch() {
         return BatchRequest_1.batch;

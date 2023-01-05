@@ -134,6 +134,9 @@ class MultipleSchemasService<
     return this.initApi('testEntity4Api', TestEntity4Api);
   }
 
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get functionImports() {
     return {
       testFunctionImportEntityReturnType1: (
@@ -145,6 +148,9 @@ class MultipleSchemasService<
     };
   }
 
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get actionImports() {
     return {
       testActionImportNoParameterComplexReturnType1: (
@@ -162,6 +168,13 @@ class MultipleSchemasService<
           this.deSerializers
         )
     };
+  }
+
+  /**
+   * Get unbound functions and actions.
+   */
+  get operations() {
+    return { ...this.functionImports, ...this.actionImports };
   }
 
   get batch(): typeof batch {

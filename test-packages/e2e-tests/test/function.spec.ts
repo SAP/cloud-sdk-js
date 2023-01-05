@@ -1,14 +1,10 @@
-import {
-  returnSapCloudSdk,
-  concatStrings,
-  getByKey,
-  getAll,
-  returnCollection
-} from '@sap-cloud-sdk/test-services-e2e/v4/test-service/function-imports';
+import { testService } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 
 const url = 'http://localhost:4004/';
 const destination = { url };
-
+const { operations } = testService();
+const { returnSapCloudSdk, concatStrings, getByKey, getAll, returnCollection } =
+  operations;
 describe('functions', () => {
   describe('without parameters, returns string', () => {
     const request = returnSapCloudSdk({});

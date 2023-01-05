@@ -656,6 +656,9 @@ export function fContinue<
   );
 }
 
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 export const functionImports = {
   testFunctionImportNoReturnType,
   testFunctionImportEdmReturnType,

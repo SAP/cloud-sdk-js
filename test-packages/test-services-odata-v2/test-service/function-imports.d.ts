@@ -353,6 +353,9 @@ export declare function fContinue<
   FContinueParameters<DeSerializersT>,
   boolean
 >;
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 export declare const functionImports: {
   testFunctionImportNoReturnType: typeof testFunctionImportNoReturnType;
   testFunctionImportEdmReturnType: typeof testFunctionImportEdmReturnType;

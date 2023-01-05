@@ -58,6 +58,8 @@ export function serviceClass(service: VdmServiceMetadata): string {
     ${getActionFunctionImports(service, 'functionImports')}
     
     ${getActionFunctionImports(service, 'actionImports')}
+
+    ${getOperations(service)}
     
     ${serviceHasEntities ? getBatch() : ''}
 
@@ -69,20 +71,44 @@ function getActionFunctionImports(
   service: VdmServiceMetadata,
   type: 'functionImports' | 'actionImports'
 ): string {
-  if (service[type] === undefined || service[type]!.length === 0) {
+  const operations = service[type];
+  if (!operations?.length) {
     return '';
   }
 
-  const lines = service[type]!.map(
+  const lines = operations.map(
     f =>
       `${f.name}:(parameter:${f.parametersTypeName}<DeSerializersT>)=>${f.name}(parameter,this.deSerializers)`
   );
 
   return codeBlock`
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get ${type}( ) {
     return {${lines.join(',')}}
   }
   `;
+}
+
+function getOperations(service: VdmServiceMetadata): string {
+  const operations: string[] = [];
+  if (service.functionImports?.length) {
+    operations.push('...this.functionImports');
+  }
+  if (service.actionImports?.length) {
+    operations.push('...this.actionImports');
+  }
+
+  return operations.length
+    ? codeBlock`
+    /**
+     * Get unbound functions and actions.
+     */
+    get operations() {
+      return { ${operations.join(', ')} };
+    }`
+    : '';
 }
 
 function getBatch() {

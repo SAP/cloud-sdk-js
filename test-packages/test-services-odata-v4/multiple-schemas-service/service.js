@@ -41,17 +41,29 @@ class MultipleSchemasService {
     get testEntity4Api() {
         return this.initApi('testEntity4Api', TestEntity4Api_1.TestEntity4Api);
     }
+    /**
+     * @deprecated Since v2.13.0. Use {@link operations} instead.
+     */
     get functionImports() {
         return {
             testFunctionImportEntityReturnType1: (parameter) => (0, function_imports_1.testFunctionImportEntityReturnType1)(parameter, this.deSerializers),
             testFunctionImportEntityReturnType2: (parameter) => (0, function_imports_1.testFunctionImportEntityReturnType2)(parameter, this.deSerializers)
         };
     }
+    /**
+     * @deprecated Since v2.13.0. Use {@link operations} instead.
+     */
     get actionImports() {
         return {
             testActionImportNoParameterComplexReturnType1: (parameter) => (0, action_imports_1.testActionImportNoParameterComplexReturnType1)(parameter, this.deSerializers),
             testActionImportNoParameterComplexReturnType2: (parameter) => (0, action_imports_1.testActionImportNoParameterComplexReturnType2)(parameter, this.deSerializers)
         };
+    }
+    /**
+     * Get unbound functions and actions.
+     */
+    get operations() {
+        return { ...this.functionImports, ...this.actionImports };
     }
     get batch() {
         return BatchRequest_1.batch;

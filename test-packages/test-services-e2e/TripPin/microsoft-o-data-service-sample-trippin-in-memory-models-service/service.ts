@@ -133,6 +133,9 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
     return this.initApi('airportsApi', AirportsApi);
   }
 
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get functionImports() {
     return {
       getNearestAirport: (
@@ -141,11 +144,21 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
     };
   }
 
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get actionImports() {
     return {
       resetDataSource: (parameter: ResetDataSourceParameters<DeSerializersT>) =>
         resetDataSource(parameter, this.deSerializers)
     };
+  }
+
+  /**
+   * Get unbound functions and actions.
+   */
+  get operations() {
+    return { ...this.functionImports, ...this.actionImports };
   }
 
   get batch(): typeof batch {

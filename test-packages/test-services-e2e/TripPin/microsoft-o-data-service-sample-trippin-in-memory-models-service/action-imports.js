@@ -17,6 +17,9 @@ function resetDataSource(parameters, deSerializers = odata_v4_1.defaultDeSeriali
     return new odata_v4_1.ActionImportRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'ResetDataSource', data => (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined), params, deSerializers);
 }
 exports.resetDataSource = resetDataSource;
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 exports.actionImports = {
     resetDataSource
 };

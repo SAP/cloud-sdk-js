@@ -29,6 +29,9 @@ export declare function resetDataSource<
   ResetDataSourceParameters<DeSerializersT>,
   undefined
 >;
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 export declare const actionImports: {
   resetDataSource: typeof resetDataSource;
 };

@@ -95,6 +95,9 @@ declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
   get peopleApi(): PeopleApi<DeSerializersT>;
   get airlinesApi(): AirlinesApi<DeSerializersT>;
   get airportsApi(): AirportsApi<DeSerializersT>;
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get functionImports(): {
     getNearestAirport: (
       parameter: GetNearestAirportParameters<DeSerializersT>
@@ -104,6 +107,9 @@ declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
       import('./Airports').Airports<DefaultDeSerializers>
     >;
   };
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get actionImports(): {
     resetDataSource: (
       parameter: ResetDataSourceParameters<DeSerializersT>
@@ -111,6 +117,25 @@ declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
       DeSerializersT,
       ResetDataSourceParameters<DeSerializersT>,
       undefined
+    >;
+  };
+  /**
+   * Get unbound functions and actions.
+   */
+  get operations(): {
+    resetDataSource: (
+      parameter: ResetDataSourceParameters<DeSerializersT>
+    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
+      DeSerializersT,
+      ResetDataSourceParameters<DeSerializersT>,
+      undefined
+    >;
+    getNearestAirport: (
+      parameter: GetNearestAirportParameters<DeSerializersT>
+    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+      DeSerializersT,
+      GetNearestAirportParameters<DeSerializersT>,
+      import('./Airports').Airports<DefaultDeSerializers>
     >;
   };
   get batch(): typeof batch;

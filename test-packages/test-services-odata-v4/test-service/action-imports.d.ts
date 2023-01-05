@@ -198,6 +198,9 @@ export declare function testActionImportNullableTest<
   TestActionImportNullableTestParameters<DeSerializersT>,
   TestComplexType | null
 >;
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 export declare const actionImports: {
   testActionImportNoParameterNoReturnType: typeof testActionImportNoParameterNoReturnType;
   testActionImportMultipleParameterComplexReturnType: typeof testActionImportMultipleParameterComplexReturnType;

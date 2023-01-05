@@ -67,6 +67,7 @@ export interface GeneratorOptions {
    */
   packageJson?: boolean;
   /**
+   * @deprecated Since v2.13.0. Use the `include` option to add a custom package.json
    * License name to be used on the generated `package.json`. Only considered if 'packageJson' is enabled.
    */
   licenseInPackageJson?: string;
@@ -83,6 +84,7 @@ export interface GeneratorOptions {
   optionsPerService?: string;
   // TODO remove packageVersion in version 3.0
   /**
+   * @deprecated Since v2.13.0. Use the `include` option to add a custom package.json
    * Internal option used to adjust the version in the generated package.json. Will not be used in the future.
    */
   packageVersion?: string;

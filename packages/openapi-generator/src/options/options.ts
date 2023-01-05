@@ -105,7 +105,8 @@ export const generatorOptions = {
     description:
       "License to be used on the generated package.json. Only considered if 'packageJson' is enabled.",
     coerce: (input?: string): string | undefined =>
-      typeof input !== 'undefined' ? input : undefined
+      typeof input !== 'undefined' ? input : undefined,
+    deprecated: 'Since v2.13.0. Use the `include` option to add a custom package.json'
   },
   verbose: {
     boolean: true,
@@ -131,7 +132,8 @@ export const generatorOptions = {
     string: true,
     description: 'Set the version in the generated package.json.',
     default: '1.0.0',
-    hidden: true
+    hidden: true,
+    deprecated: 'Since v2.13.0. Use the `include` option to add a custom package.json'
   },
   readme: {
     boolean: true,

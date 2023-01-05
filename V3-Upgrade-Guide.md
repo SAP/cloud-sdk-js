@@ -82,7 +82,8 @@ The generic types of `JwtKeyMapping` is simplified so the second type argument `
 
 #### Package `@sap-cloud-sdk/generator`
 
-The deprecated option `generateCSN` is removed. There is no replacement.
+The deprecated option `generateCSN` is removed.
+If you need a schema notation (CSN) of your service use the [@sap/edm-converters](https://www.npmjs.com/package/@sap/edm-converters)  library directly.
 
 #### Package `@sap-cloud-sdk/odata-common`
 

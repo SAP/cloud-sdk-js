@@ -66,6 +66,16 @@ The following sub-sections describe affected modules, functions and interfaces w
 The deprecated option `generateCSN` is removed.
 If you need a schema notation (CSN) of your service use the [cds import](https://cap.cloud.sap/docs/guides/using-services?q=edmx#import-api) command directly.
 
+The options `versionInPackageJson` and `licenseInPackageJson`, that allowed setting custom values in generated `package.json` files are removed.
+When the `packageJson` option is enabled, a `package.json` file with version `1.0.0` and license `UNLICENSED` is created.
+If you want to set custom values, use the `include` option to add a custom `package.json`.
+
+#### Package `@sap-cloud-sdk/openapi-generator` <!-- omit from toc -->
+
+The deprecated generator options `versionInPackageJson` and `licenseInPackageJson` are removed.
+In a generated `package.json` the version `1.0.0` and license `UNLICENSED` are used.
+Use the `include` option to add a `package.json` with custom values.
+
 ### Package `@sap-cloud-sdk/odata-common` <!-- omit from toc -->
 
 - When creating entities with the `fromJson()` method, the `_customFields` property is no longer considered. Add custom properties as root level properties in your object instead.

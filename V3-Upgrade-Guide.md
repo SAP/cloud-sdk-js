@@ -88,7 +88,9 @@ Use the `include` option to add a `package.json` with custom values.
 
 #### Package `@sap-cloud-sdk/openapi-generator`
 
-
+The deprecated generator options `versionInPackageJson` and `licenseInPackageJson` are removed.
+In a generated `package.json` the version `1.0.0` and license `Apache-2.0` are used.
+Use the `include` option to add a `package.json` with custom values.
 
 #### Package `@sap-cloud-sdk/odata-common`
 

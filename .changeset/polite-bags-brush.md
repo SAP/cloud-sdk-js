@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/generator': minor
 ---
 
-[Compatibility Note] Direct access of action and function imports from generated services is deprecated. Use the more `operations` instead.
+[Compatibility Note] The SAP Cloud SDK does not differentiate between function imports and action imports anymore. Therefore the `actionImports` and `functionImports` exposed in generated services are now deprecated and replaced by `options`.

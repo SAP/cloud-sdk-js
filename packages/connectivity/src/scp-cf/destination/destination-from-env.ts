@@ -70,7 +70,8 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
     );
   }
   const destination = matchingDestinations[0];
-  return isHttpDestination(destination) && ['internet', 'private-link'].includes(proxyStrategy(destination))
+  return isHttpDestination(destination) &&
+    ['internet', 'private-link'].includes(proxyStrategy(destination))
     ? addProxyConfigurationInternet(destination)
     : destination;
 }

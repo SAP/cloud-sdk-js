@@ -47,7 +47,9 @@ export function getAgentConfig(
  * @param destination - Destination object
  * @returns Options, which can be used later the http client.
  */
-function getTrustStoreOptions(destination: HttpDestination): Record<string, any> {
+function getTrustStoreOptions(
+  destination: HttpDestination
+): Record<string, any> {
   // http case: no certificate needed
   if (getProtocolOrDefault(destination) === 'http') {
     if (destination.isTrustingAllCertificates) {

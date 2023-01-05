@@ -108,7 +108,8 @@ export async function searchRegisteredDestination(
     destination.authTokens = destinationAuthToken(options.jwt);
   }
 
-  return isHttpDestination(destination) && ['internet', 'private-link'].includes(proxyStrategy(destination))
+  return isHttpDestination(destination) &&
+    ['internet', 'private-link'].includes(proxyStrategy(destination))
     ? addProxyConfigurationInternet(destination)
     : destination;
 }

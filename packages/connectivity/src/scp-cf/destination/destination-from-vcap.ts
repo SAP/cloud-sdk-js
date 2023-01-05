@@ -62,7 +62,8 @@ export async function destinationForServiceBinding(
     : await transform(selected, options);
 
   const destWithProxy =
-    destination && isHttpDestination(destination)&&
+    destination &&
+    isHttpDestination(destination) &&
     ['internet', 'private-link'].includes(proxyStrategy(destination))
       ? addProxyConfigurationInternet(destination)
       : destination;

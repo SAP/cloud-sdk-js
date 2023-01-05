@@ -30,7 +30,7 @@ export function packageJsonBase(
     homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
     main: './index.js',
     types: './index.d.ts',
-    license: 'Apache-2.0',
+    license: 'UNLICENSED',
     publishConfig: {
       access: 'public'
     },

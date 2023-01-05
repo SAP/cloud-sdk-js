@@ -3,7 +3,7 @@ import { packageJson, PackageJsonOptions } from './package-json';
 describe('package-json', () => {
   const packageJsonStatic = {
     homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
-    license: 'Apache-2.0',
+    license: 'UNLICENSED',
     main: './index.js',
     types: './index.d.ts',
     version: '1.0.0',
@@ -68,7 +68,7 @@ describe('package-json', () => {
     const jsonString = await packageJson({
       ...packageJsonOptions('v2')
     });
-    expect(JSON.parse(jsonString).license).toEqual('Apache-2.0');
+    expect(JSON.parse(jsonString).license).toEqual('UNLICENSED');
   });
 
   it('creates v4 package content with after version script', async () => {

@@ -19,6 +19,6 @@ describe('packageJson', () => {
         sdkVersion: '1.35.0'
       })
     );
-    expect(parsed.license).toBe('Apache-2.0');
+    expect(parsed.license).toBe('UNLICENSED');
   });
 });

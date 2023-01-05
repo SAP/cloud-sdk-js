@@ -128,7 +128,9 @@ function testFunctionImportWithDifferentName(parameters, deSerializers = odata_v
     return new odata_v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportWithDifferentName', data => (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined), params, deSerializers);
 }
 exports.testFunctionImportWithDifferentName = testFunctionImportWithDifferentName;
-/** @deprecated Since v2.13.0. Use {@link operations} instead. */
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 exports.functionImports = {
     testFunctionImportEdmReturnType,
     testFunctionImportEdmReturnTypeCollection,

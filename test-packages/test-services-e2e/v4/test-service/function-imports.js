@@ -91,7 +91,9 @@ function returnSapCloudSdk(parameters, deSerializers = odata_v4_1.defaultDeSeria
     return new odata_v4_1.FunctionImportRequestBuilder('/odata/test-service', 'returnSapCloudSdk', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers)), params, deSerializers);
 }
 exports.returnSapCloudSdk = returnSapCloudSdk;
-/** @deprecated Since v2.13.0. Use {@link operations} instead. */
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 exports.functionImports = {
     concatStrings,
     getAll,

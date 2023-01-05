@@ -330,7 +330,9 @@ export function returnSapCloudSdk<
   );
 }
 
-/** @deprecated Since v2.13.0. Use {@link operations} instead. */
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 export const functionImports = {
   concatStrings,
   getAll,

@@ -186,7 +186,9 @@ export declare function returnSapCloudSdk<
   ReturnSapCloudSdkParameters<DeSerializersT>,
   string
 >;
-/** @deprecated Since v2.13.0. Use {@link operations} instead. */
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 export declare const functionImports: {
   concatStrings: typeof concatStrings;
   getAll: typeof getAll;

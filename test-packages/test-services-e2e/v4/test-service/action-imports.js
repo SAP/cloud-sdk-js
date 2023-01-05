@@ -32,7 +32,9 @@ function createTestEntityByIdReturnId(parameters, deSerializers = odata_v4_1.def
     return new odata_v4_1.ActionImportRequestBuilder('/odata/test-service', 'createTestEntityByIdReturnId', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32', deSerializers)), params, deSerializers);
 }
 exports.createTestEntityByIdReturnId = createTestEntityByIdReturnId;
-/** @deprecated Since v2.13.0. Use {@link operations} instead. */
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 exports.actionImports = {
     createTestEntityById,
     createTestEntityByIdReturnId

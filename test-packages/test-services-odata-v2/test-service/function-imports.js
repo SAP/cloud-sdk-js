@@ -168,7 +168,9 @@ function fContinue(parameters, deSerializers = odata_v2_1.defaultDeSerializers) 
     return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'Continue', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.Continue, 'Edm.Boolean', deSerializers)), params, deSerializers);
 }
 exports.fContinue = fContinue;
-/** @deprecated Since v2.13.0. Use {@link operations} instead. */
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 exports.functionImports = {
     testFunctionImportNoReturnType,
     testFunctionImportEdmReturnType,

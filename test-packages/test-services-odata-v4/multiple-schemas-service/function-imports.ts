@@ -90,7 +90,9 @@ export function testFunctionImportEntityReturnType2<
   );
 }
 
-/** @deprecated Since v2.13.0. Use {@link operations} instead. */
+/**
+ * @deprecated Since v2.13.0. Use `operations` instead.
+ */
 export const functionImports = {
   testFunctionImportEntityReturnType1,
   testFunctionImportEntityReturnType2

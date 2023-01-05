@@ -70,6 +70,19 @@ The options `versionInPackageJson` and `licenseInPackageJson`, that allowed sett
 When the `packageJson` option is enabled, a `package.json` file with version `1.0.0` and license `UNLICENSED` is created.
 If you want to set custom values, use the `include` option to add a custom `package.json`.
 
+The following deprecated options were removed with a clear replacement:
+- `forceOverwrite` becomes `overwrite`
+- `generatePackageJson` becomes `overwrite`
+- `writeReadme` becomes `readme`
+- `processesJsGeneration` becomes `transpilationProcesses`
+
+The deprecated `generateNpmrc` option of the generator is removed. 
+In most cases the `.npmrc` was present in the project root anyhow. 
+If this is not the case, use the `include` option to add a `.npmrc` to the generated code if needed.
+
+The internal options `sdkAfterVersionScript`, `s4HanaCloud` and `packageVersion` of the generator are removed.
+These were hidden options never meant for external usage and there is no replacement.
+
 #### Package `@sap-cloud-sdk/openapi-generator` <!-- omit from toc -->
 
 The deprecated generator options `versionInPackageJson` and `licenseInPackageJson` are removed.

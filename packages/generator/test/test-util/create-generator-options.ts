@@ -12,7 +12,7 @@ export function createOptions(
     inputDir: '',
     outputDir: '',
     serviceMapping: 'service-mapping.json',
-    generatePackageJson: false,
+    packageJson: false,
     ...options
   });
 }

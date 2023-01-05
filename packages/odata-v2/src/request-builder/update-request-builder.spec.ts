@@ -29,6 +29,19 @@ function createTestEntity() {
     .build();
 }
 
+function createTestEntityWithStringProperty() {
+  const keyPropGuid = uuid();
+  const keyPropString = 'stringId';
+  const stringProp = 'some value';
+
+  return testEntityApi
+    .entityBuilder()
+    .keyPropertyGuid(keyPropGuid)
+    .keyPropertyString(keyPropString)
+    .stringProperty(stringProp)
+    .build();
+}
+
 describe('UpdateRequestBuilder', () => {
   afterEach(() => {
     nock.cleanAll();
@@ -145,16 +158,7 @@ describe('UpdateRequestBuilder', () => {
 
   it('executes the update when nullable string is set to null', async () => {
     // Given: Entity with only key properties and one nullable string property which has non-null value
-    const keyPropGuid = uuid();
-    const keyPropString = 'stringId';
-    const stringProp = 'some value';
-
-    const entity = testEntityApi
-      .entityBuilder()
-      .keyPropertyGuid(keyPropGuid)
-      .keyPropertyString(keyPropString)
-      .stringProperty(stringProp)
-      .build();
+    const entity = createTestEntityWithStringProperty();
 
     const scope = mockUpdateRequest(
       {
@@ -185,16 +189,7 @@ describe('UpdateRequestBuilder', () => {
 
   it('executes the update when nullable string is set to undefined', async () => {
     // Given: Entity with only key properties and one nullable string property which has non-null value
-    const keyPropGuid = uuid();
-    const keyPropString = 'stringId';
-    const stringProp = 'some value';
-
-    const entity = testEntityApi
-      .entityBuilder()
-      .keyPropertyGuid(keyPropGuid)
-      .keyPropertyString(keyPropString)
-      .stringProperty(stringProp)
-      .build();
+    const entity = createTestEntityWithStringProperty();
 
     const scope = mockUpdateRequest(
       {

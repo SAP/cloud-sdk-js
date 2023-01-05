@@ -6,8 +6,7 @@ describe('packageJson', () => {
       packageJson({
         npmPackageName: 'workflow-service',
         description: 'description',
-        sdkVersion: '1.35.0',
-        version: '1.23.1'
+        sdkVersion: '1.35.0'
       })
     ).toMatchSnapshot();
   });
@@ -17,11 +16,9 @@ describe('packageJson', () => {
       packageJson({
         npmPackageName: 'workflow-service',
         description: 'description',
-        sdkVersion: '1.35.0',
-        version: '1.23.1',
-        license: 'my license information'
+        sdkVersion: '1.35.0'
       })
     );
-    expect(parsed.license).toBe('my license information');
+    expect(parsed.license).toBe('Apache-2.0');
   });
 });

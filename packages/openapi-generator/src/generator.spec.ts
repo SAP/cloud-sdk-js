@@ -164,9 +164,9 @@ describe('generator', () => {
       expect(existsSync(packageJson)).toBe(true);
     });
 
-    it('should create a package.json with the provided version', async () => {
+    it('should create a package.json with the default version', async () => {
       const packageJson = readJSON(resolve(outputPath, 'package.json'));
-      expect(packageJson.version).toBe('1.2.3');
+      expect(packageJson.version).toBe('1.0.0');
     });
 
     it('should create a tsconfig.json', () => {

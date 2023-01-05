@@ -18,6 +18,8 @@ const logger = createLogger({
   messageContext: 'proxy-util'
 });
 
+type ProxyStrategy = 'no-proxy' | 'on-premise' | 'internet' | 'private-link';
+
 /**
  * @internal
  * Determines the proxy strategy. If the 'no_proxy' env variable is set, the `ProxyConfiguration` in the destination is omitted.
@@ -25,9 +27,7 @@ const logger = createLogger({
  * @param destination - Destination to derive the proxy strategy from.
  * @returns The proxy strategy for the given destination.
  */
-export function proxyStrategy(
-  destination: Destination
-): 'no-proxy' | 'on-premise' | 'internet' | 'private-link' {
+export function proxyStrategy(destination: Destination): ProxyStrategy {
   if (destination.proxyType === 'OnPremise') {
     logger.debug(
       'OnPrem destination proxy settings from connectivity service will be used.'

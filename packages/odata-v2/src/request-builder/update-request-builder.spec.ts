@@ -1,6 +1,6 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { createLogger } from '@sap-cloud-sdk/util';
 import {
   defaultDestination,
   mockUpdateRequest
@@ -26,6 +26,19 @@ function createTestEntity() {
     .int32Property(int32Prop)
     .stringProperty(stringProp)
     .booleanProperty(booleanProp)
+    .build();
+}
+
+function createTestEntityWithStringProperty() {
+  const keyPropGuid = uuid();
+  const keyPropString = 'stringId';
+  const stringProp = 'some value';
+
+  return testEntityApi
+    .entityBuilder()
+    .keyPropertyGuid(keyPropGuid)
+    .keyPropertyString(keyPropString)
+    .stringProperty(stringProp)
     .build();
 }
 
@@ -63,7 +76,8 @@ describe('UpdateRequestBuilder', () => {
     entity.booleanProperty = false;
     const requestBody = {
       Int32Property: entity.int32Property,
-      BooleanProperty: false
+      BooleanProperty: false,
+      StringProperty: null
     };
 
     mockUpdateRequest(
@@ -91,7 +105,9 @@ describe('UpdateRequestBuilder', () => {
 
     const requestBody = {
       Int32Property: entity.int32Property,
-      SomeCustomField: customFieldVal
+      SomeCustomField: customFieldVal,
+      StringProperty: null,
+      BooleanProperty: null
     };
 
     mockUpdateRequest(
@@ -138,6 +154,68 @@ describe('UpdateRequestBuilder', () => {
       entity
     ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
+  });
+
+  it('executes the update when nullable string is set to null', async () => {
+    // Given: Entity with only key properties and one nullable string property which has non-null value
+    const entity = createTestEntityWithStringProperty();
+
+    const scope = mockUpdateRequest(
+      {
+        body: {
+          StringProperty: null
+        },
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString
+        )
+      },
+      testEntityApi
+    );
+
+    // When: We update the nullable string property value to null
+    entity.stringProperty = null;
+
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
+
+    // Then: We expect the update to happen (http request is sent) and the value of the property to be null
+    expect(actual).toEqual(entity.setOrInitializeRemoteState());
+    expect(actual.stringProperty).toBeNull();
+    expect(scope.isDone()).toBe(true);
+  });
+
+  it('executes the update when nullable string is set to undefined', async () => {
+    // Given: Entity with only key properties and one nullable string property which has non-null value
+    const entity = createTestEntityWithStringProperty();
+
+    const scope = mockUpdateRequest(
+      {
+        body: {
+          StringProperty: null
+        },
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString
+        )
+      },
+      testEntityApi
+    );
+
+    // When: We update the nullable string property value to undefined
+    entity.stringProperty = undefined;
+
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
+
+    // Then: We expect the update to happen (http request is sent) and the value of the property to be null
+    expect(actual).toEqual(entity.setOrInitializeRemoteState());
+    expect(actual.stringProperty).toBeUndefined();
+    expect(scope.isDone()).toBe(true);
   });
 
   it('update request sends the whole entity when using PUT', async () => {
@@ -194,7 +272,14 @@ describe('UpdateRequestBuilder', () => {
   });
 
   it('update request excludes ignored properties', async () => {
-    const entity = createTestEntity();
+    const keyPropGuid = uuid();
+    const keyPropString = 'stringId';
+
+    const entity = testEntityApi
+      .entityBuilder()
+      .keyPropertyGuid(keyPropGuid)
+      .keyPropertyString(keyPropString)
+      .build();
 
     const scope = nock(/.*/).patch(/.*/).reply(500);
 
@@ -208,7 +293,11 @@ describe('UpdateRequestBuilder', () => {
 
   it('update request should contain version identifier when set on entity', async () => {
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
-    const requestBody = { Int32Property: entity.int32Property };
+    const requestBody = {
+      Int32Property: entity.int32Property,
+      StringProperty: null,
+      BooleanProperty: null
+    };
 
     mockUpdateRequest(
       {
@@ -231,7 +320,11 @@ describe('UpdateRequestBuilder', () => {
 
   it('update request should contain version identifier when set on request', async () => {
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
-    const requestBody = { Int32Property: entity.int32Property };
+    const requestBody = {
+      Int32Property: entity.int32Property,
+      StringProperty: null,
+      BooleanProperty: null
+    };
     const customVersionIdentifier = 'custom-version-identifier';
 
     mockUpdateRequest(
@@ -256,7 +349,11 @@ describe('UpdateRequestBuilder', () => {
 
   it('should ignore version identifier', async () => {
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
-    const requestBody = { Int32Property: entity.int32Property };
+    const requestBody = {
+      Int32Property: entity.int32Property,
+      StringProperty: null,
+      BooleanProperty: null
+    };
 
     mockUpdateRequest(
       {
@@ -304,7 +401,11 @@ describe('UpdateRequestBuilder', () => {
     const eTag = 'someEtag';
 
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
-    const requestBody = { Int32Property: entity.int32Property };
+    const requestBody = {
+      Int32Property: entity.int32Property,
+      StringProperty: null,
+      BooleanProperty: null
+    };
 
     mockUpdateRequest(
       {
@@ -375,7 +476,8 @@ describe('UpdateRequestBuilder', () => {
       entity.booleanProperty = false;
       const requestBody = {
         Int32Property: entity.int32Property,
-        BooleanProperty: false
+        BooleanProperty: false,
+        StringProperty: null
       };
       const response = { d: requestBody };
 

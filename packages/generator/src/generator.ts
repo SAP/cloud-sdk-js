@@ -49,7 +49,6 @@ import { operationsSourceFile } from './operations/file';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
 import { serviceMappingFile } from './service-mapping';
-import { csn } from './service/csn';
 import { indexFile } from './service/index-file';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
@@ -449,26 +448,6 @@ export async function generateSourcesForService(
         createFileOptions
       )
     );
-  }
-
-  if (options.generateCSN) {
-    try {
-      logger.verbose(
-        `[${service.originalFileName}] Generating ${service.directoryName}-csn.json ...`
-      );
-      filePromises.push(
-        createFile(
-          serviceDirPath,
-          `${service.directoryName}-csn.json`,
-          await csn(service),
-          createFileOptions
-        )
-      );
-    } catch (e) {
-      logger.error(
-        `CSN creation for service ${service.originalFileName} failed. Original error: ${e.message}`
-      );
-    }
   }
 
   if (options.generateSdkMetadata) {

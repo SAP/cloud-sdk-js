@@ -18,26 +18,28 @@ const logger = createLogger({
   messageContext: 'proxy-util'
 });
 
+type ProxyStrategy = 'no-proxy' | 'on-premise' | 'internet' | 'private-link';
+
 /**
- * Determines the proxy strategy. If noProxy is set the ProxyConfiguration in the destination is omitted.
- * For onPremProxy or internetProxy the connectivity service or environment variables are checked to fill the {@link ProxyConfiguration}.
- * @param destination - from which the proxy strategy is derived.
- * @returns ProxyStrategy possible values are noProxy, internetProxy or onPremProxy.
  * @internal
+ * Determines the proxy strategy. If the 'no_proxy' env variable is set, the `ProxyConfiguration` in the destination is omitted.
+ * For the 'on-premise' and 'internet' proxy strategies the connectivity service or environment variables are checked to fill the `ProxyConfiguration`.
+ * @param destination - Destination to derive the proxy strategy from.
+ * @returns The proxy strategy for the given destination.
  */
 export function proxyStrategy(destination: Destination): ProxyStrategy {
   if (destination.proxyType === 'OnPremise') {
     logger.debug(
       'OnPrem destination proxy settings from connectivity service will be used.'
     );
-    return ProxyStrategy.ON_PREMISE_PROXY;
+    return 'on-premise';
   }
 
   if (destination.proxyType === 'PrivateLink') {
     logger.debug(
       'PrivateLink destination proxy settings will be used. This is not supported in local/CI/CD environments.'
     );
-    return ProxyStrategy.PRIVATELINK_PROXY;
+    return 'private-link';
   }
 
   const destinationProtocol = getProtocolOrDefault(destination);
@@ -45,7 +47,7 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
     logger.debug(
       `Could not find proxy settings for ${destinationProtocol} in the environment variables - no proxy used.`
     );
-    return ProxyStrategy.NO_PROXY;
+    return 'no-proxy';
   }
 
   if (getNoProxyEnvValue().includes(destination.url)) {
@@ -54,17 +56,17 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
         destination.url
       } is in no_proxy list: ${getNoProxyEnvValue()} - no proxy used.`
     );
-    return ProxyStrategy.NO_PROXY;
+    return 'no-proxy';
   }
 
   if (getProxyEnvValue(destinationProtocol)) {
     logger.debug(
       `Proxy settings for ${destinationProtocol} are found in environment variables.`
     );
-    return ProxyStrategy.INTERNET_PROXY;
+    return 'internet';
   }
 
-  return ProxyStrategy.NO_PROXY;
+  return 'no-proxy';
 }
 
 function getProxyEnvValue(protocol: Protocol): string | undefined {
@@ -263,16 +265,4 @@ export function proxyAgent(
   throw new Error(
     `The target protocol: ${targetProtocol} has to be either https or http.`
   );
-}
-
-/**
- * Enum representing the different strategies for proxies on requests. Possible situations are "NO_PROXY", use the connectivity service proxy for On-Premise connection or a usual web proxy.
- * See also {@link ProxyConfiguration} for more details.
- * @internal
- */
-export enum ProxyStrategy {
-  NO_PROXY,
-  ON_PREMISE_PROXY,
-  INTERNET_PROXY,
-  PRIVATELINK_PROXY
 }

@@ -10,8 +10,7 @@ import {
 import {
   addProxyConfigurationInternet,
   proxyAgent,
-  proxyStrategy,
-  ProxyStrategy
+  proxyStrategy
 } from '../scp-cf/destination';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
@@ -30,35 +29,14 @@ const logger = createLogger({
 export function getAgentConfig(
   destination: Destination
 ): HttpAgentConfig | HttpsAgentConfig {
-  const agentType = destination.proxyConfiguration
-    ? AgentType.PROXY
-    : AgentType.DEFAULT;
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOption(destination)
   };
-  if (agentType === AgentType.PROXY) {
-    return createProxyAgent(destination, certificateOptions);
-  }
-  return createDefaultAgent(destination, certificateOptions);
-}
-
-enum AgentType {
-  DEFAULT,
-  PROXY
-}
-
-function createProxyAgent(
-  destination: Destination,
-  options: https.AgentOptions
-): HttpAgentConfig | HttpsAgentConfig {
-  if (!destination.proxyConfiguration) {
-    throw new Error(
-      `The destination proxy configuration: ${destination.proxyConfiguration} is undefined.`
-    );
-  }
-  return proxyAgent(destination, options);
+  return destination.proxyConfiguration
+    ? proxyAgent(destination, certificateOptions)
+    : createDefaultAgent(destination, certificateOptions);
 }
 
 /**
@@ -200,7 +178,7 @@ export function urlAndAgent(targetUri: string): {
   httpsAgent?: http.Agent;
 } {
   let destination: Destination = { url: targetUri, proxyType: 'Internet' };
-  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
+  if (proxyStrategy(destination) === 'internet') {
     destination = addProxyConfigurationInternet(destination);
   }
   return {

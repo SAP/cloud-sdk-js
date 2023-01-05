@@ -46,8 +46,7 @@ import {
 } from './destination-cache';
 import {
   addProxyConfigurationInternet,
-  proxyStrategy,
-  ProxyStrategy
+  proxyStrategy
 } from './http-proxy-util';
 
 type DestinationOrigin = 'subscriber' | 'provider';
@@ -536,15 +535,15 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destination: HttpDestination
   ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
-      case ProxyStrategy.ON_PREMISE_PROXY:
+      case 'on-premise':
         return addProxyConfigurationOnPrem(
           destination,
           this.subscriberToken?.userJwt
         );
-      case ProxyStrategy.INTERNET_PROXY:
-      case ProxyStrategy.PRIVATELINK_PROXY:
+      case 'internet':
+      case 'private-link':
         return addProxyConfigurationInternet(destination);
-      case ProxyStrategy.NO_PROXY:
+      case 'no-proxy':
         return destination;
       default:
         throw new Error(

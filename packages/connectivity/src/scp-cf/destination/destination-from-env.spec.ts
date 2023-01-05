@@ -146,7 +146,7 @@ describe('env-destination-accessor', () => {
 
       getDestinationFromEnvByName('FINAL-DESTINATION');
       expect(warnSpy).toBeCalledWith(
-        "The 'destinations' env variable contains multiple destinations with the name 'FINAL-DESTINATION'. Only the first entry will be respected."
+        "The 'destinations' env variable contains multiple destinations with the name 'FINAL-DESTINATION'. Only the first entry will be considered."
       );
     });
 

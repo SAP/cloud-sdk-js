@@ -15,7 +15,7 @@ import {
 } from './destination-cache';
 import {
   addProxyConfigurationInternet,
-  needsInternetProxy
+  proxyStrategy
 } from './http-proxy-util';
 
 const logger = createLogger({
@@ -75,45 +75,46 @@ export async function searchRegisteredDestination(
   options: DestinationFetchOptions
 ): Promise<Destination | null> {
   let decodedJwt: Record<string, any>;
-  // An error will be thrown if no jwt and no xsuaa service exist.
+  // An error will be thrown if no JWT and no xsuaa service exist.
   try {
     decodedJwt = decodedJwtOrZid(options);
   } catch (e) {
     logger.debug(
-      'Failed to retrieve registered destination, because it was neither possible to decode jwt nor create a dummy jwt with `zid` property.'
+      'Failed to retrieve registered destination, because it was neither possible to decode JWT nor create a dummy JWT with `zid` property.'
     );
     logger.debug(e);
     return null;
   }
 
   const destination =
-    (await registerDestinationCache.retrieveDestinationFromCache(
+    await registerDestinationCache.retrieveDestinationFromCache(
       decodedJwt,
       options.destinationName,
       isolationStrategy(options)
-    )) || null;
-
-  if (destination?.forwardAuthToken) {
-    destination.authTokens = destinationAuthToken(options.jwt);
-  }
-
-  if (destination) {
-    logger.info(
-      `Successfully retrieved destination '${options.destinationName}' from registered destinations.`
     );
-  } else {
+
+  if (!destination) {
     logger.debug(
       `Could not retrieve '${options.destinationName}' from registered destinations.`
     );
+    return null;
   }
 
-  return isHttpDestination(destination) && needsInternetProxy(destination)
+  logger.info(
+    `Successfully retrieved destination '${options.destinationName}' from registered destinations.`
+  );
+
+  if (destination.forwardAuthToken) {
+    destination.authTokens = destinationAuthToken(options.jwt);
+  }
+
+  return isHttpDestination(destination) && ['internet', 'private-link'].includes(proxyStrategy(destination))
     ? addProxyConfigurationInternet(destination)
     : destination;
 }
 
 /**
- * If a explicit isolation strategy is given by the user this is used. If not the isolation strategy is determined in the following way:
+ * If an explicit isolation strategy is given by the user this is used. If not the isolation strategy is determined in the following way:
  * If a JWT is given and it contains a user_id the isolation is 'TenantUser'. If no JWT is given or it does not contain a user the isolation is 'Tenant'.
  * @param options - Options passed to register the destination containing the jwt.
  * @returns The isolation strategy.
@@ -125,7 +126,6 @@ function isolationStrategy(
     return options.isolationStrategy;
   }
   const decoded = options?.jwt ? decodeJwt(options.jwt) : undefined;
-
   return getDefaultIsolationStrategy(decoded);
 }
 

@@ -8,7 +8,6 @@ import { DestinationFetchOptions } from './destination-accessor-types';
 import type { Destination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,
-  ProxyStrategy,
   proxyStrategy
 } from './http-proxy-util';
 import { isHttpDestination } from './destination-service-types';
@@ -67,18 +66,13 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
   }
   if (matchingDestinations.length > 1) {
     logger.warn(
-      `The 'destinations' env variable contains multiple destinations with the name '${name}'. Only the first entry will be respected.`
+      `The 'destinations' env variable contains multiple destinations with the name '${name}'. Only the first entry will be considered.`
     );
   }
   const destination = matchingDestinations[0];
-  if (
-    isHttpDestination(destination) &&
-    (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY ||
-      proxyStrategy(destination) === ProxyStrategy.PRIVATELINK_PROXY)
-  ) {
-    return addProxyConfigurationInternet(destination);
-  }
-  return destination;
+  return isHttpDestination(destination) && ['internet', 'private-link'].includes(proxyStrategy(destination))
+    ? addProxyConfigurationInternet(destination)
+    : destination;
 }
 
 /**

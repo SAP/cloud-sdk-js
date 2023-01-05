@@ -67,10 +67,6 @@ export interface GeneratorOptions {
    */
   packageJson?: boolean;
   /**
-   * License name to be used on the generated `package.json`. Only considered if 'packageJson' is enabled.
-   */
-  licenseInPackageJson?: string;
-  /**
    * Turn on verbose logging.
    */
   verbose?: boolean;
@@ -147,10 +143,6 @@ export interface ParsedGeneratorOptions {
    * @internal
    */
   packageJson: boolean;
-  /**
-   * @internal
-   */
-  licenseInPackageJson?: string;
   /**
    * @internal
    */

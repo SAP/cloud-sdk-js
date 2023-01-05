@@ -26,8 +26,7 @@ import {
 } from './destination';
 import {
   Destination,
-  DestinationCertificate,
-  DestinationType
+  DestinationCertificate
 } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 import { DestinationFetchOptions } from './destination-accessor-types';
@@ -56,12 +55,7 @@ export function fetchInstanceDestinations(
   jwt: string,
   options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
-  return fetchDestinations(
-    destinationServiceUri,
-    jwt,
-    DestinationType.Instance,
-    options
-  );
+  return fetchDestinations(destinationServiceUri, jwt, 'instance', options);
 }
 
 /**
@@ -77,18 +71,13 @@ export function fetchSubaccountDestinations(
   jwt: string,
   options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
-  return fetchDestinations(
-    destinationServiceUri,
-    jwt,
-    DestinationType.Subaccount,
-    options
-  );
+  return fetchDestinations(destinationServiceUri, jwt, 'subaccount', options);
 }
 
 async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
-  type: DestinationType,
+  type: 'instance' | 'subaccount',
   options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
   const targetUri = `${removeTrailingSlashes(

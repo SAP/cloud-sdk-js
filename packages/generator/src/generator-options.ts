@@ -73,17 +73,6 @@ export interface GeneratorOptions {
    */
   packageJson?: boolean;
   /**
-   * @deprecated Since v2.12.0.
-   * By default, when generating `package.json` file, the generator will set a version by using the generator version.
-   * It can also be set to a specific version.
-   */
-  versionInPackageJson?: string;
-  /**
-   * @deprecated Since v2.12.0.
-   * License name to be used on the generated package.json. Only considered if 'packageJson' is enabled.
-   */
-  licenseInPackageJson?: string;
-  /**
    * When enabled, generates transpiled `.js`, `.js.map`, and `.d.ts` files.
    * By default, only `.ts` files are generated.
    */
@@ -280,22 +269,6 @@ export const generatorOptionsCli = {
     default: true,
     deprecated: "Since v2.12.0. Use 'packageJson' instead.",
     replacedBy: 'packageJson'
-  },
-  versionInPackageJson: {
-    describe:
-      'By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version.',
-    type: 'string',
-    deprecated:
-      "Since v2.6.0. Use the 'include' option to add your own package.json file instead.",
-    replacedBy: 'packageVersion'
-  },
-  licenseInPackageJson: {
-    describe:
-      "License to be used on the generated package.json. Only considered if 'generatePackageJson' is enabled.",
-    type: 'string',
-    requiresArg: false,
-    deprecated:
-      "Since v2.12.0. Use the 'include' option to add your own package.json file instead."
   },
   transpile: {
     describe:

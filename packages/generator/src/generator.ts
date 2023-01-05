@@ -7,7 +7,6 @@ import {
   formatTsConfig,
   getSdkMetadataFileNames,
   getSdkVersion,
-  getVersionForClient,
   packageDescription,
   readCompilerOptions,
   readCustomTsConfig,
@@ -323,12 +322,10 @@ export async function generateSourcesForService(
         'package.json',
         await packageJson({
           npmPackageName: service.npmPackageName,
-          version: await getVersionForClient(options.packageVersion),
           sdkVersion: await getSdkVersion(),
           description: packageDescription(service.speakingModuleName),
           sdkAfterVersionScript: options.sdkAfterVersionScript,
-          oDataVersion: service.oDataVersion,
-          license: options.licenseInPackageJson
+          oDataVersion: service.oDataVersion
         }),
         createFileOptions
       )

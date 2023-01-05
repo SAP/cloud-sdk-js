@@ -1,5 +1,4 @@
 import levenshtein from 'fast-levenshtein';
-import { getSdkVersion } from './util';
 import { Client, MultiLineText, ServiceStatus } from './sdk-metadata-types';
 
 const distanceThreshold = 5;
@@ -15,14 +14,6 @@ export function getSdkMetadataFileNames(originalFileName: string): {
   };
 }
 
-/**
- * @internal
- */
-export async function getVersionForClient(
-  versionInPackageJson?: string
-): Promise<string> {
-  return versionInPackageJson || getSdkVersion();
-}
 /**
  * @internal
  */

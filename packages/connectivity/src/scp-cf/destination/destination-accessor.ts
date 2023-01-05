@@ -159,9 +159,9 @@ export async function getAllDestinationsFromDestinationService(
 
   logger.debug(loggerMessage);
 
-  const allDestinations = instance.concat(subaccount);
+  const allDestinations = [...instance, ...subaccount];
 
-  if (allDestinations && allDestinations.length !== 0) {
+  if (allDestinations?.length) {
     logger.debug(
       `Successfully retrieved all destinations for account: "${accountName}" from destination service.`
     );

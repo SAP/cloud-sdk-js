@@ -277,6 +277,7 @@ export declare function testFunctionImportWithDifferentName<
   TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
   undefined
 >;
+/** @deprecated Since v2.13.0. Use {@link operations} instead. */
 export declare const functionImports: {
   testFunctionImportEdmReturnType: typeof testFunctionImportEdmReturnType;
   testFunctionImportEdmReturnTypeCollection: typeof testFunctionImportEdmReturnTypeCollection;

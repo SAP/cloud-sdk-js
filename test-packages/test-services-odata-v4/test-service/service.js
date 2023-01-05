@@ -116,6 +116,9 @@ class TestService {
     get testEntityEndsWithSomethingElseApi() {
         return this.initApi('testEntityEndsWithSomethingElseApi', TestEntityEndsWithSomethingElseApi_1.TestEntityEndsWithSomethingElseApi);
     }
+    /**
+     * @deprecated Since v2.13.0. Use {@link operations} instead.
+     */
     get functionImports() {
         return {
             testFunctionImportEdmReturnType: (parameter) => (0, function_imports_1.testFunctionImportEdmReturnType)(parameter, this.deSerializers),
@@ -131,6 +134,9 @@ class TestService {
             testFunctionImportWithDifferentName: (parameter) => (0, function_imports_1.testFunctionImportWithDifferentName)(parameter, this.deSerializers)
         };
     }
+    /**
+     * @deprecated Since v2.13.0. Use {@link operations} instead.
+     */
     get actionImports() {
         return {
             testActionImportNoParameterNoReturnType: (parameter) => (0, action_imports_1.testActionImportNoParameterNoReturnType)(parameter, this.deSerializers),
@@ -141,6 +147,12 @@ class TestService {
             testActionImportSharedEntityReturnTypeCollection: (parameter) => (0, action_imports_1.testActionImportSharedEntityReturnTypeCollection)(parameter, this.deSerializers),
             testActionImportNullableTest: (parameter) => (0, action_imports_1.testActionImportNullableTest)(parameter, this.deSerializers)
         };
+    }
+    /**
+     * Get unbound functions and actions.
+     */
+    get operations() {
+        return { ...this.functionImports, ...this.actionImports };
     }
     get batch() {
         return BatchRequest_1.batch;

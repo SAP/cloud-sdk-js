@@ -28,6 +28,7 @@ function testFunctionImportEntityReturnType2(parameters, deSerializers = odata_v
     return new odata_v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.multipleSchemasService)(deSerializers).testEntity2Api), params, deSerializers);
 }
 exports.testFunctionImportEntityReturnType2 = testFunctionImportEntityReturnType2;
+/** @deprecated Since v2.13.0. Use {@link operations} instead. */
 exports.functionImports = {
     testFunctionImportEntityReturnType1,
     testFunctionImportEntityReturnType2

@@ -208,12 +208,6 @@ export type EdmxJoinedOperationBound = EdmxJoinedOperation & {
   entitySetName: string;
 };
 
-function isBoundOperation(
-  operation: EdmxJoinedOperation | EdmxJoinedOperationBound
-): operation is EdmxJoinedOperationBound {
-  return operation.IsBound;
-}
-
 /**
  * @internal
  */

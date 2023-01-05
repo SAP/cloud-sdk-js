@@ -282,6 +282,9 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     );
   }
 
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get functionImports() {
     return {
       testFunctionImportEdmReturnType: (
@@ -337,6 +340,9 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     };
   }
 
+  /**
+   * @deprecated Since v2.13.0. Use {@link operations} instead.
+   */
   get actionImports() {
     return {
       testActionImportNoParameterNoReturnType: (
@@ -375,6 +381,13 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
         parameter: TestActionImportNullableTestParameters<DeSerializersT>
       ) => testActionImportNullableTest(parameter, this.deSerializers)
     };
+  }
+
+  /**
+   * Get unbound functions and actions.
+   */
+  get operations() {
+    return { ...this.functionImports, ...this.actionImports };
   }
 
   get batch(): typeof batch {

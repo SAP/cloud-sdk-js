@@ -61,6 +61,7 @@ export declare function createTestEntityByIdReturnId<
   CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
   number
 >;
+/** @deprecated Since v2.13.0. Use {@link operations} instead. */
 export declare const actionImports: {
   createTestEntityById: typeof createTestEntityById;
   createTestEntityByIdReturnId: typeof createTestEntityByIdReturnId;

@@ -47,15 +47,27 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService {
     get airportsApi() {
         return this.initApi('airportsApi', AirportsApi_1.AirportsApi);
     }
+    /**
+     * @deprecated Since v2.13.0. Use {@link operations} instead.
+     */
     get functionImports() {
         return {
             getNearestAirport: (parameter) => (0, function_imports_1.getNearestAirport)(parameter, this.deSerializers)
         };
     }
+    /**
+     * @deprecated Since v2.13.0. Use {@link operations} instead.
+     */
     get actionImports() {
         return {
             resetDataSource: (parameter) => (0, action_imports_1.resetDataSource)(parameter, this.deSerializers)
         };
+    }
+    /**
+     * Get unbound functions and actions.
+     */
+    get operations() {
+        return { ...this.functionImports, ...this.actionImports };
     }
     get batch() {
         return BatchRequest_1.batch;

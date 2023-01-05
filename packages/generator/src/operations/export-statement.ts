@@ -21,6 +21,7 @@ export function exportStatement(
         initializer: exportsInitializer(operations)
       }
     ],
+    docs: ['@deprecated Since v2.13.0. Use {@link operations} instead.'],
     isExported: true
   };
 }

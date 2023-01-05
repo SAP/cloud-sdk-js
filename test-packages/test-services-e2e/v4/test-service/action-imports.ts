@@ -104,6 +104,7 @@ export function createTestEntityByIdReturnId<
   );
 }
 
+/** @deprecated Since v2.13.0. Use {@link operations} instead. */
 export const actionImports = {
   createTestEntityById,
   createTestEntityByIdReturnId

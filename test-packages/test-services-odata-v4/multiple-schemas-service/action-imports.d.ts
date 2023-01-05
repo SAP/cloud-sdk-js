@@ -52,6 +52,7 @@ export declare function testActionImportNoParameterComplexReturnType2<
   TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
   TestComplexType2
 >;
+/** @deprecated Since v2.13.0. Use {@link operations} instead. */
 export declare const actionImports: {
   testActionImportNoParameterComplexReturnType1: typeof testActionImportNoParameterComplexReturnType1;
   testActionImportNoParameterComplexReturnType2: typeof testActionImportNoParameterComplexReturnType2;

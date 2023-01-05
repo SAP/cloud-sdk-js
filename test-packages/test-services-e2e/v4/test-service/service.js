@@ -44,6 +44,9 @@ class TestService {
     get testEntity50PropApi() {
         return this.initApi('testEntity50PropApi', TestEntity50PropApi_1.TestEntity50PropApi);
     }
+    /**
+     * @deprecated Since v2.13.0. Use {@link operations} instead.
+     */
     get functionImports() {
         return {
             concatStrings: (parameter) => (0, function_imports_1.concatStrings)(parameter, this.deSerializers),
@@ -55,11 +58,20 @@ class TestService {
             returnSapCloudSdk: (parameter) => (0, function_imports_1.returnSapCloudSdk)(parameter, this.deSerializers)
         };
     }
+    /**
+     * @deprecated Since v2.13.0. Use {@link operations} instead.
+     */
     get actionImports() {
         return {
             createTestEntityById: (parameter) => (0, action_imports_1.createTestEntityById)(parameter, this.deSerializers),
             createTestEntityByIdReturnId: (parameter) => (0, action_imports_1.createTestEntityByIdReturnId)(parameter, this.deSerializers)
         };
+    }
+    /**
+     * Get unbound functions and actions.
+     */
+    get operations() {
+        return { ...this.functionImports, ...this.actionImports };
     }
     get batch() {
         return BatchRequest_1.batch;

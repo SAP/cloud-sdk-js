@@ -91,6 +91,7 @@ export function testActionImportNoParameterComplexReturnType2<
   );
 }
 
+/** @deprecated Since v2.13.0. Use {@link operations} instead. */
 export const actionImports = {
   testActionImportNoParameterComplexReturnType1,
   testActionImportNoParameterComplexReturnType2

@@ -39,6 +39,7 @@ export declare function getNearestAirport<
   GetNearestAirportParameters<DeSerializersT>,
   Airports
 >;
+/** @deprecated Since v2.13.0. Use {@link operations} instead. */
 export declare const functionImports: {
   getNearestAirport: typeof getNearestAirport;
 };

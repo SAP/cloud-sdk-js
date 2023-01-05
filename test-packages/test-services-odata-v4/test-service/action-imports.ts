@@ -362,6 +362,7 @@ export function testActionImportNullableTest<
   );
 }
 
+/** @deprecated Since v2.13.0. Use {@link operations} instead. */
 export const actionImports = {
   testActionImportNoParameterNoReturnType,
   testActionImportMultipleParameterComplexReturnType,

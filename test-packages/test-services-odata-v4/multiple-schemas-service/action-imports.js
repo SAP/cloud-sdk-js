@@ -29,6 +29,7 @@ function testActionImportNoParameterComplexReturnType2(parameters, deSerializers
     return new odata_v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType2', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType2_1.TestComplexType2)), params, deSerializers);
 }
 exports.testActionImportNoParameterComplexReturnType2 = testActionImportNoParameterComplexReturnType2;
+/** @deprecated Since v2.13.0. Use {@link operations} instead. */
 exports.actionImports = {
     testActionImportNoParameterComplexReturnType1,
     testActionImportNoParameterComplexReturnType2

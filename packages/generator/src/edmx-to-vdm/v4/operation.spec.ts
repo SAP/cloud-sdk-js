@@ -16,7 +16,7 @@ import {
 import { generateComplexTypesV4 } from './complex-type';
 import { createEntityType, getComplexType, getFormatter } from './entity.spec';
 
-describe('action-import', () => {
+describe('operation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -30,7 +30,7 @@ describe('action-import', () => {
     expect(joined).toEqual([]);
   });
 
-  it('considers only operations where a import matches', () => {
+  it('considers only operations where an import matches', () => {
     const imports: EdmxOperationImport[] = [{ operationName: 'op1' } as any];
     const operations: EdmxOperation[] = [
       { Name: 'op1', IsBound: 'false' },
@@ -40,7 +40,7 @@ describe('action-import', () => {
     expect(joined).toEqual([{ operationName: 'op1', IsBound: false }]);
   });
 
-  it('considers only operations where a import with namespace matches', () => {
+  it('considers only operations where an import with namespace matches', () => {
     const imports: EdmxOperationImport[] = [{ operationName: 'ns.op1' } as any];
     const operations: EdmxOperation[] = [
       { Name: 'op1', IsBound: 'false' },

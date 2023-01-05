@@ -52,6 +52,7 @@ export declare function testFunctionImportEntityReturnType2<
   TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
   TestEntity2
 >;
+/** @deprecated Since v2.13.0. Use {@link operations} instead. */
 export declare const functionImports: {
   testFunctionImportEntityReturnType1: typeof testFunctionImportEntityReturnType1;
   testFunctionImportEntityReturnType2: typeof testFunctionImportEntityReturnType2;

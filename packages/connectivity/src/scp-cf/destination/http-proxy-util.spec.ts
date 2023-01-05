@@ -3,7 +3,6 @@ import { basicHeader } from '../authorization-header';
 import {
   addProxyConfigurationInternet,
   parseProxyEnv,
-  ProxyStrategy,
   proxyStrategy
 } from './http-proxy-util';
 import { Destination } from './destination-service-types';
@@ -41,9 +40,7 @@ describe('proxy-util', () => {
   it('should use proxy type OnPrem if the destination is onPrem - even if HTTP(S)_PROXY env are present.', () => {
     process.env['https_proxy'] = 'https://some.proxy.com:443';
 
-    expect(proxyStrategy(onPremDestination)).toBe(
-      ProxyStrategy.ON_PREMISE_PROXY
-    );
+    expect(proxyStrategy(onPremDestination)).toBe('on-premise');
     expect(addProxyConfigurationInternet(onPremDestination)).toStrictEqual({
       ...onPremDestination,
       proxyConfiguration: {
@@ -56,7 +53,7 @@ describe('proxy-util', () => {
 
   it('should use no proxy if the destination URL is in the NO_PROXY list.', () => {
     process.env['https_proxy'] = 'https://some.proxy.com:4711';
-    expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.INTERNET_PROXY);
+    expect(proxyStrategy(httpsDestination)).toBe('internet');
     expect(addProxyConfigurationInternet(httpsDestination)).toStrictEqual({
       ...httpsDestination,
       proxyConfiguration: {
@@ -69,24 +66,22 @@ describe('proxy-util', () => {
     process.env[
       'no_proxy'
     ] = `http://some.otherURL.com,${httpsDestination.url}`;
-    expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.NO_PROXY);
+    expect(proxyStrategy(httpsDestination)).toBe('no-proxy');
   });
 
   it('should use internet proxy if an env variable is set.', () => {
-    expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.NO_PROXY);
-    expect(proxyStrategy(httpDestination)).toBe(ProxyStrategy.NO_PROXY);
+    expect(proxyStrategy(httpsDestination)).toBe('no-proxy');
+    expect(proxyStrategy(httpDestination)).toBe('no-proxy');
 
     process.env['https_proxy'] = 'envIsNowSet';
-    expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.INTERNET_PROXY);
+    expect(proxyStrategy(httpsDestination)).toBe('internet');
 
     process.env['http_proxy'] = 'envIsNowSet';
-    expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.INTERNET_PROXY);
+    expect(proxyStrategy(httpsDestination)).toBe('internet');
   });
 
   it('should use PrivateLink proxy if proxy type is PrivateLink.', () => {
-    expect(proxyStrategy(privateLinkDestination)).toBe(
-      ProxyStrategy.PRIVATELINK_PROXY
-    );
+    expect(proxyStrategy(privateLinkDestination)).toBe('private-link');
   });
 
   it('should use the proxy env with the  protocol indicated by the destination.', () => {
@@ -158,14 +153,14 @@ describe('proxy-util', () => {
 
   it('should work with lower and upper case env variables', () => {
     process.env['HTTPS_PROXY'] = 'https://some.proxy.com:443';
-    expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.INTERNET_PROXY);
+    expect(proxyStrategy(httpsDestination)).toBe('internet');
     process.env['NO_PROXY'] = `${httpsDestination.url}`;
-    expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.NO_PROXY);
+    expect(proxyStrategy(httpsDestination)).toBe('no-proxy');
   });
 
   it('should ignore undefined and empty environment variables', () => {
     process.env['HTTPS_PROXY'] = 'https://some.proxy.com';
-    expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.INTERNET_PROXY);
+    expect(proxyStrategy(httpsDestination)).toBe('internet');
     expect(addProxyConfigurationInternet(httpsDestination)).toStrictEqual({
       ...httpsDestination,
       proxyConfiguration: {
@@ -176,13 +171,13 @@ describe('proxy-util', () => {
     });
 
     process.env['HTTPS_PROXY'] = '';
-    expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.NO_PROXY);
+    expect(proxyStrategy(httpsDestination)).toBe('no-proxy');
     expect(
       addProxyConfigurationInternet(httpsDestination).proxyConfiguration
     ).toBe(undefined);
 
     delete process.env['HTTPS_PROXY'];
-    expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.NO_PROXY);
+    expect(proxyStrategy(httpsDestination)).toBe('no-proxy');
     expect(
       addProxyConfigurationInternet(httpsDestination).proxyConfiguration
     ).toBe(undefined);

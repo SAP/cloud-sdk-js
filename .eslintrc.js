@@ -57,6 +57,13 @@ module.exports = {
     }
   ],
   rules: {
-    radix: 'off'
+    radix: 'off',
+    'no-restricted-syntax': [
+      'error',
+      {
+        'selector': 'TSEnumDeclaration',
+        'message': 'Enums are weird in TypeScript. Prefer union types or const objects instead.'
+      },
+    ]
   }
 };

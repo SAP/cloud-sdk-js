@@ -64,7 +64,7 @@ The following sub-sections describe affected modules, functions and interfaces w
 #### Package `@sap-cloud-sdk/generator` <!-- omit from toc -->
 
 The deprecated option `generateCSN` is removed.
-If you need a schema notation (CSN) of your service use the [@sap/edm-converters](https://www.npmjs.com/package/@sap/edm-converters)  library directly.
+If you need a schema notation (CSN) of your service use the [cds import](https://cap.cloud.sap/docs/guides/using-services?q=edmx#import-api) command directly.
 
 ### Package `@sap-cloud-sdk/odata-common` <!-- omit from toc -->
 

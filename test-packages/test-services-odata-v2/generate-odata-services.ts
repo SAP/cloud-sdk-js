@@ -15,7 +15,6 @@ const generatorConfigOData = {
   generateNpmrc: false,
   generatePackageJson: false,
   packageJson: false,
-  generateCSN: false,
   generateSdkMetadata: false,
   skipValidation: true,
   // Unnecessary options

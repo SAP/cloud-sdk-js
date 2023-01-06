@@ -1,6 +1,6 @@
 import { PathLike } from 'fs';
 import { resolve, dirname, join } from 'path';
-import { Option, ParsedOptions } from './options-parser';
+import { Options, ParsedOptions } from './options-parser';
 
 /**
  * Options to configure the client generation when using the generator programmatically.
@@ -224,4 +224,4 @@ export const cliOptions = {
     type: 'boolean',
     default: false
   }
-} as const satisfies Record<keyof GeneratorOptions, Option>;
+} as const satisfies Options<GeneratorOptions>;

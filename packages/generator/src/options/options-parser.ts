@@ -4,6 +4,14 @@ const logger = createLogger('generator-options');
 
 /**
  * @internal
+ * CLI options type, based on generator options type.
+ */
+export type Options<GeneratorOptionsT> = {
+  [K in keyof GeneratorOptionsT]: Option<GeneratorOptionsT[K]>;
+};
+
+/**
+ * @internal
  * Options for SAP Cloud SDK generators.
  * Some keys are modified, for more explicit parsing.
  */

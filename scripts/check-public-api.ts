@@ -10,7 +10,7 @@ import {
   readCompilerOptions,
   transpileDirectory
 } from '@sap-cloud-sdk/generator-common/internal';
-import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/file-writer';
+import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file-writer';
 
 const { readFile, lstat, readdir } = promises;
 

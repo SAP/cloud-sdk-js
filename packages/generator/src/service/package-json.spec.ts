@@ -33,7 +33,6 @@ describe('package-json', () => {
     return {
       npmPackageName: `my-${oDataVersion}-package`,
       description: `my ${oDataVersion} package description`,
-      sdkAfterVersionScript: false,
       oDataVersion,
       sdkVersion: '1.2.3'
     };
@@ -51,17 +50,6 @@ describe('package-json', () => {
         '@sap-cloud-sdk/odata-v2': '^1.2.3'
       }
     });
-  });
-
-  it('includes after version script', async () => {
-    const jsonString = await packageJson({
-      ...packageJsonOptions('v2'),
-      sdkAfterVersionScript: true
-    });
-
-    expect(JSON.parse(jsonString).scripts.version).toEqual(
-      'node ../../../after-version-update.js'
-    );
   });
 
   it('adds the default license information', async () => {

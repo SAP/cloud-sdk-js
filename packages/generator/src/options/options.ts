@@ -76,20 +76,30 @@ export interface GeneratorOptions {
   verbose?: boolean;
 }
 
-function coerceRequiredPathArg(
+/**
+ * Resolves arguments that represent paths to an absolute path as a `string`. Only works for required options.
+ * @param arg - Path argument as passed by the user.
+ * @param options - Options as passed by the user.
+ * @returns Absolute path as a `string`.
+ */
+function resolveRequiredPath(
   arg: string,
   options: GeneratorOptions & { config?: string }
 ): string {
   return options.config ? resolve(dirname(options.config), arg) : resolve(arg);
 }
 
-function coercePathArg(
+/**
+ * Same as `resolveRequiredPath`, but for non-required options.
+ * @param arg - Path argument as passed by the user, or `undefined` if nothing was passed.
+ * @param options - Options as passed by the user.
+ * @returns Absolute path as a `string` or `undefined`.
+ */
+function resolvePath(
   arg: string | undefined,
   options: GeneratorOptions & { config?: string }
 ): string | undefined {
-  if (arg) {
-    return coerceRequiredPathArg(arg, options);
-  }
+  return arg ? resolveRequiredPath(arg, options) : undefined;
 }
 
 /**
@@ -106,7 +116,7 @@ export const cliOptions = {
     alias: 'i',
     describe:
       'This directory will be recursively searched for EDMX and XML files.',
-    coerce: coerceRequiredPathArg,
+    coerce: resolveRequiredPath,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -114,7 +124,7 @@ export const cliOptions = {
   outputDir: {
     alias: 'o',
     describe: 'Directory to save the generated code in.',
-    coerce: coerceRequiredPathArg,
+    coerce: resolveRequiredPath,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -128,7 +138,7 @@ export const cliOptions = {
       arg: string | undefined,
       options: GeneratorOptions & { config?: string }
     ) =>
-      coerceRequiredPathArg(
+      resolveRequiredPath(
         arg ? arg : join(options.inputDir.toString(), 'service-mapping.json'),
         options
       )
@@ -138,7 +148,7 @@ export const cliOptions = {
     describe:
       'Configuration file to the prettier config relative to the generator config file',
     type: 'string',
-    coerce: coercePathArg,
+    coerce: resolvePath,
     requiresArg: true
   },
   useSwagger: {
@@ -159,7 +169,7 @@ export const cliOptions = {
     describe:
       'Glob describing additional files to be added to the each generated service directory - relative to the inputDir.',
     type: 'string',
-    coerce: coercePathArg,
+    coerce: resolvePath,
     requiresArg: true
   },
   overwrite: {
@@ -190,7 +200,7 @@ export const cliOptions = {
     describe:
       'Replace the default `tsconfig.json` by passing a path to a custom config. By default, a `tsconfig.json` is only generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file is read from this directory.',
     type: 'string',
-    coerce: coercePathArg
+    coerce: resolvePath
   },
   transpilationProcesses: {
     describe: 'Number of processes used for generation of javascript files.',

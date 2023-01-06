@@ -23,6 +23,12 @@ describe('options parser', () => {
     type: 'string',
     coerce: (val, opt) => (val ? 'test' : opt.otherOption)
   } as const;
+  const coercedWithDefaultOption = {
+    describe: 'coerced option',
+    type: 'string',
+    default: 'default value',
+    coerce: val => `coerced: ${val}`
+  } as const;
   const options = { deprecatedOption, otherOption, newOption } as const;
 
   let warnSpy: jest.SpyInstance;
@@ -94,6 +100,22 @@ describe('options parser', () => {
       ).toEqual({
         otherOption: 'other option value',
         coercedOption: 'other option value'
+      });
+    });
+
+    it('coerces value for properties with a default value, when set', () => {
+      expect(
+        parseOptions({ coercedWithDefaultOption } as const, {
+          coercedWithDefaultOption: 'custom value'
+        })
+      ).toEqual({
+        coercedWithDefaultOption: 'coerced: custom value'
+      });
+    });
+
+    it('coerces value for properties with a default value, when unset', () => {
+      expect(parseOptions({ coercedWithDefaultOption } as const, {})).toEqual({
+        coercedWithDefaultOption: 'coerced: default value'
       });
     });
 

@@ -29,6 +29,7 @@ export type Option = Omit<Options, 'coerce'> & {
  * Helper to represent parsed options based on a public generator options type and a CLI options configuration.
  * - Makes all properties required.
  * - Removes deprecated and replaced options.
+ * - Sets default values.
  * - Replaces input types with coerced types.
  * @typeParam GeneratorOptionsOptionsT - Public generator options.
  * @typeParam CliOptionsT - Configuration of CLI options.

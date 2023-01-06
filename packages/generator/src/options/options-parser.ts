@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { InferredOptionType, Options } from 'yargs';
+import { InferredOptionType, Options as YargsOption } from 'yargs';
 const logger = createLogger('generator-options');
 
 /**
@@ -7,7 +7,7 @@ const logger = createLogger('generator-options');
  * Options for SAP Cloud SDK generators.
  * Some keys are modified, for more explicit parsing.
  */
-export type Option = Omit<Options, 'coerce'> & {
+export type Option<T = any> = Omit<YargsOption, 'coerce'> & {
   /**
    * Name of the option the current option was replaced with.
    */
@@ -21,8 +21,8 @@ export type Option = Omit<Options, 'coerce'> & {
   /**
    * Coerce function with additional parameter for all options.
    */
-  coerce?: (arg: any, options: any) => any;
-} & Required<Pick<Options, 'describe' | 'type'>>;
+  coerce?: (arg: T, options: any) => any;
+} & Required<Pick<YargsOption, 'describe' | 'type'>>;
 
 /**
  * @internal

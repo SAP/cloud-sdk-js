@@ -83,10 +83,12 @@ export interface GeneratorOptions {
  * @returns Absolute path as a `string`.
  */
 function resolveRequiredPath(
-  arg: string,
+  arg: PathLike,
   options: GeneratorOptions & { config?: string }
 ): string {
-  return options.config ? resolve(dirname(options.config), arg) : resolve(arg);
+  return options.config
+    ? resolve(dirname(options.config), arg.toString())
+    : resolve(arg.toString());
 }
 
 /**
@@ -96,7 +98,7 @@ function resolveRequiredPath(
  * @returns Absolute path as a `string` or `undefined`.
  */
 function resolvePath(
-  arg: string | undefined,
+  arg: PathLike | undefined,
   options: GeneratorOptions & { config?: string }
 ): string | undefined {
   return arg ? resolveRequiredPath(arg, options) : undefined;

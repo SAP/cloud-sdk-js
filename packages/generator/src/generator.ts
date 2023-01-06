@@ -69,20 +69,23 @@ const logger = createLogger({
 export async function generate(
   options: GeneratorOptions & { config?: string }
 ): Promise<void> {
-  return generateWithParsedOptions(parseOptions(cliOptions, options));
+  const parsedOptions = parseOptions(cliOptions, options);
+  if (parsedOptions.verbose) {
+    setLogLevel('verbose', logger);
+  }
+
+  logger.verbose(`Parsed Options: ${JSON.stringify(options, null, 2)}`);
+
+  return generateWithParsedOptions(parsedOptions);
 }
 
 /**
  * @internal
  * This is the main entry point for generation, after options were parsed - either from the CLI or from the programmatically passed configuration.
  */
-export async function generateWithParsedOptions(
+async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  if (options.verbose) {
-    setLogLevel('verbose', logger);
-  }
-
   const projectAndServices = await generateProject(options);
   if (!projectAndServices) {
     throw Error('The project is undefined.');

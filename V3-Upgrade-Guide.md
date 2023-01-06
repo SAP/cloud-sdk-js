@@ -77,8 +77,7 @@ The following deprecated options were renamed:
 - `processesJsGeneration` becomes `transpilationProcesses`
 
 The deprecated `generateNpmrc` option of the generator is removed. 
-In most cases the `.npmrc` was present in the project root anyhow. 
-If this is not the case, use the `include` option to add a `.npmrc` to the generated code if needed.
+Use the `include` option to add a `.npmrc` to the generated code if needed.
 
 The internal options `sdkAfterVersionScript`, `s4HanaCloud` and `packageVersion` of the generator are removed.
 These were hidden options never meant for external usage and there is no replacement.

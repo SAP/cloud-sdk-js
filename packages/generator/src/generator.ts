@@ -1,5 +1,5 @@
-import { existsSync, PathLike, promises as fsPromises } from 'fs';
-import { dirname, posix, resolve, sep } from 'path';
+import { existsSync, promises as fsPromises } from 'fs';
+import { dirname, join, posix, resolve, sep } from 'path';
 import {
   copyFiles,
   createFile,
@@ -98,11 +98,11 @@ async function generateWithParsedOptions(
     const directories = services
       .filter(async service => {
         const files = await readdir(
-          resolveOutDirPath(service.directoryName, options)
+          join(options.outputDir, service.directoryName)
         );
         return files.includes('tsconfig.json');
       })
-      .map(service => resolveOutDirPath(service.directoryName, options));
+      .map(service => join(options.outputDir, service.directoryName));
 
     const chunks = splitInChunks(directories, options.transpilationProcesses);
     try {
@@ -248,7 +248,7 @@ async function generateIncludes(
     const includeDir = resolve(options.inputDir.toString(), options.include)
       .split(sep)
       .join(posix.sep);
-    const serviceDir = resolveOutDirPath(service.directoryName, options);
+    const serviceDir = join(options.outputDir, service.directoryName);
     const files = new GlobSync(includeDir).found;
     await copyFiles(files, serviceDir, options.overwrite);
   }
@@ -258,7 +258,7 @@ async function generateServiceFile(
   service: VdmServiceMetadata,
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  const serviceDir = resolveOutDirPath(service.directoryName, options);
+  const serviceDir = join(options.outputDir, service.directoryName);
   const createFileOptions = await getFileCreationOptions(options);
   await createFile(
     serviceDir,
@@ -276,7 +276,7 @@ async function generateEntityApis(
   await Promise.all(
     service.entities.map(entity =>
       createFile(
-        resolveOutDirPath(service.directoryName, options),
+        join(options.outputDir, service.directoryName),
         `${entity.className}Api.ts`,
         entityApiFile(entity, service),
         createFileOptions
@@ -293,7 +293,7 @@ export async function generateSourcesForService(
   project: Project,
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  const serviceDirPath = resolveOutDirPath(service.directoryName, options);
+  const serviceDirPath = join(options.outputDir, service.directoryName);
   const serviceDir = project.createDirectory(serviceDirPath);
   const createFileOptions = await getFileCreationOptions(options);
 
@@ -491,11 +491,4 @@ function parseServices(options: ParsedGeneratorOptions): VdmServiceMetadata[] {
     return [];
   }
   return services;
-}
-
-function resolveOutDirPath(
-  path: PathLike,
-  options: ParsedGeneratorOptions
-): string {
-  return resolve(options.outputDir.toString(), path.toString());
 }

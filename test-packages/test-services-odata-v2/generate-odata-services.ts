@@ -5,21 +5,13 @@ import { generate } from '@sap-cloud-sdk/generator';
 const logger = createLogger('generate-odata-services');
 
 const generatorConfigOData = {
-  forceOverwrite: true,
   overwrite: true,
   transpile: true,
   useSwagger: false,
-  writeReadme: false,
   readme: false,
   clearOutputDir: false,
-  generateNpmrc: false,
-  generatePackageJson: false,
   packageJson: false,
-  generateCSN: false,
   generateSdkMetadata: false,
-  // Unnecessary options
-  sdkAfterVersionScript: false,
-  s4hanaCloud: false,
   verbose: false
 };
 

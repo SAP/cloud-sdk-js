@@ -10,14 +10,11 @@ function title(service: VdmServiceMetadata): string {
   return service.npmPackageName || service.speakingModuleName;
 }
 
-function serviceReference(
-  service: VdmServiceMetadata,
-  s4hanaCloud: boolean
-): string {
+function serviceReference(service: VdmServiceMetadata): string {
   const ref = service.apiBusinessHubMetadata
     ? `[${service.speakingModuleName}](${service.apiBusinessHubMetadata.url})`
     : service.speakingModuleName;
-  return s4hanaCloud ? `${ref} of SAP S/4HANA Cloud` : `${ref}`;
+  return ref;
 }
 
 function communicationScenarioLine(service: VdmServiceMetadata): string[] {
@@ -41,17 +38,11 @@ function businessDocumentationLine(service: VdmServiceMetadata): string[] {
 /**
  * @internal
  */
-export function readme(
-  service: VdmServiceMetadata,
-  s4hanaCloud = false
-): string {
+export function readme(service: VdmServiceMetadata): string {
   return [
     `# ${title(service)}`,
     '',
-    `This package contains the OData VDM for the ${serviceReference(
-      service,
-      s4hanaCloud
-    )}.`,
+    `This package contains the OData VDM for the ${serviceReference(service)}.`,
     ...communicationScenarioLine(service),
     ...businessDocumentationLine(service),
     '',

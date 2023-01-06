@@ -29,10 +29,7 @@ export class ODataUpdateRequestConfig<
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super(
-      UpdateStrategy.MODIFY_WITH_PATCH,
-      entityApi.entityConstructor._defaultServicePath
-    );
+    super('patch', entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
@@ -44,11 +41,6 @@ export class ODataUpdateRequestConfig<
   }
 
   updateWithPut(): void {
-    this.method = UpdateStrategy.REPLACE_WITH_PUT;
+    this.method = 'put';
   }
-}
-
-enum UpdateStrategy {
-  MODIFY_WITH_PATCH = 'patch',
-  REPLACE_WITH_PUT = 'put'
 }

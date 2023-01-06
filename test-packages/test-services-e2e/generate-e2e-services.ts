@@ -9,11 +9,7 @@ const generatorConfigOData = {
   readme: false,
   clearOutputDir: false,
   packageJson: false,
-  generateCSN: false,
-  generateSdkMetadata: false,
-  // Unnecessary options
-  sdkAfterVersionScript: false,
-  s4hanaCloud: false
+  generateSdkMetadata: false
 };
 
 async function generateE2E() {

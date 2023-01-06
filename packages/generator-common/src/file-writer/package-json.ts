@@ -9,19 +9,11 @@ export interface PackageJsonOptions {
   /**
    * @internal
    */
-  version: string;
-  /**
-   * @internal
-   */
   sdkVersion: string;
   /**
    * @internal
    */
   description: string;
-  /**
-   * @internal
-   */
-  license?: string;
 }
 
 /* eslint-disable valid-jsdoc */
@@ -33,12 +25,12 @@ export function packageJsonBase(
 ): Record<string, any> {
   return {
     name: options.npmPackageName,
-    version: options.version,
+    version: '1.0.0',
     description: options.description,
     homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
     main: './index.js',
     types: './index.d.ts',
-    ...(options.license ? { license: options.license } : {}),
+    license: 'UNLICENSED',
     publishConfig: {
       access: 'public'
     },

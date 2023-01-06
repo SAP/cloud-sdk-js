@@ -3,11 +3,12 @@
 exports[`packageJson returns the package.json content 1`] = `
 "{
   "name": "workflow-service",
-  "version": "1.23.1",
+  "version": "1.0.0",
   "description": "description",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
   "main": "./index.js",
   "types": "./index.d.ts",
+  "license": "UNLICENSED",
   "publishConfig": {
     "access": "public"
   },

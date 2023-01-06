@@ -12,7 +12,7 @@ import {
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import { decodeJwt } from '../jwt';
 import { fetchSubaccountDestinations } from './destination-service';
-import { Destination, DestinationType } from './destination-service-types';
+import { Destination } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 
 const destinationServiceUrl = 'https://myDestination.service.url';
@@ -89,7 +89,7 @@ describe('DestinationServiceCache', () => {
 
 function getDestinationsFromCache(token: string): Destination[] | undefined {
   return destinationServiceCache.retrieveDestinationsFromCache(
-    `${destinationServiceUrl}/destination-configuration/v1/${DestinationType.Subaccount}Destinations`,
+    `${destinationServiceUrl}/destination-configuration/v1/subaccountDestinations`,
     decodeJwt(token)
   );
 }

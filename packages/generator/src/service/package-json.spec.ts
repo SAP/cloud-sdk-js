@@ -3,8 +3,10 @@ import { packageJson, PackageJsonOptions } from './package-json';
 describe('package-json', () => {
   const packageJsonStatic = {
     homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
+    license: 'UNLICENSED',
     main: './index.js',
     types: './index.d.ts',
+    version: '1.0.0',
     publishConfig: {
       access: 'public'
     },
@@ -30,9 +32,7 @@ describe('package-json', () => {
   function packageJsonOptions(oDataVersion: ODataVersion): PackageJsonOptions {
     return {
       npmPackageName: `my-${oDataVersion}-package`,
-      version: `X.Y.Z-${oDataVersion}`,
       description: `my ${oDataVersion} package description`,
-      sdkAfterVersionScript: false,
       oDataVersion,
       sdkVersion: '1.2.3'
     };
@@ -43,7 +43,6 @@ describe('package-json', () => {
 
     expect(JSON.parse(jsonString)).toEqual({
       name: 'my-v2-package',
-      version: 'X.Y.Z-v2',
       description: 'my v2 package description',
       ...packageJsonStatic,
       dependencies: {
@@ -53,23 +52,11 @@ describe('package-json', () => {
     });
   });
 
-  it('includes after version script', async () => {
+  it('adds the default license information', async () => {
     const jsonString = await packageJson({
-      ...packageJsonOptions('v2'),
-      sdkAfterVersionScript: true
+      ...packageJsonOptions('v2')
     });
-
-    expect(JSON.parse(jsonString).scripts.version).toEqual(
-      'node ../../../after-version-update.js'
-    );
-  });
-
-  it('adds the license information', async () => {
-    const jsonString = await packageJson({
-      ...packageJsonOptions('v2'),
-      license: 'my license value'
-    });
-    expect(JSON.parse(jsonString).license).toEqual('my license value');
+    expect(JSON.parse(jsonString).license).toEqual('UNLICENSED');
   });
 
   it('creates v4 package content with after version script', async () => {
@@ -77,7 +64,6 @@ describe('package-json', () => {
 
     expect(JSON.parse(jsonString)).toEqual({
       name: 'my-v4-package',
-      version: 'X.Y.Z-v4',
       description: 'my v4 package description',
       ...packageJsonStatic,
       dependencies: {

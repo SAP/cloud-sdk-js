@@ -7,7 +7,6 @@ import {
   formatTsConfig,
   getSdkMetadataFileNames,
   getSdkVersion,
-  getVersionForClient,
   packageDescription,
   readCompilerOptions,
   readCustomTsConfig,
@@ -50,7 +49,6 @@ import { operationsSourceFile } from './operations/file';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
 import { serviceMappingFile } from './service-mapping';
-import { csn } from './service/csn';
 import { indexFile } from './service/index-file';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
@@ -309,12 +307,9 @@ export async function generateSourcesForService(
         'package.json',
         await packageJson({
           npmPackageName: service.npmPackageName,
-          version: await getVersionForClient(options.packageVersion),
           sdkVersion: await getSdkVersion(),
           description: packageDescription(service.speakingModuleName),
-          sdkAfterVersionScript: options.sdkAfterVersionScript,
-          oDataVersion: service.oDataVersion,
-          license: options.licenseInPackageJson
+          oDataVersion: service.oDataVersion
         }),
         createFileOptions
       )
@@ -434,30 +429,10 @@ export async function generateSourcesForService(
       createFile(
         serviceDirPath,
         'README.md',
-        readme(service, options.s4hanaCloud),
+        readme(service),
         createFileOptions
       )
     );
-  }
-
-  if (options.generateCSN) {
-    try {
-      logger.verbose(
-        `[${service.originalFileName}] Generating ${service.directoryName}-csn.json ...`
-      );
-      filePromises.push(
-        createFile(
-          serviceDirPath,
-          `${service.directoryName}-csn.json`,
-          await csn(service),
-          createFileOptions
-        )
-      );
-    } catch (e) {
-      logger.error(
-        `CSN creation for service ${service.originalFileName} failed. Original error: ${e.message}`
-      );
-    }
   }
 
   if (options.generateSdkMetadata) {

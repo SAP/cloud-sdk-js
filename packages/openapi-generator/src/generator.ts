@@ -359,9 +359,7 @@ async function generatePackageJson(
     packageJson({
       npmPackageName: openApiDocument.serviceOptions.packageName,
       description: packageDescription(openApiDocument.serviceName),
-      sdkVersion: await getSdkVersion(),
-      version: options.packageVersion,
-      license: options.licenseInPackageJson
+      sdkVersion: await getSdkVersion()
     }),
     createFileOptions
   );

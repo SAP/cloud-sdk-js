@@ -28,6 +28,23 @@
 
 -
 
+# 2.13.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.13.0
+
+## Compatibility Notes
+
+- [generator] The SAP Cloud SDK does not differentiate between function imports and action imports anymore. Therefore the `actionImports` and `functionImports` exposed in generated services are now deprecated and replaced by `options`. (aa0cf4820)
+- [openapi-generator] The options `licenseInPackageJson` and `versionInPackageJson` are deprecated. If you want to set the license or version in your generated `package.json` file, use the `include` option to add a custom `package.json` instead. (aa0cf4820)
+
+## Fixed Issues
+
+- [odata-v2] Allow to update OData v2 entities to `null`. Fixes [3204](https://github.com/SAP/cloud-sdk-js/issues/3204).
+  - @sap-cloud-sdk/connectivity@2.13.0
+  - @sap-cloud-sdk/http-client@2.13.0
+  - @sap-cloud-sdk/odata-common@2.13.0
+  - @sap-cloud-sdk/util@2.13.0 (83eee1a3b)
+
 # 2.12.1
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.12.1

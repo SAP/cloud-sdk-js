@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/odata-v2
 
+## 2.13.0
+
+### Patch Changes
+
+- 83eee1a3b: [Fixed Issue] Allow to update OData v2 entities to `null`. Fixes [3204](https://github.com/SAP/cloud-sdk-js/issues/3204).
+  - @sap-cloud-sdk/connectivity@2.13.0
+  - @sap-cloud-sdk/http-client@2.13.0
+  - @sap-cloud-sdk/odata-common@2.13.0
+  - @sap-cloud-sdk/util@2.13.0
+
 ## 2.12.1
 
 ### Patch Changes

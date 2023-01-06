@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 2.13.0
+
+### Minor Changes
+
+- aa0cf4820: [Compatibility Note] The options `licenseInPackageJson` and `versionInPackageJson` are deprecated. If you want to set the license or version in your generated `package.json` file, use the `include` option to add a custom `package.json` instead.
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@2.13.0
+- @sap-cloud-sdk/openapi@2.13.0
+- @sap-cloud-sdk/util@2.13.0
+
 ## 2.12.1
 
 ### Patch Changes

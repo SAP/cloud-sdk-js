@@ -1,5 +1,20 @@
 # @sap-cloud-sdk/generator
 
+## 2.13.0
+
+### Minor Changes
+
+- aa0cf4820: [Compatibility Note] The SAP Cloud SDK does not differentiate between function imports and action imports anymore. Therefore the `actionImports` and `functionImports` exposed in generated services are now deprecated and replaced by `options`.
+
+### Patch Changes
+
+- Updated dependencies [83eee1a3b]
+  - @sap-cloud-sdk/odata-v2@2.13.0
+  - @sap-cloud-sdk/generator-common@2.13.0
+  - @sap-cloud-sdk/odata-common@2.13.0
+  - @sap-cloud-sdk/odata-v4@2.13.0
+  - @sap-cloud-sdk/util@2.13.0
+
 ## 2.12.1
 
 ### Patch Changes

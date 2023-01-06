@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/integration-tests
 
+## 2.13.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@2.13.0
+- @sap-cloud-sdk/mail-client@2.13.0
+- @sap-cloud-sdk/test-util@2.13.0
+- @sap-cloud-sdk/util@2.13.0
+- @sap-cloud-sdk/test-services-odata-v2@2.13.0
+- @sap-cloud-sdk/test-services-odata-v4@2.13.0
+
 ## 2.12.1
 
 ### Patch Changes

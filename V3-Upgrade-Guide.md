@@ -70,9 +70,9 @@ The options `versionInPackageJson` and `licenseInPackageJson`, that allowed sett
 When the `packageJson` option is enabled, a `package.json` file with version `1.0.0` and license `UNLICENSED` is created.
 If you want to set custom values, use the `include` option to add a custom `package.json`.
 
-The following deprecated options were removed with a clear replacement:
+The following deprecated options were renamed:
 - `forceOverwrite` becomes `overwrite`
-- `generatePackageJson` becomes `overwrite`
+- `generatePackageJson` becomes `packageJson`
 - `writeReadme` becomes `readme`
 - `processesJsGeneration` becomes `transpilationProcesses`
 

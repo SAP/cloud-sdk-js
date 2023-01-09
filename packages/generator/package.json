@@ -45,7 +45,7 @@
     "@sap-cloud-sdk/odata-v2": "^2.11.0",
     "@sap-cloud-sdk/odata-v4": "^2.11.0",
     "@sap-cloud-sdk/util": "^2.11.0",
-    "@types/fs-extra": "^9.0.1",
+    "@types/fs-extra": "^11.0.0",
     "fast-xml-parser": "^4.0.12",
     "fs-extra": "^11.1.0",
     "glob": "^8.0.1",

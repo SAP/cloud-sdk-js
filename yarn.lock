@@ -4053,10 +4053,10 @@ fast-safe-stringify@^2.0.7:
   resolved "https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
-fast-xml-parser@^4.0.12:
-  version "4.0.12"
-  resolved "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.12.tgz#9e3117d76523d20dfbd30482c1621fb9b03a7817"
-  integrity sha512-/Nmo3823Rfx7UTJosQNz6hBVbszfv1Unb7A4iNJZhvCGCgtIHv/uODmrYIH8vc05+XKZ4hNIOv6SlBejvJgATw==
+fast-xml-parser@^4.0.13:
+  version "4.0.13"
+  resolved "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.13.tgz#dab3e7ea17d39805af0a9f6d041f4c975c2b9b58"
+  integrity sha512-g+OboAw8ol1FgTHhKLR7ZHcItNudceiY04BBrvqa0JBWoPhi/+e5r4H5AeW+EsQCroJLJwsuOP3dD3c6cc5uOg==
   dependencies:
     strnum "^1.0.5"
 
@@ -7295,9 +7295,9 @@ postcss-values-parser@^5.0.0:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.1.7, postcss@^8.4.6:
-  version "8.4.20"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.20.tgz#64c52f509644cecad8567e949f4081d98349dc56"
-  integrity sha512-6Q04AXR1212bXr5fh03u8aAwbLxAQNGQ/Q1LNa0VfOI06ZAlhPHtQvE4OIdpj4kLThXilalPnmDSOD65DcHt+g==
+  version "8.4.21"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.21.tgz#c639b719a57efc3187b13a1d765675485f4134f4"
+  integrity sha512-tP7u/Sn/dVxK2NnruI4H9BG+x+Wxz6oeZ1cJ8P6G/PZY0IKk4k/63TDsQf2kQq3+qoJeLm2kIBUNlZe3zgb4Zg==
   dependencies:
     nanoid "^3.3.4"
     picocolors "^1.0.0"

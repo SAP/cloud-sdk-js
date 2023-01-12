@@ -417,7 +417,7 @@ async function callDestinationService(
 
   return executeWithMiddleware(
     resilienceMiddleware,
-    { requestConfig: config, ...context } as HttpMiddlewareContext,
+    { requestConfig: config, ...context, destinationName },
     () => axios.request(config)
   );
 }

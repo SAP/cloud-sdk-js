@@ -16,10 +16,19 @@ import {
   circuitBreakers,
   circuitBreakerHttp
 } from '@sap-cloud-sdk/resilience/internal';
+import * as sdkJwt from '@sap-cloud-sdk/connectivity/dist/scp-cf/jwt';
+import * as tokenAccessor from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
+import { subscriberFirst } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination';
 import {
+  basicMultipleResponse,
   connectivityProxyConfigMock,
   defaultDestination,
-  privateKey
+  mockInstanceDestinationsCall,
+  mockServiceBindings,
+  mockSubaccountDestinationsCall,
+  privateKey,
+  subscriberServiceToken,
+  subscriberUserJwt
 } from '../../../test-resources/test/test-util';
 import * as csrfHeaders from './csrf-token-header';
 import {
@@ -303,6 +312,53 @@ describe('generic http client', () => {
         method: 'get'
       });
       expect(response.data).toEqual('Initial value.Middleware One.');
+    });
+
+    it('passes the context properties to the middleware', async () => {
+      const showContextMiddleware: Middleware<
+        HttpResponse,
+        HttpMiddlewareContext
+      > = (opt: MiddlewareIn<HttpResponse, HttpMiddlewareContext>) => () =>
+        ({ data: opt.context } as any);
+
+      mockServiceBindings();
+      jest
+        .spyOn(sdkJwt, 'verifyJwt')
+        .mockImplementation(token => Promise.resolve(sdkJwt.decodeJwt(token)));
+      jest
+        .spyOn(tokenAccessor, 'serviceToken')
+        .mockImplementation((_, options) =>
+          Promise.resolve(subscriberServiceToken)
+        );
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        basicMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+
+      const response = await executeHttpRequest(
+        {
+          destinationName: 'FINAL-DESTINATION',
+          jwt: subscriberUserJwt,
+          iasToXsuaaTokenExchange: false
+        },
+        {
+          middleware: [showContextMiddleware],
+          method: 'get'
+        }
+      );
+      expect(response.data).toEqual({
+        destinationName: 'FINAL-DESTINATION',
+        jwt: subscriberUserJwt,
+        requestConfig: expect.any(Object),
+        tenantId: 'subscriber',
+        uri: 'https://my.system.com'
+      });
+
+      nock.cleanAll();
+      jest.clearAllMocks();
     });
 
     it('attaches multiple middleware in the expected order', async () => {

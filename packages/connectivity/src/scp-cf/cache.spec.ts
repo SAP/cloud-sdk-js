@@ -15,7 +15,7 @@ const destinationOne: Destination = {
   password: 'pwd',
   authentication: 'BasicAuthentication' as AuthenticationType,
   authTokens: [],
-  sapClient: null,
+  sapClient: undefined,
   originalProperties: {},
   isTrustingAllCertificates: false
 };

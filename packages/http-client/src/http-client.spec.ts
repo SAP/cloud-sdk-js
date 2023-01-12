@@ -4,7 +4,6 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { Destination, ProxyConfiguration } from '@sap-cloud-sdk/connectivity';
 import {
   timeout,
   Middleware,
@@ -16,18 +15,25 @@ import {
   circuitBreakers,
   circuitBreakerHttp
 } from '@sap-cloud-sdk/resilience/internal';
-import * as sdkJwt from '@sap-cloud-sdk/connectivity/dist/scp-cf/jwt';
-import * as tokenAccessor from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
+import { responseWithPublicKey } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt.spec';
+import { Destination, ProxyConfiguration } from '../../connectivity/src';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,
   defaultDestination,
+  destinationBindingClientSecretMock,
+  mockClientCredentialsGrantCall,
   mockInstanceDestinationsCall,
   mockServiceBindings,
   mockSubaccountDestinationsCall,
+  mockUserTokenGrantCall,
   privateKey,
+  providerServiceToken,
+  providerXsuaaUrl,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserJwt,
+  subscriberXsuaaUrl,
+  xsuaaBindingMock
 } from '../../../test-resources/test/test-util';
 import * as csrfHeaders from './csrf-token-header';
 import {
@@ -313,6 +319,40 @@ describe('generic http client', () => {
       expect(response.data).toEqual('Initial value.Middleware One.');
     });
 
+    function mockJwtValidationAndServiceToken() {
+      const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
+      nock(jku).get('/').reply(200, responseWithPublicKey());
+      mockUserTokenGrantCall(
+        providerXsuaaUrl,
+        1,
+        subscriberUserJwt,
+        subscriberUserJwt,
+        xsuaaBindingMock.credentials
+      );
+      mockClientCredentialsGrantCall(
+        providerXsuaaUrl,
+        { access_token: providerServiceToken },
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+      mockClientCredentialsGrantCall(
+        subscriberXsuaaUrl,
+        { access_token: subscriberServiceToken },
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+    }
+
+    function mockDestinationService() {
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        basicMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+    }
+
     it('passes the context properties to the middleware', async () => {
       const showContextMiddleware: Middleware<
         HttpResponse,
@@ -321,21 +361,10 @@ describe('generic http client', () => {
         ({ data: opt.context } as any);
 
       mockServiceBindings();
-      jest
-        .spyOn(sdkJwt, 'verifyJwt')
-        .mockImplementation(token => Promise.resolve(sdkJwt.decodeJwt(token)));
-      jest
-        .spyOn(tokenAccessor, 'serviceToken')
-        .mockImplementation((_, options) =>
-          Promise.resolve(subscriberServiceToken)
-        );
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        basicMultipleResponse,
-        200,
-        subscriberServiceToken
-      );
+      // Inside connectivity package we can use jest to mock jwtVerify and tokenAccessor
+      // Between modules this is not possible and done via HTTP mocks instead
+      mockJwtValidationAndServiceToken();
+      mockDestinationService();
 
       const response = await executeHttpRequest(
         {
@@ -356,9 +385,10 @@ describe('generic http client', () => {
         uri: 'https://my.system.com'
       });
 
+      delete process.env['VCAP_SERVICES'];
       nock.cleanAll();
       jest.clearAllMocks();
-    });
+    }, 999999);
 
     it('attaches multiple middleware in the expected order', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');

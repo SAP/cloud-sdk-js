@@ -1,4 +1,5 @@
 import nock from 'nock';
+import { decodeJwt } from '@sap-cloud-sdk/connectivity';
 import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
@@ -780,6 +781,32 @@ describe('authentication types', () => {
       ).rejects.toThrowError('For principal propagation a user JWT is needed.');
       expectAllMocksUsed(httpMocks);
     });
+  });
+
+  it('works for onPremise Basic and issuer JWT', async () => {
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
+
+    const httpMocks = [
+      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
+      mockSubaccountDestinationsCall(
+        nock,
+        onPremiseBasicMultipleResponse,
+        200,
+        onlyIssuerServiceToken
+      )
+    ];
+
+    const dest = await getDestination({
+      destinationName: 'OnPremise',
+      iss: onlyIssuerXsuaaUrl
+    });
+
+    const proxyToken =
+      dest?.proxyConfiguration!.headers!['Proxy-Authorization'].split(' ')[1];
+    expect(decodeJwt(proxyToken!).zid).toEqual(TestTenants.SUBSCRIBER_ONLY_ISS);
+    expectAllMocksUsed(httpMocks);
   });
 
   describe('autehntication type SamlAssertion', () => {

@@ -532,7 +532,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       case 'on-premise':
         return addProxyConfigurationOnPrem(
           destination,
-          this.subscriberToken?.userJwt
+          this.subscriberToken?.userJwt || this.subscriberToken?.type === 'iss'
+            ? this.subscriberToken?.serviceJwt
+            : undefined
         );
       case 'internet':
       case 'private-link':

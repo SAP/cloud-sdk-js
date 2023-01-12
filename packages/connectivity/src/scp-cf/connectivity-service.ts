@@ -118,7 +118,7 @@ async function proxyHeaders(
 }
 
 async function proxyAuthorizationHeader(
-  jwt?
+  jwt?: string
 ): Promise<{ 'Proxy-Authorization': string }> {
   try {
     const connServiceBinding = readConnectivityServiceBinding();

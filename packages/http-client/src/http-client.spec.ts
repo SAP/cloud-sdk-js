@@ -18,7 +18,6 @@ import {
 } from '@sap-cloud-sdk/resilience/internal';
 import * as sdkJwt from '@sap-cloud-sdk/connectivity/dist/scp-cf/jwt';
 import * as tokenAccessor from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
-import { subscriberFirst } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,

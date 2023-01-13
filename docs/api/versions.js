@@ -1,4 +1,4 @@
 export default [
-  'v2',
-  'v1'
-];
+  "v2",
+  "v1"
+]

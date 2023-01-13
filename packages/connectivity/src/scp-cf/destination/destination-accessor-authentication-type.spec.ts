@@ -753,7 +753,9 @@ describe('authentication types', () => {
 
       await expect(
         getDestination({ destinationName: 'OnPremise' })
-      ).rejects.toThrowError('No user token (JWT) has been provided. This is strictly necessary for \'PrincipalPropagation\'.');
+      ).rejects.toThrowError(
+        "No user token (JWT) has been provided. This is strictly necessary for 'PrincipalPropagation'."
+      );
       expectAllMocksUsed(httpMocks);
     });
 
@@ -777,7 +779,9 @@ describe('authentication types', () => {
           destinationName: 'OnPremise',
           iss: onlyIssuerXsuaaUrl
         })
-      ).rejects.toThrowError('No user token (JWT) has been provided. This is strictly necessary for \'PrincipalPropagation\'.');
+      ).rejects.toThrowError(
+        "No user token (JWT) has been provided. This is strictly necessary for 'PrincipalPropagation'."
+      );
       expectAllMocksUsed(httpMocks);
     });
   });

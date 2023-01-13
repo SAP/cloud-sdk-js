@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/connectivity
 
+## 2.14.0
+
+### Minor Changes
+
+- 20f550efd: [Fixed Issue] Fix the combination of providing the `iss` together with `OnPremise` basic destinations.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@2.14.0
+
 ## 2.13.0
 
 ### Patch Changes

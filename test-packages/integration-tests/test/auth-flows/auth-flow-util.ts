@@ -42,6 +42,7 @@ export interface Systems {
   s4onPrem: {
     providerBasic: string;
     providerPrincipalPropagation: string;
+    subscriberBasic: string;
   };
   s4: {
     providerBasic: string;

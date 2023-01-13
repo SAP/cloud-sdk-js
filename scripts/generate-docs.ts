@@ -11,7 +11,9 @@ import execa from 'execa';
 import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
 import { compareVersions } from 'compare-versions';
 import { transformFile } from './util';
-const apiDocPath = resolve('docs', 'api');
+const docPath = resolve(
+  JSON.parse(readFileSync('tsconfig.typedoc.json', 'utf8')).typedocOptions.out
+);
 
 const isDirectory = entryPath => lstatSync(entryPath).isDirectory();
 const flatten = arr =>
@@ -42,7 +44,7 @@ const pipe =
  * - https://username.github.io/repo/modules/sap_cloud_sdk_analytics.html does not.
  */
 function adjustForGitHubPages() {
-  const documentationFiles = flatten(readDir(resolve(apiDocPath, version)));
+  const documentationFiles = flatten(readDir(resolve(docPath)));
   const htmlPaths = documentationFiles.filter(isHtmlFile);
   adjustSearchJs(documentationFiles);
   htmlPaths.forEach(filePath =>
@@ -85,9 +87,7 @@ function removeUnderlinePrefixFromFileName(filePath) {
 }
 
 function insertCopyrightAndTracking() {
-  const filePaths = flatten(readDir(resolve(apiDocPath, version))).filter(
-    isHtmlFile
-  );
+  const filePaths = flatten(readDir(docPath)).filter(isHtmlFile);
   filePaths.forEach(filePath => {
     const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
     const trackingTag =
@@ -110,11 +110,9 @@ function insertCopyrightAndTracking() {
   });
 }
 
-const version = JSON.parse(readFileSync('package.json', 'utf8')).version;
-
 function getSortedApiVersions() {
-  return readdirSync(apiDocPath)
-    .filter(entry => lstatSync(resolve(apiDocPath, entry)).isDirectory())
+  return readdirSync(resolve(docPath, '..'))
+    .filter(entry => lstatSync(resolve(docPath, '..', entry)).isDirectory())
     .sort(compareVersions)
     .reverse();
 }
@@ -123,7 +121,7 @@ function writeVersions() {
   const apiVersions = getSortedApiVersions();
   writeFileSync(
     resolve('docs', 'api', 'versions.js'),
-    `export default ${formatJson(apiVersions)};`,
+    `export default ${formatJson(apiVersions)}`,
     'utf8'
   );
   writeFileSync(

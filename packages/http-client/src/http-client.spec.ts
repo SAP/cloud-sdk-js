@@ -382,13 +382,13 @@ describe('generic http client', () => {
         jwt: subscriberUserJwt,
         requestConfig: expect.any(Object),
         tenantId: 'subscriber',
-        uri: 'https://my.system.com'
+        uri: 'https://my.system.example.com'
       });
 
       delete process.env['VCAP_SERVICES'];
       nock.cleanAll();
       jest.clearAllMocks();
-    }, 999999);
+    });
 
     it('attaches multiple middleware in the expected order', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');

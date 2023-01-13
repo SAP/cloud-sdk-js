@@ -11,7 +11,7 @@ import {
 import { getServiceList } from './environment-accessor';
 import { Service } from './environment-accessor-types';
 import { serviceToken } from './token-accessor';
-import { isUserToken, JwtPair } from './jwt';
+import { JwtPair } from './jwt';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -28,13 +28,6 @@ export async function addProxyConfigurationOnPrem(
   destination: Destination,
   jwt?: JwtPair
 ): Promise<Destination> {
-  if (
-    destination.authentication === 'PrincipalPropagation' &&
-    !isUserToken(jwt)
-  ) {
-    throw new Error('For principal propagation a user JWT is needed.');
-  }
-
   if (destination.type === 'MAIL') {
     return {
       ...destination,

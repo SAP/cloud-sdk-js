@@ -167,6 +167,28 @@ describe('OAuth flows', () => {
     expect(destination?.password).toBeDefined();
   }, 60000);
 
+  xit('Basic Auth OP: iss as token provider', async () => {
+    const destination = await getDestination({
+      destinationName: systems.s4onPrem.providerBasic,
+      iss: 'http://s4sdk.localhost:8080/uaa/oauth/token'
+    });
+    expect(destination?.password).toBeDefined();
+    expect(
+      destination!.proxyConfiguration!.headers!['Proxy-Authorization']
+    ).toBeDefined();
+  }, 60000);
+
+  xit('Basic Auth OP: iss as token subscriber', async () => {
+    const destination = await getDestination({
+      destinationName: systems.s4onPrem.subscriberBasic,
+      iss: 'http://s4sdk-cf-subscriber.localhost:8080/uaa/oauth/token'
+    });
+    expect(destination?.password).toBeDefined();
+    expect(
+      destination!.proxyConfiguration!.headers!['Proxy-Authorization']
+    ).toBeDefined();
+  }, 60000);
+
   xit('Oauth2ClientCredentials: JWT with no JKU should be accepted if destination has jwks or jwks_uri property', async () => {
     const destination = await getDestination({
       destinationName:

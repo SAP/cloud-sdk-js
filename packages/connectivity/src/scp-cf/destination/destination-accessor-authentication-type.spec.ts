@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { decodeJwt } from '@sap-cloud-sdk/connectivity';
+import { decodeJwt } from '../jwt';
 import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl,

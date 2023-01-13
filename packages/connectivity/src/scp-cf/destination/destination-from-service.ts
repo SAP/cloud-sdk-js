@@ -194,6 +194,12 @@ export class DestinationFromServiceRetriever {
       );
     }
 
+    if (destination.authentication === 'PrincipalPropagation') {
+      if (!this.isUserJwt(da.subscriberToken)) {
+        DestinationFromServiceRetriever.throwUserTokenMissing(destination);
+      }
+    }
+
     if (
       destination.authentication === 'OAuth2Password' ||
       destination.authentication === 'ClientCertificateAuthentication' ||
@@ -274,6 +280,12 @@ export class DestinationFromServiceRetriever {
       ...optionsWithoutJwt
     });
     return { encoded, decoded: decodeJwt(encoded) };
+  }
+
+  private static throwUserTokenMissing(destination) {
+    throw Error(
+      `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
+    );
   }
 
   private static checkDestinationForCustomJwt(destination: Destination): void {
@@ -428,9 +440,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     const { destination, origin } = destinationResult;
     const { destinationName } = this.options;
     if (!DestinationFromServiceRetriever.isUserJwt(this.subscriberToken)) {
-      throw Error(
-        `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
-      );
+      throw DestinationFromServiceRetriever.throwUserTokenMissing(destination);
     }
     // This covers OAuth to user-dependent auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     // Which is the same for: OAuth2UserTokenExchange, OAuth2JWTBearer and OAuth2SAMLBearerAssertion
@@ -532,9 +542,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       case 'on-premise':
         return addProxyConfigurationOnPrem(
           destination,
-          this.subscriberToken?.userJwt || this.subscriberToken?.type === 'iss'
-            ? this.subscriberToken?.serviceJwt
-            : undefined
+          this.subscriberToken?.type === 'iss'
+            ? this.subscriberToken.serviceJwt
+            : this.subscriberToken?.userJwt
         );
       case 'internet':
       case 'private-link':

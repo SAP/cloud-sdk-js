@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { decodeJwt } from '../jwt';
+import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
@@ -47,7 +47,6 @@ import {
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
-import { wrapJwtInHeader } from '../jwt';
 import * as identityService from '../identity-service';
 import { parseDestination } from './destination';
 import { getDestination } from './destination-accessor';
@@ -754,7 +753,7 @@ describe('authentication types', () => {
 
       await expect(
         getDestination({ destinationName: 'OnPremise' })
-      ).rejects.toThrowError('For principal propagation a user JWT is needed.');
+      ).rejects.toThrowError('No user token (JWT) has been provided. This is strictly necessary for \'PrincipalPropagation\'.');
       expectAllMocksUsed(httpMocks);
     });
 
@@ -778,7 +777,7 @@ describe('authentication types', () => {
           destinationName: 'OnPremise',
           iss: onlyIssuerXsuaaUrl
         })
-      ).rejects.toThrowError('For principal propagation a user JWT is needed.');
+      ).rejects.toThrowError('No user token (JWT) has been provided. This is strictly necessary for \'PrincipalPropagation\'.');
       expectAllMocksUsed(httpMocks);
     });
   });

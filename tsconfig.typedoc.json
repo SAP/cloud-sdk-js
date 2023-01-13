@@ -60,7 +60,7 @@
     }
   ],
   "typedocOptions": {
-    "out": "docs/api/2.11.0",
+    "out": "docs/api/v3",
     "entryPoints": [
       "packages/util/src/index.ts",
       "packages/resilience/src/index.ts",

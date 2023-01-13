@@ -143,10 +143,6 @@ function validateLogs(generationLogs: string) {
 }
 
 async function generateDocs() {
-  process.on('unhandledRejection', reason => {
-    console.error(`Unhandled rejection at: ${reason}`);
-    process.exit(1);
-  });
   const generationLogs = await execa.command(
     'typedoc --tsconfig tsconfig.typedoc.json',
     {
@@ -159,5 +155,10 @@ async function generateDocs() {
   insertCopyrightAndTracking();
   writeVersions();
 }
+
+process.on('unhandledRejection', reason => {
+  console.error(`Unhandled rejection at: ${reason}`);
+  process.exit(1);
+});
 
 generateDocs();

@@ -135,7 +135,7 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
         jwt: destination.jwt,
         requestConfig: request,
         uri: resolvedDestination.url,
-        destinationName: resolvedDestination.name || undefined,
+        destinationName: resolvedDestination.name ?? undefined,
         tenantId: getTenantIdForMiddleware(destination.jwt)
       },
       () => executeFn(request)

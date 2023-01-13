@@ -53,4 +53,3 @@ export interface TestEntityCircularLinkChildType<
   keyProperty: DeserializedType<T, 'Edm.String'>;
   toParent?: TestEntityCircularLinkParentType<T> | null;
 }
-//# sourceMappingURL=TestEntityCircularLinkChild.d.ts.map

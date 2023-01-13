@@ -165,4 +165,3 @@ export declare class TestEntityLvl3MultiLinkApi<
     >;
   };
 }
-//# sourceMappingURL=TestEntityLvl3MultiLinkApi.d.ts.map

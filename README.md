@@ -145,14 +145,20 @@ Feel free to leave your feedback in form of [GitHub issues](https://github.com/S
 Want to contribute? Check out our [contribution](./CONTRIBUTING.md) guide and follow our [code of conduct](./CODE_OF_CONDUCT).
 
 ## Links
-
-- [Documentation portal](https://sap.github.io/cloud-sdk/)
+- [Official support channel](https://github.com/SAP/cloud-sdk-js/issues/new/choose)
+  <br>
+  <br>
+- [Github](https://github.com/SAP/cloud-sdk-js)
+  <br>
+  <br>
+- [SAP Cloud SDK Documentation portal](https://sap.github.io/cloud-sdk)
+- [SAP Cloud SDK Documentation portal - Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
+- [SAP Cloud SDK Documentation portal - API documentation](https://sap.github.io/cloud-sdk/api/latest)
+- [SAP Cloud SDK Documentation portal - Error handling](https://sap.github.io/cloud-sdk/docs/js/features/error-handling)
+- [SAP Cloud SDK Documentation portal - Release notes](https://sap.github.io/cloud-sdk/docs/js/release-notes)
+  <br>
+  <br>
 - [Sample repository](https://github.com/SAP-samples/cloud-sdk-js)
-- [SAP Help Page on SAP Cloud SDK](https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US)
-- [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
-- [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)
-- [SAP Cloud SDK community page](https://community.sap.com/topics/cloud-sdk)
-- [Community Call for SAP Cloud SDK](https://blogs.sap.com/2019/06/26/sap-cloud-sdk-new-format-of-the-update-call-for-sap-community/)
 
 ## License
 

@@ -6838,10 +6838,10 @@ ono@^4.0.11:
   dependencies:
     format-util "^1.0.3"
 
-openapi-backend@^5.6.0:
-  version "5.6.0"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.6.0.tgz#6a8b2da56521b0efa95eeff92f0636527de5dd20"
-  integrity sha512-viyzYxUjU8QGGSG13qH9LmTD1rl3kY1IEtoLjn8pDEwQiDuyVWHeqH/l3VOUojA2rr55at/4GldqSApqZKy76w==
+openapi-backend@^5.6.2:
+  version "5.6.2"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.6.2.tgz#9ec6b11c4c7963079a0404d29eb938d301e8a798"
+  integrity sha512-bu+9W0VXbNt8vP+Vs0x9t7diJ6BAErEpX3tCcm8fXHNWdpqjGGpHoTAhLL2jJsR30vp4oQbqbsj3EbcZw+5l8w==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^9.0.7"
     ajv "^8.6.2"

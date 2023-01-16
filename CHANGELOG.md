@@ -28,6 +28,14 @@
 
 -
 
+# 2.14.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/2.14.0
+
+## Fixed Issues
+
+- [connectivity] Fix the combination of providing the `iss` together with `OnPremise` basic destinations. (20f550efd)
+
 # 2.13.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.13.0

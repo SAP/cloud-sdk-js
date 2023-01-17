@@ -14,3 +14,5 @@ Also, you can browse our [release notes](https://help.sap.com/doc/2324e9c3b28748
 - [Example Applications using the SAP Cloud SDK](https://github.com/SAP/cloud-s4-sdk-examples)
 - [SAP Cloud SDK community page](https://community.sap.com/topics/cloud-sdk)
 - [Community Call for SAP Cloud SDK](https://blogs.sap.com/2019/06/26/sap-cloud-sdk-new-format-of-the-update-call-for-sap-community/)
+
+

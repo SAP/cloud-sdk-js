@@ -6,6 +6,7 @@
 
 ## 2.9.0
 
+
 ### Minor Changes
 
 - 4c51d3dc: [New Functionality] Add method `setGlobalTransports` to support setting custom transport globally.

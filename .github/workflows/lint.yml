@@ -25,7 +25,7 @@ jobs:
           key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
       - name: Run lint:fix
         run: |
-          yarn install --frozen-lockfile
+          yarn install --ignore-engines --frozen-lockfile
           git checkout ${{ github.event.inputs.branch }}
           git pull
           yarn lint:fix

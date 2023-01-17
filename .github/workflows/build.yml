@@ -63,7 +63,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --ignore-engines --frozen-lockfile
       - run: yarn lint
         name: Static Code Check
       - run: yarn check:test-service
@@ -95,7 +95,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --ignore-engines --frozen-lockfile
       - run: yarn test:e2e
   dependabot:
     runs-on: ubuntu-latest
@@ -149,7 +149,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --ignore-engines --frozen-lockfile
       - name: Canary Release
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
@@ -182,7 +182,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --ignore-engines --frozen-lockfile
       - uses: ./.github/actions/get-changelog
         name: Get Changelog
         id: get-changelog

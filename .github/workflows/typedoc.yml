@@ -24,5 +24,5 @@ jobs:
             node_modules
             */*/node_modules
           key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --ignore-engines --frozen-lockfile
       - run: yarn doc

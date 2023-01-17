@@ -92,7 +92,7 @@
     "@types/uuid": "^9.0.0",
     "@types/voca": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "@typescript-eslint/parser": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.2",
     "axios": "^0.27.1",
     "compare-versions": "^5.0.3",
     "depcheck": "^1.0.0",

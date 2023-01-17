@@ -40,7 +40,7 @@
     "@sap-cloud-sdk/util": "^2.11.0",
     "@sap-cloud-sdk/resilience": "^2.11.0",
     "@sap/xsenv": "^3.4.0",
-    "@sap/xssec": "^3.2.14",
+    "@sap/xssec": "^3.2.15",
     "axios": "^1.2.2",
     "http-proxy-agent": "^5.0.0",
     "https-proxy-agent": "^5.0.0",
@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "base64url": "^3.0.1",
-    "nock": "^13.2.9",
+    "nock": "^13.3.0",
     "typescript": "~4.9.4"
   }
 }

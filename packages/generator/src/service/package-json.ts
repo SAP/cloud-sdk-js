@@ -11,10 +11,6 @@ export interface PackageJsonOptions extends PackageJsonOptionsBase {
   /**
    * @internal
    */
-  sdkAfterVersionScript: boolean;
-  /**
-   * @internal
-   */
   oDataVersion: ODataVersion;
 }
 
@@ -43,10 +39,7 @@ export async function packageJson(
           '**/*-csn.json'
         ],
         scripts: {
-          compile: 'npx tsc',
-          ...(options.sdkAfterVersionScript
-            ? { version: 'node ../../../after-version-update.js' }
-            : {})
+          compile: 'npx tsc'
         },
         dependencies: {
           '@sap-cloud-sdk/odata-common': `^${options.sdkVersion}`,

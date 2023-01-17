@@ -323,7 +323,6 @@ export async function generateSourcesForService(
           npmPackageName: service.npmPackageName,
           sdkVersion: await getSdkVersion(),
           description: packageDescription(service.speakingModuleName),
-          sdkAfterVersionScript: options.sdkAfterVersionScript,
           oDataVersion: service.oDataVersion
         }),
         createFileOptions
@@ -444,7 +443,7 @@ export async function generateSourcesForService(
       createFile(
         serviceDirPath,
         'README.md',
-        readme(service, options.s4hanaCloud),
+        readme(service),
         createFileOptions
       )
     );

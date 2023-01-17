@@ -13,7 +13,7 @@ export function createOptions(
     outputDir: '',
     skipValidation: true,
     serviceMapping: 'service-mapping.json',
-    generatePackageJson: false,
+    packageJson: false,
     ...options
   });
 }

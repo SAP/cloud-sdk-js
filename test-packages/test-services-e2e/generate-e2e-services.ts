@@ -4,19 +4,12 @@ import { generate } from '@sap-cloud-sdk/generator';
 
 const logger = createLogger('generate-e2e-services');
 const generatorConfigOData = {
-  forceOverwrite: true,
   overwrite: true,
   useSwagger: false,
-  writeReadme: false,
   readme: false,
   clearOutputDir: false,
-  generateNpmrc: false,
-  generatePackageJson: false,
   packageJson: false,
-  generateSdkMetadata: false,
-  // Unnecessary options
-  sdkAfterVersionScript: false,
-  s4hanaCloud: false
+  generateSdkMetadata: false
 };
 
 async function generateE2E() {

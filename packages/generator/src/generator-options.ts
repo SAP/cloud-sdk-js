@@ -29,11 +29,6 @@ export interface GeneratorOptions {
    */
   useSwagger?: boolean;
   /**
-   * @deprecated Since v2.12.0. Use `readme` instead.
-   * Generate default `README.md` files in the client directories.
-   */
-  writeReadme?: boolean;
-  /**
    * Generate default `README.md` files in the client directories.
    */
   readme?: boolean;
@@ -41,13 +36,6 @@ export interface GeneratorOptions {
    * Include files matching the given glob into the root of each generated client directory.
    */
   include?: string;
-  /**
-   * @deprecated Since v2.12.0. Use `overwrite` instead.
-   * Exit when encountering a file that already exists.
-   * When set to true, it will be overwritten instead.
-   * Please note that compared to the `clearOutputDir` option, this will not delete outdated files.
-   */
-  forceOverwrite?: boolean;
   /**
    * Exit when encountering a file that already exists.
    * When set to true, it will be overwritten instead.
@@ -58,16 +46,6 @@ export interface GeneratorOptions {
    * Delete EVERYTHING in the specified output directory before generating code.
    */
   clearOutputDir?: boolean;
-  /**
-   * @deprecated
-   * Generate a `.npmrc` file specifying a registry for `@sap` scoped dependencies.
-   */
-  generateNpmrc?: boolean;
-  /**
-   * @deprecated Since v2.12.0. Use `packageJson` instead.
-   * Generate a `package.json` file, specifying dependencies and scripts for compiling and generating documentation.
-   */
-  generatePackageJson?: boolean;
   /**
    * Generate a `package.json` file, specifying dependencies and scripts for compiling.
    */
@@ -88,30 +66,9 @@ export interface GeneratorOptions {
    */
   generateSdkMetadata?: boolean;
   /**
-   * @deprecated Since v2.12.0.
-   * Number of node processes used for transpilation of JavaScript files.
-   */
-  processesJsGeneration?: number;
-  /**
    * Number of node processes used for transpilation of JavaScript files.
    */
   transpilationProcesses?: number;
-  /**
-   * @deprecated Since v2.12.0.
-   * When set to true, the `package.json` of generated services will have the after-version script to internally keep the versions in sync.
-   */
-  sdkAfterVersionScript?: boolean;
-  /**
-   * @deprecated Since v2.12.0.
-   * Internal option used to adjust the description for S/4HANA cloud systems. Will not be used in the future.
-   */
-  s4hanaCloud?: boolean;
-  // TODO: remove packageVersion in version 3.0
-  /**
-   * @deprecated Since v2.12.0.
-   * Internal option used to adjust the version in the generated `package.json`. Will not be used in the future.
-   */
-  packageVersion?: string;
   /**
    * By default, only errors, warnings and important info logs will be displayed.
    * If set to true, all logs will be displayed.
@@ -214,15 +171,6 @@ export const generatorOptionsCli = {
     default: false,
     hidden: true
   },
-  writeReadme: {
-    describe:
-      'When set to true, the generator will write a README.md file into the root folder of every package. This option does not make that much sense without also set useSwagger to "true".',
-    type: 'boolean',
-    default: false,
-    hidden: true,
-    deprecated: "Since v2.12.0. Use 'readme' instead.",
-    replacedBy: 'readme'
-  },
   include: {
     describe:
       'Glob describing additional files to be added to the each generated service directory - relative to the inputDir.',
@@ -236,23 +184,9 @@ export const generatorOptionsCli = {
     type: 'boolean',
     default: false
   },
-  forceOverwrite: {
-    describe:
-      'By default, the generator will exit when encountering a file that already exists. When set to true, it will be overwritten instead. Please note that compared to the --clearOutputDir option, this will not delete outdated files.',
-    type: 'boolean',
-    default: false,
-    deprecated: "Since v2.12.0. Use 'overwrite' instead.",
-    replacedBy: 'overwrite'
-  },
   clearOutputDir: {
     describe:
       'When set to true, the generator will delete EVERYTHING in the specified output directory before generating code.',
-    type: 'boolean',
-    default: false
-  },
-  generateNpmrc: {
-    describe: 'Has no effect.',
-    deprecated: 'Since v2.8.0. This option does not have any effect anymore.',
     type: 'boolean',
     default: false
   },
@@ -261,14 +195,6 @@ export const generatorOptionsCli = {
       'When enabled, a `package.json` that specifies dependencies and scripts for transpilation is generated.',
     type: 'boolean',
     default: false
-  },
-  generatePackageJson: {
-    describe:
-      'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
-    type: 'boolean',
-    default: true,
-    deprecated: "Since v2.12.0. Use 'packageJson' instead.",
-    replacedBy: 'packageJson'
   },
   transpile: {
     describe:
@@ -290,36 +216,8 @@ export const generatorOptionsCli = {
     hidden: true,
     replacedBy: 'processesJsGeneration'
   },
-  processesJsGeneration: {
-    describe: 'Number of processes used for generation of javascript files.',
-    alias: 'np',
-    type: 'number',
-    default: defaultValueProcessesJsGeneration,
-    deprecated:
-      "Since v2.12.0. Use 'transpilationProcesses' option to set number of processes for generation instead."
-  },
-  sdkAfterVersionScript: {
-    describe:
-      'When set to true, the package.json of generated services will have the after-version script to internally keep the versions in sync.',
-    type: 'boolean',
-    default: false,
-    hidden: true
-  },
   generateSdkMetadata: {
     describe: 'When set to true, SDK metadata for the API hub is generated.',
-    type: 'boolean',
-    default: false,
-    hidden: true
-  },
-  packageVersion: {
-    describe: 'Version of the generated package.',
-    type: 'string',
-    default: '1.0.0',
-    hidden: true
-  },
-  s4hanaCloud: {
-    describe:
-      'When set to true, the description of the generated packages will be specific to S/4HANA Cloud.',
     type: 'boolean',
     default: false,
     hidden: true

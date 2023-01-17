@@ -1217,13 +1217,14 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.4.0":
-  version "6.4.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.4.0.tgz#e34d72e36960b0917b507b8311bf5dcb03140e6a"
-  integrity sha512-vlOLvCdpF7k9dVEwxAk9Vu+iflDL5Dl5umpI6kpyJx/QVNp9SmVqN1hdZDP3BpvftmOphaAWxSZLMDz6JiduJw==
+"@sap/cds-dk@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.4.1.tgz#af99771d31ba5b3185a7568fd670c61b7e5f3694"
+  integrity sha512-XY/+WP98FHqVVEOSfkbpIpNlxIDrUY7C0z1EUyG8ztD3nVntJh6UUIC3LyEomlrLrbaBszR5Src7pEjPNCut+Q==
   dependencies:
     "@sap/cds" "^6.4.0"
     "@sap/cds-foss" "^4"
+    "@sap/cds-mtxs" "^1.4.3"
     "@sap/eslint-plugin-cds" "^2.6.0"
     axios ">=0.21"
     connect-livereload "^0.6.1"
@@ -1239,7 +1240,6 @@
     ws "^8.4.2"
     xml-js "^1.6.11"
   optionalDependencies:
-    "@sap/cds-mtxs" "^1.4.0"
     sqlite3 "^5.0.4"
 
 "@sap/cds-foss@^4":
@@ -1253,10 +1253,10 @@
     xmlbuilder "^15.1.1"
     yaml "^2.1.1"
 
-"@sap/cds-mtxs@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-1.4.0.tgz#02c02115f3bd90fe4ba8e7b3a9d02ae0dd2845fb"
-  integrity sha512-d9ZJPHOAJ2YXz8fpBrvBBXcxB8DOudCe9KCXiE4khtjlehuy81Aii9Al8M+wVzX6MhS0baVKWOxgzH2kNoqWHQ==
+"@sap/cds-mtxs@^1.4.3":
+  version "1.4.4"
+  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-1.4.4.tgz#ec730f8309c5e71e3e343071aa7d6da4e560e6ff"
+  integrity sha512-ll+BMHLJZTFSAU/W4XRT+Ca3/+KEVO18vsgW1LzgVaA2aDtoG1D4+Lw/tcZCE7BdGD+/OnZHdPBG4vvNH7XErQ==
   dependencies:
     "@sap/hdi-deploy" "^4"
     axios ">=0.27.2"

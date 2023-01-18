@@ -52,4 +52,3 @@ export type TestEntity =
       linkedSimpleTestEntityCollection?: SimpleTestEntity[];
     }
   | Record<string, any>;
-//# sourceMappingURL=test-entity.d.ts.map

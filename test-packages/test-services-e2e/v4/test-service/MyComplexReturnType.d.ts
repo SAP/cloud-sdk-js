@@ -88,4 +88,3 @@ export declare namespace MyComplexReturnType {
    */
   const _propertyMetadata: PropertyMetadata<MyComplexReturnType>[];
 }
-//# sourceMappingURL=MyComplexReturnType.d.ts.map

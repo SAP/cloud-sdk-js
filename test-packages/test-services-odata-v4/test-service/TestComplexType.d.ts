@@ -433,4 +433,3 @@ export declare namespace TestComplexType {
    */
   const _propertyMetadata: PropertyMetadata<TestComplexType>[];
 }
-//# sourceMappingURL=TestComplexType.d.ts.map

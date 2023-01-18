@@ -67,4 +67,3 @@ export declare class TestEntity50PropRequestBuilder<
     entity: TestEntity50Prop<T>
   ): DeleteRequestBuilder<TestEntity50Prop<T>, T>;
 }
-//# sourceMappingURL=TestEntity50PropRequestBuilder.d.ts.map

@@ -395,4 +395,3 @@ export type WriteTestServiceRequestBuilder<
       TestActionImportNullableTestParameters<DeSerializersT>,
       TestComplexType | null
     >;
-//# sourceMappingURL=BatchRequest.d.ts.map

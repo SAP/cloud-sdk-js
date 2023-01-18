@@ -59,4 +59,3 @@ export declare class AirlinesRequestBuilder<
    */
   delete(entity: Airlines<T>): DeleteRequestBuilder<Airlines<T>, T>;
 }
-//# sourceMappingURL=AirlinesRequestBuilder.d.ts.map

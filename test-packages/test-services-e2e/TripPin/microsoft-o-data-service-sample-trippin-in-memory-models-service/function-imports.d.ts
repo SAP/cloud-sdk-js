@@ -42,4 +42,3 @@ export declare function getNearestAirport<
 export declare const functionImports: {
   getNearestAirport: typeof getNearestAirport;
 };
-//# sourceMappingURL=function-imports.d.ts.map

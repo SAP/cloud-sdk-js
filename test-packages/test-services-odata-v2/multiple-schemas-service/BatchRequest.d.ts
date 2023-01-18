@@ -57,4 +57,3 @@ export type WriteMultipleSchemasServiceRequestBuilder<
   | CreateRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
   | DeleteRequestBuilder<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>;
-//# sourceMappingURL=BatchRequest.d.ts.map

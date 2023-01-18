@@ -12,4 +12,3 @@ export * from './simple-test-entity-with-symbols-1';
 export * from './complex-test-entity';
 export * from './cyclic-parent';
 export * from './cyclic-child';
-//# sourceMappingURL=index.d.ts.map

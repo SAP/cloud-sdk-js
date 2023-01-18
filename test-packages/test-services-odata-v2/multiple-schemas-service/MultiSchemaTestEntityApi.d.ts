@@ -103,4 +103,3 @@ export declare class MultiSchemaTestEntityApi<
     >;
   };
 }
-//# sourceMappingURL=MultiSchemaTestEntityApi.d.ts.map

@@ -1,6 +1,6 @@
+import * as http from 'http';
 import type { Middleware } from '@sap-cloud-sdk/resilience';
 import { HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
-import * as http from 'http';
 /**
  * Represents the request configuration, that was inferred from a destination.
  */

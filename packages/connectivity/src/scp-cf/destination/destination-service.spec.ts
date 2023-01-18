@@ -4,6 +4,7 @@ import nock from 'nock';
 import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 import { createLogger } from '@sap-cloud-sdk/util';
+// eslint-disable-next-line import/named
 import axios, { RawAxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
@@ -11,7 +12,8 @@ import { destinationServiceUri } from '../../../../../test-resources/test/test-u
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { DestinationConfiguration, parseDestination } from './destination';
 import {
-  fetchCertificate, fetchDestination,
+  fetchCertificate,
+  fetchDestination,
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';

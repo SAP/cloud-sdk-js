@@ -1,3 +1,5 @@
+import * as http from 'http';
+import * as https from 'https';
 import {
   buildHeadersForDestination,
   Destination,
@@ -23,8 +25,6 @@ import {
   unixEOL
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import * as http from 'http';
-import * as https from 'https';
 import { buildCsrfHeaders } from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,

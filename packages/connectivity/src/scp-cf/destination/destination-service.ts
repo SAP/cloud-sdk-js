@@ -6,11 +6,14 @@ import {
 } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
 import {
-  Context, HttpMiddlewareContext,
-  Middleware, resilience
+  Context,
+  HttpMiddlewareContext,
+  Middleware,
+  resilience
 } from '@sap-cloud-sdk/resilience';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import * as asyncRetry from 'async-retry';
+// eslint-disable-next-line import/named
 import axios, { AxiosError, AxiosResponse, RawAxiosRequestConfig } from 'axios';
 import { urlAndAgent } from '../../http-agent';
 import { buildAuthorizationHeaders } from '../authorization-header';

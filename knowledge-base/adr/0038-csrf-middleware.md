@@ -77,10 +77,13 @@ The `csrf()` middleware will fetch the token and add it to the `fn` before it is
 
 ```ts
 function csrf() {
-  return (fn: Function<HttpResponse, HttpRequest>, context: Context) => {
+  return (
+    fn: Function<HttpResponse, HttpRequest>,
+    context: HttpRequestContext
+  ) => {
     return async () => {
       const csrfToken = await getCsrfToken(context);
-      fn.arg.heades['x-csrf-token'] = csrfToken;
+      fn.arg.headers['x-csrf-token'] = csrfToken;
       return fn();
     };
   };

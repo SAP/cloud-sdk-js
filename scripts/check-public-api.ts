@@ -121,7 +121,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     console.log(JSON.stringify(opts));
     await transpileDirectory(pathToSource, {
       compilerOptions: opts,
-      //We have things in our sources like  #!/usr/bin/env node in CLI .js files which is not working with parser of prettier.
+      // We have things in our sources like  `#!/usr/bin/env node` in CLI `.js` files which is not working with parser of prettier.
       createFileOptions: {
         overwrite: true,
         prettierOptions: defaultPrettierConfig,

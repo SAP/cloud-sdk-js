@@ -212,4 +212,3 @@ export interface BoundFunctionWithArgumentsParameters<
 export interface BoundActionWithoutArgumentsParameters<
   DeSerializersT extends DeSerializers
 > {}
-//# sourceMappingURL=TestEntity.d.ts.map

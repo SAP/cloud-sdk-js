@@ -211,4 +211,3 @@ export declare class TestEntityLvl2MultiLinkApi<
     >;
   };
 }
-//# sourceMappingURL=TestEntityLvl2MultiLinkApi.d.ts.map

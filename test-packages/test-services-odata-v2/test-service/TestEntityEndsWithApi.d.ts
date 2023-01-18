@@ -96,4 +96,3 @@ export declare class TestEntityEndsWithApi<
     >;
   };
 }
-//# sourceMappingURL=TestEntityEndsWithApi.d.ts.map

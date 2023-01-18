@@ -1,1 +1,0 @@
-{"version":3,"file":"cyclic-parent.d.ts","sourceRoot":"","sources":["cyclic-parent.ts"],"names":[],"mappings":"AAKA,OAAO,KAAK,EAAE,WAAW,EAAE,MAAM,gBAAgB,CAAC;AAClD;;GAEG;AACH,MAAM,MAAM,YAAY,GACpB;IACE,QAAQ,CAAC,EAAE,WAAW,EAAE,CAAC;CAC1B,GACD,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,CAAC"}

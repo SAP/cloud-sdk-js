@@ -20,4 +20,3 @@ export declare const DefaultApi: {
    */
   defaultTag: () => OpenApiRequestBuilder<any>;
 };
-//# sourceMappingURL=default-api.d.ts.map

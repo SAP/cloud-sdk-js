@@ -108,4 +108,3 @@ export declare class TestEntityWithEnumKeyApi<
     >;
   };
 }
-//# sourceMappingURL=TestEntityWithEnumKeyApi.d.ts.map

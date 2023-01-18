@@ -19,8 +19,8 @@
   "devDependencies": {
     "@vercel/ncc": "^0.36.0",
     "depcheck": "^1.4.3",
-    "eslint": "^8.31.0",
-    "prettier": "^2.8.1",
+    "eslint": "^8.32.0",
+    "prettier": "^2.8.3",
     "typescript": "^4.9.4"
   }
 }

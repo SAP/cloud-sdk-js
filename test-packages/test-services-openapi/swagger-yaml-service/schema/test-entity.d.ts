@@ -18,4 +18,3 @@ export type TestEntity =
       integerProperty?: number;
     }
   | Record<string, any>;
-//# sourceMappingURL=test-entity.d.ts.map

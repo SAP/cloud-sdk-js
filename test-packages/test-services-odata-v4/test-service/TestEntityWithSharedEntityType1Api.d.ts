@@ -110,4 +110,3 @@ export declare class TestEntityWithSharedEntityType1Api<
     >;
   };
 }
-//# sourceMappingURL=TestEntityWithSharedEntityType1Api.d.ts.map

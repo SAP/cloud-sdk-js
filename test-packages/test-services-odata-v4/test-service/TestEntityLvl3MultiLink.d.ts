@@ -57,4 +57,3 @@ export interface TestEntityLvl3MultiLinkType<
   guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }
-//# sourceMappingURL=TestEntityLvl3MultiLink.d.ts.map

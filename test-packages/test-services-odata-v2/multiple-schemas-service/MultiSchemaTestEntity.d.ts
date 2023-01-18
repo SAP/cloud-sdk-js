@@ -43,4 +43,3 @@ export interface MultiSchemaTestEntityType<
 > {
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }
-//# sourceMappingURL=MultiSchemaTestEntity.d.ts.map

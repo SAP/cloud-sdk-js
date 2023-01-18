@@ -1,5 +1,3 @@
-import * as http from 'http';
-import * as https from 'https';
 import {
   buildHeadersForDestination,
   Destination,
@@ -16,6 +14,7 @@ import {
   getSubdomainAndZoneId,
   resolveDestination
 } from '@sap-cloud-sdk/connectivity/internal';
+import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   createLogger,
   ErrorWithCause,
@@ -24,7 +23,8 @@ import {
   unixEOL
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
+import * as http from 'http';
+import * as https from 'https';
 import { buildCsrfHeaders } from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
@@ -453,7 +453,7 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
 
 /**
  * Builds an Axios config with default configuration i.e. no_proxy, default http and https agent and GET as request method.
- * @returns AxiosRequestConfig with default parameters
+ * @returns RawAxiosRequestConfig with default parameters
  * @internal
  */
 export function getAxiosConfigWithDefaults(): HttpRequestConfig {

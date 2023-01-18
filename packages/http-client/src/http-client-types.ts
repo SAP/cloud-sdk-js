@@ -1,6 +1,6 @@
-import * as http from 'http';
 import type { Middleware } from '@sap-cloud-sdk/resilience';
 import { HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
+import * as http from 'http';
 /**
  * Represents the request configuration, that was inferred from a destination.
  */
@@ -47,7 +47,7 @@ export type Method =
   | 'PATCH';
 
 /**
- * This interface is compatible with AxiosRequestConfig.
+ * This interface is compatible with RawAxiosRequestConfig.
  */
 export type HttpRequestConfig = HttpRequestConfigBase & {
   params?: Record<string, any>;

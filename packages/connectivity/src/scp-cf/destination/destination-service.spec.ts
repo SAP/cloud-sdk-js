@@ -1,22 +1,21 @@
-import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
+import nock from 'nock';
 // eslint-disable-next-line import/named
-import axios, { AxiosRequestConfig } from 'axios';
 import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
-import { HttpsProxyAgent } from 'https-proxy-agent';
-import { createLogger } from '@sap-cloud-sdk/util';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
+import { createLogger } from '@sap-cloud-sdk/util';
+import axios, { RawAxiosRequestConfig } from 'axios';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
-import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
-import { Destination } from './destination-service-types';
-import {
-  fetchDestination,
-  fetchInstanceDestinations,
-  fetchSubaccountDestinations,
-  fetchCertificate
-} from './destination-service';
 import { DestinationConfiguration, parseDestination } from './destination';
+import {
+  fetchCertificate, fetchDestination,
+  fetchInstanceDestinations,
+  fetchSubaccountDestinations
+} from './destination-service';
+import { Destination } from './destination-service-types';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -531,7 +530,7 @@ describe('destination service', () => {
       const result = await fetchDestination(destinationServiceUri, jwt, {
         destinationName
       });
-      const expectedConfig: AxiosRequestConfig = {
+      const expectedConfig: RawAxiosRequestConfig = {
         baseURL:
           'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         method: 'get',
@@ -609,7 +608,7 @@ describe('destination service', () => {
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName
       });
-      const expectedConfig: AxiosRequestConfig = {
+      const expectedConfig: RawAxiosRequestConfig = {
         baseURL:
           'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         headers: {

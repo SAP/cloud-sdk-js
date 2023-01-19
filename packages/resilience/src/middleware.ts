@@ -10,6 +10,10 @@ export interface HttpMiddlewareContext extends Context {
    */
   jwt?: string;
   /**
+   * Destination name used in the request.
+   */
+  destinationName?: string;
+  /**
    * Request config.
    */
   requestConfig: AxiosRequestConfig;

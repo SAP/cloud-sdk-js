@@ -184,4 +184,3 @@ export declare class AirportsApi<
     >;
   };
 }
-//# sourceMappingURL=AirportsApi.d.ts.map

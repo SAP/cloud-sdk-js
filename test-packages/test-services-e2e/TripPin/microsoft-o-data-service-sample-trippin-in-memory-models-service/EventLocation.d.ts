@@ -100,4 +100,3 @@ export declare namespace EventLocation {
    */
   const _propertyMetadata: PropertyMetadata<EventLocation>[];
 }
-//# sourceMappingURL=EventLocation.d.ts.map

@@ -158,4 +158,3 @@ export declare class TestEntityLinkApi<
     >;
   };
 }
-//# sourceMappingURL=TestEntityLinkApi.d.ts.map

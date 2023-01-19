@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/named
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosResponse, RawAxiosRequestConfig } from 'axios';
 import nock from 'nock';
-import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
 import { circuitBreakerHttp, circuitBreakers } from './circuit-breaker';
+import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
 
 describe('circuit-breaker', () => {
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('circuit-breaker', () => {
       .get(/failing-500/)
       .reply(500);
 
-    const requestConfig: AxiosRequestConfig = {
+    const requestConfig: RawAxiosRequestConfig = {
       method: 'get',
       baseURL: host,
       url: 'failing-500'
@@ -63,7 +63,7 @@ describe('circuit-breaker', () => {
       .times(10)
       .reply(404);
 
-    const requestConfig: AxiosRequestConfig = {
+    const requestConfig: RawAxiosRequestConfig = {
       method: 'get',
       baseURL: host,
       url: 'failing-ignore'
@@ -92,7 +92,7 @@ describe('circuit-breaker', () => {
   it('creates circuit breaker for each tenant', async () => {
     nock(host, {}).get(/ok/).times(2).reply(200);
 
-    const requestConfig: AxiosRequestConfig = {
+    const requestConfig: RawAxiosRequestConfig = {
       method: 'get',
       baseURL: host,
       url: 'ok'
@@ -128,19 +128,19 @@ describe('circuit-breaker', () => {
       .get(/path-2/)
       .reply(200);
 
-    const requestConfigPath1: AxiosRequestConfig = {
+    const requestConfigPath1: RawAxiosRequestConfig = {
       method: 'get',
       baseURL: host,
       url: 'path-1'
     };
-    const requestConfigPath2: AxiosRequestConfig = {
+    const requestConfigPath2: RawAxiosRequestConfig = {
       method: 'get',
       baseURL: host,
       url: 'path-2'
     };
     const request = requestConfig => () => axios.request(requestConfig);
     const context: (
-      requestConfig: AxiosRequestConfig
+      requestConfig: RawAxiosRequestConfig
     ) => HttpMiddlewareContext = requestConfig => ({
       requestConfig,
       uri: host,
@@ -167,7 +167,7 @@ describe('circuit-breaker', () => {
       .times(10)
       .reply(401);
 
-    const requestConfig: AxiosRequestConfig = {
+    const requestConfig: RawAxiosRequestConfig = {
       method: 'post',
       baseURL: host,
       url: '/oauth/token',

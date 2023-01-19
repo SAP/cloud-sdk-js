@@ -10,6 +10,9 @@ function openFile(filePath: string): string {
 function getChangelogWithVersion(v: string = getPackageVersion()): string {
   const changelog = openFile('CHANGELOG.md');
   const [, olderLogs] = changelog.split(`${unixEOL}# ${v}`);
+  if (!olderLogs) {
+    throw new Error(`Can not find version ${v} in CHANGELOG.md`);
+  }
   let logs = olderLogs.split(`${unixEOL}# `)[0];
   logs = unixEOL + logs.slice(logs.indexOf(`${unixEOL}##`) + 1);
   logs = logs.replace(/## /g, '### ');
@@ -25,9 +28,21 @@ function getChangelogWithVersion(v: string = getPackageVersion()): string {
   return [headerWithVersion, apiReferenceLink, logs].join(unixEOL);
 }
 
+function getReleaseNotesFilePath(): string {
+  const majorVersion = getPackageVersion().split('.')[0];
+  const versionedInDocusaurus: string[] = JSON.parse(
+    readFileSync('./cloud-sdk/docs-js_versions.json', { encoding: 'utf-8' })
+  );
+  if (versionedInDocusaurus.includes(`v${majorVersion}`)) {
+    return `./cloud-sdk/docs-js_versioned_docs/version-v${majorVersion}/release-notes.mdx`;
+  }
+  return './cloud-sdk/docs-js/release-notes.mdx';
+}
+
 export function addCurrentChangelog(): void {
   const changelog = getChangelogWithVersion();
-  const releaseNotes = openFile('./cloud-sdk/docs-js/release-notes.mdx');
+  const releaseNotesFilePath = getReleaseNotesFilePath();
+  const releaseNotes = openFile(releaseNotesFilePath);
   let releaseNotesArray = releaseNotes.split(
     `<!-- This line is used for our release notes automation -->${unixEOL}`
   );
@@ -36,5 +51,5 @@ export function addCurrentChangelog(): void {
   const newReleaseNotes = releaseNotesArray.join(
     `<!-- This line is used for our release notes automation -->${unixEOL}`
   );
-  writeFileSync('./cloud-sdk/docs-js/release-notes.mdx', newReleaseNotes);
+  writeFileSync(releaseNotesFilePath, newReleaseNotes);
 }

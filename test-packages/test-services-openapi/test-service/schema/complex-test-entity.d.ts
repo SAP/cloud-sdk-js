@@ -52,4 +52,3 @@ export type ComplexTestEntity =
         | Record<string, number>;
     }
   | Record<string, any>;
-//# sourceMappingURL=complex-test-entity.d.ts.map

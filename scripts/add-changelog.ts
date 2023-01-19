@@ -1,5 +1,5 @@
 import { getPackageVersion } from './get-package-version';
-import { readFileSync, writeFileSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync } from 'fs';
 
 const unixEOL = '\n';
 
@@ -30,13 +30,21 @@ function getChangelogWithVersion(v: string = getPackageVersion()): string {
 
 function getReleaseNotesFilePath(): string {
   const majorVersion = getPackageVersion().split('.')[0];
-  const versionedInDocusaurus: string[] = JSON.parse(
-    readFileSync('./cloud-sdk/docs-js_versions.json', { encoding: 'utf-8' })
-  );
-  if (versionedInDocusaurus.includes(`v${majorVersion}`)) {
+
+  if (isVersioned(majorVersion)) {
     return `./cloud-sdk/docs-js_versioned_docs/version-v${majorVersion}/release-notes.mdx`;
   }
   return './cloud-sdk/docs-js/release-notes.mdx';
+}
+
+function isVersioned(majorVersion: string): boolean {
+  const versionedInDocusaurus = readdirSync(
+    './cloud-sdk/docs-js_versioned_docs/'
+  );
+  //The docusaurus folders are called version-v1, version-v2 so match regex for ends with v1,v2,...
+  return !!versionedInDocusaurus.find(folder =>
+    folder.match(new RegExp(`v${majorVersion}$`))
+  );
 }
 
 export function addCurrentChangelog(): void {

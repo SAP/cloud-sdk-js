@@ -56,7 +56,7 @@
     }
   ],
   "typedocOptions": {
-    "out": "docs/api/v2",
+    "out": "knowledge-base/api-reference",
     "entryPoints": [
       "packages/util/src/index.ts",
       "packages/connectivity/src/index.ts",

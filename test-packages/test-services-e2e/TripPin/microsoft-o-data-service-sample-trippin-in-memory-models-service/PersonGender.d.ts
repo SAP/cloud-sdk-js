@@ -21,4 +21,3 @@ export declare enum PersonGender {
    */
   Unknown = 'Unknown'
 }
-//# sourceMappingURL=PersonGender.d.ts.map

@@ -14,4 +14,3 @@ export type Schema123456 =
       someProperty?: string;
     }
   | Record<string, any>;
-//# sourceMappingURL=schema-123456.d.ts.map

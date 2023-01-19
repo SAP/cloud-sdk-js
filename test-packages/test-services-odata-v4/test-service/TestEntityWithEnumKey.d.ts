@@ -43,4 +43,3 @@ export interface TestEntityWithEnumKeyType<
 > {
   keyPropertyEnum1: TestEnumType;
 }
-//# sourceMappingURL=TestEntityWithEnumKey.d.ts.map

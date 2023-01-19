@@ -3,17 +3,16 @@ import { resolve } from 'path';
 import execa from 'execa';
 import * as fs from 'fs-extra';
 import mock from 'mock-fs';
-import { generate } from '../../../packages/generator/src/generator';
-import { createOptionsFromConfig } from '../../../packages/generator/src/generator-options';
-import { createOptions } from '../../../packages/generator/test/test-util/create-generator-options';
+import { generate } from '@sap-cloud-sdk/generator/internal';
+import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 
 const pathToGenerator = path.resolve(
   __dirname,
-  '../../../packages/generator/src/generator-cli.ts'
+  '../../../packages/generator/src/cli.ts'
 );
 
-describe('generator-cli', () => {
+describe('OData generator CLI', () => {
   const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
   const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
   const pathToConfig = path.resolve(__dirname, 'generator.config.json');
@@ -43,16 +42,18 @@ describe('generator-cli', () => {
   });
 
   it('should fail if mandatory parameters are not there', async () => {
-    try {
-      await execa('npx', ['ts-node', pathToGenerator]);
-    } catch (err) {
-      expect(err.stderr).toContain(
-        'Missing required arguments: inputDir, outputDir'
-      );
-    }
+    await expect(() =>
+      execa.command(`npx ts-node ${pathToGenerator}`)
+    ).rejects.toThrowError(/Missing required arguments: inputDir, outputDir/);
   }, 60000);
 
-  it('should generate VDM if all arguments are there', async () => {
+  it('should read config', async () => {
+    await expect(
+      execa.command(`npx ts-node ${pathToGenerator} -c ${pathToConfig}`)
+    ).resolves.not.toThrow();
+  }, 60000);
+
+  it('should generate client if all arguments are there', async () => {
     await generate(
       createOptions({
         inputDir,
@@ -69,13 +70,5 @@ describe('generator-cli', () => {
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('TestEntity.js');
     expect(entities).toContain('package.json');
-  });
-
-  it('should create options from a config file', () => {
-    const outputDir = path.resolve(__dirname, 'generator-test-output');
-    expect(createOptionsFromConfig(pathToConfig)).toEqual({
-      inputDir,
-      outputDir
-    });
   });
 });

@@ -121,7 +121,7 @@ export function toSanitizedObject(
 export function pickIgnoreCase<T extends Record<string, any>>(
   obj: T = {} as T,
   ...keys: string[]
-): Partial<Pick<T, (typeof keys)[number]>> {
+): Partial<Pick<T, typeof keys[number]>> {
   return keys.reduce((filteredHeaders, providedKey) => {
     const originalKey = Object.keys(obj).find(
       objKey => objKey.toLowerCase() === providedKey.toLowerCase()

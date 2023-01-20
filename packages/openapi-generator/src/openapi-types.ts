@@ -110,7 +110,7 @@ const supportedMethods = {
  * Methods supported by OpenAPI and SAP Cloud SDK.
  * @internal
  */
-export type Method = (typeof supportedMethods)[keyof typeof supportedMethods];
+export type Method = typeof supportedMethods[keyof typeof supportedMethods];
 
 /**
  * Get supported methods.

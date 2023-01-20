@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/named
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosResponse, RawAxiosRequestConfig } from 'axios';
 import nock from 'nock';
 import { circuitBreakers } from './circuit-breaker';
 import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
@@ -78,7 +78,7 @@ describe('combined resilience features', () => {
       .delay(delay)
       .reply(200);
 
-    const requestConfig: AxiosRequestConfig = {
+    const requestConfig: RawAxiosRequestConfig = {
       method: 'get',
       baseURL: host,
       url: 'with-delay'
@@ -123,7 +123,7 @@ describe('combined resilience features', () => {
       .get(/with-retry/)
       .reply(HTTP_STATUS.UNAUTHORIZED);
 
-    const requestConfig: AxiosRequestConfig = {
+    const requestConfig: RawAxiosRequestConfig = {
       method: 'get',
       baseURL: host,
       url: 'with-retry'
@@ -153,7 +153,7 @@ describe('combined resilience features', () => {
       .get(/with-retry/)
       .reply(HTTP_STATUS.OK);
 
-    const requestConfig: AxiosRequestConfig = {
+    const requestConfig: RawAxiosRequestConfig = {
       method: 'get',
       baseURL: host,
       url: 'with-retry'

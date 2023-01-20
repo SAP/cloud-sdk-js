@@ -1,6 +1,6 @@
 import { PathLike } from 'fs';
-import { resolve, dirname } from 'path';
-import { readFileSync } from 'fs-extra';
+import { resolve, dirname, join } from 'path';
+import { Options, ParsedOptions } from './options-parser';
 
 /**
  * Options to configure the client generation when using the generator programmatically.
@@ -74,56 +74,56 @@ export interface GeneratorOptions {
    * If set to true, all logs will be displayed.
    */
   verbose?: boolean;
+  /**
+   * Generation will stop if objects need renaming due to non-unique conditions or conflicts to JavaScript keywords.
+   * If you enable this option, conflicts are resolved by appending postfixes like '_1".
+   */
+  skipValidation?: boolean;
 }
 
 /**
- * @internal
+ * Resolves arguments that represent paths to an absolute path as a `string`. Only works for required options.
+ * @param arg - Path argument as passed by the user.
+ * @param options - Options as passed by the user.
+ * @returns Absolute path as a `string`.
  */
-export const defaultValueProcessesJsGeneration = 16;
-
-function coercePathArg(arg?: string): string | undefined {
-  return arg ? resolve(arg) : arg;
+function resolveRequiredPath(
+  arg: PathLike,
+  options: GeneratorOptions & { config?: string }
+): string {
+  return options.config
+    ? resolve(dirname(options.config), arg.toString())
+    : resolve(arg.toString());
 }
 
 /**
- * Union type of the deprecated option names.
- * @typeParam T - Options configuration.
+ * Same as `resolveRequiredPath`, but for non-required options.
+ * @param arg - Path argument as passed by the user, or `undefined` if nothing was passed.
+ * @param options - Options as passed by the user.
+ * @returns Absolute path as a `string` or `undefined`.
  */
-type DeprecatedOptionNamesWithReplacements<T> = {
-  [K in keyof T]: T[K] extends { deprecated: string; replacedBy: string }
-    ? K
-    : never;
-}[keyof T];
-
-/**
- * @internal
- * Helper to represent parsed options based on a public generator options type and a CLI options configuration.
- * @typeParam GeneratorOptionsOptionsT - Public generator options.
- * @typeParam CliOptionsT - Configuration of CLI options.
- */
-export type ParsedOptions<GeneratorOptionsOptionsT, CliOptionsT> = Omit<
-  Required<GeneratorOptionsOptionsT>,
-  DeprecatedOptionNamesWithReplacements<CliOptionsT>
->;
+function resolvePath(
+  arg: PathLike | undefined,
+  options: GeneratorOptions & { config?: string }
+): string | undefined {
+  return arg ? resolveRequiredPath(arg, options) : undefined;
+}
 
 /**
  * @internal
  * Represents the parsed generator options.
  */
-export type ParsedGeneratorOptions = ParsedOptions<
-  GeneratorOptions,
-  typeof generatorOptionsCli
->;
+export type ParsedGeneratorOptions = ParsedOptions<typeof cliOptions>;
 
 /**
  * @internal
  */
-export const generatorOptionsCli = {
+export const cliOptions = {
   inputDir: {
     alias: 'i',
     describe:
-      'This directory will be recursively searched for `.edmx`/`.xml` files.',
-    coerce: coercePathArg,
+      'This directory will be recursively searched for EDMX and XML files.',
+    coerce: resolveRequiredPath,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -131,7 +131,7 @@ export const generatorOptionsCli = {
   outputDir: {
     alias: 'o',
     describe: 'Directory to save the generated code in.',
-    coerce: coercePathArg,
+    coerce: resolveRequiredPath,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -141,16 +141,22 @@ export const generatorOptionsCli = {
     describe:
       'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. Will be generated if not existent. By default it will be saved to/read from the input directory as "service-mapping.json".',
     type: 'string',
-    coerce: coercePathArg,
-    normalize: true
+    coerce: (
+      arg: string | undefined,
+      options: GeneratorOptions & { config?: string }
+    ) =>
+      resolveRequiredPath(
+        arg ? arg : join(options.inputDir.toString(), 'service-mapping.json'),
+        options
+      )
   },
   prettierConfig: {
     alias: 'p',
     describe:
       'Configuration file to the prettier config relative to the generator config file',
     type: 'string',
-    coerce: coercePathArg,
-    normalize: true
+    coerce: resolvePath,
+    requiresArg: true
   },
   useSwagger: {
     describe:
@@ -161,7 +167,7 @@ export const generatorOptionsCli = {
   },
   readme: {
     describe:
-      'When set to true, the generator will write a README.md file into the root folder of every package. This option does not make that much sense without also set useSwagger to "true".',
+      "When set to true, the generator will write a README.md file into the root folder of every package. The information in the readme are mostly derived from accompanying Swagger or OpenAPI files. Therefore it is recommended to use the 'readme' option in combination with 'useSwagger'.",
     type: 'boolean',
     default: false,
     hidden: true
@@ -170,8 +176,8 @@ export const generatorOptionsCli = {
     describe:
       'Glob describing additional files to be added to the each generated service directory - relative to the inputDir.',
     type: 'string',
-    coerce: coercePathArg,
-    normalize: true
+    coerce: resolvePath,
+    requiresArg: true
   },
   overwrite: {
     describe:
@@ -198,16 +204,16 @@ export const generatorOptionsCli = {
     default: false
   },
   tsconfig: {
-    string: true,
     describe:
       'Replace the default `tsconfig.json` by passing a path to a custom config. By default, a `tsconfig.json` is only generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file is read from this directory.',
-    coerce: coercePathArg
+    type: 'string',
+    coerce: resolvePath
   },
   transpilationProcesses: {
     describe: 'Number of processes used for generation of javascript files.',
     alias: 'np',
     type: 'number',
-    default: defaultValueProcessesJsGeneration,
+    default: 16,
     hidden: true,
     replacedBy: 'processesJsGeneration'
   },
@@ -222,28 +228,11 @@ export const generatorOptionsCli = {
       'By default, only errors, warnings and important info logs will be displayed. If set to true, all logs will be displayed.',
     type: 'boolean',
     default: false
+  },
+  skipValidation: {
+    describe:
+      "Generation will stop if objects need renaming due to non-unique conditions or conflicts to JavaScript keywords. If you enable this option, conflicts are resolved by appending postfixes like '_1'",
+    type: 'boolean',
+    default: false
   }
-} as const;
-
-/**
- * @internal
- */
-export function createOptionsFromConfig(configPath: string): GeneratorOptions {
-  const file = readFileSync(configPath, 'utf-8');
-  const pathLikeKeys = [
-    'inputDir',
-    'outputDir',
-    'serviceMapping',
-    'prettierConfig'
-  ];
-  return pathLikeKeys.reduce(
-    (json, pathLikeKey) =>
-      typeof json[pathLikeKey] === 'undefined'
-        ? json
-        : {
-            ...json,
-            [pathLikeKey]: resolve(dirname(configPath), json[pathLikeKey])
-          },
-    JSON.parse(file)
-  );
-}
+} as const satisfies Options<GeneratorOptions>;

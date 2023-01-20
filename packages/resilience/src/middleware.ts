@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/named
-import { AxiosRequestConfig } from 'axios';
+import { RawAxiosRequestConfig } from 'axios';
 
 /**
  * Context for HttpRequests of the middleware.
  */
-export interface HttpMiddlewareContext extends Context<AxiosRequestConfig> {
+export interface HttpMiddlewareContext extends Context<RawAxiosRequestConfig> {
   /**
    * JWT used in the request.
    */

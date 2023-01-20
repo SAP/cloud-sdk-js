@@ -1,4 +1,4 @@
-import { ParsedGeneratorOptions } from './generator-options';
+import { ParsedGeneratorOptions } from './options';
 import { npmCompliantName } from './generator-utils';
 import { GlobalNameFormatter } from './global-name-formatter';
 import { inputPaths, ServiceDefinitionPaths } from './input-path-provider';
@@ -54,11 +54,13 @@ class ServiceGenerator {
     const vdmServiceEntities = isV2Metadata(serviceMetadata.edmx)
       ? getServiceEntitiesV2(
           serviceMetadata,
-          vdmServicePackageMetaData.className
+          vdmServicePackageMetaData.className,
+          this.options.skipValidation
         )
       : getServiceEntitiesV4(
           serviceMetadata,
-          vdmServicePackageMetaData.className
+          vdmServicePackageMetaData.className,
+          this.options.skipValidation
         );
 
     return {

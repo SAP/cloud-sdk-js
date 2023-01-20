@@ -15,8 +15,12 @@ import {
   circuitBreakers,
   circuitBreakerHttp
 } from '@sap-cloud-sdk/resilience/internal';
-import { responseWithPublicKey } from '../..//connectivity/src/scp-cf/jwt.spec';
-import { Destination, ProxyConfiguration,HttpDestination } from '../../connectivity/src';
+import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
+import {
+  Destination,
+  ProxyConfiguration,
+  HttpDestination
+} from '../../connectivity/src';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,

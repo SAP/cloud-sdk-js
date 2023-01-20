@@ -47,7 +47,7 @@ export type Method =
   | 'PATCH';
 
 /**
- * This interface is compatible with AxiosRequestConfig.
+ * This interface is compatible with RawAxiosRequestConfig.
  */
 export type HttpRequestConfig = HttpRequestConfigBase & {
   params?: Record<string, any>;

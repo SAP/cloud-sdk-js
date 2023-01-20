@@ -12,4 +12,3 @@ export type CyclicChild =
       parent?: CyclicParent;
     }
   | Record<string, any>;
-//# sourceMappingURL=cyclic-child.d.ts.map

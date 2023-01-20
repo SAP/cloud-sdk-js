@@ -58,4 +58,3 @@ export interface TestEntityCircularLinkParentType<
   toFirstChild?: TestEntityCircularLinkChildType<T> | null;
   toChildren: TestEntityCircularLinkChildType<T>[];
 }
-//# sourceMappingURL=TestEntityCircularLinkParent.d.ts.map

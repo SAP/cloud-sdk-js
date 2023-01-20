@@ -68,4 +68,3 @@ export declare class TestEntityWithEnumKeyRequestBuilder<
     entity: TestEntityWithEnumKey<T>
   ): DeleteRequestBuilder<TestEntityWithEnumKey<T>, T>;
 }
-//# sourceMappingURL=TestEntityWithEnumKeyRequestBuilder.d.ts.map

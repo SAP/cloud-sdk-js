@@ -17,6 +17,7 @@ import {
   HttpDestination,
   resolveDestination
 } from '@sap-cloud-sdk/connectivity/internal';
+import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   createLogger,
   ErrorWithCause,
@@ -25,7 +26,6 @@ import {
   unixEOL
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { buildCsrfHeaders } from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
@@ -124,6 +124,7 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
         jwt: destination.jwt,
         requestConfig: request,
         uri: resolvedDestination.url,
+        destinationName: resolvedDestination.name ?? undefined,
         tenantId: getTenantIdForMiddleware(destination.jwt)
       },
       () => executeFn(request)
@@ -443,7 +444,7 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
 
 /**
  * Builds an Axios config with default configuration i.e. no_proxy, default http and https agent and GET as request method.
- * @returns AxiosRequestConfig with default parameters
+ * @returns RawAxiosRequestConfig with default parameters
  * @internal
  */
 export function getAxiosConfigWithDefaults(): HttpRequestConfig {

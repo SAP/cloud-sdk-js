@@ -56,4 +56,3 @@ export declare const functionImports: {
   testFunctionImportEntityReturnType1: typeof testFunctionImportEntityReturnType1;
   testFunctionImportEntityReturnType2: typeof testFunctionImportEntityReturnType2;
 };
-//# sourceMappingURL=function-imports.d.ts.map

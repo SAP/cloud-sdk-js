@@ -43,7 +43,7 @@ describe('register-destination', () => {
     unmockDestinationsEnv();
   });
 
-  it('registers http destination and retrieves it', async () => {
+  it('registers HTTP destination and retrieves it', async () => {
     await registerDestination(testDestination);
     const actual = await getDestination({
       destinationName: testDestination.name

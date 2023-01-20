@@ -252,13 +252,8 @@ export function assertHttpDestination(
   destination: Destination | HttpDestination
 ): asserts destination is HttpDestination {
   if (!isHttpDestination(destination)) {
-    if (!destination.url) {
-      throw new Error(
-        `The 'url' property is not set for destination ${destination.name} which is mandatory if you use it as an 'HTTP destination`
-      );
-    }
-    throw new Error(
-      `The 'type' property is  ${destination.type} instead of  HTTP for destination '${destination.name}' which is mandatory if you use it as an 'HTTP destination`
+    throw new Error(destination.url ? 
+      `The 'type' property is  ${destination.type} instead of  HTTP for destination '${destination.name}' which is mandatory if you use it as an 'HTTP destination` : `The 'url' property is not set for destination ${destination.name} which is mandatory if you use it as an 'HTTP destination`
     );
   }
 }

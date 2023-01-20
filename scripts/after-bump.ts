@@ -3,7 +3,7 @@ import { getPackageVersion } from './get-package-version';
 import { mergeChangelogs } from './merge-changelogs';
 
 async function commitAndTag() {
-  const version = getPackageVersion;
+  const version: string = getPackageVersion();
   const cwd = process.cwd();
 
   await add('-A', cwd);

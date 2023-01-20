@@ -1,5 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
+import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { signedJwt } from '../../../../../test-resources/test/test-util';
 import {
   mockInstanceDestinationsCall,
@@ -34,27 +35,26 @@ import {
   mockJwtBearerToken,
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
-import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import { parseDestination } from './destination';
-import { getDestination } from './destination-accessor';
+import {
+  AuthenticationType,
+  Destination,
+  DestinationAuthToken
+} from './destination-service-types';
+import { destinationServiceCache } from './destination-service-cache';
+import {
+  alwaysProvider,
+  alwaysSubscriber,
+  subscriberFirst
+} from './destination-selection-strategies';
+import { getDestinationFromDestinationService } from './destination-from-service';
 import {
   destinationCache,
   getDestinationCacheKey,
   IsolationStrategy,
   setDestinationCache
 } from './destination-cache';
-import { getDestinationFromDestinationService } from './destination-from-service';
-import {
-  alwaysProvider,
-  alwaysSubscriber,
-  subscriberFirst
-} from './destination-selection-strategies';
-import { destinationServiceCache } from './destination-service-cache';
-import {
-  AuthenticationType,
-  Destination,
-  DestinationAuthToken
-} from './destination-service-types';
+import { getDestination } from './destination-accessor';
+import { parseDestination } from './destination';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',

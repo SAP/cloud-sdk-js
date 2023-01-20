@@ -235,4 +235,3 @@ export declare class TestEntityMultiLinkApi<
     >;
   };
 }
-//# sourceMappingURL=TestEntityMultiLinkApi.d.ts.map

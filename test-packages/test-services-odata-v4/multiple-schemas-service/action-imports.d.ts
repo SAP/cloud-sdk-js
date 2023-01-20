@@ -56,4 +56,3 @@ export declare const actionImports: {
   testActionImportNoParameterComplexReturnType1: typeof testActionImportNoParameterComplexReturnType1;
   testActionImportNoParameterComplexReturnType2: typeof testActionImportNoParameterComplexReturnType2;
 };
-//# sourceMappingURL=action-imports.d.ts.map

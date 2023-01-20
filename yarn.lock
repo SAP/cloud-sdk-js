@@ -6808,10 +6808,10 @@ openapi-types@^12.0.2, openapi-types@^12.1.0:
   resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-12.1.0.tgz#bd01acc937b73c9f6db2ac2031bf0231e21ebff0"
   integrity sha512-XpeCy01X6L5EpP+6Hc3jWN7rMZJ+/k1lwki/kTmWzbVhdPie3jd5O2ZtedEx8Yp58icJ0osVldLMrTB/zslQXA==
 
-opossum@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.npmjs.org/opossum/-/opossum-7.0.1.tgz#4691adf5505dd075a38ce9b404afad65cbd170f0"
-  integrity sha512-mM6mFi0ugBn1a2Q1Z7wPnfoNrLeEwn87FKLgkyPENgevt5Ct6OjTlAR7uT7YeegAZ6qj3Fz/Bt0+9VlWGtNDdQ==
+opossum@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.npmjs.org/opossum/-/opossum-7.1.0.tgz#2900e1205633e09f7b6c40770c56abe8983e7cd4"
+  integrity sha512-u3KZa2JTVsewFILe2NIebLMii/zzszTTBxRnM9USxVNcq2R2me40uP38/B39GueeOABXgWGtClPZPg4NAwHU4g==
 
 optionator@^0.8.1:
   version "0.8.3"

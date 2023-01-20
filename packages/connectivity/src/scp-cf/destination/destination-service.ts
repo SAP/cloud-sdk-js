@@ -107,7 +107,7 @@ async function fetchDestinations(
   )
     .then(response => {
       const destinations: Destination[] = response.data.map(
-        parsableDestination => parseDestination(parsableDestination)
+        destination => parseDestination(destination)
       );
 
       if (options?.useCache) {

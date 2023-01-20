@@ -32,21 +32,13 @@ const pipe =
   start =>
     fns.reduce((state, fn) => fn(state), start);
 
-/**
- * GitHub pages has requirements for links, so additional adjustment is necessary. See example below:
- * - https://username.github.io/repo/modules/sap_cloud_sdk_analytics works.
- * - https://username.github.io/repo/modules/sap_cloud_sdk_analytics.html does not.
- */
 function adjustForGitHubPages() {
   const documentationFiles = flatten(readDir(resolve(docPath)));
   const htmlPaths = documentationFiles.filter(isHtmlFile);
   adjustSearchJs(documentationFiles);
   htmlPaths.forEach(filePath =>
     transformFile(filePath, file =>
-      file.replace(
-        /<a href="[^>]*_[^>]*.html[^>]*>/gi,
-        removeUnderlinePrefixAndHtmlSuffix
-      )
+      file.replace(/<a href="[^>]*_[^>]*.html[^>]*>/gi, removeUnderlinePrefix)
     )
   );
   htmlPaths.forEach(filePath => removeUnderlinePrefixFromFileName(filePath));
@@ -58,19 +50,14 @@ function adjustSearchJs(paths) {
     throw Error(`Expected one 'search.json', but found: ${filtered.length}.`);
   }
   transformFile(filtered[0], file =>
-    file.replace(
-      /"[^"]*_[^"]*.html[^"]*"/gi,
-      removeUnderlinePrefixAndHtmlSuffix
-    )
+    file.replace(/"[^"]*_[^"]*.html[^"]*"/gi, removeUnderlinePrefix)
   );
 }
 
-function removeUnderlinePrefixAndHtmlSuffix(str) {
+function removeUnderlinePrefix(str) {
   const i = str.indexOf('_');
   // Remove the first `_`
-  const firstUnderlineRemoved = str.substring(0, i) + str.substring(i + 1);
-  // Remove `.html`
-  return firstUnderlineRemoved.replace('.html', '');
+  return str.substring(0, i) + str.substring(i + 1);
 }
 
 function removeUnderlinePrefixFromFileName(filePath) {

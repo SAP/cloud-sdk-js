@@ -1,16 +1,10 @@
 /* eslint-disable no-console */
-import {
-  lstatSync,
-  readdirSync,
-  renameSync,
-  readFileSync,
-  writeFileSync
-} from 'fs';
+import { lstatSync, readdirSync, renameSync, readFileSync } from 'fs';
 import { resolve, basename, extname } from 'path';
 import execa from 'execa';
-import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
-import { compareVersions } from 'compare-versions';
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { transformFile } from './util';
+
 const docPath = resolve(
   JSON.parse(readFileSync('tsconfig.typedoc.json', 'utf8')).typedocOptions.out
 );
@@ -110,27 +104,6 @@ function insertCopyrightAndTracking() {
   });
 }
 
-function getSortedApiVersions() {
-  return readdirSync(resolve(docPath, '..'))
-    .filter(entry => lstatSync(resolve(docPath, '..', entry)).isDirectory())
-    .sort(compareVersions)
-    .reverse();
-}
-
-function writeVersions() {
-  const apiVersions = getSortedApiVersions();
-  writeFileSync(
-    resolve('docs', 'api', 'versions.js'),
-    `export default ${formatJson(apiVersions)}`,
-    'utf8'
-  );
-  writeFileSync(
-    resolve('docs', 'api', 'versions.json'),
-    formatJson(apiVersions),
-    'utf8'
-  );
-}
-
 function validateLogs(generationLogs: string) {
   const invalidLinksMessage =
     'Found invalid symbol reference(s) in JSDocs, they will not render as links in the generated documentation.';
@@ -151,7 +124,6 @@ async function generateDocs() {
   validateLogs(generationLogs.stdout);
   adjustForGitHubPages();
   insertCopyrightAndTracking();
-  writeVersions();
 }
 
 process.on('unhandledRejection', reason => {

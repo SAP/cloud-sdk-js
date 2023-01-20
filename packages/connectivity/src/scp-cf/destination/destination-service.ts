@@ -5,19 +5,20 @@ import {
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   Context,
-  resilience,
   HttpMiddlewareContext,
-  Middleware
+  Middleware,
+  resilience
 } from '@sap-cloud-sdk/resilience';
+import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import * as asyncRetry from 'async-retry';
-import { decodeJwt, wrapJwtInHeader } from '../jwt';
+// eslint-disable-next-line import/named
+import axios, { AxiosError, AxiosResponse, RawAxiosRequestConfig } from 'axios';
 import { urlAndAgent } from '../../http-agent';
-import { getSubdomainAndZoneId } from '../xsuaa-service';
 import { buildAuthorizationHeaders } from '../authorization-header';
+import { decodeJwt, wrapJwtInHeader } from '../jwt';
+import { getSubdomainAndZoneId } from '../xsuaa-service';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -26,12 +27,12 @@ import {
   parseDestination,
   validateDestinationConfig
 } from './destination';
+import { DestinationFetchOptions } from './destination-accessor-types';
+import { destinationServiceCache } from './destination-service-cache';
 import {
   Destination,
   DestinationCertificate
 } from './destination-service-types';
-import { destinationServiceCache } from './destination-service-cache';
-import { DestinationFetchOptions } from './destination-accessor-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -400,7 +401,7 @@ async function callDestinationService(
 > {
   const { destinationName, retry } = options || {};
 
-  const config: AxiosRequestConfig = {
+  const config: RawAxiosRequestConfig = {
     ...urlAndAgent(context.uri),
     proxy: false,
     method: 'get',
@@ -417,7 +418,7 @@ async function callDestinationService(
 
   return executeWithMiddleware(
     resilienceMiddleware,
-    { requestConfig: config, ...context } as HttpMiddlewareContext,
+    { requestConfig: config, ...context, destinationName },
     () => axios.request(config)
   );
 }

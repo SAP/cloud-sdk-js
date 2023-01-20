@@ -16,6 +16,7 @@ describe('combined resilience features', () => {
     SERVICE_UNAVAILABLE: 503
   };
   const host = 'http://example.com';
+  const request = (config) => axios.request(config);
 
   beforeEach(() => {
     Object.keys(circuitBreakers).forEach(key => delete circuitBreakers[key]);
@@ -31,17 +32,16 @@ describe('combined resilience features', () => {
       .delay(300)
       .reply(HTTP_STATUS.OK);
 
-    const request = () =>
-      axios.request({
-        baseURL: 'https://example.com',
-        method: 'get',
-        url: '/retry'
-      });
+    const requestConfig = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/retry'
+    }
 
     await expect(
       executeWithMiddleware(
         [timeout(600), retry(2)],
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant', fnArguments:requestConfig},
         request
       )
     ).resolves.not.toThrow();
@@ -56,16 +56,15 @@ describe('combined resilience features', () => {
       .delay(50)
       .reply(HTTP_STATUS.OK);
 
-    const request = () =>
-      axios.request({
-        baseURL: 'https://example.com',
-        method: 'get',
-        url: '/retry'
-      });
+    const config = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/retry'
+    }
 
     const response = await executeWithMiddleware(
       [timeout(200), retry(2)],
-      { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+      { uri: 'https://example.com', tenantId: 'dummy-tenant',fnArguments:config },
       request
     );
 
@@ -85,15 +84,15 @@ describe('combined resilience features', () => {
       url: 'with-delay'
     };
     const context: HttpMiddlewareContext = {
-      requestConfig,
+      fnArguments: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
     };
-    const request = () => axios.request(requestConfig);
+
     const keepCalling = true;
     while (keepCalling) {
       await expect(
-        executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+        executeWithMiddleware<AxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
           resilience({ timeout: delay * 0.5 }),
           context,
           request
@@ -108,7 +107,7 @@ describe('combined resilience features', () => {
     expect(circuitBreakers[`${host}::myTestTenant`].stats.failures).toBe(10);
     expect(circuitBreakers[`${host}::myTestTenant`].stats.fires).toBe(10);
     await expect(
-      executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+      executeWithMiddleware<AxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
         resilience({ timeout: false }),
         context,
         request
@@ -130,13 +129,12 @@ describe('combined resilience features', () => {
       url: 'with-retry'
     };
     const context: HttpMiddlewareContext = {
-      requestConfig,
+      fnArguments: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
     };
-    const request = () => axios.request(requestConfig);
     await expect(
-      executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+      executeWithMiddleware<AxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
         resilience({ retry: true }),
         context,
         request
@@ -161,13 +159,13 @@ describe('combined resilience features', () => {
       url: 'with-retry'
     };
     const context: HttpMiddlewareContext = {
-      requestConfig,
+      fnArguments: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
     };
     const request = () => axios.request(requestConfig);
     await expect(
-      executeWithMiddleware<AxiosResponse, HttpMiddlewareContext>(
+      executeWithMiddleware<AxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
         resilience({ timeout: false, retry: true }),
         context,
         request

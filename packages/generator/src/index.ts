@@ -5,4 +5,4 @@
  */
 
 export { generate } from './generator';
-export { GeneratorOptions } from './generator-options';
+export { GeneratorOptions } from './options';

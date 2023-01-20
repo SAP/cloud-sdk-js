@@ -303,7 +303,6 @@ export async function exportAllInBarrel(
         'internal.ts',
         'index.ts',
         'cli.ts',
-        'generator-cli.ts',
         '**/*.md'
       ],
       cwd

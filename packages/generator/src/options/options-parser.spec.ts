@@ -3,20 +3,34 @@ import { getOptionsWithoutDefaults, parseOptions } from './options-parser';
 const logger = createLogger('generator-options');
 
 describe('options parser', () => {
-  const options = {
-    deprecatedOption: {
-      describe: 'deprecated option',
-      deprecated: 'Since vX.',
-      replacedBy: 'newOption'
-    },
-    otherOption: {
-      describe: 'other option'
-    },
-    newOption: {
-      describe: 'new option',
-      default: false
-    }
+  const deprecatedOption = {
+    describe: 'deprecated option',
+    type: 'string',
+    deprecated: 'Since vX.',
+    replacedBy: 'newOption'
   } as const;
+  const otherOption = {
+    describe: 'other option',
+    type: 'string'
+  } as const;
+  const newOption = {
+    describe: 'new option',
+    type: 'boolean',
+    default: false
+  } as const;
+  const coercedOption = {
+    describe: 'coerced option',
+    type: 'string',
+    coerce: (val, opt) => (val ? 'test' : opt.otherOption)
+  } as const;
+  const coercedWithDefaultOption = {
+    describe: 'coerced option',
+    type: 'string',
+    default: 'default value',
+    coerce: val => `coerced: ${val}`
+  } as const;
+  const options = { deprecatedOption, otherOption, newOption } as const;
+
   let warnSpy: jest.SpyInstance;
 
   beforeEach(() => {
@@ -65,6 +79,43 @@ describe('options parser', () => {
         })
       ).toEqual({
         newOption: true
+      });
+    });
+
+    it('coerces value', () => {
+      expect(
+        parseOptions({ otherOption, coercedOption } as const, {
+          coercedOption: 'will disappear'
+        })
+      ).toEqual({
+        coercedOption: 'test'
+      });
+    });
+
+    it('coerces value even if unset, using other options', () => {
+      expect(
+        parseOptions({ otherOption, coercedOption } as const, {
+          otherOption: 'other option value'
+        })
+      ).toEqual({
+        otherOption: 'other option value',
+        coercedOption: 'other option value'
+      });
+    });
+
+    it('coerces value for properties with a default value, when set', () => {
+      expect(
+        parseOptions({ coercedWithDefaultOption } as const, {
+          coercedWithDefaultOption: 'custom value'
+        })
+      ).toEqual({
+        coercedWithDefaultOption: 'coerced: custom value'
+      });
+    });
+
+    it('coerces value for properties with a default value, when unset', () => {
+      expect(parseOptions({ coercedWithDefaultOption } as const, {})).toEqual({
+        coercedWithDefaultOption: 'coerced: default value'
       });
     });
 

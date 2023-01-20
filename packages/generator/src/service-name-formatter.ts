@@ -1,5 +1,6 @@
 import {
   camelCase,
+  createLogger,
   UniqueNameGenerator,
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
@@ -11,6 +12,7 @@ import {
   reservedServiceKeywords
 } from './reserved-words';
 
+const logger = createLogger('service-name-formatter');
 /**
  * @internal
  */
@@ -28,6 +30,8 @@ export class ServiceNameFormatter {
   static directoryToSpeakingModuleName(packageName: string): string {
     return voca.titleCase(packageName.replace(/-/g, ' '));
   }
+  private serviceName: string;
+  private skipValidation: boolean;
 
   private serviceWideNameGenerator = new UniqueNameGenerator('_', [
     ...defaultReservedWords,
@@ -47,10 +51,29 @@ export class ServiceNameFormatter {
   } = {};
 
   constructor(
-    entitySetNames: string[] = [],
-    complexTypeNames: string[] = [],
-    functionImportNames: string[] = []
+    serviceName: string,
+    options?: {
+      skipValidation?: boolean;
+      entitySetNames?: string[];
+      complexTypeNames?: string[];
+      functionImportNames?: string[];
+    }
   ) {
+    const defaults = {
+      skipValidation: false,
+      entitySetNames: [],
+      complexTypeNames: [],
+      functionImportNames: []
+    };
+    const {
+      skipValidation,
+      entitySetNames,
+      complexTypeNames,
+      functionImportNames
+    } = { ...defaults, ...options };
+    this.skipValidation = skipValidation;
+    this.serviceName = serviceName;
+
     // Here we assume that entity sets and complex types cannot have the same original name
     [...entitySetNames, ...complexTypeNames].forEach(
       entitySetOrComplexTypeName => {
@@ -81,7 +104,34 @@ export class ServiceNameFormatter {
       originalContainerTypeName
     );
 
-    return generator.generateAndSaveUniqueName(transformedName);
+    const uniqueName = generator.generateAndSaveUniqueName(transformedName);
+    this.assertNameChange({
+      originalContainerTypeName,
+      transformedName,
+      uniqueName
+    });
+    return uniqueName;
+  }
+
+  assertNameChange({
+    originalContainerTypeName,
+    transformedName,
+    uniqueName
+  }: {
+    originalContainerTypeName: string;
+    transformedName: string;
+    uniqueName: string;
+  }): void {
+    if (uniqueName !== transformedName) {
+      const message = `A naming conflict appears for service ${this.serviceName} in container '${originalContainerTypeName}'.
+The conflict resolution is: ${transformedName} -> ${uniqueName}.`;
+      if (this.skipValidation) {
+        logger.info(message);
+      } else {
+        throw new Error(`${message}
+If you are ok with this change execute the generator with the '--skipValidation' option.`);
+      }
+    }
   }
 
   originalToInstancePropertyName(
@@ -95,7 +145,13 @@ export class ServiceNameFormatter {
       originalContainerTypeName
     );
 
-    return generator.generateAndSaveUniqueName(transformedName);
+    const uniqueName = generator.generateAndSaveUniqueName(transformedName);
+    this.assertNameChange({
+      originalContainerTypeName: 'action/function operation name',
+      transformedName,
+      uniqueName
+    });
+    return uniqueName;
   }
 
   originalToOperationName(originalName: string): string {
@@ -103,33 +159,42 @@ export class ServiceNameFormatter {
     const newName =
       this.serviceWideNameGenerator.generateAndSaveUniqueName(transformedName);
 
-    return applyPrefixOnJsConflictFunctionImports(newName);
+    const uniqueName = applyPrefixOnJsConflictFunctionImports(newName);
+
+    this.assertNameChange({
+      originalContainerTypeName: 'action/function operation name',
+      transformedName,
+      uniqueName
+    });
+
+    return uniqueName;
   }
 
   originalToBoundOperationName(
     entityName: string,
     functionName: string
   ): string {
-    const newName = this.originalToInstancePropertyName(
+    const transformedName = this.originalToInstancePropertyName(
       entityName,
       functionName
     );
-    return applyPrefixOnJsConflictFunctionImports(newName);
+    const uniqueName = applyPrefixOnJsConflictFunctionImports(transformedName);
+
+    this.assertNameChange({
+      originalContainerTypeName: 'bound action/function operation name',
+      transformedName,
+      uniqueName
+    });
+
+    return uniqueName;
   }
 
   originalToComplexTypeName(originalName: string): string {
-    const transformedName = stripAUnderscore(
-      voca.titleCase(originalName)
-    ).replace('_', '');
-
-    return this.serviceWideNameGenerator.generateAndSaveUniqueName(
-      transformedName,
-      false
-    );
+    return this.originalToServiceWideName(originalName, 'complex type name');
   }
 
   originalToEnumTypeName(originalName: string): string {
-    return this.originalToComplexTypeName(originalName);
+    return this.originalToServiceWideName(originalName, 'enum name');
   }
 
   originalToNavigationPropertyName(
@@ -142,7 +207,15 @@ export class ServiceNameFormatter {
       this.instancePropertyNameGenerators,
       entitySetName
     );
-    return generator.generateAndSaveUniqueName(transformedName);
+    const uniqueName = generator.generateAndSaveUniqueName(transformedName);
+
+    this.assertNameChange({
+      originalContainerTypeName: entitySetName,
+      transformedName,
+      uniqueName
+    });
+
+    return uniqueName;
   }
 
   originalToParameterName(
@@ -156,7 +229,15 @@ export class ServiceNameFormatter {
       originalFunctionImportName
     );
 
-    return generator.generateAndSaveUniqueName(transformedName);
+    const uniqueName = generator.generateAndSaveUniqueName(transformedName);
+
+    this.assertNameChange({
+      originalContainerTypeName: 'action/function parameter name',
+      transformedName,
+      uniqueName
+    });
+
+    return uniqueName;
   }
 
   originalToBoundParameterName(
@@ -171,7 +252,15 @@ export class ServiceNameFormatter {
       `${entityName}.${originalFunctionImportName}`
     );
 
-    return generator.generateAndSaveUniqueName(transformedName);
+    const uniqueName = generator.generateAndSaveUniqueName(transformedName);
+
+    this.assertNameChange({
+      originalContainerTypeName: 'bound action/function parameter name',
+      transformedName,
+      uniqueName
+    });
+
+    return uniqueName;
   }
 
   originalToEntityClassName(entitySetName: string): string {
@@ -182,14 +271,42 @@ export class ServiceNameFormatter {
 
     transformedName = stripAUnderscore(voca.titleCase(transformedName));
 
-    const newNames =
+    const uniqueName =
       this.serviceWideNameGenerator.generateAndSaveUniqueNamesWithSuffixes(
         transformedName,
         getInterfaceNamesSuffixes(),
         false
-      );
+      )[0];
 
-    return newNames[0];
+    this.assertNameChange({
+      originalContainerTypeName: 'entity set name',
+      transformedName,
+      uniqueName
+    });
+
+    return uniqueName;
+  }
+
+  private originalToServiceWideName(
+    originalName: string,
+    originalContainerTypeName: string
+  ): string {
+    const transformedName = stripAUnderscore(
+      voca.titleCase(originalName)
+    ).replace('_', '');
+
+    const uniqueName = this.serviceWideNameGenerator.generateAndSaveUniqueName(
+      transformedName,
+      false
+    );
+
+    this.assertNameChange({
+      originalContainerTypeName,
+      transformedName,
+      uniqueName
+    });
+
+    return uniqueName;
   }
 
   private getOrInitGenerator(

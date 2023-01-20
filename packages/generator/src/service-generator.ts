@@ -54,11 +54,13 @@ class ServiceGenerator {
     const vdmServiceEntities = isV2Metadata(serviceMetadata.edmx)
       ? getServiceEntitiesV2(
           serviceMetadata,
-          vdmServicePackageMetaData.className
+          vdmServicePackageMetaData.className,
+          this.options.skipValidation
         )
       : getServiceEntitiesV4(
           serviceMetadata,
-          vdmServicePackageMetaData.className
+          vdmServicePackageMetaData.className,
+          this.options.skipValidation
         );
 
     return {

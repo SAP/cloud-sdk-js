@@ -13,7 +13,7 @@ export function parseCmdArgs(
   const command = yargs(argv)
     .command(
       '$0',
-      'OData Client Code Generator for OData v2 and v4. Generates typed clients from EDMX and XML files for usage with the SAP Cloud SDK for JavaScript.'
+      'OpenAPI Client Code Generator. Generates typed clients from OpenAPI files for usage with the SAP Cloud SDK for JavaScript.'
     )
     .options(getOptionsWithoutDefaults(cliOptions))
     .config()

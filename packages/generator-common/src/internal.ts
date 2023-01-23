@@ -6,3 +6,4 @@ export * from './util';
 export * from './file-writer';
 export * from './package-description';
 export * from './ts-config';
+export * from './options-parser';

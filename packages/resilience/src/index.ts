@@ -15,7 +15,6 @@ export type {
 export {
   MiddlewareIn,
   MiddlewareContext,
-  // HttpMiddlewareContext,
   SkipNext
 } from './middleware';
 export { ResilienceOptions, resilience } from './resilience';

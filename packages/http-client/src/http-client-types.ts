@@ -116,7 +116,7 @@ export interface HttpRequestConfigBase {
   data?: any;
   /**
    * Middleware {@link @sap-cloud-sdk/resilience!Middleware} to be applied to the request.
-   * The request context is set using {@link @sap-cloud-sdk/resilience!HttpMiddlewareContext}.
+   * The request context is set using {@link @sap-cloud-sdk/http-client!HttpMiddlewareContext}.
    */
   middleware?: HttpMiddleware[];
   /**

@@ -1,19 +1,3 @@
-// eslint-disable-next-line import/named
-
-// /**
-//  * Context for HttpRequests of the middleware.
-//  */
-// export interface HttpMiddlewareContext extends Context<RawAxiosRequestConfig> {
-//   /**
-//    * JWT used in the request.
-//    */
-//   jwt?: string;
-//   /**
-//    * Destination name used in the request.
-//    */
-//   destinationName?: string;
-// }
-
 /**
  * Input parameter of a middleware.
  */

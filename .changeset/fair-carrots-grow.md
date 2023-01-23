@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/generator': patch
 ---
 
-Fixes the link to the generator binary.
+[Fixed Issue] Now links to the correct generator binary.

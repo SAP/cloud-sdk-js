@@ -1,19 +1,18 @@
 // eslint-disable-next-line import/named
-import { RawAxiosRequestConfig } from 'axios';
 
-/**
- * Context for HttpRequests of the middleware.
- */
-export interface HttpMiddlewareContext extends Context<RawAxiosRequestConfig> {
-  /**
-   * JWT used in the request.
-   */
-  jwt?: string;
-  /**
-   * Destination name used in the request.
-   */
-  destinationName?: string;
-}
+// /**
+//  * Context for HttpRequests of the middleware.
+//  */
+// export interface HttpMiddlewareContext extends Context<RawAxiosRequestConfig> {
+//   /**
+//    * JWT used in the request.
+//    */
+//   jwt?: string;
+//   /**
+//    * Destination name used in the request.
+//    */
+//   destinationName?: string;
+// }
 
 /**
  * Input parameter of a middleware.
@@ -21,7 +20,7 @@ export interface HttpMiddlewareContext extends Context<RawAxiosRequestConfig> {
 export interface MiddlewareIn<
   ArgumentT,
   ReturnT,
-  ContextT extends Context<ArgumentT>
+  ContextT extends MiddlewareContext<ArgumentT>
 > {
   /**
    * Initial function enriched by the middleware e.g. axios request getting a timeout.
@@ -60,7 +59,7 @@ export type MiddlewareOut<ArgumentT, ReturnT> = MiddlewareFunction<
 /**
  * Minimal Context of the middleware.
  */
-export interface Context<ArgumentT> {
+export interface MiddlewareContext<ArgumentT> {
   /**
    * URI of the function passed to the middleware.
    */
@@ -75,7 +74,10 @@ export interface Context<ArgumentT> {
   fnArgument: ArgumentT;
 }
 
-type MiddlewareFunction<ArgumentT, ReturnT> = (
+/**
+ * Function ot which the middleware is added.
+ */
+export type MiddlewareFunction<ArgumentT, ReturnT> = (
   arg: ArgumentT
 ) => Promise<ReturnT>;
 
@@ -87,7 +89,7 @@ type MiddlewareFunction<ArgumentT, ReturnT> = (
 export type Middleware<
   ArgumentT,
   ReturnT,
-  ContextT extends Context<ArgumentT>
+  ContextT extends MiddlewareContext<ArgumentT>
 > = (
   options: MiddlewareIn<ArgumentT, ReturnT, ContextT>
 ) => MiddlewareOut<ArgumentT, ReturnT>;
@@ -103,7 +105,7 @@ export type Middleware<
 export function executeWithMiddleware<
   ArgumentT,
   ReturnT,
-  ContextT extends Context<ArgumentT>
+  ContextT extends MiddlewareContext<ArgumentT>
 >(
   middlewares: Middleware<ArgumentT, ReturnT, ContextT>[] | undefined,
   context: ContextT,
@@ -141,7 +143,7 @@ export function executeWithMiddleware<
 function addMiddlewaresToInitialFunction<
   ArgumentT,
   ReturnT,
-  ContextT extends Context<ArgumentT>
+  ContextT extends MiddlewareContext<ArgumentT>
 >(
   middlewares: Middleware<ArgumentT, ReturnT, ContextT>[],
   initial: MiddlewareIn<ArgumentT, ReturnT, ContextT>

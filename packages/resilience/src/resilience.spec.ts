@@ -2,7 +2,7 @@
 import axios, { AxiosResponse, RawAxiosRequestConfig } from 'axios';
 import nock from 'nock';
 import { circuitBreakers } from './circuit-breaker';
-import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
+import { MiddlewareContext, executeWithMiddleware } from './middleware';
 import { resilience } from './resilience';
 import { retry } from './retry';
 import { timeout } from './timeout';
@@ -91,7 +91,7 @@ describe('combined resilience features', () => {
       baseURL: host,
       url: 'with-delay'
     };
-    const context: HttpMiddlewareContext = {
+    const context: MiddlewareContext<RawAxiosRequestConfig> = {
       fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
@@ -103,7 +103,7 @@ describe('combined resilience features', () => {
         executeWithMiddleware<
           RawAxiosRequestConfig,
           AxiosResponse,
-          HttpMiddlewareContext
+          MiddlewareContext<RawAxiosRequestConfig>
         >(resilience({ timeout: delay * 0.5 }), context, request)
       ).rejects.toThrow();
 
@@ -118,7 +118,7 @@ describe('combined resilience features', () => {
       executeWithMiddleware<
         RawAxiosRequestConfig,
         AxiosResponse,
-        HttpMiddlewareContext
+        MiddlewareContext<RawAxiosRequestConfig>
       >(resilience({ timeout: false }), context, request)
     ).rejects.toThrow('Breaker is open');
 
@@ -136,7 +136,7 @@ describe('combined resilience features', () => {
       baseURL: host,
       url: 'with-retry'
     };
-    const context: HttpMiddlewareContext = {
+    const context: MiddlewareContext<RawAxiosRequestConfig> = {
       fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
@@ -145,7 +145,7 @@ describe('combined resilience features', () => {
       executeWithMiddleware<
         RawAxiosRequestConfig,
         AxiosResponse,
-        HttpMiddlewareContext
+        MiddlewareContext<RawAxiosRequestConfig>
       >(resilience({ retry: true }), context, request)
     ).rejects.toThrowError(/Request failed with status code 401/);
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
@@ -166,7 +166,7 @@ describe('combined resilience features', () => {
       baseURL: host,
       url: 'with-retry'
     };
-    const context: HttpMiddlewareContext = {
+    const context: MiddlewareContext<RawAxiosRequestConfig> = {
       fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
@@ -175,7 +175,7 @@ describe('combined resilience features', () => {
       executeWithMiddleware<
         RawAxiosRequestConfig,
         AxiosResponse,
-        HttpMiddlewareContext
+        MiddlewareContext<RawAxiosRequestConfig>
       >(resilience({ timeout: false, retry: true }), context, request)
     ).resolves.not.toThrowError();
 

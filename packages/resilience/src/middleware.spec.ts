@@ -1,11 +1,15 @@
 import { createLogger } from '@sap-cloud-sdk/util/dist/logger';
-import { Context, executeWithMiddleware, MiddlewareIn } from './middleware';
+import {
+  MiddlewareContext,
+  executeWithMiddleware,
+  MiddlewareIn
+} from './middleware';
 
 describe('middleware', () => {
   const logger = createLogger('middleware');
 
   const middleWareAppend1 = function (
-    options: MiddlewareIn<string, string, Context<string>>
+    options: MiddlewareIn<string, string, MiddlewareContext<string>>
   ) {
     const id = 'append1';
     return s => {
@@ -14,7 +18,7 @@ describe('middleware', () => {
     };
   };
   const middleWareAppend2 = function (
-    options: MiddlewareIn<string, string, Context<string>>
+    options: MiddlewareIn<string, string, MiddlewareContext<string>>
   ) {
     const id = 'append2';
     return s => {
@@ -24,14 +28,14 @@ describe('middleware', () => {
   };
 
   const middleWareSkip = function (
-    options: MiddlewareIn<string, string, Context<string>>
+    options: MiddlewareIn<string, string, MiddlewareContext<string>>
   ) {
     options.skipNext();
     return options.fn;
   };
 
   const middleWareAdjustArgument = function (
-    options: MiddlewareIn<string, string, Context<string>>
+    options: MiddlewareIn<string, string, MiddlewareContext<string>>
   ) {
     options.context.fnArgument = 'Changed by middleware';
     return options.fn;

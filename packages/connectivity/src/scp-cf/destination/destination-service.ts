@@ -8,9 +8,8 @@ import {
 import axios, { RawAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
-  Context,
+  MiddlewareContext,
   resilience,
-  HttpMiddlewareContext,
   Middleware
 } from '@sap-cloud-sdk/resilience';
 import * as asyncRetry from 'async-retry';
@@ -321,7 +320,7 @@ function retryDestination(
 ): Middleware<
   RawAxiosRequestConfig,
   AxiosResponse<DestinationJson>,
-  HttpMiddlewareContext
+  MiddlewareContext<RawAxiosRequestConfig>
 > {
   return options => arg => {
     let retryCount = 1;
@@ -363,7 +362,7 @@ type DestinationCertificateJson = {
 };
 
 async function callCertificateEndpoint(
-  context: Omit<Context<RawAxiosRequestConfig>, 'fnArgument'>,
+  context: Omit<MiddlewareContext<RawAxiosRequestConfig>, 'fnArgument'>,
   headers: Record<string, any>
 ): Promise<AxiosResponse<DestinationCertificateJson>> {
   if (!context.uri.includes('Certificates')) {
@@ -377,7 +376,7 @@ async function callCertificateEndpoint(
 }
 
 async function callDestinationEndpoint(
-  context: Omit<Context<RawAxiosRequestConfig>, 'fnArgument'>,
+  context: Omit<MiddlewareContext<RawAxiosRequestConfig>, 'fnArgument'>,
   headers: Record<string, any>,
   options?: DestinationServiceOptions
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
@@ -394,7 +393,7 @@ async function callDestinationEndpoint(
 }
 
 async function callDestinationService(
-  context: Omit<Context<RawAxiosRequestConfig>, 'fnArgument'>,
+  context: Omit<MiddlewareContext<RawAxiosRequestConfig>, 'fnArgument'>,
   headers: Record<string, any>,
   options?: DestinationServiceOptions
 ): Promise<
@@ -417,14 +416,14 @@ async function callDestinationService(
           ...resilience<
             RawAxiosRequestConfig,
             AxiosResponse,
-            HttpMiddlewareContext
+            MiddlewareContext<RawAxiosRequestConfig>
           >(),
           retryDestination(destinationName)
         ]
       : resilience<
           RawAxiosRequestConfig,
           AxiosResponse,
-          HttpMiddlewareContext
+          MiddlewareContext<RawAxiosRequestConfig>
         >();
 
   return executeWithMiddleware(

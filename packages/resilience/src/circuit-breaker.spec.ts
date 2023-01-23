@@ -2,7 +2,7 @@
 import axios, { AxiosResponse, RawAxiosRequestConfig } from 'axios';
 import nock from 'nock';
 import { circuitBreakerHttp, circuitBreakers } from './circuit-breaker';
-import { executeWithMiddleware, HttpMiddlewareContext } from './middleware';
+import { MiddlewareContext, executeWithMiddleware } from './middleware';
 
 describe('circuit-breaker', () => {
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe('circuit-breaker', () => {
       baseURL: host,
       url: 'failing-500'
     };
-    const context: HttpMiddlewareContext = {
+    const context: MiddlewareContext<RawAxiosRequestConfig> = {
       fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
@@ -35,7 +35,7 @@ describe('circuit-breaker', () => {
         executeWithMiddleware<
           RawAxiosRequestConfig,
           AxiosResponse,
-          HttpMiddlewareContext
+          MiddlewareContext<RawAxiosRequestConfig>
         >([circuitBreakerHttp()], context, request)
       ).rejects.toThrow();
       const breaker = circuitBreakers[`${host}::myTestTenant`];
@@ -47,7 +47,7 @@ describe('circuit-breaker', () => {
       executeWithMiddleware<
         RawAxiosRequestConfig,
         AxiosResponse,
-        HttpMiddlewareContext
+        MiddlewareContext<RawAxiosRequestConfig>
       >([circuitBreakerHttp()], context, request)
     ).rejects.toThrow('Breaker is open');
   });
@@ -69,7 +69,7 @@ describe('circuit-breaker', () => {
       baseURL: host,
       url: 'failing-ignore'
     };
-    const context: HttpMiddlewareContext = {
+    const context: MiddlewareContext<RawAxiosRequestConfig> = {
       fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
@@ -81,7 +81,7 @@ describe('circuit-breaker', () => {
         executeWithMiddleware<
           RawAxiosRequestConfig,
           AxiosResponse,
-          HttpMiddlewareContext
+          MiddlewareContext<RawAxiosRequestConfig>
         >([circuitBreakerHttp()], context, request)
       ).rejects.toThrow();
 
@@ -98,7 +98,7 @@ describe('circuit-breaker', () => {
       baseURL: host,
       url: 'ok'
     };
-    const context: HttpMiddlewareContext = {
+    const context: MiddlewareContext<RawAxiosRequestConfig> = {
       fnArgument: requestConfig,
       uri: host,
       tenantId: 'tenant1'
@@ -107,12 +107,12 @@ describe('circuit-breaker', () => {
     await executeWithMiddleware<
       RawAxiosRequestConfig,
       AxiosResponse,
-      HttpMiddlewareContext
+      MiddlewareContext<RawAxiosRequestConfig>
     >([circuitBreakerHttp()], context, request);
     await executeWithMiddleware<
       RawAxiosRequestConfig,
       AxiosResponse,
-      HttpMiddlewareContext
+      MiddlewareContext<RawAxiosRequestConfig>
     >([circuitBreakerHttp()], { ...context, tenantId: 'tenant2' }, request);
 
     expect(Object.keys(circuitBreakers)).toEqual([
@@ -140,7 +140,7 @@ describe('circuit-breaker', () => {
     };
     const context: (
       requestConfig: RawAxiosRequestConfig
-    ) => HttpMiddlewareContext = requestConfig => ({
+    ) => MiddlewareContext<RawAxiosRequestConfig> = requestConfig => ({
       fnArgument: requestConfig,
       uri: host,
       tenantId: 'tenant1'
@@ -149,12 +149,12 @@ describe('circuit-breaker', () => {
     await executeWithMiddleware<
       RawAxiosRequestConfig,
       AxiosResponse,
-      HttpMiddlewareContext
+      MiddlewareContext<RawAxiosRequestConfig>
     >([circuitBreakerHttp()], context(requestConfigPath1), request);
     await executeWithMiddleware<
       RawAxiosRequestConfig,
       AxiosResponse,
-      HttpMiddlewareContext
+      MiddlewareContext<RawAxiosRequestConfig>
     >([circuitBreakerHttp()], context(requestConfigPath2), request);
 
     expect(Object.keys(circuitBreakers)).toEqual([`${host}::tenant1`]);
@@ -176,7 +176,7 @@ describe('circuit-breaker', () => {
         grant_type: 'client_credentials'
       }
     };
-    const context: HttpMiddlewareContext = {
+    const context: MiddlewareContext<RawAxiosRequestConfig> = {
       fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
@@ -188,7 +188,7 @@ describe('circuit-breaker', () => {
         executeWithMiddleware<
           RawAxiosRequestConfig,
           AxiosResponse,
-          HttpMiddlewareContext
+          MiddlewareContext<RawAxiosRequestConfig>
         >([circuitBreakerHttp()], context, request)
       ).rejects.toThrowError(/Request failed with status code 401/);
       keepCalling = !mock.isDone();

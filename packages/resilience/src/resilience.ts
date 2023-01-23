@@ -1,7 +1,7 @@
 import { timeout } from './timeout';
 import { retry } from './retry';
 import { circuitBreakerHttp } from './circuit-breaker';
-import { Context } from './middleware';
+import { MiddlewareContext } from './middleware';
 import type { Middleware } from './middleware';
 /**
  * Interface for Resilience Options.
@@ -42,7 +42,7 @@ const defaultResilienceOptions: ResilienceOptions = {
 export function resilience<
   ArgumenT,
   ReturnT,
-  ContextT extends Context<ArgumenT>
+  ContextT extends MiddlewareContext<ArgumenT>
 >(options?: ResilienceOptions): Middleware<ArgumenT, ReturnT, ContextT>[] {
   const resilienceOption = { ...defaultResilienceOptions, ...options };
   const middlewares: Middleware<ArgumenT, ReturnT, ContextT>[] = [];

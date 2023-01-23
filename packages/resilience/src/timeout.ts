@@ -1,5 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Context, Middleware, MiddlewareIn, MiddlewareOut } from './middleware';
+import {
+  MiddlewareContext,
+  Middleware,
+  MiddlewareIn,
+  MiddlewareOut
+} from './middleware';
 
 const defaultTimeout = 10000;
 
@@ -16,7 +21,7 @@ const logger = createLogger({
 export function timeout<
   ArgumentType,
   ReturnType,
-  ContextType extends Context<ArgumentType>
+  ContextType extends MiddlewareContext<ArgumentType>
 >(
   timeoutValue: number = defaultTimeout
 ): Middleware<ArgumentType, ReturnType, ContextType> {

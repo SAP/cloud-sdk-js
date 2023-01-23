@@ -1,6 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import * as asyncRetry from 'async-retry';
-import { Context, Middleware, MiddlewareIn, MiddlewareOut } from './middleware';
+import {
+  MiddlewareContext,
+  Middleware,
+  MiddlewareIn,
+  MiddlewareOut
+} from './middleware';
 
 const logger = createLogger({
   package: 'resilience',
@@ -17,7 +22,7 @@ const defaultRetryCount = 3;
 export function retry<
   ArgumentType,
   ReturnType,
-  ContextType extends Context<ArgumentType>
+  ContextType extends MiddlewareContext<ArgumentType>
 >(
   retryCount: number = defaultRetryCount
 ): Middleware<ArgumentType, ReturnType, ContextType> {

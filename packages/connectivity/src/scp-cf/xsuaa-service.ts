@@ -1,6 +1,6 @@
 import * as xssec from '@sap/xssec';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
-import { resilience, Context } from '@sap-cloud-sdk/resilience';
+import { resilience, MiddlewareContext } from '@sap-cloud-sdk/resilience';
 import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
@@ -74,7 +74,7 @@ export async function getClientCredentialsToken(
   return executeWithMiddleware<
     typeof fnArgs,
     ClientCredentialsResponse,
-    Context<typeof fnArgs>
+    MiddlewareContext<typeof fnArgs>
   >(
     resilience(),
     {
@@ -118,7 +118,11 @@ export function getUserToken(
       )
     );
 
-  return executeWithMiddleware<typeof fnArgs, string, Context<typeof fnArgs>>(
+  return executeWithMiddleware<
+    typeof fnArgs,
+    string,
+    MiddlewareContext<typeof fnArgs>
+  >(
     resilience(),
     {
       uri: service.credentials.url,

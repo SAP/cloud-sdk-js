@@ -1,7 +1,7 @@
 import CircuitBreaker from 'opossum';
 // eslint-disable-next-line import/named
 import { AxiosError } from 'axios';
-import { Context, Middleware, MiddlewareIn } from './middleware';
+import { MiddlewareContext, Middleware, MiddlewareIn } from './middleware';
 
 /**
  * Map of all existing circuit breakers.
@@ -21,7 +21,7 @@ export const circuitBreakerDefaultOptions: CircuitBreakerOptions = {
   cache: false
 };
 type ErrorFilter = (err) => boolean;
-type KeyBuilder<ArgumentT, ContextT extends Context<ArgumentT>> = (
+type KeyBuilder<ArgumentT, ContextT extends MiddlewareContext<ArgumentT>> = (
   context: ContextT
 ) => string;
 
@@ -37,7 +37,7 @@ function httpErrorFilter(error: AxiosError): boolean {
 
 function circuitBreakerKeyBuilder<
   ArgumentT,
-  ContextT extends Context<ArgumentT>
+  ContextT extends MiddlewareContext<ArgumentT>
 >(context: ContextT): string {
   return `${context.uri}::${context.tenantId}`;
 }
@@ -49,7 +49,7 @@ function circuitBreakerKeyBuilder<
 export function circuitBreakerHttp<
   ArgumentT,
   ReturnT,
-  ContextT extends Context<ArgumentT>
+  ContextT extends MiddlewareContext<ArgumentT>
 >(): Middleware<ArgumentT, ReturnT, ContextT> {
   return circuitBreaker<ArgumentT, ReturnT, ContextT>(
     circuitBreakerKeyBuilder,
@@ -60,7 +60,7 @@ export function circuitBreakerHttp<
 function circuitBreaker<
   ArgumentT,
   ReturnT,
-  ContextT extends Context<ArgumentT>
+  ContextT extends MiddlewareContext<ArgumentT>
 >(
   keyBuilder: KeyBuilder<ArgumentT, ContextT>,
   errorFilter: ErrorFilter

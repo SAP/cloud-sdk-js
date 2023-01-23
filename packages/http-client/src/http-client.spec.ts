@@ -5,11 +5,7 @@ import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
 import axios, { RawAxiosRequestConfig } from 'axios';
-import {
-  timeout,
-  MiddlewareIn,
-  HttpMiddlewareContext
-} from '@sap-cloud-sdk/resilience';
+import { timeout, MiddlewareIn } from '@sap-cloud-sdk/resilience';
 import * as jwt123 from 'jsonwebtoken';
 import {
   circuitBreakers,
@@ -39,6 +35,7 @@ import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
   HttpMiddleware,
+  HttpMiddlewareContext,
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
   HttpResponse

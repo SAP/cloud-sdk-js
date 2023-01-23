@@ -21,7 +21,9 @@ export const circuitBreakerDefaultOptions: CircuitBreakerOptions = {
   cache: false
 };
 type ErrorFilter = (err) => boolean;
-type KeyBuilder<ArgumentT,ContextT extends Context<ArgumentT>> = (context: ContextT) => string;
+type KeyBuilder<ArgumentT, ContextT extends Context<ArgumentT>> = (
+  context: ContextT
+) => string;
 
 function httpErrorFilter(error: AxiosError): boolean {
   if (
@@ -33,9 +35,10 @@ function httpErrorFilter(error: AxiosError): boolean {
   return false;
 }
 
-function circuitBreakerKeyBuilder<ArgumentT,ContextT extends Context<ArgumentT>>(
-  context: ContextT
-): string {
+function circuitBreakerKeyBuilder<
+  ArgumentT,
+  ContextT extends Context<ArgumentT>
+>(context: ContextT): string {
   return `${context.uri}::${context.tenantId}`;
 }
 
@@ -44,27 +47,31 @@ function circuitBreakerKeyBuilder<ArgumentT,ContextT extends Context<ArgumentT>>
  * @returns The middleware adding a circuit breaker to the function.
  */
 export function circuitBreakerHttp<
-    ArgumentT,
+  ArgumentT,
   ReturnT,
   ContextT extends Context<ArgumentT>
->(): Middleware<ArgumentT,ReturnT, ContextT> {
-  return circuitBreaker<ArgumentT,ReturnT, ContextT>(
+>(): Middleware<ArgumentT, ReturnT, ContextT> {
+  return circuitBreaker<ArgumentT, ReturnT, ContextT>(
     circuitBreakerKeyBuilder,
     httpErrorFilter
   );
 }
 
-function circuitBreaker<ArgumentT,ReturnT, ContextT extends Context<ArgumentT>>(
-  keyBuilder: KeyBuilder<ArgumentT,ContextT>,
+function circuitBreaker<
+  ArgumentT,
+  ReturnT,
+  ContextT extends Context<ArgumentT>
+>(
+  keyBuilder: KeyBuilder<ArgumentT, ContextT>,
   errorFilter: ErrorFilter
-): Middleware<ArgumentT,ReturnT, ContextT> {
-  return (options: MiddlewareIn<any,any, any>) => () =>
+): Middleware<ArgumentT, ReturnT, ContextT> {
+  return (options: MiddlewareIn<any, any, any>) => () =>
     (
       getCircuitBreaker(
         keyBuilder(options.context),
         errorFilter
       ) as CircuitBreaker<any, ReturnT>
-    ).fire(options.fn);
+    ).fire(options.fn, options.context.fnArgument);
 }
 
 function getCircuitBreaker(

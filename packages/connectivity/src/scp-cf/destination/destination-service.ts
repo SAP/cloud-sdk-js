@@ -318,8 +318,12 @@ function errorMessageFromResponse(
 
 function retryDestination(
   destinationName: string
-): Middleware<RawAxiosRequestConfig,AxiosResponse<DestinationJson>, HttpMiddlewareContext> {
-  return options => (arg) => {
+): Middleware<
+  RawAxiosRequestConfig,
+  AxiosResponse<DestinationJson>,
+  HttpMiddlewareContext
+> {
+  return options => arg => {
     let retryCount = 1;
     return asyncRetry.default(
       async bail => {
@@ -359,7 +363,7 @@ type DestinationCertificateJson = {
 };
 
 async function callCertificateEndpoint(
-  context: Omit<Context<RawAxiosRequestConfig>,'fnArguments'>,
+  context: Omit<Context<RawAxiosRequestConfig>, 'fnArgument'>,
   headers: Record<string, any>
 ): Promise<AxiosResponse<DestinationCertificateJson>> {
   if (!context.uri.includes('Certificates')) {
@@ -373,7 +377,7 @@ async function callCertificateEndpoint(
 }
 
 async function callDestinationEndpoint(
-  context: Omit<Context<RawAxiosRequestConfig>,'fnArguments'>,
+  context: Omit<Context<RawAxiosRequestConfig>, 'fnArgument'>,
   headers: Record<string, any>,
   options?: DestinationServiceOptions
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
@@ -390,7 +394,7 @@ async function callDestinationEndpoint(
 }
 
 async function callDestinationService(
-  context: Omit<Context<RawAxiosRequestConfig>,'fnArguments'>,
+  context: Omit<Context<RawAxiosRequestConfig>, 'fnArgument'>,
   headers: Record<string, any>,
   options?: DestinationServiceOptions
 ): Promise<
@@ -400,7 +404,7 @@ async function callDestinationService(
 > {
   const { destinationName, retry } = options || {};
 
-  const config: RawAxiosRequestConfig = {
+  const requestConfig: RawAxiosRequestConfig = {
     ...urlAndAgent(context.uri),
     proxy: false,
     method: 'get',
@@ -410,14 +414,22 @@ async function callDestinationService(
   const resilienceMiddleware =
     destinationName && retry
       ? [
-          ...resilience<RawAxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(),
+          ...resilience<
+            RawAxiosRequestConfig,
+            AxiosResponse,
+            HttpMiddlewareContext
+          >(),
           retryDestination(destinationName)
         ]
-      : resilience<RawAxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>();
+      : resilience<
+          RawAxiosRequestConfig,
+          AxiosResponse,
+          HttpMiddlewareContext
+        >();
 
   return executeWithMiddleware(
     resilienceMiddleware,
-    { ...context,fnArguments:config },
+    { ...context, fnArgument: requestConfig },
     config => axios.request(config)
   );
 }

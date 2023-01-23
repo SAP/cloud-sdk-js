@@ -1,5 +1,6 @@
 import * as http from 'http';
 import type { Context, Middleware } from '@sap-cloud-sdk/resilience';
+// eslint-disable-next-line import/named
 import { RawAxiosRequestConfig } from 'axios';
 
 /**
@@ -19,7 +20,11 @@ export interface HttpMiddlewareContext extends Context<RawAxiosRequestConfig> {
 /**
  * Middleware for http requests.
  */
-export type HttpMiddleWare = Middleware<RawAxiosRequestConfig,HttpResponse,HttpMiddlewareContext>;
+export type HttpMiddleware = Middleware<
+  RawAxiosRequestConfig,
+  HttpResponse,
+  HttpMiddlewareContext
+>;
 
 /**
  * Represents the request configuration, that was inferred from a destination.
@@ -112,7 +117,7 @@ export interface HttpRequestConfigBase {
    * Middleware {@link @sap-cloud-sdk/resilience!Middleware} to be applied to the request.
    * The request context is set using {@link @sap-cloud-sdk/resilience!HttpMiddlewareContext}.
    */
-  middleware?: HttpMiddleWare[];
+  middleware?: HttpMiddleware[];
   /**
    * The max size of the http response content in bytes.
    */

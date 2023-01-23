@@ -3,10 +3,11 @@ import {
   mergeIgnoreCase,
   VALUE_IS_UNDEFINED
 } from '@sap-cloud-sdk/util';
-import { encodeTypedClientRequest, HttpMiddleWare } from '@sap-cloud-sdk/http-client/internal';
-import type {
-  ParameterEncoder
+import {
+  encodeTypedClientRequest,
+  HttpMiddleware
 } from '@sap-cloud-sdk/http-client/internal';
+import type { ParameterEncoder } from '@sap-cloud-sdk/http-client/internal';
 
 /**
  * Set of possible request methods.
@@ -37,7 +38,7 @@ export abstract class ODataRequestConfig {
   private _customRequestConfiguration: Record<string, string> = {};
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
-  private _middlewares: HttpMiddleWare[] = [];
+  private _middlewares: HttpMiddleware[] = [];
 
   /**
    * Creates an instance of ODataRequest.
@@ -56,13 +57,11 @@ export abstract class ODataRequestConfig {
     this.defaultHeaders = mergeIgnoreCase(this.defaultHeaders, defaultHeaders);
   }
 
-  set middlewares(
-    middlewares: HttpMiddleWare[]
-  ) {
+  set middlewares(middlewares: HttpMiddleware[]) {
     this._middlewares = middlewares;
   }
 
-  get middlewares(): HttpMiddleWare[] {
+  get middlewares(): HttpMiddleware[] {
     return this._middlewares;
   }
 

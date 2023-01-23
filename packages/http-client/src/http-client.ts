@@ -133,12 +133,12 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
       requestConfig.middleware,
       {
         jwt: destination.jwt,
-        fnArguments: request,
+        fnArgument: request,
         uri: resolvedDestination.url,
         destinationName: resolvedDestination.name ?? undefined,
         tenantId: getTenantIdForMiddleware(destination.jwt)
       },
-        (req: typeof request) => executeFn(req)
+      (req: typeof request) => executeFn(req)
     );
   };
 }

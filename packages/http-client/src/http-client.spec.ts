@@ -3,10 +3,10 @@ import http from 'http';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
-import axios from 'axios';
+// eslint-disable-next-line import/named
+import axios, { RawAxiosRequestConfig } from 'axios';
 import {
   timeout,
-  Middleware,
   MiddlewareIn,
   HttpMiddlewareContext
 } from '@sap-cloud-sdk/resilience';
@@ -38,6 +38,7 @@ import {
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
+  HttpMiddleware,
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
   HttpResponse
@@ -232,19 +233,23 @@ describe('generic http client', () => {
     function buildMiddleware(
       appendedText: string,
       skipNext = false
-    ): Middleware<HttpResponse, HttpMiddlewareContext> {
+    ): HttpMiddleware {
       // We want to add a name to the function for debugging which is not easy to set.
       // Doing the dummy object the name of the key is taken as function name.
       const dummy = {
         [appendedText](
-          options: MiddlewareIn<HttpResponse, HttpMiddlewareContext>
+          options: MiddlewareIn<
+            RawAxiosRequestConfig,
+            HttpResponse,
+            HttpMiddlewareContext
+          >
         ) {
           if (skipNext) {
             options.skipNext();
           }
 
-          const wrapped = () =>
-            options.fn().then(res => {
+          const wrapped = args =>
+            options.fn(args).then(res => {
               res.data = res.data + appendedText;
               return res;
             });
@@ -354,11 +359,16 @@ describe('generic http client', () => {
     }
 
     it('passes the context properties to the middleware', async () => {
-      const showContextMiddleware: Middleware<
-        HttpResponse,
-        HttpMiddlewareContext
-      > = (opt: MiddlewareIn<HttpResponse, HttpMiddlewareContext>) => () =>
-        ({ data: opt.context } as any);
+      const showContextMiddleware: HttpMiddleware =
+        (
+          opt: MiddlewareIn<
+            RawAxiosRequestConfig,
+            HttpResponse,
+            HttpMiddlewareContext
+          >
+        ) =>
+        () =>
+          ({ data: opt.context } as any);
 
       mockServiceBindings();
       // Inside connectivity package we can use jest to mock jwtVerify and tokenAccessor
@@ -380,7 +390,7 @@ describe('generic http client', () => {
       expect(response.data).toEqual({
         destinationName: 'FINAL-DESTINATION',
         jwt: subscriberUserJwt,
-        requestConfig: expect.any(Object),
+        fnArgument: expect.any(Object),
         tenantId: 'subscriber',
         uri: 'https://my.system.example.com'
       });
@@ -487,6 +497,42 @@ describe('generic http client', () => {
           response.statusCode === 200 ? resolve(200) : reject()
         )
       );
+    });
+
+    it('is possible to change config properties with a middleware', async () => {
+      const changeUrlMiddleware: HttpMiddleware = function (options) {
+        options.context.fnArgument.url = 'test-works';
+        return options.fn;
+      };
+
+      const mock = nock('http://example.com', {})
+        .get(/test-works/)
+        .reply(200)
+        .get(/test-fail/)
+        .reply(500);
+
+      await expect(
+        executeHttpRequest(
+          { url: 'http://example.com' },
+          {
+            url: 'test-fail',
+            method: 'get'
+          }
+        )
+      ).rejects.toThrow();
+
+      await expect(
+        executeHttpRequest(
+          { url: 'http://example.com' },
+          {
+            url: 'test-fail',
+            method: 'get',
+            middleware: [changeUrlMiddleware, circuitBreakerHttp()]
+          }
+        )
+      ).resolves.not.toThrow();
+
+      expect(mock.isDone()).toBe(true);
     });
 
     it('takes a generic HTTP request and executes it', async () => {

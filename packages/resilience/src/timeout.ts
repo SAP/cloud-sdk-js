@@ -13,9 +13,13 @@ const logger = createLogger({
  * @param timeoutValue - Timeout in milliseconds. Default value is 10000.
  * @returns The middleware adding a timeout to the function.
  */
-export function timeout<ArgumentType, ReturnType, ContextType extends Context<ArgumentType>>(
+export function timeout<
+  ArgumentType,
+  ReturnType,
+  ContextType extends Context<ArgumentType>
+>(
   timeoutValue: number = defaultTimeout
-): Middleware<ArgumentType,ReturnType, ContextType> {
+): Middleware<ArgumentType, ReturnType, ContextType> {
   if (timeoutValue <= 0) {
     throw new Error('Timeout value is invalid.');
   }
@@ -25,10 +29,10 @@ export function timeout<ArgumentType, ReturnType, ContextType extends Context<Ar
     );
   }
   return function (
-    options: MiddlewareIn<ArgumentType,ReturnType, ContextType>
-  ): MiddlewareOut<ArgumentType,ReturnType> {
+    options: MiddlewareIn<ArgumentType, ReturnType, ContextType>
+  ): MiddlewareOut<ArgumentType, ReturnType> {
     const message = `Request to URL: ${options.context.uri} ran into a timeout after ${timeoutValue}ms.`;
-    return (arg) => wrapInTimeout(options.fn(arg), timeoutValue, message);
+    return arg => wrapInTimeout(options.fn(arg), timeoutValue, message);
   };
 }
 

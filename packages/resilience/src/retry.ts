@@ -14,17 +14,21 @@ const defaultRetryCount = 3;
  * @param retryCount - Number of retry attempts. Default value is 3.
  * @returns The middleware adding a retry to the function.
  */
-export function retry<ArgumentType, ReturnType, ContextType extends Context<ArgumentType>>(
+export function retry<
+  ArgumentType,
+  ReturnType,
+  ContextType extends Context<ArgumentType>
+>(
   retryCount: number = defaultRetryCount
-): Middleware<ArgumentType,ReturnType, ContextType> {
+): Middleware<ArgumentType, ReturnType, ContextType> {
   if (retryCount < 0) {
     throw new Error('Retry count value is invalid.');
   }
 
   return function (
-    options: MiddlewareIn<ArgumentType,ReturnType, ContextType>
-  ): MiddlewareOut<ArgumentType,ReturnType> {
-    return (arg) =>
+    options: MiddlewareIn<ArgumentType, ReturnType, ContextType>
+  ): MiddlewareOut<ArgumentType, ReturnType> {
+    return arg =>
       asyncRetry.default(
         async bail => {
           try {

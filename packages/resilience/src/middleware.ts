@@ -9,6 +9,10 @@ export interface HttpMiddlewareContext extends Context<RawAxiosRequestConfig> {
    * JWT used in the request.
    */
   jwt?: string;
+  /**
+   * Destination name used in the request.
+   */
+  destinationName?: string;
 }
 
 /**
@@ -18,7 +22,7 @@ export interface MiddlewareIn<ArgumentT,ReturnT, ContextT extends Context<Argume
   /**
    * Initial function enriched by the middleware e.g. axios request getting a timeout.
    */
-  fn: Function<ArgumentT,ReturnT>;
+  readonly fn: Function<ArgumentT,ReturnT>;
   /**
    * Context of the execution e.g. the request context or URL.
    */
@@ -26,7 +30,7 @@ export interface MiddlewareIn<ArgumentT,ReturnT, ContextT extends Context<Argume
   /**
    * Call this method to disable all following middlewares.
    */
-  skipNext: SkipNext;
+  readonly skipNext: SkipNext;
 }
 
 /**
@@ -53,18 +57,18 @@ export interface Context<ArgumentT> {
   /**
    * URI of the function passed to the middleware.
    */
-  uri: string;
+  readonly uri: string;
   /**
    * Tenant identifier.
    */
-  tenantId: string;
+  readonly tenantId: string;
   /**
-   * Arguments used in the middleware function
+   * Arguments used in the middleware function. You can change this property to change the arguments in function execution.
    */
-  fnArguments: ArgumentT
+  fnArguments: ArgumentT;
 }
 
-type Function<ArgumentT,ReturnT> = (arg:ArgumentT)=>Promise<ReturnT>
+type Function<ArgumentT,ReturnT> = (arg: ArgumentT) => Promise<ReturnT>;
 
 /**
  * Middleware type - This function takes some initial function and returns a function.

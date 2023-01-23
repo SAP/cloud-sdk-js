@@ -36,12 +36,12 @@ describe('combined resilience features', () => {
       baseURL: 'https://example.com',
       method: 'get',
       url: '/retry'
-    }
+    };
 
     await expect(
       executeWithMiddleware(
         [timeout(600), retry(2)],
-        { uri: 'https://example.com', tenantId: 'dummy-tenant', fnArguments:requestConfig},
+        { uri: 'https://example.com', tenantId: 'dummy-tenant', fnArguments:requestConfig },
         request
       )
     ).resolves.not.toThrow();
@@ -60,7 +60,7 @@ describe('combined resilience features', () => {
       baseURL: 'https://example.com',
       method: 'get',
       url: '/retry'
-    }
+    };
 
     const response = await executeWithMiddleware(
       [timeout(200), retry(2)],
@@ -92,7 +92,7 @@ describe('combined resilience features', () => {
     const keepCalling = true;
     while (keepCalling) {
       await expect(
-        executeWithMiddleware<AxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
+        executeWithMiddleware<RawAxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
           resilience({ timeout: delay * 0.5 }),
           context,
           request
@@ -107,7 +107,7 @@ describe('combined resilience features', () => {
     expect(circuitBreakers[`${host}::myTestTenant`].stats.failures).toBe(10);
     expect(circuitBreakers[`${host}::myTestTenant`].stats.fires).toBe(10);
     await expect(
-      executeWithMiddleware<AxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
+      executeWithMiddleware<RawAxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
         resilience({ timeout: false }),
         context,
         request
@@ -134,7 +134,7 @@ describe('combined resilience features', () => {
       tenantId: 'myTestTenant'
     };
     await expect(
-      executeWithMiddleware<AxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
+      executeWithMiddleware<RawAxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
         resilience({ retry: true }),
         context,
         request
@@ -165,7 +165,7 @@ describe('combined resilience features', () => {
     };
     const request = () => axios.request(requestConfig);
     await expect(
-      executeWithMiddleware<AxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
+      executeWithMiddleware<RawAxiosRequestConfig,AxiosResponse, HttpMiddlewareContext>(
         resilience({ timeout: false, retry: true }),
         context,
         request

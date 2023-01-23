@@ -5,6 +5,8 @@ import { executeWithMiddleware } from './middleware';
 import { resilience } from './resilience';
 
 describe('timeout', () => {
+  const request = config=>axios.request(config)
+
   it('uses a custom timeout if given', async () => {
     const delayInResponse = 100;
     nock('https://example.com', {})
@@ -13,17 +15,16 @@ describe('timeout', () => {
       .delay(delayInResponse)
       .reply(200);
 
-    const request = () =>
-      axios.request({
+    const requestConfig ={
         baseURL: 'https://example.com',
         method: 'get',
         url: '/with-delay'
-      });
+      };
 
     await expect(
       executeWithMiddleware(
         [timeout(delayInResponse * 0.5)],
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant',fnArguments:requestConfig },
         request
       )
     ).rejects.toThrow(
@@ -33,7 +34,7 @@ describe('timeout', () => {
     await expect(
       executeWithMiddleware(
         resilience({ timeout: delayInResponse * 2, circuitBreaker: false }),
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant',fnArguments:requestConfig },
         request
       )
     ).resolves.not.toThrow();
@@ -51,15 +52,14 @@ describe('timeout', () => {
       .delay(11 * oneSecond)
       .reply(200);
 
-    const request = () =>
-      axios.request({
+    const requestConfig ={
         baseURL: 'https://example.com',
         method: 'get',
         url: '/with-delay'
-      });
+      };
     const response = await executeWithMiddleware(
       [timeout()],
-      { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+      { uri: 'https://example.com', tenantId: 'dummy-tenant',fnArguments:requestConfig },
       request
     );
 
@@ -68,7 +68,7 @@ describe('timeout', () => {
     await expect(
       executeWithMiddleware(
         [timeout()],
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        { uri: 'https://example.com', tenantId: 'dummy-tenant',fnArguments:requestConfig },
         request
       )
     ).rejects.toThrow(

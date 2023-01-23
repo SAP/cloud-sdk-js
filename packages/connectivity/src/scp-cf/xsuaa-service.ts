@@ -54,22 +54,27 @@ export async function getClientCredentialsToken(
   const serviceCredentials = resolvedService.credentials;
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  const xssecPromise: () => Promise<ClientCredentialsResponse> = () =>
-    new Promise((resolve, reject) => {
-      xssec.requests.requestClientCredentialsToken(
+    const fnArgs = [
         subdomainAndZoneId.subdomain,
         serviceCredentials,
         null,
         subdomainAndZoneId.zoneId,
+    ]
+
+  const xssecPromise: (args: typeof fnArgs) => Promise<ClientCredentialsResponse> = args =>
+    new Promise((resolve, reject) => {
+      xssec.requests.requestClientCredentialsToken(
+          ...args,
         (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
           err ? reject(err) : resolve(tokenResponse)
       );
     });
-  return executeWithMiddleware<ClientCredentialsResponse, Context>(
+  return executeWithMiddleware<typeof fnArgs,ClientCredentialsResponse, Context<typeof fnArgs>>(
     resilience(),
     {
       uri: serviceCredentials.url,
-      tenantId: subdomainAndZoneId.zoneId ?? serviceCredentials.tenantid
+      tenantId: subdomainAndZoneId.zoneId ?? serviceCredentials.tenantid,
+        fnArguments: fnArgs
     },
     xssecPromise
   ).catch(err => {
@@ -91,28 +96,29 @@ export function getUserToken(
 ): Promise<string> {
   const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
-  const xssecPromise: () => Promise<string> = () =>
+  const fnArgs = [
+      userJwt,
+      service.credentials,
+      null,
+      null,
+      subdomainAndZoneId.subdomain,
+      subdomainAndZoneId.zoneId
+  ]
+
+  const xssecPromise:  (args:typeof fnArgs) => Promise<string> = args =>
     new Promise((resolve: (token: string) => void, reject) =>
-      xssec.requests.requestUserToken(
-        userJwt,
-        service.credentials,
-        null,
-        null,
-        subdomainAndZoneId.subdomain,
-        subdomainAndZoneId.zoneId,
-        (err: Error, token: string) => (err ? reject(err) : resolve(token))
-      )
+      xssec.requests.requestUserToken(...args, (err: Error, token: string) => (err ? reject(err) : resolve(token)))
     );
 
-  return executeWithMiddleware<string, Context>(
+   return executeWithMiddleware<typeof fnArgs,string, Context<typeof fnArgs>>(
     resilience(),
     {
       uri: service.credentials.url,
-      tenantId: subdomainAndZoneId.zoneId ?? service.credentials.tenantid
+      tenantId: subdomainAndZoneId.zoneId ?? service.credentials.tenantid,
+        fnArguments:fnArgs
     },
     xssecPromise
   )
-    .then(data => data)
     .catch(err => {
       throw new Error(
         `Could not fetch JWT bearer token for service of type ${service.label}: ${err.message}`

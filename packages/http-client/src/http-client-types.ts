@@ -1,6 +1,26 @@
 import * as http from 'http';
-import type { Middleware } from '@sap-cloud-sdk/resilience';
-import { HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
+import type { Context, Middleware } from '@sap-cloud-sdk/resilience';
+import { RawAxiosRequestConfig } from 'axios';
+
+/**
+ * Context for HttpRequests of the middleware.
+ */
+export interface HttpMiddlewareContext extends Context<RawAxiosRequestConfig> {
+  /**
+   * JWT used in the request.
+   */
+  jwt?: string;
+  /**
+   * Destination name used in the request.
+   */
+  destinationName?: string;
+}
+
+/**
+ * Middleware for http requests.
+ */
+export type HttpMiddleWare = Middleware<RawAxiosRequestConfig,HttpResponse,HttpMiddlewareContext>;
+
 /**
  * Represents the request configuration, that was inferred from a destination.
  */
@@ -92,7 +112,7 @@ export interface HttpRequestConfigBase {
    * Middleware {@link @sap-cloud-sdk/resilience!Middleware} to be applied to the request.
    * The request context is set using {@link @sap-cloud-sdk/resilience!HttpMiddlewareContext}.
    */
-  middleware?: Middleware<HttpResponse, HttpMiddlewareContext>[];
+  middleware?: HttpMiddleWare[];
   /**
    * The max size of the http response content in bytes.
    */

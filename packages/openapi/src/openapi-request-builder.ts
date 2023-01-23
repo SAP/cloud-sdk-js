@@ -17,9 +17,9 @@ import {
 import {
   filterCustomRequestConfig,
   OriginOptions,
-  encodeTypedClientRequest
+  encodeTypedClientRequest,
+  HttpMiddleWare
 } from '@sap-cloud-sdk/http-client/internal';
-import { Middleware, HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
 
 /**
  * Request builder for OpenAPI requests.
@@ -33,7 +33,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: Record<string, string> = {};
   private _fetchCsrfToken = true;
-  private _middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[] = [];
+  private _middlewares: HttpMiddleWare[] = [];
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -88,9 +88,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @param middlewares - Middlewares to be applied to the executeHttpRequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
-  middleware(
-    middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[]
-  ): this {
+  middleware(middlewares: HttpMiddleWare[]): this {
     this._middlewares = middlewares;
     return this;
   }

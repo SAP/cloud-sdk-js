@@ -21,7 +21,7 @@ export const circuitBreakerDefaultOptions: CircuitBreakerOptions = {
   cache: false
 };
 type ErrorFilter = (err) => boolean;
-type KeyBuilder<ContextT extends Context> = (context: ContextT) => string;
+type KeyBuilder<ArgumentT,ContextT extends Context<ArgumentT>> = (context: ContextT) => string;
 
 function httpErrorFilter(error: AxiosError): boolean {
   if (
@@ -33,7 +33,7 @@ function httpErrorFilter(error: AxiosError): boolean {
   return false;
 }
 
-function circuitBreakerKeyBuilder<ContextT extends Context>(
+function circuitBreakerKeyBuilder<ArgumentT,ContextT extends Context<ArgumentT>>(
   context: ContextT
 ): string {
   return `${context.uri}::${context.tenantId}`;
@@ -44,20 +44,21 @@ function circuitBreakerKeyBuilder<ContextT extends Context>(
  * @returns The middleware adding a circuit breaker to the function.
  */
 export function circuitBreakerHttp<
+    ArgumentT,
   ReturnT,
-  ContextT extends Context
->(): Middleware<ReturnT, ContextT> {
-  return circuitBreaker<ReturnT, ContextT>(
+  ContextT extends Context<ArgumentT>
+>(): Middleware<ArgumentT,ReturnT, ContextT> {
+  return circuitBreaker<ArgumentT,ReturnT, ContextT>(
     circuitBreakerKeyBuilder,
     httpErrorFilter
   );
 }
 
-function circuitBreaker<ReturnT, ContextT extends Context>(
-  keyBuilder: KeyBuilder<ContextT>,
+function circuitBreaker<ArgumentT,ReturnT, ContextT extends Context<ArgumentT>>(
+  keyBuilder: KeyBuilder<ArgumentT,ContextT>,
   errorFilter: ErrorFilter
-): Middleware<ReturnT, ContextT> {
-  return (options: MiddlewareIn<any, any>) => () =>
+): Middleware<ArgumentT,ReturnT, ContextT> {
+  return (options: MiddlewareIn<any,any, any>) => () =>
     (
       getCircuitBreaker(
         keyBuilder(options.context),

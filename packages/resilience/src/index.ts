@@ -12,9 +12,5 @@ export type {
   MiddlewareOut,
   MiddlewareFunction
 } from './middleware';
-export {
-  MiddlewareIn,
-  MiddlewareContext,
-  SkipNext
-} from './middleware';
+export { MiddlewareIn, MiddlewareContext, SkipNext } from './middleware';
 export { ResilienceOptions, resilience } from './resilience';

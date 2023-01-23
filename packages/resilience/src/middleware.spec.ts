@@ -54,7 +54,6 @@ describe('middleware', () => {
   });
 
   it('stops middlewares if skip is called', async () => {
-    const infoSpy = jest.spyOn(logger, 'info');
     const actual = await executeWithMiddleware(
       [middleWareAppend1, middleWareSkip, middleWareAppend2],
       { uri: 'dummyUri', fnArgument: 'initial Input', tenantId: 'dummyTenant' },

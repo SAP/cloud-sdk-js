@@ -1,7 +1,7 @@
 import { defaultTsConfig } from '@sap-cloud-sdk/generator-common/internal';
 import mock from 'mock-fs';
 import { tsconfigJson } from './tsconfig-json';
-import {ParsedGeneratorOptions} from "./options";
+import { ParsedGeneratorOptions } from './options';
 
 describe('tsconfigJson', () => {
   afterEach(() => {

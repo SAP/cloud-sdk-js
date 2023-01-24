@@ -1,5 +1,3 @@
-import {ParsedGeneratorOptions} from "./options";
-
 jest.mock('path', () => {
   const path = jest.requireActual('path');
   return {
@@ -12,6 +10,7 @@ jest.mock('path', () => {
 });
 
 import mock from 'mock-fs';
+import { ParsedGeneratorOptions } from './options';
 import {
   getOptionsPerService,
   getOriginalOptionsPerService,

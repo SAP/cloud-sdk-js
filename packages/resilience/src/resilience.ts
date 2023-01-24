@@ -40,12 +40,12 @@ const defaultResilienceOptions: ResilienceOptions = {
  * @returns Array of middleware functions.
  */
 export function resilience<
-  ArgumenT,
+  ArgumentT,
   ReturnT,
-  ContextT extends MiddlewareContext<ArgumenT>
->(options?: ResilienceOptions): Middleware<ArgumenT, ReturnT, ContextT>[] {
+  ContextT extends MiddlewareContext<ArgumentT>
+>(options?: ResilienceOptions): Middleware<ArgumentT, ReturnT, ContextT>[] {
   const resilienceOption = { ...defaultResilienceOptions, ...options };
-  const middlewares: Middleware<ArgumenT, ReturnT, ContextT>[] = [];
+  const middlewares: Middleware<ArgumentT, ReturnT, ContextT>[] = [];
   if (typeof resilienceOption.timeout === 'number') {
     middlewares.push(timeout(resilienceOption.timeout));
   } else if (resilienceOption.timeout) {

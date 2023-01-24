@@ -8,9 +8,9 @@ import {
 import axios, { RawAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
-  MiddlewareContext,
   resilience,
-  Middleware
+  Middleware,
+  MiddlewareContext
 } from '@sap-cloud-sdk/resilience';
 import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
@@ -410,21 +410,14 @@ async function callDestinationService(
     headers
   };
 
-  const resilienceMiddleware =
-    destinationName && retry
-      ? [
-          ...resilience<
-            RawAxiosRequestConfig,
-            AxiosResponse,
-            MiddlewareContext<RawAxiosRequestConfig>
-          >(),
-          retryDestination(destinationName)
-        ]
-      : resilience<
-          RawAxiosRequestConfig,
-          AxiosResponse,
-          MiddlewareContext<RawAxiosRequestConfig>
-        >();
+  const resilienceMiddleware = resilience<
+    RawAxiosRequestConfig,
+    AxiosResponse<DestinationJson>,
+    MiddlewareContext<RawAxiosRequestConfig>
+  >();
+  if (destinationName && retry) {
+    resilienceMiddleware.unshift(retryDestination(destinationName));
+  }
 
   return executeWithMiddleware(
     resilienceMiddleware,

@@ -67,4 +67,3 @@ export declare class TestEntityCircularLinkChildRequestBuilder<
     entity: TestEntityCircularLinkChild<T>
   ): DeleteRequestBuilder<TestEntityCircularLinkChild<T>, T>;
 }
-//# sourceMappingURL=TestEntityCircularLinkChildRequestBuilder.d.ts.map

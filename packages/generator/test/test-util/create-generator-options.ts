@@ -1,16 +1,17 @@
 import {
   GeneratorOptions,
-  generatorOptionsCli,
+  cliOptions,
   ParsedGeneratorOptions
-} from '../../src/generator-options';
-import { parseOptions } from '../../src/options-parser';
+} from '../../src/options';
+import { parseOptions } from '../../src/options/options-parser';
 
 export function createOptions(
   options?: Partial<GeneratorOptions>
 ): ParsedGeneratorOptions {
-  return parseOptions(generatorOptionsCli, {
+  return parseOptions(cliOptions, {
     inputDir: '',
     outputDir: '',
+    skipValidation: true,
     serviceMapping: 'service-mapping.json',
     packageJson: false,
     ...options

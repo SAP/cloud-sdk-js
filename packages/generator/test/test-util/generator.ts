@@ -28,6 +28,7 @@ export async function getGeneratedFiles(
     inputDir: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
     useSwagger: false,
     packageJson: false,
+    skipValidation: true,
     outputDir
   });
   const project = await generateProject(opt);

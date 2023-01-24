@@ -7,7 +7,7 @@ function openFile(filePath: string): string {
   return readFileSync(filePath, { encoding: 'utf8' });
 }
 
-function getChangelogWithVersion(v = getPackageVersion): string {
+function getChangelogWithVersion(v: string = getPackageVersion()): string {
   const changelog = openFile('CHANGELOG.md');
   const [, olderLogs] = changelog.split(`${unixEOL}# ${v}`);
   let logs = olderLogs.split(`${unixEOL}# `)[0];

@@ -11,11 +11,11 @@ export interface HttpMiddlewareContext
   /**
    * JWT used in the request.
    */
-  jwt?: string;
+  readonly jwt?: string;
   /**
    * Destination name used in the request.
    */
-  destinationName?: string;
+  readonly destinationName?: string;
 }
 
 /**

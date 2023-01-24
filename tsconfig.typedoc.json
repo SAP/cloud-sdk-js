@@ -60,7 +60,7 @@
     }
   ],
   "typedocOptions": {
-    "out": "docs/api/v3",
+    "out": "knowledge-base/api-reference",
     "entryPoints": [
       "packages/util/src/index.ts",
       "packages/resilience/src/index.ts",

@@ -1,16 +1,10 @@
 /* eslint-disable no-console */
-import {
-  lstatSync,
-  readdirSync,
-  renameSync,
-  readFileSync,
-  writeFileSync
-} from 'fs';
+import { lstatSync, readdirSync, renameSync, readFileSync } from 'fs';
 import { resolve, basename, extname } from 'path';
 import execa from 'execa';
-import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
-import { compareVersions } from 'compare-versions';
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { transformFile } from './util';
+
 const docPath = resolve(
   JSON.parse(readFileSync('tsconfig.typedoc.json', 'utf8')).typedocOptions.out
 );
@@ -38,21 +32,13 @@ const pipe =
   start =>
     fns.reduce((state, fn) => fn(state), start);
 
-/**
- * GitHub pages has requirements for links, so additional adjustment is necessary. See example below:
- * - https://username.github.io/repo/modules/sap_cloud_sdk_analytics works.
- * - https://username.github.io/repo/modules/sap_cloud_sdk_analytics.html does not.
- */
 function adjustForGitHubPages() {
   const documentationFiles = flatten(readDir(resolve(docPath)));
   const htmlPaths = documentationFiles.filter(isHtmlFile);
   adjustSearchJs(documentationFiles);
   htmlPaths.forEach(filePath =>
     transformFile(filePath, file =>
-      file.replace(
-        /<a href="[^>]*_[^>]*.html[^>]*>/gi,
-        removeUnderlinePrefixAndHtmlSuffix
-      )
+      file.replace(/<a href="[^>]*_[^>]*.html[^>]*>/gi, removeUnderlinePrefix)
     )
   );
   htmlPaths.forEach(filePath => removeUnderlinePrefixFromFileName(filePath));
@@ -64,19 +50,14 @@ function adjustSearchJs(paths) {
     throw Error(`Expected one 'search.json', but found: ${filtered.length}.`);
   }
   transformFile(filtered[0], file =>
-    file.replace(
-      /"[^"]*_[^"]*.html[^"]*"/gi,
-      removeUnderlinePrefixAndHtmlSuffix
-    )
+    file.replace(/"[^"]*_[^"]*.html[^"]*"/gi, removeUnderlinePrefix)
   );
 }
 
-function removeUnderlinePrefixAndHtmlSuffix(str) {
+function removeUnderlinePrefix(str) {
   const i = str.indexOf('_');
   // Remove the first `_`
-  const firstUnderlineRemoved = str.substring(0, i) + str.substring(i + 1);
-  // Remove `.html`
-  return firstUnderlineRemoved.replace('.html', '');
+  return str.substring(0, i) + str.substring(i + 1);
 }
 
 function removeUnderlinePrefixFromFileName(filePath) {
@@ -110,27 +91,6 @@ function insertCopyrightAndTracking() {
   });
 }
 
-function getSortedApiVersions() {
-  return readdirSync(resolve(docPath, '..'))
-    .filter(entry => lstatSync(resolve(docPath, '..', entry)).isDirectory())
-    .sort(compareVersions)
-    .reverse();
-}
-
-function writeVersions() {
-  const apiVersions = getSortedApiVersions();
-  writeFileSync(
-    resolve('docs', 'api', 'versions.js'),
-    `export default ${formatJson(apiVersions)}`,
-    'utf8'
-  );
-  writeFileSync(
-    resolve('docs', 'api', 'versions.json'),
-    formatJson(apiVersions),
-    'utf8'
-  );
-}
-
 function validateLogs(generationLogs: string) {
   const invalidLinksMessage =
     'Found invalid symbol reference(s) in JSDocs, they will not render as links in the generated documentation.';
@@ -151,7 +111,6 @@ async function generateDocs() {
   validateLogs(generationLogs.stdout);
   adjustForGitHubPages();
   insertCopyrightAndTracking();
-  writeVersions();
 }
 
 process.on('unhandledRejection', reason => {

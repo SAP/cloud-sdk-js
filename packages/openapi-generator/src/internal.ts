@@ -7,3 +7,4 @@ export * from './extensions';
 export * from './generator';
 export * from './openapi-types';
 export * from './schema-util';
+export * from './cli-parser';

@@ -40,7 +40,7 @@ function isVersioned(majorVersion: string): boolean {
   const versionedInDocusaurus = readdirSync(
     './cloud-sdk/docs-js_versioned_docs/'
   );
-  //The docusaurus folders are called version-v1, version-v2 so match regex for ends with v1,v2,...
+  // The docusaurus folders are called version-v1, version-v2 so match regex for ends with v1, v2, ...
   return !!versionedInDocusaurus.find(folder =>
     folder.match(new RegExp(`v${majorVersion}$`))
   );

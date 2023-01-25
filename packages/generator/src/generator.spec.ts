@@ -5,7 +5,10 @@ import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
 import { createLogger } from '@sap-cloud-sdk/util';
-import {createOptions, createParsedOptions} from '../test/test-util/create-generator-options';
+import {
+  createOptions,
+  createParsedOptions
+} from '../test/test-util/create-generator-options';
 import {
   checkStaticProperties,
   getOperationFunctionDeclarations,
@@ -17,7 +20,6 @@ import {
   generateProject,
   getInstallODataErrorMessage
 } from './generator';
-import { cliOptions } from './options';
 
 const pathTestResources = resolve(__dirname, '../../../test-resources');
 const pathTestService = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
@@ -256,7 +258,7 @@ describe('generator', () => {
         include: join(pathTestResources, '*.md')
       });
 
-      await generateProject(createParsedOptions( options));
+      await generateProject(createParsedOptions(options));
       await generate(options);
       expect(logger.level).toBe('info');
       expect(consoleSpy).not.toBeCalled();
@@ -283,7 +285,7 @@ describe('generator', () => {
         verbose: true
       });
 
-      await generateProject(createParsedOptions( options));
+      await generateProject(createParsedOptions(options));
       await generate(options);
       expect(logger.level).toBe('verbose');
       const log = await promises.readFile('test.log', { encoding: 'utf-8' });

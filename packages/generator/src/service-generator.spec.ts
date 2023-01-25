@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import {createOptions, createParsedOptions} from '../test/test-util/create-generator-options';
+import { createParsedOptions } from '../test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import { GlobalNameFormatter } from './global-name-formatter';
 import { ServiceMapping } from './service-mapping';
@@ -336,7 +336,7 @@ describe('service-generator', () => {
 
       it('does not clash with reserved JavaScript keywords', () => {
         const services = parseAllServices(
-            createParsedOptions({
+          createParsedOptions({
             inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
@@ -351,7 +351,7 @@ describe('service-generator', () => {
 
       it('function imports EDM return types are read correctly', () => {
         const [service] = parseAllServices(
-            createParsedOptions({
+          createParsedOptions({
             inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
@@ -382,7 +382,7 @@ describe('service-generator', () => {
 
       it('should parse C4C service definitions with proper class names.', () => {
         const services = parseAllServices(
-            createParsedOptions({
+          createParsedOptions({
             inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
@@ -407,7 +407,7 @@ describe('service-generator', () => {
 
       it('should skip entity types when not defined in any entity sets', () => {
         const services = parseAllServices(
-            createParsedOptions({
+          createParsedOptions({
             inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
@@ -422,7 +422,7 @@ describe('service-generator', () => {
 
       it('parses multiple schemas', () => {
         const services = parseAllServices(
-            createParsedOptions({
+          createParsedOptions({
             inputDir: resolve(
               oDataServiceSpecs,
               'v2',
@@ -471,7 +471,7 @@ describe('service-generator', () => {
 
       it('v4 function imports EDM return types are read correctly', () => {
         const [service] = parseAllServices(
-            createParsedOptions({
+          createParsedOptions({
             inputDir: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV'),
             useSwagger: false
           })

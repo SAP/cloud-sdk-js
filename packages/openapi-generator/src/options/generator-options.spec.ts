@@ -174,7 +174,7 @@ describe('parseGeneratorOptions', () => {
     expect(parsed.outputDir).toContain('some-output');
     // RegEx to match paths for both *nix and Windows
     expect(parsed.include).toMatchObject([
-      expect.stringMatching(join(resolve(),'test-config.json'))
+      expect.stringMatching(join(resolve(), 'test-config.json'))
     ]);
   });
 

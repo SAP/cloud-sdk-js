@@ -5,7 +5,7 @@ import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { createOptions } from '../test/test-util/create-generator-options';
+import {createOptions, createParsedOptions} from '../test/test-util/create-generator-options';
 import {
   checkStaticProperties,
   getOperationFunctionDeclarations,
@@ -17,6 +17,7 @@ import {
   generateProject,
   getInstallODataErrorMessage
 } from './generator';
+import { cliOptions } from './options';
 
 const pathTestResources = resolve(__dirname, '../../../test-resources');
 const pathTestService = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
@@ -42,11 +43,11 @@ describe('generator', () => {
         outputDir: 'common',
         overwrite: true,
         prettierConfig: '/prettier/config',
-        generateSdkMetadata: true,
+        metadata: true,
         include: join(pathTestResources, '*.md')
       });
       // TODO the first call will go away once ts-morph is removed
-      project = await generateProject(options);
+      project = await generateProject(createParsedOptions(options));
       await generate(options);
     });
 
@@ -61,7 +62,7 @@ describe('generator', () => {
       });
       try {
         // TODO the first call will go away once ts-morph is removed
-        project = await generateProject(options);
+        project = await generateProject(createParsedOptions(options));
         await generate(options);
         throw new Error('Should not go here.');
       } catch (e) {
@@ -250,12 +251,12 @@ describe('generator', () => {
         outputDir: 'logger',
         overwrite: true,
         prettierConfig: '/prettier/config',
-        generateSdkMetadata: true,
+        metadata: true,
         skipValidation: true,
         include: join(pathTestResources, '*.md')
       });
 
-      await generateProject(options);
+      await generateProject(createParsedOptions( options));
       await generate(options);
       expect(logger.level).toBe('info');
       expect(consoleSpy).not.toBeCalled();
@@ -277,12 +278,12 @@ describe('generator', () => {
         overwrite: true,
         skipValidation: true,
         prettierConfig: '/prettier/config',
-        generateSdkMetadata: true,
+        metadata: true,
         include: join(pathTestResources, '*.md'),
         verbose: true
       });
 
-      await generateProject(options);
+      await generateProject(createParsedOptions( options));
       await generate(options);
       expect(logger.level).toBe('verbose');
       const log = await promises.readFile('test.log', { encoding: 'utf-8' });

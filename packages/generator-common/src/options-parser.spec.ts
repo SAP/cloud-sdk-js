@@ -1,7 +1,11 @@
 import { resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
-import { getOptionsWithoutDefaults, parseOptions, resolveGlob } from './options-parser';
+import {
+  getOptionsWithoutDefaults,
+  parseOptions,
+  resolveGlob
+} from './options-parser';
 const logger = createLogger('generator-options');
 
 describe('options parser', () => {
@@ -38,7 +42,11 @@ describe('options parser', () => {
   };
   const options = { deprecatedOption, otherOption, newOption } as const;
 
-  const absoluteJsonPaths = ['package.json','test/package.json','tsconfig.json'].map(s=>resolve(s));
+  const absoluteJsonPaths = [
+    'package.json',
+    'test/package.json',
+    'tsconfig.json'
+  ].map(s => resolve(s));
 
   let warnSpy: jest.SpyInstance;
 
@@ -101,29 +109,42 @@ describe('options parser', () => {
       });
     });
 
-    it('includes using glob using cwd',()=>{
-      expect(parseOptions({ include },{ include: '**/*.json' }).include).toEqual(absoluteJsonPaths);
+    it('includes using glob using cwd', () => {
+      expect(
+        parseOptions({ include }, { include: '**/*.json' }).include
+      ).toEqual(absoluteJsonPaths);
     });
 
-    it('includes using glob using root',()=>{
-      expect(parseOptions({ include },{ include:  resolve('**/*.json') }).include).toEqual(absoluteJsonPaths);
+    it('includes using glob using root', () => {
+      expect(
+        parseOptions({ include }, { include: resolve('**/*.json') }).include
+      ).toEqual(absoluteJsonPaths);
     });
 
-    it('includes using config path',()=>{
+    it('does not fail on include option not set', () => {
+      expect(parseOptions({ include }, {}).include).toEqual([]);
+    });
+
+    it('includes using config path', () => {
       const config = {
-          describe: 'config files',
-          type: 'string' as const
+        describe: 'config files',
+        type: 'string' as const
       };
 
       mock({
-        '/dummy/root':{
-          'file-1.json' : '',
-          'sub-1':{
-            'file-2.json' : ''
+        '/dummy/root': {
+          'file-1.json': '',
+          'sub-1': {
+            'file-2.json': ''
           }
         }
       });
-      expect(parseOptions({ include,config },{ include:  '**/*.json', config: '/dummy/root/config.json' }).include).toEqual(['file-1.json','sub-1/file-2.json'].map(s=>resolve(s)));
+      expect(
+        parseOptions(
+          { include, config },
+          { include: '**/*.json', config: '/dummy/root/config.json' }
+        ).include
+      ).toEqual(['file-1.json', 'sub-1/file-2.json'].map(s => resolve(s)));
       mock.restore();
     });
 

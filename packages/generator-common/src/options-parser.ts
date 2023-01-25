@@ -1,8 +1,6 @@
-import { PathLike } from 'fs';
 import { dirname, resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { InferredOptionType, Options as YargsOption } from 'yargs';
-import { GeneratorOptions } from '@sap-cloud-sdk/generator/dist/options';
 const logger = createLogger('generator-options');
 import { sync as globSync } from 'glob';
 
@@ -71,13 +69,55 @@ type OptionsWith<
     : never;
 }[keyof CliOptionsT];
 
-export function resolveGlob(
-    arg: PathLike | undefined,
-    options: GeneratorOptions & { config?: string }
-): string[]{
-  const globConfig =  options.config ? { cwd:resolve(dirname(options.config)) } : { cwd:resolve() };
+/**
+ * Resolves a string using glob notation. If a config is given in generatoroptions the glob working diretory is considered relative to this config.
+ * @internal
+ * @param arg Value for the string for which the glob is resolved
+ * @param options Generator options
+ */
+export function resolveGlob<GeneratorOptionsT>(
+  arg: string | undefined,
+  options: GeneratorOptionsT & { config?: string }
+): string[] {
+  if (!arg) {
+    return [];
+  }
 
-  return globSync(arg,globConfig).map(s=>resolve(s));
+  const globConfig = options.config
+    ? { cwd: resolve(dirname(options.config)) }
+    : { cwd: resolve() };
+
+  return globSync(arg, globConfig).map(s => resolve(s));
+}
+
+/**
+ * Resolves arguments that represent paths to an absolute path as a `string`. Only works for required options.
+ * @internal
+ * @param arg - Path argument as passed by the user.
+ * @param options - Options as passed by the user.
+ * @returns Absolute path as a `string`.
+ */
+export function resolveRequiredPath<GeneratorOptionsT>(
+  arg: string,
+  options: GeneratorOptionsT & { config?: string }
+): string {
+  return options.config
+    ? resolve(dirname(options.config), arg.toString())
+    : resolve(arg.toString());
+}
+
+/**
+ * Same as `resolveRequiredPath`, but for non-required options.
+ * @internal
+ * @param arg - Path argument as passed by the user, or `undefined` if nothing was passed.
+ * @param options - Options as passed by the user.
+ * @returns Absolute path as a `string` or `undefined`.
+ */
+export function resolvePath<GeneratorOptionsT>(
+  arg: string | undefined,
+  options: GeneratorOptionsT & { config?: string }
+): string | undefined {
+  return arg ? resolveRequiredPath(arg, options) : undefined;
 }
 
 /**

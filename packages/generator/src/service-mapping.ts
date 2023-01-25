@@ -1,6 +1,6 @@
 import { parse } from 'path';
 import { unixEOL, createLogger, readJSON } from '@sap-cloud-sdk/util';
-import { GeneratorOptions } from './options';
+import { ParsedGeneratorOptions } from './options';
 import { VdmServiceMetadata } from './vdm-types';
 import { servicePathFromSwagger } from './swagger-parser/swagger-util';
 import { ServiceMetadata } from './edmx-parser/edmx-file-reader';
@@ -40,7 +40,9 @@ export interface ServiceMapping {
 /**
  * @internal
  */
-export function readServiceMapping(options: GeneratorOptions): VdmMapping {
+export function readServiceMapping(
+  options: ParsedGeneratorOptions
+): VdmMapping {
   return (
     (options.serviceMapping &&
       (readJSON(options.serviceMapping) as VdmMapping)) ||

@@ -18,6 +18,8 @@ import {
   getInstallODataErrorMessage
 } from './generator';
 
+const { readFile } = promises;
+
 const pathTestResources = resolve(__dirname, '../../../test-resources');
 const pathTestService = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
 const pathToGeneratorCommon = resolve(__dirname, '../../generator-common');
@@ -40,6 +42,7 @@ describe('generator', () => {
       const options = createOptions({
         inputDir: pathTestService,
         outputDir: 'common',
+        optionsPerService: 'test-service-options.json',
         overwrite: true,
         prettierConfig: '/prettier/config',
         generateSdkMetadata: true,
@@ -94,19 +97,24 @@ describe('generator', () => {
       ).toBeDefined();
     });
 
-    it('generates the api hub metadata and writes to the input folder', async () => {
-      // nock('http://registry.npmjs.org/').head(/.*/).reply(404);
-
-      const sourceFiles = await promises.readdir(
-        join(pathTestService, 'sdk-metadata')
-      );
-      const clientFile = sourceFiles.find(
-        file => file === 'API_TEST_SRV_CLIENT_JS.json'
-      );
-
+    it('generates the options per service and writes to the given folder', async () => {
+      const clientFile = await promises.readFile('test-service-options.json');
       expect(clientFile).toBeDefined();
     }, 10000);
-  });
+
+  it('generates the api hub metadata and writes to the input folder', async () => {
+    // nock('http://registry.npmjs.org/').head(/.*/).reply(404);
+
+    const sourceFiles = await promises.readdir(
+      join(pathTestService, 'sdk-metadata')
+    );
+    const clientFile = sourceFiles.find(
+      file => file === 'API_TEST_SRV_CLIENT_JS.json'
+    );
+
+    expect(clientFile).toBeDefined();
+  }, 10000);
+});
 
   describe('v2', () => {
     let files: SourceFile[];
@@ -226,6 +234,109 @@ describe('generator', () => {
     });
   });
 
+  describe('optionsPerService', () => {
+    beforeEach(async () => {
+      mock({
+        common: {},
+          // '/prettier/config': JSON.stringify({ printWidth: 66 }),
+          [pathTestResources]: mock.load(pathTestResources),
+          [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
+          [pathRootNodeModules]: mock.load(pathRootNodeModules),
+          existingConfig:
+          '{ "API_TEST_SRV": {"directoryName": "test-service" } }',
+          anotherConfig:
+          '{ "inputDir/spec2.json": {"directoryName": "customName" } }'
+        });
+    });
+
+    afterEach(() => {
+      mock.restore();
+    });
+
+    it('writes options per service', async () => {
+    const options = createOptions({
+      inputDir: pathTestService,
+      outputDir: 'out',
+      optionsPerService: 'test-service-options.json',
+      skipValidation: true,
+      overwrite: true
+    });
+      await generate(options);
+
+      const actual = readFile('test-service-options.json', 'utf8');
+      await expect(actual).resolves.toMatch(
+        JSON.stringify(
+          {
+            'API_TEST_SRV': {
+              directoryName: 'test-service',
+              servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              npmPackageName: 'test-service'
+            }
+          },
+          null,
+          2
+        )
+      );
+    });
+
+    xit('overwrites writes options per service', async () => {
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'out',
+        optionsPerService: 'existingConfig',
+        skipValidation: true,
+        overwrite: true
+      });
+        await generate(options);
+
+      const actual = readFile('existingConfig', 'utf8');
+      await expect(actual).resolves.toMatch(
+        JSON.stringify(
+          {
+            'API_TEST_SRV': {
+              directoryName: 'test-service',
+              servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              npmPackageName: 'test-service'
+            }
+          },
+          null,
+          2
+        )
+      );
+    });
+
+    xit('merges options per service', async () => {
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'out',
+        optionsPerService: 'anotherConfig',
+        skipValidation: true,
+        overwrite: true
+      });
+        await generateProject(options);
+        await generate(options);
+
+      const actual = readFile('anotherConfig', 'utf8');
+     // await expect(actual).resolves.toMatch(endsWithNewLine);
+      await expect(actual).resolves.toMatch(
+        JSON.stringify(
+          {
+            'inputDir/spec2.json': {
+              directoryName: 'customName'
+            },
+            'API_TEST_SRV': {
+              directoryName: 'test-service',
+              servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              npmPackageName: 'test-service'
+            }
+          },
+          null,
+          2
+        )
+      );
+    });
+  });
+
   describe('logger', () => {
     beforeAll(() => {
       mock({
@@ -239,7 +350,7 @@ describe('generator', () => {
 
     afterAll(() => mock.restore());
 
-    it('should display no verbose logs by default', async () => {
+    it('should not display verbose logs by default', async () => {
       const consoleSpy = jest.spyOn(process.stdout, 'write');
       const logger = createLogger({
         package: 'generator',
@@ -285,7 +396,7 @@ describe('generator', () => {
       await generateProject(options);
       await generate(options);
       expect(logger.level).toBe('verbose');
-      const log = await promises.readFile('test.log', { encoding: 'utf-8' });
+      const log = await readFile('test.log', { encoding: 'utf-8' });
       expect(log).toMatch(/Generating entities .../);
     });
   });

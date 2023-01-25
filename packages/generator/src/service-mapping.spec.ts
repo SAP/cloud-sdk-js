@@ -1,5 +1,5 @@
 import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
-import { getServicePath, serviceMapping, VdmMapping } from './service-mapping';
+import { getServicePath, optionsPerService, VdmMapping } from './service-mapping';
 import { VdmServiceMetadata } from './vdm-types';
 
 describe('service-mapping', () => {
@@ -50,7 +50,7 @@ describe('service-mapping', () => {
       }
     };
 
-    expect(serviceMapping(serviceMetadata)).toEqual(expectedVdmMapping);
+    expect(optionsPerService(serviceMetadata)).toEqual(expectedVdmMapping);
   });
 
   it('should log an error if no service path can be determined', () => {
@@ -80,7 +80,7 @@ describe('service-mapping', () => {
       } as any
     };
 
-    const serviceMappingIn = {
+    const optionsPerServiceIn = {
       servicePath: VALUE_IS_UNDEFINED
     } as any;
 
@@ -90,7 +90,7 @@ describe('service-mapping', () => {
     });
 
     const errorSpy = jest.spyOn(logger, 'error');
-    getServicePath(metadata, serviceMappingIn);
+    getServicePath(metadata, optionsPerServiceIn);
     expect(errorSpy).toHaveBeenCalledWith(
       '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "service-mapping.json".'
     );

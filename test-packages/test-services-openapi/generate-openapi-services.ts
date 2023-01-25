@@ -8,6 +8,7 @@ const generatorConfigOpenApi: Partial<GeneratorOptions> = {
   transpile: true,
   packageJson: true,
   packageVersion: '1.2.3',
+  optionsPerService: 'service-mapping.json',
   include: '../../test-resources/{CHANGELOG.md,some-test-markdown.md}',
   readme: true,
   skipValidation: true,

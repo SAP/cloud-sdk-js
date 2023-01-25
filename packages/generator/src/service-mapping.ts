@@ -1,5 +1,6 @@
 import { parse } from 'path';
-import { unixEOL, createLogger, readJSON } from '@sap-cloud-sdk/util';
+import { existsSync, readFileSync } from 'fs';
+import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './options';
 import { VdmServiceMetadata } from './vdm-types';
 import { servicePathFromSwagger } from './swagger-parser/swagger-util';
@@ -18,12 +19,12 @@ export const VALUE_IS_UNDEFINED = 'VALUE_IS_UNDEFINED';
  * @internal
  */
 export interface VdmMapping {
-  [fileName: string]: ServiceMapping;
+  [fileName: string]: OptionsPerService;
 }
 /**
  * @internal
  */
-export interface ServiceMapping {
+export interface OptionsPerService {
   /**
    * @internal
    */
@@ -40,17 +41,16 @@ export interface ServiceMapping {
 /**
  * @internal
  */
-export function readServiceMapping(options: GeneratorOptions): VdmMapping {
-  return (
-    (options.serviceMapping &&
-      (readJSON(options.serviceMapping) as VdmMapping)) ||
-    {}
-  );
+export function readOptionsPerService(options: GeneratorOptions): VdmMapping {
+  const configPath = options.optionsPerService;
+  return configPath && existsSync(configPath)
+    ? JSON.parse(readFileSync(configPath, 'utf8')) as VdmMapping
+    : {};
 }
 /**
  * @internal
  */
-export function serviceMapping(services: VdmServiceMetadata[]): VdmMapping {
+export function optionsPerService(services: VdmServiceMetadata[]): VdmMapping {
   return services.reduce((vdmMapping, service) => {
     vdmMapping[service.originalFileName] = {
       directoryName: service.directoryName,
@@ -64,18 +64,18 @@ export function serviceMapping(services: VdmServiceMetadata[]): VdmMapping {
 /**
  * @internal
  */
-export function serviceMappingFile(services: VdmServiceMetadata[]): string {
-  return JSON.stringify(serviceMapping(services), null, 2) + unixEOL;
+export function optionsPerServiceFile(services: VdmServiceMetadata[]): string {
+  return JSON.stringify(optionsPerService(services), null, 2) + unixEOL;
 }
 /**
  * @internal
  */
 export function getServicePath(
   metadata: ServiceMetadata,
-  serviceMappingIn?: ServiceMapping
+  optionsPerServiceIn?: OptionsPerService
 ): string {
   let servicePath =
-    serviceMappingIn?.servicePath ||
+    optionsPerServiceIn?.servicePath ||
     servicePathFromSelfLink(metadata.edmx.selfLink) ||
     servicePathFromSwagger(metadata.swagger);
   if (!servicePath || servicePath === VALUE_IS_UNDEFINED) {

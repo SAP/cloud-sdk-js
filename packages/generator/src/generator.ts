@@ -48,7 +48,7 @@ import { serviceFile } from './generator-without-ts-morph/service/file';
 import { operationsSourceFile } from './operations/file';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
-import { serviceMappingFile } from './service-mapping';
+import { optionsPerServiceFile } from './service-mapping';
 import { indexFile } from './service/index-file';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
@@ -190,16 +190,19 @@ export async function generateProject(
   );
   await Promise.all(promises);
 
-  if (!options.serviceMapping) {
-    throw Error('The service mapping is undefined.');
+  if (options.optionsPerService) {
+    logger.verbose('Generating options per service ...');
+
+    const dir = dirname(options.optionsPerService);
+    await mkdir(dir, { recursive: true });
+    const optionsFile = project.createSourceFile(
+      resolve(options.optionsPerService.toString()),
+      optionsPerServiceFile(services),
+      { overwrite: true }
+    );
+
+    optionsFile.save();
   }
-
-  project.createSourceFile(
-    resolve(options.serviceMapping.toString()),
-    serviceMappingFile(services),
-    { overwrite: true }
-  );
-
   return { project, services };
 }
 

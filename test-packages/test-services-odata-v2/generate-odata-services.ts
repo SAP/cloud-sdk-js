@@ -20,7 +20,8 @@ async function generateOdata(): Promise<void> {
   return generate({
     ...generatorConfigOData,
     inputDir: join('..', '..', 'test-resources', 'odata-service-specs', 'v2'),
-    outputDir: resolve('.')
+    outputDir: resolve('.'),
+    optionsPerService: 'service-mapping.json'
   }).catch(reason => {
     logger.error(`[v2] Unhandled rejection at: ${reason}`);
     process.exit(1);

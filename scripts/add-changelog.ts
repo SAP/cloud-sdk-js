@@ -1,5 +1,5 @@
 import { getPackageVersion } from './get-package-version';
-import { readFileSync, writeFileSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync } from 'fs';
 
 const unixEOL = '\n';
 
@@ -10,6 +10,9 @@ function openFile(filePath: string): string {
 function getChangelogWithVersion(v: string = getPackageVersion()): string {
   const changelog = openFile('CHANGELOG.md');
   const [, olderLogs] = changelog.split(`${unixEOL}# ${v}`);
+  if (!olderLogs) {
+    throw new Error(`Can not find version ${v} in CHANGELOG.md`);
+  }
   let logs = olderLogs.split(`${unixEOL}# `)[0];
   logs = unixEOL + logs.slice(logs.indexOf(`${unixEOL}##`) + 1);
   logs = logs.replace(/## /g, '### ');
@@ -20,14 +23,33 @@ function getChangelogWithVersion(v: string = getPackageVersion()): string {
   const year = date.getFullYear();
 
   const headerWithVersion = `${unixEOL}## ${v} [Core Modules] - ${month} ${day}, ${year}`;
-  const apiReferenceLink = `${unixEOL}**API Reference:** [${v}](https://sap.github.io/cloud-sdk/api/${v})`;
 
-  return [headerWithVersion, apiReferenceLink, logs].join(unixEOL);
+  return [headerWithVersion, logs].join(unixEOL);
+}
+
+function getReleaseNotesFilePath(): string {
+  const majorVersion = getPackageVersion().split('.')[0];
+
+  if (isVersioned(majorVersion)) {
+    return `./cloud-sdk/docs-js_versioned_docs/version-v${majorVersion}/release-notes.mdx`;
+  }
+  return './cloud-sdk/docs-js/release-notes.mdx';
+}
+
+function isVersioned(majorVersion: string): boolean {
+  const versionedInDocusaurus = readdirSync(
+    './cloud-sdk/docs-js_versioned_docs/'
+  );
+  // The docusaurus folders are called version-v1, version-v2 so match regex for ends with v1, v2, ...
+  return !!versionedInDocusaurus.find(folder =>
+    folder.match(new RegExp(`v${majorVersion}$`))
+  );
 }
 
 export function addCurrentChangelog(): void {
   const changelog = getChangelogWithVersion();
-  const releaseNotes = openFile('./cloud-sdk/docs-js/release-notes.mdx');
+  const releaseNotesFilePath = getReleaseNotesFilePath();
+  const releaseNotes = openFile(releaseNotesFilePath);
   let releaseNotesArray = releaseNotes.split(
     `<!-- This line is used for our release notes automation -->${unixEOL}`
   );
@@ -36,5 +58,5 @@ export function addCurrentChangelog(): void {
   const newReleaseNotes = releaseNotesArray.join(
     `<!-- This line is used for our release notes automation -->${unixEOL}`
   );
-  writeFileSync('./cloud-sdk/docs-js/release-notes.mdx', newReleaseNotes);
+  writeFileSync(releaseNotesFilePath, newReleaseNotes);
 }

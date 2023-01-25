@@ -1,4 +1,5 @@
-import { cliOptions, parseOptions } from '@sap-cloud-sdk/generator/internal';
+import { cliOptions } from '@sap-cloud-sdk/generator/internal';
+import { parseOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { expectError, expectType } from 'tsd';
 
 const options = {

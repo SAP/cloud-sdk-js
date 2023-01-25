@@ -62,10 +62,8 @@ export async function getClientCredentialsToken(
     serviceCredentials: resolveService(service).credentials
   };
 
-  const xssecPromise: (
-    arg: XsuaaParameters
-  ) => Promise<ClientCredentialsResponse> = arg =>
-    new Promise((resolve, reject) => {
+  const xssecPromise = function (arg): Promise<ClientCredentialsResponse> {
+    return new Promise((resolve, reject) => {
       xssec.requests.requestClientCredentialsToken(
         arg.subdomain,
         arg.serviceCredentials,
@@ -75,6 +73,7 @@ export async function getClientCredentialsToken(
           err ? reject(err) : resolve(tokenResponse)
       );
     });
+  };
   return executeWithMiddleware<
     XsuaaParameters,
     ClientCredentialsResponse,
@@ -112,8 +111,8 @@ export function getUserToken(
     userJwt
   };
 
-  const xssecPromise: (arg: XsuaaParameters) => Promise<string> = arg =>
-    new Promise((resolve: (token: string) => void, reject) =>
+  const xssecPromise = function (arg: XsuaaParameters): Promise<string> {
+    return new Promise((resolve: (token: string) => void, reject) =>
       xssec.requests.requestUserToken(
         arg.userJwt,
         arg.serviceCredentials,
@@ -124,6 +123,7 @@ export function getUserToken(
         (err: Error, token: string) => (err ? reject(err) : resolve(token))
       )
     );
+  };
 
   return executeWithMiddleware<
     XsuaaParameters,

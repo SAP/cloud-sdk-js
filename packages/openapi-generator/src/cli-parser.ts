@@ -2,7 +2,7 @@ import { parseCmdArgsBuilder } from '@sap-cloud-sdk/generator-common/internal';
 import { cliOptions, GeneratorOptions } from './options';
 
 const commandText =
-  'OData Client Code Generator for OData v2 and v4. Generates typed clients from EDMX and XML files for usage with the SAP Cloud SDK for JavaScript.';
+  'OpenAPI Client Code Generator. Generates typed clients from OpenAPI files for usage with the SAP Cloud SDK for JavaScript.';
 /**
  * @internal
  */

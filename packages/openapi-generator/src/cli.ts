@@ -1,35 +1,19 @@
 #!/usr/bin/env node
 
-import { createLogger } from '@sap-cloud-sdk/util';
-import yargs from 'yargs';
-// eslint-disable-next-line import/no-internal-modules
-import { hideBin } from 'yargs/helpers';
-import { parseOptionsFromConfig, getSpecifiedFlags, cli } from './options';
-import { generateWithParsedOptions } from './generator';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { parseCmdArgs } from './cli-parser';
+import { generate } from './generator';
 
-const logger = createLogger('openapi-generator');
+const logger = createLogger({
+  package: 'generator',
+  messageContext: 'cli'
+});
 
-parseCmdArgs();
-/**
- * @internal
- */
-export default async function parseCmdArgs(): Promise<void> {
-  try {
-    const argv = await cli(process.argv).argv;
+logger.info('Parsing args...');
 
-    if (argv.config) {
-      await generateWithParsedOptions({
-        ...(await parseOptionsFromConfig(argv.config)),
-        ...getSpecifiedFlags(
-          argv,
-          Object.keys(await yargs(hideBin(process.argv)).argv)
-        )
-      });
-    } else {
-      await generateWithParsedOptions(argv);
-    }
-  } catch (err) {
-    logger.error(err);
-    yargs.exit(1, new Error());
-  }
-}
+generate(parseCmdArgs(process.argv.slice(2)))
+  .then(() => logger.info('Generation of services finished successfully.'))
+  .catch(err => {
+    logger.error(new ErrorWithCause('Generation of services failed.', err));
+    process.exit(1);
+  });

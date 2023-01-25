@@ -20,9 +20,8 @@ function getChangelogWithVersion(v: string = getPackageVersion()): string {
   const year = date.getFullYear();
 
   const headerWithVersion = `${unixEOL}## ${v} [Core Modules] - ${month} ${day}, ${year}`;
-  const apiReferenceLink = `${unixEOL}**API Reference:** [${v}](https://sap.github.io/cloud-sdk/api/${v})`;
 
-  return [headerWithVersion, apiReferenceLink, logs].join(unixEOL);
+  return [headerWithVersion, logs].join(unixEOL);
 }
 
 export function addCurrentChangelog(): void {

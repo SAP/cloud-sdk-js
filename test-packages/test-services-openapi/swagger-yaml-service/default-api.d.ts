@@ -33,4 +33,3 @@ export declare const DefaultApi: {
     body: TestEntity | undefined
   ) => OpenApiRequestBuilder<string>;
 };
-//# sourceMappingURL=default-api.d.ts.map

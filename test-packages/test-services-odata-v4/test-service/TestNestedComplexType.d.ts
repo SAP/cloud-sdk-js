@@ -91,4 +91,3 @@ export declare namespace TestNestedComplexType {
    */
   const _propertyMetadata: PropertyMetadata<TestNestedComplexType>[];
 }
-//# sourceMappingURL=TestNestedComplexType.d.ts.map

@@ -8,4 +8,3 @@ import type { SimpleTestEntity } from './simple-test-entity';
  * SimpleTestEntity schema
  */
 export type OtherSimpleTestEntity = SimpleTestEntity;
-//# sourceMappingURL=other-simple-test-entity.d.ts.map

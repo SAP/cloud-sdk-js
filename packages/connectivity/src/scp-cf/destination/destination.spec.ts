@@ -15,7 +15,7 @@ describe('parseDestination', () => {
     const actual = parseDestination(basicMultipleResponse[0]);
 
     const expected: Destination = {
-      url: 'https://my.system.com',
+      url: 'https://my.system.example.com',
       name: 'FINAL-DESTINATION',
       proxyType: 'Internet',
       username: 'USER_NAME',

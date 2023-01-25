@@ -41,16 +41,14 @@
     "@sap-cloud-sdk/generator-common": "^2.11.0",
     "@sap-cloud-sdk/openapi": "^2.11.0",
     "@sap-cloud-sdk/util": "^2.11.0",
-    "glob": "^8.0.1",
+    "glob": "^8.1.0",
     "js-yaml": "^4.0.0",
     "openapi-types": "^12.1.0",
-    "swagger2openapi": "^7.0.4",
-    "yargs": "^17.6.2"
+    "swagger2openapi": "^7.0.4"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.0",
-    "@types/yargs": "^17.0.19",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.3",
     "mock-fs": "^5.2.0",
     "typescript": "~4.9.4"
   }

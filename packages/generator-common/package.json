@@ -40,11 +40,13 @@
     "@sap-cloud-sdk/util": "^2.11.0",
     "fast-levenshtein": "~3.0.0",
     "fs-extra": "^11.1.0",
-    "glob": "^8.0.1",
+    "glob": "^8.1.0",
     "typescript": "~4.9.4",
-    "prettier": "^2.8.1"
+    "prettier": "^2.8.3",
+    "yargs": "^17.6.2"
   },
   "devDependencies": {
+    "@types/yargs": "^17.0.20",
     "mock-fs": "^5.2.0"
   }
 }

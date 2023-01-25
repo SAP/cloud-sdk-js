@@ -1,28 +1,15 @@
-// eslint-disable-next-line import/named
-import { AxiosRequestConfig } from 'axios';
-
-/**
- * Context for HttpRequests of the middleware.
- */
-export interface HttpMiddlewareContext extends Context {
-  /**
-   * JWT used in the request.
-   */
-  jwt?: string;
-  /**
-   * Request config.
-   */
-  requestConfig: AxiosRequestConfig;
-}
-
 /**
  * Input parameter of a middleware.
  */
-export interface MiddlewareIn<ReturnT, ContextT extends Context> {
+export interface MiddlewareIn<
+  ArgumentT,
+  ReturnT,
+  ContextT extends MiddlewareContext<ArgumentT>
+> {
   /**
    * Initial function enriched by the middleware e.g. axios request getting a timeout.
    */
-  fn: () => Promise<ReturnT>;
+  readonly fn: MiddlewareFunction<ArgumentT, ReturnT>;
   /**
    * Context of the execution e.g. the request context or URL.
    */
@@ -30,7 +17,7 @@ export interface MiddlewareIn<ReturnT, ContextT extends Context> {
   /**
    * Call this method to disable all following middlewares.
    */
-  skipNext: SkipNext;
+  readonly skipNext: SkipNext;
 }
 
 /**
@@ -48,30 +35,48 @@ export interface SkipNext {
 /**
  * Return type of middlewares.
  */
-export type MiddlewareOut<ReturnT> = () => Promise<ReturnT>;
+export type MiddlewareOut<ArgumentT, ReturnT> = MiddlewareFunction<
+  ArgumentT,
+  ReturnT
+>;
 
 /**
  * Minimal Context of the middleware.
  */
-export interface Context {
+export interface MiddlewareContext<ArgumentT> {
   /**
    * URI of the function passed to the middleware.
    */
-  uri: string;
+  readonly uri: string;
   /**
    * Tenant identifier.
    */
-  tenantId: string;
+  readonly tenantId: string;
+  /**
+   * Arguments used in the middleware function. You can change this property to change the arguments in function execution.
+   */
+  fnArgument: ArgumentT;
 }
+
+/**
+ * Function ot which the middleware is added.
+ */
+export type MiddlewareFunction<ArgumentT, ReturnT> = (
+  arg: ArgumentT
+) => Promise<ReturnT>;
 
 /**
  * Middleware type - This function takes some initial function and returns a function.
  * The input is the MiddlewareIn containing the initial function and some context information e.g. axios request and the request context.
  * It returns a new functions with some additional feature e.g. timeout.
  */
-export type Middleware<ReturnT, ContextT extends Context> = (
-  options: MiddlewareIn<ReturnT, ContextT>
-) => MiddlewareOut<ReturnT>;
+export type Middleware<
+  ArgumentT,
+  ReturnT,
+  ContextT extends MiddlewareContext<ArgumentT>
+> = (
+  options: MiddlewareIn<ArgumentT, ReturnT, ContextT>
+) => MiddlewareOut<ArgumentT, ReturnT>;
 
 /**
  * Helper function to join a list of middlewares given an initial input.
@@ -81,13 +86,17 @@ export type Middleware<ReturnT, ContextT extends Context> = (
  * @returns Function with middlewares layered around it.
  * @internal
  */
-export function executeWithMiddleware<ReturnT, ContextT extends Context>(
-  middlewares: Middleware<ReturnT, ContextT>[] | undefined,
+export function executeWithMiddleware<
+  ArgumentT,
+  ReturnT,
+  ContextT extends MiddlewareContext<ArgumentT>
+>(
+  middlewares: Middleware<ArgumentT, ReturnT, ContextT>[] | undefined,
   context: ContextT,
-  fn: () => Promise<ReturnT>
+  fn: MiddlewareFunction<ArgumentT, ReturnT>
 ): Promise<ReturnT> {
   if (!middlewares?.length) {
-    return fn();
+    return fn(context.fnArgument);
   }
 
   // The skipNext function is called in the middleware to skip the next middlewares
@@ -101,7 +110,7 @@ export function executeWithMiddleware<ReturnT, ContextT extends Context>(
     middlewares,
     initial
   );
-  return functionWithMiddlewares();
+  return functionWithMiddlewares(context.fnArgument);
 }
 
 /**
@@ -115,10 +124,14 @@ export function executeWithMiddleware<ReturnT, ContextT extends Context>(
  * @param initial - Initial function and context.
  * @returns The function with the middlewares added.
  */
-function addMiddlewaresToInitialFunction<ReturnT, ContextT extends Context>(
-  middlewares: Middleware<ReturnT, ContextT>[],
-  initial: MiddlewareIn<ReturnT, ContextT>
-): MiddlewareOut<ReturnT> {
+function addMiddlewaresToInitialFunction<
+  ArgumentT,
+  ReturnT,
+  ContextT extends MiddlewareContext<ArgumentT>
+>(
+  middlewares: Middleware<ArgumentT, ReturnT, ContextT>[],
+  initial: MiddlewareIn<ArgumentT, ReturnT, ContextT>
+): MiddlewareOut<ArgumentT, ReturnT> {
   const { context, skipNext } = initial;
 
   const functionWithMiddlewares = middlewares.reduce((prev, curr) => {

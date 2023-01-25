@@ -214,4 +214,3 @@ export declare class TestEntityLvl2SingleLinkApi<
     >;
   };
 }
-//# sourceMappingURL=TestEntityLvl2SingleLinkApi.d.ts.map

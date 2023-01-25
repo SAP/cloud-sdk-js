@@ -2,7 +2,7 @@ import {
   formatTsConfig,
   readCustomTsConfig
 } from '@sap-cloud-sdk/generator-common/internal';
-import { ParsedGeneratorOptions } from './generator-options';
+import { ParsedGeneratorOptions } from './options';
 
 /**
  * Build a tsconfig.json file as string.

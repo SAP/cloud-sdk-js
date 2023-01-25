@@ -1,5 +1,7 @@
+import { resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { getOptionsWithoutDefaults, parseOptions } from './options-parser';
+import mock from 'mock-fs';
+import { getOptionsWithoutDefaults, parseOptions, resolveGlob } from './options-parser';
 const logger = createLogger('generator-options');
 
 describe('options parser', () => {
@@ -29,7 +31,14 @@ describe('options parser', () => {
     default: 'default value',
     coerce: val => `coerced: ${val}`
   } as const;
+  const include = {
+    describe: 'include files with glob',
+    type: 'string' as const,
+    coerce: resolveGlob
+  };
   const options = { deprecatedOption, otherOption, newOption } as const;
+
+  const absoluteJsonPaths = ['package.json','test/package.json','tsconfig.json'].map(s=>resolve(s));
 
   let warnSpy: jest.SpyInstance;
 
@@ -90,6 +99,32 @@ describe('options parser', () => {
       ).toEqual({
         coercedOption: 'test'
       });
+    });
+
+    it('includes using glob using cwd',()=>{
+      expect(parseOptions({ include },{ include: '**/*.json' }).include).toEqual(absoluteJsonPaths);
+    });
+
+    it('includes using glob using root',()=>{
+      expect(parseOptions({ include },{ include:  resolve('**/*.json') }).include).toEqual(absoluteJsonPaths);
+    });
+
+    it('includes using config path',()=>{
+      const config = {
+          describe: 'config files',
+          type: 'string' as const
+      };
+
+      mock({
+        '/dummy/root':{
+          'file-1.json' : '',
+          'sub-1':{
+            'file-2.json' : ''
+          }
+        }
+      });
+      expect(parseOptions({ include,config },{ include:  '**/*.json', config: '/dummy/root/config.json' }).include).toEqual(['file-1.json','sub-1/file-2.json'].map(s=>resolve(s)));
+      mock.restore();
     });
 
     it('coerces value even if unset, using other options', () => {

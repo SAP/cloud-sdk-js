@@ -1,6 +1,10 @@
+import { PathLike } from 'fs';
+import { dirname, resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { InferredOptionType, Options as YargsOption } from 'yargs';
+import { GeneratorOptions } from '@sap-cloud-sdk/generator/dist/options';
 const logger = createLogger('generator-options');
+import { sync as globSync } from 'glob';
 
 /**
  * @internal
@@ -66,6 +70,15 @@ type OptionsWith<
     ? K
     : never;
 }[keyof CliOptionsT];
+
+export function resolveGlob(
+    arg: PathLike | undefined,
+    options: GeneratorOptions & { config?: string }
+): string[]{
+  const globConfig =  options.config ? { cwd:resolve(dirname(options.config)) } : { cwd:resolve() };
+
+  return globSync(arg,globConfig).map(s=>resolve(s));
+}
 
 /**
  * @internal

@@ -42,11 +42,9 @@ describe('options parser', () => {
   };
   const options = { deprecatedOption, otherOption, newOption } as const;
 
-  const absoluteJsonPaths = [
-    'package.json',
-    'test/package.json',
-    'tsconfig.json'
-  ].map(s => resolve(s));
+  const absoluteJsonPaths = ['package.json', 'tsconfig.json'].map(s =>
+    resolve(s)
+  );
 
   let warnSpy: jest.SpyInstance;
 
@@ -110,14 +108,14 @@ describe('options parser', () => {
     });
 
     it('includes using glob using cwd', () => {
-      expect(
-        parseOptions({ include }, { include: '**/*.json' }).include
-      ).toEqual(absoluteJsonPaths);
+      expect(parseOptions({ include }, { include: '*.json' }).include).toEqual(
+        absoluteJsonPaths
+      );
     });
 
     it('includes using glob using root', () => {
       expect(
-        parseOptions({ include }, { include: resolve('**/*.json') }).include
+        parseOptions({ include }, { include: resolve('*.json') }).include
       ).toEqual(absoluteJsonPaths);
     });
 

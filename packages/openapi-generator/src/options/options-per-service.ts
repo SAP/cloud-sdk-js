@@ -1,7 +1,7 @@
 import { existsSync, promises } from 'fs';
 import { parse, posix, relative, sep } from 'path';
 import { unique, UniqueNameGenerator } from '@sap-cloud-sdk/util';
-import { ParsedGeneratorOptions } from './generator-options';
+import { ParsedGeneratorOptions } from './options';
 
 const { readFile } = promises;
 

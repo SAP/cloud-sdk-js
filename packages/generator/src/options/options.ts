@@ -1,6 +1,9 @@
 import { PathLike, existsSync, lstatSync } from 'fs';
 import { resolve, dirname, join, extname } from 'path';
-import { Options, ParsedOptions } from './options-parser';
+import {
+  Options,
+  ParsedOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * Options to configure the client generation when using the generator programmatically.

@@ -11,7 +11,8 @@ import {
   readCompilerOptions,
   readCustomTsConfig,
   readPrettierConfig,
-  transpileDirectory
+  transpileDirectory,
+  parseOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   createLogger,
@@ -38,8 +39,7 @@ import { sourceFile } from './file-generator';
 import {
   GeneratorOptions,
   cliOptions,
-  ParsedGeneratorOptions,
-  parseOptions
+  ParsedGeneratorOptions
 } from './options';
 import { hasEntities } from './generator-utils';
 import { entityApiFile } from './generator-without-ts-morph';

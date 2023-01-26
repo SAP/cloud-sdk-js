@@ -61,6 +61,8 @@ The following sub-sections describe affected modules, functions and interfaces w
 ### Package `@sap-cloud-sdk/connectivity` <!-- omit from toc -->
 
 - The generic type parameter `JwtKeysT` in `JwtKeyMapping` is now narrowed to extend `string`.
+- The property `url` on the `Destination` interface becomes optional.
+  It is only present for HTTP destinations and not for Mail destinations.
 
 #### Package `@sap-cloud-sdk/generator` <!-- omit from toc -->
 

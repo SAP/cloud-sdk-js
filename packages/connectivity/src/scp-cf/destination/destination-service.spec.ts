@@ -3,7 +3,6 @@ import nock from 'nock';
 // eslint-disable-next-line import/named
 import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
-import { createLogger } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
 import axios, { RawAxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
@@ -54,11 +53,6 @@ const oauth2SamlBearerDestination = {
   userIdSource: 'email',
   tokenServicePassword: 'password'
 } satisfies DestinationConfiguration;
-
-const brokenDestination = {
-  Name: 'BrokenDestination',
-  URL: undefined
-};
 
 describe('destination service', () => {
   describe('fetchInstanceDestinations', () => {
@@ -135,34 +129,6 @@ describe('destination service', () => {
       expected.forEach((e, index) => {
         expect(instanceDestinations[index]).toMatchObject(e);
       });
-    });
-
-    it('only returns valid destinations - instance destinations', async () => {
-      const response = [
-        basicDestination,
-        oauth2SamlBearerDestination,
-        brokenDestination
-      ];
-
-      nock(destinationServiceUri, {
-        reqheaders: {
-          authorization: `Bearer ${jwt}`
-        }
-      })
-        .get('/destination-configuration/v1/instanceDestinations')
-        .reply(200, response);
-
-      const logger = createLogger({
-        package: 'connectivity',
-        messageContext: 'destination-service'
-      });
-      const debugSpy = jest.spyOn(logger, 'debug');
-      const instanceDestinations: Destination[] =
-        await fetchInstanceDestinations(destinationServiceUri, jwt);
-      expect(instanceDestinations.length).toBe(2);
-      expect(debugSpy).toHaveBeenCalledWith(
-        'Parsing of destination with name "BrokenDestination" failed - skip this destination in parsing.'
-      );
     });
 
     it('returns 400 for an invalid JWT', async () => {
@@ -273,34 +239,6 @@ describe('destination service', () => {
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
       });
-    });
-
-    it('only returns valid destinations - subaccount destinations', async () => {
-      const response = [
-        basicDestination,
-        oauth2SamlBearerDestination,
-        brokenDestination
-      ];
-
-      nock(destinationServiceUri, {
-        reqheaders: {
-          authorization: `Bearer ${jwt}`
-        }
-      })
-        .get('/destination-configuration/v1/subaccountDestinations')
-        .reply(200, response);
-
-      const logger = createLogger({
-        package: 'connectivity',
-        messageContext: 'destination-service'
-      });
-      const debugSpy = jest.spyOn(logger, 'debug');
-      const subaccountDestinations: Destination[] =
-        await fetchSubaccountDestinations(destinationServiceUri, jwt);
-      expect(subaccountDestinations.length).toBe(2);
-      expect(debugSpy).toHaveBeenCalledWith(
-        'Parsing of destination with name "BrokenDestination" failed - skip this destination in parsing.'
-      );
     });
 
     it('returns 400 for an invalid JWT', async () => {

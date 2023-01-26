@@ -348,7 +348,7 @@ describe('GetAllRequestBuilder', () => {
           'ERNIE-UND-CERT',
           wrapJwtInHeader(onlyIssuerServiceToken).headers
         ),
-        nock(certificateSingleResponse.destinationConfiguration.URL)
+        nock(certificateSingleResponse.destinationConfiguration.URL!)
           .get(/.*/)
           .reply(200, 'iss token used on the way')
       ];

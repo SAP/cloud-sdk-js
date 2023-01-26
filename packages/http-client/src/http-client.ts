@@ -3,17 +3,18 @@ import * as https from 'https';
 import {
   buildHeadersForDestination,
   Destination,
-  DestinationOrFetchOptions,
-  getAgentConfig,
-  toDestinationNameUrl
+  HttpDestinationOrFetchOptions,
+  getAgentConfig
 } from '@sap-cloud-sdk/connectivity';
 import {
+  assertHttpDestination,
   decodedJwtOrZid,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
   getAuthHeader,
   getSubdomainAndZoneId,
+  HttpDestination,
   resolveDestination
 } from '@sap-cloud-sdk/connectivity/internal';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
@@ -56,16 +57,10 @@ const TENANT_ID = 'tenant_id';
  * @returns A {@link DestinationHttpRequestConfig}.
  */
 export async function buildHttpRequest(
-  destination: DestinationOrFetchOptions
+  destination: HttpDestinationOrFetchOptions
 ): Promise<DestinationHttpRequestConfig> {
   const resolvedDestination = await resolveDestination(destination);
-  if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
-    throw Error(
-      `The type of the destination '${toDestinationNameUrl(
-        destination
-      )}' has to be 'HTTP', but is '${destination.type}'.`
-    );
-  }
+  assertHttpDestination(resolvedDestination);
 
   const headers = await buildHeaders(resolvedDestination);
 
@@ -84,7 +79,7 @@ export async function buildHttpRequest(
 export async function addDestinationToRequestConfig<
   T extends HttpRequestConfig
 >(
-  destination: DestinationOrFetchOptions,
+  destination: HttpDestination,
   requestConfig: T
 ): Promise<T & DestinationHttpRequestConfig> {
   const destinationConfig = await buildHttpRequest(destination);
@@ -103,18 +98,12 @@ export async function addDestinationToRequestConfig<
  */
 export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
   return async function <T extends HttpRequestConfigWithOrigin>(
-    destination: DestinationOrFetchOptions,
+    destination: HttpDestinationOrFetchOptions,
     requestConfig: T,
     options?: HttpRequestOptions
   ): Promise<HttpResponse> {
     const resolvedDestination = await resolveDestination(destination);
-    if (!!resolvedDestination.type && resolvedDestination.type !== 'HTTP') {
-      throw Error(
-        `The type of the destination '${toDestinationNameUrl(
-          destination
-        )}' has to be 'HTTP', but is '${destination.type}'.`
-      );
-    }
+    assertHttpDestination(resolvedDestination);
 
     const destinationRequestConfig = await buildHttpRequest(
       resolvedDestination
@@ -366,11 +355,10 @@ function logRequestInformation(request: HttpRequestConfig) {
  * @returns A promise resolving to an {@link HttpResponse}.
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(
-  destination: DestinationOrFetchOptions,
+  destination: HttpDestinationOrFetchOptions,
   requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
-  // eslint-disable-next-line jsdoc/require-jsdoc
   const requestConfigWithOrigin =
     buildHttpRequestConfigWithOrigin(requestConfig);
   return execute(executeWithAxios)(
@@ -397,7 +385,7 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
 export function executeHttpRequestWithOrigin<
   T extends HttpRequestConfigWithOrigin
 >(
-  destination: DestinationOrFetchOptions,
+  destination: HttpDestinationOrFetchOptions,
   requestConfig?: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
@@ -411,7 +399,7 @@ export function executeHttpRequestWithOrigin<
 }
 
 function buildDestinationHttpRequestConfig(
-  destination: Destination,
+  destination: HttpDestination,
   headers: Record<string, string>
 ): DestinationHttpRequestConfig {
   return {
@@ -531,7 +519,7 @@ export function shouldHandleCsrfToken(
 }
 
 async function getCsrfHeaders(
-  destination: DestinationOrFetchOptions,
+  destination: HttpDestinationOrFetchOptions,
   request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
   const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
@@ -550,7 +538,7 @@ async function getCsrfHeaders(
 }
 
 async function addCsrfTokenToHeader(
-  destination: DestinationOrFetchOptions,
+  destination: HttpDestinationOrFetchOptions,
   request: HttpRequestConfig & DestinationHttpRequestConfig,
   httpRequestOptions?: HttpRequestOptions
 ): Promise<Record<string, string>> {

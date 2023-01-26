@@ -22,6 +22,11 @@ const testDestination: DestinationWithName = {
   url: 'https://example.com'
 };
 
+const mailDestination: DestinationWithName = {
+  name: 'RegisteredDestination',
+  type: 'MAIL'
+};
+
 const destinationWithForwarding: DestinationWithName = {
   forwardAuthToken: true,
   url: 'https://mys4hana.com',
@@ -38,12 +43,20 @@ describe('register-destination', () => {
     unmockDestinationsEnv();
   });
 
-  it('registers destination and retrieves it', async () => {
+  it('registers HTTP destination and retrieves it', async () => {
     await registerDestination(testDestination);
     const actual = await getDestination({
       destinationName: testDestination.name
     });
     expect(actual).toEqual(testDestination);
+  });
+
+  it('registers mail destination and retrieves it', async () => {
+    await registerDestination(mailDestination);
+    const actual = await getDestination({
+      destinationName: mailDestination.name
+    });
+    expect(actual).toEqual(mailDestination);
   });
 
   it('registers destination and retrieves it with JWT', async () => {

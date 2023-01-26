@@ -8,7 +8,8 @@ import {
   AuthenticationType,
   Destination,
   DestinationAuthToken,
-  DestinationCertificate
+  DestinationCertificate,
+  HttpDestination
 } from './destination-service-types';
 
 /**
@@ -19,7 +20,6 @@ import {
 export function sanitizeDestination(
   destination: Record<string, any>
 ): Destination {
-  validateDestinationInput(destination);
   const destAuthToken = parseAuthTokens(destination);
   let parsedDestination = parseCertificates(destAuthToken) as Destination;
 
@@ -41,7 +41,6 @@ export function parseDestination(
   destinationJson: DestinationJson | DestinationConfiguration
 ): Destination {
   const destinationConfig = getDestinationConfig(destinationJson);
-  validateDestinationConfig(destinationConfig);
 
   const destination = Object.entries(destinationConfig).reduce(
     (dest, [originalKey, value]) => {
@@ -181,43 +180,6 @@ export function getDestinationConfig(
     ? destinationJson.destinationConfiguration
     : destinationJson;
 }
-/**
-  @internal
- */
-export function validateDestinationConfig(
-  destinationConfig: DestinationConfiguration
-): void {
-  if (
-    isHttpDestination(destinationConfig) &&
-    typeof destinationConfig.URL === 'undefined'
-  ) {
-    const detailedMessage = destinationConfig.Name
-      ? `, but destination with name "${destinationConfig.Name}" has no property 'URL'`
-      : '';
-
-    throw Error(
-      `Property 'URL' of destination configuration must not be undefined${detailedMessage}.`
-    );
-  }
-}
-
-function validateDestinationInput(destinationInput: Record<string, any>): void {
-  if (
-    isHttpDestination(destinationInput) &&
-    typeof destinationInput.url === 'undefined'
-  ) {
-    throw Error("Property 'url' of destination input must not be undefined.");
-  }
-}
-
-function isHttpDestination(destinationInput: Record<string, any>): boolean {
-  return (
-    destinationInput.Type === 'HTTP' ||
-    destinationInput.type === 'HTTP' ||
-    (typeof destinationInput.type === 'undefined' &&
-      typeof destinationInput.Type === 'undefined')
-  );
-}
 
 /**
  * Transform destination to string containing destination information.
@@ -227,9 +189,17 @@ function isHttpDestination(destinationInput: Record<string, any>): boolean {
 export function toDestinationNameUrl(
   destination: DestinationOrFetchOptions
 ): string {
-  return isDestinationFetchOptions(destination)
-    ? `name: ${destination.destinationName}`
-    : `name: ${destination.name}, url: ${destination.url}`;
+  if (isDestinationFetchOptions(destination)) {
+    return `name: ${destination.destinationName}`;
+  }
+
+  const text = ['name', 'url']
+    .filter(key => destination[key])
+    .map(key => `${key}: ${destination[key]}`);
+
+  return text.length > 0
+    ? text.join(',')
+    : "Destination does not have a 'name' or 'url' property.";
 }
 
 function setOriginalProperties(destination: Destination): Destination {
@@ -341,7 +311,7 @@ export interface DestinationConfiguration {
   /**
    * `URL` of the destination.
    */
-  URL: string;
+  URL?: string;
   /**
    * `Name` of the destination.
    */
@@ -467,9 +437,17 @@ export function noDestinationErrorMessage(
 }
 
 /**
- * Type that is either a {@link Destination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
+ * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
  */
 export type DestinationOrFetchOptions = Xor<
   Destination,
+  DestinationFetchOptions & DestinationForServiceBindingOptions
+>;
+
+/**
+ * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
+ */
+export type HttpDestinationOrFetchOptions = Xor<
+  HttpDestination,
   DestinationFetchOptions & DestinationForServiceBindingOptions
 >;

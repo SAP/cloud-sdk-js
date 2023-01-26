@@ -1,7 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { decodeJwt } from '../jwt';
 import { getXsuaaServiceCredentials } from '../environment-accessor';
-import { Destination, DestinationAuthToken } from './destination-service-types';
+import {
+  Destination,
+  DestinationAuthToken,
+  isHttpDestination
+} from './destination-service-types';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
   DefaultDestinationCache,
@@ -46,10 +50,8 @@ export async function registerDestination(
   destination: DestinationWithName,
   options?: RegisterDestinationOptions
 ): Promise<void> {
-  if (!destination.name || !destination.url) {
-    throw Error(
-      'Registering destinations requires a destination name and url.'
-    );
+  if (!destination.name) {
+    throw Error('Registering destinations requires a destination name.');
   }
 
   await registerDestinationCache.cacheRetrievedDestination(
@@ -106,7 +108,8 @@ export async function searchRegisteredDestination(
     destination.authTokens = destinationAuthToken(options.jwt);
   }
 
-  return ['internet', 'private-link'].includes(proxyStrategy(destination))
+  return isHttpDestination(destination) &&
+    ['internet', 'private-link'].includes(proxyStrategy(destination))
     ? addProxyConfigurationInternet(destination)
     : destination;
 }

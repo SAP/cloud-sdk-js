@@ -7,7 +7,7 @@ import { RawAxiosRequestConfig } from 'axios';
  * Context for HttpRequests of the middleware.
  */
 export interface HttpMiddlewareContext
-  extends MiddlewareContext<RawAxiosRequestConfig> {
+  extends MiddlewareContext<HttpRequest> {
   /**
    * JWT used in the request.
    */
@@ -22,7 +22,7 @@ export interface HttpMiddlewareContext
  * Middleware for http requests.
  */
 export type HttpMiddleware = Middleware<
-  RawAxiosRequestConfig,
+  HttpRequest,
   HttpResponse,
   HttpMiddlewareContext
 >;

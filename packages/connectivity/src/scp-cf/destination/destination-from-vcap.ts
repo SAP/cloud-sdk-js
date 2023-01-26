@@ -7,7 +7,7 @@ import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
-import { Destination } from './destination-service-types';
+import { Destination, isHttpDestination } from './destination-service-types';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import { destinationCache } from './destination-cache';
 import { decodedJwtOrZid } from './destination-from-registration';
@@ -63,6 +63,7 @@ export async function destinationForServiceBinding(
 
   const destWithProxy =
     destination &&
+    isHttpDestination(destination) &&
     ['internet', 'private-link'].includes(proxyStrategy(destination))
       ? addProxyConfigurationInternet(destination)
       : destination;

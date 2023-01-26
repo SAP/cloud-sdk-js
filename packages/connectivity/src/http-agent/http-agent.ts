@@ -9,6 +9,7 @@ import {
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 import {
   addProxyConfigurationInternet,
+  HttpDestination,
   proxyAgent,
   proxyStrategy
 } from '../scp-cf/destination';
@@ -24,10 +25,10 @@ const logger = createLogger({
  * If the destination contains a proxy configuration, the agent will be a proxy-agent.
  * If not it will be the default http-agent coming from node.
  * @param destination - Determining which kind of configuration is returned.
- * @returns The http or http-agent configuration.
+ * @returns The HTTP or HTTPS agent configuration.
  */
 export function getAgentConfig(
-  destination: Destination
+  destination: HttpDestination
 ): HttpAgentConfig | HttpsAgentConfig {
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const certificateOptions = {
@@ -46,7 +47,9 @@ export function getAgentConfig(
  * @param destination - Destination object
  * @returns Options, which can be used later the http client.
  */
-function getTrustStoreOptions(destination: Destination): Record<string, any> {
+function getTrustStoreOptions(
+  destination: HttpDestination
+): Record<string, any> {
   // http case: no certificate needed
   if (getProtocolOrDefault(destination) === 'http') {
     if (destination.isTrustingAllCertificates) {
@@ -156,7 +159,7 @@ function selectCertificate(destination): DestinationCertificate {
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
  */
 function createDefaultAgent(
-  destination: Destination,
+  destination: HttpDestination,
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   if (getProtocolOrDefault(destination) === 'https') {
@@ -177,7 +180,7 @@ export function urlAndAgent(targetUri: string): {
   httpAgent?: http.Agent;
   httpsAgent?: http.Agent;
 } {
-  let destination: Destination = { url: targetUri, proxyType: 'Internet' };
+  let destination: HttpDestination = { url: targetUri, proxyType: 'Internet' };
   if (proxyStrategy(destination) === 'internet') {
     destination = addProxyConfigurationInternet(destination);
   }

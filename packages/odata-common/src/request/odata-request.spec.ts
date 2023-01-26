@@ -1,11 +1,11 @@
 import { v4 as uuid } from 'uuid';
-import { Destination } from '@sap-cloud-sdk/connectivity';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
 import { commonODataUri } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import {
   CommonEntity,
   commonEntityApi
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { DefaultDeSerializers } from '../de-serializers';
 import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
 import { ODataRequest } from './odata-request';
@@ -68,7 +68,7 @@ describe('OData Request', () => {
   });
 
   it('request config contains headers without ETag value when there is no ETag config', async () => {
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'http://example.com'
     };
 
@@ -95,7 +95,7 @@ describe('OData Request', () => {
 
 function createRequest(
   requestConfigConstructor,
-  destination: Destination = { url: '' }
+  destination: HttpDestination = { url: '' }
 ) {
   const config = new requestConfigConstructor(commonEntityApi, commonODataUri);
   config.keys = {

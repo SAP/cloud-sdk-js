@@ -70,10 +70,10 @@ type OptionsWith<
 }[keyof CliOptionsT];
 
 /**
- * Resolves a string using glob notation. If a config is given in generatoroptions the glob working diretory is considered relative to this config.
+ * Resolves a string using glob notation. If a config is given in generatorOptions, the glob working directory is considered relative to this config.
  * @internal
- * @param arg Value for the string for which the glob is resolved
- * @param options Generator options
+ * @param arg - Value for the string for which the glob is resolved.
+ * @param options - Generator options.
  */
 export function resolveGlob<GeneratorOptionsT>(
   arg: string | undefined,

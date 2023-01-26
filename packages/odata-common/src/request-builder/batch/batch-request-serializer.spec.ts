@@ -1,4 +1,3 @@
-import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
   CommonEntity,
   commonEntityApi,
@@ -13,6 +12,7 @@ import {
   updateRequestBuilder,
   WriteBuilder
 } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
 import {
   serializeBatchRequest,
   serializeRequest,
@@ -187,7 +187,7 @@ describe('batch request serializer', () => {
       expect(() =>
         serializeBatchRequest(request, {
           subRequestPathType: request.requestConfig.subRequestPathType,
-          destination: {} as Destination
+          destination: { url: '' } as HttpDestination
         })
       ).toThrowErrorMatchingInlineSnapshot(
         '"Cannot serialize batch request. Invalid destination provided for sub request path type \'absolute\'"'

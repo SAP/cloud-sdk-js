@@ -9,7 +9,6 @@ import {
   verifyJwt
 } from '../jwt';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
-import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
   getDestinationService,
   getDestinationServiceCredentialsList
@@ -18,7 +17,12 @@ import { isIdenticalTenant } from '../tenant';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
 import { DestinationServiceCredentials } from '../environment-accessor-types';
-import { Destination } from './destination-service-types';
+import { addProxyConfigurationOnPrem } from '../connectivity-service';
+import {
+  Destination,
+  HttpDestination,
+  isHttpDestination
+} from './destination-service-types';
 import {
   alwaysProvider,
   alwaysSubscriber,
@@ -217,7 +221,9 @@ export class DestinationFromServiceRetriever {
       );
     }
 
-    const withProxySetting = await da.addProxyConfiguration(destination);
+    const withProxySetting = isHttpDestination(destination)
+      ? await da.addProxyConfiguration(destination)
+      : destination;
     const withTrustStore = await da.addTrustStoreConfiguration(
       withProxySetting,
       destinationResult.origin
@@ -536,7 +542,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   private async addProxyConfiguration(
-    destination: Destination
+    destination: HttpDestination
   ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
       case 'on-premise':

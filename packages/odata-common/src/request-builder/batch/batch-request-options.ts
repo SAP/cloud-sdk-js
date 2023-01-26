@@ -1,4 +1,4 @@
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
 
 /**
  * The path in the sub request should be serialized as an absolute or relative URL.
@@ -20,5 +20,5 @@ export interface BatchRequestSerializationOptions {
   /**
    * @internal
    */
-  destination?: Destination;
+  destination?: HttpDestination;
 }

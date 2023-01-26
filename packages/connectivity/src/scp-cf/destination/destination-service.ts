@@ -20,10 +20,8 @@ import { buildAuthorizationHeaders } from '../authorization-header';
 import {
   DestinationConfiguration,
   DestinationJson,
-  getDestinationConfig,
   parseCertificate,
-  parseDestination,
-  validateDestinationConfig
+  parseDestination
 } from './destination';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import { destinationServiceCache } from './destination-service-cache';
@@ -75,21 +73,6 @@ export function fetchSubaccountDestinations(
   return fetchDestinations(destinationServiceUri, jwt, 'subaccount', options);
 }
 
-function isParsable(
-  destinationResponse: DestinationConfiguration | DestinationJson
-): boolean {
-  const config = getDestinationConfig(destinationResponse);
-  try {
-    validateDestinationConfig(config);
-    return true;
-  } catch (err) {
-    logger.debug(
-      `Parsing of destination with name "${config.Name}" failed - skip this destination in parsing.`
-    );
-    return false;
-  }
-}
-
 async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
@@ -121,9 +104,9 @@ async function fetchDestinations(
     headers
   )
     .then(response => {
-      const destinations: Destination[] = response.data
-        .filter(isParsable)
-        .map(parsableDestination => parseDestination(parsableDestination));
+      const destinations: Destination[] = response.data.map(destination =>
+        parseDestination(destination)
+      );
 
       if (options?.useCache) {
         destinationServiceCache.cacheRetrievedDestinations(

@@ -11,7 +11,7 @@ import {
   HttpsAgentConfig
 } from '../../http-agent/agent-config';
 import { getProtocolOrDefault } from '../get-protocol';
-import { Destination } from './destination-service-types';
+import { HttpDestination } from './destination-service-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -27,7 +27,7 @@ type ProxyStrategy = 'no-proxy' | 'on-premise' | 'internet' | 'private-link';
  * @param destination - Destination to derive the proxy strategy from.
  * @returns The proxy strategy for the given destination.
  */
-export function proxyStrategy(destination: Destination): ProxyStrategy {
+export function proxyStrategy(destination: HttpDestination): ProxyStrategy {
   if (destination.proxyType === 'OnPremise') {
     logger.debug(
       'OnPrem destination proxy settings from connectivity service will be used.'
@@ -195,7 +195,9 @@ export function parseProxyEnv(
  * @returns Destination containing the configuration for web proxy.
  * @internal
  */
-export function addProxyConfigurationInternet(destination: any): Destination {
+export function addProxyConfigurationInternet(
+  destination: HttpDestination
+): HttpDestination {
   const proxyEnvValue = getProxyEnvValue(getProtocolOrDefault(destination));
   if (proxyEnvValue) {
     const proxyConfiguration = parseProxyEnv(proxyEnvValue);
@@ -220,7 +222,7 @@ export function addProxyConfigurationInternet(destination: any): Destination {
  * @internal
  */
 export function proxyAgent(
-  destination: Destination,
+  destination: HttpDestination,
   options?: AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   const proxyConfig = destination.proxyConfiguration;

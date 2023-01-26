@@ -6,7 +6,7 @@ import {
   getServicePath,
   readOptionsPerService,
   VdmMapping
-} from './service-mapping';
+} from './options-per-service';
 import { ServiceNameFormatter } from './service-name-formatter';
 import { readEdmxFile, ServiceMetadata } from './edmx-parser/edmx-file-reader';
 import { readSwaggerFile } from './swagger-parser/swagger-parser';

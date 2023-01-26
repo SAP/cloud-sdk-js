@@ -2,7 +2,7 @@ import { resolve } from 'path';
 import { createOptions } from '../test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import { GlobalNameFormatter } from './global-name-formatter';
-import { OptionsPerService } from './service-mapping';
+import { OptionsPerService } from './options-per-service';
 import { VdmProperty } from './vdm-types';
 import { parseAllServices, parseService } from './service-generator';
 

@@ -48,7 +48,7 @@ import { serviceFile } from './generator-without-ts-morph/service/file';
 import { operationsSourceFile } from './operations/file';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
-import { optionsPerServiceFile } from './service-mapping';
+import { optionsPerServiceFile } from './options-per-service';
 import { indexFile } from './service/index-file';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';

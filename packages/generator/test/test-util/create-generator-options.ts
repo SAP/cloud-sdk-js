@@ -12,7 +12,7 @@ export function createOptions(
     inputDir: '',
     outputDir: '',
     skipValidation: true,
-    optionsPerService: 'service-mapping.json',
+    optionsPerService: 'options-per-service.json',
     packageJson: false,
     ...options
   });

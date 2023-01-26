@@ -19,9 +19,9 @@ export interface GeneratorOptions {
   outputDir: PathLike;
   /**
    * Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files.
-   * The configuration allows to set a `directoryName` and `packageName` for every service, identified by the path to the original file.
+   * The configuration allows to set a `directoryName` and `npmPackageName` for every service, identified by the path to the original file.
    * It also makes sure that names do not change between generator runs.
-   * If a directory is passed, a `service-mapping.json` file is read/created in this directory.
+   * If a directory is passed, a `options-per-service.json` file is read/created in this directory.
    */
   optionsPerService?: PathLike;
   /**
@@ -143,7 +143,7 @@ export const cliOptions = {
   optionsPerService: {
     alias: 's',
     describe:
-      'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. The configuration allows to set a `directoryName` and `packageName` for every service, identified by the path to the original file. It also makes sure that names do not change between generator runs. If a directory is passed, a `options-per-service.json` file is read/created in this directory.',
+      'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. The configuration allows to set a `directoryName` and `npmPackageName` for every service, identified by the path to the original file. It also makes sure that names do not change between generator runs. If a directory is passed, a `options-per-service.json` file is read/created in this directory.',
     type: 'string',
     coerce: (
       arg: string | undefined,

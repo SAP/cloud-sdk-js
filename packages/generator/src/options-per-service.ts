@@ -8,7 +8,7 @@ import { ServiceMetadata } from './edmx-parser/edmx-file-reader';
 
 const logger = createLogger({
   package: 'generator',
-  messageContext: 'service-mapping'
+  messageContext: 'options-per-service'
 });
 
 /**
@@ -82,7 +82,7 @@ export function getServicePath(
     logger.error(
       `[ ${
         parse(metadata.edmx.path.toString()).name
-      } ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "service-mapping.json".`
+      } ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".`
     );
     servicePath = VALUE_IS_UNDEFINED;
   }

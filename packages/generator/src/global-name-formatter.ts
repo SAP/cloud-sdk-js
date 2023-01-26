@@ -1,5 +1,5 @@
 import { propertyExists, UniqueNameGenerator } from '@sap-cloud-sdk/util';
-import { OptionsPerService, VdmMapping } from './service-mapping';
+import { OptionsPerService, VdmMapping } from './options-per-service';
 /**
  * @internal
  */

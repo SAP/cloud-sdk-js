@@ -1,13 +1,11 @@
 import * as http from 'http';
 import type { MiddlewareContext, Middleware } from '@sap-cloud-sdk/resilience';
 // eslint-disable-next-line import/named
-import { RawAxiosRequestConfig } from 'axios';
 
 /**
  * Context for HttpRequests of the middleware.
  */
-export interface HttpMiddlewareContext
-  extends MiddlewareContext<HttpRequest> {
+export interface HttpMiddlewareContext extends MiddlewareContext<HttpRequest> {
   /**
    * JWT used in the request.
    */

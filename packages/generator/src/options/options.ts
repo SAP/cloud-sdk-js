@@ -152,10 +152,10 @@ export const cliOptions = {
       if (typeof arg !== 'undefined') {
         const isFilePath =
           (existsSync(arg) && lstatSync(arg).isFile()) || !!extname(arg);
-          return resolveRequiredPath(
-            isFilePath ? arg : join(arg, 'options-per-service.json'),
-            options
-          );
+        return resolveRequiredPath(
+          isFilePath ? arg : join(arg, 'options-per-service.json'),
+          options
+        );
       }
     }
   },

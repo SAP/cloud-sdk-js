@@ -33,6 +33,7 @@ describe('generator', () => {
     beforeAll(async () => {
       mock({
         common: {},
+        someDir: {},
         '/prettier/config': JSON.stringify({ printWidth: 66 }),
         [pathTestResources]: mock.load(pathTestResources),
         [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
@@ -42,7 +43,7 @@ describe('generator', () => {
       const options = createOptions({
         inputDir: pathTestService,
         outputDir: 'common',
-        optionsPerService: 'test-service-options.json',
+        optionsPerService: 'someDir/test-service-options.json',
         overwrite: true,
         prettierConfig: '/prettier/config',
         generateSdkMetadata: true,
@@ -98,23 +99,25 @@ describe('generator', () => {
     });
 
     it('generates the options per service and writes to the given folder', async () => {
-      const clientFile = await promises.readFile('test-service-options.json');
+      const clientFile = await promises.readFile(
+        'someDir/test-service-options.json'
+      );
       expect(clientFile).toBeDefined();
     }, 10000);
 
-  it('generates the api hub metadata and writes to the input folder', async () => {
-    // nock('http://registry.npmjs.org/').head(/.*/).reply(404);
+    it('generates the api hub metadata and writes to the input folder', async () => {
+      // nock('http://registry.npmjs.org/').head(/.*/).reply(404);
 
-    const sourceFiles = await promises.readdir(
-      join(pathTestService, 'sdk-metadata')
-    );
-    const clientFile = sourceFiles.find(
-      file => file === 'API_TEST_SRV_CLIENT_JS.json'
-    );
+      const sourceFiles = await promises.readdir(
+        join(pathTestService, 'sdk-metadata')
+      );
+      const clientFile = sourceFiles.find(
+        file => file === 'API_TEST_SRV_CLIENT_JS.json'
+      );
 
-    expect(clientFile).toBeDefined();
-  }, 10000);
-});
+      expect(clientFile).toBeDefined();
+    }, 10000);
+  });
 
   describe('v2', () => {
     let files: SourceFile[];
@@ -238,36 +241,38 @@ describe('generator', () => {
     beforeEach(async () => {
       mock({
         common: {},
-          // '/prettier/config': JSON.stringify({ printWidth: 66 }),
-          [pathTestResources]: mock.load(pathTestResources),
-          [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
-          [pathRootNodeModules]: mock.load(pathRootNodeModules),
-          existingConfig:
+        temp: {
+          'options.json': JSON.stringify('')
+        },
+        [pathTestResources]: mock.load(pathTestResources),
+        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
+        [pathRootNodeModules]: mock.load(pathRootNodeModules),
+        existingConfig:
           '{ "API_TEST_SRV": {"directoryName": "test-service" } }',
-          anotherConfig:
+        anotherConfig:
           '{ "inputDir/spec2.json": {"directoryName": "customName" } }'
-        });
+      });
     });
 
     afterEach(() => {
       mock.restore();
     });
 
-    it('writes options per service', async () => {
-    const options = createOptions({
-      inputDir: pathTestService,
-      outputDir: 'out',
-      optionsPerService: 'test-service-options.json',
-      skipValidation: true,
-      overwrite: true
-    });
+    it('writes options per service with custom name', async () => {
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'out',
+        optionsPerService: 'test-service-options.json',
+        skipValidation: true,
+        overwrite: true
+      });
       await generate(options);
 
       const actual = readFile('test-service-options.json', 'utf8');
       await expect(actual).resolves.toMatch(
         JSON.stringify(
           {
-            'API_TEST_SRV': {
+            API_TEST_SRV: {
               directoryName: 'test-service',
               servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
               npmPackageName: 'test-service'
@@ -279,21 +284,47 @@ describe('generator', () => {
       );
     });
 
-    xit('overwrites writes options per service', async () => {
+    it('writes options per service to the given dir', async () => {
       const options = createOptions({
         inputDir: pathTestService,
         outputDir: 'out',
-        optionsPerService: 'existingConfig',
+        optionsPerService: 'temp',
         skipValidation: true,
         overwrite: true
       });
-        await generate(options);
+      await generate(options);
 
-      const actual = readFile('existingConfig', 'utf8');
+      const actual = readFile('temp/options-per-service.json', 'utf8');
       await expect(actual).resolves.toMatch(
         JSON.stringify(
           {
-            'API_TEST_SRV': {
+            API_TEST_SRV: {
+              directoryName: 'test-service',
+              servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              npmPackageName: 'test-service'
+            }
+          },
+          null,
+          2
+        )
+      );
+    });
+
+    it('writes options per service to the given dir containing an existing options file ', async () => {
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'out',
+        optionsPerService: 'temp/options.json',
+        skipValidation: true,
+        overwrite: true
+      });
+      await generate(options);
+
+      const actual = readFile('temp/options.json', 'utf8');
+      await expect(actual).resolves.toMatch(
+        JSON.stringify(
+          {
+            API_TEST_SRV: {
               directoryName: 'test-service',
               servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
               npmPackageName: 'test-service'
@@ -313,18 +344,43 @@ describe('generator', () => {
         skipValidation: true,
         overwrite: true
       });
-        await generateProject(options);
-        await generate(options);
+      await generateProject(options);
+      await generate(options);
 
       const actual = readFile('anotherConfig', 'utf8');
-     // await expect(actual).resolves.toMatch(endsWithNewLine);
       await expect(actual).resolves.toMatch(
         JSON.stringify(
           {
             'inputDir/spec2.json': {
               directoryName: 'customName'
             },
-            'API_TEST_SRV': {
+            API_TEST_SRV: {
+              directoryName: 'test-service',
+              servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              npmPackageName: 'test-service'
+            }
+          },
+          null,
+          2
+        )
+      );
+    });
+
+    xit('overwrites writes options per service', async () => {
+      const options = createOptions({
+        inputDir: pathTestService,
+        outputDir: 'out',
+        optionsPerService: 'existingConfig',
+        skipValidation: true,
+        overwrite: true
+      });
+      await generate(options);
+
+      const actual = readFile('existingConfig', 'utf8');
+      await expect(actual).resolves.toMatch(
+        JSON.stringify(
+          {
+            API_TEST_SRV: {
               directoryName: 'test-service',
               servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
               npmPackageName: 'test-service'

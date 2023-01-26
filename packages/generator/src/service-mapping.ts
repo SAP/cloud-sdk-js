@@ -44,7 +44,7 @@ export interface OptionsPerService {
 export function readOptionsPerService(options: GeneratorOptions): VdmMapping {
   const configPath = options.optionsPerService;
   return configPath && existsSync(configPath)
-    ? JSON.parse(readFileSync(configPath, 'utf8')) as VdmMapping
+    ? (JSON.parse(readFileSync(configPath, 'utf8')) as VdmMapping)
     : {};
 }
 /**

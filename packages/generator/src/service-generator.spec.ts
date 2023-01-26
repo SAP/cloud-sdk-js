@@ -52,7 +52,9 @@ describe('service-generator', () => {
         expect(serviceMetadata.directoryName).toEqual(
           optionsPerService.directoryName
         );
-        expect(serviceMetadata.servicePath).toEqual(optionsPerService.servicePath);
+        expect(serviceMetadata.servicePath).toEqual(
+          optionsPerService.servicePath
+        );
         expect(serviceMetadata.npmPackageName).toEqual(
           optionsPerService.npmPackageName
         );

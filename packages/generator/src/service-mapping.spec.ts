@@ -1,5 +1,9 @@
 import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
-import { getServicePath, optionsPerService, VdmMapping } from './service-mapping';
+import {
+  getServicePath,
+  optionsPerService,
+  VdmMapping
+} from './service-mapping';
 import { VdmServiceMetadata } from './vdm-types';
 
 describe('service-mapping', () => {

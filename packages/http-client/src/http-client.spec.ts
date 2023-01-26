@@ -5,7 +5,7 @@ import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
 import axios, { RawAxiosRequestConfig } from 'axios';
-import { timeout, MiddlewareIn } from '@sap-cloud-sdk/resilience';
+import { timeout, MiddlewareOptions } from '@sap-cloud-sdk/resilience';
 import * as jwt123 from 'jsonwebtoken';
 import {
   circuitBreakers,
@@ -235,7 +235,7 @@ describe('generic http client', () => {
       // Doing the dummy object the name of the key is taken as function name.
       const dummy = {
         [appendedText](
-          options: MiddlewareIn<
+          options: MiddlewareOptions<
             RawAxiosRequestConfig,
             HttpResponse,
             HttpMiddlewareContext
@@ -358,7 +358,7 @@ describe('generic http client', () => {
     it('passes the context properties to the middleware', async () => {
       const showContextMiddleware: HttpMiddleware =
         (
-          opt: MiddlewareIn<
+          opt: MiddlewareOptions<
             RawAxiosRequestConfig,
             HttpResponse,
             HttpMiddlewareContext

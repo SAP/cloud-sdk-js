@@ -3,7 +3,7 @@ import * as asyncRetry from 'async-retry';
 import {
   MiddlewareContext,
   Middleware,
-  MiddlewareIn,
+  MiddlewareOptions,
   MiddlewareOut
 } from './middleware';
 
@@ -31,7 +31,7 @@ export function retry<
   }
 
   return function (
-    options: MiddlewareIn<ArgumentType, ReturnType, ContextType>
+    options: MiddlewareOptions<ArgumentType, ReturnType, ContextType>
   ): MiddlewareOut<ArgumentType, ReturnType> {
     return arg =>
       asyncRetry.default(

@@ -1,7 +1,7 @@
 import CircuitBreaker from 'opossum';
 // eslint-disable-next-line import/named
 import { AxiosError } from 'axios';
-import { MiddlewareContext, Middleware, MiddlewareIn } from './middleware';
+import { MiddlewareContext, Middleware, MiddlewareOptions } from './middleware';
 
 /**
  * Map of all existing circuit breakers.
@@ -65,7 +65,7 @@ function circuitBreaker<
   keyBuilder: KeyBuilder<ArgumentT, ContextT>,
   errorFilter: ErrorFilter
 ): Middleware<ArgumentT, ReturnT, ContextT> {
-  return (options: MiddlewareIn<any, any, any>) => () =>
+  return (options: MiddlewareOptions<any, any, any>) => () =>
     (
       getCircuitBreaker(
         keyBuilder(options.context),

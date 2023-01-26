@@ -1,7 +1,7 @@
 /**
  * Input parameter of a middleware.
  */
-export interface MiddlewareIn<
+export interface MiddlewareOptions<
   ArgumentT,
   ReturnT,
   ContextT extends MiddlewareContext<ArgumentT>
@@ -59,7 +59,7 @@ export interface MiddlewareContext<ArgumentT> {
 }
 
 /**
- * Function ot which the middleware is added.
+ * Function around which the middlewares are added.
  */
 export type MiddlewareFunction<ArgumentT, ReturnT> = (
   arg: ArgumentT
@@ -75,8 +75,8 @@ export type Middleware<
   ReturnT,
   ContextT extends MiddlewareContext<ArgumentT>
 > = (
-  options: MiddlewareIn<ArgumentT, ReturnT, ContextT>
-) => MiddlewareOut<ArgumentT, ReturnT>;
+  options: MiddlewareOptions<ArgumentT, ReturnT, ContextT>
+) => MiddlewareFunction<ArgumentT, ReturnT>;
 
 /**
  * Helper function to join a list of middlewares given an initial input.
@@ -130,7 +130,7 @@ function addMiddlewaresToInitialFunction<
   ContextT extends MiddlewareContext<ArgumentT>
 >(
   middlewares: Middleware<ArgumentT, ReturnT, ContextT>[],
-  initial: MiddlewareIn<ArgumentT, ReturnT, ContextT>
+  initial: MiddlewareOptions<ArgumentT, ReturnT, ContextT>
 ): MiddlewareOut<ArgumentT, ReturnT> {
   const { context, skipNext } = initial;
 

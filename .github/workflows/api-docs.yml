@@ -7,6 +7,7 @@ on:
       - 'v*-main'
     paths:
       - 'knowledge-base/api-reference/**'
+  workflow_dispatch:
 
 jobs:
   push-to-documentation-branch:

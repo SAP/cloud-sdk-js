@@ -10,6 +10,7 @@ describe('retry', () => {
     FORBIDDEN: 403,
     SERVICE_UNAVAILABLE: 504
   };
+  const request = config => axios.request(config);
 
   afterEach(() => {
     nock.cleanAll();
@@ -18,17 +19,20 @@ describe('retry', () => {
   it('needs no retry', async () => {
     nock('https://example.com', {}).get('/retry').reply(HTTP_STATUS.OK);
 
-    const request = () =>
-      axios.request({
-        baseURL: 'https://example.com',
-        method: 'get',
-        url: '/retry'
-      });
+    const requestConfig = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/retry'
+    };
 
     await expect(
       executeWithMiddleware(
         [retry(0)],
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        {
+          uri: 'https://example.com',
+          tenantId: 'dummy-tenant',
+          fnArgument: requestConfig
+        },
         request
       )
     ).resolves.not.toThrow();
@@ -43,17 +47,20 @@ describe('retry', () => {
       .get('/retry')
       .reply(HTTP_STATUS.OK);
 
-    const request = () =>
-      axios.request({
-        baseURL: 'https://example.com',
-        method: 'get',
-        url: '/retry'
-      });
+    const requestConfig = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/retry'
+    };
 
     await expect(
       executeWithMiddleware(
         [retry(2)],
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        {
+          uri: 'https://example.com',
+          tenantId: 'dummy-tenant',
+          fnArgument: requestConfig
+        },
         request
       )
     ).resolves.not.toThrow();
@@ -66,17 +73,20 @@ describe('retry', () => {
       .get('/retry')
       .reply(HTTP_STATUS.OK);
 
-    const request = () =>
-      axios.request({
-        baseURL: 'https://example.com',
-        method: 'get',
-        url: '/retry'
-      });
+    const requestConfig = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/retry'
+    };
 
     await expect(
       executeWithMiddleware(
         [retry(7)],
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        {
+          uri: 'https://example.com',
+          tenantId: 'dummy-tenant',
+          fnArgument: requestConfig
+        },
         request
       )
     ).rejects.toThrowError('Request failed with status code 401');
@@ -91,17 +101,20 @@ describe('retry', () => {
       .get('/retry')
       .reply(HTTP_STATUS.OK);
 
-    const request = () =>
-      axios.request({
-        baseURL: 'https://example.com',
-        method: 'get',
-        url: '/retry'
-      });
+    const requestConfig = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/retry'
+    };
 
     await expect(
       executeWithMiddleware(
         [retry(7)],
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        {
+          uri: 'https://example.com',
+          tenantId: 'dummy-tenant',
+          fnArgument: requestConfig
+        },
         request
       )
     ).rejects.toThrowError('Request failed with status code 403');

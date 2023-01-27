@@ -5,7 +5,8 @@ import type { MiddlewareContext, Middleware } from '@sap-cloud-sdk/resilience';
 /**
  * Context for HttpRequests of the middleware.
  */
-export interface HttpMiddlewareContext extends MiddlewareContext<HttpRequestConfig> {
+export interface HttpMiddlewareContext
+  extends MiddlewareContext<HttpRequestConfig> {
   /**
    * JWT used in the request.
    */

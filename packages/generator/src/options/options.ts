@@ -1,4 +1,5 @@
-import { join } from 'path';
+import { PathLike, existsSync, lstatSync } from 'fs';
+import { resolve, dirname, join, extname } from 'path';
 import {
   Options,
   ParsedOptions,
@@ -21,9 +22,11 @@ export interface GeneratorOptions {
   outputDir: string;
   /**
    * Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files.
-   * Will be generated if not existent.
-   * Default set to `inputDir/service-mapping.json`.
+   * The configuration allows to set a `directoryName` and `npmPackageName` for every service, identified by the path to the original file.
+   * It also makes sure that names do not change between generator runs.
+   * If a directory is passed, a `options-per-service.json` file is read/created in this directory.
    */
+  optionsPerService?: PathLike;
   serviceMapping?: string;
   /**
    * Specify the path to the prettier config. If not given a default config will be used for the generated sources.
@@ -113,19 +116,24 @@ export const cliOptions = {
     demandOption: true,
     requiresArg: true
   },
-  serviceMapping: {
+  optionsPerService: {
     alias: 's',
     describe:
-      'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. Will be generated if not existent. By default it will be saved to/read from the input directory as "service-mapping.json".',
+      'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. The configuration allows to set a `directoryName` and `npmPackageName` for every service, identified by the path to the original file. It also makes sure that names do not change between generator runs. If a directory is passed, a `options-per-service.json` file is read/created in this directory.',
     type: 'string',
     coerce: (
       arg: string | undefined,
       options: GeneratorOptions & { config?: string }
-    ) =>
-      resolveRequiredPath(
-        arg ? arg : join(options.inputDir.toString(), 'service-mapping.json'),
-        options
-      )
+    ) => {
+      if (typeof arg !== 'undefined') {
+        const isFilePath =
+          (existsSync(arg) && lstatSync(arg).isFile()) || !!extname(arg);
+        return resolveRequiredPath(
+          isFilePath ? arg : join(arg, 'options-per-service.json'),
+          options
+        );
+      }
+    }
   },
   prettierConfig: {
     alias: 'p',

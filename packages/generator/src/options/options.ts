@@ -1,5 +1,5 @@
 import { PathLike, existsSync, lstatSync } from 'fs';
-import { resolve, dirname, join, extname } from 'path';
+import { join, extname } from 'path';
 import {
   Options,
   ParsedOptions,
@@ -27,7 +27,6 @@ export interface GeneratorOptions {
    * If a directory is passed, a `options-per-service.json` file is read/created in this directory.
    */
   optionsPerService?: PathLike;
-  serviceMapping?: string;
   /**
    * Specify the path to the prettier config. If not given a default config will be used for the generated sources.
    */

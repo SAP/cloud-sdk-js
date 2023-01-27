@@ -347,7 +347,7 @@ describe('generator', () => {
         skipValidation: true,
         overwrite: true
       });
-      await generateProject(options);
+      await generateProject(createParsedOptions(options));
       await generate(options);
 
       const actual = readFile('anotherConfig', 'utf8');

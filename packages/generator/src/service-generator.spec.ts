@@ -2,7 +2,7 @@ import { resolve } from 'path';
 import { createOptions } from '../test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import { GlobalNameFormatter } from './global-name-formatter';
-import { ServiceMapping } from './service-mapping';
+import { OptionsPerService } from './options-per-service';
 import { VdmProperty } from './vdm-types';
 import { parseAllServices, parseService } from './service-generator';
 
@@ -27,7 +27,7 @@ describe('service-generator', () => {
       });
 
       it('prioritizes mapping over original names', () => {
-        const serviceMapping: ServiceMapping = {
+        const optionsPerService: OptionsPerService = {
           directoryName: 'custom-directory-name',
           servicePath: '/path/to/service',
           npmPackageName: 'custom-package-name'
@@ -44,17 +44,19 @@ describe('service-generator', () => {
           },
           createOptions(),
           {
-            API_TEST_SRV: serviceMapping
+            API_TEST_SRV: optionsPerService
           },
-          new GlobalNameFormatter({ API_TEST_SRV: serviceMapping })
+          new GlobalNameFormatter({ API_TEST_SRV: optionsPerService })
         );
 
         expect(serviceMetadata.directoryName).toEqual(
-          serviceMapping.directoryName
+          optionsPerService.directoryName
         );
-        expect(serviceMetadata.servicePath).toEqual(serviceMapping.servicePath);
+        expect(serviceMetadata.servicePath).toEqual(
+          optionsPerService.servicePath
+        );
         expect(serviceMetadata.npmPackageName).toEqual(
-          serviceMapping.npmPackageName
+          optionsPerService.npmPackageName
         );
       });
     });

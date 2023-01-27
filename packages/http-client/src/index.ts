@@ -13,7 +13,6 @@ export {
 export {
   HttpRequestOptions,
   HttpResponse,
-  HttpRequest,
   OriginOptions,
   HttpRequestConfigBase,
   DestinationHttpRequestConfig,

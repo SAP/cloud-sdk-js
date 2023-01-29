@@ -9,13 +9,13 @@ import {
   DeSerializers,
   DeserializedType,
   edmToTs,
-  transformReturnValueForEdmType,
-  defaultDeSerializers,
-  BoundActionImportRequestBuilder,
   entityDeserializer,
+  transformReturnValueForEdmType,
   transformReturnValueForComplexType,
+  defaultDeSerializers,
   FunctionImportParameter,
-  BoundFunctionImportRequestBuilder
+  BoundFunctionImportRequestBuilder,
+  BoundActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityApi } from './TestEntityApi';
 import { MyComplexReturnType } from './MyComplexReturnType';
@@ -113,6 +113,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Bound Function Without Arguments.
    * @param parameters - Object containing all parameters for the function.
+   * @type: function
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundFunctionWithoutArguments(
@@ -146,6 +147,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Bound Function Without Arguments Complex Return Type.
    * @param parameters - Object containing all parameters for the function.
+   * @type: function
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundFunctionWithoutArgumentsComplexReturnType(
@@ -177,6 +179,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Bound Function With Arguments.
    * @param parameters - Object containing all parameters for the function.
+   * @type: function
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundFunctionWithArguments(
@@ -221,6 +224,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Bound Action Without Arguments.
    * @param parameters - Object containing all parameters for the action.
+   * @type: action
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundActionWithoutArguments(

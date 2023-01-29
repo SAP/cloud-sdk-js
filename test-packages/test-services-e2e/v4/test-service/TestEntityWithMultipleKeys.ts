@@ -11,9 +11,9 @@ import {
   edmToTs,
   transformReturnValueForEdmType,
   defaultDeSerializers,
-  BoundActionImportRequestBuilder,
   FunctionImportParameter,
-  BoundFunctionImportRequestBuilder
+  BoundFunctionImportRequestBuilder,
+  BoundActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 
@@ -63,6 +63,7 @@ export class TestEntityWithMultipleKeys<
   /**
    * Bound Function Without Arguments With Multiple Keys.
    * @param parameters - Object containing all parameters for the function.
+   * @type: function
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundFunctionWithoutArgumentsWithMultipleKeys(
@@ -96,6 +97,7 @@ export class TestEntityWithMultipleKeys<
   /**
    * Bound Function With Arguments With Multiple Keys.
    * @param parameters - Object containing all parameters for the function.
+   * @type: function
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundFunctionWithArgumentsWithMultipleKeys(
@@ -140,6 +142,7 @@ export class TestEntityWithMultipleKeys<
   /**
    * Bound Action Without Arguments With Multiple Keys.
    * @param parameters - Object containing all parameters for the action.
+   * @type: action
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundActionWithoutArgumentsWithMultipleKeys(

@@ -15,20 +15,18 @@ import {
   returnCollection,
   returnInt,
   returnSapCloudSdk,
+  createTestEntityById,
+  createTestEntityByIdReturnId,
   ConcatStringsParameters,
   GetAllParameters,
   GetByKeyParameters,
   GetByKeyWithMultipleKeysParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
-  ReturnSapCloudSdkParameters
-} from './function-imports';
-import {
-  createTestEntityById,
-  createTestEntityByIdReturnId,
+  ReturnSapCloudSdkParameters,
   CreateTestEntityByIdParameters,
   CreateTestEntityByIdReturnIdParameters
-} from './action-imports';
+} from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
@@ -146,7 +144,7 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     return this.initApi('testEntity50PropApi', TestEntity50PropApi);
   }
 
-  get functionImports() {
+  get operations() {
     return {
       concatStrings: (parameter: ConcatStringsParameters<DeSerializersT>) =>
         concatStrings(parameter, this.deSerializers),
@@ -164,12 +162,7 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
         returnInt(parameter, this.deSerializers),
       returnSapCloudSdk: (
         parameter: ReturnSapCloudSdkParameters<DeSerializersT>
-      ) => returnSapCloudSdk(parameter, this.deSerializers)
-    };
-  }
-
-  get actionImports() {
-    return {
+      ) => returnSapCloudSdk(parameter, this.deSerializers),
       createTestEntityById: (
         parameter: CreateTestEntityByIdParameters<DeSerializersT>
       ) => createTestEntityById(parameter, this.deSerializers),

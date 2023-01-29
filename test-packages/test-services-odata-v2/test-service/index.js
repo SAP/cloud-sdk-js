@@ -50,7 +50,7 @@ __exportStar(require("./Casetest_1RequestBuilder"), exports);
 __exportStar(require("./TestComplexType"), exports);
 __exportStar(require("./TestNestedComplexType"), exports);
 __exportStar(require("./TestLvl2NestedComplexType"), exports);
-__exportStar(require("./function-imports"), exports);
+__exportStar(require("./operations"), exports);
 __exportStar(require("./BatchRequest"), exports);
 __exportStar(require("./service"), exports);
 //# sourceMappingURL=index.js.map

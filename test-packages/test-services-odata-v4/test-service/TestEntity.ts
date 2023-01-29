@@ -12,7 +12,6 @@ import {
   transformReturnValueForEdmType,
   defaultDeSerializers,
   FunctionImportParameter,
-  ActionImportParameter,
   BoundFunctionImportRequestBuilder,
   BoundActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';

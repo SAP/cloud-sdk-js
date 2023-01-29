@@ -48,7 +48,7 @@ import {
   TestFunctionImportMultipleParamsParameters,
   CreateTestComplexTypeParameters,
   FContinueParameters
-} from './function-imports';
+} from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
 import {
@@ -256,7 +256,7 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     return this.initApi('casetest_1Api', Casetest_1Api);
   }
 
-  get functionImports() {
+  get operations() {
     return {
       testFunctionImportNoReturnType: (
         parameter: TestFunctionImportNoReturnTypeParameters<DeSerializersT>

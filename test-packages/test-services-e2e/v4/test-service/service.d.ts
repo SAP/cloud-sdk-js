@@ -14,12 +14,10 @@ import {
   GetByKeyWithMultipleKeysParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
-  ReturnSapCloudSdkParameters
-} from './function-imports';
-import {
+  ReturnSapCloudSdkParameters,
   CreateTestEntityByIdParameters,
   CreateTestEntityByIdReturnIdParameters
-} from './action-imports';
+} from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
@@ -106,7 +104,7 @@ declare class TestService<
   get testEntityWithMultipleKeysApi(): TestEntityWithMultipleKeysApi<DeSerializersT>;
   get testEntityLinkApi(): TestEntityLinkApi<DeSerializersT>;
   get testEntity50PropApi(): TestEntity50PropApi<DeSerializersT>;
-  get functionImports(): {
+  get operations(): {
     concatStrings: (
       parameter: ConcatStringsParameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
@@ -156,8 +154,6 @@ declare class TestService<
       ReturnSapCloudSdkParameters<DeSerializersT>,
       string
     >;
-  };
-  get actionImports(): {
     createTestEntityById: (
       parameter: CreateTestEntityByIdParameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<

@@ -16,7 +16,6 @@ export * from './Location';
 export * from './EventLocation';
 export * from './AirportLocation';
 export * from './PersonGender';
-export * from './function-imports';
-export * from './action-imports';
+export * from './operations';
 export * from './BatchRequest';
 export * from './service';

@@ -7,8 +7,10 @@ import { PhotosApi } from './PhotosApi';
 import { PeopleApi } from './PeopleApi';
 import { AirlinesApi } from './AirlinesApi';
 import { AirportsApi } from './AirportsApi';
-import { GetNearestAirportParameters } from './function-imports';
-import { ResetDataSourceParameters } from './action-imports';
+import {
+  GetNearestAirportParameters,
+  ResetDataSourceParameters
+} from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
@@ -95,7 +97,7 @@ declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
   get peopleApi(): PeopleApi<DeSerializersT>;
   get airlinesApi(): AirlinesApi<DeSerializersT>;
   get airportsApi(): AirportsApi<DeSerializersT>;
-  get functionImports(): {
+  get operations(): {
     getNearestAirport: (
       parameter: GetNearestAirportParameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
@@ -103,8 +105,6 @@ declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
       GetNearestAirportParameters<DeSerializersT>,
       import('./Airports').Airports<DefaultDeSerializers>
     >;
-  };
-  get actionImports(): {
     resetDataSource: (
       parameter: ResetDataSourceParameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<

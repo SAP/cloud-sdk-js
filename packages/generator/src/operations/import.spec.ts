@@ -74,9 +74,7 @@ describe('import declarations for operations', () => {
           'DefaultDeSerializers',
           'defaultDeSerializers',
           'FunctionImportParameter',
-          'ActionImportParameter',
           'FunctionImportRequestBuilder',
-          'ActionImportRequestBuilder'
         ]
       },
       {

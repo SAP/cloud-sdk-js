@@ -4,7 +4,7 @@ import { operationsSourceFile } from './file';
 
 describe('file', () => {
   it('functionImportSourceFile', () => {
-    const actual = operationsSourceFile(foodService, 'function');
+    const actual = operationsSourceFile(foodService);
 
     const imports = (actual.statements as any).filter(
       element => element.kind === StructureKind.ImportDeclaration

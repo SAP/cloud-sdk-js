@@ -15,19 +15,20 @@ import { operationFunction } from './operation';
  * @internal
  */
 export function operationsSourceFile(
-  service: VdmServiceMetadata,
-  type: 'function' | 'action'
+  service: VdmServiceMetadata
 ): SourceFileStructure {
-  const propertyName = `${type}Imports`;
-  const operations: VdmOperation[] = service[propertyName];
+  const functions = service.functionImports;
+  const actions = service.actionImports || [];
+  const operations = functions.concat(actions);
+
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...operationImportDeclarations(service, type, operations),
+      ...operationImportDeclarations(service, operations),
       ...flat(
         operations.map(operation => operationStatements(operation, service))
       ),
-      exportStatement(operations, `${type}Imports`)
+      exportStatement(operations)
     ]
   };
 }

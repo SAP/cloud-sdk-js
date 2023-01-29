@@ -29,6 +29,7 @@ async function generateOdata(): Promise<void> {
       'v4'
     )
   }).catch(reason => {
+    console.log(reason);
     logger.error(`[v4] Unhandled rejection at: ${reason}`);
     process.exit(1);
   });

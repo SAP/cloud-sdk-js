@@ -6,7 +6,8 @@
 import {
   DeSerializers,
   DefaultDeSerializers,
-  FunctionImportRequestBuilder
+  FunctionImportRequestBuilder,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
@@ -19,6 +20,7 @@ export interface TestFunctionImportEdmReturnTypeParameters<
 /**
  * Test Function Import Edm Return Type.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportEdmReturnType<
@@ -40,6 +42,7 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters<
 /**
  * Test Function Import Edm Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportEdmReturnTypeCollection<
@@ -74,6 +77,7 @@ export interface TestFunctionImportNullableTestParameters<
 /**
  * Test Function Import Nullable Test.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportNullableTest<
@@ -95,6 +99,7 @@ export interface TestFunctionImportEntityReturnTypeParameters<
 /**
  * Test Function Import Entity Return Type.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportEntityReturnType<
@@ -116,6 +121,7 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters<
 /**
  * Test Function Import Entity Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportEntityReturnTypeCollection<
@@ -137,6 +143,7 @@ export interface TestFunctionImportSharedEntityReturnTypeParameters<
 /**
  * Test Function Import Shared Entity Return Type. The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportSharedEntityReturnType<
@@ -161,6 +168,7 @@ export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters<
 /**
  * Test Function Import Shared Entity Return Type Collection. The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportSharedEntityReturnTypeCollection<
@@ -185,6 +193,7 @@ export interface TestFunctionImportComplexReturnTypeParameters<
 /**
  * Test Function Import Complex Return Type.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportComplexReturnType<
@@ -206,6 +215,7 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters<
 /**
  * Test Function Import Complex Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportComplexReturnTypeCollection<
@@ -244,6 +254,7 @@ export interface TestFunctionImportMultipleParamsParameters<
 /**
  * Test Function Import Multiple Params.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportMultipleParams<
@@ -265,6 +276,7 @@ export interface TestFunctionImportWithDifferentNameParameters<
 /**
  * Test Function Import With Different Name.
  * @param parameters - Object containing all parameters for the function.
+ * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportWithDifferentName<
@@ -277,7 +289,202 @@ export declare function testFunctionImportWithDifferentName<
   TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
   undefined
 >;
-export declare const functionImports: {
+/**
+ * Type of the parameters to be passed to {@link testActionImportNoParameterNoReturnType}.
+ */
+export interface TestActionImportNoParameterNoReturnTypeParameters<
+  DeSerializersT extends DeSerializers
+> {}
+/**
+ * Test Action Import No Parameter No Return Type.
+ * @param parameters - Object containing all parameters for the action.
+ * @type: action
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testActionImportNoParameterNoReturnType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>,
+  undefined
+>;
+/**
+ * Type of the parameters to be passed to {@link testActionImportMultipleParameterComplexReturnType}.
+ */
+export interface TestActionImportMultipleParameterComplexReturnTypeParameters<
+  DeSerializersT extends DeSerializers
+> {
+  /**
+   * String Param.
+   */
+  stringParam: string;
+  /**
+   * Non Nullable String Param.
+   */
+  nonNullableStringParam: string;
+  /**
+   * Nullable Boolean Param.
+   */
+  nullableBooleanParam?: boolean | null;
+  /**
+   * Nullable Geography Point Param.
+   */
+  nullableGeographyPointParam?: any | null;
+}
+/**
+ * Test Action Import Multiple Parameter Complex Return Type.
+ * @param parameters - Object containing all parameters for the action.
+ * @type: action
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testActionImportMultipleParameterComplexReturnType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>,
+  TestComplexType
+>;
+/**
+ * Type of the parameters to be passed to {@link testActionImportUnsupportedEdmTypes}.
+ */
+export interface TestActionImportUnsupportedEdmTypesParameters<
+  DeSerializersT extends DeSerializers
+> {
+  /**
+   * Simple Param.
+   */
+  simpleParam: any;
+}
+/**
+ * Test Action Import Unsupported Edm Types.
+ * @param parameters - Object containing all parameters for the action.
+ * @type: action
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testActionImportUnsupportedEdmTypes<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>,
+  any
+>;
+/**
+ * Type of the parameters to be passed to {@link testActionImportNoParameterEntityReturnType}.
+ */
+export interface TestActionImportNoParameterEntityReturnTypeParameters<
+  DeSerializersT extends DeSerializers
+> {}
+/**
+ * Test Action Import No Parameter Entity Return Type.
+ * @param parameters - Object containing all parameters for the action.
+ * @type: action
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testActionImportNoParameterEntityReturnType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>,
+  TestEntity
+>;
+/**
+ * Type of the parameters to be passed to {@link testActionImportSharedEntityReturnType}.
+ */
+export interface TestActionImportSharedEntityReturnTypeParameters<
+  DeSerializersT extends DeSerializers
+> {}
+/**
+ * Test Action Import Shared Entity Return Type. The 'execute' method does not exist for this action import. Please use 'executeRaw' to get the raw response.
+ * @param parameters - Object containing all parameters for the action.
+ * @type: action
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testActionImportSharedEntityReturnType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestActionImportSharedEntityReturnTypeParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): Omit<
+  ActionImportRequestBuilder<
+    DeSerializersT,
+    TestActionImportSharedEntityReturnTypeParameters<DeSerializersT>,
+    never
+  >,
+  'execute'
+>;
+/**
+ * Type of the parameters to be passed to {@link testActionImportSharedEntityReturnTypeCollection}.
+ */
+export interface TestActionImportSharedEntityReturnTypeCollectionParameters<
+  DeSerializersT extends DeSerializers
+> {}
+/**
+ * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist for this action import. Please use 'executeRaw' to get the raw response.
+ * @param parameters - Object containing all parameters for the action.
+ * @type: action
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testActionImportSharedEntityReturnTypeCollection<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestActionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): Omit<
+  ActionImportRequestBuilder<
+    DeSerializersT,
+    TestActionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
+    never
+  >,
+  'execute'
+>;
+/**
+ * Type of the parameters to be passed to {@link testActionImportNullableTest}.
+ */
+export interface TestActionImportNullableTestParameters<
+  DeSerializersT extends DeSerializers
+> {
+  /**
+   * Nullable Per Default.
+   */
+  nullablePerDefault?: string | null;
+  /**
+   * Nullable Explicit.
+   */
+  nullableExplicit?: string | null;
+  /**
+   * Non Nullable.
+   */
+  nonNullable: string;
+}
+/**
+ * Test Action Import Nullable Test.
+ * @param parameters - Object containing all parameters for the action.
+ * @type: action
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testActionImportNullableTest<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestActionImportNullableTestParameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  TestActionImportNullableTestParameters<DeSerializersT>,
+  TestComplexType | null
+>;
+export declare const operations: {
   testFunctionImportEdmReturnType: typeof testFunctionImportEdmReturnType;
   testFunctionImportEdmReturnTypeCollection: typeof testFunctionImportEdmReturnTypeCollection;
   testFunctionImportNullableTest: typeof testFunctionImportNullableTest;
@@ -289,4 +496,11 @@ export declare const functionImports: {
   testFunctionImportComplexReturnTypeCollection: typeof testFunctionImportComplexReturnTypeCollection;
   testFunctionImportMultipleParams: typeof testFunctionImportMultipleParams;
   testFunctionImportWithDifferentName: typeof testFunctionImportWithDifferentName;
+  testActionImportNoParameterNoReturnType: typeof testActionImportNoParameterNoReturnType;
+  testActionImportMultipleParameterComplexReturnType: typeof testActionImportMultipleParameterComplexReturnType;
+  testActionImportUnsupportedEdmTypes: typeof testActionImportUnsupportedEdmTypes;
+  testActionImportNoParameterEntityReturnType: typeof testActionImportNoParameterEntityReturnType;
+  testActionImportSharedEntityReturnType: typeof testActionImportSharedEntityReturnType;
+  testActionImportSharedEntityReturnTypeCollection: typeof testActionImportSharedEntityReturnTypeCollection;
+  testActionImportNullableTest: typeof testActionImportNullableTest;
 };

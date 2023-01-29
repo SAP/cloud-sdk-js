@@ -38,11 +38,10 @@ export async function getGeneratedFiles(
 }
 
 export function getOperationFunctionDeclarations(
-  files: SourceFile[],
-  type: 'function' | 'action'
+  files: SourceFile[]
 ): FunctionDeclaration[] {
   const functionImportsFile = files.find(
-    file => file.getBaseName() === `${type}-imports.ts`
+    file => file.getBaseName() === 'operations.ts'
   );
 
   return functionImportsFile?.getFunctions() || [];

@@ -392,29 +392,16 @@ export async function generateSourcesForService(
     );
   });
 
-  if (service.functionImports?.length) {
+  // Merge generated function-imports.ts and action-imports.ts into one operations.ts.
+  if (service.functionImports.length || service.actionImports?.length) {
     logger.verbose(
-      `[${service.originalFileName}] Generating function imports ...`
+      `[${service.originalFileName}] Generating operation imports ...`
     );
     filePromises.push(
       sourceFile(
         serviceDir,
-        'function-imports',
-        operationsSourceFile(service, 'function'),
-        createFileOptions
-      )
-    );
-  }
-
-  if (service.actionImports?.length) {
-    logger.verbose(
-      `[${service.originalFileName}] Generating action imports ...`
-    );
-    filePromises.push(
-      sourceFile(
-        serviceDir,
-        'action-imports',
-        operationsSourceFile(service, 'action'),
+        'operations',
+        operationsSourceFile(service),
         createFileOptions
       )
     );

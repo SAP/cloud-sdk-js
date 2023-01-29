@@ -29,6 +29,13 @@ import {
   testFunctionImportComplexReturnTypeCollection,
   testFunctionImportMultipleParams,
   testFunctionImportWithDifferentName,
+  testActionImportNoParameterNoReturnType,
+  testActionImportMultipleParameterComplexReturnType,
+  testActionImportUnsupportedEdmTypes,
+  testActionImportNoParameterEntityReturnType,
+  testActionImportSharedEntityReturnType,
+  testActionImportSharedEntityReturnTypeCollection,
+  testActionImportNullableTest,
   TestFunctionImportEdmReturnTypeParameters,
   TestFunctionImportEdmReturnTypeCollectionParameters,
   TestFunctionImportNullableTestParameters,
@@ -39,16 +46,7 @@ import {
   TestFunctionImportComplexReturnTypeParameters,
   TestFunctionImportComplexReturnTypeCollectionParameters,
   TestFunctionImportMultipleParamsParameters,
-  TestFunctionImportWithDifferentNameParameters
-} from './function-imports';
-import {
-  testActionImportNoParameterNoReturnType,
-  testActionImportMultipleParameterComplexReturnType,
-  testActionImportUnsupportedEdmTypes,
-  testActionImportNoParameterEntityReturnType,
-  testActionImportSharedEntityReturnType,
-  testActionImportSharedEntityReturnTypeCollection,
-  testActionImportNullableTest,
+  TestFunctionImportWithDifferentNameParameters,
   TestActionImportNoParameterNoReturnTypeParameters,
   TestActionImportMultipleParameterComplexReturnTypeParameters,
   TestActionImportUnsupportedEdmTypesParameters,
@@ -56,7 +54,7 @@ import {
   TestActionImportSharedEntityReturnTypeParameters,
   TestActionImportSharedEntityReturnTypeCollectionParameters,
   TestActionImportNullableTestParameters
-} from './action-imports';
+} from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
@@ -282,7 +280,7 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     );
   }
 
-  get functionImports() {
+  get operations() {
     return {
       testFunctionImportEdmReturnType: (
         parameter: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>
@@ -333,12 +331,7 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
       ) => testFunctionImportMultipleParams(parameter, this.deSerializers),
       testFunctionImportWithDifferentName: (
         parameter: TestFunctionImportWithDifferentNameParameters<DeSerializersT>
-      ) => testFunctionImportWithDifferentName(parameter, this.deSerializers)
-    };
-  }
-
-  get actionImports() {
-    return {
+      ) => testFunctionImportWithDifferentName(parameter, this.deSerializers),
       testActionImportNoParameterNoReturnType: (
         parameter: TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>
       ) =>

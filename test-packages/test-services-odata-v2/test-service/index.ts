@@ -34,6 +34,6 @@ export * from './Casetest_1RequestBuilder';
 export * from './TestComplexType';
 export * from './TestNestedComplexType';
 export * from './TestLvl2NestedComplexType';
-export * from './function-imports';
+export * from './operations';
 export * from './BatchRequest';
 export * from './service';

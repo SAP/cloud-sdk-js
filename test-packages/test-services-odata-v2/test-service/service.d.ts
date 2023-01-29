@@ -33,7 +33,7 @@ import {
   TestFunctionImportMultipleParamsParameters,
   CreateTestComplexTypeParameters,
   FContinueParameters
-} from './function-imports';
+} from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
 import {
@@ -124,7 +124,7 @@ declare class TestService<
   get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<DeSerializersT>;
   get caseTestApi(): CaseTestApi<DeSerializersT>;
   get casetest_1Api(): Casetest_1Api<DeSerializersT>;
-  get functionImports(): {
+  get operations(): {
     testFunctionImportNoReturnType: (
       parameter: TestFunctionImportNoReturnTypeParameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<

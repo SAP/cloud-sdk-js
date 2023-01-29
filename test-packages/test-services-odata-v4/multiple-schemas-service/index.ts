@@ -15,7 +15,6 @@ export * from './TestComplexType1';
 export * from './TestComplexType2';
 export * from './TestEnumType1';
 export * from './TestEnumType2';
-export * from './function-imports';
-export * from './action-imports';
+export * from './operations';
 export * from './BatchRequest';
 export * from './service';

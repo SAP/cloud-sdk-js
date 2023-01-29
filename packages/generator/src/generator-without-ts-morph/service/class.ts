@@ -54,10 +54,8 @@ export function serviceClass(service: VdmServiceMetadata): string {
     ${service.entities
       .map(entity => getEntityApiFunction(entity, service))
       .join('\n\n')}
-    
-    ${getActionFunctionImports(service, 'functionImports')}
-    
-    ${getActionFunctionImports(service, 'actionImports')}
+
+    ${getOperations(service)}
     
     ${serviceHasEntities ? getBatch() : ''}
 
@@ -65,21 +63,21 @@ export function serviceClass(service: VdmServiceMetadata): string {
   }`;
 }
 
-function getActionFunctionImports(
-  service: VdmServiceMetadata,
-  type: 'functionImports' | 'actionImports'
-): string {
-  if (service[type] === undefined || service[type]!.length === 0) {
+function getOperations(service: VdmServiceMetadata): string {
+  const operations = service.functionImports.concat(
+    service.actionImports || []
+  );
+  if (operations.length === 0) {
     return '';
   }
 
-  const lines = service[type]!.map(
+  const lines = operations.map(
     f =>
       `${f.name}:(parameter:${f.parametersTypeName}<DeSerializersT>)=>${f.name}(parameter,this.deSerializers)`
   );
 
   return codeBlock`
-  get ${type}( ) {
+  get operations() {
     return {${lines.join(',')}}
   }
   `;

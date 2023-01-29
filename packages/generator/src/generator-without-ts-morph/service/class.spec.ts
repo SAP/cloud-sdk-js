@@ -24,27 +24,20 @@ describe('class', () => {
     expect(result).not.toContain('actionImports');
   });
 
-  it('contains functionImports if in VDM', () => {
+  it('contains operations if in VDM', () => {
     const result = serviceClass({
       ...service,
       functionImports: [
         { name: 'myFunction', parametersTypeName: 'paraName' } as any
-      ]
-    });
-    expect(result).toContain('functionImport');
-    expect(result).toContain(
-      'myFunction:(parameter:paraName<DeSerializersT>)=>myFunction(parameter,this.deSerializers)'
-    );
-  });
-
-  it('contains actionImports if in VDM', () => {
-    const result = serviceClass({
-      ...service,
+      ],
       actionImports: [
         { name: 'myAction', parametersTypeName: 'paraName' } as any
       ]
     });
-    expect(result).toContain('actionImport');
+    expect(result).toContain('operations');
+    expect(result).toContain(
+      'myFunction:(parameter:paraName<DeSerializersT>)=>myFunction(parameter,this.deSerializers)'
+    );
     expect(result).toContain(
       'myAction:(parameter:paraName<DeSerializersT>)=>myAction(parameter,this.deSerializers)'
     );

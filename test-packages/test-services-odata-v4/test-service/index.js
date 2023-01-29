@@ -54,8 +54,7 @@ __exportStar(require("./TestLvl2NestedComplexType"), exports);
 __exportStar(require("./TestEnumType"), exports);
 __exportStar(require("./TestEnumTypeInt64"), exports);
 __exportStar(require("./TestEnumTypeWithOneMember"), exports);
-__exportStar(require("./function-imports"), exports);
-__exportStar(require("./action-imports"), exports);
+__exportStar(require("./operations"), exports);
 __exportStar(require("./BatchRequest"), exports);
 __exportStar(require("./service"), exports);
 //# sourceMappingURL=index.js.map

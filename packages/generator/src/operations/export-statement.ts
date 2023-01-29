@@ -9,15 +9,14 @@ import { VdmOperation } from '../vdm-types';
  * @internal
  */
 export function exportStatement(
-  operations: VdmOperation[],
-  name: 'functionImports' | 'actionImports'
+  operations: VdmOperation[]
 ): VariableStatementStructure {
   return {
     kind: StructureKind.VariableStatement,
     declarationKind: VariableDeclarationKind.Const,
     declarations: [
       {
-        name,
+        name: 'operations',
         initializer: exportsInitializer(operations)
       }
     ],

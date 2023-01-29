@@ -28,9 +28,7 @@ import {
   TestFunctionImportComplexReturnTypeParameters,
   TestFunctionImportComplexReturnTypeCollectionParameters,
   TestFunctionImportMultipleParamsParameters,
-  TestFunctionImportWithDifferentNameParameters
-} from './function-imports';
-import {
+  TestFunctionImportWithDifferentNameParameters,
   TestActionImportNoParameterNoReturnTypeParameters,
   TestActionImportMultipleParameterComplexReturnTypeParameters,
   TestActionImportUnsupportedEdmTypesParameters,
@@ -38,7 +36,7 @@ import {
   TestActionImportSharedEntityReturnTypeParameters,
   TestActionImportSharedEntityReturnTypeCollectionParameters,
   TestActionImportNullableTestParameters
-} from './action-imports';
+} from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
@@ -135,7 +133,7 @@ declare class TestService<
   get testEntityCircularLinkChildApi(): TestEntityCircularLinkChildApi<DeSerializersT>;
   get testEntityEndsWithApi(): TestEntityEndsWithApi<DeSerializersT>;
   get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<DeSerializersT>;
-  get functionImports(): {
+  get operations(): {
     testFunctionImportEdmReturnType: (
       parameter: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
@@ -219,8 +217,6 @@ declare class TestService<
       TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
       undefined
     >;
-  };
-  get actionImports(): {
     testActionImportNoParameterNoReturnType: (
       parameter: TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<

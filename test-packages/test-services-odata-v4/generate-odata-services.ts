@@ -23,6 +23,7 @@ async function generateOdata(): Promise<void> {
     inputDir: join('..', '..', 'test-resources', 'odata-service-specs', 'v4'),
     outputDir: resolve('.')
   }).catch(reason => {
+    console.log(reason);
     logger.error(`[v4] Unhandled rejection at: ${reason}`);
     process.exit(1);
   });

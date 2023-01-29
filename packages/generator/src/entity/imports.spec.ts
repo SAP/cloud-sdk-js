@@ -63,10 +63,10 @@ const expectedEntityImportsV4 = [
         'DeSerializers',
         'DefaultDeSerializers',
         'defaultDeSerializers',
-        'ActionImportParameter',
-        'ActionImportRequestBuilder',
         'FunctionImportParameter',
-        'FunctionImportRequestBuilder'
+        'ActionImportParameter',
+        'FunctionImportRequestBuilder',
+        'ActionImportRequestBuilder'
       ],
       ['foodService']
     ],

@@ -84,7 +84,6 @@ function returnTypeImport(
  */
 export function operationImportDeclarations(
   { oDataVersion, className }: VdmServiceMetadata,
-  type: 'function' | 'action',
   operations: VdmOperation[] = []
 ): ImportDeclarationStructure[] {
   if (!operations.length) {
@@ -99,9 +98,10 @@ export function operationImportDeclarations(
   const includesUnbound = !!operations.filter(operation => !operation.isBound)
     .length;
 
-  const hasOperationWithParameters = !!operations.filter(
-    operation => operation.parameters.length > 0 && operation.type === type
-  ).length;
+  const hasOperationWithParameters = operations.some(
+    operation => operation.parameters.length > 0
+  );
+
   if (includesUnbound && includesBound) {
     throw new Error(
       'Bound and unbound operations found in generation - this should not happen.'
@@ -129,13 +129,16 @@ export function operationImportDeclarations(
         'defaultDeSerializers',
         ...propertyTypeImportNames(parameters),
         ...(hasOperationWithParameters
-          ? [`${voca.capitalize(type)}ImportParameter`]
+          ? ['FunctionImportParameter', 'ActionImportParameter']
           : []),
         ...(includesUnbound
-          ? [`${voca.capitalize(type)}ImportRequestBuilder`]
+          ? ['FunctionImportRequestBuilder', 'ActionImportRequestBuilder']
           : []),
         ...(includesBound
-          ? [`Bound${voca.capitalize(type)}ImportRequestBuilder`]
+          ? [
+              'BoundFunctionImportRequestBuilder',
+              'BoundActionImportRequestBuilder'
+            ]
           : [])
       ],
       oDataVersion

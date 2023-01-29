@@ -6,10 +6,57 @@
 import {
   DeSerializers,
   DefaultDeSerializers,
+  FunctionImportRequestBuilder,
   ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
+import { TestEntity1 } from './TestEntity1';
+import { TestEntity2 } from './TestEntity2';
 import { TestComplexType1 } from './TestComplexType1';
 import { TestComplexType2 } from './TestComplexType2';
+/**
+ * Type of the parameters to be passed to {@link testFunctionImportEntityReturnType1}.
+ */
+export interface TestFunctionImportEntityReturnType1Parameters<
+  DeSerializersT extends DeSerializers
+> {}
+/**
+ * Test Function Import Entity Return Type 1.
+ * @param parameters - Object containing all parameters for the function.
+ * @type: function
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testFunctionImportEntityReturnType1<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
+  TestEntity1
+>;
+/**
+ * Type of the parameters to be passed to {@link testFunctionImportEntityReturnType2}.
+ */
+export interface TestFunctionImportEntityReturnType2Parameters<
+  DeSerializersT extends DeSerializers
+> {}
+/**
+ * Test Function Import Entity Return Type 2.
+ * @param parameters - Object containing all parameters for the function.
+ * @type: function
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testFunctionImportEntityReturnType2<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
+  deSerializers?: DeSerializersT
+): FunctionImportRequestBuilder<
+  DeSerializersT,
+  TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
+  TestEntity2
+>;
 /**
  * Type of the parameters to be passed to {@link testActionImportNoParameterComplexReturnType1}.
  */
@@ -19,6 +66,7 @@ export interface TestActionImportNoParameterComplexReturnType1Parameters<
 /**
  * Test Action Import No Parameter Complex Return Type 1.
  * @param parameters - Object containing all parameters for the action.
+ * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportNoParameterComplexReturnType1<
@@ -40,6 +88,7 @@ export interface TestActionImportNoParameterComplexReturnType2Parameters<
 /**
  * Test Action Import No Parameter Complex Return Type 2.
  * @param parameters - Object containing all parameters for the action.
+ * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportNoParameterComplexReturnType2<
@@ -52,7 +101,9 @@ export declare function testActionImportNoParameterComplexReturnType2<
   TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
   TestComplexType2
 >;
-export declare const actionImports: {
+export declare const operations: {
+  testFunctionImportEntityReturnType1: typeof testFunctionImportEntityReturnType1;
+  testFunctionImportEntityReturnType2: typeof testFunctionImportEntityReturnType2;
   testActionImportNoParameterComplexReturnType1: typeof testActionImportNoParameterComplexReturnType1;
   testActionImportNoParameterComplexReturnType2: typeof testActionImportNoParameterComplexReturnType2;
 };

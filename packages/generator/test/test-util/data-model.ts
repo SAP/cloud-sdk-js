@@ -178,7 +178,10 @@ function getActionImport(): VdmOperation {
     originalName: 'food-action-import',
     httpMethod: 'POST',
     returnType: {
-      returnType: 'string'
+      returnType: 'string',
+      returnTypeCategory: 'edm-type',
+      builderFunction:
+        "(val) => edmToTs(val.TestActionImportUnsupportedEdmTypes, 'Edm.String', deSerializers)"
     },
     parametersTypeName: 'actionImportReturn',
     parameters: [{ description: 'local test parameter' }] as VdmParameter[]

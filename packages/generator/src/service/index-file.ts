@@ -21,11 +21,9 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
         exportStatement(complexType.typeName)
       ),
       ...service.enumTypes.map(enumType => exportStatement(enumType.typeName)),
-      ...(service.functionImports && service.functionImports.length
-        ? [exportStatement('function-imports')]
-        : []),
-      ...(service.actionImports && service.actionImports.length
-        ? [exportStatement('action-imports')]
+      ...((service.functionImports && service.functionImports.length) ||
+      (service.actionImports && service.actionImports.length)
+        ? [exportStatement('operations')]
         : []),
       ...(hasEntities(service) ? [exportStatement('BatchRequest')] : []),
       exportStatement('service')

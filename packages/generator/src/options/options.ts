@@ -35,7 +35,6 @@ const odataReadmeText =
  * @internal
  */
 export const cliOptions = {
-  ...getCommonCliOptions(odataReadmeText),
   inputDir: {
     alias: 'i',
     describe:
@@ -59,5 +58,6 @@ export const cliOptions = {
     default: 16,
     hidden: true,
     replacedBy: 'processesJsGeneration'
-  }
+  },
+  ...getCommonCliOptions(odataReadmeText)
 } as const satisfies Options<GeneratorOptions>;

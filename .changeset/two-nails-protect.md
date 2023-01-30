@@ -5,4 +5,4 @@
 ---
 
 [Compatibility Note] The two generators use the same CLI parsing code now, aligning the way paths are resolved.
-In case you experience problems with the new logic enable the `verbose` flag to investigate what are the new paths now.
+In case you experience problems with the new logic, enable the `verbose` flag to investigate the new paths.

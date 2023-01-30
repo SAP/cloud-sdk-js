@@ -1,4 +1,4 @@
-import { dirname, resolve } from 'path';
+import { dirname, posix, resolve, sep } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { InferredOptionType, Options as YargsOption } from 'yargs';
 const logger = createLogger('generator-options');
@@ -87,7 +87,9 @@ export function resolveGlob<GeneratorOptionsT>(
     ? { cwd: resolve(dirname(options.config)) }
     : { cwd: resolve() };
 
-  return globSync(arg, globConfig).map(s => resolve(s));
+  return globSync(arg.split(sep).join(posix.sep), globConfig).map(s =>
+    resolve(s)
+  );
 }
 
 /**

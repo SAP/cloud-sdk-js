@@ -109,7 +109,7 @@
     "jest": "^27.2.3",
     "jest-junit": "^15.0.0",
     "license-checker": "^25.0.1",
-    "madge": "^5.0.0",
+    "madge": "^6.0.0",
     "prettier": "^2.8.3",
     "puppeteer": "^19.0.0",
     "semver": "^7.3.8",

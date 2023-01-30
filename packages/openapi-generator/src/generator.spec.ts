@@ -124,7 +124,6 @@ describe('generator', () => {
         include: 'root/additionalFiles/*',
         readme: true,
         packageJson: true,
-        packageVersion: '1.2.3',
         clearOutputDir: true
       });
     }, 80000);

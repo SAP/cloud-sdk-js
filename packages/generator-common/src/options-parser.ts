@@ -1,4 +1,5 @@
-import { dirname, posix, resolve, sep } from 'path';
+import { dirname, extname, join, posix, resolve, sep } from 'path';
+import { existsSync, lstatSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { InferredOptionType, Options as YargsOption } from 'yargs';
 const logger = createLogger('generator-options');
@@ -107,6 +108,26 @@ export function resolveRequiredPath<GeneratorOptionsT>(
   return options.config
     ? resolve(dirname(options.config), arg.toString())
     : resolve(arg.toString());
+}
+
+/**
+ * Resolve the optionsPerService. If a directory is given the default name 'options-per-service.json' is used.
+ * @internal
+ * @param arg
+ * @param options
+ */
+export function resolveOptionsPerService<GeneratorOptionsT>(
+  arg: string,
+  options: GeneratorOptionsT & { config?: string }
+): string | undefined {
+  if (typeof arg !== 'undefined') {
+    const isFilePath =
+      (existsSync(arg) && lstatSync(arg).isFile()) || !!extname(arg);
+    return resolveRequiredPath(
+      isFilePath ? arg : join(arg, 'options-per-service.json'),
+      options
+    );
+  }
 }
 
 /**

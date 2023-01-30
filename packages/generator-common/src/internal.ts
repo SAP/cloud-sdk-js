@@ -8,3 +8,4 @@ export * from './package-description';
 export * from './ts-config';
 export * from './options-parser';
 export * from './cli-parser';
+export * from './options';

@@ -98,12 +98,15 @@ export function operationImportDeclarations(
   const includesUnbound = !!operations.filter(operation => !operation.isBound)
     .length;
   const hasFunctionWithParameters = operations.some(
-    operation => operation.parameters.length > 0 && operation.type === 'function'
+    operation =>
+      operation.parameters.length > 0 && operation.type === 'function'
   );
   const hasActionWithParameters = operations.some(
     operation => operation.parameters.length > 0 && operation.type === 'action'
   );
-  const hasFunction = operations.some(operation => operation.type === 'function');
+  const hasFunction = operations.some(
+    operation => operation.type === 'function'
+  );
   const hasAction = operations.some(operation => operation.type === 'action');
 
   if (includesUnbound && includesBound) {
@@ -128,7 +131,7 @@ export function operationImportDeclarations(
     'DeSerializers',
     'DefaultDeSerializers',
     'defaultDeSerializers',
-    ...propertyTypeImportNames(parameters),
+    ...propertyTypeImportNames(parameters)
   ];
   if (hasFunctionWithParameters) {
     namedImports.push('FunctionImportParameter');
@@ -137,17 +140,25 @@ export function operationImportDeclarations(
     namedImports.push('ActionImportParameter');
   }
   if (includesUnbound) {
-    hasFunction && namedImports.push('FunctionImportRequestBuilder');
-    hasAction && namedImports.push('ActionImportRequestBuilder');
+    if (hasFunction) {
+      namedImports.push('FunctionImportRequestBuilder');
+    }
+    if (hasAction) {
+      namedImports.push('ActionImportRequestBuilder');
+    }
   }
   if (includesBound) {
-    hasFunction && namedImports.push('BoundFunctionImportRequestBuilder');
-    hasAction && namedImports.push('BoundActionImportRequestBuilder');
+    if (hasFunction) {
+      namedImports.push('BoundFunctionImportRequestBuilder');
+    }
+    if (hasAction) {
+      namedImports.push('BoundActionImportRequestBuilder');
+    }
   }
 
   return [
     ...externalImportDeclarationsTsMorph(parameters),
-    odataImportDeclarationTsMorph(namedImports,oDataVersion),
+    odataImportDeclarationTsMorph(namedImports, oDataVersion),
     ...serviceImport,
     ...returnTypeImports(returnTypes)
   ];

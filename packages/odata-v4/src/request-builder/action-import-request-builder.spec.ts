@@ -4,7 +4,7 @@ import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType,
   testActionImportUnsupportedEdmTypes
-} from '@sap-cloud-sdk/test-services-odata-v4/test-service/action-imports';
+} from '@sap-cloud-sdk/test-services-odata-v4/test-service/operations';
 import { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { entitySerializer } from '@sap-cloud-sdk/odata-common';
 import { defaultDeSerializers } from '../de-serializers';

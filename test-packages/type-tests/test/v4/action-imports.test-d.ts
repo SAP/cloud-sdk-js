@@ -7,7 +7,7 @@ import {
   TestActionImportNullableTestParameters,
   testActionImportUnsupportedEdmTypes,
   TestActionImportUnsupportedEdmTypesParameters
-} from '@sap-cloud-sdk/test-services-odata-v4/test-service/action-imports';
+} from '@sap-cloud-sdk/test-services-odata-v4/test-service/operations';
 import {
   TestComplexType,
   testService
@@ -103,4 +103,4 @@ expectType<
     TestActionImportNoParameterNoReturnTypeParameters<DefaultDeSerializersV4>,
     undefined
   >
->(testService().actionImports.testActionImportNoParameterNoReturnType({}));
+>(testService().operations.testActionImportNoParameterNoReturnType({}));

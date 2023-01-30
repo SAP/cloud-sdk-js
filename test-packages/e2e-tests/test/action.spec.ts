@@ -1,7 +1,7 @@
 import {
   createTestEntityById,
   createTestEntityByIdReturnId
-} from '@sap-cloud-sdk/test-services-e2e/v4/test-service/action-imports';
+} from '@sap-cloud-sdk/test-services-e2e/v4/test-service/operations';
 import { destination } from './test-util';
 import { deleteEntity } from './test-utils/test-entity-operations';
 

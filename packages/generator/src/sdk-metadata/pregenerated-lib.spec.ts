@@ -1,10 +1,14 @@
 import { resolve } from 'path';
-import { packageDescription } from '@sap-cloud-sdk/generator-common/internal';
+import {
+  packageDescription,
+  parseOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 import { VdmServiceMetadata } from '../vdm-types';
 import { parseService } from '../service-generator';
 import { createOptions } from '../../test/test-util/create-generator-options';
 import { GlobalNameFormatter } from '../global-name-formatter';
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
+import { cliOptions } from '../options';
 describe('pregenerated-lib', () => {
   const service: VdmServiceMetadata = getTestService();
 
@@ -22,7 +26,7 @@ export function getTestService(npmPackageName?: string): VdmServiceMetadata {
         'API_TEST_SRV/API_TEST_SRV.edmx'
       )
     },
-    createOptions(),
+    parseOptions(cliOptions, createOptions()),
     {},
     new GlobalNameFormatter({
       API_TEST_SRV: {

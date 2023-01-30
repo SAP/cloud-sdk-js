@@ -22,16 +22,15 @@ describe('parseGeneratorOptions', () => {
 
   const optionsDefaultValues = {
     transpile: false,
-    include: undefined,
+    include: [],
     clearOutputDir: false,
     skipValidation: false,
     tsconfig: undefined,
     packageJson: false,
     optionsPerService: undefined,
-    packageVersion: '1.0.0',
     readme: false,
     metadata: false,
-    prettierConfig: '',
+    prettierConfig: undefined,
     verbose: false,
     overwrite: false,
     config: undefined
@@ -175,7 +174,7 @@ describe('parseGeneratorOptions', () => {
     expect(parsed.outputDir).toContain('some-output');
     // RegEx to match paths for both *nix and Windows
     expect(parsed.include).toMatchObject([
-      expect.stringMatching('test.{1,1}test-config.json')
+      expect.stringMatching(join(resolve(), 'test-config.json'))
     ]);
   });
 

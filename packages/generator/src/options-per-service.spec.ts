@@ -1,8 +1,12 @@
 import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
-import { getServicePath, serviceMapping, VdmMapping } from './service-mapping';
+import {
+  getServicePath,
+  optionsPerService,
+  VdmMapping
+} from './options-per-service';
 import { VdmServiceMetadata } from './vdm-types';
 
-describe('service-mapping', () => {
+describe('options-per-service', () => {
   it('generates a valid VdmMapping from service metadata', () => {
     const serviceMetadata: VdmServiceMetadata[] = [
       {
@@ -50,7 +54,7 @@ describe('service-mapping', () => {
       }
     };
 
-    expect(serviceMapping(serviceMetadata)).toEqual(expectedVdmMapping);
+    expect(optionsPerService(serviceMetadata)).toEqual(expectedVdmMapping);
   });
 
   it('should log an error if no service path can be determined', () => {
@@ -62,13 +66,13 @@ describe('service-mapping', () => {
 
     const logger = createLogger({
       package: 'generator',
-      messageContext: 'service-mapping'
+      messageContext: 'options-per-service'
     });
 
     const errorSpy = jest.spyOn(logger, 'error');
     getServicePath(metadata);
     expect(errorSpy).toHaveBeenCalledWith(
-      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "service-mapping.json".'
+      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
     );
   });
 
@@ -80,19 +84,19 @@ describe('service-mapping', () => {
       } as any
     };
 
-    const serviceMappingIn = {
+    const optionsPerServiceIn = {
       servicePath: VALUE_IS_UNDEFINED
     } as any;
 
     const logger = createLogger({
       package: 'generator',
-      messageContext: 'service-mapping'
+      messageContext: 'options-per-service'
     });
 
     const errorSpy = jest.spyOn(logger, 'error');
-    getServicePath(metadata, serviceMappingIn);
+    getServicePath(metadata, optionsPerServiceIn);
     expect(errorSpy).toHaveBeenCalledWith(
-      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "service-mapping.json".'
+      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
     );
   });
 
@@ -106,13 +110,13 @@ describe('service-mapping', () => {
 
     const logger = createLogger({
       package: 'generator',
-      messageContext: 'service-mapping'
+      messageContext: 'options-per-service'
     });
 
     const errorSpy = jest.spyOn(logger, 'error');
     getServicePath(metadata);
     expect(errorSpy).toHaveBeenCalledWith(
-      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "service-mapping.json".'
+      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
     );
   });
 });

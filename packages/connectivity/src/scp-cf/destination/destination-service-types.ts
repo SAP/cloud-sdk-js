@@ -19,7 +19,7 @@ export interface Destination {
    * The URL has to define the protocol, like `http://` or `https://`, and a host.
    * The path for requests against this destination will be appended to the path defined in the URL as a new path segment.
    */
-  url: string;
+  url?: string;
 
   /**
    * Type of authentication to use.
@@ -239,13 +239,40 @@ export type DestinationRetrievalOptions = CachingOptions & {
 };
 
 /**
- * Type guard to find if object is a Destination.
- * @param destination - Destination to be checked
- * @returns boolean
- * @internal
+ * Destination for HTTP request where the URL is mandatory.
  */
-export function isDestination(destination: any): destination is Destination {
-  return destination.url !== undefined;
+export type HttpDestination = Destination & { url: string };
+
+/**
+ * Assertion that the Destination is a HttpDestination.
+ * This method comes in handy when you retrieved a destination from the destination service and need to check if it is a HttpDestination.
+ * @param destination - Destination or HttpDestination.
+ */
+export function assertHttpDestination(
+  destination: Destination | HttpDestination
+): asserts destination is HttpDestination {
+  if (!isHttpDestination(destination)) {
+    throw new Error(
+      destination.url
+        ? `The 'type' property is  ${destination.type} instead of  HTTP for destination '${destination.name}' which is mandatory if you use it as an 'HTTP destination`
+        : `The 'url' property is not set for destination ${destination.name} which is mandatory if you use it as an 'HTTP destination`
+    );
+  }
+}
+
+/**
+ * Type guard to find if object is a Destination.
+ * @param destination - Destination to be checked.
+ * @returns Boolean.
+ */
+export function isHttpDestination(
+  destination: HttpDestination | Destination | null
+): destination is HttpDestination {
+  return (
+    !!destination &&
+    !!destination.url &&
+    (!destination.type || destination.type === 'HTTP')
+  );
 }
 
 /**

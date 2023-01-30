@@ -11,7 +11,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { createODataUri as createODataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
 import { createODataUri as createODataUriV4 } from '@sap-cloud-sdk/odata-v4/internal';
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { HttpDestination, Destination } from '@sap-cloud-sdk/connectivity/internal';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 
 const defaultCsrfToken = 'mocked-x-csrf-token';
@@ -33,7 +33,7 @@ export const defaultRequestHeaders = {
 
 export const defaultDestinationName = 'Testination';
 
-export const defaultDestination: Destination = {
+export const defaultDestination: HttpDestination = {
   name: defaultDestinationName,
   url: 'http://example.com',
   username: 'username',
@@ -55,7 +55,7 @@ export function unmockDestinationsEnv() {
 
 interface MockRequestParams {
   host?: string;
-  destination?: Destination;
+  destination?: HttpDestination;
   path?: string;
   statusCode?: number;
   additionalHeaders?: Record<string, any>;

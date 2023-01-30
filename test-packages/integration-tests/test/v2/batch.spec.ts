@@ -3,7 +3,7 @@ import {
   changeset
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { ErrorResponse } from '@sap-cloud-sdk/odata-common';
 import {
@@ -33,7 +33,7 @@ const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const csrfToken = 'CSRFTOKEN';
 
-const destination: Destination = {
+const destination: HttpDestination = {
   url: 'https://example.com',
   username: 'username',
   password: 'password',

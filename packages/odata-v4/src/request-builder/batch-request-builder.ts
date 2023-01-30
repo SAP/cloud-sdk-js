@@ -1,5 +1,5 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import {
   parseBatchResponse,
   BatchRequestBuilder,
@@ -26,7 +26,7 @@ export class ODataBatchRequestBuilder<
    * @returns Promise resolving to the requested data.
    */
   async execute(
-    destination: DestinationOrFetchOptions
+    destination: HttpDestinationOrFetchOptions
   ): Promise<BatchResponse<DeSerializersT>[]> {
     return this.executeRaw(destination)
       .then(response => parseBatchResponse(response))

@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { join, resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 import {
@@ -114,9 +114,10 @@ describe('options parser', () => {
     });
 
     it('includes using glob using root', () => {
-      expect(
-        parseOptions({ include }, { include: resolve('*.json') }).include
-      ).toEqual(absoluteJsonPaths);
+      const rootGlob = join(resolve(), '*.json');
+      expect(parseOptions({ include }, { include: rootGlob }).include).toEqual(
+        absoluteJsonPaths
+      );
     });
 
     it('does not fail on include option not set', () => {

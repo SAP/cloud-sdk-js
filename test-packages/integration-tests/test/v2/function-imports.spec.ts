@@ -1,4 +1,4 @@
-import { functionImports } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { operations } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { Destination } from '@sap-cloud-sdk/connectivity';
@@ -53,7 +53,7 @@ describe('Function imports', () => {
       .get(`${servicePath}/TestFunctionImportEdmReturnType`)
       .reply(200, singleTestEntityResponse());
 
-    const request = functionImports
+    const request = operations
       .testFunctionImportEdmReturnType({})
       .execute(destination);
     await expect(request).resolves.not.toThrow();
@@ -75,7 +75,7 @@ describe('Function imports', () => {
       .get(`${servicePath}/TestFunctionImportEdmReturnType`)
       .reply(400, errorResponse());
 
-    const request = functionImports
+    const request = operations
       .testFunctionImportEdmReturnType({})
       .execute(destination);
     await expect(request).rejects.toThrowErrorMatchingSnapshot();

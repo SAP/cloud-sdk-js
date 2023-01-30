@@ -4,7 +4,7 @@ import {
   getByKey,
   getAll,
   returnCollection
-} from '@sap-cloud-sdk/test-services-e2e/v4/test-service/function-imports';
+} from '@sap-cloud-sdk/test-services-e2e/v4/test-service/operations';
 
 const url = 'http://localhost:4004/';
 const destination = { url };

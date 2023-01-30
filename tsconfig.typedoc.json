@@ -76,7 +76,7 @@
       "packages/test-util/src/index.ts",
       "packages/temporal-de-serializers/src/index.ts"
     ],
-    "name": "SAP Cloud SDK for JavaScript / TypeScript",
+    "name": "SAP Cloud SDK for JavaScript",
     "readme": "DOCUMENTATION.md",
     "theme": "default",
     "includeVersion": true,

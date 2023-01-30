@@ -1,8 +1,11 @@
-import { PathLike } from 'fs';
-import { resolve, dirname, join } from 'path';
+import { PathLike, existsSync, lstatSync } from 'fs';
+import { join, extname } from 'path';
 import {
   Options,
-  ParsedOptions
+  ParsedOptions,
+  resolveRequiredPath,
+  resolvePath,
+  resolveGlob
 } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
@@ -12,21 +15,22 @@ export interface GeneratorOptions {
   /**
    * This directory will be recursively searched for `.edmx`/`.xml` files.
    */
-  inputDir: PathLike;
+  inputDir: string;
   /**
    * Directory to save the generated code in.
    */
-  outputDir: PathLike;
+  outputDir: string;
   /**
    * Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files.
-   * Will be generated if not existent.
-   * Default set to `inputDir/service-mapping.json`.
+   * The configuration allows to set a `directoryName` and `npmPackageName` for every service, identified by the path to the original file.
+   * It also makes sure that names do not change between generator runs.
+   * If a directory is passed, a `options-per-service.json` file is read/created in this directory.
    */
-  serviceMapping?: PathLike;
+  optionsPerService?: PathLike;
   /**
    * Specify the path to the prettier config. If not given a default config will be used for the generated sources.
    */
-  prettierConfig?: PathLike;
+  prettierConfig?: string;
   /**
    * If set to true, swagger definitions (JSON) are used for generation.
    */
@@ -67,7 +71,7 @@ export interface GeneratorOptions {
   /**
    * Hidden option only for internal usage - generate metadata for API hub integration.
    */
-  generateSdkMetadata?: boolean;
+  metadata?: boolean;
   /**
    * Number of node processes used for transpilation of JavaScript files.
    */
@@ -82,34 +86,6 @@ export interface GeneratorOptions {
    * If you enable this option, conflicts are resolved by appending postfixes like '_1".
    */
   skipValidation?: boolean;
-}
-
-/**
- * Resolves arguments that represent paths to an absolute path as a `string`. Only works for required options.
- * @param arg - Path argument as passed by the user.
- * @param options - Options as passed by the user.
- * @returns Absolute path as a `string`.
- */
-function resolveRequiredPath(
-  arg: PathLike,
-  options: GeneratorOptions & { config?: string }
-): string {
-  return options.config
-    ? resolve(dirname(options.config), arg.toString())
-    : resolve(arg.toString());
-}
-
-/**
- * Same as `resolveRequiredPath`, but for non-required options.
- * @param arg - Path argument as passed by the user, or `undefined` if nothing was passed.
- * @param options - Options as passed by the user.
- * @returns Absolute path as a `string` or `undefined`.
- */
-function resolvePath(
-  arg: PathLike | undefined,
-  options: GeneratorOptions & { config?: string }
-): string | undefined {
-  return arg ? resolveRequiredPath(arg, options) : undefined;
 }
 
 /**
@@ -139,19 +115,24 @@ export const cliOptions = {
     demandOption: true,
     requiresArg: true
   },
-  serviceMapping: {
+  optionsPerService: {
     alias: 's',
     describe:
-      'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. Will be generated if not existent. By default it will be saved to/read from the input directory as "service-mapping.json".',
+      'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. The configuration allows to set a `directoryName` and `npmPackageName` for every service, identified by the path to the original file. It also makes sure that names do not change between generator runs. If a directory is passed, a `options-per-service.json` file is read/created in this directory.',
     type: 'string',
     coerce: (
       arg: string | undefined,
       options: GeneratorOptions & { config?: string }
-    ) =>
-      resolveRequiredPath(
-        arg ? arg : join(options.inputDir.toString(), 'service-mapping.json'),
-        options
-      )
+    ) => {
+      if (typeof arg !== 'undefined') {
+        const isFilePath =
+          (existsSync(arg) && lstatSync(arg).isFile()) || !!extname(arg);
+        return resolveRequiredPath(
+          isFilePath ? arg : join(arg, 'options-per-service.json'),
+          options
+        );
+      }
+    }
   },
   prettierConfig: {
     alias: 'p',
@@ -179,7 +160,7 @@ export const cliOptions = {
     describe:
       'Glob describing additional files to be added to the each generated service directory - relative to the inputDir.',
     type: 'string',
-    coerce: resolvePath,
+    coerce: resolveGlob,
     requiresArg: true
   },
   overwrite: {
@@ -220,7 +201,7 @@ export const cliOptions = {
     hidden: true,
     replacedBy: 'processesJsGeneration'
   },
-  generateSdkMetadata: {
+  metadata: {
     describe: 'When set to true, SDK metadata for the API hub is generated.',
     type: 'boolean',
     default: false,

@@ -1,7 +1,7 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
 import {
-  Destination,
+  HttpDestination,
   parseDestination,
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
@@ -23,7 +23,7 @@ import {
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
-const destination: Destination = {
+const destination: HttpDestination = {
   url: 'http://example.com'
 };
 
@@ -156,7 +156,7 @@ describe('openapi-request-builder', () => {
         'ERNIE-UND-CERT',
         wrapJwtInHeader(onlyIssuerServiceToken).headers
       ),
-      nock(certificateSingleResponse.destinationConfiguration.URL)
+      nock(certificateSingleResponse.destinationConfiguration.URL!)
         .get(/.*/)
         .reply(200, 'iss token used on the way')
     ];

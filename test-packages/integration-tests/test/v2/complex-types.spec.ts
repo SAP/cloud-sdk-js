@@ -4,7 +4,7 @@ import {
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import BigNumber from 'bignumber.js';
 import nock from 'nock';
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { asc } from '@sap-cloud-sdk/odata-common';
 import {
@@ -19,7 +19,7 @@ const entityName = TestEntity._entityName;
 
 const getAllResponse = testEntityCollectionResponse();
 
-const destination: Destination = {
+const destination: HttpDestination = {
   url: 'https://example.com',
   username: 'username',
   password: 'password',

@@ -1,5 +1,5 @@
 import { propertyExists, UniqueNameGenerator } from '@sap-cloud-sdk/util';
-import { ServiceMapping, VdmMapping } from './service-mapping';
+import { OptionsPerService, VdmMapping } from './options-per-service';
 /**
  * @internal
  */
@@ -62,7 +62,7 @@ export class GlobalNameFormatter {
 
   private fromMapping(
     originalFileName: string,
-    key: keyof ServiceMapping
+    key: keyof OptionsPerService
   ): string | undefined {
     return propertyExists(this.vdmMapping, originalFileName, key)
       ? this.vdmMapping[originalFileName][key]

@@ -1,5 +1,5 @@
 import { GlobalNameFormatter } from './global-name-formatter';
-import { VdmMapping } from './service-mapping';
+import { VdmMapping } from './options-per-service';
 
 describe('global-name-formatter', () => {
   const vdmMapping: VdmMapping = {

@@ -23,7 +23,7 @@ export * from './reserved-words';
 export * from './sdk-metadata';
 export * from './service';
 export * from './service-generator';
-export * from './service-mapping';
+export * from './options-per-service';
 export * from './service-name-formatter';
 export * from './swagger-parser';
 export * from './typedoc';

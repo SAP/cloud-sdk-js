@@ -5,7 +5,7 @@ import {
   parseProxyEnv,
   proxyStrategy
 } from './http-proxy-util';
-import { Destination } from './destination-service-types';
+import { HttpDestination } from './destination-service-types';
 
 describe('proxy-util', () => {
   afterEach(() => {
@@ -15,7 +15,7 @@ describe('proxy-util', () => {
     });
   });
 
-  const onPremDestination: Destination = {
+  const onPremDestination: HttpDestination = {
     name: 'onPremDestination',
     url: 'https://my.system.com',
     proxyType: 'OnPremise'
@@ -31,7 +31,7 @@ describe('proxy-util', () => {
     url: 'http://example.com'
   };
 
-  const privateLinkDestination: Destination = {
+  const privateLinkDestination: HttpDestination = {
     name: 'privateLinkDestination',
     url: 'https://example.com',
     proxyType: 'PrivateLink'

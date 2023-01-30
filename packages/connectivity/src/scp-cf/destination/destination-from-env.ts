@@ -10,6 +10,7 @@ import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
+import { isHttpDestination } from './destination-service-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -69,7 +70,8 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
     );
   }
   const destination = matchingDestinations[0];
-  return ['internet', 'private-link'].includes(proxyStrategy(destination))
+  return isHttpDestination(destination) &&
+    ['internet', 'private-link'].includes(proxyStrategy(destination))
     ? addProxyConfigurationInternet(destination)
     : destination;
 }

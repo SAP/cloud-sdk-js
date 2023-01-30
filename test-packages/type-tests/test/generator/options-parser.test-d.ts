@@ -69,9 +69,9 @@ const realParsedOptions = parseOptions(cliOptions, {});
 expectType<string>(realParsedOptions.inputDir);
 
 /**
- * `serviceMapping` is required because it has a default.
+ * `optionsPerService` is optional because it has no default value.
  */
-expectType<string>(realParsedOptions.serviceMapping);
+expectType<string | undefined>(realParsedOptions.optionsPerService);
 
 /**
  * `prettierConfig` is optional because it has no default value.

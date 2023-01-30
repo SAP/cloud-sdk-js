@@ -4,9 +4,9 @@ import { GlobalNameFormatter } from './global-name-formatter';
 import { inputPaths, ServiceDefinitionPaths } from './input-path-provider';
 import {
   getServicePath,
-  readServiceMapping,
+  readOptionsPerService,
   VdmMapping
-} from './service-mapping';
+} from './options-per-service';
 import { ServiceNameFormatter } from './service-name-formatter';
 import { readEdmxFile, ServiceMetadata } from './edmx-parser/edmx-file-reader';
 import { readSwaggerFile } from './swagger-parser/swagger-parser';
@@ -18,15 +18,15 @@ import { getServiceEntitiesV4 } from './edmx-to-vdm/v4';
 
 class ServiceGenerator {
   private globalNameFormatter: GlobalNameFormatter;
-  private serviceMapping: VdmMapping;
+  private optionsPerService: VdmMapping;
 
   constructor(readonly options: ParsedGeneratorOptions) {
-    this.serviceMapping = readServiceMapping(options);
-    this.globalNameFormatter = new GlobalNameFormatter(this.serviceMapping);
+    this.optionsPerService = readOptionsPerService(options);
+    this.globalNameFormatter = new GlobalNameFormatter(this.optionsPerService);
   }
 
-  public withServiceMapping(serviceMapping: VdmMapping) {
-    this.serviceMapping = serviceMapping;
+  public withOptionsPerService(optionsPerService: VdmMapping) {
+    this.optionsPerService = optionsPerService;
     return this;
   }
 
@@ -98,7 +98,7 @@ class ServiceGenerator {
       speakingModuleName,
       servicePath: getServicePath(
         serviceMetadata,
-        this.serviceMapping[serviceMetadata.edmx.fileName]
+        this.optionsPerService[serviceMetadata.edmx.fileName]
       ),
       edmxPath: serviceDefinitionPaths.edmxPath,
       apiBusinessHubMetadata: apiBusinessHubMetadata(serviceMetadata.swagger),
@@ -147,7 +147,7 @@ export function parseService(
   globalNameFormatter: GlobalNameFormatter
 ): VdmServiceMetadata {
   return new ServiceGenerator(options)
-    .withServiceMapping(mappings)
+    .withOptionsPerService(mappings)
     .withGlobalNameFormatter(globalNameFormatter)
     .generateService(serviceDefinitionPaths);
 }

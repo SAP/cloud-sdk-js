@@ -1,10 +1,12 @@
-import { resolve, extname, posix, sep } from 'path';
+import { resolve, extname } from 'path';
 import { existsSync, lstatSync } from 'fs';
-import { GlobSync } from 'glob';
 // eslint-disable-next-line import/no-internal-modules
 import {
   ParsedOptions,
-  Options
+  Options,
+  resolveRequiredPath,
+  resolvePath,
+  resolveGlob
 } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
@@ -105,10 +107,7 @@ export const cliOptions = {
     alias: 'i',
     describe:
       'Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.',
-    coerce: (input: string, options): string =>
-      typeof input !== 'undefined'
-        ? resolve(input).split(sep).join(posix.sep)
-        : '',
+    coerce: resolveRequiredPath,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -118,8 +117,7 @@ export const cliOptions = {
     alias: 'o',
     describe:
       'Specify the path to the directory to generate the client(s) in. Each client is generated into a subdirectory within the given output directory. Creates the directory if it does not exist. Customize subdirectory naming through `--optionsPerService`.',
-    coerce: (input: string, options): string =>
-      typeof input !== 'undefined' ? resolve(input) : '',
+    coerce: resolveRequiredPath,
     demandOption: true,
     requiresArg: true
   },
@@ -128,8 +126,7 @@ export const cliOptions = {
     alias: 'p',
     describe:
       'Specify the path to the prettier config. If not given a default config will be used for the generated sources.',
-    coerce: (input: string): string =>
-      typeof input !== 'undefined' ? resolve(input) : '',
+    coerce: resolvePath,
     requiresArg: true
   },
   transpile: {
@@ -141,10 +138,7 @@ export const cliOptions = {
   },
   include: {
     type: 'string',
-    coerce: (input: string, options): string[] | undefined =>
-      typeof input !== 'undefined'
-        ? new GlobSync(input.split(sep).join(posix.sep)).found
-        : undefined,
+    coerce: resolveGlob,
     describe:
       'Include files matching the given glob into the root of each generated client directory.',
     requiresArg: true
@@ -171,8 +165,7 @@ export const cliOptions = {
     type: 'string',
     describe:
       'Replace the default `tsconfig.json` by passing a path to a custom config. By default, a `tsconfig.json` is only generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file is read from this directory.',
-    coerce: (input?: string): string | undefined =>
-      typeof input !== 'undefined' ? resolve(input) : undefined
+    coerce: resolvePath
   },
   packageJson: {
     type: 'boolean',
@@ -199,12 +192,6 @@ export const cliOptions = {
           : resolve(input, 'options-per-service.json');
       }
     }
-  },
-  packageVersion: {
-    type: 'string',
-    describe: 'Set the version in the generated package.json.',
-    default: '1.0.0',
-    hidden: true
   },
   readme: {
     type: 'boolean',

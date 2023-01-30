@@ -11,8 +11,12 @@ import {
   circuitBreakers,
   circuitBreakerHttp
 } from '@sap-cloud-sdk/resilience/internal';
-import { responseWithPublicKey } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt.spec';
-import { Destination, ProxyConfiguration } from '../../connectivity/src';
+import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
+import {
+  Destination,
+  ProxyConfiguration,
+  HttpDestination
+} from '../../connectivity/src';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,
@@ -55,7 +59,7 @@ import {
 } from './http-client';
 
 describe('generic http client', () => {
-  const httpsDestination: Destination = {
+  const httpsDestination: HttpDestination = {
     name: 'httpsDestination',
     url: 'https://example.com',
     authentication: 'BasicAuthentication',
@@ -66,7 +70,7 @@ describe('generic http client', () => {
 
   const proxyAuthorization = 'youmaypass';
 
-  const proxyDestination: Destination = {
+  const proxyDestination: HttpDestination = {
     name: 'proxyDestination',
     url: 'http://example.com',
     authentication: 'BasicAuthentication',
@@ -782,7 +786,7 @@ sap-client:001`);
 
     it('throws an error if the destination URL uses neither "http" nor "https" as protocol (e.g. RFC)', async () => {
       jest.spyOn(axios, 'request').mockResolvedValue({});
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'rfc://example.com',
         authentication: 'NoAuthentication'
       };
@@ -793,7 +797,7 @@ sap-client:001`);
     });
 
     it('includes the default axios config in request', async () => {
-      const destination: Destination = { url: 'https://destinationUrl' };
+      const destination: HttpDestination = { url: 'https://destinationUrl' };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await executeHttpRequest(destination, { method: 'get' });
       expect(requestSpy).toHaveBeenCalledWith(
@@ -820,7 +824,7 @@ sap-client:001`);
     }, 60000);
 
     it('overwrites the default axios config with destination related request config', async () => {
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'https://destinationUrl',
         proxyConfiguration: {
           host: 'dummy',
@@ -843,7 +847,7 @@ sap-client:001`);
     });
 
     it('overwrites destination related request config with the explicit one', async () => {
-      const destination: Destination = { url: 'https://destinationUrl' };
+      const destination: HttpDestination = { url: 'https://destinationUrl' };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await expect(
         executeHttpRequest(
@@ -862,7 +866,7 @@ sap-client:001`);
 
     it('rejectUnauthorized property of HttpsAgent should be set to true when isTrustingAllCertificates is false', async () => {
       jest.spyOn(axios, 'request').mockResolvedValue({});
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'https://example.com',
         isTrustingAllCertificates: true
       };
@@ -880,7 +884,7 @@ sap-client:001`);
 
     it('rejectUnauthorized property of HttpsAgent should be set to false when isTrustingAllCertificates is true', async () => {
       jest.spyOn(axios, 'request').mockResolvedValue({});
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'https://example.com',
         isTrustingAllCertificates: false
       };
@@ -899,7 +903,7 @@ sap-client:001`);
       jest.spyOn(axios, 'request').mockResolvedValue({});
 
       const expectedConfigEntry = { httpAgent: expect.anything() };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'http://example.com',
         authentication: 'NoAuthentication'
       };
@@ -913,7 +917,7 @@ sap-client:001`);
     it('request config contains httpsAgent when destination URL uses "https" as protocol', async () => {
       jest.spyOn(axios, 'request').mockResolvedValue({});
       const expectedConfigEntry = { httpsAgent: expect.anything() };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'https://example.com',
         authentication: 'NoAuthentication'
       };

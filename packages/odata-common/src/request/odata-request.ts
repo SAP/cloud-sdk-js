@@ -20,6 +20,10 @@ import {
   OriginOptions,
   mergeOptionsWithPriority
 } from '@sap-cloud-sdk/http-client/internal';
+import {
+  assertHttpDestination,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity/internal';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 
@@ -35,14 +39,18 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    */
   constructor(
     public config: RequestConfigT,
-    private _destination?: Destination | undefined
+    private _destination?: HttpDestination | undefined
   ) {}
 
   set destination(dest: Destination | undefined) {
-    this._destination = dest && sanitizeDestination(dest);
+    if (dest) {
+      const sanitized = sanitizeDestination(dest);
+      assertHttpDestination(sanitized);
+      this._destination = sanitized;
+    }
   }
 
-  get destination(): Destination | undefined {
+  get destination(): HttpDestination | undefined {
     return this._destination;
   }
 

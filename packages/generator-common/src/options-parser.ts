@@ -87,6 +87,7 @@ export function resolveGlob<GeneratorOptionsT>(
     ? { cwd: resolve(dirname(options.config)) }
     : { cwd: resolve() };
 
+  // Glob expressions only support unix style path separator (/). The below adjustment is made so it works on Windows. https://github.com/isaacs/node-glob#windows
   return globSync(arg.split(sep).join(posix.sep), globConfig).map(s =>
     resolve(s)
   );

@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { join, resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 import {

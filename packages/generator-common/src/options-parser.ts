@@ -1,4 +1,4 @@
-import { dirname, resolve } from 'path';
+import { dirname, posix, resolve, sep } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { InferredOptionType, Options as YargsOption } from 'yargs';
 const logger = createLogger('generator-options');
@@ -70,10 +70,10 @@ type OptionsWith<
 }[keyof CliOptionsT];
 
 /**
- * Resolves a string using glob notation. If a config is given in generatoroptions the glob working diretory is considered relative to this config.
+ * Resolves a string using glob notation. If a config is given in generatorOptions, the glob working directory is considered relative to this config.
  * @internal
- * @param arg Value for the string for which the glob is resolved
- * @param options Generator options
+ * @param arg - Value for the string for which the glob is resolved.
+ * @param options - Generator options.
  */
 export function resolveGlob<GeneratorOptionsT>(
   arg: string | undefined,
@@ -87,7 +87,10 @@ export function resolveGlob<GeneratorOptionsT>(
     ? { cwd: resolve(dirname(options.config)) }
     : { cwd: resolve() };
 
-  return globSync(arg, globConfig).map(s => resolve(s));
+  // Glob expressions only support unix style path separator (/). The below adjustment is made so it works on Windows. https://github.com/isaacs/node-glob#windows
+  return globSync(arg.split(sep).join(posix.sep), globConfig).map(s =>
+    resolve(s)
+  );
 }
 
 /**

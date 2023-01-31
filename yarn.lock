@@ -1313,9 +1313,9 @@
     axios ">=0.27.2"
 
 "@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.4.0", "@sap/cds@^6.4.1":
-  version "6.4.1"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.4.1.tgz#fb65236579233a55e4075d2fb3db82a4b12ad094"
-  integrity sha512-lbBIo2B4bBANCbVw1aUl2bvamV6gdRof3BsDDdhvfoRSZsap88rMpOLAZaAEO/bD5Sk2Ia35q+eOCQk//r08BQ==
+  version "6.5.0"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.5.0.tgz#9a65f852368911c3ddbe4d2594fcbaa52755f512"
+  integrity sha512-xzlFEgm2On2/iztS5rj6200cN+6GrszlKGEOnFXDicJYk9SjDOjWgkWX+1j75c9t7qOSi7vidRSKAKjFyALRXg==
   dependencies:
     "@sap/cds-compiler" "^3.2.0"
     "@sap/cds-foss" "^4"
@@ -1693,10 +1693,10 @@
   resolved "https://registry.npmjs.org/@types/yargs-parser/-/yargs-parser-21.0.0.tgz#0c60e537fa790f5f9472ed2776c2b71ec117351b"
   integrity sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==
 
-"@types/yargs@^17.0.20", "@types/yargs@^17.0.8":
-  version "17.0.20"
-  resolved "https://registry.npmjs.org/@types/yargs/-/yargs-17.0.20.tgz#107f0fcc13bd4a524e352b41c49fe88aab5c54d5"
-  integrity sha512-eknWrTHofQuPk2iuqDm1waA7V6xPlbgBoaaXEgYkClhLOnB0TtbW+srJaOToAgawPxPlHQzwypFA2bhZaUGP5A==
+"@types/yargs@^17.0.21", "@types/yargs@^17.0.8":
+  version "17.0.21"
+  resolved "https://registry.npmjs.org/@types/yargs/-/yargs-17.0.21.tgz#1d8d790eb7c5ba31a8eda9fb43557859972cdb94"
+  integrity sha512-kQxgIw2qr3/au36DPzK4Kzl5fpB/SehrD7TUBdWQlOLUkgBMhOBQzz1R9Kuukng9ukWxD3lewSMUZWCwNcmRHg==
   dependencies:
     "@types/yargs-parser" "*"
 

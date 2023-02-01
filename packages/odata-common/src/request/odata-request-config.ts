@@ -1,7 +1,6 @@
 import {
   createLogger,
-  mergeIgnoreCase,
-  VALUE_IS_UNDEFINED
+  mergeIgnoreCase
 } from '@sap-cloud-sdk/util';
 import {
   encodeTypedClientRequest,
@@ -51,9 +50,6 @@ export abstract class ODataRequestConfig {
     readonly defaultServicePath: string,
     defaultHeaders?: Record<string, any>
   ) {
-    if (defaultServicePath === VALUE_IS_UNDEFINED) {
-      logger.warn('The service path is undefined in "_defaultServicePath".');
-    }
     this.defaultHeaders = mergeIgnoreCase(this.defaultHeaders, defaultHeaders);
   }
 

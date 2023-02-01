@@ -14,10 +14,6 @@ const logger = createLogger({
 /**
  * @internal
  */
-export const VALUE_IS_UNDEFINED = 'VALUE_IS_UNDEFINED';
-/**
- * @internal
- */
 export interface VdmMapping {
   [fileName: string]: OptionsPerService;
 }
@@ -74,19 +70,28 @@ export function optionsPerServiceFile(services: VdmServiceMetadata[]): string {
  */
 export function getServicePath(
   metadata: ServiceMetadata,
+  skipValidation: boolean,
   optionsPerServiceIn?: OptionsPerService
 ): string {
   let servicePath =
     optionsPerServiceIn?.servicePath ||
     servicePathFromSelfLink(metadata.edmx.selfLink) ||
     servicePathFromSwagger(metadata.swagger);
-  if (!servicePath || servicePath === VALUE_IS_UNDEFINED) {
-    logger.error(
-      `[ ${
-        parse(metadata.edmx.path.toString()).name
-      } ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".`
-    );
-    servicePath = VALUE_IS_UNDEFINED;
+  if (!servicePath) {
+    if (skipValidation) {
+      logger.warn(
+        `[ ${
+          parse(metadata.edmx.path.toString()).name
+        } ] No service path could be determined from available metadata! Setting "servicePath" to "/" in the "options-per-service.json".`
+      );
+      servicePath = '/';
+    } else {
+      throw new Error(
+        `[ ${
+          parse(metadata.edmx.path.toString()).name
+        } ] No service path could be determined from available metadata! Set "servicePath" in the "options-per-service.json" to generate client.`
+      );
+    }
   }
   return servicePath;
 }

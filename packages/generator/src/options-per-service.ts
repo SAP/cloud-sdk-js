@@ -1,7 +1,7 @@
 import { parse } from 'path';
 import { existsSync, readFileSync } from 'fs';
 import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
-import { GeneratorOptions } from './options';
+import { ParsedGeneratorOptions } from './options';
 import { VdmServiceMetadata } from './vdm-types';
 import { servicePathFromSwagger } from './swagger-parser/swagger-util';
 import { ServiceMetadata } from './edmx-parser/edmx-file-reader';
@@ -41,7 +41,9 @@ export interface OptionsPerService {
 /**
  * @internal
  */
-export function readOptionsPerService(options: GeneratorOptions): VdmMapping {
+export function readOptionsPerService(
+  options: ParsedGeneratorOptions
+): VdmMapping {
   const configPath = options.optionsPerService;
   return configPath && existsSync(configPath)
     ? (JSON.parse(readFileSync(configPath, 'utf8')) as VdmMapping)

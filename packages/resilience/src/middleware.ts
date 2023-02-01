@@ -59,7 +59,7 @@ export type MiddlewareFunction<ArgumentT, ReturnT> = (
 
 /**
  * Middleware type - This function takes some initial function and returns a function.
- * The input is the MiddlewareIn containing the initial function and some context information e.g. axios request and the request context.
+ * The input containing the initial function and some context information e.g. axios request and the request context.
  * It returns a new functions with some additional feature e.g. timeout.
  */
 export type Middleware<

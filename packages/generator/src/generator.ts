@@ -395,7 +395,7 @@ export async function generateSourcesForService(
   // Merge generated function-imports.ts and action-imports.ts into one operations.ts.
   if (service.functionImports.length || service.actionImports?.length) {
     logger.verbose(
-      `[${service.originalFileName}] Generating operation imports ...`
+      `[${service.originalFileName}] Generating operations ...`
     );
     filePromises.push(
       sourceFile(

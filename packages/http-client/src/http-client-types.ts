@@ -1,6 +1,5 @@
 import * as http from 'http';
 import type { MiddlewareContext, Middleware } from '@sap-cloud-sdk/resilience';
-// eslint-disable-next-line import/named
 
 /**
  * Context for HttpRequests of the middleware.

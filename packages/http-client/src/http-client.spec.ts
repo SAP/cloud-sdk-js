@@ -240,7 +240,7 @@ describe('generic http client', () => {
       const dummy = {
         [appendedText](
           options: MiddlewareOptions<
-            RawAxiosRequestConfig,
+            HttpRequestConfig,
             HttpResponse,
             HttpMiddlewareContext
           >

@@ -85,11 +85,17 @@ Use the `include` option to add a `.npmrc` to the generated code if needed.
 The internal options `sdkAfterVersionScript`, `s4HanaCloud` and `packageVersion` of the generator are removed.
 These were hidden options never meant for external usage and there is no replacement.
 
+The types for paths in the `GeneratorOptions` are changed from `fs.PathLike` to `string`.
+In case you passed a buffer object please resolve it to a string before passing it to the SAP Cloud SDK.
+
 #### Package `@sap-cloud-sdk/openapi-generator` <!-- omit from toc -->
 
-The deprecated generator options `versionInPackageJson` and `licenseInPackageJson` are removed.
+The deprecated generator options `versionInPackageJson`, `packageVersion` and `licenseInPackageJson` are removed.
 In a generated `package.json` the version `1.0.0` and license `UNLICENSED` are used.
 Use the `include` option to add a `package.json` with custom values.
+
+The generator uses the same code to resolve paths as the OData generator now.
+In case you experience problems with the new logic enable the `verbose` flag to investigate what are the new paths now.
 
 ### Package `@sap-cloud-sdk/odata-common` <!-- omit from toc -->
 

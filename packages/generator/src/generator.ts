@@ -1,5 +1,5 @@
 import { existsSync, promises as fsPromises } from 'fs';
-import { dirname, join, posix, resolve, sep } from 'path';
+import { dirname, join, resolve } from 'path';
 import {
   copyFiles,
   createFile,
@@ -21,7 +21,6 @@ import {
   splitInChunks
 } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
-import { GlobSync } from 'glob';
 import {
   IndentationText,
   ModuleKind,
@@ -247,13 +246,9 @@ async function generateIncludes(
   service: VdmServiceMetadata,
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  if (options.include) {
-    const includeDir = resolve(options.inputDir.toString(), options.include)
-      .split(sep)
-      .join(posix.sep);
+  if (options.include && options.include.length > 0) {
     const serviceDir = join(options.outputDir, service.directoryName);
-    const files = new GlobSync(includeDir).found;
-    await copyFiles(files, serviceDir, options.overwrite);
+    await copyFiles(options.include, serviceDir, options.overwrite);
   }
 }
 
@@ -441,7 +436,7 @@ export async function generateSourcesForService(
     );
   }
 
-  if (options.generateSdkMetadata) {
+  if (options.metadata) {
     const { clientFileName } = getSdkMetadataFileNames(
       service.originalFileName
     );

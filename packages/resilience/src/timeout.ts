@@ -3,7 +3,7 @@ import {
   MiddlewareContext,
   Middleware,
   MiddlewareOptions,
-  MiddlewareOut
+  MiddlewareFunction
 } from './middleware';
 
 const defaultTimeout = 10000;
@@ -35,7 +35,7 @@ export function timeout<
   }
   return function (
     options: MiddlewareOptions<ArgumentType, ReturnType, ContextType>
-  ): MiddlewareOut<ArgumentType, ReturnType> {
+  ): MiddlewareFunction<ArgumentType, ReturnType> {
     const message = `Request to URL: ${options.context.uri} ran into a timeout after ${timeoutValue}ms.`;
     return arg => wrapInTimeout(options.fn(arg), timeoutValue, message);
   };

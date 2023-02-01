@@ -33,14 +33,6 @@ export interface SkipNext {
 }
 
 /**
- * Return type of middlewares.
- */
-export type MiddlewareOut<ArgumentT, ReturnT> = MiddlewareFunction<
-  ArgumentT,
-  ReturnT
->;
-
-/**
  * Minimal Context of the middleware.
  */
 export interface MiddlewareContext<ArgumentT> {
@@ -131,7 +123,7 @@ function addMiddlewaresToInitialFunction<
 >(
   middlewares: Middleware<ArgumentT, ReturnT, ContextT>[],
   initial: MiddlewareOptions<ArgumentT, ReturnT, ContextT>
-): MiddlewareOut<ArgumentT, ReturnT> {
+): MiddlewareFunction<ArgumentT, ReturnT> {
   const { context, skipNext } = initial;
 
   const functionWithMiddlewares = middlewares.reduce((prev, curr) => {

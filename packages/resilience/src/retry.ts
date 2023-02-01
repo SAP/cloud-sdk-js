@@ -4,7 +4,7 @@ import {
   MiddlewareContext,
   Middleware,
   MiddlewareOptions,
-  MiddlewareOut
+  MiddlewareFunction
 } from './middleware';
 
 const logger = createLogger({
@@ -32,7 +32,7 @@ export function retry<
 
   return function (
     options: MiddlewareOptions<ArgumentType, ReturnType, ContextType>
-  ): MiddlewareOut<ArgumentType, ReturnType> {
+  ): MiddlewareFunction<ArgumentType, ReturnType> {
     return arg =>
       asyncRetry.default(
         async bail => {

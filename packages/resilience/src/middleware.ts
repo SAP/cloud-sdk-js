@@ -1,7 +1,7 @@
 /**
  * Input parameter of a middleware.
  */
-export interface MiddlewareIn<
+export interface MiddlewareOptions<
   ArgumentT,
   ReturnT,
   ContextT extends MiddlewareContext<ArgumentT>
@@ -33,14 +33,6 @@ export interface SkipNext {
 }
 
 /**
- * Return type of middlewares.
- */
-export type MiddlewareOut<ArgumentT, ReturnT> = MiddlewareFunction<
-  ArgumentT,
-  ReturnT
->;
-
-/**
  * Minimal Context of the middleware.
  */
 export interface MiddlewareContext<ArgumentT> {
@@ -59,7 +51,7 @@ export interface MiddlewareContext<ArgumentT> {
 }
 
 /**
- * Function ot which the middleware is added.
+ * Function around which the middlewares are added.
  */
 export type MiddlewareFunction<ArgumentT, ReturnT> = (
   arg: ArgumentT
@@ -67,7 +59,7 @@ export type MiddlewareFunction<ArgumentT, ReturnT> = (
 
 /**
  * Middleware type - This function takes some initial function and returns a function.
- * The input is the MiddlewareIn containing the initial function and some context information e.g. axios request and the request context.
+ * The input containing the initial function and some context information e.g. axios request and the request context.
  * It returns a new functions with some additional feature e.g. timeout.
  */
 export type Middleware<
@@ -75,8 +67,8 @@ export type Middleware<
   ReturnT,
   ContextT extends MiddlewareContext<ArgumentT>
 > = (
-  options: MiddlewareIn<ArgumentT, ReturnT, ContextT>
-) => MiddlewareOut<ArgumentT, ReturnT>;
+  options: MiddlewareOptions<ArgumentT, ReturnT, ContextT>
+) => MiddlewareFunction<ArgumentT, ReturnT>;
 
 /**
  * Helper function to join a list of middlewares given an initial input.
@@ -130,8 +122,8 @@ function addMiddlewaresToInitialFunction<
   ContextT extends MiddlewareContext<ArgumentT>
 >(
   middlewares: Middleware<ArgumentT, ReturnT, ContextT>[],
-  initial: MiddlewareIn<ArgumentT, ReturnT, ContextT>
-): MiddlewareOut<ArgumentT, ReturnT> {
+  initial: MiddlewareOptions<ArgumentT, ReturnT, ContextT>
+): MiddlewareFunction<ArgumentT, ReturnT> {
   const { context, skipNext } = initial;
 
   const functionWithMiddlewares = middlewares.reduce((prev, curr) => {

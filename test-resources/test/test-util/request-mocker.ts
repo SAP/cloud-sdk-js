@@ -135,11 +135,11 @@ export function mockCountRequest(
   count: number,
   getAllRequest: GetAllRequestBuilderBase<EntityBase, any>
 ) {
-  const servicePath =
-    getAllRequest._entityApi.entityConstructor._defaultServicePath;
+  const basePath =
+    getAllRequest._entityApi.entityConstructor._defaultBasePath;
   const entityName = getAllRequest._entityApi.entityConstructor._entityName;
   return nock(defaultHost)
-    .get(`${servicePath}/${entityName}/$count`)
+    .get(`${basePath}/${entityName}/$count`)
     .reply(200, count.toString());
 }
 
@@ -241,7 +241,7 @@ function getRequestHeaders(
 export function mockCsrfTokenRequest(
   host: string,
   sapClient: string,
-  servicePath = '/sap/opu/odata/sap/API_TEST_SRV',
+  basePath = '/sap/opu/odata/sap/API_TEST_SRV',
   username = 'username',
   password = 'password',
   csrfToken = 'CSRFTOKEN'
@@ -253,7 +253,7 @@ export function mockCsrfTokenRequest(
       'sap-client': sapClient
     }
   })
-    .get(servicePath)
+    .get(basePath)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']

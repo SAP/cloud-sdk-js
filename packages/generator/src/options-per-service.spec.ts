@@ -1,6 +1,6 @@
 import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
 import {
-  getServicePath,
+  getBasePath,
   optionsPerService,
   VdmMapping
 } from './options-per-service';
@@ -14,7 +14,7 @@ describe('options-per-service', () => {
         originalFileName: 'API_A_SERV',
         directoryName: 'a-serv',
         npmPackageName: '@sap/a-serv',
-        servicePath: '/path/to/serv',
+        basePath: '/path/to/serv',
         complexTypes: [],
         enumTypes: [],
         entities: [],
@@ -29,7 +29,7 @@ describe('options-per-service', () => {
         originalFileName: 'API_B_SERV',
         directoryName: 'b-serv',
         npmPackageName: '@sap/b-serv',
-        servicePath: '/path/to/serv',
+        basePath: '/path/to/serv',
         complexTypes: [],
         enumTypes: [],
         entities: [],
@@ -44,12 +44,12 @@ describe('options-per-service', () => {
     const expectedVdmMapping: VdmMapping = {
       API_A_SERV: {
         directoryName: 'a-serv',
-        servicePath: '/path/to/serv',
+        basePath: '/path/to/serv',
         npmPackageName: '@sap/a-serv'
       },
       API_B_SERV: {
         directoryName: 'b-serv',
-        servicePath: '/path/to/serv',
+        basePath: '/path/to/serv',
         npmPackageName: '@sap/b-serv'
       }
     };
@@ -70,13 +70,13 @@ describe('options-per-service', () => {
     });
 
     const errorSpy = jest.spyOn(logger, 'error');
-    getServicePath(metadata);
+    getBasePath(metadata);
     expect(errorSpy).toHaveBeenCalledWith(
-      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
+      '[ file ] No base path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
     );
   });
 
-  it('should log an error if servicePath in service mapping has VALUE_IS_UNDEFINED', () => {
+  it('should log an error if basePath in service mapping has VALUE_IS_UNDEFINED', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx',
@@ -85,7 +85,7 @@ describe('options-per-service', () => {
     };
 
     const optionsPerServiceIn = {
-      servicePath: VALUE_IS_UNDEFINED
+      basePath: VALUE_IS_UNDEFINED
     } as any;
 
     const logger = createLogger({
@@ -94,13 +94,13 @@ describe('options-per-service', () => {
     });
 
     const errorSpy = jest.spyOn(logger, 'error');
-    getServicePath(metadata, optionsPerServiceIn);
+    getBasePath(metadata, optionsPerServiceIn);
     expect(errorSpy).toHaveBeenCalledWith(
-      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
+      '[ file ] No base path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
     );
   });
 
-  it('should log an error if no service path can be determined and swagger has no service path', () => {
+  it('should log an error if no base path can be determined and swagger has no base path', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx'
@@ -114,9 +114,9 @@ describe('options-per-service', () => {
     });
 
     const errorSpy = jest.spyOn(logger, 'error');
-    getServicePath(metadata);
+    getBasePath(metadata);
     expect(errorSpy).toHaveBeenCalledWith(
-      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
+      '[ file ] No base path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
     );
   });
 });

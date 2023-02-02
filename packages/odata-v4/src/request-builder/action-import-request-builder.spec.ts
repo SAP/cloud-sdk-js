@@ -9,7 +9,7 @@ import { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-serv
 import { entitySerializer } from '@sap-cloud-sdk/odata-common';
 import { defaultDeSerializers } from '../de-serializers';
 
-const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const host = 'https://example.com';
 
 const destination: HttpDestination = {
@@ -32,7 +32,7 @@ function mockCsrfTokenRequest(path?: string) {
       'x-csrf-token': 'Fetch'
     }
   })
-    .head(path ? `${servicePath}/${path}` : servicePath)
+    .head(path ? `${basePath}/${path}` : basePath)
     .reply(200, '', mockedBuildHeaderResponse);
 }
 
@@ -45,7 +45,7 @@ describe('action import request builder', () => {
         'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token']
       }
     })
-      .post(`${servicePath}/TestActionImportNoParameterNoReturnType`)
+      .post(`${basePath}/TestActionImportNoParameterNoReturnType`)
       .reply(204);
 
     const result = await testActionImportNoParameterNoReturnType({}).execute(
@@ -61,7 +61,7 @@ describe('action import request builder', () => {
     mockCsrfTokenRequest('TestActionImportUnsupportedEdmTypes');
 
     nock(host)
-      .post(`${servicePath}/TestActionImportUnsupportedEdmTypes`, {
+      .post(`${basePath}/TestActionImportUnsupportedEdmTypes`, {
         SimpleParam: 'someUntypedParameter'
       })
       .reply(200, response);
@@ -85,7 +85,7 @@ describe('action import request builder', () => {
 
     nock(host)
       .post(
-        `${servicePath}/TestActionImportMultipleParameterComplexReturnType`,
+        `${basePath}/TestActionImportMultipleParameterComplexReturnType`,
         httpBody
       )
       .reply(200, httpResponse);
@@ -101,7 +101,7 @@ describe('action import request builder', () => {
       mockCsrfTokenRequest('TestActionImportNoParameterNoReturnType');
 
       nock(host)
-        .post(`${servicePath}/TestActionImportNoParameterNoReturnType`)
+        .post(`${basePath}/TestActionImportNoParameterNoReturnType`)
         .reply(204, {});
 
       const actual = await testActionImportNoParameterNoReturnType(

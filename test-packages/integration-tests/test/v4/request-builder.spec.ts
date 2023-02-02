@@ -6,7 +6,7 @@ import { singleTestEntityResponse } from '../test-data/single-test-entity-respon
 
 const testEntityApi = testService().testEntityApi;
 
-const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = 'A_TestEntity';
 const username = 'username';
 const password = 'password';
@@ -28,7 +28,7 @@ function mockCsrfTokenRequest(path?: string) {
       'x-csrf-token': 'Fetch'
     }
   })
-    .head(path ? `${servicePath}/${path}` : servicePath)
+    .head(path ? `${basePath}/${path}` : basePath)
     .reply(200, '', mockedBuildHeaderResponse);
 }
 
@@ -59,7 +59,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -83,7 +83,7 @@ describe('Request Builder', () => {
         cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
-      .post(`${servicePath}/${entityName}`, {
+      .post(`${basePath}/${entityName}`, {
         StringProperty: 'someProperty',
         Int16Property: 16,
         BooleanProperty: false
@@ -120,7 +120,7 @@ describe('Request Builder', () => {
       }
     })
       .patch(
-        `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`,
+        `${basePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`,
         {
           StringProperty: 'newStringProp'
         }
@@ -166,7 +166,7 @@ describe('Request Builder', () => {
       }
     })
       .delete(
-        `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`
+        `${basePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`
       )
       .reply(200, entityJson);
 

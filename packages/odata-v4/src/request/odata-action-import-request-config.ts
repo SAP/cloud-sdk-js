@@ -19,18 +19,18 @@ export class ODataActionImportRequestConfig<
 > extends ODataRequestConfig {
   /**
    * Creates an instance of ODataActionImportRequestConfig.
-   * @param defaultServicePath - Default path of the service.
+   * @param defaultBasePath - Default base path of the service.
    * @param actionImportName - The name of the action import.
    * @param parameters - Parameters of the action imports.
    * @param oDataUri - URI conversion functions.
    */
   constructor(
-    defaultServicePath: string,
+    defaultBasePath: string,
     readonly actionImportName: string,
     public parameters: ActionImportParameters<ParametersT>,
     protected oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('post', defaultServicePath);
+    super('post', defaultBasePath);
     this.payload = this.buildHttpPayload(parameters);
   }
 

@@ -5,7 +5,7 @@ import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { errorResponse } from '../test-data/error-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 
-const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
 const csrfToken = 'CSRFTOKEN';
 
@@ -16,7 +16,7 @@ function mockCsrfTokenRequest(url: string) {
       'x-csrf-token': 'Fetch'
     }
   })
-    .get(servicePath)
+    .get(basePath)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
@@ -50,7 +50,7 @@ describe('Function imports', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/TestFunctionImportEdmReturnType`)
+      .get(`${basePath}/TestFunctionImportEdmReturnType`)
       .reply(200, singleTestEntityResponse());
 
     const request = functionImports
@@ -72,7 +72,7 @@ describe('Function imports', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/TestFunctionImportEdmReturnType`)
+      .get(`${basePath}/TestFunctionImportEdmReturnType`)
       .reply(400, errorResponse());
 
     const request = functionImports

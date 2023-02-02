@@ -24,7 +24,7 @@ const logger = createLogger({
  */
 export abstract class ODataRequestConfig {
   payload: Record<string, any> | string;
-  customServicePath: string;
+  basePath: string;
 
   readonly defaultHeaders: Record<string, any> = {
     'content-type': 'application/json',
@@ -43,16 +43,16 @@ export abstract class ODataRequestConfig {
   /**
    * Creates an instance of ODataRequest.
    * @param method - HTTP method of the request.
-   * @param defaultServicePath - Default path of the according service.
+   * @param defaultBasePath - Default path of the according service.
    * @param defaultHeaders - The default headers of the given request as an object.
    */
   constructor(
     public method: RequestMethodType,
-    readonly defaultServicePath: string,
+    readonly defaultBasePath: string,
     defaultHeaders?: Record<string, any>
   ) {
-    if (defaultServicePath === VALUE_IS_UNDEFINED) {
-      logger.warn('The service path is undefined in "_defaultServicePath".');
+    if (defaultBasePath === VALUE_IS_UNDEFINED) {
+      logger.warn('The service path is undefined in "_defaultBasePath".');
     }
     this.defaultHeaders = mergeIgnoreCase(this.defaultHeaders, defaultHeaders);
   }

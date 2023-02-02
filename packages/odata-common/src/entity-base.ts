@@ -21,9 +21,9 @@ export interface Constructable<EntityT extends EntityBase> {
    */
   _entityName: string;
   /**
-   * Service path as specified in the `options-per-service.json`, e.g., `/sap/opu/odata/sap/API_COMMON_SRV`.
+   * Base path as specified in the `options-per-service.json`, e.g., `/sap/opu/odata/sap/API_COMMON_SRV`.
    */
-  _defaultServicePath: string;
+  _defaultBasePath: string;
   /**
    * Names of the key properties of the entity.
    */
@@ -49,7 +49,7 @@ export type EntityBuilderType<
 export abstract class EntityBase {
   static _serviceName: string;
   static _entityName: string;
-  static _defaultServicePath: string;
+  static _defaultBasePath: string;
 
   /**
    * The remote state of the entity.

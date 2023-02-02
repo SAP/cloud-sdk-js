@@ -23,7 +23,7 @@ export class FunctionImportRequestBuilder<
   /**
    * Creates an instance of FunctionImportRequestBuilder.
    * @param method - HTTP method to be used for the request.
-   * @param defaultServicePath - Default path for the service the function belongs to.
+   * @param defaultBasePath - Default base path for the service the function belongs to.
    * @param functionImportName - The name of the function import.
    * @param responseTransformer - Transformation function for the response.
    * @param parameters - Parameters to be set in the function.
@@ -31,7 +31,7 @@ export class FunctionImportRequestBuilder<
    */
   constructor(
     method: RequestMethodType,
-    defaultServicePath: string,
+    defaultBasePath: string,
     functionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
     parameters: FunctionImportParameters<ParametersT>,
@@ -41,7 +41,7 @@ export class FunctionImportRequestBuilder<
       responseTransformer,
       new ODataFunctionImportRequestConfig(
         method,
-        defaultServicePath,
+        defaultBasePath,
         functionImportName,
         parameters,
         createODataUri(deSerializers)

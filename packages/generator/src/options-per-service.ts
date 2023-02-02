@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'fs';
 import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
 import { ParsedGeneratorOptions } from './options';
 import { VdmServiceMetadata } from './vdm-types';
-import { servicePathFromSwagger } from './swagger-parser/swagger-util';
+import { basePathFromSwagger } from './swagger-parser/swagger-util';
 import { ServiceMetadata } from './edmx-parser/edmx-file-reader';
 
 const logger = createLogger({
@@ -32,7 +32,7 @@ export interface OptionsPerService {
   /**
    * @internal
    */
-  servicePath: string;
+  basePath: string;
   /**
    * @internal
    */
@@ -56,7 +56,7 @@ export function optionsPerService(services: VdmServiceMetadata[]): VdmMapping {
   return services.reduce((vdmMapping, service) => {
     vdmMapping[service.originalFileName] = {
       directoryName: service.directoryName,
-      servicePath: service.servicePath,
+      basePath: service.basePath,
       npmPackageName: service.npmPackageName
     };
 
@@ -72,26 +72,26 @@ export function optionsPerServiceFile(services: VdmServiceMetadata[]): string {
 /**
  * @internal
  */
-export function getServicePath(
+export function getBasePath(
   metadata: ServiceMetadata,
   optionsPerServiceIn?: OptionsPerService
 ): string {
-  let servicePath =
-    optionsPerServiceIn?.servicePath ||
-    servicePathFromSelfLink(metadata.edmx.selfLink) ||
-    servicePathFromSwagger(metadata.swagger);
-  if (!servicePath || servicePath === VALUE_IS_UNDEFINED) {
+  let basePath =
+    optionsPerServiceIn?.basePath ||
+    basePathFromSelfLink(metadata.edmx.selfLink) ||
+    basePathFromSwagger(metadata.swagger);
+  if (!basePath || basePath === VALUE_IS_UNDEFINED) {
     logger.error(
       `[ ${
         parse(metadata.edmx.path.toString()).name
       } ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".`
     );
-    servicePath = VALUE_IS_UNDEFINED;
+    basePath = VALUE_IS_UNDEFINED;
   }
-  return servicePath;
+  return basePath;
 }
 
-function servicePathFromSelfLink(
+function basePathFromSelfLink(
   selfLink: string | undefined
 ): string | undefined {
   if (selfLink) {

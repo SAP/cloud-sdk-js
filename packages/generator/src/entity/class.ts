@@ -62,7 +62,7 @@ function staticProperties(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): PropertyDeclarationStructure[] {
-  return [entityName(entity), defaultServicePath(service), keys(entity)];
+  return [entityName(entity), defaultBasePath(service), keys(entity)];
 }
 
 function entityName(entity: VdmEntity): PropertyDeclarationStructure {
@@ -75,14 +75,14 @@ function entityName(entity: VdmEntity): PropertyDeclarationStructure {
   };
 }
 
-function defaultServicePath(
+function defaultBasePath(
   service: VdmServiceMetadata
 ): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
-    name: prependPrefix('defaultServicePath'),
+    name: prependPrefix('defaultBasePath'),
     isStatic: true,
-    initializer: `'${service.servicePath}'`,
+    initializer: `'${service.basePath}'`,
     docs: [addLeadingNewline('Default url path for the according service.')]
   };
 }

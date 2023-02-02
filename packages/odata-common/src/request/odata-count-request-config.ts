@@ -26,7 +26,7 @@ export class ODataCountRequestConfig<
   ) {
     super(
       'get',
-      getAllRequest._entityApi.entityConstructor._defaultServicePath
+      getAllRequest._entityApi.entityConstructor._defaultBasePath
     );
   }
 

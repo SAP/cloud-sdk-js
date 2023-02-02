@@ -5,12 +5,12 @@ describe('global-name-formatter', () => {
   const vdmMapping: VdmMapping = {
     API_A_SERV: {
       directoryName: 'a-serv',
-      servicePath: '/path/to/serv',
+      basePath: '/path/to/serv',
       npmPackageName: '@sap/a-serv'
     },
     API_B_SERV: {
       directoryName: 'b-serv',
-      servicePath: '/path/to/serv',
+      basePath: '/path/to/serv',
       npmPackageName: '@sap/b-serv'
     }
   };

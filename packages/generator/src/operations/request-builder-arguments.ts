@@ -12,7 +12,7 @@ export function getRequestBuilderArgumentsBase(
   const sharedParameters = [getTransformer(operation), 'params'];
   if (!operation.isBound) {
     return [
-      `'${service.servicePath}'`,
+      `'${service.basePath}'`,
       `'${operation.originalName}'`,
       ...sharedParameters,
       'deSerializers'

@@ -19,7 +19,7 @@ export interface VdmServicePackageMetaData {
   /**
    * @internal
    */
-  servicePath: string;
+  basePath: string;
   /**
    * @internal
    */

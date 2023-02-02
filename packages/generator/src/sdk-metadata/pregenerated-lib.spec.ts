@@ -31,7 +31,7 @@ export function getTestService(npmPackageName?: string): VdmServiceMetadata {
     new GlobalNameFormatter({
       API_TEST_SRV: {
         directoryName: 'test-service',
-        servicePath: '/sap/opu/odata/sap/API_TEST_SERVICE_SRV;v=0002',
+        basePath: '/sap/opu/odata/sap/API_TEST_SERVICE_SRV;v=0002',
         npmPackageName: npmPackageName || '@sap/cloud-sdk-vdm-test-service'
       }
     })

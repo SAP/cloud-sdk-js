@@ -2,8 +2,8 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import {
   MiddlewareContext,
   Middleware,
-  MiddlewareIn,
-  MiddlewareOut
+  MiddlewareOptions,
+  MiddlewareFunction
 } from './middleware';
 
 const defaultTimeout = 10000;
@@ -34,8 +34,8 @@ export function timeout<
     );
   }
   return function (
-    options: MiddlewareIn<ArgumentType, ReturnType, ContextType>
-  ): MiddlewareOut<ArgumentType, ReturnType> {
+    options: MiddlewareOptions<ArgumentType, ReturnType, ContextType>
+  ): MiddlewareFunction<ArgumentType, ReturnType> {
     const message = `Request to URL: ${options.context.uri} ran into a timeout after ${timeoutValue}ms.`;
     return arg => wrapInTimeout(options.fn(arg), timeoutValue, message);
   };

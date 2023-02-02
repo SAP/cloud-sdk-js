@@ -4,7 +4,7 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
-import axios, { RawAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { timeout, MiddlewareOptions } from '@sap-cloud-sdk/resilience';
 import * as jwt123 from 'jsonwebtoken';
 import {
@@ -363,7 +363,7 @@ describe('generic http client', () => {
       const showContextMiddleware: HttpMiddleware =
         (
           opt: MiddlewareOptions<
-            RawAxiosRequestConfig,
+            HttpRequestConfig,
             HttpResponse,
             HttpMiddlewareContext
           >

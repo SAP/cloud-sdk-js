@@ -78,15 +78,14 @@ export async function getClientCredentialsToken(
     XsuaaParameters,
     ClientCredentialsResponse,
     MiddlewareContext<XsuaaParameters>
-  >(
-    resilience(),
-    {
+  >(resilience(), {
+    fn: xssecPromise,
+    fnArgument,
+    context: {
       uri: fnArgument.serviceCredentials.url,
-      tenantId: fnArgument.zoneId ?? fnArgument.serviceCredentials.tenantid,
-      fnArgument
-    },
-    xssecPromise
-  ).catch(err => {
+      tenantId: fnArgument.zoneId ?? fnArgument.serviceCredentials.tenantid
+    }
+  }).catch(err => {
     throw new Error(
       `Could not fetch client credentials token for service of type ${
         resolveService(service).label
@@ -129,15 +128,14 @@ export function getUserToken(
     XsuaaParameters,
     string,
     MiddlewareContext<XsuaaParameters>
-  >(
-    resilience(),
-    {
+  >(resilience(), {
+    fn: xssecPromise,
+    fnArgument,
+    context: {
       uri: service.credentials.url,
-      tenantId: fnArgument.zoneId ?? service.credentials.tenantid,
-      fnArgument
-    },
-    xssecPromise
-  ).catch(err => {
+      tenantId: fnArgument.zoneId ?? service.credentials.tenantid
+    }
+  }).catch(err => {
     throw new Error(
       `Could not fetch JWT bearer token for service of type ${service.label}: ${err.message}`
     );

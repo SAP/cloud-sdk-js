@@ -46,20 +46,21 @@ export function resilience<
 >(options?: ResilienceOptions): Middleware<ArgumentT, ReturnT, ContextT>[] {
   const resilienceOption = { ...defaultResilienceOptions, ...options };
   const middlewares: Middleware<ArgumentT, ReturnT, ContextT>[] = [];
-  if (typeof resilienceOption.timeout === 'number') {
-    middlewares.push(timeout(resilienceOption.timeout));
-  } else if (resilienceOption.timeout) {
-    middlewares.push(timeout());
+  if (typeof resilienceOption.retry === 'number') {
+    middlewares.push(retry(resilienceOption.retry));
+  } else if (resilienceOption.retry) {
+    middlewares.push(retry());
   }
 
   if (resilienceOption.circuitBreaker) {
     middlewares.push(circuitBreakerHttp());
   }
 
-  if (typeof resilienceOption.retry === 'number') {
-    middlewares.push(retry(resilienceOption.retry));
-  } else if (resilienceOption.retry) {
-    middlewares.push(retry());
+  if (typeof resilienceOption.timeout === 'number') {
+    middlewares.push(timeout(resilienceOption.timeout));
+  } else if (resilienceOption.timeout) {
+    middlewares.push(timeout());
   }
+
   return middlewares;
 }

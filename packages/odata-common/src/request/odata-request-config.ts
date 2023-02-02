@@ -1,7 +1,4 @@
-import {
-  createLogger,
-  mergeIgnoreCase
-} from '@sap-cloud-sdk/util';
+import { createLogger, mergeIgnoreCase } from '@sap-cloud-sdk/util';
 import {
   encodeTypedClientRequest,
   HttpMiddleware

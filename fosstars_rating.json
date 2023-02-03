@@ -258,9 +258,9 @@
         }
       }
     },
-    "value" : 5.566173436492585,
+    "value" : 5.373230174081238,
     "weight" : 1.0,
-    "confidence" : 9.921599845612004,
+    "confidence" : 9.566989916533991,
     "usedValues" : [ {
       "type" : "ScoreValue",
       "score" : {
@@ -1289,7 +1289,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 181,
+        "number" : 179,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1300,7 +1300,7 @@
         "number" : 3,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "181 commits in the last 3 months results to 10.00 points", "3 contributors increase the score value from 10.00 to 11.00" ],
+      "explanation" : [ "179 commits in the last 3 months results to 10.00 points", "3 contributors increase the score value from 10.00 to 11.00" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
@@ -1507,16 +1507,16 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 1.9856666666666667,
+      "value" : 0.172,
       "weight" : 0.5,
-      "confidence" : 10.0,
+      "confidence" : 6.666666666666667,
       "usedValues" : [ {
         "type" : "IntegerValue",
         "feature" : {
           "type" : "PositiveIntegerFeature",
           "name" : "Number of stars for a GitHub repository"
         },
-        "number" : 123,
+        "number" : 122,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1527,12 +1527,11 @@
         "number" : 15,
         "explanation" : [ ]
       }, {
-        "type" : "IntegerValue",
+        "type" : "UnknownValue",
         "feature" : {
           "type" : "PositiveIntegerFeature",
           "name" : "Number of projects on GitHub that use an open source project"
         },
-        "number" : 2719,
         "explanation" : [ ]
       } ],
       "explanation" : [ ],
@@ -2972,5 +2971,5 @@
       }
     }
   },
-  "label" : [ "OssSecurityRating$SecurityLabel", "GOOD" ]
+  "label" : [ "OssSecurityRating$SecurityLabel", "MODERATE" ]
 }

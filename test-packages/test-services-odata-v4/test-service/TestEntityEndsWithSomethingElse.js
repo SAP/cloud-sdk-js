@@ -24,7 +24,7 @@ TestEntityEndsWithSomethingElse._entityName = 'A_TestEntityEndsWithSomethingElse
 /**
  * Default url path for the according service.
  */
-TestEntityEndsWithSomethingElse._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+TestEntityEndsWithSomethingElse._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntityEndsWithSomethingElse entity
  */

@@ -24,7 +24,7 @@ TestEntityWithSharedEntityType1._entityName = 'A_TestEntityWithSharedEntityType1
 /**
  * Default url path for the according service.
  */
-TestEntityWithSharedEntityType1._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+TestEntityWithSharedEntityType1._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntityWithSharedEntityType1 entity
  */

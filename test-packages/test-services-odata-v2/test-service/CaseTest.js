@@ -24,7 +24,7 @@ CaseTest._entityName = 'A_CaseTest';
 /**
  * Default url path for the according service.
  */
-CaseTest._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+CaseTest._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the CaseTest entity
  */

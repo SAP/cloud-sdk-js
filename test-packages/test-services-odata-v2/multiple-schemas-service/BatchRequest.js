@@ -16,5 +16,5 @@ function changeset(first, ...rest) {
     return new odata_v2_1.BatchChangeSet((0, util_1.transformVariadicArgumentToArray)(first, rest));
 }
 exports.changeset = changeset;
-exports.defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
+exports.defaultMultipleSchemasServicePath = '/';
 //# sourceMappingURL=BatchRequest.js.map

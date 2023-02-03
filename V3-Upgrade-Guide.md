@@ -23,6 +23,7 @@ This document will guide you through the steps necessary to upgrade to version 3
 - [Use Service Function instead of API Constructor](#use-service-function-instead-of-api-constructor)
 - [Adjust Operation Names Starting With `_` in Generated OData Clients](#adjust-operation-names-starting-with-_-in-generated-odata-clients)
 - [Use `optionsPerService` in OData generator](#use-optionsperservice-in-odata-generator)
+- [Set `servicePath` in `options-per-service.json`](#set-servicepath-in-options-per-servicejson)
 
 ## Update Your Project Dependencies
 
@@ -196,3 +197,14 @@ Set the `optionsPerService` to either:
   If the file does not exist, it will be created.
 - The directory from which the file is read/created (e.g. `someDir`. This will create a file named `options-per-service.json` in `someDir`)
 
+## Set `servicePath` in `options-per-service.json`
+
+By default, generation of OData clients will fail if the `servicePath` cannot be determined at the time of generation.
+The generator will determine the path from:
+- `servicePath` property in the `options-per-service.json`
+- `.edmx` service specification, or
+- swagger file
+in the above mentioned order.
+
+To allow generation in spite of missing `servicePath`, set the `skipValidation` option to true.
+This will generate the client successfuly with `servicePath` set to `/`.

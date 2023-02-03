@@ -1,7 +1,7 @@
 {
   "API_MULTIPLE_SCHEMAS_SRV": {
     "directoryName": "multiple-schemas-service",
-    "basePath": "VALUE_IS_UNDEFINED",
+    "basePath": "/",
     "npmPackageName": "multiple-schemas-service"
   },
   "API_TEST_SRV": {

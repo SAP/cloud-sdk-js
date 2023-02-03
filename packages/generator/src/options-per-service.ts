@@ -14,10 +14,6 @@ const logger = createLogger({
 /**
  * @internal
  */
-export const VALUE_IS_UNDEFINED = 'VALUE_IS_UNDEFINED';
-/**
- * @internal
- */
 export interface VdmMapping {
   [fileName: string]: OptionsPerService;
 }
@@ -74,19 +70,28 @@ export function optionsPerServiceFile(services: VdmServiceMetadata[]): string {
  */
 export function getBasePath(
   metadata: ServiceMetadata,
+  skipValidation: boolean,
   optionsPerServiceIn?: OptionsPerService
 ): string {
   let basePath =
     optionsPerServiceIn?.basePath ||
     basePathFromSelfLink(metadata.edmx.selfLink) ||
     basePathFromSwagger(metadata.swagger);
-  if (!basePath || basePath === VALUE_IS_UNDEFINED) {
-    logger.error(
-      `[ ${
-        parse(metadata.edmx.path.toString()).name
-      } ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".`
-    );
-    basePath = VALUE_IS_UNDEFINED;
+  if (!basePath) {
+    if (skipValidation) {
+      logger.warn(
+        `[ ${
+          parse(metadata.edmx.path.toString()).name
+        } ] No base path could be determined from available metadata! Setting "basePath" to "/" in the "options-per-service.json".`
+      );
+      basePath = '/';
+    } else {
+      throw new Error(
+        `[ ${
+          parse(metadata.edmx.path.toString()).name
+        } ] No base path could be determined from available metadata! Set "basePath" in the "options-per-service.json" to generate client.`
+      );
+    }
   }
   return basePath;
 }

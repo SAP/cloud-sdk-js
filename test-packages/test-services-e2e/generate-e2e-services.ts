@@ -49,7 +49,7 @@ async function generateE2E() {
       '..',
       'test-resources',
       'odata-service-specs-e2e',
-      'v4'
+      'TripPin'
     )
   });
 }

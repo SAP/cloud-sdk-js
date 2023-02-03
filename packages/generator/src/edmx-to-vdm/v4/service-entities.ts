@@ -14,7 +14,7 @@ export function getServiceEntitiesV4(
   serviceName: string,
   skipValidation: boolean
 ): VdmServiceEntities {
-  const formatter = new ServiceNameFormatter(serviceName);
+  const formatter = new ServiceNameFormatter(serviceName, { skipValidation });
 
   const enumTypes = generateEnumTypesV4(serviceMetadata, formatter);
   const complexTypes = generateComplexTypesV4(

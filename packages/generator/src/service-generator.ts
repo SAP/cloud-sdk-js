@@ -98,6 +98,7 @@ class ServiceGenerator {
       speakingModuleName,
       servicePath: getServicePath(
         serviceMetadata,
+        this.options.skipValidation,
         this.optionsPerService[serviceMetadata.edmx.fileName]
       ),
       edmxPath: serviceDefinitionPaths.edmxPath,

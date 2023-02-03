@@ -74,7 +74,7 @@ export function changeset<DeSerializersT extends DeSerializers>(
   return new BatchChangeSet(transformVariadicArgumentToArray(first, rest));
 }
 
-export const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
+export const defaultMultipleSchemasServicePath = '/';
 export type ReadMultipleSchemasServiceRequestBuilder<
   DeSerializersT extends DeSerializers
 > =

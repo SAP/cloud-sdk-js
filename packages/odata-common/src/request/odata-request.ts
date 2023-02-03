@@ -70,10 +70,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @param includeQueryParameters - Whether or not to include the query parameters in the URL.
    * @returns The relative URL for the request.
    */
-  relativeUrl(
-    includeBasePath = true,
-    includeQueryParameters = true
-  ): string {
+  relativeUrl(includeBasePath = true, includeQueryParameters = true): string {
     const query = includeQueryParameters ? this.query() : '';
     return `${removeTrailingSlashes(
       this.relativeResourceUrl(includeBasePath)

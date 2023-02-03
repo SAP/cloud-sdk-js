@@ -96,9 +96,7 @@ describe('Custom Fields', () => {
         'content-type': 'application/json'
       }
     })
-      .get(
-        `${basePath}/${entityName}?$filter=(MyCustomField%20eq%20'ToMatch')`
-      )
+      .get(`${basePath}/${entityName}?$filter=(MyCustomField%20eq%20'ToMatch')`)
       .reply(200, getAllResponseWithCustomField);
 
     const request = testEntityApi

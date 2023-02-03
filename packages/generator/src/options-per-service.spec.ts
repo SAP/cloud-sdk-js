@@ -88,9 +88,7 @@ describe('options-per-service', () => {
       } as any
     };
 
-    expect(getBasePath(metadata, false)).toEqual(
-      '/swagger-test-service-path'
-    );
+    expect(getBasePath(metadata, false)).toEqual('/swagger-test-service-path');
   });
 
   it('should return "/" if skipValidation is true and basePath cannot be determined from options-per-service, self link and swagger', () => {

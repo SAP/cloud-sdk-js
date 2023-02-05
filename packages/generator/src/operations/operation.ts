@@ -45,8 +45,6 @@ export function operationFunctionBase(
       [
         getDocDescription(operation),
         `@param parameters - Object containing all parameters for the ${operation.type}.`,
-        // TODO: is this still necessary, considering that the line above indicates the type of operation?
-        `@type: ${operation.type}`,
         '@returns A request builder that allows to overwrite some of the values and execute the resulting request.'
       ].join('\n')
     ]

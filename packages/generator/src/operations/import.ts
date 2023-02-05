@@ -124,41 +124,23 @@ export function operationImportDeclarations(
         }
       ];
 
-  const namedImports = [
-    ...edmRelatedImports(returnTypes),
-    ...complexTypeRelatedImports(returnTypes),
-    ...responseTransformerImports(returnTypes),
-    'DeSerializers',
-    'DefaultDeSerializers',
-    'defaultDeSerializers',
-    ...propertyTypeImportNames(parameters)
-  ];
-  if (hasFunctionWithParameters) {
-    namedImports.push('FunctionImportParameter');
-  }
-  if (hasActionWithParameters) {
-    namedImports.push('ActionImportParameter');
-  }
-  if (includesUnbound) {
-    if (hasFunction) {
-      namedImports.push('FunctionImportRequestBuilder');
-    }
-    if (hasAction) {
-      namedImports.push('ActionImportRequestBuilder');
-    }
-  }
-  if (includesBound) {
-    if (hasFunction) {
-      namedImports.push('BoundFunctionImportRequestBuilder');
-    }
-    if (hasAction) {
-      namedImports.push('BoundActionImportRequestBuilder');
-    }
-  }
-
   return [
     ...externalImportDeclarationsTsMorph(parameters),
-    odataImportDeclarationTsMorph(namedImports, oDataVersion),
+    odataImportDeclarationTsMorph([
+      ...edmRelatedImports(returnTypes),
+      ...complexTypeRelatedImports(returnTypes),
+      ...responseTransformerImports(returnTypes),
+      'DeSerializers',
+      'DefaultDeSerializers',
+      'defaultDeSerializers',
+      ...propertyTypeImportNames(parameters),
+      ...(hasFunctionWithParameters ? ['FunctionImportParameter'] : []),
+      ...(hasActionWithParameters ? ['ActionImportParameter'] : []),
+      ...(includesUnbound && hasFunction ? ['FunctionImportRequestBuilder'] : []),
+      ...(includesUnbound && hasAction ? ['ActionImportRequestBuilder'] : []),
+      ...(includesBound && hasFunction ? ['BoundFunctionImportRequestBuilder'] : []),
+      ...(includesBound && hasAction ? ['BoundActionImportRequestBuilder'] : []),
+    ], oDataVersion),
     ...serviceImport,
     ...returnTypeImports(returnTypes)
   ];

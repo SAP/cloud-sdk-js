@@ -19,7 +19,7 @@ export function operationsSourceFile(
 ): SourceFileStructure {
   const functions = service.functionImports;
   const actions = service.actionImports || [];
-  const operations = functions.concat(actions);
+  const operations = [...functions, ...actions];
 
   return {
     kind: StructureKind.SourceFile,

@@ -31,7 +31,6 @@ export interface TestFunctionImportEntityReturnType1Parameters<
 /**
  * Test Function Import Entity Return Type 1.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportEntityReturnType1<
@@ -69,7 +68,6 @@ export interface TestFunctionImportEntityReturnType2Parameters<
 /**
  * Test Function Import Entity Return Type 2.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportEntityReturnType2<
@@ -107,7 +105,6 @@ export interface TestActionImportNoParameterComplexReturnType1Parameters<
 /**
  * Test Action Import No Parameter Complex Return Type 1.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportNoParameterComplexReturnType1<
@@ -146,7 +143,6 @@ export interface TestActionImportNoParameterComplexReturnType2Parameters<
 /**
  * Test Action Import No Parameter Complex Return Type 2.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testActionImportNoParameterComplexReturnType2<

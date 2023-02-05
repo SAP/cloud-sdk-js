@@ -20,7 +20,6 @@ export interface TestFunctionImportEdmReturnTypeParameters<
 /**
  * Test Function Import Edm Return Type.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportEdmReturnType<
@@ -42,7 +41,6 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters<
 /**
  * Test Function Import Edm Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportEdmReturnTypeCollection<
@@ -77,7 +75,6 @@ export interface TestFunctionImportNullableTestParameters<
 /**
  * Test Function Import Nullable Test.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportNullableTest<
@@ -99,7 +96,6 @@ export interface TestFunctionImportEntityReturnTypeParameters<
 /**
  * Test Function Import Entity Return Type.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportEntityReturnType<
@@ -121,7 +117,6 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters<
 /**
  * Test Function Import Entity Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportEntityReturnTypeCollection<
@@ -143,7 +138,6 @@ export interface TestFunctionImportSharedEntityReturnTypeParameters<
 /**
  * Test Function Import Shared Entity Return Type. The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportSharedEntityReturnType<
@@ -168,7 +162,6 @@ export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters<
 /**
  * Test Function Import Shared Entity Return Type Collection. The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportSharedEntityReturnTypeCollection<
@@ -193,7 +186,6 @@ export interface TestFunctionImportComplexReturnTypeParameters<
 /**
  * Test Function Import Complex Return Type.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportComplexReturnType<
@@ -215,7 +207,6 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters<
 /**
  * Test Function Import Complex Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportComplexReturnTypeCollection<
@@ -254,7 +245,6 @@ export interface TestFunctionImportMultipleParamsParameters<
 /**
  * Test Function Import Multiple Params.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportMultipleParams<
@@ -276,7 +266,6 @@ export interface TestFunctionImportWithDifferentNameParameters<
 /**
  * Test Function Import With Different Name.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testFunctionImportWithDifferentName<
@@ -298,7 +287,6 @@ export interface TestActionImportNoParameterNoReturnTypeParameters<
 /**
  * Test Action Import No Parameter No Return Type.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportNoParameterNoReturnType<
@@ -337,7 +325,6 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters<
 /**
  * Test Action Import Multiple Parameter Complex Return Type.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportMultipleParameterComplexReturnType<
@@ -364,7 +351,6 @@ export interface TestActionImportUnsupportedEdmTypesParameters<
 /**
  * Test Action Import Unsupported Edm Types.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportUnsupportedEdmTypes<
@@ -386,7 +372,6 @@ export interface TestActionImportNoParameterEntityReturnTypeParameters<
 /**
  * Test Action Import No Parameter Entity Return Type.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportNoParameterEntityReturnType<
@@ -408,7 +393,6 @@ export interface TestActionImportSharedEntityReturnTypeParameters<
 /**
  * Test Action Import Shared Entity Return Type. The 'execute' method does not exist for this action import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportSharedEntityReturnType<
@@ -433,7 +417,6 @@ export interface TestActionImportSharedEntityReturnTypeCollectionParameters<
 /**
  * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist for this action import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportSharedEntityReturnTypeCollection<
@@ -471,7 +454,6 @@ export interface TestActionImportNullableTestParameters<
 /**
  * Test Action Import Nullable Test.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function testActionImportNullableTest<

@@ -40,7 +40,6 @@ export interface ConcatStringsParameters<DeSerializersT extends DeSerializers> {
 /**
  * Concat Strings.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function concatStrings<
@@ -78,7 +77,6 @@ export interface GetAllParameters<DeSerializersT extends DeSerializers> {}
 /**
  * Get All.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function getAll<
@@ -119,7 +117,6 @@ export interface GetByKeyParameters<DeSerializersT extends DeSerializers> {
 /**
  * Get By Key.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function getByKey<
@@ -172,7 +169,6 @@ export interface GetByKeyWithMultipleKeysParameters<
 /**
  * Get By Key With Multiple Keys.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function getByKeyWithMultipleKeys<
@@ -231,7 +227,6 @@ export interface ReturnCollectionParameters<
 /**
  * Return Collection.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function returnCollection<
@@ -273,7 +268,6 @@ export interface ReturnIntParameters<DeSerializersT extends DeSerializers> {
 /**
  * Return Int.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function returnInt<
@@ -312,7 +306,6 @@ export interface ReturnSapCloudSdkParameters<
 /**
  * Return Sap Cloud Sdk.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function returnSapCloudSdk<
@@ -354,7 +347,6 @@ export interface CreateTestEntityByIdParameters<
 /**
  * Create Test Entity By Id.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function createTestEntityById<
@@ -399,7 +391,6 @@ export interface CreateTestEntityByIdReturnIdParameters<
 /**
  * Create Test Entity By Id Return Id.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function createTestEntityByIdReturnId<

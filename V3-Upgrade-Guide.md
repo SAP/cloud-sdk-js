@@ -24,6 +24,7 @@ This document will guide you through the steps necessary to upgrade to version 3
 - [Adjust Operation Names Starting With `_` in Generated OData Clients](#adjust-operation-names-starting-with-_-in-generated-odata-clients)
 - [Use `optionsPerService` in OData generator](#use-optionsperservice-in-odata-generator)
 - [Set `servicePath` in `options-per-service.json`](#set-servicepath-in-options-per-servicejson)
+- [Generate `operations` instead of `actionImports` and `functionImports`](#generate-operations-instead-of-actionimports-and-functionimports)
 
 ## Update Your Project Dependencies
 
@@ -208,3 +209,9 @@ in the above mentioned order.
 
 To allow generation in spite of missing `servicePath`, set the `skipValidation` option to true.
 This will generate the client successfuly with `servicePath` set to `/`.
+
+## Generate `operations` instead of `actionImports` and `functionImports`
+
+Unbound actions and functions, which were generated into separate files as `action-imports.ts` and `function-imports.ts`, are now generated into one file `operations.ts`.
+
+A common getter `operations` in the generated `service.ts` is in place of separate getters for functions and actions. Const exports for `functionImports` and `actionImports` are also removed.

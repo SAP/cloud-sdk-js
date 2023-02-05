@@ -12,7 +12,6 @@ const TestComplexType_1 = require("./TestComplexType");
 /**
  * Test Function Import No Return Type.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportNoReturnType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -23,7 +22,6 @@ exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
 /**
  * Test Function Import Edm Return Type.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEdmReturnType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -34,7 +32,6 @@ exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
 /**
  * Test Function Import Edm Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEdmReturnTypeCollection(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -45,7 +42,6 @@ exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnT
 /**
  * Test Function Import Entity Return Type.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEntityReturnType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -56,7 +52,6 @@ exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
 /**
  * Test Function Import Entity Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEntityReturnTypeCollection(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -67,7 +62,6 @@ exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityR
 /**
  * Test Function Import Shared Entity Return Type. The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportSharedEntityReturnType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -78,7 +72,6 @@ exports.testFunctionImportSharedEntityReturnType = testFunctionImportSharedEntit
 /**
  * Test Function Import Shared Entity Return Type Collection. The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportSharedEntityReturnTypeCollection(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -89,7 +82,6 @@ exports.testFunctionImportSharedEntityReturnTypeCollection = testFunctionImportS
 /**
  * Test Function Import Complex Return Type.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportComplexReturnType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -100,7 +92,6 @@ exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnTyp
 /**
  * Test Function Import Unsupported Edm Types.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportUnsupportedEdmTypes(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -113,7 +104,6 @@ exports.testFunctionImportUnsupportedEdmTypes = testFunctionImportUnsupportedEdm
 /**
  * Test Function Import Complex Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportComplexReturnTypeCollection(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -124,7 +114,6 @@ exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComple
 /**
  * Test Function Import Get.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportGet(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -137,7 +126,6 @@ exports.testFunctionImportGet = testFunctionImportGet;
 /**
  * Test Function Import Post.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportPost(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -150,7 +138,6 @@ exports.testFunctionImportPost = testFunctionImportPost;
 /**
  * Test Function Import Multiple Params.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportMultipleParams(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -164,7 +151,6 @@ exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
 /**
  * Create Test Complex Type.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function createTestComplexType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
@@ -175,7 +161,6 @@ exports.createTestComplexType = createTestComplexType;
 /**
  * Continue.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function fContinue(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {

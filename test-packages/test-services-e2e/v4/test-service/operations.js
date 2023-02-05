@@ -11,7 +11,6 @@ const service_1 = require("./service");
 /**
  * Concat Strings.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function concatStrings(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -25,7 +24,6 @@ exports.concatStrings = concatStrings;
 /**
  * Get All.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getAll(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -36,7 +34,6 @@ exports.getAll = getAll;
 /**
  * Get By Key.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getByKey(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -49,7 +46,6 @@ exports.getByKey = getByKey;
 /**
  * Get By Key With Multiple Keys.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getByKeyWithMultipleKeys(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -64,7 +60,6 @@ exports.getByKeyWithMultipleKeys = getByKeyWithMultipleKeys;
 /**
  * Return Collection.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnCollection(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -77,7 +72,6 @@ exports.returnCollection = returnCollection;
 /**
  * Return Int.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnInt(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -90,7 +84,6 @@ exports.returnInt = returnInt;
 /**
  * Return Sap Cloud Sdk.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnSapCloudSdk(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -101,7 +94,6 @@ exports.returnSapCloudSdk = returnSapCloudSdk;
 /**
  * Create Test Entity By Id.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function createTestEntityById(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -114,7 +106,6 @@ exports.createTestEntityById = createTestEntityById;
 /**
  * Create Test Entity By Id Return Id.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function createTestEntityByIdReturnId(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {

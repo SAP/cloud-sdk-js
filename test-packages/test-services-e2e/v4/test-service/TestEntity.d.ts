@@ -103,7 +103,6 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Bound Function Without Arguments.
    * @param parameters - Object containing all parameters for the function.
-   * @type: function
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundFunctionWithoutArguments(
@@ -118,7 +117,6 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Bound Function Without Arguments Complex Return Type.
    * @param parameters - Object containing all parameters for the function.
-   * @type: function
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundFunctionWithoutArgumentsComplexReturnType(
@@ -133,7 +131,6 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Bound Function With Arguments.
    * @param parameters - Object containing all parameters for the function.
-   * @type: function
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundFunctionWithArguments(
@@ -148,7 +145,6 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Bound Action Without Arguments.
    * @param parameters - Object containing all parameters for the action.
-   * @type: action
    * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
    */
   boundActionWithoutArguments(

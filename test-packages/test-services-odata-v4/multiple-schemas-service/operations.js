@@ -13,7 +13,6 @@ const TestComplexType2_1 = require("./TestComplexType2");
 /**
  * Test Function Import Entity Return Type 1.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEntityReturnType1(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -24,7 +23,6 @@ exports.testFunctionImportEntityReturnType1 = testFunctionImportEntityReturnType
 /**
  * Test Function Import Entity Return Type 2.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEntityReturnType2(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -35,7 +33,6 @@ exports.testFunctionImportEntityReturnType2 = testFunctionImportEntityReturnType
 /**
  * Test Action Import No Parameter Complex Return Type 1.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportNoParameterComplexReturnType1(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -46,7 +43,6 @@ exports.testActionImportNoParameterComplexReturnType1 = testActionImportNoParame
 /**
  * Test Action Import No Parameter Complex Return Type 2.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportNoParameterComplexReturnType2(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {

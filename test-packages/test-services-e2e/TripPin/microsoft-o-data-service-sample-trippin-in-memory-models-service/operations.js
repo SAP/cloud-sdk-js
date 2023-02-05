@@ -11,7 +11,6 @@ const service_1 = require("./service");
 /**
  * Get Nearest Airport.
  * @param parameters - Object containing all parameters for the function.
- * @type: function
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getNearestAirport(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
@@ -26,7 +25,6 @@ exports.getNearestAirport = getNearestAirport;
 /**
  * Reset Data Source.
  * @param parameters - Object containing all parameters for the action.
- * @type: action
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function resetDataSource(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {

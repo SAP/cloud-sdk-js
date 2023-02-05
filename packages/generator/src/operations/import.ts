@@ -98,8 +98,7 @@ export function operationImportDeclarations(
   const includesUnbound = !!operations.filter(operation => !operation.isBound)
     .length;
   const hasFunctionWithParameters = operations.some(
-    operation =>
-      operation.parameters.length && operation.type === 'function'
+    operation => operation.parameters.length && operation.type === 'function'
   );
   const hasActionWithParameters = operations.some(
     operation => operation.parameters.length > 0 && operation.type === 'action'
@@ -126,21 +125,30 @@ export function operationImportDeclarations(
 
   return [
     ...externalImportDeclarationsTsMorph(parameters),
-    odataImportDeclarationTsMorph([
-      ...edmRelatedImports(returnTypes),
-      ...complexTypeRelatedImports(returnTypes),
-      ...responseTransformerImports(returnTypes),
-      'DeSerializers',
-      'DefaultDeSerializers',
-      'defaultDeSerializers',
-      ...propertyTypeImportNames(parameters),
-      ...(hasFunctionWithParameters ? ['FunctionImportParameter'] : []),
-      ...(hasActionWithParameters ? ['ActionImportParameter'] : []),
-      ...(includesUnbound && hasFunction ? ['FunctionImportRequestBuilder'] : []),
-      ...(includesUnbound && hasAction ? ['ActionImportRequestBuilder'] : []),
-      ...(includesBound && hasFunction ? ['BoundFunctionImportRequestBuilder'] : []),
-      ...(includesBound && hasAction ? ['BoundActionImportRequestBuilder'] : []),
-    ], oDataVersion),
+    odataImportDeclarationTsMorph(
+      [
+        ...edmRelatedImports(returnTypes),
+        ...complexTypeRelatedImports(returnTypes),
+        ...responseTransformerImports(returnTypes),
+        'DeSerializers',
+        'DefaultDeSerializers',
+        'defaultDeSerializers',
+        ...propertyTypeImportNames(parameters),
+        ...(hasFunctionWithParameters ? ['FunctionImportParameter'] : []),
+        ...(hasActionWithParameters ? ['ActionImportParameter'] : []),
+        ...(includesUnbound && hasFunction
+          ? ['FunctionImportRequestBuilder']
+          : []),
+        ...(includesUnbound && hasAction ? ['ActionImportRequestBuilder'] : []),
+        ...(includesBound && hasFunction
+          ? ['BoundFunctionImportRequestBuilder']
+          : []),
+        ...(includesBound && hasAction
+          ? ['BoundActionImportRequestBuilder']
+          : [])
+      ],
+      oDataVersion
+    ),
     ...serviceImport,
     ...returnTypeImports(returnTypes)
   ];

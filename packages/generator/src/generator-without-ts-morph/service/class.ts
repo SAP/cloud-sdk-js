@@ -64,7 +64,10 @@ export function serviceClass(service: VdmServiceMetadata): string {
 }
 
 function getOperations(service: VdmServiceMetadata): string {
-  const operations = [...(service.functionImports || []), ...(service.actionImports || [])];
+  const operations = [
+    ...(service.functionImports || []),
+    ...(service.actionImports || [])
+  ];
   if (!operations.length) {
     return '';
   }

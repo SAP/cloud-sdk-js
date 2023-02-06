@@ -22,15 +22,14 @@ describe('timeout', () => {
     };
 
     await expect(
-      executeWithMiddleware(
-        [timeout(delayInResponse * 0.5)],
-        {
+      executeWithMiddleware([timeout(delayInResponse * 0.5)], {
+        context: {
           uri: 'https://example.com',
-          tenantId: 'dummy-tenant',
-          fnArgument: requestConfig
+          tenantId: 'dummy-tenant'
         },
-        request
-      )
+        fnArgument: requestConfig,
+        fn: request
+      })
     ).rejects.toThrow(
       'Request to URL: https://example.com ran into a timeout after 50ms.'
     );

@@ -598,27 +598,27 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dts-critic@^0.0.146":
-  version "0.0.146"
-  resolved "https://registry.npmjs.org/@definitelytyped/dts-critic/-/dts-critic-0.0.146.tgz#97c6612dbc5fab1788034add1a5d5b02189383a2"
-  integrity sha512-kLhtqg0nVrLgK0aSLqiANAp7L9nDANdZ1lOpUqGZgG5kHCfS/VmK5/zbaXBm7NSf+QkDLSv0vfXmUtBLZKykqA==
+"@definitelytyped/dts-critic@^0.0.147":
+  version "0.0.147"
+  resolved "https://registry.npmjs.org/@definitelytyped/dts-critic/-/dts-critic-0.0.147.tgz#ba897db113cd1fb694dab0d2c93a18b02b124b4f"
+  integrity sha512-U4k/Mq97f+TyrzNGo4p1XyC/BeeJP+vBYAlnNi60jQEj9PdUm1nEL1k24EJ63r10FsZlWVMor+XGcIkSTcSIGQ==
   dependencies:
-    "@definitelytyped/header-parser" "^0.0.146"
+    "@definitelytyped/header-parser" "^0.0.147"
     command-exists "^1.2.8"
     rimraf "^3.0.2"
     semver "^6.2.0"
     tmp "^0.2.1"
     yargs "^15.3.1"
 
-"@definitelytyped/dtslint@^0.0.146":
-  version "0.0.146"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.146.tgz#59cec6bf88015165cedc524fec59feac8dc39ee6"
-  integrity sha512-+DjJme+AkTiy8LGTcK6BI/v4TBL9O4mhm16AFfgMUr55q5DC7Vm8FtfZJwpPEbQvOoYrQNXZYSEHwass4UI8/g==
+"@definitelytyped/dtslint@^0.0.147":
+  version "0.0.147"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.147.tgz#13d402b9196a3a8815295a9345a406b06223a763"
+  integrity sha512-Igv4pRmgVmuqXy6lZlqcv676zmwsF++++guZNAAJcvVS4YHCbwyYFyjENP5PehBVEnFmFd6HvfwipMZs1VUViA==
   dependencies:
-    "@definitelytyped/dts-critic" "^0.0.146"
-    "@definitelytyped/header-parser" "^0.0.146"
-    "@definitelytyped/typescript-versions" "^0.0.146"
-    "@definitelytyped/utils" "^0.0.146"
+    "@definitelytyped/dts-critic" "^0.0.147"
+    "@definitelytyped/header-parser" "^0.0.147"
+    "@definitelytyped/typescript-versions" "^0.0.147"
+    "@definitelytyped/utils" "^0.0.147"
     "@typescript-eslint/eslint-plugin" "^5.30.0"
     "@typescript-eslint/parser" "^5.30.0"
     "@typescript-eslint/utils" "^5.30.0"
@@ -629,26 +629,26 @@
     tslint "5.14.0"
     yargs "^15.1.0"
 
-"@definitelytyped/header-parser@^0.0.146":
-  version "0.0.146"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.0.146.tgz#08903e1e9ed133908bc2933d991d1537ec02d5d2"
-  integrity sha512-rmDRPRRVHLMQDf2cjGqmawNwEVP/4xqGOT9brt8rBi7IfFZgRXR93MJlAuUcRkFauNJgsgDNlJVdUT+z0zsmQw==
+"@definitelytyped/header-parser@^0.0.147":
+  version "0.0.147"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.0.147.tgz#cb02f9971091cdaab3337f7c96c843d4ff8dc71d"
+  integrity sha512-0fP2EZF6hTSWJJAhX+xEDBLqeGjxAqc3WB/b1hVw/gjo4Ceng+Cx7UlydSx9xPqw+xY0+QVogRGbPW2vfEnqGA==
   dependencies:
-    "@definitelytyped/typescript-versions" "^0.0.146"
+    "@definitelytyped/typescript-versions" "^0.0.147"
     "@types/parsimmon" "^1.10.1"
     parsimmon "^1.13.0"
 
-"@definitelytyped/typescript-versions@^0.0.146":
-  version "0.0.146"
-  resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.0.146.tgz#a2a3a2fc028084bdfa16c93d5167af4f3bd8db99"
-  integrity sha512-o1E7hX3bu45AYVQM5qccdpde/T1IAHXmy6w7I0Fzca3wPg5d/RfSsRv2j+HAtzWlp+f6jRjhP+d8vgR6Ffwjsg==
+"@definitelytyped/typescript-versions@^0.0.147":
+  version "0.0.147"
+  resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.0.147.tgz#4af4081666ad6ac2f0da1258e602412d7dec257f"
+  integrity sha512-FRAoeZFiS7chfZL/HCtEV8tYoaC9+SqDdNZ9xPMdcbkBCXLFQKnyzZzGIPc/dfTRt1mZjTPZQ3rRxj5tm2jyEw==
 
-"@definitelytyped/utils@^0.0.146":
-  version "0.0.146"
-  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.0.146.tgz#542bf84f8e46960cb11955a29f7b4c97e5303d2c"
-  integrity sha512-THRFJlGlT2roR2/jVqPMsiouZX19vk/2/IDgB+YQyNc88nD9UsBV05qVFUHyhzCokztuefy4Y01c2WBDU2ojoQ==
+"@definitelytyped/utils@^0.0.147":
+  version "0.0.147"
+  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.0.147.tgz#4c9f409d2a234afd44ca65c6bef4a7c21000e1ba"
+  integrity sha512-JfOgrMg8pNruSRMzSZRZCtgHM0PbUAh77fO2Y8qozbOnlGB1tf86pC83W0pkFtZWZRHY4fwaOkzUpLpjwNK05g==
   dependencies:
-    "@definitelytyped/typescript-versions" "^0.0.146"
+    "@definitelytyped/typescript-versions" "^0.0.147"
     "@qiwi/npm-registry-client" "^8.9.1"
     "@types/node" "^14.14.35"
     charm "^1.0.2"
@@ -2254,10 +2254,10 @@ aws4@^1.8.0:
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.12.0.tgz#ce1c9d143389679e253b314241ea9aa5cec980d3"
   integrity sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==
 
-axios@>=0.21, axios@>=0.27.2, axios@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.npmjs.org/axios/-/axios-1.3.1.tgz#80bf6c8dbb46e6db1fa8fe9ab114c1ca7405c2ee"
-  integrity sha512-78pWJsQTceInlyaeBQeYZ/QgZeWS8hGeKiIJiDKQe3hEyBb7sEMq0K4gjx+Va6WHTYO4zI/RRl8qGRzn0YMadA==
+axios@>=0.21, axios@>=0.27.2, axios@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.npmjs.org/axios/-/axios-1.3.2.tgz#7ac517f0fa3ec46e0e636223fd973713a09c72b3"
+  integrity sha512-1M3O703bYqYuPhbHeya5bnhpYVsDDRyQSabNja04mZtboLNSuZ4YrltestrLXfHgmzua4TpUqRiVKbiQuo2epw==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -4152,10 +4152,10 @@ fast-safe-stringify@^2.0.7:
   resolved "https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
-fast-xml-parser@^4.0.15:
-  version "4.0.15"
-  resolved "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.15.tgz#9befe85c68ee90cf3757f1ef9cf3f1497888dbea"
-  integrity sha512-bF4/E33/K/EZDHV23IJpSK2SU7rZTaSkDH5G85nXX8SKlQ9qBpWQhyPpm2nlTBewDJgtpd6+1x4TNpKmocmthQ==
+fast-xml-parser@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.1.1.tgz#28c878b7f1eb4555fa898f1c715adf9d4007306e"
+  integrity sha512-4gAP5PvNyrqePBOIIcpaEeE+nKBry1n6qTQiJsE59sLP0OC+YwhU7/XVmLLEMexbiluFQX1yEYm82Pk9B7xEiw==
   dependencies:
     strnum "^1.0.5"
 

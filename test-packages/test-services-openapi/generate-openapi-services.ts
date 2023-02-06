@@ -7,7 +7,6 @@ const generatorConfigOpenApi: Partial<GeneratorOptions> = {
   clearOutputDir: false,
   transpile: true,
   packageJson: true,
-  packageVersion: '1.2.3',
   include: '../../test-resources/{CHANGELOG.md,some-test-markdown.md}',
   readme: true,
   skipValidation: true,

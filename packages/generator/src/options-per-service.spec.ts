@@ -1,6 +1,7 @@
-import { createLogger, VALUE_IS_UNDEFINED } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   getServicePath,
+  OptionsPerService,
   optionsPerService,
   VdmMapping
 } from './options-per-service';
@@ -57,50 +58,42 @@ describe('options-per-service', () => {
     expect(optionsPerService(serviceMetadata)).toEqual(expectedVdmMapping);
   });
 
-  it('should log an error if no service path can be determined', () => {
-    const metadata = {
-      edmx: {
-        path: 'test/path/file.edmx'
-      } as any
-    };
-
-    const logger = createLogger({
-      package: 'generator',
-      messageContext: 'options-per-service'
-    });
-
-    const errorSpy = jest.spyOn(logger, 'error');
-    getServicePath(metadata);
-    expect(errorSpy).toHaveBeenCalledWith(
-      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
-    );
-  });
-
-  it('should log an error if servicePath in service mapping has VALUE_IS_UNDEFINED', () => {
+  it('gets servicePath from optionsPerService over edmx self link and swagger', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx',
         selfLink: '/test-service'
+      } as any,
+      swagger: {
+        basePath: '/swagger-test-service-path'
       } as any
     };
 
     const optionsPerServiceIn = {
-      servicePath: VALUE_IS_UNDEFINED
-    } as any;
+      servicePath: '/options-test-service'
+    } as OptionsPerService;
 
-    const logger = createLogger({
-      package: 'generator',
-      messageContext: 'options-per-service'
-    });
-
-    const errorSpy = jest.spyOn(logger, 'error');
-    getServicePath(metadata, optionsPerServiceIn);
-    expect(errorSpy).toHaveBeenCalledWith(
-      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
+    expect(getServicePath(metadata, false, optionsPerServiceIn)).toEqual(
+      '/options-test-service'
     );
   });
 
-  it('should log an error if no service path can be determined and swagger has no service path', () => {
+  it('gets servicePath from swagger when it cannot be determined from options or self link', () => {
+    const metadata = {
+      edmx: {
+        path: 'test/path/file.edmx'
+      } as any,
+      swagger: {
+        basePath: '/swagger-test-service-path'
+      } as any
+    };
+
+    expect(getServicePath(metadata, false)).toEqual(
+      '/swagger-test-service-path'
+    );
+  });
+
+  it('should return "/" if skipValidation is true and servicePath cannot be determined from options-per-service, self link and swagger', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx'
@@ -112,11 +105,22 @@ describe('options-per-service', () => {
       package: 'generator',
       messageContext: 'options-per-service'
     });
+    const warnSpy = jest.spyOn(logger, 'warn');
+    expect(getServicePath(metadata, true)).toEqual('/');
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[ file ] No service path could be determined from available metadata! Setting "servicePath" to "/" in the "options-per-service.json".'
+    );
+  });
 
-    const errorSpy = jest.spyOn(logger, 'error');
-    getServicePath(metadata);
-    expect(errorSpy).toHaveBeenCalledWith(
-      '[ file ] No service path could be determined from available metadata! Replace VALUE_IS_UNDEFINED in the "options-per-service.json".'
+  it('should throw if skipValidation is false and servicePath cannot be determined from options-per-service, self link and swagger', () => {
+    const metadata = {
+      edmx: {
+        path: 'test/path/file.edmx'
+      } as any,
+      swagger: {} as any
+    };
+    expect(() => getServicePath(metadata, false)).toThrowError(
+      /No service path could be determined from available metadata!/
     );
   });
 });

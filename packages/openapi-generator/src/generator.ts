@@ -1,5 +1,5 @@
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, dirname, posix } from 'path';
+import { resolve, parse, basename, dirname } from 'path';
 import {
   createLogger,
   kebabCase,
@@ -20,7 +20,6 @@ import {
   readPrettierConfig,
   parseOptions
 } from '@sap-cloud-sdk/generator-common/internal';
-import { glob } from 'glob';
 import { apiFile } from './file-serializer/api-file';
 import { packageJson } from './file-serializer/package-json';
 import { readme } from './file-serializer/readme';
@@ -44,7 +43,7 @@ import {
   tsconfigJson
 } from './options';
 
-const { mkdir, lstat } = promisesFs;
+const { mkdir } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -74,7 +73,7 @@ export async function generate(
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  if (options.input === '' || options.outputDir === '') {
+  if (!options.input.length || options.outputDir === '') {
     throw new Error('Either input or outputDir were not set.');
   }
   if (options.verbose) {
@@ -88,7 +87,7 @@ export async function generateWithParsedOptions(
       typeof promisesFs.rm === 'undefined' ? {} : { force: true };
     await rm(options.outputDir, { recursive: true, ...forceOption });
   }
-  const inputFilePaths = await getInputFilePaths(options.input);
+  const inputFilePaths = options.input; // await getInputFilePaths(options.input);
 
   const optionsPerService = await getOptionsPerService(inputFilePaths, options);
   const tsConfig = await tsconfigJson(options);
@@ -283,39 +282,6 @@ async function generateService(
     options
   );
   logger.info(`Successfully generated client for '${inputFilePath}'`);
-}
-
-/**
- * Recursively searches through a given input path and returns all file paths as a string array.
- * @param input - the path to the input directory.
- * @returns all file paths as a string array.
- * @internal
- */
-export async function getInputFilePaths(input: string): Promise<string[]> {
-  if (glob.hasMagic(input)) {
-    return new Promise(resolvePromise => {
-      glob(input, (_error, paths) => {
-        resolvePromise(
-          paths
-            .filter(path => /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/.test(path))
-            .map(path => resolve(path))
-        );
-      });
-    });
-  }
-
-  if ((await lstat(input)).isDirectory()) {
-    return new Promise(resolvePromise => {
-      glob(
-        posix.join(input, '**/*.{json,JSON,yaml,YAML,yml,YML}'),
-        (_error, paths) => {
-          resolvePromise(paths.map(path => resolve(path)));
-        }
-      );
-    });
-  }
-
-  return [resolve(input)];
 }
 
 async function generateReadme(

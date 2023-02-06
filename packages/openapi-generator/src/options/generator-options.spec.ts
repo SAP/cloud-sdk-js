@@ -1,6 +1,6 @@
 import { join, posix, resolve, sep } from 'path';
 import mock from 'mock-fs';
-import { parseOptions } from '@sap-cloud-sdk/generator-common/dist/options-parser';
+import { parseOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { parseCmdArgs } from '../cli-parser';
 import { cliOptions } from './options';
 

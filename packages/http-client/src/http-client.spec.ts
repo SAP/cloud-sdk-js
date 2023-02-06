@@ -3,27 +3,43 @@ import http from 'http';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
+// eslint-disable-next-line import/named
 import axios from 'axios';
-import { Destination, ProxyConfiguration } from '@sap-cloud-sdk/connectivity';
-import {
-  timeout,
-  Middleware,
-  MiddlewareIn,
-  HttpMiddlewareContext
-} from '@sap-cloud-sdk/resilience';
+import { timeout, MiddlewareOptions } from '@sap-cloud-sdk/resilience';
 import * as jwt123 from 'jsonwebtoken';
 import {
   circuitBreakers,
   circuitBreakerHttp
 } from '@sap-cloud-sdk/resilience/internal';
+import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
 import {
+  Destination,
+  ProxyConfiguration,
+  HttpDestination
+} from '../../connectivity/src';
+import {
+  basicMultipleResponse,
   connectivityProxyConfigMock,
   defaultDestination,
-  privateKey
+  destinationBindingClientSecretMock,
+  mockClientCredentialsGrantCall,
+  mockInstanceDestinationsCall,
+  mockServiceBindings,
+  mockSubaccountDestinationsCall,
+  mockUserTokenGrantCall,
+  privateKey,
+  providerServiceToken,
+  providerXsuaaUrl,
+  subscriberServiceToken,
+  subscriberUserJwt,
+  subscriberXsuaaUrl,
+  xsuaaBindingMock
 } from '../../../test-resources/test/test-util';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
+  HttpMiddleware,
+  HttpMiddlewareContext,
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
   HttpResponse
@@ -43,7 +59,7 @@ import {
 } from './http-client';
 
 describe('generic http client', () => {
-  const httpsDestination: Destination = {
+  const httpsDestination: HttpDestination = {
     name: 'httpsDestination',
     url: 'https://example.com',
     authentication: 'BasicAuthentication',
@@ -54,7 +70,7 @@ describe('generic http client', () => {
 
   const proxyAuthorization = 'youmaypass';
 
-  const proxyDestination: Destination = {
+  const proxyDestination: HttpDestination = {
     name: 'proxyDestination',
     url: 'http://example.com',
     authentication: 'BasicAuthentication',
@@ -218,19 +234,23 @@ describe('generic http client', () => {
     function buildMiddleware(
       appendedText: string,
       skipNext = false
-    ): Middleware<HttpResponse, HttpMiddlewareContext> {
+    ): HttpMiddleware {
       // We want to add a name to the function for debugging which is not easy to set.
       // Doing the dummy object the name of the key is taken as function name.
       const dummy = {
         [appendedText](
-          options: MiddlewareIn<HttpResponse, HttpMiddlewareContext>
+          options: MiddlewareOptions<
+            HttpRequestConfig,
+            HttpResponse,
+            HttpMiddlewareContext
+          >
         ) {
           if (skipNext) {
             options.skipNext();
           }
 
-          const wrapped = () =>
-            options.fn().then(res => {
+          const wrapped = args =>
+            options.fn(args).then(res => {
               res.data = res.data + appendedText;
               return res;
             });
@@ -305,30 +325,103 @@ describe('generic http client', () => {
       expect(response.data).toEqual('Initial value.Middleware One.');
     });
 
+    function mockJwtValidationAndServiceToken() {
+      const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
+      nock(jku).get('/').reply(200, responseWithPublicKey());
+      mockUserTokenGrantCall(
+        providerXsuaaUrl,
+        1,
+        subscriberUserJwt,
+        subscriberUserJwt,
+        xsuaaBindingMock.credentials
+      );
+      mockClientCredentialsGrantCall(
+        providerXsuaaUrl,
+        { access_token: providerServiceToken },
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+      mockClientCredentialsGrantCall(
+        subscriberXsuaaUrl,
+        { access_token: subscriberServiceToken },
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+    }
+
+    function mockDestinationService() {
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        basicMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+    }
+
+    it('passes the context properties to the middleware', async () => {
+      const showContextMiddleware: HttpMiddleware =
+        (
+          opt: MiddlewareOptions<
+            HttpRequestConfig,
+            HttpResponse,
+            HttpMiddlewareContext
+          >
+        ) =>
+        () =>
+          ({ data: opt.context } as any);
+
+      mockServiceBindings();
+      // Inside connectivity package we can use jest to mock jwtVerify and tokenAccessor
+      // Between modules this is not possible and done via HTTP mocks instead
+      mockJwtValidationAndServiceToken();
+      mockDestinationService();
+
+      const response = await executeHttpRequest(
+        {
+          destinationName: 'FINAL-DESTINATION',
+          jwt: subscriberUserJwt,
+          iasToXsuaaTokenExchange: false
+        },
+        {
+          middleware: [showContextMiddleware],
+          method: 'get'
+        }
+      );
+      delete process.env['VCAP_SERVICES'];
+      nock.cleanAll();
+      jest.clearAllMocks();
+
+      expect(response.data).toEqual({
+        destinationName: 'FINAL-DESTINATION',
+        jwt: subscriberUserJwt,
+        tenantId: 'subscriber',
+        uri: 'https://my.system.example.com'
+      });
+    });
+
     it('attaches multiple middleware in the expected order', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
-      const myMiddlewareTwo = buildMiddleware('Middleware Two.');
-      const myMiddlewareOne = buildMiddleware('Middleware One.');
+      const myMiddlewareA = buildMiddleware('Middleware A.');
+      const myMiddlewareB = buildMiddleware('Middleware B.');
 
       const response = await executeHttpRequest(httpsDestination, {
-        middleware: [myMiddlewareOne, myMiddlewareTwo],
+        middleware: [myMiddlewareB, myMiddlewareA],
         method: 'get'
       });
-      expect(response.data).toEqual(
-        'Initial value.Middleware One.Middleware Two.'
-      );
+      expect(response.data).toEqual('Initial value.Middleware A.Middleware B.');
     });
 
     it('stops middleware chain if skipNext is set to true.', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
-      const myMiddlewareTwo = buildMiddleware('Middleware Two.');
-      const myMiddlewareOne = buildMiddleware('Middleware One.', true);
+      const myMiddlewareB = buildMiddleware('Middleware B.');
+      const myMiddlewareA = buildMiddleware('Middleware A.', true);
 
       const response = await executeHttpRequest(httpsDestination, {
-        middleware: [myMiddlewareOne, myMiddlewareTwo],
+        middleware: [myMiddlewareB, myMiddlewareA],
         method: 'get'
       });
-      expect(response.data).toEqual('Initial value.Middleware One.');
+      expect(response.data).toEqual('Initial value.Middleware A.');
     });
 
     it('returns a tenantid from jwt containing either zid or iss', () => {
@@ -402,6 +495,42 @@ describe('generic http client', () => {
           response.statusCode === 200 ? resolve(200) : reject()
         )
       );
+    });
+
+    it('is possible to change config properties with a middleware', async () => {
+      const changeUrlMiddleware: HttpMiddleware = function (options) {
+        return requestConfig =>
+          options.fn({ ...requestConfig, url: 'test-works' });
+      };
+
+      const mock = nock('http://example.com', {})
+        .get(/test-works/)
+        .reply(200)
+        .get(/test-fail/)
+        .reply(500);
+
+      await expect(
+        executeHttpRequest(
+          { url: 'http://example.com' },
+          {
+            url: 'test-fail',
+            method: 'get'
+          }
+        )
+      ).rejects.toThrow();
+
+      await expect(
+        executeHttpRequest(
+          { url: 'http://example.com' },
+          {
+            url: 'test-fail',
+            method: 'get',
+            middleware: [changeUrlMiddleware, circuitBreakerHttp()]
+          }
+        )
+      ).resolves.not.toThrow();
+
+      expect(mock.isDone()).toBe(true);
     });
 
     it('takes a generic HTTP request and executes it', async () => {
@@ -654,7 +783,7 @@ sap-client:001`);
 
     it('throws an error if the destination URL uses neither "http" nor "https" as protocol (e.g. RFC)', async () => {
       jest.spyOn(axios, 'request').mockResolvedValue({});
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'rfc://example.com',
         authentication: 'NoAuthentication'
       };
@@ -665,7 +794,7 @@ sap-client:001`);
     });
 
     it('includes the default axios config in request', async () => {
-      const destination: Destination = { url: 'https://destinationUrl' };
+      const destination: HttpDestination = { url: 'https://destinationUrl' };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await executeHttpRequest(destination, { method: 'get' });
       expect(requestSpy).toHaveBeenCalledWith(
@@ -692,7 +821,7 @@ sap-client:001`);
     }, 60000);
 
     it('overwrites the default axios config with destination related request config', async () => {
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'https://destinationUrl',
         proxyConfiguration: {
           host: 'dummy',
@@ -715,7 +844,7 @@ sap-client:001`);
     });
 
     it('overwrites destination related request config with the explicit one', async () => {
-      const destination: Destination = { url: 'https://destinationUrl' };
+      const destination: HttpDestination = { url: 'https://destinationUrl' };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await expect(
         executeHttpRequest(
@@ -734,7 +863,7 @@ sap-client:001`);
 
     it('rejectUnauthorized property of HttpsAgent should be set to true when isTrustingAllCertificates is false', async () => {
       jest.spyOn(axios, 'request').mockResolvedValue({});
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'https://example.com',
         isTrustingAllCertificates: true
       };
@@ -752,7 +881,7 @@ sap-client:001`);
 
     it('rejectUnauthorized property of HttpsAgent should be set to false when isTrustingAllCertificates is true', async () => {
       jest.spyOn(axios, 'request').mockResolvedValue({});
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'https://example.com',
         isTrustingAllCertificates: false
       };
@@ -771,7 +900,7 @@ sap-client:001`);
       jest.spyOn(axios, 'request').mockResolvedValue({});
 
       const expectedConfigEntry = { httpAgent: expect.anything() };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'http://example.com',
         authentication: 'NoAuthentication'
       };
@@ -785,7 +914,7 @@ sap-client:001`);
     it('request config contains httpsAgent when destination URL uses "https" as protocol', async () => {
       jest.spyOn(axios, 'request').mockResolvedValue({});
       const expectedConfigEntry = { httpsAgent: expect.anything() };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'https://example.com',
         authentication: 'NoAuthentication'
       };

@@ -118,4 +118,3 @@ export declare class TestEntityCircularLinkChildApi<
     >;
   };
 }
-//# sourceMappingURL=TestEntityCircularLinkChildApi.d.ts.map

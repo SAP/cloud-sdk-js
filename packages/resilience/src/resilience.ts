@@ -1,7 +1,7 @@
 import { timeout } from './timeout';
 import { retry } from './retry';
 import { circuitBreakerHttp } from './circuit-breaker';
-import { Context } from './middleware';
+import { MiddlewareContext } from './middleware';
 import type { Middleware } from './middleware';
 /**
  * Interface for Resilience Options.
@@ -39,25 +39,28 @@ const defaultResilienceOptions: ResilienceOptions = {
  * @param options - Resilience Options.
  * @returns Array of middleware functions.
  */
-export function resilience<ReturnT, ContextT extends Context>(
-  options?: ResilienceOptions
-): Middleware<ReturnT, ContextT>[] {
+export function resilience<
+  ArgumentT,
+  ReturnT,
+  ContextT extends MiddlewareContext<ArgumentT>
+>(options?: ResilienceOptions): Middleware<ArgumentT, ReturnT, ContextT>[] {
   const resilienceOption = { ...defaultResilienceOptions, ...options };
-  const middlewares: Middleware<ReturnT, ContextT>[] = [];
-  if (typeof resilienceOption.timeout === 'number') {
-    middlewares.push(timeout(resilienceOption.timeout));
-  } else if (resilienceOption.timeout) {
-    middlewares.push(timeout());
+  const middlewares: Middleware<ArgumentT, ReturnT, ContextT>[] = [];
+  if (typeof resilienceOption.retry === 'number') {
+    middlewares.push(retry(resilienceOption.retry));
+  } else if (resilienceOption.retry) {
+    middlewares.push(retry());
   }
 
   if (resilienceOption.circuitBreaker) {
     middlewares.push(circuitBreakerHttp());
   }
 
-  if (typeof resilienceOption.retry === 'number') {
-    middlewares.push(retry(resilienceOption.retry));
-  } else if (resilienceOption.retry) {
-    middlewares.push(retry());
+  if (typeof resilienceOption.timeout === 'number') {
+    middlewares.push(timeout(resilienceOption.timeout));
+  } else if (resilienceOption.timeout) {
+    middlewares.push(timeout());
   }
+
   return middlewares;
 }

@@ -75,4 +75,3 @@ export declare class TestEntityWithMultipleKeysRequestBuilder<
     entity: TestEntityWithMultipleKeys<T>
   ): DeleteRequestBuilder<TestEntityWithMultipleKeys<T>, T>;
 }
-//# sourceMappingURL=TestEntityWithMultipleKeysRequestBuilder.d.ts.map

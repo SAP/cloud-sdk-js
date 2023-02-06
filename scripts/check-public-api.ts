@@ -10,7 +10,7 @@ import {
   readCompilerOptions,
   transpileDirectory
 } from '@sap-cloud-sdk/generator-common/internal';
-import {defaultPrettierConfig} from "@sap-cloud-sdk/generator-common/dist/file-writer";
+import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file-writer';
 
 const { readFile, lstat, readdir } = promises;
 
@@ -118,15 +118,16 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     const { pathToSource, pathCompiled } = paths(pathToPackage);
     mockFileSystem(pathToPackage);
     const opts = await getCompilerOptions(pathToPackage);
-    console.log(JSON.stringify(opts))
-    await transpileDirectory(
-      pathToSource,
-        {
-          compilerOptions: opts,
-          //We have things in our sources like  #!/usr/bin/env node in CLI .js files which is not working with parser of prettier.
-          createFileOptions:{overwrite:true,prettierOptions:defaultPrettierConfig,usePrettier:false}
-        }
-    );
+    console.log(JSON.stringify(opts));
+    await transpileDirectory(pathToSource, {
+      compilerOptions: opts,
+      // We have things in our sources like  `#!/usr/bin/env node` in CLI `.js` files which is not working with parser of prettier.
+      createFileOptions: {
+        overwrite: true,
+        prettierOptions: defaultPrettierConfig,
+        usePrettier: false
+      }
+    });
     await checkBarrelRecursive(pathToSource);
 
     const indexFilePath = join(pathToSource, 'index.ts');
@@ -302,7 +303,6 @@ export async function exportAllInBarrel(
         'internal.ts',
         'index.ts',
         'cli.ts',
-        'generator-cli.ts',
         '**/*.md'
       ],
       cwd

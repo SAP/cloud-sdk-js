@@ -41,4 +41,3 @@ export interface Casetest_1Type<
 > {
   keyPropertyString: DeserializedType<T, 'Edm.String'>;
 }
-//# sourceMappingURL=Casetest_1.d.ts.map

@@ -44,4 +44,3 @@ export interface AirlinesType<T extends DeSerializers = DefaultDeSerializers> {
   airlineCode: DeserializedType<T, 'Edm.String'>;
   name: DeserializedType<T, 'Edm.String'>;
 }
-//# sourceMappingURL=Airlines.d.ts.map

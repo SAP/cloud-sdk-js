@@ -21,7 +21,7 @@ export interface Constructable<EntityT extends EntityBase> {
    */
   _entityName: string;
   /**
-   * Service path as specified in the `service-mapping.json`, e.g., `/sap/opu/odata/sap/API_COMMON_SRV`.
+   * Service path as specified in the `options-per-service.json`, e.g., `/sap/opu/odata/sap/API_COMMON_SRV`.
    */
   _defaultServicePath: string;
   /**

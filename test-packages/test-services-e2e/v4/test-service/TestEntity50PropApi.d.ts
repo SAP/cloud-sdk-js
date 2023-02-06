@@ -1550,4 +1550,3 @@ export declare class TestEntity50PropApi<
     >;
   };
 }
-//# sourceMappingURL=TestEntity50PropApi.d.ts.map

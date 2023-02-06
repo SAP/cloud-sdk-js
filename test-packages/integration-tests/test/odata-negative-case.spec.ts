@@ -9,7 +9,7 @@ import {
 // TODO use fs-mock
 describe('odata negative tests', () => {
   const pathToGenerator = resolve(
-    '../../node_modules/@sap-cloud-sdk/generator/dist/generator-cli.js'
+    '../../node_modules/@sap-cloud-sdk/generator/dist/cli.js'
   );
   const testDir = join(testOutputRootDir, 'odata-negative');
 
@@ -65,7 +65,8 @@ describe('odata negative tests', () => {
             'faulty-typescript.ts'
           ),
           '--clearOutputDir',
-          '--transpile'
+          '--transpile',
+          '--skipValidation'
         ],
         { cwd: __dirname }
       )

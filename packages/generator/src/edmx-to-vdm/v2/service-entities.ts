@@ -10,9 +10,10 @@ import { generateEntitiesV2 } from './entity';
  */
 export function getServiceEntitiesV2(
   serviceMetadata: ServiceMetadata,
-  serviceName: string
+  serviceName: string,
+  skipValidation: boolean
 ): VdmServiceEntities {
-  const formatter = new ServiceNameFormatter();
+  const formatter = new ServiceNameFormatter(serviceName, { skipValidation });
 
   const complexTypes = generateComplexTypesV2(serviceMetadata, formatter);
   const entities = generateEntitiesV2(serviceMetadata, complexTypes, formatter);

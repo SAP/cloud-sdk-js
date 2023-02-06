@@ -10,4 +10,3 @@ export * from './tag-space-api';
 export * from './default-api';
 export * from './extension-api';
 export * from './schema';
-//# sourceMappingURL=index.d.ts.map

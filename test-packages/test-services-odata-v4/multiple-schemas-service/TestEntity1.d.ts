@@ -61,4 +61,3 @@ export interface TestEntity1Type<
   enumProperty?: TestEnumType1 | null;
   complexTypeProperty?: TestComplexType1<T> | null;
 }
-//# sourceMappingURL=TestEntity1.d.ts.map

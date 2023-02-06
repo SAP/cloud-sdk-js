@@ -78,4 +78,3 @@ export interface TestEntityLvl2MultiLinkType<
   keyProperty: DeserializedType<T, 'Edm.String'>;
   toMultiLink2: TestEntityLvl3MultiLinkType<T>[];
 }
-//# sourceMappingURL=TestEntityLvl2MultiLink.d.ts.map

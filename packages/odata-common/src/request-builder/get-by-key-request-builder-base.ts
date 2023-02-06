@@ -2,7 +2,7 @@ import {
   ErrorWithCause,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
-import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { v4 as uuid } from 'uuid';
 import { EntityBase } from '../entity-base';
 import { EntityDeserializer } from '../entity-deserializer';
@@ -95,7 +95,7 @@ export abstract class GetByKeyRequestBuilderBase<
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to the requested entity.
    */
-  async execute(destination: DestinationOrFetchOptions): Promise<EntityT> {
+  async execute(destination: HttpDestinationOrFetchOptions): Promise<EntityT> {
     return this.executeRaw(destination)
       .then(response =>
         this.entityDeserializer.deserializeEntity(

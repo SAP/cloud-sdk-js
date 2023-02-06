@@ -60,4 +60,3 @@ export declare class PhotosRequestBuilder<
    */
   delete(entity: Photos<T>): DeleteRequestBuilder<Photos<T>, T>;
 }
-//# sourceMappingURL=PhotosRequestBuilder.d.ts.map

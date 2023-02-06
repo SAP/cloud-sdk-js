@@ -5,7 +5,7 @@
     "lib": ["esnext"],
     "sourceMap": true,
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,

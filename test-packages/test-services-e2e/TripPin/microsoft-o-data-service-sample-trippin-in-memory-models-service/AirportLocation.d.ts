@@ -94,4 +94,3 @@ export declare namespace AirportLocation {
    */
   const _propertyMetadata: PropertyMetadata<AirportLocation>[];
 }
-//# sourceMappingURL=AirportLocation.d.ts.map

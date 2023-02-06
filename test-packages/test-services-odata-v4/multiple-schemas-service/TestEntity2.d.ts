@@ -47,4 +47,3 @@ export interface TestEntity2Type<
   keyPropertyString: DeserializedType<T, 'Edm.String'>;
   singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
 }
-//# sourceMappingURL=TestEntity2.d.ts.map

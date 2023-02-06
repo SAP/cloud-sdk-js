@@ -67,4 +67,3 @@ export declare class MultiSchemaTestEntityRequestBuilder<
     entity: MultiSchemaTestEntity<T>
   ): DeleteRequestBuilder<MultiSchemaTestEntity<T>, T>;
 }
-//# sourceMappingURL=MultiSchemaTestEntityRequestBuilder.d.ts.map

@@ -11,9 +11,10 @@ import { generateEnumTypesV4 } from './enum-type';
  */
 export function getServiceEntitiesV4(
   serviceMetadata: ServiceMetadata,
-  serviceName: string
+  serviceName: string,
+  skipValidation: boolean
 ): VdmServiceEntities {
-  const formatter = new ServiceNameFormatter();
+  const formatter = new ServiceNameFormatter(serviceName, { skipValidation });
 
   const enumTypes = generateEnumTypesV4(serviceMetadata, formatter);
   const complexTypes = generateComplexTypesV4(

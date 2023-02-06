@@ -72,4 +72,3 @@ export declare namespace TestLvl2NestedComplexType {
    */
   const _propertyMetadata: PropertyMetadata<TestLvl2NestedComplexType>[];
 }
-//# sourceMappingURL=TestLvl2NestedComplexType.d.ts.map

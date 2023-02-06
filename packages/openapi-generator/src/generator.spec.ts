@@ -124,7 +124,6 @@ describe('generator', () => {
         include: 'root/additionalFiles/*',
         readme: true,
         packageJson: true,
-        packageVersion: '1.2.3',
         clearOutputDir: true
       });
     }, 80000);
@@ -149,7 +148,7 @@ describe('generator', () => {
 
       const expectedFiles: string[] = [];
       ['default-api', 'entity-api', 'test-case-api'].forEach(file =>
-        ['js', 'd.ts.map', 'd.ts'].forEach(postfix =>
+        ['js', 'd.ts'].forEach(postfix =>
           expectedFiles.push(`${file}.${postfix}`)
         )
       );

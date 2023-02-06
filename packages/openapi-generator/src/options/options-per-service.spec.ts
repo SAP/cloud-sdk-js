@@ -10,7 +10,7 @@ jest.mock('path', () => {
 });
 
 import mock from 'mock-fs';
-import { ParsedGeneratorOptions } from './generator-options';
+import { ParsedGeneratorOptions } from './options';
 import {
   getOptionsPerService,
   getOriginalOptionsPerService,

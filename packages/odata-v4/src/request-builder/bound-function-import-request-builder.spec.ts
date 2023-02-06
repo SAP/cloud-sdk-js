@@ -1,4 +1,4 @@
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import {
   TestEntity,
   testService
@@ -10,7 +10,7 @@ describe('bound function import request builder', () => {
   const servicePath = TestEntity._defaultServicePath;
   const host = 'https://example.com';
 
-  const destination: Destination = {
+  const destination: HttpDestination = {
     url: host,
     username: 'username',
     password: 'password',

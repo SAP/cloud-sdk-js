@@ -145,4 +145,3 @@ export type WriteTestServiceRequestBuilder<
       CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
       number
     >;
-//# sourceMappingURL=BatchRequest.d.ts.map

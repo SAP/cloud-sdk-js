@@ -59,4 +59,3 @@ export declare class Casetest_1RequestBuilder<
    */
   delete(entity: Casetest_1<T>): DeleteRequestBuilder<Casetest_1<T>, T>;
 }
-//# sourceMappingURL=Casetest_1RequestBuilder.d.ts.map

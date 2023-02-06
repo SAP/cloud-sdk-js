@@ -5,13 +5,12 @@ import {
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import axios, { RawAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
-  Context,
   resilience,
-  HttpMiddlewareContext,
-  Middleware
+  Middleware,
+  MiddlewareContext
 } from '@sap-cloud-sdk/resilience';
 import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
@@ -21,17 +20,15 @@ import { buildAuthorizationHeaders } from '../authorization-header';
 import {
   DestinationConfiguration,
   DestinationJson,
-  getDestinationConfig,
   parseCertificate,
-  parseDestination,
-  validateDestinationConfig
+  parseDestination
 } from './destination';
+import { DestinationFetchOptions } from './destination-accessor-types';
+import { destinationServiceCache } from './destination-service-cache';
 import {
   Destination,
   DestinationCertificate
 } from './destination-service-types';
-import { destinationServiceCache } from './destination-service-cache';
-import { DestinationFetchOptions } from './destination-accessor-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -76,21 +73,6 @@ export function fetchSubaccountDestinations(
   return fetchDestinations(destinationServiceUri, jwt, 'subaccount', options);
 }
 
-function isParsable(
-  destinationResponse: DestinationConfiguration | DestinationJson
-): boolean {
-  const config = getDestinationConfig(destinationResponse);
-  try {
-    validateDestinationConfig(config);
-    return true;
-  } catch (err) {
-    logger.debug(
-      `Parsing of destination with name "${config.Name}" failed - skip this destination in parsing.`
-    );
-    return false;
-  }
-}
-
 async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
@@ -122,9 +104,9 @@ async function fetchDestinations(
     headers
   )
     .then(response => {
-      const destinations: Destination[] = response.data
-        .filter(isParsable)
-        .map(parsableDestination => parseDestination(parsableDestination));
+      const destinations: Destination[] = response.data.map(destination =>
+        parseDestination(destination)
+      );
 
       if (options?.useCache) {
         destinationServiceCache.cacheRetrievedDestinations(
@@ -318,13 +300,17 @@ function errorMessageFromResponse(
 
 function retryDestination(
   destinationName: string
-): Middleware<AxiosResponse<DestinationJson>, HttpMiddlewareContext> {
-  return options => () => {
+): Middleware<
+  RawAxiosRequestConfig,
+  AxiosResponse<DestinationJson>,
+  MiddlewareContext<RawAxiosRequestConfig>
+> {
+  return options => arg => {
     let retryCount = 1;
     return asyncRetry.default(
       async bail => {
         try {
-          const destination = await options.fn();
+          const destination = await options.fn(arg);
           if (retryCount < 3) {
             retryCount++;
             // this will throw if the destination does not contain valid auth headers and a second try is done to get a destination with valid tokens.
@@ -359,7 +345,7 @@ type DestinationCertificateJson = {
 };
 
 async function callCertificateEndpoint(
-  context: Context,
+  context: Omit<MiddlewareContext<RawAxiosRequestConfig>, 'fnArgument'>,
   headers: Record<string, any>
 ): Promise<AxiosResponse<DestinationCertificateJson>> {
   if (!context.uri.includes('Certificates')) {
@@ -373,7 +359,7 @@ async function callCertificateEndpoint(
 }
 
 async function callDestinationEndpoint(
-  context: Context,
+  context: Omit<MiddlewareContext<RawAxiosRequestConfig>, 'fnArgument'>,
   headers: Record<string, any>,
   options?: DestinationServiceOptions
 ): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
@@ -390,7 +376,7 @@ async function callDestinationEndpoint(
 }
 
 async function callDestinationService(
-  context: Context,
+  context: Omit<MiddlewareContext<RawAxiosRequestConfig>, 'fnArgument'>,
   headers: Record<string, any>,
   options?: DestinationServiceOptions
 ): Promise<
@@ -400,24 +386,25 @@ async function callDestinationService(
 > {
   const { destinationName, retry } = options || {};
 
-  const config: AxiosRequestConfig = {
+  const requestConfig: RawAxiosRequestConfig = {
     ...urlAndAgent(context.uri),
     proxy: false,
     method: 'get',
     headers
   };
 
-  const resilienceMiddleware =
-    destinationName && retry
-      ? [
-          ...resilience<AxiosResponse, HttpMiddlewareContext>(),
-          retryDestination(destinationName)
-        ]
-      : resilience<AxiosResponse, HttpMiddlewareContext>();
+  const resilienceMiddleware = resilience<
+    RawAxiosRequestConfig,
+    AxiosResponse<DestinationJson>,
+    MiddlewareContext<RawAxiosRequestConfig>
+  >();
+  if (destinationName && retry) {
+    resilienceMiddleware.unshift(retryDestination(destinationName));
+  }
 
-  return executeWithMiddleware(
-    resilienceMiddleware,
-    { requestConfig: config, ...context } as HttpMiddlewareContext,
-    () => axios.request(config)
-  );
+  return executeWithMiddleware(resilienceMiddleware, {
+    context,
+    fnArgument: requestConfig,
+    fn: config => axios.request(config)
+  });
 }

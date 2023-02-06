@@ -65,4 +65,3 @@ export declare class TestEntityMultiLinkRequestBuilder<
     entity: TestEntityMultiLink<T>
   ): DeleteRequestBuilder<TestEntityMultiLink<T>, T>;
 }
-//# sourceMappingURL=TestEntityMultiLinkRequestBuilder.d.ts.map

@@ -23,7 +23,14 @@ async function generateE2E() {
       'v4'
     ),
     outputDir: resolve('v4'),
-    transpile: true
+    transpile: true,
+    optionsPerService: resolve(
+      '..',
+      '..',
+      'test-resources',
+      'odata-service-specs-e2e',
+      'v4'
+    )
   });
 
   await generate({
@@ -36,7 +43,14 @@ async function generateE2E() {
       'TripPin'
     ),
     outputDir: resolve('TripPin'),
-    transpile: true
+    transpile: true,
+    optionsPerService: resolve(
+      '..',
+      '..',
+      'test-resources',
+      'odata-service-specs-e2e',
+      'TripPin'
+    )
   });
 }
 

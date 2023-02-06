@@ -85,4 +85,3 @@ export interface PeopleType<T extends DeSerializers = DefaultDeSerializers> {
   friends: PeopleType<T>[];
   photo?: PhotosType<T> | null;
 }
-//# sourceMappingURL=People.d.ts.map

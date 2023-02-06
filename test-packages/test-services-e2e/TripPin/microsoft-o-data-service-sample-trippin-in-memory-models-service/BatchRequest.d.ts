@@ -93,4 +93,3 @@ export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestB
       ResetDataSourceParameters<DeSerializersT>,
       undefined
     >;
-//# sourceMappingURL=BatchRequest.d.ts.map

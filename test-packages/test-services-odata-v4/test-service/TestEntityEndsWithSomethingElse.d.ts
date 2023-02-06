@@ -44,4 +44,3 @@ export interface TestEntityEndsWithSomethingElseType<
 > {
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }
-//# sourceMappingURL=TestEntityEndsWithSomethingElse.d.ts.map

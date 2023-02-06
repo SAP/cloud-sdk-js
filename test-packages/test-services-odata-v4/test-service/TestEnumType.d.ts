@@ -17,4 +17,3 @@ export declare enum TestEnumType {
    */
   Member2 = 'Member2'
 }
-//# sourceMappingURL=TestEnumType.d.ts.map

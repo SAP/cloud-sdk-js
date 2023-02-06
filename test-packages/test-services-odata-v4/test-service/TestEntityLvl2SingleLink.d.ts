@@ -69,4 +69,3 @@ export interface TestEntityLvl2SingleLinkType<
   int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }
-//# sourceMappingURL=TestEntityLvl2SingleLink.d.ts.map

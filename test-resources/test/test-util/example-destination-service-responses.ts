@@ -124,7 +124,7 @@ export const basicMultipleResponse: DestinationConfiguration[] = [
   {
     Name: 'FINAL-DESTINATION',
     Type: 'HTTP',
-    URL: 'https://my.system.com',
+    URL: 'https://my.system.example.com',
     Authentication: 'BasicAuthentication' as AuthenticationType,
     ProxyType: 'Internet',
     TrustAll: 'TRUE',

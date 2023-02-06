@@ -39,4 +39,3 @@ export declare class CaseTest<T extends DeSerializers = DefaultDeSerializers>
 export interface CaseTestType<T extends DeSerializers = DefaultDeSerializers> {
   keyPropertyString: DeserializedType<T, 'Edm.String'>;
 }
-//# sourceMappingURL=CaseTest.d.ts.map

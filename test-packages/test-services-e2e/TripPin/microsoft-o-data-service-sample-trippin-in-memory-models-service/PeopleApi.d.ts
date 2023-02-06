@@ -298,4 +298,3 @@ export declare class PeopleApi<
     >;
   };
 }
-//# sourceMappingURL=PeopleApi.d.ts.map

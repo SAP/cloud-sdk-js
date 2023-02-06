@@ -125,4 +125,3 @@ export interface BoundFunctionWithArgumentsWithMultipleKeysParameters<
 export interface BoundActionWithoutArgumentsWithMultipleKeysParameters<
   DeSerializersT extends DeSerializers
 > {}
-//# sourceMappingURL=TestEntityWithMultipleKeys.d.ts.map

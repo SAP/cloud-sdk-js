@@ -72,4 +72,3 @@ export declare namespace TestComplexBaseType {
    */
   const _propertyMetadata: PropertyMetadata<TestComplexBaseType>[];
 }
-//# sourceMappingURL=TestComplexBaseType.d.ts.map

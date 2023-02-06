@@ -1,3 +1,4 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from './service-name-formatter';
 
 describe('name-formatter', () => {
@@ -15,28 +16,36 @@ describe('name-formatter', () => {
     });
 
     it('entity', () => {
-      const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        entitySetNames: ['A_SomeEntity']
+      });
       expect(formatter.originalToEntityClassName('A_SomeEntity')).toBe(
         'SomeEntity'
       );
     });
 
     it('entity with ugly entity set name', () => {
-      const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        entitySetNames: ['A_SomeEntity']
+      });
       expect(
         formatter.originalToEntityClassName('A_SomeEntityCollection')
       ).toBe('SomeEntity');
     });
 
     it('entity with ugly entity set and entity type name', () => {
-      const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        entitySetNames: ['A_SomeEntity']
+      });
       expect(
         formatter.originalToEntityClassName('A_SomeEntityCollection')
       ).toBe('SomeEntity');
     });
 
     it('property', () => {
-      const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        entitySetNames: ['A_SomeEntity']
+      });
       expect(
         formatter.originalToInstancePropertyName('A_SomeEntity', 'SomeProperty')
       ).toBe('someProperty');
@@ -46,7 +55,9 @@ describe('name-formatter', () => {
     });
 
     it('nav property', () => {
-      const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        entitySetNames: ['A_SomeEntity']
+      });
       expect(
         formatter.originalToNavigationPropertyName(
           'A_SomeEntity',
@@ -59,19 +70,25 @@ describe('name-formatter', () => {
     });
 
     it('complex type', () => {
-      const formatter = new ServiceNameFormatter([], ['My_Struct'], []);
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        complexTypeNames: ['My_Struct']
+      });
       expect(formatter.originalToComplexTypeName('My_Struct')).toBe('MyStruct');
     });
 
     it('function import', () => {
-      const formatter = new ServiceNameFormatter([], [], ['FunctionImport']);
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        functionImportNames: ['FunctionImport']
+      });
       expect(formatter.originalToOperationName('FunctionImport')).toBe(
         'functionImport'
       );
     });
 
     it('function import parameters', () => {
-      const formatter = new ServiceNameFormatter([], [], ['FunctionImport']);
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        functionImportNames: ['FunctionImport']
+      });
       expect(
         formatter.originalToParameterName('FunctionImport', 'SomeParam')
       ).toBe('someParam');
@@ -92,12 +109,26 @@ describe('name-formatter', () => {
   });
 
   describe('enforces unique names for', () => {
-    it('entities', () => {
-      const formatter = new ServiceNameFormatter(
-        ['A_SomeEntity', 'SomeEntity'],
-        [],
-        []
+    it('logs if names are changes', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        skipValidation: true
+      });
+      const logger = createLogger('service-name-formatter');
+      const logSpy = jest.spyOn(logger, 'info');
+      formatter.originalToEntityClassName('SomeEntity');
+      formatter.originalToEntityClassName('SomeEntity');
+      expect(logSpy).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /A naming conflict appears for service MyServiceName/
+        )
       );
+    });
+
+    it('entities - skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        skipValidation: true,
+        entitySetNames: ['A_SomeEntity', 'SomeEntity']
+      });
       expect(formatter.originalToEntityClassName('A_SomeEntity')).toBe(
         'SomeEntity'
       );
@@ -106,8 +137,22 @@ describe('name-formatter', () => {
       );
     });
 
-    it('entities, function imports and complex types vs external imports', () => {
-      const formatter = new ServiceNameFormatter([], [], []);
+    it('entities - no skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        entitySetNames: ['A_SomeEntity', 'SomeEntity']
+      });
+      expect(formatter.originalToEntityClassName('A_SomeEntity')).toBe(
+        'SomeEntity'
+      );
+      expect(() =>
+        formatter.originalToEntityClassName('SomeEntity')
+      ).toThrowError(/A naming conflict appears for/);
+    });
+
+    it('entities, function imports and complex types vs external imports - skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        skipValidation: true
+      });
       expect(formatter.originalToEntityClassName('Time')).toBe('Time_1');
       expect(formatter.originalToComplexTypeName('BigNumber')).toBe(
         'BigNumber_1'
@@ -115,8 +160,24 @@ describe('name-formatter', () => {
       expect(formatter.originalToEntityClassName('Service')).toBe('Service_1');
     });
 
-    it('properties', () => {
-      const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
+    it('entities, function imports and complex types vs external imports - no skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName');
+      expect(() => formatter.originalToEntityClassName('Time')).toThrow(
+        /A naming conflict appears for/
+      );
+      expect(() => formatter.originalToComplexTypeName('BigNumber')).toThrow(
+        /A naming conflict appears for/
+      );
+      expect(() => formatter.originalToEntityClassName('Service')).toThrow(
+        /A naming conflict appears for/
+      );
+    });
+
+    it('properties - skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        skipValidation: true,
+        entitySetNames: ['A_SomeEntity']
+      });
       expect(
         formatter.originalToInstancePropertyName('A_SomeEntity', 'SomeProperty')
       ).toBe('someProperty');
@@ -140,8 +201,34 @@ describe('name-formatter', () => {
       ).toBe('SOME_PROPERTY_1');
     });
 
-    it('nav properties', () => {
-      const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
+    it('properties - no skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        entitySetNames: ['A_SomeEntity']
+      });
+
+      formatter.originalToInstancePropertyName('A_SomeEntity', 'SomeProperty');
+
+      expect(() =>
+        formatter.originalToInstancePropertyName('A_SomeEntity', 'someProperty')
+      ).toThrow(/A naming conflict appears for/);
+      expect(() =>
+        formatter.originalToInstancePropertyName(
+          'A_SomeEntity',
+          '_SomeProperty'
+        )
+      ).toThrow(/A naming conflict appears for/);
+
+      formatter.originalToStaticPropertyName('A_SomeEntity', 'SomeProperty');
+      expect(() =>
+        formatter.originalToStaticPropertyName('A_SomeEntity', 'someProperty')
+      ).toThrow(/A naming conflict appears for/);
+    });
+
+    it('nav properties - skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        skipValidation: true,
+        entitySetNames: ['A_SomeEntity']
+      });
       expect(
         formatter.originalToNavigationPropertyName(
           'A_SomeEntity',
@@ -162,24 +249,56 @@ describe('name-formatter', () => {
       ).toBe('TO_SOME_ENTITY_1');
     });
 
-    it('complex types', () => {
-      const formatter = new ServiceNameFormatter(
-        [],
-        ['My_Struct', 'MyStruct'],
-        []
+    it('nav properties - no skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        entitySetNames: ['A_SomeEntity']
+      });
+
+      formatter.originalToNavigationPropertyName(
+        'A_SomeEntity',
+        'to_SomeEntity'
       );
+
+      expect(() =>
+        formatter.originalToNavigationPropertyName(
+          'A_SomeEntity',
+          'toSomeEntity'
+        )
+      ).toThrow(/A naming conflict appears for/);
+
+      formatter.originalToStaticPropertyName('A_SomeEntity', 'to_SomeEntity');
+
+      expect(() =>
+        formatter.originalToStaticPropertyName('A_SomeEntity', 'toSomeEntity')
+      ).toThrow(/A naming conflict appears for/);
+    });
+
+    it('complex types - skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        skipValidation: true,
+        complexTypeNames: ['My_Struct', 'MyStruct']
+      });
       expect(formatter.originalToComplexTypeName('My_Struct')).toBe('MyStruct');
       expect(formatter.originalToComplexTypeName('MyStruct')).toBe(
         'MyStruct_1'
       );
     });
 
-    it('function imports', () => {
-      const formatter = new ServiceNameFormatter(
-        [],
-        [],
-        ['FunctionImport', 'functionImport']
+    it('complex types - no skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        complexTypeNames: ['My_Struct', 'MyStruct']
+      });
+      formatter.originalToComplexTypeName('My_Struct');
+      expect(() => formatter.originalToComplexTypeName('MyStruct')).toThrow(
+        /A naming conflict appears for/
       );
+    });
+
+    it('function imports - skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        skipValidation: true,
+        functionImportNames: ['FunctionImport', 'functionImport']
+      });
       expect(formatter.originalToOperationName('FunctionImport')).toBe(
         'functionImport'
       );
@@ -188,8 +307,21 @@ describe('name-formatter', () => {
       );
     });
 
-    it('function import parameters', () => {
-      const formatter = new ServiceNameFormatter([], [], ['FunctionImport']);
+    it('function imports - no skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        functionImportNames: ['FunctionImport', 'functionImport']
+      });
+      formatter.originalToOperationName('FunctionImport');
+      expect(() => formatter.originalToOperationName('functionImport')).toThrow(
+        /A naming conflict appears for/
+      );
+    });
+
+    it('function import parameters - skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        skipValidation: true,
+        functionImportNames: ['FunctionImport']
+      });
       expect(
         formatter.originalToParameterName('FunctionImport', 'SomeParam')
       ).toBe('someParam');
@@ -198,12 +330,22 @@ describe('name-formatter', () => {
       ).toBe('someParam_1');
     });
 
-    it('entities and interfaces', () => {
-      const formatter = new ServiceNameFormatter(
-        ['SomeEntity', 'SomeEntityType'],
-        [],
-        []
-      );
+    it('function import parameters - no skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        functionImportNames: ['FunctionImport']
+      });
+
+      formatter.originalToParameterName('FunctionImport', 'SomeParam');
+      expect(() =>
+        formatter.originalToParameterName('FunctionImport', 'someParam')
+      ).toThrow(/A naming conflict appears for/);
+    });
+
+    it('entities and interfaces - skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        skipValidation: true,
+        entitySetNames: ['SomeEntity', 'SomeEntityType']
+      });
       // SomeEntityType interface is created implicitly after the line below
       expect(formatter.originalToEntityClassName('SomeEntity')).toBe(
         'SomeEntity'
@@ -212,11 +354,25 @@ describe('name-formatter', () => {
         'SomeEntityType_1'
       );
     });
+
+    it('entities and interfaces - no skip validation', () => {
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        entitySetNames: ['SomeEntity', 'SomeEntityType']
+      });
+      // SomeEntityType interface is created implicitly after the line below
+      formatter.originalToEntityClassName('SomeEntity');
+
+      expect(() =>
+        formatter.originalToEntityClassName('SomeEntityType')
+      ).toThrow(/A naming conflict appears for/);
+    });
   });
 
   describe('updates the cache to avoid clashes in the future', () => {
     function getFreshNameFormatter(): ServiceNameFormatter {
-      return new ServiceNameFormatter([], [], ['FunctionImport']);
+      return new ServiceNameFormatter('MyServiceName', {
+        functionImportNames: ['FunctionImport']
+      });
     }
 
     it('should add class and classType to service wide names cache.', () => {
@@ -228,7 +384,9 @@ describe('name-formatter', () => {
     });
 
     it('should add the function import parameter to the parameter names cache.', () => {
-      const formatter = new ServiceNameFormatter([], [], ['FunctionImport']);
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        functionImportNames: ['FunctionImport']
+      });
       formatter.originalToParameterName('FunctionImport', 'SomeParam');
       expect(
         formatter['parameterNameGenerators']['FunctionImport'][
@@ -238,7 +396,9 @@ describe('name-formatter', () => {
     });
 
     it('should add the navigational parameter to the instance property names cache.', () => {
-      const formatter = new ServiceNameFormatter(['A_SomeEntity'], [], []);
+      const formatter = new ServiceNameFormatter('MyServiceName', {
+        entitySetNames: ['A_SomeEntity']
+      });
       expect(
         formatter.originalToNavigationPropertyName(
           'A_SomeEntity',

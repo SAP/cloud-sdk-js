@@ -59,4 +59,3 @@ export declare class TestEntity1RequestBuilder<
    */
   delete(entity: TestEntity1<T>): DeleteRequestBuilder<TestEntity1<T>, T>;
 }
-//# sourceMappingURL=TestEntity1RequestBuilder.d.ts.map

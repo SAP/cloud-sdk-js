@@ -209,7 +209,7 @@ describe('entity', () => {
 const defaultNamespace = 'ns';
 
 export function getFormatter() {
-  return new ServiceNameFormatter();
+  return new ServiceNameFormatter('MyServiceName');
 }
 
 function createTestEntitySet(

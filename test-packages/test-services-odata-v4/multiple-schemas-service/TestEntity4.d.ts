@@ -47,4 +47,3 @@ export interface TestEntity4Type<
   keyPropertyString: DeserializedType<T, 'Edm.String'>;
   booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
 }
-//# sourceMappingURL=TestEntity4.d.ts.map

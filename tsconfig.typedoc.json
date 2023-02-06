@@ -60,7 +60,7 @@
     }
   ],
   "typedocOptions": {
-    "out": "docs/api/2.11.0",
+    "out": "knowledge-base/api-reference",
     "entryPoints": [
       "packages/util/src/index.ts",
       "packages/resilience/src/index.ts",
@@ -76,7 +76,7 @@
       "packages/test-util/src/index.ts",
       "packages/temporal-de-serializers/src/index.ts"
     ],
-    "name": "SAP Cloud SDK for JavaScript / TypeScript",
+    "name": "SAP Cloud SDK for JavaScript",
     "readme": "DOCUMENTATION.md",
     "theme": "default",
     "includeVersion": true,

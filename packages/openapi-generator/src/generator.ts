@@ -17,7 +17,8 @@ import {
   packageDescription,
   createFile,
   CreateFileOptions,
-  readPrettierConfig
+  readPrettierConfig,
+  parseOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 import { glob } from 'glob';
 import { apiFile } from './file-serializer/api-file';
@@ -29,11 +30,6 @@ import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser/document';
 import { convertOpenApiSpec } from './document-converter';
 import {
-  parseGeneratorOptions,
-  ParsedGeneratorOptions,
-  GeneratorOptions
-} from './options/generator-options';
-import {
   ServiceOptions,
   OptionsPerService,
   getOptionsPerService,
@@ -41,7 +37,12 @@ import {
   getRelPathWithPosixSeparator
 } from './options/options-per-service';
 import { sdkMetadata } from './sdk-metadata';
-import { tsconfigJson } from './options';
+import {
+  cliOptions,
+  GeneratorOptions,
+  ParsedGeneratorOptions,
+  tsconfigJson
+} from './options';
 
 const { mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -51,8 +52,17 @@ const logger = createLogger('openapi-generator');
  * Generates models and API files.
  * @param options - Options to configure generation.
  */
-export async function generate(options: GeneratorOptions): Promise<void> {
-  return generateWithParsedOptions(parseGeneratorOptions(options));
+export async function generate(
+  options: GeneratorOptions & { config?: string }
+): Promise<void> {
+  const parsedOptions = parseOptions(cliOptions, options);
+  if (parsedOptions.verbose) {
+    setLogLevel('verbose', logger);
+  }
+
+  logger.verbose(`Parsed Options: ${JSON.stringify(options, null, 2)}`);
+
+  return generateWithParsedOptions(parsedOptions);
 }
 
 /**

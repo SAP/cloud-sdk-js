@@ -67,4 +67,3 @@ export declare class TestEntityLvl2SingleLinkRequestBuilder<
     entity: TestEntityLvl2SingleLink<T>
   ): DeleteRequestBuilder<TestEntityLvl2SingleLink<T>, T>;
 }
-//# sourceMappingURL=TestEntityLvl2SingleLinkRequestBuilder.d.ts.map

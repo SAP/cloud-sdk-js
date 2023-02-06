@@ -1,14 +1,9 @@
+import { createLogger, mergeIgnoreCase } from '@sap-cloud-sdk/util';
 import {
-  createLogger,
-  mergeIgnoreCase,
-  VALUE_IS_UNDEFINED
-} from '@sap-cloud-sdk/util';
-import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
-import type {
-  HttpResponse,
-  ParameterEncoder
+  encodeTypedClientRequest,
+  HttpMiddleware
 } from '@sap-cloud-sdk/http-client/internal';
-import { Middleware, HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
+import type { ParameterEncoder } from '@sap-cloud-sdk/http-client/internal';
 
 /**
  * Set of possible request methods.
@@ -39,7 +34,7 @@ export abstract class ODataRequestConfig {
   private _customRequestConfiguration: Record<string, string> = {};
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
-  private _middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[] = [];
+  private _middlewares: HttpMiddleware[] = [];
 
   /**
    * Creates an instance of ODataRequest.
@@ -52,19 +47,14 @@ export abstract class ODataRequestConfig {
     readonly defaultServicePath: string,
     defaultHeaders?: Record<string, any>
   ) {
-    if (defaultServicePath === VALUE_IS_UNDEFINED) {
-      logger.warn('The service path is undefined in "_defaultServicePath".');
-    }
     this.defaultHeaders = mergeIgnoreCase(this.defaultHeaders, defaultHeaders);
   }
 
-  set middlewares(
-    middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[]
-  ) {
+  set middlewares(middlewares: HttpMiddleware[]) {
     this._middlewares = middlewares;
   }
 
-  get middlewares(): Middleware<HttpResponse, HttpMiddlewareContext>[] {
+  get middlewares(): HttpMiddleware[] {
     return this._middlewares;
   }
 

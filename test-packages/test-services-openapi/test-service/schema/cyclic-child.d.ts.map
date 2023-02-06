@@ -1,1 +1,0 @@
-{"version":3,"file":"cyclic-child.d.ts","sourceRoot":"","sources":["cyclic-child.ts"],"names":[],"mappings":"AAKA,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,iBAAiB,CAAC;AACpD;;GAEG;AACH,MAAM,MAAM,WAAW,GACnB;IACE,MAAM,CAAC,EAAE,YAAY,CAAC;CACvB,GACD,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,CAAC"}

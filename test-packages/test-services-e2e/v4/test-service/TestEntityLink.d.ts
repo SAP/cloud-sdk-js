@@ -55,4 +55,3 @@ export interface TestEntityLinkType<
   keyToTestEntity: DeserializedType<T, 'Edm.Int32'>;
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
 }
-//# sourceMappingURL=TestEntityLink.d.ts.map

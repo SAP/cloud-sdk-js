@@ -20,4 +20,3 @@ export declare const ExtensionApi: {
    */
   nicePostFunction: () => OpenApiRequestBuilder<any>;
 };
-//# sourceMappingURL=extension-api.d.ts.map

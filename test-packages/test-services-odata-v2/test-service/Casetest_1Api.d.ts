@@ -96,4 +96,3 @@ export declare class Casetest_1Api<
     >;
   };
 }
-//# sourceMappingURL=Casetest_1Api.d.ts.map

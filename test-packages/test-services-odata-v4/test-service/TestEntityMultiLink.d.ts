@@ -87,4 +87,3 @@ export interface TestEntityMultiLinkType<
   toMultiLink1: TestEntityLvl2MultiLinkType<T>[];
   toSingleLink?: TestEntityLvl2SingleLinkType<T> | null;
 }
-//# sourceMappingURL=TestEntityMultiLink.d.ts.map

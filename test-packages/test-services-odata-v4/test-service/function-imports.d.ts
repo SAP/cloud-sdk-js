@@ -290,4 +290,3 @@ export declare const functionImports: {
   testFunctionImportMultipleParams: typeof testFunctionImportMultipleParams;
   testFunctionImportWithDifferentName: typeof testFunctionImportWithDifferentName;
 };
-//# sourceMappingURL=function-imports.d.ts.map

@@ -59,4 +59,3 @@ export declare class PeopleRequestBuilder<
    */
   delete(entity: People<T>): DeleteRequestBuilder<People<T>, T>;
 }
-//# sourceMappingURL=PeopleRequestBuilder.d.ts.map

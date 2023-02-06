@@ -129,4 +129,3 @@ export declare class TestEntity2Api<
     >;
   };
 }
-//# sourceMappingURL=TestEntity2Api.d.ts.map

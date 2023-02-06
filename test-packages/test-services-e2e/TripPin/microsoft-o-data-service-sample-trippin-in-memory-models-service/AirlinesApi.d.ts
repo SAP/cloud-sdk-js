@@ -126,4 +126,3 @@ export declare class AirlinesApi<
     >;
   };
 }
-//# sourceMappingURL=AirlinesApi.d.ts.map

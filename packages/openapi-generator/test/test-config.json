@@ -1,0 +1,5 @@
+{
+  "input": "some-repository",
+  "outputDir": "some-output",
+  "include": "**/test-config.json"
+}

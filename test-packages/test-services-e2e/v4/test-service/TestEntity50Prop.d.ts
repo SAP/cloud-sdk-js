@@ -408,4 +408,3 @@ export interface TestEntity50PropType<
     'Edm.DateTimeOffset'
   > | null;
 }
-//# sourceMappingURL=TestEntity50Prop.d.ts.map

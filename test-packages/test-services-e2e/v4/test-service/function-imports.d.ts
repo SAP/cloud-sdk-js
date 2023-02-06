@@ -195,4 +195,3 @@ export declare const functionImports: {
   returnInt: typeof returnInt;
   returnSapCloudSdk: typeof returnSapCloudSdk;
 };
-//# sourceMappingURL=function-imports.d.ts.map

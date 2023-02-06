@@ -1,7 +1,7 @@
 import { existsSync, promises } from 'fs';
 import { parse, posix, relative, sep } from 'path';
 import { unique, UniqueNameGenerator } from '@sap-cloud-sdk/util';
-import { ParsedGeneratorOptions } from './generator-options';
+import { ParsedGeneratorOptions } from './options';
 
 const { readFile } = promises;
 
@@ -52,8 +52,8 @@ export async function getOriginalOptionsPerService(
 
 /**
  * Get the options per service for given service specifications.
- * If optionsPerServicePath is not given default values are used for the services.
- * If optionsPerServicePath is given existing values for the services are.
+ * If optionsPerServicePath is not given, default values are used for the services.
+ * If optionsPerServicePath is given, existing values for the services are used.
  * @param inputPaths - Service spec file paths.
  * @param options - Generator options.
  * @returns The parsed options per service.

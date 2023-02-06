@@ -15,7 +15,7 @@ function openFile(filePath) {
     return (0, fs_1.readFileSync)(filePath, { encoding: 'utf8' });
 }
 function getChangelog(v) {
-    if (v === void 0) { v = get_package_version_1.getPackageVersion; }
+    if (v === void 0) { v = (0, get_package_version_1.getPackageVersion)(); }
     var changelog = openFile('CHANGELOG.md');
     var _a = changelog.split("".concat(unixEOL, "# ").concat(v)), olderLogs = _a[1];
     var logs = olderLogs.split("".concat(unixEOL, "# "))[0];
@@ -34,7 +34,10 @@ exports.getChangelog = getChangelog;
 exports.__esModule = true;
 exports.getPackageVersion = void 0;
 var fs_1 = __nccwpck_require__(147);
-var getPackageVersion = function (pathToRootPackageJson) { return JSON.parse((0, fs_1.readFileSync)(pathToRootPackageJson || 'package.json', 'utf8')).version; };
+var getPackageVersion = function (pathToRootPackageJson) {
+    return JSON.parse((0, fs_1.readFileSync)(pathToRootPackageJson || 'package.json', 'utf8'))
+        .version;
+};
 exports.getPackageVersion = getPackageVersion;
 
 

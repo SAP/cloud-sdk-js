@@ -1,11 +1,9 @@
-import { join, posix, sep } from 'path';
+import { join, posix, resolve, sep } from 'path';
 import mock from 'mock-fs';
-import { createLogger } from '@sap-cloud-sdk/util';
-import { generateWithParsedOptions } from '../generator';
-import {
-  parseGeneratorOptions,
-  parseOptionsFromConfig
-} from './generator-options';
+import { parseOptions } from '@sap-cloud-sdk/generator-common/dist/options-parser';
+import { parseCmdArgs } from '../cli-parser';
+import { cliOptions } from './options';
+
 describe('parseGeneratorOptions', () => {
   beforeEach(() => {
     mock({
@@ -17,19 +15,22 @@ describe('parseGeneratorOptions', () => {
 
   afterEach(() => {
     mock.restore();
+    jest.clearAllMocks();
   });
 
-  const options = {
+  const spyError = jest.spyOn(console, 'error');
+
+  const optionsDefaultValues = {
     transpile: false,
-    include: undefined,
+    include: [],
     clearOutputDir: false,
     skipValidation: false,
     tsconfig: undefined,
     packageJson: false,
     optionsPerService: undefined,
-    packageVersion: '1.0.0',
     readme: false,
     metadata: false,
+    prettierConfig: undefined,
     verbose: false,
     overwrite: false,
     config: undefined
@@ -37,20 +38,20 @@ describe('parseGeneratorOptions', () => {
 
   it('gets default options', () => {
     expect(
-      parseGeneratorOptions({
+      parseOptions(cliOptions, {
         input: 'inputDir',
         outputDir: 'outputDir'
       })
     ).toEqual({
       input: join(process.cwd(), 'inputDir').split(sep).join(posix.sep),
       outputDir: join(process.cwd(), 'outputDir'),
-      ...options
+      ...optionsDefaultValues
     });
   });
 
   it('parses per service config file for a non-existent file path', () => {
     expect(
-      parseGeneratorOptions({
+      parseOptions(cliOptions, {
         input: 'inputDir',
         outputDir: 'outputDir',
         optionsPerService: 'non-existent-directory/config.json'
@@ -65,7 +66,7 @@ describe('parseGeneratorOptions', () => {
 
   it('parses per service config file for existent file path', () => {
     expect(
-      parseGeneratorOptions({
+      parseOptions(cliOptions, {
         input: 'inputDir',
         outputDir: 'outputDir',
         optionsPerService: 'existent-directory/existent-file'
@@ -77,7 +78,7 @@ describe('parseGeneratorOptions', () => {
 
   it('parses per service config file for a non-existent directory path', () => {
     expect(
-      parseGeneratorOptions({
+      parseOptions(cliOptions, {
         input: 'inputDir',
         outputDir: 'outputDir',
         optionsPerService: 'non-existent-directory'
@@ -92,7 +93,7 @@ describe('parseGeneratorOptions', () => {
 
   it('parses per service config file for existent directory path', () => {
     expect(
-      parseGeneratorOptions({
+      parseOptions(cliOptions, {
         input: 'inputDir',
         outputDir: 'outputDir',
         optionsPerService: 'existent-directory'
@@ -107,7 +108,7 @@ describe('parseGeneratorOptions', () => {
 
   it('parses tsconfig.json path', () => {
     expect(
-      parseGeneratorOptions({
+      parseOptions(cliOptions, {
         input: 'inputDir',
         outputDir: 'outputDir',
         tsconfig: 'someDir'
@@ -118,85 +119,74 @@ describe('parseGeneratorOptions', () => {
   });
 
   it('throws an error if input and outputDir are not set', () => {
-    const config = {
-      input: '',
-      outputDir: '',
-      ...options
-    };
-    return expect(
-      generateWithParsedOptions(config)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Either input or outputDir were not set."'
+    jest.spyOn(process, 'exit').mockImplementation(number => {
+      throw new Error('process.exit: ' + number);
+    });
+
+    expect(() => parseCmdArgs([])).toThrowError();
+    expect(spyError).toHaveBeenCalledWith(
+      'Missing required arguments: input, outputDir'
     );
   });
 
   it('throws an error if outputDir is not set', () => {
-    const config = {
-      input: 'some-dir',
-      outputDir: '',
-      ...options
-    };
-    return expect(
-      generateWithParsedOptions(config)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Either input or outputDir were not set."'
+    jest.spyOn(process, 'exit').mockImplementation(number => {
+      throw new Error('process.exit: ' + number);
+    });
+
+    expect(() => parseCmdArgs(['--input', 'someValue'])).toThrowError();
+    expect(spyError).toHaveBeenCalledWith(
+      'Missing required argument: outputDir'
     );
   });
 
   it('throws an error if input is not set', () => {
-    const config = {
-      input: '',
-      outputDir: 'some-dir',
-      ...options
-    };
-    return expect(
-      generateWithParsedOptions(config)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Either input or outputDir were not set."'
-    );
+    jest.spyOn(process, 'exit').mockImplementation(number => {
+      throw new Error('process.exit: ' + number);
+    });
+
+    expect(() =>
+      parseCmdArgs(['--outputDir', 'someOutputValue'])
+    ).toThrowError();
+    expect(spyError).toHaveBeenCalledWith('Missing required argument: input');
+  });
+
+  it('throws no error if input and output are set', () => {
+    expect(() =>
+      parseCmdArgs([
+        '--input',
+        'someInputValue',
+        '--outputDir',
+        'someOutputValue'
+      ])
+    ).not.toThrowError();
   });
 
   it('parses a given path to a config file and returns its content as parsed generator options', async () => {
-    const config = {
-      input: 'some-repository',
-      include: '/path/*'
-    };
-    const parameters = {
-      config: '/path/config.json'
-    };
-    mock({
-      '/path/': {
-        'config.json': JSON.stringify(config),
-        'README.md': 'Test File'
-      }
-    });
-    const parsed = await parseOptionsFromConfig(parameters.config);
-    expect(parsed.input).toContain(config.input);
+    mock.restore();
+    const path = resolve(__dirname, '../../test/test-config.json');
+
+    const parsed = await parseOptions(
+      cliOptions,
+      parseCmdArgs(['--config', path])
+    );
+    expect(parsed.input).toContain('some-repository');
+    expect(parsed.outputDir).toContain('some-output');
     // RegEx to match paths for both *nix and Windows
     expect(parsed.include).toMatchObject([
-      expect.stringMatching('.*path.*config.json.*'),
-      expect.stringMatching('.*path.*README.md.*')
+      expect.stringMatching(join(resolve(), 'test-config.json'))
     ]);
   });
 
-  it('logs a warning if wrong configuration keys were used', async () => {
-    const logger = createLogger('openapi-generator');
-    jest.spyOn(logger, 'warn');
-    const config = {
-      input: 'some-repository',
-      wrong_key: 'random-value'
-    };
-    const parameters = {
-      config: '/path/config.json'
-    };
-    mock({
-      '/path/': {
-        'config.json': JSON.stringify(config)
-      }
+  it('fails if wrong configuration keys were used', async () => {
+    jest.spyOn(process, 'exit').mockImplementation(number => {
+      throw new Error('process.exit: ' + number);
     });
-    await parseOptionsFromConfig(parameters.config);
-    expect(logger.warn).toHaveBeenCalledWith(
-      '"wrong_key" is not part of the configuration and will be ignored.'
-    );
+    mock.restore();
+    const path = resolve(__dirname, '../../test/test-config-wrong-key.json');
+    expect(() =>
+      parseOptions(cliOptions, parseCmdArgs(['--config', path]))
+    ).toThrowError();
+    expect(spyError).toHaveBeenCalledWith('Unknown argument: wrongKey');
   });
 });

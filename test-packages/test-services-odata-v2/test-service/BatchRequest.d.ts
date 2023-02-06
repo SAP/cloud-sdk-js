@@ -352,4 +352,3 @@ export type WriteTestServiceRequestBuilder<
       TestFunctionImportPostParameters<DeSerializersT>,
       boolean
     >;
-//# sourceMappingURL=BatchRequest.d.ts.map

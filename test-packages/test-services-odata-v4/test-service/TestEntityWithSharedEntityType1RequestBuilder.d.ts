@@ -67,4 +67,3 @@ export declare class TestEntityWithSharedEntityType1RequestBuilder<
     entity: TestEntityWithSharedEntityType1<T>
   ): DeleteRequestBuilder<TestEntityWithSharedEntityType1<T>, T>;
 }
-//# sourceMappingURL=TestEntityWithSharedEntityType1RequestBuilder.d.ts.map

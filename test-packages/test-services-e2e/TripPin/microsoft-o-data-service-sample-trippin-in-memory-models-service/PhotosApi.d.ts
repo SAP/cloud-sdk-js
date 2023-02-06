@@ -126,4 +126,3 @@ export declare class PhotosApi<
     >;
   };
 }
-//# sourceMappingURL=PhotosApi.d.ts.map

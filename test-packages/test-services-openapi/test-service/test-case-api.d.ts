@@ -123,4 +123,3 @@ export declare const TestCaseApi: {
    */
   getTestCasesNoOperationId: () => OpenApiRequestBuilder<any>;
 };
-//# sourceMappingURL=test-case-api.d.ts.map

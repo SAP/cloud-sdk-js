@@ -44,4 +44,3 @@ export interface TestEntityWithSharedEntityType1Type<
 > {
   keyProperty: DeserializedType<T, 'Edm.String'>;
 }
-//# sourceMappingURL=TestEntityWithSharedEntityType1.d.ts.map

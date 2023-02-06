@@ -107,7 +107,7 @@ function validateAuthHeader(header: string | undefined): boolean {
  * @param token - JWT to be verified
  * @param options - Options to control certain aspects of JWT verification behavior.
  * @returns A Promise to the decoded and verified JWT.
- *  @internal
+ * @internal
  */
 export async function verifyJwt(
   token: string,

@@ -2,7 +2,8 @@ import {
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   subscriberXsuaaUrl,
-  TestTenants
+  TestTenants,
+  xsuaaBindingMock
 } from './environment-mocks';
 import { signedJwtForVerification } from './keys';
 
@@ -89,7 +90,10 @@ export const subscriberUserPayload = {
   iat,
   iss: subscriberXsuaaUrl,
   zid: TestTenants.SUBSCRIBER,
-  user_id: 'user-sub'
+  user_id: 'user-sub',
+  // The client and audience are necesssary if XSSEC validates the token
+  azp: xsuaaBindingMock.credentials.clientid,   // Becomes clientId in XSSEC
+  aud: [xsuaaBindingMock.credentials.clientid]  // Becomes audience in XSSEC
 };
 
 export const subscriberUserJwt = signedJwtForVerification(

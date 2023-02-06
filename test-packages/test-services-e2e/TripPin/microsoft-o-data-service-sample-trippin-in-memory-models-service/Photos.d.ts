@@ -45,4 +45,3 @@ export interface PhotosType<T extends DeSerializers = DefaultDeSerializers> {
   id: DeserializedType<T, 'Edm.Int64'>;
   name?: DeserializedType<T, 'Edm.String'> | null;
 }
-//# sourceMappingURL=Photos.d.ts.map

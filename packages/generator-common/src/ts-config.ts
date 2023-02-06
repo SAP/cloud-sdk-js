@@ -12,7 +12,7 @@ export const defaultTsConfig = {
     module: 'commonjs',
     lib: ['esnext'],
     declaration: true,
-    declarationMap: true,
+    declarationMap: false,
     sourceMap: true,
     diagnostics: true,
     moduleResolution: 'node',

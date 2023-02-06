@@ -55,4 +55,3 @@ export interface AirportsType<T extends DeSerializers = DefaultDeSerializers> {
   iataCode: DeserializedType<T, 'Edm.String'>;
   location: AirportLocation<T>;
 }
-//# sourceMappingURL=Airports.d.ts.map

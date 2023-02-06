@@ -70,4 +70,3 @@ export declare const EntityApi: {
    */
   countEntities: () => OpenApiRequestBuilder<number>;
 };
-//# sourceMappingURL=entity-api.d.ts.map

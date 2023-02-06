@@ -65,4 +65,3 @@ export declare class TestEntityEndsWithRequestBuilder<
     entity: TestEntityEndsWith<T>
   ): DeleteRequestBuilder<TestEntityEndsWith<T>, T>;
 }
-//# sourceMappingURL=TestEntityEndsWithRequestBuilder.d.ts.map

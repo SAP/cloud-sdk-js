@@ -101,4 +101,3 @@ export declare namespace City {
    */
   const _propertyMetadata: PropertyMetadata<City>[];
 }
-//# sourceMappingURL=City.d.ts.map

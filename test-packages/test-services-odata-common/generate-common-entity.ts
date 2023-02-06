@@ -19,7 +19,7 @@ export async function generateCommonEntity() {
     createOptions({
       inputDir: resolve(__dirname, 'COMMON_SRV.edmx'),
       outputDir: resolve(__dirname),
-      serviceMapping: resolve(__dirname, 'service-mapping.json'),
+      optionsPerService: resolve(__dirname, 'options-per-service.json'),
       overwrite: true
     })
   );

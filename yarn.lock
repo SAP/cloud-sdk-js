@@ -6041,10 +6041,10 @@ log-symbols@^4.0.0, log-symbols@^4.1.0:
     chalk "^4.1.0"
     is-unicode-supported "^0.1.0"
 
-logform@^2.3.2, logform@^2.4.0, logform@^2.4.2:
-  version "2.4.2"
-  resolved "https://registry.npmjs.org/logform/-/logform-2.4.2.tgz#a617983ac0334d0c3b942c34945380062795b47c"
-  integrity sha512-W4c9himeAwXEdZ05dQNerhFz2XG80P9Oj0loPUMV23VC2it0orMHQhJm4hdnnor3rd1HsGf6a2lPwBM1zeXHGw==
+logform@^2.3.2, logform@^2.4.0, logform@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.npmjs.org/logform/-/logform-2.5.0.tgz#d41cf38d9e7e8a158d79b5df6fe597a1274b8f62"
+  integrity sha512-fsFiH2yjSCTmzotZ5JmEo0brQyJ7iHrc8pQ5pnHg6e1e5WfkqdNMDvgRWSfz+aCr3Y2YxYzHA4UKj+6QoctKrg==
   dependencies:
     "@colors/colors" "1.5.0"
     fecha "^4.2.0"

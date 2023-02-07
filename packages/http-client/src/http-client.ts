@@ -118,17 +118,16 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
     request.headers = await addCsrfTokenToHeader(destination, request, options);
     logRequestInformation(request);
 
-    return executeWithMiddleware(
-      requestConfig.middleware,
-      {
+    return executeWithMiddleware(requestConfig.middleware, {
+      fnArgument: request,
+      fn: (req: typeof request) => executeFn(req),
+      context: {
         jwt: destination.jwt,
-        fnArgument: request,
         uri: resolvedDestination.url,
         destinationName: resolvedDestination.name ?? undefined,
         tenantId: getTenantIdForMiddleware(destination.jwt)
-      },
-      (req: typeof request) => executeFn(req)
-    );
+      }
+    });
   };
 }
 

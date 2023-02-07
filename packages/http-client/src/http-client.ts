@@ -26,7 +26,6 @@ import {
   unixEOL
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { buildCsrfHeaders } from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
@@ -42,6 +41,7 @@ import {
   ParameterEncoder
 } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
+import { csrf } from './csrf-token-middleware';
 
 const logger = createLogger({
   package: 'http-client',
@@ -100,7 +100,7 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
   return async function <T extends HttpRequestConfigWithOrigin>(
     destination: HttpDestinationOrFetchOptions,
     requestConfig: T,
-    options?: HttpRequestOptions
+    options: HttpRequestOptions
   ): Promise<HttpResponse> {
     const resolvedDestination = await resolveDestination(destination);
     assertHttpDestination(resolvedDestination);
@@ -115,12 +115,15 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
       destinationRequestConfig
     );
 
-    request.headers = await addCsrfTokenToHeader(destination, request, options);
-    logRequestInformation(request);
+    if(options?.fetchCsrfToken){
+      requestConfig.middleware = [...(requestConfig.middleware || []),csrf()];
+    }
 
     return executeWithMiddleware(requestConfig.middleware, {
       fnArgument: request,
-      fn: (req: typeof request) => executeFn(req),
+      fn: (req: typeof request) => {
+        logRequestInformation(request);
+        return executeFn(req);},
       context: {
         jwt: destination.jwt,
         uri: resolvedDestination.url,
@@ -363,7 +366,7 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
   return execute(executeWithAxios)(
     destination,
     requestConfigWithOrigin,
-    options
+      { ...getDefaultHttpRequestOptions(), ...options }
   );
 }
 
@@ -393,7 +396,7 @@ export function executeHttpRequestWithOrigin<
   return execute(executeWithAxios)(
     destination,
     requestConfigWithDefaults,
-    options
+      { ...getDefaultHttpRequestOptions(), ...options }
   );
 }
 
@@ -501,51 +504,6 @@ function buildHttpRequestOptions(
         ...httpRequestOptions
       }
     : getDefaultHttpRequestOptions();
-}
-
-/**
- * @internal
- */
-export function shouldHandleCsrfToken(
-  requestConfig: HttpRequestConfig,
-  options: HttpRequestOptions
-): boolean {
-  return (
-    !!options.fetchCsrfToken &&
-    requestConfig.method !== 'get' &&
-    requestConfig.method !== 'GET'
-  );
-}
-
-async function getCsrfHeaders(
-  destination: HttpDestinationOrFetchOptions,
-  request: HttpRequestConfig & DestinationHttpRequestConfig
-): Promise<Record<string, any>> {
-  const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
-  return Object.keys(csrfHeaders).length
-    ? csrfHeaders
-    : buildCsrfHeaders(destination, {
-        params: request.params,
-        headers: request.headers,
-        url: request.url,
-        middleware: request.middleware,
-        timeout: 0, // zero means no timeout
-        proxy: request.proxy,
-        httpAgent: request.httpAgent,
-        httpsAgent: request.httpsAgent
-      });
-}
-
-async function addCsrfTokenToHeader(
-  destination: HttpDestinationOrFetchOptions,
-  request: HttpRequestConfig & DestinationHttpRequestConfig,
-  httpRequestOptions?: HttpRequestOptions
-): Promise<Record<string, string>> {
-  const options = buildHttpRequestOptions(httpRequestOptions);
-  const csrfHeaders = shouldHandleCsrfToken(request, options)
-    ? await getCsrfHeaders(destination, request)
-    : {};
-  return { ...request.headers, ...csrfHeaders };
 }
 
 /**

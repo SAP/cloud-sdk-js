@@ -138,29 +138,12 @@ export function getInputFilePaths(input: string): string[] {
     return globSync(input)
       .filter(path => /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/.test(path))
       .map(s => resolve(s));
-    // return new Promise(resolvePromise => {
-    //   glob(input, (_error, paths) => {
-    //     resolvePromise(
-    //       paths
-    //         .filter(path => /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/.test(path))
-    //         .map(path => resolve(path))
-    //     );
-    //   });
-    // });
   }
 
   if (lstatSync(input).isDirectory()) {
     return globSync(
       posix.join(input, '**/*.{json,JSON,yaml,YAML,yml,YML}')
     ).map(s => resolve(s));
-    // return new Promise(resolvePromise => {
-    //   glob(
-    //     posix.join(input, '**/*.{json,JSON,yaml,YAML,yml,YML}'),
-    //     (_error, paths) => {
-    //       resolvePromise(paths.map(path => resolve(path)));
-    //     }
-    //   );
-    // });
   }
 
   return [resolve(input)];

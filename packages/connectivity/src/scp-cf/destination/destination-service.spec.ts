@@ -508,8 +508,11 @@ describe('destination service', () => {
       // Assertion for two anonymous functions in the middleware one of them is timeout the other CB.
       expect(spy).toHaveBeenCalledWith(
         [expect.any(Function), expect.any(Function)],
-        expect.anything(),
-        expect.anything()
+        {
+          context: expect.objectContaining({ tenantId: 'tenant' }),
+          fn: expect.any(Function),
+          fnArgument: expect.objectContaining({ baseURL: expect.any(String) })
+        }
       );
     });
 

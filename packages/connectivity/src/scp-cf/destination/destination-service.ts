@@ -402,9 +402,9 @@ async function callDestinationService(
     resilienceMiddleware.unshift(retryDestination(destinationName));
   }
 
-  return executeWithMiddleware(
-    resilienceMiddleware,
-    { ...context, fnArgument: requestConfig },
-    config => axios.request(config)
-  );
+  return executeWithMiddleware(resilienceMiddleware, {
+    context,
+    fnArgument: requestConfig,
+    fn: config => axios.request(config)
+  });
 }

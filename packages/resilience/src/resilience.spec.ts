@@ -39,15 +39,14 @@ describe('combined resilience features', () => {
     };
 
     await expect(
-      executeWithMiddleware(
-        [timeout(600), retry(2)],
-        {
+      executeWithMiddleware([retry(2), timeout(600)], {
+        context: {
           uri: 'https://example.com',
-          tenantId: 'dummy-tenant',
-          fnArgument: requestConfig
+          tenantId: 'dummy-tenant'
         },
-        request
-      )
+        fnArgument: requestConfig,
+        fn: request
+      })
     ).resolves.not.toThrow();
   }, 10000);
 
@@ -66,15 +65,14 @@ describe('combined resilience features', () => {
       url: '/retry'
     };
 
-    const response = await executeWithMiddleware(
-      [timeout(200), retry(2)],
-      {
+    const response = await executeWithMiddleware([retry(2), timeout(200)], {
+      context: {
         uri: 'https://example.com',
-        tenantId: 'dummy-tenant',
-        fnArgument: config
+        tenantId: 'dummy-tenant'
       },
-      request
-    );
+      fnArgument: config,
+      fn: request
+    });
 
     expect(response.status).toBe(HTTP_STATUS.OK);
   }, 10000);
@@ -92,7 +90,6 @@ describe('combined resilience features', () => {
       url: 'with-delay'
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
-      fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
     };
@@ -104,7 +101,11 @@ describe('combined resilience features', () => {
           RawAxiosRequestConfig,
           AxiosResponse,
           MiddlewareContext<RawAxiosRequestConfig>
-        >(resilience({ timeout: delay * 0.5 }), context, request)
+        >(resilience({ timeout: delay * 0.5 }), {
+          context,
+          fn: request,
+          fnArgument: requestConfig
+        })
       ).rejects.toThrow();
 
       const breaker = circuitBreakers[`${host}::myTestTenant`];
@@ -119,7 +120,11 @@ describe('combined resilience features', () => {
         RawAxiosRequestConfig,
         AxiosResponse,
         MiddlewareContext<RawAxiosRequestConfig>
-      >(resilience({ timeout: false }), context, request)
+      >(resilience({ timeout: false }), {
+        context,
+        fn: request,
+        fnArgument: requestConfig
+      })
     ).rejects.toThrow('Breaker is open');
 
     expect(circuitBreakers[`${host}::myTestTenant`].stats.failures).toBe(10);
@@ -137,7 +142,6 @@ describe('combined resilience features', () => {
       url: 'with-retry'
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
-      fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
     };
@@ -146,7 +150,11 @@ describe('combined resilience features', () => {
         RawAxiosRequestConfig,
         AxiosResponse,
         MiddlewareContext<RawAxiosRequestConfig>
-      >(resilience({ retry: true }), context, request)
+      >(resilience({ retry: true }), {
+        context,
+        fn: request,
+        fnArgument: requestConfig
+      })
     ).rejects.toThrowError(/Request failed with status code 401/);
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
     expect(circuitBreakers[`${host}::myTestTenant`].stats.failures).toBe(0);
@@ -167,7 +175,6 @@ describe('combined resilience features', () => {
       url: 'with-retry'
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
-      fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
     };
@@ -176,7 +183,11 @@ describe('combined resilience features', () => {
         RawAxiosRequestConfig,
         AxiosResponse,
         MiddlewareContext<RawAxiosRequestConfig>
-      >(resilience({ timeout: false, retry: true }), context, request)
+      >(resilience({ timeout: false, retry: true }), {
+        context,
+        fn: request,
+        fnArgument: requestConfig
+      })
     ).resolves.not.toThrowError();
 
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);

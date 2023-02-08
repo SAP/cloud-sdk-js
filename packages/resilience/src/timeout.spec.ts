@@ -22,15 +22,14 @@ describe('timeout', () => {
     };
 
     await expect(
-      executeWithMiddleware(
-        [timeout(delayInResponse * 0.5)],
-        {
+      executeWithMiddleware([timeout(delayInResponse * 0.5)], {
+        context: {
           uri: 'https://example.com',
-          tenantId: 'dummy-tenant',
-          fnArgument: requestConfig
+          tenantId: 'dummy-tenant'
         },
-        request
-      )
+        fnArgument: requestConfig,
+        fn: request
+      })
     ).rejects.toThrow(
       'Request to URL: https://example.com ran into a timeout after 50ms.'
     );
@@ -39,11 +38,13 @@ describe('timeout', () => {
       executeWithMiddleware(
         resilience({ timeout: delayInResponse * 2, circuitBreaker: false }),
         {
-          uri: 'https://example.com',
-          tenantId: 'dummy-tenant',
-          fnArgument: requestConfig
-        },
-        request
+          context: {
+            uri: 'https://example.com',
+            tenantId: 'dummy-tenant'
+          },
+          fnArgument: requestConfig,
+          fn: request
+        }
       )
     ).resolves.not.toThrow();
   });
@@ -65,28 +66,27 @@ describe('timeout', () => {
       method: 'get',
       url: '/with-delay'
     };
-    const response = await executeWithMiddleware(
-      [timeout()],
-      {
+    const response = await executeWithMiddleware([timeout()], {
+      context: {
         uri: 'https://example.com',
-        tenantId: 'dummy-tenant',
-        fnArgument: requestConfig
+        tenantId: 'dummy-tenant'
       },
-      request
-    );
+      fnArgument: requestConfig,
+      fn: request
+    });
 
     expect(response.status).toEqual(200);
 
     await expect(
-      executeWithMiddleware(
-        [timeout()],
-        {
+      executeWithMiddleware([timeout()], {
+        context: {
           uri: 'https://example.com',
           tenantId: 'dummy-tenant',
           fnArgument: requestConfig
         },
-        request
-      )
+        fnArgument: requestConfig,
+        fn: request
+      })
     ).rejects.toThrow(
       'Request to URL: https://example.com ran into a timeout after 10000ms'
     );

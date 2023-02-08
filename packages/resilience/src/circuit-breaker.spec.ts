@@ -25,7 +25,6 @@ describe('circuit-breaker', () => {
       url: 'failing-500'
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
-      fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
     };
@@ -36,7 +35,11 @@ describe('circuit-breaker', () => {
           RawAxiosRequestConfig,
           AxiosResponse,
           MiddlewareContext<RawAxiosRequestConfig>
-        >([circuitBreakerHttp()], context, request)
+        >([circuitBreakerHttp()], {
+          context,
+          fn: request,
+          fnArgument: requestConfig
+        })
       ).rejects.toThrow();
       const breaker = circuitBreakers[`${host}::myTestTenant`];
       if (breaker.opened) {
@@ -48,7 +51,11 @@ describe('circuit-breaker', () => {
         RawAxiosRequestConfig,
         AxiosResponse,
         MiddlewareContext<RawAxiosRequestConfig>
-      >([circuitBreakerHttp()], context, request)
+      >([circuitBreakerHttp()], {
+        context,
+        fn: request,
+        fnArgument: requestConfig
+      })
     ).rejects.toThrow('Breaker is open');
   });
 
@@ -70,7 +77,6 @@ describe('circuit-breaker', () => {
       url: 'failing-ignore'
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
-      fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
     };
@@ -82,7 +88,11 @@ describe('circuit-breaker', () => {
           RawAxiosRequestConfig,
           AxiosResponse,
           MiddlewareContext<RawAxiosRequestConfig>
-        >([circuitBreakerHttp()], context, request)
+        >([circuitBreakerHttp()], {
+          context,
+          fn: request,
+          fnArgument: requestConfig
+        })
       ).rejects.toThrow();
 
       keepCalling = !mock.isDone();
@@ -99,7 +109,6 @@ describe('circuit-breaker', () => {
       url: 'ok'
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
-      fnArgument: requestConfig,
       uri: host,
       tenantId: 'tenant1'
     };
@@ -108,12 +117,20 @@ describe('circuit-breaker', () => {
       RawAxiosRequestConfig,
       AxiosResponse,
       MiddlewareContext<RawAxiosRequestConfig>
-    >([circuitBreakerHttp()], context, request);
+    >([circuitBreakerHttp()], {
+      context,
+      fn: request,
+      fnArgument: requestConfig
+    });
     await executeWithMiddleware<
       RawAxiosRequestConfig,
       AxiosResponse,
       MiddlewareContext<RawAxiosRequestConfig>
-    >([circuitBreakerHttp()], { ...context, tenantId: 'tenant2' }, request);
+    >([circuitBreakerHttp()], {
+      context: { ...context, tenantId: 'tenant2' },
+      fn: request,
+      fnArgument: requestConfig
+    });
 
     expect(Object.keys(circuitBreakers)).toEqual([
       `${host}::tenant1`,
@@ -150,12 +167,20 @@ describe('circuit-breaker', () => {
       RawAxiosRequestConfig,
       AxiosResponse,
       MiddlewareContext<RawAxiosRequestConfig>
-    >([circuitBreakerHttp()], context(requestConfigPath1), request);
+    >([circuitBreakerHttp()], {
+      context: context(requestConfigPath1),
+      fn: request,
+      fnArgument: requestConfigPath1
+    });
     await executeWithMiddleware<
       RawAxiosRequestConfig,
       AxiosResponse,
       MiddlewareContext<RawAxiosRequestConfig>
-    >([circuitBreakerHttp()], context(requestConfigPath2), request);
+    >([circuitBreakerHttp()], {
+      context: context(requestConfigPath2),
+      fn: request,
+      fnArgument: requestConfigPath2
+    });
 
     expect(Object.keys(circuitBreakers)).toEqual([`${host}::tenant1`]);
   });
@@ -177,7 +202,6 @@ describe('circuit-breaker', () => {
       }
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
-      fnArgument: requestConfig,
       uri: host,
       tenantId: 'myTestTenant'
     };
@@ -189,7 +213,11 @@ describe('circuit-breaker', () => {
           RawAxiosRequestConfig,
           AxiosResponse,
           MiddlewareContext<RawAxiosRequestConfig>
-        >([circuitBreakerHttp()], context, request)
+        >([circuitBreakerHttp()], {
+          context,
+          fn: request,
+          fnArgument: requestConfig
+        })
       ).rejects.toThrowError(/Request failed with status code 401/);
       keepCalling = !mock.isDone();
     }

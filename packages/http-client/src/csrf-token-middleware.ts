@@ -18,7 +18,7 @@ import {
 const logger = createLogger('csrf-middleware');
 
 export interface CsrfMiddlewareOptions {
-    method?: Method;url?: string;middlewares?: HttpMiddleware[];
+    method?: Method;url?: string;middleware?: HttpMiddleware[];
 };
 
 /**
@@ -102,7 +102,7 @@ async function makeCsrfRequest(
     options: CsrfMiddlewareOptions & {context: HttpMiddlewareContext}
 ): Promise<CsrfHeaderWithCookie|undefined> {
     try {
-        const response =await executeWithMiddleware(options.middlewares,{ fn:axios.request, fnArgument: requestConfig,context:options.context });
+        const response =await executeWithMiddleware(options.middleware,{ fn:axios.request, fnArgument: requestConfig,context:options.context });
         return findCsrfHeader(response.headers);
     } catch (error) {
         if (findCsrfHeader(error.response?.headers)) {

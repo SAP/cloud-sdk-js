@@ -145,7 +145,7 @@ describe('CSRF middleware',()=>{
             .reply(200,  {}
             );
         const spy = jest.spyOn(axios, 'request');
-        await executeHttpRequest({ url: host },{ method:'POST',url:'some/path',middleware:[csrf({ middlewares:[timeout(500)] })] },{ fetchCsrfToken:false });
+        await executeHttpRequest({ url: host },{ method:'POST',url:'some/path',middleware:[csrf({ middleware:[timeout(500)] })] },{ fetchCsrfToken:false });
         expect(spy).toHaveBeenNthCalledWith(3,expect.objectContaining({ method:'POST',headers:{}, url: 'some/path' }));
     });
 
@@ -158,7 +158,7 @@ describe('CSRF middleware',()=>{
             .post('/some/path')
             .reply(200,  {}
             );
-        await executeHttpRequest({ url: host },{ method:'POST',url:'some/path',middleware:[csrf({ middlewares:[circuitBreakerHttp()] })] },{ fetchCsrfToken:false });
+        await executeHttpRequest({ url: host },{ method:'POST',url:'some/path',middleware:[csrf({ middleware:[circuitBreakerHttp()] })] },{ fetchCsrfToken:false });
         expect(Object.keys(circuitBreakers)).toEqual(['http://example.com::tenant_id']);
     });
 

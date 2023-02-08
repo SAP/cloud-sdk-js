@@ -78,7 +78,7 @@ describe('options-per-service', () => {
     );
   });
 
-  it('gets servicePath from swagger when it cannot be determined from options or self link', () => {
+  it('gets basePath from swagger when it cannot be determined from options or self link', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx'

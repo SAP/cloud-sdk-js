@@ -81,7 +81,7 @@ It used the following sub-scores:
     
 1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **2.02** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **2.03** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
     
@@ -312,7 +312,7 @@ This sub-score is based on 2 features:
 
 ### Project popularity
 
-Score: **2.02**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **2.03**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This scoring function is based on number of stars, watchers and dependent projects.
 
@@ -322,7 +322,7 @@ This sub-score is based on 3 features:
 
 
 
-1.  **Number of projects on GitHub that use an open source project:** 2768
+1.  **Number of projects on GitHub that use an open source project:** 2786
 1.  **Number of stars for a GitHub repository:** 122
 1.  **Number of watchers for a GitHub repository:** 15
 

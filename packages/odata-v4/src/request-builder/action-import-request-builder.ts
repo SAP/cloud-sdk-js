@@ -21,14 +21,14 @@ export class ActionImportRequestBuilder<
 > {
   /**
    * Creates an instance of ActionImportRequestBuilder.
-   * @param defaultServicePath - Default path for the service the action belongs to.
+   * @param defaultBasePath - Default base path for the service the action belongs to.
    * @param actionImportName - The name of the action import.
    * @param responseTransformer - Transformation function for the response.
    * @param parameters - Parameters to be set in the action.
    * @param deSerializers - DeSerializer used in the action import.
    */
   constructor(
-    defaultServicePath: string,
+    defaultBasePath: string,
     actionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
     parameters: ActionImportParameters<ParametersT>,
@@ -37,7 +37,7 @@ export class ActionImportRequestBuilder<
     super(
       responseTransformer,
       new ODataActionImportRequestConfig(
-        defaultServicePath,
+        defaultBasePath,
         actionImportName,
         parameters,
         createODataUri(deSerializers)

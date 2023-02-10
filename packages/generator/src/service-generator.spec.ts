@@ -29,7 +29,7 @@ describe('service-generator', () => {
       it('prioritizes mapping over original names', () => {
         const optionsPerService: OptionsPerService = {
           directoryName: 'custom-directory-name',
-          servicePath: '/path/to/service',
+          basePath: '/path/to/service',
           npmPackageName: 'custom-package-name'
         };
 
@@ -52,9 +52,7 @@ describe('service-generator', () => {
         expect(serviceMetadata.directoryName).toEqual(
           optionsPerService.directoryName
         );
-        expect(serviceMetadata.servicePath).toEqual(
-          optionsPerService.servicePath
-        );
+        expect(serviceMetadata.basePath).toEqual(optionsPerService.basePath);
         expect(serviceMetadata.npmPackageName).toEqual(
           optionsPerService.npmPackageName
         );
@@ -73,9 +71,7 @@ describe('service-generator', () => {
         expect(services[0].namespaces[0]).toEqual('API_TEST_SRV');
         expect(services[0].directoryName).toEqual('test-service');
         expect(services[0].npmPackageName).toEqual('test-service');
-        expect(services[0].servicePath).toEqual(
-          '/sap/opu/odata/sap/API_TEST_SRV'
-        );
+        expect(services[0].basePath).toEqual('/sap/opu/odata/sap/API_TEST_SRV');
         expect(services[0].entities.length).toEqual(14);
       });
 

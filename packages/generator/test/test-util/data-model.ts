@@ -189,7 +189,7 @@ export const foodService: VdmServiceMetadata = {
   oDataVersion: 'v2',
   directoryName: 'FOOD_SERVICE',
   namespaces: ['FOOD_SERVICE'],
-  servicePath: 'some/path/to/food',
+  basePath: 'some/path/to/food',
   npmPackageName: '@hello/food-service',
   originalFileName: 'food.service.edmx',
   speakingModuleName: 'Food Service',

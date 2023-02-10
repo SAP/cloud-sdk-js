@@ -45,7 +45,7 @@ function apiHubServiceName(swagger: SwaggerMetadata): string {
 /**
  * @internal
  */
-export function servicePathFromSwagger(
+export function basePathFromSwagger(
   swagger?: SwaggerMetadata
 ): string | undefined {
   return swagger?.basePath;

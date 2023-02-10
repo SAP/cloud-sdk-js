@@ -27,7 +27,7 @@ export declare class TestEntityLvl2SingleLink<
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath: string;
+  static _defaultBasePath: string;
   /**
    * All key fields of the TestEntityLvl2SingleLink entity
    */

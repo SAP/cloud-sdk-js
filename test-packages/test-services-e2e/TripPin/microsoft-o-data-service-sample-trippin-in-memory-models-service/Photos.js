@@ -24,7 +24,7 @@ Photos._entityName = 'Photos';
 /**
  * Default url path for the according service.
  */
-Photos._defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+Photos._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 /**
  * All key fields of the Photos entity
  */

@@ -24,7 +24,7 @@ TestEntityWithEnumKey._entityName = 'A_TestEntityWithEnumKey';
 /**
  * Default url path for the according service.
  */
-TestEntityWithEnumKey._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+TestEntityWithEnumKey._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntityWithEnumKey entity
  */

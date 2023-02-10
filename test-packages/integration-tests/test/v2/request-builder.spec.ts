@@ -23,7 +23,7 @@ import { singleTestEntityResponse } from '../test-data/single-test-entity-respon
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 import { testEntityApi, testEntityMultiLinkApi } from './test-util';
 
-const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = 'A_TestEntity';
 const username = 'username';
 const password = 'password';
@@ -51,7 +51,7 @@ function mockCsrfTokenRequest(path?: string) {
       'x-csrf-token': 'Fetch'
     }
   })
-    .head(path ? `${servicePath}/${path}` : servicePath)
+    .head(path ? `${basePath}/${path}` : basePath)
     .reply(200, '', mockedBuildHeaderResponse);
 }
 
@@ -84,7 +84,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -102,7 +102,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi.requestBuilder().getAll().execute({
@@ -127,7 +127,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -171,7 +171,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -195,7 +195,7 @@ describe('Request Builder', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd%3F1234')`
+        `${basePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd%3F1234')`
       )
       .reply(200, response);
 
@@ -216,7 +216,7 @@ describe('Request Builder', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}?$select=*,to_SingleLink/*&$expand=to_SingleLink`
+        `${basePath}/${entityName}?$select=*,to_SingleLink/*&$expand=to_SingleLink`
       )
       .reply(200, getAllResponse);
 
@@ -242,7 +242,7 @@ describe('Request Builder', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')?$select=to_SingleLink/*&$expand=to_SingleLink`
+        `${basePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')?$select=to_SingleLink/*&$expand=to_SingleLink`
       )
       .reply(200, response);
 
@@ -268,7 +268,7 @@ describe('Request Builder', () => {
         cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
-      .post(`${servicePath}/${entityName}`, {
+      .post(`${basePath}/${entityName}`, {
         StringProperty: 'someProperty',
         Int16Property: 16,
         BooleanProperty: false
@@ -305,7 +305,7 @@ describe('Request Builder', () => {
       }
     })
       .post(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')/to_MultiLink`,
+        `${basePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')/to_MultiLink`,
         {
           StringProperty: 'prop'
         }
@@ -342,7 +342,7 @@ describe('Request Builder', () => {
       }
     })
       .patch(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`,
+        `${basePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`,
         {
           StringProperty: 'newStringProp'
         }
@@ -394,7 +394,7 @@ describe('Request Builder', () => {
       }
     })
       .delete(
-        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`
+        `${basePath}/A_TestEntity(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`
       )
       .reply(204);
 
@@ -429,7 +429,7 @@ describe('Request Builder', () => {
       }
     })
       .delete(
-        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`
+        `${basePath}/A_TestEntity(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`
       )
       .reply(204);
 
@@ -451,7 +451,7 @@ describe('Request Builder', () => {
         'sap-client': destination.sapClient as string
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, undefined, undefined);
 
     nock(destination.url, {
@@ -461,7 +461,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .post(`${servicePath}/${entityName}`, {
+      .post(`${basePath}/${entityName}`, {
         StringProperty: 'stringProp',
         Int16Property: 145,
         BooleanProperty: true
@@ -491,7 +491,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -516,7 +516,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, getAllResponse);
 
     const request = testEntityApi
@@ -537,7 +537,7 @@ describe('Request Builder', () => {
 
   it('should allow setting custom query parameters', async () => {
     nock(destinationServiceUri)
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .query({
         testParameter: 'customcustom'
       })
@@ -558,7 +558,7 @@ describe('Request Builder', () => {
 
   it('should allow setting custom query parameters twice', async () => {
     nock(destinationServiceUri)
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .query({
         testParameter: 'customcustom',
         additionalParameter: 'additional'
@@ -633,7 +633,7 @@ describe('Request Builder', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, {});
 
     const request = testEntityApi.requestBuilder().getAll().execute({

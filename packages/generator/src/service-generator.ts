@@ -3,7 +3,7 @@ import { npmCompliantName } from './generator-utils';
 import { GlobalNameFormatter } from './global-name-formatter';
 import { inputPaths, ServiceDefinitionPaths } from './input-path-provider';
 import {
-  getServicePath,
+  getBasePath,
   readOptionsPerService,
   VdmMapping
 } from './options-per-service';
@@ -96,7 +96,7 @@ class ServiceGenerator {
       directoryName,
       npmPackageName,
       speakingModuleName,
-      servicePath: getServicePath(
+      basePath: getBasePath(
         serviceMetadata,
         this.options.skipValidation,
         this.optionsPerService[serviceMetadata.edmx.fileName]

@@ -35,7 +35,7 @@ export class ODataGetByKeyRequestConfig<
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('get', entityApi.entityConstructor._defaultServicePath);
+    super('get', entityApi.entityConstructor._defaultBasePath);
   }
 
   resourcePath(): string {

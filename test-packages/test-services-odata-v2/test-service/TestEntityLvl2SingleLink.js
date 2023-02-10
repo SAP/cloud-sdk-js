@@ -24,7 +24,7 @@ TestEntityLvl2SingleLink._entityName = 'A_TestEntityLvl2SingleLink';
 /**
  * Default url path for the according service.
  */
-TestEntityLvl2SingleLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+TestEntityLvl2SingleLink._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntityLvl2SingleLink entity
  */

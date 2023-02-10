@@ -24,7 +24,7 @@ Airlines._entityName = 'Airlines';
 /**
  * Default url path for the according service.
  */
-Airlines._defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+Airlines._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 /**
  * All key fields of the Airlines entity
  */

@@ -29,7 +29,7 @@ export class ODataDeleteRequestConfig<
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('delete', entityApi.entityConstructor._defaultServicePath);
+    super('delete', entityApi.entityConstructor._defaultBasePath);
   }
 
   resourcePath(): string {

@@ -56,10 +56,10 @@ Let's discuss OData path and OpenAPI path separately, as OData case is a bit com
 Below is one example about how the path should look like in terms of OData
 
 ```
-/servicePath/Entity('key')/to_MultiLink('key')/to_SingleLink
+/basePath/Entity('key')/to_MultiLink('key')/to_SingleLink
 ```
 
-- service path: `/servicePath`
+- base path: `/basePath`
 - entity path: `/Entity(KeyName='value')`
 - navigation property path: `/to_MultiLink(KeyName='value')/to_SingleLink`
 

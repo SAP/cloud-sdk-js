@@ -22,21 +22,21 @@ describe('OData Request', () => {
       expect(request.serviceUrl()).toBe('/sap/opu/odata/sap/API_COMMON_SRV');
     });
 
-    it('should contain custom service path', () => {
+    it('should contain a new base path', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      request.config.customServicePath = 'custom/path';
+      request.config.basePath = 'custom/path';
       expect(request.serviceUrl()).toBe('/custom/path');
     });
 
-    it('should contain custom service path without slashes', () => {
+    it('should contain a base path without slashes', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      request.config.customServicePath = '/custom/path/';
+      request.config.basePath = '/custom/path/';
       expect(request.serviceUrl()).toBe('/custom/path');
     });
 
-    it('should be empty for empty custom service path', () => {
+    it('should be empty for empty base path', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      request.config.customServicePath = '';
+      request.config.basePath = '';
       expect(request.serviceUrl()).toBe('/');
     });
   });

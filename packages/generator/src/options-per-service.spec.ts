@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
-  getServicePath,
+  getBasePath,
   OptionsPerService,
   optionsPerService,
   VdmMapping
@@ -15,7 +15,7 @@ describe('options-per-service', () => {
         originalFileName: 'API_A_SERV',
         directoryName: 'a-serv',
         npmPackageName: '@sap/a-serv',
-        servicePath: '/path/to/serv',
+        basePath: '/path/to/serv',
         complexTypes: [],
         enumTypes: [],
         entities: [],
@@ -30,7 +30,7 @@ describe('options-per-service', () => {
         originalFileName: 'API_B_SERV',
         directoryName: 'b-serv',
         npmPackageName: '@sap/b-serv',
-        servicePath: '/path/to/serv',
+        basePath: '/path/to/serv',
         complexTypes: [],
         enumTypes: [],
         entities: [],
@@ -45,12 +45,12 @@ describe('options-per-service', () => {
     const expectedVdmMapping: VdmMapping = {
       API_A_SERV: {
         directoryName: 'a-serv',
-        servicePath: '/path/to/serv',
+        basePath: '/path/to/serv',
         npmPackageName: '@sap/a-serv'
       },
       API_B_SERV: {
         directoryName: 'b-serv',
-        servicePath: '/path/to/serv',
+        basePath: '/path/to/serv',
         npmPackageName: '@sap/b-serv'
       }
     };
@@ -58,7 +58,7 @@ describe('options-per-service', () => {
     expect(optionsPerService(serviceMetadata)).toEqual(expectedVdmMapping);
   });
 
-  it('gets servicePath from optionsPerService over edmx self link and swagger', () => {
+  it('gets basePath from optionsPerService over edmx self link and swagger', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx',
@@ -70,15 +70,15 @@ describe('options-per-service', () => {
     };
 
     const optionsPerServiceIn = {
-      servicePath: '/options-test-service'
+      basePath: '/options-test-service'
     } as OptionsPerService;
 
-    expect(getServicePath(metadata, false, optionsPerServiceIn)).toEqual(
+    expect(getBasePath(metadata, false, optionsPerServiceIn)).toEqual(
       '/options-test-service'
     );
   });
 
-  it('gets servicePath from swagger when it cannot be determined from options or self link', () => {
+  it('gets basePath from swagger when it cannot be determined from options or self link', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx'
@@ -88,12 +88,10 @@ describe('options-per-service', () => {
       } as any
     };
 
-    expect(getServicePath(metadata, false)).toEqual(
-      '/swagger-test-service-path'
-    );
+    expect(getBasePath(metadata, false)).toEqual('/swagger-test-service-path');
   });
 
-  it('should return "/" if skipValidation is true and servicePath cannot be determined from options-per-service, self link and swagger', () => {
+  it('should return "/" if skipValidation is true and basePath cannot be determined from options-per-service, self link and swagger', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx'
@@ -106,21 +104,21 @@ describe('options-per-service', () => {
       messageContext: 'options-per-service'
     });
     const warnSpy = jest.spyOn(logger, 'warn');
-    expect(getServicePath(metadata, true)).toEqual('/');
+    expect(getBasePath(metadata, true)).toEqual('/');
     expect(warnSpy).toHaveBeenCalledWith(
-      '[ file ] No service path could be determined from available metadata! Setting "servicePath" to "/" in the "options-per-service.json".'
+      '[ file ] No base path could be determined from available metadata! Setting "basePath" to "/" in the "options-per-service.json".'
     );
   });
 
-  it('should throw if skipValidation is false and servicePath cannot be determined from options-per-service, self link and swagger', () => {
+  it('should throw if skipValidation is false and basePath cannot be determined from options-per-service, self link and swagger', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx'
       } as any,
       swagger: {} as any
     };
-    expect(() => getServicePath(metadata, false)).toThrowError(
-      /No service path could be determined from available metadata!/
+    expect(() => getBasePath(metadata, false)).toThrowError(
+      /No base path could be determined from available metadata!/
     );
   });
 });

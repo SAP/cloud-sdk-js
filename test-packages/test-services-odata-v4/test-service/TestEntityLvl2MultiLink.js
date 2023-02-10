@@ -24,7 +24,7 @@ TestEntityLvl2MultiLink._entityName = 'A_TestEntityLvl2MultiLink';
 /**
  * Default url path for the according service.
  */
-TestEntityLvl2MultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+TestEntityLvl2MultiLink._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntityLvl2MultiLink entity
  */

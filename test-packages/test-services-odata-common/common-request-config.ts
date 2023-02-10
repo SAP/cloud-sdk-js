@@ -186,7 +186,7 @@ export function batchRequestBuilder(
   requests: (ReadBuilders | BatchChangeSet)[]
 ): BatchRequestBuilder<DefaultDeSerializers> {
   const builder = new CommonBatchRequestBuilder(
-    CommonEntity._defaultServicePath,
+    CommonEntity._defaultBasePath,
     requests
   );
   Object.assign(builder.requestConfig, {

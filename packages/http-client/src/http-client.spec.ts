@@ -35,7 +35,7 @@ import {
   subscriberXsuaaUrl,
   xsuaaBindingMock
 } from '../../../test-resources/test/test-util';
-import * as csrfHeaders from './csrf-token-header';
+import * as csrf from './csrf-token-middleware';
 import {
   DestinationHttpRequestConfig,
   HttpMiddleware,
@@ -50,9 +50,7 @@ import {
   buildRequestWithMergedHeadersAndQueryParameters,
   encodeAllParameters,
   executeHttpRequest,
-  getDefaultHttpRequestOptions,
   encodeTypedClientRequest,
-  shouldHandleCsrfToken,
   executeHttpRequestWithOrigin,
   buildHttpRequestConfigWithOrigin,
   getTenantIdForMiddleware
@@ -547,7 +545,6 @@ describe('generic http client', () => {
         })
         .reply(200, { res: 'ult' }, { sharp: 'header' });
 
-      jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
       const config: HttpRequestConfig = {
         method: 'GET',
         url: '/api/entity',
@@ -561,7 +558,6 @@ describe('generic http client', () => {
       expect(response.data.res).toBe('ult');
       expect(response.status).toBe(200);
       expect(response.headers).toMatchObject({ sharp: 'header' });
-      expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
     });
 
     it('logs request information', async () => {
@@ -660,11 +656,11 @@ sap-client:001`);
           a: 1
         }
       };
-      jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
+      jest.spyOn(csrf, 'csrf');
       await expect(
         executeHttpRequest(httpsDestination, config)
       ).resolves.not.toThrow();
-      expect(csrfHeaders.buildCsrfHeaders).toHaveBeenCalled();
+      expect(csrf.csrf).toHaveBeenCalled();
     });
 
     it('fetches csrf token headers even when the response status is not 2xx', async () => {
@@ -746,9 +742,7 @@ sap-client:001`);
         }
       };
 
-      jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
       await executeHttpRequest(httpsDestination, config);
-      expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
     });
 
     it('should apply http(s)Agent to both CSRF token request and the real request', async () => {
@@ -1307,26 +1301,6 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         params: {}
       };
       expect(actual).toStrictEqual(expected);
-    });
-  });
-
-  describe('shouldHandleCsrfToken', () => {
-    it('should not handle csrf token for get request with default HttpRequestOptions', () => {
-      const request = { method: 'get' } as HttpRequestConfig;
-      const options = getDefaultHttpRequestOptions();
-      expect(shouldHandleCsrfToken(request, options)).toEqual(false);
-    });
-
-    it('should not handle csrf token when fetchCsrfToken is overriden to false', () => {
-      const request = { method: 'post' } as HttpRequestConfig;
-      const options = { fetchCsrfToken: false };
-      expect(shouldHandleCsrfToken(request, options)).toEqual(false);
-    });
-
-    it('should handle csrf token for non-get request with default HttpRequestOptions', () => {
-      const request = { method: 'patch' } as HttpRequestConfig;
-      const options = getDefaultHttpRequestOptions();
-      expect(shouldHandleCsrfToken(request, options)).toEqual(true);
     });
   });
 

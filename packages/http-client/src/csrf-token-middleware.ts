@@ -1,83 +1,111 @@
 import { MiddlewareOptions } from '@sap-cloud-sdk/resilience';
 import {
-    createLogger,
-    ErrorWithCause, first,
-    pickIgnoreCase,
-    pickValueIgnoreCase,
-    removeTrailingSlashes
+  createLogger,
+  ErrorWithCause,
+  first,
+  pickIgnoreCase,
+  pickValueIgnoreCase,
+  removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
-    HttpMiddleware,
-    HttpMiddlewareContext,
-    HttpRequestConfig, HttpRequestConfigBase, HttpRequestConfigWithOrigin,
-    HttpResponse, Method
+  HttpMiddleware,
+  HttpMiddlewareContext,
+  HttpRequestConfig,
+  HttpRequestConfigBase,
+  HttpRequestConfigWithOrigin,
+  HttpResponse,
+  Method
 } from './http-client-types';
 
 const logger = createLogger('csrf-middleware');
 
+/**
+ * Options for middleware to fetch csrf tokens.
+ */
 export interface CsrfMiddlewareOptions {
-    method?: Method;url?: string;middleware?: HttpMiddleware[];
-};
+  /**
+   * Method used for the token fetching. Default is `head`.
+   */
+  method?: Method;
+  /**
+   * Url used for the token fetching. Default is the resource path without parameters.
+   */
+  url?: string;
+  /**
+   * Middlewares added to the token retrieval request.
+   */
+  middleware?: HttpMiddleware[];
+}
 
 /**
  * Middleware for fetching a CSRF token. This middleware is added to all request per default.
  * Use the `fetchCsrfToken` option to disable it.
- * @param options
- * @returns The middleware for fetching CSRF tokens
+ * @param options - Options like URL or method to configure the token fetching.
+ * @returns The middleware for fetching CSRF tokens.
  */
-export function csrf(options?: CsrfMiddlewareOptions): HttpMiddleware{
-    return (middlewareOptions: MiddlewareOptions<  HttpRequestConfig,
+export function csrf(options?: CsrfMiddlewareOptions): HttpMiddleware {
+  return (
+      middlewareOptions: MiddlewareOptions<
+        HttpRequestConfig,
         HttpResponse,
-        HttpMiddlewareContext>)=>async requestConfig=>{
-            if(noActionNeeded(requestConfig)){
-                return middlewareOptions.fn(requestConfig);
-            }
-            const csrfToken = await makeCsrfRequests(requestConfig,{ ...options,...middlewareOptions });
-            requestConfig.headers = { ...requestConfig.headers, ...csrfToken };
-            return middlewareOptions.fn(requestConfig);
-        };
+        HttpMiddlewareContext
+      >
+    ) =>
+    async requestConfig => {
+      if (noActionNeeded(requestConfig)) {
+        return middlewareOptions.fn(requestConfig);
+      }
+      const csrfToken = await makeCsrfRequests(requestConfig, {
+        ...options,
+        ...middlewareOptions
+      });
+      requestConfig.headers = { ...requestConfig.headers, ...csrfToken };
+      return middlewareOptions.fn(requestConfig);
+    };
 }
 
-function noActionNeeded(requestConfig: HttpRequestConfig): boolean{
-    if(requestConfig.method.toLowerCase() === 'get'){
-        logger.debug('Method is GET no CSRF token needed.');
-        return true;
-    }
+function noActionNeeded(requestConfig: HttpRequestConfig): boolean {
+  if (requestConfig.method.toLowerCase() === 'get') {
+    logger.debug('Method is GET no CSRF token needed.');
+    return true;
+  }
 
-    if(pickValueIgnoreCase(requestConfig.headers, 'x-csrf-token')){
-        logger.debug('CSRF token header was already provided. Existing token used.');
-        return true;
-    }
+  if (pickValueIgnoreCase(requestConfig.headers, 'x-csrf-token')) {
+    logger.debug(
+      'CSRF token header was already provided. Existing token used.'
+    );
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
 function appendSlash<T extends HttpRequestConfigBase>(requestConfig: T): T {
-    if (!requestConfig.url) {
-        requestConfig.url = '/';
-    } else if (!requestConfig.url.endsWith('/')) {
-        requestConfig.url = `${requestConfig.url}/`;
-    }
-    return requestConfig;
+  if (!requestConfig.url) {
+    requestConfig.url = '/';
+  } else if (!requestConfig.url.endsWith('/')) {
+    requestConfig.url = `${requestConfig.url}/`;
+  }
+  return requestConfig;
 }
 
 function removeSlash<T extends HttpRequestConfigBase>(requestConfig: T): T {
-    if (requestConfig.url!.endsWith('/')) {
-        requestConfig.url = removeTrailingSlashes(requestConfig.url!);
-    }
-    return requestConfig;
+  if (requestConfig.url!.endsWith('/')) {
+    requestConfig.url = removeTrailingSlashes(requestConfig.url!);
+  }
+  return requestConfig;
 }
 
-function getCsrfToken(headers: Record<string, any>): string| undefined {
-    return Object.values(pickIgnoreCase(headers,'x-csrf-token'))[0];
+function getCsrfToken(headers: Record<string, any>): string | undefined {
+  return Object.values(pickIgnoreCase(headers, 'x-csrf-token'))[0];
 }
 
-function getSetCookieHeader(headers: Record<string, any>): string|undefined {
-    // The axios client wraps the set-cookie header in a array.
-    const value =  Object.values(pickIgnoreCase(headers,'set-cookie'))[0];
-    return Array.isArray(value) ? value[0] : value;
+function getSetCookieHeader(headers: Record<string, any>): string | undefined {
+  // The axios client wraps the set-cookie header in a array.
+  const value = Object.values(pickIgnoreCase(headers, 'set-cookie'))[0];
+  return Array.isArray(value) ? value[0] : value;
 }
 
 /**
@@ -86,74 +114,86 @@ function getSetCookieHeader(headers: Record<string, any>): string|undefined {
  * @internal
  */
 export function buildCsrfFetchHeaders(headers: any): Record<string, any> {
-    const contentLengthHeaderKey =
-        first(Object.keys(pickIgnoreCase(headers, 'content-length'))) ||
-        'content-length';
+  const contentLengthHeaderKey =
+    first(Object.keys(pickIgnoreCase(headers, 'content-length'))) ||
+    'content-length';
 
-    return {
-        'x-csrf-token': 'Fetch',
-        ...headers,
-        [contentLengthHeaderKey]: 0
-    };
+  return {
+    'x-csrf-token': 'Fetch',
+    ...headers,
+    [contentLengthHeaderKey]: 0
+  };
 }
 
 async function makeCsrfRequest(
-    requestConfig: HttpRequestConfig,
-    options: CsrfMiddlewareOptions & {context: HttpMiddlewareContext}
-): Promise<CsrfHeaderWithCookie|undefined> {
-    try {
-        const response =await executeWithMiddleware(options.middleware,{ fn:axios.request, fnArgument: requestConfig,context:options.context });
-        return findCsrfHeader(response.headers);
-    } catch (error) {
-        if (findCsrfHeader(error.response?.headers)) {
-            return findCsrfHeader(error.response?.headers);
-        }
-        logger.warn(
-            new ErrorWithCause(
-                `Failed to get CSRF token from  URL: ${requestConfig.url}.`,
-                error
-            )
-        );
+  requestConfig: HttpRequestConfig,
+  options: CsrfMiddlewareOptions & { context: HttpMiddlewareContext }
+): Promise<CsrfHeaderWithCookie | undefined> {
+  try {
+    const response = await executeWithMiddleware(options.middleware, {
+      fn: axios.request,
+      fnArgument: requestConfig,
+      context: options.context
+    });
+    return findCsrfHeader(response.headers);
+  } catch (error) {
+    if (findCsrfHeader(error.response?.headers)) {
+      return findCsrfHeader(error.response?.headers);
     }
+    logger.warn(
+      new ErrorWithCause(
+        `Failed to get CSRF token from  URL: ${requestConfig.url}.`,
+        error
+      )
+    );
+  }
 }
 
-function findCsrfHeader(headers: Record<string, any>| undefined): CsrfHeaderWithCookie|undefined{
-    if(!headers){
-        return;
-    }
+function findCsrfHeader(
+  headers: Record<string, any> | undefined
+): CsrfHeaderWithCookie | undefined {
+  if (!headers) {
+    return;
+  }
 
-    const csrfHeader = getCsrfToken(headers);
-    if(!csrfHeader){
-        return;
-    }
-    const cookieHeader = getSetCookieHeader(headers) ? { cookie:getSetCookieHeader(headers) } : {};
-    return  { 'x-csrf-token':csrfHeader,...cookieHeader };
+  const csrfHeader = getCsrfToken(headers);
+  if (!csrfHeader) {
+    return;
+  }
+  const cookieHeader = getSetCookieHeader(headers)
+    ? { cookie: getSetCookieHeader(headers) }
+    : {};
+  return { 'x-csrf-token': csrfHeader, ...cookieHeader };
 }
 
 async function makeCsrfRequests(
-    requestConfig: HttpRequestConfig,
-    options: CsrfMiddlewareOptions & {context: HttpMiddlewareContext}
-): Promise<CsrfHeaderWithCookie|undefined> {
-    const axiosConfig: HttpRequestConfigWithOrigin = {
-        ...requestConfig,
-        method: options.method || 'head',
-        params: {},
-        url:options.url || requestConfig.url,
-        headers:buildCsrfFetchHeaders(requestConfig.headers)
-    };
+  requestConfig: HttpRequestConfig,
+  options: CsrfMiddlewareOptions & { context: HttpMiddlewareContext }
+): Promise<CsrfHeaderWithCookie | undefined> {
+  const axiosConfig: HttpRequestConfigWithOrigin = {
+    ...requestConfig,
+    method: options.method || 'head',
+    params: {},
+    url: options.url || requestConfig.url,
+    headers: buildCsrfFetchHeaders(requestConfig.headers)
+  };
 
-    // If the user set the URL to fetch the token we only do
-    if(options.url){
-        return makeCsrfRequest(axiosConfig,options);
-    }
+  // If the user set the URL to fetch the token we only do
+  if (options.url) {
+    return makeCsrfRequest(axiosConfig, options);
+  }
 
-    // The S/4 does a redirect if the CSRF token is fetched in case the '/' is not in the URL.
-    // TODO: remove once https://github.com/axios/axios/issues/3369 is really fixed. Issue is closed but problem stays.
-    // We try first with slash and then without
-    return (await makeCsrfRequest(appendSlash(axiosConfig),options)) ?? (await makeCsrfRequest(removeSlash(axiosConfig),options));
+  // The S/4 does a redirect if the CSRF token is fetched in case the '/' is not in the URL.
+  // TODO: remove once https://github.com/axios/axios/issues/3369 is really fixed. Issue is closed but problem stays.
+  // We try first with slash and then without
+  // eslint-disable-next-line  no-return-await
+  return (
+    (await makeCsrfRequest(appendSlash(axiosConfig), options)) ??
+    (await makeCsrfRequest(removeSlash(axiosConfig), options))
+  );
 }
 
 interface CsrfHeaderWithCookie {
-    'x-csrf-token': string;
-        cookie?: string;
+  'x-csrf-token': string;
+  cookie?: string;
 }

@@ -21,7 +21,6 @@ import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   createLogger,
   ErrorWithCause,
-  pickIgnoreCase,
   sanitizeRecord,
   unixEOL
 } from '@sap-cloud-sdk/util';
@@ -115,15 +114,16 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
       destinationRequestConfig
     );
 
-    if(options?.fetchCsrfToken){
-      requestConfig.middleware = [...(requestConfig.middleware || []),csrf()];
+    if (options?.fetchCsrfToken) {
+      requestConfig.middleware = [...(requestConfig.middleware || []), csrf()];
     }
 
     return executeWithMiddleware(requestConfig.middleware, {
       fnArgument: request,
       fn: (req: typeof request) => {
         logRequestInformation(request);
-        return executeFn(req);},
+        return executeFn(req);
+      },
       context: {
         jwt: destination.jwt,
         uri: resolvedDestination.url,
@@ -363,11 +363,10 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
 ): Promise<HttpResponse> {
   const requestConfigWithOrigin =
     buildHttpRequestConfigWithOrigin(requestConfig);
-  return execute(executeWithAxios)(
-    destination,
-    requestConfigWithOrigin,
-      { ...getDefaultHttpRequestOptions(), ...options }
-  );
+  return execute(executeWithAxios)(destination, requestConfigWithOrigin, {
+    ...getDefaultHttpRequestOptions(),
+    ...options
+  });
 }
 
 /**
@@ -393,11 +392,10 @@ export function executeHttpRequestWithOrigin<
 ): Promise<HttpResponse> {
   const requestConfigWithDefaults =
     requestConfig ?? getDefaultHttpRequestConfigOptions();
-  return execute(executeWithAxios)(
-    destination,
-    requestConfigWithDefaults,
-      { ...getDefaultHttpRequestOptions(), ...options }
-  );
+  return execute(executeWithAxios)(destination, requestConfigWithDefaults, {
+    ...getDefaultHttpRequestOptions(),
+    ...options
+  });
 }
 
 function buildDestinationHttpRequestConfig(

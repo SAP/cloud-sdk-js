@@ -186,7 +186,7 @@ async function makeCsrfRequests(
   // The S/4 does a redirect if the CSRF token is fetched in case the '/' is not in the URL.
   // TODO: remove once https://github.com/axios/axios/issues/3369 is really fixed. Issue is closed but problem stays.
   // We try first with slash and then without
-  // eslint-disable-next-line  no-return-await
+  /* eslint-disable no-return-await */
   return (
     (await makeCsrfRequest(appendSlash(axiosConfig), options)) ??
     (await makeCsrfRequest(removeSlash(axiosConfig), options))

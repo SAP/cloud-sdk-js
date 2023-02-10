@@ -373,7 +373,7 @@ describe('GetAllRequestBuilder', () => {
           },
           url: 'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
           method: 'get',
-          middleware: [],
+          middleware: [expect.any(Function)],
           data: undefined
         },
         { fetchCsrfToken: true }

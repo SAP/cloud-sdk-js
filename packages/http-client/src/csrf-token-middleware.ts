@@ -3,6 +3,7 @@ import {
   createLogger,
   ErrorWithCause,
   first,
+  flatten,
   pickIgnoreCase,
   pickValueIgnoreCase,
   removeTrailingSlashes
@@ -61,6 +62,11 @@ export function csrf(options?: CsrfMiddlewareOptions): HttpMiddleware {
         ...options,
         ...middlewareOptions
       });
+      if (csrfToken?.cookie) {
+        csrfToken.cookie = requestConfig.headers?.cookie
+          ? [requestConfig.headers?.cookie, csrfToken?.cookie].join(';')
+          : csrfToken?.cookie;
+      }
       requestConfig.headers = { ...requestConfig.headers, ...csrfToken };
       return middlewareOptions.fn(requestConfig);
     };
@@ -103,9 +109,11 @@ function getCsrfToken(headers: Record<string, any>): string | undefined {
 }
 
 function getSetCookieHeader(headers: Record<string, any>): string | undefined {
-  // The axios client wraps the set-cookie header in a array.
-  const value = Object.values(pickIgnoreCase(headers, 'set-cookie'))[0];
-  return Array.isArray(value) ? value[0] : value;
+  const cookies = Object.values(pickIgnoreCase(headers, 'set-cookie'));
+  // On cookie format: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
+  return flatten(cookies)
+    .map((cookie: string) => cookie.split(';')[0])
+    .join(';');
 }
 
 /**

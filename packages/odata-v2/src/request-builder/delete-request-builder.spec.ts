@@ -49,13 +49,10 @@ describe('DeleteRequestBuilder', () => {
       },
       testEntityApi
     );
-
-    const deleteRequest = new DeleteRequestBuilder(
+    const deleteRequest = await new DeleteRequestBuilder(
       testEntityApi,
       entity
     ).execute(defaultDestination);
-
-    await expect(deleteRequest).resolves.toBe(undefined);
   });
 
   it('delete request with version identifier on the request should resolve', async () => {

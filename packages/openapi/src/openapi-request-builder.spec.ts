@@ -22,7 +22,6 @@ import {
   providerServiceToken
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
-import {csrf} from "@sap-cloud-sdk/http-client";
 
 const destination: HttpDestination = {
   url: 'http://example.com'
@@ -93,7 +92,7 @@ describe('openapi-request-builder', () => {
       sanitizeDestination(destination),
       {
         method: 'post',
-        middleware: [expect.any(Function)], //this is the csrf token middleware
+        middleware: [expect.any(Function)], // this is the csrf token middleware
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },

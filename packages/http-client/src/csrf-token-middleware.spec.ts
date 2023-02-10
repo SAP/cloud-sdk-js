@@ -89,6 +89,33 @@ describe('CSRF middleware', () => {
     );
   });
 
+  it('fetches and adds the csrf token with cookie and merge existing cookies', async () => {
+    nock(host)
+      .head('/some/path/')
+      .reply(200, {}, { ...csrfResponseHeaders, 'set-cookie': 'cookieValue' });
+    nock(host).post('/some/path').reply(200, {});
+    const spy = jest.spyOn(axios, 'request');
+    await executeHttpRequest(
+      { url: host },
+      {
+        method: 'POST',
+        url: 'some/path',
+        headers: { cookie: 'existingCookie' }
+      }
+    );
+    expect(spy).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        method: 'POST',
+        headers: {
+          ...csrfResponseHeaders,
+          cookie: 'existingCookie;cookieValue'
+        },
+        url: 'some/path'
+      })
+    );
+  });
+
   it('fetches headers from "/some/path/" first', async () => {
     nock(host).head('/some/path/').reply(200, {}, csrfResponseHeaders);
     nock(host).post('/some/path').reply(200, {});

@@ -36,7 +36,7 @@ class ServiceGenerator {
   }
 
   public generateAllServices(): VdmServiceMetadata[] {
-    return inputPaths(this.options.inputDir, this.options.useSwagger).map(p =>
+    return inputPaths(this.options.input, this.options.useSwagger).map(p =>
       this.generateService(p)
     );
   }

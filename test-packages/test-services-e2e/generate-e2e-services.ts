@@ -15,7 +15,7 @@ const generatorConfigOData = {
 async function generateE2E() {
   await generate({
     ...generatorConfigOData,
-    inputDir: resolve(
+    input: resolve(
       '..',
       '..',
       'test-resources',
@@ -35,7 +35,7 @@ async function generateE2E() {
 
   await generate({
     ...generatorConfigOData,
-    inputDir: resolve(
+    input: resolve(
       '..',
       '..',
       'test-resources',

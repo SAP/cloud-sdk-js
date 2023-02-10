@@ -44,7 +44,7 @@ describe('generator', () => {
       });
 
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'common',
         optionsPerService: 'someDir/test-service-options.json',
         overwrite: true,
@@ -61,7 +61,7 @@ describe('generator', () => {
 
     it('fails if skip validation is not enabled', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'failing',
         overwrite: true,
         skipValidation: false
@@ -263,7 +263,7 @@ describe('generator', () => {
 
     it('writes options per service with custom name', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'out',
         optionsPerService: 'test-service-options.json',
         skipValidation: true,
@@ -289,7 +289,7 @@ describe('generator', () => {
 
     it('writes options per service to the given dir', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'out',
         optionsPerService: 'temp',
         skipValidation: true,
@@ -315,7 +315,7 @@ describe('generator', () => {
 
     it('writes options per service to the given dir containing an existing options file ', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'out',
         optionsPerService: 'temp/options.json',
         skipValidation: true,
@@ -341,7 +341,7 @@ describe('generator', () => {
 
     xit('merges options per service', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'out',
         optionsPerService: 'anotherConfig',
         skipValidation: true,
@@ -371,7 +371,7 @@ describe('generator', () => {
 
     xit('overwrites writes options per service', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'out',
         optionsPerService: 'existingConfig',
         skipValidation: true,
@@ -416,7 +416,7 @@ describe('generator', () => {
         messageContext: 'generator'
       });
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'logger',
         overwrite: true,
         prettierConfig: '/prettier/config',
@@ -442,7 +442,7 @@ describe('generator', () => {
       });
       logger.add(fileTransport);
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'logger',
         overwrite: true,
         skipValidation: true,

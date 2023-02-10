@@ -13,7 +13,7 @@ export interface GeneratorOptions extends CommonGeneratorOptions {
   /**
    * This directory will be recursively searched for `.edmx`/`.xml` files.
    */
-  inputDir: string;
+  input: string;
   /**
    * If set to true, swagger definitions (JSON) are used for generation.
    */
@@ -35,7 +35,7 @@ const odataReadmeText =
  * @internal
  */
 export const cliOptions = {
-  inputDir: {
+  input: {
     alias: 'i',
     describe:
       'This directory will be recursively searched for EDMX and XML files.',

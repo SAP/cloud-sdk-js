@@ -64,9 +64,9 @@ expectType<number | undefined>(parsedOptions.coercedOptional);
 const realParsedOptions = parseOptions(cliOptions, {});
 
 /**
- * `inputDir` is required.
+ * `input` is required.
  */
-expectType<string>(realParsedOptions.inputDir);
+expectType<string>(realParsedOptions.input);
 
 /**
  * `optionsPerService` is optional because it has no default value.

@@ -77,9 +77,6 @@ export async function generateWithParsedOptions(
   if (options.input === '' || options.outputDir === '') {
     throw new Error('Either input or outputDir were not set.');
   }
-  if (options.verbose) {
-    setLogLevel('verbose', logger);
-  }
 
   if (options.clearOutputDir) {
     // function rm was added in node version 14 and is the preferred method to use.

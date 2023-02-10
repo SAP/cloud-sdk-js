@@ -44,7 +44,7 @@ describe('OData generator CLI', () => {
   it('should fail if mandatory parameters are not there', async () => {
     await expect(() =>
       execa.command(`npx ts-node ${pathToGenerator}`)
-    ).rejects.toThrowError(/Missing required arguments: inputDir, outputDir/);
+    ).rejects.toThrowError(/Missing required arguments: input, outputDir/);
   }, 60000);
 
   it('should read config', async () => {
@@ -56,7 +56,7 @@ describe('OData generator CLI', () => {
   it('should generate client if all arguments are there', async () => {
     await generate(
       createOptions({
-        inputDir,
+        input,
         outputDir: outputDirGenerateAll,
         transpile: true,
         packageJson: true

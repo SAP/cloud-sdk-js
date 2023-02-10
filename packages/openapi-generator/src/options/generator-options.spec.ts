@@ -173,7 +173,7 @@ describe('parseGeneratorOptions', () => {
     expect(parsed.input).toMatchObject([]);
     expect(parsed.outputDir).toContain('some-output');
     // RegEx to match paths for both *nix and Windows
-    expect(parsed.include).toMatchObject([join(resolve(), 'test-config.json')]);
+    expect(parsed.include).toMatchObject([path]);
   });
 
   it('fails if wrong configuration keys were used', async () => {

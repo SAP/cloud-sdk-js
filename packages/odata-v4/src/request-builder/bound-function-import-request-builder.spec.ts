@@ -7,7 +7,7 @@ import nock from 'nock';
 
 describe('bound function import request builder', () => {
   const { testEntityApi } = testService();
-  const servicePath = TestEntity._defaultServicePath;
+  const basePath = TestEntity._defaultBasePath;
   const host = 'https://example.com';
 
   const destination: HttpDestination = {
@@ -22,7 +22,7 @@ describe('bound function import request builder', () => {
   it('executes a bound function without arguments', async () => {
     nock(host)
       .get(
-        `${servicePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString='abc')/boundFunctionWithoutArguments()`
+        `${basePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString='abc')/boundFunctionWithoutArguments()`
       )
       .reply(200, { value: 'returnValue' });
 
@@ -39,7 +39,7 @@ describe('bound function import request builder', () => {
   it('executes a bound function with arguments', async () => {
     nock(host)
       .get(
-        `${servicePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString='abc')/boundFunctionWithArguments(param1='foo',param2='bar')`
+        `${basePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString='abc')/boundFunctionWithArguments(param1='foo',param2='bar')`
       )
       .reply(200, { value: 'returnValue' });
 

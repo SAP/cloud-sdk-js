@@ -28,11 +28,11 @@ export class BatchRequestBuilder<
 
   /**
    * Creates an instance of ODataBatchRequestBuilder.
-   * @param defaultServicePath - Service path.
+   * @param defaultBasePath - Base path.
    * @param requests - An array of retrieve requests or change sets.
    */
   constructor(
-    readonly defaultServicePath: string,
+    readonly defaultBasePath: string,
     readonly requests: (
       | BatchChangeSet<DeSerializersT>
       | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
@@ -43,7 +43,7 @@ export class BatchRequestBuilder<
         >
     )[]
   ) {
-    super(new ODataBatchRequestConfig(defaultServicePath));
+    super(new ODataBatchRequestConfig(defaultBasePath));
     this.deSerializers = first(
       Object.values(this.getEntityToApiMap())
     )?.deSerializers;

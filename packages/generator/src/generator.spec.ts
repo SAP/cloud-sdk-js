@@ -277,7 +277,7 @@ describe('generator', () => {
           {
             API_TEST_SRV: {
               directoryName: 'test-service',
-              servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              basePath: '/sap/opu/odata/sap/API_TEST_SRV',
               npmPackageName: 'test-service'
             }
           },
@@ -303,7 +303,7 @@ describe('generator', () => {
           {
             API_TEST_SRV: {
               directoryName: 'test-service',
-              servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              basePath: '/sap/opu/odata/sap/API_TEST_SRV',
               npmPackageName: 'test-service'
             }
           },
@@ -329,7 +329,7 @@ describe('generator', () => {
           {
             API_TEST_SRV: {
               directoryName: 'test-service',
-              servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              basePath: '/sap/opu/odata/sap/API_TEST_SRV',
               npmPackageName: 'test-service'
             }
           },
@@ -359,7 +359,7 @@ describe('generator', () => {
             },
             API_TEST_SRV: {
               directoryName: 'test-service',
-              servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              basePath: '/sap/opu/odata/sap/API_TEST_SRV',
               npmPackageName: 'test-service'
             }
           },
@@ -385,7 +385,7 @@ describe('generator', () => {
           {
             API_TEST_SRV: {
               directoryName: 'test-service',
-              servicePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              basePath: '/sap/opu/odata/sap/API_TEST_SRV',
               npmPackageName: 'test-service'
             }
           },

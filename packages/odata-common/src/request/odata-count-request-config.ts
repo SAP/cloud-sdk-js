@@ -24,10 +24,7 @@ export class ODataCountRequestConfig<
   constructor(
     readonly getAllRequest: GetAllRequestBuilderBase<EntityT, DeSerializersT>
   ) {
-    super(
-      'get',
-      getAllRequest._entityApi.entityConstructor._defaultServicePath
-    );
+    super('get', getAllRequest._entityApi.entityConstructor._defaultBasePath);
   }
 
   resourcePath(): string {

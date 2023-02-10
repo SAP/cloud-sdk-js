@@ -11,7 +11,7 @@ export function checkStaticProperties(entityClass: ClassDeclaration): void {
   const properties = entityClass.getProperties();
   const staticProperties = [
     properties.find(p => p.getName() === '_entityName')!,
-    properties.find(p => p.getName() === '_defaultServicePath')!
+    properties.find(p => p.getName() === '_defaultBasePath')!
   ];
 
   expect(staticProperties.map(p => p.isStatic())).toEqual([true, true]);

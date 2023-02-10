@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'fs';
 import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
 import { ParsedGeneratorOptions } from './options';
 import { VdmServiceMetadata } from './vdm-types';
-import { servicePathFromSwagger } from './swagger-parser/swagger-util';
+import { basePathFromSwagger } from './swagger-parser/swagger-util';
 import { ServiceMetadata } from './edmx-parser/edmx-file-reader';
 
 const logger = createLogger({
@@ -28,7 +28,7 @@ export interface OptionsPerService {
   /**
    * @internal
    */
-  servicePath: string;
+  basePath: string;
   /**
    * @internal
    */
@@ -52,7 +52,7 @@ export function optionsPerService(services: VdmServiceMetadata[]): VdmMapping {
   return services.reduce((vdmMapping, service) => {
     vdmMapping[service.originalFileName] = {
       directoryName: service.directoryName,
-      servicePath: service.servicePath,
+      basePath: service.basePath,
       npmPackageName: service.npmPackageName
     };
 
@@ -68,35 +68,35 @@ export function optionsPerServiceFile(services: VdmServiceMetadata[]): string {
 /**
  * @internal
  */
-export function getServicePath(
+export function getBasePath(
   metadata: ServiceMetadata,
   skipValidation: boolean,
   optionsPerServiceIn?: OptionsPerService
 ): string {
-  let servicePath =
-    optionsPerServiceIn?.servicePath ||
-    servicePathFromSelfLink(metadata.edmx.selfLink) ||
-    servicePathFromSwagger(metadata.swagger);
-  if (!servicePath) {
+  let basePath =
+    optionsPerServiceIn?.basePath ||
+    basePathFromSelfLink(metadata.edmx.selfLink) ||
+    basePathFromSwagger(metadata.swagger);
+  if (!basePath) {
     if (skipValidation) {
       logger.warn(
         `[ ${
           parse(metadata.edmx.path.toString()).name
-        } ] No service path could be determined from available metadata! Setting "servicePath" to "/" in the "options-per-service.json".`
+        } ] No base path could be determined from available metadata! Setting "basePath" to "/" in the "options-per-service.json".`
       );
-      servicePath = '/';
+      basePath = '/';
     } else {
       throw new Error(
         `[ ${
           parse(metadata.edmx.path.toString()).name
-        } ] No service path could be determined from available metadata! Set "servicePath" in the "options-per-service.json" to generate client.`
+        } ] No base path could be determined from available metadata! Set "basePath" in the "options-per-service.json" to generate client.`
       );
     }
   }
-  return servicePath;
+  return basePath;
 }
 
-function servicePathFromSelfLink(
+function basePathFromSelfLink(
   selfLink: string | undefined
 ): string | undefined {
   if (selfLink) {

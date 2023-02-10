@@ -24,7 +24,7 @@ TestEntityCircularLinkChild._entityName = 'A_TestEntityCircularLinkChild';
 /**
  * Default url path for the according service.
  */
-TestEntityCircularLinkChild._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+TestEntityCircularLinkChild._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntityCircularLinkChild entity
  */

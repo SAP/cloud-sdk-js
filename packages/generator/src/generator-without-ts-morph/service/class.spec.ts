@@ -7,7 +7,7 @@ describe('class', () => {
     originalFileName: 'API_A_SERV',
     directoryName: 'a-serv',
     npmPackageName: '@sap/a-serv',
-    servicePath: '/path/to/serv',
+    basePath: '/path/to/serv',
     complexTypes: [],
     enumTypes: [],
     entities: [],

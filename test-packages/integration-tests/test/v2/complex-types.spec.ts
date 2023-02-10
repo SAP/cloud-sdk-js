@@ -14,7 +14,7 @@ import {
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 import { testEntityApi } from './test-util';
 
-const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = TestEntity._entityName;
 
 const getAllResponse = testEntityCollectionResponse();
@@ -41,7 +41,7 @@ describe('Complex types', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}?$filter=(ComplexTypeProperty/StringProperty%20eq%20%27someComplexTypeProperty%27)`
+        `${basePath}/${entityName}?$filter=(ComplexTypeProperty/StringProperty%20eq%20%27someComplexTypeProperty%27)`
       )
       .reply(200, getAllResponse);
 
@@ -70,7 +70,7 @@ describe('Complex types', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}?$orderby=ComplexTypeProperty/StringProperty%20asc`
+        `${basePath}/${entityName}?$orderby=ComplexTypeProperty/StringProperty%20asc`
       )
       .reply(200, getAllResponse);
 

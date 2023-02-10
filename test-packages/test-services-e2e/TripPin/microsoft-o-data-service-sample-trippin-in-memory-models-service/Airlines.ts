@@ -25,7 +25,7 @@ export class Airlines<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath =
+  static _defaultBasePath =
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * All key fields of the Airlines entity

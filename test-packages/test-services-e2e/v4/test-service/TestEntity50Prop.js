@@ -24,7 +24,7 @@ TestEntity50Prop._entityName = 'TestEntity50Prop';
 /**
  * Default url path for the according service.
  */
-TestEntity50Prop._defaultServicePath = '/odata/test-service';
+TestEntity50Prop._defaultBasePath = '/odata/test-service';
 /**
  * All key fields of the TestEntity50Prop entity
  */

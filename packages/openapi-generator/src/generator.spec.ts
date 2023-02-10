@@ -3,8 +3,9 @@ import { existsSync, promises } from 'fs';
 import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
 import prettier from 'prettier';
+import { getInputFilePaths } from '@sap-cloud-sdk/generator-common/internal';
 import { emptyDocument } from '../test/test-util';
-import { generate, getInputFilePaths } from './generator';
+import { generate } from './generator';
 
 jest.mock('../../generator-common/internal', () => {
   const actual = jest.requireActual('../../generator-common/internal');
@@ -47,14 +48,14 @@ describe('generator', () => {
 
     const input = 'root/inputDir';
 
-    it('should return an array with one file path for an input file', async () => {
-      expect(
-        await getInputFilePaths('root/inputDir/test-service.json')
-      ).toEqual([resolve(input, 'test-service.json')]);
+    it('should return an array with one file path for an input file', () => {
+      expect(getInputFilePaths('root/inputDir/test-service.json')).toEqual([
+        resolve(input, 'test-service.json')
+      ]);
     });
 
-    it('should return an array with all JSON and YAML file paths within the input directory and all subdirectories', async () => {
-      expect(await getInputFilePaths(input)).toEqual([
+    it('should return an array with all JSON and YAML file paths within the input directory and all subdirectories', () => {
+      expect(getInputFilePaths(input)).toEqual([
         resolve(input, 'sub-dir/test-service.YAML'),
         resolve(input, 'sub-dir/test-service.yml'),
         resolve(input, 'sub-dir/test-service.YML'),
@@ -65,23 +66,23 @@ describe('generator', () => {
       ]);
     });
 
-    it('should return an array with all `.json` files within the input directory and all subdirectories', async () => {
-      expect(await getInputFilePaths('root/inputDir/**/*.json')).toEqual([
+    it('should return an array with all `.json` files within the input directory and all subdirectories', () => {
+      expect(getInputFilePaths('root/inputDir/**/*.json')).toEqual([
         resolve(input, 'sub-dir/test-service2.json'),
         resolve(input, 'test-service.json')
       ]);
     });
 
-    it('should return an array with all JSON and YAML file paths within the input directory', async () => {
-      expect(await getInputFilePaths('root/inputDir/*')).toEqual([
+    it('should return an array with all JSON and YAML file paths within the input directory', () => {
+      expect(getInputFilePaths('root/inputDir/*')).toEqual([
         resolve(input, 'test-service.json'),
         resolve(input, 'test-service.JSON'),
         resolve(input, 'test-service.yaml')
       ]);
     });
 
-    it('should return an array with all `.json` and `.yaml` files within the input directory', async () => {
-      expect(await getInputFilePaths('root/inputDir/*.{json,yaml}')).toEqual([
+    it('should return an array with all `.json` and `.yaml` files within the input directory', () => {
+      expect(getInputFilePaths('root/inputDir/*.{json,yaml}')).toEqual([
         resolve(input, 'test-service.json'),
         resolve(input, 'test-service.yaml')
       ]);

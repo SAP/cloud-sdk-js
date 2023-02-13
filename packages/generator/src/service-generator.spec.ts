@@ -11,14 +11,7 @@ describe('service-generator', () => {
     describe('parseService', () => {
       it('namespace by default', () => {
         const serviceMetadata = parseService(
-          {
-            edmxPath: resolve(
-              oDataServiceSpecs,
-              'v2',
-              'API_TEST_SRV',
-              'API_TEST_SRV.edmx'
-            )
-          },
+          resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV', 'API_TEST_SRV.edmx'),
           createParsedOptions(),
           {},
           new GlobalNameFormatter(undefined)
@@ -34,14 +27,7 @@ describe('service-generator', () => {
         };
 
         const serviceMetadata = parseService(
-          {
-            edmxPath: resolve(
-              oDataServiceSpecs,
-              'v2',
-              'API_TEST_SRV',
-              'API_TEST_SRV.edmx'
-            )
-          },
+          resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV', 'API_TEST_SRV.edmx'),
           createParsedOptions(),
           {
             API_TEST_SRV: optionsPerService
@@ -421,11 +407,7 @@ describe('service-generator', () => {
       it('parses multiple schemas', () => {
         const services = parseAllServices(
           createParsedOptions({
-            input: resolve(
-              oDataServiceSpecs,
-              'v2',
-              'API_MULTIPLE_SCHEMAS_SRV'
-            ),
+            input: resolve(oDataServiceSpecs, 'v2', 'API_MULTIPLE_SCHEMAS_SRV'),
             useSwagger: false
           })
         );

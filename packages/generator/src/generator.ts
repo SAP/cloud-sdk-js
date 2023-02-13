@@ -173,11 +173,6 @@ export async function generateProject(
 ): Promise<ProjectAndServices | undefined> {
   const services = parseServices(options);
 
-  if (!services.length) {
-    logger.warn('No services parsed.');
-    return;
-  }
-
   if (options.clearOutputDir) {
     emptyDirSync(options.outputDir.toString());
   }

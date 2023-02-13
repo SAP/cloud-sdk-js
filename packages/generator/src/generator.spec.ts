@@ -5,6 +5,7 @@ import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { getInputFilePaths } from '@sap-cloud-sdk/generator-common/dist/options-parser';
 import {
   createOptions,
   createParsedOptions
@@ -237,6 +238,76 @@ describe('generator', () => {
           'testActionImportMultipleParameterComplexReturnType'
         ])
       );
+    });
+  });
+
+  describe('get input file paths', () => {
+    beforeEach(() => {
+      mock({
+        root: {
+          inputDir: {
+            'test-service.txt': 'dummy text specification file',
+            'test-service.edmx': 'dummy edmx specification file',
+            'test-service.xml': 'dummy xml specification file',
+            'test-service.XML': 'dummy XML specification file',
+            'empty-dir': {},
+            'sub-dir': {
+              'test-service.edmx': 'dummy edmx specification file',
+              'test-service.xml': 'dummy edmx specification file',
+              'test-service.XML': 'dummy YML specification file',
+              'test-service.EDMX': 'dummy xml specification file',
+              'test-service.txt': 'dummy text specification file'
+            }
+          },
+          outputDir: {}
+        }
+      });
+    });
+
+    afterEach(() => {
+      mock.restore();
+    });
+
+    const input = 'root/inputDir';
+
+    it('should return an array with one file path for an input file', () => {
+      expect(
+        getInputFilePaths('root/inputDir/test-service.edmx', 'OData')
+      ).toEqual([resolve(input, 'test-service.edmx')]);
+    });
+
+    it('should return an array with all edmx and xml file paths within the input directory and all subdirectories', () => {
+      expect(getInputFilePaths(input, 'OData')).toEqual([
+        resolve(input, 'sub-dir/test-service.edmx'),
+        resolve(input, 'sub-dir/test-service.EDMX'),
+        resolve(input, 'sub-dir/test-service.xml'),
+        resolve(input, 'sub-dir/test-service.XML'),
+        resolve(input, 'test-service.edmx'),
+        resolve(input, 'test-service.xml'),
+        resolve(input, 'test-service.XML')
+      ]);
+    });
+
+    it('should return an array with all `.xml` files within the input directory and all subdirectories', () => {
+      expect(getInputFilePaths('root/inputDir/**/*.xml', 'OData')).toEqual([
+        resolve(input, 'sub-dir/test-service.xml'),
+        resolve(input, 'test-service.xml')
+      ]);
+    });
+
+    it('should return an array with all edmx and xml file paths within the input directory', () => {
+      expect(getInputFilePaths('root/inputDir/*', 'OData')).toEqual([
+        resolve(input, 'test-service.edmx'),
+        resolve(input, 'test-service.xml'),
+        resolve(input, 'test-service.XML')
+      ]);
+    });
+
+    it('should return an array with all `.xml` and `.edmx` files within the input directory', () => {
+      expect(getInputFilePaths('root/inputDir/*.{xml,edmx}', 'OData')).toEqual([
+        resolve(input, 'test-service.edmx'),
+        resolve(input, 'test-service.xml')
+      ]);
     });
   });
 

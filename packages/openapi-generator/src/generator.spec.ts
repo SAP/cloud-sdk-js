@@ -49,13 +49,13 @@ describe('generator', () => {
     const input = 'root/inputDir';
 
     it('should return an array with one file path for an input file', () => {
-      expect(getInputFilePaths('root/inputDir/test-service.json')).toEqual([
-        resolve(input, 'test-service.json')
-      ]);
+      expect(
+        getInputFilePaths('root/inputDir/test-service.json', 'OpenApi')
+      ).toEqual([resolve(input, 'test-service.json')]);
     });
 
     it('should return an array with all JSON and YAML file paths within the input directory and all subdirectories', () => {
-      expect(getInputFilePaths(input)).toEqual([
+      expect(getInputFilePaths(input, 'OpenApi')).toEqual([
         resolve(input, 'sub-dir/test-service.YAML'),
         resolve(input, 'sub-dir/test-service.yml'),
         resolve(input, 'sub-dir/test-service.YML'),
@@ -67,14 +67,14 @@ describe('generator', () => {
     });
 
     it('should return an array with all `.json` files within the input directory and all subdirectories', () => {
-      expect(getInputFilePaths('root/inputDir/**/*.json')).toEqual([
+      expect(getInputFilePaths('root/inputDir/**/*.json', 'OpenApi')).toEqual([
         resolve(input, 'sub-dir/test-service2.json'),
         resolve(input, 'test-service.json')
       ]);
     });
 
     it('should return an array with all JSON and YAML file paths within the input directory', () => {
-      expect(getInputFilePaths('root/inputDir/*')).toEqual([
+      expect(getInputFilePaths('root/inputDir/*', 'OpenApi')).toEqual([
         resolve(input, 'test-service.json'),
         resolve(input, 'test-service.JSON'),
         resolve(input, 'test-service.yaml')
@@ -82,7 +82,9 @@ describe('generator', () => {
     });
 
     it('should return an array with all `.json` and `.yaml` files within the input directory', () => {
-      expect(getInputFilePaths('root/inputDir/*.{json,yaml}')).toEqual([
+      expect(
+        getInputFilePaths('root/inputDir/*.{json,yaml}', 'OpenApi')
+      ).toEqual([
         resolve(input, 'test-service.json'),
         resolve(input, 'test-service.yaml')
       ]);

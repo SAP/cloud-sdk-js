@@ -4,6 +4,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { InferredOptionType, Options as YargsOption } from 'yargs';
 const logger = createLogger('generator-options');
 import { glob, sync as globSync } from 'glob';
+import { ServiceType } from './options';
 
 /**
  * @internal
@@ -110,21 +111,38 @@ export function resolveRequiredPath<GeneratorOptionsT>(
 }
 
 /**
- * Resolves input string using glob notation.
+ * Builds a glob resolver function for OData or OpenApi
  * @internal
- * @param arg - Path argument as passed by the user.
- * @param options - Options as passed by the user.
- * @returns Absolute path as a `string`.
+ * @param serviceType - For which service the glob resolver is build.
+ * @returns Function for resolving inputs Globs for OData or Openapi
  */
-export function resolveInputGlob<GeneratorOptionsT>(
-  arg: string,
-  options: GeneratorOptionsT & { config?: string }
-): string[] {
-  const inputPath = options.config
-    ? resolve(dirname(options.config), arg.toString())
-    : resolve(arg.toString());
+export function buildResolveInputGlob<GeneratorOptionsT>(
+  serviceType: ServiceType
+) {
+  /**
+   * Resolves input string using glob notation.
+   * @internal
+   * @param arg - Path argument as passed by the user.
+   * @param options - Options as passed by the user.
+   * @returns Absolute path as a `string`.
+   */
+  return function resolveInputGlob(
+    arg: string,
+    options: GeneratorOptionsT & { config?: string }
+  ): string[] {
+    const inputPath = options.config
+      ? resolve(dirname(options.config), arg.toString())
+      : resolve(arg.toString());
 
-  return getInputFilePaths(inputPath.split(sep).join(posix.sep));
+    const resolvedServiceFilePaths = getInputFilePaths(
+      inputPath.split(sep).join(posix.sep),
+      serviceType
+    );
+    if (!resolvedServiceFilePaths.length) {
+      logger.warn(`No service definition files found using '${arg}' as input`);
+    }
+    return resolvedServiceFilePaths;
+  };
 }
 
 /**
@@ -133,18 +151,27 @@ export function resolveInputGlob<GeneratorOptionsT>(
  * @returns all file paths as a string array.
  * @internal
  */
-export function getInputFilePaths(input: string): string[] {
+export function getInputFilePaths(
+  input: string,
+  serviceType: ServiceType
+): string[] {
   // Check for any special characters in the input
   if (glob.hasMagic(input)) {
+    const regex =
+      serviceType === 'OData'
+        ? /(.xml|.edmx|.XML|.EDMX)$/
+        : /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/;
     return globSync(input)
-      .filter(path => /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/.test(path))
+      .filter(path => regex.test(path))
       .map(s => resolve(s));
   }
 
   if (lstatSync(input).isDirectory()) {
-    return globSync(
-      posix.join(input, '**/*.{json,JSON,yaml,YAML,yml,YML}')
-    ).map(s => resolve(s));
+    const regex =
+      serviceType === 'OData'
+        ? '**/*.{xml,edmx,XML,EDMX}'
+        : '**/*.{json,JSON,yaml,YAML,yml,YML}';
+    return globSync(posix.join(input, regex)).map(s => resolve(s));
   }
 
   return [resolve(input)];

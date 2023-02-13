@@ -1,7 +1,8 @@
+import { parse } from 'path';
+import { existsSync } from 'fs';
 import { ParsedGeneratorOptions } from './options';
 import { npmCompliantName } from './generator-utils';
 import { GlobalNameFormatter } from './global-name-formatter';
-import { inputPaths, ServiceDefinitionPaths } from './input-path-provider';
 import {
   getBasePath,
   readOptionsPerService,
@@ -36,19 +37,17 @@ class ServiceGenerator {
   }
 
   public generateAllServices(): VdmServiceMetadata[] {
-    return inputPaths(this.options.input, this.options.useSwagger).map(p =>
-      this.generateService(p)
+    return this.options.input.map(serviceSpecPath =>
+      this.generateService(serviceSpecPath)
     );
   }
 
-  public generateService(
-    serviceDefinitionPaths: ServiceDefinitionPaths
-  ): VdmServiceMetadata {
-    const serviceMetadata = this.readEdmxAndSwaggerFile(serviceDefinitionPaths);
+  public generateService(edmxServiceSpecPath: string): VdmServiceMetadata {
+    const serviceMetadata = this.readEdmxAndSwaggerFile(edmxServiceSpecPath);
 
     const vdmServicePackageMetaData = this.getServicePackageMetaData(
       serviceMetadata,
-      serviceDefinitionPaths
+      edmxServiceSpecPath
     );
 
     const vdmServiceEntities = isV2Metadata(serviceMetadata.edmx)
@@ -71,7 +70,7 @@ class ServiceGenerator {
 
   private getServicePackageMetaData(
     serviceMetadata: ServiceMetadata,
-    serviceDefinitionPaths: ServiceDefinitionPaths
+    edmxServiceSpecPath: string
   ): VdmServicePackageMetaData {
     const directoryName = this.globalNameFormatter.uniqueDirectoryName(
       ServiceNameFormatter.originalToServiceName(
@@ -101,23 +100,27 @@ class ServiceGenerator {
         this.options.skipValidation,
         this.optionsPerService[serviceMetadata.edmx.fileName]
       ),
-      edmxPath: serviceDefinitionPaths.edmxPath,
+      edmxPath: edmxServiceSpecPath,
       apiBusinessHubMetadata: apiBusinessHubMetadata(serviceMetadata.swagger),
       className
     };
   }
 
-  private readEdmxAndSwaggerFile(
-    serviceDefinitionPaths: ServiceDefinitionPaths
-  ): ServiceMetadata {
+  private readEdmxAndSwaggerFile(edmxServiceSpecPath: string): ServiceMetadata {
     const serviceMetadata: ServiceMetadata = {
-      edmx: readEdmxFile(serviceDefinitionPaths.edmxPath)
+      edmx: readEdmxFile(edmxServiceSpecPath)
     };
-    if (serviceDefinitionPaths.swaggerPath) {
-      serviceMetadata.swagger = readSwaggerFile(
-        serviceDefinitionPaths.swaggerPath
+    const extension = parse(edmxServiceSpecPath).ext;
+    ['.JSON'].forEach(swaggerExtension => {
+      const swaggerPath = edmxServiceSpecPath.replace(
+        extension,
+        swaggerExtension
       );
-    }
+      if (existsSync(swaggerPath)) {
+        serviceMetadata.swagger = readSwaggerFile(swaggerPath);
+      }
+    });
+
     return serviceMetadata;
   }
 }
@@ -142,7 +145,7 @@ export function parseAllServices(
  * @internal
  */
 export function parseService(
-  serviceDefinitionPaths: ServiceDefinitionPaths,
+  edmxServiceSpecPath: string,
   options: ParsedGeneratorOptions,
   mappings: VdmMapping,
   globalNameFormatter: GlobalNameFormatter
@@ -150,7 +153,7 @@ export function parseService(
   return new ServiceGenerator(options)
     .withOptionsPerService(mappings)
     .withGlobalNameFormatter(globalNameFormatter)
-    .generateService(serviceDefinitionPaths);
+    .generateService(edmxServiceSpecPath);
 }
 
 /**

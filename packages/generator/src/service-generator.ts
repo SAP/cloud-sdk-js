@@ -113,7 +113,7 @@ class ServiceGenerator {
     const { dir, name } = parse(edmxServiceSpecPath);
     const files = readdirSync(dir);
     files.forEach(file => {
-      if (name + '.json' === file || name + '.JSON'=== file) {
+      if (name + '.json' === file || name + '.JSON' === file) {
         serviceMetadata.swagger = readSwaggerFile(join(dir, file));
       }
     });

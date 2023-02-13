@@ -56,7 +56,7 @@ describe('OData generator CLI', () => {
   it('should generate client if all arguments are there', async () => {
     await generate(
       createOptions({
-        input,
+        input: inputDir,
         outputDir: outputDirGenerateAll,
         transpile: true,
         packageJson: true

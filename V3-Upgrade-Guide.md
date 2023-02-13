@@ -80,6 +80,9 @@ The following deprecated options were renamed:
 - `generatePackageJson` becomes `packageJson`
 - `writeReadme` becomes `readme`
 - `processesJsGeneration` becomes `transpilationProcesses`
+- `inputDir` becomes `input`
+
+The new `input` options accepts now also file paths and glob patterns.
 
 The deprecated `generateNpmrc` option of the generator is removed. 
 Use the `include` option to add a `.npmrc` to the generated code if needed.

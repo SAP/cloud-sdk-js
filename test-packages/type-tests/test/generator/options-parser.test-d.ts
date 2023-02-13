@@ -66,7 +66,7 @@ const realParsedOptions = parseOptions(cliOptions, {});
 /**
  * `input` is required.
  */
-expectType<string>(realParsedOptions.input);
+expectType<string[]>(realParsedOptions.input);
 
 /**
  * `optionsPerService` is optional because it has no default value.

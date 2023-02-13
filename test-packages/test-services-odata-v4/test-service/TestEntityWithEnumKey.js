@@ -8,7 +8,7 @@ exports.TestEntityWithEnumKey = void 0;
  */
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 /**
- * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 class TestEntityWithEnumKey extends odata_v4_1.Entity {
     constructor(_entityApi) {

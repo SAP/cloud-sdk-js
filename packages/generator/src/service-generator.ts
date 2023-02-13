@@ -1,5 +1,5 @@
-import { parse } from 'path';
-import { existsSync } from 'fs';
+import { join, parse } from 'path';
+import { readdirSync } from 'fs';
 import { ParsedGeneratorOptions } from './options';
 import { npmCompliantName } from './generator-utils';
 import { GlobalNameFormatter } from './global-name-formatter';
@@ -110,14 +110,11 @@ class ServiceGenerator {
     const serviceMetadata: ServiceMetadata = {
       edmx: readEdmxFile(edmxServiceSpecPath)
     };
-    const extension = parse(edmxServiceSpecPath).ext;
-    ['.JSON'].forEach(swaggerExtension => {
-      const swaggerPath = edmxServiceSpecPath.replace(
-        extension,
-        swaggerExtension
-      );
-      if (existsSync(swaggerPath)) {
-        serviceMetadata.swagger = readSwaggerFile(swaggerPath);
+    const { dir, name } = parse(edmxServiceSpecPath);
+    const files = readdirSync(dir);
+    files.forEach(file => {
+      if (name + '.json' === file || name + '.JSON'=== file) {
+        serviceMetadata.swagger = readSwaggerFile(join(dir, file));
       }
     });
 

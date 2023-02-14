@@ -7,11 +7,6 @@ import {
 } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
- * Options to configure the client generation when using the generator programmatically.
- */
-export type GeneratorOptions = CommonGeneratorOptions;
-
-/**
  * @internal
  * Represents the parsed generator options.
  */
@@ -22,4 +17,4 @@ export type ParsedGeneratorOptions = ParsedOptions<typeof cliOptions>;
  */
 export const cliOptions = {
   ...getCommonCliOptions('OpenApi')
-} as const satisfies Options<GeneratorOptions>;
+} as const satisfies Options<CommonGeneratorOptions>;

@@ -123,7 +123,7 @@ export function getCommonCliOptions(serviceType: ServiceType) {
 }
 
 /**
- * @internal
+ * Generator options shared by the OData and OpenApi generator.
  */
 export interface CommonGeneratorOptions {
   /**

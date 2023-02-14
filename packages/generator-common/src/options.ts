@@ -3,13 +3,9 @@ import {
   resolveGlob,
   resolveOptionsPerService,
   resolvePath,
-  resolveRequiredPath
+  resolveRequiredPath,
+  ServiceType
 } from './options-parser';
-
-/**
- * @internal
- */
-export type ServiceType = 'OData' | 'OpenApi';
 
 function getReadmeText(serviceType: ServiceType): string {
   return serviceType === 'OData'

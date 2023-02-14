@@ -4,7 +4,11 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { InferredOptionType, Options as YargsOption } from 'yargs';
 const logger = createLogger('generator-options');
 import { glob, sync as globSync } from 'glob';
-import { ServiceType } from './options';
+
+/**
+ * @internal
+ */
+export type ServiceType = 'OData' | 'OpenApi';
 
 /**
  * @internal

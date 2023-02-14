@@ -1,1 +1,1 @@
-export {CommonGeneratorOptions} from './options'
+export { CommonGeneratorOptions } from './options';

@@ -1,9 +1,9 @@
 import { resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { generate, GeneratorOptions } from '@sap-cloud-sdk/openapi-generator';
+import { generate, CommonGeneratorOptions } from '@sap-cloud-sdk/openapi-generator';
 
 const logger = createLogger('generate-openapi-services');
-const generatorConfigOpenApi: Partial<GeneratorOptions> = {
+const generatorConfigOpenApi: Partial<CommonGeneratorOptions> = {
   clearOutputDir: false,
   transpile: true,
   packageJson: true,

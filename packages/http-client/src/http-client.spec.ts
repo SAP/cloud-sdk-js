@@ -5,7 +5,7 @@ import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
 import axios from 'axios';
-import { timeout, MiddlewareOptions } from '@sap-cloud-sdk/resilience';
+import { timeout } from '@sap-cloud-sdk/resilience';
 import * as jwt123 from 'jsonwebtoken';
 import {
   circuitBreakers,
@@ -39,7 +39,7 @@ import * as csrf from './csrf-token-middleware';
 import {
   DestinationHttpRequestConfig,
   HttpMiddleware,
-  HttpMiddlewareContext,
+  HttpMiddlewareOptions,
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
   HttpResponse
@@ -236,13 +236,7 @@ describe('generic http client', () => {
       // We want to add a name to the function for debugging which is not easy to set.
       // Doing the dummy object the name of the key is taken as function name.
       const dummy = {
-        [appendedText](
-          options: MiddlewareOptions<
-            HttpRequestConfig,
-            HttpResponse,
-            HttpMiddlewareContext
-          >
-        ) {
+        [appendedText](options: HttpMiddlewareOptions) {
           if (skipNext) {
             options.skipNext();
           }
@@ -359,14 +353,7 @@ describe('generic http client', () => {
 
     it('passes the context properties to the middleware', async () => {
       const showContextMiddleware: HttpMiddleware =
-        (
-          opt: MiddlewareOptions<
-            HttpRequestConfig,
-            HttpResponse,
-            HttpMiddlewareContext
-          >
-        ) =>
-        () =>
+        (opt: HttpMiddlewareOptions) => () =>
           ({ data: opt.context } as any);
 
       mockServiceBindings();

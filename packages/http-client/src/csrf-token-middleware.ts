@@ -1,4 +1,3 @@
-import { MiddlewareOptions } from '@sap-cloud-sdk/resilience';
 import {
   createLogger,
   ErrorWithCause,
@@ -13,10 +12,10 @@ import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   HttpMiddleware,
   HttpMiddlewareContext,
+  HttpMiddlewareOptions,
   HttpRequestConfig,
   HttpRequestConfigBase,
   HttpRequestConfigWithOrigin,
-  HttpResponse,
   Method
 } from './http-client-types';
 
@@ -47,29 +46,22 @@ export interface CsrfMiddlewareOptions {
  * @returns The middleware for fetching CSRF tokens.
  */
 export function csrf(options?: CsrfMiddlewareOptions): HttpMiddleware {
-  return (
-      middlewareOptions: MiddlewareOptions<
-        HttpRequestConfig,
-        HttpResponse,
-        HttpMiddlewareContext
-      >
-    ) =>
-    async requestConfig => {
-      if (noActionNeeded(requestConfig)) {
-        return middlewareOptions.fn(requestConfig);
-      }
-      const csrfToken = await makeCsrfRequests(requestConfig, {
-        ...options,
-        ...middlewareOptions
-      });
-      if (csrfToken?.cookie) {
-        csrfToken.cookie = requestConfig.headers?.cookie
-          ? [requestConfig.headers?.cookie, csrfToken?.cookie].join(';')
-          : csrfToken?.cookie;
-      }
-      requestConfig.headers = { ...requestConfig.headers, ...csrfToken };
+  return (middlewareOptions: HttpMiddlewareOptions) => async requestConfig => {
+    if (noActionNeeded(requestConfig)) {
       return middlewareOptions.fn(requestConfig);
-    };
+    }
+    const csrfToken = await makeCsrfRequests(requestConfig, {
+      ...options,
+      ...middlewareOptions
+    });
+    if (csrfToken?.cookie) {
+      csrfToken.cookie = requestConfig.headers?.cookie
+        ? [requestConfig.headers?.cookie, csrfToken?.cookie].join(';')
+        : csrfToken?.cookie;
+    }
+    requestConfig.headers = { ...requestConfig.headers, ...csrfToken };
+    return middlewareOptions.fn(requestConfig);
+  };
 }
 
 function noActionNeeded(requestConfig: HttpRequestConfig): boolean {

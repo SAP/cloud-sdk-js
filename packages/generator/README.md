@@ -18,7 +18,7 @@ $ npm install @sap-cloud-sdk/generator
 The generator is primarily meant to be used on the command line:
 
 ```sh
-generate-odata-client --inputDir path/to/your/service-specification(s) --outputDir path/where/the/modules/are/stored
+generate-odata-client --input path/to/your/service-specification(s) --outputDir path/where/the/modules/are/stored
 ```
 
 Run `generate-odata-client --help` for further options.

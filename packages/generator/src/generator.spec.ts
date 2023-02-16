@@ -5,6 +5,7 @@ import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { getInputFilePaths } from '@sap-cloud-sdk/generator-common/dist/options-parser';
 import {
   createOptions,
   createParsedOptions
@@ -44,7 +45,7 @@ describe('generator', () => {
       });
 
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'common',
         optionsPerService: 'someDir/test-service-options.json',
         overwrite: true,
@@ -61,7 +62,7 @@ describe('generator', () => {
 
     it('fails if skip validation is not enabled', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'failing',
         overwrite: true,
         skipValidation: false
@@ -240,6 +241,76 @@ describe('generator', () => {
     });
   });
 
+  describe('get input file paths', () => {
+    beforeEach(() => {
+      mock({
+        root: {
+          inputDir: {
+            'test-service.txt': 'dummy text specification file',
+            'test-service.edmx': 'dummy edmx specification file',
+            'test-service.xml': 'dummy xml specification file',
+            'test-service.XML': 'dummy XML specification file',
+            'empty-dir': {},
+            'sub-dir': {
+              'test-service.edmx': 'dummy edmx specification file',
+              'test-service.xml': 'dummy edmx specification file',
+              'test-service.XML': 'dummy YML specification file',
+              'test-service.EDMX': 'dummy xml specification file',
+              'test-service.txt': 'dummy text specification file'
+            }
+          },
+          outputDir: {}
+        }
+      });
+    });
+
+    afterEach(() => {
+      mock.restore();
+    });
+
+    const input = 'root/inputDir';
+
+    it('should return an array with one file path for an input file', () => {
+      expect(
+        getInputFilePaths('root/inputDir/test-service.edmx', 'OData')
+      ).toEqual([resolve(input, 'test-service.edmx')]);
+    });
+
+    it('should return an array with all edmx and xml file paths within the input directory and all subdirectories', () => {
+      expect(getInputFilePaths(input, 'OData')).toEqual([
+        resolve(input, 'sub-dir/test-service.edmx'),
+        resolve(input, 'sub-dir/test-service.EDMX'),
+        resolve(input, 'sub-dir/test-service.xml'),
+        resolve(input, 'sub-dir/test-service.XML'),
+        resolve(input, 'test-service.edmx'),
+        resolve(input, 'test-service.xml'),
+        resolve(input, 'test-service.XML')
+      ]);
+    });
+
+    it('should return an array with all `.xml` files within the input directory and all subdirectories', () => {
+      expect(getInputFilePaths('root/inputDir/**/*.xml', 'OData')).toEqual([
+        resolve(input, 'sub-dir/test-service.xml'),
+        resolve(input, 'test-service.xml')
+      ]);
+    });
+
+    it('should return an array with all edmx and xml file paths within the input directory', () => {
+      expect(getInputFilePaths('root/inputDir/*', 'OData')).toEqual([
+        resolve(input, 'test-service.edmx'),
+        resolve(input, 'test-service.xml'),
+        resolve(input, 'test-service.XML')
+      ]);
+    });
+
+    it('should return an array with all `.xml` and `.edmx` files within the input directory', () => {
+      expect(getInputFilePaths('root/inputDir/*.{xml,edmx}', 'OData')).toEqual([
+        resolve(input, 'test-service.edmx'),
+        resolve(input, 'test-service.xml')
+      ]);
+    });
+  });
+
   describe('optionsPerService', () => {
     beforeEach(async () => {
       mock({
@@ -263,7 +334,7 @@ describe('generator', () => {
 
     it('writes options per service with custom name', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'out',
         optionsPerService: 'test-service-options.json',
         skipValidation: true,
@@ -289,7 +360,7 @@ describe('generator', () => {
 
     it('writes options per service to the given dir', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'out',
         optionsPerService: 'temp',
         skipValidation: true,
@@ -315,7 +386,7 @@ describe('generator', () => {
 
     it('writes options per service to the given dir containing an existing options file ', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'out',
         optionsPerService: 'temp/options.json',
         skipValidation: true,
@@ -341,7 +412,7 @@ describe('generator', () => {
 
     xit('merges options per service', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'out',
         optionsPerService: 'anotherConfig',
         skipValidation: true,
@@ -371,7 +442,7 @@ describe('generator', () => {
 
     xit('overwrites writes options per service', async () => {
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'out',
         optionsPerService: 'existingConfig',
         skipValidation: true,
@@ -416,7 +487,7 @@ describe('generator', () => {
         messageContext: 'generator'
       });
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'logger',
         overwrite: true,
         prettierConfig: '/prettier/config',
@@ -442,7 +513,7 @@ describe('generator', () => {
       });
       logger.add(fileTransport);
       const options = createOptions({
-        inputDir: pathTestService,
+        input: pathTestService,
         outputDir: 'logger',
         overwrite: true,
         skipValidation: true,

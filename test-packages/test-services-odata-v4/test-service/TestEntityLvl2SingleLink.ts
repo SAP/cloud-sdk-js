@@ -12,7 +12,7 @@ import {
 import type { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
 
 /**
- * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export class TestEntityLvl2SingleLink<
     T extends DeSerializers = DefaultDeSerializers

@@ -11,14 +11,7 @@ describe('service-generator', () => {
     describe('parseService', () => {
       it('namespace by default', () => {
         const serviceMetadata = parseService(
-          {
-            edmxPath: resolve(
-              oDataServiceSpecs,
-              'v2',
-              'API_TEST_SRV',
-              'API_TEST_SRV.edmx'
-            )
-          },
+          resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV', 'API_TEST_SRV.edmx'),
           createParsedOptions(),
           {},
           new GlobalNameFormatter(undefined)
@@ -34,14 +27,7 @@ describe('service-generator', () => {
         };
 
         const serviceMetadata = parseService(
-          {
-            edmxPath: resolve(
-              oDataServiceSpecs,
-              'v2',
-              'API_TEST_SRV',
-              'API_TEST_SRV.edmx'
-            )
-          },
+          resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV', 'API_TEST_SRV.edmx'),
           createParsedOptions(),
           {
             API_TEST_SRV: optionsPerService
@@ -63,7 +49,7 @@ describe('service-generator', () => {
       it('generates vdm from EDMX', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -78,7 +64,7 @@ describe('service-generator', () => {
       it('generates vdm from EDMX using swagger', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: true
           })
         );
@@ -92,7 +78,7 @@ describe('service-generator', () => {
       it('entity properties are read correctly', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')
           })
         );
         const properties = services[0].entities.find(
@@ -141,7 +127,7 @@ describe('service-generator', () => {
       it('entities are read correctly', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')
           })
         );
 
@@ -243,7 +229,7 @@ describe('service-generator', () => {
       it('complex types are parsed correctly', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')
           })
         );
 
@@ -273,7 +259,7 @@ describe('service-generator', () => {
       it('complex type properties are read correctly', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -303,7 +289,7 @@ describe('service-generator', () => {
       it('does not clash with complex type builder function', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -335,7 +321,7 @@ describe('service-generator', () => {
       it('does not clash with reserved JavaScript keywords', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -350,7 +336,7 @@ describe('service-generator', () => {
       it('function imports EDM return types are read correctly', () => {
         const [service] = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -381,7 +367,7 @@ describe('service-generator', () => {
       it('should parse C4C service definitions with proper class names.', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -406,7 +392,7 @@ describe('service-generator', () => {
       it('should skip entity types when not defined in any entity sets', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+            input: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -421,11 +407,7 @@ describe('service-generator', () => {
       it('parses multiple schemas', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(
-              oDataServiceSpecs,
-              'v2',
-              'API_MULTIPLE_SCHEMAS_SRV'
-            ),
+            input: resolve(oDataServiceSpecs, 'v2', 'API_MULTIPLE_SCHEMAS_SRV'),
             useSwagger: false
           })
         );
@@ -440,7 +422,7 @@ describe('service-generator', () => {
       it('enum property is read correctly', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV')
+            input: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV')
           })
         );
         const properties = services[0].entities.find(
@@ -470,7 +452,7 @@ describe('service-generator', () => {
       it('v4 function imports EDM return types are read correctly', () => {
         const [service] = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV'),
+            input: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -488,7 +470,7 @@ describe('service-generator', () => {
       it('should parse actions imports correctly', () => {
         const services = parseAllServices(
           createParsedOptions({
-            inputDir: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV'),
+            input: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV'),
             useSwagger: false
           })
         );

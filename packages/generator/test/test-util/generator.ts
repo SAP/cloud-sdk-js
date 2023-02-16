@@ -27,7 +27,7 @@ export async function getGeneratedFiles(
   outputDir: string
 ): Promise<SourceFile[]> {
   const opt = createOptions({
-    inputDir: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
+    input: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
     useSwagger: false,
     packageJson: false,
     skipValidation: true,

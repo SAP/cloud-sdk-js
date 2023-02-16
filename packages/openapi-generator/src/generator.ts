@@ -18,7 +18,8 @@ import {
   createFile,
   CreateFileOptions,
   readPrettierConfig,
-  parseOptions
+  parseOptions,
+  CommonGeneratorOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 import { apiFile } from './file-serializer/api-file';
 import { packageJson } from './file-serializer/package-json';
@@ -36,12 +37,7 @@ import {
   getRelPathWithPosixSeparator
 } from './options/options-per-service';
 import { sdkMetadata } from './sdk-metadata';
-import {
-  cliOptions,
-  GeneratorOptions,
-  ParsedGeneratorOptions,
-  tsconfigJson
-} from './options';
+import { cliOptions, ParsedGeneratorOptions, tsconfigJson } from './options';
 
 const { mkdir } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -52,7 +48,7 @@ const logger = createLogger('openapi-generator');
  * @param options - Options to configure generation.
  */
 export async function generate(
-  options: GeneratorOptions & { config?: string }
+  options: CommonGeneratorOptions & { config?: string }
 ): Promise<void> {
   const parsedOptions = parseOptions(cliOptions, options);
   if (parsedOptions.verbose) {
@@ -75,9 +71,6 @@ export async function generateWithParsedOptions(
 ): Promise<void> {
   if (!options.input.length || options.outputDir === '') {
     throw new Error('Either input or outputDir were not set.');
-  }
-  if (options.verbose) {
-    setLogLevel('verbose', logger);
   }
 
   if (options.clearOutputDir) {

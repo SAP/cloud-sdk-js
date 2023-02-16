@@ -8,7 +8,7 @@ exports.TestEntityLvl2SingleLink = void 0;
  */
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 /**
- * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 class TestEntityLvl2SingleLink extends odata_v2_1.Entity {
     constructor(_entityApi) {

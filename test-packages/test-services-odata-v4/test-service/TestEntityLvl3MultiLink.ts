@@ -12,7 +12,7 @@ import {
 import type { TestEntityLvl3MultiLinkApi } from './TestEntityLvl3MultiLinkApi';
 
 /**
- * This class represents the entity "A_TestEntityLvl3MultiLink" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export class TestEntityLvl3MultiLink<
     T extends DeSerializers = DefaultDeSerializers

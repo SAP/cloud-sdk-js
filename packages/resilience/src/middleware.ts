@@ -128,9 +128,9 @@ function addMiddlewaresToInitialFunction<
   const { context, skipNext } = initial;
 
   // Reduce right is in line with the composition operator [g,f] relates g o f means g after f.
-  const functionWithMiddlewares = middlewares.reduceRight((prev, curr) => {
-    const middlewareAdded = skipNext.called ? prev.fn : curr(prev);
-    return { fn: middlewareAdded, context, skipNext };
+  const functionWithMiddlewares = middlewares.reduceRight((prevMiddlewareOption, middleWare) => {
+    // const middlewareAdded = skipNext.called ? prev.fn : curr(prev);
+    return { fn: middleWare(prevMiddlewareOption), context, skipNext };
   }, initial);
   return functionWithMiddlewares.fn;
 }

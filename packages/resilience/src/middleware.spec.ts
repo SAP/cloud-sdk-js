@@ -23,6 +23,9 @@ describe('middleware', () => {
       logger.info(`After Middleware added: ${appendString}`);
       return async s => {
         const result = await options.fn(s);
+        if(options.skipNext.called){
+          return result
+        }
         return `${result} ${appendString}`;
       };
     };
@@ -30,8 +33,11 @@ describe('middleware', () => {
   const middleWareSkip = function (
     options: MiddlewareOptions<string, string, MiddlewareContext<string>>
   ) {
-    options.skipNext();
-    return options.fn;
+    return async arg =>{
+      const response = await options.fn(arg);
+      options.skipNext();
+      return response
+    }
   };
 
   const middleWareAdjustArgument = function (
@@ -39,6 +45,8 @@ describe('middleware', () => {
   ) {
     return s => options.fn(`${s} adjusted by Middleware`);
   };
+
+
 
   it('adds middlewares in the expected order - right to left', async () => {
     const infoSpy = jest.spyOn(logger, 'info');
@@ -95,7 +103,7 @@ describe('middleware', () => {
   it('stops middlewares if skip is called', async () => {
     const actual = await executeWithMiddleware(
       [
-        beforeMiddlewareBuilder('A'),
+        afterMiddlewareBuilder('A'),
         middleWareSkip,
         afterMiddlewareBuilder('B')
       ],

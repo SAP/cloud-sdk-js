@@ -107,8 +107,6 @@ export function executeWithMiddleware<
 }
 
 /**
- * .
- *
  * This functions adds the middlewares to the initial functions.
  * You start with a function (axios request function) and add a timeout, circuit-breaker etc..
  * The result is new a function containing a timeout, circuit-breaker etc..

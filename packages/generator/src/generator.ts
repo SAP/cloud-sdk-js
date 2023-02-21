@@ -1,5 +1,5 @@
 import { existsSync, promises as fsPromises } from 'fs';
-import { dirname, join, posix, resolve, sep } from 'path';
+import { dirname, join, resolve } from 'path';
 import {
   copyFiles,
   createFile,
@@ -11,7 +11,8 @@ import {
   readCompilerOptions,
   readCustomTsConfig,
   readPrettierConfig,
-  transpileDirectory
+  transpileDirectory,
+  parseOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   createLogger,
@@ -20,7 +21,6 @@ import {
   splitInChunks
 } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
-import { GlobSync } from 'glob';
 import {
   IndentationText,
   ModuleKind,
@@ -38,8 +38,7 @@ import { sourceFile } from './file-generator';
 import {
   GeneratorOptions,
   cliOptions,
-  ParsedGeneratorOptions,
-  parseOptions
+  ParsedGeneratorOptions
 } from './options';
 import { hasEntities } from './generator-utils';
 import { entityApiFile } from './generator-without-ts-morph';
@@ -48,7 +47,7 @@ import { serviceFile } from './generator-without-ts-morph/service/file';
 import { operationsSourceFile } from './operations/file';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
-import { serviceMappingFile } from './service-mapping';
+import { optionsPerServiceFile } from './options-per-service';
 import { indexFile } from './service/index-file';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
@@ -174,11 +173,6 @@ export async function generateProject(
 ): Promise<ProjectAndServices | undefined> {
   const services = parseServices(options);
 
-  if (!services.length) {
-    logger.warn('No services parsed.');
-    return;
-  }
-
   if (options.clearOutputDir) {
     emptyDirSync(options.outputDir.toString());
   }
@@ -190,16 +184,19 @@ export async function generateProject(
   );
   await Promise.all(promises);
 
-  if (!options.serviceMapping) {
-    throw Error('The service mapping is undefined.');
+  if (options.optionsPerService) {
+    logger.verbose('Generating options per service ...');
+
+    const dir = dirname(options.optionsPerService);
+    await mkdir(dir, { recursive: true });
+    const optionsFile = project.createSourceFile(
+      resolve(options.optionsPerService.toString()),
+      optionsPerServiceFile(services),
+      { overwrite: true }
+    );
+
+    optionsFile.save();
   }
-
-  project.createSourceFile(
-    resolve(options.serviceMapping.toString()),
-    serviceMappingFile(services),
-    { overwrite: true }
-  );
-
   return { project, services };
 }
 
@@ -244,13 +241,9 @@ async function generateIncludes(
   service: VdmServiceMetadata,
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  if (options.include) {
-    const includeDir = resolve(options.inputDir.toString(), options.include)
-      .split(sep)
-      .join(posix.sep);
+  if (options.include && options.include.length > 0) {
     const serviceDir = join(options.outputDir, service.directoryName);
-    const files = new GlobSync(includeDir).found;
-    await copyFiles(files, serviceDir, options.overwrite);
+    await copyFiles(options.include, serviceDir, options.overwrite);
   }
 }
 
@@ -438,7 +431,7 @@ export async function generateSourcesForService(
     );
   }
 
-  if (options.generateSdkMetadata) {
+  if (options.metadata) {
     const { clientFileName } = getSdkMetadataFileNames(
       service.originalFileName
     );

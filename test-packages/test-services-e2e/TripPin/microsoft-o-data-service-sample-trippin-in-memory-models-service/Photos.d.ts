@@ -25,7 +25,7 @@ export declare class Photos<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath: string;
+  static _defaultBasePath: string;
   /**
    * All key fields of the Photos entity
    */

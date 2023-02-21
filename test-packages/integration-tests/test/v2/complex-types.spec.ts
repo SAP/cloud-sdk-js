@@ -4,7 +4,7 @@ import {
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import BigNumber from 'bignumber.js';
 import nock from 'nock';
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { asc } from '@sap-cloud-sdk/odata-common';
 import {
@@ -14,12 +14,12 @@ import {
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 import { testEntityApi } from './test-util';
 
-const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = TestEntity._entityName;
 
 const getAllResponse = testEntityCollectionResponse();
 
-const destination: Destination = {
+const destination: HttpDestination = {
   url: 'https://example.com',
   username: 'username',
   password: 'password',
@@ -41,7 +41,7 @@ describe('Complex types', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}?$filter=(ComplexTypeProperty/StringProperty%20eq%20%27someComplexTypeProperty%27)`
+        `${basePath}/${entityName}?$filter=(ComplexTypeProperty/StringProperty%20eq%20%27someComplexTypeProperty%27)`
       )
       .reply(200, getAllResponse);
 
@@ -70,7 +70,7 @@ describe('Complex types', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}?$orderby=ComplexTypeProperty/StringProperty%20asc`
+        `${basePath}/${entityName}?$orderby=ComplexTypeProperty/StringProperty%20asc`
       )
       .reply(200, getAllResponse);
 

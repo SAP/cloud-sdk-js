@@ -3,7 +3,7 @@ import {
   changeset
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { ErrorResponse } from '@sap-cloud-sdk/odata-common';
 import {
@@ -30,10 +30,10 @@ import {
 } from '../test-data/batch/responses';
 
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
-const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const csrfToken = 'CSRFTOKEN';
 
-const destination: Destination = {
+const destination: HttpDestination = {
   url: 'https://example.com',
   username: 'username',
   password: 'password',
@@ -50,7 +50,7 @@ function mockCsrfTokenRequest(host: string, sapClient: string) {
       'sap-client': sapClient
     }
   })
-    .head(`${servicePath}/$batch`)
+    .head(`${basePath}/$batch`)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
@@ -68,7 +68,7 @@ function mockBatchRequest(matchRequestPayload, responseData) {
     }
   })
     .matchHeader('content-type', /multipart\/mixed; boundary=batch_*/)
-    .post(`${servicePath}/$batch`, new RegExp(matchRequestPayload))
+    .post(`${basePath}/$batch`, new RegExp(matchRequestPayload))
     .reply(202, responseData, {
       'Content-Type': 'multipart/mixed; boundary=TEST-RESPONSE'
     });

@@ -1,15 +1,17 @@
 import { resolve } from 'path';
 import { ClassDeclaration, FunctionDeclaration, SourceFile } from 'ts-morph';
 import { ODataVersion } from '@sap-cloud-sdk/util';
+import { parseOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { generateProject } from '../../src/generator';
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
+import { cliOptions } from '../../src/options';
 import { createOptions } from './create-generator-options';
 
 export function checkStaticProperties(entityClass: ClassDeclaration): void {
   const properties = entityClass.getProperties();
   const staticProperties = [
     properties.find(p => p.getName() === '_entityName')!,
-    properties.find(p => p.getName() === '_defaultServicePath')!
+    properties.find(p => p.getName() === '_defaultBasePath')!
   ];
 
   expect(staticProperties.map(p => p.isStatic())).toEqual([true, true]);
@@ -25,13 +27,13 @@ export async function getGeneratedFiles(
   outputDir: string
 ): Promise<SourceFile[]> {
   const opt = createOptions({
-    inputDir: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
+    input: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
     useSwagger: false,
     packageJson: false,
     skipValidation: true,
     outputDir
   });
-  const project = await generateProject(opt);
+  const project = await generateProject(parseOptions(cliOptions, opt));
   return project!.project.getSourceFiles();
 }
 

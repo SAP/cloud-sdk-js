@@ -1,4 +1,5 @@
-import { cliOptions, parseOptions } from '@sap-cloud-sdk/generator/internal';
+import { cliOptions } from '@sap-cloud-sdk/generator/internal';
+import { parseOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { expectError, expectType } from 'tsd';
 
 const options = {
@@ -63,14 +64,14 @@ expectType<number | undefined>(parsedOptions.coercedOptional);
 const realParsedOptions = parseOptions(cliOptions, {});
 
 /**
- * `inputDir` is required.
+ * `input` is required.
  */
-expectType<string>(realParsedOptions.inputDir);
+expectType<string[]>(realParsedOptions.input);
 
 /**
- * `serviceMapping` is required because it has a default.
+ * `optionsPerService` is optional because it has no default value.
  */
-expectType<string>(realParsedOptions.serviceMapping);
+expectType<string | undefined>(realParsedOptions.optionsPerService);
 
 /**
  * `prettierConfig` is optional because it has no default value.

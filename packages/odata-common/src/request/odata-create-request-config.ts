@@ -32,7 +32,7 @@ export class ODataCreateRequestConfig<
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('post', entityApi.entityConstructor._defaultServicePath);
+    super('post', entityApi.entityConstructor._defaultBasePath);
   }
 
   resourcePath(): string {

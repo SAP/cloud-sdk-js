@@ -27,7 +27,7 @@ export declare class MultiSchemaTestEntity<
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath: string;
+  static _defaultBasePath: string;
   /**
    * All key fields of the MultiSchemaTestEntity entity
    */

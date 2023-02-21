@@ -29,7 +29,7 @@ export class ODataUpdateRequestConfig<
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('patch', entityApi.entityConstructor._defaultServicePath);
+    super('patch', entityApi.entityConstructor._defaultBasePath);
   }
 
   resourcePath(): string {

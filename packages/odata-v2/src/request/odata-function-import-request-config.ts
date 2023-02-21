@@ -19,19 +19,19 @@ export class ODataFunctionImportRequestConfig<
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
    * @param method - HTTP method for the request.
-   * @param defaultServicePath - Default path of the service.
+   * @param defaultBasePath - Default base path of the service.
    * @param functionImportName - The name of the function import.
    * @param parameters - Object containing the parameters with a value and additional meta information.
    * @param oDataUri - URI conversion functions.
    */
   constructor(
     method: RequestMethodType,
-    defaultServicePath: string,
+    defaultBasePath: string,
     functionImportName: string,
     parameters: FunctionImportParameters<ParametersT>,
     oDataUri: ODataUri<DeSerializersT>
   ) {
-    super(method, defaultServicePath, functionImportName, parameters, oDataUri);
+    super(method, defaultBasePath, functionImportName, parameters, oDataUri);
   }
 
   resourcePath(): string {

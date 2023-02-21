@@ -2,9 +2,12 @@ name: api-docs
 
 on:
   push:
-    branches: [main]
+    branches:
+      - 'main'
+      - 'v*-main'
     paths:
-      - 'docs/**'
+      - 'knowledge-base/api-reference/**'
+  workflow_dispatch:
 
 jobs:
   push-to-documentation-branch:
@@ -31,10 +34,10 @@ jobs:
         run: |
           git config --global user.email "cloud-sdk-js@github.com"
           git config --global user.name "cloud-sdk-js"
-          set -x
+          M_VERSION=`awk -F'"' '/"version": "[0-9\.]+"/{ print $4; exit; }' package.json | awk -F'.' '{print "v"$1; exit; }'`
           cd ..
           git clone --depth 1 git@github.com:SAP/cloud-sdk.git
-          rsync -avz cloud-sdk-js/docs/api/ cloud-sdk/static/api/
+          rsync -avz cloud-sdk-js/knowledge-base/api-reference/ cloud-sdk/static/api/$M_VERSION/
           cd cloud-sdk
           git add -A
           git commit -a -m "Update SAP Cloud SDK for JavaScript API documentation" || exit 0

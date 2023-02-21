@@ -20,6 +20,10 @@ import {
   OriginOptions,
   mergeOptionsWithPriority
 } from '@sap-cloud-sdk/http-client/internal';
+import {
+  assertHttpDestination,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity/internal';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 
@@ -35,14 +39,18 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    */
   constructor(
     public config: RequestConfigT,
-    private _destination?: Destination | undefined
+    private _destination?: HttpDestination | undefined
   ) {}
 
   set destination(dest: Destination | undefined) {
-    this._destination = dest && sanitizeDestination(dest);
+    if (dest) {
+      const sanitized = sanitizeDestination(dest);
+      assertHttpDestination(sanitized);
+      this._destination = sanitized;
+    }
   }
 
-  get destination(): Destination | undefined {
+  get destination(): HttpDestination | undefined {
     return this._destination;
   }
 
@@ -58,17 +66,14 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Constructs a URL relative to the destination.
-   * @param includeServicePath - Whether or not to include the service path in the URL.
+   * @param includeBasePath - Whether or not to include the base path in the URL.
    * @param includeQueryParameters - Whether or not to include the query parameters in the URL.
    * @returns The relative URL for the request.
    */
-  relativeUrl(
-    includeServicePath = true,
-    includeQueryParameters = true
-  ): string {
+  relativeUrl(includeBasePath = true, includeQueryParameters = true): string {
     const query = includeQueryParameters ? this.query() : '';
     return `${removeTrailingSlashes(
-      this.relativeResourceUrl(includeServicePath)
+      this.relativeResourceUrl(includeBasePath)
     )}${this.config.appendedPaths.join('')}${query}`;
   }
 
@@ -92,11 +97,11 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination is undefined.');
     }
     const systemUrl = this.destination.url;
-    const servicePath =
-      typeof this.config.customServicePath === 'undefined'
-        ? this.config.defaultServicePath
-        : this.config.customServicePath;
-    return `${removeTrailingSlashes(systemUrl)}/${removeSlashes(servicePath)}`;
+    const basePath =
+      typeof this.config.basePath === 'undefined'
+        ? this.config.defaultBasePath
+        : this.config.basePath;
+    return `${removeTrailingSlashes(systemUrl)}/${removeSlashes(basePath)}`;
   }
 
   /**
@@ -104,11 +109,11 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns The relative URL of the service the given entity belongs to.
    */
   relativeServiceUrl(): string {
-    const servicePath =
-      typeof this.config.customServicePath === 'undefined'
-        ? this.config.defaultServicePath
-        : this.config.customServicePath;
-    return `${removeSlashes(servicePath)}`;
+    const basePath =
+      typeof this.config.basePath === 'undefined'
+        ? this.config.defaultBasePath
+        : this.config.basePath;
+    return `${removeSlashes(basePath)}`;
   }
 
   /**
@@ -123,11 +128,11 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Returns the relative URL to a specific OData resource.
-   * @param includeServicePath - Whether or not to include the service path in the URL.
+   * @param includeBasePath - Whether or not to include the base path in the URL.
    * @returns The relative URL of the resource.
    */
-  relativeResourceUrl(includeServicePath = true): string {
-    const baseUrl = includeServicePath
+  relativeResourceUrl(includeBasePath = true): string {
+    const baseUrl = includeBasePath
       ? removeTrailingSlashes(this.relativeServiceUrl())
       : '';
     const url = `${baseUrl}/${this.config.resourcePath()}`;

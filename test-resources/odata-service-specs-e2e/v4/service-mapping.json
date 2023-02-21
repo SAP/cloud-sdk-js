@@ -1,7 +1,0 @@
-{
-  "API-TEST_SRV": {
-    "directoryName": "test-service",
-    "servicePath": "/odata/test-service",
-    "npmPackageName": "test-service"
-  }
-}

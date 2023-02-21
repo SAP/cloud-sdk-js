@@ -11,7 +11,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { createODataUri as createODataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
 import { createODataUri as createODataUriV4 } from '@sap-cloud-sdk/odata-v4/internal';
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { HttpDestination, Destination } from '@sap-cloud-sdk/connectivity/internal';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 
 const defaultCsrfToken = 'mocked-x-csrf-token';
@@ -33,7 +33,7 @@ export const defaultRequestHeaders = {
 
 export const defaultDestinationName = 'Testination';
 
-export const defaultDestination: Destination = {
+export const defaultDestination: HttpDestination = {
   name: defaultDestinationName,
   url: 'http://example.com',
   username: 'username',
@@ -55,7 +55,7 @@ export function unmockDestinationsEnv() {
 
 interface MockRequestParams {
   host?: string;
-  destination?: Destination;
+  destination?: HttpDestination;
   path?: string;
   statusCode?: number;
   additionalHeaders?: Record<string, any>;
@@ -135,11 +135,11 @@ export function mockCountRequest(
   count: number,
   getAllRequest: GetAllRequestBuilderBase<EntityBase, any>
 ) {
-  const servicePath =
-    getAllRequest._entityApi.entityConstructor._defaultServicePath;
+  const basePath =
+    getAllRequest._entityApi.entityConstructor._defaultBasePath;
   const entityName = getAllRequest._entityApi.entityConstructor._entityName;
   return nock(defaultHost)
-    .get(`${servicePath}/${entityName}/$count`)
+    .get(`${basePath}/${entityName}/$count`)
     .reply(200, count.toString());
 }
 
@@ -241,7 +241,7 @@ function getRequestHeaders(
 export function mockCsrfTokenRequest(
   host: string,
   sapClient: string,
-  servicePath = '/sap/opu/odata/sap/API_TEST_SRV',
+  basePath = '/sap/opu/odata/sap/API_TEST_SRV',
   username = 'username',
   password = 'password',
   csrfToken = 'CSRFTOKEN'
@@ -253,7 +253,7 @@ export function mockCsrfTokenRequest(
       'sap-client': sapClient
     }
   })
-    .get(servicePath)
+    .get(basePath)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']

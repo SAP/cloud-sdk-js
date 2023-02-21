@@ -1,5 +1,5 @@
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, dirname, posix } from 'path';
+import { resolve, parse, basename, dirname } from 'path';
 import {
   createLogger,
   kebabCase,
@@ -17,9 +17,10 @@ import {
   packageDescription,
   createFile,
   CreateFileOptions,
-  readPrettierConfig
+  readPrettierConfig,
+  parseOptions,
+  CommonGeneratorOptions
 } from '@sap-cloud-sdk/generator-common/internal';
-import { glob } from 'glob';
 import { apiFile } from './file-serializer/api-file';
 import { packageJson } from './file-serializer/package-json';
 import { readme } from './file-serializer/readme';
@@ -29,11 +30,6 @@ import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser/document';
 import { convertOpenApiSpec } from './document-converter';
 import {
-  parseGeneratorOptions,
-  ParsedGeneratorOptions,
-  GeneratorOptions
-} from './options/generator-options';
-import {
   ServiceOptions,
   OptionsPerService,
   getOptionsPerService,
@@ -41,9 +37,9 @@ import {
   getRelPathWithPosixSeparator
 } from './options/options-per-service';
 import { sdkMetadata } from './sdk-metadata';
-import { tsconfigJson } from './options';
+import { cliOptions, ParsedGeneratorOptions, tsconfigJson } from './options';
 
-const { mkdir, lstat } = promisesFs;
+const { mkdir } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -51,8 +47,17 @@ const logger = createLogger('openapi-generator');
  * Generates models and API files.
  * @param options - Options to configure generation.
  */
-export async function generate(options: GeneratorOptions): Promise<void> {
-  return generateWithParsedOptions(parseGeneratorOptions(options));
+export async function generate(
+  options: CommonGeneratorOptions & { config?: string }
+): Promise<void> {
+  const parsedOptions = parseOptions(cliOptions, options);
+  if (parsedOptions.verbose) {
+    setLogLevel('verbose', logger);
+  }
+
+  logger.verbose(`Parsed Options: ${JSON.stringify(options, null, 2)}`);
+
+  return generateWithParsedOptions(parsedOptions);
 }
 
 /**
@@ -64,11 +69,8 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  if (options.input === '' || options.outputDir === '') {
+  if (!options.input.length || options.outputDir === '') {
     throw new Error('Either input or outputDir were not set.');
-  }
-  if (options.verbose) {
-    setLogLevel('verbose', logger);
   }
 
   if (options.clearOutputDir) {
@@ -78,7 +80,7 @@ export async function generateWithParsedOptions(
       typeof promisesFs.rm === 'undefined' ? {} : { force: true };
     await rm(options.outputDir, { recursive: true, ...forceOption });
   }
-  const inputFilePaths = await getInputFilePaths(options.input);
+  const inputFilePaths = options.input; // await getInputFilePaths(options.input);
 
   const optionsPerService = await getOptionsPerService(inputFilePaths, options);
   const tsConfig = await tsconfigJson(options);
@@ -273,39 +275,6 @@ async function generateService(
     options
   );
   logger.info(`Successfully generated client for '${inputFilePath}'`);
-}
-
-/**
- * Recursively searches through a given input path and returns all file paths as a string array.
- * @param input - the path to the input directory.
- * @returns all file paths as a string array.
- * @internal
- */
-export async function getInputFilePaths(input: string): Promise<string[]> {
-  if (glob.hasMagic(input)) {
-    return new Promise(resolvePromise => {
-      glob(input, (_error, paths) => {
-        resolvePromise(
-          paths
-            .filter(path => /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/.test(path))
-            .map(path => resolve(path))
-        );
-      });
-    });
-  }
-
-  if ((await lstat(input)).isDirectory()) {
-    return new Promise(resolvePromise => {
-      glob(
-        posix.join(input, '**/*.{json,JSON,yaml,YAML,yml,YML}'),
-        (_error, paths) => {
-          resolvePromise(paths.map(path => resolve(path)));
-        }
-      );
-    });
-  }
-
-  return [resolve(input)];
 }
 
 async function generateReadme(

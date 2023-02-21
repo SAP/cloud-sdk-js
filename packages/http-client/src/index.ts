@@ -15,7 +15,9 @@ export {
   HttpResponse,
   OriginOptions,
   HttpRequestConfigBase,
-  DestinationHttpRequestConfig
+  DestinationHttpRequestConfig,
+  HttpMiddleware,
+  HttpMiddlewareContext
 } from './http-client-types';
 export type {
   HttpRequestConfig,

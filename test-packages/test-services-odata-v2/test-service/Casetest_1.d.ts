@@ -11,7 +11,7 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 import type { Casetest_1Api } from './Casetest_1Api';
 /**
- * This class represents the entity "A_CASETEST" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export declare class Casetest_1<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
@@ -25,7 +25,7 @@ export declare class Casetest_1<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath: string;
+  static _defaultBasePath: string;
   /**
    * All key fields of the Casetest_1 entity
    */

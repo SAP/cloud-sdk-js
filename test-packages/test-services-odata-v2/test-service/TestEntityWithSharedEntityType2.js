@@ -8,7 +8,7 @@ exports.TestEntityWithSharedEntityType2 = void 0;
  */
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 /**
- * This class represents the entity "A_TestEntityWithSharedEntityType2" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 class TestEntityWithSharedEntityType2 extends odata_v2_1.Entity {
     constructor(_entityApi) {
@@ -24,7 +24,7 @@ TestEntityWithSharedEntityType2._entityName = 'A_TestEntityWithSharedEntityType2
 /**
  * Default url path for the according service.
  */
-TestEntityWithSharedEntityType2._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+TestEntityWithSharedEntityType2._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntityWithSharedEntityType2 entity
  */

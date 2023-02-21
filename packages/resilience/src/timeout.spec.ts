@@ -5,6 +5,8 @@ import { executeWithMiddleware } from './middleware';
 import { resilience } from './resilience';
 
 describe('timeout', () => {
+  const request = config => axios.request(config);
+
   it('uses a custom timeout if given', async () => {
     const delayInResponse = 100;
     nock('https://example.com', {})
@@ -13,19 +15,21 @@ describe('timeout', () => {
       .delay(delayInResponse)
       .reply(200);
 
-    const request = () =>
-      axios.request({
-        baseURL: 'https://example.com',
-        method: 'get',
-        url: '/with-delay'
-      });
+    const requestConfig = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/with-delay'
+    };
 
     await expect(
-      executeWithMiddleware(
-        [timeout(delayInResponse * 0.5)],
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
-        request
-      )
+      executeWithMiddleware([timeout(delayInResponse * 0.5)], {
+        context: {
+          uri: 'https://example.com',
+          tenantId: 'dummy-tenant'
+        },
+        fnArgument: requestConfig,
+        fn: request
+      })
     ).rejects.toThrow(
       'Request to URL: https://example.com ran into a timeout after 50ms.'
     );
@@ -33,8 +37,14 @@ describe('timeout', () => {
     await expect(
       executeWithMiddleware(
         resilience({ timeout: delayInResponse * 2, circuitBreaker: false }),
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
-        request
+        {
+          context: {
+            uri: 'https://example.com',
+            tenantId: 'dummy-tenant'
+          },
+          fnArgument: requestConfig,
+          fn: request
+        }
       )
     ).resolves.not.toThrow();
   });
@@ -51,26 +61,32 @@ describe('timeout', () => {
       .delay(11 * oneSecond)
       .reply(200);
 
-    const request = () =>
-      axios.request({
-        baseURL: 'https://example.com',
-        method: 'get',
-        url: '/with-delay'
-      });
-    const response = await executeWithMiddleware(
-      [timeout()],
-      { uri: 'https://example.com', tenantId: 'dummy-tenant' },
-      request
-    );
+    const requestConfig = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/with-delay'
+    };
+    const response = await executeWithMiddleware([timeout()], {
+      context: {
+        uri: 'https://example.com',
+        tenantId: 'dummy-tenant'
+      },
+      fnArgument: requestConfig,
+      fn: request
+    });
 
     expect(response.status).toEqual(200);
 
     await expect(
-      executeWithMiddleware(
-        [timeout()],
-        { uri: 'https://example.com', tenantId: 'dummy-tenant' },
-        request
-      )
+      executeWithMiddleware([timeout()], {
+        context: {
+          uri: 'https://example.com',
+          tenantId: 'dummy-tenant',
+          fnArgument: requestConfig
+        },
+        fnArgument: requestConfig,
+        fn: request
+      })
     ).rejects.toThrow(
       'Request to URL: https://example.com ran into a timeout after 10000ms'
     );

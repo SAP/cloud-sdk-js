@@ -1,0 +1,5 @@
+{
+  "input": "some-repository",
+  "outputDir": "random-value",
+  "wrong-key": "some-value"
+}

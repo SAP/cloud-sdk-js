@@ -11,7 +11,7 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 import type { TestEntityOtherMultiLinkApi } from './TestEntityOtherMultiLinkApi';
 /**
- * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityOtherMultiLink<
     T extends DeSerializers = DefaultDeSerializers
@@ -27,7 +27,7 @@ export declare class TestEntityOtherMultiLink<
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath: string;
+  static _defaultBasePath: string;
   /**
    * All key fields of the TestEntityOtherMultiLink entity
    */

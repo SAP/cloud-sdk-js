@@ -1,8 +1,8 @@
 import { createServer, Server } from 'https';
 import { promisify } from 'util';
 import {
-  Destination,
-  DestinationCertificate
+  DestinationCertificate,
+  HttpDestination
 } from '@sap-cloud-sdk/connectivity';
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 
@@ -67,7 +67,7 @@ ZH+EmGNgQbWNQV96abqUFGju68IIxz1ycGj0372Ko53CRKMG8GH5oA48qpP0xw==
 
   describe('trust', () => {
     it('fails for a server using self-signed certificate if the trustStore is not set.', async () => {
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: `https://localhost:${port}`
       };
 
@@ -77,7 +77,7 @@ ZH+EmGNgQbWNQV96abqUFGju68IIxz1ycGj0372Ko53CRKMG8GH5oA48qpP0xw==
     });
 
     it('resolves for a server using self-signed certificate if trustAll is set.', async () => {
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: `https://localhost:${port}`,
         isTrustingAllCertificates: true
       };
@@ -87,7 +87,7 @@ ZH+EmGNgQbWNQV96abqUFGju68IIxz1ycGj0372Ko53CRKMG8GH5oA48qpP0xw==
     });
 
     it('resolves for a server using self-signed certificate if the trustStore is set.', async () => {
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: `https://localhost:${port}`,
         trustStoreCertificate: destinationCertificate
       };

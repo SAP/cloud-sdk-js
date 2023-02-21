@@ -1,5 +1,5 @@
 import { identity } from '@sap-cloud-sdk/util';
-import { DestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   EntityIdentifiable,
@@ -47,7 +47,7 @@ export class UpdateRequestBuilder<
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to the entity once it was updated.
    */
-  async execute(destination: DestinationOrFetchOptions): Promise<EntityT> {
+  async execute(destination: HttpDestinationOrFetchOptions): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
     }
@@ -61,7 +61,7 @@ export class UpdateRequestBuilder<
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptions
+    destination: HttpDestinationOrFetchOptions
   ): Promise<HttpResponse> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       throw new Error('Cannot execute an update request with empty payload.');

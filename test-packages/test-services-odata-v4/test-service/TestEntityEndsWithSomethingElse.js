@@ -8,7 +8,7 @@ exports.TestEntityEndsWithSomethingElse = void 0;
  */
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 /**
- * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 class TestEntityEndsWithSomethingElse extends odata_v4_1.Entity {
     constructor(_entityApi) {
@@ -24,7 +24,7 @@ TestEntityEndsWithSomethingElse._entityName = 'A_TestEntityEndsWithSomethingElse
 /**
  * Default url path for the according service.
  */
-TestEntityEndsWithSomethingElse._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+TestEntityEndsWithSomethingElse._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntityEndsWithSomethingElse entity
  */

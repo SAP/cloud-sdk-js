@@ -8,7 +8,7 @@ exports.TestEntitySingleLink = void 0;
  */
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 /**
- * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 class TestEntitySingleLink extends odata_v2_1.Entity {
     constructor(_entityApi) {
@@ -24,7 +24,7 @@ TestEntitySingleLink._entityName = 'A_TestEntitySingleLink';
 /**
  * Default url path for the according service.
  */
-TestEntitySingleLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+TestEntitySingleLink._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntitySingleLink entity
  */

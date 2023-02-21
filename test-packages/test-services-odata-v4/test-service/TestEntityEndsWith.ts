@@ -12,7 +12,7 @@ import {
 import type { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
 
 /**
- * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export class TestEntityEndsWith<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
@@ -25,7 +25,7 @@ export class TestEntityEndsWith<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntityEndsWith entity
    */

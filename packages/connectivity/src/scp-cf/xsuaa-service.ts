@@ -1,10 +1,10 @@
 import * as xssec from '@sap/xssec';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
-import { resilience, Context } from '@sap-cloud-sdk/resilience';
+import { resilience, MiddlewareContext } from '@sap-cloud-sdk/resilience';
 import { JwtPayload } from './jsonwebtoken-type';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
-import { Service } from './environment-accessor-types';
+import { Service, ServiceCredentials } from './environment-accessor-types';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveService } from './environment-accessor';
 
@@ -40,6 +40,13 @@ export function getSubdomainAndZoneId(
   return { subdomain, zoneId };
 }
 
+interface XsuaaParameters {
+  subdomain: string | null;
+  zoneId: string | null;
+  serviceCredentials: ServiceCredentials;
+  userJwt?: string;
+}
+
 /**
  * Make a user token request against the XSUAA service.
  * @param service - Service as it is defined in the environment variable.
@@ -50,31 +57,39 @@ export async function getClientCredentialsToken(
   service: string | Service,
   userJwt?: string | JwtPayload
 ): Promise<ClientCredentialsResponse> {
-  const resolvedService = resolveService(service);
-  const serviceCredentials = resolvedService.credentials;
-  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
+  const fnArgument: XsuaaParameters = {
+    ...getSubdomainAndZoneId(userJwt),
+    serviceCredentials: resolveService(service).credentials
+  };
 
-  const xssecPromise: () => Promise<ClientCredentialsResponse> = () =>
-    new Promise((resolve, reject) => {
+  const xssecPromise = function (arg): Promise<ClientCredentialsResponse> {
+    return new Promise((resolve, reject) => {
       xssec.requests.requestClientCredentialsToken(
-        subdomainAndZoneId.subdomain,
-        serviceCredentials,
+        arg.subdomain,
+        arg.serviceCredentials,
         null,
-        subdomainAndZoneId.zoneId,
+        arg.zoneId,
         (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
           err ? reject(err) : resolve(tokenResponse)
       );
     });
-  return executeWithMiddleware<ClientCredentialsResponse, Context>(
-    resilience(),
-    {
-      uri: serviceCredentials.url,
-      tenantId: subdomainAndZoneId.zoneId ?? serviceCredentials.tenantid
-    },
-    xssecPromise
-  ).catch(err => {
+  };
+  return executeWithMiddleware<
+    XsuaaParameters,
+    ClientCredentialsResponse,
+    MiddlewareContext<XsuaaParameters>
+  >(resilience(), {
+    fn: xssecPromise,
+    fnArgument,
+    context: {
+      uri: fnArgument.serviceCredentials.url,
+      tenantId: fnArgument.zoneId ?? fnArgument.serviceCredentials.tenantid
+    }
+  }).catch(err => {
     throw new Error(
-      `Could not fetch client credentials token for service of type ${resolvedService.label}: ${err.message}`
+      `Could not fetch client credentials token for service of type ${
+        resolveService(service).label
+      }: ${err.message}`
     );
   });
 }
@@ -89,33 +104,40 @@ export function getUserToken(
   service: Service,
   userJwt: string
 ): Promise<string> {
-  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
+  const fnArgument: XsuaaParameters = {
+    ...getSubdomainAndZoneId(userJwt),
+    serviceCredentials: service.credentials,
+    userJwt
+  };
 
-  const xssecPromise: () => Promise<string> = () =>
-    new Promise((resolve: (token: string) => void, reject) =>
+  const xssecPromise = function (arg: XsuaaParameters): Promise<string> {
+    return new Promise((resolve: (token: string) => void, reject) =>
       xssec.requests.requestUserToken(
-        userJwt,
-        service.credentials,
+        arg.userJwt,
+        arg.serviceCredentials,
         null,
         null,
-        subdomainAndZoneId.subdomain,
-        subdomainAndZoneId.zoneId,
+        arg.subdomain,
+        arg.zoneId,
         (err: Error, token: string) => (err ? reject(err) : resolve(token))
       )
     );
+  };
 
-  return executeWithMiddleware<string, Context>(
-    resilience(),
-    {
+  return executeWithMiddleware<
+    XsuaaParameters,
+    string,
+    MiddlewareContext<XsuaaParameters>
+  >(resilience(), {
+    fn: xssecPromise,
+    fnArgument,
+    context: {
       uri: service.credentials.url,
-      tenantId: subdomainAndZoneId.zoneId ?? service.credentials.tenantid
-    },
-    xssecPromise
-  )
-    .then(data => data)
-    .catch(err => {
-      throw new Error(
-        `Could not fetch JWT bearer token for service of type ${service.label}: ${err.message}`
-      );
-    });
+      tenantId: fnArgument.zoneId ?? service.credentials.tenantid
+    }
+  }).catch(err => {
+    throw new Error(
+      `Could not fetch JWT bearer token for service of type ${service.label}: ${err.message}`
+    );
+  });
 }

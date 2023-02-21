@@ -3,11 +3,13 @@
 import { AxiosResponse } from 'axios';
 import { isNullish } from '@sap-cloud-sdk/util';
 import {
-  Destination,
   useOrFetchDestination,
-  DestinationOrFetchOptions
+  HttpDestinationOrFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-import { noDestinationErrorMessage } from '@sap-cloud-sdk/connectivity/internal';
+import {
+  assertHttpDestination,
+  noDestinationErrorMessage
+} from '@sap-cloud-sdk/connectivity/internal';
 import {
   Method,
   HttpResponse,
@@ -17,9 +19,9 @@ import {
 import {
   filterCustomRequestConfig,
   OriginOptions,
-  encodeTypedClientRequest
+  encodeTypedClientRequest,
+  HttpMiddleware
 } from '@sap-cloud-sdk/http-client/internal';
-import { Middleware, HttpMiddlewareContext } from '@sap-cloud-sdk/resilience';
 
 /**
  * Request builder for OpenAPI requests.
@@ -33,7 +35,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: Record<string, string> = {};
   private _fetchCsrfToken = true;
-  private _middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[] = [];
+  private _middlewares: HttpMiddleware[] = [];
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -88,9 +90,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @param middlewares - Middlewares to be applied to the executeHttpRequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
-  middleware(
-    middlewares: Middleware<HttpResponse, HttpMiddlewareContext>[]
-  ): this {
+  middleware(middlewares: HttpMiddleware[]): this {
     this._middlewares = middlewares;
     return this;
   }
@@ -102,7 +102,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns A promise resolving to an {@link @sap-cloud-sdk/http-client!HttpResponse}.
    */
   async executeRaw(
-    destination: DestinationOrFetchOptions
+    destination: HttpDestinationOrFetchOptions
   ): Promise<HttpResponse> {
     const fetchCsrfToken =
       this._fetchCsrfToken &&
@@ -112,12 +112,11 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     if (isNullish(destination)) {
       throw Error(noDestinationErrorMessage(destination));
     }
+    assertHttpDestination(resolvedDestination!);
 
-    return executeHttpRequest(
-      resolvedDestination as Destination,
-      await this.requestConfig(),
-      { fetchCsrfToken }
-    );
+    return executeHttpRequest(resolvedDestination, await this.requestConfig(), {
+      fetchCsrfToken
+    });
   }
 
   /**
@@ -125,7 +124,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to the requested return type.
    */
-  async execute(destination: DestinationOrFetchOptions): Promise<ResponseT> {
+  async execute(
+    destination: HttpDestinationOrFetchOptions
+  ): Promise<ResponseT> {
     const response = await this.executeRaw(destination);
     if (isAxiosResponse(response)) {
       return response.data;

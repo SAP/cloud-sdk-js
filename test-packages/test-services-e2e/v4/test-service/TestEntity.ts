@@ -35,7 +35,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = '/odata/test-service';
+  static _defaultBasePath = '/odata/test-service';
   /**
    * All key fields of the TestEntity entity
    */

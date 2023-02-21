@@ -1,5 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Context, Middleware, MiddlewareIn, MiddlewareOut } from './middleware';
+import {
+  MiddlewareContext,
+  Middleware,
+  MiddlewareOptions,
+  MiddlewareFunction
+} from './middleware';
 
 const defaultTimeout = 10000;
 
@@ -13,9 +18,13 @@ const logger = createLogger({
  * @param timeoutValue - Timeout in milliseconds. Default value is 10000.
  * @returns The middleware adding a timeout to the function.
  */
-export function timeout<ReturnType, ContextType extends Context>(
+export function timeout<
+  ArgumentType,
+  ReturnType,
+  ContextType extends MiddlewareContext<ArgumentType>
+>(
   timeoutValue: number = defaultTimeout
-): Middleware<ReturnType, ContextType> {
+): Middleware<ArgumentType, ReturnType, ContextType> {
   if (timeoutValue <= 0) {
     throw new Error('Timeout value is invalid.');
   }
@@ -25,10 +34,10 @@ export function timeout<ReturnType, ContextType extends Context>(
     );
   }
   return function (
-    options: MiddlewareIn<ReturnType, ContextType>
-  ): MiddlewareOut<ReturnType> {
+    options: MiddlewareOptions<ArgumentType, ReturnType, ContextType>
+  ): MiddlewareFunction<ArgumentType, ReturnType> {
     const message = `Request to URL: ${options.context.uri} ran into a timeout after ${timeoutValue}ms.`;
-    return () => wrapInTimeout(options.fn(), timeoutValue, message);
+    return arg => wrapInTimeout(options.fn(arg), timeoutValue, message);
   };
 }
 

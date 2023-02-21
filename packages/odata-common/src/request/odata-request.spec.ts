@@ -1,11 +1,11 @@
 import { v4 as uuid } from 'uuid';
-import { Destination } from '@sap-cloud-sdk/connectivity';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
 import { commonODataUri } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import {
   CommonEntity,
   commonEntityApi
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { DefaultDeSerializers } from '../de-serializers';
 import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
 import { ODataRequest } from './odata-request';
@@ -22,21 +22,21 @@ describe('OData Request', () => {
       expect(request.serviceUrl()).toBe('/sap/opu/odata/sap/API_COMMON_SRV');
     });
 
-    it('should contain custom service path', () => {
+    it('should contain a new base path', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      request.config.customServicePath = 'custom/path';
+      request.config.basePath = 'custom/path';
       expect(request.serviceUrl()).toBe('/custom/path');
     });
 
-    it('should contain custom service path without slashes', () => {
+    it('should contain a base path without slashes', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      request.config.customServicePath = '/custom/path/';
+      request.config.basePath = '/custom/path/';
       expect(request.serviceUrl()).toBe('/custom/path');
     });
 
-    it('should be empty for empty custom service path', () => {
+    it('should be empty for empty base path', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      request.config.customServicePath = '';
+      request.config.basePath = '';
       expect(request.serviceUrl()).toBe('/');
     });
   });
@@ -68,7 +68,7 @@ describe('OData Request', () => {
   });
 
   it('request config contains headers without ETag value when there is no ETag config', async () => {
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'http://example.com'
     };
 
@@ -95,7 +95,7 @@ describe('OData Request', () => {
 
 function createRequest(
   requestConfigConstructor,
-  destination: Destination = { url: '' }
+  destination: HttpDestination = { url: '' }
 ) {
   const config = new requestConfigConstructor(commonEntityApi, commonODataUri);
   config.keys = {

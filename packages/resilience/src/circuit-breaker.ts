@@ -1,7 +1,7 @@
 import CircuitBreaker from 'opossum';
 // eslint-disable-next-line import/named
 import { AxiosError } from 'axios';
-import { Context, Middleware, MiddlewareIn } from './middleware';
+import { MiddlewareContext, Middleware, MiddlewareOptions } from './middleware';
 
 /**
  * Map of all existing circuit breakers.
@@ -21,7 +21,9 @@ export const circuitBreakerDefaultOptions: CircuitBreakerOptions = {
   cache: false
 };
 type ErrorFilter = (err) => boolean;
-type KeyBuilder<ContextT extends Context> = (context: ContextT) => string;
+type KeyBuilder<ArgumentT, ContextT extends MiddlewareContext<ArgumentT>> = (
+  context: ContextT
+) => string;
 
 function httpErrorFilter(error: AxiosError): boolean {
   if (
@@ -33,9 +35,10 @@ function httpErrorFilter(error: AxiosError): boolean {
   return false;
 }
 
-function circuitBreakerKeyBuilder<ContextT extends Context>(
-  context: ContextT
-): string {
+function circuitBreakerKeyBuilder<
+  ArgumentT,
+  ContextT extends MiddlewareContext<ArgumentT>
+>(context: ContextT): string {
   return `${context.uri}::${context.tenantId}`;
 }
 
@@ -44,26 +47,31 @@ function circuitBreakerKeyBuilder<ContextT extends Context>(
  * @returns The middleware adding a circuit breaker to the function.
  */
 export function circuitBreakerHttp<
+  ArgumentT,
   ReturnT,
-  ContextT extends Context
->(): Middleware<ReturnT, ContextT> {
-  return circuitBreaker<ReturnT, ContextT>(
+  ContextT extends MiddlewareContext<ArgumentT>
+>(): Middleware<ArgumentT, ReturnT, ContextT> {
+  return circuitBreaker<ArgumentT, ReturnT, ContextT>(
     circuitBreakerKeyBuilder,
     httpErrorFilter
   );
 }
 
-function circuitBreaker<ReturnT, ContextT extends Context>(
-  keyBuilder: KeyBuilder<ContextT>,
+function circuitBreaker<
+  ArgumentT,
+  ReturnT,
+  ContextT extends MiddlewareContext<ArgumentT>
+>(
+  keyBuilder: KeyBuilder<ArgumentT, ContextT>,
   errorFilter: ErrorFilter
-): Middleware<ReturnT, ContextT> {
-  return (options: MiddlewareIn<any, any>) => () =>
+): Middleware<ArgumentT, ReturnT, ContextT> {
+  return (options: MiddlewareOptions<any, any, any>) => fnArgument =>
     (
       getCircuitBreaker(
         keyBuilder(options.context),
         errorFilter
       ) as CircuitBreaker<any, ReturnT>
-    ).fire(options.fn);
+    ).fire(options.fn, fnArgument);
 }
 
 function getCircuitBreaker(

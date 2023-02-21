@@ -24,7 +24,7 @@ TestEntityLink._entityName = 'TestEntityLink';
 /**
  * Default url path for the according service.
  */
-TestEntityLink._defaultServicePath = '/odata/test-service';
+TestEntityLink._defaultBasePath = '/odata/test-service';
 /**
  * All key fields of the TestEntityLink entity
  */

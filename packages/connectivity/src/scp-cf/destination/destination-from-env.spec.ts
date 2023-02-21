@@ -19,6 +19,11 @@ const environmentDestination = {
   password: 'mypw'
 };
 
+const mailDestination = {
+  name: 'MAIL-DESTINATION',
+  type: 'MAIL'
+};
+
 const destinationFromEnv: Destination = {
   authTokens: [],
   authentication: 'BasicAuthentication',
@@ -107,6 +112,13 @@ describe('env-destination-accessor', () => {
 
       const actual = getDestinationFromEnvByName('FINAL-DESTINATION');
       expect(actual).toMatchObject(destinationFromEnv);
+    });
+
+    it('should return a mail destination for a name', () => {
+      mockDestinationsEnv(mailDestination);
+
+      const actual = getDestinationFromEnvByName('MAIL-DESTINATION');
+      expect(actual).toMatchObject(mailDestination);
     });
 
     it('should return a destination for a name, that is given as a destination configuration', () => {

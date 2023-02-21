@@ -35,8 +35,8 @@ People.requestBuilder().someOperation(params); // getAll(), getByKey(...keys), c
 which then generates url like below that has only **ONE** level:
 
 ```
-/servicePath/People // getAll(), create, update, delete(entity)
-/servicePath/People(1) // getByKey, delete(key)
+/basePath/People // getAll(), create, update, delete(entity)
+/basePath/People(1) // getByKey, delete(key)
 ```
 
 ### Exception: `asChildOf`

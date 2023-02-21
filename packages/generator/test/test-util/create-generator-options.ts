@@ -1,19 +1,25 @@
+import { parseOptions } from '@sap-cloud-sdk/generator-common/internal';
 import {
   GeneratorOptions,
-  cliOptions,
-  ParsedGeneratorOptions
+  ParsedGeneratorOptions,
+  cliOptions
 } from '../../src/options';
-import { parseOptions } from '../../src/options/options-parser';
 
 export function createOptions(
   options?: Partial<GeneratorOptions>
-): ParsedGeneratorOptions {
-  return parseOptions(cliOptions, {
-    inputDir: '',
+): GeneratorOptions {
+  return {
+    input: '',
     outputDir: '',
     skipValidation: true,
-    serviceMapping: 'service-mapping.json',
+    optionsPerService: 'options-per-service.json',
     packageJson: false,
     ...options
-  });
+  };
+}
+
+export function createParsedOptions(
+  options?: Partial<GeneratorOptions>
+): ParsedGeneratorOptions {
+  return parseOptions(cliOptions, createOptions(options));
 }

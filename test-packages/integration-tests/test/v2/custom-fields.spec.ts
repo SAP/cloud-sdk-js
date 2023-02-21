@@ -1,13 +1,13 @@
 import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 import { testEntityApi } from './test-util';
 
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
-const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const csrfToken = 'CSRFTOKEN';
 const entityName = TestEntity._entityName;
 
@@ -19,7 +19,7 @@ function mockCsrfTokenRequest(host: string, sapClient: string, path?: string) {
       'sap-client': sapClient
     }
   })
-    .head(path ? `${servicePath}/${path}` : servicePath)
+    .head(path ? `${basePath}/${path}` : basePath)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
@@ -30,7 +30,7 @@ const getAllResponseWithCustomField = injectCustomField(
   testEntityCollectionResponse()
 );
 
-const destination: Destination = {
+const destination: HttpDestination = {
   url: 'https://example.com',
   username: 'username',
   password: 'password',
@@ -51,7 +51,7 @@ describe('Custom Fields', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, getAllResponseWithCustomField);
 
     const entities = await testEntityApi
@@ -73,7 +73,7 @@ describe('Custom Fields', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}?$select=MyCustomField`)
+      .get(`${basePath}/${entityName}?$select=MyCustomField`)
       .reply(200, getAllResponseWithCustomField);
 
     const request = testEntityApi
@@ -96,9 +96,7 @@ describe('Custom Fields', () => {
         'content-type': 'application/json'
       }
     })
-      .get(
-        `${servicePath}/${entityName}?$filter=(MyCustomField%20eq%20'ToMatch')`
-      )
+      .get(`${basePath}/${entityName}?$filter=(MyCustomField%20eq%20'ToMatch')`)
       .reply(200, getAllResponseWithCustomField);
 
     const request = testEntityApi
@@ -129,7 +127,7 @@ describe('Custom Fields', () => {
         'content-type': 'application/json'
       }
     })
-      .get(`${servicePath}/${entityName}`)
+      .get(`${basePath}/${entityName}`)
       .reply(200, getAllResponseWithCustomField);
 
     nock(destination.url, {
@@ -144,7 +142,7 @@ describe('Custom Fields', () => {
       }
     })
       .patch(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`,
+        `${basePath}/${entityName}(KeyPropertyGuid=guid'aaaabbbb-cccc-dddd-eeee-ffff00001111',KeyPropertyString='abcd1234')`,
         {
           MyCustomField: 'NewValue'
         }
@@ -181,7 +179,7 @@ describe('Custom Fields', () => {
         cookie: 'key1=val1;key2=val2;key3=val3'
       }
     })
-      .post(`${servicePath}/${entityName}`, {
+      .post(`${basePath}/${entityName}`, {
         StringProperty: 'stringProp',
         Int16Property: 19,
         MyCustomField: 'CustomField'

@@ -1,7 +1,0 @@
-{
-  "API-TEST_SRV": {
-    "directoryName": "microsoft-o-data-service-sample-trippin-in-memory-models-service",
-    "servicePath": "V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/",
-    "npmPackageName": "microsoft-o-data-service-sample-trippin-in-memory-models-service"
-  }
-}

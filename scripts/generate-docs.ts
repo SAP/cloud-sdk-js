@@ -16,14 +16,14 @@ const flatten = arr =>
       curr instanceof Array ? [...prev, ...flatten(curr)] : [...prev, curr],
     []
   );
-const inputDirAbsPath = inputDir => resolve(__dirname, inputDir);
+const inputDirAbsPath = input => resolve(__dirname, input);
 
-const readDir = inputDir =>
+const readDir = input =>
   pipe(inputDirAbsPath, absPath =>
     readdirSync(absPath)
       .map(file => resolve(absPath, file))
       .map(file => (isDirectory(file) ? readDir(file) : file))
-  )(inputDir);
+  )(input);
 
 const isHtmlFile = fileName => extname(fileName) === '.html';
 const isSearchJs = fileName => basename(fileName) === 'search.js';

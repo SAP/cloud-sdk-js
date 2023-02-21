@@ -19,13 +19,7 @@ describe('pregenerated-lib', () => {
 
 export function getTestService(npmPackageName?: string): VdmServiceMetadata {
   return parseService(
-    {
-      edmxPath: resolve(
-        oDataServiceSpecs,
-        'v2',
-        'API_TEST_SRV/API_TEST_SRV.edmx'
-      )
-    },
+    resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV/API_TEST_SRV.edmx'),
     parseOptions(cliOptions, createOptions()),
     {},
     new GlobalNameFormatter({

@@ -11,7 +11,7 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 import type { TestEntityEndsWithSomethingElseApi } from './TestEntityEndsWithSomethingElseApi';
 /**
- * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityEndsWithSomethingElse<
     T extends DeSerializers = DefaultDeSerializers

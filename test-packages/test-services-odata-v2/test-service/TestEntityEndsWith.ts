@@ -12,7 +12,7 @@ import {
 import type { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
 
 /**
- * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export class TestEntityEndsWith<T extends DeSerializers = DefaultDeSerializers>
   extends Entity

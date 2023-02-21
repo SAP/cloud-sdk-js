@@ -24,7 +24,7 @@ import {
   TestEntitySingleLinkType
 } from './TestEntitySingleLink';
 /**
- * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   extends Entity

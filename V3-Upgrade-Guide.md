@@ -62,6 +62,7 @@ The following sub-sections describe affected modules, functions and interfaces w
 
 ### Package `@sap-cloud-sdk/connectivity` <!-- omit from toc -->
 
+- The generic type parameter `JwtKeysT` in `JwtKeyMapping` is now narrowed to extend `string`.
 - The property `url` on the `Destination` interface is now optional.
   It is only present for HTTP destinations and not for Mail destinations.
 - The `IsolationStrategy` enum is replaced by a union type of the same name.
@@ -104,6 +105,9 @@ The following deprecated options were renamed:
 - `generatePackageJson` becomes `packageJson`
 - `writeReadme` becomes `readme`
 - `processesJsGeneration` becomes `transpilationProcesses`
+- `inputDir` becomes `input`
+
+The new `input` options accepts now also file paths and glob patterns.
 
 The deprecated `generateNpmrc` option of the generator is removed.
 Use the `include` option to add a `.npmrc` to the generated code if needed.

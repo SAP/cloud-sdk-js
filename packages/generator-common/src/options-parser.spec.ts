@@ -143,7 +143,9 @@ describe('options parser', () => {
           { include, config },
           { include: '**/*.json', config: '/dummy/root/config.json' }
         ).include
-      ).toEqual(['file-1.json', 'sub-1/file-2.json'].map(s => resolve(s)));
+      ).toEqual(
+        ['file-1.json', 'sub-1/file-2.json'].map(s => resolve('/dummy/root', s))
+      );
       mock.restore();
     });
 

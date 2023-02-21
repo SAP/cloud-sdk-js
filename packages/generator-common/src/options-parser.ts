@@ -3,7 +3,12 @@ import { existsSync, lstatSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { InferredOptionType, Options as YargsOption } from 'yargs';
 const logger = createLogger('generator-options');
-import { sync as globSync } from 'glob';
+import { glob, sync as globSync } from 'glob';
+
+/**
+ * @internal
+ */
+export type ServiceType = 'OData' | 'OpenApi';
 
 /**
  * @internal
@@ -71,7 +76,8 @@ type OptionsWith<
 }[keyof CliOptionsT];
 
 /**
- * Resolves a string using glob notation. If a config is given in generatorOptions, the glob working directory is considered relative to this config.
+ * Resolves a string using glob notation.
+ * If a config is given in generatorOptions, the glob working directory is considered relative to this config.
  * @internal
  * @param arg - Value for the string for which the glob is resolved.
  * @param options - Generator options.
@@ -84,14 +90,12 @@ export function resolveGlob<GeneratorOptionsT>(
     return [];
   }
 
-  const globConfig = options.config
-    ? { cwd: resolve(dirname(options.config)) }
-    : { cwd: resolve() };
+  const inputPath = options.config
+    ? resolve(dirname(options.config), arg.toString())
+    : resolve(arg.toString());
 
   // Glob expressions only support unix style path separator (/). The below adjustment is made so it works on Windows. https://github.com/isaacs/node-glob#windows
-  return globSync(arg.split(sep).join(posix.sep), globConfig).map(s =>
-    resolve(s)
-  );
+  return globSync(inputPath.split(sep).join(posix.sep)).map(s => resolve(s));
 }
 
 /**
@@ -108,6 +112,73 @@ export function resolveRequiredPath<GeneratorOptionsT>(
   return options.config
     ? resolve(dirname(options.config), arg.toString())
     : resolve(arg.toString());
+}
+
+/**
+ * Builds a glob resolver function for OData or OpenApi
+ * @internal
+ * @param serviceType - For which service the glob resolver is build.
+ * @returns Function for resolving inputs Globs for OData or Openapi
+ */
+export function buildResolveInputGlob<GeneratorOptionsT>(
+  serviceType: ServiceType
+) {
+  /**
+   * Resolves input string using glob notation.
+   * @internal
+   * @param arg - Path argument as passed by the user.
+   * @param options - Options as passed by the user.
+   * @returns Absolute path as a `string`.
+   */
+  return function resolveInputGlob(
+    arg: string,
+    options: GeneratorOptionsT & { config?: string }
+  ): string[] {
+    const inputPath = options.config
+      ? resolve(dirname(options.config), arg.toString())
+      : resolve(arg.toString());
+
+    const resolvedServiceFilePaths = getInputFilePaths(
+      inputPath.split(sep).join(posix.sep),
+      serviceType
+    );
+    if (!resolvedServiceFilePaths.length) {
+      logger.warn(`No service definition files found using '${arg}' as input`);
+    }
+    return resolvedServiceFilePaths;
+  };
+}
+
+/**
+ * Recursively searches through a given input path and returns all file paths as a string array.
+ * @param input - the path to the input directory.
+ * @returns all file paths as a string array.
+ * @internal
+ */
+export function getInputFilePaths(
+  input: string,
+  serviceType: ServiceType
+): string[] {
+  // Check for any special characters in the input
+  if (glob.hasMagic(input)) {
+    const regex =
+      serviceType === 'OData'
+        ? /(.xml|.edmx|.XML|.EDMX)$/
+        : /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/;
+    return globSync(input)
+      .filter(path => regex.test(path))
+      .map(s => resolve(s));
+  }
+
+  if (lstatSync(input).isDirectory()) {
+    const regex =
+      serviceType === 'OData'
+        ? '**/*.{xml,edmx,XML,EDMX}'
+        : '**/*.{json,JSON,yaml,YAML,yml,YML}';
+    return globSync(posix.join(input, regex)).map(s => resolve(s));
+  }
+
+  return [resolve(input)];
 }
 
 /**

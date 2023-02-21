@@ -12,7 +12,7 @@ import {
 import type { Casetest_1Api } from './Casetest_1Api';
 
 /**
- * This class represents the entity "A_CASETEST" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export class Casetest_1<T extends DeSerializers = DefaultDeSerializers>
   extends Entity

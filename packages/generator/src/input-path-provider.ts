@@ -56,8 +56,4 @@ export interface ServiceDefinitionPaths {
    * @internal
    */
   edmxPath: PathLike;
-  /**
-   * @internal
-   */
-  swaggerPath?: PathLike;
 }

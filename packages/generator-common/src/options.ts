@@ -1,16 +1,37 @@
 import {
+  buildResolveInputGlob,
   resolveGlob,
   resolveOptionsPerService,
   resolvePath,
-  resolveRequiredPath
+  resolveRequiredPath,
+  ServiceType
 } from './options-parser';
 
+function getReadmeText(serviceType: ServiceType): string {
+  return serviceType === 'OData'
+    ? "When set to true, the generator will write a README.md file into the root folder of every package. The information in the readme are mostly derived from accompanying Swagger or OpenAPI files. Therefore it is recommended to use the 'readme' option in combination with 'useSwagger'."
+    : 'Generate default `README.md` files in the client directories.';
+}
+
+function getInputText(serviceType: ServiceType): string {
+  return serviceType === 'OData'
+    ? 'Specify the path to the directory or file containing the OData service definition(s) to generate clients for. Accepts Swagger and EDMX definitions as XML and JSON files. Throws an error if the path does not exist.'
+    : 'Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.';
+}
 /**
  * @internal
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function getCommonCliOptions(readmeText: string) {
+export function getCommonCliOptions(serviceType: ServiceType) {
   return {
+    input: {
+      alias: 'i',
+      describe: getInputText(serviceType),
+      coerce: buildResolveInputGlob(serviceType),
+      type: 'string',
+      demandOption: true,
+      requiresArg: true
+    },
     optionsPerService: {
       alias: 's',
       describe:
@@ -94,7 +115,7 @@ export function getCommonCliOptions(readmeText: string) {
 
     readme: {
       type: 'boolean',
-      describe: readmeText,
+      describe: getReadmeText(serviceType),
       default: false,
       hidden: true
     }
@@ -102,9 +123,14 @@ export function getCommonCliOptions(readmeText: string) {
 }
 
 /**
- * @internal
+ * Generator options shared by the OData and OpenApi generator.
  */
 export interface CommonGeneratorOptions {
+  /**
+   * Specify the path to the directory or file containing the service definition(s) to generate clients for.
+   * Throws an error if the path does not exist.
+   */
+  input: string;
   /**
    * Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files.
    * The configuration allows to set a `directoryName` and `npmPackageName` for every service, identified by the path to the original file.

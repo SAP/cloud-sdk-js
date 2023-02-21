@@ -11,7 +11,7 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 import type { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
 /**
- * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityCircularLinkChild<
     T extends DeSerializers = DefaultDeSerializers

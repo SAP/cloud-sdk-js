@@ -65,6 +65,30 @@ The following sub-sections describe affected modules, functions and interfaces w
 - The generic type parameter `JwtKeysT` in `JwtKeyMapping` is now narrowed to extend `string`.
 - The property `url` on the `Destination` interface is now optional.
   It is only present for HTTP destinations and not for Mail destinations.
+- The `IsolationStrategy` enum is replaced by a union type of the same name.
+
+  Example: To apply the tenant isolation strategy update
+
+  ```ts
+  .execute({
+    destinationName: 'DESTINATION',
+    useCache: true,
+    isolationStrategy: IsolationStrategy.Tenant
+  })
+  ```
+
+  to
+
+  ```ts
+  .execute({
+    destinationName:
+    'DESTINATION',
+    useCache: true,
+    isolationStrategy: 'tenant'
+  })
+  ```
+
+- The generic type parameter `JwtKeysT` in `JwtKeyMapping` is now narrowed to extend `string`.
 
 #### Package `@sap-cloud-sdk/generator` <!-- omit from toc -->
 

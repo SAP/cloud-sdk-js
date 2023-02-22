@@ -1275,20 +1275,18 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.4.0":
-  version "6.4.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.4.0.tgz#e34d72e36960b0917b507b8311bf5dcb03140e6a"
-  integrity sha512-vlOLvCdpF7k9dVEwxAk9Vu+iflDL5Dl5umpI6kpyJx/QVNp9SmVqN1hdZDP3BpvftmOphaAWxSZLMDz6JiduJw==
+"@sap/cds-dk@6.5.2":
+  version "6.5.2"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.5.2.tgz#6092dbc6966bc190ddfd1460cd2061496163c02f"
+  integrity sha512-JH4UkDNGKKrV6IHQGJ43fpGClB4ODQbY3g/bMRlHMJnoByp+83TwzRDdu548XRS38gWQHaSEgj5ksDM4hd+c8w==
   dependencies:
     "@sap/cds" "^6.4.0"
     "@sap/cds-foss" "^4"
+    "@sap/cds-mtxs" "^1.4.3"
     "@sap/eslint-plugin-cds" "^2.6.0"
     axios ">=0.21"
-    connect-livereload "^0.6.1"
     eslint "^8"
     express "^4.17.1"
-    glob "^8.0.3"
-    htmlparser2 "^8.0.0"
     livereload-js "^3.3.1"
     md5 "^2.3.0"
     mustache "^4.0.1"
@@ -1297,7 +1295,6 @@
     ws "^8.4.2"
     xml-js "^1.6.11"
   optionalDependencies:
-    "@sap/cds-mtxs" "^1.4.0"
     sqlite3 "^5.0.4"
 
 "@sap/cds-foss@^4":
@@ -1311,10 +1308,10 @@
     xmlbuilder "^15.1.1"
     yaml "^2.1.1"
 
-"@sap/cds-mtxs@^1.4.0":
-  version "1.4.5"
-  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-1.4.5.tgz#5c707ad1923a58b8ec51fc86579844d40d8d5a55"
-  integrity sha512-QEPE+TdmmCtspUzKxMZb12H8ESilWZrMQofhi5UyIxtuynybX3ng6Xn7tGXunO0yfel4KMx6L6TYVQVmWCsgWg==
+"@sap/cds-mtxs@^1.4.3":
+  version "1.5.1"
+  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-1.5.1.tgz#4b3440e05e3afdf4dbe953249e460ca7316f498f"
+  integrity sha512-izxww4+FgeHcX6J+O/CeVkJpunU6dRzySA+8RQLtNrPfToMD4XeV9wS8txFrRq0PtJt8U32JMvv4qBCnhOtAxw==
   dependencies:
     "@sap/hdi-deploy" "^4"
     axios ">=0.27.2"
@@ -2925,11 +2922,6 @@ concat-stream@^2.0.0:
     readable-stream "^3.0.2"
     typedarray "^0.0.6"
 
-connect-livereload@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.npmjs.org/connect-livereload/-/connect-livereload-0.6.1.tgz#1ac0c8bb9d9cfd5b28b629987a56a9239db9baaa"
-  integrity sha512-3R0kMOdL7CjJpU66fzAkCe6HNtd3AavCS4m+uW4KtJjrdGPT0SQEZieAYd+cm+lJoBznNQ4lqipYWkhBMgk00g==
-
 console-control-strings@^1.0.0, console-control-strings@^1.1.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
@@ -3470,36 +3462,6 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dom-serializer@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/dom-serializer/-/dom-serializer-2.0.0.tgz#e41b802e1eedf9f6cae183ce5e622d789d7d8e53"
-  integrity sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==
-  dependencies:
-    domelementtype "^2.3.0"
-    domhandler "^5.0.2"
-    entities "^4.2.0"
-
-domelementtype@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.npmjs.org/domelementtype/-/domelementtype-2.3.0.tgz#5c45e8e869952626331d7aab326d01daf65d589d"
-  integrity sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==
-
-domhandler@^5.0.1, domhandler@^5.0.2:
-  version "5.0.3"
-  resolved "https://registry.npmjs.org/domhandler/-/domhandler-5.0.3.tgz#cc385f7f751f1d1fc650c21374804254538c7d31"
-  integrity sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==
-  dependencies:
-    domelementtype "^2.3.0"
-
-domutils@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/domutils/-/domutils-3.0.1.tgz#696b3875238338cb186b6c0612bd4901c89a4f1c"
-  integrity sha512-z08c1l761iKhDFtfXO04C7kTdPBLi41zwOZl00WS8b5eiaebNpY00HKbztwBq+e3vyqWNwWF3mP9YLUeqIrF+Q==
-  dependencies:
-    dom-serializer "^2.0.0"
-    domelementtype "^2.3.0"
-    domhandler "^5.0.1"
-
 dot-prop@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npmjs.org/dot-prop/-/dot-prop-6.0.1.tgz#fc26b3cf142b9e59b74dbd39ed66ce620c681083"
@@ -3592,11 +3554,6 @@ enquirer@2.3.6, enquirer@^2.3.0:
   integrity sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==
   dependencies:
     ansi-colors "^4.1.1"
-
-entities@^4.2.0, entities@^4.3.0:
-  version "4.4.0"
-  resolved "https://registry.npmjs.org/entities/-/entities-4.4.0.tgz#97bdaba170339446495e653cfd2db78962900174"
-  integrity sha512-oYp7156SP8LkeGD0GF85ad1X9Ai79WtRsZ2gxJqtBuzH+98YUV6jkHEKlZkMbcrjJjIVJNIDP/3WL9wQkoPbWA==
 
 env-paths@^2.2.0:
   version "2.2.1"
@@ -4631,7 +4588,7 @@ glob@^7.0.5, glob@^7.1.1, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^8.0.3, glob@^8.1.0:
+glob@^8.1.0:
   version "8.1.0"
   resolved "https://registry.npmjs.org/glob/-/glob-8.1.0.tgz#d388f656593ef708ee3e34640fdfb99a9fd1c33e"
   integrity sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==
@@ -4808,16 +4765,6 @@ html-escaper@^2.0.0:
   version "2.0.2"
   resolved "https://registry.npmjs.org/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
-
-htmlparser2@^8.0.0:
-  version "8.0.1"
-  resolved "https://registry.npmjs.org/htmlparser2/-/htmlparser2-8.0.1.tgz#abaa985474fcefe269bc761a779b544d7196d010"
-  integrity sha512-4lVbmc1diZC7GUJQtRQ5yBAeUCL1exyMwmForWkRLnwyzWBFxN633SALPMGYaWZvKe9j1pRZJpauvmxENSp/EA==
-  dependencies:
-    domelementtype "^2.3.0"
-    domhandler "^5.0.2"
-    domutils "^3.0.1"
-    entities "^4.3.0"
 
 http-cache-semantics@^4.1.0:
   version "4.1.0"
@@ -9514,10 +9461,10 @@ yargs@^16.1.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-yargs@^17.0.1, yargs@^17.1.1, yargs@^17.3.1, yargs@^17.7.0:
-  version "17.7.0"
-  resolved "https://registry.npmjs.org/yargs/-/yargs-17.7.0.tgz#b21e9af1e0a619a2a9c67b1133219b2975a07985"
-  integrity sha512-dwqOPg5trmrre9+v8SUo2q/hAwyKoVfu8OC1xPHKJGNdxAvPl4sKxL4vBnh3bQz/ZvvGAFeA5H3ou2kcOY8sQQ==
+yargs@^17.0.1, yargs@^17.1.1, yargs@^17.3.1, yargs@^17.7.1:
+  version "17.7.1"
+  resolved "https://registry.npmjs.org/yargs/-/yargs-17.7.1.tgz#34a77645201d1a8fc5213ace787c220eabbd0967"
+  integrity sha512-cwiTb08Xuv5fqF4AovYacTFNxk62th7LKJ6BL9IGUpTJrWoU7/7WdQGTP2SjKf1dUNBGzDd28p/Yfs/GI6JrLw==
   dependencies:
     cliui "^8.0.1"
     escalade "^3.1.1"

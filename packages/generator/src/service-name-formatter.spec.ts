@@ -93,21 +93,7 @@ describe('name-formatter', () => {
         formatter.originalToParameterName('FunctionImport', 'SomeParam')
       ).toBe('someParam');
     });
-
-    it('speaking service name from package name', () => {
-      expect(
-        ServiceNameFormatter.directoryToSpeakingModuleName(
-          'business-partner-service'
-        )
-      ).toBe('Business Partner Service');
-      expect(
-        ServiceNameFormatter.directoryToSpeakingModuleName(
-          'business partner service'
-        )
-      ).toBe('Business Partner Service');
-    });
   });
-
   describe('enforces unique names for', () => {
     it('logs if names are changes', () => {
       const formatter = new ServiceNameFormatter('MyServiceName', {

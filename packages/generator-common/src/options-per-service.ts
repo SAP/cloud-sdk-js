@@ -1,9 +1,17 @@
 import { existsSync, promises } from 'fs';
-import { parse, posix, relative, sep } from 'path';
-import { unique, UniqueNameGenerator } from '@sap-cloud-sdk/util';
-import { ParsedGeneratorOptions } from './options';
+import { basename, dirname, parse, posix, relative, sep } from 'path';
+import {
+  createLogger,
+  formatJson,
+  unique,
+  UniqueNameGenerator
+} from '@sap-cloud-sdk/util';
+import { createFile, readPrettierConfig } from './file-writer';
+import { npmCompliantName } from './util';
 
-const { readFile } = promises;
+const logger = createLogger('options-per-service');
+
+const { readFile, mkdir } = promises;
 
 /**
  * Represents the service options for all services, mapped from the input file path to the service configuration.
@@ -31,9 +39,9 @@ export interface ServiceOptions {
    */
   packageName: string;
   /**
-   * Human readable name of the service. Used in API documentation and readme.
+   * Base path for the request.
    */
-  serviceName: string;
+  basePath?: string;
 }
 
 /**
@@ -61,7 +69,10 @@ export async function getOriginalOptionsPerService(
  */
 export async function getOptionsPerService(
   inputPaths: string[],
-  { optionsPerService, skipValidation }: ParsedGeneratorOptions
+  {
+    optionsPerService,
+    skipValidation
+  }: { skipValidation: boolean; optionsPerService: string | undefined }
 ): Promise<OptionsPerService> {
   const originalOptionsPerService = await getOriginalOptionsPerService(
     optionsPerService
@@ -87,13 +98,13 @@ export async function getOptionsPerService(
 
       previousOptions[relativePath] = getServiceOptions(
         uniqueDirName,
+        skipValidation,
         originalOptionsPerService[relativePath]
       );
       return previousOptions;
     },
     {}
   );
-
   return optsPerService;
 }
 
@@ -182,17 +193,50 @@ function parseDirectoryName(filePath: string): string {
  */
 export function getServiceOptions(
   directoryName: string,
+  skipValidataion: boolean,
   serviceOptions?: Partial<ServiceOptions>
 ): ServiceOptions {
+  if (!skipValidataion && serviceOptions?.packageName) {
+    const adjusted = npmCompliantName(serviceOptions?.packageName);
+    if (adjusted !== serviceOptions?.packageName) {
+      throw new Error(
+        `The intended packageName name ${serviceOptions.packageName} is not npm Compliant. Either change to a compliant value e.g. '${adjusted}' in your options per service configuration or execute with '--skipValidation'.`
+      );
+    }
+  }
+
   const defaultConfig = {
-    packageName: directoryName,
-    directoryName,
-    serviceName: directoryName
+    packageName: npmCompliantName(directoryName),
+    directoryName
   };
 
   return {
     ...defaultConfig,
-    ...serviceOptions,
-    directoryName
+    ...serviceOptions
   };
+}
+
+/**
+ * @internal
+ */
+export async function writeOptionsPerService(
+  filePath: string,
+  optionsPerService: OptionsPerService,
+  options: { prettierConfig: string | undefined }
+): Promise<void> {
+  logger.verbose('Generating options per service.');
+  const dir = dirname(filePath);
+  await mkdir(dir, { recursive: true });
+  await createFile(
+    dir,
+    basename(filePath),
+    formatJson({
+      ...(await getOriginalOptionsPerService(filePath)),
+      ...optionsPerService
+    }),
+    {
+      overwrite: true,
+      prettierOptions: await readPrettierConfig(options.prettierConfig)
+    }
+  );
 }

@@ -283,18 +283,6 @@ export function prefixString(string: string, prefix?: string): string {
   return prefix ? `${prefix}${string}` : string;
 }
 
-/**
- * Takes a name and returns a transformation that is guaranteed to be compliant with npm naming rules.
- * @param name - The name to be transformed if necessary.
- * @returns Name that is guaranteed to be compliant.
- * @internal
- */
-export function npmCompliantName(name: string): string {
-  let compliantName = trimToNpmMaxLength(name);
-  compliantName = transformIfNecessary(compliantName);
-  return compliantName;
-}
-
 // We use this function to still be able to generate the "cloud-sdk-vdm" package, even though the prefix + name logic does not allow it normally
 /**
  * @internal
@@ -303,59 +291,6 @@ export function cloudSdkVdmHack(name: string): string {
   return name === '@sap/cloud-sdk-vdm-' ? name.slice(0, -1) : name;
 }
 
-const trimToNpmMaxLength = (str: string): string => {
-  if (str.length > npmMaxLength) {
-    logger.warn(
-      `Provided package name ${str} is longer than 214 chars and will be cut!`
-    );
-    return str.substr(0, npmMaxLength);
-  }
-  return str;
-};
-
-const transformIfNecessary = (packageName: string): string => {
-  if (npmRegex.exec(packageName)) {
-    return packageName;
-  }
-  const newName = _npmCompliantName(packageName);
-  logger.warn(
-    `Provided name ${packageName} is not compliant with npm naming rules and was transformed to ${newName}!`
-  );
-  return newName;
-};
-
-const _npmCompliantName = (name: string): string => {
-  if (name.startsWith('@') && name.includes('/')) {
-    return (
-      '@' +
-      splitAtFirstOccurrence(name, '/')
-        .map(x => makeNpmCompliant(x))
-        .join('/')
-    );
-  }
-  return makeNpmCompliant(name);
-};
-
-const splitAtFirstOccurrence = (str: string, separator: string) => [
-  str.slice(0, str.indexOf(separator)),
-  str.slice(str.indexOf(separator) + 1)
-];
-
-const lowerCase = (str: string): string => str.toLowerCase();
-const stripLeadingDotsAndUnderscores = (str: string): string =>
-  str.replace(/^[._]*/g, '');
-const replaceNonNpmPackageCharacters = (str: string): string =>
-  str.replace(/[^a-z0-9-~._]/g, '');
-
-const makeNpmCompliant = (name: string) => {
-  let compliantName = lowerCase(name);
-  compliantName = stripLeadingDotsAndUnderscores(compliantName);
-  compliantName = replaceNonNpmPackageCharacters(compliantName);
-  return compliantName;
-};
-
-const npmMaxLength = 214;
-const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 /**
  * @internal
  */

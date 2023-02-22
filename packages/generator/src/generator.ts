@@ -12,7 +12,10 @@ import {
   readCustomTsConfig,
   readPrettierConfig,
   transpileDirectory,
-  parseOptions
+  parseOptions,
+  getRelPathWithPosixSeparator,
+  writeOptionsPerService,
+  OptionsPerService
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   createLogger,
@@ -47,7 +50,6 @@ import { serviceFile } from './generator-without-ts-morph/service/file';
 import { operationsSourceFile } from './operations/file';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
-import { optionsPerServiceFile } from './options-per-service';
 import { indexFile } from './service/index-file';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
@@ -97,11 +99,13 @@ async function generateWithParsedOptions(
     const directories = services
       .filter(async service => {
         const files = await readdir(
-          join(options.outputDir, service.directoryName)
+          join(options.outputDir, service.serviceOptions.directoryName)
         );
         return files.includes('tsconfig.json');
       })
-      .map(service => join(options.outputDir, service.directoryName));
+      .map(service =>
+        join(options.outputDir, service.serviceOptions.directoryName)
+      );
 
     const chunks = splitInChunks(directories, options.transpilationProcesses);
     try {
@@ -171,7 +175,7 @@ export async function transpileDirectories(
 export async function generateProject(
   options: ParsedGeneratorOptions
 ): Promise<ProjectAndServices | undefined> {
-  const services = parseServices(options);
+  const services = await parseServices(options);
 
   if (options.clearOutputDir) {
     emptyDirSync(options.outputDir.toString());
@@ -187,15 +191,17 @@ export async function generateProject(
   if (options.optionsPerService) {
     logger.verbose('Generating options per service ...');
 
-    const dir = dirname(options.optionsPerService);
-    await mkdir(dir, { recursive: true });
-    const optionsFile = project.createSourceFile(
-      resolve(options.optionsPerService.toString()),
-      optionsPerServiceFile(services),
-      { overwrite: true }
+    const optionsPerService = services.reduce((prev, curr) => {
+      const relativePath = getRelPathWithPosixSeparator(
+        curr.edmxPath.toString()
+      );
+      return { ...prev, [relativePath]: curr.serviceOptions };
+    }, {} as OptionsPerService);
+    await writeOptionsPerService(
+      options.optionsPerService,
+      optionsPerService,
+      options
     );
-
-    optionsFile.save();
   }
   return { project, services };
 }
@@ -242,7 +248,10 @@ async function generateIncludes(
   options: ParsedGeneratorOptions
 ): Promise<void> {
   if (options.include && options.include.length > 0) {
-    const serviceDir = join(options.outputDir, service.directoryName);
+    const serviceDir = join(
+      options.outputDir,
+      service.serviceOptions.directoryName
+    );
     await copyFiles(options.include, serviceDir, options.overwrite);
   }
 }
@@ -251,7 +260,10 @@ async function generateServiceFile(
   service: VdmServiceMetadata,
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  const serviceDir = join(options.outputDir, service.directoryName);
+  const serviceDir = join(
+    options.outputDir,
+    service.serviceOptions.directoryName
+  );
   const createFileOptions = await getFileCreationOptions(options);
   await createFile(
     serviceDir,
@@ -269,7 +281,7 @@ async function generateEntityApis(
   await Promise.all(
     service.entities.map(entity =>
       createFile(
-        join(options.outputDir, service.directoryName),
+        join(options.outputDir, service.serviceOptions.directoryName),
         `${entity.className}Api.ts`,
         entityApiFile(entity, service),
         createFileOptions
@@ -286,7 +298,10 @@ export async function generateSourcesForService(
   project: Project,
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  const serviceDirPath = join(options.outputDir, service.directoryName);
+  const serviceDirPath = join(
+    options.outputDir,
+    service.serviceOptions.directoryName
+  );
   const serviceDir = project.createDirectory(serviceDirPath);
   const createFileOptions = await getFileCreationOptions(options);
 
@@ -302,7 +317,7 @@ export async function generateSourcesForService(
         serviceDirPath,
         'package.json',
         await packageJson({
-          npmPackageName: service.npmPackageName,
+          npmPackageName: service.serviceOptions.packageName,
           sdkVersion: await getSdkVersion(),
           description: packageDescription(service.speakingModuleName),
           oDataVersion: service.oDataVersion
@@ -477,8 +492,10 @@ function projectOptions(): ProjectOptions {
   };
 }
 
-function parseServices(options: ParsedGeneratorOptions): VdmServiceMetadata[] {
-  const services = parseAllServices(options);
+async function parseServices(
+  options: ParsedGeneratorOptions
+): Promise<VdmServiceMetadata[]> {
+  const services = await parseAllServices(options);
   if (!services.length) {
     logger.warn('No service definition files found.');
     return [];

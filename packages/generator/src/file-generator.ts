@@ -20,6 +20,7 @@ export async function sourceFile(
   file.formatText({ insertSpaceAfterCommaDelimiter: true });
 
   const { base, dir } = parse(file.getFilePath());
+
   await createFile(dir, base, file.getFullText(), options);
   return file;
 }

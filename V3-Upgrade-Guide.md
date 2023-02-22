@@ -235,6 +235,10 @@ Here is an example how the options change:
 }
 ```
 
+Note that the default values for the `directoryName` and `packageName` have changed.
+They are both based on the directory name which is based on the name of the service specification.
+If you are not happy with the default name use the `optionsPerService` to specify a different value. 
+
 ## Set `basePath` in `options-per-service.json`
 
 By default, generation of OData clients will fail if the `basePath` cannot be determined at the time of generation.

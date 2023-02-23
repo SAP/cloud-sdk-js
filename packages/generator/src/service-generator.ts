@@ -17,17 +17,7 @@ import { getServiceEntitiesV4 } from './edmx-to-vdm/v4';
 import { getBasePath } from './service-base-path';
 
 class ServiceGenerator {
-  // private globalNameFormatter: GlobalNameFormatter;
-  // private optionsPerService: OptionsPerService;
-
-  constructor(readonly options: ParsedGeneratorOptions) {
-    // this.globalNameFormatter = new GlobalNameFormatter(this.optionsPerService);
-  }
-
-  // public withGlobalNameFormatter(globalNameFormatter: GlobalNameFormatter) {
-  //   // this.globalNameFormatter = globalNameFormatter;
-  //   return this;
-  // }
+  constructor(readonly options: ParsedGeneratorOptions) {}
 
   public async generateAllServices(): Promise<VdmServiceMetadata[]> {
     return Promise.all(
@@ -128,11 +118,7 @@ export async function parseService(
   edmxServiceSpecPath: string,
   options: ParsedGeneratorOptions
 ): Promise<VdmServiceMetadata> {
-  return (
-    new ServiceGenerator(options)
-      // .withGlobalNameFormatter(globalNameFormatter)
-      .generateService(edmxServiceSpecPath)
-  );
+  return new ServiceGenerator(options).generateService(edmxServiceSpecPath);
 }
 
 /**

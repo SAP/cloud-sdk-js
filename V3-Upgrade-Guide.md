@@ -233,8 +233,8 @@ Also, the properties in the configuration have changed:
 - The option `serviceName` is removed.
 A value for the documentation header is derived from the directory name.
 - The `npmPackageName` is renamed to `packageName` to align with the OpenApi generator.
+Note that the default values for the `directoryName` and `packageName` have changed.
 - The keys change to the relative paths of the service specifications.
-In case you have problems finding the relative path, rerun the generator which will add new default entries to the exising options.
 
 Here is an example how the options change:
 
@@ -259,9 +259,11 @@ Here is an example how the options change:
 }
 ```
 
-Note that the default values for the `directoryName` and `packageName` have changed.
-They are both based on the directory name which is based on the name of the service specification.
-If you are not happy with the default name use the `optionsPerService` to specify a different value. 
+In case you have problems finding the relative path or adjusting the property names please do the following:
+- Remove the exising `options-per-service.json` file.
+- Re-run the generator.
+This will generate a fresh file with the new relative paths and new property names with default values.
+- Adjust the default values for packageName, directoryName and basePath with values fitting your needs.   
 
 ## Set `basePath` in `options-per-service.json`
 

@@ -3,56 +3,6 @@ import { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per
 import { getBasePath } from './service-base-path';
 
 describe('options-per-service', () => {
-  // it('generates a valid VdmMapping from service metadata', () => {
-  //   const serviceMetadata: VdmServiceMetadata[] = [
-  //     {
-  //       oDataVersion: 'v2',
-  //       originalFileName: 'API_A_SERV',
-  //       directoryName: 'a-serv',
-  //       npmPackageName: '@sap/a-serv',
-  //       basePath: '/path/to/serv',
-  //       complexTypes: [],
-  //       enumTypes: [],
-  //       entities: [],
-  //       functionImports: [],
-  //       namespaces: ['namespace'],
-  //       speakingModuleName: 'moduleName',
-  //       className: 'AService',
-  //       edmxPath: 'edmxPath'
-  //     },
-  //     {
-  //       oDataVersion: 'v2',
-  //       originalFileName: 'API_B_SERV',
-  //       directoryName: 'b-serv',
-  //       npmPackageName: '@sap/b-serv',
-  //       basePath: '/path/to/serv',
-  //       complexTypes: [],
-  //       enumTypes: [],
-  //       entities: [],
-  //       functionImports: [],
-  //       namespaces: ['namespace'],
-  //       speakingModuleName: 'moduleName',
-  //       className: 'BService',
-  //       edmxPath: 'edmxPath'
-  //     }
-  //   ];
-  //
-  //   const expectedVdmMapping: OptionsPerService = {
-  //     API_A_SERV: {
-  //       directoryName: 'a-serv',
-  //       basePath: '/path/to/serv',
-  //       packageName: '@sap/a-serv'
-  //     },
-  //     API_B_SERV: {
-  //       directoryName: 'b-serv',
-  //       basePath: '/path/to/serv',
-  //       packageName: '@sap/b-serv'
-  //     }
-  //   };
-  //
-  //   expect(optionsPerService(serviceMetadata)).toEqual(expectedVdmMapping);
-  // });
-
   it('gets basePath from optionsPerService over edmx self link and swagger', () => {
     const metadata = {
       edmx: {

@@ -1,12 +1,12 @@
 # SAP Cloud SDK for JavaScript Version 3 Upgrade Guide <!-- omit from toc -->
 
-The purpose of this document is to collect information on Cloud SDK version 2 to version 3 migration information.
+The purpose of this document is to collect information on the Cloud SDK version 2 to version 3 migration.
 It should include information on all steps a user needs to take when updating the SDK version from 2 to 3.
 
 This document should be written in a style which addresses the consumer of the SDK.
 It will eventually end up in the SDK docs portal and release notes for version 3.
 
-Please add you items below when creating a change which will involve manual tasks for the user when performing the upgrade.
+Please add your items below when creating a change which will involve manual tasks for the user when performing the upgrade.
 Add sections to the document as you see fit.
 
 <!-- Everything below this line should be written in the style of end user documentation. If you need to add hints for SDK developers, to that above. -->
@@ -23,7 +23,7 @@ This document will guide you through the steps necessary to upgrade to version 3
 - [Use Service Function instead of API Constructor](#use-service-function-instead-of-api-constructor)
 - [Adjust Operation Names Starting With `_` in Generated OData Clients](#adjust-operation-names-starting-with-_-in-generated-odata-clients)
 - [Adjust Conflict Resolution in OData Client Generation](#adjust-conflict-resolution-in-odata-client-generation)
-- [Use `optionsPerService` in OData generator](#use-optionsperservice-in-odata-generator)
+- [Use `optionsPerService` in OData Client generator](#use-optionsperservice-in-odata-client-generator)
 - [Set `basePath` in `options-per-service.json`](#set-basepath-in-options-per-servicejson)
 
 ## Update Your Project Dependencies
@@ -67,7 +67,7 @@ The following sub-sections describe affected modules, functions and interfaces w
   It is only present for HTTP destinations and not for Mail destinations.
 - The `IsolationStrategy` enum is replaced by a union type of the same name.
 
-  Example: To apply the tenant isolation strategy update
+  Make changes to your tenant isolation strategy like in this example:
 
   ```ts
   .execute({
@@ -81,23 +81,20 @@ The following sub-sections describe affected modules, functions and interfaces w
 
   ```ts
   .execute({
-    destinationName:
-    'DESTINATION',
+    destinationName: 'DESTINATION',
     useCache: true,
     isolationStrategy: 'tenant'
   })
   ```
 
-- The generic type parameter `JwtKeysT` in `JwtKeyMapping` is now narrowed to extend `string`.
-
-#### Package `@sap-cloud-sdk/generator` <!-- omit from toc -->
+### Package `@sap-cloud-sdk/generator` <!-- omit from toc -->
 
 The deprecated option `generateCSN` is removed.
 If you need a schema notation (CSN) of your service use the [cds import](https://cap.cloud.sap/docs/guides/using-services?q=edmx#import-api) command directly.
 
 The options `versionInPackageJson` and `licenseInPackageJson`, that allowed setting custom values in generated `package.json` files are removed.
 When the `packageJson` option is enabled, a `package.json` file with version `1.0.0` and license `UNLICENSED` is created.
-If you want to set custom values, use the `include` option to add a custom `package.json`.
+Use the `include` option to add a `package.json` with custom values.
 
 The following deprecated options were renamed:
 
@@ -107,7 +104,7 @@ The following deprecated options were renamed:
 - `processesJsGeneration` becomes `transpilationProcesses`
 - `inputDir` becomes `input`
 
-The new `input` options accepts now also file paths and glob patterns.
+The new `input` option now also accepts file paths and glob patterns.
 
 The deprecated `generateNpmrc` option of the generator is removed.
 Use the `include` option to add a `.npmrc` to the generated code if needed.
@@ -118,14 +115,14 @@ These were hidden options never meant for external usage and there is no replace
 The types for paths in the `GeneratorOptions` are changed from `fs.PathLike` to `string`.
 In case you passed a buffer object please resolve it to a string before passing it to the SAP Cloud SDK.
 
-#### Package `@sap-cloud-sdk/openapi-generator` <!-- omit from toc -->
+### Package `@sap-cloud-sdk/openapi-generator` <!-- omit from toc -->
 
 The deprecated generator options `versionInPackageJson`, `packageVersion` and `licenseInPackageJson` are removed.
-In a generated `package.json` the version `1.0.0` and license `UNLICENSED` are used.
+When the `packageJson` option is enabled, a `package.json` file with version `1.0.0` and license `UNLICENSED` is created.
 Use the `include` option to add a `package.json` with custom values.
 
-The generator uses the same code to resolve paths as the OData generator now.
-In case you experience problems with the new logic enable the `verbose` flag to investigate what are the new paths now.
+The OpenAPI generator now uses the same code as the OData generator to resolve paths.
+In case you experience problems with the new implementation enable the `verbose` flag to investigate what the paths resolve to now.
 
 ### Package `@sap-cloud-sdk/odata-common` <!-- omit from toc -->
 
@@ -149,12 +146,13 @@ New example:
 }
 ```
 
-- "Content-type" HTTP headers cannot be passed as a string in the constructor of `ODataRequestConfig` anymore. Instead pass an object with "content-type" as a key and the header value as a value, e.g. `{ 'content-type': 'some-value' }` to the constructor.
+- "Content-type" HTTP headers cannot be passed as a string in the constructor of the `ODataRequestConfig` anymore.
+  Instead, pass an object to the constructor with "content-type" as a key and the header value as a value, e.g. `{ 'content-type': 'some-value' }`.
 
 ## Switch to Middlewares for Timeouts
 
 The `timeout()` method was removed from the request builder and the `timeout` option was removed from the `executeHttpRequest()` function.
-If you want to set a timeout for a request use the new timeout middleware:
+If you want to set a timeout for a request, use the new timeout middleware:
 
 ```ts
 import { timeout } from '@sap-cloud-sdk/resilience';
@@ -173,7 +171,7 @@ You find a detailed guide on the general [middleware concept](https://sap.github
 
 By default, the OData generator will only generate TypeScript code.
 The `generateJs` option has been replaced with the `transpile` option.
-To generate JavaScript code, enable transpilation using the `transpile` option.
+To generate JavaScript code, enable transpilation by using the `transpile` option.
 
 A new option, `tsconfig`, can be used to either pass a custom `tsconfig.json` configuration file or use a default config from the SDK.
 This flag should be used together with `transpile`.
@@ -189,23 +187,23 @@ const { myEntityApi } = myEntityService();
 return myEntityApi.requestBuilder().getAll().execute(destination);
 ```
 
-This way a getter initializes references to navigation properties of the API.
-If you call the API constructor directly like:
+This way, a getter initializes references to navigation properties of the API.
+If you call the API constructor directly like the following:
 
 ```ts
 const myEntityApi = new MyEntityApi();
 ```
 
-the navigation properties are not correctly initialized leading to potential errors.
-To avoid this unintended usage of the constructor the visibility was changed to `private`.
+the navigation properties are not correctly initialized, leading to potential errors.
+The visibility of the constructor is now changed to `private` to avoid its unintended usage.
 If you used the constructor directly change your code to use the service function e.g. `myEntityService()` in the example above.
 
 ## Adjust Operation Names Starting With `_` in Generated OData Clients
 
 Rules for naming OData operations (actions or functions) when generating clients have changed slightly.
-If an operation begins with an underscore symbol(`_`), it is removed in the generated client code.
+If an operation begins with an underscore symbol(`_`), it is removed in the generated client's code.
 
-To adjust the names for unbound operations, search in `function-import.ts` and `action-import.ts` files in your generated client code for operations starting with `_`.
+To adjust the names for unbound operations, search in `function-import.ts` and `action-import.ts` files in your generated client's code for operations starting with an `_`.
 Similarly, to adjust the names of bound operations of an entity, search in the respective entity's `.ts` file, e.g., `BusinessPartner.ts`.
 
 ## Adjust Conflict Resolution in OData Client Generation
@@ -215,27 +213,29 @@ This has changed and the generation process will now fail with an error message 
 You can still generate in such a case by enabling the `skipValidation` option.
 The generator will add postfixes like `_1` to resolve the conflict if the option is enabled.
 
-## Use `optionsPerService` in OData generator
+## Use `optionsPerService` in OData Client Generator
 
-The `serviceMapping` option in OData generator has been renamed to `optionsPerService` and alias `-s` has also been removed.
-The `service-mapping.json` file is now `options-per-service.json`.
-The file will not be generated by default in the input directory, as in the previous versions.
+The `serviceMapping` option in the OData generator has been renamed to `optionsPerService`, addtionally its alias `-s` has been removed.
+The `service-mapping.json` file is now named `options-per-service.json`.
+The file will no longer be generated into the input directory by default, unlike previous versions.
 
-Set the `optionsPerService` to either:
+If you want to continue generating the `optionsPerService`, set it to either:
 
 - The file path containing the options per service (e.g. `options.json`).
   If the file does not exist, it will be created.
-- The directory from which the file is read/created (e.g. `someDir`. This will create a file named `options-per-service.json` in `someDir`)
+- The directory from which the file is read/created (e.g. `someDir`).
+  This will create a file named `options-per-service.json` in `someDir`.
 
 ## Set `basePath` in `options-per-service.json`
 
 By default, generation of OData clients will fail if the `basePath` cannot be determined at the time of generation.
-The generator will determine the path from:
+The generator will determine the path from the:
 
 - `basePath` property in the `options-per-service.json`
 - `.edmx` service specification, or
 - swagger file
-  in the above mentioned order.
 
-To allow generation in spite of missing `basePath`, set the `skipValidation` option to true.
-This will generate the client successfuly with `basePath` set to `/`.
+in the above mentioned order.
+
+To allow generation in spite of a missing `basePath`, set the `skipValidation` option to true.
+This will generate the client successfuly with the `basePath` set to `/`.

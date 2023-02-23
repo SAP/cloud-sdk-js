@@ -193,10 +193,10 @@ function parseDirectoryName(filePath: string): string {
  */
 export function getServiceOptions(
   directoryName: string,
-  skipValidataion: boolean,
+  skipValidation: boolean,
   serviceOptions?: Partial<ServiceOptions>
 ): ServiceOptions {
-  if (!skipValidataion && serviceOptions?.packageName) {
+  if (!skipValidation && serviceOptions?.packageName) {
     const adjusted = npmCompliantName(serviceOptions?.packageName);
     if (adjusted !== serviceOptions?.packageName) {
       throw new Error(

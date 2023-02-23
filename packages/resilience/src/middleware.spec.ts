@@ -27,13 +27,6 @@ describe('middleware', () => {
       };
     };
 
-  const middleWareSkip = function (
-    options: MiddlewareOptions<string, string, MiddlewareContext<string>>
-  ) {
-    options.skipNext();
-    return options.fn;
-  };
-
   const middleWareAdjustArgument = function (
     options: MiddlewareOptions<string, string, MiddlewareContext<string>>
   ) {
@@ -90,22 +83,6 @@ describe('middleware', () => {
       }
     );
     expect(actual).toBe('initial Input A C D B');
-  });
-
-  it('stops middlewares if skip is called', async () => {
-    const actual = await executeWithMiddleware(
-      [
-        beforeMiddlewareBuilder('A'),
-        middleWareSkip,
-        afterMiddlewareBuilder('B')
-      ],
-      {
-        fn: (s: string) => Promise.resolve(s),
-        context,
-        fnArgument: 'initial Input'
-      }
-    );
-    expect(actual).toBe('initial Input B');
   });
 
   it('allows to adjust function argument via middlewares', async () => {

@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
+import { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 import { emptyDocument } from '../../test/test-util';
-import { ServiceOptions } from '../options';
 import { parseOpenApiDocument } from './document';
 import * as api from './api';
 
@@ -25,8 +25,7 @@ describe('parseOpenApiDocument', () => {
       input,
       {
         packageName: '@sap/cloud-sdk-openapi-test-service',
-        directoryName: 'test-service',
-        serviceName: 'TestService'
+        directoryName: 'test-service'
       },
       options
     );
@@ -53,8 +52,7 @@ describe('parseOpenApiDocument', () => {
       input,
       {
         packageName: '@sap/cloud-sdk-openapi-test-service',
-        directoryName: 'test-service',
-        serviceName: 'TestService'
+        directoryName: 'test-service'
       },
       { strictNaming: false }
     );
@@ -88,7 +86,7 @@ describe('parseOpenApiDocument', () => {
 
     const parsed = await parseOpenApiDocument(
       document,
-      { serviceName: 'myService' } as ServiceOptions,
+      { directoryName: 'myService' } as ServiceOptions,
       options
     );
     expect(parsed.schemas).toStrictEqual([
@@ -121,8 +119,7 @@ describe('parseOpenApiDocument', () => {
       input,
       {
         packageName: '@sap/cloud-sdk-openapi-test-service',
-        directoryName: 'test-service',
-        serviceName: 'TestService'
+        directoryName: 'test-service'
       },
       { strictNaming: false }
     );

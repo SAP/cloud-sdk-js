@@ -5,9 +5,12 @@ describe('class', () => {
   const service: VdmServiceMetadata = {
     oDataVersion: 'v2',
     originalFileName: 'API_A_SERV',
-    directoryName: 'a-serv',
-    npmPackageName: '@sap/a-serv',
-    basePath: '/path/to/serv',
+    serviceOptions: {
+      directoryName: 'a-serv',
+      packageName: '@sap/a-serv',
+      basePath: '/path/to/serv'
+    },
+
     complexTypes: [],
     enumTypes: [],
     entities: [],

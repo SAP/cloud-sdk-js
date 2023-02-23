@@ -186,7 +186,6 @@ export async function generateProject(
   const promises = services.map(service =>
     generateSourcesForService(service, project, options)
   );
-  await Promise.all(promises);
 
   if (options.optionsPerService) {
     logger.verbose('Generating options per service ...');
@@ -203,6 +202,9 @@ export async function generateProject(
       options
     );
   }
+
+  await Promise.all(promises);
+
   return { project, services };
 }
 

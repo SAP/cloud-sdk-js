@@ -85,6 +85,32 @@ describe('generator', () => {
       }
     });
 
+    it('writes a options-per-service if it fails', async () => {
+      const options = createOptions({
+        input: pathTestService,
+        outputDir: 'failing',
+        overwrite: true,
+        skipValidation: false
+      });
+      try {
+        // TODO the first call will go away once ts-morph is removed
+        project = await generateProject(createParsedOptions(options));
+        await generate(options);
+        throw new Error('Should not go here.');
+      } catch (e) {
+        const optionsPerService = await readFile('someDir/test-service-options.json',{encoding:'utf-8'})
+        expect(JSON.parse(optionsPerService)).toEqual({
+              "../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx": {
+                "basePath": "/sap/opu/odata/sap/API_TEST_SRV",
+                "directoryName": "API_TEST_SRV",
+                "packageName": "api_test_srv"
+              }
+            }
+
+        )
+      }
+    });
+
     it('reads custom prettier configuration', () => {
       expect(prettierSpy).toHaveBeenCalledWith(expect.any(String), {
         parser: expect.any(String),

@@ -26,14 +26,14 @@ export function getBasePath(
       logger.warn(
         `[ ${
           parse(metadata.edmx.path.toString()).name
-        } ] No base path could be determined from available metadata! Setting "basePath" to "/" in the "options-per-service.json".`
+        } ] No base path could be determined from available metadata! Setting "basePath" to "/" as default value. Consider using 'optionsPerService' configuration to explicitly set a value.`
       );
       basePath = '/';
     } else {
       throw new Error(
         `[ ${
           parse(metadata.edmx.path.toString()).name
-        } ] No base path could be determined from available metadata! Set "basePath" in the "options-per-service.json" to generate client.`
+        } ] No base path could be determined from available metadata! Enable '--skipValidation' to use "/" as a default value. Alternatively use the 'optionsPerService' configuration to explicitly set a value.`
       );
     }
   }

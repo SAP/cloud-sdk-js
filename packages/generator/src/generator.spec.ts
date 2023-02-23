@@ -98,16 +98,18 @@ describe('generator', () => {
         await generate(options);
         throw new Error('Should not go here.');
       } catch (e) {
-        const optionsPerService = await readFile('someDir/test-service-options.json',{encoding:'utf-8'})
+        const optionsPerService = await readFile(
+          'someDir/test-service-options.json',
+          { encoding: 'utf-8' }
+        );
         expect(JSON.parse(optionsPerService)).toEqual({
-              "../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx": {
-                "basePath": "/sap/opu/odata/sap/API_TEST_SRV",
-                "directoryName": "API_TEST_SRV",
-                "packageName": "api_test_srv"
-              }
+          '../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx':
+            {
+              basePath: '/sap/opu/odata/sap/API_TEST_SRV',
+              directoryName: 'API_TEST_SRV',
+              packageName: 'api_test_srv'
             }
-
-        )
+        });
       }
     });
 

@@ -19,12 +19,28 @@ export type IsolationStrategy = 'tenant' | 'tenant-user';
 
 /**
  * Interface to implement custom destination caching.
- * To set a custom implementation, call method {@link setDestinationCache} and pass the cache instance.
+ * To use a custom cache, call {@link setDestinationCache} and pass a cache instance that implements this interface.
  */
 export interface DestinationCacheInterface {
-  hasKey(key: string): Promise<boolean>;
-  get(key: string | undefined): Promise<Destination | undefined>;
+  /**
+   * This is called when an entry is added to the cache.
+   * @param key - The cache key to store the item under.
+   * @param item - The destination alongside an expiration time to store in the cache.
+   */
   set(key: string | undefined, item: CacheEntry<Destination>): Promise<void>;
+  /**
+   * This is called when an entry shall be retrieved from the cache.
+   * @param key - The cache key the item is stored under.
+   */
+  get(key: string | undefined): Promise<Destination | undefined>;
+  /**
+   * This is called when checking if a given key occurs in the cache.
+   * @param key - The cache key the item should be stored under, if available.
+   */
+  hasKey(key: string): Promise<boolean>;
+  /**
+   * This can be called to remove all existing entries from the cache.
+   */
   clear(): Promise<void>;
 }
 

@@ -1,12 +1,12 @@
 {
-  "API_MULTIPLE_SCHEMAS_SRV": {
+  "../../test-resources/odata-service-specs/v4/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx": {
+    "packageName": "API_MULTIPLE_SCHEMAS_SRV",
     "directoryName": "multiple-schemas-service",
-    "basePath": "/sap/opu/odata/sap/API_TEST_SRV",
-    "npmPackageName": "multiple-schemas-service"
+    "basePath": "/sap/opu/odata/sap/API_TEST_SRV"
   },
-  "API_TEST_SRV": {
+  "../../test-resources/odata-service-specs/v4/API_TEST_SRV/API_TEST_SRV.edmx": {
+    "packageName": "API_TEST_SRV",
     "directoryName": "test-service",
-    "basePath": "/sap/opu/odata/sap/API_TEST_SRV",
-    "npmPackageName": "test-service"
+    "basePath": "/sap/opu/odata/sap/API_TEST_SRV"
   }
 }

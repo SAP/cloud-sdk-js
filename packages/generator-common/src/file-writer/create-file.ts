@@ -107,7 +107,14 @@ async function formatWithPrettier(
   const parser: BuiltInParserName | undefined = fileParserMap[fileExtension];
 
   if (parser) {
-    return prettier.format(content, { ...prettierOptions, parser });
+    try {
+      return prettier.format(content, { ...prettierOptions, parser });
+    } catch (e) {
+      logger.warn(
+        `Error in prettify file ${fileName} - emit unformatted content`
+      );
+      return content;
+    }
   }
   logger.info(
     `No prettier-parser configured for file ${fileName} - skip prettier.`

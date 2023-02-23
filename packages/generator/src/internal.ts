@@ -13,7 +13,6 @@ export * from './generator-utils';
 // generator-without-ts-morph will be removed once we finished the migration to template-based generation
 export * from './generator-without-ts-morph';
 export * from './generator-without-ts-morph/request-builder';
-export * from './global-name-formatter';
 export * from './imports';
 export * from './input-path-provider';
 export * from './internal-prefix';
@@ -23,7 +22,7 @@ export * from './reserved-words';
 export * from './sdk-metadata';
 export * from './service';
 export * from './service-generator';
-export * from './options-per-service';
+export * from './service-base-path';
 export * from './service-name-formatter';
 export * from './swagger-parser';
 export * from './typedoc';

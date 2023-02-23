@@ -12,6 +12,7 @@ const generatorConfigOData = {
   clearOutputDir: false,
   packageJson: false,
   generateSdkMetadata: false,
+  skipValidation: true,
   // Unnecessary options
   s4hanaCloud: false
 };

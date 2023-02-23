@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
+import { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
-import { ServiceOptions } from '../options/options-per-service';
 import { parseSchema, parseSchemaProperties } from './schema';
 import { parseApis } from './api';
 import { createRefs, OpenApiDocumentRefs } from './refs';
@@ -26,9 +26,9 @@ export async function parseOpenApiDocument(
 
   return {
     apis: parseApis(document, refs, options),
-    serviceName: serviceOptions.serviceName,
     serviceDescription: document.info.description,
     serviceOptions,
+    serviceName: serviceOptions.directoryName,
     schemas: parseSchemas(document, refs, options)
   };
 }

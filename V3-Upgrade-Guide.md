@@ -219,12 +219,49 @@ The `serviceMapping` option in the OData generator has been renamed to `optionsP
 The `service-mapping.json` file is now named `options-per-service.json`.
 The file will no longer be generated into the input directory by default, unlike previous versions.
 
-If you want to continue generating the `optionsPerService`, set it to either:
+If the generator should consider options, it is **mandatory** to set the `optionsPerService` argument.
+You can set the value to either:
 
 - The file path containing the options per service (e.g. `options.json`).
-  If the file does not exist, it will be created.
-- The directory from which the file is read/created (e.g. `someDir`).
-  This will create a file named `options-per-service.json` in `someDir`.
+  If the file does not exist, it will be created and initialized.
+  If the file exists, missing or partial service options will be added with the default values. 
+- The directory from which the file is read/created (e.g. `someDir`. This will read/create a file named `options-per-service.json` in `someDir`)
+
+Also, the properties in the configuration have changed:
+- The option `serviceName` is removed.
+A value for the documentation header is derived from the directory name.
+- The `npmPackageName` is renamed to `packageName` to align with the OpenApi generator.
+Note that the default values for the `directoryName` and `packageName` have changed.
+- The keys change to the relative paths of the service specifications.
+
+Here is an example how the options change:
+
+```json
+//Old Format
+{
+  "API-TEST_SRV": {
+    "directoryName": "test-service",
+    "basePath": "/odata/test-service",
+    "npmPackageName": "npm-package-test-service",
+    "serviceName": "some-text-used-in-documentation-service"
+  }
+}
+
+//New Format
+{
+  "../test-resources/odata-spec/API-TEST_SRV.edmx": {
+    "packageName": "npm-package-test-service",
+    "directoryName": "test-service",
+    "basePath": "/odata/test-service"
+  }
+}
+```
+
+In case you have problems finding the relative path or adjusting the property names please do the following:
+- Remove the exising `options-per-service.json` file.
+- Re-run the generator.
+This will generate a fresh file with the new relative paths and new property names with default values.
+- Adjust the default values for packageName, directoryName and basePath with values fitting your needs.   
 
 ## Set `basePath` in `options-per-service.json`
 

@@ -200,7 +200,7 @@ export function getServiceOptions(
     const adjusted = npmCompliantName(serviceOptions?.packageName);
     if (adjusted !== serviceOptions?.packageName) {
       throw new Error(
-        `The intended packageName name ${serviceOptions.packageName} is not npm Compliant. Either change to a compliant value e.g. '${adjusted}' in your options per service configuration or execute with '--skipValidation'.`
+        `The intended packageName name ${serviceOptions.packageName} is not npm compliant. Either change to a compliant value e.g. '${adjusted}' in your options per service configuration or execute with '--skipValidation'.`
       );
     }
   }

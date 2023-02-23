@@ -64,7 +64,7 @@ describe('getServiceOptions', () => {
     expect(() =>
       getServiceOptions('serviceName', false, expectedConfig)
     ).toThrowErrorMatchingInlineSnapshot(
-      "\"The intended packageName name serviceName is not npm Compliant. Either change to a compliant value e.g. 'servicename' in your options per service configuration or execute with '--skipValidation'.\""
+      "\"The intended packageName name serviceName is not npm compliant. Either change to a compliant value e.g. 'servicename' in your options per service configuration or execute with '--skipValidation'.\""
     );
   });
 

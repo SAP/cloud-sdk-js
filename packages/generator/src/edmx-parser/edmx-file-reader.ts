@@ -1,9 +1,9 @@
-import { PathLike, readFileSync } from 'fs';
-import path, { basename } from 'path';
+import { PathLike, readdirSync, readFileSync } from 'fs';
+import path, { basename, join, parse } from 'path';
 import { XMLParser } from 'fast-xml-parser';
 import { ODataVersion, removeFileExtension } from '@sap-cloud-sdk/util';
 import { forceArray } from '../generator-utils';
-import { SwaggerMetadata } from '../swagger-parser';
+import { readSwaggerFile, SwaggerMetadata } from '../swagger-parser';
 import { getMergedPropertyWithNamespace } from './common';
 /**
  * @internal
@@ -85,6 +85,27 @@ function parseLink(root): string | undefined {
     return selfLink.href;
   }
 }
+
+/**
+ * @internal
+ */
+export function readEdmxAndSwaggerFile(
+  edmxServiceSpecPath: string
+): ServiceMetadata {
+  const serviceMetadata: ServiceMetadata = {
+    edmx: readEdmxFile(edmxServiceSpecPath)
+  };
+  const { dir, name } = parse(edmxServiceSpecPath);
+  const files = readdirSync(dir);
+  files.forEach(file => {
+    if (name + '.json' === file || name + '.JSON' === file) {
+      serviceMetadata.swagger = readSwaggerFile(join(dir, file));
+    }
+  });
+
+  return serviceMetadata;
+}
+
 /**
  * @internal
  */

@@ -24,7 +24,7 @@ People._entityName = 'People';
 /**
  * Default url path for the according service.
  */
-People._defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+People._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 /**
  * All key fields of the People entity
  */

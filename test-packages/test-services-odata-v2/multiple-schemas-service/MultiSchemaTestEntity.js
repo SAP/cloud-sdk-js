@@ -24,7 +24,7 @@ MultiSchemaTestEntity._entityName = 'MultiSchemaTestEntity';
 /**
  * Default url path for the according service.
  */
-MultiSchemaTestEntity._defaultServicePath = '/';
+MultiSchemaTestEntity._defaultBasePath = '/';
 /**
  * All key fields of the MultiSchemaTestEntity entity
  */

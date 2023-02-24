@@ -190,10 +190,13 @@ function getActionImport(): VdmOperation {
 
 export const foodService: VdmServiceMetadata = {
   oDataVersion: 'v2',
-  directoryName: 'FOOD_SERVICE',
+  serviceOptions: {
+    directoryName: 'FOOD_SERVICE',
+    basePath: 'some/path/to/food',
+    packageName: '@hello/food-service'
+  },
   namespaces: ['FOOD_SERVICE'],
-  servicePath: 'some/path/to/food',
-  npmPackageName: '@hello/food-service',
+  className: 'FoodService',
   originalFileName: 'food.service.edmx',
   speakingModuleName: 'Food Service',
   entities: [breakfastEntity, brunchEntity],
@@ -204,7 +207,7 @@ export const foodService: VdmServiceMetadata = {
   actionImports: [getActionImport()],
   complexTypes: [],
   enumTypes: [],
-  className: 'FoodService',
+
   edmxPath: 'some/path/to/food/edmx'
 };
 

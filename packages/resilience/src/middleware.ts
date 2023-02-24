@@ -14,22 +14,6 @@ export interface MiddlewareOptions<
    * Context of the execution e.g. the request context or URL.
    */
   context: ContextT;
-  /**
-   * Call this method to disable all following middlewares.
-   */
-  readonly skipNext: SkipNext;
-}
-
-/**
- * Type of the skip next method.
- */
-export interface SkipNext {
-  (): void;
-
-  /**
-   * Initially the called property is false and becomes true after invocation.
-   */
-  called: boolean;
 }
 
 /**
@@ -44,10 +28,6 @@ export interface MiddlewareContext<ArgumentT> {
    * Tenant identifier.
    */
   readonly tenantId: string;
-  /**
-   * Arguments used in the middleware function. You can change this property to change the arguments in function execution.
-   */
-  fnArgument: ArgumentT;
 }
 
 /**
@@ -84,35 +64,32 @@ export function executeWithMiddleware<
   ContextT extends MiddlewareContext<ArgumentT>
 >(
   middlewares: Middleware<ArgumentT, ReturnT, ContextT>[] | undefined,
-  context: ContextT,
-  fn: MiddlewareFunction<ArgumentT, ReturnT>
+  {
+    fn,
+    context,
+    fnArgument
+  }: MiddlewareOptions<ArgumentT, ReturnT, ContextT> & {
+    fnArgument: ArgumentT;
+  }
 ): Promise<ReturnT> {
   if (!middlewares?.length) {
-    return fn(context.fnArgument);
+    return fn(fnArgument);
   }
 
-  // The skipNext function is called in the middleware to skip the next middlewares
-  const skipNext = function () {
-    skipNext.called = true;
-  };
-  skipNext.called = false;
-
-  const initial = { context, fn, skipNext };
+  const initial = { context, fn };
   const functionWithMiddlewares = addMiddlewaresToInitialFunction(
     middlewares,
     initial
   );
-  return functionWithMiddlewares(context.fnArgument);
+  return functionWithMiddlewares(fnArgument);
 }
 
 /**
- * .
- *
  * This functions adds the middlewares to the initial functions.
  * You start with a function (axios request function) and add a timeout, circuit-breaker etc..
  * The result is new a function containing a timeout, circuit-breaker etc..
  * Note that the actual function is not executed.
- * @param middlewares - Middlewares added to the function.
+ * @param middlewares - Middlewares added to the function. Added from right to function.
  * @param initial - Initial function and context.
  * @returns The function with the middlewares added.
  */
@@ -124,11 +101,12 @@ function addMiddlewaresToInitialFunction<
   middlewares: Middleware<ArgumentT, ReturnT, ContextT>[],
   initial: MiddlewareOptions<ArgumentT, ReturnT, ContextT>
 ): MiddlewareFunction<ArgumentT, ReturnT> {
-  const { context, skipNext } = initial;
+  const { context } = initial;
 
-  const functionWithMiddlewares = middlewares.reduce((prev, curr) => {
-    const middlewareAdded = skipNext.called ? prev.fn : curr(prev);
-    return { fn: middlewareAdded, context, skipNext };
-  }, initial);
+  // Reduce right is in line with the composition operator [g,f] relates g o f means g after f.
+  const functionWithMiddlewares = middlewares.reduceRight(
+    (prev, curr) => ({ fn: curr(prev), context }),
+    initial
+  );
   return functionWithMiddlewares.fn;
 }

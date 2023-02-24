@@ -1,12 +1,15 @@
-import { join, posix, resolve, sep } from 'path';
+import { join, resolve } from 'path';
 import mock from 'mock-fs';
-import { parseOptions } from '@sap-cloud-sdk/generator-common/dist/options-parser';
+import { parseOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { parseCmdArgs } from '../cli-parser';
 import { cliOptions } from './options';
 
 describe('parseGeneratorOptions', () => {
   beforeEach(() => {
     mock({
+      inputDir: {
+        'spec.json': ''
+      },
       'existent-directory': {
         'existent-file': 'file content'
       }
@@ -43,7 +46,7 @@ describe('parseGeneratorOptions', () => {
         outputDir: 'outputDir'
       })
     ).toEqual({
-      input: join(process.cwd(), 'inputDir').split(sep).join(posix.sep),
+      input: [join(process.cwd(), 'inputDir', 'spec.json')],
       outputDir: join(process.cwd(), 'outputDir'),
       ...optionsDefaultValues
     });
@@ -162,20 +165,15 @@ describe('parseGeneratorOptions', () => {
     ).not.toThrowError();
   });
 
-  it('parses a given path to a config file and returns its content as parsed generator options', async () => {
+  it('parses a given path to a config file and returns its content as parsed generator options', () => {
     mock.restore();
     const path = resolve(__dirname, '../../test/test-config.json');
 
-    const parsed = await parseOptions(
-      cliOptions,
-      parseCmdArgs(['--config', path])
-    );
-    expect(parsed.input).toContain('some-repository');
+    const parsed = parseOptions(cliOptions, parseCmdArgs(['--config', path]));
+    expect(parsed.input).toMatchObject([]);
     expect(parsed.outputDir).toContain('some-output');
     // RegEx to match paths for both *nix and Windows
-    expect(parsed.include).toMatchObject([
-      expect.stringMatching(join(resolve(), 'test-config.json'))
-    ]);
+    expect(parsed.include).toMatchObject([path]);
   });
 
   it('fails if wrong configuration keys were used', async () => {

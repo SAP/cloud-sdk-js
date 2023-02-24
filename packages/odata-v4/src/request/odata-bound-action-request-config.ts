@@ -31,7 +31,7 @@ export class ODataBoundActionImportRequestConfig<
     readonly oDataUri: ODataUri<DeSerializersT>
   ) {
     super(
-      entityApi.entityConstructor._defaultServicePath,
+      entityApi.entityConstructor._defaultBasePath,
       functionImportName,
       parameters,
       oDataUri

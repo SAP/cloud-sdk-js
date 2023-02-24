@@ -15,7 +15,7 @@ import {
   TestEntityCircularLinkParentType
 } from './TestEntityCircularLinkParent';
 /**
- * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityCircularLinkChild<
     T extends DeSerializers = DefaultDeSerializers
@@ -31,7 +31,7 @@ export declare class TestEntityCircularLinkChild<
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath: string;
+  static _defaultBasePath: string;
   /**
    * All key fields of the TestEntityCircularLinkChild entity
    */

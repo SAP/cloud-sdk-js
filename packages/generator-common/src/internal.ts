@@ -9,3 +9,4 @@ export * from './ts-config';
 export * from './options-parser';
 export * from './cli-parser';
 export * from './options';
+export * from './options-per-service';

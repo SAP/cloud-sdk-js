@@ -231,10 +231,7 @@ describe('generic http client', () => {
       jest.restoreAllMocks();
     });
 
-    function buildMiddleware(
-      appendedText: string,
-      skipNext = false
-    ): HttpMiddleware {
+    function buildMiddleware(appendedText: string): HttpMiddleware {
       // We want to add a name to the function for debugging which is not easy to set.
       // Doing the dummy object the name of the key is taken as function name.
       const dummy = {
@@ -245,10 +242,6 @@ describe('generic http client', () => {
             HttpMiddlewareContext
           >
         ) {
-          if (skipNext) {
-            options.skipNext();
-          }
-
           const wrapped = args =>
             options.fn(args).then(res => {
               res.data = res.data + appendedText;
@@ -388,43 +381,28 @@ describe('generic http client', () => {
           method: 'get'
         }
       );
-      expect(response.data).toEqual({
-        destinationName: 'FINAL-DESTINATION',
-        jwt: subscriberUserJwt,
-        fnArgument: expect.any(Object),
-        tenantId: 'subscriber',
-        uri: 'https://my.system.example.com'
-      });
-
       delete process.env['VCAP_SERVICES'];
       nock.cleanAll();
       jest.clearAllMocks();
+
+      expect(response.data).toEqual({
+        destinationName: 'FINAL-DESTINATION',
+        jwt: subscriberUserJwt,
+        tenantId: 'subscriber',
+        uri: 'https://my.system.example.com'
+      });
     });
 
     it('attaches multiple middleware in the expected order', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
-      const myMiddlewareTwo = buildMiddleware('Middleware Two.');
-      const myMiddlewareOne = buildMiddleware('Middleware One.');
+      const myMiddlewareA = buildMiddleware('Middleware A.');
+      const myMiddlewareB = buildMiddleware('Middleware B.');
 
       const response = await executeHttpRequest(httpsDestination, {
-        middleware: [myMiddlewareOne, myMiddlewareTwo],
+        middleware: [myMiddlewareB, myMiddlewareA],
         method: 'get'
       });
-      expect(response.data).toEqual(
-        'Initial value.Middleware One.Middleware Two.'
-      );
-    });
-
-    it('stops middleware chain if skipNext is set to true.', async () => {
-      nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
-      const myMiddlewareTwo = buildMiddleware('Middleware Two.');
-      const myMiddlewareOne = buildMiddleware('Middleware One.', true);
-
-      const response = await executeHttpRequest(httpsDestination, {
-        middleware: [myMiddlewareOne, myMiddlewareTwo],
-        method: 'get'
-      });
-      expect(response.data).toEqual('Initial value.Middleware One.');
+      expect(response.data).toEqual('Initial value.Middleware A.Middleware B.');
     });
 
     it('returns a tenantid from jwt containing either zid or iss', () => {
@@ -502,8 +480,8 @@ describe('generic http client', () => {
 
     it('is possible to change config properties with a middleware', async () => {
       const changeUrlMiddleware: HttpMiddleware = function (options) {
-        options.context.fnArgument.url = 'test-works';
-        return options.fn;
+        return requestConfig =>
+          options.fn({ ...requestConfig, url: 'test-works' });
       };
 
       const mock = nock('http://example.com', {})

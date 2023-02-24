@@ -9,7 +9,7 @@ export function createOptions(
   options?: Partial<GeneratorOptions>
 ): GeneratorOptions {
   return {
-    inputDir: '',
+    input: '',
     outputDir: '',
     skipValidation: true,
     optionsPerService: 'options-per-service.json',

@@ -75,12 +75,12 @@ export abstract class MethodRequestBuilder<
 
   /**
    * Replace the default service path with the given custom path.
-   * In case of the SAP S/4HANA APIs the servicePath defaults to `/sap/opu/odata/sap/<SERVICE_NAME>` and can be overwritten here.
-   * @param servicePath - Path to override the default with.
+   * In case of the SAP S/4HANA APIs the basePath defaults to `/sap/opu/odata/sap/<SERVICE_NAME>` and can be overwritten here.
+   * @param basePath - Path to override the default with.
    * @returns The request builder itself, to facilitate method chaining.
    */
-  setCustomServicePath(servicePath: string): this {
-    this.requestConfig.customServicePath = servicePath;
+  setBasePath(basePath: string): this {
+    this.requestConfig.basePath = basePath;
     return this;
   }
 

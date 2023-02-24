@@ -17,7 +17,7 @@ export async function generateCommonEntity() {
 
   await generate(
     createOptions({
-      inputDir: resolve(__dirname, 'COMMON_SRV.edmx'),
+      input: resolve(__dirname, 'COMMON_SRV.edmx'),
       outputDir: resolve(__dirname),
       optionsPerService: resolve(__dirname, 'options-per-service.json'),
       overwrite: true

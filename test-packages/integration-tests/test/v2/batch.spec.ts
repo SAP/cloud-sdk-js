@@ -30,7 +30,7 @@ import {
 } from '../test-data/batch/responses';
 
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
-const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const csrfToken = 'CSRFTOKEN';
 
 const destination: HttpDestination = {
@@ -50,7 +50,7 @@ function mockCsrfTokenRequest(host: string, sapClient: string) {
       'sap-client': sapClient
     }
   })
-    .head(`${servicePath}/$batch`)
+    .head(`${basePath}/$batch`)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
@@ -68,7 +68,7 @@ function mockBatchRequest(matchRequestPayload, responseData) {
     }
   })
     .matchHeader('content-type', /multipart\/mixed; boundary=batch_*/)
-    .post(`${servicePath}/$batch`, new RegExp(matchRequestPayload))
+    .post(`${basePath}/$batch`, new RegExp(matchRequestPayload))
     .reply(202, responseData, {
       'Content-Type': 'multipart/mixed; boundary=TEST-RESPONSE'
     });

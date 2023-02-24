@@ -7,67 +7,93 @@ import {
 
 describe('middleware', () => {
   const logger = createLogger('middleware');
+  const context = { uri: 'dummyUri', tenantId: 'dummyTenant' };
 
-  const middleWareAppend1 = function (
-    options: MiddlewareOptions<string, string, MiddlewareContext<string>>
-  ) {
-    const id = 'append1';
-    return s => {
-      logger.info(id);
-      return options.fn(s + ' ' + id);
+  const beforeMiddlewareBuilder = appendString =>
+    function (
+      options: MiddlewareOptions<string, string, MiddlewareContext<string>>
+    ) {
+      logger.info(`Before Middleware added: ${appendString}`);
+      return s => options.fn(`${s} ${appendString}`);
     };
-  };
-  const middleWareAppend2 = function (
-    options: MiddlewareOptions<string, string, MiddlewareContext<string>>
-  ) {
-    const id = 'append2';
-    return s => {
-      logger.info(id);
-      return options.fn(s + ' ' + id);
+  const afterMiddlewareBuilder = appendString =>
+    function (
+      options: MiddlewareOptions<string, string, MiddlewareContext<string>>
+    ) {
+      logger.info(`After Middleware added: ${appendString}`);
+      return async s => {
+        const result = await options.fn(s);
+        return `${result} ${appendString}`;
+      };
     };
-  };
-
-  const middleWareSkip = function (
-    options: MiddlewareOptions<string, string, MiddlewareContext<string>>
-  ) {
-    options.skipNext();
-    return options.fn;
-  };
 
   const middleWareAdjustArgument = function (
     options: MiddlewareOptions<string, string, MiddlewareContext<string>>
   ) {
-    options.context.fnArgument = 'Changed by middleware';
-    return options.fn;
+    return s => options.fn(`${s} adjusted by Middleware`);
   };
 
-  it('adds middlewares in the expected order', async () => {
+  it('adds middlewares in the expected order - right to left', async () => {
     const infoSpy = jest.spyOn(logger, 'info');
     const actual = await executeWithMiddleware(
-      [middleWareAppend1, middleWareAppend2],
-      { uri: 'dummyUri', fnArgument: 'initial Input', tenantId: 'dummyTenant' },
-      (s: string) => Promise.resolve(s)
+      [
+        beforeMiddlewareBuilder('A'),
+        afterMiddlewareBuilder('B'),
+        beforeMiddlewareBuilder('C'),
+        afterMiddlewareBuilder('D')
+      ],
+      {
+        fn: (s: string) => Promise.resolve(s),
+        context,
+        fnArgument: 'initial Input'
+      }
     );
-    expect(infoSpy).toHaveBeenNthCalledWith(2, 'append1');
-    expect(infoSpy).toHaveBeenNthCalledWith(1, 'append2');
-    expect(actual).toBe('initial Input append2 append1');
+    expect(infoSpy).toHaveBeenNthCalledWith(1, 'After Middleware added: D');
+    expect(infoSpy).toHaveBeenNthCalledWith(2, 'Before Middleware added: C');
+    expect(infoSpy).toHaveBeenNthCalledWith(3, 'After Middleware added: B');
+    expect(infoSpy).toHaveBeenNthCalledWith(4, 'Before Middleware added: A');
   });
 
-  it('stops middlewares if skip is called', async () => {
+  it('executes middlewares in the expected order like implied by composition (only after middlewares)', async () => {
+    const infoSpy = jest.spyOn(logger, 'info');
     const actual = await executeWithMiddleware(
-      [middleWareAppend1, middleWareSkip, middleWareAppend2],
-      { uri: 'dummyUri', fnArgument: 'initial Input', tenantId: 'dummyTenant' },
-      (s: string) => Promise.resolve(s)
+      [afterMiddlewareBuilder('A'), afterMiddlewareBuilder('B')],
+      {
+        fn: (s: string) => Promise.resolve(s),
+        context,
+        fnArgument: 'initial Input'
+      }
     );
-    expect(actual).toBe('initial Input append1');
+    expect(actual).toBe('initial Input B A');
+  });
+
+  it('executes middlewares in the expected order - after and before middlewares', async () => {
+    const infoSpy = jest.spyOn(logger, 'info');
+    const actual = await executeWithMiddleware(
+      [
+        beforeMiddlewareBuilder('A'),
+        afterMiddlewareBuilder('B'),
+        beforeMiddlewareBuilder('C'),
+        afterMiddlewareBuilder('D')
+      ],
+      {
+        fn: (s: string) => Promise.resolve(s),
+        context,
+        fnArgument: 'initial Input'
+      }
+    );
+    expect(actual).toBe('initial Input A C D B');
   });
 
   it('allows to adjust function argument via middlewares', async () => {
     const actual = await executeWithMiddleware(
-      [middleWareAppend1, middleWareAdjustArgument],
-      { uri: 'dummyUri', fnArgument: 'initial Input', tenantId: 'dummyTenant' },
-      (s: string) => Promise.resolve(s)
+      [afterMiddlewareBuilder('A'), middleWareAdjustArgument],
+      {
+        fn: (s: string) => Promise.resolve(s),
+        context,
+        fnArgument: 'initial Input'
+      }
     );
-    expect(actual).toBe('Changed by middleware append1');
+    expect(actual).toBe('initial Input adjusted by Middleware A');
   });
 });

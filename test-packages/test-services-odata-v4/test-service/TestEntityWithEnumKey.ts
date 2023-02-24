@@ -13,7 +13,7 @@ import type { TestEntityWithEnumKeyApi } from './TestEntityWithEnumKeyApi';
 import { TestEnumType } from './TestEnumType';
 
 /**
- * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export class TestEntityWithEnumKey<
     T extends DeSerializers = DefaultDeSerializers
@@ -28,7 +28,7 @@ export class TestEntityWithEnumKey<
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntityWithEnumKey entity
    */

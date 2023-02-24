@@ -32,7 +32,7 @@ export class OdataBoundFunctionImportRequestConfig<
   ) {
     super(
       method,
-      entityApi.entityConstructor._defaultServicePath,
+      entityApi.entityConstructor._defaultBasePath,
       functionImportName,
       parameters,
       oDataUri

@@ -2,7 +2,7 @@ import { getExpectedHelpfulLinks } from '../../test/test-util/readme-util';
 import { ApiBusinessHubMetadata, VdmServiceMetadata } from '../vdm-types';
 import { readme } from './readme';
 
-const npmPackageName = 'business-partner-service';
+const packageName = 'business-partner-service';
 const speakingModuleName = 'Business Partner Service';
 const apiHubUrl = 'https://api.sap.com/api/API_BUSINESS_PARTNER';
 const communicationScenario = 'Things, stuff and codings (SAP_COM_1234)';
@@ -11,7 +11,9 @@ describe('service readme', () => {
   it("returns the content of the package's README.md file", () => {
     expect(
       readme({
-        npmPackageName,
+        serviceOptions: {
+          packageName
+        },
         speakingModuleName,
         apiBusinessHubMetadata: {
           url: apiHubUrl,
@@ -34,7 +36,9 @@ ${getExpectedHelpfulLinks()}
   it('does not reference communication scenarios if non are defined', () => {
     expect(
       readme({
-        npmPackageName,
+        serviceOptions: {
+          packageName
+        },
         speakingModuleName,
         apiBusinessHubMetadata: {
           url: apiHubUrl,
@@ -54,7 +58,9 @@ ${getExpectedHelpfulLinks()}
   it('does not create a link if no apiBusinessHubMetadata is defined', () => {
     expect(
       readme({
-        npmPackageName,
+        serviceOptions: {
+          packageName
+        },
         speakingModuleName
       } as VdmServiceMetadata)
     ).toBe(
@@ -70,7 +76,9 @@ ${getExpectedHelpfulLinks()}
   it('does not create usage example if none exist', () => {
     expect(
       readme({
-        npmPackageName,
+        serviceOptions: {
+          packageName
+        },
         speakingModuleName
       } as VdmServiceMetadata)
     ).toBe(

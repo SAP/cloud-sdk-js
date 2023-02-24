@@ -6,7 +6,7 @@ describe('ODataBatchConfig', () => {
 
   beforeEach(() => {
     config = new ODataBatchRequestConfig(
-      CommonEntity._defaultServicePath,
+      CommonEntity._defaultBasePath,
       'batch_id'
     );
   });

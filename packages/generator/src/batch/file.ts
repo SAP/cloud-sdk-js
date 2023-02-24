@@ -16,9 +16,9 @@ export function batchSourceFile(
       ...importBatchDeclarations(service),
       batchFunction(service),
       changesetFunction(service),
-      `export const default${service.className}Path = '${service.servicePath}';`,
+      `export const default${service.className}Path = '${service.serviceOptions.basePath}';`,
       readRequestType(service),
       writeRequestType(service)
     ]
-  };
+  } as SourceFileStructure;
 }

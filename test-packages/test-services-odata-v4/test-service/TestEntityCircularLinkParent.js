@@ -8,7 +8,7 @@ exports.TestEntityCircularLinkParent = void 0;
  */
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 /**
- * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 class TestEntityCircularLinkParent extends odata_v4_1.Entity {
     constructor(_entityApi) {
@@ -24,7 +24,7 @@ TestEntityCircularLinkParent._entityName = 'A_TestEntityCircularLinkParent';
 /**
  * Default url path for the according service.
  */
-TestEntityCircularLinkParent._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+TestEntityCircularLinkParent._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
  * All key fields of the TestEntityCircularLinkParent entity
  */

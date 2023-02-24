@@ -11,7 +11,7 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithSharedEntityType1Api } from './TestEntityWithSharedEntityType1Api';
 /**
- * This class represents the entity "A_TestEntityWithSharedEntityType1" of service "API_TEST_SRV".
+ * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityWithSharedEntityType1<
     T extends DeSerializers = DefaultDeSerializers
@@ -27,7 +27,7 @@ export declare class TestEntityWithSharedEntityType1<
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath: string;
+  static _defaultBasePath: string;
   /**
    * All key fields of the TestEntityWithSharedEntityType1 entity
    */

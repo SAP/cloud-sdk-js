@@ -10,6 +10,7 @@
     "./packages/http-client/**/*",
     "./packages/mail-client/**/*",
     "./packages/openapi/**/*",
+    "./packages/generator-common/**/*",
     "./packages/generator/**/*",
     "./packages/openapi-generator/**/*",
     "./packages/test-util/**/*",
@@ -44,6 +45,9 @@
       "path": "./packages/mail-client"
     },
     {
+      "path": "./packages/generator-common"
+    },
+    {
       "path": "./packages/openapi"
     },
     {
@@ -72,6 +76,7 @@
       "packages/odata-v4/src/index.ts",
       "packages/openapi/src/index.ts",
       "packages/generator/src/index.ts",
+      "packages/generator-common/src/index.ts",
       "packages/openapi-generator/src/index.ts",
       "packages/test-util/src/index.ts",
       "packages/temporal-de-serializers/src/index.ts"

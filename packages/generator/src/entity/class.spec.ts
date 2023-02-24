@@ -27,7 +27,7 @@ describe('entity class generator generates a class', () => {
     expect(staticProperties.map(prop => [prop.name, prop.initializer])).toEqual(
       [
         ['_entityName', `'${breakfastEntity.entitySetName}'`],
-        ['_defaultServicePath', `'${foodService.servicePath}'`],
+        ['_defaultBasePath', `'${foodService.serviceOptions.basePath}'`],
         ['_keys', "['EntityName','BreakfastTime']"]
       ]
     );

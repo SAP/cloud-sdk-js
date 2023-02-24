@@ -21,8 +21,8 @@ function mockCsrfTokenRequest(
   })
     .head(
       path
-        ? `${TestEntity._defaultServicePath}/${path}`
-        : TestEntity._defaultServicePath
+        ? `${TestEntity._defaultBasePath}/${path}`
+        : TestEntity._defaultBasePath
     )
     .reply(200, '', {
       'x-csrf-token': csrfToken,
@@ -46,7 +46,7 @@ function mockUpdateRequest(
       cookie: 'key1=val1;key2=val2;key3=val3'
     }
   })
-    .patch(`${TestEntity._defaultServicePath}/${entityNameWithKey}`, payload)
+    .patch(`${TestEntity._defaultBasePath}/${entityNameWithKey}`, payload)
     .reply(204);
 }
 
@@ -137,7 +137,7 @@ describe('deep-update and change detection', () => {
       }
     })
       .patch(
-        `${TestEntity._defaultServicePath}/A_TestEntity(KeyPropertyGuid=guid'${testEntityKeyPropGuid}',KeyPropertyString='${testEntityKeyPropString}')`,
+        `${TestEntity._defaultBasePath}/A_TestEntity(KeyPropertyGuid=guid'${testEntityKeyPropGuid}',KeyPropertyString='${testEntityKeyPropString}')`,
         {
           StringProperty: 'no',
           to_SingleLink: { StringProperty: 'abc' },

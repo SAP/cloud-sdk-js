@@ -1,5 +1,6 @@
 import { PathLike } from 'fs';
 import { ODataVersion } from '@sap-cloud-sdk/util';
+import { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 /**
  * @internal
  */
@@ -19,23 +20,11 @@ export interface VdmServicePackageMetaData {
   /**
    * @internal
    */
-  servicePath: string;
-  /**
-   * @internal
-   */
-  directoryName: string;
-  /**
-   * @internal
-   */
-  npmPackageName: string;
+  apiBusinessHubMetadata?: ApiBusinessHubMetadata | undefined;
   /**
    * @internal
    */
   speakingModuleName: string;
-  /**
-   * @internal
-   */
-  apiBusinessHubMetadata?: ApiBusinessHubMetadata | undefined;
   /**
    * @internal
    */
@@ -71,9 +60,11 @@ export interface VdmServiceEntities {
   actionImports?: VdmOperation[];
 }
 /**
+ * Basepath is set here
  * @internal
  */
-export type VdmServiceMetadata = VdmServicePackageMetaData & VdmServiceEntities;
+export type VdmServiceMetadata = VdmServicePackageMetaData &
+  VdmServiceEntities & { serviceOptions: Required<ServiceOptions> };
 
 /**
  * Entity

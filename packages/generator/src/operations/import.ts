@@ -101,7 +101,7 @@ export function operationImportDeclarations(
     operation => operation.parameters.length && operation.type === 'function'
   );
   const hasActionWithParameters = operations.some(
-    operation => operation.parameters.length > 0 && operation.type === 'action'
+    operation => operation.parameters.length && operation.type === 'action'
   );
   const hasFunction = operations.some(
     operation => operation.type === 'function'

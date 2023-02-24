@@ -10,17 +10,17 @@ An SDK to reduce your development effort when building side-by-side extension ap
 
 ## Announcement - Upgrade Strategy
 
-We have released version 2 of the SAP Cloud SDK for JavaScript on npm.
-Check out the [upgrade guide](https://sap.github.io/cloud-sdk/docs/js/guides/upgrade-to-version-2) for detailed instructions.
+We have released version 3 of the SAP Cloud SDK for JavaScript on npm.
+Check out the [upgrade guide](https://github.com/SAP/cloud-sdk-js/blob/main/V3-Upgrade-Guide.md) for detailed instructions.
 The upgrade effort should be around 1 day for an average project and should not take more than a week for larger projects.
 
-It is recommended to upgrade to version 2 as version 1.x will not be actively maintained, with the exception of critical security vulnerabilities for up to 6 months.
+It is recommended to upgrade to version 3 as version 2.x will not be actively maintained, with the exception of critical security vulnerabilities for up to 6 months.
 
-Please share your ideas, suggestions or improvements in our [GitHub discussion](https://github.com/SAP/cloud-sdk-js/discussions/1518).
+Please share your ideas, suggestions or improvements in our [GitHub discussion](https://github.com/SAP/cloud-sdk-js/discussions/3557).
 
 ## Looking for documentation?
 
-Check our [API documentation](https://sap.github.io/cloud-sdk/api/2.10.0/) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
+Check our [API documentation](https://sap.github.io/cloud-sdk/api/3.0.0/) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
 
 ### Table of Contents
 

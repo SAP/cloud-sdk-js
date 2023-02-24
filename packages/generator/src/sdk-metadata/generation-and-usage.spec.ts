@@ -7,15 +7,19 @@ import { entityCodeSample } from './code-samples';
 
 describe('generation-and-usage', () => {
   const service = {
-    npmPackageName: '@sap/dummy-package',
-    originalFileName: 'DummyClass',
-    directoryName: 'dummy-service',
+    serviceOptions: {
+      packageName: '@sap/dummy-package',
+      directoryName: 'dummy-service'
+    },
     className: 'dummyService',
+    originalFileName: 'DummyClass',
     entities: [{ className: 'DummyCollection' }, { className: 'DummyClass' }]
   } as VdmServiceMetadata;
 
   const serviceWithFunctionImport = {
-    npmPackageName: '@sap/dummy-package',
+    serviceOptions: {
+      packageName: '@sap/dummy-package'
+    },
     originalFileName: 'Dummy',
     functionImports: [
       {
@@ -31,7 +35,9 @@ describe('generation-and-usage', () => {
   } as VdmServiceMetadata;
 
   const serviceWithMultipleImports = {
-    npmPackageName: '@sap/dummy-package',
+    serviceOptions: {
+      packageName: '@sap/dummy-package'
+    },
     originalFileName: 'Dummy',
     functionImports: [
       {
@@ -52,7 +58,9 @@ describe('generation-and-usage', () => {
   } as VdmServiceMetadata;
 
   const serviceWithActionImport = {
-    npmPackageName: '@sap/dummy-package',
+    serviceOptions: {
+      packageName: '@sap/dummy-package'
+    },
     originalFileName: 'Dummy',
     actionImports: [
       {

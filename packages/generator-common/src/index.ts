@@ -1,0 +1,1 @@
+export { CommonGeneratorOptions } from './options';

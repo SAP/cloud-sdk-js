@@ -46,45 +46,47 @@ describe('generator', () => {
       mock.restore();
     });
 
-    const inputDir = 'root/inputDir';
+    const input = 'root/inputDir';
 
     it('should return an array with one file path for an input file', () => {
-      expect(getInputFilePaths('root/inputDir/test-service.json')).toEqual([
-        resolve(inputDir, 'test-service.json')
-      ]);
+      expect(
+        getInputFilePaths('root/inputDir/test-service.json', 'OpenApi')
+      ).toEqual([resolve(input, 'test-service.json')]);
     });
 
     it('should return an array with all JSON and YAML file paths within the input directory and all subdirectories', () => {
-      expect(getInputFilePaths(inputDir)).toEqual([
-        resolve(inputDir, 'sub-dir/test-service.YAML'),
-        resolve(inputDir, 'sub-dir/test-service.yml'),
-        resolve(inputDir, 'sub-dir/test-service.YML'),
-        resolve(inputDir, 'sub-dir/test-service2.json'),
-        resolve(inputDir, 'test-service.json'),
-        resolve(inputDir, 'test-service.JSON'),
-        resolve(inputDir, 'test-service.yaml')
+      expect(getInputFilePaths(input, 'OpenApi')).toEqual([
+        resolve(input, 'sub-dir/test-service.YAML'),
+        resolve(input, 'sub-dir/test-service.yml'),
+        resolve(input, 'sub-dir/test-service.YML'),
+        resolve(input, 'sub-dir/test-service2.json'),
+        resolve(input, 'test-service.json'),
+        resolve(input, 'test-service.JSON'),
+        resolve(input, 'test-service.yaml')
       ]);
     });
 
     it('should return an array with all `.json` files within the input directory and all subdirectories', () => {
-      expect(getInputFilePaths('root/inputDir/**/*.json')).toEqual([
-        resolve(inputDir, 'sub-dir/test-service2.json'),
-        resolve(inputDir, 'test-service.json')
+      expect(getInputFilePaths('root/inputDir/**/*.json', 'OpenApi')).toEqual([
+        resolve(input, 'sub-dir/test-service2.json'),
+        resolve(input, 'test-service.json')
       ]);
     });
 
     it('should return an array with all JSON and YAML file paths within the input directory', () => {
-      expect(getInputFilePaths('root/inputDir/*')).toEqual([
-        resolve(inputDir, 'test-service.json'),
-        resolve(inputDir, 'test-service.JSON'),
-        resolve(inputDir, 'test-service.yaml')
+      expect(getInputFilePaths('root/inputDir/*', 'OpenApi')).toEqual([
+        resolve(input, 'test-service.json'),
+        resolve(input, 'test-service.JSON'),
+        resolve(input, 'test-service.yaml')
       ]);
     });
 
     it('should return an array with all `.json` and `.yaml` files within the input directory', () => {
-      expect(getInputFilePaths('root/inputDir/*.{json,yaml}')).toEqual([
-        resolve(inputDir, 'test-service.json'),
-        resolve(inputDir, 'test-service.yaml')
+      expect(
+        getInputFilePaths('root/inputDir/*.{json,yaml}', 'OpenApi')
+      ).toEqual([
+        resolve(input, 'test-service.json'),
+        resolve(input, 'test-service.yaml')
       ]);
     });
   });
@@ -227,21 +229,14 @@ describe('generator', () => {
         optionsPerService: 'options.json'
       });
 
-      const actual = readFile('options.json', 'utf8');
-      await expect(actual).resolves.toMatch(endsWithNewLine);
-      await expect(actual).resolves.toMatch(
-        JSON.stringify(
-          {
-            'inputDir/spec.json': {
-              packageName: 'spec',
-              directoryName: 'spec',
-              serviceName: 'spec'
-            }
-          },
-          null,
-          2
-        )
-      );
+      const actual = await readFile('options.json', 'utf8');
+      expect(actual).toMatch(endsWithNewLine);
+      await expect(JSON.parse(actual)).toEqual({
+        'inputDir/spec.json': {
+          packageName: 'spec',
+          directoryName: 'spec'
+        }
+      });
     });
 
     it('overwrites writes options per service', async () => {
@@ -251,21 +246,14 @@ describe('generator', () => {
         optionsPerService: 'existingConfig'
       });
 
-      const actual = readFile('existingConfig', 'utf8');
-      await expect(actual).resolves.toMatch(endsWithNewLine);
-      await expect(actual).resolves.toMatch(
-        JSON.stringify(
-          {
-            'inputDir/spec.json': {
-              packageName: 'customName',
-              directoryName: 'customName',
-              serviceName: 'customName'
-            }
-          },
-          null,
-          2
-        )
-      );
+      const actual = await readFile('existingConfig', 'utf8');
+      await expect(actual).toMatch(endsWithNewLine);
+      await expect(JSON.parse(actual)).toEqual({
+        'inputDir/spec.json': {
+          packageName: 'customname',
+          directoryName: 'customName'
+        }
+      });
     });
 
     it('merges options per service', async () => {
@@ -275,24 +263,17 @@ describe('generator', () => {
         optionsPerService: 'anotherConfig'
       });
 
-      const actual = readFile('anotherConfig', 'utf8');
-      await expect(actual).resolves.toMatch(endsWithNewLine);
-      await expect(actual).resolves.toMatch(
-        JSON.stringify(
-          {
-            'inputDir/spec2.json': {
-              directoryName: 'customName'
-            },
-            'inputDir/spec.json': {
-              packageName: 'spec',
-              directoryName: 'spec',
-              serviceName: 'spec'
-            }
-          },
-          null,
-          2
-        )
-      );
+      const actual = await readFile('anotherConfig', 'utf8');
+      await expect(actual).toMatch(endsWithNewLine);
+      await expect(JSON.parse(actual)).toEqual({
+        'inputDir/spec2.json': {
+          directoryName: 'customName'
+        },
+        'inputDir/spec.json': {
+          packageName: 'spec',
+          directoryName: 'spec'
+        }
+      });
     });
   });
 

@@ -37,6 +37,28 @@ describe('retry', () => {
     ).resolves.not.toThrow();
   });
 
+  it('rejects after retires', async () => {
+    nock('https://example.com', {})
+      .get('/retry')
+      .reply(HTTP_STATUS.SERVICE_UNAVAILABLE)
+      .get('/retry')
+      .reply(HTTP_STATUS.SERVICE_UNAVAILABLE);
+
+    const requestConfig = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/retry'
+    };
+
+    await expect(
+      executeWithMiddleware([retry(1)], {
+        context: { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        fnArgument: requestConfig,
+        fn: request
+      })
+    ).rejects.toThrow();
+  });
+
   it('needs to retry twice', async () => {
     nock('https://example.com', {})
       .get('/retry')

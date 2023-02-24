@@ -27,9 +27,6 @@ export class ServiceNameFormatter {
       : `${formattedName}-service`;
   }
 
-  static directoryToSpeakingModuleName(packageName: string): string {
-    return voca.titleCase(packageName.replace(/-/g, ' '));
-  }
   private serviceName: string;
   private skipValidation: boolean;
 

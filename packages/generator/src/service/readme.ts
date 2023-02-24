@@ -7,7 +7,7 @@ import { getApiSpecificUsage } from '../sdk-metadata';
 import { VdmServiceMetadata } from '../vdm-types';
 
 function title(service: VdmServiceMetadata): string {
-  return service.npmPackageName || service.speakingModuleName;
+  return service.serviceOptions.packageName || service.speakingModuleName;
 }
 
 function serviceReference(service: VdmServiceMetadata): string {

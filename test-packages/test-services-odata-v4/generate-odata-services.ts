@@ -12,6 +12,7 @@ const generatorConfigOData = {
   clearOutputDir: false,
   packageJson: false,
   generateSdkMetadata: false,
+  skipValidation: true,
   // Unnecessary options
   s4hanaCloud: false
 };
@@ -19,7 +20,7 @@ const generatorConfigOData = {
 async function generateOdata(): Promise<void> {
   return generate({
     ...generatorConfigOData,
-    inputDir: join('..', '..', 'test-resources', 'odata-service-specs', 'v4'),
+    input: join('..', '..', 'test-resources', 'odata-service-specs', 'v4'),
     outputDir: resolve('.'),
     optionsPerService: join(
       '..',

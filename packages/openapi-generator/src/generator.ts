@@ -1,11 +1,10 @@
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, dirname } from 'path';
+import { resolve, parse } from 'path';
 import {
   createLogger,
   kebabCase,
   finishAll,
   setLogLevel,
-  formatJson,
   ErrorWithCause
 } from '@sap-cloud-sdk/util';
 import {
@@ -18,7 +17,12 @@ import {
   createFile,
   CreateFileOptions,
   readPrettierConfig,
-  parseOptions
+  parseOptions,
+  CommonGeneratorOptions,
+  writeOptionsPerService,
+  getOptionsPerService,
+  getRelPathWithPosixSeparator,
+  ServiceOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 import { apiFile } from './file-serializer/api-file';
 import { packageJson } from './file-serializer/package-json';
@@ -28,20 +32,8 @@ import { apiIndexFile, schemaIndexFile } from './file-serializer/index-file';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser/document';
 import { convertOpenApiSpec } from './document-converter';
-import {
-  ServiceOptions,
-  OptionsPerService,
-  getOptionsPerService,
-  getOriginalOptionsPerService,
-  getRelPathWithPosixSeparator
-} from './options/options-per-service';
 import { sdkMetadata } from './sdk-metadata';
-import {
-  cliOptions,
-  GeneratorOptions,
-  ParsedGeneratorOptions,
-  tsconfigJson
-} from './options';
+import { cliOptions, ParsedGeneratorOptions, tsconfigJson } from './options';
 
 const { mkdir } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -52,7 +44,7 @@ const logger = createLogger('openapi-generator');
  * @param options - Options to configure generation.
  */
 export async function generate(
-  options: GeneratorOptions & { config?: string }
+  options: CommonGeneratorOptions & { config?: string }
 ): Promise<void> {
   const parsedOptions = parseOptions(cliOptions, options);
   if (parsedOptions.verbose) {
@@ -76,9 +68,6 @@ export async function generateWithParsedOptions(
   if (!options.input.length || options.outputDir === '') {
     throw new Error('Either input or outputDir were not set.');
   }
-  if (options.verbose) {
-    setLogLevel('verbose', logger);
-  }
 
   if (options.clearOutputDir) {
     // function rm was added in node version 14 and is the preferred method to use.
@@ -87,7 +76,7 @@ export async function generateWithParsedOptions(
       typeof promisesFs.rm === 'undefined' ? {} : { force: true };
     await rm(options.outputDir, { recursive: true, ...forceOption });
   }
-  const inputFilePaths = options.input; // await getInputFilePaths(options.input);
+  const inputFilePaths = options.input;
 
   const optionsPerService = await getOptionsPerService(inputFilePaths, options);
   const tsConfig = await tsconfigJson(options);
@@ -117,7 +106,7 @@ export async function generateWithParsedOptions(
     throw err;
   } finally {
     if (options.optionsPerService) {
-      await generateOptionsPerService(
+      await writeOptionsPerService(
         options.optionsPerService,
         optionsPerService,
         options
@@ -338,27 +327,5 @@ async function generatePackageJson(
       sdkVersion: await getSdkVersion()
     }),
     createFileOptions
-  );
-}
-
-async function generateOptionsPerService(
-  filePath: string,
-  optionsPerService: OptionsPerService,
-  options: ParsedGeneratorOptions
-) {
-  logger.verbose('Generating options per service.');
-  const dir = dirname(filePath);
-  await mkdir(dir, { recursive: true });
-  await createFile(
-    dir,
-    basename(filePath),
-    formatJson({
-      ...(await getOriginalOptionsPerService(filePath)),
-      ...optionsPerService
-    }),
-    {
-      overwrite: true,
-      prettierOptions: await readPrettierConfig(options.prettierConfig)
-    }
   );
 }

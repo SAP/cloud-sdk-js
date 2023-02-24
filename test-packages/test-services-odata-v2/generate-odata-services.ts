@@ -19,7 +19,7 @@ const generatorConfigOData = {
 async function generateOdata(): Promise<void> {
   return generate({
     ...generatorConfigOData,
-    inputDir: join('..', '..', 'test-resources', 'odata-service-specs', 'v2'),
+    input: join('..', '..', 'test-resources', 'odata-service-specs', 'v2'),
     outputDir: resolve('.'),
     optionsPerService: join(
       '..',

@@ -14,22 +14,6 @@ export interface MiddlewareOptions<
    * Context of the execution e.g. the request context or URL.
    */
   context: ContextT;
-  /**
-   * Call this method to disable all following middlewares.
-   */
-  readonly skipNext: SkipNext;
-}
-
-/**
- * Type of the skip next method.
- */
-export interface SkipNext {
-  (): void;
-
-  /**
-   * Initially the called property is false and becomes true after invocation.
-   */
-  called: boolean;
 }
 
 /**
@@ -84,7 +68,7 @@ export function executeWithMiddleware<
     fn,
     context,
     fnArgument
-  }: Omit<MiddlewareOptions<ArgumentT, ReturnT, ContextT>, 'skipNext'> & {
+  }: MiddlewareOptions<ArgumentT, ReturnT, ContextT> & {
     fnArgument: ArgumentT;
   }
 ): Promise<ReturnT> {
@@ -92,13 +76,7 @@ export function executeWithMiddleware<
     return fn(fnArgument);
   }
 
-  // The skipNext function is called in the middleware to skip the next middlewares
-  const skipNext = function () {
-    skipNext.called = true;
-  };
-  skipNext.called = false;
-
-  const initial = { context, fn, skipNext };
+  const initial = { context, fn };
   const functionWithMiddlewares = addMiddlewaresToInitialFunction(
     middlewares,
     initial
@@ -107,8 +85,6 @@ export function executeWithMiddleware<
 }
 
 /**
- * .
- *
  * This functions adds the middlewares to the initial functions.
  * You start with a function (axios request function) and add a timeout, circuit-breaker etc..
  * The result is new a function containing a timeout, circuit-breaker etc..
@@ -125,12 +101,12 @@ function addMiddlewaresToInitialFunction<
   middlewares: Middleware<ArgumentT, ReturnT, ContextT>[],
   initial: MiddlewareOptions<ArgumentT, ReturnT, ContextT>
 ): MiddlewareFunction<ArgumentT, ReturnT> {
-  const { context, skipNext } = initial;
+  const { context } = initial;
 
   // Reduce right is in line with the composition operator [g,f] relates g o f means g after f.
-  const functionWithMiddlewares = middlewares.reduceRight((prev, curr) => {
-    const middlewareAdded = skipNext.called ? prev.fn : curr(prev);
-    return { fn: middlewareAdded, context, skipNext };
-  }, initial);
+  const functionWithMiddlewares = middlewares.reduceRight(
+    (prev, curr) => ({ fn: curr(prev), context }),
+    initial
+  );
   return functionWithMiddlewares.fn;
 }

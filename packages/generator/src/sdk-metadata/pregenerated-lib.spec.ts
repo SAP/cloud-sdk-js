@@ -6,34 +6,25 @@ import {
 import { VdmServiceMetadata } from '../vdm-types';
 import { parseService } from '../service-generator';
 import { createOptions } from '../../test/test-util/create-generator-options';
-import { GlobalNameFormatter } from '../global-name-formatter';
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
 import { cliOptions } from '../options';
 describe('pregenerated-lib', () => {
-  const service: VdmServiceMetadata = getTestService();
-
-  it('returns description of the service', () => {
-    expect(packageDescription(service.speakingModuleName)).toMatchSnapshot();
+  it('returns description of the service', async () => {
+    const service: VdmServiceMetadata = await getTestService();
+    expect(packageDescription(service.className)).toMatchSnapshot();
   });
 });
 
-export function getTestService(npmPackageName?: string): VdmServiceMetadata {
+export async function getTestService(
+  npmPackageName?: string
+): Promise<VdmServiceMetadata> {
+  const path = resolve(
+    oDataServiceSpecs,
+    'v2',
+    'API_TEST_SRV/API_TEST_SRV.edmx'
+  );
   return parseService(
-    {
-      edmxPath: resolve(
-        oDataServiceSpecs,
-        'v2',
-        'API_TEST_SRV/API_TEST_SRV.edmx'
-      )
-    },
-    parseOptions(cliOptions, createOptions()),
-    {},
-    new GlobalNameFormatter({
-      API_TEST_SRV: {
-        directoryName: 'test-service',
-        basePath: '/sap/opu/odata/sap/API_TEST_SERVICE_SRV;v=0002',
-        npmPackageName: npmPackageName || '@sap/cloud-sdk-vdm-test-service'
-      }
-    })
+    path,
+    parseOptions(cliOptions, createOptions({ input: path }))
   );
 }

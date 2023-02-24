@@ -22,7 +22,7 @@ import {
 const logger = createLogger('csrf-middleware');
 
 /**
- * Options for middleware to fetch csrf tokens.
+ * Options for middleware to fetch CSRF tokens.
  */
 export interface CsrfMiddlewareOptions {
   /**
@@ -30,7 +30,7 @@ export interface CsrfMiddlewareOptions {
    */
   method?: Method;
   /**
-   * Url used for the token fetching. Default is the resource path without parameters.
+   * URL used for the token fetching. Default is the resource path without parameters.
    */
   url?: string;
   /**
@@ -47,7 +47,7 @@ export interface CsrfMiddlewareOptions {
  */
 export function csrf(options?: CsrfMiddlewareOptions): HttpMiddleware {
   return (middlewareOptions: HttpMiddlewareOptions) => async requestConfig => {
-    if (noActionNeeded(requestConfig)) {
+    if (!needsCsrfToken(requestConfig)) {
       return middlewareOptions.fn(requestConfig);
     }
     const csrfToken = await makeCsrfRequests(requestConfig, {

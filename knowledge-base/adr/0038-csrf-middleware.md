@@ -27,7 +27,8 @@ Note that any kind of resilience entering via the middleware is not considered.
 
 Not all systems require a CSRF token.
 We follow also the trend of optional functionality not being enabled by default, like cache.
-Currently, the CSRF token fails gracefully, and the SDK retries to get one, this means we may have unnecessary HTTP requests.
+Currently, when the CSRF token fetching fails, the SDK retries the fetch with an adjusted URL.
+This means we may have unnecessary HTTP requests.
 If the default is off, one should really fail.
 
 ## CSRF as one Middleware Layer
@@ -101,6 +102,6 @@ In case a user need something different they can pass their own `csrf()` middlew
 ## Migration Discussion
 
 - Too late in version 3 development to change the CSRF default behavior.
-- Deprecate `skipCsrfTokenFetchion()` in version 3 and remove it in version 4.
+- Deprecate `fetchCsrfToken` and `skipCsrfTokenFetching` in version 3 and remove it in version 4.
 - In version 4 per default no CSRF if fetched and you need to include the `csrf()` middleware.
 - Under the hood we could rewrite the code to use middlewares for csrf.

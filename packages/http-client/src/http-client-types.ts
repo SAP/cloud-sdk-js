@@ -1,5 +1,9 @@
 import * as http from 'http';
-import type { MiddlewareContext, Middleware } from '@sap-cloud-sdk/resilience';
+import type {
+  MiddlewareContext,
+  Middleware,
+  MiddlewareOptions
+} from '@sap-cloud-sdk/resilience';
 
 /**
  * Context for HttpRequests of the middleware.
@@ -15,6 +19,15 @@ export interface HttpMiddlewareContext
    */
   readonly destinationName?: string;
 }
+
+/**
+ * Options for http middleware.
+ */
+export type HttpMiddlewareOptions = MiddlewareOptions<
+  HttpRequestConfig,
+  HttpResponse,
+  HttpMiddlewareContext
+>;
 
 /**
  * Middleware for http requests.

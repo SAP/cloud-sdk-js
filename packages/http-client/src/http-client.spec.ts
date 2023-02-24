@@ -50,9 +50,7 @@ import {
   buildRequestWithMergedHeadersAndQueryParameters,
   encodeAllParameters,
   executeHttpRequest,
-  getDefaultHttpRequestOptions,
   encodeTypedClientRequest,
-  shouldHandleCsrfToken,
   executeHttpRequestWithOrigin,
   buildHttpRequestConfigWithOrigin,
   getTenantIdForMiddleware
@@ -236,7 +234,6 @@ describe('generic http client', () => {
       // Doing the dummy object the name of the key is taken as function name.
       const dummy = {
         [appendedText](options: HttpMiddlewareOptions) {
-
           const wrapped = args =>
             options.fn(args).then(res => {
               res.data = res.data + appendedText;

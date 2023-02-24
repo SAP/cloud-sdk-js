@@ -25,7 +25,7 @@ This document will guide you through the steps necessary to upgrade to version 3
 - [Adjust Conflict Resolution in OData Client Generation](#adjust-conflict-resolution-in-odata-client-generation)
 - [Use `optionsPerService` in OData generator](#use-optionsperservice-in-odata-generator)
 - [Set `basePath` in `options-per-service.json`](#set-basepath-in-options-per-servicejson)
-- [Generate `operations` instead of `actionImports` and `functionImports`](#generate-operations-instead-of-actionimports-and-functionimports)
+- [Use `operations` instead of `actionImports` and `functionImports`](#use-operations-instead-of-actionimports-and-functionimports)
 
 ## Update Your Project Dependencies
 
@@ -281,8 +281,28 @@ The generator will determine the path from:
 To allow generation in spite of missing `basePath`, set the `skipValidation` option to true.
 This will generate the client successfully with `basePath` set to `/`.
 
-## Generate `operations` instead of `actionImports` and `functionImports`
+## Use `operations` instead of `actionImports` and `functionImports`
 
-Unbound actions and functions, which were generated into separate files as `action-imports.ts` and `function-imports.ts`, are now generated into one file `operations.ts`.
+Unbound actions and functions, were previously represented as separate service properties, `actionImports` and `functionImports`, of generated clients.
+They are now represented by one common property, `operations`.
 
-A common getter `operations` in the generated `service.ts` is in place of separate getters for functions and actions. Const exports for `functionImports` and `actionImports` are also removed.
+Instead of:
+
+```ts
+import { myService } from './generated/my-service';
+
+// Operations are split into functions and actions
+const { functionImports, actionImports } = myService();
+const { myFunction } = functionImports;
+const { myAction } = actionImports;
+```
+
+Use
+
+```ts
+import { myService } from './generated/my-service';
+
+// Operations are merged in one property
+const { operations } = myService();
+const { myFunction, myAction } = operations;
+```

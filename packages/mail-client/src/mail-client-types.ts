@@ -11,7 +11,6 @@ import {
 /**
  * Represents an e-mail address.
  * This interface is compatible with `Mail.Address` of `nodemailer`.
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface Address {
   /**
@@ -28,7 +27,6 @@ export interface Address {
  * Represents an object or array of additional header fields.
  * Prepared header values that are not folded or encoded by Nodemailer.
  * This type is compatible with `Headers` of `nodemailer`.
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export type Headers =
   | { [key: string]: string | string[] | { prepared: boolean; value: string } }
@@ -37,7 +35,6 @@ export type Headers =
 /**
  * Represents the structure of an attachment.
  * This interface is compatible with `AttachmentLike` of `nodemailer`.
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface AttachmentLike {
   /**
@@ -53,7 +50,6 @@ export interface AttachmentLike {
 /**
  * Represents an attachment.
  * This interface is compatible with `Attachment` of `nodemailer`.
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface Attachment extends AttachmentLike {
   /**
@@ -98,7 +94,6 @@ export interface Attachment extends AttachmentLike {
 /**
  * Represents configurations for sending an e-mail.
  * This interface is compatible with `Mail.Options` of `nodemailer`.
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface MailConfig {
   /**
@@ -162,7 +157,6 @@ export interface MailConfig {
 /**
  * Represents an envelope that contains the e-mail addresses of the sender and the recipients.
  * This interface is compatible with `MimeNode.Envelope` of `nodemailer`.
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface Envelope {
   /**
@@ -178,7 +172,6 @@ export interface Envelope {
 /**
  * Represents the response from the mail server.
  * This interface is compatible with `SMTPTransport.SentMessageInfo` of `nodemailer`.
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface MailResponse {
   /**
@@ -206,7 +199,6 @@ export interface MailResponse {
 /**
  * Represents a mail destination configured on the SAP Business Technology Platform.
  * Currently only `mail.transport.protocol` and `mail.smtp.provider.*` are considered.
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * @internal
  */
 export interface MailDestination {
@@ -285,7 +277,6 @@ export interface MailClientOptions extends SmtpTransportOptions {
 /**
  * Represents options for setting up the SMTP connection.
  * This interface is compatible with `SMTPConnection.Options` of `nodemailer`.
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  */
 export interface SmtpTransportOptions {
   /**

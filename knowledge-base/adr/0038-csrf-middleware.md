@@ -27,9 +27,13 @@ Note that any kind of resilience entering via the middleware is not considered.
 
 Not all systems require a CSRF token.
 We follow also the trend of optional functionality not being enabled by default, like cache.
+If the default is off, the execution can also stop if the token fetching fails.
+Currently, this is silently ignored and the request to the target system is executed anyhow.
+
+What should also change is the default implementation of the CSRF token fetching.
 Currently, when the CSRF token fetching fails, the SDK retries the fetch with an adjusted URL.
-This means we may have unnecessary HTTP requests.
-If the default is off, one should really fail.
+This means we may have unnecessary HTTP requests if the adjusted URL is the right one.
+The provided middleware will only do one call and people can set the URL and method as they need.
 
 ## CSRF as one Middleware Layer
 

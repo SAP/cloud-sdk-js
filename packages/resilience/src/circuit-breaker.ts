@@ -26,13 +26,9 @@ type KeyBuilder<ArgumentT, ContextT extends MiddlewareContext<ArgumentT>> = (
 ) => string;
 
 function httpErrorFilter(error: AxiosError): boolean {
-  if (
-    error.response?.status &&
-    error.response.status.toString().startsWith('4')
-  ) {
-    return true;
-  }
-  return false;
+  return (
+    !!error.response?.status && error.response.status.toString().startsWith('4')
+  );
 }
 
 function circuitBreakerKeyBuilder<

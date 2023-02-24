@@ -18,7 +18,7 @@ export function getApiSpecificUsage(
     return entityCodeSample(
       entity.className,
       service.className,
-      service.directoryName
+      service.serviceOptions.directoryName
     );
   }
   // Return function/action import usage if no entity is found.
@@ -29,7 +29,7 @@ export function getApiSpecificUsage(
     );
     return functionImportCodeSample(
       functionImport,
-      `${service.directoryName}/function-imports`
+      `${service.serviceOptions.directoryName}/function-imports`
     );
   }
   if (service.actionImports) {
@@ -39,7 +39,7 @@ export function getApiSpecificUsage(
     );
     return actionImportCodeSample(
       actionImport,
-      `${service.directoryName}/action-imports`
+      `${service.serviceOptions.directoryName}/action-imports`
     );
   }
   return '';

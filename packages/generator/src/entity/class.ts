@@ -82,7 +82,7 @@ function defaultBasePath(
     kind: StructureKind.Property,
     name: prependPrefix('defaultBasePath'),
     isStatic: true,
-    initializer: `'${service.basePath}'`,
+    initializer: `'${service.serviceOptions.basePath}'`,
     docs: [addLeadingNewline('Default url path for the according service.')]
   };
 }

@@ -50,7 +50,9 @@ import {
   buildRequestWithMergedHeadersAndQueryParameters,
   encodeAllParameters,
   executeHttpRequest,
+  getDefaultHttpRequestOptions,
   encodeTypedClientRequest,
+  shouldHandleCsrfToken,
   executeHttpRequestWithOrigin,
   buildHttpRequestConfigWithOrigin,
   getTenantIdForMiddleware
@@ -229,17 +231,11 @@ describe('generic http client', () => {
       jest.restoreAllMocks();
     });
 
-    function buildMiddleware(
-      appendedText: string,
-      skipNext = false
-    ): HttpMiddleware {
+    function buildMiddleware(appendedText: string): HttpMiddleware {
       // We want to add a name to the function for debugging which is not easy to set.
       // Doing the dummy object the name of the key is taken as function name.
       const dummy = {
         [appendedText](options: HttpMiddlewareOptions) {
-          if (skipNext) {
-            options.skipNext();
-          }
 
           const wrapped = args =>
             options.fn(args).then(res => {
@@ -395,18 +391,6 @@ describe('generic http client', () => {
         method: 'get'
       });
       expect(response.data).toEqual('Initial value.Middleware A.Middleware B.');
-    });
-
-    it('stops middleware chain if skipNext is set to true.', async () => {
-      nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
-      const myMiddlewareB = buildMiddleware('Middleware B.');
-      const myMiddlewareA = buildMiddleware('Middleware A.', true);
-
-      const response = await executeHttpRequest(httpsDestination, {
-        middleware: [myMiddlewareB, myMiddlewareA],
-        method: 'get'
-      });
-      expect(response.data).toEqual('Initial value.Middleware A.');
     });
 
     it('returns a tenantid from jwt containing either zid or iss', () => {

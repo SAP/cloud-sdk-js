@@ -5,4 +5,3 @@
  */
 
 export { generate } from './generator';
-export { CommonGeneratorOptions } from '@sap-cloud-sdk/generator-common';

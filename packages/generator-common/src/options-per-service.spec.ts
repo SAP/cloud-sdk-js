@@ -10,7 +10,6 @@ jest.mock('path', () => {
 });
 
 import mock from 'mock-fs';
-import { ParsedGeneratorOptions } from './options';
 import {
   getOptionsPerService,
   getOriginalOptionsPerService,
@@ -22,8 +21,7 @@ describe('getOriginalOptionsPerService', () => {
   const config: OptionsPerService = {
     'some-file': {
       directoryName: 'dirName',
-      packageName: '@scope/package-name',
-      serviceName: 'serviceName'
+      packageName: '@scope/package-name'
     }
   };
 
@@ -57,35 +55,54 @@ describe('getOriginalOptionsPerService', () => {
 });
 
 describe('getServiceOptions', () => {
-  it('gets a service config if it exists', () => {
+  it('checks for npm compliant name', () => {
     const expectedConfig = {
       packageName: 'serviceName',
       directoryName: 'serviceName',
       serviceName: 'serviceName'
     };
-    expect(getServiceOptions('serviceName', expectedConfig)).toEqual(
+    expect(() =>
+      getServiceOptions('serviceName', false, expectedConfig)
+    ).toThrowErrorMatchingInlineSnapshot(
+      "\"The intended packageName name serviceName is not npm compliant. Either change to a compliant value e.g. 'servicename' in your options per service configuration or execute with '--skipValidation'.\""
+    );
+  });
+
+  it('does not check for npm compliant name if skipValidation', () => {
+    expect(
+      getServiceOptions('serviceName', true, {
+        packageName: 'serviceNN$%&Nackage'
+      }).packageName
+    ).toBe('serviceNN$%&Nackage');
+  });
+
+  it('gets a service config if it exists', () => {
+    const expectedConfig = {
+      packageName: 'service-name-package',
+      directoryName: 'serviceName',
+      serviceName: 'serviceName'
+    };
+    expect(getServiceOptions('serviceName', false, expectedConfig)).toEqual(
       expectedConfig
     );
   });
 
   it('gets the default config if it does not exist', () => {
     const expectedConfig = {
-      packageName: 'serviceName',
-      directoryName: 'serviceName',
-      serviceName: 'serviceName'
+      packageName: 'servicename',
+      directoryName: 'serviceName'
     };
-    expect(getServiceOptions('serviceName')).toEqual(expectedConfig);
+    expect(getServiceOptions('serviceName', false)).toEqual(expectedConfig);
   });
 
   it('adds defaults if a config exists partially', () => {
     expect(
-      getServiceOptions('serviceName', {
-        packageName: 'customPackageName'
+      getServiceOptions('serviceName', false, {
+        packageName: 'custompackagename'
       })
     ).toEqual({
-      packageName: 'customPackageName',
-      directoryName: 'serviceName',
-      serviceName: 'serviceName'
+      packageName: 'custompackagename',
+      directoryName: 'serviceName'
     });
   });
 });
@@ -97,12 +114,11 @@ describe('getOptionsPerService', () => {
 
   it('builds PerService config without options per service.', async () => {
     await expect(
-      getOptionsPerService(['/user/path/service'], {} as ParsedGeneratorOptions)
+      getOptionsPerService(['/user/path/service'], {} as any)
     ).resolves.toEqual({
       'path/service': {
         directoryName: 'service',
-        packageName: 'service',
-        serviceName: 'service'
+        packageName: 'service'
       }
     });
   });
@@ -111,8 +127,7 @@ describe('getOptionsPerService', () => {
     const config: OptionsPerService = {
       'path/service': {
         directoryName: 'dirName',
-        packageName: '@scope/package-name',
-        serviceName: 'serviceName'
+        packageName: '@scope/package-name'
       }
     };
 
@@ -125,12 +140,11 @@ describe('getOptionsPerService', () => {
     await expect(
       getOptionsPerService(['/user/path/service'], {
         optionsPerService: 'path/myConfig.json'
-      } as ParsedGeneratorOptions)
+      } as any)
     ).resolves.toEqual({
       'path/service': {
         directoryName: 'dirName',
-        packageName: '@scope/package-name',
-        serviceName: 'serviceName'
+        packageName: '@scope/package-name'
       }
     });
   });
@@ -152,7 +166,7 @@ describe('getOptionsPerService', () => {
     await expect(
       getOptionsPerService(['/user/path/service'], {
         optionsPerService: 'path/myPartialConfig.json'
-      } as ParsedGeneratorOptions)
+      } as any)
     ).resolves.toEqual({
       'path/service': {
         directoryName: 'service',
@@ -166,7 +180,7 @@ describe('getOptionsPerService', () => {
     await expect(
       getOptionsPerService(['/user/path1/service', '/user/path2/service'], {
         skipValidation: false
-      } as ParsedGeneratorOptions)
+      } as any)
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
             "Duplicate service file names would result in duplicate directory names. Customize directory names with \`optionsPerService\` or enable automatic name adjustment with \`skipValidation\`.
             	Duplicates:
@@ -181,17 +195,15 @@ describe('getOptionsPerService', () => {
     await expect(
       getOptionsPerService(['/user/path1/service', '/user/path2/service'], {
         skipValidation: true
-      } as ParsedGeneratorOptions)
+      } as any)
     ).resolves.toEqual({
       'path1/service': {
         directoryName: 'service',
-        packageName: 'service',
-        serviceName: 'service'
+        packageName: 'service'
       },
       'path2/service': {
         directoryName: 'service-1',
-        packageName: 'service-1',
-        serviceName: 'service-1'
+        packageName: 'service-1'
       }
     });
   });

@@ -9,6 +9,7 @@ const generatorConfigOData = {
   readme: false,
   clearOutputDir: false,
   packageJson: false,
+  skipValidation: true,
   generateSdkMetadata: false
 };
 

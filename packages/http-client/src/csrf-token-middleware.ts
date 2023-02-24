@@ -64,7 +64,7 @@ export function csrf(options?: CsrfMiddlewareOptions): HttpMiddleware {
   };
 }
 
-function noActionNeeded(requestConfig: HttpRequestConfig): boolean {
+function needsCsrfToken(requestConfig: HttpRequestConfig): boolean {
   if (requestConfig.method.toLowerCase() === 'get') {
     logger.debug('Method is GET no CSRF token needed.');
     return true;

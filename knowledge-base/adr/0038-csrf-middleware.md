@@ -2,7 +2,7 @@
 
 accepted
 
-### Structure of the Code Before Cahnge
+### Structure of the Code Before Change
 
 The CSRF token handling is done in the `http-client` before the request is executed:
 
@@ -26,8 +26,8 @@ Note that any kind of resilience entering via the middleware is not considered.
 ### General Improvement - Disable Fetch CSRF by Default
 
 Not all systems require a CSRF token.
-We follow also the trend of optional functionality not being enabled e.g. cache.
-Currently, the CSRF token fails gracefully, and we continue this means we may have unnecessary calls.
+We follow also the trend of optional functionality not being enabled by default, like cache.
+Currently, the CSRF token fails gracefully, and the SDK retries to get one, this means we may have unnecessary HTTP requests.
 If the default is off, one should really fail.
 
 ## CSRF as one Middleware Layer

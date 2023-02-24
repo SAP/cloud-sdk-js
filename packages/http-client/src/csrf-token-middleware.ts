@@ -67,17 +67,17 @@ export function csrf(options?: CsrfMiddlewareOptions): HttpMiddleware {
 function needsCsrfToken(requestConfig: HttpRequestConfig): boolean {
   if (requestConfig.method.toLowerCase() === 'get') {
     logger.debug('Method is GET no CSRF token needed.');
-    return true;
+    return false;
   }
 
   if (pickValueIgnoreCase(requestConfig.headers, 'x-csrf-token')) {
     logger.debug(
       'CSRF token header was already provided. Existing token used.'
     );
-    return true;
+    return false;
   }
 
-  return false;
+  return true;
 }
 
 function appendSlash<T extends HttpRequestConfigBase>(requestConfig: T): T {

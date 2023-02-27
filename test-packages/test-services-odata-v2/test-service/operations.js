@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.functionImports = exports.fContinue = exports.createTestComplexType = exports.testFunctionImportMultipleParams = exports.testFunctionImportPost = exports.testFunctionImportGet = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportUnsupportedEdmTypes = exports.testFunctionImportComplexReturnType = exports.testFunctionImportSharedEntityReturnTypeCollection = exports.testFunctionImportSharedEntityReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = exports.testFunctionImportNoReturnType = void 0;
+exports.operations = exports.fContinue = exports.createTestComplexType = exports.testFunctionImportMultipleParams = exports.testFunctionImportPost = exports.testFunctionImportGet = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportUnsupportedEdmTypes = exports.testFunctionImportComplexReturnType = exports.testFunctionImportSharedEntityReturnTypeCollection = exports.testFunctionImportSharedEntityReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = exports.testFunctionImportNoReturnType = void 0;
 /*
  * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -168,7 +168,7 @@ function fContinue(parameters, deSerializers = odata_v2_1.defaultDeSerializers) 
     return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'Continue', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.Continue, 'Edm.Boolean', deSerializers)), params, deSerializers);
 }
 exports.fContinue = fContinue;
-exports.functionImports = {
+exports.operations = {
     testFunctionImportNoReturnType,
     testFunctionImportEdmReturnType,
     testFunctionImportEdmReturnTypeCollection,
@@ -185,4 +185,4 @@ exports.functionImports = {
     createTestComplexType,
     fContinue
 };
-//# sourceMappingURL=function-imports.js.map
+//# sourceMappingURL=operations.js.map

@@ -9,9 +9,10 @@ import { AirlinesApi } from './AirlinesApi';
 import { AirportsApi } from './AirportsApi';
 import {
   getNearestAirport,
-  GetNearestAirportParameters
-} from './function-imports';
-import { resetDataSource, ResetDataSourceParameters } from './action-imports';
+  resetDataSource,
+  GetNearestAirportParameters,
+  ResetDataSourceParameters
+} from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
@@ -133,16 +134,11 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
     return this.initApi('airportsApi', AirportsApi);
   }
 
-  get functionImports() {
+  get operations() {
     return {
       getNearestAirport: (
         parameter: GetNearestAirportParameters<DeSerializersT>
-      ) => getNearestAirport(parameter, this.deSerializers)
-    };
-  }
-
-  get actionImports() {
-    return {
+      ) => getNearestAirport(parameter, this.deSerializers),
       resetDataSource: (parameter: ResetDataSourceParameters<DeSerializersT>) =>
         resetDataSource(parameter, this.deSerializers)
     };

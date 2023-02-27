@@ -30,8 +30,10 @@ export function entityImportDeclarations(
         kind: StructureKind.ImportDeclaration,
         isTypeOnly: true
       },
-      ...operationImportDeclarations(service, 'action', entity.actions),
-      ...operationImportDeclarations(service, 'function', entity.functions),
+      ...operationImportDeclarations(
+        service,
+        entity.actions.concat(entity.functions)
+      ),
       ...enumTypeImportDeclarations(entity.properties)
     ]);
   }

@@ -10,7 +10,7 @@ const regexUuid = '\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}';
 const responseBoundary = 'responseBoundary';
 
 describe('batch request', () => {
-  const { batch, testEntityApi, functionImports } = testService();
+  const { batch, testEntityApi, operations } = testService();
 
   const getHeader = contentType => `Content-Type: ${contentType}
 Content-Length: 3886
@@ -74,7 +74,7 @@ HTTP/1.1 200 OK
         'content-type': `multipart/mixed; boundary=${responseBoundary}`
       });
     const response = await batch(
-      functionImports.testFunctionImportGet({} as any)
+      operations.testFunctionImportGet({} as any)
     ).execute({ url: baseUrl });
     if (response[0].isReadResponse()) {
       const casted = testFunctionImportGet({} as any).responseTransformer(

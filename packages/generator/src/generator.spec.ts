@@ -189,10 +189,7 @@ describe('generator', () => {
     });
 
     it('generates function-imports.ts file', () => {
-      const functionImports = getOperationFunctionDeclarations(
-        files,
-        'function'
-      );
+      const functionImports = getOperationFunctionDeclarations(files);
       expect(functionImports.length).toBe(15);
     });
   });
@@ -212,7 +209,7 @@ describe('generator', () => {
     });
 
     it('generates expected number of files', () => {
-      expect(files.length).toBe(39);
+      expect(files.length).toBe(38);
     });
 
     it('generates TestEntity.ts file', () => {
@@ -243,29 +240,20 @@ describe('generator', () => {
       checkStaticProperties(entityClass!);
     });
 
-    it('generates function-imports.ts file', () => {
-      const functionImports = getOperationFunctionDeclarations(
-        files,
-        'function'
-      );
-      expect(functionImports.length).toBe(11);
-      const functionImportNames = functionImports.map(fi => fi.getName());
-      expect(functionImportNames).toEqual(
+    it('generates operations.ts file', () => {
+      const operationImports = getOperationFunctionDeclarations(files);
+      expect(operationImports.length).toBe(18);
+      const operationImportNames = operationImports.map(fi => fi.getName());
+      expect(operationImportNames).toEqual(
         expect.arrayContaining(['testFunctionImportWithDifferentName'])
       );
-      expect(functionImportNames).toEqual(
+      expect(operationImportNames).toEqual(
         expect.not.arrayContaining(['testFunctionImportNoReturnType'])
       );
-    });
-
-    it('generates action-imports.ts file', () => {
-      const actionImports = getOperationFunctionDeclarations(files, 'action');
-      expect(actionImports.length).toBe(7);
-      const actionImportNames = actionImports.map(action => action.getName());
-      expect(actionImportNames).toEqual(
+      expect(operationImportNames).toEqual(
         expect.arrayContaining(['testActionImportNoParameterNoReturnType'])
       );
-      expect(actionImportNames).toEqual(
+      expect(operationImportNames).toEqual(
         expect.arrayContaining([
           'testActionImportMultipleParameterComplexReturnType'
         ])

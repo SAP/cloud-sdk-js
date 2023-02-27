@@ -25,6 +25,7 @@ This document will guide you through the steps necessary to upgrade to version 3
 - [Adjust Conflict Resolution in OData Client Generation](#adjust-conflict-resolution-in-odata-client-generation)
 - [Use `optionsPerService` in OData generator](#use-optionsperservice-in-odata-generator)
 - [Set `basePath` in `options-per-service.json`](#set-basepath-in-options-per-servicejson)
+- [Use `operations` instead of `actionImports` and `functionImports`](#use-operations-instead-of-actionimports-and-functionimports)
 
 ## Update Your Project Dependencies
 
@@ -226,14 +227,15 @@ You can set the value to either:
 
 - The file path containing the options per service (e.g. `options.json`).
   If the file does not exist, it will be created and initialized.
-  If the file exists, missing or partial service options will be added with the default values. 
+  If the file exists, missing or partial service options will be added with the default values.
 - The directory from which the file is read/created (e.g. `someDir`. This will read/create a file named `options-per-service.json` in `someDir`)
 
 Also, the properties in the configuration have changed:
+
 - The option `serviceName` is removed.
-A value for the documentation header is derived from the directory name.
+  A value for the documentation header is derived from the directory name.
 - The `npmPackageName` is renamed to `packageName` to align with the OpenApi generator.
-Note that the default values for the `directoryName` and `packageName` have changed.
+  Note that the default values for the `directoryName` and `packageName` have changed.
 - The keys change to the relative paths of the service specifications.
 
 Here is an example how the options change:
@@ -260,10 +262,11 @@ Here is an example how the options change:
 ```
 
 In case you have problems finding the relative path or adjusting the property names please do the following:
+
 - Remove the exising `options-per-service.json` file.
 - Re-run the generator.
-This will generate a fresh file with the new relative paths and new property names with default values.
-- Adjust the default values for packageName, directoryName and basePath with values fitting your needs.   
+  This will generate a fresh file with the new relative paths and new property names with default values.
+- Adjust the default values for packageName, directoryName and basePath with values fitting your needs.
 
 ## Set `basePath` in `options-per-service.json`
 
@@ -276,4 +279,30 @@ The generator will determine the path from:
   in the above mentioned order.
 
 To allow generation in spite of missing `basePath`, set the `skipValidation` option to true.
-This will generate the client successfuly with `basePath` set to `/`.
+This will generate the client successfully with `basePath` set to `/`.
+
+## Use `operations` instead of `actionImports` and `functionImports`
+
+Unbound actions and functions, were previously represented as separate service properties, `actionImports` and `functionImports`, of generated clients.
+They are now represented by one common property, `operations`.
+
+Instead of:
+
+```ts
+import { myService } from './generated/my-service';
+
+// Operations are split into functions and actions
+const { functionImports, actionImports } = myService();
+const { myFunction } = functionImports;
+const { myAction } = actionImports;
+```
+
+Use
+
+```ts
+import { myService } from './generated/my-service';
+
+// Operations are merged in one property
+const { operations } = myService();
+const { myFunction, myAction } = operations;
+```

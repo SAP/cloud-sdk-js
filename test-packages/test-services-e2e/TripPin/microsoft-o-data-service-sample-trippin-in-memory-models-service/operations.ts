@@ -5,11 +5,13 @@
  */
 import {
   transformReturnValueForEntity,
+  transformReturnValueForUndefined,
   DeSerializers,
   DefaultDeSerializers,
   defaultDeSerializers,
   FunctionImportParameter,
-  FunctionImportRequestBuilder
+  FunctionImportRequestBuilder,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { microsoftODataServiceSampleTrippinInMemoryModelsService } from './service';
 import { Airports } from './Airports';
@@ -65,6 +67,40 @@ export function getNearestAirport<
   );
 }
 
-export const functionImports = {
-  getNearestAirport
+/**
+ * Type of the parameters to be passed to {@link resetDataSource}.
+ */
+export interface ResetDataSourceParameters<
+  DeSerializersT extends DeSerializers
+> {}
+
+/**
+ * Reset Data Source.
+ * @param parameters - Object containing all parameters for the action.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export function resetDataSource<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: ResetDataSourceParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  ResetDataSourceParameters<DeSerializersT>,
+  undefined
+> {
+  const params = {};
+
+  return new ActionImportRequestBuilder(
+    'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
+    'ResetDataSource',
+    data => transformReturnValueForUndefined(data, val => undefined),
+    params,
+    deSerializers
+  );
+}
+
+export const operations = {
+  getNearestAirport,
+  resetDataSource
 };

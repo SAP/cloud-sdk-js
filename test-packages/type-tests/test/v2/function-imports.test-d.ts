@@ -132,4 +132,4 @@ expectType<
     TestFunctionImportNoReturnTypeParameters<DefaultDeSerializerV2>,
     undefined
   >
->(testService().functionImports.testFunctionImportNoReturnType({}));
+>(testService().operations.testFunctionImportNoReturnType({}));

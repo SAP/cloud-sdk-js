@@ -9,13 +9,13 @@ import {
   DeSerializers,
   DeserializedType,
   edmToTs,
-  transformReturnValueForEdmType,
-  defaultDeSerializers,
-  BoundActionImportRequestBuilder,
   entityDeserializer,
+  transformReturnValueForEdmType,
   transformReturnValueForComplexType,
+  defaultDeSerializers,
   FunctionImportParameter,
-  BoundFunctionImportRequestBuilder
+  BoundFunctionImportRequestBuilder,
+  BoundActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityApi } from './TestEntityApi';
 import { MyComplexReturnType } from './MyComplexReturnType';

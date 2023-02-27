@@ -100,7 +100,7 @@ describe('name-formatter', () => {
         skipValidation: true
       });
       const logger = createLogger('service-name-formatter');
-      const logSpy = jest.spyOn(logger, 'info');
+      const logSpy = jest.spyOn(logger, 'warn');
       formatter.originalToEntityClassName('SomeEntity');
       formatter.originalToEntityClassName('SomeEntity');
       expect(logSpy).toHaveBeenCalledWith(

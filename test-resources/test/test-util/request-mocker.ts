@@ -233,7 +233,7 @@ function getRequestHeaders(
     const initialHeaders =
       method === 'get'
         ? defaultRequestHeaders
-        : { ...defaultRequestHeaders, 'x-csrf-token': defaultCsrfToken };
+        : { ...defaultRequestHeaders, 'x-csrf-token': defaultCsrfToken};
     return { reqheaders: { ...initialHeaders, ...additionalHeaders } };
   }
 }

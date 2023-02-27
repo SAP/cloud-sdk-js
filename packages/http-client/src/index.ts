@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @module @sap-cloud-sdk/http-client
  */
-
+export { csrf, CsrfMiddlewareOptions } from './csrf-token-middleware';
 export {
   buildHttpRequest,
   encodeAllParameters,
@@ -17,6 +17,7 @@ export {
   HttpRequestConfigBase,
   DestinationHttpRequestConfig,
   HttpMiddleware,
+  HttpMiddlewareOptions,
   HttpMiddlewareContext
 } from './http-client-types';
 export type {

@@ -92,7 +92,7 @@ describe('openapi-request-builder', () => {
       sanitizeDestination(destination),
       {
         method: 'post',
-        middleware: [],
+        middleware: [expect.any(Function)], // this is the csrf token middleware
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },

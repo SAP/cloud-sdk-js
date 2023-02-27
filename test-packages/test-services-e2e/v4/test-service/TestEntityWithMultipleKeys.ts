@@ -11,9 +11,9 @@ import {
   edmToTs,
   transformReturnValueForEdmType,
   defaultDeSerializers,
-  BoundActionImportRequestBuilder,
   FunctionImportParameter,
-  BoundFunctionImportRequestBuilder
+  BoundFunctionImportRequestBuilder,
+  BoundActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 

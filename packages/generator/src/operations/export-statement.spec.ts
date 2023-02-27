@@ -4,12 +4,12 @@ import { exportStatement } from './export-statement';
 
 describe('export-statement', () => {
   it('exportStatement', () => {
-    const actual = exportStatement([orderBreakfast], 'functionImports');
+    const actual = exportStatement([orderBreakfast]);
 
     expect(actual.declarationKind).toEqual('const');
     expect(actual.isExported).toBeTruthy();
     expect(actual.declarations).toEqual([
-      { name: 'functionImports', initializer: `{\norderBreakfast${unixEOL}}` }
+      { name: 'operations', initializer: `{\norderBreakfast${unixEOL}}` }
     ]);
   });
 });

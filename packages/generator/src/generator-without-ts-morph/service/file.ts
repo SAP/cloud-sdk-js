@@ -17,25 +17,23 @@ ${serviceBuilder(service.className, service.oDataVersion)}
 ${serviceClass(service)}`;
 }
 
-function getImports(
-  actionFunctionImports:
-    | { name: string; parametersTypeName: string }[]
-    | undefined,
-  moduleIdentifier: 'function-imports' | 'action-imports'
-): Import[] {
-  if (actionFunctionImports === undefined) {
+function getImports(service: VdmServiceMetadata): Import[] {
+  const operationImports = service.functionImports.concat(
+    service.actionImports || []
+  );
+  if (operationImports.length === 0) {
     return [];
   }
-  const names = actionFunctionImports.map(
+  const names = operationImports.map(
     actionFunctionImport => actionFunctionImport.name
   );
-  const parameterNames = actionFunctionImports.map(
+  const parameterNames = operationImports.map(
     actionFunctionImport => actionFunctionImport.parametersTypeName
   );
   return [
     {
       names: [...names, ...parameterNames],
-      moduleIdentifier: `./${moduleIdentifier}`
+      moduleIdentifier: './operations'
     }
   ];
 }
@@ -44,19 +42,14 @@ function getImports(
  * @internal
  */
 export function imports(service: VdmServiceMetadata): Import[] {
-  const functionImports = getImports(
-    service.functionImports,
-    'function-imports'
-  );
+  const operationImports = getImports(service);
 
-  const actionImports = getImports(service.actionImports, 'action-imports');
   const serviceImports = [
     ...service.entities.map(entity => ({
       names: [`${entity.className}Api`],
       moduleIdentifier: `./${entity.className}Api`
     })),
-    ...functionImports,
-    ...actionImports,
+    ...operationImports,
     {
       names: ['BigNumber'],
       moduleIdentifier: 'bignumber.js'

@@ -9,12 +9,10 @@ import { TestEntity3Api } from './TestEntity3Api';
 import { TestEntity4Api } from './TestEntity4Api';
 import {
   TestFunctionImportEntityReturnType1Parameters,
-  TestFunctionImportEntityReturnType2Parameters
-} from './function-imports';
-import {
+  TestFunctionImportEntityReturnType2Parameters,
   TestActionImportNoParameterComplexReturnType1Parameters,
   TestActionImportNoParameterComplexReturnType2Parameters
-} from './action-imports';
+} from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
@@ -101,7 +99,7 @@ declare class MultipleSchemasService<
   get testEntity2Api(): TestEntity2Api<DeSerializersT>;
   get testEntity3Api(): TestEntity3Api<DeSerializersT>;
   get testEntity4Api(): TestEntity4Api<DeSerializersT>;
-  get functionImports(): {
+  get operations(): {
     testFunctionImportEntityReturnType1: (
       parameter: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
@@ -116,8 +114,6 @@ declare class MultipleSchemasService<
       TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
       import('./TestEntity2').TestEntity2<DefaultDeSerializers>
     >;
-  };
-  get actionImports(): {
     testActionImportNoParameterComplexReturnType1: (
       parameter: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<

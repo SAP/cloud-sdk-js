@@ -84,7 +84,6 @@ function returnTypeImport(
  */
 export function operationImportDeclarations(
   { oDataVersion, className }: VdmServiceMetadata,
-  type: 'function' | 'action',
   operations: VdmOperation[] = []
 ): ImportDeclarationStructure[] {
   if (!operations.length) {
@@ -98,10 +97,17 @@ export function operationImportDeclarations(
     .length;
   const includesUnbound = !!operations.filter(operation => !operation.isBound)
     .length;
+  const hasFunctionWithParameters = operations.some(
+    operation => operation.parameters.length && operation.type === 'function'
+  );
+  const hasActionWithParameters = operations.some(
+    operation => operation.parameters.length && operation.type === 'action'
+  );
+  const hasFunction = operations.some(
+    operation => operation.type === 'function'
+  );
+  const hasAction = operations.some(operation => operation.type === 'action');
 
-  const hasOperationWithParameters = !!operations.filter(
-    operation => operation.parameters.length > 0 && operation.type === type
-  ).length;
   if (includesUnbound && includesBound) {
     throw new Error(
       'Bound and unbound operations found in generation - this should not happen.'
@@ -128,14 +134,17 @@ export function operationImportDeclarations(
         'DefaultDeSerializers',
         'defaultDeSerializers',
         ...propertyTypeImportNames(parameters),
-        ...(hasOperationWithParameters
-          ? [`${voca.capitalize(type)}ImportParameter`]
+        ...(hasFunctionWithParameters ? ['FunctionImportParameter'] : []),
+        ...(hasActionWithParameters ? ['ActionImportParameter'] : []),
+        ...(includesUnbound && hasFunction
+          ? ['FunctionImportRequestBuilder']
           : []),
-        ...(includesUnbound
-          ? [`${voca.capitalize(type)}ImportRequestBuilder`]
+        ...(includesUnbound && hasAction ? ['ActionImportRequestBuilder'] : []),
+        ...(includesBound && hasFunction
+          ? ['BoundFunctionImportRequestBuilder']
           : []),
-        ...(includesBound
-          ? [`Bound${voca.capitalize(type)}ImportRequestBuilder`]
+        ...(includesBound && hasAction
+          ? ['BoundActionImportRequestBuilder']
           : [])
       ],
       oDataVersion

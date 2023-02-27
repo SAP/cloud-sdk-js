@@ -10,15 +10,13 @@ import { TestEntity4Api } from './TestEntity4Api';
 import {
   testFunctionImportEntityReturnType1,
   testFunctionImportEntityReturnType2,
-  TestFunctionImportEntityReturnType1Parameters,
-  TestFunctionImportEntityReturnType2Parameters
-} from './function-imports';
-import {
   testActionImportNoParameterComplexReturnType1,
   testActionImportNoParameterComplexReturnType2,
+  TestFunctionImportEntityReturnType1Parameters,
+  TestFunctionImportEntityReturnType2Parameters,
   TestActionImportNoParameterComplexReturnType1Parameters,
   TestActionImportNoParameterComplexReturnType2Parameters
-} from './action-imports';
+} from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
@@ -134,19 +132,14 @@ class MultipleSchemasService<
     return this.initApi('testEntity4Api', TestEntity4Api);
   }
 
-  get functionImports() {
+  get operations() {
     return {
       testFunctionImportEntityReturnType1: (
         parameter: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>
       ) => testFunctionImportEntityReturnType1(parameter, this.deSerializers),
       testFunctionImportEntityReturnType2: (
         parameter: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>
-      ) => testFunctionImportEntityReturnType2(parameter, this.deSerializers)
-    };
-  }
-
-  get actionImports() {
-    return {
+      ) => testFunctionImportEntityReturnType2(parameter, this.deSerializers),
       testActionImportNoParameterComplexReturnType1: (
         parameter: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>
       ) =>

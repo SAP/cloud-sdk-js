@@ -1,5 +1,5 @@
 import { resolve, relative, sep } from 'path';
-import { writeFile, readFile, readdir } from 'fs/promises';
+import { readFile, readdir } from 'fs/promises';
 import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
 import { apiDocsDir, transformFile, nextSdkVersion } from './util';
 import { validMessageTypes } from './merge-changelogs';

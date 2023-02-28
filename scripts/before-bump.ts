@@ -24,28 +24,6 @@ function updateDocumentationMd(version: string) {
   );
 }
 
-function updateTypeDocConfig(version: string) {
-  transformFile('tsconfig.typedoc.json', config => {
-    const parsedConfig = JSON.parse(config);
-    return formatJson({
-      ...parsedConfig,
-      typedocOptions: {
-        ...parsedConfig.typedocOptions,
-        out: `${relative(resolve(), apiDocsDir)}/${version}`
-      }
-    });
-  });
-}
-
-function updateDocsVersions(version: string) {
-  transformFile(resolve('docs', 'api', 'versions.json'), versionsJson => {
-    const versions = JSON.parse(versionsJson);
-    return versions.includes(version)
-      ? versionsJson
-      : formatJson([version, ...versions]);
-  });
-}
-
 async function checkChangesets() {
   const csFolder = '.changeset';
   const changesets = (await readdir(csFolder))
@@ -85,8 +63,6 @@ async function beforeBump() {
   const version = await nextSdkVersion();
   updateRootPackageJson(version);
   updateDocumentationMd(version);
-  updateTypeDocConfig(version);
-  updateDocsVersions(version);
 }
 
 beforeBump();

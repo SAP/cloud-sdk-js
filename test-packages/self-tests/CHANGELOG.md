@@ -1,7 +1,5 @@
 # @sap-cloud-sdk/self-tests
 
-## 3.0.0
-
 ## 2.11.0
 
 ## 2.10.0

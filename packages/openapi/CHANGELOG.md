@@ -1,45 +1,5 @@
 # @sap-cloud-sdk/openapi
 
-## 3.0.0
-
-### Major Changes
-
-- 94b45b10b: [Compatibility Note] Remove the options `timeout` and `enableCircuitBreaker` from all BTP service interactions i.e. destination and token fetching.
-- 94b45b10b: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
-- 94b45b10b: [Compatibility Note] Remove `timeout()` method from the request builders and the `timeout` options from the `executeHttpRequest()` function.
-  Visit the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/guides/resilience) to see how to add a timeout using middlewares.
-
-### Minor Changes
-
-- 94b45b10b: [New Functionality] Introduce the middleware on the request builders and http-client.
-  Visit the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/guides/resilience) to see how to use middlewares.
-
-### Patch Changes
-
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-- Updated dependencies [94b45b10b]
-  - @sap-cloud-sdk/util@3.0.0
-  - @sap-cloud-sdk/connectivity@3.0.0
-  - @sap-cloud-sdk/http-client@3.0.0
-  - @sap-cloud-sdk/resilience@3.0.0
-
 ## 2.11.0
 
 ### Patch Changes

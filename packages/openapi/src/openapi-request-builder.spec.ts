@@ -7,7 +7,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
-import { timeout } from '@sap-cloud-sdk/resilience';
+import { retry, timeout } from '@sap-cloud-sdk/resilience';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,
@@ -125,10 +125,46 @@ describe('openapi-request-builder', () => {
 
     const timeoutAboveDelay = () =>
       new OpenApiRequestBuilder('get', '/with-delay')
-        .middleware([timeout(delayInResponse * 10)])
+        .middleware(timeout(delayInResponse * 10))
         .execute(slowDestination);
     await expect(timeoutAboveDelay()).resolves.not.toThrow();
   });
+
+  it('executes a request using retry and timeout (using spread middleware overload)', async () => {
+    const delayInResponse = 10;
+    const slowDestination = { url: 'https://example.com' };
+    nock(slowDestination.url, {})
+      .get('/with-delay')
+      .delay(delayInResponse)
+      .reply(503)
+      .get('/with-delay')
+      .delay(delayInResponse)
+      .reply(200);
+
+    const timeoutAboveDelay = () =>
+      new OpenApiRequestBuilder('get', '/with-delay')
+        .middleware(retry(2), timeout(100))
+        .execute(slowDestination);
+    await expect(timeoutAboveDelay()).resolves.not.toThrow();
+  }, 10000);
+
+  it('executes a request using retry and timeout (using array middleware overload)', async () => {
+    const delayInResponse = 10;
+    const slowDestination = { url: 'https://example.com' };
+    nock(slowDestination.url, {})
+      .get('/with-delay')
+      .delay(delayInResponse)
+      .reply(503)
+      .get('/with-delay')
+      .delay(delayInResponse)
+      .reply(200);
+
+    const timeoutAboveDelay = () =>
+      new OpenApiRequestBuilder('get', '/with-delay')
+        .middleware([retry(2), timeout(100)])
+        .execute(slowDestination);
+    await expect(timeoutAboveDelay()).resolves.not.toThrow();
+  }, 10000);
 
   it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
     mockServiceBindings();

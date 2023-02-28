@@ -237,7 +237,7 @@ describe('GetAllRequestBuilder', () => {
       try {
         await requestBuilder
           .top(1)
-          .middleware([timeout(10)])
+          .middleware(timeout(10))
           .execute(defaultDestination);
       } catch (err) {
         expect(err.message).toBe(

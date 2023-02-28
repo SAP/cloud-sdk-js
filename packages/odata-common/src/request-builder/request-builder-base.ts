@@ -1,4 +1,7 @@
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import {
+  ErrorWithCause,
+  transformVariadicArgumentToArray
+} from '@sap-cloud-sdk/util';
 import {
   HttpDestinationOrFetchOptions,
   useOrFetchDestination
@@ -58,8 +61,16 @@ export abstract class MethodRequestBuilder<
    * @param middlewares - Middlewares to be applied to the executeHttpRequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
-  middleware(middlewares: HttpMiddleware[]): this {
-    this.requestConfig.middlewares = middlewares;
+  middleware(middlewares: HttpMiddleware | HttpMiddleware[]): this;
+  middleware(...middlewares: HttpMiddleware[]): this;
+  middleware(
+    first: undefined | HttpMiddleware | HttpMiddleware[],
+    ...rest: HttpMiddleware[]
+  ): this {
+    this.requestConfig.middlewares = transformVariadicArgumentToArray(
+      first,
+      rest
+    );
     return this;
   }
 

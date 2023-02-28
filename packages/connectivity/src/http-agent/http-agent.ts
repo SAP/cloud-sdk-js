@@ -122,6 +122,7 @@ function getKeyStoreOption(destination: Destination): Record<string, any> {
   if (
     destination.keyStoreName &&
     destination.keyStorePassword &&
+    // Only add certificates, when using MTLS (https://github.com/SAP/cloud-sdk-js/issues/3544)
     destination.authentication === 'ClientCertificateAuthentication'
   ) {
     const certificate = selectCertificate(destination);

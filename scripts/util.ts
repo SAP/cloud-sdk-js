@@ -6,7 +6,7 @@ import getReleasePlan from '@changesets/get-release-plan';
 import { getPackageVersion } from "./get-package-version";
 import { inc, ReleaseType } from "semver";
 
-export const apiDocsDir = resolve('docs', 'api');
+export const apiDocsDir = resolve('knowledge-base', 'api-reference');
 
 export function transformFile(
   filePath: string,

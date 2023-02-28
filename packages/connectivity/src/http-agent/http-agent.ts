@@ -99,7 +99,12 @@ function getTrustStoreOptions(
  * @returns Options, which can be used later by tls.createSecureContext() e.g. pfx and passphrase or an empty object, if the protocol is not 'https:' or no client information are in the definition.
  */
 function getKeyStoreOption(destination: Destination): Record<string, any> {
-  if (destination.keyStoreName && destination.keyStorePassword) {
+  if (
+    destination.keyStoreName &&
+    destination.keyStorePassword &&
+    // Only add certificates, when using MTLS (https://github.com/SAP/cloud-sdk-js/issues/3544)
+    destination.authentication === 'ClientCertificateAuthentication'
+  ) {
     const certificate = selectCertificate(destination);
 
     logger.debug(`Certificate with name "${certificate.name}" selected.`);

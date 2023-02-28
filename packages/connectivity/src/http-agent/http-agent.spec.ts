@@ -159,6 +159,30 @@ describe('createAgent', () => {
     );
   });
 
+  it("does not return an agent for destinations with authentication types that have a certificate but don't use MTLS", () => {
+    const destination: HttpDestination = {
+      url: 'https://destination.example.com',
+      authentication: 'OAuth2SAMLBearerAssertion',
+      keyStoreName: 'cert.p12',
+      keyStorePassword: 'password',
+      certificates: [
+        {
+          name: 'cert.p12',
+          content: 'base64string',
+          type: 'CERTIFICATE'
+        }
+      ]
+    };
+
+    const expectedOptions = {
+      rejectUnauthorized: true
+    };
+
+    expect(getAgentConfig(destination)['httpsAgent']['options']).toMatchObject(
+      expectedOptions
+    );
+  });
+
   it('throws an error if the format is not supported', () => {
     const destination: HttpDestination = {
       url: 'https://destination.example.com',

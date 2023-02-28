@@ -28,10 +28,7 @@ export async function nextSdkVersion(): Promise<string> {
     .sort((a, b) => b - a);
   const release = versionOrder[Math.min(...versionIncreases)];
   const newVersion = inc(currentVersion, release as ReleaseType);
-  if (release === 'major') {
-    console.log('test');
-    console.log(process.env.INPUT_MAJOR_VERSION);
-    console.log('test');
+  if (release === 'major' && newVersion !== process.env.INPUT_MAJOR_VERSION) {
     throw new Error(
       `The turbo repo/changeset release processes are not planned to be applied to the major version release.`
     );

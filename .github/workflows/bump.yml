@@ -2,7 +2,10 @@ name: bump
 
 on:
   workflow_dispatch:
-
+    inputs:
+      majorVersion:
+        description: Mandatory, when bumping a major version. Semver compatible version string (X.Y.Z). Must not be set for patch and minor version releases.
+        required: false
 jobs:
   bump:
     runs-on: ubuntu-latest

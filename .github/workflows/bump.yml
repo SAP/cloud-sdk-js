@@ -6,8 +6,10 @@ on:
       majorVersion:
         description: Mandatory, when bumping a major version. Semver compatible version string (X.Y.Z). Must not be set for patch and minor version releases.
         required: false
-  env:
-    INPUT_MAJOR_VERSION: ${{ github.event.inputs.majorVersion }}
+
+env:
+  INPUT_MAJOR_VERSION: ${{ github.event.inputs.majorVersion }}
+
 jobs:
   bump:
     runs-on: ubuntu-latest

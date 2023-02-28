@@ -8,6 +8,12 @@ import * as xssec from '@sap/xssec';
 // } from '@sap-cloud-sdk/connectivity';
 // eslint-disable-next-line
 import { sendMail } from '@sap-cloud-sdk/mail-client';
+
+describe('dummy test suite, should be removed', () => {
+  it('dummy test , should be removed', () => {
+    expect(true).toBeTruthy();
+  });
+});
 // import { assertHttpDestination } from '@sap-cloud-sdk/connectivity/internal';
 // import { executeHttpRequest } from '../../../../packages/http-client/src';
 // import {

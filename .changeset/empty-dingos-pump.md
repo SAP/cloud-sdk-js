@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/generator': major
 ---
 
-[Compatibility Notes] The `generateJs` option has been replaced with the `transpile` option. Transpilation is not enabled by default.
+[Compatibility Note] The `generateJs` option has been replaced with the `transpile` option. Transpilation is not enabled by default.

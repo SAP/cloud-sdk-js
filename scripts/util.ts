@@ -30,7 +30,7 @@ export async function nextSdkVersion(): Promise<string> {
   const newVersion = inc(currentVersion, release as ReleaseType);
   if (release === 'major' && newVersion !== process.env.INPUT_MAJOR_VERSION) {
     throw new Error(
-      `The turbo repo/changeset release processes are not planned to be applied to the major version release.`
+      `Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input in the workflow.`
     );
   }
 

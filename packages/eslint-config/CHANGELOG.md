@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/eslint-config
 
+## 3.0.0
+
+### Major Changes
+
+- fde964e37: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
+
 ## 2.11.0
 
 ## 2.10.0

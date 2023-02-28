@@ -1,5 +1,31 @@
 # @sap-cloud-sdk/generator-common
 
+## 3.0.0
+
+### Major Changes
+
+- fde964e37: [New Functionality] Introduced options `transpile` and `tsconfig` to configure transpilation for generated OData clients.
+- fde964e37: [Compatibility Note] The generator does not create `d.ts.map` files per default anymore. If you need them include a custom `tsconfig.json`.
+  [Compatibility Note] All SAP Cloud SDK packages ship without `d.ts.map` files from now on.
+  Modern IDEs don't require those files for code navigation, thus they are removed to decrease download size of the SDK.
+- fde964e37: [Compatibility Note] Removed the option `versionInPackageJson` from the OData and OpenAPI generator.
+  If the option `packageJson` is enabled now a `package.json` with a default version `1.0.0` is created.
+  If necessary use the `include` option to add a `package.json` with a custom value.
+  [Compatibility Note] Removed the option `licenseInPackageJson` from the OData and OpenAPI generator.
+  If the option `packageJson` is enabled now a `package.json` with a default license `UNLICENSED` is created.
+  If necessary use the `include` option to add a `package.json` with a custom value.
+- fde964e37: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
+- fde964e37: [Compatibility Note] The two generators use the same CLI parsing code now, aligning the way paths are resolved.
+  In case you experience problems with the new logic, enable the `verbose` flag to investigate the new paths.
+
+### Patch Changes
+
+- Updated dependencies [fde964e37]
+- Updated dependencies [fde964e37]
+- Updated dependencies [fde964e37]
+- Updated dependencies [fde964e37]
+  - @sap-cloud-sdk/util@3.0.0
+
 ## 2.11.0
 
 ### Minor Changes

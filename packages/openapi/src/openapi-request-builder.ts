@@ -1,7 +1,10 @@
 /* eslint-disable max-classes-per-file */
 // eslint-disable-next-line import/named
 import { AxiosResponse } from 'axios';
-import { isNullish } from '@sap-cloud-sdk/util';
+import {
+  isNullish,
+  transformVariadicArgumentToArray
+} from '@sap-cloud-sdk/util';
 import {
   useOrFetchDestination,
   HttpDestinationOrFetchOptions
@@ -90,8 +93,13 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @param middlewares - Middlewares to be applied to the executeHttpRequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
-  middleware(middlewares: HttpMiddleware[]): this {
-    this._middlewares = middlewares;
+  middleware(middlewares: HttpMiddleware[]): this;
+  middleware(...middlewares: HttpMiddleware[]): this;
+  middleware(
+    first: undefined | HttpMiddleware | HttpMiddleware[],
+    ...rest: HttpMiddleware[]
+  ): this {
+    this._middlewares = transformVariadicArgumentToArray(first, rest);
     return this;
   }
 

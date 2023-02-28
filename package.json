@@ -91,7 +91,7 @@
     "@types/node": "^14.18.36",
     "@types/uuid": "^9.0.1",
     "@types/voca": "^1.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.53.0",
     "axios": "^0.27.1",
     "depcheck": "^1.0.0",

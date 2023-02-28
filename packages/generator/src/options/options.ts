@@ -6,7 +6,7 @@ import {
 } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
- * Options to configure the client generation when using the generator programmatically.
+ * Options to configure OData client generation when using the generator programmatically.
  */
 export interface GeneratorOptions extends CommonGeneratorOptions {
   /**
@@ -18,6 +18,7 @@ export interface GeneratorOptions extends CommonGeneratorOptions {
    */
   transpilationProcesses?: number;
 }
+
 /**
  * @internal
  * Represents the parsed generator options.

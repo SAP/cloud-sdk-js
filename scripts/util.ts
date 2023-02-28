@@ -27,11 +27,11 @@ export async function nextSdkVersion(): Promise<string> {
     .map(({ type }) => versionOrder.indexOf(type))
     .sort((a, b) => b - a);
   const release = versionOrder[Math.min(...versionIncreases)];
-  if (release === 'major') {
-    throw new Error(
-      `The turbo repo/changeset release processes are not planned to be applied to the major version release.`
-    );
-  }
+  // if (release === 'major') {
+  //   throw new Error(
+  //     `The turbo repo/changeset release processes are not planned to be applied to the major version release.`
+  //   );
+  // }
 
   const newVersion = inc(currentVersion, release as ReleaseType);
   if (!newVersion) {

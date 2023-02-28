@@ -18,7 +18,6 @@ import {
   CreateFileOptions,
   readPrettierConfig,
   parseOptions,
-  CommonGeneratorOptions,
   writeOptionsPerService,
   getOptionsPerService,
   getRelPathWithPosixSeparator,
@@ -33,7 +32,12 @@ import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser/document';
 import { convertOpenApiSpec } from './document-converter';
 import { sdkMetadata } from './sdk-metadata';
-import { cliOptions, ParsedGeneratorOptions, tsconfigJson } from './options';
+import {
+  cliOptions,
+  GeneratorOptions,
+  ParsedGeneratorOptions,
+  tsconfigJson
+} from './options';
 
 const { mkdir } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -44,7 +48,7 @@ const logger = createLogger('openapi-generator');
  * @param options - Options to configure generation.
  */
 export async function generate(
-  options: CommonGeneratorOptions & { config?: string }
+  options: GeneratorOptions & { config?: string }
 ): Promise<void> {
   const parsedOptions = parseOptions(cliOptions, options);
   if (parsedOptions.verbose) {

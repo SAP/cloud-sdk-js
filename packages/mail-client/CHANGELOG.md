@@ -1,5 +1,31 @@
 # @sap-cloud-sdk/mail-client
 
+## 3.0.0
+
+### Major Changes
+
+- 94b45b10b: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
+
+### Patch Changes
+
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+- Updated dependencies [94b45b10b]
+  - @sap-cloud-sdk/util@3.0.0
+  - @sap-cloud-sdk/connectivity@3.0.0
+
 ## 2.11.0
 
 ### Patch Changes

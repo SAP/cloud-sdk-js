@@ -1,5 +1,14 @@
 # @sap-cloud-sdk/util
 
+## 3.0.0
+
+### Major Changes
+
+- 94b45b10b: [Compatibility Note] By default, generation of OData clients fails if a service path cannot be determined. Either provide `servicePath` value in the `options-per-service.json` or set `skipValidation` to true, in which case, `/` will be used.
+- 94b45b10b: [Compatibility Note] The function `variadicArgumentToArray` is replaced by the function `transformVariadicArgumentToArray`.
+- 94b45b10b: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
+- 94b45b10b: [Compatibility Note] The field `logger` on the interface `LoggerOptions` was not used and is removed from the interface.
+
 ## 2.11.0
 
 ## 2.10.0

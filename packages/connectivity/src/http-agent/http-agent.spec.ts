@@ -160,7 +160,7 @@ describe('createAgent', () => {
   });
 
   it("does not return an agent for destinations with authentication types that have a certificate but don't use MTLS", () => {
-    const destination: Destination = {
+    const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'OAuth2SAMLBearerAssertion',
       keyStoreName: 'cert.p12',

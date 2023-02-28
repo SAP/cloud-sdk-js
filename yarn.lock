@@ -1316,14 +1316,6 @@
     "@sap/cds-compiler" "^3.2.0"
     "@sap/cds-foss" "^4"
 
-"@sap/cloud-sdk-vdm-business-partner-service@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-2.1.0.tgz#1e632b827778609a49410cf2545f47723db36b0c"
-  integrity sha512-XQqY8FXEgpC6l3NOlEIPYj44bH+I0jaM7tzHADxLz/VT/4TQ3d32gTzRHQjcYCarBXlyNglB5TYW9PmZniULQQ==
-  dependencies:
-    "@sap-cloud-sdk/odata-common" "^2.1.0"
-    "@sap-cloud-sdk/odata-v2" "^2.1.0"
-
 "@sap/eslint-plugin-cds@^2.6.0":
   version "2.6.0"
   resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-2.6.0.tgz#c3627a2960a3c541e1d55cc5ae272330461cf3ba"

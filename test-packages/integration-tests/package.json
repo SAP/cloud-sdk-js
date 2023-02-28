@@ -28,7 +28,6 @@
     "@sap-cloud-sdk/odata-common": "^2.11.0",
     "@sap-cloud-sdk/odata-v2": "^2.11.0",
     "@sap-cloud-sdk/openapi-generator": "^2.11.0",
-    "@sap/cloud-sdk-vdm-business-partner-service": "^2.1.0",
     "bignumber.js": "^9.1.1",
     "execa": "^5.0.0",
     "jsonwebtoken": "^9.0.0",

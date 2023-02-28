@@ -15,14 +15,14 @@ jobs:
         with:
           node-version: 14
       - run: yarn install --frozen-lockfile
-      - name: Version 1 Stable Release
-        if: startsWith(github.ref, 'refs/tags/v1')
+      - name: Legacy Release
+        if: startsWith(github.ref, 'refs/tags/v1') || startsWith(github.ref, 'refs/tags/v2')
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           yarn changeset publish --tag legacy
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
-      - name: Version 2 Stable Release
+      - name: Latest Release
         if: startsWith(github.ref, 'refs/tags/v2')
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc

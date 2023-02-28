@@ -61,7 +61,7 @@ export abstract class MethodRequestBuilder<
    * @param middlewares - Middlewares to be applied to the executeHttpRequest().
    * @returns The request builder itself, to facilitate method chaining.
    */
-  middleware(middlewares: HttpMiddleware[]): this;
+  middleware(middlewares: HttpMiddleware | HttpMiddleware[]): this;
   middleware(...middlewares: HttpMiddleware[]): this;
   middleware(
     first: undefined | HttpMiddleware | HttpMiddleware[],

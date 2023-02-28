@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/integration-tests",
-  "version": "3.0.0",
+  "version": "2.11.0",
   "description": "SAP Cloud SDK for JavaScript integration tests",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -15,19 +15,19 @@
     "check:dependencies": "depcheck . --ignores=@sap-cloud-sdk/generator,@sap-cloud-sdk/openapi-generator"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^3.0.0",
-    "@sap-cloud-sdk/test-services-odata-v2": "^3.0.0",
-    "@sap-cloud-sdk/test-services-odata-v4": "^3.0.0",
-    "@sap-cloud-sdk/test-util": "^3.0.0",
-    "@sap-cloud-sdk/util": "^3.0.0",
-    "@sap-cloud-sdk/mail-client": "^3.0.0",
+    "@sap-cloud-sdk/connectivity": "^2.11.0",
+    "@sap-cloud-sdk/test-services-odata-v2": "^2.11.0",
+    "@sap-cloud-sdk/test-services-odata-v4": "^2.11.0",
+    "@sap-cloud-sdk/test-util": "^2.11.0",
+    "@sap-cloud-sdk/util": "^2.11.0",
+    "@sap-cloud-sdk/mail-client": "^2.11.0",
     "@sap/xssec": "^3.2.17"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator": "^3.0.0",
-    "@sap-cloud-sdk/odata-common": "^3.0.0",
-    "@sap-cloud-sdk/odata-v2": "^3.0.0",
-    "@sap-cloud-sdk/openapi-generator": "^3.0.0",
+    "@sap-cloud-sdk/generator": "^2.11.0",
+    "@sap-cloud-sdk/odata-common": "^2.11.0",
+    "@sap-cloud-sdk/odata-v2": "^2.11.0",
+    "@sap-cloud-sdk/openapi-generator": "^2.11.0",
     "@sap/cloud-sdk-vdm-business-partner-service": "^2.1.0",
     "bignumber.js": "^9.1.1",
     "execa": "^5.0.0",

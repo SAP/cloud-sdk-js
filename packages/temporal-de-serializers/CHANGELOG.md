@@ -1,25 +1,5 @@
 # @sap-cloud-sdk/temporal-de-serializers
 
-## 3.0.0
-
-### Major Changes
-
-- f9a5a766c: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
-
-### Patch Changes
-
-- Updated dependencies [7cc8dab4b]
-- Updated dependencies [350843baa]
-- Updated dependencies [714556c4d]
-- Updated dependencies [afaf93408]
-- Updated dependencies [f9a5a766c]
-- Updated dependencies [fabe2cd96]
-- Updated dependencies [a50c96b66]
-- Updated dependencies [350843baa]
-- Updated dependencies [fabe2cd96]
-- Updated dependencies [29d804ebd]
-  - @sap-cloud-sdk/odata-common@3.0.0
-
 ## 2.11.0
 
 ### Patch Changes

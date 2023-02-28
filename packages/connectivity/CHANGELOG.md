@@ -1,38 +1,5 @@
 # @sap-cloud-sdk/connectivity
 
-## 3.0.0
-
-### Major Changes
-
-- 350843baa: [Compatibility Note] The generic types of `JwtKeyMapping` is simplified so the second type argument `JwtKeysT` are always strings.
-- b25bcbbf4: [Compatibility Note] The `Protocol` enum was replaced with a string literal union type. Now, instead of passing `Protocol.HTTPS` pass 'https'.
-- afaf93408: [Compatibility Note] Remove the options `timeout` and `enableCircuitBreaker` from all BTP service interactions i.e. destination and token fetching.
-- f9a5a766c: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
-- 44a165ef4: [Compatibility Note] The enum `IsolationStrategy` was replaced with a string literal union type of the same name. Use 'tenant' and 'tenant-user' instead of `IsolationStrategy.Tenant` and `IsolationStrategy.Tenant_User`.
-- b25bcbbf4: [Improvement] Replace `Protocol` enum with a string literal union type.
-- 29d804ebd: [Compatibility Note]] The `url` property in `Destination` is now optional as destinations of type `MAIL` do not have a URL.
-- 44a165ef4: [Improvement] Replace `IsolationStrategy` enum with union type.
-
-### Minor Changes
-
-- db7c5ef2e: [New Functionality] Support `OAuth2RefreshToken` authentication type
-- 4e6fe1086: [New Functionality] Add a `retry` option in the `DestinationFetchOption`.
-  Enable this options if the token exchange done by the destination service is unstable.
-- f703b6e4b: [Fixed Issue] Fix the combination of providing the `iss` together with `OnPremise` basic destinations.
-- a47ebcfd7: [New Functionality] Add `ResilienceOptions` and `resilience()` function. The function returns an array of middlewares based on the provided options.
-
-### Patch Changes
-
-- Updated dependencies [7cc8dab4b]
-- Updated dependencies [350843baa]
-- Updated dependencies [fe1ef5419]
-- Updated dependencies [afaf93408]
-- Updated dependencies [f9a5a766c]
-- Updated dependencies [a47ebcfd7]
-- Updated dependencies [350843baa]
-  - @sap-cloud-sdk/util@3.0.0
-  - @sap-cloud-sdk/resilience@3.0.0
-
 ## 2.11.0
 
 ### Patch Changes

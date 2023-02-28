@@ -1,40 +1,5 @@
 # @sap-cloud-sdk/openapi-generator
 
-## 3.0.0
-
-### Major Changes
-
-- b1eb72868: [Compatibility Note] The internal option `packageVersion` of the OpenAPI generator is removed.
-- 9cc19716f: [Compatibility Note] Removed the option `versionInPackageJson` from the OData and OpenAPI generator.
-  If the option `packageJson` is enabled now a `package.json` with a default version `1.0.0` is created.
-  If necessary use the `include` option to add a `package.json` with a custom value.
-  [Compatibility Note] Removed the option `licenseInPackageJson` from the OData and OpenAPI generator.
-  If the option `packageJson` is enabled now a `package.json` with a default license `UNLICENSED` is created.
-  If necessary use the `include` option to add a `package.json` with a custom value.
-- 98960982e: [Compatibility Note] Rename servicePath to basePath.
-- f9a5a766c: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
-- a50c96b66: [Compatibility Note] The `serviceMapping` option of the OData generator has been renamed to `optionsPerService`. The mapping file, `service-mapping.json` has also been renamed to `options-per-service.json`. By default, an options file will not be generated.
-- db5bcf8da: [Compatibility Note] `tsConfig` option has been renamed to `tsconfig`.
-- b1eb72868: [Compatibility Note] The two generators use the same CLI parsing code now, aligning the way paths are resolved.
-  In case you experience problems with the new logic, enable the `verbose` flag to investigate the new paths.
-
-### Patch Changes
-
-- Updated dependencies [7cc8dab4b]
-- Updated dependencies [db5bcf8da]
-- Updated dependencies [0bc92f0e2]
-- Updated dependencies [9cc19716f]
-- Updated dependencies [350843baa]
-- Updated dependencies [afaf93408]
-- Updated dependencies [f9a5a766c]
-- Updated dependencies [fabe2cd96]
-- Updated dependencies [350843baa]
-- Updated dependencies [b1eb72868]
-- Updated dependencies [fabe2cd96]
-  - @sap-cloud-sdk/util@3.0.0
-  - @sap-cloud-sdk/generator-common@3.0.0
-  - @sap-cloud-sdk/openapi@3.0.0
-
 ## 2.11.0
 
 ### Minor Changes

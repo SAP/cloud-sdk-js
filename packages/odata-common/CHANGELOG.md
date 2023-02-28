@@ -1,53 +1,5 @@
 # @sap-cloud-sdk/odata-common
 
-## 3.0.0
-
-### Major Changes
-
-- 7cc8dab4b: [Compatibility Note] By default, generation of OData clients fails if a service path cannot be determined. Either provide `servicePath` value in the `options-per-service.json` or set `skipValidation` to true, in which case, `/` will be used.
-- 350843baa: [Compatibility Note] The constructor of `ODataRequestConfig` was changed so that the third parameter cannot be a `string` anymore.
-  Passing in a string which was then interpreted as the value for the `Content-Type` HTTP header was deprecated.
-  The type of the parameter is now `Record<string, any>`, and if only want to set the `Content-Type` HTTP header you can do so by passing `{'content-type': 'some-value'}` to the constructor.
-- 714556c4d: [Compatibility Note] The constructor of the entity API is private to avoid accidental usage. Use the service object to get a API instance.
-- afaf93408: [Compatibility Note] Remove the options `timeout` and `enableCircuitBreaker` from all BTP service interactions i.e. destination and token fetching.
-- f9a5a766c: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
-- fabe2cd96: [Compatibility Note] Remove `timeout()` method from the request builders and the `timeout` options from the `executeHttpRequest()` function.
-  Visit the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/guides/resilience) to see how to add a timeout using middlewares.
-- a50c96b66: [Compatibility Note] The `serviceMapping` option of the OData generator has been renamed to `optionsPerService`. The mapping file, `service-mapping.json` has also been renamed to `options-per-service.json`. By default, an options file will not be generated.
-- 350843baa: [Compatibility Note] Setting custom fields in `fromJson` through the `_customFields` property has been removed.
-  Add custom properties to your JSON object instead.
-- 29d804ebd: [Compatibility Note]] The `url` property in `Destination` is now optional as destinations of type `MAIL` do not have a URL.
-
-### Minor Changes
-
-- fabe2cd96: [New Functionality] Introduce the middleware on the request builders and http-client.
-  Visit the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/guides/resilience) to see how to use middlewares.
-
-### Patch Changes
-
-- Updated dependencies [7cc8dab4b]
-- Updated dependencies [350843baa]
-- Updated dependencies [db7c5ef2e]
-- Updated dependencies [b25bcbbf4]
-- Updated dependencies [350843baa]
-- Updated dependencies [fe1ef5419]
-- Updated dependencies [afaf93408]
-- Updated dependencies [f9a5a766c]
-- Updated dependencies [fabe2cd96]
-- Updated dependencies [44a165ef4]
-- Updated dependencies [b25bcbbf4]
-- Updated dependencies [4e6fe1086]
-- Updated dependencies [350843baa]
-- Updated dependencies [f703b6e4b]
-- Updated dependencies [a47ebcfd7]
-- Updated dependencies [350843baa]
-- Updated dependencies [fabe2cd96]
-- Updated dependencies [29d804ebd]
-- Updated dependencies [44a165ef4]
-  - @sap-cloud-sdk/util@3.0.0
-  - @sap-cloud-sdk/connectivity@3.0.0
-  - @sap-cloud-sdk/http-client@3.0.0
-
 ## 2.11.0
 
 ### Minor Changes

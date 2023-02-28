@@ -1,43 +1,5 @@
 # @sap-cloud-sdk/odata-v2
 
-## 3.0.0
-
-### Major Changes
-
-- 300cb37bb: [Compatibility Note] Remove the options `timeout` and `enableCircuitBreaker` from all BTP service interactions i.e. destination and token fetching.
-- 300cb37bb: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
-
-### Patch Changes
-
-- 300cb37bb: [Fixed Issue] Allow to update OData v2 entities to `null`. Fixes [3204](https://github.com/SAP/cloud-sdk-js/issues/3204).
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-  - @sap-cloud-sdk/odata-common@3.0.0
-  - @sap-cloud-sdk/util@3.0.0
-  - @sap-cloud-sdk/connectivity@3.0.0
-  - @sap-cloud-sdk/http-client@3.0.0
-
 ## 2.11.0
 
 ### Patch Changes

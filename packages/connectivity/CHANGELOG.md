@@ -1,38 +1,5 @@
 # @sap-cloud-sdk/connectivity
 
-## 3.0.0
-
-### Major Changes
-
-- 300cb37bb: [Compatibility Note] The generic types of `JwtKeyMapping` is simplified so the second type argument `JwtKeysT` are always strings.
-- 300cb37bb: [Compatibility Note] The `Protocol` enum was replaced with a string literal union type. Now, instead of passing `Protocol.HTTPS` pass 'https'.
-- 300cb37bb: [Compatibility Note] Remove the options `timeout` and `enableCircuitBreaker` from all BTP service interactions i.e. destination and token fetching.
-- 300cb37bb: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
-- 300cb37bb: [Compatibility Note] The enum `IsolationStrategy` was replaced with a string literal union type of the same name. Use 'tenant' and 'tenant-user' instead of `IsolationStrategy.Tenant` and `IsolationStrategy.Tenant_User`.
-- 300cb37bb: [Improvement] Replace `Protocol` enum with a string literal union type.
-- 300cb37bb: [Compatibility Note]] The `url` property in `Destination` is now optional as destinations of type `MAIL` do not have a URL.
-- 300cb37bb: [Improvement] Replace `IsolationStrategy` enum with union type.
-
-### Minor Changes
-
-- 300cb37bb: [New Functionality] Support `OAuth2RefreshToken` authentication type
-- 300cb37bb: [New Functionality] Add a `retry` option in the `DestinationFetchOption`.
-  Enable this options if the token exchange done by the destination service is unstable.
-- 300cb37bb: [Fixed Issue] Fix the combination of providing the `iss` together with `OnPremise` basic destinations.
-- 300cb37bb: [New Functionality] Add `ResilienceOptions` and `resilience()` function. The function returns an array of middlewares based on the provided options.
-
-### Patch Changes
-
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-- Updated dependencies [300cb37bb]
-  - @sap-cloud-sdk/util@3.0.0
-  - @sap-cloud-sdk/resilience@3.0.0
-
 ## 2.11.0
 
 ### Patch Changes

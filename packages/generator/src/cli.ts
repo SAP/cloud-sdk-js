@@ -9,8 +9,6 @@ const logger = createLogger({
   messageContext: 'cli'
 });
 
-logger.info('Parsing args...');
-
 generate(parseCmdArgs(process.argv.slice(2)))
   .then(() => logger.info('Generation of services finished successfully.'))
   .catch(err => {

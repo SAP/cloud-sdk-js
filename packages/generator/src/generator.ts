@@ -75,7 +75,7 @@ export async function generate(
     setLogLevel('verbose', logger);
   }
 
-  logger.verbose(`Parsed Options: ${JSON.stringify(options, null, 2)}`);
+  logger.verbose(`Parsed Options: ${JSON.stringify(parsedOptions, null, 2)}`);
 
   return generateWithParsedOptions(parsedOptions);
 }

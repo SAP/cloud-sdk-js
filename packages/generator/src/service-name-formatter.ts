@@ -120,10 +120,9 @@ export class ServiceNameFormatter {
     uniqueName: string;
   }): void {
     if (uniqueName !== transformedName) {
-      const message = `A naming conflict appears for service ${this.serviceName} in container '${originalContainerTypeName}'.
-The conflict resolution is: ${transformedName} -> ${uniqueName}.`;
+      const message = `A naming conflict appears for service ${this.serviceName} in container '${originalContainerTypeName}'. The conflict resolution is: ${transformedName} -> ${uniqueName}.`;
       if (this.skipValidation) {
-        logger.info(message);
+        logger.warn(message);
       } else {
         throw new Error(`${message}
 If you are ok with this change execute the generator with the '--skipValidation' option.`);

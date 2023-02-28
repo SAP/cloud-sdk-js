@@ -1,5 +1,73 @@
 # @sap-cloud-sdk/generator
 
+## 3.0.0
+
+### Major Changes
+
+- 7cc8dab4b: [Compatibility Note] By default, generation of OData clients fails if a service path cannot be determined. Either provide `servicePath` value in the `options-per-service.json` or set `skipValidation` to true, in which case, `/` will be used.
+- 4f1a255ac: [Compatibility Note] The options per service behavior is now the same as for the OpenApi generator.
+  For details on how to migrate and what has change look at the migration guide.
+- 67ee59ec1: [Compatibility Note] The deprecated `forceOverwrite` option of the generator is removed. Use the `overwrite` option instead.
+  [Compatibility Note] The deprecated `generatePackageJson` option of the generator is removed. Use the `packageJson` option instead.
+  [Compatibility Note] The deprecated `writeReadme` option of the generator is removed. Use the `readme` option instead.
+  [Compatibility Note] The deprecated `processesJsGeneration` option of the generator is removed. Use the `transpilationProcesses` option instead.
+  [Compatibility Note] The internal options `sdkAfterVersionScript`, `s4HanaCloud` and `packageVersion` of the generator are removed.
+  These were hidden options never meant for external usage and there is no replacement.
+  [Compatibility Note] The deprecated `generateNpmrc` option of the generator is removed. Use the `include` option to add a `.npmrc` to the generated code if needed.
+- f6bdbeade: [Compatibility Note] Add `verbose` generator option. By default, only error and warning logs will be displayed. If `verbose` is set to `true`, all logs will be displayed.
+- db5bcf8da: [New Functionality] Introduced options `transpile` and `tsconfig` to configure transpilation for generated OData clients.
+- db5bcf8da: [Compatibility Note] The `generateJs` option has been replaced with the `transpile` option. Transpilation is not enabled by default.
+- 248c02d7b: [Compatibility Note] The command line argument `inputDir` of the OData generator is renamed to `input`.
+  The new `input` options accepts now also file paths and glob patterns.
+- e9b5bc9cc: [Compatibility Note] The OData generator won't automatically rename identifiers to avoid name conflicts.
+  The generation process will fail if identifiers have conflicting names.
+  Switch on the `skipValidation` flag if you want to generate despite name conflicts and are okay with changed identifier names to avoid conflicts.
+- 9cc19716f: [Compatibility Note] Removed the option `versionInPackageJson` from the OData and OpenAPI generator.
+  If the option `packageJson` is enabled now a `package.json` with a default version `1.0.0` is created.
+  If necessary use the `include` option to add a `package.json` with a custom value.
+  [Compatibility Note] Removed the option `licenseInPackageJson` from the OData and OpenAPI generator.
+  If the option `packageJson` is enabled now a `package.json` with a default license `UNLICENSED` is created.
+  If necessary use the `include` option to add a `package.json` with a custom value.
+- 98960982e: [Compatibility Note] Rename servicePath to basePath.
+- f9a5a766c: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
+- 7340703e0: [Compatibility Note] The option `generateCSN` is removed. There is no replacement.
+- a50c96b66: [Compatibility Note] The `serviceMapping` option of the OData generator has been renamed to `optionsPerService`. The mapping file, `service-mapping.json` has also been renamed to `options-per-service.json`. By default, an options file will not be generated.
+- b1eb72868: [Compatibility Note] The type for paths in the `GeneratorOptions` is changed from `fs.PathLike` to `string`.
+  In case you passed a buffer object please resolve it to a string before passing it to the SAP Cloud SDK.
+- b1eb72868: [Compatibility Note] The two generators use the same CLI parsing code now, aligning the way paths are resolved.
+  In case you experience problems with the new logic, enable the `verbose` flag to investigate the new paths.
+
+### Minor Changes
+
+- 3a1cc7f72: [Improvement] Align naming rules for operations and properties in OData clients by removing `_` prefix
+- d1e33228e: [Fixed Issue] Allow OData service to contain an entity name 'Service'.
+
+### Patch Changes
+
+- 622e7eba6: [Fixed Issue] Now links to the correct generator binary.
+- Updated dependencies [7cc8dab4b]
+- Updated dependencies [db5bcf8da]
+- Updated dependencies [350843baa]
+- Updated dependencies [0bc92f0e2]
+- Updated dependencies [714556c4d]
+- Updated dependencies [9cc19716f]
+- Updated dependencies [350843baa]
+- Updated dependencies [afaf93408]
+- Updated dependencies [f9a5a766c]
+- Updated dependencies [72817ee93]
+- Updated dependencies [fabe2cd96]
+- Updated dependencies [a50c96b66]
+- Updated dependencies [350843baa]
+- Updated dependencies [350843baa]
+- Updated dependencies [b1eb72868]
+- Updated dependencies [fabe2cd96]
+- Updated dependencies [29d804ebd]
+  - @sap-cloud-sdk/odata-common@3.0.0
+  - @sap-cloud-sdk/util@3.0.0
+  - @sap-cloud-sdk/generator-common@3.0.0
+  - @sap-cloud-sdk/odata-v2@3.0.0
+  - @sap-cloud-sdk/odata-v4@3.0.0
+
 ## 2.11.0
 
 ### Minor Changes

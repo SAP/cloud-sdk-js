@@ -1,5 +1,47 @@
 # @sap-cloud-sdk/http-client
 
+## 3.0.0
+
+### Major Changes
+
+- afaf93408: [Compatibility Note] Remove the options `timeout` and `enableCircuitBreaker` from all BTP service interactions i.e. destination and token fetching.
+- f9a5a766c: [Compatibility Note] Switch the compilerOptions.module to `Node16` instead of `CommonJS` for better interoperability with ES modules. See the [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/esm-node.html) for technical details if needed.
+- fabe2cd96: [Compatibility Note] Remove `timeout()` method from the request builders and the `timeout` options from the `executeHttpRequest()` function.
+  Visit the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/guides/resilience) to see how to add a timeout using middlewares.
+- 350843baa: [Compatibility Note] Removed overload of executeHttpRequest
+  The overload, that accepted `HttpRequestConfigWithOrigin` as a parameter, is removed and replaced by the function `executeHttpRequestWithOrigin`.
+- 29d804ebd: [Compatibility Note]] The `url` property in `Destination` is now optional as destinations of type `MAIL` do not have a URL.
+
+### Minor Changes
+
+- fe1ef5419: [New Functionality] The request configuration used in the final request is now part of the middleware context.
+  User can implement middlewares to change request properties like `headers` using this reference in the middleware context.
+  The request configuration contains the `url`, `headers` and all other properties of the HTTP request.
+- fabe2cd96: [New Functionality] Introduce the middleware on the request builders and http-client.
+  Visit the [documentation portal](https://sap.github.io/cloud-sdk/docs/js/guides/resilience) to see how to use middlewares.
+
+### Patch Changes
+
+- Updated dependencies [7cc8dab4b]
+- Updated dependencies [350843baa]
+- Updated dependencies [db7c5ef2e]
+- Updated dependencies [b25bcbbf4]
+- Updated dependencies [350843baa]
+- Updated dependencies [fe1ef5419]
+- Updated dependencies [afaf93408]
+- Updated dependencies [f9a5a766c]
+- Updated dependencies [44a165ef4]
+- Updated dependencies [b25bcbbf4]
+- Updated dependencies [4e6fe1086]
+- Updated dependencies [f703b6e4b]
+- Updated dependencies [a47ebcfd7]
+- Updated dependencies [350843baa]
+- Updated dependencies [29d804ebd]
+- Updated dependencies [44a165ef4]
+  - @sap-cloud-sdk/util@3.0.0
+  - @sap-cloud-sdk/connectivity@3.0.0
+  - @sap-cloud-sdk/resilience@3.0.0
+
 ## 2.11.0
 
 ### Patch Changes

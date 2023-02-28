@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-services-odata-common",
-  "version": "2.11.0",
+  "version": "3.0.0",
   "description": "Custom Services for testing",
   "files": [
     "**/*.js",
@@ -25,10 +25,10 @@
     "moment": "^2.29.4"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator-common": "^2.11.0"
+    "@sap-cloud-sdk/generator-common": "^3.0.0"
   },
   "peerDependencies": {
-    "@sap-cloud-sdk/generator": "^2.3.0",
-    "@sap-cloud-sdk/util": "^2.3.0"
+    "@sap-cloud-sdk/generator": "^3.0.0",
+    "@sap-cloud-sdk/util": "^3.0.0"
   }
 }

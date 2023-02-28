@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/mail-client",
-  "version": "2.14.0",
+  "version": "2.15.0",
   "description": "SAP Cloud SDK for JavaScript e-mail client",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -38,8 +38,8 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^2.14.0",
-    "@sap-cloud-sdk/util": "^2.14.0",
+    "@sap-cloud-sdk/connectivity": "^2.15.0",
+    "@sap-cloud-sdk/util": "^2.15.0",
     "nodemailer": "6.9.1",
     "socks": "2.7.1"
   },

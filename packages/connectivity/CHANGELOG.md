@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/connectivity
 
+## 2.15.0
+
+### Minor Changes
+
+- 5bad86c70: [Fixed Issue] Stop adding certificates when sending requests to a destination, if the authentication type does not require a certificate.
+- 5bad86c70: [Compatibility Note] When making a request to a destination that has a certificate in its defintion, the certificate is only added, if it is needed for the according authentication type. That way, `ClientCertificateAuthentication` will have a certificate in the request, while `OAuth2SAMLBearerAssertion` does not. Previously, the certificate would be added regardless.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@2.15.0
+
 ## 2.14.0
 
 ### Minor Changes

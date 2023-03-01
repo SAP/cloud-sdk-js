@@ -20,7 +20,7 @@ const npmMaxLength = 214;
 const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 
 /**
- * Checks whether a name is compliant with NPM naming rules. Logs a warning if not.
+ * Checks whether a name is compliant with npm naming rules. Logs a warning if not.
  * @param packageName - The name to be checked.
  * @internal
  */
@@ -33,15 +33,15 @@ export function validateNpmCompliance(packageName: string): void {
   if (!isCompliant(packageName)) {
     const newPackageName = npmCompliantName(packageName);
     logger.warn(
-      `Provided package name "${packageName}" is not compliant with NPM naming rules and was transformed to ${newPackageName}!`
+      `Provided package name "${packageName}" is not compliant with npm naming rules and was transformed to ${newPackageName}!`
     );
   }
 }
 
 /**
- * Takes a name and returns a transformation that is guaranteed to be compliant with NPM naming rules.
+ * Takes a name and returns a transformation that is guaranteed to be compliant with npm naming rules.
  * @param packageName - The name to be transformed, if necessary.
- * @returns Name that is guaranteed to be NPM compliant.
+ * @returns Name that is guaranteed to be npm compliant.
  * @internal
  */
 export function npmCompliantName(packageName: string): string {

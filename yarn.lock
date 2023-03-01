@@ -1267,10 +1267,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.5.2":
-  version "6.5.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.5.2.tgz#6092dbc6966bc190ddfd1460cd2061496163c02f"
-  integrity sha512-JH4UkDNGKKrV6IHQGJ43fpGClB4ODQbY3g/bMRlHMJnoByp+83TwzRDdu548XRS38gWQHaSEgj5ksDM4hd+c8w==
+"@sap/cds-dk@6.6.0":
+  version "6.6.0"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.6.0.tgz#9981dc3c538d2b397eb54cd965fd2ff46d71124a"
+  integrity sha512-vVUWuDM4nbLVvsn2BaDmG19jy5QDshRa8JGuKQp5qU4j0dwmv80OysE/7oVhtPzWfm5QEaVnYR+hCwgfpDd9SQ==
   dependencies:
     "@sap/cds" "^6.4.0"
     "@sap/cds-foss" "^4"
@@ -1279,7 +1279,7 @@
     axios ">=0.21"
     eslint "^8"
     express "^4.17.1"
-    livereload-js "^3.3.1"
+    livereload-js "^4.0.0"
     md5 "^2.3.0"
     mustache "^4.0.1"
     node-watch ">=0.7"
@@ -5989,10 +5989,10 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
-livereload-js@^3.3.1:
-  version "3.4.1"
-  resolved "https://registry.npmjs.org/livereload-js/-/livereload-js-3.4.1.tgz#ba90fbc708ed1b9a024bb89c4ee12c96ea03d66f"
-  integrity sha512-5MP0uUeVCec89ZbNOT/i97Mc+q3SxXmiUGhRFOTmhrGPn//uWVQdCvcLJDy64MSBR5MidFdOR7B9viumoavy6g==
+livereload-js@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/livereload-js/-/livereload-js-4.0.0.tgz#377fbf52863c736676cc68e9ff752edf8baeec71"
+  integrity sha512-aRt4F8CnfY+6yNFObvO02qPmf76/wwGPzDEomgxPwOflTaBZz8yp16kMVnPxGFPwqSO4mJ/qVOWk/SxDTqX/Xg==
 
 load-yaml-file@^0.2.0:
   version "0.2.0"

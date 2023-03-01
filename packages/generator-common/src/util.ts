@@ -20,49 +20,60 @@ const npmMaxLength = 214;
 const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 
 /**
- * Takes a name and returns a transformation that is guaranteed to be compliant with npm naming rules.
- * @param name - The name to be transformed if necessary.
- * @returns Name that is guaranteed to be compliant.
+ * Checks whether a name is compliant with npm naming rules. Logs a warning if not.
+ * @param packageName - The name to be checked.
  * @internal
  */
-export function npmCompliantName(name: string): string {
-  let compliantName = trimToNpmMaxLength(name);
-  compliantName = transformIfNecessary(compliantName);
-  return compliantName;
+export function validateNpmCompliance(packageName: string): void {
+  if (packageName.length > npmMaxLength) {
+    logger.warn(
+      `Provided package name "${packageName}" is longer than 214 chars and will be cut!`
+    );
+  }
+  if (!isCompliant(packageName)) {
+    const newPackageName = npmCompliantName(packageName);
+    logger.warn(
+      `Provided package name "${packageName}" is not compliant with npm naming rules and was transformed to ${newPackageName}!`
+    );
+  }
 }
 
-const trimToNpmMaxLength = (str: string): string => {
-  if (str.length > npmMaxLength) {
-    logger.warn(
-      `Provided package name ${str} is longer than 214 chars and will be cut!`
-    );
-    return str.substr(0, npmMaxLength);
-  }
-  return str;
-};
+/**
+ * Takes a name and returns a transformation that is guaranteed to be compliant with npm naming rules.
+ * @param packageName - The name to be transformed, if necessary.
+ * @returns Name that is guaranteed to be npm compliant.
+ * @internal
+ */
+export function npmCompliantName(packageName: string): string {
+  packageName = packageName.substring(0, npmMaxLength);
+  return isScoped(packageName)
+    ? transformScopedName(packageName)
+    : transformUnscopedName(packageName);
+}
 
-const transformIfNecessary = (packageName: string): string => {
-  if (npmRegex.exec(packageName)) {
-    return packageName;
-  }
-  const newName = _npmCompliantName(packageName);
-  logger.warn(
-    `Provided name ${packageName} is not compliant with npm naming rules and was transformed to ${newName}!`
+function isCompliant(packageName: string): boolean {
+  return !!npmRegex.exec(packageName);
+}
+
+function isScoped(packageName: string): boolean {
+  return packageName.startsWith('@') && packageName.includes('/');
+}
+
+function transformScopedName(packageName: string) {
+  return (
+    '@' +
+    splitAtFirstOccurrence(packageName, '/')
+      .map(scopeOrName => transformUnscopedName(scopeOrName))
+      .join('/')
   );
-  return newName;
-};
+}
 
-const _npmCompliantName = (name: string): string => {
-  if (name.startsWith('@') && name.includes('/')) {
-    return (
-      '@' +
-      splitAtFirstOccurrence(name, '/')
-        .map(x => makeNpmCompliant(x))
-        .join('/')
-    );
-  }
-  return makeNpmCompliant(name);
-};
+function transformUnscopedName(packageName: string) {
+  let compliantName = packageName.toLowerCase();
+  compliantName = stripLeadingDotsAndUnderscores(compliantName);
+  compliantName = replaceNonNpmPackageCharacters(compliantName);
+  return compliantName;
+}
 
 /**
  * This is taken from version 2.0
@@ -80,21 +91,17 @@ export function directoryToServiceName(name: string): string {
   return `${directoryToSpeakingModuleName(name).replace(/ /g, '')}`;
 }
 
-const lowerCase = (str: string): string => str.toLowerCase();
+function stripLeadingDotsAndUnderscores(str: string): string {
+  return str.replace(/^[._]*/g, '');
+}
 
-const stripLeadingDotsAndUnderscores = (str: string): string =>
-  str.replace(/^[._]*/g, '');
-const replaceNonNpmPackageCharacters = (str: string): string =>
-  str.replace(/[^a-z0-9-~._]/g, '');
+function replaceNonNpmPackageCharacters(str: string): string {
+  return str.replace(/[^a-z0-9-~._]/g, '');
+}
 
-const makeNpmCompliant = (name: string) => {
-  let compliantName = lowerCase(name);
-  compliantName = stripLeadingDotsAndUnderscores(compliantName);
-  compliantName = replaceNonNpmPackageCharacters(compliantName);
-  return compliantName;
-};
-
-const splitAtFirstOccurrence = (str: string, separator: string) => [
-  str.slice(0, str.indexOf(separator)),
-  str.slice(str.indexOf(separator) + 1)
-];
+function splitAtFirstOccurrence(str: string, separator: string) {
+  return [
+    str.slice(0, str.indexOf(separator)),
+    str.slice(str.indexOf(separator) + 1)
+  ];
+}

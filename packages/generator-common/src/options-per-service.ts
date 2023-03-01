@@ -7,7 +7,7 @@ import {
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import { createFile, readPrettierConfig } from './file-writer';
-import { npmCompliantName } from './util';
+import { npmCompliantName, validateNpmCompliance } from './util';
 
 const logger = createLogger('options-per-service');
 
@@ -196,11 +196,13 @@ export function getServiceOptions(
   skipValidation: boolean,
   serviceOptions?: Partial<ServiceOptions>
 ): ServiceOptions {
-  if (!skipValidation && serviceOptions?.packageName) {
-    const adjusted = npmCompliantName(serviceOptions?.packageName);
-    if (adjusted !== serviceOptions?.packageName) {
+  if (serviceOptions?.packageName) {
+    const packageName = npmCompliantName(serviceOptions?.packageName);
+    if (skipValidation) {
+      validateNpmCompliance(serviceOptions?.packageName);
+    } else if (packageName !== serviceOptions?.packageName) {
       throw new Error(
-        `The intended packageName name ${serviceOptions.packageName} is not npm compliant. Either change to a compliant value e.g. '${adjusted}' in your options per service configuration or execute with '--skipValidation'.`
+        `The intended package name ${serviceOptions.packageName} is not npm compliant. Either change to a compliant value e.g. '${packageName}' in your options per service configuration or execute with '--skipValidation'.`
       );
     }
   }

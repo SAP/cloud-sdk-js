@@ -26,7 +26,7 @@ export function timeout<
   timeoutValue: number = defaultTimeout
 ): Middleware<ArgumentType, ReturnType, ContextType> {
   if (timeoutValue <= 0) {
-    throw new Error('Timeout value is invalid.');
+    throw new Error('Timeout must be greater than 0.');
   }
   if (timeoutValue < 10) {
     logger.warn(

@@ -195,13 +195,13 @@ describe('combined resilience features', () => {
 
   it('throws an error when retry is less than 1', async () => {
     expect(() => resilience({ retry: -2 })).toThrowError(
-      'Retry count value is invalid.'
+      'Number of retries must be greater or equal to 0.'
     );
   });
 
   it('throws an error when timeout is less or equal to 0', async () => {
     expect(() => resilience({ timeout: 0 })).toThrowError(
-      'Timeout value is invalid.'
+      'Timeout must be greater than 0.'
     );
   });
 });

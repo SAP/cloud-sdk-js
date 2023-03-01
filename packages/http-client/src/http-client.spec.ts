@@ -9,7 +9,7 @@ import { timeout } from '@sap-cloud-sdk/resilience';
 import * as jwt123 from 'jsonwebtoken';
 import {
   circuitBreakers,
-  circuitBreakerHttp
+  circuitBreaker
 } from '@sap-cloud-sdk/resilience/internal';
 import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
 import {
@@ -435,7 +435,7 @@ describe('generic http client', () => {
             {
               method: 'post',
               url: 'test-cb',
-              middleware: [circuitBreakerHttp()]
+              middleware: [circuitBreaker()]
             },
             {
               fetchCsrfToken: false
@@ -491,7 +491,7 @@ describe('generic http client', () => {
           {
             url: 'test-fail',
             method: 'get',
-            middleware: [changeUrlMiddleware, circuitBreakerHttp()]
+            middleware: [changeUrlMiddleware, circuitBreaker()]
           }
         )
       ).resolves.not.toThrow();

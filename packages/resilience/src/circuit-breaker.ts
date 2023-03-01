@@ -42,18 +42,25 @@ function circuitBreakerKeyBuilder<
  * Helper method to build a circuit breaker middleware.
  * @returns The middleware adding a circuit breaker to the function.
  */
-export function circuitBreakerHttp<
+export function circuitBreaker<
   ArgumentT,
   ReturnT,
   ContextT extends MiddlewareContext<ArgumentT>
 >(): Middleware<ArgumentT, ReturnT, ContextT> {
-  return circuitBreaker<ArgumentT, ReturnT, ContextT>(
+  return circuitBreakerGeneric<ArgumentT, ReturnT, ContextT>(
     circuitBreakerKeyBuilder,
     httpErrorFilter
   );
 }
 
-function circuitBreaker<
+/**
+ * @deprecated Since v3.0.1. Use `{@link circuitBreaker}` instead.
+ * Helper method to build a circuit breaker middleware.
+ * @returns The middleware adding a circuit breaker to the function.
+ */
+export const circuitBreakerHttp = circuitBreaker;
+
+function circuitBreakerGeneric<
   ArgumentT,
   ReturnT,
   ContextT extends MiddlewareContext<ArgumentT>

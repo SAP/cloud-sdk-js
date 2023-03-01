@@ -1,5 +1,12 @@
 # @sap-cloud-sdk/generator-common
 
+## 3.0.1
+
+### Patch Changes
+
+- c78c16ddf: [Improvement] Improve logs when generating OData clients without package.json
+  - @sap-cloud-sdk/util@3.0.1
+
 ## 3.0.0
 
 ### Major Changes

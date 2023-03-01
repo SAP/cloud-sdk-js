@@ -28,6 +28,20 @@
 
 - 
 
+# 3.0.1
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.0.1
+
+## Compatibility Notes
+
+- [resilience] Deprecate erroneously exposed `circuitBreakerHttp()` function in favor of `circuitBreaker()`.
+  - @sap-cloud-sdk/util@3.0.1 (fcab06c4b)
+
+## Improvements
+
+- [generator-common] Improve logs when generating OData clients without package.json
+  - @sap-cloud-sdk/util@3.0.1 (c78c16ddf)
+
 # 2.10.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.10.0

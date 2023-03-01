@@ -1,5 +1,12 @@
 # @sap-cloud-sdk/resilience
 
+## 3.0.1
+
+### Patch Changes
+
+- fcab06c4b: [Compatibility Note] Deprecate erroneously exposed `circuitBreakerHttp()` function in favor of `circuitBreaker()`.
+  - @sap-cloud-sdk/util@3.0.1
+
 ## 3.0.0
 
 ### Major Changes

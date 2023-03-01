@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/named
 import axios, { AxiosResponse, RawAxiosRequestConfig } from 'axios';
 import nock from 'nock';
-import { circuitBreakerHttp, circuitBreakers } from './circuit-breaker';
+import { circuitBreakers, circuitBreaker } from './circuit-breaker';
 import { MiddlewareContext, executeWithMiddleware } from './middleware';
 
 describe('circuit-breaker', () => {
@@ -35,7 +35,7 @@ describe('circuit-breaker', () => {
           RawAxiosRequestConfig,
           AxiosResponse,
           MiddlewareContext<RawAxiosRequestConfig>
-        >([circuitBreakerHttp()], {
+        >([circuitBreaker()], {
           context,
           fn: request,
           fnArgument: requestConfig
@@ -51,7 +51,7 @@ describe('circuit-breaker', () => {
         RawAxiosRequestConfig,
         AxiosResponse,
         MiddlewareContext<RawAxiosRequestConfig>
-      >([circuitBreakerHttp()], {
+      >([circuitBreaker()], {
         context,
         fn: request,
         fnArgument: requestConfig
@@ -88,7 +88,7 @@ describe('circuit-breaker', () => {
           RawAxiosRequestConfig,
           AxiosResponse,
           MiddlewareContext<RawAxiosRequestConfig>
-        >([circuitBreakerHttp()], {
+        >([circuitBreaker()], {
           context,
           fn: request,
           fnArgument: requestConfig
@@ -117,7 +117,7 @@ describe('circuit-breaker', () => {
       RawAxiosRequestConfig,
       AxiosResponse,
       MiddlewareContext<RawAxiosRequestConfig>
-    >([circuitBreakerHttp()], {
+    >([circuitBreaker()], {
       context,
       fn: request,
       fnArgument: requestConfig
@@ -126,7 +126,7 @@ describe('circuit-breaker', () => {
       RawAxiosRequestConfig,
       AxiosResponse,
       MiddlewareContext<RawAxiosRequestConfig>
-    >([circuitBreakerHttp()], {
+    >([circuitBreaker()], {
       context: { ...context, tenantId: 'tenant2' },
       fn: request,
       fnArgument: requestConfig
@@ -167,7 +167,7 @@ describe('circuit-breaker', () => {
       RawAxiosRequestConfig,
       AxiosResponse,
       MiddlewareContext<RawAxiosRequestConfig>
-    >([circuitBreakerHttp()], {
+    >([circuitBreaker()], {
       context: context(requestConfigPath1),
       fn: request,
       fnArgument: requestConfigPath1
@@ -176,7 +176,7 @@ describe('circuit-breaker', () => {
       RawAxiosRequestConfig,
       AxiosResponse,
       MiddlewareContext<RawAxiosRequestConfig>
-    >([circuitBreakerHttp()], {
+    >([circuitBreaker()], {
       context: context(requestConfigPath2),
       fn: request,
       fnArgument: requestConfigPath2
@@ -213,7 +213,7 @@ describe('circuit-breaker', () => {
           RawAxiosRequestConfig,
           AxiosResponse,
           MiddlewareContext<RawAxiosRequestConfig>
-        >([circuitBreakerHttp()], {
+        >([circuitBreaker()], {
           context,
           fn: request,
           fnArgument: requestConfig

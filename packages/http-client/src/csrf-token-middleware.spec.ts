@@ -1,6 +1,6 @@
 import nock from 'nock';
 import axios from 'axios';
-import { circuitBreakerHttp, timeout } from '@sap-cloud-sdk/resilience';
+import { circuitBreaker, timeout } from '@sap-cloud-sdk/resilience';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 import { csrf } from './csrf-token-middleware';
 import { executeHttpRequest } from './http-client';
@@ -206,7 +206,7 @@ describe('CSRF middleware', () => {
       {
         method: 'POST',
         url: 'some/path',
-        middleware: [csrf({ middleware: [circuitBreakerHttp()] })]
+        middleware: [csrf({ middleware: [circuitBreaker()] })]
       },
       { fetchCsrfToken: false }
     );

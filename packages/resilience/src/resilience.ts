@@ -1,6 +1,6 @@
 import { timeout } from './timeout';
 import { retry } from './retry';
-import { circuitBreakerHttp } from './circuit-breaker';
+import { circuitBreaker } from './circuit-breaker';
 import { MiddlewareContext } from './middleware';
 import type { Middleware } from './middleware';
 /**
@@ -53,7 +53,7 @@ export function resilience<
   }
 
   if (resilienceOption.circuitBreaker) {
-    middlewares.push(circuitBreakerHttp());
+    middlewares.push(circuitBreaker());
   }
 
   if (typeof resilienceOption.timeout === 'number') {

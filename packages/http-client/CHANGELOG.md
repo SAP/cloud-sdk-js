@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/http-client
 
+## 3.0.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.0.1
+- @sap-cloud-sdk/resilience@3.0.1
+- @sap-cloud-sdk/util@3.0.1
+
 ## 3.0.0
 
 ### Major Changes

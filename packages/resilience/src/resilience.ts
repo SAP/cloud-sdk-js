@@ -8,19 +8,19 @@ import type { Middleware } from './middleware';
  */
 export interface ResilienceOptions {
   /**
-   * Option for Retry Middleware.
+   * Option for retry middleware.
    * False by default. If set to true, the number of retries is 3.
    * Assign a different value to set custom number of reties.
    */
   retry?: boolean | number;
   /**
-   * Option for Timeout Middleware.
+   * Option for timeout middleware.
    * True by default, with a 10000 milliseconds timeout.
    * Assign a different value to set a custom timeout.
    */
   timeout?: boolean | number;
   /**
-   * Option for CircuitBreaker Middleware.
+   * Option for circuit breaker middleware.
    * True by default. Set false to disable.
    */
   circuitBreaker?: boolean;
@@ -34,7 +34,7 @@ const defaultResilienceOptions: ResilienceOptions = {
 
 /**
  * Return the resilience middleware functions as an array.
- * By default, Timeout and Circuit Breaker are enabled and Retry is disabled.
+ * By default, timeout and circuit breaker are enabled and retry is disabled.
  * This behavior can be overridden by adjusting the resilience options {@link ResilienceOptions}.
  * @param options - Resilience Options.
  * @returns Array of middleware functions.

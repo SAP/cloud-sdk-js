@@ -12,11 +12,11 @@ const logger = createLogger({
   messageContext: 'retry'
 });
 
-const defaultRetryCount = 3;
+const defaultRetries = 3;
 
 /**
  * Helper method to build a retry middleware.
- * @param retryCount - Number of retry attempts. Default value is 3.
+ * @param retries - Number of retry attempts. Default value is 3.
  * @returns The middleware adding a retry to the function.
  */
 export function retry<
@@ -24,10 +24,10 @@ export function retry<
   ReturnType,
   ContextType extends MiddlewareContext<ArgumentType>
 >(
-  retryCount: number = defaultRetryCount
+  retries: number = defaultRetries
 ): Middleware<ArgumentType, ReturnType, ContextType> {
-  if (retryCount < 0) {
-    throw new Error('Retry count value is invalid.');
+  if (retries < 0) {
+    throw new Error('Number of retries must be greater or equal to 0.');
   }
 
   return function (
@@ -55,7 +55,7 @@ export function retry<
             throw error;
           }
         },
-        { retries: retryCount }
+        { retries }
       );
   };
 }

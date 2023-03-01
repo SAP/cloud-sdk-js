@@ -20,7 +20,7 @@ const npmMaxLength = 214;
 const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 
 /**
- * Checks whether a name is compliant with npm naming rules. Logs a warning if not.
+ * Checks whether a name is compliant with NPM naming rules. Logs a warning if not.
  * @param packageName - The name to be checked.
  * @internal
  */

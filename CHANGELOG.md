@@ -28,15 +28,6 @@
 
 - 
 
-# 3.0.1
-
-API Docs: https://sap.github.io/cloud-sdk/api/3.0.1
-
-## Improvements
-
-- [generator-common] Improve logs when generating OData clients without package.json
-  - @sap-cloud-sdk/util@3.0.1 (7e63b7e43)
-
 # 2.10.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/2.10.0

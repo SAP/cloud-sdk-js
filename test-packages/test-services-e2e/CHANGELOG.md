@@ -1,7 +1,5 @@
 # @sap-cloud-sdk/test-services-e2e
 
-## 3.0.1
-
 ## 3.0.0
 
 ### Patch Changes

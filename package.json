@@ -105,7 +105,7 @@
     "eslint-plugin-regex": "^1.10.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "execa": "^5.0.0",
-    "glob": "^8.1.0",
+    "glob": "^9.1.2",
     "jest": "^27.2.3",
     "jest-junit": "^15.0.0",
     "license-checker": "^25.0.1",

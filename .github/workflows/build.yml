@@ -131,7 +131,7 @@ jobs:
       - run: git fetch --depth=1
       - id: date-check
         name: Check if latest commit is within 24 hrs
-        run: echo '::set-output name=skip::false'
+        run: echo "skip=false" >> $GITHUB_OUTPUT
   canary-release:
     if: ${{ needs.canary-release-pre-check.outputs.skip == 'false' }}
     runs-on: ubuntu-latest

@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 433:
+/***/ 8438:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -43,19 +43,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+exports.validateBody = exports.validatePostamble = exports.validateTitle = void 0;
 var promises_1 = __nccwpck_require__(3977);
 var node_path_1 = __nccwpck_require__(9411);
 var core_1 = __nccwpck_require__(7117);
-var github_1 = __nccwpck_require__(4005);
 var validCommitTypes = ['feat', 'fix', 'chore'];
 // Expected format: preamble(topic)!: Title text
-function validateTitle() {
+function validateTitle(title) {
     return __awaiter(this, void 0, void 0, function () {
-        var title, _a, preamble, postamble;
+        var _a, preamble, postamble;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    title = github_1.context.payload.pull_request.title;
                     if (!title.includes(':')) {
                         return [2 /*return*/, (0, core_1.setFailed)('PR title does not adhere to conventional commit guidelines. No preamble found.')];
                     }
@@ -69,6 +68,7 @@ function validateTitle() {
         });
     });
 }
+exports.validateTitle = validateTitle;
 function validatePreamble(preamble) {
     var _a;
     return __awaiter(this, void 0, void 0, function () {
@@ -100,6 +100,7 @@ function validatePostamble(title) {
     }
     (0, core_1.info)('✓ Title: OK');
 }
+exports.validatePostamble = validatePostamble;
 function getAllowedBumps(preamble, isBreaking) {
     if (isBreaking) {
         return ['major'];
@@ -154,14 +155,12 @@ function validateChangesets(preamble, commitType, isBreaking) {
         });
     });
 }
-function validateBody() {
+function validateBody(body) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, template;
+        var template;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    body = github_1.context.payload.pull_request.body.replace(/\r\n/g, '\n');
-                    return [4 /*yield*/, (0, promises_1.readFile)((0, node_path_1.resolve)('.github', 'PULL_REQUEST_TEMPLATE.md'), 'utf-8')];
+                case 0: return [4 /*yield*/, (0, promises_1.readFile)((0, node_path_1.resolve)('.github', 'PULL_REQUEST_TEMPLATE.md'), 'utf-8')];
                 case 1:
                     template = _a.sent();
                     if (!body || body === template) {
@@ -176,13 +175,7 @@ function validateBody() {
         });
     });
 }
-try {
-    validateTitle();
-    validateBody();
-}
-catch (err) {
-    (0, core_1.setFailed)(err);
-}
+exports.validateBody = validateBody;
 
 
 /***/ }),
@@ -13175,12 +13168,26 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(433);
-/******/ 	module.exports = __webpack_exports__;
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+var exports = __webpack_exports__;
+
+exports.__esModule = true;
+var core_1 = __nccwpck_require__(7117);
+var github_1 = __nccwpck_require__(4005);
+var validators_1 = __nccwpck_require__(8438);
+try {
+    (0, validators_1.validateTitle)(github_1.context.payload.pull_request.title);
+    (0, validators_1.validateBody)(github_1.context.payload.pull_request.body.replace(/\r\n/g, '\n'));
+}
+catch (err) {
+    (0, core_1.setFailed)(err);
+}
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;

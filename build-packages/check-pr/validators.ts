@@ -31,7 +31,12 @@ async function validatePreamble(preamble: string): Promise<void> {
   const { commitType, isBreaking } = groups;
 
   validateCommitType(commitType);
-  validateChangesets(preamble, commitType, !!isBreaking, await extractChangedFilesContents());
+  validateChangesets(
+    preamble,
+    commitType,
+    !!isBreaking,
+    await extractChangedFilesContents()
+  );
 }
 
 function validateCommitType(commitType) {
@@ -72,7 +77,10 @@ function getAllowedBumps(preamble: string, isBreaking: boolean): string[] {
   return [];
 }
 
-async function hasMatchingChangeset(allowedBumps: string[], changedFileContents: string[]): Promise<boolean> {
+async function hasMatchingChangeset(
+  allowedBumps: string[],
+  changedFileContents: string[]
+): Promise<boolean> {
   if (allowedBumps.length) {
     return (await changedFileContents).some(fileContent =>
       allowedBumps.some(bump =>
@@ -85,12 +93,12 @@ async function hasMatchingChangeset(allowedBumps: string[], changedFileContents:
 }
 
 async function extractChangedFilesContents(): Promise<string[]> {
-    const changedFilesStr = getInput('changed-files').trim();
-    const changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
-    const fileContents = await Promise.all(
-      changedFiles.map(file => readFile(file, 'utf-8'))
-    );
-    return fileContents;
+  const changedFilesStr = getInput('changed-files').trim();
+  const changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
+  const fileContents = await Promise.all(
+    changedFiles.map(file => readFile(file, 'utf-8'))
+  );
+  return fileContents;
 }
 
 export async function validateChangesets(

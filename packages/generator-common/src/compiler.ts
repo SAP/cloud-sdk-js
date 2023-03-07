@@ -14,7 +14,7 @@ import {
   Statement,
   WriteFileCallback
 } from 'typescript';
-import { GlobSync } from 'glob';
+import { globSync } from 'glob';
 import { createFile, CreateFileOptions, getFileExtension } from './file-writer';
 
 const logger = createLogger('compiler');
@@ -47,10 +47,10 @@ export async function transpileDirectory(
       ? `{${includeExclude.exclude.join(',')}}`
       : includeExclude.exclude[0];
 
-  const allFiles2 = new GlobSync(includes, {
+  const allFiles2 = globSync(includes, {
     ignore: excludes,
     cwd: path
-  }).found;
+  });
 
   const program = await createProgram(
     allFiles2.map(file => resolve(path, file)),

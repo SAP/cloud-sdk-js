@@ -3,7 +3,7 @@ import { existsSync, lstatSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { InferredOptionType, Options as YargsOption } from 'yargs';
 const logger = createLogger('generator-options');
-import { glob, sync as globSync } from 'glob';
+import { globSync, hasMagic } from 'glob';
 
 /**
  * @internal
@@ -160,7 +160,7 @@ export function getInputFilePaths(
   serviceType: ServiceType
 ): string[] {
   // Check for any special characters in the input
-  if (glob.hasMagic(input)) {
+  if (hasMagic(input)) {
     const regex =
       serviceType === 'OData'
         ? /(.xml|.edmx|.XML|.EDMX)$/

@@ -43,7 +43,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.validateBody = exports.validatePostamble = exports.validateTitle = void 0;
+exports.validateBody = exports.validateChangesets = exports.validatePostamble = exports.validateTitle = void 0;
 var promises_1 = __nccwpck_require__(3977);
 var node_path_1 = __nccwpck_require__(9411);
 var core_1 = __nccwpck_require__(7117);
@@ -72,16 +72,25 @@ exports.validateTitle = validateTitle;
 function validatePreamble(preamble) {
     var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var groups, commitType, isBreaking;
-        return __generator(this, function (_b) {
-            groups = (_a = preamble.match(/(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/)) === null || _a === void 0 ? void 0 : _a.groups;
-            if (!groups) {
-                return [2 /*return*/, (0, core_1.setFailed)('Could not parse preamble. Ensure it follows the conventional commit guidelines.')];
+        var groups, commitType, isBreaking, _b, _c;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    groups = (_a = preamble.match(/(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/)) === null || _a === void 0 ? void 0 : _a.groups;
+                    if (!groups) {
+                        return [2 /*return*/, (0, core_1.setFailed)('Could not parse preamble. Ensure it follows the conventional commit guidelines.')];
+                    }
+                    commitType = groups.commitType, isBreaking = groups.isBreaking;
+                    validateCommitType(commitType);
+                    _b = validateChangesets;
+                    _c = [preamble,
+                        commitType,
+                        !!isBreaking];
+                    return [4 /*yield*/, extractChangedFilesContents()];
+                case 1:
+                    _b.apply(void 0, _c.concat([_d.sent()]));
+                    return [2 /*return*/];
             }
-            commitType = groups.commitType, isBreaking = groups.isBreaking;
-            validateCommitType(commitType);
-            validateChangesets(preamble, commitType, !!isBreaking);
-            return [2 /*return*/];
         });
     });
 }
@@ -113,36 +122,47 @@ function getAllowedBumps(preamble, isBreaking) {
     }
     return [];
 }
-function hasMatchingChangeset(allowedBumps) {
+function hasMatchingChangeset(allowedBumps, changedFileContents) {
     return __awaiter(this, void 0, void 0, function () {
-        var changedFilesStr, changedFiles, fileContents;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!allowedBumps.length) return [3 /*break*/, 2];
-                    changedFilesStr = (0, core_1.getInput)('changed-files').trim();
-                    changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
-                    return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
-                case 1:
-                    fileContents = _a.sent();
-                    return [2 /*return*/, fileContents.some(function (fileContent) {
-                            return allowedBumps.some(function (bump) {
-                                return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump)).test(fileContent);
-                            });
-                        })];
+                    return [4 /*yield*/, changedFileContents];
+                case 1: return [2 /*return*/, (_a.sent()).some(function (fileContent) {
+                        return allowedBumps.some(function (bump) {
+                            return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump)).test(fileContent);
+                        });
+                    })];
                 case 2: return [2 /*return*/, true];
             }
         });
     });
 }
-function validateChangesets(preamble, commitType, isBreaking) {
+function extractChangedFilesContents() {
+    return __awaiter(this, void 0, void 0, function () {
+        var changedFilesStr, changedFiles, fileContents;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    changedFilesStr = (0, core_1.getInput)('changed-files').trim();
+                    changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
+                    return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
+                case 1:
+                    fileContents = _a.sent();
+                    return [2 /*return*/, fileContents];
+            }
+        });
+    });
+}
+function validateChangesets(preamble, commitType, isBreaking, fileContents) {
     return __awaiter(this, void 0, void 0, function () {
         var allowedBumps;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     allowedBumps = getAllowedBumps(commitType, isBreaking);
-                    return [4 /*yield*/, hasMatchingChangeset(allowedBumps)];
+                    return [4 /*yield*/, hasMatchingChangeset(allowedBumps, fileContents)];
                 case 1:
                     if (!(_a.sent())) {
                         return [2 /*return*/, (0, core_1.setFailed)("Preamble '".concat(preamble, "' requires a changeset file with bump ").concat(allowedBumps
@@ -155,6 +175,7 @@ function validateChangesets(preamble, commitType, isBreaking) {
         });
     });
 }
+exports.validateChangesets = validateChangesets;
 function validateBody(body) {
     return __awaiter(this, void 0, void 0, function () {
         var template;

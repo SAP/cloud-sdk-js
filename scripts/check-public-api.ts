@@ -2,7 +2,7 @@
 
 import { join, resolve, parse, basename, dirname } from 'path';
 import { promises, existsSync } from 'fs';
-import { GlobSync } from 'glob';
+import { globSync } from 'glob';
 import { createLogger, flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 import { CompilerOptions } from 'typescript';
@@ -165,7 +165,7 @@ export function checkIndexFileExists(indexFilePath: string): void {
  * @returns Paths to the `.d.ts` files excluding `index.d.ts` files.
  */
 export function typeDescriptorPaths(cwd: string): string[] {
-  const files = new GlobSync('**/*.d.ts', { cwd }).found;
+  const files = globSync('**/*.d.ts', { cwd });
   return files
     .filter(file => !file.endsWith('index.d.ts'))
     .map(file => join(cwd, file));
@@ -296,7 +296,7 @@ export async function exportAllInBarrel(
 ): Promise<void> {
   const barrelFilePath = join(cwd, barrelFileName);
   if (existsSync(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
-    const dirContents = new GlobSync('*', {
+    const dirContents = globSync('*', {
       ignore: [
         '**/*.spec.ts',
         '__snapshots__',
@@ -306,7 +306,7 @@ export async function exportAllInBarrel(
         '**/*.md'
       ],
       cwd
-    }).found.map(name => basename(name, '.ts'));
+    }).map(name => basename(name, '.ts'));
     const exportedFiles = parseBarrelFile(
       await readFile(barrelFilePath, 'utf8'),
       regexExportedInternal

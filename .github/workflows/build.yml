@@ -140,9 +140,9 @@ jobs:
           if [[ $dateDiff -gt 86400 ]]
           then
               echo 'No new commit found on ${{ github.ref }} within the last 24 hrs.'
-              echo '::set-output name=skip::true'
+              echo "skip=true" >> $GITHUB_OUTPUT
           else
-              echo '::set-output name=skip::false'
+              echo "skip=false" >> $GITHUB_OUTPUT
           fi
   canary-release:
     if: ${{ needs.canary-release-pre-check.outputs.skip == 'false' }}

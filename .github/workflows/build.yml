@@ -155,10 +155,7 @@ jobs:
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           date=`date +%Y%m%d%H%M%S`
           rm -f .changeset/*.md
-          project_version=$(cat package.json | jq '.version' | tr -d '"')
-          echo The project version is: $project_version
-          [[ $project_version == 3* ]] && cp canary-release-changeset.md .changeset          
-          [[ $project_version == 2* ]] && cp major-release-changeset.md .changeset
+          cp canary-release-changeset.md .changeset
           yarn changeset pre enter ${date}
           yarn changeset version
           yarn changeset pre exit

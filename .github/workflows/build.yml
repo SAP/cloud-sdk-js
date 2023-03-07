@@ -131,7 +131,19 @@ jobs:
       - run: git fetch --depth=1
       - id: date-check
         name: Check if latest commit is within 24 hrs
-        run: echo '::set-output name=skip::false'
+        run: |
+          lastCommitDate=$(git --no-pager log -n 1 main --pretty=format:"%at")
+          curDate=$(date +%s)
+          dateDiff=$(expr $curDate - $lastCommitDate)
+          echo $lastCommitDate, $curDate, $dateDiff
+
+          if [[ $dateDiff -gt 86400 ]]
+          then
+              echo 'No new commit found on ${{ github.ref }} within the last 24 hrs.'
+              echo '::set-output name=skip::true'
+          else
+              echo '::set-output name=skip::false'
+          fi
   canary-release:
     if: ${{ needs.canary-release-pre-check.outputs.skip == 'false' }}
     runs-on: ubuntu-latest

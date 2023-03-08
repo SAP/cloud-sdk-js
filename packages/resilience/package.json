@@ -38,7 +38,7 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@types/opossum": "^6.2.2",
+    "@types/opossum": "^6.2.3",
     "opossum": "^7.1.0",
     "@sap-cloud-sdk/util": "^3.0.1",
     "@types/async-retry": "^1.4.5",

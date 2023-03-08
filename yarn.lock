@@ -1586,10 +1586,10 @@
   resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
   integrity sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==
 
-"@types/opossum@^6.2.2":
-  version "6.2.2"
-  resolved "https://registry.npmjs.org/@types/opossum/-/opossum-6.2.2.tgz#f3526a6c7966dbe28b5722e59513feedb2616c8d"
-  integrity sha512-VYrqkucrT4nbQZpPxk522+HnhAC5f0EEZNMZATCRQeJwchNwx/GqBscZrHCQvNRx7mlhbgMvZ0DG4NE6BgiVAw==
+"@types/opossum@^6.2.3":
+  version "6.2.3"
+  resolved "https://registry.npmjs.org/@types/opossum/-/opossum-6.2.3.tgz#ff72d802b828ff0844a319a8ebc47f5ce23cfe2b"
+  integrity sha512-KcbU4O7GydLbRLZbKRdFikNHHAsQESYIPlA6HEm+CCaZfEk+/NTGlvY8g5t8pg/ks3U80oEf8a21lUAjW311Og==
   dependencies:
     "@types/node" "*"
 

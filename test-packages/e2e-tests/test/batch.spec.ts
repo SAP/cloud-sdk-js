@@ -1,3 +1,5 @@
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
+import { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 import {
   batch,
   changeset,
@@ -5,8 +7,6 @@ import {
   returnInt,
   returnSapCloudSdk
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
-import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
-import { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 import { destination } from './test-util';
 import {
   deleteEntity,
@@ -106,5 +106,29 @@ describe('batch', () => {
     expect(retrieveResponse.isSuccess()).toBe(true);
     expect(changesetResponse.isSuccess()).toBe(true);
     expect(deleteRes.isSuccess()).toBe(true);
+  });
+
+  it('deserializer should load in batches with only function imports', async () => {
+    const myFunctionImport = returnSapCloudSdk as any;
+    //     ^?
+
+    const inputs = [1, 2, 3];
+    const functions = inputs.map(x => changeset(myFunctionImport({ foo: x })));
+    //      ^?
+    const results = await batch(...functions)
+      //  ^?
+      .withSubRequestPathType('relativeToEntity')
+      .execute(destination);
+
+    // const r = (results[0] as unknown as WriteResponse<DefaultDeSerializers>);
+    const r = results[0] as any;
+    //    ^?
+    if (r && r.responses) {
+      const deSerializedTestEntity = r.responses[0].as(testEntityApi);
+      //      ^?
+      expect(deSerializedTestEntity).toBeDefined();
+    } else {
+      throw new Error('unexpected');
+    }
   });
 });

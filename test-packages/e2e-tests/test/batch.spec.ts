@@ -3,6 +3,7 @@ import { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 import {
   batch,
   changeset,
+  createTestEntityById,
   createTestEntityByIdReturnId,
   returnInt,
   returnSapCloudSdk
@@ -109,26 +110,24 @@ describe('batch', () => {
   });
 
   it('deserializer should load in batches with only function imports', async () => {
-    const myFunctionImport = returnSapCloudSdk as any;
+    const myOperationUnderTest = createTestEntityById;
     //     ^?
-
-    const inputs = [1, 2, 3];
-    const functions = inputs.map(x => changeset(myFunctionImport({ foo: x })));
+    const inputs = [77];
+    const functions = inputs.map(x => changeset(myOperationUnderTest({ id: x })));
     //      ^?
     const results = await batch(...functions)
       //  ^?
       .withSubRequestPathType('relativeToEntity')
       .execute(destination);
 
-    // const r = (results[0] as unknown as WriteResponse<DefaultDeSerializers>);
-    const r = results[0] as any;
+    const r = results[0];
     //    ^?
-    if (r && r.responses) {
-      const deSerializedTestEntity = r.responses[0].as(testEntityApi);
+    if (r && r.isWriteResponses()) {
+      const deSerializedTestEntity = r.responses[0].as?.(testEntityApi);
       //      ^?
       expect(deSerializedTestEntity).toBeDefined();
     } else {
-      throw new Error('unexpected');
+      throw new Error('unexpected branch');
     }
   });
 });

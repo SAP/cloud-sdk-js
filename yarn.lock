@@ -1263,10 +1263,10 @@
     "@sap/hdi-deploy" "^4"
     axios ">=0.27.2"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.4.0", "@sap/cds@^6.6.0":
-  version "6.6.0"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.6.0.tgz#e0f4f94b787b5af18b4504f28fbc5fad135fcbd7"
-  integrity sha512-+rJQIsirbHNVpzZQsTpHzzbcxPM8Y5gEAQtK8blxlukluvyk6IqrwA1eoJH8grab+DtXqcUqT8c0ooGfnCrbPw==
+"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.4.0", "@sap/cds@^6.6.1":
+  version "6.6.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.6.1.tgz#a72d3f303eeebe44b1660ff5eafeeb8f3a23dbf2"
+  integrity sha512-1JKiYO+N9m5UME7aejce4K5j6mDLkQC0P6BWcHoQJtDjkjsVc6LCLNd06RJqU8XcxeGd3EwIF33GJTLDyGIkUQ==
   dependencies:
     "@sap/cds-compiler" "^3.2.0"
     "@sap/cds-foss" "^4"

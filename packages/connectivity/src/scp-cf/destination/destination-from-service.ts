@@ -18,11 +18,7 @@ import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
 import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
-import {
-  Destination,
-  HttpDestination,
-  isHttpDestination
-} from './destination-service-types';
+import { assertHttpDestination, Destination } from './destination-service-types';
 import {
   alwaysProvider,
   alwaysSubscriber,
@@ -221,9 +217,7 @@ export class DestinationFromServiceRetriever {
       );
     }
 
-    const withProxySetting = isHttpDestination(destination)
-      ? await da.addProxyConfiguration(destination)
-      : destination;
+    const withProxySetting = await da.addProxyConfiguration(destination);
     const withTrustStore = await da.addTrustStoreConfiguration(
       withProxySetting,
       destinationResult.origin
@@ -542,7 +536,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   private async addProxyConfiguration(
-    destination: HttpDestination
+    destination: Destination
   ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
       case 'on-premise':
@@ -554,6 +548,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         );
       case 'internet':
       case 'private-link':
+        assertHttpDestination(destination);
         return addProxyConfigurationInternet(destination);
       case 'no-proxy':
         return destination;

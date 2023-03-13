@@ -47,7 +47,7 @@
     "openapi-backend": "^5.9.1",
     "pm2": "^5.2.2",
     "smtp-server": "3.11.0",
-    "sqlite3": "^5.1.4"
+    "sqlite3": "^5.1.5"
   },
   "cds": {
     "cdsc": {

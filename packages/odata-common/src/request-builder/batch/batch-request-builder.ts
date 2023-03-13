@@ -4,7 +4,11 @@ import { first } from '@sap-cloud-sdk/util';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataRequest } from '../../request/odata-request';
 import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
-import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
+import {
+  defaultDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers
+} from '../../de-serializers';
 import { EntityBase } from '../../entity-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
@@ -44,9 +48,12 @@ export class BatchRequestBuilder<
     )[]
   ) {
     super(new ODataBatchRequestConfig(defaultBasePath));
-    this.deSerializers = first(
-      Object.values(this.getEntityToApiMap())
-    )?.deSerializers;
+
+    const entityApi = first(Object.values(this.getEntityToApiMap()));
+
+    this.deSerializers = entityApi
+      ? entityApi?.deSerializers
+      : (defaultDeSerializers as DeSerializersT);
   }
 
   withSubRequestPathType(subRequestPathType: BatchSubRequestPathType): this {

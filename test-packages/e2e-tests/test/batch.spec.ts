@@ -15,7 +15,7 @@ import {
 } from './test-utils/test-entity-operations';
 
 const entityKey = 456;
-const entityKeysUsedInTests = [456, 1000, 1001];
+const entityKeysUsedInTests = [77, 456, 1000, 1001];
 const requestBuilder = testEntityApi.requestBuilder();
 
 async function deleteAllCreatedEntities() {
@@ -110,24 +110,20 @@ describe('batch', () => {
   });
 
   it('deserializer should load in batches with only function imports', async () => {
+    // See https://github.com/SAP/cloud-sdk-js/issues/3539 for the original issue
     const myOperationUnderTest = createTestEntityById;
-    //     ^?
     const inputs = [77];
     const functions = inputs.map(x => changeset(myOperationUnderTest({ id: x })));
-    //      ^?
     const results = await batch(...functions)
-      //  ^?
       .withSubRequestPathType('relativeToEntity')
       .execute(destination);
 
     const r = results[0];
-    //    ^?
     if (r && r.isWriteResponses()) {
       const deSerializedTestEntity = r.responses[0].as?.(testEntityApi);
-      //      ^?
       expect(deSerializedTestEntity).toBeDefined();
     } else {
-      throw new Error('unexpected branch');
+      throw new Error(`Result ${r} is not as expected.`);
     }
   });
 });

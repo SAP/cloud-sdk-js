@@ -1222,14 +1222,14 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.6.0":
-  version "6.6.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.6.0.tgz#9981dc3c538d2b397eb54cd965fd2ff46d71124a"
-  integrity sha512-vVUWuDM4nbLVvsn2BaDmG19jy5QDshRa8JGuKQp5qU4j0dwmv80OysE/7oVhtPzWfm5QEaVnYR+hCwgfpDd9SQ==
+"@sap/cds-dk@6.6.1":
+  version "6.6.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.6.1.tgz#37e4bcd1360a16d9af4bea3cb188b6aabcf53280"
+  integrity sha512-PcdoSvt6nD0K1qRpjTpsDJ0pNxy4lEBnKM1oCLVVfRnZnVhjpZyTNinuLyPV2+4BeIYY4/s/D2/5BhFk2dz/qw==
   dependencies:
-    "@sap/cds" "^6.4.0"
+    "@sap/cds" "^6.6.0"
     "@sap/cds-foss" "^4"
-    "@sap/cds-mtxs" "^1.4.3"
+    "@sap/cds-mtxs" "^1.6.0"
     "@sap/eslint-plugin-cds" "^2.6.0"
     axios ">=0.21"
     eslint "^8"
@@ -1255,15 +1255,15 @@
     xmlbuilder "^15.1.1"
     yaml "^2.1.1"
 
-"@sap/cds-mtxs@^1.4.3":
-  version "1.4.4"
-  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-1.4.4.tgz#ec730f8309c5e71e3e343071aa7d6da4e560e6ff"
-  integrity sha512-ll+BMHLJZTFSAU/W4XRT+Ca3/+KEVO18vsgW1LzgVaA2aDtoG1D4+Lw/tcZCE7BdGD+/OnZHdPBG4vvNH7XErQ==
+"@sap/cds-mtxs@^1.6.0":
+  version "1.6.2"
+  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-1.6.2.tgz#5858519c2684f858d96e41fff3c1bd4787cc2320"
+  integrity sha512-oqA64jl13Uv9onQn4WMNcAXBdfuR7lnhn4LLBdO86qD+5khKtPiS22Ve6nnWsNkTQKils5OJ/GxTDnrFXjaj4w==
   dependencies:
     "@sap/hdi-deploy" "^4"
     axios ">=0.27.2"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.4.0", "@sap/cds@^6.6.1":
+"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.6.0", "@sap/cds@^6.6.1":
   version "6.6.1"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.6.1.tgz#a72d3f303eeebe44b1660ff5eafeeb8f3a23dbf2"
   integrity sha512-1JKiYO+N9m5UME7aejce4K5j6mDLkQC0P6BWcHoQJtDjkjsVc6LCLNd06RJqU8XcxeGd3EwIF33GJTLDyGIkUQ==

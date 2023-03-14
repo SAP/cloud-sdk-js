@@ -1,0 +1,39 @@
+# Ignore commits in git blame
+# Those commits touch a lot of files but have little to no value for git blame
+# cf https://docs.github.com/en/repositories/working-with-files/using-files/viewing-a-file#ignore-commits-in-the-blame-view
+# Inspired by https://devblogs.microsoft.com/typescript/typescripts-migration-to-modules/#wait-what-was-that-about-git
+
+# v3.0.1
+0295a26bd68db4fea9d8e48ab274f5246eae88c6
+c78c16ddf8c4407f930f2ce82c9c9b0526943ae9
+a30ce87edbc3a13b1d35ec8f6753e533d3c14c57
+
+# v3.0.0
+d183bf57171c9c62ac58fd1ad328449e6a298298
+fde964e377831a2ab03f5bbd000909d297dcdb0d
+93295fd33ecc0b5d3cf099d8ba6308612b29a9cc
+94b45b10ba581ab06d417899c8400e84181519bf
+01f0c8f60c4410a40824ecc4dfd3e9c4056577c5
+1b974095fd2641a4611197cae7d4fe12c3fc2e15
+038dbc8092d6551688bf298b48c783f38998d582
+300cb37bb1395ac22198cf64bfdbcc0e06ceb659
+8034dcbf606c1c10326abf9c354f86e6b7b72360
+
+# v2.x
+619f8f8c77e1f203b74647b4cc9bea48ed4a0563
+8c2415a174d179307b7ac7a5640e2c0eec40b814
+729da722d88f228e624f1fb74067323079be4eae
+c6e2fb78b7fcafc408710f8648e81c057f524ab2
+15e9ef4b52455ec269763dabb22993da1782f604
+eb1a273037e889a015f2a7252b07d46b212f3331
+eadf80dd3ac036f0b55b5800c2e13b59b1fbf724
+0b2eb6a50c2b320fec91293e0b20f3b195e18787
+56ce4d6e192f7d70147576a7d5ce2bb2cf85d43f
+9a4707e93e03d0f85f8a30c1f340e326097d8bcb
+76faebb340ae7da30607923a8cae464889717b91
+0a00867407cdb992806ab653d47cfcca5ca620ce
+b1a71a1477bd50b862b2b54357de14dfe7c44acd
+
+# Remove executable bits from files
+ee5d62b0d8e70e47a8dc6090a7e97b517f4250bc
+

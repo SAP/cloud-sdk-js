@@ -113,7 +113,9 @@ describe('batch', () => {
     // See https://github.com/SAP/cloud-sdk-js/issues/3539 for the original issue
     const myOperationUnderTest = createTestEntityById;
     const inputs = [77];
-    const functions = inputs.map(x => changeset(myOperationUnderTest({ id: x })));
+    const functions = inputs.map(x =>
+      changeset(myOperationUnderTest({ id: x }))
+    );
     const results = await batch(...functions)
       .withSubRequestPathType('relativeToEntity')
       .execute(destination);

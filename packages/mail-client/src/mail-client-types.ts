@@ -230,7 +230,7 @@ export interface MailDestination {
   host?: string;
   /**
    * Port of the mail server.
-   * Based on the additional destination property 'mail.password'.
+   * Based on the additional destination property 'mail.smtp.port'.
    */
   port?: number;
   /**

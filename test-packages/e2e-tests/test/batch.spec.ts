@@ -120,13 +120,20 @@ describe('batch', () => {
       const deSerializedTestEntity = r.responses[0].as?.(testEntityApi);
       expect(deSerializedTestEntity).toBeDefined();
     } else {
-      throw new Error('Expected response to be of type WriteResponse which is not the case.');
+      throw new Error(
+        'Expected response to be of type WriteResponse which is not the case.'
+      );
     }
   });
 
   it('deserializer should load in batches with only bound function imports', async () => {
-    const myTestEntity = testEntityApi.entityBuilder().keyTestEntity(77).build();
-    const results = await batch(changeset(myTestEntity.boundActionWithoutArguments({}) as any))
+    const myTestEntity = testEntityApi
+      .entityBuilder()
+      .keyTestEntity(77)
+      .build();
+    const results = await batch(
+      changeset(myTestEntity.boundActionWithoutArguments({}) as any)
+    )
       .withSubRequestPathType('relativeToEntity')
       .execute(destination);
 
@@ -135,7 +142,9 @@ describe('batch', () => {
       const deSerializedTestEntity = r.responses[0].as?.(testEntityApi);
       expect(deSerializedTestEntity).toBeDefined();
     } else {
-      throw new Error('Expected response to be of type WriteResponse which is not the case.');
+      throw new Error(
+        'Expected response to be of type WriteResponse which is not the case.'
+      );
     }
   });
 });

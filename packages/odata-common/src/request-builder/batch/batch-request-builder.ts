@@ -1,23 +1,22 @@
 import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { first } from '@sap-cloud-sdk/util';
-import { MethodRequestBuilder } from '../request-builder-base';
-import { ODataRequest } from '../../request/odata-request';
-import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
 import {
-  defaultDeSerializers,
   DefaultDeSerializers,
   DeSerializers
 } from '../../de-serializers';
+import { EntityApi } from '../../entity-api';
 import { EntityBase } from '../../entity-base';
+import { ODataRequestConfig } from '../../request';
+import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
+import { ODataRequest } from '../../request/odata-request';
+import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
-import { EntityApi } from '../../entity-api';
-import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
-import { ODataRequestConfig } from '../../request';
-import { serializeBatchRequest } from './batch-request-serializer';
-import { BatchSubRequestPathType } from './batch-request-options';
+import { MethodRequestBuilder } from '../request-builder-base';
 import { BatchChangeSet, ChangesetBuilderTypes } from './batch-change-set';
+import { BatchSubRequestPathType } from './batch-request-options';
+import { serializeBatchRequest } from './batch-request-serializer';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. {@link GetAllRequestBuilder | getAll} and {@link GetByKeyRequestBuilder | getByKey} requests and change sets, which in turn can contain {@link CreateRequestBuilder | create}, {@link UpdateRequestBuilder | update} or {@link DeleteRequestBuilder | delete} requests.
@@ -42,7 +41,7 @@ export class BatchRequestBuilder<
       | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
       | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
       | Omit<
-          ActionFunctionImportRequestBuilderBase<unknown, ODataRequestConfig>,
+          ActionFunctionImportRequestBuilderBase<DeSerializersT, unknown, ODataRequestConfig>,
           'execute'
         >
     )[]
@@ -50,10 +49,11 @@ export class BatchRequestBuilder<
     super(new ODataBatchRequestConfig(defaultBasePath));
 
     const entityApi = first(Object.values(this.getEntityToApiMap()));
+    const entityDeserializer = entityApi?.deSerializers;
 
-    this.deSerializers = entityApi
-      ? entityApi?.deSerializers
-      : (defaultDeSerializers as DeSerializersT);
+    const operationDeserializer = this.getOperationDeserializer(requests);
+
+    this.deSerializers = entityDeserializer ? entityDeserializer : operationDeserializer;
   }
 
   withSubRequestPathType(subRequestPathType: BatchSubRequestPathType): this {
@@ -110,6 +110,17 @@ export class BatchRequestBuilder<
     });
     return request;
   }
+
+  private getOperationDeserializer(requests: (BatchChangeSet<DeSerializersT> | GetAllRequestBuilderBase<EntityBase, DeSerializersT> | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT> | Omit<ActionFunctionImportRequestBuilderBase<DeSerializersT, unknown, ODataRequestConfig>, 'execute'>)[]) {
+    const outerRequest = first(requests);
+    if (outerRequest instanceof BatchChangeSet) {
+      const innerRequest = first(outerRequest.requests);
+      if (innerRequest && isActionOrFunctionImport(innerRequest)) {
+        return innerRequest._deSerializers;
+      }
+    }
+    return undefined;
+  }
 }
 
 type AllBuilderTypes<DeSerializersT extends DeSerializers> =
@@ -119,7 +130,7 @@ type AllBuilderTypes<DeSerializersT extends DeSerializers> =
 
 function isActionOrFunctionImport<DeSerializersT extends DeSerializers>(
   req: AllBuilderTypes<DeSerializersT>
-): req is Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'> {
+): req is Omit<ActionFunctionImportRequestBuilderBase<any, any, any>, 'execute'> {
   return !!(
     req.requestConfig['functionImportName'] ??
     req.requestConfig['actionImportName']

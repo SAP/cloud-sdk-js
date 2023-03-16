@@ -16,6 +16,7 @@ export class FunctionImportRequestBuilder<
   ParametersT,
   ReturnT
 > extends ActionFunctionImportRequestBuilderBase<
+  DeSerializersT,
   ReturnT,
   ODataFunctionImportRequestConfig<DeSerializersT, ParametersT>
 > {
@@ -42,7 +43,8 @@ export class FunctionImportRequestBuilder<
         functionImportName,
         parameters,
         createODataUri(deSerializers)
-      )
+      ),
+      deSerializers
     );
   }
 }

@@ -111,12 +111,7 @@ describe('batch', () => {
 
   it('deserializer should load in batches with only function imports', async () => {
     // See https://github.com/SAP/cloud-sdk-js/issues/3539 for the original issue
-    const myOperationUnderTest = createTestEntityById;
-    const inputs = [77];
-    const functions = inputs.map(x =>
-      changeset(myOperationUnderTest({ id: x }))
-    );
-    const results = await batch(...functions)
+    const results = await batch(changeset(createTestEntityById({ id: 77 })))
       .withSubRequestPathType('relativeToEntity')
       .execute(destination);
 
@@ -125,7 +120,22 @@ describe('batch', () => {
       const deSerializedTestEntity = r.responses[0].as?.(testEntityApi);
       expect(deSerializedTestEntity).toBeDefined();
     } else {
-      throw new Error(`Result ${r} is not as expected.`);
+      throw new Error('Expected response to be of type WriteResponse which is not the case.');
+    }
+  });
+
+  it('deserializer should load in batches with only bound function imports', async () => {
+    const myTestEntity = testEntityApi.entityBuilder().keyTestEntity(77).build();
+    const results = await batch(changeset(myTestEntity.boundActionWithoutArguments({}) as any))
+      .withSubRequestPathType('relativeToEntity')
+      .execute(destination);
+
+    const r = results[0];
+    if (r && r.isWriteResponses()) {
+      const deSerializedTestEntity = r.responses[0].as?.(testEntityApi);
+      expect(deSerializedTestEntity).toBeDefined();
+    } else {
+      throw new Error('Expected response to be of type WriteResponse which is not the case.');
     }
   });
 });

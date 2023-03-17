@@ -149,6 +149,28 @@ export function buildResolveInputGlob<GeneratorOptionsT>(
   };
 }
 
+function getRawInputFilePaths(
+  input: string,
+  serviceType: ServiceType
+): string[] {
+  if (hasMagic(input)) {
+    const regex =
+      serviceType === 'OData'
+        ? /(.xml|.edmx|.XML|.EDMX)$/
+        : /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/;
+    return globSync(input, { nocase: false }).filter(path => regex.test(path));
+  }
+
+  if (lstatSync(input).isDirectory()) {
+    const regex =
+      serviceType === 'OData'
+        ? '**/*.{xml,edmx,XML,EDMX}'
+        : '**/*.{json,JSON,yaml,YAML,yml,YML}';
+    return globSync(posix.join(input, regex), { nocase: false });
+  }
+
+  return [input];
+}
 /**
  * Recursively searches through a given input path and returns all file paths as a string array.
  * @param input - the path to the input directory.
@@ -159,26 +181,9 @@ export function getInputFilePaths(
   input: string,
   serviceType: ServiceType
 ): string[] {
-  // Check for any special characters in the input
-  if (hasMagic(input)) {
-    const regex =
-      serviceType === 'OData'
-        ? /(.xml|.edmx|.XML|.EDMX)$/
-        : /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/;
-    return globSync(input)
-      .filter(path => regex.test(path))
-      .map(s => resolve(s));
-  }
-
-  if (lstatSync(input).isDirectory()) {
-    const regex =
-      serviceType === 'OData'
-        ? '**/*.{xml,edmx,XML,EDMX}'
-        : '**/*.{json,JSON,yaml,YAML,yml,YML}';
-    return globSync(posix.join(input, regex)).map(s => resolve(s));
-  }
-
-  return [resolve(input)];
+  return getRawInputFilePaths(input, serviceType)
+    .map(s => resolve(s))
+    .sort();
 }
 
 /**

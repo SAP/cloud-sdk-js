@@ -296,19 +296,17 @@ export async function exportAllInBarrel(
 ): Promise<void> {
   const barrelFilePath = join(cwd, barrelFileName);
   if (existsSync(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
-    const dirContents = (
-      await glob('*', {
-        ignore: [
-          '**/*.spec.ts',
-          '__snapshots__',
-          'internal.ts',
-          'index.ts',
-          'cli.ts',
-          '**/*.md'
-        ],
-        cwd
-      })
-    ).map(name => basename(name, '.ts'));
+    const dirContents = (await glob('*', {
+      ignore: [
+        '**/*.spec.ts',
+        '__snapshots__',
+        'internal.ts',
+        'index.ts',
+        'cli.ts',
+        '**/*.md'
+      ],
+      cwd
+    })).map(name => basename(name, '.ts'));
     const exportedFiles = parseBarrelFile(
       await readFile(barrelFilePath, 'utf8'),
       regexExportedInternal

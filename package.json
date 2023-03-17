@@ -64,7 +64,7 @@
     "check:circular": "madge --extensions ts --ts-config=./tsconfig.json --circular --exclude 'dist|test-packages|connectivity/src/scp-cf/environment-accessor.ts|http-client/src/csrf-token-header.ts' ./packages",
     "check:dependencies": "turbo run check:dependencies",
     "check:license": "ts-node scripts/check-licenses.ts",
-    "check:test-service": "yarn generate && yarn ts-node scripts/check-test-service-for-changes.ts",
+    "check:test-service": "yarn generate --force && yarn ts-node scripts/check-test-service-for-changes.ts",
     "check:public-api": "turbo run check:public-api",
     "connectivity": "yarn workspace @sap-cloud-sdk/connectivity",
     "generator": "yarn workspace @sap-cloud-sdk/generator",
@@ -117,7 +117,7 @@
     "semver": "^7.3.8",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
-    "turbo": "1.8.3",
+    "turbo": "1.6.3",
     "typedoc": "^0.23.27",
     "typescript": "~4.9.5"
   },

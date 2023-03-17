@@ -15,7 +15,7 @@ jobs:
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
       - run: yarn install --frozen-lockfile
       - run: yarn test:unit --continue -- -- -- --json --outputFile=unit-test-output.json
       - run: yarn test:integration -- -- -- --json --outputFile=int-test-output.json

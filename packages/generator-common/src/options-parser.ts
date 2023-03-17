@@ -95,7 +95,9 @@ export function resolveGlob<GeneratorOptionsT>(
     : resolve(arg.toString());
 
   // Glob expressions only support unix style path separator (/). The below adjustment is made so it works on Windows. https://github.com/isaacs/node-glob#windows
-  return globSync(inputPath.split(sep).join(posix.sep)).map(s => resolve(s));
+  return resolveFilePaths(
+    globSync(inputPath.split(sep).join(posix.sep), { nocase: false })
+  );
 }
 
 /**
@@ -121,7 +123,7 @@ export function resolveRequiredPath<GeneratorOptionsT>(
  * @returns Function for resolving inputs Globs for OData or Openapi
  */
 export function buildResolveInputGlob<GeneratorOptionsT>(
-  serviceType: ServiceType
+  serviceType?: ServiceType
 ) {
   /**
    * Resolves input string using glob notation.
@@ -151,7 +153,7 @@ export function buildResolveInputGlob<GeneratorOptionsT>(
 
 function getRawInputFilePaths(
   input: string,
-  serviceType: ServiceType
+  serviceType?: ServiceType
 ): string[] {
   if (hasMagic(input)) {
     const regex =
@@ -179,11 +181,13 @@ function getRawInputFilePaths(
  */
 export function getInputFilePaths(
   input: string,
-  serviceType: ServiceType
+  serviceType?: ServiceType
 ): string[] {
-  return getRawInputFilePaths(input, serviceType)
-    .map(s => resolve(s))
-    .sort();
+  return resolveFilePaths(getRawInputFilePaths(input, serviceType));
+}
+
+function resolveFilePaths(filePaths: string[]): string[] {
+  return filePaths.map(s => resolve(s)).sort();
 }
 
 /**

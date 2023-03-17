@@ -298,13 +298,13 @@ describe('generator', () => {
 
     it('should return an array with all edmx and xml file paths within the input directory and all subdirectories', () => {
       expect(getInputFilePaths(input, 'OData')).toEqual([
-        resolve(input, 'sub-dir/test-service.edmx'),
         resolve(input, 'sub-dir/test-service.EDMX'),
-        resolve(input, 'sub-dir/test-service.xml'),
+        resolve(input, 'sub-dir/test-service.edmx'),
         resolve(input, 'sub-dir/test-service.XML'),
+        resolve(input, 'sub-dir/test-service.xml'),
         resolve(input, 'test-service.edmx'),
-        resolve(input, 'test-service.xml'),
-        resolve(input, 'test-service.XML')
+        resolve(input, 'test-service.XML'),
+        resolve(input, 'test-service.xml')
       ]);
     });
 
@@ -318,8 +318,8 @@ describe('generator', () => {
     it('should return an array with all edmx and xml file paths within the input directory', () => {
       expect(getInputFilePaths('root/inputDir/*', 'OData')).toEqual([
         resolve(input, 'test-service.edmx'),
-        resolve(input, 'test-service.xml'),
-        resolve(input, 'test-service.XML')
+        resolve(input, 'test-service.XML'),
+        resolve(input, 'test-service.xml')
       ]);
     });
 

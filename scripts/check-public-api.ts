@@ -2,7 +2,7 @@
 
 import { join, resolve, parse, basename, dirname } from 'path';
 import { promises, existsSync } from 'fs';
-import { globSync } from 'glob';
+import { glob } from 'glob';
 import { createLogger, flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 import { CompilerOptions } from 'typescript';
@@ -164,8 +164,8 @@ export function checkIndexFileExists(indexFilePath: string): void {
  * @param cwd - Directory which is scanned for type definitions.
  * @returns Paths to the `.d.ts` files excluding `index.d.ts` files.
  */
-export function typeDescriptorPaths(cwd: string): string[] {
-  const files = globSync('**/*.d.ts', { cwd });
+export async function typeDescriptorPaths(cwd: string): Promise<string[]> {
+  const files = await glob('**/*.d.ts', { cwd });
   return files
     .filter(file => !file.endsWith('index.d.ts'))
     .map(file => join(cwd, file));
@@ -185,7 +185,7 @@ export interface ExportedObject {
 export async function parseTypeDefinitionFiles(
   pathCompiled: string
 ): Promise<ExportedObject[]> {
-  const typeDefinitionPaths = typeDescriptorPaths(pathCompiled);
+  const typeDefinitionPaths = await typeDescriptorPaths(pathCompiled);
   const result = await Promise.all(
     typeDefinitionPaths.map(async pathTypeDefinition => {
       const fileContent = await readFile(pathTypeDefinition, 'utf8');
@@ -296,17 +296,19 @@ export async function exportAllInBarrel(
 ): Promise<void> {
   const barrelFilePath = join(cwd, barrelFileName);
   if (existsSync(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
-    const dirContents = globSync('*', {
-      ignore: [
-        '**/*.spec.ts',
-        '__snapshots__',
-        'internal.ts',
-        'index.ts',
-        'cli.ts',
-        '**/*.md'
-      ],
-      cwd
-    }).map(name => basename(name, '.ts'));
+    const dirContents = (
+      await glob('*', {
+        ignore: [
+          '**/*.spec.ts',
+          '__snapshots__',
+          'internal.ts',
+          'index.ts',
+          'cli.ts',
+          '**/*.md'
+        ],
+        cwd
+      })
+    ).map(name => basename(name, '.ts'));
     const exportedFiles = parseBarrelFile(
       await readFile(barrelFilePath, 'utf8'),
       regexExportedInternal

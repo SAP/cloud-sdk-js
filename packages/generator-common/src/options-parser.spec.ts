@@ -108,20 +108,20 @@ describe('options parser', () => {
     });
 
     it('includes using glob using cwd', () => {
-      expect(parseOptions({ include }, { include: '*.json' }).include).toEqual(
-        absoluteJsonPaths
-      );
+      expect(
+        parseOptions({ include }, { include: '*.json' }).include.sort()
+      ).toEqual(absoluteJsonPaths);
     });
 
     it('includes using glob using root', () => {
       const rootGlob = join(resolve(), '*.json');
-      expect(parseOptions({ include }, { include: rootGlob }).include).toEqual(
-        absoluteJsonPaths
-      );
+      expect(
+        parseOptions({ include }, { include: rootGlob }).include.sort()
+      ).toEqual(absoluteJsonPaths);
     });
 
     it('does not fail on include option not set', () => {
-      expect(parseOptions({ include }, {}).include).toEqual([]);
+      expect(parseOptions({ include }, {}).include.sort()).toEqual([]);
     });
 
     it('includes using config path', () => {

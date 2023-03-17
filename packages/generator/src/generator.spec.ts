@@ -274,7 +274,7 @@ describe('generator', () => {
             'sub-dir': {
               'test-service.edmx': 'dummy edmx specification file',
               'test-service.xml': 'dummy edmx specification file',
-              'test-service.XML': 'dummy YML specification file',
+              'test-service.XML': 'dummy XML specification file',
               'test-service.EDMX': 'dummy xml specification file',
               'test-service.txt': 'dummy text specification file'
             }

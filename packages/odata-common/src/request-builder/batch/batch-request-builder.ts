@@ -1,10 +1,7 @@
 import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { first } from '@sap-cloud-sdk/util';
-import {
-  DefaultDeSerializers,
-  DeSerializers
-} from '../../de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
 import { EntityApi } from '../../entity-api';
 import { EntityBase } from '../../entity-base';
 import { ODataRequestConfig } from '../../request';
@@ -41,7 +38,11 @@ export class BatchRequestBuilder<
       | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
       | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
       | Omit<
-          ActionFunctionImportRequestBuilderBase<DeSerializersT, unknown, ODataRequestConfig>,
+          ActionFunctionImportRequestBuilderBase<
+            DeSerializersT,
+            unknown,
+            ODataRequestConfig
+          >,
           'execute'
         >
     )[]
@@ -53,7 +54,9 @@ export class BatchRequestBuilder<
 
     const operationDeserializer = this.getOperationDeserializer(requests);
 
-    this.deSerializers = entityDeserializer ? entityDeserializer : operationDeserializer;
+    this.deSerializers = entityDeserializer
+      ? entityDeserializer
+      : operationDeserializer;
   }
 
   withSubRequestPathType(subRequestPathType: BatchSubRequestPathType): this {
@@ -111,7 +114,21 @@ export class BatchRequestBuilder<
     return request;
   }
 
-  private getOperationDeserializer(requests: (BatchChangeSet<DeSerializersT> | GetAllRequestBuilderBase<EntityBase, DeSerializersT> | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT> | Omit<ActionFunctionImportRequestBuilderBase<DeSerializersT, unknown, ODataRequestConfig>, 'execute'>)[]) {
+  private getOperationDeserializer(
+    requests: (
+      | BatchChangeSet<DeSerializersT>
+      | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
+      | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
+      | Omit<
+          ActionFunctionImportRequestBuilderBase<
+            DeSerializersT,
+            unknown,
+            ODataRequestConfig
+          >,
+          'execute'
+        >
+    )[]
+  ) {
     const outerRequest = first(requests);
     if (outerRequest instanceof BatchChangeSet) {
       const innerRequest = first(outerRequest.requests);
@@ -130,7 +147,10 @@ type AllBuilderTypes<DeSerializersT extends DeSerializers> =
 
 function isActionOrFunctionImport<DeSerializersT extends DeSerializers>(
   req: AllBuilderTypes<DeSerializersT>
-): req is Omit<ActionFunctionImportRequestBuilderBase<any, any, any>, 'execute'> {
+): req is Omit<
+  ActionFunctionImportRequestBuilderBase<any, any, any>,
+  'execute'
+> {
   return !!(
     req.requestConfig['functionImportName'] ??
     req.requestConfig['actionImportName']

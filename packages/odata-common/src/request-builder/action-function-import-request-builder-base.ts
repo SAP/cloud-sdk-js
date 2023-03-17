@@ -11,7 +11,7 @@ import { MethodRequestBuilder } from './request-builder-base';
  * @typeParam ReturnT - Type of the function import return value.
  */
 export abstract class ActionFunctionImportRequestBuilderBase<
-DeSerializersT extends DeSerializers,
+    DeSerializersT extends DeSerializers,
     ReturnT,
     RequestConfigT extends ODataRequestConfig
   >

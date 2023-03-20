@@ -14,7 +14,7 @@
     "access": "restricted"
   },
   "scripts": {
-    "generate": "ts-node generate-odata-services.ts",
+    "generate": "ts-node generate-odata-services.ts ",
     "check:dependencies": "depcheck .",
     "lint": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"

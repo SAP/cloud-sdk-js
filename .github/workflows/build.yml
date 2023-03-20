@@ -32,13 +32,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v3
-        id: cache
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
+      # - uses: actions/cache@v3
+      #   id: cache
+      #   with:
+      #     path: |
+      #       node_modules
+      #       */*/node_modules
+      #     key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --ignore-engines --frozen-lockfile
       - run: yarn test:unit
         env:

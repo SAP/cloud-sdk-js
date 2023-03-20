@@ -16,13 +16,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - uses: actions/cache@v3
-        id: cache
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ubuntu-latest-${{ hashFiles('**/yarn.lock') }}
+          cache: 'yarn'
       - name: Run lint:fix
         run: |
           yarn install --frozen-lockfile
@@ -33,7 +27,7 @@ jobs:
         env:
           USE_SSH: true
           GIT_USER: cloud-sdk-js
-        run : |
+        run: |
           git config --global user.email "cloud-sdk-js@github.com"
           git config --global user.name "cloud-sdk-js"
           diff=`git diff`

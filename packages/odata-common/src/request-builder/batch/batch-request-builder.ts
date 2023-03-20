@@ -50,13 +50,7 @@ export class BatchRequestBuilder<
     super(new ODataBatchRequestConfig(defaultBasePath));
 
     const entityApi = first(Object.values(this.getEntityToApiMap()));
-    const entityDeserializer = entityApi?.deSerializers;
-
-    const operationDeserializer = this.getOperationDeserializer(requests);
-
-    this.deSerializers = entityDeserializer
-      ? entityDeserializer
-      : operationDeserializer;
+    this.deSerializers = entityApi?.deSerializers || this.getOperationDeserializer(requests);
   }
 
   withSubRequestPathType(subRequestPathType: BatchSubRequestPathType): this {

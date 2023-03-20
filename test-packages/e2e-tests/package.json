@@ -20,7 +20,7 @@
     "test:e2e": "jest",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
-    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'",
+    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds,bignumber.js,@sap-cloud-sdk/odata-v2'",
     "generate-edmx": "cds compile srv -s TestService -2 edmx > TestService.edmx"
   },
   "devDependencies": {

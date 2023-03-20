@@ -14,11 +14,11 @@ import {
   Statement,
   WriteFileCallback
 } from 'typescript';
-import { GlobSync } from 'glob';
+import { glob } from 'glob';
 import { createFile, CreateFileOptions, getFileExtension } from './file-writer';
 
 const logger = createLogger('compiler');
-const { writeFile, mkdir } = promises;
+const { mkdir } = promises;
 
 /**
  * Executes the TypeScript compilation for the given directory.
@@ -47,26 +47,19 @@ export async function transpileDirectory(
       ? `{${includeExclude.exclude.join(',')}}`
       : includeExclude.exclude[0];
 
-  const allFiles2 = new GlobSync(includes, {
+  const allFiles = await glob(includes, {
     ignore: excludes,
     cwd: path
-  }).found;
+  });
 
   const program = await createProgram(
-    allFiles2.map(file => resolve(path, file)),
+    allFiles.map(file => resolve(path, file)),
     compilerOptions
   );
 
   // The write file handler does not support async function hence the work around with the outer promise list.
   const fileWriterPromises: Promise<void>[] = [];
-  const prettierWriter: WriteFileCallback = (
-    fileName,
-    text,
-    writeByteOrderMark,
-    onError?,
-    sourceFiles?,
-    data?
-  ) => {
+  const prettierWriter: WriteFileCallback = (fileName, text) => {
     const parsed = parse(fileName);
     const promise = mkdir(parsed.dir, { recursive: true }).then(async () => {
       // The transpile process creates `.map.js`, `.js` and `.d.ts` files

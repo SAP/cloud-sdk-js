@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 433:
+/***/ 8438:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -43,19 +43,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+exports.validateBody = exports.validateChangesets = exports.validatePostamble = exports.validateTitle = void 0;
 var promises_1 = __nccwpck_require__(3977);
 var node_path_1 = __nccwpck_require__(9411);
 var core_1 = __nccwpck_require__(7117);
-var github_1 = __nccwpck_require__(4005);
 var validCommitTypes = ['feat', 'fix', 'chore'];
 // Expected format: preamble(topic)!: Title text
-function validateTitle() {
+function validateTitle(title) {
     return __awaiter(this, void 0, void 0, function () {
-        var title, _a, preamble, postamble;
+        var _a, preamble, postamble;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    title = github_1.context.payload.pull_request.title;
                     if (!title.includes(':')) {
                         return [2 /*return*/, (0, core_1.setFailed)('PR title does not adhere to conventional commit guidelines. No preamble found.')];
                     }
@@ -69,19 +68,29 @@ function validateTitle() {
         });
     });
 }
+exports.validateTitle = validateTitle;
 function validatePreamble(preamble) {
     var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var groups, commitType, isBreaking;
-        return __generator(this, function (_b) {
-            groups = (_a = preamble.match(/(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/)) === null || _a === void 0 ? void 0 : _a.groups;
-            if (!groups) {
-                return [2 /*return*/, (0, core_1.setFailed)('Could not parse preamble. Ensure it follows the conventional commit guidelines.')];
+        var groups, commitType, isBreaking, _b, _c;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    groups = (_a = preamble.match(/(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/)) === null || _a === void 0 ? void 0 : _a.groups;
+                    if (!groups) {
+                        return [2 /*return*/, (0, core_1.setFailed)('Could not parse preamble. Ensure it follows the conventional commit guidelines.')];
+                    }
+                    commitType = groups.commitType, isBreaking = groups.isBreaking;
+                    validateCommitType(commitType);
+                    _b = validateChangesets;
+                    _c = [preamble,
+                        commitType,
+                        !!isBreaking];
+                    return [4 /*yield*/, extractChangedFilesContents()];
+                case 1:
+                    _b.apply(void 0, _c.concat([_d.sent()]));
+                    return [2 /*return*/];
             }
-            commitType = groups.commitType, isBreaking = groups.isBreaking;
-            validateCommitType(commitType);
-            validateChangesets(preamble, commitType, !!isBreaking);
-            return [2 /*return*/];
         });
     });
 }
@@ -100,6 +109,7 @@ function validatePostamble(title) {
     }
     (0, core_1.info)('✓ Title: OK');
 }
+exports.validatePostamble = validatePostamble;
 function getAllowedBumps(preamble, isBreaking) {
     if (isBreaking) {
         return ['major'];
@@ -112,36 +122,47 @@ function getAllowedBumps(preamble, isBreaking) {
     }
     return [];
 }
-function hasMatchingChangeset(allowedBumps) {
+function hasMatchingChangeset(allowedBumps, changedFileContents) {
     return __awaiter(this, void 0, void 0, function () {
-        var changedFilesStr, changedFiles, fileContents;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!allowedBumps.length) return [3 /*break*/, 2];
-                    changedFilesStr = (0, core_1.getInput)('changed-files').trim();
-                    changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
-                    return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
-                case 1:
-                    fileContents = _a.sent();
-                    return [2 /*return*/, fileContents.some(function (fileContent) {
-                            return allowedBumps.some(function (bump) {
-                                return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump)).test(fileContent);
-                            });
-                        })];
+                    return [4 /*yield*/, changedFileContents];
+                case 1: return [2 /*return*/, (_a.sent()).some(function (fileContent) {
+                        return allowedBumps.some(function (bump) {
+                            return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump)).test(fileContent);
+                        });
+                    })];
                 case 2: return [2 /*return*/, true];
             }
         });
     });
 }
-function validateChangesets(preamble, commitType, isBreaking) {
+function extractChangedFilesContents() {
+    return __awaiter(this, void 0, void 0, function () {
+        var changedFilesStr, changedFiles, fileContents;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    changedFilesStr = (0, core_1.getInput)('changed-files').trim();
+                    changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
+                    return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
+                case 1:
+                    fileContents = _a.sent();
+                    return [2 /*return*/, fileContents];
+            }
+        });
+    });
+}
+function validateChangesets(preamble, commitType, isBreaking, fileContents) {
     return __awaiter(this, void 0, void 0, function () {
         var allowedBumps;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     allowedBumps = getAllowedBumps(commitType, isBreaking);
-                    return [4 /*yield*/, hasMatchingChangeset(allowedBumps)];
+                    return [4 /*yield*/, hasMatchingChangeset(allowedBumps, fileContents)];
                 case 1:
                     if (!(_a.sent())) {
                         return [2 /*return*/, (0, core_1.setFailed)("Preamble '".concat(preamble, "' requires a changeset file with bump ").concat(allowedBumps
@@ -154,14 +175,13 @@ function validateChangesets(preamble, commitType, isBreaking) {
         });
     });
 }
-function validateBody() {
+exports.validateChangesets = validateChangesets;
+function validateBody(body) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, template;
+        var template;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    body = github_1.context.payload.pull_request.body.replace(/\r\n/g, '\n');
-                    return [4 /*yield*/, (0, promises_1.readFile)((0, node_path_1.resolve)('.github', 'PULL_REQUEST_TEMPLATE.md'), 'utf-8')];
+                case 0: return [4 /*yield*/, (0, promises_1.readFile)((0, node_path_1.resolve)('.github', 'PULL_REQUEST_TEMPLATE.md'), 'utf-8')];
                 case 1:
                     template = _a.sent();
                     if (!body || body === template) {
@@ -176,13 +196,7 @@ function validateBody() {
         });
     });
 }
-try {
-    validateTitle();
-    validateBody();
-}
-catch (err) {
-    (0, core_1.setFailed)(err);
-}
+exports.validateBody = validateBody;
 
 
 /***/ }),
@@ -13175,12 +13189,26 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(433);
-/******/ 	module.exports = __webpack_exports__;
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+var exports = __webpack_exports__;
+
+exports.__esModule = true;
+var core_1 = __nccwpck_require__(7117);
+var github_1 = __nccwpck_require__(4005);
+var validators_1 = __nccwpck_require__(8438);
+try {
+    (0, validators_1.validateTitle)(github_1.context.payload.pull_request.title);
+    (0, validators_1.validateBody)(github_1.context.payload.pull_request.body.replace(/\r\n/g, '\n'));
+}
+catch (err) {
+    (0, core_1.setFailed)(err);
+}
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;

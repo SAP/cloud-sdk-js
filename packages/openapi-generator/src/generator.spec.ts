@@ -57,11 +57,11 @@ describe('generator', () => {
     it('should return an array with all JSON and YAML file paths within the input directory and all subdirectories', () => {
       expect(getInputFilePaths(input, 'OpenApi')).toEqual([
         resolve(input, 'sub-dir/test-service.YAML'),
-        resolve(input, 'sub-dir/test-service.yml'),
         resolve(input, 'sub-dir/test-service.YML'),
+        resolve(input, 'sub-dir/test-service.yml'),
         resolve(input, 'sub-dir/test-service2.json'),
-        resolve(input, 'test-service.json'),
         resolve(input, 'test-service.JSON'),
+        resolve(input, 'test-service.json'),
         resolve(input, 'test-service.yaml')
       ]);
     });
@@ -75,13 +75,13 @@ describe('generator', () => {
 
     it('should return an array with all JSON and YAML file paths within the input directory', () => {
       expect(getInputFilePaths('root/inputDir/*', 'OpenApi')).toEqual([
-        resolve(input, 'test-service.json'),
         resolve(input, 'test-service.JSON'),
+        resolve(input, 'test-service.json'),
         resolve(input, 'test-service.yaml')
       ]);
     });
 
-    it('should return an array with all `.json` and `.yaml` files within the input directory', () => {
+    it('should return an array with all matching JSON and YAML files within the input directory', () => {
       expect(
         getInputFilePaths('root/inputDir/*.{json,yaml}', 'OpenApi')
       ).toEqual([

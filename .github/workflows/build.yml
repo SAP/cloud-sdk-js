@@ -36,11 +36,11 @@ jobs:
         id: cache
         with:
           path: |
-            node_modules
-            !node_modules/.cache
-            */*/node_modules
-            !*/*/node_modules/.cache
-          key: hahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
+            node_modules/*
+            node_modules/!(.cache)/**
+            */*/node_modules/*
+            */*/node_modules/!(.cache)/**
+          key: ahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
       - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn install --ignore-engines --frozen-lockfile
       - run: ls -la node_modules || echo 'EMPTY'
@@ -64,11 +64,11 @@ jobs:
         id: cache
         with:
           path: |
-            node_modules
-            !node_modules/.cache
-            */*/node_modules
-            !*/*/node_modules/.cache
-          key: hahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
+            node_modules/*
+            node_modules/!(.cache)/**
+            */*/node_modules/*
+            */*/node_modules/!(.cache)/**
+          key: ahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
       - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn install --frozen-lockfile
       - run: ls -la node_modules || echo 'EMPTY'
@@ -100,11 +100,11 @@ jobs:
         id: cache
         with:
           path: |
-            node_modules
-            !node_modules/.cache
-            */*/node_modules
-            !*/*/node_modules/.cache
-          key: hahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
+            node_modules/*
+            node_modules/!(.cache)/**
+            */*/node_modules/*
+            */*/node_modules/!(.cache)/**
+          key: ahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
       - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn install --frozen-lockfile
       - run: ls -la node_modules || echo 'EMPTY'
@@ -200,11 +200,11 @@ jobs:
         id: cache
         with:
           path: |
-            node_modules
-            !node_modules/.cache
-            */*/node_modules
-            !*/*/node_modules/.cache
-          key: hahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
+            node_modules/*
+            node_modules/!(.cache)/**
+            */*/node_modules/*
+            */*/node_modules/!(.cache)/**
+          key: ahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
       - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn install --frozen-lockfile
       - run: ls -la node_modules || echo 'EMPTY'

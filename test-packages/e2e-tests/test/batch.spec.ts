@@ -8,6 +8,7 @@ import {
   returnInt,
   returnSapCloudSdk
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
+import { first } from '@sap-cloud-sdk/util';
 import { destination } from './test-util';
 import {
   deleteEntity,
@@ -111,13 +112,15 @@ describe('batch', () => {
 
   it('(de-)serializers should be used in batch requests with only actions', async () => {
     // See https://github.com/SAP/cloud-sdk-js/issues/3539 for the original issue
-    const results = await batch(changeset(createTestEntityById({ id: 77 })))
-      .withSubRequestPathType('relativeToEntity')
-      .execute(destination);
+    const changesetResult = first(
+      await batch(changeset(createTestEntityById({ id: 77 })))
+        .withSubRequestPathType('relativeToEntity')
+        .execute(destination)
+    );
 
-    const r = results[0];
-    if (r && r.isWriteResponses()) {
-      const deSerializedTestEntity = r.responses[0].as?.(testEntityApi);
+    if (changesetResult?.isWriteResponses()) {
+      const deSerializedTestEntity =
+        changesetResult.responses[0].as?.(testEntityApi);
       expect(deSerializedTestEntity).toBeDefined();
     } else {
       throw new Error(
@@ -131,15 +134,17 @@ describe('batch', () => {
       .entityBuilder()
       .keyTestEntity(77)
       .build();
-    const results = await batch(
-      changeset(myTestEntity.boundActionWithoutArguments({}) as any)
-    )
-      .withSubRequestPathType('relativeToEntity')
-      .execute(destination);
+    const changesetResult = first(
+      await batch(
+        changeset(myTestEntity.boundActionWithoutArguments({}) as any)
+      )
+        .withSubRequestPathType('relativeToEntity')
+        .execute(destination)
+    );
 
-    const r = results[0];
-    if (r && r.isWriteResponses()) {
-      const deSerializedTestEntity = r.responses[0].as?.(testEntityApi);
+    if (changesetResult?.isWriteResponses()) {
+      const deSerializedTestEntity =
+        changesetResult.responses[0].as?.(testEntityApi);
       expect(deSerializedTestEntity).toBeDefined();
     } else {
       throw new Error(

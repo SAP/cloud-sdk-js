@@ -8,7 +8,9 @@ import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Create OData request to execute a action or function import.
+ * @typeParam DeSerializersT - Type of the (De-)serializers.
  * @typeParam ReturnT - Type of the function import return value.
+ * @typeParam RequestConfigT - Type of the request config.
  */
 export abstract class ActionFunctionImportRequestBuilderBase<
     DeSerializersT extends DeSerializers,

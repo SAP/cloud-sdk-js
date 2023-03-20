@@ -126,7 +126,7 @@ describe('batch', () => {
     }
   });
 
-  it('deserializer should load in batches with only bound function imports', async () => {
+  it('(de-)serializers should be used in batch requests with only bound actions', async () => {
     const myTestEntity = testEntityApi
       .entityBuilder()
       .keyTestEntity(77)

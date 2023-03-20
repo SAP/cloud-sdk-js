@@ -40,9 +40,10 @@ jobs:
             !node_modules/.cache
             */*/node_modules
             !*/*/node_modules/.cache
-          key: hhahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
-      - run: ls -ls node_modules || echo 'EMPTY'
+          key: hahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
+      - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn install --ignore-engines --frozen-lockfile
+      - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
@@ -67,9 +68,10 @@ jobs:
             !node_modules/.cache
             */*/node_modules
             !*/*/node_modules/.cache
-          key: hhahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
-      - run: ls -ls node_modules || echo 'EMPTY'
+          key: hahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
+      - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn install --frozen-lockfile
+      - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn lint
         name: Static Code Check
       - run: yarn check:test-service
@@ -102,9 +104,10 @@ jobs:
             !node_modules/.cache
             */*/node_modules
             !*/*/node_modules/.cache
-          key: hhahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
-      - run: ls -ls node_modules || echo 'EMPTY'
+          key: hahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
+      - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn install --frozen-lockfile
+      - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn test:e2e
   dependabot:
     runs-on: ubuntu-latest
@@ -201,9 +204,10 @@ jobs:
             !node_modules/.cache
             */*/node_modules
             !*/*/node_modules/.cache
-          key: hhahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
-      - run: ls -ls node_modules || echo 'EMPTY'
+          key: hahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
+      - run: ls -la node_modules || echo 'EMPTY'
       - run: yarn install --frozen-lockfile
+      - run: ls -la node_modules || echo 'EMPTY'
       - uses: ./.github/actions/get-changelog
         name: Get Changelog
         id: get-changelog

@@ -130,7 +130,6 @@ export class BatchRequestBuilder<
         return innerRequest._deSerializers;
       }
     }
-    return undefined;
   }
 }
 

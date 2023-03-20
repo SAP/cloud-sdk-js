@@ -13,13 +13,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - uses: actions/cache@v3
-        id: cache
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          cache: 'yarn'
       - run: yarn install --frozen-lockfile
         name: install root
       - run: yarn workspace @sap-cloud-sdk/e2e-tests pretest:e2e

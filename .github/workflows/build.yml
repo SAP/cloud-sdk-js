@@ -63,8 +63,10 @@ jobs:
         with:
           path: |
             node_modules
+            !node_modules/.cache
             */*/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+            !*/*/node_modules/.cache
+          key: ahhahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
       - run: yarn lint
         name: Static Code Check
@@ -95,8 +97,10 @@ jobs:
         with:
           path: |
             node_modules
+            !node_modules/.cache
             */*/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+            !*/*/node_modules/.cache
+          key: ahhahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
       - run: yarn test:e2e
   dependabot:
@@ -191,8 +195,10 @@ jobs:
         with:
           path: |
             node_modules
+            !node_modules/.cache
             */*/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+            !*/*/node_modules/.cache
+          key: ahhahaajkdslfjskfj-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
       - uses: ./.github/actions/get-changelog
         name: Get Changelog

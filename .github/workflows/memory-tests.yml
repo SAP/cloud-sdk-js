@@ -1,4 +1,4 @@
-name: memory-tests
+name: Run Memory-Usage Tests
 
 on:
   workflow_dispatch:

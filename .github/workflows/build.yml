@@ -1,4 +1,4 @@
-name: build
+name: Run Build and Test (+ Canary Release)
 
 on:
   pull_request: ~

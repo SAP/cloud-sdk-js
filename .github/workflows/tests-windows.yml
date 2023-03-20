@@ -1,4 +1,4 @@
-name: windows-tests
+name: Run Tests on Windows
 
 on:
   push:

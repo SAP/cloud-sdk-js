@@ -1,4 +1,4 @@
-name: downloads
+name: Download NPM Stats
 
 on:
   workflow_dispatch:

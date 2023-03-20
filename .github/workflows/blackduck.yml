@@ -1,4 +1,4 @@
-name: blackduck-scan
+name: Run Blackduck Scan
 
 on:
   workflow_dispatch:

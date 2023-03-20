@@ -1,4 +1,4 @@
-name: lint
+name: Apply lint fixes
 
 on:
   workflow_dispatch:

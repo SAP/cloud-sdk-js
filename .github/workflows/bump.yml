@@ -1,4 +1,4 @@
-name: bump
+name: Run SDK Version Bump
 
 on:
   workflow_dispatch:

@@ -1,4 +1,4 @@
-name: release
+name: Release new Cloud SDK Version
 
 on:
   release:

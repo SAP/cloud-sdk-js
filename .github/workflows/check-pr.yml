@@ -1,4 +1,4 @@
-name: 'pr-check'
+name: Run PR Formalities Check
 
 on:
   pull_request:

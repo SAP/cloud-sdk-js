@@ -3,7 +3,7 @@ import { existsSync, lstatSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { InferredOptionType, Options as YargsOption } from 'yargs';
 const logger = createLogger('generator-options');
-import { glob, sync as globSync } from 'glob';
+import { globSync, hasMagic } from 'glob';
 
 /**
  * @internal
@@ -95,7 +95,9 @@ export function resolveGlob<GeneratorOptionsT>(
     : resolve(arg.toString());
 
   // Glob expressions only support unix style path separator (/). The below adjustment is made so it works on Windows. https://github.com/isaacs/node-glob#windows
-  return globSync(inputPath.split(sep).join(posix.sep)).map(s => resolve(s));
+  return resolveFilePaths(
+    globSync(inputPath.split(sep).join(posix.sep), { nocase: false })
+  );
 }
 
 /**
@@ -121,7 +123,7 @@ export function resolveRequiredPath<GeneratorOptionsT>(
  * @returns Function for resolving inputs Globs for OData or Openapi
  */
 export function buildResolveInputGlob<GeneratorOptionsT>(
-  serviceType: ServiceType
+  serviceType?: ServiceType
 ) {
   /**
    * Resolves input string using glob notation.
@@ -149,6 +151,28 @@ export function buildResolveInputGlob<GeneratorOptionsT>(
   };
 }
 
+function getRawInputFilePaths(
+  input: string,
+  serviceType?: ServiceType
+): string[] {
+  if (hasMagic(input)) {
+    const regex =
+      serviceType === 'OData'
+        ? /(.xml|.edmx|.XML|.EDMX)$/
+        : /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/;
+    return globSync(input, { nocase: false }).filter(path => regex.test(path));
+  }
+
+  if (lstatSync(input).isDirectory()) {
+    const regex =
+      serviceType === 'OData'
+        ? '**/*.{xml,edmx,XML,EDMX}'
+        : '**/*.{json,JSON,yaml,YAML,yml,YML}';
+    return globSync(posix.join(input, regex), { nocase: false });
+  }
+
+  return [input];
+}
 /**
  * Recursively searches through a given input path and returns all file paths as a string array.
  * @param input - the path to the input directory.
@@ -157,28 +181,13 @@ export function buildResolveInputGlob<GeneratorOptionsT>(
  */
 export function getInputFilePaths(
   input: string,
-  serviceType: ServiceType
+  serviceType?: ServiceType
 ): string[] {
-  // Check for any special characters in the input
-  if (glob.hasMagic(input)) {
-    const regex =
-      serviceType === 'OData'
-        ? /(.xml|.edmx|.XML|.EDMX)$/
-        : /(.json|.JSON|.yaml|.YAML|.yml|.YML)$/;
-    return globSync(input)
-      .filter(path => regex.test(path))
-      .map(s => resolve(s));
-  }
+  return resolveFilePaths(getRawInputFilePaths(input, serviceType));
+}
 
-  if (lstatSync(input).isDirectory()) {
-    const regex =
-      serviceType === 'OData'
-        ? '**/*.{xml,edmx,XML,EDMX}'
-        : '**/*.{json,JSON,yaml,YAML,yml,YML}';
-    return globSync(posix.join(input, regex)).map(s => resolve(s));
-  }
-
-  return [resolve(input)];
+function resolveFilePaths(filePaths: string[]): string[] {
+  return filePaths.map(s => resolve(s)).sort();
 }
 
 /**

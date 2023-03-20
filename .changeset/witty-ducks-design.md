@@ -5,4 +5,4 @@
 '@sap-cloud-sdk/odata-v4': patch
 ---
 
-[Compatibility Note] Fix deserializer so it works in batch requests which only contain functions or actions. This changes the type parameters of `ActionFunctionImportRequestBuilderBase`.
+[Compatibility Note] The `ActionFunctionImportRequestBuilderBase` has an additional mandatory type parameter to pass the according (de-)serializer type. This was missing previously due to a bug.

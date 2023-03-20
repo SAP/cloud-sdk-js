@@ -31,4 +31,4 @@ export type ChangesetBuilderTypes<DeSerializersT extends DeSerializers> =
   | CreateRequestBuilderBase<EntityBase, DeSerializersT>
   | UpdateRequestBuilderBase<EntityBase, DeSerializersT>
   | DeleteRequestBuilderBase<EntityBase, DeSerializersT>
-  | Omit<ActionFunctionImportRequestBuilderBase<any, any>, 'execute'>;
+  | Omit<ActionFunctionImportRequestBuilderBase<any, any, any>, 'execute'>;

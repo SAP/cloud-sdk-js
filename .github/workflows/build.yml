@@ -38,7 +38,9 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+            dist
+            */*/dist
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}new
       - run: yarn install --ignore-engines --frozen-lockfile
       - run: yarn test:unit
         env:

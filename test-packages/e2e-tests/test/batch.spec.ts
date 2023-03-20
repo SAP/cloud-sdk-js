@@ -109,7 +109,7 @@ describe('batch', () => {
     expect(deleteRes.isSuccess()).toBe(true);
   });
 
-  it('deserializer should load in batches with only function imports', async () => {
+  it('(de-)serializers should be used in batch requests with only actions', async () => {
     // See https://github.com/SAP/cloud-sdk-js/issues/3539 for the original issue
     const results = await batch(changeset(createTestEntityById({ id: 77 })))
       .withSubRequestPathType('relativeToEntity')

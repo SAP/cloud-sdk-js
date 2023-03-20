@@ -114,10 +114,10 @@ describe('options parser', () => {
     });
 
     it('includes using glob using root', () => {
-      const rootGlob = join(resolve(), '*.json');
-      expect(parseOptions({ include }, { include: rootGlob }).include).toEqual(
-        absoluteJsonPaths
-      );
+      expect(
+        parseOptions({ include }, { include: join(resolve(), '*.json') })
+          .include
+      ).toEqual(absoluteJsonPaths);
     });
 
     it('does not fail on include option not set', () => {

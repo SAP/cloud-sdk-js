@@ -18,7 +18,10 @@ import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
 import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
-import { assertHttpDestination, Destination } from './destination-service-types';
+import {
+  assertHttpDestination,
+  Destination
+} from './destination-service-types';
 import {
   alwaysProvider,
   alwaysSubscriber,

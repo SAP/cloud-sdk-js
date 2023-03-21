@@ -48,6 +48,7 @@
     "postinstall": "yarn compile",
     "compile": "turbo run compile",
     "test": "turbo run test",
+    "check": "turbo run check",
     "test:unit": "turbo run test --filter=./packages/*",
     "test:integration": "turbo run test --filter=integration-tests",
     "test:type": "turbo run test --filter=type-tests",

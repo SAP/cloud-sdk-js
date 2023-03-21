@@ -25,8 +25,8 @@
     "moment": "^2.29.4"
   },
   "peerDependencies": {
-    "@sap-cloud-sdk/generator": "^3.0.0",
-    "@sap-cloud-sdk/util": "^3.0.0",
-    "@sap-cloud-sdk/odata-v4": "^3.0.0"
+    "@sap-cloud-sdk/generator": "^3.0.1",
+    "@sap-cloud-sdk/util": "^3.0.1",
+    "@sap-cloud-sdk/odata-v4": "^3.0.1"
   }
 }

@@ -16,6 +16,7 @@ export class BoundActionImportRequestBuilder<
   ParametersT,
   ReturnT
 > extends ActionFunctionImportRequestBuilderBase<
+  DeSerializersT,
   ReturnT,
   ODataBoundActionImportRequestConfig<EntityT, DeSerializersT, ParametersT>
 > {
@@ -35,7 +36,8 @@ export class BoundActionImportRequestBuilder<
         actionImportName,
         parameters,
         createODataUri(deSerializers)
-      )
+      ),
+      deSerializers
     );
 
     this.requestConfig.keys = this.requestConfig.oDataUri.getEntityKeys(

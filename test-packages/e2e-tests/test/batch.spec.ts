@@ -1,12 +1,14 @@
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
+import { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 import {
   batch,
   changeset,
+  createTestEntityById,
   createTestEntityByIdReturnId,
   returnInt,
   returnSapCloudSdk
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
-import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
-import { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
+import { first } from '@sap-cloud-sdk/util';
 import { destination } from './test-util';
 import {
   deleteEntity,
@@ -14,7 +16,7 @@ import {
 } from './test-utils/test-entity-operations';
 
 const entityKey = 456;
-const entityKeysUsedInTests = [456, 1000, 1001];
+const entityKeysUsedInTests = [77, 456, 1000, 1001];
 const requestBuilder = testEntityApi.requestBuilder();
 
 async function deleteAllCreatedEntities() {
@@ -106,5 +108,48 @@ describe('batch', () => {
     expect(retrieveResponse.isSuccess()).toBe(true);
     expect(changesetResponse.isSuccess()).toBe(true);
     expect(deleteRes.isSuccess()).toBe(true);
+  });
+
+  it('(de-)serializers should be used in batch requests with only actions', async () => {
+    // See https://github.com/SAP/cloud-sdk-js/issues/3539 for the original issue
+    const changesetResult = first(
+      await batch(changeset(createTestEntityById({ id: 77 })))
+        .withSubRequestPathType('relativeToEntity')
+        .execute(destination)
+    );
+
+    if (changesetResult?.isWriteResponses()) {
+      const deSerializedTestEntity =
+        changesetResult.responses[0].as?.(testEntityApi);
+      expect(deSerializedTestEntity).toBeDefined();
+    } else {
+      throw new Error(
+        'Expected response to be of type WriteResponse which is not the case.'
+      );
+    }
+  });
+
+  it('(de-)serializers should be used in batch requests with only bound actions', async () => {
+    const myTestEntity = testEntityApi
+      .entityBuilder()
+      .keyTestEntity(77)
+      .build();
+    const changesetResult = first(
+      await batch(
+        changeset(myTestEntity.boundActionWithoutArguments({}) as any)
+      )
+        .withSubRequestPathType('relativeToEntity')
+        .execute(destination)
+    );
+
+    if (changesetResult?.isWriteResponses()) {
+      const deSerializedTestEntity =
+        changesetResult.responses[0].as?.(testEntityApi);
+      expect(deSerializedTestEntity).toBeDefined();
+    } else {
+      throw new Error(
+        'Expected response to be of type WriteResponse which is not the case.'
+      );
+    }
   });
 });

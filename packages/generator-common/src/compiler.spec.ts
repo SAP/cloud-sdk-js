@@ -8,7 +8,7 @@ import {
   ModuleResolutionKind,
   ScriptTarget
 } from 'typescript';
-import { GlobSync } from 'glob';
+import { globSync } from 'glob';
 import {
   readCompilerOptions,
   readIncludeExcludeWithDefaults,
@@ -216,9 +216,9 @@ describe('compilation', () => {
         exclude: []
       }
     );
-    const files = new GlobSync('**/*.js', {
+    const files = globSync('**/*.js', {
       cwd: 'test-dist-1'
-    }).found;
+    });
     expect(files).toEqual(['file-1.js', 'sub-folder/file-2.js']);
   });
 
@@ -231,9 +231,9 @@ describe('compilation', () => {
         exclude: ['**/index.ts', 'test-file.spec.ts']
       }
     );
-    const files = new GlobSync('**/*.js', {
+    const files = globSync('**/*.js', {
       cwd: 'test-dist-2'
-    }).found;
+    });
     expect(files).toEqual(['file-1.js', 'sub-folder/file-2.js']);
   });
 

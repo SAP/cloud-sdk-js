@@ -13,14 +13,8 @@ jobs:
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
-      - uses: actions/cache@v3
-        id: cache
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
+          node-version: 18
+          cache: 'yarn'
       - run: yarn install --frozen-lockfile
       - run: yarn ts-node scripts/npm-stats.ts
         name: Download Stats

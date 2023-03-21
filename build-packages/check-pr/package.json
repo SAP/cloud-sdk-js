@@ -7,6 +7,8 @@
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/index.js --out ../../.github/actions/check-pr/",
+    "test": "yarn test:unit",
+    "test:unit": "jest",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check '**/*.ts'",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write '**/*.ts'",
     "check:dependencies": "depcheck --skip-missing=true .",
@@ -19,8 +21,8 @@
   "devDependencies": {
     "@vercel/ncc": "^0.36.1",
     "depcheck": "^1.4.3",
-    "eslint": "^8.35.0",
-    "prettier": "^2.8.4",
+    "eslint": "^8.36.0",
+    "prettier": "^2.8.5",
     "typescript": "^4.9.5"
   }
 }

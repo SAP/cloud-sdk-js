@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.validateBody = exports.validateChangesets = exports.validatePostamble = exports.validateTitle = void 0;
 var promises_1 = __nccwpck_require__(3977);
 var node_path_1 = __nccwpck_require__(9411);
@@ -13195,7 +13195,7 @@ var __webpack_exports__ = {};
 "use strict";
 var exports = __webpack_exports__;
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __nccwpck_require__(7117);
 var github_1 = __nccwpck_require__(4005);
 var validators_1 = __nccwpck_require__(8438);

@@ -16,7 +16,6 @@ class TestEntitySingleLink extends odata_v4_1.Entity {
         this._entityApi = _entityApi;
     }
 }
-exports.TestEntitySingleLink = TestEntitySingleLink;
 /**
  * Technical entity name for TestEntitySingleLink.
  */
@@ -29,4 +28,5 @@ TestEntitySingleLink._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
  * All key fields of the TestEntitySingleLink entity
  */
 TestEntitySingleLink._keys = ['KeyProperty'];
+exports.TestEntitySingleLink = TestEntitySingleLink;
 //# sourceMappingURL=TestEntitySingleLink.js.map

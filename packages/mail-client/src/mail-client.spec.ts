@@ -31,6 +31,9 @@ describe('mail client', () => {
 
   const mockSocket = {
     socket: {
+      _readableState: {
+        readableListening: false
+      },
       end: jest.fn(),
       destroy: jest.fn()
     }
@@ -41,7 +44,7 @@ describe('mail client', () => {
     verify: jest.fn()
   };
 
-  it('should work with destination from service', async () => {
+  it('should work with destination from service - proxy-type Internet', async () => {
     jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
@@ -51,7 +54,6 @@ describe('mail client', () => {
     };
 
     const mailClientOptions: MailClientOptions = {
-      secure: true,
       proxy: 'http://my.proxy.com:25',
       tls: {
         rejectUnauthorized: false
@@ -96,6 +98,62 @@ describe('mail client', () => {
     ).resolves.not.toThrow();
   });
 
+  it('should work with destination from service - proxy-type OnPremise', async () => {
+    jest
+      .spyOn(SocksClient, 'createConnection')
+      .mockReturnValue(mockSocket as any);
+    jest
+      .spyOn(nodemailer, 'createTransport')
+      .mockReturnValue(mockTransport as any);
+    const mailOptions1: MailConfig = {
+      from: 'from2@example.com',
+      to: 'to2@example.com'
+    };
+
+    const mailClientOptions: MailClientOptions = {
+      tls: {
+        rejectUnauthorized: false
+      }
+    };
+
+    const mailDestinationResponse: DestinationConfiguration[] = [
+      {
+        Name: 'MyMailDestination',
+        Type: 'MAIL',
+        Authentication: 'BasicAuthentication',
+        ProxyType: 'OnPremise',
+        User: 'user',
+        Password: 'password',
+        'mail.password': 'password',
+        'mail.user': 'user',
+        'mail.smtp.host': 'smtp.gmail.com',
+        'mail.smtp.port': '587'
+      }
+    ];
+    mockServiceBindings();
+    // the mockServiceToken() method does not work outside connectivity module.
+    jest
+      .spyOn(tokenAccessor, 'serviceToken')
+      .mockImplementation((_, options) =>
+        Promise.resolve(providerServiceToken)
+      );
+    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+    mockSubaccountDestinationsCall(
+      nock,
+      mailDestinationResponse,
+      200,
+      providerServiceToken
+    );
+
+    await expect(
+      sendMail(
+        { destinationName: 'MyMailDestination' },
+        [mailOptions1],
+        mailClientOptions
+      )
+    ).resolves.not.toThrow();
+  });
+
   it('should work with registered destination', async () => {
     jest
       .spyOn(nodemailer, 'createTransport')
@@ -106,7 +164,6 @@ describe('mail client', () => {
     };
 
     const mailClientOptions: MailClientOptions = {
-      secure: true,
       proxy: 'http://my.proxy.com:25',
       tls: {
         rejectUnauthorized: false
@@ -172,7 +229,6 @@ describe('mail client', () => {
     };
 
     const mailClientOptions: MailClientOptions = {
-      secure: true,
       proxy: 'http://my.proxy.com:25',
       tls: {
         rejectUnauthorized: false

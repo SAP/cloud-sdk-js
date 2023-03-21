@@ -24,7 +24,7 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "eslint-config-prettier": "^8.7.0"
+    "eslint-config-prettier": "^8.8.0"
   },
   "peerDependencies": {
     "@typescript-eslint/parser": "^5.21.0",

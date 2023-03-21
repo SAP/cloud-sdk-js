@@ -339,7 +339,7 @@ interface ReadableState {
 }
 
 /**
- * Represent a Socket object used fon OnPrem proxy.
+ * Represents a socket object used fon On-Premise proxy.
  * @internal
  */
 export interface SocksSocket extends net.Socket {

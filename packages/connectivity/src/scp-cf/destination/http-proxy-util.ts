@@ -48,30 +48,38 @@ export function proxyStrategy(destination: Destination): ProxyStrategy {
 
   if (isHttpDestination(destination)) {
     const destinationProtocol = getProtocolOrDefault(destination);
-    if (!getProxyEnvValue(destinationProtocol)) {
-      logger.debug(
-        `Could not find proxy settings for ${destinationProtocol} in the environment variables - no proxy used.`
-      );
-      return 'no-proxy';
-    }
+    return getProxyStrategyFromProxyEnvValue(
+      destinationProtocol,
+      destination.url
+    );
+  }
+  return 'no-proxy';
+}
 
-    if (getNoProxyEnvValue().includes(destination.url)) {
-      logger.debug(
-        `Destination URL ${
-          destination.url
-        } is in no_proxy list: ${getNoProxyEnvValue()} - no proxy used.`
-      );
-      return 'no-proxy';
-    }
-
-    if (getProxyEnvValue(destinationProtocol)) {
-      logger.debug(
-        `Proxy settings for ${destinationProtocol} are found in environment variables.`
-      );
-      return 'internet';
-    }
+function getProxyStrategyFromProxyEnvValue(
+  protocol: Protocol,
+  destinationUrl: string
+): ProxyStrategy {
+  if (!getProxyEnvValue(protocol)) {
+    logger.debug(
+      `Could not find proxy settings for ${protocol} in the environment variables - no proxy used.`
+    );
+    return 'no-proxy';
   }
 
+  if (getNoProxyEnvValue().includes(destinationUrl)) {
+    logger.debug(
+      `Destination URL ${destinationUrl} is in no_proxy list: ${getNoProxyEnvValue()} - no proxy used.`
+    );
+    return 'no-proxy';
+  }
+
+  if (getProxyEnvValue(protocol)) {
+    logger.debug(
+      `Proxy settings for ${protocol} are found in environment variables.`
+    );
+    return 'internet';
+  }
   return 'no-proxy';
 }
 

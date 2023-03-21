@@ -16,7 +16,6 @@ class People extends odata_v4_1.Entity {
         this._entityApi = _entityApi;
     }
 }
-exports.People = People;
 /**
  * Technical entity name for People.
  */
@@ -29,4 +28,5 @@ People._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
  * All key fields of the People entity
  */
 People._keys = ['UserName'];
+exports.People = People;
 //# sourceMappingURL=People.js.map

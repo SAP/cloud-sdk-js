@@ -46,7 +46,6 @@ class TestEntityWithMultipleKeys extends odata_v4_1.Entity {
         return new odata_v4_1.BoundActionImportRequestBuilder(this._entityApi, this, 'boundActionWithoutArgumentsWithMultipleKeys', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers || odata_v4_1.defaultDeSerializers)), params, deSerializers || odata_v4_1.defaultDeSerializers);
     }
 }
-exports.TestEntityWithMultipleKeys = TestEntityWithMultipleKeys;
 /**
  * Technical entity name for TestEntityWithMultipleKeys.
  */
@@ -63,4 +62,5 @@ TestEntityWithMultipleKeys._keys = [
     'StringPropertyWithMultipleKeys',
     'BooleanPropertyWithMultipleKeys'
 ];
+exports.TestEntityWithMultipleKeys = TestEntityWithMultipleKeys;
 //# sourceMappingURL=TestEntityWithMultipleKeys.js.map

@@ -330,3 +330,21 @@ export interface SmtpTransportOptions {
    */
   proxy?: string;
 }
+
+/**
+ * @internal
+ */
+interface ReadableState {
+  readableListening: boolean;
+}
+
+/**
+ * Represent a Socket object used fon OnPrem proxy.
+ * @internal
+ */
+export interface SocksSocket extends net.Socket {
+  /**
+   * @internal
+   */
+  _readableState: ReadableState;
+}

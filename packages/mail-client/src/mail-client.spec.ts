@@ -98,8 +98,8 @@ describe('mail client', () => {
 
   it('should work with destination from service - proxy-type OnPremise', async () => {
     jest
-    .spyOn(SocksClient, 'createConnection')
-    .mockReturnValue(mockSocket as any);
+      .spyOn(SocksClient, 'createConnection')
+      .mockReturnValue(mockSocket as any);
     jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
@@ -176,51 +176,6 @@ describe('mail client', () => {
       type: 'MAIL',
       authentication: 'BasicAuthentication',
       proxyType: 'Internet',
-      username: 'user',
-      password: 'password',
-      originalProperties: {
-        'mail.password': 'password',
-        'mail.user': 'user',
-        'mail.smtp.host': 'smtp.gmail.com',
-        'mail.smtp.port': '587'
-      }
-    };
-
-    registerDestination(mailDestination);
-    await expect(
-      sendMail(
-        { destinationName: 'MyMailDestination' },
-        [mailOptions1],
-        mailClientOptions
-      )
-    ).resolves.not.toThrow();
-  });
-
-  xit('should work with registered destination- proxy-type OnPremise', async () => {
-    jest
-    .spyOn(SocksClient, 'createConnection')
-    .mockReturnValue(mockSocket as any);
-    jest
-      .spyOn(nodemailer, 'createTransport')
-      .mockReturnValue(mockTransport as any);
-    const mailOptions1: MailConfig = {
-      from: 'from2@example.com',
-      to: 'to2@example.com'
-    };
-
-    const mailClientOptions: MailClientOptions = {
-      secure: true,
-      tls: {
-        rejectUnauthorized: false
-      }
-    };
-
-    mockServiceBindings();
-    const mailDestination: DestinationWithName = {
-      name: 'MyMailDestination',
-      type: 'MAIL',
-      authentication: 'BasicAuthentication',
-      proxyType: 'OnPremise',
       username: 'user',
       password: 'password',
       originalProperties: {

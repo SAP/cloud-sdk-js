@@ -1,5 +1,4 @@
 ---
-'@sap-cloud-sdk/connectivity': patch
 '@sap-cloud-sdk/mail-client': patch
 ---
 

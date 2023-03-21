@@ -111,7 +111,7 @@
     "license-checker": "^25.0.1",
     "madge": "^6.0.0",
     "prettier": "^2.8.4",
-    "puppeteer": "^19.0.0",
+    "puppeteer": "^19.7.5",
     "semver": "^7.3.8",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.9.1",

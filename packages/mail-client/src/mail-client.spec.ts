@@ -51,7 +51,6 @@ describe('mail client', () => {
     };
 
     const mailClientOptions: MailClientOptions = {
-      secure: true,
       proxy: 'http://my.proxy.com:25',
       tls: {
         rejectUnauthorized: false
@@ -109,7 +108,6 @@ describe('mail client', () => {
     };
 
     const mailClientOptions: MailClientOptions = {
-      secure: true,
       tls: {
         rejectUnauthorized: false
       }
@@ -163,7 +161,6 @@ describe('mail client', () => {
     };
 
     const mailClientOptions: MailClientOptions = {
-      secure: true,
       proxy: 'http://my.proxy.com:25',
       tls: {
         rejectUnauthorized: false
@@ -229,7 +226,6 @@ describe('mail client', () => {
     };
 
     const mailClientOptions: MailClientOptions = {
-      secure: true,
       proxy: 'http://my.proxy.com:25',
       tls: {
         rejectUnauthorized: false

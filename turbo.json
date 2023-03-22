@@ -16,24 +16,15 @@
       "dependsOn": ["^compile", "^generate"]
     },
     "check": {
-      "dependsOn": ["^compile", "check:circular", "check:dependencies", "check:license", "check:test-service", "check:public-api"]
+      "dependsOn": ["^compile", "check:dependencies", "check:public-api"]
     },
     "readme": {
       "dependsOn": ["@sap-cloud-sdk/util#compile"],
       "outputs": ["README.md"]
     },
-    "check:circular": {
-
-    },
     "check:dependencies": {
       "dependsOn": ["^compile"],
       "outputs": []
-    },
-    "check:license": {
-
-    },
-    "check:test-service": {
-
     },
     "check:public-api": {
       "dependsOn": ["@sap-cloud-sdk/util#compile"],

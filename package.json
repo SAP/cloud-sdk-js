@@ -50,7 +50,6 @@
     "test": "turbo run test",
     "check": "turbo run check",
     "test:unit": "turbo run test --filter=./packages/*",
-    "test:build-packages": "turbo run test --filter=./build-packages/*",
     "test:integration": "turbo run test --filter=integration-tests",
     "test:type": "turbo run test --filter=type-tests",
     "test:e2e": "turbo run test --filter=e2e-tests",

@@ -39,7 +39,6 @@ jobs:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - run: yarn test:integration
       - run: yarn test:self
-      - run: yarn test:build-packages
       - run: yarn test:type
   checks:
     runs-on: ubuntu-latest

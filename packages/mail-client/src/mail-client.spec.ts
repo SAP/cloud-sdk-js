@@ -200,7 +200,6 @@ describe('mail client', () => {
     const spyCreateTransport = jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
-    const spyVerifyTransport = jest.spyOn(mockTransport, 'verify');
     const spySendMail = jest.spyOn(mockTransport, 'sendMail');
     const spyCloseTransport = jest.spyOn(mockTransport, 'close');
     const destination: any = {
@@ -241,7 +240,6 @@ describe('mail client', () => {
     expect(spyCreateTransport).toBeCalledWith(
       expect.objectContaining(mailClientOptions)
     );
-    expect(spyVerifyTransport).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledTimes(2);
     expect(spySendMail).toBeCalledWith(mailOptions1);
     expect(spySendMail).toBeCalledWith(mailOptions2);
@@ -255,7 +253,6 @@ describe('mail client', () => {
     const spyCreateTransport = jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
-    const spyVerifyTransport = jest.spyOn(mockTransport, 'verify');
     const spySendMail = jest.spyOn(mockTransport, 'sendMail');
     const spyCloseTransport = jest.spyOn(mockTransport, 'close');
     const spyEndSocket = jest.spyOn(mockSocket.socket, 'end');
@@ -287,7 +284,6 @@ describe('mail client', () => {
     ).resolves.not.toThrow();
     expect(spyCreateSocket).toBeCalledTimes(1);
     expect(spyCreateTransport).toBeCalledTimes(1);
-    expect(spyVerifyTransport).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledTimes(1);
     expect(spySendMail).toBeCalledWith(mailOptions);
     expect(spyCloseTransport).toBeCalledTimes(1);

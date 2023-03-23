@@ -58,7 +58,7 @@
     "doc": "ts-node scripts/generate-docs.ts",
     "preversion": "ts-node scripts/before-bump.ts",
     "version": "changeset version",
-    "postversion": "yarn generate --force && yarn doc && ts-node scripts/after-bump.ts",
+    "postversion": "yarn generate && yarn doc && ts-node scripts/after-bump.ts",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix --force",
     "check:circular": "madge --extensions ts --ts-config=./tsconfig.json --circular --exclude 'dist|test-packages|connectivity/src/scp-cf/environment-accessor.ts|http-client/src/csrf-token-header.ts' ./packages",

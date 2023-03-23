@@ -106,13 +106,7 @@ Individual checks can be run with individual scripts:
 $ yarn check:MY_CHECK
 ```
 
-Where `MY_CHECK` can be any of those:
-
-- `circular`
-- `dependencies`
-- `license`
-- `test-service`
-- `public-api`
+Where `MY_CHECK` can be any of the checks defined in the top level [`package.json`](./package.json) file.
 
 ## Linting
 

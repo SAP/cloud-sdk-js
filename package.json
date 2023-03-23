@@ -85,7 +85,7 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.0",
+    "@changesets/cli": "^2.26.1",
     "@types/jest": "^29.5.0",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/license-checker": "^25.0.1",

@@ -238,13 +238,6 @@ async function sendMailWithNodemailer<T extends MailConfig>(
     mailClientOptions,
     socket
   );
-  transport.verify(function (error) {
-    if (error) {
-      logger.debug(`The verification of the transport failed: ${error}`);
-    } else {
-      logger.debug('The transport is successfully verified.');
-    }
-  });
 
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);

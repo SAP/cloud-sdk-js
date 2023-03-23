@@ -1,5 +1,12 @@
 # @sap-cloud-sdk/e2e-tests
 
+## 3.0.2
+
+### Patch Changes
+
+- 2fa8c36a6: [Compatibility Note] The `ActionFunctionImportRequestBuilderBase` has an additional mandatory type parameter to pass the according (de-)serializer type. This was missing previously due to a bug.
+- 2fa8c36a6: [Fixed Issue] Fix batch requests to accept only functions or actions.
+
 ## 3.0.1
 
 ## 3.0.0

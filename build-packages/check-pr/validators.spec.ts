@@ -3,6 +3,7 @@ import { validateTitle, validateBody, validateChangesets } from './validators';
 
 const prTemplate = `unchanged PR template
 with multiple lines`;
+
 describe('check-pr', () => {
   beforeAll(() => {
     mock({

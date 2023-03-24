@@ -48,7 +48,7 @@ interface XsuaaParameters {
 }
 
 /**
- * Make a user token request against the XSUAA service.
+ * Make a client credentials request against the XSUAA service.
  * @param service - Service as it is defined in the environment variable.
  * @param userJwt - User JWT.
  * @returns Client credentials token.

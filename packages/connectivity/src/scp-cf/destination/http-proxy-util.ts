@@ -11,7 +11,11 @@ import {
   HttpsAgentConfig
 } from '../../http-agent/agent-config';
 import { getProtocolOrDefault } from '../get-protocol';
-import { HttpDestination } from './destination-service-types';
+import {
+  Destination,
+  HttpDestination,
+  isHttpDestination
+} from './destination-service-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -27,7 +31,7 @@ type ProxyStrategy = 'no-proxy' | 'on-premise' | 'internet' | 'private-link';
  * @param destination - Destination to derive the proxy strategy from.
  * @returns The proxy strategy for the given destination.
  */
-export function proxyStrategy(destination: HttpDestination): ProxyStrategy {
+export function proxyStrategy(destination: Destination): ProxyStrategy {
   if (destination.proxyType === 'OnPremise') {
     logger.debug(
       'OnPrem destination proxy settings from connectivity service will be used.'
@@ -42,30 +46,40 @@ export function proxyStrategy(destination: HttpDestination): ProxyStrategy {
     return 'private-link';
   }
 
-  const destinationProtocol = getProtocolOrDefault(destination);
-  if (!getProxyEnvValue(destinationProtocol)) {
+  if (isHttpDestination(destination)) {
+    const destinationProtocol = getProtocolOrDefault(destination);
+    return getProxyStrategyFromProxyEnvValue(
+      destinationProtocol,
+      destination.url
+    );
+  }
+  return 'no-proxy';
+}
+
+function getProxyStrategyFromProxyEnvValue(
+  protocol: Protocol,
+  destinationUrl: string
+): ProxyStrategy {
+  if (!getProxyEnvValue(protocol)) {
     logger.debug(
-      `Could not find proxy settings for ${destinationProtocol} in the environment variables - no proxy used.`
+      `Could not find proxy settings for ${protocol} in the environment variables - no proxy used.`
     );
     return 'no-proxy';
   }
 
-  if (getNoProxyEnvValue().includes(destination.url)) {
+  if (getNoProxyEnvValue().includes(destinationUrl)) {
     logger.debug(
-      `Destination URL ${
-        destination.url
-      } is in no_proxy list: ${getNoProxyEnvValue()} - no proxy used.`
+      `Destination URL ${destinationUrl} is in no_proxy list: ${getNoProxyEnvValue()} - no proxy used.`
     );
     return 'no-proxy';
   }
 
-  if (getProxyEnvValue(destinationProtocol)) {
+  if (getProxyEnvValue(protocol)) {
     logger.debug(
-      `Proxy settings for ${destinationProtocol} are found in environment variables.`
+      `Proxy settings for ${protocol} are found in environment variables.`
     );
     return 'internet';
   }
-
   return 'no-proxy';
 }
 

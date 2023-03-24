@@ -1,4 +1,3 @@
-import { Socket } from 'net';
 import {
   Destination,
   DestinationOrFetchOptions,
@@ -14,7 +13,8 @@ import {
   MailClientOptions,
   MailConfig,
   MailDestination,
-  MailResponse
+  MailResponse,
+  SocksSocket
 } from './mail-client-types';
 import {
   customAuthRequestHandler,
@@ -116,7 +116,9 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
   };
 }
 
-async function createSocket(mailDestination: MailDestination): Promise<Socket> {
+async function createSocket(
+  mailDestination: MailDestination
+): Promise<SocksSocket> {
   const connectionOptions: SocksClientOptions = {
     proxy: buildSocksProxy(mailDestination),
     command: 'connect',
@@ -128,13 +130,18 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
   const socketConnection = await SocksClient.createConnection(
     connectionOptions
   );
-  return socketConnection.socket;
+
+  const socksSocket = socketConnection.socket as SocksSocket;
+  // Setting `_readableListening` to true in the next line makes the socket readable.
+  // Otherwise nodemailer is not able to receive the SMTP greeting message and send emails.
+  socksSocket._readableState.readableListening = true;
+  return socksSocket;
 }
 
 function createTransport(
   mailDestination: MailDestination,
   mailClientOptions?: MailClientOptions,
-  socket?: Socket
+  socket?: SocksSocket
 ): Transporter<SentMessageInfo> {
   const baseOptions: Options = {
     pool: true,
@@ -222,7 +229,7 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   mailConfigs: T[],
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
-  let socket: Socket | undefined;
+  let socket: SocksSocket | undefined;
   if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
   }
@@ -231,13 +238,6 @@ async function sendMailWithNodemailer<T extends MailConfig>(
     mailClientOptions,
     socket
   );
-  transport.verify(function (error) {
-    if (error) {
-      logger.debug(`The verification of the transport failed: ${error}`);
-    } else {
-      logger.debug('The transport is successfully verified.');
-    }
-  });
 
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
@@ -261,7 +261,10 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   return response;
 }
 
-function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
+function teardown(
+  transport: Transporter<SentMessageInfo>,
+  socket?: SocksSocket
+) {
   transport.close();
   logger.debug('SMTP transport connection closed.');
   if (socket) {

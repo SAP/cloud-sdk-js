@@ -230,7 +230,7 @@ export interface MailDestination {
   host?: string;
   /**
    * Port of the mail server.
-   * Based on the additional destination property 'mail.password'.
+   * Based on the additional destination property 'mail.smtp.port'.
    */
   port?: number;
   /**
@@ -329,4 +329,22 @@ export interface SmtpTransportOptions {
    * A proxy URL used for connecting the SMTP server. This value will be forwarded to the underlying `nodemailer` lib, so it handles the proxy job for the SDK.
    */
   proxy?: string;
+}
+
+/**
+ * @internal
+ */
+interface ReadableState {
+  readableListening: boolean;
+}
+
+/**
+ * Represents a socket object used fon On-Premise proxy.
+ * @internal
+ */
+export interface SocksSocket extends net.Socket {
+  /**
+   * @internal
+   */
+  _readableState: ReadableState;
 }

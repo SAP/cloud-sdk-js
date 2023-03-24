@@ -28,6 +28,23 @@
 
 - 
 
+# 3.0.2
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.0.2
+
+## Compatibility Notes
+
+- [odata-common, odata-v2, odata-v4] The `ActionFunctionImportRequestBuilderBase` has an additional mandatory type parameter to pass the according (de-)serializer type. This was missing previously due to a bug. (2fa8c36a6)
+
+## Fixed Issues
+
+- [connectivity] Fix the `The proxy configuration is undefined` error for OnPrem `MAIL` destinations by removing the `isHttpDestination` check when adding proxyConfiguration to the destination object.
+  - @sap-cloud-sdk/resilience@3.0.2
+  - @sap-cloud-sdk/util@3.0.2 (47fc7278d)
+- [mail-client] Fix error `Greeting never received` when sending emails to On-Premise mail servers. The `_readableListening` property of socket is set to `true` to allow nodemailer to receive SMTP greeting messages. (47fc7278d)
+- [mail-client] Fix `Invalid greeting` error from nodemailer by removing the `transport.verify` function call. (be04dafc2)
+- [odata-common, odata-v2, odata-v4] Fix batch requests to accept only functions or actions. (2fa8c36a6)
+
 # 3.0.1
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.0.1

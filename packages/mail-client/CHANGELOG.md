@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/mail-client
 
+## 3.0.2
+
+### Patch Changes
+
+- 47fc7278d: [Fixed Issue] Fix error `Greeting never received` when sending emails to On-Premise mail servers. The `_readableListening` property of socket is set to `true` to allow nodemailer to receive SMTP greeting messages.
+- be04dafc2: [Fixed Issue] Fix `Invalid greeting` error from nodemailer by removing the `transport.verify` function call.
+- Updated dependencies [47fc7278d]
+  - @sap-cloud-sdk/connectivity@3.0.2
+  - @sap-cloud-sdk/util@3.0.2
+
 ## 3.0.1
 
 ### Patch Changes

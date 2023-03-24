@@ -45,6 +45,7 @@ function getAllStats(browser) {
     '@sap-cloud-sdk/eslint-config',
     '@sap-cloud-sdk/temporal-de-serializers',
     '@sap-cloud-sdk/odata-common',
+    '@sap-cloud-sdk/resilience',
     '@sap/cds'
   ].map(packageName => {
     return getStatsForPackage(browser, packageName);

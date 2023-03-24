@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.0.2
+
+### Patch Changes
+
+- 47fc7278d: [Fixed Issue] Fix the `The proxy configuration is undefined` error for OnPrem `MAIL` destinations by removing the `isHttpDestination` check when adding proxyConfiguration to the destination object.
+  - @sap-cloud-sdk/resilience@3.0.2
+  - @sap-cloud-sdk/util@3.0.2
+
 ## 3.0.1
 
 ### Patch Changes

@@ -57,6 +57,7 @@ export type {
   Selectable,
   SimpleTypeFields,
   NullableFieldType,
+  FieldTypeByEdmType,
   EntityTypeFromFieldOf,
   IsSelectableField,
   ComplexTypePropertyFields,

@@ -1,11 +1,23 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import mock from 'mock-fs';
 import { validateTitle, validateBody, validateChangesets } from './validators';
 
+const prTemplate = `unchanged PR template
+with multiple lines`;
+
 describe('check-pr', () => {
+  beforeAll(() => {
+    mock({
+      '.github': {
+        'PULL_REQUEST_TEMPLATE.md': prTemplate
+      }
+    });
+  });
+
   beforeEach(() => {
     process.exitCode = 0;
   });
+
+  afterAll(() => mock.restore());
 
   describe('validateTitle', () => {
     it('should validate title with proper structure', async () => {
@@ -46,20 +58,12 @@ describe('check-pr', () => {
     });
 
     it('should invalidate body with only template', async () => {
-      const template = await readFile(
-        resolve('.github', 'PULL_REQUEST_TEMPLATE.md'),
-        'utf-8'
-      );
-      await validateBody(template);
+      await validateBody(prTemplate);
       expect(process.exitCode).toEqual(1);
     });
 
     it('should invalidate with description including unchanged template', async () => {
-      const template = await readFile(
-        resolve('.github', 'PULL_REQUEST_TEMPLATE.md'),
-        'utf-8'
-      );
-      await validateBody(template.concat('test'));
+      await validateBody(`${prTemplate} with changes`);
       expect(process.exitCode).toEqual(1);
     });
   });

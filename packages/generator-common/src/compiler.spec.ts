@@ -1,5 +1,5 @@
 import { promises } from 'fs';
-import path, { resolve } from 'path';
+import { resolve, join } from 'path';
 import { EOL } from 'os';
 import mock from 'mock-fs';
 import {
@@ -219,7 +219,7 @@ describe('compilation', () => {
     const files = globSync('**/*.js', {
       cwd: 'test-dist-1'
     });
-    expect(files).toEqual(['file-1.js', path.join('sub-folder', 'file-2.js')]);
+    expect(files).toEqual(['file-1.js', join('sub-folder', 'file-2.js')]);
   });
 
   it('considers exclude correctly', async () => {
@@ -234,7 +234,7 @@ describe('compilation', () => {
     const files = globSync('**/*.js', {
       cwd: 'test-dist-2'
     });
-    expect(files).toEqual(['file-1.js', path.join('sub-folder', 'file-2.js')]);
+    expect(files).toEqual(['file-1.js', join('sub-folder', 'file-2.js')]);
   });
 
   it('throws error with file information on broken source file', async () => {

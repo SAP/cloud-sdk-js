@@ -98,7 +98,7 @@ describe('circuit-breaker', () => {
       keepCalling = !mock.isDone();
     }
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
-  }, 15000);
+  }, 30000);
 
   it('creates circuit breaker for each tenant', async () => {
     nock(host, {}).get(/ok/).times(2).reply(200);

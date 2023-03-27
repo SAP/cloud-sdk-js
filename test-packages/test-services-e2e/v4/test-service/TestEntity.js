@@ -56,7 +56,6 @@ class TestEntity extends odata_v4_1.Entity {
         return new odata_v4_1.BoundActionImportRequestBuilder(this._entityApi, this, 'boundActionWithoutArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers || odata_v4_1.defaultDeSerializers)), params, deSerializers || odata_v4_1.defaultDeSerializers);
     }
 }
-exports.TestEntity = TestEntity;
 /**
  * Technical entity name for TestEntity.
  */
@@ -69,4 +68,5 @@ TestEntity._defaultBasePath = '/odata/test-service';
  * All key fields of the TestEntity entity
  */
 TestEntity._keys = ['KeyTestEntity'];
+exports.TestEntity = TestEntity;
 //# sourceMappingURL=TestEntity.js.map

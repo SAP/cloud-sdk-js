@@ -16,7 +16,6 @@ class TestEntityMultiLink extends odata_v4_1.Entity {
         this._entityApi = _entityApi;
     }
 }
-exports.TestEntityMultiLink = TestEntityMultiLink;
 /**
  * Technical entity name for TestEntityMultiLink.
  */
@@ -29,4 +28,5 @@ TestEntityMultiLink._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
  * All key fields of the TestEntityMultiLink entity
  */
 TestEntityMultiLink._keys = ['KeyProperty'];
+exports.TestEntityMultiLink = TestEntityMultiLink;
 //# sourceMappingURL=TestEntityMultiLink.js.map

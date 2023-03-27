@@ -16,7 +16,6 @@ class TestEntityCircularLinkChild extends odata_v4_1.Entity {
         this._entityApi = _entityApi;
     }
 }
-exports.TestEntityCircularLinkChild = TestEntityCircularLinkChild;
 /**
  * Technical entity name for TestEntityCircularLinkChild.
  */
@@ -29,4 +28,5 @@ TestEntityCircularLinkChild._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV'
  * All key fields of the TestEntityCircularLinkChild entity
  */
 TestEntityCircularLinkChild._keys = ['KeyProperty'];
+exports.TestEntityCircularLinkChild = TestEntityCircularLinkChild;
 //# sourceMappingURL=TestEntityCircularLinkChild.js.map

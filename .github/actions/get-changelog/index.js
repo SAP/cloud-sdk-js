@@ -6,7 +6,7 @@
 
 "use strict";
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getChangelog = void 0;
 var fs_1 = __nccwpck_require__(147);
 var get_package_version_1 = __nccwpck_require__(761);
@@ -31,7 +31,7 @@ exports.getChangelog = getChangelog;
 
 "use strict";
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getPackageVersion = void 0;
 var fs_1 = __nccwpck_require__(147);
 var getPackageVersion = function (pathToRootPackageJson) {
@@ -2862,7 +2862,7 @@ var __webpack_exports__ = {};
 "use strict";
 var exports = __webpack_exports__;
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __nccwpck_require__(117);
 var get_changelog_1 = __nccwpck_require__(778);
 try {

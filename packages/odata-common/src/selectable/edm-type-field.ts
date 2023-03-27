@@ -20,7 +20,6 @@ export type NullableFieldType<
  * Convenience type that maps the given EDM type to a field type. It also considers whether the field is nullable.
  * @typeParam EdmT - EDM type of the field. Deprecated: Field type of the field.
  * @typeParam NullableT - Boolean type that represents whether the field is nullable.
- * @internal
  */
 export type FieldTypeByEdmType<
   T extends DeSerializers,

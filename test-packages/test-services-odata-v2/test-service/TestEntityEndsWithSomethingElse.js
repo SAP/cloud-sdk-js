@@ -16,7 +16,6 @@ class TestEntityEndsWithSomethingElse extends odata_v2_1.Entity {
         this._entityApi = _entityApi;
     }
 }
-exports.TestEntityEndsWithSomethingElse = TestEntityEndsWithSomethingElse;
 /**
  * Technical entity name for TestEntityEndsWithSomethingElse.
  */
@@ -29,4 +28,5 @@ TestEntityEndsWithSomethingElse._defaultBasePath = '/sap/opu/odata/sap/API_TEST_
  * All key fields of the TestEntityEndsWithSomethingElse entity
  */
 TestEntityEndsWithSomethingElse._keys = ['KeyProperty'];
+exports.TestEntityEndsWithSomethingElse = TestEntityEndsWithSomethingElse;
 //# sourceMappingURL=TestEntityEndsWithSomethingElse.js.map

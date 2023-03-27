@@ -16,7 +16,6 @@ class TestEntityWithEnumKey extends odata_v4_1.Entity {
         this._entityApi = _entityApi;
     }
 }
-exports.TestEntityWithEnumKey = TestEntityWithEnumKey;
 /**
  * Technical entity name for TestEntityWithEnumKey.
  */
@@ -29,4 +28,5 @@ TestEntityWithEnumKey._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
  * All key fields of the TestEntityWithEnumKey entity
  */
 TestEntityWithEnumKey._keys = ['KeyPropertyEnum1'];
+exports.TestEntityWithEnumKey = TestEntityWithEnumKey;
 //# sourceMappingURL=TestEntityWithEnumKey.js.map

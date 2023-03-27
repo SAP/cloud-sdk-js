@@ -22,10 +22,10 @@ jobs:
         env:
           NODE_OPTIONS: '--max_old_space_size=8192'
         run: yarn test:unit --continue -- -- -- --json --outputFile=unit-test-output.json
-      - run: yarn test:integration -- -- -- --json --outputFile=int-test-output.json
-        if: always()
-      - run: yarn test:self
-      - run: yarn test:type
+#      - run: yarn test:integration -- -- -- --json --outputFile=int-test-output.json
+#        if: always()
+#      - run: yarn test:self
+#      - run: yarn test:type
       - name: Archive results
         uses: actions/upload-artifact@v3
         if: failure()

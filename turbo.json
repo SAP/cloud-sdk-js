@@ -10,10 +10,13 @@
   ],
   "pipeline": {
     "compile": {
-      "dependsOn": ["^compile", "check:dependencies"]
+      "dependsOn": ["^compile"]
     },
     "test": {
       "dependsOn": ["^compile", "^generate"]
+    },
+    "check": {
+      "dependsOn": ["^compile", "check:dependencies", "check:public-api"]
     },
     "readme": {
       "dependsOn": ["@sap-cloud-sdk/util#compile"],

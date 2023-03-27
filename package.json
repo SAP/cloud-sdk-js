@@ -62,6 +62,7 @@
     "postversion": "yarn generate && yarn doc && ts-node scripts/after-bump.ts",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix --force",
+    "checks": "turbo run check && yarn run check:circular && yarn run check:license && yarn run check:test-service",
     "check:circular": "madge --extensions ts --ts-config=./tsconfig.json --circular --exclude 'dist|test-packages|connectivity/src/scp-cf/environment-accessor.ts|http-client/src/csrf-token-header.ts' ./packages",
     "check:dependencies": "turbo run check:dependencies",
     "check:license": "ts-node scripts/check-licenses.ts",

@@ -89,6 +89,25 @@ So if you made code changes in one of the packages you need to run `yarn compile
 For manual E2E to a real remote system we have also some tests against the [TripPin service](https://www.odata.org/blog/trippin-new-odata-v4-sample-service/) which is the standard OData V4 sample service.
 Since the remote service is not really stable we commented out the tests under [test-packages/e2e-tests/test/TripPin](./test-packages/e2e-tests/test/TripPin) but for manual testing they can be useful.
 
+## Checks
+
+To perform all available checks, run:
+
+```bash
+$ yarn checks
+```
+
+> **Warning**
+> Please note the plural s which is needed because yarn has its own (legacy) 'check' command which is not recommended to be used.
+
+Individual checks can be run with individual scripts:
+
+```bash
+$ yarn check:MY_CHECK
+```
+
+Where `MY_CHECK` can be any of the checks defined in the top level [`package.json`](./package.json) file.
+
 ## Linting
 
 To fix all linting issues, run:

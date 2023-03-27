@@ -44,6 +44,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.validateBody = exports.validateChangesets = exports.validatePostamble = exports.validateTitle = void 0;
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable jsdoc/require-jsdoc */
 var promises_1 = __nccwpck_require__(3977);
 var node_path_1 = __nccwpck_require__(9411);
 var core_1 = __nccwpck_require__(7117);

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable jsdoc/require-jsdoc */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { getInput, setFailed, info } from '@actions/core';

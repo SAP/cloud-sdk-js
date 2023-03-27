@@ -37,7 +37,6 @@
     "axios": "^1.3.4",
     "chalk": "^4.1.0",
     "logform": "^2.5.1",
-    "promise.allsettled": "^1.0.6",
     "voca": "^1.4.0",
     "winston": "^3.8.2",
     "winston-transport": "^4.5.0"

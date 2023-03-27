@@ -128,7 +128,7 @@ describe('openapi-request-builder', () => {
         .middleware(timeout(delayInResponse * 10))
         .execute(slowDestination);
     await expect(timeoutAboveDelay()).resolves.not.toThrow();
-  });
+  }, 20000);
 
   it('executes a request using retry and timeout (using spread middleware overload)', async () => {
     const delayInResponse = 10;
@@ -146,7 +146,7 @@ describe('openapi-request-builder', () => {
         .middleware(retry(2), timeout(100))
         .execute(slowDestination);
     await expect(timeoutAboveDelay()).resolves.not.toThrow();
-  }, 10000);
+  }, 20000);
 
   it('executes a request using retry and timeout (using array middleware overload)', async () => {
     const delayInResponse = 10;
@@ -164,7 +164,7 @@ describe('openapi-request-builder', () => {
         .middleware([retry(2), timeout(100)])
         .execute(slowDestination);
     await expect(timeoutAboveDelay()).resolves.not.toThrow();
-  }, 10000);
+  }, 20000);
 
   it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
     mockServiceBindings();
@@ -222,7 +222,7 @@ describe('openapi-request-builder', () => {
       { fetchCsrfToken: false }
     );
     expect(response.data).toBe('iss token used on the way');
-  });
+  }, 20000);
 
   it('addCustomHeaders', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');

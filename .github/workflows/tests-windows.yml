@@ -20,7 +20,7 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: 'Unit Test'
         env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
+          NODE_OPTIONS: "--max_old_space_size=8192"
         run: yarn test:unit --continue -- -- -- --json --outputFile=unit-test-output.json
       - run: yarn test:integration -- -- -- --json --outputFile=int-test-output.json
         if: always()

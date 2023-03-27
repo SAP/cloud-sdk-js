@@ -18,9 +18,10 @@ jobs:
         with:
           node-version: 18
       - run: yarn install --frozen-lockfile
-      - run: |
-         export NODE_OPTIONS="--max_old_space_size=4096"
-         yarn test:unit --continue -- -- -- --json --outputFile=unit-test-output.json
+      - name: 'Unit Test'
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: yarn test:unit --continue -- -- -- --json --outputFile=unit-test-output.json
       - run: yarn test:integration -- -- -- --json --outputFile=int-test-output.json
         if: always()
       - run: yarn test:self

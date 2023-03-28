@@ -1,38 +1,25 @@
-import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
-import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { asc, desc } from '@sap-cloud-sdk/odata-common';
 import { timeout } from '@sap-cloud-sdk/resilience';
-import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
+import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import nock from 'nock';
 import {
-  defaultDestination,
-  mockCountRequest,
-  mockDestinationsEnv,
-  mockGetRequest,
-  unmockDestinationsEnv,
-  createOriginalTestEntityData1,
-  createOriginalTestEntityData2,
-  expectAllMocksUsed,
   certificateMultipleResponse,
-  certificateSingleResponse,
-  mockInstanceDestinationsCall,
+  certificateSingleResponse, createOriginalTestEntityData1,
+  createOriginalTestEntityData2, createOriginalTestEntityDataWithLinks, defaultDestination, expectAllMocksUsed, mockCountRequest,
+  mockDestinationsEnv,
+  mockGetRequest, mockInstanceDestinationsCall,
   mockServiceBindings,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   onlyIssuerServiceToken,
-  onlyIssuerXsuaaUrl,
-  providerXsuaaUrl,
-  providerServiceToken,
-  createOriginalTestEntityDataWithLinks
+  onlyIssuerXsuaaUrl, providerServiceToken, providerXsuaaUrl, unmockDestinationsEnv
 } from '../../../../test-resources/test/test-util';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
+import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
-  testEntityApi,
-  testEntitySingleLinkApi,
-  createTestEntity,
-  testEntityApiCustom,
-  createTestEntityWithCustomDeSerializers
+  createTestEntity, createTestEntityWithCustomDeSerializers, testEntityApi, testEntityApiCustom, testEntitySingleLinkApi
 } from '../../test/test-util';
 import { DefaultDeSerializers } from '../de-serializers';
 import { GetAllRequestBuilder } from './get-all-request-builder';
@@ -326,6 +313,8 @@ describe('GetAllRequestBuilder', () => {
       jest.clearAllMocks();
 
       const nocks = [
+        nock('https://destination.example.com').get('/destination-configuration/v1/destinations/ERNIE-UND-CERT').reply(200),
+        nock(onlyIssuerXsuaaUrl).post('/oauth/token').reply(200),
         nock(onlyIssuerXsuaaUrl)
           .post('/oauth/token')
           .times(1)

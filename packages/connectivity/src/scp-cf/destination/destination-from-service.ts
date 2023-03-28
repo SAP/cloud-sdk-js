@@ -1,4 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { addProxyConfigurationOnPrem } from '../connectivity-service';
+import {
+  getDestinationService,
+  getDestinationServiceCredentialsList
+} from '../environment-accessor';
+import { DestinationServiceCredentials } from '../environment-accessor-types';
+import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { JwtPayload } from '../jsonwebtoken-type';
 import {
   decodeJwt,
@@ -8,41 +15,31 @@ import {
   JwtPair,
   verifyJwt
 } from '../jwt';
-import { jwtBearerToken, serviceToken } from '../token-accessor';
-import {
-  getDestinationService,
-  getDestinationServiceCredentialsList
-} from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
-import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
+import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
-import { DestinationServiceCredentials } from '../environment-accessor-types';
-import { addProxyConfigurationOnPrem } from '../connectivity-service';
-import {
-  assertHttpDestination,
-  Destination
-} from './destination-service-types';
-import {
-  alwaysProvider,
-  alwaysSubscriber,
-  subscriberFirst
-} from './destination-selection-strategies';
 import {
   DestinationFetchOptions,
   DestinationOptions,
   DestinationsByType
 } from './destination-accessor-types';
 import {
-  AuthAndExchangeTokens,
-  fetchDestination,
-  fetchCertificate,
-  fetchInstanceDestinations,
-  fetchSubaccountDestinations
-} from './destination-service';
-import {
   destinationCache,
   getDefaultIsolationStrategy
 } from './destination-cache';
+import {
+  alwaysProvider,
+  alwaysSubscriber,
+  subscriberFirst
+} from './destination-selection-strategies';
+import {
+  AuthAndExchangeTokens, fetchCertificate, fetchDestination, fetchInstanceDestinations,
+  fetchSubaccountDestinations
+} from './destination-service';
+import {
+  assertHttpDestination,
+  Destination
+} from './destination-service-types';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
@@ -232,13 +229,17 @@ export class DestinationFromServiceRetriever {
   public static async getSubscriberToken(
     options: DestinationOptions
   ): Promise<SubscriberToken | undefined> {
-    if (options.jwt) {
-      if (options.iss) {
-        logger.warn(
-          'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
-        );
-      }
+    if (options.iss) {
+      const serviceJwtEncoded = await serviceToken('destination', options);
 
+      return {
+        type: 'iss',
+        userJwt: undefined,
+        serviceJwt: getJwtPair(serviceJwtEncoded)
+      };
+    }
+
+    if (options.jwt) {
       if (isXsuaaToken(decodeJwtComplete(options.jwt))) {
         await verifyJwt(options.jwt, options);
         const serviceJwtEncoded = await serviceToken('destination', {
@@ -255,21 +256,6 @@ export class DestinationFromServiceRetriever {
         type: 'custom',
         userJwt: getJwtPair(options.jwt),
         serviceJwt: undefined
-      };
-    }
-
-    if (options.iss) {
-      logger.debug(
-        'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
-      );
-      const serviceJwtEncoded = await serviceToken('destination', {
-        ...options,
-        jwt: { iss: options.iss }
-      });
-      return {
-        type: 'iss',
-        userJwt: undefined,
-        serviceJwt: getJwtPair(serviceJwtEncoded)
       };
     }
   }

@@ -1,12 +1,13 @@
-import * as xssec from '@sap/xssec';
+import { MiddlewareContext, resilience } from '@sap-cloud-sdk/resilience';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
-import { resilience, MiddlewareContext } from '@sap-cloud-sdk/resilience';
-import { JwtPayload } from './jsonwebtoken-type';
-import { parseSubdomain } from './subdomain-replacer';
-import { decodeJwt } from './jwt';
-import { Service, ServiceCredentials } from './environment-accessor-types';
-import { ClientCredentialsResponse } from './xsuaa-service-types';
+import * as xssec from '@sap/xssec';
 import { resolveService } from './environment-accessor';
+import { Service, ServiceCredentials } from './environment-accessor-types';
+import { JwtPayload } from './jsonwebtoken-type';
+import { decodeJwt } from './jwt';
+import { parseSubdomain } from './subdomain-replacer';
+import { ServiceTokenOptions } from './token-accessor';
+import { ClientCredentialsResponse } from './xsuaa-service-types';
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
@@ -47,20 +48,55 @@ interface XsuaaParameters {
   userJwt?: string;
 }
 
+function isServiceTokenOptions(jwtOrOptions?: string | JwtPayload | ServiceTokenOptions): jwtOrOptions is ServiceTokenOptions {
+  return (jwtOrOptions as any)?.iss !== undefined;
+}
+
+function getFnArg(service: string | Service, jwtOrOptions?: string | JwtPayload | ServiceTokenOptions): XsuaaParameters {
+  if (isServiceTokenOptions(jwtOrOptions)) {
+    if (jwtOrOptions.iss) {
+      return {
+        subdomain: parseSubdomain(jwtOrOptions.iss),
+        zoneId: null,
+        serviceCredentials: resolveService(service).credentials
+      };
+    }
+    return {
+      ...getSubdomainAndZoneId(jwtOrOptions.jwt),
+      serviceCredentials: resolveService(service).credentials
+    };
+  }
+  return {
+    ...getSubdomainAndZoneId(jwtOrOptions),
+    serviceCredentials: resolveService(service).credentials
+  };
+}
+
 /**
  * Make a client credentials request against the XSUAA service.
  * @param service - Service as it is defined in the environment variable.
- * @param userJwt - User JWT.
+ * @param jwtOrOptions - User JWT or ServiceTokenOptions.
  * @returns Client credentials token.
  */
 export async function getClientCredentialsToken(
   service: string | Service,
-  userJwt?: string | JwtPayload
+  jwtOrOptions?: string | JwtPayload
+): Promise<ClientCredentialsResponse>;
+export async function getClientCredentialsToken(
+  service: string | Service,
+  jwtOrOptions: ServiceTokenOptions
+): Promise<ClientCredentialsResponse>;
+/**
+ * Make a client credentials request against the XSUAA service.
+ * @param service - Service as it is defined in the environment variable.
+ * @param jwtOrOptions - User JWT or ServiceTokenOptions.
+ * @returns Client credentials token.
+ */
+export async function getClientCredentialsToken(
+  service: string | Service,
+  jwtOrOptions?: string | JwtPayload | ServiceTokenOptions
 ): Promise<ClientCredentialsResponse> {
-  const fnArgument: XsuaaParameters = {
-    ...getSubdomainAndZoneId(userJwt),
-    serviceCredentials: resolveService(service).credentials
-  };
+  const fnArgument: XsuaaParameters = getFnArg(service, jwtOrOptions);
 
   const xssecPromise = function (arg): Promise<ClientCredentialsResponse> {
     return new Promise((resolve, reject) => {

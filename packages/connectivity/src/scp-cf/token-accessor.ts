@@ -1,6 +1,4 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { JwtPayload } from './jsonwebtoken-type';
-import { decodeJwt } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import {
@@ -8,8 +6,21 @@ import {
   resolveService
 } from './environment-accessor';
 import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
+import { JwtPayload } from './jsonwebtoken-type';
+import { decodeJwt } from './jwt';
 import { replaceSubdomain } from './subdomain-replacer';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
+import { ClientCredentialsResponse } from './xsuaa-service-types';
+
+/**
+ * Options for the serviceToken function. May provide both `jwt` and `iss`.
+ */
+export type ServiceTokenOptions = CachingOptions & {
+  jwt?: string | JwtPayload;
+  iss?: string;
+  // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
+  xsuaaCredentials?: XsuaaServiceCredentials;
+};
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -24,11 +35,7 @@ import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
  */
 export async function serviceToken(
   service: string | Service,
-  options?: CachingOptions & {
-    jwt?: string | JwtPayload;
-    // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
-    xsuaaCredentials?: XsuaaServiceCredentials;
-  }
+  options?: ServiceTokenOptions
 ): Promise<string> {
   const opts = {
     useCache: true,
@@ -53,7 +60,7 @@ export async function serviceToken(
   }
 
   try {
-    const token = await getClientCredentialsToken(service, options?.jwt);
+    const token: ClientCredentialsResponse = await getClientCredentialsToken(service, options);
 
     if (opts.useCache) {
       const xsuaa = multiTenantXsuaaCredentials(options);

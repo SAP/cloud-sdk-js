@@ -164,7 +164,7 @@ describe('openapi-request-builder', () => {
         .middleware([retry(2), timeout(100)])
         .execute(slowDestination);
     await expect(timeoutAboveDelay()).resolves.not.toThrow();
-  }, 10000);
+  });
 
   it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
     mockServiceBindings();

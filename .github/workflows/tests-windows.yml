@@ -17,6 +17,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'yarn'
       - run: yarn install --frozen-lockfile
       - run: yarn test:unit --concurrency=1
       - run: yarn test:integration

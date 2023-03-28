@@ -42,11 +42,10 @@ export class Cache<T> implements CacheInterface<T> {
 
   /**
    * Default validity period for each entry in cache.
-   * If `undefined`, all cached entries will be valid indefinitely.
    */
-  private defaultValidityTimeInMs: number | undefined;
+  private defaultValidityTimeInMs: number;
 
-  constructor(validityTimeInMs?: number) {
+  constructor(validityTimeInMs: number) {
     this.cache = {};
     this.defaultValidityTimeInMs = validityTimeInMs;
   }

@@ -18,15 +18,8 @@ jobs:
         with:
           node-version: 18
       - run: yarn install --frozen-lockfile
-      - run: yarn test:unit --continue -- -- -- --json --outputFile=unit-test-output.json
-      - run: yarn test:integration -- -- -- --json --outputFile=int-test-output.json
+      - run: yarn test:unit --concurrency=1
+      - run: yarn test:integration
         if: always()
       - run: yarn test:self
       - run: yarn test:type
-      - name: Archive results
-        uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: windows-test-results
-          path: '*packages/**/*-test-output.json'
-          retention-days: 30

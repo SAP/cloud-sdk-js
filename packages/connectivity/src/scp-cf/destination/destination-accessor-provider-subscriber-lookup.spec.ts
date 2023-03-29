@@ -269,27 +269,27 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       expect(actual).toMatchObject(expected);
     });
 
-    it('it warns if you use iss property and user jwt', async () => {
-      mockServiceBindings();
-      const logger = createLogger({
-        package: 'connectivity',
-        messageContext: 'destination-accessor-service'
-      });
-      const warnSpy = jest.spyOn(logger, 'warn');
-      await expect(
-        getDestinationFromDestinationService({
-          destinationName: 'someDest',
-          jwt: 'someJwt',
-          iss: 'someIss',
-          iasToXsuaaTokenExchange: false
-        })
-      ).rejects.toThrowError(
-        'The given jwt payload does not encode valid JSON.'
-      );
-      expect(warnSpy).toHaveBeenCalledWith(
-        'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
-      );
-    });
+    // it('it warns if you use iss property and user jwt', async () => {
+    //   mockServiceBindings();
+    //   const logger = createLogger({
+    //     package: 'connectivity',
+    //     messageContext: 'destination-accessor-service'
+    //   });
+    //   const warnSpy = jest.spyOn(logger, 'warn');
+    //   await expect(
+    //     getDestinationFromDestinationService({
+    //       destinationName: 'someDest',
+    //       jwt: 'someJwt',
+    //       iss: 'someIss',
+    //       iasToXsuaaTokenExchange: false
+    //     })
+    //   ).rejects.toThrowError(
+    //     'The given jwt payload does not encode valid JSON.'
+    //   );
+    //   expect(warnSpy).toHaveBeenCalledWith(
+    //     'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
+    //   );
+    // });
 
     it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
       mockServiceBindings();

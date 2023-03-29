@@ -28,7 +28,9 @@ const dummyToken = {
 const cacheOne = new Cache<Destination>(300000);
 
 // Cache with a long expiration time
-const cacheTwo = new Cache<ClientCredentialsResponse>(365 * 24 * 60 * 1000 /* 1 year */);
+const cacheTwo = new Cache<ClientCredentialsResponse>(
+  365 * 24 * 60 * 1000 /* 1 year */
+);
 
 describe('Cache', () => {
   afterEach(async () => {

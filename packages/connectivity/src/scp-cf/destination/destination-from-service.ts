@@ -232,13 +232,21 @@ export class DestinationFromServiceRetriever {
   public static async getSubscriberToken(
     options: DestinationOptions
   ): Promise<SubscriberToken | undefined> {
-    if (options.jwt) {
-      if (options.iss) {
-        logger.warn(
-          'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
-        );
-      }
+    if (options.jwt && options.iss) {
 
+      const serviceJwtEncoded = await serviceToken('destination', {
+        ...options,
+        jwt: options.jwt
+      });
+
+      return {
+        type: 'xsuaa',
+        userJwt: getJwtPair(options.jwt),
+        serviceJwt: getJwtPair(serviceJwtEncoded)
+      };
+    }
+
+    if (options.jwt) {
       if (isXsuaaToken(decodeJwtComplete(options.jwt))) {
         await verifyJwt(options.jwt, options);
         const serviceJwtEncoded = await serviceToken('destination', {

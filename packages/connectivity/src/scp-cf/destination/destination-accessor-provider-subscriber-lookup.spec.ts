@@ -1,6 +1,6 @@
-import nock from 'nock';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
+import nock from 'nock';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
@@ -8,42 +8,42 @@ import {
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
-  onlyIssuerServiceToken,
-  providerServiceToken,
-  subscriberServiceToken,
-  subscriberUserJwt
-} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
-import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl
 } from '../../../../../test-resources/test/test-util/environment-mocks';
-import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   basicMultipleResponse,
   certificateMultipleResponse,
   certificateSingleResponse,
   destinationName
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
+import {
+  onlyIssuerServiceToken,
+  providerServiceToken,
+  subscriberServiceToken,
+  subscriberUserJwt
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
+import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import { wrapJwtInHeader } from '../jwt';
-import * as destinationService from './destination-service';
 import { DestinationConfiguration, parseDestination } from './destination';
+import {
+  getAllDestinationsFromDestinationService,
+  getDestination
+} from './destination-accessor';
+import {
+  AllDestinationOptions,
+  DestinationFetchOptions,
+  DestinationWithoutToken
+} from './destination-accessor-types';
+import { getDestinationFromDestinationService } from './destination-from-service';
 import {
   alwaysProvider,
   alwaysSubscriber,
   DestinationSelectionStrategy,
   subscriberFirst
 } from './destination-selection-strategies';
+import * as destinationService from './destination-service';
 import { Destination } from './destination-service-types';
-import {
-  getAllDestinationsFromDestinationService,
-  getDestination
-} from './destination-accessor';
-import { getDestinationFromDestinationService } from './destination-from-service';
-import {
-  AllDestinationOptions,
-  DestinationFetchOptions,
-  DestinationWithoutToken
-} from './destination-accessor-types';
 
 const destName = 'DESTINATION';
 
@@ -268,6 +268,22 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       const expected = parseDestination(basicMultipleResponse[0]);
       expect(actual).toMatchObject(expected);
     });
+
+    // it('works if  you use iss property and user jwt', async () => {
+    //   mockServiceBindings();
+    //   nock('https://subscriber-only-iss.example.com').get('*').reply(200);
+    //   nock('https://subscriber-only-iss.example.com').post('/oauth/token').reply(200);
+
+    //   console.log(JSON.stringify(subscriberUserJwt))
+    //   await expect(
+    //     getDestinationFromDestinationService({
+    //       destinationName: 'someDest',
+    //       jwt: onlyIssuerServiceToken,
+    //       iss: onlyIssuerXsuaaUrl,
+    //       iasToXsuaaTokenExchange: false
+    //     })
+    //   ).resolves.toEqual({});
+    // });
 
     // it('it warns if you use iss property and user jwt', async () => {
     //   mockServiceBindings();

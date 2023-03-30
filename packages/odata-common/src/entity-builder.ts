@@ -38,7 +38,7 @@ export type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
 export type FromJsonType<JsonT> = {
   [key: string]: any; // custom properties
 } & {
-  [P in keyof PureEntityType<JsonT>]?: PureEntityType<JsonT>[P] extends (infer U)[]
+  [P in keyof PureEntityType<JsonT>]?: PureEntityType<JsonT>[P] extends (infer U)[] | null | undefined
     ? U extends Record<string, any>
       ? FromJsonType<U>[] // one-to-many navigation properties
       : PureEntityType<JsonT>[P] // collection type
@@ -116,6 +116,7 @@ export class EntityBuilder<
 
     return entityBuilder.build();
   }
+
   private filterCustomFields(
     customFields: Record<string, any>
   ): Record<string, any> {

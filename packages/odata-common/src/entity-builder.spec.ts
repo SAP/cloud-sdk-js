@@ -4,11 +4,6 @@ import {
   commonEntityApiCustom,
   CommonEntitySingleLinkApi
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
-import { FromJsonType } from './entity-builder';
-
-interface TestJsonType {
-  customField: string;
-}
 
 describe('EntityBuilder', () => {
   it('should build an empty entity when no properties are defined', () => {
@@ -107,7 +102,7 @@ describe('EntityBuilder', () => {
     });
 
     it('should build an entity from json with custom fields', () => {
-      const entityJson: FromJsonType<TestJsonType> = {
+      const entityJson = {
         customField: 'customField'
       };
       const entity = commonEntityApi.entityBuilder().fromJson(entityJson);
@@ -123,7 +118,7 @@ describe('EntityBuilder', () => {
     });
 
     it('should build an entity from json with complex type fields', () => {
-      const entityJson: FromJsonType<TestJsonType> = {
+      const entityJson = {
         complexTypeProperty: { stringProperty: 'complexTypeValue' }
       };
       const entity = commonEntityApi.entityBuilder().fromJson(entityJson);
@@ -135,7 +130,7 @@ describe('EntityBuilder', () => {
     });
 
     it('should build an entity from json with collection fields', () => {
-      const entityJson: FromJsonType<TestJsonType> = {
+      const entityJson = {
         collectionProperty: ['collectionValue']
       };
       const entity = commonEntityApi.entityBuilder().fromJson(entityJson);
@@ -147,7 +142,7 @@ describe('EntityBuilder', () => {
     });
 
     it('should build an entity from json with empty collection field', () => {
-      const entityJson: FromJsonType<TestJsonType> = {
+      const entityJson = {
         collectionProperty: []
       };
       const entity = commonEntityApi.entityBuilder().fromJson(entityJson);

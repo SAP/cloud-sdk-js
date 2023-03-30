@@ -1,5 +1,5 @@
 {
-  "name": "@sap-cloud-sdk/memory-tests-canary",
+  "name": "@sap-cloud-sdk/memory-tests-v2",
   "version": "0.0.1",
   "description": "Memory usage tests of the SAP Cloud SDK for JavaScript",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",

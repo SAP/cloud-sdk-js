@@ -1,0 +1,7 @@
+{
+  "../../../test-resources/odata-service-specs-e2e/v4/API_TEST_SRV/API-TEST_SRV.edmx": {
+    "packageName": "test-service",
+    "directoryName": "test-service",
+    "basePath": "/odata/test-service"
+  }
+}

@@ -7,7 +7,7 @@
   "private": true,
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "generate-vdm": "yarn generate-odata-client -i ../../../test-resources/odata-service-specs-e2e/v4 -o .",
+    "generate-vdm": "yarn generate-odata-client --transpile -i ../../../test-resources/odata-service-specs-e2e/v4 --optionsPerService . -o .",
     "test": "node --inspect test-script.js"
   },
   "devDependencies": {

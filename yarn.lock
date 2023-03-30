@@ -1282,19 +1282,19 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.6.2":
-  version "6.6.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.6.2.tgz#523168a3de6d01d0d0114fa1b6415da6f6828855"
-  integrity sha512-iINeS5f5OGb8vvb2gC5dMSuNdvdUgbrtJyVe+s2Z3MPqe53efNvI45OFUTHUJ4NLHDjWooUeJq/K4dT+6H4iqg==
+"@sap/cds-dk@6.7.0":
+  version "6.7.0"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.7.0.tgz#0d76f712f439f2fb0e12d0d889ab65b47c4a38a0"
+  integrity sha512-Bs8ugITPXWn18nq+fl5e9JKId5eVCYNf6KfdmXOTuPzptPFHwthBDnkjsIHaXRIoFV5FbmjRI3XXP2BxQdEPPg==
   dependencies:
-    "@sap/cds" "^6.6.0"
+    "@sap/cds" "^6.7.0"
     "@sap/cds-foss" "^4"
-    "@sap/cds-mtxs" "^1.6.0"
+    "@sap/cds-mtxs" "^1.7.0"
     "@sap/eslint-plugin-cds" "^2.6.0"
     axios ">=0.21"
     eslint "^8"
     express "^4.17.1"
-    livereload-js "^4.0.0"
+    livereload-js "^4.0.1"
     md5 "^2.3.0"
     mustache "^4.0.1"
     node-watch ">=0.7"
@@ -1315,15 +1315,15 @@
     xmlbuilder "^15.1.1"
     yaml "^2.1.1"
 
-"@sap/cds-mtxs@^1.6.0":
-  version "1.6.2"
-  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-1.6.2.tgz#5858519c2684f858d96e41fff3c1bd4787cc2320"
-  integrity sha512-oqA64jl13Uv9onQn4WMNcAXBdfuR7lnhn4LLBdO86qD+5khKtPiS22Ve6nnWsNkTQKils5OJ/GxTDnrFXjaj4w==
+"@sap/cds-mtxs@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-1.7.0.tgz#e03418f510c194bfeb7ba1fbc9da23e81776e75e"
+  integrity sha512-Q0J7lOq2wRELuEbE9P3QMfa406PE7v/g5q3QXcQ/b8YbOCNsvJ2oq2z3iztJgB/qJ8OkC/JsnycJNshr49CB3A==
   dependencies:
     "@sap/hdi-deploy" "^4"
     axios ">=0.27.2"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.6.0", "@sap/cds@^6.7.0":
+"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.7.0":
   version "6.7.0"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.7.0.tgz#2fa1bca8c8bc4c06802075928695118d0f47efa2"
   integrity sha512-KqBEBNou1TgDDFNtOVQLON/S7doCoVE+wfSuEXJ/yMtA4Yyg8ixeiUYNtjTVW/jl3CJzNPYdIKHcH3g1RSvB/w==
@@ -5890,10 +5890,10 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
-livereload-js@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/livereload-js/-/livereload-js-4.0.0.tgz#377fbf52863c736676cc68e9ff752edf8baeec71"
-  integrity sha512-aRt4F8CnfY+6yNFObvO02qPmf76/wwGPzDEomgxPwOflTaBZz8yp16kMVnPxGFPwqSO4mJ/qVOWk/SxDTqX/Xg==
+livereload-js@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/livereload-js/-/livereload-js-4.0.1.tgz#57b7fc9d3cbafacc5d32992df45fbc6bb25ed483"
+  integrity sha512-X19mASPEjbndNzT6qYqlxgDOaAWFuwymWdBqaSXHwWZUbPpqmEdvyYaPojPsIDM2SfC4cM3Wp92Hum3yP8z+0Q==
 
 load-yaml-file@^0.2.0:
   version "0.2.0"
@@ -9205,7 +9205,7 @@ write-file-atomic@^4.0.2:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.7"
 
-ws@8.13.0:
+ws@8.13.0, ws@^8.4.2:
   version "8.13.0"
   resolved "https://registry.npmjs.org/ws/-/ws-8.13.0.tgz#9a9fb92f93cf41512a0735c8f4dd09b8a1211cd0"
   integrity sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==
@@ -9214,11 +9214,6 @@ ws@^7.0.0:
   version "7.5.9"
   resolved "https://registry.npmjs.org/ws/-/ws-7.5.9.tgz#54fa7db29f4c7cec68b1ddd3a89de099942bb591"
   integrity sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==
-
-ws@^8.4.2:
-  version "8.12.1"
-  resolved "https://registry.npmjs.org/ws/-/ws-8.12.1.tgz#c51e583d79140b5e42e39be48c934131942d4a8f"
-  integrity sha512-1qo+M9Ba+xNhPB+YTWUlK6M17brTut5EXbcBaMRN5pH5dFrXz7lzz1ChFSUq3bOUl8yEvSenhHmYUNJxFzdJew==
 
 ws@~7.4.0:
   version "7.4.6"

@@ -221,10 +221,10 @@ export class DestinationFromServiceRetriever {
 
   private static async retrieveUserToken(
     options: DestinationOptions,
-    verify: boolean
+    isXsuaaJwt: boolean
   ): Promise<JwtPair | undefined> {
     if (options.jwt) {
-      if (verify) {
+      if (!options.iss && isXsuaaJwt) {
         await verifyJwt(options.jwt, options);
       }
       return getJwtPair(options.jwt);

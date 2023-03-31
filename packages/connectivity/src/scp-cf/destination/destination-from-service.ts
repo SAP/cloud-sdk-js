@@ -67,48 +67,12 @@ interface DestinationSearchResult {
  * When a destination is fetched from the SDK the user can pass different tokens.
  * The token determines from which tenant the destination is obtained (provider or subscriber) and if it contains user information so that user propagation flows are possible.
  * Possible types are: A user specific JWT issued by the XSUAA, a JWT from a custom IdP or only the `iss` property to get destinations from a different tenant.
- * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the"provider account", where the application is running.
+ * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the "provider account", where the application is running.
  * The tenant defined in the subscriber token is the provider tenant for single tenant applications.
  */
 interface SubscriberToken {
   userJwt?: JwtPair;
   serviceJwt?: JwtPair;
-}
-// IssToken | XsuaaToken | CustomToken;
-
-/**
- * User provided a dummy token with the `iss` property.
- * This is used if a tenant other than the provider tenant should be accessed but no user related login (JWT) is available for this tenant.
- * Therefore, the `userJwt` is undefined and only a destination service token has been issued.
- */
-interface IssToken {
-  type: 'iss';
-  userJwt: undefined;
-  serviceJwt: JwtPair;
-}
-
-/**
- * User provided a token issued form the XSUAA.
- * This token has the JKU properties to be verified by the SDK.
- * The provided token is the userJwt containing the `zid` and `user_id` properties.
- * The service token was derived from this token and is for the same tenant.
- */
-interface XsuaaToken {
-  type: 'xsuaa';
-  userJwt: JwtPair;
-  serviceJwt: JwtPair;
-}
-
-/**
- * User provided a token from a custom issuer (not XSUAA).
- * Such a token can not be converted to a service token by the XSUAA.
- * Therefore, the serviceJwt is undefined and the SDK does not do a token validation - the destination service does this based on jwks properties on the destination.
- * For service calls the provider service token is used so this types works only for single tenant application.
- */
-interface CustomToken {
-  type: 'custom';
-  userJwt: JwtPair;
-  serviceJwt: undefined;
 }
 
 const emptyDestinationByType: DestinationsByType = {

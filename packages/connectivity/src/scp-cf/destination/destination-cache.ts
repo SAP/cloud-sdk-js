@@ -172,7 +172,7 @@ export const DestinationCache = (
 });
 
 /**
- * Calculates a cache key based on the jwt and destination name for the given isolation strategy.
+ * Calculates a cache key based on the JWT and destination name for the given isolation strategy.
  * Cache keys for strategies are non-overlapping, i.e. using a cache key for strategy {@link 'tenant'}
  * will not result in a cache hit for a destination that has been cached with strategy {@link 'tenant-user'}.
  * @param decodedJwt - The decoded JWT of the current request.

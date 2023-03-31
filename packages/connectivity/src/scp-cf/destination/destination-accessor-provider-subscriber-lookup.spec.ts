@@ -8,14 +8,16 @@ import {
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
-  mockServiceBindings,
-  onlyIssuerXsuaaUrl
+  onlyIssuerXsuaaUrl,
+  mockServiceBindings
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   basicMultipleResponse,
   certificateMultipleResponse,
   certificateSingleResponse,
-  destinationName
+  destinationName,
+  samlAssertionMultipleResponse,
+  samlAssertionSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import {
   onlyIssuerServiceToken,
@@ -25,6 +27,7 @@ import {
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import { wrapJwtInHeader } from '../jwt';
+import * as identityService from '../identity-service';
 import { DestinationConfiguration, parseDestination } from './destination';
 import {
   getAllDestinationsFromDestinationService,
@@ -269,43 +272,43 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       expect(actual).toMatchObject(expected);
     });
 
-    // it('works if  you use iss property and user jwt', async () => {
-    //   mockServiceBindings();
-    //   nock('https://subscriber-only-iss.example.com').get('*').reply(200);
-    //   nock('https://subscriber-only-iss.example.com').post('/oauth/token').reply(200);
+    it('when combining `iss` and `jwt` it should fetch service token with `iss` and set user token to `jwt`', async () => {
+      mockServiceBindings();
+      mockServiceToken();
 
-    //   console.log(JSON.stringify(subscriberUserJwt))
-    //   await expect(
-    //     getDestinationFromDestinationService({
-    //       destinationName: 'someDest',
-    //       jwt: onlyIssuerServiceToken,
-    //       iss: onlyIssuerXsuaaUrl,
-    //       iasToXsuaaTokenExchange: false
-    //     })
-    //   ).resolves.toEqual({});
-    // });
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
-    // it('it warns if you use iss property and user jwt', async () => {
-    //   mockServiceBindings();
-    //   const logger = createLogger({
-    //     package: 'connectivity',
-    //     messageContext: 'destination-accessor-service'
-    //   });
-    //   const warnSpy = jest.spyOn(logger, 'warn');
-    //   await expect(
-    //     getDestinationFromDestinationService({
-    //       destinationName: 'someDest',
-    //       jwt: 'someJwt',
-    //       iss: 'someIss',
-    //       iasToXsuaaTokenExchange: false
-    //     })
-    //   ).rejects.toThrowError(
-    //     'The given jwt payload does not encode valid JSON.'
-    //   );
-    //   expect(warnSpy).toHaveBeenCalledWith(
-    //     'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
-    //   );
-    // });
+      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        samlAssertionMultipleResponse,
+        200,
+        onlyIssuerServiceToken
+      );
+
+      mockSingleDestinationCall(
+        nock,
+        samlAssertionSingleResponse,
+        200,
+        'FINAL-DESTINATION',
+        {
+          ...wrapJwtInHeader(onlyIssuerServiceToken).headers,
+          'X-user-token': subscriberUserJwt
+        },
+        { badheaders: [] }
+      );
+
+      const expected = parseDestination(samlAssertionSingleResponse);
+      const actual = await getDestinationFromDestinationService({
+        destinationName: 'FINAL-DESTINATION',
+        iss: onlyIssuerXsuaaUrl,
+        jwt: subscriberUserJwt,
+        cacheVerificationKeys: false
+      });
+      expect(actual).toMatchObject(expected);
+    });
 
     it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
       mockServiceBindings();
@@ -340,7 +343,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       });
       expect(actual).toMatchObject(expected);
       expect(debugSpy).toHaveBeenCalledWith(
-        'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
+        'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'
       );
     });
 

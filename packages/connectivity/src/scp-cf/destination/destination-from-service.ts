@@ -6,20 +6,12 @@ import {
 } from '../environment-accessor';
 import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
-import {
-  decodeJwt,
-  decodeJwtComplete,
-  getJwtPair,
-  isXsuaaToken,
-  JwtPair,
-  verifyJwt
-} from '../jwt';
+import { JwtPair } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
 import {
   DestinationFetchOptions,
-  DestinationOptions,
   DestinationsByType
 } from './destination-accessor-types';
 import {
@@ -42,6 +34,8 @@ import {
   assertHttpDestination,
   Destination
 } from './destination-service-types';
+import { getProviderServiceToken } from './get-provider-token';
+import { getSubscriberToken, SubscriberToken } from './get-subscriber-token';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
@@ -61,18 +55,6 @@ interface DestinationSearchResult {
   destination: Destination;
   fromCache: boolean;
   origin: DestinationOrigin;
-}
-
-/**
- * When a destination is fetched from the SDK the user can pass different tokens.
- * The token determines from which tenant the destination is obtained (provider or subscriber) and if it contains user information so that user propagation flows are possible.
- * Possible types are: A user specific JWT issued by the XSUAA, a JWT from a custom IdP or only the `iss` property to get destinations from a different tenant.
- * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the "provider account", where the application is running.
- * The tenant defined in the subscriber token is the provider tenant for single tenant applications.
- */
-interface SubscriberToken {
-  userJwt?: JwtPair;
-  serviceJwt?: JwtPair;
 }
 
 const emptyDestinationByType: DestinationsByType = {
@@ -128,11 +110,8 @@ export class DestinationFromServiceRetriever {
       options.jwt = await exchangeToken(options);
     }
 
-    const subscriberToken =
-      await DestinationFromServiceRetriever.getSubscriberToken(options);
-
-    const providerToken =
-      await DestinationFromServiceRetriever.getProviderServiceToken(options);
+    const subscriberToken = await getSubscriberToken(options);
+    const providerToken = await getProviderServiceToken(options);
 
     const da = new DestinationFromServiceRetriever(
       options,
@@ -194,65 +173,6 @@ export class DestinationFromServiceRetriever {
     );
     await da.updateDestinationCache(withTrustStore, destinationResult.origin);
     return withTrustStore;
-  }
-
-  public static async getProviderServiceToken(
-    options: DestinationOptions
-  ): Promise<JwtPair> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { jwt, ...optionsWithoutJwt } = options;
-    const encoded = await serviceToken('destination', {
-      ...optionsWithoutJwt
-    });
-    return { encoded, decoded: decodeJwt(encoded) };
-  }
-
-  public static async getSubscriberToken(
-    options: DestinationOptions
-  ): Promise<SubscriberToken | undefined> {
-    const isXsuaaJwt =
-      !!options.jwt && isXsuaaToken(decodeJwtComplete(options.jwt));
-
-    return {
-      userJwt: await this.retrieveUserToken(options, isXsuaaJwt),
-      serviceJwt: await this.retrieveServiceToken(options, isXsuaaJwt)
-    };
-  }
-
-  private static async retrieveUserToken(
-    options: DestinationOptions,
-    isXsuaaJwt: boolean
-  ): Promise<JwtPair | undefined> {
-    if (options.jwt) {
-      if (!options.iss && isXsuaaJwt) {
-        await verifyJwt(options.jwt, options);
-      }
-      return getJwtPair(options.jwt);
-    }
-  }
-
-  private static async retrieveServiceToken(
-    options: DestinationOptions,
-    isXsuaaJwt: boolean
-  ): Promise<JwtPair | undefined> {
-    let jwt;
-    if (options.iss) {
-      logger.debug(
-        'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'
-      );
-
-      jwt = { iss: options.iss };
-    } else if (options.jwt && isXsuaaJwt) {
-      jwt = options.jwt;
-    }
-
-    if (jwt) {
-      const serviceJwtEncoded = await serviceToken('destination', {
-        ...options,
-        jwt
-      });
-      return getJwtPair(serviceJwtEncoded);
-    }
   }
 
   private static throwUserTokenMissing(destination) {

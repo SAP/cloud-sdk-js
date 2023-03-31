@@ -10,8 +10,6 @@ export async function getProviderServiceToken(
 ): Promise<JwtPair> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { jwt, ...optionsWithoutJwt } = options;
-  const encoded = await serviceToken('destination', {
-    ...optionsWithoutJwt
-  });
+  const encoded = await serviceToken('destination', optionsWithoutJwt);
   return { encoded, decoded: decodeJwt(encoded) };
 }

@@ -115,13 +115,13 @@
     "license-checker": "^25.0.1",
     "madge": "^6.0.0",
     "prettier": "^2.8.7",
-    "puppeteer": "^19.8.0",
+    "puppeteer": "^19.8.2",
     "semver": "^7.3.8",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
-    "turbo": "1.8.6",
+    "turbo": "1.8.8",
     "typedoc": "^0.23.28",
-    "typescript": "~5.0.2"
+    "typescript": "~5.0.3"
   },
   "resolutions": {
     "@sap/cds": "^6.1.1",

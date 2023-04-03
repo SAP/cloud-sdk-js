@@ -1,5 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { JwtPayload } from '../jsonwebtoken-type';
+import { addProxyConfigurationOnPrem } from '../connectivity-service';
+import {
+  getDestinationService,
+  getDestinationServiceCredentialsList
+} from '../environment-accessor';
+import { DestinationServiceCredentials } from '../environment-accessor-types';
+import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import {
   decodeJwt,
   decodeJwtComplete,
@@ -8,41 +14,34 @@ import {
   JwtPair,
   verifyJwt
 } from '../jwt';
-import { jwtBearerToken, serviceToken } from '../token-accessor';
-import {
-  getDestinationService,
-  getDestinationServiceCredentialsList
-} from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
-import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
+import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
-import { DestinationServiceCredentials } from '../environment-accessor-types';
-import { addProxyConfigurationOnPrem } from '../connectivity-service';
-import {
-  assertHttpDestination,
-  Destination
-} from './destination-service-types';
-import {
-  alwaysProvider,
-  alwaysSubscriber,
-  subscriberFirst
-} from './destination-selection-strategies';
 import {
   DestinationFetchOptions,
   DestinationOptions,
   DestinationsByType
 } from './destination-accessor-types';
 import {
+  destinationCache,
+  getDefaultIsolationStrategy
+} from './destination-cache';
+import {
+  alwaysProvider,
+  alwaysSubscriber,
+  subscriberFirst
+} from './destination-selection-strategies';
+import {
   AuthAndExchangeTokens,
-  fetchDestination,
   fetchCertificate,
+  fetchDestination,
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
 import {
-  destinationCache,
-  getDefaultIsolationStrategy
-} from './destination-cache';
+  assertHttpDestination,
+  Destination
+} from './destination-service-types';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
@@ -68,44 +67,12 @@ interface DestinationSearchResult {
  * When a destination is fetched from the SDK the user can pass different tokens.
  * The token determines from which tenant the destination is obtained (provider or subscriber) and if it contains user information so that user propagation flows are possible.
  * Possible types are: A user specific JWT issued by the XSUAA, a JWT from a custom IdP or only the `iss` property to get destinations from a different tenant.
- * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the"provider account", where the application is running.
+ * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the "provider account", where the application is running.
  * The tenant defined in the subscriber token is the provider tenant for single tenant applications.
  */
-type SubscriberToken = IssToken | XsuaaToken | CustomToken;
-
-/**
- * User provided a dummy token with the `iss` property.
- * This is used if a tenant other than the provider tenant should be accessed but no user related login (JWT) is available for this tenant.
- * Therefore, the `userJwt` is undefined and only a destination service token has been issued.
- */
-interface IssToken {
-  type: 'iss';
-  userJwt: undefined;
-  serviceJwt: JwtPair;
-}
-
-/**
- * User provided a token issued form the XSUAA.
- * This token has the JKU properties to be verified by the SDK.
- * The provided token is the userJwt containing the `zid` and `user_id` properties.
- * The service token was derived from this token and is for the same tenant.
- */
-interface XsuaaToken {
-  type: 'xsuaa';
-  userJwt: JwtPair;
-  serviceJwt: JwtPair;
-}
-
-/**
- * User provided a token from a custom issuer (not XSUAA).
- * Such a token can not be converted to a service token by the XSUAA.
- * Therefore, the serviceJwt is undefined and the SDK does not do a token validation - the destination service does this based on jwks properties on the destination.
- * For service calls the provider service token is used so this types works only for single tenant application.
- */
-interface CustomToken {
-  type: 'custom';
-  userJwt: JwtPair;
-  serviceJwt: undefined;
+interface SubscriberToken {
+  userJwt?: JwtPair;
+  serviceJwt?: JwtPair;
 }
 
 const emptyDestinationByType: DestinationsByType = {
@@ -119,7 +86,7 @@ const emptyDestinationByType: DestinationsByType = {
  */
 export function getDestinationServiceCredentials(): DestinationServiceCredentials {
   const credentials = getDestinationServiceCredentialsList();
-  if (!credentials || credentials.length === 0) {
+  if (!credentials?.length) {
     throw Error(
       'No binding to a destination service instance found. Please bind a destination service instance to your application.'
     );
@@ -229,51 +196,6 @@ export class DestinationFromServiceRetriever {
     return withTrustStore;
   }
 
-  public static async getSubscriberToken(
-    options: DestinationOptions
-  ): Promise<SubscriberToken | undefined> {
-    if (options.jwt) {
-      if (options.iss) {
-        logger.warn(
-          'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
-        );
-      }
-
-      if (isXsuaaToken(decodeJwtComplete(options.jwt))) {
-        await verifyJwt(options.jwt, options);
-        const serviceJwtEncoded = await serviceToken('destination', {
-          ...options,
-          jwt: options.jwt
-        });
-        return {
-          type: 'xsuaa',
-          userJwt: getJwtPair(options.jwt),
-          serviceJwt: getJwtPair(serviceJwtEncoded)
-        };
-      }
-      return {
-        type: 'custom',
-        userJwt: getJwtPair(options.jwt),
-        serviceJwt: undefined
-      };
-    }
-
-    if (options.iss) {
-      logger.debug(
-        'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
-      );
-      const serviceJwtEncoded = await serviceToken('destination', {
-        ...options,
-        jwt: { iss: options.iss }
-      });
-      return {
-        type: 'iss',
-        userJwt: undefined,
-        serviceJwt: getJwtPair(serviceJwtEncoded)
-      };
-    }
-  }
-
   public static async getProviderServiceToken(
     options: DestinationOptions
   ): Promise<JwtPair> {
@@ -283,6 +205,54 @@ export class DestinationFromServiceRetriever {
       ...optionsWithoutJwt
     });
     return { encoded, decoded: decodeJwt(encoded) };
+  }
+
+  public static async getSubscriberToken(
+    options: DestinationOptions
+  ): Promise<SubscriberToken | undefined> {
+    const isXsuaaJwt =
+      !!options.jwt && isXsuaaToken(decodeJwtComplete(options.jwt));
+
+    return {
+      userJwt: await this.retrieveUserToken(options, isXsuaaJwt),
+      serviceJwt: await this.retrieveServiceToken(options, isXsuaaJwt)
+    };
+  }
+
+  private static async retrieveUserToken(
+    options: DestinationOptions,
+    verify: boolean
+  ): Promise<JwtPair | undefined> {
+    if (options.jwt) {
+      if (verify) {
+        await verifyJwt(options.jwt, options);
+      }
+      return getJwtPair(options.jwt);
+    }
+  }
+
+  private static async retrieveServiceToken(
+    options: DestinationOptions,
+    isXsuaaJwt: boolean
+  ): Promise<JwtPair | undefined> {
+    let jwt;
+    if (options.iss) {
+      logger.debug(
+        'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'
+      );
+
+      jwt = { iss: options.iss };
+    } else if (options.jwt && isXsuaaJwt) {
+      jwt = options.jwt;
+    }
+
+    if (jwt) {
+      const serviceJwtEncoded = await serviceToken('destination', {
+        ...options,
+        jwt
+      });
+      return getJwtPair(serviceJwtEncoded);
+    }
   }
 
   private static throwUserTokenMissing(destination) {
@@ -301,8 +271,8 @@ export class DestinationFromServiceRetriever {
 
   private static isUserJwt(
     token: SubscriberToken | undefined
-  ): token is CustomToken | XsuaaToken {
-    return !!token && token.type !== 'iss';
+  ): token is SubscriberToken & { userJwt: JwtPair } {
+    return !!token?.userJwt;
   }
 
   private options: RequiredProperties<
@@ -448,14 +418,14 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     // This covers OAuth to user-dependent auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     // Which is the same for: OAuth2UserTokenExchange, OAuth2JWTBearer and OAuth2SAMLBearerAssertion
 
-    // If user JWT is not XSUAA enforce the JWKS properties are there - destination service would do that as well. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
-    if (this.subscriberToken.type === 'custom') {
+    // If subscriber token does not include service JWT (aka. originally passed JWT was not an XSUAA JWT) enforce the JWKS properties are there - destination service would do that as well. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
+    if (!this.subscriberToken.serviceJwt) {
       DestinationFromServiceRetriever.checkDestinationForCustomJwt(destination);
     }
 
-    // Case 1 Destination in provider and jwt issued for provider account But not custom JWT given-> not extra x-user-token header needed
+    // Case 1 Destination in provider and JWT issued for provider account, but no custom JWT given -> no extra x-user-token header needed
     if (
-      this.subscriberToken.type !== 'custom' &&
+      this.subscriberToken.serviceJwt &&
       isIdenticalTenant(
         this.subscriberToken.userJwt.decoded,
         this.providerServiceToken.decoded
@@ -471,11 +441,12 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         )
       };
     }
-    // Case 2 Subscriber and provider account not the same OR custom jwt -> x-user-token  header passed to determine user and tenant in token service URL and service token to get the destination
+    // Case 2 Subscriber and provider account not the same OR custom JWT -> x-user-token header passed to determine user and tenant in token service URL and service token to get the destination
     const serviceJwt =
       origin === 'provider'
         ? this.providerServiceToken
-        : this.subscriberToken.serviceJwt!;
+        : // TODO: What is the meaning of this? Why do we assume this is defined. Technically, it might not be.
+          this.subscriberToken.serviceJwt!;
     logger.debug(
       `UserExchange flow started for destination ${destinationName} of the ${origin} account.`
     );
@@ -545,9 +516,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       case 'on-premise':
         return addProxyConfigurationOnPrem(
           destination,
-          this.subscriberToken?.type === 'iss'
-            ? this.subscriberToken.serviceJwt
-            : this.subscriberToken?.userJwt
+          this.subscriberToken?.userJwt || this.subscriberToken?.serviceJwt
         );
       case 'internet':
       case 'private-link':
@@ -562,18 +531,14 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
   }
 
-  private selectSubscriberJwt(): JwtPayload {
-    if (!this.subscriberToken) {
+  private selectSubscriberJwt(): JwtPair {
+    // TODO: What to do when I have both, jwt and iss?
+    const jwt =
+      this.subscriberToken?.userJwt || this.subscriberToken?.serviceJwt;
+    if (!jwt) {
       throw new Error('Try to get subscriber token but value is undefined.');
     }
-    switch (this.subscriberToken.type) {
-      case 'custom':
-        return this.subscriberToken.userJwt.decoded;
-      case 'iss':
-        return this.subscriberToken.serviceJwt.decoded;
-      case 'xsuaa':
-        return this.subscriberToken.userJwt.decoded;
-    }
+    return jwt;
   }
 
   private async updateDestinationCache(
@@ -585,7 +550,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
     await destinationCache.cacheRetrievedDestination(
       destinationOrigin === 'subscriber'
-        ? this.selectSubscriberJwt()
+        ? this.selectSubscriberJwt().decoded
         : this.providerServiceToken.decoded,
       destination,
       this.options.isolationStrategy
@@ -631,9 +596,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async getSubscriberDestinationService(): Promise<
     DestinationSearchResult | undefined
   > {
-    if (!this.subscriberToken || this.subscriberToken.type === 'custom') {
+    if (!this.subscriberToken?.serviceJwt) {
       throw new Error(
-        'Try to get destinations from subscriber account but user JWT was not set.'
+        'Try to get destinations from subscriber account but service JWT was not set.'
       );
     }
 
@@ -657,7 +622,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     DestinationSearchResult | undefined
   > {
     const destination = await destinationCache.retrieveDestinationFromCache(
-      this.selectSubscriberJwt(),
+      this.selectSubscriberJwt().decoded,
       this.options.destinationName,
       this.options.isolationStrategy
     );
@@ -689,7 +654,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       return false;
     }
 
-    if (this.subscriberToken.type === 'custom') {
+    if (!this.subscriberToken.serviceJwt) {
       return false;
     }
 

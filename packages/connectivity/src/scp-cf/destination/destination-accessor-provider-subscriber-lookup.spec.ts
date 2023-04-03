@@ -1,6 +1,6 @@
-import nock from 'nock';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
+import nock from 'nock';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
@@ -8,42 +8,45 @@ import {
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
+  onlyIssuerXsuaaUrl,
+  mockServiceBindings
+} from '../../../../../test-resources/test/test-util/environment-mocks';
+import {
+  basicMultipleResponse,
+  certificateMultipleResponse,
+  certificateSingleResponse,
+  destinationName,
+  samlAssertionMultipleResponse,
+  samlAssertionSingleResponse
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
+import {
   onlyIssuerServiceToken,
   providerServiceToken,
   subscriberServiceToken,
   subscriberUserJwt
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
-import {
-  mockServiceBindings,
-  onlyIssuerXsuaaUrl
-} from '../../../../../test-resources/test/test-util/environment-mocks';
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
-import {
-  basicMultipleResponse,
-  certificateMultipleResponse,
-  certificateSingleResponse,
-  destinationName
-} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { wrapJwtInHeader } from '../jwt';
-import * as destinationService from './destination-service';
+import * as identityService from '../identity-service';
 import { DestinationConfiguration, parseDestination } from './destination';
+import {
+  getAllDestinationsFromDestinationService,
+  getDestination
+} from './destination-accessor';
+import {
+  AllDestinationOptions,
+  DestinationFetchOptions,
+  DestinationWithoutToken
+} from './destination-accessor-types';
+import { getDestinationFromDestinationService } from './destination-from-service';
 import {
   alwaysProvider,
   alwaysSubscriber,
   DestinationSelectionStrategy,
   subscriberFirst
 } from './destination-selection-strategies';
+import * as destinationService from './destination-service';
 import { Destination } from './destination-service-types';
-import {
-  getAllDestinationsFromDestinationService,
-  getDestination
-} from './destination-accessor';
-import { getDestinationFromDestinationService } from './destination-from-service';
-import {
-  AllDestinationOptions,
-  DestinationFetchOptions,
-  DestinationWithoutToken
-} from './destination-accessor-types';
 
 const destName = 'DESTINATION';
 
@@ -269,26 +272,42 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       expect(actual).toMatchObject(expected);
     });
 
-    it('it warns if you use iss property and user jwt', async () => {
+    it('when combining `iss` and `jwt` it should fetch service token with `iss` and set user token to `jwt`', async () => {
       mockServiceBindings();
-      const logger = createLogger({
-        package: 'connectivity',
-        messageContext: 'destination-accessor-service'
+      mockServiceToken();
+
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
+
+      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        samlAssertionMultipleResponse,
+        200,
+        onlyIssuerServiceToken
+      );
+
+      mockSingleDestinationCall(
+        nock,
+        samlAssertionSingleResponse,
+        200,
+        'FINAL-DESTINATION',
+        {
+          ...wrapJwtInHeader(onlyIssuerServiceToken).headers,
+          'X-user-token': subscriberUserJwt
+        },
+        { badheaders: [] }
+      );
+
+      const expected = parseDestination(samlAssertionSingleResponse);
+      const actual = await getDestinationFromDestinationService({
+        destinationName: 'FINAL-DESTINATION',
+        iss: onlyIssuerXsuaaUrl,
+        jwt: subscriberUserJwt,
+        cacheVerificationKeys: false
       });
-      const warnSpy = jest.spyOn(logger, 'warn');
-      await expect(
-        getDestinationFromDestinationService({
-          destinationName: 'someDest',
-          jwt: 'someJwt',
-          iss: 'someIss',
-          iasToXsuaaTokenExchange: false
-        })
-      ).rejects.toThrowError(
-        'The given jwt payload does not encode valid JSON.'
-      );
-      expect(warnSpy).toHaveBeenCalledWith(
-        'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
-      );
+      expect(actual).toMatchObject(expected);
     });
 
     it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
@@ -324,7 +343,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       });
       expect(actual).toMatchObject(expected);
       expect(debugSpy).toHaveBeenCalledWith(
-        'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
+        'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'
       );
     });
 

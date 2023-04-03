@@ -38,6 +38,7 @@ import { getProviderServiceToken } from './get-provider-token';
 import {
   getRequiredSubscriberToken,
   getSubscriberToken,
+  hasTokens,
   SubscriberToken
 } from './get-subscriber-token';
 import {
@@ -440,7 +441,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       case 'on-premise':
         return addProxyConfigurationOnPrem(
           destination,
-          this.subscriberToken ? getRequiredSubscriberToken(this.subscriberToken) : undefined
+          hasTokens(this.subscriberToken)
+            ? getRequiredSubscriberToken(this.subscriberToken)
+            : undefined
         );
       case 'internet':
       case 'private-link':

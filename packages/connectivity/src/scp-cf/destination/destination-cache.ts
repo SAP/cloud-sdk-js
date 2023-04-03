@@ -186,7 +186,7 @@ export const DestinationCache = (
 function getJwtForTenant(
   token: Required<SubscriberToken> | JwtPayload
 ): JwtPayload {
-  return token.serviceJwt.decoded || token;
+  return token.serviceJwt?.decoded || token;
 }
 
 /**
@@ -203,7 +203,7 @@ function getJwtForTenant(
 function getJwtForUser(
   token: Required<SubscriberToken> | JwtPayload
 ): JwtPayload {
-  return token.userJwt.decoded || token;
+  return token.userJwt?.decoded || token;
 }
 
 /**

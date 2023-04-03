@@ -35,7 +35,11 @@ import {
   Destination
 } from './destination-service-types';
 import { getProviderServiceToken } from './get-provider-token';
-import { getSubscriberToken, SubscriberToken } from './get-subscriber-token';
+import {
+  getRequiredSubscriberToken,
+  getSubscriberToken,
+  SubscriberToken
+} from './get-subscriber-token';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
@@ -436,7 +440,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       case 'on-premise':
         return addProxyConfigurationOnPrem(
           destination,
-          this.subscriberToken?.userJwt || this.subscriberToken?.serviceJwt
+          this.subscriberToken ? getRequiredSubscriberToken(this.subscriberToken) : undefined
         );
       case 'internet':
       case 'private-link':
@@ -451,16 +455,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
   }
 
-  private selectSubscriberJwt(): JwtPair {
-    // TODO: What to do when I have both, jwt and iss?
-    const jwt =
-      this.subscriberToken?.userJwt || this.subscriberToken?.serviceJwt;
-    if (!jwt) {
-      throw new Error('Try to get subscriber token but value is undefined.');
-    }
-    return jwt;
-  }
-
   private async updateDestinationCache(
     destination: Destination,
     destinationOrigin: DestinationOrigin
@@ -470,7 +464,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
     await destinationCache.cacheRetrievedDestination(
       destinationOrigin === 'subscriber'
-        ? this.selectSubscriberJwt().decoded
+        ? getRequiredSubscriberToken(this.subscriberToken)
         : this.providerServiceToken.decoded,
       destination,
       this.options.isolationStrategy
@@ -542,7 +536,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     DestinationSearchResult | undefined
   > {
     const destination = await destinationCache.retrieveDestinationFromCache(
-      this.selectSubscriberJwt().decoded,
+      getRequiredSubscriberToken(this.subscriberToken),
       this.options.destinationName,
       this.options.isolationStrategy
     );

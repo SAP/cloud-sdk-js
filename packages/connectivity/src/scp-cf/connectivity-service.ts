@@ -21,7 +21,7 @@ const logger = createLogger({
 /**
  * @internal
  * @param destination - Destination which is extended
- * @param jwt - The user jwt
+ * @param jwt - The user JWT
  * @returns Destination containing the proxy config
  */
 export async function addProxyConfigurationOnPrem(

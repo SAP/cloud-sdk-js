@@ -14,7 +14,6 @@ import {
 } from './destination-from-vcap';
 import {
   getDestinationFromDestinationService,
-  DestinationFromServiceRetriever,
   getDestinationServiceCredentials
 } from './destination-from-service';
 import {
@@ -28,6 +27,8 @@ import {
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
+import { getSubscriberToken } from './get-subscriber-token';
+import { getProviderServiceToken } from './get-provider-token';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -138,9 +139,8 @@ export async function getAllDestinationsFromDestinationService(
   }
 
   const token =
-    (await DestinationFromServiceRetriever.getSubscriberToken(options))
-      ?.serviceJwt ||
-    (await DestinationFromServiceRetriever.getProviderServiceToken(options));
+    (await getSubscriberToken(options))?.serviceJwt ||
+    (await getProviderServiceToken(options));
 
   const destinationServiceUri = getDestinationServiceCredentials().uri;
   const accountName = parseSubdomain(token.decoded.iss!);

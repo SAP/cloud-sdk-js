@@ -113,10 +113,9 @@ export async function verifyJwt(
   token: string,
   options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
-  const disableCache = { ...defaultVerifyJwtOptions, ...options }
-    .cacheVerificationKeys
-    ? false
-    : true;
+  const disableCache = !{ ...defaultVerifyJwtOptions, ...options }
+    .cacheVerificationKeys;
+
   const credentials = getXsuaaServiceCredentials(token);
 
   const promise = new Promise<JwtPayload>((resolve, reject) => {

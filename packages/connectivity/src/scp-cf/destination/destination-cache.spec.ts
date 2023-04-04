@@ -559,13 +559,13 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          onPremisePrincipalPropagationMultipleResponse,
-          200,
-          providerServiceToken
-        );
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        onPremisePrincipalPropagationMultipleResponse,
+        200,
+        providerServiceToken
+      );
 
       const retrieveFromCacheSpy = jest.spyOn(
         destinationCache,

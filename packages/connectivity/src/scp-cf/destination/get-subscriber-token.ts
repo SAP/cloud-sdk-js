@@ -113,17 +113,28 @@ export function getRequiredSubscriberToken(
   if (token) {
     const { userJwt, serviceJwt } = token;
 
-    if (hasTokens(token)) {
-      // in case one of the tokens is missing use the other token for tenant and user identification
-      // at least one of the properties is defined, therefore ! is safe
-      return {
-        userJwt: userJwt || serviceJwt!,
-        serviceJwt: serviceJwt || userJwt!
-      };
+    const requiredToken = {
+      userJwt: userJwt || serviceJwt,
+      serviceJwt: serviceJwt || userJwt
+    };
+
+    if (isRequired(requiredToken)) {
+      return requiredToken;
     }
   }
 
   throw new Error('Could not get subscriber token: Token value is undefined.');
+}
+
+/**
+ * Type guard to check whether a token has both `userJwt` and `serviceJwt` defined.
+ * @param token - Token to check.
+ * @returns Whether both tokens are defined.
+ */
+function isRequired(
+  token: SubscriberToken | undefined
+): token is Required<SubscriberToken> {
+  return !!(token?.userJwt && token.serviceJwt);
 }
 
 /**

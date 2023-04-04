@@ -14,7 +14,8 @@ import {
   addProxyConfigurationOnPrem,
   httpProxyHostAndPort
 } from './connectivity-service';
-import { Destination } from './destination';
+import { Destination, getRequiredSubscriberToken } from './destination';
+import { getJwtPair } from './jwt';
 
 describe('connectivity-service', () => {
   afterEach(() => {
@@ -72,11 +73,12 @@ describe('connectivity-service', () => {
         }
       }
     };
-
-    const withProxy = await addProxyConfigurationOnPrem(input, {
-      encoded: providerUserJwt,
-      decoded: {}
-    });
+    const withProxy = await addProxyConfigurationOnPrem(
+      input,
+      getRequiredSubscriberToken({
+        userJwt: getJwtPair(providerUserJwt)
+      })
+    );
     expect(withProxy).toEqual(expected);
   });
 

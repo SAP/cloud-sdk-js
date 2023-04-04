@@ -147,7 +147,9 @@ function headerForProxy(
   }
 }
 
-function noAuthOnPremiseProxy(destination: Destination): Record<string, any> {
+function noAuthOnPremiseProxy(
+  destination: Destination
+): AuthenticationNoAuthHeaders {
   let principalPropagationHeader;
   try {
     principalPropagationHeader = headerForPrincipalPropagation(destination);
@@ -170,6 +172,10 @@ interface AuthenticationHeaderOnPrem {
 interface AuthenticationHeaderProxy {
   'Proxy-Authorization': string;
 }
+interface AuthenticationNoAuthHeaders {
+  'Proxy-Authorization'?: string;
+  'SAP-Connectivity-Authentication'?: string;
+}
 interface AuthenticationHeaders {
   authorization?: string;
   'Proxy-Authorization'?: string;
@@ -178,12 +184,12 @@ interface AuthenticationHeaders {
 
 function getProxyRelatedAuthHeaders(
   destination: Destination
-): AuthenticationHeaderProxy | undefined {
+): AuthenticationHeaderProxy | AuthenticationNoAuthHeaders | undefined {
   if (
     destination.proxyType === 'OnPremise' &&
     destination.authentication === 'NoAuthentication'
   ) {
-    return noAuthOnPremiseProxy(destination) as any;
+    return noAuthOnPremiseProxy(destination);
   }
   // The connectivity service will raise an exception if it can not obtain the 'Proxy-Authorization' and the destination lookup will fail early
   return headerForProxy(destination);

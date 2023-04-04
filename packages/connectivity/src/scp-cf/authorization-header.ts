@@ -147,6 +147,22 @@ function headerForProxy(
   }
 }
 
+function noAuthOnPremiseProxy(
+  destination: Destination
+): Record<string, any> {
+  let principalPropagationHeader;
+  try {
+    principalPropagationHeader = headerForPrincipalPropagation(destination);
+  } catch (e) {
+    logger.warn('No principal propagation header found.');
+  }
+
+  return {
+    ...headerForProxy(destination),
+    ...principalPropagationHeader
+  };
+}
+
 interface AuthenticationHeaderCloud {
   authorization: string;
 }
@@ -169,9 +185,7 @@ function getProxyRelatedAuthHeaders(
     destination.proxyType === 'OnPremise' &&
     destination.authentication === 'NoAuthentication'
   ) {
-    throw Error(
-      'OnPremise connections are not possible with NoAuthentication. Please select a supported authentication method e.g. PrincipalPropagation or BasicAuthentication.'
-    );
+    return noAuthOnPremiseProxy(destination) as any;
   }
   // The connectivity service will raise an exception if it can not obtain the 'Proxy-Authorization' and the destination lookup will fail early
   return headerForProxy(destination);

@@ -147,14 +147,12 @@ function headerForProxy(
   }
 }
 
-function noAuthOnPremiseProxy(
-  destination: Destination
-): Record<string, any> {
+function noAuthOnPremiseProxy(destination: Destination): Record<string, any> {
   let principalPropagationHeader;
   try {
     principalPropagationHeader = headerForPrincipalPropagation(destination);
   } catch (e) {
-    logger.warn('No principal propagation header found.');
+    logger.debug('No principal propagation header found.');
   }
 
   return {

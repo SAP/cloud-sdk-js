@@ -161,6 +161,14 @@ export interface Destination {
    * This field is used to authenticate the destination using a JWT without JKU.
    */
   jwksUri?: string;
+
+  /**
+   * Automatic handling of mTLS certificate and key on CloudFoundry.
+   *
+   * If this option is set to true, the CloudFoundry [instance identity](https://docs.cloudfoundry.org/devguide/deploy-apps/instance-identity.html)
+   * will be automatically used for TLS secured HTTP requests.
+   */
+  inferMtlsCertificate?: boolean;
 }
 
 /**

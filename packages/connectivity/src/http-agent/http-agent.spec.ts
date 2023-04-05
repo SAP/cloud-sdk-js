@@ -1,11 +1,12 @@
-import { HttpsProxyAgent } from 'https-proxy-agent';
 import { HttpProxyAgent } from 'http-proxy-agent';
-import {
-  proxyAgent,
-  ProxyConfiguration,
-  DestinationCertificate
-} from '../scp-cf';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+import mock from 'mock-fs';
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
+import {
+  DestinationCertificate,
+  ProxyConfiguration,
+  proxyAgent
+} from '../scp-cf';
 import { HttpDestination } from '../scp-cf/destination';
 import { getAgentConfig } from './http-agent';
 
@@ -257,5 +258,64 @@ describe('getAgentConfig', () => {
     };
 
     expect(() => getAgentConfig(destination)).toThrow();
+  });
+
+  describe('mTLS', () => {
+    describe('on CloudFoundry', () => {
+      beforeAll(() => {
+        mock({
+          'cf-crypto': {
+            'cf-cert': 'my-cert',
+            'cf-key': 'my-key'
+          }
+        });
+
+        process.env.CF_INSTANCE_CERT = 'cf-crypto/cf-cert';
+        process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
+      });
+
+      afterAll(() => {
+        mock.restore();
+
+        delete process.env.CF_INSTANCE_CERT;
+        delete process.env.CF_INSTANCE_KEY;
+      });
+
+      it('returns an object with key "httpsAgent" and mTLS options for destinations with inferMtlsCertificate option and environment variables are present', async () => {
+        const destination: HttpDestination = {
+          url: 'https://example.com',
+          inferMtlsCertificate: true
+        };
+        const actual = getAgentConfig(destination)['httpsAgent'].options;
+
+        expect(await actual.cert).toEqual('my-cert');
+        expect(await actual.key).toEqual('my-key');
+        expect(actual.pfx).not.toBeDefined();
+        expect(actual.passphrase).not.toBeDefined();
+      });
+    });
+
+    it('returns an object with key "httpsAgent" and mTLS options for destinations with inferMtlsCertificate option and environment variables are not present', async () => {
+      const destination: HttpDestination = {
+        url: 'https://example.com',
+        inferMtlsCertificate: true
+      };
+
+      const actual = getAgentConfig(destination)['httpsAgent'].options;
+
+      expect(await actual.cert).not.toBeDefined();
+      expect(await actual.key).not.toBeDefined();
+    });
+
+    it('returns an object with key "httpsAgent" and mTLS options missing for destinations without inferMtlsCertificate option', async () => {
+      const destination: HttpDestination = {
+        url: 'https://example.com'
+      };
+
+      const actual = getAgentConfig(destination)['httpsAgent'].options;
+
+      expect(await actual.cert).not.toBeDefined();
+      expect(await actual.key).not.toBeDefined();
+    });
   });
 });

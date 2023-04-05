@@ -36,10 +36,19 @@ export interface SubscriberToken {
 
 /**
  * @internal
+ * @param token - The token to check
+ * @returns Whether the given token is a subscriber token.
+ */
+export function isSubscriberToken(token: any): token is SubscriberToken {
+  return token.userJwt || token.serviceJwt;
+}
+
+/**
+ * @internal
  */
 export async function getSubscriberToken(
   options: DestinationOptions
-): Promise<SubscriberToken | undefined> {
+): Promise<SubscriberToken> {
   const isXsuaaJwt =
     !!options.jwt && isXsuaaToken(decodeJwtComplete(options.jwt));
 
@@ -91,4 +100,75 @@ function getJwtForServiceToken(
   if (options.jwt && isXsuaaJwt) {
     return options.jwt;
   }
+}
+
+/**
+ * @internal
+ * Get a subscriber token pair with required fields. Checks that at least one of the tokens exists and sets defaults if needed.
+ * @returns The decoded subscriber tokens.
+ */
+export function getRequiredSubscriberToken(
+  token: SubscriberToken | undefined
+): Required<SubscriberToken> {
+  if (token) {
+    const { userJwt, serviceJwt } = token;
+
+    const requiredToken = {
+      userJwt: userJwt || serviceJwt,
+      serviceJwt: serviceJwt || userJwt
+    };
+
+    if (isRequired(requiredToken)) {
+      return requiredToken;
+    }
+  }
+
+  throw new Error('Could not get subscriber token: Token value is undefined.');
+}
+
+/**
+ * Type guard to check whether a token has both `userJwt` and `serviceJwt` defined.
+ * @param token - Token to check.
+ * @returns Whether both tokens are defined.
+ */
+function isRequired(
+  token: SubscriberToken | undefined
+): token is Required<SubscriberToken> {
+  return !!(token?.userJwt && token.serviceJwt);
+}
+
+/**
+ * @internal
+ * Check whether the subscriber token has one of the tokens set
+ * @param token - Subscriber token pair to check
+ * @returns True if at least one of the tokens exist.
+ */
+export function hasTokens(token: SubscriberToken | undefined): boolean {
+  return !!token?.userJwt || !!token?.serviceJwt;
+}
+
+/**
+ * @internal
+ * Retrieve the token to use for tenant identification.
+ *
+ * If `iss` or XSUAA user JWT was passed, this is the `serviceJwt`.
+ * If a custom user JWT was passed, this is used.
+ * @param token - The subscriber token for service and user.
+ * @returns The decoded JWT to use for tenant identification.
+ */
+export function getJwtForTenant(token: Required<SubscriberToken>): JwtPair {
+  return token.serviceJwt;
+}
+
+/**
+ * @internal
+ * Retrieve the token to use for user identification.
+ *
+ * If a user token was passed, this is used.
+ * If only `iss` was passed try to get the user from the service token.
+ * @param token - The subscriber token for service and user.
+ * @returns The decoded JWT to use for user identification.
+ */
+export function getJwtForUser(token: Required<SubscriberToken>): JwtPair {
+  return token.userJwt;
 }

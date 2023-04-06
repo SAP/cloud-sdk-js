@@ -1,5 +1,18 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.1.0
+
+### Minor Changes
+
+- 039412e59: [New Functionality] Add support for authentication type `NoAuthentication` on-premise destinations.
+- 28b7af86f: [Compatibility Note] The combination of `iss` and `jwt` is now supported when fetching destinations. When both properties are set, the `iss` property is no longer ignored.
+- 28b7af86f: [New Functionality] Allow combination of `iss` an `jwt` when fetching a destination. In this case the `iss` URL will be used to fetch the destination service token and `jwt` will be used for the `x-user-token` header of user based authentication types.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.1.0
+- @sap-cloud-sdk/util@3.1.0
+
 ## 3.0.2
 
 ### Patch Changes

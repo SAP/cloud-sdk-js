@@ -11,7 +11,7 @@ import {
 import { getServiceList } from './environment-accessor';
 import { Service } from './environment-accessor-types';
 import { serviceToken } from './token-accessor';
-import { JwtPair } from './jwt';
+import { SubscriberToken } from './destination';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -21,12 +21,12 @@ const logger = createLogger({
 /**
  * @internal
  * @param destination - Destination which is extended
- * @param jwt - The user JWT
+ * @param subscriberToken - The user and service token
  * @returns Destination containing the proxy config
  */
 export async function addProxyConfigurationOnPrem(
   destination: Destination,
-  jwt?: JwtPair
+  subscriberToken?: Required<SubscriberToken>
 ): Promise<Destination> {
   if (destination.type === 'MAIL') {
     return {
@@ -38,7 +38,7 @@ export async function addProxyConfigurationOnPrem(
   const proxyConfiguration: ProxyConfiguration = {
     ...httpProxyHostAndPort(),
     headers: {
-      ...(await proxyHeaders(destination.authentication, jwt?.encoded))
+      ...(await proxyHeaders(destination.authentication, subscriberToken))
     }
   };
   return { ...destination, proxyConfiguration };
@@ -97,12 +97,14 @@ function readConnectivityServiceBinding(): Service {
 
 async function proxyHeaders(
   authenticationType: AuthenticationType | undefined,
-  jwt?: string
+  subscriberToken?: Required<SubscriberToken>
 ): Promise<ProxyConfigurationHeaders> {
-  const proxyAuthHeader = await proxyAuthorizationHeader(jwt);
+  const proxyAuthHeader = await proxyAuthorizationHeader(
+    subscriberToken?.serviceJwt.encoded
+  );
   const sapConnectivityHeader = sapConnectivityAuthenticationHeader(
     authenticationType,
-    jwt
+    subscriberToken?.userJwt.encoded
   );
   return {
     ...proxyAuthHeader,

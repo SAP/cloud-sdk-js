@@ -5,6 +5,7 @@ import { userId } from '../user';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { Destination } from './destination-service-types';
 import { DestinationsByType } from './destination-accessor-types';
+import { SubscriberToken } from './get-subscriber-token';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -101,7 +102,7 @@ export interface DestinationCacheType {
    * @internal
    */
   retrieveDestinationFromCache: (
-    decodedJwt: Record<string, any>,
+    token: Required<SubscriberToken> | JwtPayload,
     name: string,
     isolation: IsolationStrategy
   ) => Promise<Destination | undefined>;
@@ -109,7 +110,7 @@ export interface DestinationCacheType {
    * @internal
    */
   cacheRetrievedDestination: (
-    decodedJwt: Record<string, any>,
+    token: Required<SubscriberToken> | JwtPayload,
     destination: Destination,
     isolation: IsolationStrategy
   ) => Promise<void>;
@@ -117,7 +118,7 @@ export interface DestinationCacheType {
    * @internal
    */
   cacheRetrievedDestinations: (
-    decodedJwt: Record<string, any>,
+    token: Required<SubscriberToken> | JwtPayload,
     retrievedDestinations: DestinationsByType,
     isolation: IsolationStrategy
   ) => Promise<void>;
@@ -141,28 +142,28 @@ export const DestinationCache = (
   cache: DestinationCacheInterface = new DefaultDestinationCache(300000)
 ): DestinationCacheType => ({
   retrieveDestinationFromCache: async (
-    decodedJwt: Record<string, any>,
+    token: Required<SubscriberToken> | JwtPayload,
     name: string,
     isolation: IsolationStrategy
   ): Promise<Destination | undefined> =>
-    cache.get(getDestinationCacheKey(decodedJwt, name, isolation)),
+    cache.get(getDestinationCacheKey(token, name, isolation)),
   cacheRetrievedDestination: async (
-    decodedJwt: Record<string, any>,
+    token: Required<SubscriberToken> | JwtPayload,
     destination: Destination,
     isolation: IsolationStrategy
   ): Promise<void> => {
-    cacheRetrievedDestination(decodedJwt, destination, isolation, cache);
+    cacheRetrievedDestination(token, destination, isolation, cache);
   },
   cacheRetrievedDestinations: async (
-    decodedJwt: Record<string, any>,
+    token: Required<SubscriberToken> | JwtPayload,
     retrievedDestinations: DestinationsByType,
     isolation: IsolationStrategy
   ): Promise<void> => {
     retrievedDestinations.subaccount.forEach(dest =>
-      cacheRetrievedDestination(decodedJwt, dest, isolation, cache)
+      cacheRetrievedDestination(token, dest, isolation, cache)
     );
     retrievedDestinations.instance.forEach(dest =>
-      cacheRetrievedDestination(decodedJwt, dest, isolation, cache)
+      cacheRetrievedDestination(token, dest, isolation, cache)
     );
   },
   clear: async (): Promise<void> => {
@@ -172,7 +173,41 @@ export const DestinationCache = (
 });
 
 /**
- * Calculates a cache key based on the jwt and destination name for the given isolation strategy.
+ * Retrieve the token to use for tenant identification.
+ *
+ * For subscriber:
+ * If `iss` or XSUAA user JWT was passed, this is the `serviceJwt`.
+ * If a custom user JWT was passed, this is used.
+ *
+ * For provider: always use the token as passed.
+ * @param token - Either the subscriber JWTs or one provider JWT.
+ * @returns The decoded JWT to use for tenant identification.
+ */
+function getJwtForTenant(
+  token: Required<SubscriberToken> | JwtPayload
+): JwtPayload {
+  return token.serviceJwt?.decoded || token;
+}
+
+/**
+ * Retrieve the token to use for user identification.
+ *
+ * For subscriber:
+ * If a user token was passed, this is used.
+ * If only `iss` was passed try to get the user from the service token.
+ *
+ * For provider: always use the token as passed.
+ * @param token - Either the subscriber JWTs or one provider JWT.
+ * @returns The decoded JWT to use for user identification.
+ */
+function getJwtForUser(
+  token: Required<SubscriberToken> | JwtPayload
+): JwtPayload {
+  return token.userJwt?.decoded || token;
+}
+
+/**
+ * Calculates a cache key based on the JWT and destination name for the given isolation strategy.
  * Cache keys for strategies are non-overlapping, i.e. using a cache key for strategy {@link 'tenant'}
  * will not result in a cache hit for a destination that has been cached with strategy {@link 'tenant-user'}.
  * @param decodedJwt - The decoded JWT of the current request.
@@ -182,18 +217,18 @@ export const DestinationCache = (
  * @internal
  */
 export function getDestinationCacheKey(
-  decodedJwt: Record<string, any>,
+  token: SubscriberToken | JwtPayload,
   destinationName: string,
   isolationStrategy: IsolationStrategy = 'tenant-user'
 ): string | undefined {
   if (isolationStrategy === 'tenant') {
-    return getTenantCacheKey(destinationName, tenantId(decodedJwt));
+    return getTenantCacheKey(destinationName, tenantId(getJwtForTenant(token)));
   }
   if (isolationStrategy === 'tenant-user') {
     return getTenantUserCacheKey(
       destinationName,
-      tenantId(decodedJwt),
-      userId(decodedJwt)
+      tenantId(getJwtForTenant(token)),
+      userId(getJwtForUser(token))
     );
   }
   logger.warn(
@@ -227,7 +262,7 @@ function getTenantUserCacheKey(
 }
 
 async function cacheRetrievedDestination<T extends DestinationCacheInterface>(
-  decodedJwt: Record<string, any>,
+  token: Required<SubscriberToken> | JwtPayload,
   destination: Destination,
   isolation: IsolationStrategy,
   cache: T
@@ -236,7 +271,7 @@ async function cacheRetrievedDestination<T extends DestinationCacheInterface>(
     throw new Error('The destination name is undefined.');
   }
 
-  const key = getDestinationCacheKey(decodedJwt, destination.name, isolation);
+  const key = getDestinationCacheKey(token, destination.name, isolation);
   const expiresIn = first(destination.authTokens || [])?.expiresIn;
   const expirationTime = expiresIn
     ? Date.now() + parseInt(expiresIn) * 1000

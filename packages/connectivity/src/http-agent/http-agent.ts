@@ -1,7 +1,7 @@
-import { readFile } from 'fs/promises';
+import { createLogger, last } from '@sap-cloud-sdk/util';
+import { readFileSync } from 'fs';
 import http from 'http';
 import https from 'https';
-import { createLogger, last } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationCertificate,
@@ -125,8 +125,8 @@ function getKeyStoreOption(destination: Destination): Record<string, any> {
 function getMtlsOptions(destination: Destination): Record<string, any> {
   if (mtlsIsEnabled(destination)) {
     return {
-      cert: readFile(process.env.CF_INSTANCE_CERT as string, 'utf8'),
-      key: readFile(process.env.CF_INSTANCE_KEY as string, 'utf8')
+      cert: readFileSync(process.env.CF_INSTANCE_CERT as string, 'utf8'),
+      key: readFileSync(process.env.CF_INSTANCE_KEY as string, 'utf8')
     };
   }
   return {};

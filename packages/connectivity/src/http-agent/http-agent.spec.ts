@@ -288,8 +288,8 @@ describe('getAgentConfig', () => {
         };
         const actual = getAgentConfig(destination)['httpsAgent'].options;
 
-        expect(await actual.cert).toEqual('my-cert');
-        expect(await actual.key).toEqual('my-key');
+        expect(actual.cert).toEqual('my-cert');
+        expect(actual.key).toEqual('my-key');
         expect(actual.pfx).not.toBeDefined();
         expect(actual.passphrase).not.toBeDefined();
       });
@@ -303,8 +303,8 @@ describe('getAgentConfig', () => {
 
       const actual = getAgentConfig(destination)['httpsAgent'].options;
 
-      expect(await actual.cert).not.toBeDefined();
-      expect(await actual.key).not.toBeDefined();
+      expect(actual.cert).not.toBeDefined();
+      expect(actual.key).not.toBeDefined();
     });
 
     it('returns an object with key "httpsAgent" and mTLS options missing for destinations without inferMtlsCertificate option', async () => {
@@ -314,8 +314,8 @@ describe('getAgentConfig', () => {
 
       const actual = getAgentConfig(destination)['httpsAgent'].options;
 
-      expect(await actual.cert).not.toBeDefined();
-      expect(await actual.key).not.toBeDefined();
+      expect(actual.cert).not.toBeDefined();
+      expect(actual.key).not.toBeDefined();
     });
   });
 });

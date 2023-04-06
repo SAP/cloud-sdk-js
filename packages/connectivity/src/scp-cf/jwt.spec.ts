@@ -41,7 +41,7 @@ export function responseWithPublicKey(key = publicKey) {
 }
 
 describe('jwt', () => {
-  describe('isXsuaa', () => {
+  describe('isXsuaa()', () => {
     it('returns true if jku and uaa are from same domain', () => {
       const jwt = decodeJwtComplete(
         signedJwtForVerification(
@@ -49,7 +49,7 @@ describe('jwt', () => {
           'https://myTenant.authentication.sap.hana.ondemand.com/token_keys'
         )
       );
-      mockServiceBindings({ xsuaaBinding: false });
+      mockServiceBindings();
       expect(isXsuaaToken(jwt)).toBe(true);
     });
 

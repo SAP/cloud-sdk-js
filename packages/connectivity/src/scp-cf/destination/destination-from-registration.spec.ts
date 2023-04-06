@@ -191,7 +191,7 @@ describe('register-destination', () => {
 
 describe('register-destination without xsuaa binding', () => {
   beforeAll(() => {
-    mockServiceBindings(undefined, false);
+    mockServiceBindings({ xsuaaBinding: false });
   });
 
   afterEach(async () => {

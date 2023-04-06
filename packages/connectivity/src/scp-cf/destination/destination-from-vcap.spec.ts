@@ -3,7 +3,7 @@ import {
   providerUserPayload
 } from '../../../../../test-resources/test/test-util';
 import * as tokenAccessor from '../token-accessor';
-import { Service } from '../environment-accessor-types';
+import { Service } from '../environment-accessor/environment-accessor-types';
 import { getDestination } from './destination-accessor';
 import { destinationForServiceBinding } from './destination-from-vcap';
 import { destinationCache } from './destination-cache';

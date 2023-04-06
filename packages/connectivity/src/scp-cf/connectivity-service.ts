@@ -9,7 +9,7 @@ import {
   Destination
 } from './destination/destination-service-types';
 import { getServiceList } from './environment-accessor';
-import { Service } from './environment-accessor-types';
+import { Service } from './environment-accessor/environment-accessor-types';
 import { serviceToken } from './token-accessor';
 import { SubscriberToken } from './destination';
 

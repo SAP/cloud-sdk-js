@@ -50,7 +50,7 @@ describe('jwt', () => {
           'https://myTenant.authentication.sap.hana.ondemand.com/token_keys'
         )
       );
-      mockServiceBindings();
+      mockServiceBindings({ xsuaaBinding: false });
       expect(isXsuaaToken(jwt)).toBe(true);
     });
 

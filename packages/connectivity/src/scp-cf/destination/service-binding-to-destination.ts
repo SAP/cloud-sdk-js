@@ -1,4 +1,4 @@
-import { Service } from '../environment-accessor-types';
+import { Service } from '../environment-accessor/environment-accessor-types';
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
 import type {

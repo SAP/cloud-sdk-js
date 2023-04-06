@@ -12,10 +12,7 @@ import {
   DestinationForServiceBindingOptions,
   searchServiceBindingForDestination
 } from './destination-from-vcap';
-import {
-  getDestinationFromDestinationService,
-  getDestinationServiceCredentials
-} from './destination-from-service';
+import { getDestinationFromDestinationService } from './destination-from-service';
 import {
   DestinationFetchOptions,
   isDestinationFetchOptions,
@@ -29,6 +26,7 @@ import {
 } from './destination-service';
 import { getSubscriberToken } from './get-subscriber-token';
 import { getProviderServiceToken } from './get-provider-token';
+import { getDestinationServiceCredentials } from '../environment-accessor';
 
 const logger = createLogger({
   package: 'connectivity',

@@ -137,32 +137,6 @@ function headerForPrincipalPropagation(
   };
 }
 
-function headerForProxy(
-  destination: Destination
-): AuthenticationHeaderProxy | undefined {
-  const authHeader =
-    destination?.proxyConfiguration?.headers?.['Proxy-Authorization'];
-  if (authHeader) {
-    return { 'Proxy-Authorization': authHeader };
-  }
-}
-
-function noAuthOnPremiseProxy(
-  destination: Destination
-): AuthenticationNoAuthHeaders {
-  let principalPropagationHeader;
-  try {
-    principalPropagationHeader = headerForPrincipalPropagation(destination);
-  } catch (e) {
-    logger.debug('No principal propagation header found.');
-  }
-
-  return {
-    ...headerForProxy(destination),
-    ...principalPropagationHeader
-  };
-}
-
 interface AuthenticationHeaderCloud {
   authorization: string;
 }
@@ -171,10 +145,6 @@ interface AuthenticationHeaderOnPrem {
 }
 interface AuthenticationHeaderProxy {
   'Proxy-Authorization': string;
-}
-interface AuthenticationNoAuthHeaders {
-  'Proxy-Authorization'?: string;
-  'SAP-Connectivity-Authentication'?: string;
 }
 interface AuthenticationHeaders {
   authorization?: string;
@@ -184,30 +154,13 @@ interface AuthenticationHeaders {
 
 function getProxyRelatedAuthHeaders(
   destination: Destination
-): AuthenticationHeaderProxy | AuthenticationNoAuthHeaders | undefined {
-  if (
-    destination.proxyType === 'OnPremise' &&
-    destination.authentication === 'NoAuthentication'
-  ) {
-    return noAuthOnPremiseProxy(destination);
-  }
+): AuthenticationHeaderProxy | undefined {
   // The connectivity service will raise an exception if it can not obtain the 'Proxy-Authorization' and the destination lookup will fail early
-  return headerForProxy(destination);
-}
-
-interface AuthenticationHeaderCloud {
-  authorization: string;
-}
-interface AuthenticationHeaderOnPrem {
-  'SAP-Connectivity-Authentication': string;
-}
-interface AuthenticationHeaderProxy {
-  'Proxy-Authorization': string;
-}
-interface AuthenticationHeaders {
-  authorization?: string;
-  'Proxy-Authorization'?: string;
-  'SAP-Connectivity-Authentication'?: string;
+  const authHeader =
+    destination?.proxyConfiguration?.headers?.['Proxy-Authorization'];
+  if (authHeader) {
+    return { 'Proxy-Authorization': authHeader };
+  }
 }
 
 async function getAuthenticationRelatedHeaders(
@@ -235,6 +188,12 @@ async function getAuthenticationRelatedHeaders(
       );
       return;
     case 'NoAuthentication':
+      try {
+        return headerForPrincipalPropagation(destination);
+      } catch (e) {
+        logger.debug('No principal propagation header found.');
+        return undefined;
+      }
     case 'ClientCertificateAuthentication':
       return;
     case 'SAMLAssertion':

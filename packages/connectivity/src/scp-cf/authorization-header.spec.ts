@@ -85,6 +85,23 @@ describe('getAuthHeaders', () => {
       });
       expect(headers.authorization).toBeUndefined();
     });
+
+    it('adds onpremise headers when NoAuth is used', async () => {
+      const destination = {
+        url: '',
+        authentication: 'NoAuthentication',
+        proxyType: 'OnPremise',
+        proxyConfiguration: {
+          headers: {
+            'SAP-Connectivity-Authentication': 'someValueDestination',
+            'Proxy-Authorization': 'someProxyValue'
+          }
+        }
+      } as Destination;
+
+      const headers = await getAuthHeaders(destination);
+      checkHeaders(headers);
+    });
   });
 
   describe('client credentials', () => {

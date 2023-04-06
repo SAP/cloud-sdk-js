@@ -98,5 +98,5 @@ function appNames(credentials: XsuaaServiceCredentials[]) {
   const names = credentials.map(({ xsappname }) => xsappname);
   return names.length === 1
     ? `App name: ${names[0]}.`
-    : `App names: ${names.map(name => `\n\t- ${name}`)}`;
+    : `App names:${names.map(name => `\n\t- ${name}`).join('')}`;
 }

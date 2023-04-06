@@ -1,8 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { getXsuaaServiceCredentials } from './xsuaa';
 
-const logger = createLogger('environment-accessor');
-
 const clientId = 'sb-jwt-app';
 
 const services = {
@@ -56,13 +54,33 @@ describe('getXsuaaServiceCredentials', () => {
 
   it('throws an error if no match can be found', () => {
     process.env.VCAP_SERVICES = JSON.stringify({
-      xsuaa: [{ name: 'xsuaa1' }, { name: 'xsuaa2' }]
+      xsuaa: [
+        { name: 'xsuaa1', label: 'xsuaa' },
+        { name: 'xsuaa2', label: 'xsuaa' }
+      ]
     });
 
     expect(() =>
       getXsuaaServiceCredentials()
     ).toThrowErrorMatchingInlineSnapshot(
       `"Could not find binding to the XSUAA service, that includes credentials."`
+    );
+  });
+
+  it('logs a message if multiple credentials were found', () => {
+    const logger = createLogger('environment-accessor');
+    const warnSpy = jest.spyOn(logger, 'warn');
+
+    process.env.VCAP_SERVICES = JSON.stringify({
+      xsuaa: [
+        { name: 'xsuaa1', label: 'xsuaa', credentials: { xsappname: 'app1' } },
+        { name: 'xsuaa2', label: 'xsuaa', credentials: { xsappname: 'app2' } }
+      ]
+    });
+
+    getXsuaaServiceCredentials();
+    expect(warnSpy).toHaveBeenCalledWith(
+      `Found multiple XSUAA service instances. App names:\n\t- app1\n\t- app2\nChoosing first one ('app1').`
     );
   });
 });

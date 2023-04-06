@@ -1,6 +1,5 @@
 import { IncomingMessage } from 'http';
 import { Socket } from 'net';
-import { unixEOL } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import {
   mockServiceBindings,
@@ -131,7 +130,7 @@ describe('jwt', () => {
     it('succeeds and decodes for correct inline key', async () => {
       nock(jku)
         .get('/')
-        .reply(200, responseWithPublicKey(publicKey.split(unixEOL).join('')));
+        .reply(200, responseWithPublicKey(publicKey.split('\n').join('')));
 
       await expect(
         verifyJwt(signedJwtForVerification(jwtPayload, jku))

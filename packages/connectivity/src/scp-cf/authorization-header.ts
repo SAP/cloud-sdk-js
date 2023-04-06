@@ -192,7 +192,7 @@ async function getAuthenticationRelatedHeaders(
         return headerForPrincipalPropagation(destination);
       } catch (e) {
         logger.debug('No principal propagation header found.');
-        return undefined;
+        return;
       }
     case 'ClientCertificateAuthentication':
       return;

@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/connectivity': minor
 ---
 
-[New Functionality] Add support for NoAuthentication on-premise destinations back.
+[New Functionality] Add support for authentication type `NoAuthentication` on-premise destinations.

@@ -1,6 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
-import { getDestinationServiceCredentials } from '../environment-accessor';
+import {
+  Service,
+  getDestinationServiceCredentials,
+  getService
+} from '../environment-accessor';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { JwtPair } from '../jwt';
 import { isIdenticalTenant } from '../tenant';

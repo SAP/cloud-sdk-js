@@ -49,7 +49,7 @@ describe('Failure cases', () => {
         iasToXsuaaTokenExchange: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Unable to get access token for "destination" service. No service instance of type "destination" found."'
+      '"Could not find service binding for type \'destination\'."'
     );
   }, 50000);
 

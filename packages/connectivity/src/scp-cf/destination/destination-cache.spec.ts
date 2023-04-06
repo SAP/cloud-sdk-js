@@ -12,7 +12,7 @@ import {
   connectivityProxyConfigMock,
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
-  TestTenants
+  testTenants
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   certificateMultipleResponse,
@@ -332,7 +332,7 @@ describe('destination cache', () => {
     it("uses cache with isolation strategy 'tenant' and 'iss' set", async () => {
       await destinationCache
         .getCacheInstance()
-        .set(`${TestTenants.SUBSCRIBER_ONLY_ISS}::${destinationOne.name}`, {
+        .set(`${testTenants.subscriberOnlyIss}::${destinationOne.name}`, {
           entry: destinationOne
         });
 

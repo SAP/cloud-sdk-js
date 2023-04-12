@@ -137,16 +137,6 @@ function headerForPrincipalPropagation(
   };
 }
 
-function headerForProxy(
-  destination: Destination
-): AuthenticationHeaderProxy | undefined {
-  const authHeader =
-    destination?.proxyConfiguration?.headers?.['Proxy-Authorization'];
-  if (authHeader) {
-    return { 'Proxy-Authorization': authHeader };
-  }
-}
-
 interface AuthenticationHeaderCloud {
   authorization: string;
 }
@@ -165,31 +155,12 @@ interface AuthenticationHeaders {
 function getProxyRelatedAuthHeaders(
   destination: Destination
 ): AuthenticationHeaderProxy | undefined {
-  if (
-    destination.proxyType === 'OnPremise' &&
-    destination.authentication === 'NoAuthentication'
-  ) {
-    throw Error(
-      'OnPremise connections are not possible with NoAuthentication. Please select a supported authentication method e.g. PrincipalPropagation or BasicAuthentication.'
-    );
-  }
   // The connectivity service will raise an exception if it can not obtain the 'Proxy-Authorization' and the destination lookup will fail early
-  return headerForProxy(destination);
-}
-
-interface AuthenticationHeaderCloud {
-  authorization: string;
-}
-interface AuthenticationHeaderOnPrem {
-  'SAP-Connectivity-Authentication': string;
-}
-interface AuthenticationHeaderProxy {
-  'Proxy-Authorization': string;
-}
-interface AuthenticationHeaders {
-  authorization?: string;
-  'Proxy-Authorization'?: string;
-  'SAP-Connectivity-Authentication'?: string;
+  const authHeader =
+    destination?.proxyConfiguration?.headers?.['Proxy-Authorization'];
+  if (authHeader) {
+    return { 'Proxy-Authorization': authHeader };
+  }
 }
 
 async function getAuthenticationRelatedHeaders(
@@ -217,6 +188,12 @@ async function getAuthenticationRelatedHeaders(
       );
       return;
     case 'NoAuthentication':
+      try {
+        return headerForPrincipalPropagation(destination);
+      } catch (e) {
+        logger.debug('No principal propagation header found.');
+        return;
+      }
     case 'ClientCertificateAuthentication':
       return;
     case 'SAMLAssertion':

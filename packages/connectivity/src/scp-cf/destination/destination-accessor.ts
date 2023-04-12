@@ -1,6 +1,7 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { parseSubdomain } from '../subdomain-replacer';
+import { getDestinationServiceCredentials } from '../environment-accessor';
 import {
   DestinationOrFetchOptions,
   sanitizeDestination,
@@ -26,7 +27,6 @@ import {
 } from './destination-service';
 import { getSubscriberToken } from './get-subscriber-token';
 import { getProviderServiceToken } from './get-provider-token';
-import { getDestinationServiceCredentials } from '../environment-accessor';
 
 const logger = createLogger({
   package: 'connectivity',

@@ -63,7 +63,7 @@ describe('getXsuaaServiceCredentials', () => {
     expect(() =>
       getXsuaaServiceCredentials()
     ).toThrowErrorMatchingInlineSnapshot(
-      `"Could not find binding to the XSUAA service, that includes credentials."`
+      '"Could not find binding to the XSUAA service, that includes credentials."'
     );
   });
 
@@ -80,7 +80,7 @@ describe('getXsuaaServiceCredentials', () => {
 
     getXsuaaServiceCredentials();
     expect(warnSpy).toHaveBeenCalledWith(
-      `Found multiple XSUAA service instances. App names:\n\t- app1\n\t- app2\nChoosing first one ('app1').`
+      "Found multiple XSUAA service instances. App names:\n\t- app1\n\t- app2\nChoosing first one ('app1')."
     );
   });
 });

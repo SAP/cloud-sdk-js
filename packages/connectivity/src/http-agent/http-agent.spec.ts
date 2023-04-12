@@ -1,5 +1,6 @@
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { HttpProxyAgent } from 'http-proxy-agent';
+import mock from 'mock-fs';
 import {
   proxyAgent,
   ProxyConfiguration,
@@ -8,7 +9,6 @@ import {
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
 import { HttpDestination } from '../scp-cf/destination';
 import { getAgentConfig } from './http-agent';
-import mock from 'mock-fs';
 
 describe('createAgent', () => {
   const baseDestination: HttpDestination = {

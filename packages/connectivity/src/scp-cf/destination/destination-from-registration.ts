@@ -38,7 +38,7 @@ export const registerDestinationCache = DestinationCache(
 export type RegisterDestinationOptions = Pick<
   DestinationFetchOptions,
   'jwt' | 'isolationStrategy'
-  > & { inferMtls?: boolean };
+> & { inferMtls?: boolean };
 
 /**
  * Registers a destination in a cache for later usage.

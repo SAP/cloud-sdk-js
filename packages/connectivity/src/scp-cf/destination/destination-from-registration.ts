@@ -1,18 +1,18 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { decodeJwt } from '../jwt';
 import { getXsuaaServiceCredentials } from '../environment-accessor';
+import { decodeJwt } from '../jwt';
+import { DestinationFetchOptions } from './destination-accessor-types';
+import {
+  DefaultDestinationCache,
+  DestinationCache,
+  IsolationStrategy,
+  getDefaultIsolationStrategy
+} from './destination-cache';
 import {
   Destination,
   DestinationAuthToken,
   isHttpDestination
 } from './destination-service-types';
-import { DestinationFetchOptions } from './destination-accessor-types';
-import {
-  DefaultDestinationCache,
-  DestinationCache,
-  getDefaultIsolationStrategy,
-  IsolationStrategy
-} from './destination-cache';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
@@ -31,12 +31,14 @@ export const registerDestinationCache = DestinationCache(
 );
 
 /**
+ * @experimental This API is experimental and might change in newer versions. Use with caution.
+ *
  * Represents options to configure how a destination should be registered.
  */
 export type RegisterDestinationOptions = Pick<
   DestinationFetchOptions,
   'jwt' | 'isolationStrategy'
->;
+  > & { inferMtls?: boolean };
 
 /**
  * Registers a destination in a cache for later usage.
@@ -53,6 +55,8 @@ export async function registerDestination(
   if (!destination.name) {
     throw Error('Registering destinations requires a destination name.');
   }
+
+  destination.mtls = !!options?.inferMtls;
 
   await registerDestinationCache.cacheRetrievedDestination(
     decodedJwtOrZid(options),

@@ -1,6 +1,7 @@
-import https from 'https';
-import http from 'http';
 import { createLogger, last } from '@sap-cloud-sdk/util';
+import { readFileSync } from 'fs';
+import http from 'http';
+import https from 'https';
 import {
   Destination,
   DestinationCertificate,
@@ -33,7 +34,8 @@ export function getAgentConfig(
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
-    ...getKeyStoreOption(destination)
+    ...getKeyStoreOption(destination),
+    ...getMtlsOptions(destination)
   };
   return destination.proxyConfiguration
     ? proxyAgent(destination, certificateOptions)
@@ -103,7 +105,10 @@ function getKeyStoreOption(destination: Destination): Record<string, any> {
     destination.keyStoreName &&
     destination.keyStorePassword &&
     // Only add certificates, when using MTLS (https://github.com/SAP/cloud-sdk-js/issues/3544)
-    destination.authentication === 'ClientCertificateAuthentication'
+    destination.authentication === 'ClientCertificateAuthentication' &&
+    // pfx is an alternative to providing key and cert individually
+    // For mTLS we provide key and cert, in non-mTLS cases we provide pfx
+    !mtlsIsEnabled(destination)
   ) {
     const certificate = selectCertificate(destination);
 
@@ -115,6 +120,27 @@ function getKeyStoreOption(destination: Destination): Record<string, any> {
     };
   }
   return {};
+}
+
+/*
+ Reads mTLS client certificates from known environment variables on CloudFoundry.
+ */
+function getMtlsOptions(destination: Destination): Record<string, any> {
+  if (mtlsIsEnabled(destination)) {
+    return {
+      cert: readFileSync(process.env.CF_INSTANCE_CERT as string, 'utf8'),
+      key: readFileSync(process.env.CF_INSTANCE_KEY as string, 'utf8')
+    };
+  }
+  return {};
+}
+
+function mtlsIsEnabled(destination: Destination) {
+  return (
+    destination.mtls &&
+    process.env.CF_INSTANCE_CERT &&
+    process.env.CF_INSTANCE_KEY
+  );
 }
 
 /*

@@ -16,11 +16,11 @@
   },
   "dependencies": {
     "@sap-cloud-sdk/connectivity": "^3.1.0",
+    "@sap-cloud-sdk/mail-client": "^3.1.0",
     "@sap-cloud-sdk/test-services-odata-v2": "^3.1.0",
     "@sap-cloud-sdk/test-services-odata-v4": "^3.1.0",
     "@sap-cloud-sdk/test-util": "^3.1.0",
     "@sap-cloud-sdk/util": "^3.1.0",
-    "@sap-cloud-sdk/mail-client": "^3.1.0",
     "@sap/xssec": "^3.2.17"
   },
   "devDependencies": {
@@ -31,6 +31,7 @@
     "bignumber.js": "^9.1.1",
     "execa": "^5.0.0",
     "jsonwebtoken": "^9.0.0",
+    "mock-fs": "^5.2.0",
     "nock": "^13.3.0",
     "winston": "^3.8.2"
   }

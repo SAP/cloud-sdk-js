@@ -55,7 +55,7 @@ describe('mTLS on CloudFoundry', () => {
         httpsAgent: expect.objectContaining({
           options: expect.objectContaining({
             cert: 'my-cert',
-            key: 'my-key',
+            key: 'my-key'
           })
         })
       })

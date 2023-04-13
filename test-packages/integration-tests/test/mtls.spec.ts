@@ -5,6 +5,7 @@ import {
   registerDestination
 } from '@sap-cloud-sdk/connectivity/src/scp-cf';
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
+import axios from 'axios';
 import mock from 'mock-fs';
 import nock from 'nock';
 import { mockServiceBindings } from '../../../test-resources/test/test-util/environment-mocks';
@@ -39,14 +40,25 @@ describe('mTLS on CloudFoundry', () => {
     inferMtls: true
   };
 
-  // fixme: actually needs to assert on cert/key being part of the request
   it('can perform http request with mTLS on registered destination', async () => {
     nock('https://example.com').get('/mtls').reply(200);
     mockServiceBindings();
+    const spy = jest.spyOn(axios, 'request');
 
     await registerDestination(testDestinationWithMtls, options);
     const response = await executeHttpRequest(testDestinationWithMtls);
 
     expect(response.status).toEqual(200);
+    expect(spy).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        httpsAgent: expect.objectContaining({
+          options: expect.objectContaining({
+            cert: 'my-cert',
+            key: 'my-key',
+          })
+        })
+      })
+    );
   });
 });

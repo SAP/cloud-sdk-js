@@ -6,9 +6,13 @@ import { MiddlewareContext, Middleware, MiddlewareOptions } from './middleware';
 /**
  * Map of all existing circuit breakers.
  * Entries are added in a lazy way.
+ * TODO:
+ *  The value type here should be CircuitBreaker, but this would make the Opossum types part of our public API.
+ *  This happens although it is marked as internal, because transpilation includes internal.
+ *  Adding CircuitBreaker will break transpilation on generation.
  * @internal
  */
-export const circuitBreakers: Record<string, CircuitBreaker> = {};
+export const circuitBreakers: Record<string, any> = {};
 
 /**
  * @internal

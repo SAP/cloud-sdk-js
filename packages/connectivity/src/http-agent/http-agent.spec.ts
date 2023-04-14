@@ -1,6 +1,7 @@
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import mock from 'mock-fs';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   proxyAgent,
   ProxyConfiguration,
@@ -9,7 +10,6 @@ import {
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
 import { HttpDestination } from '../scp-cf/destination';
 import { getAgentConfig } from './http-agent';
-import { createLogger } from '@sap-cloud-sdk/util';
 
 describe('createAgent', () => {
   const baseDestination: HttpDestination = {

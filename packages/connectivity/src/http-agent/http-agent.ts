@@ -127,7 +127,11 @@ function getKeyStoreOption(destination: Destination): Record<string, any> {
  */
 function getMtlsOptions(destination: Destination): Record<string, any> {
   if (!mtlsIsEnabled(destination) && destination.mtls) {
-    logger.warn(`Destination ${destination.name ? destination.name : ''} has mTLS enabled, but the required Cloud Foundry environment variables (CF_INSTANCE_CERT and CF_INSTANCE_KEY) are not defined. Note that 'inferMtls' only works on Cloud Foundry.`);
+    logger.warn(
+      `Destination ${
+        destination.name ? destination.name : ''
+      } has mTLS enabled, but the required Cloud Foundry environment variables (CF_INSTANCE_CERT and CF_INSTANCE_KEY) are not defined. Note that 'inferMtls' only works on Cloud Foundry.`
+    );
   }
   if (mtlsIsEnabled(destination)) {
     return {

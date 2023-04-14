@@ -9,6 +9,7 @@ import {
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
 import { HttpDestination } from '../scp-cf/destination';
 import { getAgentConfig } from './http-agent';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 describe('createAgent', () => {
   const baseDestination: HttpDestination = {
@@ -300,11 +301,16 @@ describe('getAgentConfig', () => {
         url: 'https://example.com',
         mtls: true
       };
+      const logger = createLogger('http-agent');
+      const warnSpy = jest.spyOn(logger, 'warn');
 
       const actual = getAgentConfig(destination)['httpsAgent'].options;
 
       expect(actual.cert).not.toBeDefined();
       expect(actual.key).not.toBeDefined();
+      expect(warnSpy).toHaveBeenCalledTimes(1);
+
+      warnSpy.mockRestore();
     });
 
     it('returns an object with key "httpsAgent" and mTLS options missing for destinations without inferMtls option', async () => {

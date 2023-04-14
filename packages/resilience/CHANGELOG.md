@@ -1,5 +1,12 @@
 # @sap-cloud-sdk/resilience
 
+## 3.1.1
+
+### Patch Changes
+
+- 166a16d82: [Fixed Issue] Fix transpilation on OData generation, where types for 'opossum' could not be found.
+  - @sap-cloud-sdk/util@3.1.1
+
 ## 3.1.0
 
 ### Patch Changes

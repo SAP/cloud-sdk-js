@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.1.1
+
+### Patch Changes
+
+- Updated dependencies [166a16d82]
+  - @sap-cloud-sdk/resilience@3.1.1
+  - @sap-cloud-sdk/util@3.1.1
+
 ## 3.1.0
 
 ### Minor Changes

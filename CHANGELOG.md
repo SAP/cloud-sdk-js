@@ -28,6 +28,15 @@
 
 - 
 
+# 3.1.1
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.1.1
+
+## Fixed Issues
+
+- [resilience] Fix transpilation on OData generation, where types for 'opossum' could not be found.
+  - @sap-cloud-sdk/util@3.1.1 (166a16d82)
+
 # 3.1.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.1.0

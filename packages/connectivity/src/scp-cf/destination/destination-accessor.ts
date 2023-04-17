@@ -1,6 +1,7 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { parseSubdomain } from '../subdomain-replacer';
+import { getDestinationServiceCredentials } from '../environment-accessor';
 import {
   DestinationOrFetchOptions,
   sanitizeDestination,
@@ -12,10 +13,7 @@ import {
   DestinationForServiceBindingOptions,
   searchServiceBindingForDestination
 } from './destination-from-vcap';
-import {
-  getDestinationFromDestinationService,
-  getDestinationServiceCredentials
-} from './destination-from-service';
+import { getDestinationFromDestinationService } from './destination-from-service';
 import {
   DestinationFetchOptions,
   isDestinationFetchOptions,

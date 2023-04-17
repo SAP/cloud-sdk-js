@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/generator
 
+## 3.1.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.1.1
+- @sap-cloud-sdk/odata-common@3.1.1
+- @sap-cloud-sdk/odata-v2@3.1.1
+- @sap-cloud-sdk/odata-v4@3.1.1
+- @sap-cloud-sdk/util@3.1.1
+
 ## 3.1.0
 
 ### Patch Changes

@@ -7,7 +7,10 @@ import {
   getXsuaaServiceCredentials,
   resolveService
 } from './environment-accessor';
-import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
+import {
+  Service,
+  XsuaaServiceCredentials
+} from './environment-accessor/environment-accessor-types';
 import { replaceSubdomain } from './subdomain-replacer';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 

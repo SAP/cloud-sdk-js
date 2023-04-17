@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt } from '../jwt';
-import { Service } from '../environment-accessor-types';
+import { Service } from '../environment-accessor/environment-accessor-types';
 import { getServiceByInstanceName } from '../environment-accessor';
 import {
   addProxyConfigurationInternet,

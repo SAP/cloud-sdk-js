@@ -1,21 +1,17 @@
 import { XsuaaServiceCredentials } from '@sap-cloud-sdk/connectivity/internal';
-import {
-  Protocol,
-  ProxyConfiguration,
-  Service
-} from '@sap-cloud-sdk/connectivity';
+import { ProxyConfiguration, Service } from '@sap-cloud-sdk/connectivity';
 import { publicKey } from './keys';
 
-export enum TestTenants {
-  PROVIDER = 'provider',
-  SUBSCRIBER = 'subscriber',
-  SUBSCRIBER_ONLY_ISS = 'subscriber-only-iss'
-}
+export const testTenants = {
+  provider: 'provider',
+  subscriber: 'subscriber',
+  subscriberOnlyIss: 'subscriber-only-iss'
+};
 
-export const providerXsuaaUrl = `https://${TestTenants.PROVIDER}.example.com`;
-export const providerXsuaaCertUrl = `https://${TestTenants.PROVIDER}.cert.example.com`;
-export const subscriberXsuaaUrl = `https://${TestTenants.SUBSCRIBER}.example.com`;
-export const onlyIssuerXsuaaUrl = `https://${TestTenants.SUBSCRIBER_ONLY_ISS}.example.com`;
+export const providerXsuaaUrl = `https://${testTenants.provider}.example.com`;
+export const providerXsuaaCertUrl = `https://${testTenants.provider}.cert.example.com`;
+export const subscriberXsuaaUrl = `https://${testTenants.subscriber}.example.com`;
+export const onlyIssuerXsuaaUrl = `https://${testTenants.subscriberOnlyIss}.example.com`;
 export const destinationServiceUri = 'https://destination.example.com';
 
 export const providerXsuaaClientCredentials = {
@@ -100,14 +96,13 @@ export interface MockServiceBindings {
   connectivity: Service[];
 }
 
-export function mockServiceBindings(
-  options?: {
-    mockDestinationBindingWithCert: boolean;
-  },
-  xsuaaBinding = true
-): MockServiceBindings {
+export function mockServiceBindings(options?: {
+  mockDestinationBindingWithCert?: boolean;
+  xsuaaBinding?: boolean;
+}): MockServiceBindings {
+  options = { xsuaaBinding: true, ...options };
   const mockServiceEnv = {
-    xsuaa: xsuaaBinding ? [xsuaaBindingMock] : [],
+    xsuaa: options.xsuaaBinding ? [xsuaaBindingMock] : [],
     destination: [
       options?.mockDestinationBindingWithCert
         ? destinationBindingCertMock

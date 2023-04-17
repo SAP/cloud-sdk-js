@@ -1,10 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
-  getDestinationService,
-  getDestinationServiceCredentialsList
+  Service,
+  getDestinationServiceCredentials,
+  getService
 } from '../environment-accessor';
-import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { JwtPair } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
@@ -66,26 +66,6 @@ const emptyDestinationByType: DestinationsByType = {
   instance: [],
   subaccount: []
 };
-
-/**
- * Utility function to get destination service credentials, including error handling.
- * @internal
- */
-export function getDestinationServiceCredentials(): DestinationServiceCredentials {
-  const credentials = getDestinationServiceCredentialsList();
-  if (!credentials?.length) {
-    throw Error(
-      'No binding to a destination service instance found. Please bind a destination service instance to your application.'
-    );
-  }
-  if (credentials.length > 1) {
-    logger.warn(
-      'Found more than one destination service instance. Using the first one.'
-    );
-  }
-
-  return credentials[0];
-}
 
 /**
  * Retrieves a destination with the given name from the Cloud Foundry destination service.
@@ -616,4 +596,13 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
     return destination;
   }
+}
+
+function getDestinationService(): Service {
+  const destinationService = getService('destination');
+
+  if (!destinationService) {
+    throw Error('No binding to a destination service found.');
+  }
+  return destinationService;
 }

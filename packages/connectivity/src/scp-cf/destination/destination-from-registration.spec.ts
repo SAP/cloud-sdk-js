@@ -191,7 +191,7 @@ describe('register-destination', () => {
 
 describe('register-destination without xsuaa binding', () => {
   beforeAll(() => {
-    mockServiceBindings(undefined, false);
+    mockServiceBindings({ xsuaaBinding: false });
   });
 
   afterEach(async () => {
@@ -211,6 +211,8 @@ describe('register-destination without xsuaa binding', () => {
   it('throws an error when no JWT is provided', async () => {
     await expect(() =>
       registerDestination(testDestination)
-    ).rejects.toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Could not find binding to the XSUAA service, that includes credentials."'
+    );
   });
 });

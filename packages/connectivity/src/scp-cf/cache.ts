@@ -40,14 +40,10 @@ export class Cache<T> implements CacheInterface<T> {
    */
   private cache: Record<string, CacheEntry<T>>;
 
-  private inferDefaultExpirationTime(
-  ): number | undefined {
-    const now = new Date();
-    return this.defaultValidityTime
-      ? now.setMilliseconds(now.getMilliseconds() + this.defaultValidityTime).valueOf()
-      : undefined;
-  }
-
+  /**
+   * Creates an instance of Cache.
+   * @param defaultValidityTime - The default expiration time in milliseconds. Use `0` for unlimited cache duration.
+   */
   constructor(private defaultValidityTime: number) {
     this.cache = {};
   }
@@ -86,10 +82,18 @@ export class Cache<T> implements CacheInterface<T> {
    */
   set(key: string | undefined, item: CacheEntry<T>): void {
     if (key) {
-      const expires =
-        item.expires ?? this.inferDefaultExpirationTime();
+      const expires = item.expires ?? this.inferDefaultExpirationTime();
       this.cache[key] = { entry: item.entry, expires };
     }
+  }
+
+  private inferDefaultExpirationTime(): number | undefined {
+    const now = new Date();
+    return this.defaultValidityTime
+      ? now
+          .setMilliseconds(now.getMilliseconds() + this.defaultValidityTime)
+          .valueOf()
+      : undefined;
   }
 }
 

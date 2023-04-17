@@ -40,6 +40,14 @@ export class Cache<T> implements CacheInterface<T> {
    */
   private cache: Record<string, CacheEntry<T>>;
 
+  private inferDefaultExpirationTime(
+  ): number | undefined {
+    const now = new Date();
+    return this.defaultValidityTime
+      ? now.setMilliseconds(now.getMilliseconds() + this.defaultValidityTime).valueOf()
+      : undefined;
+  }
+
   constructor(private defaultValidityTime: number) {
     this.cache = {};
   }
@@ -79,7 +87,7 @@ export class Cache<T> implements CacheInterface<T> {
   set(key: string | undefined, item: CacheEntry<T>): void {
     if (key) {
       const expires =
-        item.expires ?? inferExpirationTime(this.defaultValidityTime);
+        item.expires ?? this.inferDefaultExpirationTime();
       this.cache[key] = { entry: item.entry, expires };
     }
   }
@@ -90,13 +98,4 @@ function isExpired<T>(item: CacheEntry<T>): boolean {
     return false;
   }
   return item.expires < Date.now();
-}
-
-function inferExpirationTime(
-  validityTimeInMs: number | undefined
-): number | undefined {
-  const now = new Date();
-  return validityTimeInMs
-    ? now.setMilliseconds(now.getMilliseconds() + validityTimeInMs).valueOf()
-    : undefined;
 }

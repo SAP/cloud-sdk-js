@@ -116,6 +116,18 @@ describe('register-destination', () => {
     ).resolves.toBe(true);
   });
 
+  it('caches with unlimited time', async () => {
+      jest.useFakeTimers();
+      registerDestination(testDestination);
+      const minutesToExpire = 9999;
+      // Shift time to expire the set item
+      jest.advanceTimersByTime(60000 * minutesToExpire);
+      const actual = await getDestination({
+        destinationName: testDestination.name
+      });
+      expect(actual).toEqual(testDestination);
+    });
+
   it('adds proxy to registered destination', async () => {
     process.env['https_proxy'] = 'some.http.com';
     registerDestination(testDestination);

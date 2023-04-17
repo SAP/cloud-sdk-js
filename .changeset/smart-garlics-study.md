@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/connectivity': minor
 ---
 
-[Improvement] Change the default validity time of the cache to 5 minutes. If you need to customize it, use the `expires_in` option.
+[Improvement] Change the default validity time parameter of the Cache constructor to be required, rename it from `validityTimeInMs` to `defaultValidityTime`, and allow never-expiring cache with explicitly setting this parameter to `0`. Set the default validity time of `ClientCredentialsTokenCache` to 5 minutes.

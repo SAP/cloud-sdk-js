@@ -51,7 +51,7 @@ export interface DestinationCacheInterface {
 export class DefaultDestinationCache implements DestinationCacheInterface {
   cache: Cache<Destination>;
 
-  constructor(validityTimeInMs = 300000) {
+  constructor(validityTimeInMs = 0) {
     this.cache = new Cache<Destination>(validityTimeInMs);
   }
 

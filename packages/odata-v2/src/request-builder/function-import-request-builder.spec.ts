@@ -220,7 +220,9 @@ describe('FunctionImportRequestBuilder', () => {
 
     await expect(
       requestBuilder.execute(defaultDestination)
-    ).rejects.toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"get request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! "'
+    );
   });
 });
 

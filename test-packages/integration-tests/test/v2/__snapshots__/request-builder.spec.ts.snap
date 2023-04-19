@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Request Builder should fail for update request without keys 1`] = `"OData update request failed!"`;

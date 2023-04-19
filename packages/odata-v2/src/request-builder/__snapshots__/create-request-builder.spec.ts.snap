@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`CreateRequestBuilder throws an error when request execution fails 1`] = `"Create request failed!"`;

@@ -7,13 +7,15 @@ describe('url', () => {
 
     await expect(
       checkUrlExists('https://non.existing.com')
-    ).rejects.toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Request failed with status code 404"'
+    );
   });
 
   it('does not throw for existing link', async () => {
     nock('https://existing.com').head(/.*/).reply(200);
     await expect(
       checkUrlExists('https://existing.com')
-    ).resolves.toMatchSnapshot();
+    ).resolves.toMatchInlineSnapshot('200');
   });
 });

@@ -394,7 +394,9 @@ describe('UpdateRequestBuilder', () => {
       entity
     ).execute(defaultDestination);
 
-    await expect(updateRequest).rejects.toThrowErrorMatchingSnapshot();
+    await expect(updateRequest).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"OData update request failed!"'
+    );
   });
 
   it('should set the remote state and ETag', async () => {

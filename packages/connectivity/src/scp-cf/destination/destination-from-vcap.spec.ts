@@ -163,9 +163,11 @@ describe('vcap-service-destination', () => {
   });
 
   it('throws an error if the service type is not supported', async () => {
-    await expect(() =>
-      destinationForServiceBinding('my-custom-service')
-    ).rejects.toThrowErrorMatchingSnapshot();
+    await expect(() => destinationForServiceBinding('my-custom-service'))
+      .rejects.toThrowErrorMatchingInlineSnapshot(`
+      "The service "my-custom-service" is of type "undefined" which is not supported! Consider providing your own transformation function when calling destinationForServiceBinding, like this:
+        destinationServiceForBinding(yourServiceName, { serviceBindingToDestination: yourTransformationFunction });"
+    `);
   });
 
   it('throws an error if no service binding can be found for the given name', async () => {

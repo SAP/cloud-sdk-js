@@ -1,6 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`vcap-service-destination throws an error if the service type is not supported 1`] = `
-"The service "my-custom-service" is of type "undefined" which is not supported! Consider providing your own transformation function when calling destinationForServiceBinding, like this:
-  destinationServiceForBinding(yourServiceName, { serviceBindingToDestination: yourTransformationFunction });"
-`;

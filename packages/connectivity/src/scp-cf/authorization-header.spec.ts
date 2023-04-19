@@ -97,7 +97,9 @@ describe('buildAuthorizationHeaders', () => {
 
   describe('principal propagation', () => {
     it('builds headers', async () => {
-      const headers = await buildAuthorizationHeaders(principalPropagationDestination);
+      const headers = await buildAuthorizationHeaders(
+        principalPropagationDestination
+      );
       checkHeaders(headers);
     });
 

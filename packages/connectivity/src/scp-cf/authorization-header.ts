@@ -46,24 +46,6 @@ export function getAuthHeader(
   }
 }
 
-/**
- * @internal
- * @param destination - Destination from which headers are extracted
- * @param customHeaders - Custom and default headers.
- * @returns auth header
- */
-export async function getAuthHeaders(
-  destination: Destination,
-  customHeaders?: Record<string, any>
-): Promise<AuthenticationHeaders> {
-  const customAuthHeader = getAuthHeader(
-    destination.authentication,
-    customHeaders
-  );
-
-  return buildAuthorizationHeaders(destination, customAuthHeader);
-}
-
 function toAuthorizationHeader(
   authorization: string
 ): AuthenticationHeaderCloud {
@@ -230,17 +212,9 @@ async function getAuthenticationRelatedHeaders(
  * @internal
  */
 export async function buildAuthorizationHeaders(
-  destination: Destination,
-  customAuthHeader?: AuthenticationHeaderCloud | AuthenticationHeaderOnPrem
+  destination: Destination
 ): Promise<AuthenticationHeaders> {
   const sanitizedDestination = sanitizeDestination(destination);
-
-  if (customAuthHeader && Object.keys(customAuthHeader).length) {
-    return {
-      ...customAuthHeader,
-      ...getProxyRelatedAuthHeaders(sanitizedDestination)
-    };
-  }
 
   return {
     ...(await getAuthenticationRelatedHeaders(sanitizedDestination)),

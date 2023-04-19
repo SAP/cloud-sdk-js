@@ -3,7 +3,7 @@ import {
   mergeLeftIgnoreCase,
   pickNonNullish
 } from '@sap-cloud-sdk/util';
-import { getAuthHeaders } from './authorization-header';
+import { buildAuthorizationHeaders } from './authorization-header';
 import { Destination } from './destination/destination-service-types';
 
 /**
@@ -14,7 +14,7 @@ import { Destination } from './destination/destination-service-types';
 export async function buildHeadersForDestination(
   destination: Destination
 ): Promise<Record<string, string>> {
-  const authHeaders = await getAuthHeaders(destination);
+  const authHeaders = await buildAuthorizationHeaders(destination);
   const sapHeaders = getSapHeaders(destination);
 
   return mergeIgnoreCase(destination.headers, {

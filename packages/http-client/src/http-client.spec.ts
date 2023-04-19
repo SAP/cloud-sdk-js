@@ -752,7 +752,9 @@ sap-client:001`);
 
       await expect(
         executeHttpRequest(destination, { method: 'get' })
-      ).rejects.toThrowErrorMatchingSnapshot();
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Protocol of the provided destination (rfc://example.com) is not supported! Currently only HTTP and HTTPS are supported."'
+      );
     });
 
     it('includes the default axios config in request', async () => {

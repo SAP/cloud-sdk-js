@@ -205,7 +205,9 @@ describe('GetAllRequestBuilder', () => {
         destinationName: 'NonExistentDestination'
       });
 
-      await expect(getAllRequest).rejects.toThrowErrorMatchingSnapshot();
+      await expect(getAllRequest).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Could not find a destination with name "NonExistentDestination"! Unable to execute request."'
+      );
     });
 
     it('throws an error when request execution fails', async () => {
@@ -219,7 +221,9 @@ describe('GetAllRequestBuilder', () => {
 
       const getAllRequest = requestBuilder.execute(defaultDestination);
 
-      await expect(getAllRequest).rejects.toThrowErrorMatchingSnapshot();
+      await expect(getAllRequest).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"get request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! "'
+      );
     });
 
     it('considers custom timeout on the request', async () => {

@@ -45,7 +45,6 @@ import {
   HttpResponse
 } from './http-client-types';
 import {
-  addDestinationToRequestConfig,
   buildHttpRequest,
   buildRequestWithMergedHeadersAndQueryParameters,
   encodeAllParameters,
@@ -139,88 +138,6 @@ describe('generic http client', () => {
       await expect(
         buildHttpRequest({ url: 'https://example.com' })
       ).resolves.not.toThrow();
-    });
-  });
-
-  describe('addDestinationToRequestConfig', () => {
-    afterEach(() => {
-      jest.clearAllMocks();
-    });
-
-    it('merges given headers with provided headers (but gives priority to custom headers)', async () => {
-      const expected = {
-        a: '1',
-        b: '2',
-        baseURL: 'https://example.com',
-        headers: {
-          a: '1',
-          authorization: 'CUSTOM',
-          'sap-client': '001'
-        }
-      };
-
-      const actual = await addDestinationToRequestConfig(httpsDestination, {
-        method: 'get',
-        a: '1',
-        b: '2',
-        headers: {
-          a: '1',
-          authorization: 'CUSTOM'
-        }
-      });
-
-      expect(actual).toMatchObject(expected);
-      expect(actual.httpsAgent).toBeDefined();
-    });
-
-    it('overwrites baseURL and either httpAgent or httpsAgent', async () => {
-      const expected = {
-        baseURL: 'https://custom.example.com',
-        headers: {
-          a: '1',
-          authorization: 'CUSTOM',
-          'sap-client': '001'
-        },
-        httpsAgent: 'custom-agent'
-      };
-
-      const actual = await addDestinationToRequestConfig(httpsDestination, {
-        method: 'get',
-        baseURL: 'https://custom.example.com',
-        headers: {
-          a: '1',
-          authorization: 'CUSTOM'
-        },
-        httpsAgent: 'custom-agent'
-      });
-
-      expect(actual).toMatchObject(expected);
-    });
-
-    it('allows usage with e.g. axios.request', async () => {
-      nock('https://example.com', {
-        reqheaders: {
-          authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
-          'sap-client': '001'
-        }
-      })
-        .get('/api/entity')
-        .query({
-          a: 'a',
-          b: 'b'
-        })
-        .reply(200);
-
-      const request = addDestinationToRequestConfig(httpsDestination, {
-        method: 'get',
-        url: '/api/entity',
-        headers: {},
-        params: {
-          a: 'a',
-          b: 'b'
-        }
-      }).then(conf => axios.request(conf));
-      await expect(request).resolves.not.toThrow();
     });
   });
 

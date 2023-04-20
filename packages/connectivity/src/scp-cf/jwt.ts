@@ -50,24 +50,6 @@ export function retrieveJwt(req: IncomingMessage): string | undefined {
   return undefined;
 }
 
-/**
- * Checks if the given JWT is from the XSUAA or from an alternative issuer based on the iss property and the uaa domain of the XSUAA.
- * @param decodedUserJwt - JWT to be checked.
- * @returns True if JWT is issued by XSUAA
- * @internal
- */
-export function isXsuaaToken(decodedUserJwt: JwtWithPayloadObject): boolean {
-  if (!decodedUserJwt.header.jku) {
-    return false;
-  }
-  const jkuDomain = new URL(decodedUserJwt.header.jku).hostname;
-  const uaaDomain = getXsuaaServiceCredentials(
-    decodedUserJwt.payload
-  ).uaadomain;
-
-  return jkuDomain.endsWith(uaaDomain);
-}
-
 function authHeader(req: IncomingMessage): string | undefined {
   const entries = Object.entries(req.headers).find(
     ([key]) => key.toLowerCase() === 'authorization'

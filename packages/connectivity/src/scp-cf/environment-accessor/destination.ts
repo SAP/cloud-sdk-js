@@ -1,29 +1,13 @@
-import { createLogger } from '@sap-cloud-sdk/util';
+import { JwtPayload } from '../jsonwebtoken-type';
 import { DestinationServiceCredentials } from './environment-accessor-types';
-import { getServiceCredentialsList } from './env';
-
-const logger = createLogger({
-  package: 'connectivity',
-  messageContext: 'environment-accessor'
-});
+import { getServiceCredentials } from './service-credentials';
 
 /**
  * Utility function to get destination service credentials, including error handling.
  * @internal
  */
-export function getDestinationServiceCredentials(): DestinationServiceCredentials {
-  const credentials = getServiceCredentialsList('destination');
-
-  if (!credentials.length) {
-    throw Error(
-      'Could not find binding to the destination service, that includes credentials.'
-    );
-  }
-  if (credentials.length > 1) {
-    logger.warn(
-      'Found multiple bindings to the destination service. Using the first one.'
-    );
-  }
-
-  return credentials[0];
+export function getDestinationServiceCredentials(
+  token?: JwtPayload | string
+): DestinationServiceCredentials {
+  return getServiceCredentials('destination', token);
 }

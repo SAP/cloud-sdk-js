@@ -27,31 +27,6 @@ describe('getXsuaaServiceCredentials', () => {
     delete process.env.VCAP_SERVICES;
   });
 
-  it('gets the XSUAA service credentials matching a given JWT', () => {
-    expect(
-      getXsuaaServiceCredentials({
-        client_id: clientId
-      }).clientid
-    ).toBe(clientId);
-  });
-
-  it('uses the audience for matching when no match can be found using the clientid', () => {
-    expect(
-      getXsuaaServiceCredentials({
-        aud: [clientId]
-      }).clientid
-    ).toBe(clientId);
-  });
-
-  it('uses scope if audience array is empty for matching when no match can be found using the clientid', () => {
-    expect(
-      getXsuaaServiceCredentials({
-        aud: [],
-        scope: [clientId + '.rest.of.the.link']
-      }).clientid
-    ).toBe(clientId);
-  });
-
   it('throws an error if no match can be found', () => {
     process.env.VCAP_SERVICES = JSON.stringify({
       xsuaa: [

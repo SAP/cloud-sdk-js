@@ -3,52 +3,6 @@ import { getServiceCredentials } from './service-credentials';
 
 const logger = createLogger('environment-accessor');
 
-// const services = {
-//   'one-credentials': [
-//     {
-//       name: 'one-credentials-1',
-//       label: 'one-credentials',
-//       credentials: {
-//         clientid: 'clientid',
-//         clientsecret: 'clientsecret',
-//         uri: 'uri'
-//       }
-//     }
-//   ],
-//   'multiple-credentials': [
-//     {
-//       name: 'multiple-credentials-1',
-//       label: 'multiple-credentials',
-//       credentials: {
-//         clientid: 'clientid1',
-//         clientsecret: 'clientsecret1',
-//         uri: 'uri1',
-//         xsappname: 'app1'
-//       }
-//     },
-//     {
-//       name: 'multiple-credentials-2',
-//       label: 'multiple-credentials',
-//       credentials: {
-//         clientid: 'clientid2',
-//         clientsecret: 'clientsecret2',
-//         uri: 'uri2',
-//         xsappname: 'app2'
-//       }
-//     }
-//   ],
-//   'no-credentials': [
-//     {
-//       name: 'no-credentials-1',
-//       label: 'no-credentials'
-//     },
-//     {
-//       name: 'no-credentials-2',
-//       label: 'no-credentials'
-//     }
-//   ]
-// };
-
 function mockBindings(...bindings: { label: string; name: string }[]) {
   process.env.VCAP_SERVICES = JSON.stringify(
     bindings.reduce((services, binding) => {

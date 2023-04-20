@@ -3,7 +3,10 @@ import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import * as xssec from '@sap/xssec';
 import { decode } from 'jsonwebtoken';
 import { Cache } from './cache';
-import { getXsuaaServiceCredentials } from './environment-accessor';
+import {
+  getDestinationServiceCredentials,
+  getXsuaaServiceCredentials
+} from './environment-accessor';
 import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
 import { TokenKey } from './xsuaa-service-types';
 
@@ -253,6 +256,24 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT extends string>(
       `Property '${mapping[key].keyInJwt}' is missing in JWT payload.`
     );
   }
+}
+
+/**
+ * Checks if the given JWT was issued by XSUAA based on the iss property and the uaa domain of the XSUAA.
+ * @param decodedUserJwt - JWT to be checked.
+ * @returns Whether the JWT was issued by XSUAA.
+ * @internal
+ */
+export function isXsuaaToken(decodedUserJwt: JwtWithPayloadObject): boolean {
+  if (!decodedUserJwt.header.jku) {
+    return false;
+  }
+  const jkuDomain = new URL(decodedUserJwt.header.jku).hostname;
+  const uaaDomain = getDestinationServiceCredentials(
+    decodedUserJwt.payload
+  ).uaadomain;
+
+  return jkuDomain.endsWith(uaaDomain);
 }
 
 /**

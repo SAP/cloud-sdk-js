@@ -14,6 +14,8 @@ export const subscriberXsuaaUrl = `https://${testTenants.subscriber}.example.com
 export const onlyIssuerXsuaaUrl = `https://${testTenants.subscriberOnlyIss}.example.com`;
 export const destinationServiceUri = 'https://destination.example.com';
 
+const uaaDomain = 'authentication.sap.hana.ondemand.com';
+
 export const providerXsuaaClientCredentials = {
   url: providerXsuaaUrl
 } as XsuaaServiceCredentials;
@@ -29,7 +31,7 @@ export const xsuaaBindingMock: Service = {
     clientid: 'clientid',
     clientsecret: 'clientsecret',
     verificationkey: publicKey,
-    uaadomain: 'authentication.sap.hana.ondemand.com',
+    uaadomain: uaaDomain,
     subaccountid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
     tenantid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
     zoneid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24'
@@ -45,7 +47,8 @@ export const destinationBindingClientSecretMock: Service = {
     clientid: 'destinationClient',
     clientsecret: 'destinationSecret',
     uri: destinationServiceUri,
-    url: providerXsuaaUrl
+    url: providerXsuaaUrl,
+    uaadomain: uaaDomain
   }
 };
 
@@ -60,7 +63,8 @@ export const destinationBindingCertMock: Service = {
     key: 'certificateKey',
     uri: destinationServiceUri,
     url: providerXsuaaUrl,
-    certurl: providerXsuaaCertUrl
+    certurl: providerXsuaaCertUrl,
+    uaadomain: uaaDomain
   }
 };
 

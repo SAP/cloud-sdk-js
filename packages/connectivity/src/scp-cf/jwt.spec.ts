@@ -41,7 +41,7 @@ export function responseWithPublicKey(key = publicKey) {
 }
 
 describe('jwt', () => {
-  describe('isXsuaa()', () => {
+  describe('isXsuaaToken()', () => {
     it('returns true if jku and uaa are from same domain', () => {
       const jwt = decodeJwtComplete(
         signedJwtForVerification(
@@ -70,6 +70,7 @@ describe('jwt', () => {
       expect(isXsuaaToken(jwt)).toBe(false);
     });
   });
+
   describe('retrieveJwt', () => {
     it('returns undefined when incoming message has no auth header', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT())).toBeUndefined();

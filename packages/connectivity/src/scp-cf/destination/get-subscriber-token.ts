@@ -1,8 +1,12 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { decodeJwtComplete, getJwtPair, JwtPair, verifyJwt } from '../jwt';
+import {
+  decodeJwtComplete,
+  getJwtPair,
+  isXsuaaToken,
+  JwtPair,
+  verifyJwt
+} from '../jwt';
 import { serviceToken } from '../token-accessor';
-import { JwtWithPayloadObject } from '../jsonwebtoken-type';
-import { getDestinationServiceCredentials } from '../environment-accessor';
 import { DestinationOptions } from './destination-accessor-types';
 
 const logger = createLogger({
@@ -131,24 +135,6 @@ function isRequired(
   token: SubscriberToken | undefined
 ): token is Required<SubscriberToken> {
   return !!(token?.userJwt && token.serviceJwt);
-}
-
-/**
- * Checks if the given JWT was issued by XSUAA based on the iss property and the uaa domain of the XSUAA.
- * @param decodedUserJwt - JWT to be checked.
- * @returns Whether the JWT was issued by XSUAA.
- * @internal
- */
-export function isXsuaaToken(decodedUserJwt: JwtWithPayloadObject): boolean {
-  if (!decodedUserJwt.header.jku) {
-    return false;
-  }
-  const jkuDomain = new URL(decodedUserJwt.header.jku).hostname;
-  const uaaDomain = getDestinationServiceCredentials(
-    decodedUserJwt.payload
-  ).uaadomain;
-
-  return jkuDomain.endsWith(uaaDomain);
 }
 
 /**

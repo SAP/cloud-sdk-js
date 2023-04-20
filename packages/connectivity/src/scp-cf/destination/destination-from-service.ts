@@ -3,7 +3,7 @@ import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
   Service,
   getDestinationServiceCredentials,
-  getService
+  getServiceBinding
 } from '../environment-accessor';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { JwtPair } from '../jwt';
@@ -599,7 +599,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 }
 
 function getDestinationService(): Service {
-  const destinationService = getService('destination');
+  const destinationService = getServiceBinding('destination');
 
   if (!destinationService) {
     throw Error('No binding to a destination service found.');

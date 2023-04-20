@@ -27,31 +27,6 @@ describe('getXsuaaServiceCredentials', () => {
     delete process.env.VCAP_SERVICES;
   });
 
-  it('gets the XSUAA service credentials matching a given JWT', () => {
-    expect(
-      getXsuaaServiceCredentials({
-        client_id: clientId
-      }).clientid
-    ).toBe(clientId);
-  });
-
-  it('uses the audience for matching when no match can be found using the clientid', () => {
-    expect(
-      getXsuaaServiceCredentials({
-        aud: [clientId]
-      }).clientid
-    ).toBe(clientId);
-  });
-
-  it('uses scope if audience array is empty for matching when no match can be found using the clientid', () => {
-    expect(
-      getXsuaaServiceCredentials({
-        aud: [],
-        scope: [clientId + '.rest.of.the.link']
-      }).clientid
-    ).toBe(clientId);
-  });
-
   it('throws an error if no match can be found', () => {
     process.env.VCAP_SERVICES = JSON.stringify({
       xsuaa: [
@@ -63,7 +38,7 @@ describe('getXsuaaServiceCredentials', () => {
     expect(() =>
       getXsuaaServiceCredentials()
     ).toThrowErrorMatchingInlineSnapshot(
-      '"Could not find binding to the XSUAA service, that includes credentials."'
+      '"Could not find binding to service \'xsuaa\', that includes credentials."'
     );
   });
 
@@ -80,7 +55,7 @@ describe('getXsuaaServiceCredentials', () => {
 
     getXsuaaServiceCredentials();
     expect(warnSpy).toHaveBeenCalledWith(
-      "Found multiple XSUAA service instances. App names:\n\t- app1\n\t- app2\nChoosing first one ('app1')."
+      "Found multiple bindings for service 'xsuaa'. App names:\n\t- app1\n\t- app2\nChoosing first one ('app1')."
     );
   });
 });

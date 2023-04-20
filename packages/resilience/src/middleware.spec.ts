@@ -35,7 +35,7 @@ describe('middleware', () => {
 
   it('adds middlewares in the expected order - right to left', async () => {
     const infoSpy = jest.spyOn(logger, 'info');
-    const actual = await executeWithMiddleware(
+    executeWithMiddleware(
       [
         beforeMiddlewareBuilder('A'),
         afterMiddlewareBuilder('B'),
@@ -55,7 +55,7 @@ describe('middleware', () => {
   });
 
   it('executes middlewares in the expected order like implied by composition (only after middlewares)', async () => {
-    const infoSpy = jest.spyOn(logger, 'info');
+    jest.spyOn(logger, 'info');
     const actual = await executeWithMiddleware(
       [afterMiddlewareBuilder('A'), afterMiddlewareBuilder('B')],
       {
@@ -68,7 +68,7 @@ describe('middleware', () => {
   });
 
   it('executes middlewares in the expected order - after and before middlewares', async () => {
-    const infoSpy = jest.spyOn(logger, 'info');
+    jest.spyOn(logger, 'info');
     const actual = await executeWithMiddleware(
       [
         beforeMiddlewareBuilder('A'),

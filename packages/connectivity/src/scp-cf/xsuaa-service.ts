@@ -9,7 +9,7 @@ import {
   ServiceCredentials
 } from './environment-accessor/environment-accessor-types';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
-import { resolveService } from './environment-accessor';
+import { resolveServiceBinding } from './environment-accessor';
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
@@ -62,7 +62,7 @@ export async function getClientCredentialsToken(
 ): Promise<ClientCredentialsResponse> {
   const fnArgument: XsuaaParameters = {
     ...getSubdomainAndZoneId(userJwt),
-    serviceCredentials: resolveService(service).credentials
+    serviceCredentials: resolveServiceBinding(service).credentials
   };
 
   const xssecPromise = function (arg): Promise<ClientCredentialsResponse> {
@@ -91,7 +91,7 @@ export async function getClientCredentialsToken(
   }).catch(err => {
     throw new Error(
       `Could not fetch client credentials token for service of type ${
-        resolveService(service).label
+        resolveServiceBinding(service).label
       }: ${err.message}`
     );
   });

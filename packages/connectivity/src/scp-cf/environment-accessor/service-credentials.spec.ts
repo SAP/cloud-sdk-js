@@ -61,19 +61,6 @@ function mockBindings(...bindings: { label: string; name: string }[]) {
   );
 }
 
-function mockBindings2(
-  ...bindings: (Record<string, any> & { label: string; name: string })[]
-) {
-  process.env.VCAP_SERVICES = JSON.stringify(
-    bindings.reduce(
-      (services, binding) => ({
-        [binding.label]: [...services[binding.label], binding]
-      }),
-      {}
-    )
-  );
-}
-
 describe('service credentials', () => {
   let warnSpy;
   beforeEach(() => {

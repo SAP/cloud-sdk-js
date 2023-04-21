@@ -955,7 +955,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           requestConfig: {}
         }
       };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         ...defaultDestination,
         authentication: 'OAuth2SAMLBearerAssertion',
         authTokens: [
@@ -971,10 +971,12 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           }
         ]
       };
+
+      const destinationRequestConfig = await buildHttpRequest(destination);
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         httpRequestConfigWithOrigin,
         destination,
-        {} as DestinationHttpRequestConfig
+        destinationRequestConfig
       );
       const expected = {
         method: 'get',
@@ -984,7 +986,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         },
         params: {}
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
     });
 
     it("should encode query parameters excluding the 'custom' ones.", async () => {
@@ -1028,7 +1030,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           destUrlProp: 'a%3Fb'
         }
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
     });
 
     it('should encode all parameters if the encodeAll function is used', async () => {
@@ -1052,7 +1054,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           destUrlProp: 'a%3Fb'
         }
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
     });
 
     it('should use custom parameter serializer if given', async () => {
@@ -1084,7 +1086,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           destUrlProp: 'a?bSomeChange'
         }
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
     });
 
     it('should merge and resolve conflicts', async () => {
@@ -1101,7 +1103,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           }
         }
       };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'http://example.com',
         headers: { 'sap-client': '001' },
         originalProperties: {
@@ -1109,10 +1111,11 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           'URL.queries.param1': 'destPropParam1'
         }
       };
+      const destinationRequestConfig = await buildHttpRequest(destination);
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         httpRequestConfigWithOrigin,
         destination,
-        {} as DestinationHttpRequestConfig
+        destinationRequestConfig
       );
       const expected = {
         method: 'get',
@@ -1126,7 +1129,8 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           param1: 'destPropParam1'
         }
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
+      expect(actual.headers).toStrictEqual(expected.headers);
     });
 
     it('should add location id headers to the headers if there is a cloudConnectorLocationId in the destination', async () => {
@@ -1136,14 +1140,15 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           requestConfig: {}
         }
       };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'http://example.com',
         cloudConnectorLocationId: 'Potsdam'
       };
+      const destinationRequestConfig = await buildHttpRequest(destination);
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         httpRequestConfigWithOrigin,
         destination,
-        {} as DestinationHttpRequestConfig
+        destinationRequestConfig
       );
       const expected = {
         method: 'get',
@@ -1152,8 +1157,10 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         },
         params: {}
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
+      expect(actual.headers).toStrictEqual(expected.headers);
     });
+
     it('should add proxy headers to the headers if there is a proxy configuration in the destination', async () => {
       const proxyHeaders = {
         'Proxy-Authorization': 'Bearer jwt',
@@ -1165,7 +1172,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           requestConfig: {}
         }
       };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'http://example.com',
         proxyType: 'OnPremise',
         proxyConfiguration: {
@@ -1174,10 +1181,11 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         },
         authentication: 'PrincipalPropagation'
       };
+      const destinationRequestConfig = await buildHttpRequest(destination);
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         httpRequestConfigWithOrigin,
         destination,
-        {} as DestinationHttpRequestConfig
+        destinationRequestConfig
       );
       const expected = {
         method: 'get',
@@ -1187,7 +1195,8 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         },
         params: {}
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
+      expect(actual.headers).toStrictEqual(expected.headers);
     });
   });
 

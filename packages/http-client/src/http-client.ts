@@ -233,6 +233,7 @@ export async function buildRequestWithMergedHeadersAndQueryParameters(
 
   const mergedHeaders = await getMergedHeaders(
     destination,
+    destinationRequestConfig.headers,
     headersOriginOptions
   );
 
@@ -244,21 +245,16 @@ export async function buildRequestWithMergedHeadersAndQueryParameters(
 
 async function getMergedHeaders(
   destination: Destination,
+  headersDestination?: Record<string, string>,
   headersOriginOptions?: OriginOptions
 ): Promise<Record<string, string> | undefined> {
-  const headersDestination = await buildHeaders(destination);
-  const customAuthHeader = getAuthHeader(
-    destination.authentication,
-    headersOriginOptions?.custom
-  );
-
   const queryParametersDestinationProperty = getAdditionalHeaders(
     (destination.originalProperties as DestinationConfiguration) || {}
   ).headers;
 
   return mergeOptionsWithPriority({
     requestConfig: headersOriginOptions?.requestConfig,
-    custom: { ...headersOriginOptions?.custom, ...customAuthHeader },
+    custom: { ...headersOriginOptions?.custom },
     destinationProperty: queryParametersDestinationProperty,
     destination: headersDestination
   });

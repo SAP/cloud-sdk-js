@@ -45,8 +45,7 @@ export function retry<
               logger.debug(
                 'HTTP request failed but error did not contain a response status field as expected. Rethrowing error.'
               );
-            }
-            else if (status.toString().startsWith('4')) {
+            } else if (status.toString().startsWith('4')) {
               bail(new Error(`Request failed with status code ${status}`));
               // We need to return something here but the actual value does not matter
               return undefined as ReturnType;

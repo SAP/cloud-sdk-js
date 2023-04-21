@@ -8,7 +8,7 @@ import {
   AuthenticationType,
   Destination
 } from './destination/destination-service-types';
-import { getServiceList } from './environment-accessor';
+import { getServiceBindings } from './environment-accessor';
 import { Service } from './environment-accessor/environment-accessor-types';
 import { serviceToken } from './token-accessor';
 import { SubscriberToken } from './destination';
@@ -84,7 +84,7 @@ export async function socksProxyHostAndPort(): Promise<ProxyConfiguration> {
 }
 
 function readConnectivityServiceBinding(): Service {
-  const serviceBindings = getServiceList('connectivity');
+  const serviceBindings = getServiceBindings('connectivity');
 
   if (!serviceBindings.length) {
     throw new Error(

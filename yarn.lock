@@ -1287,10 +1287,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.7.0":
-  version "6.7.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.7.0.tgz#0d76f712f439f2fb0e12d0d889ab65b47c4a38a0"
-  integrity sha512-Bs8ugITPXWn18nq+fl5e9JKId5eVCYNf6KfdmXOTuPzptPFHwthBDnkjsIHaXRIoFV5FbmjRI3XXP2BxQdEPPg==
+"@sap/cds-dk@6.7.1":
+  version "6.7.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.7.1.tgz#f99f5d8938dc427e110e27bbccbb0f897a7ffb62"
+  integrity sha512-7R7CCoAahcA+wL0aiT6BcM3Erz4UWSWsNAP3qJwu1s9OQmRck+/A9qjAbALFbqYAir2ntdVqccoiB86Cs98mOA==
   dependencies:
     "@sap/cds" "^6.7.0"
     "@sap/cds-foss" "^4"
@@ -1558,10 +1558,10 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^29.5.0":
-  version "29.5.0"
-  resolved "https://registry.npmjs.org/@types/jest/-/jest-29.5.0.tgz#337b90bbcfe42158f39c2fb5619ad044bbb518ac"
-  integrity sha512-3Emr5VOl/aoBwnWcH/EFQvlSAmjV+XtV9GGu5mwdYew5vhQh0IUZx/60x0TzHDu09Bi7HMx10t/namdJw5QIcg==
+"@types/jest@^29.5.1":
+  version "29.5.1"
+  resolved "https://registry.npmjs.org/@types/jest/-/jest-29.5.1.tgz#83c818aa9a87da27d6da85d3378e5a34d2f31a47"
+  integrity sha512-tEuVcHrpaixS36w7hpsfLBLpjtMRJUE09/MHXn923LOVojDwyC14cWcfc0rDs0VEfUyYmt/+iX1kxxp+gZMcaQ==
   dependencies:
     expect "^29.0.0"
     pretty-format "^29.0.0"
@@ -1629,10 +1629,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^18.15.11":
-  version "18.15.11"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.15.11.tgz#b3b790f09cb1696cffcec605de025b088fa4225f"
-  integrity sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==
+"@types/node@*", "@types/node@^18.15.12":
+  version "18.15.12"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.15.12.tgz#833756634e78c829e1254db006468dadbb0c696b"
+  integrity sha512-Wha1UwsB3CYdqUm2PPzh/1gujGCNtWVUYF0mB00fJFoR4gTyWTDPjSm+zBF787Ahw8vSGgBja90MkgFwvB86Dg==
 
 "@types/node@^12.7.1":
   version "12.20.55"
@@ -2273,10 +2273,10 @@ aws4@^1.8.0:
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.12.0.tgz#ce1c9d143389679e253b314241ea9aa5cec980d3"
   integrity sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==
 
-axios@>=0.21, axios@>=0.27.2, axios@^1.3.5:
-  version "1.3.5"
-  resolved "https://registry.npmjs.org/axios/-/axios-1.3.5.tgz#e07209b39a0d11848e3e341fa087acd71dadc542"
-  integrity sha512-glL/PvG/E+xCWwV8S6nCHcrfg1exGx7vxyUIivIA1iL7BIh6bePylCfVHwp6k13ao7SATxB6imau2kqY+I67kw==
+axios@>=0.21, axios@>=0.27.2, axios@^1.3.6:
+  version "1.3.6"
+  resolved "https://registry.npmjs.org/axios/-/axios-1.3.6.tgz#1ace9a9fb994314b5f6327960918406fa92c6646"
+  integrity sha512-PEcdkk7JcdPiMDkvM4K6ZBRYq9keuVJsToxm2zQIM70Qqo2WHTdJZMXcG9X+RmRp2VPNUQC8W1RAGbgt6b1yMg==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -4098,10 +4098,10 @@ fast-safe-stringify@^2.0.7:
   resolved "https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
-fast-xml-parser@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.2.1.tgz#ae1f447c14fe55d710c4b6abb1885cfeddf079a3"
-  integrity sha512-aiRXmcEtCTmqkoC9tfcgIXQN+7u9OONGFjZ4D3dXryNLNj7LSKxyabDppoRVMBrczQNrGr3fsMBKX8/d3AgYEA==
+fast-xml-parser@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.2.2.tgz#cb7310d1e9cf42d22c687b0fae41f3c926629368"
+  integrity sha512-DLzIPtQqmvmdq3VUKR7T6omPK/VCRNqgFlGtbESfyhcH2R4I8EzK1/K6E8PkRCK2EabWrUHK32NjYRbEFnnz0Q==
   dependencies:
     strnum "^1.0.5"
 
@@ -7229,9 +7229,9 @@ postcss-values-parser@^6.0.2:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.4.12:
-  version "8.4.22"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.22.tgz#c29e6776b60ab3af602d4b513d5bd2ff9aa85dc1"
-  integrity sha512-XseknLAfRHzVWjCEtdviapiBtfLdgyzExD50Rg2ePaucEesyh8Wv4VPdW0nbyDa1ydbrAxV19jvMT4+LFmcNUA==
+  version "8.4.23"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.23.tgz#df0aee9ac7c5e53e1075c24a3613496f9e6552ab"
+  integrity sha512-bQ3qMcpF6A/YjR55xtoTr0jGOlnPOKAIMdOWiv0EIT6HVPEaJiJB4NLljSbiHoC2RX7DN5Uvjtpbg1NPdwv1oA==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"
@@ -7415,10 +7415,10 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-puppeteer-core@19.9.1:
-  version "19.9.1"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-19.9.1.tgz#002148cbfaac98433067e40e1b950e4915998c5e"
-  integrity sha512-46JGqhqTgYO5DuUMRGUiMCKM/86uHMsMCK7Fw7cbY/p+eCKLIPGVyQyI/E0UcGYa0+OH3dz0ResaDdHxqCgDDw==
+puppeteer-core@19.10.0:
+  version "19.10.0"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-19.10.0.tgz#f92d60693be370ea9a927d7b1ad62704681608ea"
+  integrity sha512-F6btgaEJXcpdw/kJszBhe7t4kx1C42oG159romCagX8ttComuk5dqkmAd/AQc/E4cS3onOUsHI5WgjIstuYsFw==
   dependencies:
     "@puppeteer/browsers" "0.4.1"
     chromium-bidi "0.4.6"
@@ -7432,17 +7432,17 @@ puppeteer-core@19.9.1:
     unbzip2-stream "1.4.3"
     ws "8.13.0"
 
-puppeteer@^19.9.1:
-  version "19.9.1"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-19.9.1.tgz#b68fcd41b0a61fefa52737414a9077f07bb2b181"
-  integrity sha512-Ii8yZySNdpPzeKAK6ROFQ+gAi04igoZ0cPsBE1LW9fmzkqQTqbJpEGhJ/5gBS8oVqkQ2CNFA4BskJl75zaWWgA==
+puppeteer@^19.10.0:
+  version "19.10.0"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-19.10.0.tgz#d018e42b189c79da10a6b568a16f1c971219d700"
+  integrity sha512-u2ftBcAu1cL5x2uKD5FLhHkN60Z1d5T0iMftiUEyRfdwT0poObRvjpc69F0HbtN/7lFeW2v+VN4pgeVVSOZYWg==
   dependencies:
     "@puppeteer/browsers" "0.4.1"
     cosmiconfig "8.1.3"
     https-proxy-agent "5.0.1"
     progress "2.0.3"
     proxy-from-env "1.1.0"
-    puppeteer-core "19.9.1"
+    puppeteer-core "19.10.0"
 
 pure-rand@^6.0.0:
   version "6.0.0"
@@ -9051,9 +9051,9 @@ vizion@~2.2.1:
     js-git "^0.7.8"
 
 vm2@^3.9.8:
-  version "3.9.16"
-  resolved "https://registry.npmjs.org/vm2/-/vm2-3.9.16.tgz#0fbc2a265f7bf8b837cea6f4a908f88a3f93b8e6"
-  integrity sha512-3T9LscojNTxdOyG+e8gFeyBXkMlOBYDoF6dqZbj+MPVHi9x10UfiTAJIobuchRCp3QvC+inybTbMJIUrLsig0w==
+  version "3.9.17"
+  resolved "https://registry.npmjs.org/vm2/-/vm2-3.9.17.tgz#251b165ff8a0e034942b5181057305e39570aeab"
+  integrity sha512-AqwtCnZ/ERcX+AVj9vUsphY56YANXxRuqMb7GsDtAr0m0PcQX3u0Aj3KWiXM0YAHy7i6JEeHrwOnwXbGYgRpAw==
   dependencies:
     acorn "^8.7.0"
     acorn-walk "^8.2.0"

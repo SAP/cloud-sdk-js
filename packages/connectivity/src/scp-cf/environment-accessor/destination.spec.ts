@@ -17,7 +17,8 @@ const services = {
       credentials: {
         clientid: 'clientid2',
         clientsecret: 'clientsecret2',
-        uri: 'uri2'
+        uri: 'uri2',
+        xsappname: 'app'
       }
     }
   ]
@@ -47,7 +48,7 @@ describe('getDestinationServiceCredentials()', () => {
     expect(() =>
       getDestinationServiceCredentials()
     ).toThrowErrorMatchingInlineSnapshot(
-      '"Could not find binding to the destination service, that includes credentials."'
+      '"Could not find binding to service \'destination\', that includes credentials."'
     );
   });
 
@@ -62,7 +63,7 @@ describe('getDestinationServiceCredentials()', () => {
     getDestinationServiceCredentials();
 
     expect(warnSpy).toHaveBeenCalledWith(
-      'Found multiple bindings to the destination service. Using the first one.'
+      "Found multiple bindings for service 'destination'. App names:\n\t- app\n\t- app\nChoosing first one ('app')."
     );
   });
 });

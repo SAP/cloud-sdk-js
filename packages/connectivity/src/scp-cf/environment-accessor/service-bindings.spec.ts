@@ -1,11 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
-  getService,
-  getServiceByInstanceName,
-  getServiceCredentialsList,
-  getServiceList,
-  resolveService
-} from './env';
+  getServiceBinding,
+  getServiceBindingByInstanceName,
+  getServiceBindings,
+  resolveServiceBinding
+} from './service-bindings';
 
 const logger = createLogger('environment-accessor');
 
@@ -46,7 +45,7 @@ const services = {
   ]
 };
 
-describe('env', () => {
+describe('service bindings', () => {
   beforeEach(() => {
     process.env.VCAP_SERVICES = JSON.stringify(services);
   });
@@ -56,38 +55,20 @@ describe('env', () => {
     delete process.env.VCAP_SERVICES;
   });
 
-  describe('getServiceList()', () => {
+  describe('getServiceBindings()', () => {
     it('gets a list of services for the given label', () => {
-      expect(getServiceList('destination')).toEqual(services.destination);
+      expect(getServiceBindings('destination')).toEqual(services.destination);
     });
 
     it('is empty for unknown label', () => {
-      expect(getServiceList('unknown')).toEqual([]);
+      expect(getServiceBindings('unknown')).toEqual([]);
     });
   });
 
-  describe('getServiceCredentialsList()', () => {
-    it('gets a list of credentials', () => {
-      const serviceCredentials = getServiceCredentialsList('destination');
-      expect(serviceCredentials).toEqual(
-        services.destination.map(({ credentials }) => credentials)
-      );
-    });
-
-    it('filters bindings without credentials and logs warning', () => {
-      const warnSpy = jest.spyOn(logger, 'warn');
-      const serviceCredentials = getServiceCredentialsList('xsuaa');
-      expect(serviceCredentials).toEqual([]);
-      expect(warnSpy).toHaveBeenCalledWith(
-        "Ignoring 2 service bindings of service type 'xsuaa' because of missing credentials."
-      );
-    });
-  });
-
-  describe('getService()', () => {
+  describe('getServiceBinding()', () => {
     it('gets service and warns if multiple bindings are found', () => {
       const warnSpy = jest.spyOn(logger, 'warn');
-      const service = getService('destination');
+      const service = getServiceBinding('destination');
       expect(service).toEqual(services.destination[0]);
       expect(warnSpy).toBeCalledWith(
         `Found more than one service binding for service type 'destination':
@@ -99,7 +80,7 @@ Selecting the first one.`
 
     it('warns if service does not exist', () => {
       const warnSpy = jest.spyOn(logger, 'warn');
-      const service = getService('unknown');
+      const service = getServiceBinding('unknown');
       expect(service).toBeUndefined();
       expect(warnSpy).toBeCalledWith(
         "Could not find service binding of type 'unknown'. This might cause errors in other parts of the application."
@@ -107,35 +88,37 @@ Selecting the first one.`
     });
   });
 
-  describe('resolveService()', () => {
+  describe('resolveServiceBinding()', () => {
     it('returns the service if it is a service instance already', () => {
       const service = services.destination[0];
-      expect(resolveService(service)).toEqual(service);
+      expect(resolveServiceBinding(service)).toEqual(service);
     });
 
     it('retrieves the service if it is a service label', () => {
-      expect(resolveService('destination')).toEqual(services.destination[0]);
+      expect(resolveServiceBinding('destination')).toEqual(
+        services.destination[0]
+      );
     });
 
     it('throws an error if the service does not exist', () => {
       expect(() =>
-        resolveService('unknown')
+        resolveServiceBinding('unknown')
       ).toThrowErrorMatchingInlineSnapshot(
         '"Could not find service binding for type \'unknown\'."'
       );
     });
   });
 
-  describe('getServiceByInstanceName()', () => {
+  describe('getServiceBindingByInstanceName()', () => {
     it('resolves service by instance name', () => {
-      expect(getServiceByInstanceName('my-destination-service2')).toEqual(
-        services.destination[1]
-      );
+      expect(
+        getServiceBindingByInstanceName('my-destination-service2')
+      ).toEqual(services.destination[1]);
     });
 
     it('throws an error if instance name does not exist', () => {
       expect(() =>
-        getServiceByInstanceName('unknown')
+        getServiceBindingByInstanceName('unknown')
       ).toThrowErrorMatchingInlineSnapshot(
         '"Could not find service with name: \'unknown\'."'
       );
@@ -150,7 +133,7 @@ Selecting the first one.`
         xsuaa: [{ name: 'duplicate', label: 'xsuaa' }]
       };
       process.env.VCAP_SERVICES = JSON.stringify(duplicateServices);
-      expect(getServiceByInstanceName('duplicate')).toEqual(
+      expect(getServiceBindingByInstanceName('duplicate')).toEqual(
         duplicateServices.xsuaa[0]
       );
     });

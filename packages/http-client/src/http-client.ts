@@ -12,7 +12,6 @@ import {
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
-  getAuthHeader,
   getSubdomainAndZoneId,
   HttpDestination,
   resolveDestination

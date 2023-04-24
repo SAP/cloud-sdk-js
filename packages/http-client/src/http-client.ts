@@ -255,7 +255,7 @@ async function getMergedHeaders(
     (destination.originalProperties as DestinationConfiguration) || {}
   ).headers;
 
-      headersDestination = destination.forwardAuthToken
+  headersDestination = destination.forwardAuthToken
     ? addForwardAuthTokenHeader(headersDestination, jwt)
     : headersDestination;
 

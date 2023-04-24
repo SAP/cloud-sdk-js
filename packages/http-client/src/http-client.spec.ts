@@ -11,7 +11,10 @@ import {
   circuitBreakers,
   circuitBreaker
 } from '@sap-cloud-sdk/resilience/internal';
-import { DestinationWithName, registerDestination } from '@sap-cloud-sdk/connectivity';
+import {
+  DestinationWithName,
+  registerDestination
+} from '@sap-cloud-sdk/connectivity';
 import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
 import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
 import {
@@ -885,10 +888,11 @@ sap-client:001`);
         }
       };
       await registerDestination(destinationWithForwardingNoAuth, { jwt });
-      await executeHttpRequest({ destinationName: 'FORWARD-TOKEN-NOAUTH', jwt }, config);
-      expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining(expectedConfig)
+      await executeHttpRequest(
+        { destinationName: 'FORWARD-TOKEN-NOAUTH', jwt },
+        config
       );
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
 
       registerDestinationCache.clear();
     });
@@ -925,10 +929,11 @@ sap-client:001`);
         }
       };
       await registerDestination(destinationWithForwardingNoAuth);
-      await executeHttpRequest({ destinationName: 'FORWARD-TOKEN-NOAUTH' }, config);
-      expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining(expectedConfig)
+      await executeHttpRequest(
+        { destinationName: 'FORWARD-TOKEN-NOAUTH' },
+        config
       );
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
       registerDestinationCache.clear();
     });
   });

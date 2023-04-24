@@ -76,6 +76,7 @@ describe('combined resilience features', () => {
 
     expect(response.status).toBe(HTTP_STATUS.OK);
   }, 10000);
+
   it('uses circuit breaker and timeout by default with resilience()', async () => {
     const delay = 100;
     nock(host, {})

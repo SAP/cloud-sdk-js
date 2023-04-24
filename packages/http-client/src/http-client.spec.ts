@@ -12,6 +12,7 @@ import {
   circuitBreaker
 } from '@sap-cloud-sdk/resilience/internal';
 import { DestinationWithName, registerDestination } from '@sap-cloud-sdk/connectivity';
+import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
 import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
 import {
   Destination,
@@ -55,7 +56,6 @@ import {
   buildHttpRequestConfigWithOrigin,
   getTenantIdForMiddleware
 } from './http-client';
-import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
 
 describe('generic http client', () => {
   const httpsDestination: HttpDestination = {

@@ -34,15 +34,12 @@ function getWriteRequestType(service: VdmServiceMetadata): string {
     e =>
       `CreateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | UpdateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | DeleteRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
   );
-  const functionImportsReturnTypes = service.functionImports
-    .filter(fn => fn.httpMethod.toLowerCase() !== 'get')
+  const operationImportsReturnTypes = service.operationImports
+    .filter(fn => fn.type === 'action' || fn.httpMethod.toLowerCase() !== 'get')
     .map(fn => operationReturnType(fn));
-  const actionImportsReturnTypes =
-    service.actionImports?.map(fn => operationReturnType(fn)) ?? [];
   return [
     ...createUpdateDeleteBuilderTypes,
-    ...functionImportsReturnTypes,
-    ...actionImportsReturnTypes
+    ...operationImportsReturnTypes
   ].join(' | ');
 }
 
@@ -55,8 +52,8 @@ function getReadRequestType(service: VdmServiceMetadata): string {
     e =>
       `GetByKeyRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
   );
-  const functionImportsReturnTypes = service.functionImports
-    .filter(fn => fn.httpMethod.toLowerCase() === 'get')
+  const functionImportsReturnTypes = service.operationImports
+    .filter(fn => fn.type === 'function' && fn.httpMethod.toLowerCase() === 'get')
     .map(fn => operationReturnType(fn));
 
   return [

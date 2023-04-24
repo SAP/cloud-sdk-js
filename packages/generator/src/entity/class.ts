@@ -49,10 +49,7 @@ export function entityClass(
       ...properties(entity),
       ...navProperties(entity, service)
     ],
-    methods: [
-      ...boundOperations(entity.functions, service),
-      ...boundOperations(entity.actions, service)
-    ],
+    methods: boundOperations(entity.operations, service),
     isExported: true,
     docs: [addLeadingNewline(getEntityDescription(entity, service))]
   };

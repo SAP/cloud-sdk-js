@@ -19,7 +19,7 @@ export function entitySourceFile(
       ...otherEntityImports(entity, service),
       entityClass(entity, service),
       entityTypeInterface(entity, service),
-      ...[...entity.functions, ...entity.actions].map(operation =>
+      ...entity.operations.map(operation =>
         parametersInterface(operation)
       )
     ]

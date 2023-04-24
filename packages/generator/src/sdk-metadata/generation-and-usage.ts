@@ -1,9 +1,8 @@
 import { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
 import { VdmServiceMetadata } from '../vdm-types';
 import {
-  actionImportCodeSample,
   entityCodeSample,
-  functionImportCodeSample
+  operationImportCodeSample
 } from './code-samples';
 import { sampleOperationImport, getODataEntity } from './code-sample-util';
 
@@ -22,24 +21,14 @@ export function getApiSpecificUsage(
     );
   }
   // Return function/action import usage if no entity is found.
-  if (service.functionImports?.length > 0) {
-    const functionImport = sampleOperationImport(
+  if (service.operationImports.length > 0) {
+    const operationImport = sampleOperationImport(
       service.originalFileName,
-      service.functionImports
+      service.operationImports
     );
-    return functionImportCodeSample(
-      functionImport,
-      `${service.serviceOptions.directoryName}/function-imports`
-    );
-  }
-  if (service.actionImports) {
-    const actionImport = sampleOperationImport(
-      service.originalFileName,
-      service.actionImports
-    );
-    return actionImportCodeSample(
-      actionImport,
-      `${service.serviceOptions.directoryName}/action-imports`
+    return operationImportCodeSample(
+      operationImport,
+      `${service.serviceOptions.directoryName}/operation-imports`
     );
   }
   return '';

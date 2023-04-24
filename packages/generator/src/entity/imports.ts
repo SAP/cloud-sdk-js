@@ -32,7 +32,7 @@ export function entityImportDeclarations(
       },
       ...operationImportDeclarations(
         service,
-        entity.actions.concat(entity.functions)
+        entity.operations
       ),
       ...enumTypeImportDeclarations(entity.properties)
     ]);

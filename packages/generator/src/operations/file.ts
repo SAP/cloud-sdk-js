@@ -17,9 +17,7 @@ import { operationFunction } from './operation';
 export function operationsSourceFile(
   service: VdmServiceMetadata
 ): SourceFileStructure {
-  const functions = service.functionImports;
-  const actions = service.actionImports || [];
-  const operations = [...functions, ...actions];
+  const operations = service.operationImports;
 
   return {
     kind: StructureKind.SourceFile,

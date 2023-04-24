@@ -29,20 +29,11 @@ const resultPromise = ${getApiName(
 /**
  * @internal
  */
-export function functionImportCodeSample(
-  functionImport: VdmOperation,
+export function operationImportCodeSample(
+  operationImport: VdmOperation,
   packageName: string
 ): MultiLineText {
-  return importsCodeSample(functionImport, packageName);
-}
-/**
- * @internal
- */
-export function actionImportCodeSample(
-  actionImport: VdmOperation,
-  packageName: string
-): MultiLineText {
-  return importsCodeSample(actionImport, packageName);
+  return importsCodeSample(operationImport, packageName);
 }
 
 function importsCodeSample(

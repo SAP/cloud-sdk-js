@@ -61,8 +61,7 @@ export const brunchEntity: VdmEntity = {
   deletable: true,
   updatable: true,
   entityTypeNamespace: '',
-  functions: [],
-  actions: []
+  operations: []
 };
 
 export const toBrunch: VdmNavigationProperty = {
@@ -151,8 +150,7 @@ export const breakfastEntity: VdmEntity = {
   deletable: false,
   updatable: true,
   entityTypeNamespace: '',
-  functions: [getPriceFunction],
-  actions: [payMealAction]
+  operations: [getPriceFunction, payMealAction]
 };
 
 function getFunctionImport(
@@ -200,11 +198,11 @@ export const foodService: VdmServiceMetadata = {
   originalFileName: 'food.service.edmx',
   speakingModuleName: 'Food Service',
   entities: [breakfastEntity, brunchEntity],
-  functionImports: [
+  operationImports: [
     getFunctionImport('funcGet', 'get'),
-    getFunctionImport('funcPost', 'post')
+    getFunctionImport('funcPost', 'post'),
+    getActionImport()
   ],
-  actionImports: [getActionImport()],
   complexTypes: [],
   enumTypes: [],
 

@@ -49,7 +49,7 @@ describe('Failure cases', () => {
         iasToXsuaaTokenExchange: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not find service binding for type \'destination\'."'
+      '"Could not find binding to service \'destination\', that includes credentials."'
     );
   }, 50000);
 

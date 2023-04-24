@@ -12,10 +12,6 @@ import { getJwtPair } from '../jwt';
 import { getSubscriberToken } from './get-subscriber-token';
 
 describe('getSubscriberToken()', () => {
-  beforeAll(() => {
-    mockServiceBindings();
-  });
-
   let verifyJwtSpy;
   beforeEach(() => {
     mockServiceBindings();

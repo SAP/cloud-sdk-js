@@ -49,13 +49,13 @@ describe('jwt', () => {
           'https://myTenant.authentication.sap.hana.ondemand.com/token_keys'
         )
       );
-      mockServiceBindings();
+      mockServiceBindings({ xsuaaBinding: false });
       expect(isXsuaaToken(jwt)).toBe(true);
     });
 
     it('returns false if jku is missing', () => {
       const jwt = decodeJwtComplete(signedJwtForVerification({}, undefined));
-      mockServiceBindings();
+      mockServiceBindings({ xsuaaBinding: false });
       expect(isXsuaaToken(jwt)).toBe(false);
     });
 
@@ -66,7 +66,7 @@ describe('jwt', () => {
           'https://myTenant.some.non.xsuaa.domain.com/token_keys'
         )
       );
-      mockServiceBindings();
+      mockServiceBindings({ xsuaaBinding: false });
       expect(isXsuaaToken(jwt)).toBe(false);
     });
   });

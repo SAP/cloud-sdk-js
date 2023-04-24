@@ -80,6 +80,11 @@ describe('Cache', () => {
     expect(cacheOne.hasKey('one')).toBeFalsy();
   });
 
+  it('should return the item when its expiration time is undefined', () => {
+    cacheTwo.set('someToken', { entry: dummyToken });
+    expect(cacheTwo.get('someToken')).toEqual(dummyToken);
+  });
+
   it('custom expiration time should be set correctly', () => {
     cacheTwo.set('expiredToken', { entry: dummyToken, expires: 10 });
     cacheTwo.set('validToken', {

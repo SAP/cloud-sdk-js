@@ -11,6 +11,7 @@ import {
   circuitBreakers,
   circuitBreaker
 } from '@sap-cloud-sdk/resilience/internal';
+import { DestinationWithName, registerDestination } from '@sap-cloud-sdk/connectivity';
 import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
 import {
   Destination,
@@ -54,6 +55,7 @@ import {
   buildHttpRequestConfigWithOrigin,
   getTenantIdForMiddleware
 } from './http-client';
+import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
 
 describe('generic http client', () => {
   const httpsDestination: HttpDestination = {
@@ -83,6 +85,13 @@ describe('generic http client', () => {
       port: 1234,
       protocol: 'http'
     }
+  };
+
+  const destinationWithForwardingNoAuth: DestinationWithName = {
+    forwardAuthToken: true,
+    url: 'https://example.com',
+    authentication: 'NoAuthentication',
+    name: 'FORWARD-TOKEN-NOAUTH'
   };
 
   describe('buildHttpRequest', () => {
@@ -834,6 +843,93 @@ sap-client:001`);
       })
         .then(r => console.log(r))
         .catch(console.error);
+    });
+
+    it('passes auth tokens to final request when forwardAuthToken is enabled for NoAuthentication auth type', async () => {
+      mockServiceBindings();
+
+      const jwt = jwt123.sign(
+        JSON.stringify({ user_id: 'user', zid: 'tenant', exp: 1234 }),
+        privateKey,
+        {
+          algorithm: 'RS512'
+        }
+      );
+      const spy = jest.spyOn(axios, 'request');
+      nock('https://example.com')
+        .get('/api/entity')
+        .query({
+          $a: 'a',
+          b: 'b'
+        })
+        .reply(200);
+
+      const config: HttpRequestConfig = {
+        method: 'GET',
+        url: '/api/entity',
+        params: {
+          $a: 'a',
+          b: 'b'
+        },
+        headers: {
+          'content-type': 'application/json',
+          accept: 'application/json'
+        }
+      };
+
+      const expectedConfig = {
+        headers: {
+          authorization: `Bearer ${jwt}`,
+          'content-type': 'application/json',
+          accept: 'application/json'
+        }
+      };
+      await registerDestination(destinationWithForwardingNoAuth, { jwt });
+      await executeHttpRequest({ destinationName: 'FORWARD-TOKEN-NOAUTH', jwt }, config);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfig)
+      );
+
+      registerDestinationCache.clear();
+    });
+
+    it('ignores forwardAuthToken when JWT is missing', async () => {
+      mockServiceBindings();
+
+      const spy = jest.spyOn(axios, 'request');
+      nock('https://example.com')
+        .get('/api/entity')
+        .query({
+          $a: 'a',
+          b: 'b'
+        })
+        .reply(200);
+
+      const config: HttpRequestConfig = {
+        method: 'GET',
+        url: '/api/entity',
+        params: {
+          $a: 'a',
+          b: 'b'
+        },
+        headers: {
+          'content-type': 'application/json',
+          accept: 'application/json'
+        }
+      };
+
+      const expectedConfig = {
+        headers: {
+          'content-type': 'application/json',
+          accept: 'application/json'
+        }
+      };
+      await registerDestination(destinationWithForwardingNoAuth);
+      await executeHttpRequest({ destinationName: 'FORWARD-TOKEN-NOAUTH' }, config);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfig)
+      );
+      registerDestinationCache.clear();
     });
   });
 

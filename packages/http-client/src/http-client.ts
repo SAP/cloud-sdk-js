@@ -91,7 +91,8 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
     const request = await buildRequestWithMergedHeadersAndQueryParameters(
       requestConfig,
       resolvedDestination,
-      destinationRequestConfig
+      destinationRequestConfig,
+      destination.jwt
     );
 
     if (options?.fetchCsrfToken) {
@@ -217,7 +218,8 @@ function getEncodedParameters(
 export async function buildRequestWithMergedHeadersAndQueryParameters(
   requestConfig: HttpRequestConfigWithOrigin,
   destination: Destination,
-  destinationRequestConfig: DestinationHttpRequestConfig
+  destinationRequestConfig: DestinationHttpRequestConfig,
+  jwt?: string
 ): Promise<HttpRequestConfig & DestinationHttpRequestConfig> {
   const { paramsOriginOptions, headersOriginOptions, requestConfigBase } =
     splitRequestConfig(requestConfig);
@@ -233,7 +235,8 @@ export async function buildRequestWithMergedHeadersAndQueryParameters(
   const mergedHeaders = await getMergedHeaders(
     destination,
     destinationRequestConfig.headers,
-    headersOriginOptions
+    headersOriginOptions,
+    jwt
   );
 
   const request = merge(destinationRequestConfig, requestConfigBase);
@@ -245,11 +248,16 @@ export async function buildRequestWithMergedHeadersAndQueryParameters(
 async function getMergedHeaders(
   destination: Destination,
   headersDestination?: Record<string, string>,
-  headersOriginOptions?: OriginOptions
+  headersOriginOptions?: OriginOptions,
+  jwt?: string
 ): Promise<Record<string, string> | undefined> {
   const queryParametersDestinationProperty = getAdditionalHeaders(
     (destination.originalProperties as DestinationConfiguration) || {}
   ).headers;
+
+      headersDestination = destination.forwardAuthToken
+    ? addForwardAuthTokenHeader(headersDestination, jwt)
+    : headersDestination;
 
   return mergeOptionsWithPriority({
     requestConfig: headersOriginOptions?.requestConfig,
@@ -257,6 +265,19 @@ async function getMergedHeaders(
     destinationProperty: queryParametersDestinationProperty,
     destination: headersDestination
   });
+}
+
+function addForwardAuthTokenHeader(
+  headersDestination?: Record<string, string>,
+  jwt?: string | undefined
+) {
+  if (!jwt) {
+    logger.debug(
+      'The `forwardAuthToken` is set, but the JWT is missing. Please provide a valid JWT to enable token forwarding.'
+    );
+    return headersDestination;
+  }
+  return { ...headersDestination, authorization: `Bearer ${jwt}` };
 }
 
 function collectParametersFromAllOrigins(

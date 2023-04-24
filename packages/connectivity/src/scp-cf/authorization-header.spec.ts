@@ -59,14 +59,14 @@ describe('buildAuthorizationHeaders', () => {
       ).resolves.not.toThrow();
     });
 
-    it('creates no authentication headers when only url is defined in a destination.', async () => {
+    it('does not create authentication headers when only url is defined in a destination.', async () => {
       const headers = await buildAuthorizationHeaders({
         url: defaultDestination.url
       });
       expect(headers.authorization).toBeUndefined();
     });
 
-    it('adds no authentication headers for Internet proxy type', async () => {
+    it('does not add authentication headers for Internet proxy type', async () => {
       const headers = await buildAuthorizationHeaders({
         url: defaultDestination.url,
         proxyType: 'Internet'

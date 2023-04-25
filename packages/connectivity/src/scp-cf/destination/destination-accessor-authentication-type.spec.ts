@@ -3,7 +3,7 @@ import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
-  TestTenants
+  testTenants
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   expectAllMocksUsed,
@@ -312,7 +312,7 @@ describe('authentication types', () => {
           destinationName,
           {
             ...wrapJwtInHeader(providerServiceToken).headers,
-            'X-tenant': TestTenants.SUBSCRIBER
+            'X-tenant': testTenants.subscriber
           },
           { badheaders: [] }
         )
@@ -808,7 +808,7 @@ describe('authentication types', () => {
 
     const proxyToken =
       dest?.proxyConfiguration!.headers!['Proxy-Authorization'].split(' ')[1];
-    expect(decodeJwt(proxyToken!).zid).toEqual(TestTenants.SUBSCRIBER_ONLY_ISS);
+    expect(decodeJwt(proxyToken!).zid).toEqual(testTenants.subscriberOnlyIss);
     expectAllMocksUsed(httpMocks);
   });
 

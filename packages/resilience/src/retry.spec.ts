@@ -8,7 +8,8 @@ describe('retry', () => {
     OK: 200,
     UNAUTHORIZED: 401,
     FORBIDDEN: 403,
-    SERVICE_UNAVAILABLE: 504
+    SERVICE_UNAVAILABLE: 504,
+    UNDEFINED: undefined
   };
   const request = config => axios.request(config);
 
@@ -135,5 +136,29 @@ describe('retry', () => {
     ).rejects.toThrowError('Request failed with status code 403');
 
     expect(nock.isDone()).toBeFalsy();
+  });
+
+  it('needs to handle an undefined error status', async () => {
+    nock('https://example.com', {})
+      .get('/retry')
+      .reply(HTTP_STATUS.SERVICE_UNAVAILABLE)
+      .get('/retry')
+      .replyWithError('My error status is undefined');
+
+    const requestConfig = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/retry'
+    };
+
+    await expect(
+      executeWithMiddleware([retry(1)], {
+        context: { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        fnArgument: requestConfig,
+        fn: request
+      })
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"My error status is undefined"'
+    );
   });
 });

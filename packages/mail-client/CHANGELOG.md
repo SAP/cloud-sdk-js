@@ -1,5 +1,22 @@
 # @sap-cloud-sdk/mail-client
 
+## 3.1.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.1.1
+- @sap-cloud-sdk/util@3.1.1
+
+## 3.1.0
+
+### Patch Changes
+
+- Updated dependencies [039412e59]
+- Updated dependencies [28b7af86f]
+- Updated dependencies [28b7af86f]
+  - @sap-cloud-sdk/connectivity@3.1.0
+  - @sap-cloud-sdk/util@3.1.0
+
 ## 3.0.2
 
 ### Patch Changes

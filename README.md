@@ -33,7 +33,7 @@ Check our [API documentation](https://sap.github.io/cloud-sdk/api/3.0.0/) and [g
 - [How to switch to the Open Source version of the SAP Cloud SDK](#how-to-switch-to-the-open-source-version-of-the-sap-cloud-sdk)
 - [Related Projects](#related-projects)
   - [SAP Cloud SDK CLI](#sap-cloud-sdk-cli)
-  - [Sample Projects](#sap-cloud-sdk-starter-projects)
+  - [SAP Cloud SDK Sample Projects](#sap-cloud-sdk-sample-projects)
   - [Virtual Data Model (VDM)](#virtual-data-model-vdm)
   - [Project "Piper"](#project-piper)
 - [Feedback](#feedback)

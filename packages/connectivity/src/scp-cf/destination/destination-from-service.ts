@@ -1,25 +1,17 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
-  getDestinationService,
-  getDestinationServiceCredentialsList
+  Service,
+  getDestinationServiceCredentials,
+  getServiceBinding
 } from '../environment-accessor';
-import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
-import {
-  decodeJwt,
-  decodeJwtComplete,
-  getJwtPair,
-  isXsuaaToken,
-  JwtPair,
-  verifyJwt
-} from '../jwt';
+import { JwtPair } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
 import {
   DestinationFetchOptions,
-  DestinationOptions,
   DestinationsByType
 } from './destination-accessor-types';
 import {
@@ -42,6 +34,13 @@ import {
   assertHttpDestination,
   Destination
 } from './destination-service-types';
+import { getProviderServiceToken } from './get-provider-token';
+import {
+  getRequiredSubscriberToken,
+  getSubscriberToken,
+  hasTokens,
+  SubscriberToken
+} from './get-subscriber-token';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
@@ -63,42 +62,10 @@ interface DestinationSearchResult {
   origin: DestinationOrigin;
 }
 
-/**
- * When a destination is fetched from the SDK the user can pass different tokens.
- * The token determines from which tenant the destination is obtained (provider or subscriber) and if it contains user information so that user propagation flows are possible.
- * Possible types are: A user specific JWT issued by the XSUAA, a JWT from a custom IdP or only the `iss` property to get destinations from a different tenant.
- * We name these tokens "subscriber tokens", because they are related to the subscriber account in contrast to the "provider account", where the application is running.
- * The tenant defined in the subscriber token is the provider tenant for single tenant applications.
- */
-interface SubscriberToken {
-  userJwt?: JwtPair;
-  serviceJwt?: JwtPair;
-}
-
 const emptyDestinationByType: DestinationsByType = {
   instance: [],
   subaccount: []
 };
-
-/**
- * Utility function to get destination service credentials, including error handling.
- * @internal
- */
-export function getDestinationServiceCredentials(): DestinationServiceCredentials {
-  const credentials = getDestinationServiceCredentialsList();
-  if (!credentials?.length) {
-    throw Error(
-      'No binding to a destination service instance found. Please bind a destination service instance to your application.'
-    );
-  }
-  if (credentials.length > 1) {
-    logger.warn(
-      'Found more than one destination service instance. Using the first one.'
-    );
-  }
-
-  return credentials[0];
-}
 
 /**
  * Retrieves a destination with the given name from the Cloud Foundry destination service.
@@ -128,11 +95,8 @@ export class DestinationFromServiceRetriever {
       options.jwt = await exchangeToken(options);
     }
 
-    const subscriberToken =
-      await DestinationFromServiceRetriever.getSubscriberToken(options);
-
-    const providerToken =
-      await DestinationFromServiceRetriever.getProviderServiceToken(options);
+    const subscriberToken = await getSubscriberToken(options);
+    const providerToken = await getProviderServiceToken(options);
 
     const da = new DestinationFromServiceRetriever(
       options,
@@ -194,65 +158,6 @@ export class DestinationFromServiceRetriever {
     );
     await da.updateDestinationCache(withTrustStore, destinationResult.origin);
     return withTrustStore;
-  }
-
-  public static async getProviderServiceToken(
-    options: DestinationOptions
-  ): Promise<JwtPair> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { jwt, ...optionsWithoutJwt } = options;
-    const encoded = await serviceToken('destination', {
-      ...optionsWithoutJwt
-    });
-    return { encoded, decoded: decodeJwt(encoded) };
-  }
-
-  public static async getSubscriberToken(
-    options: DestinationOptions
-  ): Promise<SubscriberToken | undefined> {
-    const isXsuaaJwt =
-      !!options.jwt && isXsuaaToken(decodeJwtComplete(options.jwt));
-
-    return {
-      userJwt: await this.retrieveUserToken(options, isXsuaaJwt),
-      serviceJwt: await this.retrieveServiceToken(options, isXsuaaJwt)
-    };
-  }
-
-  private static async retrieveUserToken(
-    options: DestinationOptions,
-    verify: boolean
-  ): Promise<JwtPair | undefined> {
-    if (options.jwt) {
-      if (verify) {
-        await verifyJwt(options.jwt, options);
-      }
-      return getJwtPair(options.jwt);
-    }
-  }
-
-  private static async retrieveServiceToken(
-    options: DestinationOptions,
-    isXsuaaJwt: boolean
-  ): Promise<JwtPair | undefined> {
-    let jwt;
-    if (options.iss) {
-      logger.debug(
-        'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'
-      );
-
-      jwt = { iss: options.iss };
-    } else if (options.jwt && isXsuaaJwt) {
-      jwt = options.jwt;
-    }
-
-    if (jwt) {
-      const serviceJwtEncoded = await serviceToken('destination', {
-        ...options,
-        jwt
-      });
-      return getJwtPair(serviceJwtEncoded);
-    }
   }
 
   private static throwUserTokenMissing(destination) {
@@ -516,7 +421,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       case 'on-premise':
         return addProxyConfigurationOnPrem(
           destination,
-          this.subscriberToken?.userJwt || this.subscriberToken?.serviceJwt
+          hasTokens(this.subscriberToken)
+            ? getRequiredSubscriberToken(this.subscriberToken)
+            : undefined
         );
       case 'internet':
       case 'private-link':
@@ -531,16 +438,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
   }
 
-  private selectSubscriberJwt(): JwtPair {
-    // TODO: What to do when I have both, jwt and iss?
-    const jwt =
-      this.subscriberToken?.userJwt || this.subscriberToken?.serviceJwt;
-    if (!jwt) {
-      throw new Error('Try to get subscriber token but value is undefined.');
-    }
-    return jwt;
-  }
-
   private async updateDestinationCache(
     destination: Destination,
     destinationOrigin: DestinationOrigin
@@ -550,7 +447,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
     await destinationCache.cacheRetrievedDestination(
       destinationOrigin === 'subscriber'
-        ? this.selectSubscriberJwt().decoded
+        ? getRequiredSubscriberToken(this.subscriberToken)
         : this.providerServiceToken.decoded,
       destination,
       this.options.isolationStrategy
@@ -622,7 +519,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     DestinationSearchResult | undefined
   > {
     const destination = await destinationCache.retrieveDestinationFromCache(
-      this.selectSubscriberJwt().decoded,
+      getRequiredSubscriberToken(this.subscriberToken),
       this.options.destinationName,
       this.options.isolationStrategy
     );
@@ -699,4 +596,13 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
     return destination;
   }
+}
+
+function getDestinationService(): Service {
+  const destinationService = getServiceBinding('destination');
+
+  if (!destinationService) {
+    throw Error('No binding to a destination service found.');
+  }
+  return destinationService;
 }

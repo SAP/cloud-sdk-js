@@ -5,9 +5,12 @@ import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import {
   getXsuaaServiceCredentials,
-  resolveService
+  resolveServiceBinding
 } from './environment-accessor';
-import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
+import {
+  Service,
+  XsuaaServiceCredentials
+} from './environment-accessor/environment-accessor-types';
 import { replaceSubdomain } from './subdomain-replacer';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 
@@ -36,7 +39,7 @@ export async function serviceToken(
     ...options
   };
 
-  service = resolveService(service);
+  service = resolveServiceBinding(service);
   const serviceCredentials = service.credentials;
 
   // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
@@ -87,7 +90,7 @@ export async function jwtBearerToken(
   jwt: string,
   service: string | Service
 ): Promise<string> {
-  const resolvedService = resolveService(service);
+  const resolvedService = resolveServiceBinding(service);
 
   return getUserToken(resolvedService, jwt);
 }

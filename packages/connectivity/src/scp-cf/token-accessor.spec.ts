@@ -24,7 +24,7 @@ import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { jwtBearerToken, serviceToken } from './token-accessor';
 
 describe('token accessor', () => {
-  describe('serviceToken', () => {
+  describe('serviceToken()', () => {
     beforeEach(() => {
       mockServiceBindings();
     });
@@ -291,7 +291,7 @@ describe('token accessor', () => {
       await expect(
         serviceToken('destination')
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application."'
+        '"Could not find binding to service \'xsuaa\', that includes credentials."'
       );
     });
 
@@ -301,7 +301,7 @@ describe('token accessor', () => {
       await expect(
         serviceToken('destination')
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Unable to get access token for "destination" service. No service instance of type "destination" found."'
+        '"Could not find service binding for type \'destination\'."'
       );
     });
 

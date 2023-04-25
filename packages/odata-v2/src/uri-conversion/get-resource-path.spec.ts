@@ -27,7 +27,9 @@ describe('get resource path', () => {
   it('throws error if no keys set', () => {
     expect(() =>
       getResourcePathForKeys({}, testEntityApi)
-    ).toThrowErrorMatchingSnapshot();
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Cannot get resource path for entity A_TestEntity. The following keys are missing: KeyPropertyGuid, KeyPropertyString"'
+    );
   });
 
   it('throws error if not all keys are set', () => {
@@ -35,7 +37,9 @@ describe('get resource path', () => {
 
     expect(() =>
       getResourcePathForKeys(keys, testEntityApi)
-    ).toThrowErrorMatchingSnapshot();
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Cannot get resource path for entity A_TestEntity. The following keys are missing: KeyPropertyString"'
+    );
   });
 
   it('throws error if keys are nullish', () => {
@@ -43,7 +47,9 @@ describe('get resource path', () => {
 
     expect(() =>
       getResourcePathForKeys(keys, testEntityApi)
-    ).toThrowErrorMatchingSnapshot();
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Cannot get resource path for entity A_TestEntity. The following keys have nullish values, but are not nullable: KeyPropertyGuid, KeyPropertyString"'
+    );
   });
 
   it('allows values to be empty string', () => {

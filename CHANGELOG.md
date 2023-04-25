@@ -28,6 +28,32 @@
 
 - 
 
+# 3.1.1
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.1.1
+
+## Fixed Issues
+
+- [resilience] Fix transpilation on OData generation, where types for 'opossum' could not be found.
+  - @sap-cloud-sdk/util@3.1.1 (166a16d82)
+
+# 3.1.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.1.0
+
+## Compatibility Notes
+
+- [connectivity] The combination of `iss` and `jwt` is now supported when fetching destinations. When both properties are set, the `iss` property is no longer ignored. (28b7af86f)
+
+## New Functionalities
+
+- [connectivity] Add support for authentication type `NoAuthentication` on-premise destinations. (039412e59)
+- [connectivity] Allow combination of `iss` an `jwt` when fetching a destination. In this case the `iss` URL will be used to fetch the destination service token and `jwt` will be used for the `x-user-token` header of user based authentication types. (28b7af86f)
+
+## Fixed Issues
+
+- [odata-common] Adjust `FromJsonType` to stricter typings in TypeScript 5. (cc8425abc)
+
 # 3.0.2
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.0.2

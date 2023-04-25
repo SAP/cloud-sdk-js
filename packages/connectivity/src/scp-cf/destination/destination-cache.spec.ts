@@ -12,7 +12,7 @@ import {
   connectivityProxyConfigMock,
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
-  TestTenants
+  testTenants
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   certificateMultipleResponse,
@@ -118,6 +118,7 @@ describe('destination cache', () => {
     await destinationCache.clear();
     destinationServiceCache.clear();
     nock.cleanAll();
+    jest.resetAllMocks();
   });
 
   describe('caching', () => {
@@ -331,7 +332,7 @@ describe('destination cache', () => {
     it("uses cache with isolation strategy 'tenant' and 'iss' set", async () => {
       await destinationCache
         .getCacheInstance()
-        .set(`${TestTenants.SUBSCRIBER_ONLY_ISS}::${destinationOne.name}`, {
+        .set(`${testTenants.subscriberOnlyIss}::${destinationOne.name}`, {
           entry: destinationOne
         });
 
@@ -473,9 +474,13 @@ describe('destination cache', () => {
       expect(retrieveFromCacheSpy).toHaveBeenCalled();
       expect(retrieveFromCacheSpy).toHaveBeenCalledWith(
         expect.objectContaining({
-          iss: 'https://provider.example.com',
-          user_id: 'user-prov',
-          zid: 'provider'
+          userJwt: expect.objectContaining({
+            decoded: expect.objectContaining({
+              iss: 'https://provider.example.com',
+              user_id: 'user-prov',
+              zid: 'provider'
+            })
+          })
         }),
         destinationFromCache?.name,
         'tenant-user'
@@ -534,9 +539,13 @@ describe('destination cache', () => {
       expect(retrieveFromCacheSpy).toHaveBeenCalled();
       expect(retrieveFromCacheSpy).toHaveBeenCalledWith(
         expect.objectContaining({
-          iss: 'https://provider.example.com',
-          user_id: 'user-prov',
-          zid: 'provider'
+          userJwt: expect.objectContaining({
+            decoded: expect.objectContaining({
+              iss: 'https://provider.example.com',
+              user_id: 'user-prov',
+              zid: 'provider'
+            })
+          })
         }),
         expected.name,
         'tenant-user'
@@ -550,15 +559,13 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          onPremisePrincipalPropagationMultipleResponse,
-          200,
-          providerServiceToken
-        )
-      ];
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        onPremisePrincipalPropagationMultipleResponse,
+        200,
+        providerServiceToken
+      );
 
       const retrieveFromCacheSpy = jest.spyOn(
         destinationCache,
@@ -600,9 +607,13 @@ describe('destination cache', () => {
       expect(retrieveFromCacheSpy).toHaveBeenCalled();
       expect(retrieveFromCacheSpy).toHaveBeenCalledWith(
         expect.objectContaining({
-          iss: 'https://provider.example.com',
-          user_id: 'user-prov',
-          zid: 'provider'
+          userJwt: expect.objectContaining({
+            decoded: expect.objectContaining({
+              iss: 'https://provider.example.com',
+              user_id: 'user-prov',
+              zid: 'provider'
+            })
+          })
         }),
         expected.name,
         'tenant-user'
@@ -611,6 +622,7 @@ describe('destination cache', () => {
 
     it('retrieves subscriber cached destination', async () => {
       mockServiceBindings();
+      mockServiceToken();
       mockVerifyJwt();
 
       const authType = 'NoAuthentication' as AuthenticationType;
@@ -711,7 +723,7 @@ describe('destination cache', () => {
     });
   });
 
-  describe('caching without mocs', () => {
+  describe('caching without mocks', () => {
     it('should cache the destination correctly', async () => {
       const dummyJwt = { user_id: 'user', zid: 'tenant' };
       await destinationCache.cacheRetrievedDestination(

@@ -167,7 +167,8 @@ function getFunctionImport(
       returnTypeCategory: 'edm-type',
       builderFunction:
         "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.String', deSerializers)"
-    }
+    },
+    type: 'function'
   } as VdmOperation;
 }
 
@@ -182,7 +183,8 @@ function getActionImport(): VdmOperation {
         "(val) => edmToTs(val.TestActionImportUnsupportedEdmTypes, 'Edm.String', deSerializers)"
     },
     parametersTypeName: 'actionImportReturn',
-    parameters: [{ description: 'local test parameter' }] as VdmParameter[]
+    parameters: [{ description: 'local test parameter' }] as VdmParameter[],
+    type: 'action'
   } as VdmOperation;
 }
 

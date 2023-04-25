@@ -309,7 +309,8 @@ describe('service-generator', () => {
         );
 
         const functionImport = services[0].operationImports.find(
-          f => f.originalName === 'CreateTestComplexType' && f.type === 'function'
+          f =>
+            f.originalName === 'CreateTestComplexType' && f.type === 'function'
         )!;
         const complexType = services[0].complexTypes.find(
           c => c.originalName === 'A_TestComplexType'
@@ -356,7 +357,9 @@ describe('service-generator', () => {
         );
 
         const functionImport = service.operationImports.find(
-          f => f.originalName === 'TestFunctionImportEdmReturnType' && f.type === 'function'
+          f =>
+            f.originalName === 'TestFunctionImportEdmReturnType' &&
+            f.type === 'function'
         )!;
 
         expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
@@ -365,7 +368,9 @@ describe('service-generator', () => {
         );
 
         const functionImportUnsupportedEdmTypes = service.operationImports.find(
-          f => f.originalName === 'TestFunctionImportUnsupportedEdmTypes' && f.type === 'function'
+          f =>
+            f.originalName === 'TestFunctionImportUnsupportedEdmTypes' &&
+            f.type === 'function'
         )!;
 
         expect(
@@ -472,7 +477,9 @@ describe('service-generator', () => {
         );
 
         const functionImport = service.operationImports.find(
-          f => f.originalName === 'TestFunctionImportEdmReturnType' && f.type === 'function'
+          f =>
+            f.originalName === 'TestFunctionImportEdmReturnType' &&
+            f.type === 'function'
         )!;
 
         expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
@@ -489,7 +496,9 @@ describe('service-generator', () => {
           })
         );
 
-        const actions = services[0].operationImports.filter(op => op.type === 'action');
+        const actions = services[0].operationImports.filter(
+          op => op.type === 'action'
+        );
 
         expect(actions?.length).toEqual(7);
         const actionWithUnsupportedEdmType = actions?.find(

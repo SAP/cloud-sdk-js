@@ -53,7 +53,9 @@ function getReadRequestType(service: VdmServiceMetadata): string {
       `GetByKeyRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
   );
   const functionImportsReturnTypes = service.operationImports
-    .filter(fn => fn.type === 'function' && fn.httpMethod.toLowerCase() === 'get')
+    .filter(
+      fn => fn.type === 'function' && fn.httpMethod.toLowerCase() === 'get'
+    )
     .map(fn => operationReturnType(fn));
 
   return [

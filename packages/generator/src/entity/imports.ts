@@ -30,10 +30,7 @@ export function entityImportDeclarations(
         kind: StructureKind.ImportDeclaration,
         isTypeOnly: true
       },
-      ...operationImportDeclarations(
-        service,
-        entity.operations
-      ),
+      ...operationImportDeclarations(service, entity.operations),
       ...enumTypeImportDeclarations(entity.properties)
     ]);
   }

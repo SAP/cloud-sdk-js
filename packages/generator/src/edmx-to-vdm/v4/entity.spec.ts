@@ -186,20 +186,26 @@ describe('entity', () => {
     const actionFilter = op => op.type === 'action';
 
     // entities[0]
-    expect(entities[0].operations.filter(functionFilter).map(({ name }) => name)).toEqual([
-      'fn1IsBound'
-    ]);
-    expect(entities[0].operations.filter(functionFilter)[0].parameters.length).toBe(1);
-    expect(entities[0].operations.filter(actionFilter).map(({ name }) => name)).toEqual([
-      'action1IsBound'
-    ]);
-    expect(entities[0].operations.filter(actionFilter)[0].parameters.length).toBe(0);
+    expect(
+      entities[0].operations.filter(functionFilter).map(({ name }) => name)
+    ).toEqual(['fn1IsBound']);
+    expect(
+      entities[0].operations.filter(functionFilter)[0].parameters.length
+    ).toBe(1);
+    expect(
+      entities[0].operations.filter(actionFilter).map(({ name }) => name)
+    ).toEqual(['action1IsBound']);
+    expect(
+      entities[0].operations.filter(actionFilter)[0].parameters.length
+    ).toBe(0);
 
     // entities[1]
-    expect(entities[1].operations.filter(functionFilter).map(({ name }) => name)).toEqual([
-      'fn3IsBoundToOtherEntity'
-    ]);
-    expect(entities[1].operations.filter(functionFilter)[0].parameters.length).toBe(1);
+    expect(
+      entities[1].operations.filter(functionFilter).map(({ name }) => name)
+    ).toEqual(['fn3IsBoundToOtherEntity']);
+    expect(
+      entities[1].operations.filter(functionFilter)[0].parameters.length
+    ).toBe(1);
     expect(entities[1].operations.filter(actionFilter).length).toBe(0);
 
     // entities[2]

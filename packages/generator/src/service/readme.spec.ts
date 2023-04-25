@@ -1,5 +1,9 @@
 import { getExpectedHelpfulLinks } from '../../test/test-util/readme-util';
-import { ApiBusinessHubMetadata, VdmOperation, VdmServiceMetadata } from '../vdm-types';
+import {
+  ApiBusinessHubMetadata,
+  VdmOperation,
+  VdmServiceMetadata
+} from '../vdm-types';
 import { readme } from './readme';
 
 const packageName = 'business-partner-service';
@@ -83,7 +87,7 @@ ${getExpectedHelpfulLinks()}
           packageName
         },
         speakingModuleName,
-        operationImports: [] as VdmOperation[],
+        operationImports: [] as VdmOperation[]
       } as VdmServiceMetadata)
     ).toBe(
       `# business-partner-service

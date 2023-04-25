@@ -19,9 +19,7 @@ export function entitySourceFile(
       ...otherEntityImports(entity, service),
       entityClass(entity, service),
       entityTypeInterface(entity, service),
-      ...entity.operations.map(operation =>
-        parametersInterface(operation)
-      )
+      ...entity.operations.map(operation => parametersInterface(operation))
     ]
   };
 }

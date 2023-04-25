@@ -1,9 +1,6 @@
 import { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
 import { VdmServiceMetadata } from '../vdm-types';
-import {
-  entityCodeSample,
-  operationImportCodeSample
-} from './code-samples';
+import { entityCodeSample, operationImportCodeSample } from './code-samples';
 import { sampleOperationImport, getODataEntity } from './code-sample-util';
 
 /**

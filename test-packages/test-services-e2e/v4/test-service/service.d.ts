@@ -8,15 +8,15 @@ import { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
 import { TestEntity50PropApi } from './TestEntity50PropApi';
 import {
+  CreateTestEntityByIdParameters,
+  CreateTestEntityByIdReturnIdParameters,
   ConcatStringsParameters,
   GetAllParameters,
   GetByKeyParameters,
   GetByKeyWithMultipleKeysParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
-  ReturnSapCloudSdkParameters,
-  CreateTestEntityByIdParameters,
-  CreateTestEntityByIdReturnIdParameters
+  ReturnSapCloudSdkParameters
 } from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
@@ -105,6 +105,20 @@ declare class TestService<
   get testEntityLinkApi(): TestEntityLinkApi<DeSerializersT>;
   get testEntity50PropApi(): TestEntity50PropApi<DeSerializersT>;
   get operations(): {
+    createTestEntityById: (
+      parameter: CreateTestEntityByIdParameters<DeSerializersT>
+    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
+      DeSerializersT,
+      CreateTestEntityByIdParameters<DeSerializersT>,
+      import('./TestEntity').TestEntity<DefaultDeSerializers>
+    >;
+    createTestEntityByIdReturnId: (
+      parameter: CreateTestEntityByIdReturnIdParameters<DeSerializersT>
+    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
+      DeSerializersT,
+      CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
+      number
+    >;
     concatStrings: (
       parameter: ConcatStringsParameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
@@ -153,20 +167,6 @@ declare class TestService<
       DeSerializersT,
       ReturnSapCloudSdkParameters<DeSerializersT>,
       string
-    >;
-    createTestEntityById: (
-      parameter: CreateTestEntityByIdParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
-      DeSerializersT,
-      CreateTestEntityByIdParameters<DeSerializersT>,
-      import('./TestEntity').TestEntity<DefaultDeSerializers>
-    >;
-    createTestEntityByIdReturnId: (
-      parameter: CreateTestEntityByIdReturnIdParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
-      DeSerializersT,
-      CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
-      number
     >;
   };
   get batch(): typeof batch;

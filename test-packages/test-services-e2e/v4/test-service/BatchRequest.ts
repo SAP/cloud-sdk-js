@@ -21,15 +21,15 @@ import {
   TestEntityWithMultipleKeys,
   TestEntityLink,
   TestEntity50Prop,
+  CreateTestEntityByIdParameters,
+  CreateTestEntityByIdReturnIdParameters,
   ConcatStringsParameters,
   GetAllParameters,
   GetByKeyParameters,
   GetByKeyWithMultipleKeysParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
-  ReturnSapCloudSdkParameters,
-  CreateTestEntityByIdParameters,
-  CreateTestEntityByIdReturnIdParameters
+  ReturnSapCloudSdkParameters
 } from './index';
 
 /**

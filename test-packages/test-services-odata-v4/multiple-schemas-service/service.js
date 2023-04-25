@@ -42,10 +42,10 @@ class MultipleSchemasService {
     }
     get operations() {
         return {
-            testFunctionImportEntityReturnType1: (parameter) => (0, operations_1.testFunctionImportEntityReturnType1)(parameter, this.deSerializers),
-            testFunctionImportEntityReturnType2: (parameter) => (0, operations_1.testFunctionImportEntityReturnType2)(parameter, this.deSerializers),
             testActionImportNoParameterComplexReturnType1: (parameter) => (0, operations_1.testActionImportNoParameterComplexReturnType1)(parameter, this.deSerializers),
-            testActionImportNoParameterComplexReturnType2: (parameter) => (0, operations_1.testActionImportNoParameterComplexReturnType2)(parameter, this.deSerializers)
+            testActionImportNoParameterComplexReturnType2: (parameter) => (0, operations_1.testActionImportNoParameterComplexReturnType2)(parameter, this.deSerializers),
+            testFunctionImportEntityReturnType1: (parameter) => (0, operations_1.testFunctionImportEntityReturnType1)(parameter, this.deSerializers),
+            testFunctionImportEntityReturnType2: (parameter) => (0, operations_1.testFunctionImportEntityReturnType2)(parameter, this.deSerializers)
         };
     }
     get batch() {

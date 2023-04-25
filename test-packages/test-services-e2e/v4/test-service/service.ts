@@ -8,6 +8,8 @@ import { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 import { TestEntityLinkApi } from './TestEntityLinkApi';
 import { TestEntity50PropApi } from './TestEntity50PropApi';
 import {
+  createTestEntityById,
+  createTestEntityByIdReturnId,
   concatStrings,
   getAll,
   getByKey,
@@ -15,17 +17,15 @@ import {
   returnCollection,
   returnInt,
   returnSapCloudSdk,
-  createTestEntityById,
-  createTestEntityByIdReturnId,
+  CreateTestEntityByIdParameters,
+  CreateTestEntityByIdReturnIdParameters,
   ConcatStringsParameters,
   GetAllParameters,
   GetByKeyParameters,
   GetByKeyWithMultipleKeysParameters,
   ReturnCollectionParameters,
   ReturnIntParameters,
-  ReturnSapCloudSdkParameters,
-  CreateTestEntityByIdParameters,
-  CreateTestEntityByIdReturnIdParameters
+  ReturnSapCloudSdkParameters
 } from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
@@ -146,6 +146,12 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
 
   get operations() {
     return {
+      createTestEntityById: (
+        parameter: CreateTestEntityByIdParameters<DeSerializersT>
+      ) => createTestEntityById(parameter, this.deSerializers),
+      createTestEntityByIdReturnId: (
+        parameter: CreateTestEntityByIdReturnIdParameters<DeSerializersT>
+      ) => createTestEntityByIdReturnId(parameter, this.deSerializers),
       concatStrings: (parameter: ConcatStringsParameters<DeSerializersT>) =>
         concatStrings(parameter, this.deSerializers),
       getAll: (parameter: GetAllParameters<DeSerializersT>) =>
@@ -162,13 +168,7 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
         returnInt(parameter, this.deSerializers),
       returnSapCloudSdk: (
         parameter: ReturnSapCloudSdkParameters<DeSerializersT>
-      ) => returnSapCloudSdk(parameter, this.deSerializers),
-      createTestEntityById: (
-        parameter: CreateTestEntityByIdParameters<DeSerializersT>
-      ) => createTestEntityById(parameter, this.deSerializers),
-      createTestEntityByIdReturnId: (
-        parameter: CreateTestEntityByIdReturnIdParameters<DeSerializersT>
-      ) => createTestEntityByIdReturnId(parameter, this.deSerializers)
+      ) => returnSapCloudSdk(parameter, this.deSerializers)
     };
   }
 

@@ -467,7 +467,7 @@ describe('destination service', () => {
         .reply(200, response);
 
       const spy = jest.spyOn(axios, 'request');
-      const result = await fetchDestination(destinationServiceUri, jwt, {
+      await fetchDestination(destinationServiceUri, jwt, {
         destinationName
       });
       const expectedConfig: RawAxiosRequestConfig = {

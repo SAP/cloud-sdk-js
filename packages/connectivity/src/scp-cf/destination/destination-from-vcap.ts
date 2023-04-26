@@ -2,7 +2,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt } from '../jwt';
 import { Service } from '../environment-accessor/environment-accessor-types';
-import { getServiceByInstanceName } from '../environment-accessor';
+import { getServiceBindingByInstanceName } from '../environment-accessor';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
@@ -56,7 +56,7 @@ export async function destinationForServiceBinding(
     }
   }
 
-  const selected = getServiceByInstanceName(serviceInstanceName)!;
+  const selected = getServiceBindingByInstanceName(serviceInstanceName)!;
   const destination = options.serviceBindingTransformFn
     ? await options.serviceBindingTransformFn(selected, options)
     : await transform(selected, options);

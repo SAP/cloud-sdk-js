@@ -228,7 +228,7 @@ describe('register-destination without xsuaa binding', () => {
     await expect(() =>
       registerDestination(testDestination)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not find binding to the XSUAA service, that includes credentials."'
+      '"Could not find binding to service \'xsuaa\', that includes credentials."'
     );
   });
 });

@@ -19,6 +19,7 @@ export interface MiddlewareOptions<
 /**
  * Minimal Context of the middleware.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface MiddlewareContext<ArgumentT> {
   /**
    * URI of the function passed to the middleware.

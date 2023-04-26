@@ -67,25 +67,6 @@ export async function buildHttpRequest(
 }
 
 /**
- * Builds a {@link DestinationHttpRequestConfig} for the given destination
- * and then merges it into the given request configuration.
- * Setting of the given request configuration take precedence over any destination related configuration.
- * @param destination - A destination or a destination name and a JWT.
- * @param requestConfig - Any object representing an HTTP request.
- * @returns The given request config merged with the config built for the given destination.
- * @internal
- */
-export async function addDestinationToRequestConfig<
-  T extends HttpRequestConfig
->(
-  destination: HttpDestination,
-  requestConfig: T
-): Promise<T & DestinationHttpRequestConfig> {
-  const destinationConfig = await buildHttpRequest(destination);
-  return merge(destinationConfig, requestConfig);
-}
-
-/**
  * Takes as parameter a function that expects an {@link HttpRequest} and returns a Promise of {@link HttpResponse}.
  * Returns a function that takes a destination and a request-config (extends {@link HttpRequestConfig}), builds an {@link HttpRequest} from them, and calls
  * the provided execute function.
@@ -491,17 +472,6 @@ export function getDefaultHttpRequestOptions(): HttpRequestOptions {
   return {
     fetchCsrfToken: true
   };
-}
-
-function buildHttpRequestOptions(
-  httpRequestOptions?: HttpRequestOptions
-): HttpRequestOptions {
-  return httpRequestOptions
-    ? {
-        ...getDefaultHttpRequestOptions(),
-        ...httpRequestOptions
-      }
-    : getDefaultHttpRequestOptions();
 }
 
 /**

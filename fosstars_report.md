@@ -1,8 +1,8 @@
 **Rating**: **GOOD**
 
-**Score**: **6.88**, max score value is 10.0
+**Score**: **7.1**, max score value is 10.0
 
-**Confidence**: High (9.65, max confidence value is 10.0)
+**Confidence**: Max (10.0, max confidence value is 10.0)
 
 ## Details
 
@@ -77,7 +77,7 @@ It used the following sub-scores:
     
 1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **0.19** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **2.26** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
     
@@ -244,7 +244,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** Not found
+1.  **Info about vulnerabilities in the project:** 1 vulnerability, [details below](#known-vulnerabilities)
 
 
 ### Unpatched vulnerabilities
@@ -259,7 +259,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** Not found
+1.  **Info about vulnerabilities in the project:** 1 vulnerability, [details below](#known-vulnerabilities)
 
 
 ### Community commitment
@@ -285,20 +285,20 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-282 commits in the last 3 months results to 10.00 points
+279 commits in the last 3 months results to 10.00 points
 3 contributors increase the score value from 10.00 to 11.00
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 282
+1.  **Number of commits in the last three months:** 279
 1.  **Number of contributors in the last three months:** 3
 
 
 ### Project popularity
 
-Score: **0.19**, confidence is 6.67 (low), weight is 0.5 (medium)
+Score: **2.26**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This scoring function is based on number of stars, watchers and dependent projects.
 
@@ -308,7 +308,7 @@ This sub-score is based on 3 features:
 
 
 
-1.  **Number of projects on GitHub that use an open source project:** unknown
+1.  **Number of projects on GitHub that use an open source project:** 3115
 1.  **Number of stars for a GitHub repository:** 127
 1.  **Number of watchers for a GitHub repository:** 18
 
@@ -581,4 +581,5 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-No vulnerabilities found
+1.  [CVE-2021-41251](https://nvd.nist.gov/vuln/detail/CVE-2021-41251): @sap-cloud-sdk/core contains the core functionality of the SAP Cloud SDK as well as the SAP Business Technology Platform abstractions. This affects applications on SAP Business Technology Platform that use the SAP Cloud SDK and enabled caching of destinations. In affected versions and in some cases, when user information was missing, destinations were cached without user information, allowing other users to retrieve the same destination with its permissions. By default, destination caching is disabled. The security for caching has been increased. The changes are released in version 1.52.0. Users unable to upgrade are advised to disable destination caching (it is disabled by default).
+

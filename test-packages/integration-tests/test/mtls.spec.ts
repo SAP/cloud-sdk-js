@@ -40,7 +40,7 @@ describe('mTLS on CloudFoundry', () => {
     inferMtls: true
   };
 
-  it('can perform http request with mTLS on registered destination', async () => {
+  it('can perform an http request against a registered destination using mTLS', async () => {
     nock('https://example.com').get('/mtls').reply(200);
     mockServiceBindings();
     const spy = jest.spyOn(axios, 'request');

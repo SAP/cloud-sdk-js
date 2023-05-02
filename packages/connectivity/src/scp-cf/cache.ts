@@ -42,7 +42,7 @@ export class Cache<T> implements CacheInterface<T> {
 
   /**
    * Creates an instance of Cache.
-   * @param defaultValidityTime - The default expiration time in milliseconds. Use 0 for unlimited cache duration.
+   * @param defaultValidityTime - The default validity time in milliseconds. Use 0 for unlimited cache duration.
    */
   constructor(private defaultValidityTime: number) {
     this.cache = {};

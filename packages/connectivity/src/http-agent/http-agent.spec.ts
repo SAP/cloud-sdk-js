@@ -1,5 +1,7 @@
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { HttpProxyAgent } from 'http-proxy-agent';
+import mock from 'mock-fs';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   proxyAgent,
   ProxyConfiguration,
@@ -257,5 +259,68 @@ describe('getAgentConfig', () => {
     };
 
     expect(() => getAgentConfig(destination)).toThrow();
+  });
+
+  describe('mTLS', () => {
+    describe('on CloudFoundry', () => {
+      beforeAll(() => {
+        mock({
+          'cf-crypto': {
+            'cf-cert': 'my-cert',
+            'cf-key': 'my-key'
+          }
+        });
+      });
+
+      afterAll(() => {
+        mock.restore();
+        delete process.env.CF_INSTANCE_CERT;
+        delete process.env.CF_INSTANCE_KEY;
+      });
+
+      it('returns an object with key "httpsAgent" which includes mTLS options when mtls is set to true and env variables contain cert & key', async () => {
+        process.env.CF_INSTANCE_CERT = 'cf-crypto/cf-cert';
+        process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
+
+        const destination: HttpDestination = {
+          url: 'https://example.com',
+          mtls: true
+        };
+        const actual = getAgentConfig(destination)['httpsAgent'].options;
+
+        expect(actual.cert).toEqual('my-cert');
+        expect(actual.key).toEqual('my-key');
+        expect(actual.pfx).not.toBeDefined();
+        expect(actual.passphrase).not.toBeDefined();
+      });
+    });
+
+    it('returns an object with key "httpsAgent" which is missing mTLS options when mtls is set to true but env variables do not include cert & key', async () => {
+      const destination: HttpDestination = {
+        url: 'https://example.com',
+        mtls: true
+      };
+      const logger = createLogger('http-agent');
+      const warnSpy = jest.spyOn(logger, 'warn');
+
+      const actual = getAgentConfig(destination)['httpsAgent'].options;
+
+      expect(actual.cert).not.toBeDefined();
+      expect(actual.key).not.toBeDefined();
+      expect(warnSpy).toHaveBeenCalledTimes(1);
+
+      warnSpy.mockRestore();
+    });
+
+    it('returns an object with key "httpsAgent" which is missing mTLS options if mtls is not set to true', async () => {
+      const destination: HttpDestination = {
+        url: 'https://example.com'
+      };
+
+      const actual = getAgentConfig(destination)['httpsAgent'].options;
+
+      expect(actual.cert).not.toBeDefined();
+      expect(actual.key).not.toBeDefined();
+    });
   });
 });

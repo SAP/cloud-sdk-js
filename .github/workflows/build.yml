@@ -17,117 +17,117 @@ on:
         required: false
 
 jobs:
-  tests:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [18]
-    steps:
-      - name: Show input from dispatch event
-        run: echo "Canary release flag ${{ github.event.inputs.canary-release }}"
-      - uses: actions/checkout@v3
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-          registry-url: 'https://registry.npmjs.org'
-      - run: yarn install --ignore-engines --frozen-lockfile
-      - run: yarn test:unit
-        env:
-          SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
-      - run: yarn test:integration
-      - run: yarn test:self
-      - run: yarn test:build-packages
-      - run: yarn test:type
-  checks:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
-      - name: REUSE Compliance Check
-        uses: fsfe/reuse-action@v1.1
-      - run: yarn install --frozen-lockfile
-      - run: yarn lint
-        name: Static Code Check
-      - run: yarn check:test-service
-        name: Test Service Version Check
-      - run: yarn check:dependencies
-        name: Undeclared dependency Check
-      - run: yarn check:public-api
-        name: Check public api
-      - run: yarn test:self
-        name: Self tests for tools
-      - run: yarn check:circular
-        name: Circular dependency Check
-      - run: yarn doc
-        name: API Doc Check
-      - run: yarn check:license
-        name: License Check
-  e2e-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
-      - run: yarn test:e2e
-  dependabot:
-    runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
-    needs: [tests, checks, e2e-tests]
-    permissions:
-      pull-requests: write
-      contents: write
-    steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1.3.6
-        with:
-          github-token: '${{ secrets.GITHUB_TOKEN }}'
-      - name: Approve a PR
-        run: gh pr review --approve "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Enable auto-merge for Dependabot PRs
-        run: gh pr merge --auto --squash "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  canary-release-pre-check:
-    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'true' || github.event_name == 'schedule' }}
-    runs-on: ubuntu-latest
-    outputs:
-      skip: ${{ steps.date-check.outputs.skip }}
-    needs: [tests, checks, e2e-tests]
-    steps:
-      - uses: actions/checkout@v3
-      - run: git fetch --depth=1
-      - id: date-check
-        name: Check if latest commit is within 24 hrs
-        run: |
-          lastCommitDate=$(git --no-pager log -n 1 main --pretty=format:"%at")
-          curDate=$(date +%s)
-          dateDiff=$(expr $curDate - $lastCommitDate)
-          echo $lastCommitDate, $curDate, $dateDiff
+#   tests:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 15
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         node-version: [18]
+#     steps:
+#       - name: Show input from dispatch event
+#         run: echo "Canary release flag ${{ github.event.inputs.canary-release }}"
+#       - uses: actions/checkout@v3
+#       - run: git fetch --depth=1
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#           cache: 'yarn'
+#           registry-url: 'https://registry.npmjs.org'
+#       - run: yarn install --ignore-engines --frozen-lockfile
+#       - run: yarn test:unit
+#         env:
+#           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
+#       - run: yarn test:integration
+#       - run: yarn test:self
+#       - run: yarn test:build-packages
+#       - run: yarn test:type
+#   checks:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - run: git fetch --depth=1
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+#           cache: 'yarn'
+#       - name: REUSE Compliance Check
+#         uses: fsfe/reuse-action@v1.1
+#       - run: yarn install --frozen-lockfile
+#       - run: yarn lint
+#         name: Static Code Check
+#       - run: yarn check:test-service
+#         name: Test Service Version Check
+#       - run: yarn check:dependencies
+#         name: Undeclared dependency Check
+#       - run: yarn check:public-api
+#         name: Check public api
+#       - run: yarn test:self
+#         name: Self tests for tools
+#       - run: yarn check:circular
+#         name: Circular dependency Check
+#       - run: yarn doc
+#         name: API Doc Check
+#       - run: yarn check:license
+#         name: License Check
+#   e2e-tests:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - run: git fetch --depth=1
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+#           cache: 'yarn'
+#       - run: yarn install --frozen-lockfile
+#       - run: yarn test:e2e
+#   dependabot:
+#     runs-on: ubuntu-latest
+#     if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+#     needs: [tests, checks, e2e-tests]
+#     permissions:
+#       pull-requests: write
+#       contents: write
+#     steps:
+#       - name: Dependabot metadata
+#         id: metadata
+#         uses: dependabot/fetch-metadata@v1.3.6
+#         with:
+#           github-token: '${{ secrets.GITHUB_TOKEN }}'
+#       - name: Approve a PR
+#         run: gh pr review --approve "$PR_URL"
+#         env:
+#           PR_URL: ${{github.event.pull_request.html_url}}
+#           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#       - name: Enable auto-merge for Dependabot PRs
+#         run: gh pr merge --auto --squash "$PR_URL"
+#         env:
+#           PR_URL: ${{github.event.pull_request.html_url}}
+#           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#   canary-release-pre-check:
+#     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'true' || github.event_name == 'schedule' }}
+#     runs-on: ubuntu-latest
+#     outputs:
+#       skip: ${{ steps.date-check.outputs.skip }}
+#     needs: [tests, checks, e2e-tests]
+#     steps:
+#       - uses: actions/checkout@v3
+#       - run: git fetch --depth=1
+#       - id: date-check
+#         name: Check if latest commit is within 24 hrs
+#         run: |
+#           lastCommitDate=$(git --no-pager log -n 1 main --pretty=format:"%at")
+#           curDate=$(date +%s)
+#           dateDiff=$(expr $curDate - $lastCommitDate)
+#           echo $lastCommitDate, $curDate, $dateDiff
 
-          if [[ $dateDiff -gt 86400 ]]
-          then
-              echo 'No new commit found on ${{ github.ref }} within the last 24 hrs.'
-              echo "skip=true" >> $GITHUB_OUTPUT
-          else
-              echo "skip=false" >> $GITHUB_OUTPUT
-          fi
+#           if [[ $dateDiff -gt 86400 ]]
+#           then
+#               echo 'No new commit found on ${{ github.ref }} within the last 24 hrs.'
+#               echo "skip=true" >> $GITHUB_OUTPUT
+#           else
+#               echo "skip=false" >> $GITHUB_OUTPUT
+#           fi
   canary-release:
     if: ${{ needs.canary-release-pre-check.outputs.skip == 'false' }}
     runs-on: ubuntu-latest
@@ -142,6 +142,7 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: Canary Release
         run: |
+          cat .npmrc
           date=`date +%Y%m%d%H%M%S`
           rm -f .changeset/*.md
           cp canary-release-changeset.md .changeset

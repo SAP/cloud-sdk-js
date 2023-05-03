@@ -53,5 +53,5 @@ export function getCacheKey(url: string, clientId: string): string | undefined {
  * @internal
  */
 export const clientCredentialsTokenCache = ClientCredentialsTokenCache(
-  new Cache<ClientCredentialsResponse>()
+  new Cache<ClientCredentialsResponse>(5 * 60 * 1000 /* 5 minutes in ms */)
 );

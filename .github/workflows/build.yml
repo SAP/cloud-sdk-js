@@ -143,7 +143,7 @@ jobs:
       - name: Canary Release
         run: |
           # echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
-          cat .npmrc
+          # cat .npmrc
           date=`date +%Y%m%d%H%M%S`
           rm -f .changeset/*.md
           cp canary-release-changeset.md .changeset

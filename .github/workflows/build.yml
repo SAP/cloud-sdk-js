@@ -129,7 +129,7 @@ jobs:
 #               echo "skip=false" >> $GITHUB_OUTPUT
 #           fi
   canary-release:
-    if: ${{ needs.canary-release-pre-check.outputs.skip == 'false' }}
+    # if: ${{ needs.canary-release-pre-check.outputs.skip == 'false' }}
     runs-on: ubuntu-latest
     needs: [canary-release-pre-check]
     steps:

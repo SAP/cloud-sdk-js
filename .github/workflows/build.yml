@@ -33,6 +33,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+          registry-url: 'https://registry.npmjs.org'
       - run: yarn install --ignore-engines --frozen-lockfile
       - run: yarn test:unit
         env:

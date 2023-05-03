@@ -22,6 +22,11 @@ const testDestination: DestinationWithName = {
   url: 'https://example.com'
 };
 
+const testDestinationWithMtls: DestinationWithName = {
+  name: 'RegisteredDestinationMtls',
+  url: 'https://example.com'
+};
+
 const mailDestination: DestinationWithName = {
   name: 'RegisteredDestination',
   type: 'MAIL'
@@ -49,6 +54,17 @@ describe('register-destination', () => {
       destinationName: testDestination.name
     });
     expect(actual).toEqual(testDestination);
+  });
+
+  it('registers HTTP destination with mTLS and retrieves it', async () => {
+    const options = {
+      inferMtls: true
+    };
+    await registerDestination(testDestinationWithMtls, options);
+    const actual = await getDestination({
+      destinationName: testDestinationWithMtls.name
+    });
+    expect(actual?.mtls).toStrictEqual(true);
   });
 
   it('registers mail destination and retrieves it', async () => {

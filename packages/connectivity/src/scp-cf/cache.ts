@@ -41,14 +41,11 @@ export class Cache<T> implements CacheInterface<T> {
   private cache: Record<string, CacheEntry<T>>;
 
   /**
-   * Default validity period for each entry in cache.
-   * If `undefined`, all cached entries will be valid indefinitely.
+   * Creates an instance of Cache.
+   * @param defaultValidityTime - The default validity time in milliseconds. Use 0 for unlimited cache duration.
    */
-  private defaultValidityTimeInMs: number | undefined;
-
-  constructor(validityTimeInMs?: number) {
+  constructor(private defaultValidityTime: number) {
     this.cache = {};
-    this.defaultValidityTimeInMs = validityTimeInMs;
   }
 
   /**
@@ -85,10 +82,18 @@ export class Cache<T> implements CacheInterface<T> {
    */
   set(key: string | undefined, item: CacheEntry<T>): void {
     if (key) {
-      const expires =
-        item.expires ?? inferExpirationTime(this.defaultValidityTimeInMs);
+      const expires = item.expires ?? this.inferDefaultExpirationTime();
       this.cache[key] = { entry: item.entry, expires };
     }
+  }
+
+  private inferDefaultExpirationTime(): number | undefined {
+    const now = new Date();
+    return this.defaultValidityTime
+      ? now
+          .setMilliseconds(now.getMilliseconds() + this.defaultValidityTime)
+          .valueOf()
+      : undefined;
   }
 }
 
@@ -97,13 +102,4 @@ function isExpired<T>(item: CacheEntry<T>): boolean {
     return false;
   }
   return item.expires < Date.now();
-}
-
-function inferExpirationTime(
-  validityTimeInMs: number | undefined
-): number | undefined {
-  const now = new Date();
-  return validityTimeInMs
-    ? now.setMilliseconds(now.getMilliseconds() + validityTimeInMs).valueOf()
-    : undefined;
 }

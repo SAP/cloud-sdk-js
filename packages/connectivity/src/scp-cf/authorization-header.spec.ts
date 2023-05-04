@@ -53,17 +53,12 @@ describe('buildAuthorizationHeaders', () => {
       ).resolves.not.toThrow();
     });
 
-    it('defaults to NoAuthentication', async () => {
-      await expect(
-        buildAuthorizationHeaders({ url: 'https://example.com' })
-      ).resolves.not.toThrow();
-    });
-
-    it('does not create authentication headers when only url is defined in a destination.', async () => {
-      const headers = await buildAuthorizationHeaders({
-        url: defaultDestination.url
+    it('defaults to NoAuthentication and does not create authentication headers when only url is defined', async () => {
+      const headerPromise = buildAuthorizationHeaders({
+        url: 'https://example.com'
       });
-      expect(headers.authorization).toBeUndefined();
+      await expect(headerPromise).resolves.not.toThrow();
+      expect((await headerPromise).authorization).toBeUndefined();
     });
 
     it('does not add authentication headers for Internet proxy type', async () => {

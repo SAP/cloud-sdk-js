@@ -1280,25 +1280,26 @@
   optionalDependencies:
     npmlog "2 || ^3.1.0 || ^4.0.0"
 
-"@sap/cds-compiler@^3.2.0":
-  version "3.5.4"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-3.5.4.tgz#03da5c70a6004c3917b27761023c81937a8ad0f8"
-  integrity sha512-/CehyluX4hK252qZ/3/0fXygQPy5JjWbpDO2RK3+Co9HBruhFO/arq9HCV3FobJIwa9wlEc9fUOU22HNuqp2Tg==
+"@sap/cds-compiler@^3.2.0", "@sap/cds-compiler@~3.9.0":
+  version "3.9.2"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-3.9.2.tgz#eb526c9a86d8e8303fa8f3aecc306b9849c5e188"
+  integrity sha512-rJtTq4877SsUKyeP9iNPt/mIS1OMs8bmoHZhxl1+4ROItFTLESnNQiL1IQUkME8Qlv442Fv4jcj3y8kJUNroQg==
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.7.2":
-  version "6.7.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.7.2.tgz#e184d5221c38e73d060104e8d51e3bf35b2eb375"
-  integrity sha512-wPpFlh6fRuTPYRET3pa3UW2AngVqQy3AXLMw7hPc+NNxneNQnyKgh1/cjaJ3NrsA44cjhu/jyJ9tadslnZtMbA==
+"@sap/cds-dk@6.8.0":
+  version "6.8.0"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.8.0.tgz#d122a5e94fa68646aeadf16280d6c5619d532ba3"
+  integrity sha512-C0kTGFldYiuEn4+Lcn8BvucGp39g83ahQkGmfa5Wz05rKq/cBzthu0FPeuIBsiZ5rKcfo5mXf3OgIXRdnMr6OQ==
   dependencies:
-    "@sap/cds" "^6.7.0"
+    "@sap/cds" "~6.8.0"
+    "@sap/cds-compiler" "~3.9.0"
     "@sap/cds-foss" "^4"
-    "@sap/cds-mtxs" "^1.7.0"
+    "@sap/cds-mtxs" "~1.8.0"
     "@sap/eslint-plugin-cds" "^2.6.0"
     axios ">=0.21"
     eslint "^8"
-    express "^4.17.1"
+    express "^4.17.3"
     livereload-js "^4.0.1"
     md5 "^2.3.0"
     mustache "^4.0.1"
@@ -1320,18 +1321,18 @@
     xmlbuilder "^15.1.1"
     yaml "^2.1.1"
 
-"@sap/cds-mtxs@^1.7.0":
-  version "1.7.0"
-  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-1.7.0.tgz#e03418f510c194bfeb7ba1fbc9da23e81776e75e"
-  integrity sha512-Q0J7lOq2wRELuEbE9P3QMfa406PE7v/g5q3QXcQ/b8YbOCNsvJ2oq2z3iztJgB/qJ8OkC/JsnycJNshr49CB3A==
+"@sap/cds-mtxs@~1.8.0":
+  version "1.8.0"
+  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-1.8.0.tgz#69b16b5b3119d920f60ccf8ad798150ef8e42c97"
+  integrity sha512-Txn2fybanBGqzMvD33GFvteBXaZdF6HoVqUx7jXCQCBdWbldCvRs96uo4Ykouy+ZOXZWJoKQS9ZUNHa51VYiiA==
   dependencies:
     "@sap/hdi-deploy" "^4"
     axios ">=0.27.2"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.7.0", "@sap/cds@^6.7.2":
-  version "6.7.2"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.7.2.tgz#13fbb741c9fcd8156b92e4244420db24403886ae"
-  integrity sha512-gLcZ9W37Ms+EJIPyPomco3BEej9NdZ1GQ1kQ8PqBh+tWkMKprLYSguyUq5KnblDz4KRhWskYrt7VbYX3ec73dg==
+"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.7.2", "@sap/cds@~6.8.0":
+  version "6.8.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.8.1.tgz#ea6caede23808ba0c45fd9ff06325e57c14ff3d3"
+  integrity sha512-skqbpXJqAuNzbs88gJnKPE0plFuc9FgTkR9FnvOa2Nb3wrFv+HJTrKI9chIgz9Dwjpncep1LhExPMF22StSExQ==
   dependencies:
     "@sap/cds-compiler" "^3.2.0"
     "@sap/cds-foss" "^4"
@@ -1934,11 +1935,11 @@ acorn@^8.4.1, acorn@^8.7.0, acorn@^8.8.0:
   integrity sha512-xjIYgE8HBrkpd/sJqOGNspf8uHG+NOHGOw6a/Urj8taM2EXfdNAH2oFcPeIFfsv3+kz/mJrS5VuMqbNLjCa2vw==
 
 agent-base@6, agent-base@>=6.0.2, agent-base@^6.0.0, agent-base@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.npmjs.org/agent-base/-/agent-base-6.0.2.tgz#49fff58577cfee3f37176feab4c22e00f86d7f77"
-  integrity sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/agent-base/-/agent-base-7.0.0.tgz#3424dd96658fbbcc0b090e41aaca2deb9a89f9cf"
+  integrity sha512-awaqsf16R0tAUMxWiVikaBDKrbt0im7XdzPMh3I8TFC097G4ZowjGgLBfXt+tGPsE+1U1FyLBGuWMd/EPVblWg==
   dependencies:
-    debug "4"
+    debug "^4.3.4"
 
 agentkeepalive@^4.1.3:
   version "4.2.1"
@@ -3973,7 +3974,7 @@ expect@^29.0.0, expect@^29.5.0:
     jest-message-util "^29.5.0"
     jest-util "^29.5.0"
 
-express@^4.17.1, express@^4.18.2:
+express@^4.17.3, express@^4.18.2:
   version "4.18.2"
   resolved "https://registry.npmjs.org/express/-/express-4.18.2.tgz#3fabe08296e930c796c19e3c516979386ba9fd59"
   integrity sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==
@@ -6304,11 +6305,6 @@ minipass@^3.0.0, minipass@^3.1.0, minipass@^3.1.1, minipass@^3.1.3:
   dependencies:
     yallist "^4.0.0"
 
-minipass@^4.0.0:
-  version "4.2.5"
-  resolved "https://registry.npmjs.org/minipass/-/minipass-4.2.5.tgz#9e0e5256f1e3513f8c34691dd68549e85b2c8ceb"
-  integrity sha512-+yQl7SX3bIT83Lhb4BVorMAHVuqsskxRdlmO9kTpyukp8vsm2Sn/fUOV9xlnG8/a5JsypJzap21lz/y3FBMJ8Q==
-
 minipass@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/minipass/-/minipass-5.0.0.tgz#3e9788ffb90b694a5d0ec94479a45b5d8738133d"
@@ -8488,13 +8484,13 @@ tar-stream@^2.1.4:
     readable-stream "^3.1.1"
 
 tar@>=6.1.2, tar@^6.0.2, tar@^6.1.11, tar@^6.1.2:
-  version "6.1.13"
-  resolved "https://registry.npmjs.org/tar/-/tar-6.1.13.tgz#46e22529000f612180601a6fe0680e7da508847b"
-  integrity sha512-jdIBIN6LTIe2jqzay/2vtYLlBHa3JF42ot3h1dW8Q0PaAG4v8rm0cvpVePtau5C6OKXGGcgO9q2AMNSWxiLqKw==
+  version "6.1.14"
+  resolved "https://registry.npmjs.org/tar/-/tar-6.1.14.tgz#e87926bec1cfe7c9e783a77a79f3e81c1cfa3b66"
+  integrity sha512-piERznXu0U7/pW7cdSn7hjqySIVTYT6F76icmFk7ptU7dDYlXTm5r9A6K04R2vU3olYgoKeo1Cg3eeu5nhftAw==
   dependencies:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"
-    minipass "^4.0.0"
+    minipass "^5.0.0"
     minizlib "^2.1.1"
     mkdirp "^1.0.3"
     yallist "^4.0.0"

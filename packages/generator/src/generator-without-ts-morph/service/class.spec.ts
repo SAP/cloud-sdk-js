@@ -14,22 +14,22 @@ describe('class', () => {
     complexTypes: [],
     enumTypes: [],
     entities: [],
-    operationImports: [],
+    operations: [],
     namespaces: ['namespace'],
     speakingModuleName: 'moduleName',
     className: 'AService',
     edmxPath: 'edmxPath'
   };
 
-  it('contains no operationImports if not in VDM', () => {
+  it('contains no operations if not in VDM', () => {
     const result = serviceClass(service);
-    expect(result).not.toContain('operationImports');
+    expect(result).not.toContain('operations');
   });
 
   it('contains operations if in VDM', () => {
     const result = serviceClass({
       ...service,
-      operationImports: [
+      operations: [
         { name: 'myFunction', parametersTypeName: 'paraName' } as VdmOperation,
         { name: 'myAction', parametersTypeName: 'paraName' } as VdmOperation
       ]

@@ -6,7 +6,7 @@ import {
   mergeImportDeclarations,
   odataImportDeclarationTsMorph
 } from '../imports';
-import { operationImportDeclarations } from '../operations';
+import { operationDeclarations } from '../operations';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
 /**
@@ -30,7 +30,7 @@ export function entityImportDeclarations(
         kind: StructureKind.ImportDeclaration,
         isTypeOnly: true
       },
-      ...operationImportDeclarations(service, entity.operations),
+      ...operationDeclarations(service, entity.operations),
       ...enumTypeImportDeclarations(entity.properties)
     ]);
   }

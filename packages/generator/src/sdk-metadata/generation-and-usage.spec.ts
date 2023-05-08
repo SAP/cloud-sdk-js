@@ -21,7 +21,7 @@ describe('generation-and-usage', () => {
       packageName: '@sap/dummy-package'
     },
     originalFileName: 'Dummy',
-    operationImports: [
+    operations: [
       {
         name: 'dummyFunc',
         parametersTypeName: 'dummyParamType',
@@ -39,7 +39,7 @@ describe('generation-and-usage', () => {
       packageName: '@sap/dummy-package'
     },
     originalFileName: 'Dummy',
-    operationImports: [
+    operations: [
       {
         name: 'dummyFunc',
         httpMethod: 'get',
@@ -62,7 +62,7 @@ describe('generation-and-usage', () => {
       packageName: '@sap/dummy-package'
     },
     originalFileName: 'Dummy',
-    operationImports: [
+    operations: [
       {
         name: 'dummyActionImport',
         httpMethod: 'get',

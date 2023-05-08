@@ -405,7 +405,7 @@ export async function generateSourcesForService(
   });
 
   // Merge generated function-imports.ts and action-imports.ts into one operations.ts.
-  if (service.operationImports.length) {
+  if (service.operations.length) {
     logger.verbose(`[${service.originalFileName}] Generating operations ...`);
     filePromises.push(
       sourceFile(

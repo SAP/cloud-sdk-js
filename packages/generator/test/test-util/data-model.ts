@@ -200,7 +200,7 @@ export const foodService: VdmServiceMetadata = {
   originalFileName: 'food.service.edmx',
   speakingModuleName: 'Food Service',
   entities: [breakfastEntity, brunchEntity],
-  operationImports: [
+  operations: [
     getFunctionImport('funcGet', 'get'),
     getFunctionImport('funcPost', 'post'),
     getActionImport()

@@ -49,6 +49,6 @@ export function getServiceEntitiesV4(
     complexTypes,
     enumTypes,
     entities,
-    operationImports: [...actionImports, ...functionImports]
+    operations: [...actionImports, ...functionImports]
   };
 }

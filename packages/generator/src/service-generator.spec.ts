@@ -308,7 +308,7 @@ describe('service-generator', () => {
           })
         );
 
-        const functionImport = services[0].operationImports.find(
+        const functionImport = services[0].operations.find(
           f =>
             f.originalName === 'CreateTestComplexType' && f.type === 'function'
         )!;
@@ -341,7 +341,7 @@ describe('service-generator', () => {
           })
         );
 
-        const functionImport = services[0].operationImports.find(
+        const functionImport = services[0].operations.find(
           f => f.originalName === 'Continue' && f.type === 'function'
         )!;
 
@@ -356,7 +356,7 @@ describe('service-generator', () => {
           })
         );
 
-        const functionImport = service.operationImports.find(
+        const functionImport = service.operations.find(
           f =>
             f.originalName === 'TestFunctionImportEdmReturnType' &&
             f.type === 'function'
@@ -367,7 +367,7 @@ describe('service-generator', () => {
           "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.Boolean', deSerializers)"
         );
 
-        const functionImportUnsupportedEdmTypes = service.operationImports.find(
+        const functionImportUnsupportedEdmTypes = service.operations.find(
           f =>
             f.originalName === 'TestFunctionImportUnsupportedEdmTypes' &&
             f.type === 'function'
@@ -476,7 +476,7 @@ describe('service-generator', () => {
           })
         );
 
-        const functionImport = service.operationImports.find(
+        const functionImport = service.operations.find(
           f =>
             f.originalName === 'TestFunctionImportEdmReturnType' &&
             f.type === 'function'
@@ -496,7 +496,7 @@ describe('service-generator', () => {
           })
         );
 
-        const actions = services[0].operationImports.filter(
+        const actions = services[0].operations.filter(
           op => op.type === 'action'
         );
 

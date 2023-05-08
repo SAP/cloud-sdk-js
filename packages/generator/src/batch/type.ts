@@ -34,12 +34,12 @@ function getWriteRequestType(service: VdmServiceMetadata): string {
     e =>
       `CreateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | UpdateRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT> | DeleteRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
   );
-  const operationImportsReturnTypes = service.operationImports
+  const operationsReturnTypes = service.operations
     .filter(fn => fn.type === 'action' || fn.httpMethod.toLowerCase() !== 'get')
     .map(fn => operationReturnType(fn));
   return [
     ...createUpdateDeleteBuilderTypes,
-    ...operationImportsReturnTypes
+    ...operationsReturnTypes
   ].join(' | ');
 }
 
@@ -52,7 +52,7 @@ function getReadRequestType(service: VdmServiceMetadata): string {
     e =>
       `GetByKeyRequestBuilder<${e.className}<DeSerializersT>, DeSerializersT>`
   );
-  const functionImportsReturnTypes = service.operationImports
+  const functionImportsReturnTypes = service.operations
     .filter(
       fn => fn.type === 'function' && fn.httpMethod.toLowerCase() === 'get'
     )

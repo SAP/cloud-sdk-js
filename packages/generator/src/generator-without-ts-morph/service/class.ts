@@ -64,11 +64,11 @@ export function serviceClass(service: VdmServiceMetadata): string {
 }
 
 function getOperations(service: VdmServiceMetadata): string {
-  if (!service.operationImports.length) {
+  if (!service.operations.length) {
     return '';
   }
 
-  const lines = service.operationImports.map(
+  const lines = service.operations.map(
     f =>
       `${f.name}:(parameter:${f.parametersTypeName}<DeSerializersT>)=>${f.name}(parameter,this.deSerializers)`
   );

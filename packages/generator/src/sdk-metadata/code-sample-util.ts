@@ -25,45 +25,45 @@ export function getShortestNameEntity(vdmEntities: VdmEntity[]): VdmEntity {
 /**
  * @internal
  */
-export function sampleOperationImport(
+export function sampleOperation(
   serviceName: string,
-  operationImports: VdmOperation[]
+  operations: VdmOperation[]
 ): VdmOperation {
-  if (operationImports.length === 1) {
-    return operationImports[0];
+  if (operations.length === 1) {
+    return operations[0];
   }
 
   return (
-    getLevenshteinClosest(serviceName, operationImports, x => x.name) ||
-    getOperationWithoutParameters(operationImports) ||
-    getOperationWithMinParameters(operationImports)
+    getLevenshteinClosest(serviceName, operations, x => x.name) ||
+    getOperationWithoutParameters(operations) ||
+    getOperationWithMinParameters(operations)
   );
 }
 /**
  * @internal
  */
 export function getOperationWithoutParameters(
-  operationImports: VdmOperation[]
+  operations: VdmOperation[]
 ): VdmOperation | undefined {
-  return operationImports.find(func => func.parameters?.length === 0);
+  return operations.find(func => func.parameters?.length === 0);
 }
 
 /**
  * Sorts and gets a function or action import having minimum input parameters.
- * @param operationImports - function or action imports array
+ * @param operations - function or action imports array
  * @returns Function or action containing minimum input parameters
  * @internal
  */
 export function getOperationWithMinParameters(
-  operationImports: VdmOperation[]
+  operations: VdmOperation[]
 ): VdmOperation {
-  const getOperations = operationImports.filter(
+  const getOperations = operations.filter(
     func => func.httpMethod?.toLowerCase() === 'get'
   );
   if (getOperations.length) {
-    operationImports = getOperations;
+    operations = getOperations;
   }
-  const sortedOperations = operationImports.sort((funcA, funcB) =>
+  const sortedOperations = operations.sort((funcA, funcB) =>
     funcA.parameters?.length < funcB.parameters?.length ? -1 : 1
   );
   return sortedOperations[0];

@@ -30,10 +30,10 @@ const logger = createLogger({
 const extractResponse = (response: string) => `${response}.value`;
 
 function splitMissingOperation(
-  operationImports: EdmxOperationImport[],
+  operations: EdmxOperationImport[],
   operations: EdmxOperation[]
 ): [EdmxOperationImport[], EdmxJoinedOperation[]] {
-  return operationImports.reduce<
+  return operations.reduce<
     [EdmxOperationImport[], EdmxJoinedOperation[]]
   >(
     ([withoutOperation, withOperation], curr) => {
@@ -116,7 +116,7 @@ function splitMissingParameter(
  * It also removes the first parameter which contains only the entity information
  */
 export function filterAndTransformOperations(
-  operationImports: EdmxOperationImport[],
+  operations: EdmxOperationImport[],
   operations: EdmxOperation[],
   isBound: boolean
 ): EdmxJoinedOperation[] {
@@ -125,7 +125,7 @@ export function filterAndTransformOperations(
   );
 
   const [withoutOperation, withOperation] = splitMissingOperation(
-    operationImports,
+    operations,
     filteredByBoundOperations
   );
 
@@ -146,8 +146,8 @@ export function filterAndTransformOperations(
     logger.warn(
       `Could not find ${operationType}s referenced by the following ${operationType} imports. Skipping code generation: ${withoutOperation
         .map(
-          operationImport =>
-            `${operationImport.Name} => ${operationImport.operationName}`
+          operation =>
+            `${operation.Name} => ${operation.operationName}`
         )
         .join(', \n')}`
     );
@@ -268,12 +268,12 @@ function generateOperations(
   className?: string
 ): VdmOperation[] {
   const operations = parseOperations(serviceMetadata.edmx.root, operationType);
-  const operationImports = parseOperationImports(
+  const operations = parseOperationImports(
     serviceMetadata.edmx.root,
     operationType
   );
   const joinedOperationData = filterAndTransformOperations(
-    operationImports,
+    operations,
     operations,
     !!edmxBindingEntitySetName
   )

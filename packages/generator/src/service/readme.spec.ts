@@ -24,7 +24,7 @@ describe('service readme', () => {
           communicationScenario,
           businessDocumentationUrl: 'https://example.com'
         },
-        operationImports: [] as VdmOperation[]
+        operations: [] as VdmOperation[]
       } as VdmServiceMetadata)
     ).toBe(
       `# business-partner-service
@@ -49,7 +49,7 @@ ${getExpectedHelpfulLinks()}
           url: apiHubUrl,
           communicationScenario: null
         } as ApiBusinessHubMetadata,
-        operationImports: [] as VdmOperation[]
+        operations: [] as VdmOperation[]
       } as VdmServiceMetadata)
     ).toBe(
       `# business-partner-service
@@ -68,7 +68,7 @@ ${getExpectedHelpfulLinks()}
           packageName
         },
         speakingModuleName,
-        operationImports: [] as VdmOperation[]
+        operations: [] as VdmOperation[]
       } as VdmServiceMetadata)
     ).toBe(
       `# business-partner-service
@@ -87,7 +87,7 @@ ${getExpectedHelpfulLinks()}
           packageName
         },
         speakingModuleName,
-        operationImports: [] as VdmOperation[]
+        operations: [] as VdmOperation[]
       } as VdmServiceMetadata)
     ).toBe(
       `# business-partner-service

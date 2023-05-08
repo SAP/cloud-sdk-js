@@ -132,14 +132,14 @@ export function parseOperationImports(
   root: any,
   operationType: 'function' | 'action'
 ): EdmxOperationImport[] {
-  const operationImports = getPropertyFromEntityContainer(
+  const operations = getPropertyFromEntityContainer(
     root,
     `${voca.capitalize(operationType)}Import`
   );
 
-  return operationImports.map(operationImport => ({
-    ...operationImport,
-    operationName: operationImport[voca.capitalize(operationType)],
+  return operations.map(operation => ({
+    ...operation,
+    operationName: operation[voca.capitalize(operationType)],
     operationType
   }));
 }

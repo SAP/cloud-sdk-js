@@ -92,7 +92,7 @@
     "@types/jsonwebtoken": "^9.0.2",
     "@types/license-checker": "^25.0.1",
     "@types/mock-fs": "^4.13.0",
-    "@types/node": "^18.16.3",
+    "@types/node": "^18.16.5",
     "@types/uuid": "^9.0.1",
     "@types/voca": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^5.59.2",

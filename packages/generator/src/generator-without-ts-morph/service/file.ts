@@ -19,7 +19,7 @@ ${serviceClass(service)}`;
 
 function getImports(service: VdmServiceMetadata): Import[] {
   const operations = service.operations;
-  if (operations.length === 0) {
+  if (!operations.length) {
     return [];
   }
   const names = operations.map(

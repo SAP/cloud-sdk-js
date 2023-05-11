@@ -52,44 +52,44 @@ describe('GetAllRequestBuilder', () => {
         .url(defaultDestination);
       expect(actual).toBe(expected);
     });
-  });
 
-  it('is built correctly for selects inside of an expand', async () => {
-    const expected =
-      'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$expand=to_SingleLink($select=BooleanProperty)';
-    const actual = await requestBuilder
-      .expand(
-        testEntityApi.schema.TO_SINGLE_LINK.select(
-          testEntitySingleLinkApi.schema.BOOLEAN_PROPERTY
+    it('is built correctly for selects inside of an expand', async () => {
+      const expected =
+        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$expand=to_SingleLink($select=BooleanProperty)';
+      const actual = await requestBuilder
+        .expand(
+          testEntityApi.schema.TO_SINGLE_LINK.select(
+            testEntitySingleLinkApi.schema.BOOLEAN_PROPERTY
+          )
         )
-      )
-      .url(defaultDestination);
-    expect(actual).toBe(expected);
+        .url(defaultDestination);
+      expect(actual).toBe(expected);
+    });
   });
 
   describe('execute', () => {
+    const testEntity1 = createOriginalTestEntityDataV4_1();
+    const testEntity2 = createOriginalTestEntityDataV4_2();
+    const response = [
+      {
+        KeyPropertyGuid: testEntity1.KeyPropertyGuid,
+        KeyPropertyString: 'ABCDE',
+        KeyDateProperty: '2023-05-05',
+        StringProperty: 'FGHIJ',
+        BooleanProperty: false,
+        Int16Property: 13
+      },
+      {
+        KeyPropertyGuid: testEntity2.KeyPropertyGuid,
+        KeyPropertyString: '12345',
+        KeyDateProperty: '2023-05-05',
+        StringProperty: '6789',
+        BooleanProperty: true,
+        Int16Property: 42,
+        EnumProperty: 'Enum1'
+      }
+    ];
     it('returns all entities', async () => {
-      const testEntity1 = createOriginalTestEntityDataV4_1();
-      const testEntity2 = createOriginalTestEntityDataV4_2();
-      const response = [
-        {
-          KeyPropertyGuid: testEntity1.KeyPropertyGuid,
-          KeyPropertyString: 'ABCDE',
-          KeyDateProperty: '2023-05-05',
-          StringProperty: 'FGHIJ',
-          BooleanProperty: false,
-          Int16Property: 13
-        },
-        {
-          KeyPropertyGuid: testEntity2.KeyPropertyGuid,
-          KeyPropertyString: '12345',
-          KeyDateProperty: '2023-05-05',
-          StringProperty: '6789',
-          BooleanProperty: true,
-          Int16Property: 42,
-          EnumProperty: 'Enum1'
-        }
-      ];
       mockGetRequest(
         {
           responseBody: { value: response },
@@ -108,19 +108,10 @@ describe('GetAllRequestBuilder', () => {
     });
 
     it('top(1) returns the first entity', async () => {
-      const testEntity1 = createOriginalTestEntityDataV4_1();
-      const response = {
-        KeyPropertyGuid: testEntity1.KeyPropertyGuid,
-        KeyPropertyString: 'ABCDE',
-        KeyDateProperty: '2023-05-05',
-        StringProperty: 'FGHIJ',
-        BooleanProperty: false,
-        Int16Property: 13
-      };
       mockGetRequest(
         {
           query: { $top: 1 },
-          responseBody: { value: [response] },
+          responseBody: { value: [response[0]] },
           path: 'A_TestEntity'
         },
         testEntityApi
@@ -131,20 +122,10 @@ describe('GetAllRequestBuilder', () => {
     });
 
     it('skip(1) skips the first entity', async () => {
-      const testEntity2 = createOriginalTestEntityDataV4_2();
-      const response = {
-        KeyPropertyGuid: testEntity2.KeyPropertyGuid,
-        KeyPropertyString: '12345',
-        KeyDateProperty: '2023-05-05',
-        StringProperty: '6789',
-        BooleanProperty: true,
-        Int16Property: 42,
-        EnumProperty: 'Enum1'
-      };
       mockGetRequest(
         {
           query: { $skip: 1 },
-          responseBody: { value: [response] },
+          responseBody: { value: [response[1]] },
           path: 'A_TestEntity'
         },
         testEntityApi

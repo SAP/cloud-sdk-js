@@ -48,8 +48,6 @@ describe('UpdateRequestBuilder', () => {
       testEntityApi
     );
 
-    // 'A_TestEntity(KeyPropertyGuid=0ca5efe7-51a4-468b-b7fe-d33c91f6324d,KeyPropertyString='stringId',DateProperty=2023-05-04)'
-    // 'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity(KeyPropertyGuid=b290bfbe-73ab-4be2-b3b9-e5101bcf12b3,KeyPropertyString='stringId',DateProperty=2023-05-04)'
     const actual = await new UpdateRequestBuilder(
       testEntityApi,
       entity

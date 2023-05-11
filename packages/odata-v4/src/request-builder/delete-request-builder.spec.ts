@@ -11,7 +11,7 @@ import { DeleteRequestBuilder } from './delete-request-builder';
 describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();
   const keyPropString = 'TEST_ID';
-  const keyDate = moment();
+  const keyPropDate = moment(0);
 
   afterAll(() => {
     nock.cleanAll();
@@ -20,7 +20,7 @@ describe('DeleteRequestBuilder', () => {
   it('should resolve if only the key is given.', async () => {
     mockDeleteRequest(
       {
-        path: testEntityResourcePath(keyPropGuid, keyPropString, keyDate)
+        path: testEntityResourcePath(keyPropGuid, keyPropString, keyPropDate)
       },
       testEntityApi
     );
@@ -28,7 +28,7 @@ describe('DeleteRequestBuilder', () => {
     const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString,
-      KeyDateProperty: keyDate
+      KeyDateProperty: keyPropDate
     }).execute(defaultDestination);
 
     await expect(deleteRequest).resolves.toBeUndefined();
@@ -40,13 +40,13 @@ describe('DeleteRequestBuilder', () => {
       .entityBuilder()
       .keyPropertyGuid(keyPropGuid)
       .keyPropertyString(keyPropString)
-      .keyDateProperty(keyDate)
+      .keyDateProperty(keyPropDate)
       .build()
       .setVersionIdentifier(versionId);
 
     mockDeleteRequest(
       {
-        path: testEntityResourcePath(keyPropGuid, keyPropString, keyDate),
+        path: testEntityResourcePath(keyPropGuid, keyPropString, keyPropDate),
         additionalHeaders: {
           'if-match': versionId
         }

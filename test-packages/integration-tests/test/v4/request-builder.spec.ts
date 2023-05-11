@@ -108,7 +108,7 @@ describe('Request Builder', () => {
 
   it('should resolve for update request', async () => {
     mockCsrfTokenRequest(
-      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`
+      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234',KeyDateProperty=1970-01-01)`
     );
 
     nock(destination.url, {
@@ -121,7 +121,7 @@ describe('Request Builder', () => {
       }
     })
       .patch(
-        `${basePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`,
+        `${basePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234',KeyDateProperty=1970-01-01)`,
         {
           StringProperty: 'newStringProp'
         }
@@ -135,6 +135,7 @@ describe('Request Builder', () => {
           .entityBuilder()
           .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
           .keyPropertyString('abcd1234')
+          .keyDateProperty(moment(0))
           .stringProperty('newStringProp')
           .build()
       )

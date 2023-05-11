@@ -152,7 +152,7 @@ describe('Request Builder', () => {
       .entityBuilder()
       .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
       .keyPropertyString('abcd1234')
-      .keyDateProperty(moment.utc('2023-05-05', 'Y-MM-DD', true),)
+      .keyDateProperty(moment.utc('2023-05-05', 'Y-MM-DD', true))
       .stringProperty('someContent')
       .build();
 
@@ -174,7 +174,11 @@ describe('Request Builder', () => {
 
     const request = testEntityApi
       .requestBuilder()
-      .delete(entity.keyPropertyGuid, entity.keyPropertyString, entity.keyDateProperty!)
+      .delete(
+        entity.keyPropertyGuid,
+        entity.keyPropertyString,
+        entity.keyDateProperty!
+      )
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();

@@ -1,7 +1,7 @@
 import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import {
-  createOriginalTestEntityData1,
-  createOriginalTestEntityData2,
+  createOriginalTestEntityDataV4_1,
+  createOriginalTestEntityDataV4_2,
   createOriginalTestEntityDataWithLinks,
   defaultDestination,
   mockCountRequest,
@@ -69,12 +69,30 @@ describe('GetAllRequestBuilder', () => {
 
   describe('execute', () => {
     it('returns all entities', async () => {
-      const testEntity1 = createOriginalTestEntityData1();
-      const testEntity2 = createOriginalTestEntityData2();
-
+      const testEntity1 = createOriginalTestEntityDataV4_1();
+      const testEntity2 = createOriginalTestEntityDataV4_2();
+      const response = [
+        {
+          KeyPropertyGuid: testEntity1.KeyPropertyGuid,
+          KeyPropertyString: 'ABCDE',
+          KeyDateProperty: '2023-05-05',
+          StringProperty: 'FGHIJ',
+          BooleanProperty: false,
+          Int16Property: 13
+        },
+        {
+          KeyPropertyGuid: testEntity2.KeyPropertyGuid,
+          KeyPropertyString: '12345',
+          KeyDateProperty: '2023-05-05',
+          StringProperty: '6789',
+          BooleanProperty: true,
+          Int16Property: 42,
+          EnumProperty: 'Enum1'
+        }
+      ];
       mockGetRequest(
         {
-          responseBody: { value: [testEntity1, testEntity2] },
+          responseBody: { value: response },
           path: 'A_TestEntity'
         },
         testEntityApi
@@ -90,11 +108,19 @@ describe('GetAllRequestBuilder', () => {
     });
 
     it('top(1) returns the first entity', async () => {
-      const testEntity1 = createOriginalTestEntityData1();
+      const testEntity1 = createOriginalTestEntityDataV4_1();
+      const response = {
+        KeyPropertyGuid: testEntity1.KeyPropertyGuid,
+        KeyPropertyString: 'ABCDE',
+        KeyDateProperty: '2023-05-05',
+        StringProperty: 'FGHIJ',
+        BooleanProperty: false,
+        Int16Property: 13
+      };
       mockGetRequest(
         {
           query: { $top: 1 },
-          responseBody: { value: [testEntity1] },
+          responseBody: { value: [response] },
           path: 'A_TestEntity'
         },
         testEntityApi
@@ -105,11 +131,20 @@ describe('GetAllRequestBuilder', () => {
     });
 
     it('skip(1) skips the first entity', async () => {
-      const testEntity2 = createOriginalTestEntityData2();
+      const testEntity2 = createOriginalTestEntityDataV4_2();
+      const response = {
+        KeyPropertyGuid: testEntity2.KeyPropertyGuid,
+        KeyPropertyString: '12345',
+        KeyDateProperty: '2023-05-05',
+        StringProperty: '6789',
+        BooleanProperty: true,
+        Int16Property: 42,
+        EnumProperty: 'Enum1'
+      };
       mockGetRequest(
         {
           query: { $skip: 1 },
-          responseBody: { value: [testEntity2] },
+          responseBody: { value: [response] },
           path: 'A_TestEntity'
         },
         testEntityApi

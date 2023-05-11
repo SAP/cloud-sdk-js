@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { testService } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import moment from 'moment';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response-v4';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response-v4';
 
@@ -144,13 +145,14 @@ describe('Request Builder', () => {
 
   it('should resolve for delete request using key fields', async () => {
     mockCsrfTokenRequest(
-      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`
+      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234',KeyDateProperty=2023-05-05)`
     );
 
     const entity = testEntityApi
       .entityBuilder()
       .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
       .keyPropertyString('abcd1234')
+      .keyDateProperty(moment.utc('2023-05-05', 'Y-MM-DD', true),)
       .stringProperty('someContent')
       .build();
 
@@ -166,13 +168,13 @@ describe('Request Builder', () => {
       }
     })
       .delete(
-        `${basePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234')`
+        `${basePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString='abcd1234',KeyDateProperty=2023-05-05)`
       )
       .reply(200, entityJson);
 
     const request = testEntityApi
       .requestBuilder()
-      .delete(entity.keyPropertyGuid, entity.keyPropertyString)
+      .delete(entity.keyPropertyGuid, entity.keyPropertyString, entity.keyDateProperty!)
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();

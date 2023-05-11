@@ -12,12 +12,12 @@ describe('entity-builder', () => {
   it('should build an entity with non-primitive JS types (moment, BigNumber etc.)', () => {
     const expected: TestEntity = testEntityApi.entityBuilder().build();
 
-    expected.dateProperty = moment();
+    expected.keyDateProperty = moment();
     expected.decimalProperty = new BigNumber(10);
 
     const actual = testEntityApi
       .entityBuilder()
-      .dateProperty(expected.dateProperty)
+      .keyDateProperty(expected.keyDateProperty)
       .decimalProperty(expected.decimalProperty)
       .build();
 

@@ -3,6 +3,7 @@ import {
   TestEntity,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import moment from 'moment';
 import nock from 'nock';
 
 describe('bound function import request builder', () => {
@@ -28,7 +29,8 @@ describe('bound function import request builder', () => {
 
     const entity = testEntityApi.entityBuilder().fromJson({
       keyPropertyGuid: '12345678-aaaa-bbbb-cccc-ddddeeeeffff',
-      keyPropertyString: 'abc'
+      keyPropertyString: 'abc',
+      keyDateProperty: moment()
     });
     const response = await entity
       .boundFunctionWithoutArguments({})
@@ -45,7 +47,8 @@ describe('bound function import request builder', () => {
 
     const entity = testEntityApi.entityBuilder().fromJson({
       keyPropertyGuid: '12345678-aaaa-bbbb-cccc-ddddeeeeffff',
-      keyPropertyString: 'abc'
+      keyPropertyString: 'abc',
+      keyDateProperty: moment()
     });
     const response = await entity
       .boundFunctionWithArguments({ param1: 'foo', param2: 'bar' })

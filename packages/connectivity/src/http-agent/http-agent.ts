@@ -134,6 +134,7 @@ function getMtlsOptions(destination: Destination): Record<string, any> {
     );
   }
   if (mtlsIsEnabled(destination)) {
+    // Implement caching here
     return {
       cert: readFileSync(process.env.CF_INSTANCE_CERT as string, 'utf8'),
       key: readFileSync(process.env.CF_INSTANCE_KEY as string, 'utf8')

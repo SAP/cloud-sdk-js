@@ -174,6 +174,7 @@ async function makeCsrfRequests(
     ...requestConfig,
     method: options.method || 'head',
     params: {},
+    data: {},
     url: options.url || requestConfig.url,
     headers: buildCsrfFetchHeaders(requestConfig.headers)
   };

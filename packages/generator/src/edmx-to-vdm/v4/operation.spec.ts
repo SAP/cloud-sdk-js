@@ -143,7 +143,6 @@ describe('action-import', () => {
     const actionImport = generateUnboundOperations(
       service,
       'myServiceWithActions',
-      'action',
       entities,
       [],
       formatter
@@ -226,7 +225,6 @@ describe('action-import', () => {
     const actionImports = generateUnboundOperations(
       service,
       'myTestServiceName',
-      'action',
       entities,
       complexTypes,
       getFormatter()
@@ -244,7 +242,6 @@ describe('action-import', () => {
     generateUnboundOperations(
       service,
       'myTestServiceName',
-      'action',
       [],
       [],
       formatter
@@ -266,7 +263,6 @@ describe('action-import', () => {
     generateUnboundOperations(
       service,
       'myTestServiceName',
-      'action',
       entities,
       [],
       formatter

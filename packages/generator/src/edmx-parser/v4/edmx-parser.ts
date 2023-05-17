@@ -128,33 +128,44 @@ function parseNavigationPropertyBinding(
 /**
  * @internal
  */
-export function parseOperationImports(
-  root: any,
-  operationType: 'function' | 'action'
-): EdmxOperationImport[] {
-  const operations = getPropertyFromEntityContainer(
+export function parseOperationImports(root: any): EdmxOperationImport[] {
+  const functions = getPropertyFromEntityContainer(
     root,
-    `${voca.capitalize(operationType)}Import`
+    `${voca.capitalize('function')}Import`
+  );
+  const actions = getPropertyFromEntityContainer(
+    root,
+    `${voca.capitalize('action')}Import`
   );
 
-  return operations.map(operation => ({
-    ...operation,
-    operationName: operation[voca.capitalize(operationType)],
-    operationType
-  }));
+  return [
+    ...functions.map(operation => ({
+      ...operation,
+      operationName: operation[voca.capitalize('function')],
+      operationType: 'function'
+    })),
+    ...actions.map(operation => ({
+      ...operation,
+      operationName: operation[voca.capitalize('action')],
+      operationType: 'action'
+    }))
+  ];
 }
 
 /**
  * @internal
  */
-export function parseOperations(
-  root: any,
-  operationType: 'function' | 'action'
-): EdmxOperation[] {
-  return getMergedPropertyWithNamespace(
-    root,
-    voca.capitalize(operationType)
-  ).map(operation => ({
+export function parseOperations(root: any): EdmxOperation[] {
+  return [
+    ...getMergedPropertyWithNamespace(
+      root,
+      voca.capitalize('function')
+    ),
+    ...getMergedPropertyWithNamespace(
+      root,
+      voca.capitalize('action')
+    )
+  ].map(operation => ({
     ...operation,
     Parameter: forceArray(operation.Parameter),
     IsBound: operation.IsBound || 'false'

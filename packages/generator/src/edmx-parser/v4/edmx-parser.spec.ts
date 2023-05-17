@@ -16,7 +16,7 @@ describe('edmx-edmx-parser', () => {
     const metadataEdmx = readEdmxFile(
       resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV', 'API_TEST_SRV.edmx')
     );
-    expect(parseOperations(metadataEdmx.root, 'function')[0].IsBound).toEqual(
+    expect(parseOperations(metadataEdmx.root)[0].IsBound).toEqual(
       'false'
     );
   });
@@ -34,7 +34,6 @@ describe('edmx-edmx-parser', () => {
 
     const isBoundValues: string[] = parseOperations(
       metadataEdmx.root,
-      'function'
     ).map(operation => operation.IsBound);
     expect(isBoundValues.length).not.toEqual(0);
 
@@ -51,12 +50,10 @@ describe('edmx-edmx-parser', () => {
 
     expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(14);
     expect(parseEntityType(metadataEdmx.root).length).toBe(14);
-    expect(parseOperationImports(metadataEdmx.root, 'function').length).toBe(
-      13
+    expect(parseOperationImports(metadataEdmx.root).length).toBe(
+      23
     );
-    expect(parseOperations(metadataEdmx.root, 'function').length).toBe(13);
-    expect(parseOperationImports(metadataEdmx.root, 'action').length).toBe(10);
-    expect(parseOperations(metadataEdmx.root, 'action').length).toBe(9);
+    expect(parseOperations(metadataEdmx.root).length).toBe(22);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
     expect(parseEnumTypes(metadataEdmx.root).length).toBe(3);
 
@@ -95,11 +92,11 @@ describe('edmx-edmx-parser', () => {
       expect(complexTypeWithBaseType?.Property).toContain(p);
     });
 
-    parseOperations(metadataEdmx.root, 'function').forEach(f => {
+    parseOperations(metadataEdmx.root,).forEach(f => {
       expect(f.Parameter).toBeInstanceOf(Array);
     });
 
-    parseOperations(metadataEdmx.root, 'action').forEach(f => {
+    parseOperations(metadataEdmx.root,).forEach(f => {
       expect(f.Parameter).toBeInstanceOf(Array);
     });
 

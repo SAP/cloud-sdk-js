@@ -59,7 +59,6 @@ describe('CSRF middleware', () => {
       { url: host },
       { method: 'POST', url: 'some/path' }
     );
-
     expect(spy).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({

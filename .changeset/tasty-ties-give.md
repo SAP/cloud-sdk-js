@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/http-client': minor
 ---
 
-[Fixed Issue] CSRF token fetching now supports large requests.
+[Fixed Issue] Improve CSRF token fetching for large requests.

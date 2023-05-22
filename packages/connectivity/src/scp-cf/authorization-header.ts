@@ -170,12 +170,10 @@ async function getAuthenticationRelatedHeaders(
       );
       return;
     case 'NoAuthentication':
-      try {
+      if (destination.proxyType === 'OnPremise') {
         return headerForPrincipalPropagation(destination);
-      } catch (e) {
-        logger.debug('No principal propagation header found.');
-        return;
       }
+      return;
     case 'ClientCertificateAuthentication':
       return;
     case 'SAMLAssertion':

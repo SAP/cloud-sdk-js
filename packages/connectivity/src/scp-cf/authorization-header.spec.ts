@@ -4,6 +4,7 @@ import {
   defaultDestination
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { buildAuthorizationHeaders } from './authorization-header';
+import * as destinationImport from './destination/destination';
 import { Destination } from './destination';
 
 const principalPropagationDestination = {
@@ -54,10 +55,14 @@ describe('buildAuthorizationHeaders', () => {
     });
 
     it('defaults to NoAuthentication and does not create authentication headers when only url is defined', async () => {
+      const spy = jest.spyOn(destinationImport, 'sanitizeDestination');
       const headerPromise = buildAuthorizationHeaders({
         url: 'https://example.com'
       });
       await expect(headerPromise).resolves.not.toThrow();
+      expect(spy).toHaveReturnedWith(
+        expect.objectContaining({ authentication: 'NoAuthentication' })
+      );
       expect((await headerPromise).authorization).toBeUndefined();
     });
 

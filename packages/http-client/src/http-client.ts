@@ -271,13 +271,13 @@ function addForwardAuthTokenHeader(
   headersDestination?: Record<string, string>,
   jwt?: string | undefined
 ) {
-  if (!jwt) {
-    logger.debug(
-      'The `forwardAuthToken` is set, but the JWT is missing. Please provide a valid JWT to enable token forwarding.'
-    );
-    return headersDestination;
+  if (jwt) {
+    return { ...headersDestination, authorization: `Bearer ${jwt}` };
   }
-  return { ...headersDestination, authorization: `Bearer ${jwt}` };
+  logger.debug(
+    'The `forwardAuthToken` is set, but the JWT is missing. Please provide a valid JWT to enable token forwarding.'
+  );
+  return headersDestination;
 }
 
 function collectParametersFromAllOrigins(

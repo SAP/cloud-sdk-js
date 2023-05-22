@@ -61,7 +61,7 @@ describe('buildAuthorizationHeaders', () => {
       expect((await headerPromise).authorization).toBeUndefined();
     });
 
-    it('does not add authentication headers for Internet proxy type', async () => {
+    it("does not add authentication headers for proxy type 'Internet'", async () => {
       const headers = await buildAuthorizationHeaders({
         url: defaultDestination.url,
         proxyType: 'Internet'
@@ -69,7 +69,7 @@ describe('buildAuthorizationHeaders', () => {
       expect(headers.authorization).toBeUndefined();
     });
 
-    it('adds onpremise headers when NoAuth is used for OnPremise proxy type', async () => {
+    it("adds on premise related headers for authentication type 'NoAuthentication' combined with proxy type 'OnPremise'", async () => {
       const destination = {
         url: '',
         authentication: 'NoAuthentication',

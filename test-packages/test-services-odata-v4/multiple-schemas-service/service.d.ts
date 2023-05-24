@@ -8,10 +8,10 @@ import { TestEntity2Api } from './TestEntity2Api';
 import { TestEntity3Api } from './TestEntity3Api';
 import { TestEntity4Api } from './TestEntity4Api';
 import {
-  TestActionImportNoParameterComplexReturnType1Parameters,
-  TestActionImportNoParameterComplexReturnType2Parameters,
   TestFunctionImportEntityReturnType1Parameters,
-  TestFunctionImportEntityReturnType2Parameters
+  TestFunctionImportEntityReturnType2Parameters,
+  TestActionImportNoParameterComplexReturnType1Parameters,
+  TestActionImportNoParameterComplexReturnType2Parameters
 } from './operations';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
@@ -100,20 +100,6 @@ declare class MultipleSchemasService<
   get testEntity3Api(): TestEntity3Api<DeSerializersT>;
   get testEntity4Api(): TestEntity4Api<DeSerializersT>;
   get operations(): {
-    testActionImportNoParameterComplexReturnType1: (
-      parameter: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
-      DeSerializersT,
-      TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
-      import('./TestComplexType1').TestComplexType1<DefaultDeSerializers>
-    >;
-    testActionImportNoParameterComplexReturnType2: (
-      parameter: TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
-      DeSerializersT,
-      TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
-      import('./TestComplexType2').TestComplexType2<DefaultDeSerializers>
-    >;
     testFunctionImportEntityReturnType1: (
       parameter: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>
     ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
@@ -127,6 +113,20 @@ declare class MultipleSchemasService<
       DeSerializersT,
       TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
       import('./TestEntity2').TestEntity2<DefaultDeSerializers>
+    >;
+    testActionImportNoParameterComplexReturnType1: (
+      parameter: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>
+    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
+      DeSerializersT,
+      TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
+      import('./TestComplexType1').TestComplexType1<DefaultDeSerializers>
+    >;
+    testActionImportNoParameterComplexReturnType2: (
+      parameter: TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>
+    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
+      DeSerializersT,
+      TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
+      import('./TestComplexType2').TestComplexType2<DefaultDeSerializers>
     >;
   };
   get batch(): typeof batch;

@@ -48,8 +48,8 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService {
     }
     get operations() {
         return {
-            resetDataSource: (parameter) => (0, operations_1.resetDataSource)(parameter, this.deSerializers),
-            getNearestAirport: (parameter) => (0, operations_1.getNearestAirport)(parameter, this.deSerializers)
+            getNearestAirport: (parameter) => (0, operations_1.getNearestAirport)(parameter, this.deSerializers),
+            resetDataSource: (parameter) => (0, operations_1.resetDataSource)(parameter, this.deSerializers)
         };
     }
     get batch() {

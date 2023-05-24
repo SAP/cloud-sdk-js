@@ -21,8 +21,8 @@ import {
   People,
   Airlines,
   Airports,
-  ResetDataSourceParameters,
-  GetNearestAirportParameters
+  GetNearestAirportParameters,
+  ResetDataSourceParameters
 } from './index';
 
 /**

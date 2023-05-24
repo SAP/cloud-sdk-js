@@ -30,13 +30,6 @@ import {
   TestEntityCircularLinkChild,
   TestEntityEndsWith,
   TestEntityEndsWithSomethingElse,
-  TestActionImportNoParameterNoReturnTypeParameters,
-  TestActionImportMultipleParameterComplexReturnTypeParameters,
-  TestActionImportUnsupportedEdmTypesParameters,
-  TestActionImportNoParameterEntityReturnTypeParameters,
-  TestActionImportSharedEntityReturnTypeParameters,
-  TestActionImportSharedEntityReturnTypeCollectionParameters,
-  TestActionImportNullableTestParameters,
   TestFunctionImportEdmReturnTypeParameters,
   TestFunctionImportEdmReturnTypeCollectionParameters,
   TestFunctionImportNullableTestParameters,
@@ -48,6 +41,13 @@ import {
   TestFunctionImportComplexReturnTypeCollectionParameters,
   TestFunctionImportMultipleParamsParameters,
   TestFunctionImportWithDifferentNameParameters,
+  TestActionImportNoParameterNoReturnTypeParameters,
+  TestActionImportMultipleParameterComplexReturnTypeParameters,
+  TestActionImportUnsupportedEdmTypesParameters,
+  TestActionImportNoParameterEntityReturnTypeParameters,
+  TestActionImportSharedEntityReturnTypeParameters,
+  TestActionImportSharedEntityReturnTypeCollectionParameters,
+  TestActionImportNullableTestParameters,
   TestComplexType
 } from './index';
 /**

@@ -117,13 +117,6 @@ class TestService {
     }
     get operations() {
         return {
-            testActionImportNoParameterNoReturnType: (parameter) => (0, operations_1.testActionImportNoParameterNoReturnType)(parameter, this.deSerializers),
-            testActionImportMultipleParameterComplexReturnType: (parameter) => (0, operations_1.testActionImportMultipleParameterComplexReturnType)(parameter, this.deSerializers),
-            testActionImportUnsupportedEdmTypes: (parameter) => (0, operations_1.testActionImportUnsupportedEdmTypes)(parameter, this.deSerializers),
-            testActionImportNoParameterEntityReturnType: (parameter) => (0, operations_1.testActionImportNoParameterEntityReturnType)(parameter, this.deSerializers),
-            testActionImportSharedEntityReturnType: (parameter) => (0, operations_1.testActionImportSharedEntityReturnType)(parameter, this.deSerializers),
-            testActionImportSharedEntityReturnTypeCollection: (parameter) => (0, operations_1.testActionImportSharedEntityReturnTypeCollection)(parameter, this.deSerializers),
-            testActionImportNullableTest: (parameter) => (0, operations_1.testActionImportNullableTest)(parameter, this.deSerializers),
             testFunctionImportEdmReturnType: (parameter) => (0, operations_1.testFunctionImportEdmReturnType)(parameter, this.deSerializers),
             testFunctionImportEdmReturnTypeCollection: (parameter) => (0, operations_1.testFunctionImportEdmReturnTypeCollection)(parameter, this.deSerializers),
             testFunctionImportNullableTest: (parameter) => (0, operations_1.testFunctionImportNullableTest)(parameter, this.deSerializers),
@@ -134,7 +127,14 @@ class TestService {
             testFunctionImportComplexReturnType: (parameter) => (0, operations_1.testFunctionImportComplexReturnType)(parameter, this.deSerializers),
             testFunctionImportComplexReturnTypeCollection: (parameter) => (0, operations_1.testFunctionImportComplexReturnTypeCollection)(parameter, this.deSerializers),
             testFunctionImportMultipleParams: (parameter) => (0, operations_1.testFunctionImportMultipleParams)(parameter, this.deSerializers),
-            testFunctionImportWithDifferentName: (parameter) => (0, operations_1.testFunctionImportWithDifferentName)(parameter, this.deSerializers)
+            testFunctionImportWithDifferentName: (parameter) => (0, operations_1.testFunctionImportWithDifferentName)(parameter, this.deSerializers),
+            testActionImportNoParameterNoReturnType: (parameter) => (0, operations_1.testActionImportNoParameterNoReturnType)(parameter, this.deSerializers),
+            testActionImportMultipleParameterComplexReturnType: (parameter) => (0, operations_1.testActionImportMultipleParameterComplexReturnType)(parameter, this.deSerializers),
+            testActionImportUnsupportedEdmTypes: (parameter) => (0, operations_1.testActionImportUnsupportedEdmTypes)(parameter, this.deSerializers),
+            testActionImportNoParameterEntityReturnType: (parameter) => (0, operations_1.testActionImportNoParameterEntityReturnType)(parameter, this.deSerializers),
+            testActionImportSharedEntityReturnType: (parameter) => (0, operations_1.testActionImportSharedEntityReturnType)(parameter, this.deSerializers),
+            testActionImportSharedEntityReturnTypeCollection: (parameter) => (0, operations_1.testActionImportSharedEntityReturnTypeCollection)(parameter, this.deSerializers),
+            testActionImportNullableTest: (parameter) => (0, operations_1.testActionImportNullableTest)(parameter, this.deSerializers)
         };
     }
     get batch() {

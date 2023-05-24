@@ -21,10 +21,10 @@ import {
   TestEntity2,
   TestEntity3,
   TestEntity4,
-  TestActionImportNoParameterComplexReturnType1Parameters,
-  TestActionImportNoParameterComplexReturnType2Parameters,
   TestFunctionImportEntityReturnType1Parameters,
   TestFunctionImportEntityReturnType2Parameters,
+  TestActionImportNoParameterComplexReturnType1Parameters,
+  TestActionImportNoParameterComplexReturnType2Parameters,
   TestComplexType1,
   TestComplexType2
 } from './index';

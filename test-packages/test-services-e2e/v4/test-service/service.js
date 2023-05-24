@@ -45,15 +45,15 @@ class TestService {
     }
     get operations() {
         return {
-            createTestEntityById: (parameter) => (0, operations_1.createTestEntityById)(parameter, this.deSerializers),
-            createTestEntityByIdReturnId: (parameter) => (0, operations_1.createTestEntityByIdReturnId)(parameter, this.deSerializers),
             concatStrings: (parameter) => (0, operations_1.concatStrings)(parameter, this.deSerializers),
             getAll: (parameter) => (0, operations_1.getAll)(parameter, this.deSerializers),
             getByKey: (parameter) => (0, operations_1.getByKey)(parameter, this.deSerializers),
             getByKeyWithMultipleKeys: (parameter) => (0, operations_1.getByKeyWithMultipleKeys)(parameter, this.deSerializers),
             returnCollection: (parameter) => (0, operations_1.returnCollection)(parameter, this.deSerializers),
             returnInt: (parameter) => (0, operations_1.returnInt)(parameter, this.deSerializers),
-            returnSapCloudSdk: (parameter) => (0, operations_1.returnSapCloudSdk)(parameter, this.deSerializers)
+            returnSapCloudSdk: (parameter) => (0, operations_1.returnSapCloudSdk)(parameter, this.deSerializers),
+            createTestEntityById: (parameter) => (0, operations_1.createTestEntityById)(parameter, this.deSerializers),
+            createTestEntityByIdReturnId: (parameter) => (0, operations_1.createTestEntityByIdReturnId)(parameter, this.deSerializers)
         };
     }
     get batch() {

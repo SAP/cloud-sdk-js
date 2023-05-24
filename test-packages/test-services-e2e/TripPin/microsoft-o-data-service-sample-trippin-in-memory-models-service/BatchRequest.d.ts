@@ -20,8 +20,8 @@ import {
   People,
   Airlines,
   Airports,
-  ResetDataSourceParameters,
-  GetNearestAirportParameters
+  GetNearestAirportParameters,
+  ResetDataSourceParameters
 } from './index';
 /**
  * Batch builder for operations supported on the Microsoft O Data Service Sample Trippin In Memory Models Service.

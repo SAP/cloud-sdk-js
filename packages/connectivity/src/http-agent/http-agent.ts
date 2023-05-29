@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { readFile } from 'node:fs/promises';
 import http from 'http';
 import https from 'https';
 import { createLogger, last } from '@sap-cloud-sdk/util';
@@ -14,6 +14,7 @@ import {
   proxyAgent,
   proxyStrategy
 } from '../scp-cf/destination';
+import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({
@@ -28,14 +29,14 @@ const logger = createLogger({
  * @param destination - Determining which kind of configuration is returned.
  * @returns The HTTP or HTTPS agent configuration.
  */
-export function getAgentConfig(
+export async function getAgentConfig(
   destination: HttpDestination
-): HttpAgentConfig | HttpsAgentConfig {
+): Promise<HttpAgentConfig | HttpsAgentConfig> {
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOption(destination),
-    ...getMtlsOptions(destination)
+    ...(await getMtlsOptions(destination))
   };
   return destination.proxyConfiguration
     ? proxyAgent(destination, certificateOptions)
@@ -122,10 +123,27 @@ function getKeyStoreOption(destination: Destination): Record<string, any> {
   return {};
 }
 
+/**
+ * Options used for establishing mTLS connections.
+ * @internal
+ */
+export interface MtlsOptions {
+  /**
+   * @internal
+   */
+  cert: string;
+  /**
+   * @internal
+   */
+  key: string;
+}
+
 /*
  Reads mTLS client certificates from known environment variables on CloudFoundry.
  */
-function getMtlsOptions(destination: Destination): Record<string, any> {
+async function getMtlsOptions(
+  destination: Destination
+): Promise<MtlsOptions | undefined> {
   if (!mtlsIsEnabled(destination) && destination.mtls) {
     logger.warn(
       `Destination ${
@@ -134,13 +152,18 @@ function getMtlsOptions(destination: Destination): Record<string, any> {
     );
   }
   if (mtlsIsEnabled(destination)) {
-    // Implement caching here
+    if (registerDestinationCache.useMtlsCache) {
+      return registerDestinationCache.getMtlsOptions();
+    }
+    const getCert = readFile(process.env.CF_INSTANCE_CERT as string, 'utf8');
+    const getKey = readFile(process.env.CF_INSTANCE_KEY as string, 'utf8');
+    const [cert, key] = await Promise.all([getCert, getKey]);
     return {
-      cert: readFileSync(process.env.CF_INSTANCE_CERT as string, 'utf8'),
-      key: readFileSync(process.env.CF_INSTANCE_KEY as string, 'utf8')
+      cert,
+      key
     };
   }
-  return {};
+  return;
 }
 
 function mtlsIsEnabled(destination: Destination) {
@@ -214,17 +237,17 @@ function createDefaultAgent(
  * @param targetUri - Used as baseURL in request config.
  * @returns HttpRequestConfig containing baseUrl and http(s) agents.
  */
-export function urlAndAgent(targetUri: string): {
+export async function urlAndAgent(targetUri: string): Promise<{
   baseURL: string;
   httpAgent?: http.Agent;
   httpsAgent?: http.Agent;
-} {
+}> {
   let destination: HttpDestination = { url: targetUri, proxyType: 'Internet' };
   if (proxyStrategy(destination) === 'internet') {
     destination = addProxyConfigurationInternet(destination);
   }
   return {
     baseURL: destination.url,
-    ...getAgentConfig(destination)
+    ...(await getAgentConfig(destination))
   };
 }

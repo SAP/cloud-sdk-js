@@ -3,8 +3,6 @@ import { getXsuaaServiceCredentials } from '../environment-accessor';
 import { decodeJwt } from '../jwt';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
-  DefaultDestinationCache,
-  DestinationCache,
   IsolationStrategy,
   getDefaultIsolationStrategy
 } from './destination-cache';
@@ -17,18 +15,12 @@ import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
+import { registerDestinationCache } from './register-destination-cache';
 
 const logger = createLogger({
   package: 'connectivity',
   messageContext: 'register-destination'
 });
-
-/**
- * @internal
- */
-export const registerDestinationCache = DestinationCache(
-  new DefaultDestinationCache(undefined)
-);
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -38,7 +30,7 @@ export const registerDestinationCache = DestinationCache(
 export type RegisterDestinationOptions = Pick<
   DestinationFetchOptions,
   'jwt' | 'isolationStrategy'
-> & { inferMtls?: boolean };
+> & { inferMtls?: boolean; useMtlsCache?: boolean };
 
 /**
  * Registers a destination in a cache for later usage.
@@ -57,6 +49,11 @@ export async function registerDestination(
   }
 
   destination.mtls = !!options?.inferMtls;
+
+  if (options?.useMtlsCache) {
+    registerDestinationCache.useMtlsCache = true;
+    await registerDestinationCache.cacheMtlsOptions();
+  }
 
   await registerDestinationCache.cacheRetrievedDestination(
     decodedJwtOrZid(options),

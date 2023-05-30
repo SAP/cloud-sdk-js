@@ -70,6 +70,7 @@ describe('jwt', () => {
       expect(isXsuaaToken(jwt)).toBe(false);
     });
   });
+
   describe('retrieveJwt', () => {
     it('returns undefined when incoming message has no auth header', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT())).toBeUndefined();

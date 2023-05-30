@@ -18,7 +18,8 @@ describe('generation-and-usage', () => {
 
   const serviceWithFunctionImport = {
     serviceOptions: {
-      packageName: '@sap/dummy-package'
+      packageName: '@sap/dummy-package',
+      directoryName: 'dummy-service'
     },
     originalFileName: 'Dummy',
     operations: [
@@ -36,7 +37,8 @@ describe('generation-and-usage', () => {
 
   const serviceWithMultipleImports = {
     serviceOptions: {
-      packageName: '@sap/dummy-package'
+      packageName: '@sap/dummy-package',
+      directoryName: 'dummy-service'
     },
     originalFileName: 'Dummy',
     operations: [
@@ -59,7 +61,8 @@ describe('generation-and-usage', () => {
 
   const serviceWithActionImport = {
     serviceOptions: {
-      packageName: '@sap/dummy-package'
+      packageName: '@sap/dummy-package',
+      directoryName: 'dummy-service'
     },
     originalFileName: 'Dummy',
     operations: [

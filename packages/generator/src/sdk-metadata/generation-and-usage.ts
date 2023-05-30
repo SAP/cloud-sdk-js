@@ -25,7 +25,7 @@ export function getApiSpecificUsage(
     );
     return operationCodeSample(
       operation,
-      `${service.serviceOptions.directoryName}/operation-imports`
+      `${service.serviceOptions.directoryName}/operations`
     );
   }
   return '';

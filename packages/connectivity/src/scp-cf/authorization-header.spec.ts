@@ -4,6 +4,7 @@ import {
   defaultDestination
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { buildAuthorizationHeaders } from './authorization-header';
+import * as destinationImport from './destination/destination';
 import { Destination } from './destination';
 
 const principalPropagationDestination = {
@@ -53,20 +54,27 @@ describe('buildAuthorizationHeaders', () => {
       ).resolves.not.toThrow();
     });
 
-    it('defaults to NoAuthentication', async () => {
-      await expect(
-        buildAuthorizationHeaders({ url: 'https://example.com' })
-      ).resolves.not.toThrow();
+    it('defaults to NoAuthentication and does not create authentication headers when only url is defined', async () => {
+      const spy = jest.spyOn(destinationImport, 'sanitizeDestination');
+      const headerPromise = buildAuthorizationHeaders({
+        url: 'https://example.com'
+      });
+      await expect(headerPromise).resolves.not.toThrow();
+      expect(spy).toHaveReturnedWith(
+        expect.objectContaining({ authentication: 'NoAuthentication' })
+      );
+      expect((await headerPromise).authorization).toBeUndefined();
     });
 
-    it('creates no authentication headers when only url is defined in a destination.', async () => {
+    it("does not add authentication headers for proxy type 'Internet'", async () => {
       const headers = await buildAuthorizationHeaders({
-        url: defaultDestination.url
+        url: defaultDestination.url,
+        proxyType: 'Internet'
       });
       expect(headers.authorization).toBeUndefined();
     });
 
-    it('adds onpremise headers when NoAuth is used', async () => {
+    it("adds on premise related headers for authentication type 'NoAuthentication' combined with proxy type 'OnPremise'", async () => {
       const destination = {
         url: '',
         authentication: 'NoAuthentication',

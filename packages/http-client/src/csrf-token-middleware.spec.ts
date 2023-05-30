@@ -116,7 +116,7 @@ describe('CSRF middleware', () => {
     );
   });
 
-  it('fetches headers from "/some/path/" first', async () => {
+  it('fetches headers from "/some/path/" first, without sending data', async () => {
     nock(host).head('/some/path/').reply(200, {}, csrfResponseHeaders);
     nock(host).post('/some/path').reply(200, {});
     const spy = jest.spyOn(axios, 'request');
@@ -129,7 +129,8 @@ describe('CSRF middleware', () => {
       expect.objectContaining({
         method: 'head',
         headers: csrfFetchHeader,
-        url: 'some/path/'
+        url: 'some/path/',
+        data: {}
       })
     );
   });

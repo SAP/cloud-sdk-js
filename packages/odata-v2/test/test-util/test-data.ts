@@ -41,6 +41,9 @@ export function createTestEntity(
   if ('Int16Property' in originalData) {
     entityBuilder.int16Property(originalData.Int16Property);
   }
+  if ('DateTimeProperty' in originalData) {
+    entityBuilder.dateTimeProperty(originalData.DateTimeProperty);
+  }
   const entity = entityBuilder.build().setOrInitializeRemoteState();
 
   if (originalData.to_SingleLink) {

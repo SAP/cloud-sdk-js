@@ -17,6 +17,7 @@ import {
   fetchSubaccountDestinations
 } from './destination-service';
 import { Destination } from './destination-service-types';
+import { getProxyUrl } from './http-proxy-util';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -466,7 +467,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
 
-      const spy = jest.spyOn(axios, 'request');
+      const req = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName
       });
@@ -478,14 +479,18 @@ describe('destination service', () => {
         headers: {
           Authorization: `Bearer ${jwt}`
         },
-        httpsAgent: new HttpsProxyAgent({
-          port: 80,
-          host: 'some.foo.bar',
-          protocol: 'http',
-          rejectUnauthorized: true
-        })
+        httpsAgent: new HttpsProxyAgent(
+          getProxyUrl({
+            port: 80,
+            host: 'some.foo.bar',
+            protocol: 'http'
+          }),
+          {
+            rejectUnauthorized: true
+          }
+        )
       };
-      expect(spy).toHaveBeenCalledWith(expectedConfig);
+      expect(req).toHaveBeenCalledWith(expectedConfig);
       delete process.env.HTTPS_PROXY;
     });
 

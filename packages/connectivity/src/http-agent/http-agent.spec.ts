@@ -8,7 +8,7 @@ import {
   DestinationCertificate
 } from '../scp-cf';
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
-import { HttpDestination } from '../scp-cf/destination';
+import { HttpDestination, getProxyUrl } from '../scp-cf/destination';
 import { getAgentConfig } from './http-agent';
 
 describe('createAgent', () => {
@@ -39,8 +39,7 @@ describe('createAgent', () => {
 
   it('returns a proxy agent if there is a proxy setting on the destination', () => {
     expect(getAgentConfig(proxyDestination)['httpsAgent']).toEqual(
-      new HttpsProxyAgent({
-        ...connectivityProxyConfigMock,
+      new HttpsProxyAgent(getProxyUrl(connectivityProxyConfigMock), {
         rejectUnauthorized: true
       })
     );
@@ -76,8 +75,7 @@ describe('createAgent', () => {
         'httpsAgent'
       ]
     ).toEqual(
-      new HttpsProxyAgent({
-        ...connectivityProxyConfigMock,
+      new HttpsProxyAgent(getProxyUrl(connectivityProxyConfigMock), {
         rejectUnauthorized: false
       })
     );
@@ -94,7 +92,7 @@ describe('createAgent', () => {
       proxyConfiguration
     };
     expect(proxyAgent(destHttpWithProxy)['httpAgent']).toStrictEqual(
-      new HttpProxyAgent('https://some.host.com:4711')
+      new HttpProxyAgent(getProxyUrl(proxyConfiguration))
     );
   });
 
@@ -109,7 +107,7 @@ describe('createAgent', () => {
       proxyConfiguration
     };
     expect(proxyAgent(destHttpsWithProxy)['httpsAgent']).toStrictEqual(
-      new HttpsProxyAgent(proxyConfiguration)
+      new HttpsProxyAgent(getProxyUrl(proxyConfiguration))
     );
   });
 

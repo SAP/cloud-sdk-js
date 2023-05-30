@@ -29,6 +29,7 @@ export function requestBuilderImportDeclarations(
 
 function requestBuilderImports(entity: VdmEntity) {
   const imports = [
+    'Entity',
     'DefaultDeSerializers',
     'DeSerializers',
     'GetAllRequestBuilder',

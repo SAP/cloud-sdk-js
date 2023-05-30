@@ -8,6 +8,7 @@ describe('imports', () => {
       {
         moduleIdentifier: '@sap-cloud-sdk/odata-v2',
         names: [
+          'Entity',
           'DefaultDeSerializers',
           'DeSerializers',
           'GetAllRequestBuilder',

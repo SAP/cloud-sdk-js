@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import { parseCert } from 'x509';
+import { parseCert } from 'x509.js';
 import { MtlsOptions } from '../../http-agent';
 import { AsyncCache, AsyncCacheInterface } from '../async-cache';
 import { DestinationCache, DestinationCacheType } from './destination-cache';

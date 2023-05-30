@@ -118,10 +118,10 @@ class TestEntityApi {
                  */
                 TIME_OF_DAY_PROPERTY: fieldBuilder.buildEdmTypeField('TimeOfDayProperty', 'Edm.TimeOfDay', true),
                 /**
-                 * Static representation of the {@link dateProperty} property for query construction.
+                 * Static representation of the {@link keyDateProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATE_PROPERTY: fieldBuilder.buildEdmTypeField('DateProperty', 'Edm.Date', true),
+                KEY_DATE_PROPERTY: fieldBuilder.buildEdmTypeField('KeyDateProperty', 'Edm.Date', true),
                 /**
                  * Static representation of the {@link dateTimeOffSetProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.

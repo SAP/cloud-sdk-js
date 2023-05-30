@@ -27,6 +27,7 @@ export function createTestEntity(originalData): TestEntity {
     .entityBuilder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
     .keyPropertyString(originalData.KeyPropertyString)
+    .keyDateProperty(originalData.KeyDateProperty)
     .stringProperty(originalData.StringProperty)
     .booleanProperty(originalData.BooleanProperty)
     .int16Property(originalData.Int16Property)
@@ -60,8 +61,13 @@ export function createTestEntityWithEnumKey(
     .setOrInitializeRemoteState();
 }
 
-export function testEntityResourcePath(guid, str): string {
+export function testEntityResourcePath(guid, str, date): string {
   return `A_TestEntity(KeyPropertyGuid=${createUriConverter(
     defaultDeSerializers
-  )(guid, 'Edm.Guid')},KeyPropertyString='${str}')`;
+  )(
+    guid,
+    'Edm.Guid'
+  )},KeyPropertyString='${str}',KeyDateProperty=${createUriConverter(
+    defaultDeSerializers
+  )(date, 'Edm.Date')})`;
 }

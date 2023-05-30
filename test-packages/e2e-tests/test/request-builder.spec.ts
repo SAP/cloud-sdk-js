@@ -1,4 +1,3 @@
-import {} from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 import moment from 'moment';
 import { and } from '@sap-cloud-sdk/odata-common';
 import {
@@ -33,8 +32,7 @@ async function createEntity(key: number) {
 }
 
 describe('Request builder', () => {
-  beforeEach(async () => deleteEntity(entityKey, destination));
-  beforeEach(async () => deleteEntity(entityKey, destination));
+  beforeEach(async () => deleteEntity(entityKey, destination), 60000);
 
   it('should return a collection of entities for get all request', async () => {
     const testEntities = await requestBuilder
@@ -115,7 +113,7 @@ describe('Request builder', () => {
         })
       ])
     );
-  });
+  }, 60000);
 
   it('should update an entity', async () => {
     await createEntity(entityKey);

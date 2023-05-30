@@ -1,5 +1,6 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
+import moment from 'moment';
 import {
   defaultDestination,
   mockUpdateRequest
@@ -11,11 +12,13 @@ function createTestEntity() {
   const keyPropGuid = uuid();
   const keyPropString = 'stringId';
   const int32Prop = 125;
+  const keyPropDate = moment();
 
   return testEntityApi
     .entityBuilder()
     .keyPropertyGuid(keyPropGuid)
     .keyPropertyString(keyPropString)
+    .keyDateProperty(keyPropDate)
     .int32Property(int32Prop)
     .build();
 }
@@ -38,7 +41,8 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString
+          entity.keyPropertyString,
+          entity.keyDateProperty
         )
       },
       testEntityApi

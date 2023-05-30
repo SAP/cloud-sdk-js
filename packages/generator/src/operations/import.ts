@@ -97,12 +97,7 @@ export function operationDeclarations(
     .length;
   const includesUnbound = !!operations.filter(operation => !operation.isBound)
     .length;
-  const hasFunctionWithParameters = operations.some(
-    operation => operation.parameters.length && operation.type === 'function'
-  );
-  const hasActionWithParameters = operations.some(
-    operation => operation.parameters.length && operation.type === 'action'
-  );
+  const hasOperationWithParameters = operations.some(operation => operation.parameters.length);
   const hasFunction = operations.some(
     operation => operation.type === 'function'
   );
@@ -134,12 +129,8 @@ export function operationDeclarations(
         'DefaultDeSerializers',
         'defaultDeSerializers',
         ...propertyTypeImportNames(parameters),
-        ...(hasFunctionWithParameters ? ['FunctionImportParameter'] : []),
-        ...(hasActionWithParameters ? ['ActionImportParameter'] : []),
-        ...(includesUnbound && hasFunction
-          ? ['FunctionImportRequestBuilder']
-          : []),
-        ...(includesUnbound && hasAction ? ['ActionImportRequestBuilder'] : []),
+        ...(hasOperationWithParameters ? ['OperationParameter'] : []),
+        ...(includesUnbound && operations.length ? ['OperationRequestBuilder'] : []),
         ...(includesBound && hasFunction
           ? ['BoundFunctionImportRequestBuilder']
           : []),

@@ -1,11 +1,11 @@
 import {
   ActionFunctionImportRequestBuilderBase,
   EntityApi,
-  EntityBase
+  EntityBase,
+  OperationParameters
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
 import {
-  ActionImportParameters,
   ODataBoundActionImportRequestConfig
 } from '../request';
 import { createODataUri } from '../uri-conversion';
@@ -25,7 +25,7 @@ export class BoundActionImportRequestBuilder<
     entity: EntityT,
     actionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
-    parameters: ActionImportParameters<ParametersT>,
+    parameters: OperationParameters<ParametersT>,
     deSerializers: DeSerializersT
   ) {
     super(

@@ -1,7 +1,7 @@
 import {
   ODataUri,
-  FunctionImportParameter,
-  FunctionImportParameters,
+  OperationParameter,
+  OperationParameters,
   ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBase,
   RequestMethodType
 } from '@sap-cloud-sdk/odata-common/internal';
@@ -28,7 +28,7 @@ export class ODataFunctionImportRequestConfig<
     method: RequestMethodType,
     defaultBasePath: string,
     functionImportName: string,
-    parameters: FunctionImportParameters<ParametersT>,
+    parameters: OperationParameters<ParametersT>,
     oDataUri: ODataUri<DeSerializersT>
   ) {
     super(method, defaultBasePath, functionImportName, parameters, oDataUri);
@@ -37,7 +37,7 @@ export class ODataFunctionImportRequestConfig<
   resourcePath(): string {
     return `${this.functionImportName}(${Object.values(this.parameters)
       .map(
-        (parameter: FunctionImportParameter<ParametersT>) =>
+        (parameter: OperationParameter<ParametersT>) =>
           `${parameter.originalName}=${this.oDataUri.convertToUriFormat(
             parameter.value,
             parameter.edmType

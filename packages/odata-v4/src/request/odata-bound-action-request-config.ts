@@ -3,10 +3,10 @@ import {
   EntityBase,
   RequestMethodType,
   EntityApi,
+  OperationParameters,
   WithKeys
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
-import { ActionImportParameters } from './action-import-parameter';
 import { ODataActionImportRequestConfig } from './odata-action-import-request-config';
 
 /**
@@ -27,7 +27,7 @@ export class ODataBoundActionImportRequestConfig<
     method: RequestMethodType,
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     functionImportName: string,
-    parameters: ActionImportParameters<ParametersT>,
+    parameters: OperationParameters<ParametersT>,
     readonly oDataUri: ODataUri<DeSerializersT>
   ) {
     super(

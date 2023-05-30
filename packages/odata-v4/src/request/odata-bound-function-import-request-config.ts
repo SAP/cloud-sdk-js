@@ -1,6 +1,6 @@
 import {
   ODataUri,
-  FunctionImportParameters,
+  OperationParameters,
   RequestMethodType,
   WithKeys,
   EntityApi,
@@ -27,7 +27,7 @@ export class OdataBoundFunctionImportRequestConfig<
     method: RequestMethodType,
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     functionImportName: string,
-    parameters: FunctionImportParameters<ParametersT>,
+    parameters: OperationParameters<ParametersT>,
     readonly oDataUri: ODataUri<DeSerializersT>
   ) {
     super(

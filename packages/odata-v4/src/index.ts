@@ -29,27 +29,23 @@ export {
   transformReturnValueForEntity,
   transformReturnValueForEntityList,
   transformReturnValueForUndefined,
-  ActionImportRequestBuilder,
   CountRequestBuilder,
   CreateRequestBuilder,
   DeleteRequestBuilder,
-  FunctionImportRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   BoundActionImportRequestBuilder,
-  BoundFunctionImportRequestBuilder
+  BoundFunctionImportRequestBuilder,
+  OperationRequestBuilder
 } from './request-builder';
 
 export { ODataBatchRequestBuilder } from './request-builder';
 
 export {
-  ActionImportParameter,
   ODataActionImportRequestConfig,
   ODataFunctionImportRequestConfig
 } from './request';
-
-export type { ActionImportParameters } from './request';
 
 export { Entity } from './entity';
 export { CustomField } from './selectable';

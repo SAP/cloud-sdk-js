@@ -1,4 +1,4 @@
-export * from './function-import-parameter';
+export * from './operation-parameter';
 export * from './odata-batch-request-config';
 export * from './odata-count-request-config';
 export * from './odata-create-request-config';

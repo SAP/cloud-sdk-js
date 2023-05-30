@@ -19,12 +19,7 @@ export function importBatchDeclarations(
         'GetByKeyRequestBuilder',
         'ODataBatchRequestBuilder',
         'UpdateRequestBuilder',
-        ...(service.operations.some(op => op.type === 'function')
-          ? ['FunctionImportRequestBuilder']
-          : []),
-        ...(service.operations.some(op => op.type === 'action')
-          ? ['ActionImportRequestBuilder']
-          : []),
+        ...(service.operations.length ? ['OperationRequestBuilder'] : []),
         'BatchChangeSet'
       ],
       service.oDataVersion

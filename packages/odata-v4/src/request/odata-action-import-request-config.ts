@@ -1,12 +1,10 @@
 import {
   ODataRequestConfig,
-  ODataUri
+  ODataUri,
+  OperationParameter,
+  OperationParameters
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
-import {
-  ActionImportParameters,
-  ActionImportParameter
-} from './action-import-parameter';
 
 /**
  * Action import request configuration for an entity type.
@@ -27,7 +25,7 @@ export class ODataActionImportRequestConfig<
   constructor(
     defaultBasePath: string,
     readonly actionImportName: string,
-    public parameters: ActionImportParameters<ParametersT>,
+    public parameters: OperationParameters<ParametersT>,
     protected oDataUri: ODataUri<DeSerializersT>
   ) {
     super('post', defaultBasePath);
@@ -43,10 +41,10 @@ export class ODataActionImportRequestConfig<
   }
 
   private buildHttpPayload(
-    parameters: ActionImportParameters<ParametersT>
+    parameters: OperationParameters<ParametersT>
   ): Record<string, any> {
     const payload = Object.keys(parameters).reduce((all, key) => {
-      const payloadElement: ActionImportParameter<ParametersT> =
+      const payloadElement: OperationParameter<ParametersT> =
         parameters[key];
       if (typeof payloadElement.value !== 'undefined') {
         all[payloadElement.originalName] = payloadElement.value;

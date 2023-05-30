@@ -94,7 +94,7 @@ export type {
   ChangesetBuilderTypes
 } from './request-builder';
 export {
-  FunctionImportParameter,
+  OperationParameter,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
   WithKeys,
@@ -111,7 +111,7 @@ export {
   ODataRequestConfig,
   BatchReference
 } from './request';
-export type { RequestMethodType, FunctionImportParameters } from './request';
+export type { RequestMethodType } from './request';
 export { throwErrorWhenReturnTypeIsUnionType } from './response-transformer';
 export { isOrderableEdmType } from './edm-types';
 export type {

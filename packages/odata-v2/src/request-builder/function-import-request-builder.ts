@@ -1,5 +1,5 @@
 import {
-  FunctionImportParameters,
+  OperationParameters,
   RequestMethodType,
   ActionFunctionImportRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
@@ -35,7 +35,7 @@ export class FunctionImportRequestBuilder<
     defaultBasePath: string,
     functionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
-    parameters: FunctionImportParameters<ParametersT>,
+    parameters: OperationParameters<ParametersT>,
     deSerializers: DeSerializersT
   ) {
     super(

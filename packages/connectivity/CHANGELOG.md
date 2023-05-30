@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.2.0
+
+### Minor Changes
+
+- 616d77b85: [New Functionality] Enable the use of mTLS certificates for registered destinations on CloudFoundry.
+- 56c3f70f4: [Fixed Issue] Forward the user JWT irrespective of the destination authentication type when `forwardAuthToken` is set to true on a destination
+- 782b9e37e: [Improvement] Set the default validity time of the client credentials token cache to 5 minutes instead of never expiring.
+
+### Patch Changes
+
+- Updated dependencies [234675fc3]
+  - @sap-cloud-sdk/resilience@3.2.0
+  - @sap-cloud-sdk/util@3.2.0
+
 ## 3.1.1
 
 ### Patch Changes

@@ -438,7 +438,7 @@ export declare class TestEntityApi<
       true,
       true
     >;
-    DATE_PROPERTY: OrderableEdmTypeField<
+    KEY_DATE_PROPERTY: OrderableEdmTypeField<
       TestEntity<
         DeSerializers<
           any,

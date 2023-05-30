@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { Moment } from 'moment';
 import {
   DefaultDeSerializers,
   DeSerializers,
@@ -25,11 +26,13 @@ export declare class TestEntityRequestBuilder<
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
    * @param keyPropertyGuid Key property. See {@link TestEntity.keyPropertyGuid}.
    * @param keyPropertyString Key property. See {@link TestEntity.keyPropertyString}.
+   * @param keyDateProperty Key property. See {@link TestEntity.keyDateProperty}.
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
   getByKey(
     keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>,
-    keyPropertyString: DeserializedType<T, 'Edm.String'>
+    keyPropertyString: DeserializedType<T, 'Edm.String'>,
+    keyDateProperty: DeserializedType<T, 'Edm.Date'>
   ): GetByKeyRequestBuilder<TestEntity<T>, T>;
   /**
    * Returns a request builder for querying all `TestEntity` entities.
@@ -52,11 +55,13 @@ export declare class TestEntityRequestBuilder<
    * Returns a request builder for deleting an entity of type `TestEntity`.
    * @param keyPropertyGuid Key property. See {@link TestEntity.keyPropertyGuid}.
    * @param keyPropertyString Key property. See {@link TestEntity.keyPropertyString}.
+   * @param keyDateProperty Key property. See {@link TestEntity.keyDateProperty}.
    * @returns A request builder for creating requests that delete an entity of type `TestEntity`.
    */
   delete(
     keyPropertyGuid: string,
-    keyPropertyString: string
+    keyPropertyString: string,
+    keyDateProperty: Moment
   ): DeleteRequestBuilder<TestEntity<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntity`.

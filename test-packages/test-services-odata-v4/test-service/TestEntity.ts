@@ -47,7 +47,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * All key fields of the TestEntity entity
    */
-  static _keys = ['KeyPropertyGuid', 'KeyPropertyString'];
+  static _keys = ['KeyPropertyGuid', 'KeyPropertyString', 'KeyDateProperty'];
   /**
    * Key Property Guid.
    */
@@ -113,10 +113,10 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
   /**
-   * Date Property.
+   * Key Date Property.
    * @nullable
    */
-  dateProperty?: DeserializedType<T, 'Edm.Date'> | null;
+  keyDateProperty?: DeserializedType<T, 'Edm.Date'> | null;
   /**
    * Date Time Off Set Property.
    * @nullable
@@ -327,7 +327,7 @@ export interface TestEntityType<
   doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
   floatProperty?: DeserializedType<T, 'Edm.Float'> | null;
   timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
-  dateProperty?: DeserializedType<T, 'Edm.Date'> | null;
+  keyDateProperty?: DeserializedType<T, 'Edm.Date'> | null;
   dateTimeOffSetProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
   durationProperty?: DeserializedType<T, 'Edm.Duration'> | null;
   byteProperty?: DeserializedType<T, 'Edm.Byte'> | null;

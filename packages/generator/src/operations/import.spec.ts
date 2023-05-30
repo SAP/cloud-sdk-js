@@ -6,10 +6,7 @@ describe('import declarations for operations', () => {
   it('returns empty list when there are no functions', () => {
     const service = {};
 
-    const actual = operationDeclarations(
-      service as VdmServiceMetadata,
-      []
-    );
+    const actual = operationDeclarations(service as VdmServiceMetadata, []);
 
     expect(actual).toEqual([]);
   });

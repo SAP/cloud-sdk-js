@@ -239,13 +239,7 @@ describe('action-import', () => {
     const formatter = getFormatter();
     const service =
       createServiceMetadataWithActionImportLinksToUndefinedAction();
-    generateUnboundOperations(
-      service,
-      'myTestServiceName',
-      [],
-      [],
-      formatter
-    );
+    generateUnboundOperations(service, 'myTestServiceName', [], [], formatter);
     expect(warnSpy).toBeCalledWith(
       expect.stringContaining(
         'Could not find actions referenced by the following action imports.'

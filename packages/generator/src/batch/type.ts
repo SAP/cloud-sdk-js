@@ -37,10 +37,9 @@ function getWriteRequestType(service: VdmServiceMetadata): string {
   const operationsReturnTypes = service.operations
     .filter(fn => fn.httpMethod.toLowerCase() !== 'get')
     .map(fn => operationReturnType(fn));
-  return [
-    ...createUpdateDeleteBuilderTypes,
-    ...operationsReturnTypes
-  ].join(' | ');
+  return [...createUpdateDeleteBuilderTypes, ...operationsReturnTypes].join(
+    ' | '
+  );
 }
 
 function getReadRequestType(service: VdmServiceMetadata): string {

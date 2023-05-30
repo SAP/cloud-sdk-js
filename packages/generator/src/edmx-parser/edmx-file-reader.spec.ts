@@ -36,10 +36,8 @@ describe('edmx-file-reader', () => {
 
     expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(4);
     expect(parseEntityType(metadataEdmx.root).length).toBe(4);
-    expect(parseOperationImports(metadataEdmx.root, 'function').length).toBe(2);
-    expect(parseOperations(metadataEdmx.root, 'function').length).toBe(2);
-    expect(parseOperationImports(metadataEdmx.root, 'action').length).toBe(2);
-    expect(parseOperations(metadataEdmx.root, 'action').length).toBe(2);
+    expect(parseOperationImports(metadataEdmx.root).length).toBe(4);
+    expect(parseOperations(metadataEdmx.root).length).toBe(4);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(2);
     expect(parseEnumTypes(metadataEdmx.root).length).toBe(2);
   });

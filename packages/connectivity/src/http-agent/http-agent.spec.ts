@@ -94,7 +94,7 @@ describe('createAgent', () => {
       proxyConfiguration
     };
     expect(proxyAgent(destHttpWithProxy)['httpAgent']).toStrictEqual(
-      new HttpProxyAgent(proxyConfiguration)
+      new HttpProxyAgent('https://some.host.com:4711')
     );
   });
 

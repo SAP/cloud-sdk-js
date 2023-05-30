@@ -1,8 +1,8 @@
-import { readFile } from 'node:fs/promises';
+import { readFile } from 'fs/promises';
 import { parseCert } from 'x509.js';
 import { MtlsOptions } from '../../http-agent';
 import { AsyncCache, AsyncCacheInterface } from '../async-cache';
-import { DestinationCache, DestinationCacheType } from './destination-cache';
+import { DefaultDestinationCache, DestinationCache, DestinationCacheType } from './destination-cache';
 
 /**
  * @internal
@@ -102,7 +102,7 @@ async function cacheMtlsOptions(cache: MtlsCacheInterface): Promise<void> {
  */
 export const RegisterDestinationCache = (): RegisterDestinationCacheType => ({
   destination: {
-    ...DestinationCache()
+    ...DestinationCache(new DefaultDestinationCache(0))
   },
   mtls: {
     ...MtlsCache()

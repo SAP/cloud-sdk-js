@@ -44,7 +44,8 @@ describe('register-destination', () => {
   });
 
   afterEach(() => {
-    registerDestinationCache.clear();
+    registerDestinationCache.destination.clear();
+    registerDestinationCache.mtls.clear();
     unmockDestinationsEnv();
   });
 
@@ -94,7 +95,7 @@ describe('register-destination', () => {
   it('caches with tenant-isolation if no JWT is given', async () => {
     await registerDestination(testDestination);
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey(
           `${xsuaaBindingMock.credentials.subaccountid}::RegisteredDestination`
@@ -105,7 +106,7 @@ describe('register-destination', () => {
   it('caches with tenant isolation if JWT does not contain user-id', async () => {
     await registerDestination(testDestination, { jwt: subscriberServiceToken });
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey('subscriber::RegisteredDestination')
     ).resolves.toBe(true);
@@ -114,7 +115,7 @@ describe('register-destination', () => {
   it('caches with tenant-user-isolation if JWT is given', async () => {
     await registerDestination(testDestination, { jwt: subscriberUserJwt });
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey('user-sub:subscriber:RegisteredDestination')
     ).resolves.toBe(true);
@@ -126,7 +127,7 @@ describe('register-destination', () => {
       isolationStrategy: 'tenant'
     });
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey('subscriber::RegisteredDestination')
     ).resolves.toBe(true);
@@ -211,7 +212,8 @@ describe('register-destination without xsuaa binding', () => {
   });
 
   afterEach(async () => {
-    await registerDestinationCache.clear();
+    await registerDestinationCache.destination.clear();
+    await registerDestinationCache.mtls.clear();
     unmockDestinationsEnv();
   });
 

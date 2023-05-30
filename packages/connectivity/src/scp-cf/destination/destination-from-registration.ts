@@ -51,11 +51,11 @@ export async function registerDestination(
   destination.mtls = !!options?.inferMtls;
 
   if (options?.useMtlsCache) {
-    registerDestinationCache.useMtlsCache = true;
-    await registerDestinationCache.cacheMtlsOptions();
+    registerDestinationCache.mtls.useMtlsCache = true;
+    await registerDestinationCache.mtls.cacheMtlsOptions();
   }
 
-  await registerDestinationCache.cacheRetrievedDestination(
+  await registerDestinationCache.destination.cacheRetrievedDestination(
     decodedJwtOrZid(options),
     destination,
     isolationStrategy(options)
@@ -88,7 +88,7 @@ export async function searchRegisteredDestination(
   }
 
   const destination =
-    await registerDestinationCache.retrieveDestinationFromCache(
+    await registerDestinationCache.destination.retrieveDestinationFromCache(
       decodedJwt,
       options.destinationName,
       isolationStrategy(options)

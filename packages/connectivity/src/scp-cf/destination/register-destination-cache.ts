@@ -4,8 +4,6 @@ import { MtlsOptions } from '../../http-agent';
 import { AsyncCache, AsyncCacheInterface } from '../async-cache';
 import { DestinationCache, DestinationCacheType } from './destination-cache';
 
-// 1) Implement tests
-
 /**
  * @internal
  */
@@ -20,7 +18,10 @@ class DefaultMtlsCache
   }
 }
 
-type RegisterDestinationCacheType = MtlsCacheType & DestinationCacheType;
+interface RegisterDestinationCacheType {
+  destination: DestinationCacheType;
+  mtls: MtlsCacheType;
+}
 
 interface MtlsCacheType {
   /**
@@ -42,11 +43,11 @@ interface MtlsCacheType {
   /**
    * @internal
    */
-  clearMtlsCache: () => Promise<void>;
+  clear: () => Promise<void>;
   /**
    * @internal
    */
-  getMtlsCacheInstance: () => MtlsCacheInterface;
+  getCacheInstance: () => MtlsCacheInterface;
 }
 
 /**
@@ -69,8 +70,8 @@ const MtlsCache = (
       (retrieveMtlsOptionsFromCache(mtlsCache) as Promise<MtlsOptions>)
     );
   },
-  clearMtlsCache: async (): Promise<void> => mtlsCache.clear(),
-  getMtlsCacheInstance: () => mtlsCache
+  clear: async (): Promise<void> => mtlsCache.clear(),
+  getCacheInstance: () => mtlsCache
 });
 
 function getCertExpirationDate(cert: string): number {
@@ -100,8 +101,12 @@ async function cacheMtlsOptions(cache: MtlsCacheInterface): Promise<void> {
  * @internal
  */
 export const RegisterDestinationCache = (): RegisterDestinationCacheType => ({
-  ...MtlsCache(),
-  ...DestinationCache()
+  destination: {
+    ...DestinationCache()
+  },
+  mtls: {
+    ...MtlsCache()
+  }
 });
 
 /**

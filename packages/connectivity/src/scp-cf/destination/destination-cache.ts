@@ -68,7 +68,7 @@ export interface DestinationCacheType {
   /**
    * @internal
    */
-  clearDestinationCache: () => Promise<void>;
+  clear: () => Promise<void>;
   /**
    * @internal
    */
@@ -109,7 +109,7 @@ export const DestinationCache = (
       cacheRetrievedDestination(token, dest, isolation, cache)
     );
   },
-  clearDestinationCache: async (): Promise<void> => {
+  clear: async (): Promise<void> => {
     cache.clear();
   },
   getCacheInstance: () => cache

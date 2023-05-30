@@ -152,8 +152,8 @@ async function getMtlsOptions(
     );
   }
   if (mtlsIsEnabled(destination)) {
-    if (registerDestinationCache.useMtlsCache) {
-      return registerDestinationCache.getMtlsOptions();
+    if (registerDestinationCache.mtls.useMtlsCache) {
+      return registerDestinationCache.mtls.getMtlsOptions();
     }
     const getCert = readFile(process.env.CF_INSTANCE_CERT as string, 'utf8');
     const getKey = readFile(process.env.CF_INSTANCE_KEY as string, 'utf8');

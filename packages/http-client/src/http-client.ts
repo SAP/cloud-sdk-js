@@ -395,15 +395,15 @@ export function executeHttpRequestWithOrigin<
   });
 }
 
-function buildDestinationHttpRequestConfig(
+async function buildDestinationHttpRequestConfig(
   destination: HttpDestination,
   headers: Record<string, string>
-): DestinationHttpRequestConfig {
+): Promise<DestinationHttpRequestConfig> {
   return {
     baseURL: destination.url,
     headers,
     params: destination.queryParameters,
-    ...getAgentConfig(destination)
+    ...(await getAgentConfig(destination))
   };
 }
 

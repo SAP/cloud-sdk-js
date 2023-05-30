@@ -3,6 +3,7 @@ import {
   TestEntity,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import moment from 'moment';
 import nock from 'nock';
 
 describe('bound function import request builder', () => {
@@ -22,13 +23,14 @@ describe('bound function import request builder', () => {
   it('executes a bound function without arguments', async () => {
     nock(host)
       .get(
-        `${basePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString='abc')/boundFunctionWithoutArguments()`
+        `${basePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString='abc',KeyDateProperty=1970-01-01)/boundFunctionWithoutArguments()`
       )
       .reply(200, { value: 'returnValue' });
 
     const entity = testEntityApi.entityBuilder().fromJson({
       keyPropertyGuid: '12345678-aaaa-bbbb-cccc-ddddeeeeffff',
-      keyPropertyString: 'abc'
+      keyPropertyString: 'abc',
+      keyDateProperty: moment(0)
     });
     const response = await entity
       .boundFunctionWithoutArguments({})
@@ -39,13 +41,14 @@ describe('bound function import request builder', () => {
   it('executes a bound function with arguments', async () => {
     nock(host)
       .get(
-        `${basePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString='abc')/boundFunctionWithArguments(param1='foo',param2='bar')`
+        `${basePath}/A_TestEntity(KeyPropertyGuid=12345678-aaaa-bbbb-cccc-ddddeeeeffff,KeyPropertyString='abc',KeyDateProperty=1970-01-01)/boundFunctionWithArguments(param1='foo',param2='bar')`
       )
       .reply(200, { value: 'returnValue' });
 
     const entity = testEntityApi.entityBuilder().fromJson({
       keyPropertyGuid: '12345678-aaaa-bbbb-cccc-ddddeeeeffff',
-      keyPropertyString: 'abc'
+      keyPropertyString: 'abc',
+      keyDateProperty: moment(0)
     });
     const response = await entity
       .boundFunctionWithArguments({ param1: 'foo', param2: 'bar' })

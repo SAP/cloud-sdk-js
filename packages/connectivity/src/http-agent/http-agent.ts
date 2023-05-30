@@ -143,7 +143,7 @@ export interface MtlsOptions {
  */
 async function getMtlsOptions(
   destination: Destination
-): Promise<MtlsOptions | undefined> {
+): Promise<MtlsOptions | Record<string, never>> {
   if (!mtlsIsEnabled(destination) && destination.mtls) {
     logger.warn(
       `Destination ${
@@ -163,7 +163,7 @@ async function getMtlsOptions(
       key
     };
   }
-  return;
+  return {};
 }
 
 function mtlsIsEnabled(destination: Destination) {

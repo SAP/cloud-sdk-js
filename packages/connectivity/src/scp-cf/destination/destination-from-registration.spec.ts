@@ -13,9 +13,9 @@ import { getDestination } from './destination-accessor';
 import {
   DestinationWithName,
   registerDestination,
-  registerDestinationCache,
   searchRegisteredDestination
 } from './destination-from-registration';
+import { registerDestinationCache } from './register-destination-cache';
 
 const testDestination: DestinationWithName = {
   name: 'RegisteredDestination',

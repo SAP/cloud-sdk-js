@@ -5,9 +5,9 @@ import {
 import { getDestination, useOrFetchDestination } from './destination-accessor';
 import {
   DestinationWithName,
-  registerDestination,
-  registerDestinationCache
+  registerDestination
 } from './destination-from-registration';
+import { registerDestinationCache } from './register-destination-cache';
 
 function mockEnvDestinations() {
   process.env['destinations'] = JSON.stringify([

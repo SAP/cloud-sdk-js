@@ -142,8 +142,9 @@ function deleteRequestBuilder(entity: VdmEntity): string {
     key => `${key.propertyNameAsParam}: ${key.jsType}`
   );
 
-  const deleteByParams = entity.keys.length > 0
-    ? codeBlock`
+  const deleteByParams =
+    entity.keys.length > 0
+      ? codeBlock`
       ${documentationBlock`${getFunctionDoc(
         `Returns a request builder for deleting an entity of type \`${entity.className}\`.`,
         {
@@ -160,7 +161,7 @@ function deleteRequestBuilder(entity: VdmEntity): string {
       )}`}
       delete(${parameters}): DeleteRequestBuilder<${entity.className}<T>, T>;
       `
-    : ''
+      : '';
 
   return codeBlock`
     ${deleteByParams}

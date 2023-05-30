@@ -269,16 +269,26 @@ describe('generator', () => {
       expect(testFile!.getClasses().length).toBe(1);
       const imports = testFile!
         .getImportDeclarations()
-        .map(decl => decl.getImportClause()?.getNamedImports().map((namedImport) => namedImport.getName()) ?? [])
+        .map(
+          decl =>
+            decl
+              .getImportClause()
+              ?.getNamedImports()
+              .map(namedImport => namedImport.getName()) ?? []
+        )
         .flat();
       expect(imports).toContain('Entity');
 
-      const requestBuilderClass = testFile!.getClass('TestEntityWithNoKeysRequestBuilder');
+      const requestBuilderClass = testFile!.getClass(
+        'TestEntityWithNoKeysRequestBuilder'
+      );
       expect(requestBuilderClass).toBeDefined();
-      const deleteMethod = requestBuilderClass?.getMethods().find((method) => method.getName() === "delete");
+      const deleteMethod = requestBuilderClass
+        ?.getMethods()
+        .find(method => method.getName() === 'delete');
       expect(deleteMethod).toBeDefined();
       expect(deleteMethod!.getOverloads().length).toBe(1);
-    })
+    });
   });
 
   describe('get input file paths', () => {

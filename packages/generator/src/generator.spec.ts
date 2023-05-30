@@ -209,7 +209,7 @@ describe('generator', () => {
     });
 
     it('generates expected number of files', () => {
-      expect(files.length).toBe(38);
+      expect(files.length).toBe(40);
     });
 
     it('generates TestEntity.ts file', () => {
@@ -259,6 +259,26 @@ describe('generator', () => {
         ])
       );
     });
+
+    it('generates RequestBuilder for keyless entity without a parameter-less delete() overload', () => {
+      const testFile = files.find(
+        file => file.getBaseName() === 'TestEntityWithNoKeysRequestBuilder.ts'
+      );
+
+      expect(testFile).toBeDefined();
+      expect(testFile!.getClasses().length).toBe(1);
+      const imports = testFile!
+        .getImportDeclarations()
+        .map(decl => decl.getImportClause()?.getNamedImports().map((namedImport) => namedImport.getName()) ?? [])
+        .flat();
+      expect(imports).toContain('Entity');
+
+      const requestBuilderClass = testFile!.getClass('TestEntityWithNoKeysRequestBuilder');
+      expect(requestBuilderClass).toBeDefined();
+      const deleteMethod = requestBuilderClass?.getMethods().find((method) => method.getName() === "delete");
+      expect(deleteMethod).toBeDefined();
+      expect(deleteMethod!.getOverloads().length).toBe(1);
+    })
   });
 
   describe('get input file paths', () => {

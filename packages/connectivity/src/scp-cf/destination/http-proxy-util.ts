@@ -1,8 +1,12 @@
 import { AgentOptions } from 'https';
-import { URL } from 'url';
+import { URL } from 'node:url';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { createLogger, sanitizeRecord } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  removeTrailingSlashes,
+  sanitizeRecord
+} from '@sap-cloud-sdk/util';
 import { Protocol, getProtocol } from '../protocol';
 import { ProxyConfiguration } from '../connectivity-service-types';
 import { basicHeader } from '../authorization-header';
@@ -264,11 +268,16 @@ export function proxyAgent(
     ...options
   };
 
+  const { protocol, host, port, ...agentOptions } = agentConfig;
+  const urlConfig = new URL(
+    `${protocol}://${removeTrailingSlashes(host)}:${port}`
+  );
+
   const targetProtocol = getProtocolOrDefault(destination);
 
   if (targetProtocol === 'http') {
     return {
-      httpAgent: new HttpProxyAgent(agentConfig)
+      httpAgent: new HttpProxyAgent(urlConfig, agentOptions)
     };
   }
 

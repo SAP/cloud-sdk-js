@@ -37,19 +37,17 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^3.2.0",
     "@sap-cloud-sdk/resilience": "^3.2.0",
+    "@sap-cloud-sdk/util": "^3.2.0",
     "@sap/xsenv": "^3.4.0",
     "@sap/xssec": "^3.2.17",
     "async-retry": "^1.3.3",
     "axios": "^1.4.0",
     "http-proxy-agent": "^5.0.0",
     "https-proxy-agent": "^5.0.0",
-    "jsonwebtoken": "^9.0.0",
-    "x509.js": "^1.0.0"
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
-    "@types/x509.js": "^1.0.1",
     "base64url": "^3.0.1",
     "mock-fs": "^5.2.0",
     "nock": "^13.3.1",

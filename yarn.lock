@@ -1714,11 +1714,6 @@
   resolved "https://registry.npmjs.org/@types/voca/-/voca-1.4.2.tgz#4d2ceef3582c2a1f6a1574f71f0897400d910583"
   integrity sha512-Vmw8euGSdVlcDV69LoixtuervYUim5u6Vgp41PNxrHVGIo4vxSKMhW0I9MmBKbk3gtveNFzdHIVzyW1DpECzYw==
 
-"@types/x509.js@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@types/x509.js/-/x509.js-1.0.1.tgz#4aa7d5d2d68364dd112b1e5ae8d70d9774e955ba"
-  integrity sha512-tAND35OcoowHiWtAzXgDJD08/tlYrSAyEK4Bz1VAxM1arhdJyQckDlf4hhHAlK7Dl5/OVc9zwoXyGgCAVx0INA==
-
 "@types/yargs-parser@*":
   version "21.0.0"
   resolved "https://registry.npmjs.org/@types/yargs-parser/-/yargs-parser-21.0.0.tgz#0c60e537fa790f5f9472ed2776c2b71ec117351b"
@@ -9240,11 +9235,6 @@ ws@~7.4.0:
   version "7.4.6"
   resolved "https://registry.npmjs.org/ws/-/ws-7.4.6.tgz#5654ca8ecdeee47c33a9a4bf6d28e2be2980377c"
   integrity sha512-YmhHDO4MzaDLB+M9ym/mDA5z0naX8j7SIlT8f8z+I0VtzsRbekxEutHSme7NPS2qE8StCYQNUnfWdXta/Yu85A==
-
-x509.js@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/x509.js/-/x509.js-1.0.0.tgz#04b6a974db3c78ec276a4c0a0c84fba6ec808d38"
-  integrity sha512-u5JPtEp+zHbvOfshegzL/hrJOVPuQPkWZwCAB6is8Svlkx0GQXpoCgf1uEnN4BEqa838OSN6BpfV7/l5sC3XOw==
 
 xml-js@^1.6.11:
   version "1.6.11"

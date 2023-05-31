@@ -1,5 +1,5 @@
 import { readFile } from 'fs/promises';
-import { parseCert } from 'x509.js';
+import { X509Certificate } from 'crypto';
 import { MtlsOptions } from '../../http-agent';
 import { AsyncCache, AsyncCacheInterface } from '../async-cache';
 import { DefaultDestinationCache, DestinationCache, DestinationCacheType } from './destination-cache';
@@ -75,7 +75,7 @@ const MtlsCache = (
 });
 
 function getCertExpirationDate(cert: string): number {
-  return new Date(parseCert(cert).notAfter).getMilliseconds();
+  return new Date(new X509Certificate(cert).validTo).getMilliseconds();
 }
 
 async function retrieveMtlsOptionsFromCache(

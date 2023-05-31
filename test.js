@@ -1,0 +1,17 @@
+{"baseURL": "https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH",
+ "headers": {"Authorization": "Bearer eyJhbGciOiJSUzUxMiJ9.eyJ1c2VyX2lkIjoidXNlciIsInppZCI6InRlbmFudCJ9.KMQLZ2hFNTKSDDnzy9HEYXDWWDm4FVK2AKf59y0FzbLKAd8wou-jzQyk2ySAkKCJl8SorTXICMiQWX9AKXtwJsCEER6PIQi23cIQ5jw5jswRWQv02s2Q-dkbtJEEHilLhpR-LwiYwBZ1SPBlpbzInQFky9vZRMueqaUmvmQeh9k0Ui3o_hmYoccrzfR-zd4842iO76SIooFSQ5HH7s1zDv0DYFbpX8ajuAzsgMHNG1JeY_AyE9snmle3Yld_wY1Th6LerJuYAxX5zj3rLQ1TO8NZDx6A5gUQiHiC_LzoA6Esnh9yhmyDbY9gjL8McgrlWNJsTpERibiwGEXGGR2VqA"},
+ "httpsAgent": {"_events": {"free": [Function anonymous], "newListener": [Function maybeEnableKeylog]}, "_eventsCount": 2,
+ "_maxListeners": undefined, "freeSockets": {}, "keepAlive": false, "keepAliveMsecs": 1000, "maxFreeSockets": 256,
+ "maxSockets": Infinity, "maxTotalSockets": Infinity, "options": {"host": "some.foo.bar", "noDelay": true, "path": null,
+ "port": 80, "protocol": "http", "rejectUnauthorized": true}, "proxy": {"host": "some.foo.bar", "port": 80, "protocol": "http",
+ "rejectUnauthorized": true}, "requests": {}, "scheduling": "lifo", "secureProxy": false, "sockets": {}, "totalSocketCount": 0,
+ Symbol(kCapture): false, Symbol(AgentBaseInternalState): {}}, "method": "get", "proxy": false}
+
+ {"baseURL": "https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH", 
+  "headers": {"Authorization": "Bearer eyJhbGciOiJSUzUxMiJ9.eyJ1c2VyX2lkIjoidXNlciIsInppZCI6InRlbmFudCJ9.KMQLZ2hFNTKSDDnzy9HEYXDWWDm4FVK2AKf59y0FzbLKAd8wou-jzQyk2ySAkKCJl8SorTXICMiQWX9AKXtwJsCEER6PIQi23cIQ5jw5jswRWQv02s2Q-dkbtJEEHilLhpR-LwiYwBZ1SPBlpbzInQFky9vZRMueqaUmvmQeh9k0Ui3o_hmYoccrzfR-zd4842iO76SIooFSQ5HH7s1zDv0DYFbpX8ajuAzsgMHNG1JeY_AyE9snmle3Yld_wY1Th6LerJuYAxX5zj3rLQ1TO8NZDx6A5gUQiHiC_LzoA6Esnh9yhmyDbY9gjL8McgrlWNJsTpERibiwGEXGGR2VqA"},
+  "httpsAgent": {"_events": {"free": [Function anonymous], "newListener": [Function maybeEnableKeylog]}, "_eventsCount": 2,
+  "_maxListeners": undefined, "freeSockets": {}, "keepAlive": false, "keepAliveMsecs": 1000, "maxFreeSockets": 256,
+  "maxSockets": Infinity, "maxTotalSockets": Infinity, "options": {"host": "some.foo.bar", "noDelay": true, "path": null,
+  "port": 80, "protocol": "http", "rejectUnauthorized": true}, "proxy": {"host": "some.foo.bar", "port": 80, "protocol": "http",
+  "rejectUnauthorized": true}, "requests": {}, "scheduling": "lifo", "secureProxy": false, "sockets": {}, "totalSocketCount": 0,
+  Symbol(kCapture): false, Symbol(AgentBaseInternalState): {}}, "method": "get", "proxy": false},

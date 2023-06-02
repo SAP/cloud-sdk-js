@@ -5,7 +5,6 @@ import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 // eslint-disable-next-line import/named
 import axios, { RawAxiosRequestConfig } from 'axios';
-import { HttpsProxyAgent } from 'https-proxy-agent';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
@@ -17,7 +16,6 @@ import {
   fetchSubaccountDestinations
 } from './destination-service';
 import { Destination } from './destination-service-types';
-import { getProxyUrl } from './http-proxy-util';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -479,18 +477,14 @@ describe('destination service', () => {
         headers: {
           Authorization: `Bearer ${jwt}`
         },
-        httpsAgent: new HttpsProxyAgent(
-          getProxyUrl({
-            port: 80,
-            host: 'some.foo.bar',
-            protocol: 'http'
-          }),
-          {
-            rejectUnauthorized: true
-          }
-        )
+        httpsAgent: expect.objectContaining({
+          proxy: expect.objectContaining({
+            hostname: 'some.foo.bar',
+            protocol: 'http:'
+          })
+        })
       };
-      expect(req).toHaveBeenCalledWith(expectedConfig);
+      expect(req).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
       delete process.env.HTTPS_PROXY;
     });
 

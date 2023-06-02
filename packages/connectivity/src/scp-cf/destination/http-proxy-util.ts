@@ -273,6 +273,11 @@ export function proxyAgent(
 
   const targetProtocol = getProtocolOrDefault(destination);
 
+  const a = new HttpsProxyAgent(urlConfig, agentOptions);
+  const b = new HttpsProxyAgent(getProxyUrl({ protocol, host, port: 81 }), {
+    rejectUnauthorized: false
+  });
+
   if (targetProtocol === 'http') {
     return {
       httpAgent: new HttpProxyAgent(urlConfig, agentOptions)

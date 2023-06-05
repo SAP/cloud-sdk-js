@@ -1,5 +1,12 @@
 # @sap-cloud-sdk/resilience
 
+## 3.2.0
+
+### Patch Changes
+
+- 234675fc3: [Fixed Issue] Fix parsing error when the last response in a chain of retries returned undefined.
+  - @sap-cloud-sdk/util@3.2.0
+
 ## 3.1.1
 
 ### Patch Changes

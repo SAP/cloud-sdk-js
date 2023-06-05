@@ -269,19 +269,19 @@ export function proxyAgent(
   };
 
   const { protocol, host, port, ...agentOptions } = agentConfig;
-  const urlConfig = getProxyUrl({ protocol, host, port });
+  const proxyUrl = getProxyUrl({ protocol, host, port });
 
   const targetProtocol = getProtocolOrDefault(destination);
 
   if (targetProtocol === 'http') {
     return {
-      httpAgent: new HttpProxyAgent(urlConfig, agentOptions)
+      httpAgent: new HttpProxyAgent(proxyUrl, agentOptions)
     };
   }
 
   if (targetProtocol === 'https') {
     return {
-      httpsAgent: new HttpsProxyAgent(urlConfig, agentOptions)
+      httpsAgent: new HttpsProxyAgent(proxyUrl, agentOptions)
     };
   }
 

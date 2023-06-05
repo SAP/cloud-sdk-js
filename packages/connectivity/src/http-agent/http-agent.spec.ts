@@ -41,7 +41,7 @@ describe('createAgent', () => {
     expect(agentConfig.connectOpts.rejectUnauthorized).toBe(true);
   });
 
-  it('returns a tru agent if TrustAll is configured', () => {
+  it('returns a trustAll agent if TrustAll is configured', () => {
     const agentConfig = getAgentConfig(trustAllDestination)['httpsAgent'];
     expect(agentConfig.options.rejectUnauthorized).toBe(false);
   });

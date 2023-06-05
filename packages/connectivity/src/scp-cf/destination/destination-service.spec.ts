@@ -465,7 +465,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
 
-      const req = jest.spyOn(axios, 'request');
+      const requestSpy = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName
       });
@@ -484,7 +484,7 @@ describe('destination service', () => {
           })
         })
       };
-      expect(req).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
+      expect(requestSpy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
       delete process.env.HTTPS_PROXY;
     });
 

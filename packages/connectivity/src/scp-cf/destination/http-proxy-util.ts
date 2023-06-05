@@ -273,11 +273,6 @@ export function proxyAgent(
 
   const targetProtocol = getProtocolOrDefault(destination);
 
-  const a = new HttpsProxyAgent(urlConfig, agentOptions);
-  const b = new HttpsProxyAgent(getProxyUrl({ protocol, host, port: 81 }), {
-    rejectUnauthorized: false
-  });
-
   if (targetProtocol === 'http') {
     return {
       httpAgent: new HttpProxyAgent(urlConfig, agentOptions)
@@ -296,12 +291,11 @@ export function proxyAgent(
 }
 
 /**
- * @internal
  * Create a URL from the proxy configuration.
  * @param config - Proxy configuration.
  * @returns The proxy configuration as URI.
  */
-export function getProxyUrl(config: ProxyConfiguration): string {
+function getProxyUrl(config: ProxyConfiguration): string {
   const { protocol, host, port } = config;
   return `${protocol}://${removeTrailingSlashes(host)}:${port}`;
 }

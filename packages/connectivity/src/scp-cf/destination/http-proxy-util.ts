@@ -218,11 +218,11 @@ export function addProxyConfigurationInternet(
 ): HttpDestination {
   const proxyEnvValue = getProxyEnvValue(getProtocolOrDefault(destination));
   if (proxyEnvValue) {
-    const proxyConfiguration = parseProxyEnv(proxyEnvValue);
-    if (proxyConfiguration) {
-      return { ...destination, proxyConfiguration };
-    }
-    return { ...destination };
+    return {
+      ...destination,
+      proxyConfiguration:
+        parseProxyEnv(proxyEnvValue) || destination.proxyConfiguration
+    };
   }
   logger.warn(
     'Attempt to get proxy config from environment variables failed. At this point this should not happen - no proxy used.'

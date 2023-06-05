@@ -484,7 +484,9 @@ describe('destination service', () => {
           })
         })
       };
-      expect(requestSpy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
+      expect(requestSpy).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfig)
+      );
       delete process.env.HTTPS_PROXY;
     });
 

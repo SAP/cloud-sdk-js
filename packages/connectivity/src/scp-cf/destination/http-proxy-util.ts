@@ -269,8 +269,7 @@ export function proxyAgent(
   };
 
   const { protocol, host, port, ...agentOptions } = agentConfig;
-  const proxyUrl = getProxyUrl({ protocol, host, port });
-
+  const proxyUrl = `${protocol}://${removeTrailingSlashes(host)}:${port}`;
   const targetProtocol = getProtocolOrDefault(destination);
 
   if (targetProtocol === 'http') {
@@ -288,14 +287,4 @@ export function proxyAgent(
   throw new Error(
     `The target protocol: ${targetProtocol} has to be either https or http.`
   );
-}
-
-/**
- * Create a URL from the proxy configuration.
- * @param config - Proxy configuration.
- * @returns The proxy configuration as URI.
- */
-function getProxyUrl(config: ProxyConfiguration): string {
-  const { protocol, host, port } = config;
-  return `${protocol}://${removeTrailingSlashes(host)}:${port}`;
 }

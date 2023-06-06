@@ -4,7 +4,7 @@ import {
   buildHeadersForDestination,
   Destination,
   HttpDestinationOrFetchOptions,
-  getAgentConfig
+  getAgentConfigAsync
 } from '@sap-cloud-sdk/connectivity';
 import {
   assertHttpDestination,
@@ -403,7 +403,7 @@ async function buildDestinationHttpRequestConfig(
     baseURL: destination.url,
     headers,
     params: destination.queryParameters,
-    ...(await getAgentConfig(destination))
+    ...(await getAgentConfigAsync(destination))
   };
 }
 

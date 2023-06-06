@@ -23,8 +23,6 @@ const logger = createLogger({
 });
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
- *
  * Represents options to configure how a destination should be registered.
  */
 export type RegisterDestinationOptions = Pick<

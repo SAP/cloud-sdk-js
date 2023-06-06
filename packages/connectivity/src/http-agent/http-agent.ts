@@ -23,13 +23,14 @@ const logger = createLogger({
 });
 
 /**
- * Returns the http or https-agent config depending on the destination URL.
+ * Will be renamed to getAgentConfig in the next major release.
+ * Returns a promise of the http or https-agent config depending on the destination URL.
  * If the destination contains a proxy configuration, the agent will be a proxy-agent.
  * If not it will be the default http-agent coming from node.
  * @param destination - Determining which kind of configuration is returned.
- * @returns The HTTP or HTTPS agent configuration.
+ * @returns A promise of the HTTP or HTTPS agent configuration.
  */
-export async function getAgentConfig(
+export async function getAgentConfigAsync(
   destination: HttpDestination
 ): Promise<HttpAgentConfig | HttpsAgentConfig> {
   // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -37,6 +38,27 @@ export async function getAgentConfig(
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOption(destination),
     ...(await getMtlsOptions(destination))
+  };
+  return destination.proxyConfiguration
+    ? proxyAgent(destination, certificateOptions)
+    : createDefaultAgent(destination, certificateOptions);
+}
+
+/**
+ * Returns the http or https-agent config depending on the destination URL.
+ * If the destination contains a proxy configuration, the agent will be a proxy-agent.
+ * If not it will be the default http-agent coming from node.
+ * @deprecated Replaced by {@link getAgentConfigAsync}, will change it's default behavior to be asynchronous in next major release.
+ * @param destination - Determining which kind of configuration is returned.
+ * @returns The HTTP or HTTPS agent configuration.
+ */
+export function getAgentConfig(
+  destination: HttpDestination
+): HttpAgentConfig | HttpsAgentConfig {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const certificateOptions = {
+    ...getTrustStoreOptions(destination),
+    ...getKeyStoreOption(destination),
   };
   return destination.proxyConfiguration
     ? proxyAgent(destination, certificateOptions)
@@ -248,6 +270,6 @@ export async function urlAndAgent(targetUri: string): Promise<{
   }
   return {
     baseURL: destination.url,
-    ...(await getAgentConfig(destination))
+    ...(await getAgentConfigAsync(destination))
   };
 }

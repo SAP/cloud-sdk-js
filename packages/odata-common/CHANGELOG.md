@@ -1,5 +1,21 @@
 # @sap-cloud-sdk/odata-common
 
+## 3.2.0
+
+### Minor Changes
+
+- aa1a4bdb0: [Fixed Issue] Remove encoding of keys in the `getEntityKeys()` as it should only happen once in `getResourcePathForKeys()`.Fixes the error `value.format is not a function` when executing requests for entities with `Edm.Date` type key property.
+
+### Patch Changes
+
+- Updated dependencies [616d77b85]
+- Updated dependencies [56c3f70f4]
+- Updated dependencies [782b9e37e]
+- Updated dependencies [73ff0ab03]
+  - @sap-cloud-sdk/connectivity@3.2.0
+  - @sap-cloud-sdk/http-client@3.2.0
+  - @sap-cloud-sdk/util@3.2.0
+
 ## 3.1.1
 
 ### Patch Changes

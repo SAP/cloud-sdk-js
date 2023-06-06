@@ -227,7 +227,7 @@ export class TestEntityApi<
       true,
       true
     >;
-    DATE_PROPERTY: OrderableEdmTypeField<
+    KEY_DATE_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Date',
@@ -476,11 +476,11 @@ export class TestEntityApi<
           true
         ),
         /**
-         * Static representation of the {@link dateProperty} property for query construction.
+         * Static representation of the {@link keyDateProperty} property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
-        DATE_PROPERTY: fieldBuilder.buildEdmTypeField(
-          'DateProperty',
+        KEY_DATE_PROPERTY: fieldBuilder.buildEdmTypeField(
+          'KeyDateProperty',
           'Edm.Date',
           true
         ),

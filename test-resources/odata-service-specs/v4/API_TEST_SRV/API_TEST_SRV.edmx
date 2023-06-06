@@ -6,6 +6,7 @@
         <Key>
           <PropertyRef Name="KeyPropertyGuid"/>
           <PropertyRef Name="KeyPropertyString"/>
+          <PropertyRef Name="KeyDateProperty"/>
         </Key>
         <Property Name="KeyPropertyGuid" Type="Edm.Guid" Nullable="false"/>
         <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
@@ -20,7 +21,7 @@
         <Property Name="DoubleProperty" Type="Edm.Double"/>
         <Property Name="FloatProperty" Type="Edm.Float"/>
         <Property Name="TimeOfDayProperty" Type="Edm.TimeOfDay" Precision="0"/>
-        <Property Name="DateProperty" Type="Edm.Date" Precision="0" sap:display-format="Date"/>
+        <Property Name="KeyDateProperty" Type="Edm.Date" Precision="0" sap:display-format="Date"/>
         <Property Name="DateTimeOffSetProperty" Type="Edm.DateTimeOffset" Precision="0"/>
         <Property Name="DurationProperty" Type="Edm.Duration" Precision="0"/>
         <Property Name="ByteProperty" Type="Edm.Byte"/>

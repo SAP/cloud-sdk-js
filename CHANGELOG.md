@@ -28,6 +28,26 @@
 
 - 
 
+# 3.2.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.2.0
+
+## New Functionalities
+
+- [connectivity] Enable the use of mTLS certificates for registered destinations on CloudFoundry. (616d77b85)
+
+## Improvements
+
+- [connectivity] Set the default validity time of the client credentials token cache to 5 minutes instead of never expiring. (782b9e37e)
+
+## Fixed Issues
+
+- [connectivity, http-client] Forward the user JWT irrespective of the destination authentication type when `forwardAuthToken` is set to true on a destination (56c3f70f4)
+- [http-client] Improve CSRF token fetching for large requests. (73ff0ab03)
+- [odata-common] Remove encoding of keys in the `getEntityKeys()` as it should only happen once in `getResourcePathForKeys()`.Fixes the error `value.format is not a function` when executing requests for entities with `Edm.Date` type key property. (aa1a4bdb0)
+- [resilience] Fix parsing error when the last response in a chain of retries returned undefined.
+  - @sap-cloud-sdk/util@3.2.0 (234675fc3)
+
 # 3.1.1
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.1.1

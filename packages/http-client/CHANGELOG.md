@@ -1,5 +1,22 @@
 # @sap-cloud-sdk/http-client
 
+## 3.2.0
+
+### Minor Changes
+
+- 56c3f70f4: [Fixed Issue] Forward the user JWT irrespective of the destination authentication type when `forwardAuthToken` is set to true on a destination
+- 73ff0ab03: [Fixed Issue] Improve CSRF token fetching for large requests.
+
+### Patch Changes
+
+- Updated dependencies [616d77b85]
+- Updated dependencies [56c3f70f4]
+- Updated dependencies [234675fc3]
+- Updated dependencies [782b9e37e]
+  - @sap-cloud-sdk/connectivity@3.2.0
+  - @sap-cloud-sdk/resilience@3.2.0
+  - @sap-cloud-sdk/util@3.2.0
+
 ## 3.1.1
 
 ### Patch Changes

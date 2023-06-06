@@ -339,7 +339,7 @@ describe('getEntityKeys', () => {
     const entity = testEntityApi
       .entityBuilder()
       .keyPropertyGuid(uuid())
-      .keyPropertyString('987654321')
+      .keyPropertyString('98765/4321')
       .stringProperty('any')
       .build();
 
@@ -348,21 +348,6 @@ describe('getEntityKeys', () => {
     expect(actual).toEqual({
       KeyPropertyGuid: entity.keyPropertyGuid,
       KeyPropertyString: entity.keyPropertyString
-    });
-  });
-
-  it('should encode entity keys correctly', () => {
-    const entity = testEntityApi
-      .entityBuilder()
-      .keyPropertyGuid(uuid())
-      .keyPropertyString('/')
-      .build();
-
-    const actual = oDataUri.getEntityKeys(entity, testEntityApi);
-
-    expect(actual).toEqual({
-      KeyPropertyGuid: entity.keyPropertyGuid,
-      KeyPropertyString: encodeURIComponent(entity.keyPropertyString)
     });
   });
 });

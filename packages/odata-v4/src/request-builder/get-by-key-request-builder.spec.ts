@@ -3,7 +3,7 @@ import {
   defaultDestination,
   mockGetRequest
 } from '../../../../test-resources/test/test-util/request-mocker';
-import { createOriginalTestEntityData1 } from '../../../../test-resources/test/test-util/test-data';
+import { createOriginalTestEntityDataV4_1 } from '../../../../test-resources/test/test-util/test-data';
 import {
   testEntityApi,
   testEntityWithEnumKeyApi,
@@ -22,23 +22,31 @@ function createOriginalTestEntityWithEnumKeyData() {
 describe('GetByKeyRequestBuilder', () => {
   describe('execute', () => {
     it('returns entity by key', async () => {
-      const entityData = createOriginalTestEntityData1();
+      const entityData = createOriginalTestEntityDataV4_1();
       const expected = createTestEntity(entityData);
-
+      const response = {
+        KeyPropertyGuid: entityData.KeyPropertyGuid,
+        KeyPropertyString: 'ABCDE',
+        KeyDateProperty: '2023-05-05',
+        StringProperty: 'FGHIJ',
+        BooleanProperty: false,
+        Int16Property: 13
+      };
       mockGetRequest(
         {
           path: testEntityResourcePath(
             expected.keyPropertyGuid,
-            expected.keyPropertyString
+            expected.keyPropertyString,
+            expected.keyDateProperty
           ),
-          responseBody: entityData
+          responseBody: response
         },
         testEntityApi
       );
-
       const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: expected.keyPropertyGuid,
-        KeyPropertyString: expected.keyPropertyString
+        KeyPropertyString: expected.keyPropertyString,
+        KeyDateProperty: expected.keyDateProperty
       }).execute(defaultDestination);
       expect(actual).toEqual(expected);
     });
@@ -88,43 +96,60 @@ describe('GetByKeyRequestBuilder', () => {
   });
 
   it('ETag should be pulled from @odata.etag', async () => {
-    const entityData = createOriginalTestEntityData1();
+    const entityData = createOriginalTestEntityDataV4_1();
     const versionIdentifier = 'etagInMetadata';
     entityData['@odata.etag'] = versionIdentifier;
     const expected = createTestEntity(entityData);
-
+    const response = {
+      KeyPropertyGuid: entityData.KeyPropertyGuid,
+      KeyPropertyString: 'ABCDE',
+      KeyDateProperty: '2023-05-05',
+      StringProperty: 'FGHIJ',
+      BooleanProperty: false,
+      Int16Property: 13
+    };
     mockGetRequest(
       {
         path: testEntityResourcePath(
           expected.keyPropertyGuid,
-          expected.keyPropertyString
+          expected.keyPropertyString,
+          expected.keyDateProperty
         ),
-        responseBody: entityData
+        responseBody: response
       },
       testEntityApi
     );
 
     const actual = await new GetByKeyRequestBuilder(testEntityApi, {
       KeyPropertyGuid: expected.keyPropertyGuid,
-      KeyPropertyString: expected.keyPropertyString
+      KeyPropertyString: expected.keyPropertyString,
+      KeyDateProperty: expected.keyDateProperty
     }).execute(defaultDestination);
     expected.setVersionIdentifier(versionIdentifier);
     expect(actual).toEqual(expected);
   });
 
   it('ETag should be pulled from response header when json payload has no @odata.etag property', async () => {
-    const entityData = createOriginalTestEntityData1();
+    const entityData = createOriginalTestEntityDataV4_1();
     const expected = createTestEntity(entityData);
     const versionIdentifier = 'etagInHeader';
     expected.setVersionIdentifier(versionIdentifier);
-
+    const response = {
+      KeyPropertyGuid: entityData.KeyPropertyGuid,
+      KeyPropertyString: 'ABCDE',
+      KeyDateProperty: '2023-05-05',
+      StringProperty: 'FGHIJ',
+      BooleanProperty: false,
+      Int16Property: 13
+    };
     mockGetRequest(
       {
         path: testEntityResourcePath(
           expected.keyPropertyGuid,
-          expected.keyPropertyString
+          expected.keyPropertyString,
+          expected.keyDateProperty
         ),
-        responseBody: entityData,
+        responseBody: response,
         responseHeaders: { Etag: versionIdentifier }
       },
       testEntityApi
@@ -132,7 +157,8 @@ describe('GetByKeyRequestBuilder', () => {
 
     const actual = await new GetByKeyRequestBuilder(testEntityApi, {
       KeyPropertyGuid: expected.keyPropertyGuid,
-      KeyPropertyString: expected.keyPropertyString
+      KeyPropertyString: expected.keyPropertyString,
+      KeyDateProperty: expected.keyDateProperty
     }).execute(defaultDestination);
     expect(actual).toEqual(expected);
   });

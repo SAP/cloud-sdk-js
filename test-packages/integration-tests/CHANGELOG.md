@@ -1,5 +1,25 @@
 # @sap-cloud-sdk/integration-tests
 
+## 3.2.0
+
+### Minor Changes
+
+- 616d77b85: [New Functionality] Enable the use of mTLS certificates for registered destinations on CloudFoundry.
+
+### Patch Changes
+
+- Updated dependencies [616d77b85]
+- Updated dependencies [56c3f70f4]
+- Updated dependencies [782b9e37e]
+- Updated dependencies [73ff0ab03]
+  - @sap-cloud-sdk/connectivity@3.2.0
+  - @sap-cloud-sdk/http-client@3.2.0
+  - @sap-cloud-sdk/mail-client@3.2.0
+  - @sap-cloud-sdk/test-util@3.2.0
+  - @sap-cloud-sdk/util@3.2.0
+  - @sap-cloud-sdk/test-services-odata-v2@3.2.0
+  - @sap-cloud-sdk/test-services-odata-v4@3.2.0
+
 ## 3.1.1
 
 ### Patch Changes

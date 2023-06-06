@@ -73,6 +73,7 @@ export type {
 
 export {
   getAgentConfigAsync,
+  getAgentConfig,
   HttpAgentConfig,
   HttpsAgentConfig
 } from './http-agent';

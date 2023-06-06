@@ -2,7 +2,11 @@ import { readFile } from 'fs/promises';
 import { X509Certificate } from 'crypto';
 import { MtlsOptions } from '../../http-agent';
 import { AsyncCache, AsyncCacheInterface } from '../async-cache';
-import { DefaultDestinationCache, DestinationCache, DestinationCacheType } from './destination-cache';
+import {
+  DefaultDestinationCache,
+  DestinationCache,
+  DestinationCacheType
+} from './destination-cache';
 
 /**
  * @internal

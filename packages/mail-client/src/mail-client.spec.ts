@@ -78,9 +78,7 @@ describe('mail client', () => {
     // the mockServiceToken() method does not work outside connectivity module.
     jest
       .spyOn(tokenAccessor, 'serviceToken')
-      .mockImplementation((_, options) =>
-        Promise.resolve(providerServiceToken)
-      );
+      .mockImplementation(() => Promise.resolve(providerServiceToken));
     mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
     mockSubaccountDestinationsCall(
       nock,
@@ -134,9 +132,7 @@ describe('mail client', () => {
     // the mockServiceToken() method does not work outside connectivity module.
     jest
       .spyOn(tokenAccessor, 'serviceToken')
-      .mockImplementation((_, options) =>
-        Promise.resolve(providerServiceToken)
-      );
+      .mockImplementation(() => Promise.resolve(providerServiceToken));
     mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
     mockSubaccountDestinationsCall(
       nock,

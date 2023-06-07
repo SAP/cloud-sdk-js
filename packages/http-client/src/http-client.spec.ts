@@ -722,6 +722,7 @@ sap-client:001`);
           protocol: 'http'
         }
       };
+
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await expect(
         executeHttpRequest(destination, { method: 'get' })
@@ -730,7 +731,7 @@ sap-client:001`);
         expect.objectContaining({
           proxy: false,
           httpsAgent: expect.objectContaining({
-            proxy: expect.objectContaining({ host: 'dummy', port: 1234 })
+            proxy: expect.objectContaining({ hostname: 'dummy', port: '1234' })
           })
         })
       );

@@ -125,7 +125,6 @@
   },
   "resolutions": {
     "@sap/cds": "^6.1.1",
-    "agent-base": ">=6.0.2",
     "color-string": ">=1.5.5",
     "detective-postcss": "^6.1.0",
     "dot-prop": "^6.0.1",

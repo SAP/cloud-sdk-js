@@ -9073,10 +9073,10 @@ vm2@^3.9.8:
     acorn "^8.7.0"
     acorn-walk "^8.2.0"
 
-voca@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.npmjs.org/voca/-/voca-1.4.0.tgz#e15ac58b38290b72acc0c330366b6cc7984924d7"
-  integrity sha512-8Xz4H3vhYRGbFupLtl6dHwMx0ojUcjt0HYkqZ9oBCfipd/5mD7Md58m2/dq7uPuZU/0T3Gb1m66KS9jn+I+14Q==
+voca@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.npmjs.org/voca/-/voca-1.4.1.tgz#9f84939e1aaca80c39158049d3321c67c6d2ed0a"
+  integrity sha512-NJC/BzESaHT1p4B5k4JykxedeltmNbau4cummStd4RjFojgq/kLew5TzYge9N2geeWyI2w8T30wUET5v+F7ZHA==
 
 vscode-oniguruma@^1.7.0:
   version "1.7.0"

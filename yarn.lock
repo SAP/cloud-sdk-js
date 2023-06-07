@@ -599,27 +599,27 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dts-critic@^0.0.159":
-  version "0.0.159"
-  resolved "https://registry.npmjs.org/@definitelytyped/dts-critic/-/dts-critic-0.0.159.tgz#fa9c4129e56fab515c8eb1dab56d484726412239"
-  integrity sha512-osA3azPNxnszAEQ0RvDY07vtPDeis8+8ey+nBtfqQ7TMPa+4tFgvSxMhBRrGpdYHIfmnSfJtopN/AbMwVdcnpw==
+"@definitelytyped/dts-critic@^0.0.163":
+  version "0.0.163"
+  resolved "https://registry.npmjs.org/@definitelytyped/dts-critic/-/dts-critic-0.0.163.tgz#51750eddefd781daf481f8e4d4d277b7bd51fc87"
+  integrity sha512-HsTvylj8x2gQaawsOCcN2Xk2Cx0wgV9kaj83hgsO9SITZSPd7dA0UkHyNRadbMkMwqNDKcnizcmWdz0+0gIo8A==
   dependencies:
-    "@definitelytyped/header-parser" "^0.0.159"
+    "@definitelytyped/header-parser" "^0.0.163"
     command-exists "^1.2.8"
     rimraf "^3.0.2"
     semver "^6.2.0"
     tmp "^0.2.1"
     yargs "^15.3.1"
 
-"@definitelytyped/dtslint@^0.0.159":
-  version "0.0.159"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.159.tgz#1cf480f62e2ff233e3cc75c9582b81bff0c86186"
-  integrity sha512-Ta07FoW/ziyy9cDhqaBj8MbvuFg6ZPibP7m4CY8Ut5yLO3gB963lk61EhdVm2mgDs6jLjKrtLdeWmvqq+2/L1w==
+"@definitelytyped/dtslint@^0.0.163":
+  version "0.0.163"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.163.tgz#d31f7c01f2f829d69ab0b3c46801d5547860236d"
+  integrity sha512-U0uw7Zu0QdYSuBMYgxvRYjkhkeulTEg8vDgJ7TiYQUv/wODeujSAmGahQn51E5hOlSMYUw7A9utdbUukxE02SQ==
   dependencies:
-    "@definitelytyped/dts-critic" "^0.0.159"
-    "@definitelytyped/header-parser" "^0.0.159"
-    "@definitelytyped/typescript-versions" "^0.0.159"
-    "@definitelytyped/utils" "^0.0.159"
+    "@definitelytyped/dts-critic" "^0.0.163"
+    "@definitelytyped/header-parser" "^0.0.163"
+    "@definitelytyped/typescript-versions" "^0.0.163"
+    "@definitelytyped/utils" "^0.0.163"
     "@typescript-eslint/eslint-plugin" "^5.55.0"
     "@typescript-eslint/parser" "^5.55.0"
     "@typescript-eslint/types" "^5.56.0"
@@ -632,26 +632,26 @@
     tslint "5.14.0"
     yargs "^15.1.0"
 
-"@definitelytyped/header-parser@^0.0.159":
-  version "0.0.159"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.0.159.tgz#92b845a6cb1f4d8c7412620c777b6af61bcc5d4d"
-  integrity sha512-y+zr9ahjiFz7BLW1HeMWrx7xNxfBTDU0loJqzRh9WPHVdSrMsk+JQBSlubed/EZ1hgFZ6m93FRzBRCGIj8kBYg==
+"@definitelytyped/header-parser@^0.0.163":
+  version "0.0.163"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.0.163.tgz#fdf5589a048e89b2a2adbd33d5d3d78ecd2a2ec6"
+  integrity sha512-Jr+/q+ESfc7uWldz/j11BfpjIN/gB4WmwhFENhWaMwM0W/9p0ShF+OiUqGhk2Q3Iz8v/oyWzSsxyxgasg9kCxQ==
   dependencies:
-    "@definitelytyped/typescript-versions" "^0.0.159"
+    "@definitelytyped/typescript-versions" "^0.0.163"
     "@types/parsimmon" "^1.10.1"
     parsimmon "^1.13.0"
 
-"@definitelytyped/typescript-versions@^0.0.159":
-  version "0.0.159"
-  resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.0.159.tgz#fa8ac5808364506b94746fa0003bc4d7b11cc15b"
-  integrity sha512-9TWRPpOo3CWYUyS3QCu8goJbAhS3qAE/LWFc+Qy6Wb8vsUAwMTioCtPPsYyqrPDbatXvPFrOr182hE1OFvEFSA==
+"@definitelytyped/typescript-versions@^0.0.163":
+  version "0.0.163"
+  resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.0.163.tgz#b3e018057a0437740102850de2c093c8cddd9e6f"
+  integrity sha512-+GWtJhC+7UaCUnJ+ZkA7bfGuPd6ZbJKEjbHqh76/gOXsqAUOMEa49ufsLlIPUbkEeQlnDNoTHCegE5X/Q+u+/A==
 
-"@definitelytyped/utils@^0.0.159":
-  version "0.0.159"
-  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.0.159.tgz#e18d114462dba703a9f75316e2b668048ad103a5"
-  integrity sha512-zm+Gsw39sD2EANlJmmNXgtpIzXO3QmBq5nZx6Y95RD/s2AypDaBw0eauO1wWji6I45tJOAgPZEvfmjjaxfoyhA==
+"@definitelytyped/utils@^0.0.163":
+  version "0.0.163"
+  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.0.163.tgz#1fb26bf5cf22a00c16924fcb115fe76a46817972"
+  integrity sha512-6MX5TxaQbG/j2RkCWbcbLvv+YNipKqY0eQJafDhwC/RprUocpg+uYVNlH8XzdKRWOGJ0pq7SZOsJD4C3A01ZXg==
   dependencies:
-    "@definitelytyped/typescript-versions" "^0.0.159"
+    "@definitelytyped/typescript-versions" "^0.0.163"
     "@qiwi/npm-registry-client" "^8.9.1"
     "@types/node" "^14.14.35"
     charm "^1.0.2"
@@ -1330,9 +1330,9 @@
     axios ">=0.27.2"
 
 "@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.7.0", "@sap/cds@^6.7.2":
-  version "6.7.2"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.7.2.tgz#13fbb741c9fcd8156b92e4244420db24403886ae"
-  integrity sha512-gLcZ9W37Ms+EJIPyPomco3BEej9NdZ1GQ1kQ8PqBh+tWkMKprLYSguyUq5KnblDz4KRhWskYrt7VbYX3ec73dg==
+  version "6.8.2"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.8.2.tgz#9c819231cfb4519264089c5e98aa3e181757ebc1"
+  integrity sha512-8z8JIy5+FhPk7qh0GsQpeBlkM/y9jGIe7EZvD+ObBL47wG1SEZSdhVLEOoWF6wXouHmw+kT9rdcI9FNJDe+bdg==
   dependencies:
     "@sap/cds-compiler" "^3.2.0"
     "@sap/cds-foss" "^4"
@@ -7252,9 +7252,9 @@ postcss-values-parser@^6.0.2:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.4.12:
-  version "8.4.23"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.23.tgz#df0aee9ac7c5e53e1075c24a3613496f9e6552ab"
-  integrity sha512-bQ3qMcpF6A/YjR55xtoTr0jGOlnPOKAIMdOWiv0EIT6HVPEaJiJB4NLljSbiHoC2RX7DN5Uvjtpbg1NPdwv1oA==
+  version "8.4.24"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.24.tgz#f714dba9b2284be3cc07dbd2fc57ee4dc972d2df"
+  integrity sha512-M0RzbcI0sO/XJNucsGjvWU9ERWxb/ytp1w6dKtxTKgixdtQDq4rmx/g8W1hnaheq9jgwL/oyEdH5Bc4WwJKMqg==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"

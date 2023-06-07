@@ -37,7 +37,7 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@js-temporal/polyfill": "^0.4.3",
+    "@js-temporal/polyfill": "^0.4.4",
     "@sap-cloud-sdk/odata-common": "^3.2.0"
   },
   "devDependencies": {

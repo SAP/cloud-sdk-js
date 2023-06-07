@@ -1330,9 +1330,9 @@
     axios ">=0.27.2"
 
 "@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^6.7.0", "@sap/cds@^6.7.2":
-  version "6.7.2"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.7.2.tgz#13fbb741c9fcd8156b92e4244420db24403886ae"
-  integrity sha512-gLcZ9W37Ms+EJIPyPomco3BEej9NdZ1GQ1kQ8PqBh+tWkMKprLYSguyUq5KnblDz4KRhWskYrt7VbYX3ec73dg==
+  version "6.8.2"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.8.2.tgz#9c819231cfb4519264089c5e98aa3e181757ebc1"
+  integrity sha512-8z8JIy5+FhPk7qh0GsQpeBlkM/y9jGIe7EZvD+ObBL47wG1SEZSdhVLEOoWF6wXouHmw+kT9rdcI9FNJDe+bdg==
   dependencies:
     "@sap/cds-compiler" "^3.2.0"
     "@sap/cds-foss" "^4"
@@ -1645,10 +1645,10 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-14.18.36.tgz#c414052cb9d43fab67d679d5f3c641be911f5835"
   integrity sha512-FXKWbsJ6a1hIrRxv+FoukuHnGTgEzKYGi7kilfMae96AL9UNkPFNWJEEYWzdRI9ooIkbr4AKldyuSTLql06vLQ==
 
-"@types/nodemailer@^6.4.7":
-  version "6.4.7"
-  resolved "https://registry.npmjs.org/@types/nodemailer/-/nodemailer-6.4.7.tgz#658f4bca47c1a895b1d7e054b3b54030a5e1f5e0"
-  integrity sha512-f5qCBGAn/f0qtRcd4SEn88c8Fp3Swct1731X4ryPKqS61/A3LmmzN8zaEz7hneJvpjFbUUgY7lru/B/7ODTazg==
+"@types/nodemailer@^6.4.8":
+  version "6.4.8"
+  resolved "https://registry.npmjs.org/@types/nodemailer/-/nodemailer-6.4.8.tgz#f06c661e9b201fc2acc3a00a0fded42ba7eaca9d"
+  integrity sha512-oVsJSCkqViCn8/pEu2hfjwVO+Gb3e+eTWjg3PcjeFKRItfKpKwHphQqbYmPQrlMk+op7pNNWPbsJIEthpFN/OQ==
   dependencies:
     "@types/node" "*"
 
@@ -6609,10 +6609,10 @@ nodemailer@6.7.3:
   resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.7.3.tgz#b73f9a81b9c8fa8acb4ea14b608f5e725ea8e018"
   integrity sha512-KUdDsspqx89sD4UUyUKzdlUOper3hRkDVkrKh/89G+d9WKsU5ox51NWS4tB1XR5dPUdR4SP0E3molyEfOvSa3g==
 
-nodemailer@6.9.1:
-  version "6.9.1"
-  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.1.tgz#8249d928a43ed85fec17b13d2870c8f758a126ed"
-  integrity sha512-qHw7dOiU5UKNnQpXktdgQ1d3OFgRAekuvbJLcdG5dnEo/GtcTHRYM7+UfJARdOFU9WUQO8OiIamgWPmiSFHYAA==
+nodemailer@6.9.3:
+  version "6.9.3"
+  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.3.tgz#e4425b85f05d83c43c5cd81bf84ab968f8ef5cbe"
+  integrity sha512-fy9v3NgTzBngrMFkDsKEj0r02U7jm6XfC3b52eoNV+GCrGj+s8pt5OqhiJdWKuw51zCTdiNR/IUD1z33LIIGpg==
 
 nopt@^4.0.1:
   version "4.0.3"
@@ -7252,9 +7252,9 @@ postcss-values-parser@^6.0.2:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.4.12:
-  version "8.4.23"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.23.tgz#df0aee9ac7c5e53e1075c24a3613496f9e6552ab"
-  integrity sha512-bQ3qMcpF6A/YjR55xtoTr0jGOlnPOKAIMdOWiv0EIT6HVPEaJiJB4NLljSbiHoC2RX7DN5Uvjtpbg1NPdwv1oA==
+  version "8.4.24"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.24.tgz#f714dba9b2284be3cc07dbd2fc57ee4dc972d2df"
+  integrity sha512-M0RzbcI0sO/XJNucsGjvWU9ERWxb/ytp1w6dKtxTKgixdtQDq4rmx/g8W1hnaheq9jgwL/oyEdH5Bc4WwJKMqg==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"

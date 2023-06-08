@@ -1,7 +1,9 @@
+import { X509Certificate } from 'node:crypto';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { certAsString } from '@sap-cloud-sdk/test-util';
 import {
   proxyAgent,
   ProxyConfiguration,
@@ -9,6 +11,7 @@ import {
 } from '../scp-cf';
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
 import { HttpDestination } from '../scp-cf/destination';
+import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { getAgentConfigAsync } from './http-agent';
 
 describe('createAgent', () => {
@@ -275,7 +278,7 @@ describe('getAgentConfigAsync', () => {
       beforeAll(() => {
         mock({
           'cf-crypto': {
-            'cf-cert': 'my-cert',
+            'cf-cert': certAsString,
             'cf-key': 'my-key'
           }
         });
@@ -283,8 +286,12 @@ describe('getAgentConfigAsync', () => {
 
       afterAll(() => {
         mock.restore();
+      });
+
+      afterEach(() => {
         delete process.env.CF_INSTANCE_CERT;
         delete process.env.CF_INSTANCE_KEY;
+        registerDestinationCache.mtls.clear();
       });
 
       it('returns an object with key "httpsAgent" which includes mTLS options when mtls is set to true and env variables contain cert & key', async () => {
@@ -298,10 +305,41 @@ describe('getAgentConfigAsync', () => {
         const actual = (await getAgentConfigAsync(destination))['httpsAgent']
           .options;
 
-        expect(actual.cert).toEqual('my-cert');
+        expect(actual.cert).toEqual(certAsString);
         expect(actual.key).toEqual('my-key');
         expect(actual.pfx).not.toBeDefined();
         expect(actual.passphrase).not.toBeDefined();
+      });
+
+      it('returns an object with key "httpsAgent" which includes mTLS options when mtls is set to true, env variables contain cert & key and the cache has been used', async () => {
+        process.env.CF_INSTANCE_CERT = 'cf-crypto/cf-cert';
+        process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
+
+        const currentTimeInMs = Date.now();
+        const validCertTime = currentTimeInMs + 100000;
+        jest
+          .spyOn(X509Certificate.prototype, 'validTo', 'get')
+          .mockImplementation(() => validCertTime.toString());
+
+        const destination: HttpDestination = {
+          url: 'https://example.com',
+          mtls: true
+        };
+        registerDestinationCache.mtls.useMtlsCache = true;
+        await registerDestinationCache.mtls.cacheMtlsOptions();
+        const cacheSpy = jest.spyOn(
+          registerDestinationCache.mtls,
+          'retrieveMtlsOptionsFromCache'
+        );
+
+        const actual = (await getAgentConfigAsync(destination))['httpsAgent']
+          .options;
+
+        expect(actual.cert).toEqual(certAsString);
+        expect(actual.key).toEqual('my-key');
+        expect(actual.pfx).not.toBeDefined();
+        expect(actual.passphrase).not.toBeDefined();
+        expect(cacheSpy).toHaveBeenCalledTimes(1);
       });
     });
 

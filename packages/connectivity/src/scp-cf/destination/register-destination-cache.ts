@@ -1,5 +1,6 @@
 import { readFile } from 'fs/promises';
 import { X509Certificate } from 'crypto';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { MtlsOptions } from '../../http-agent';
 import { AsyncCache, AsyncCacheInterface } from '../async-cache';
 import {
@@ -7,6 +8,8 @@ import {
   DestinationCache,
   DestinationCacheType
 } from './destination-cache';
+
+const logger = createLogger('register-destination-cache');
 
 /**
  * @internal
@@ -43,7 +46,7 @@ interface MtlsCacheType {
   /**
    * @internal
    */
-  getMtlsOptions: () => Promise<MtlsOptions>;
+  getMtlsOptions: () => Promise<MtlsOptions | Record<string, never>>;
   /**
    * @internal
    */
@@ -64,22 +67,26 @@ const MtlsCache = (
   retrieveMtlsOptionsFromCache: async (): Promise<MtlsOptions | undefined> =>
     retrieveMtlsOptionsFromCache(mtlsCache),
   cacheMtlsOptions: async (): Promise<void> => cacheMtlsOptions(mtlsCache),
-  getMtlsOptions: async (): Promise<MtlsOptions> => {
-    const mtlsOptions = await retrieveMtlsOptionsFromCache(mtlsCache);
+  getMtlsOptions: async (): Promise<MtlsOptions | Record<string, never>> => {
+    let mtlsOptions = await retrieveMtlsOptionsFromCache(mtlsCache);
     if (!mtlsOptions) {
       await cacheMtlsOptions(mtlsCache);
+      mtlsOptions = await retrieveMtlsOptionsFromCache(mtlsCache);
     }
-    return (
-      mtlsOptions ??
-      (retrieveMtlsOptionsFromCache(mtlsCache) as Promise<MtlsOptions>)
-    );
+    if (!mtlsOptions) {
+      logger.warn(
+        'Neither the previous nor the current mtls certificate is valid anymore.'
+      );
+      return {};
+    }
+    return mtlsOptions;
   },
   clear: async (): Promise<void> => mtlsCache.clear(),
   getCacheInstance: () => mtlsCache
 });
 
 function getCertExpirationDate(cert: string): number {
-  return new Date(new X509Certificate(cert).validTo).getMilliseconds();
+  return Number(new X509Certificate(cert).validTo);
 }
 
 async function retrieveMtlsOptionsFromCache(

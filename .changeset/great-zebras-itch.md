@@ -7,4 +7,4 @@
 - Temporarly use replacement function getAgentConfigAsync.
 - Rename getAgentConfigAsync to getAgentConfig in next major version.
 
-[Improvement] mTLS certificates are now read asynchronously.
+[Improvement] Read mTLS certificates asynchronously.

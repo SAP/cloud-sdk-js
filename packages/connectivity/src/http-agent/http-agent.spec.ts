@@ -1,6 +1,4 @@
 import { X509Certificate } from 'node:crypto';
-import { HttpsProxyAgent } from 'https-proxy-agent';
-import { HttpProxyAgent } from 'http-proxy-agent';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { certAsString } from '@sap-cloud-sdk/test-util';
@@ -36,24 +34,21 @@ describe('createAgent', () => {
   };
 
   it('returns the default agent if neither a proxy configuration is present nor TrustAll is set', async () => {
-    const actual = (await getAgentConfigAsync(baseDestination))['httpsAgent'];
-    expect(actual.options.rejectUnauthorized).toBe(true);
+    const agentConfig = await getAgentConfigAsync(baseDestination)['httpsAgent'];
+    expect(agentConfig.options.rejectUnauthorized).toBe(true);
   });
 
   it('returns a proxy agent if there is a proxy setting on the destination', async () => {
-    expect((await getAgentConfigAsync(proxyDestination))['httpsAgent']).toEqual(
-      new HttpsProxyAgent({
-        ...connectivityProxyConfigMock,
-        rejectUnauthorized: true
-      })
-    );
+    const agentConfig = await getAgentConfigAsync(proxyDestination)['httpsAgent'];
+    expect(agentConfig.proxy.protocol).toEqual('http:');
+    expect(agentConfig.connectOpts.rejectUnauthorized).toBe(true);
   });
 
   it('returns a trustAll agent if TrustAll is configured', async () => {
-    const actual = (await getAgentConfigAsync(trustAllDestination))[
+    const agentConfig = (await getAgentConfigAsync(trustAllDestination))[
       'httpsAgent'
     ];
-    expect(actual.options.rejectUnauthorized).toBeFalsy();
+    expect(agentConfig.options.rejectUnauthorized).toBe(false);
   });
 
   it('returns a HTTP agent if a destination with http protocol URL is provided', async () => {
@@ -76,19 +71,12 @@ describe('createAgent', () => {
   });
 
   it('returns a proxy agent if a proxy setting and TrustAll are BOTH configured', async () => {
-    expect(
-      (
-        await getAgentConfigAsync({
-          ...proxyDestination,
-          ...trustAllDestination
-        })
-      )['httpsAgent']
-    ).toEqual(
-      new HttpsProxyAgent({
-        ...connectivityProxyConfigMock,
-        rejectUnauthorized: false
-      })
-    );
+    const agentConfig = await getAgentConfigAsync({
+      ...proxyDestination,
+      ...trustAllDestination
+    })['httpsAgent'];
+    expect(agentConfig.proxy.protocol).toEqual('http:');
+    expect(agentConfig.connectOpts.rejectUnauthorized).toEqual(false);
   });
 
   it('should return a proxy-agent with the same protocol as the destination (https).', () => {
@@ -101,8 +89,8 @@ describe('createAgent', () => {
       url: 'http://example.com',
       proxyConfiguration
     };
-    expect(proxyAgent(destHttpWithProxy)['httpAgent']).toStrictEqual(
-      new HttpProxyAgent(proxyConfiguration)
+    expect(proxyAgent(destHttpWithProxy)['httpAgent'].proxy.protocol).toEqual(
+      'https:'
     );
   });
 
@@ -116,8 +104,8 @@ describe('createAgent', () => {
       url: 'https://example.com',
       proxyConfiguration
     };
-    expect(proxyAgent(destHttpsWithProxy)['httpsAgent']).toStrictEqual(
-      new HttpsProxyAgent(proxyConfiguration)
+    expect(proxyAgent(destHttpsWithProxy)['httpsAgent'].proxy.protocol).toEqual(
+      'http:'
     );
   });
 

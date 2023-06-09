@@ -15,9 +15,7 @@ describe('pregenerated-lib', () => {
   });
 });
 
-export async function getTestService(
-  npmPackageName?: string
-): Promise<VdmServiceMetadata> {
+export async function getTestService(): Promise<VdmServiceMetadata> {
   const path = resolve(
     oDataServiceSpecs,
     'v2',

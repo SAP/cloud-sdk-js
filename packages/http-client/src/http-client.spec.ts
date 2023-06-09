@@ -13,15 +13,12 @@ import {
 } from '@sap-cloud-sdk/resilience/internal';
 import {
   DestinationWithName,
-  registerDestination
+  registerDestination,
+  Destination,
+  HttpDestination
 } from '@sap-cloud-sdk/connectivity';
 import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
 import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
-import {
-  Destination,
-  ProxyConfiguration,
-  HttpDestination
-} from '../../connectivity/src';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,
@@ -722,6 +719,7 @@ sap-client:001`);
           protocol: 'http'
         }
       };
+
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await expect(
         executeHttpRequest(destination, { method: 'get' })
@@ -730,7 +728,7 @@ sap-client:001`);
         expect.objectContaining({
           proxy: false,
           httpsAgent: expect.objectContaining({
-            proxy: expect.objectContaining({ host: 'dummy', port: 1234 })
+            proxy: expect.objectContaining({ hostname: 'dummy', port: '1234' })
           })
         })
       );
@@ -826,11 +824,6 @@ sap-client:001`);
      * Expected: Axios requests should pass via the proxy and hence result in a redirect loop.
      * */
     xit('test axios proxy redirect', () => {
-      const proxyConfiguration: ProxyConfiguration = {
-        host: 'localhost',
-        port: 8080,
-        protocol: 'http'
-      };
       // A fake proxy server
       http
         .createServer(function (req, res) {
@@ -842,7 +835,7 @@ sap-client:001`);
       axios({
         method: 'get',
         url: 'https://google.com',
-        httpsAgent: new HttpsProxyAgent(proxyConfiguration)
+        httpsAgent: new HttpsProxyAgent('http://localhost:8080')
       })
         .then(r => console.log(r))
         .catch(console.error);

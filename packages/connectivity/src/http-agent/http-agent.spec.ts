@@ -75,10 +75,12 @@ describe('createAgent', () => {
   });
 
   it('returns a proxy agent if a proxy setting and TrustAll are BOTH configured', async () => {
-    const agentConfig = (await getAgentConfigAsync({
-      ...proxyDestination,
-      ...trustAllDestination
-    }))['httpsAgent'];
+    const agentConfig = (
+      await getAgentConfigAsync({
+        ...proxyDestination,
+        ...trustAllDestination
+      })
+    )['httpsAgent'];
     expect(agentConfig.proxy.protocol).toEqual('http:');
     expect(agentConfig.connectOpts.rejectUnauthorized).toEqual(false);
   });

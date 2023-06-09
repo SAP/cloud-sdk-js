@@ -267,7 +267,7 @@ describe('generator', () => {
         )
         ?.getClass('TestEntityWithNoKeysRequestBuilder');
 
-        expect(requestBuilderClass).toBeDefined();
+      expect(requestBuilderClass).toBeDefined();
 
       ['delete', 'update', 'getByKeys'].forEach(methodName => {
         expect(requestBuilderClass?.getMethod(methodName)).not.toBeDefined();

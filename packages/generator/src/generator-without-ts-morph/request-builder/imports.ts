@@ -19,7 +19,7 @@ export function requestBuilderImportDeclarations(
         'DeserializedType',
         'RequestBuilder',
         ...propertyTypeImportNames(entity.keys)
-      ],
+      ].sort(),
       oDataVersion
     ),
     entityImportDeclaration(entity),

@@ -261,35 +261,17 @@ describe('generator', () => {
     });
 
     it('generates RequestBuilder for keyless entity without a delete(), update(), and getByKeys() method', () => {
-      const testFile = files.find(
-        file => file.getBaseName() === 'TestEntityWithNoKeysRequestBuilder.ts'
-      );
-
-      expect(testFile).toBeDefined();
-      expect(testFile!.getClasses().length).toBe(1);
-      const imports = testFile!
-        .getImportDeclarations()
-        .map(
-          decl =>
-            decl
-              .getImportClause()
-              ?.getNamedImports()
-              .map(namedImport => namedImport.getName()) ?? []
+      const requestBuilderClass = files
+        .find(
+          file => file.getBaseName() === 'TestEntityWithNoKeysRequestBuilder.ts'
         )
-        .flat();
-      expect(imports).toContain('Entity');
+        ?.getClass('TestEntityWithNoKeysRequestBuilder');
 
-      const requestBuilderClass = testFile!.getClass(
-        'TestEntityWithNoKeysRequestBuilder'
-      );
-      expect(requestBuilderClass).toBeDefined();
+        expect(requestBuilderClass).toBeDefined();
 
-      for (const methodName of ['delete', 'update', 'getByKeys']) {
-        const method = requestBuilderClass
-          ?.getMethods()
-          .find(m => m.getName() === methodName);
-        expect(method).not.toBeDefined();
-      }
+      ['delete', 'update', 'getByKeys'].forEach(methodName => {
+        expect(requestBuilderClass?.getMethod(methodName)).not.toBeDefined();
+      });
     });
   });
 

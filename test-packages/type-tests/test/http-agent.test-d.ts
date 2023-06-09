@@ -5,6 +5,6 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { expectType } from 'tsd';
 
-expectType<HttpAgentConfig | HttpsAgentConfig>(
+expectType<Promise<HttpAgentConfig | HttpsAgentConfig>>(
   getAgentConfigAsync({ name: 'destination', url: 'url' })
 );

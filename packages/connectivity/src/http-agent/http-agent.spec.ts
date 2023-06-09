@@ -34,12 +34,16 @@ describe('createAgent', () => {
   };
 
   it('returns the default agent if neither a proxy configuration is present nor TrustAll is set', async () => {
-    const agentConfig = await getAgentConfigAsync(baseDestination)['httpsAgent'];
+    const agentConfig = (await getAgentConfigAsync(baseDestination))[
+      'httpsAgent'
+    ];
     expect(agentConfig.options.rejectUnauthorized).toBe(true);
   });
 
   it('returns a proxy agent if there is a proxy setting on the destination', async () => {
-    const agentConfig = await getAgentConfigAsync(proxyDestination)['httpsAgent'];
+    const agentConfig = (await getAgentConfigAsync(proxyDestination))[
+      'httpsAgent'
+    ];
     expect(agentConfig.proxy.protocol).toEqual('http:');
     expect(agentConfig.connectOpts.rejectUnauthorized).toBe(true);
   });
@@ -71,10 +75,10 @@ describe('createAgent', () => {
   });
 
   it('returns a proxy agent if a proxy setting and TrustAll are BOTH configured', async () => {
-    const agentConfig = await getAgentConfigAsync({
+    const agentConfig = (await getAgentConfigAsync({
       ...proxyDestination,
       ...trustAllDestination
-    })['httpsAgent'];
+    }))['httpsAgent'];
     expect(agentConfig.proxy.protocol).toEqual('http:');
     expect(agentConfig.connectOpts.rejectUnauthorized).toEqual(false);
   });

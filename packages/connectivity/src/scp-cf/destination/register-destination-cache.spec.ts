@@ -24,6 +24,7 @@ describe('register-destination-cache', () => {
   afterEach(() => {
     destination.clear();
     mtls.clear();
+    mock.restore();
     jest.clearAllMocks();
   });
 

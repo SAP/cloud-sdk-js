@@ -33,7 +33,6 @@ const logger = createLogger({
 export async function getAgentConfigAsync(
   destination: HttpDestination
 ): Promise<HttpAgentConfig | HttpsAgentConfig> {
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOption(destination),
@@ -55,7 +54,6 @@ export async function getAgentConfigAsync(
 export function getAgentConfig(
   destination: HttpDestination
 ): HttpAgentConfig | HttpsAgentConfig {
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOption(destination)

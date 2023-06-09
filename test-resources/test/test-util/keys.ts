@@ -13,8 +13,8 @@ export function signedJwt(payload, algorithm: Algorithm = 'RS512') {
 }
 
 export function signedJwtForVerification(
-  payload,
-  jku,
+  payload: string | object | Buffer,
+  jku?: string,
   algorithm: Algorithm = 'RS256'
 ) {
   return sign(payload, privateKey, {

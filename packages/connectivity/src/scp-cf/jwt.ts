@@ -3,10 +3,7 @@ import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import * as xssec from '@sap/xssec';
 import { decode } from 'jsonwebtoken';
 import { Cache } from './cache';
-import {
-  getDestinationServiceCredentials,
-  getXsuaaServiceCredentials
-} from './environment-accessor';
+import { getXsuaaServiceCredentials } from './environment-accessor';
 import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
 import { TokenKey } from './xsuaa-service-types';
 
@@ -260,20 +257,13 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT extends string>(
 
 /**
  * Checks if the given JWT was issued by XSUAA based on the iss property and the uaa domain of the XSUAA.
- * @param decodedUserJwt - JWT to be checked.
+ * @param jwt - JWT to be checked.
  * @returns Whether the JWT was issued by XSUAA.
  * @internal
  */
-export function isXsuaaToken(decodedUserJwt: JwtWithPayloadObject): boolean {
-  if (!decodedUserJwt.header.jku) {
-    return false;
-  }
-  const jkuDomain = new URL(decodedUserJwt.header.jku).hostname;
-  const uaaDomain = getDestinationServiceCredentials(
-    decodedUserJwt.payload
-  ).uaadomain;
-
-  return jkuDomain.endsWith(uaaDomain);
+export function isXsuaaToken(jwt: JwtWithPayloadObject): boolean {
+  // Check inspired by xssec lib: https://github.wdf.sap.corp/CPSecurity/node-xs2sec/blob/master/lib/tokeninfo.js#L127
+  return jwt.payload.ext_attr?.enhancer === 'XSUAA';
 }
 
 /**

@@ -1,7 +1,8 @@
 import { Cache, CacheEntry } from './cache';
 
 /**
- * Generic cache interface.
+ * Generic async cache interface.
+ * @internal
  */
 export interface AsyncCacheInterface<T> {
   /**
@@ -26,6 +27,10 @@ export interface AsyncCacheInterface<T> {
   clear(): Promise<void>;
 }
 
+/**
+ * @internal
+ * Async wrapper around Cache<T>.
+ */
 export class AsyncCache<T> implements AsyncCacheInterface<T> {
   cache: Cache<T>;
 

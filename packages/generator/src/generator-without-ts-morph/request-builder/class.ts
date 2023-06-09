@@ -29,7 +29,7 @@ function requestBuilderMethods(entity: VdmEntity): string[] {
     methods.push(createRequestBuilder(entity));
   }
 
-  if (entity.keys.length > 0) {
+  if (entity.keys.length) {
     methods.push(getByKeyRequestBuilder(entity));
 
     if (entity.updatable) {

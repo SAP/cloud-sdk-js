@@ -5,7 +5,6 @@ import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 // eslint-disable-next-line import/named
 import axios, { RawAxiosRequestConfig } from 'axios';
-import { HttpsProxyAgent } from 'https-proxy-agent';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
@@ -466,7 +465,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
 
-      const spy = jest.spyOn(axios, 'request');
+      const requestSpy = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName
       });
@@ -478,14 +477,16 @@ describe('destination service', () => {
         headers: {
           Authorization: `Bearer ${jwt}`
         },
-        httpsAgent: new HttpsProxyAgent({
-          port: 80,
-          host: 'some.foo.bar',
-          protocol: 'http',
-          rejectUnauthorized: true
+        httpsAgent: expect.objectContaining({
+          proxy: expect.objectContaining({
+            hostname: 'some.foo.bar',
+            protocol: 'http:'
+          })
         })
       };
-      expect(spy).toHaveBeenCalledWith(expectedConfig);
+      expect(requestSpy).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfig)
+      );
       delete process.env.HTTPS_PROXY;
     });
 

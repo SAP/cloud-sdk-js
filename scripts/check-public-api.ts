@@ -22,11 +22,13 @@ export const regexExportedIndex = /\{([\w,]+)\}from'\./g;
 export const regexExportedInternal = /\.\/([\w-]+)/g;
 
 function mockFileSystem(pathToPackage: string) {
-  const { pathToSource, pathToTsConfig } = paths(pathToPackage);
+  const { pathToSource, pathToTsConfig, pathToNodeModules } =
+    paths(pathToPackage);
   mock({
     [pathToTsConfig]: mock.load(pathToTsConfig),
     [pathToSource]: mock.load(pathToSource),
     [pathRootNodeModules]: mock.load(pathRootNodeModules),
+    [pathToNodeModules]: mock.load(pathToNodeModules),
     [pathToTsConfigRoot]: mock.load(pathToTsConfigRoot)
   });
 }
@@ -34,11 +36,13 @@ function mockFileSystem(pathToPackage: string) {
 function paths(pathToPackage: string): {
   pathToSource: string;
   pathToTsConfig: string;
+  pathToNodeModules: string;
   pathCompiled: string;
 } {
   return {
     pathToSource: join(pathToPackage, 'src'),
     pathToTsConfig: join(pathToPackage, 'tsconfig.json'),
+    pathToNodeModules: join(pathToPackage, 'node_modules'),
     pathCompiled: 'dist'
   };
 }
@@ -296,17 +300,19 @@ export async function exportAllInBarrel(
 ): Promise<void> {
   const barrelFilePath = join(cwd, barrelFileName);
   if (existsSync(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
-    const dirContents = (await glob('*', {
-      ignore: [
-        '**/*.spec.ts',
-        '__snapshots__',
-        'internal.ts',
-        'index.ts',
-        'cli.ts',
-        '**/*.md'
-      ],
-      cwd
-    })).map(name => basename(name, '.ts'));
+    const dirContents = (
+      await glob('*', {
+        ignore: [
+          '**/*.spec.ts',
+          '__snapshots__',
+          'internal.ts',
+          'index.ts',
+          'cli.ts',
+          '**/*.md'
+        ],
+        cwd
+      })
+    ).map(name => basename(name, '.ts'));
     const exportedFiles = parseBarrelFile(
       await readFile(barrelFilePath, 'utf8'),
       regexExportedInternal

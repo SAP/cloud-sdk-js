@@ -7,8 +7,8 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
+  GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
   DeserializedType,
@@ -22,14 +22,6 @@ export declare class AirlinesRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Airlines<T>, T> {
   /**
-   * Returns a request builder for retrieving one `Airlines` entity based on its keys.
-   * @param airlineCode Key property. See {@link Airlines.airlineCode}.
-   * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
-   */
-  getByKey(
-    airlineCode: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<Airlines<T>, T>;
-  /**
    * Returns a request builder for querying all `Airlines` entities.
    * @returns A request builder for creating requests to retrieve all `Airlines` entities.
    */
@@ -40,6 +32,14 @@ export declare class AirlinesRequestBuilder<
    * @returns A request builder for creating requests that create an entity of type `Airlines`.
    */
   create(entity: Airlines<T>): CreateRequestBuilder<Airlines<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `Airlines` entity based on its keys.
+   * @param airlineCode Key property. See {@link Airlines.airlineCode}.
+   * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
+   */
+  getByKey(
+    airlineCode: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<Airlines<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `Airlines`.
    * @param entity The entity to be updated

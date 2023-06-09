@@ -7,8 +7,8 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
+  GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
   DeserializedType,
@@ -22,19 +22,6 @@ import { Airports } from './Airports';
 export class AirportsRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Airports<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `Airports` entity based on its keys.
-   * @param icaoCode Key property. See {@link Airports.icaoCode}.
-   * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
-   */
-  getByKey(
-    icaoCode: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<Airports<T>, T> {
-    return new GetByKeyRequestBuilder<Airports<T>, T>(this.entityApi, {
-      IcaoCode: icaoCode
-    });
-  }
-
   /**
    * Returns a request builder for querying all `Airports` entities.
    * @returns A request builder for creating requests to retrieve all `Airports` entities.
@@ -50,6 +37,19 @@ export class AirportsRequestBuilder<
    */
   create(entity: Airports<T>): CreateRequestBuilder<Airports<T>, T> {
     return new CreateRequestBuilder<Airports<T>, T>(this.entityApi, entity);
+  }
+
+  /**
+   * Returns a request builder for retrieving one `Airports` entity based on its keys.
+   * @param icaoCode Key property. See {@link Airports.icaoCode}.
+   * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
+   */
+  getByKey(
+    icaoCode: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<Airports<T>, T> {
+    return new GetByKeyRequestBuilder<Airports<T>, T>(this.entityApi, {
+      IcaoCode: icaoCode
+    });
   }
 
   /**

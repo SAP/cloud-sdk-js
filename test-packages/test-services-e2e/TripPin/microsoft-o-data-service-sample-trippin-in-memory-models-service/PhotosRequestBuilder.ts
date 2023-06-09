@@ -8,8 +8,8 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
+  GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
   DeserializedType,
@@ -23,17 +23,6 @@ import { Photos } from './Photos';
 export class PhotosRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Photos<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `Photos` entity based on its keys.
-   * @param id Key property. See {@link Photos.id}.
-   * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
-   */
-  getByKey(
-    id: DeserializedType<T, 'Edm.Int64'>
-  ): GetByKeyRequestBuilder<Photos<T>, T> {
-    return new GetByKeyRequestBuilder<Photos<T>, T>(this.entityApi, { Id: id });
-  }
-
   /**
    * Returns a request builder for querying all `Photos` entities.
    * @returns A request builder for creating requests to retrieve all `Photos` entities.
@@ -49,6 +38,17 @@ export class PhotosRequestBuilder<
    */
   create(entity: Photos<T>): CreateRequestBuilder<Photos<T>, T> {
     return new CreateRequestBuilder<Photos<T>, T>(this.entityApi, entity);
+  }
+
+  /**
+   * Returns a request builder for retrieving one `Photos` entity based on its keys.
+   * @param id Key property. See {@link Photos.id}.
+   * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
+   */
+  getByKey(
+    id: DeserializedType<T, 'Edm.Int64'>
+  ): GetByKeyRequestBuilder<Photos<T>, T> {
+    return new GetByKeyRequestBuilder<Photos<T>, T>(this.entityApi, { Id: id });
   }
 
   /**

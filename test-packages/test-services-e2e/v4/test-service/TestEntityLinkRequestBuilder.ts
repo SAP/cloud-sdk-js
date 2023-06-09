@@ -7,8 +7,8 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
+  GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
   DeserializedType,
@@ -22,22 +22,6 @@ import { TestEntityLink } from './TestEntityLink';
 export class TestEntityLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityLink<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityLink` entity based on its keys.
-   * @param keyTestEntityLink Key property. See {@link TestEntityLink.keyTestEntityLink}.
-   * @param keyToTestEntity Key property. See {@link TestEntityLink.keyToTestEntity}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityLink` entity based on its keys.
-   */
-  getByKey(
-    keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>,
-    keyToTestEntity: DeserializedType<T, 'Edm.Int32'>
-  ): GetByKeyRequestBuilder<TestEntityLink<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityLink<T>, T>(this.entityApi, {
-      KeyTestEntityLink: keyTestEntityLink,
-      KeyToTestEntity: keyToTestEntity
-    });
-  }
-
   /**
    * Returns a request builder for querying all `TestEntityLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityLink` entities.
@@ -58,6 +42,22 @@ export class TestEntityLinkRequestBuilder<
       this.entityApi,
       entity
     );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityLink` entity based on its keys.
+   * @param keyTestEntityLink Key property. See {@link TestEntityLink.keyTestEntityLink}.
+   * @param keyToTestEntity Key property. See {@link TestEntityLink.keyToTestEntity}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityLink` entity based on its keys.
+   */
+  getByKey(
+    keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>,
+    keyToTestEntity: DeserializedType<T, 'Edm.Int32'>
+  ): GetByKeyRequestBuilder<TestEntityLink<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityLink<T>, T>(this.entityApi, {
+      KeyTestEntityLink: keyTestEntityLink,
+      KeyToTestEntity: keyToTestEntity
+    });
   }
 
   /**

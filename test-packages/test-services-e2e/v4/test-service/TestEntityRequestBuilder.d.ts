@@ -7,8 +7,8 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
+  GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
   DeserializedType,
@@ -22,14 +22,6 @@ export declare class TestEntityRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity<T>, T> {
   /**
-   * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
-   * @param keyTestEntity Key property. See {@link TestEntity.keyTestEntity}.
-   * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
-   */
-  getByKey(
-    keyTestEntity: DeserializedType<T, 'Edm.Int32'>
-  ): GetByKeyRequestBuilder<TestEntity<T>, T>;
-  /**
    * Returns a request builder for querying all `TestEntity` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
    */
@@ -40,6 +32,14 @@ export declare class TestEntityRequestBuilder<
    * @returns A request builder for creating requests that create an entity of type `TestEntity`.
    */
   create(entity: TestEntity<T>): CreateRequestBuilder<TestEntity<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
+   * @param keyTestEntity Key property. See {@link TestEntity.keyTestEntity}.
+   * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
+   */
+  getByKey(
+    keyTestEntity: DeserializedType<T, 'Edm.Int32'>
+  ): GetByKeyRequestBuilder<TestEntity<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntity`.
    * @param entity The entity to be updated

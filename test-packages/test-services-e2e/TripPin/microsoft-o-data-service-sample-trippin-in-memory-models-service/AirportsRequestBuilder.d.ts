@@ -7,8 +7,8 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
+  GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
   DeserializedType,
@@ -22,14 +22,6 @@ export declare class AirportsRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Airports<T>, T> {
   /**
-   * Returns a request builder for retrieving one `Airports` entity based on its keys.
-   * @param icaoCode Key property. See {@link Airports.icaoCode}.
-   * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
-   */
-  getByKey(
-    icaoCode: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<Airports<T>, T>;
-  /**
    * Returns a request builder for querying all `Airports` entities.
    * @returns A request builder for creating requests to retrieve all `Airports` entities.
    */
@@ -40,6 +32,14 @@ export declare class AirportsRequestBuilder<
    * @returns A request builder for creating requests that create an entity of type `Airports`.
    */
   create(entity: Airports<T>): CreateRequestBuilder<Airports<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `Airports` entity based on its keys.
+   * @param icaoCode Key property. See {@link Airports.icaoCode}.
+   * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
+   */
+  getByKey(
+    icaoCode: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<Airports<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `Airports`.
    * @param entity The entity to be updated

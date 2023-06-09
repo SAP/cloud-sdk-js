@@ -8,8 +8,8 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
+  GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
   DeserializedType,
@@ -23,14 +23,6 @@ export declare class PhotosRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Photos<T>, T> {
   /**
-   * Returns a request builder for retrieving one `Photos` entity based on its keys.
-   * @param id Key property. See {@link Photos.id}.
-   * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
-   */
-  getByKey(
-    id: DeserializedType<T, 'Edm.Int64'>
-  ): GetByKeyRequestBuilder<Photos<T>, T>;
-  /**
    * Returns a request builder for querying all `Photos` entities.
    * @returns A request builder for creating requests to retrieve all `Photos` entities.
    */
@@ -41,6 +33,14 @@ export declare class PhotosRequestBuilder<
    * @returns A request builder for creating requests that create an entity of type `Photos`.
    */
   create(entity: Photos<T>): CreateRequestBuilder<Photos<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `Photos` entity based on its keys.
+   * @param id Key property. See {@link Photos.id}.
+   * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
+   */
+  getByKey(
+    id: DeserializedType<T, 'Edm.Int64'>
+  ): GetByKeyRequestBuilder<Photos<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `Photos`.
    * @param entity The entity to be updated

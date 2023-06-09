@@ -7,8 +7,8 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
+  GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
   DeserializedType,
@@ -22,19 +22,6 @@ import { People } from './People';
 export class PeopleRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<People<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `People` entity based on its keys.
-   * @param userName Key property. See {@link People.userName}.
-   * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
-   */
-  getByKey(
-    userName: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<People<T>, T> {
-    return new GetByKeyRequestBuilder<People<T>, T>(this.entityApi, {
-      UserName: userName
-    });
-  }
-
   /**
    * Returns a request builder for querying all `People` entities.
    * @returns A request builder for creating requests to retrieve all `People` entities.
@@ -50,6 +37,19 @@ export class PeopleRequestBuilder<
    */
   create(entity: People<T>): CreateRequestBuilder<People<T>, T> {
     return new CreateRequestBuilder<People<T>, T>(this.entityApi, entity);
+  }
+
+  /**
+   * Returns a request builder for retrieving one `People` entity based on its keys.
+   * @param userName Key property. See {@link People.userName}.
+   * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
+   */
+  getByKey(
+    userName: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<People<T>, T> {
+    return new GetByKeyRequestBuilder<People<T>, T>(this.entityApi, {
+      UserName: userName
+    });
   }
 
   /**

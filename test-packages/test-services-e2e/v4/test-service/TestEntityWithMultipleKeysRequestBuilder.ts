@@ -7,8 +7,8 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
+  GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
   DeserializedType,
@@ -22,28 +22,6 @@ import { TestEntityWithMultipleKeys } from './TestEntityWithMultipleKeys';
 export class TestEntityWithMultipleKeysRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityWithMultipleKeys<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityWithMultipleKeys` entity based on its keys.
-   * @param keyTestEntityWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.keyTestEntityWithMultipleKeys}.
-   * @param stringPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.stringPropertyWithMultipleKeys}.
-   * @param booleanPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.booleanPropertyWithMultipleKeys}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityWithMultipleKeys` entity based on its keys.
-   */
-  getByKey(
-    keyTestEntityWithMultipleKeys: DeserializedType<T, 'Edm.Int32'>,
-    stringPropertyWithMultipleKeys: DeserializedType<T, 'Edm.String'>,
-    booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>
-  ): GetByKeyRequestBuilder<TestEntityWithMultipleKeys<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityWithMultipleKeys<T>, T>(
-      this.entityApi,
-      {
-        KeyTestEntityWithMultipleKeys: keyTestEntityWithMultipleKeys,
-        StringPropertyWithMultipleKeys: stringPropertyWithMultipleKeys,
-        BooleanPropertyWithMultipleKeys: booleanPropertyWithMultipleKeys
-      }
-    );
-  }
-
   /**
    * Returns a request builder for querying all `TestEntityWithMultipleKeys` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithMultipleKeys` entities.
@@ -65,6 +43,28 @@ export class TestEntityWithMultipleKeysRequestBuilder<
     return new CreateRequestBuilder<TestEntityWithMultipleKeys<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityWithMultipleKeys` entity based on its keys.
+   * @param keyTestEntityWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.keyTestEntityWithMultipleKeys}.
+   * @param stringPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.stringPropertyWithMultipleKeys}.
+   * @param booleanPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.booleanPropertyWithMultipleKeys}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityWithMultipleKeys` entity based on its keys.
+   */
+  getByKey(
+    keyTestEntityWithMultipleKeys: DeserializedType<T, 'Edm.Int32'>,
+    stringPropertyWithMultipleKeys: DeserializedType<T, 'Edm.String'>,
+    booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>
+  ): GetByKeyRequestBuilder<TestEntityWithMultipleKeys<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityWithMultipleKeys<T>, T>(
+      this.entityApi,
+      {
+        KeyTestEntityWithMultipleKeys: keyTestEntityWithMultipleKeys,
+        StringPropertyWithMultipleKeys: stringPropertyWithMultipleKeys,
+        BooleanPropertyWithMultipleKeys: booleanPropertyWithMultipleKeys
+      }
     );
   }
 

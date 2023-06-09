@@ -4,12 +4,11 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  Entity,
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
+  GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
   DeserializedType,

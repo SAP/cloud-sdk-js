@@ -17,11 +17,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
 import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
-import {
-  Destination,
-  ProxyConfiguration,
-  HttpDestination
-} from '../../connectivity/src';
+import { Destination, HttpDestination } from '../../connectivity/src';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,
@@ -827,11 +823,6 @@ sap-client:001`);
      * Expected: Axios requests should pass via the proxy and hence result in a redirect loop.
      * */
     xit('test axios proxy redirect', () => {
-      const proxyConfiguration: ProxyConfiguration = {
-        host: 'localhost',
-        port: 8080,
-        protocol: 'http'
-      };
       // A fake proxy server
       http
         .createServer(function (req, res) {
@@ -843,7 +834,7 @@ sap-client:001`);
       axios({
         method: 'get',
         url: 'https://google.com',
-        httpsAgent: new HttpsProxyAgent(proxyConfiguration)
+        httpsAgent: new HttpsProxyAgent('http://localhost:8080')
       })
         .then(r => console.log(r))
         .catch(console.error);

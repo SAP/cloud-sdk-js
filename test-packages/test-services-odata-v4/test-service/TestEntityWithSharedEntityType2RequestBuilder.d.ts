@@ -22,14 +22,6 @@ export declare class TestEntityWithSharedEntityType2RequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityWithSharedEntityType2<T>, T> {
   /**
-   * Returns a request builder for retrieving one `TestEntityWithSharedEntityType2` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityWithSharedEntityType2.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType2` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityWithSharedEntityType2<T>, T>;
-  /**
    * Returns a request builder for querying all `TestEntityWithSharedEntityType2` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithSharedEntityType2` entities.
    */
@@ -42,6 +34,14 @@ export declare class TestEntityWithSharedEntityType2RequestBuilder<
   create(
     entity: TestEntityWithSharedEntityType2<T>
   ): CreateRequestBuilder<TestEntityWithSharedEntityType2<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `TestEntityWithSharedEntityType2` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityWithSharedEntityType2.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType2` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityWithSharedEntityType2<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityWithSharedEntityType2`.
    * @param entity The entity to be updated

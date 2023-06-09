@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  Entity,
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
@@ -23,19 +24,6 @@ export class CaseTestRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<CaseTest<T>, T> {
   /**
-   * Returns a request builder for retrieving one `CaseTest` entity based on its keys.
-   * @param keyPropertyString Key property. See {@link CaseTest.keyPropertyString}.
-   * @returns A request builder for creating requests to retrieve one `CaseTest` entity based on its keys.
-   */
-  getByKey(
-    keyPropertyString: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<CaseTest<T>, T> {
-    return new GetByKeyRequestBuilder<CaseTest<T>, T>(this.entityApi, {
-      KeyPropertyString: keyPropertyString
-    });
-  }
-
-  /**
    * Returns a request builder for querying all `CaseTest` entities.
    * @returns A request builder for creating requests to retrieve all `CaseTest` entities.
    */
@@ -50,6 +38,19 @@ export class CaseTestRequestBuilder<
    */
   create(entity: CaseTest<T>): CreateRequestBuilder<CaseTest<T>, T> {
     return new CreateRequestBuilder<CaseTest<T>, T>(this.entityApi, entity);
+  }
+
+  /**
+   * Returns a request builder for retrieving one `CaseTest` entity based on its keys.
+   * @param keyPropertyString Key property. See {@link CaseTest.keyPropertyString}.
+   * @returns A request builder for creating requests to retrieve one `CaseTest` entity based on its keys.
+   */
+  getByKey(
+    keyPropertyString: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<CaseTest<T>, T> {
+    return new GetByKeyRequestBuilder<CaseTest<T>, T>(this.entityApi, {
+      KeyPropertyString: keyPropertyString
+    });
   }
 
   /**

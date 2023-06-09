@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  Entity,
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
@@ -23,19 +24,6 @@ export class TestEntity3RequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity3<T>, T> {
   /**
-   * Returns a request builder for retrieving one `TestEntity3` entity based on its keys.
-   * @param keyPropertyString Key property. See {@link TestEntity3.keyPropertyString}.
-   * @returns A request builder for creating requests to retrieve one `TestEntity3` entity based on its keys.
-   */
-  getByKey(
-    keyPropertyString: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntity3<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntity3<T>, T>(this.entityApi, {
-      KeyPropertyString: keyPropertyString
-    });
-  }
-
-  /**
    * Returns a request builder for querying all `TestEntity3` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity3` entities.
    */
@@ -50,6 +38,19 @@ export class TestEntity3RequestBuilder<
    */
   create(entity: TestEntity3<T>): CreateRequestBuilder<TestEntity3<T>, T> {
     return new CreateRequestBuilder<TestEntity3<T>, T>(this.entityApi, entity);
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntity3` entity based on its keys.
+   * @param keyPropertyString Key property. See {@link TestEntity3.keyPropertyString}.
+   * @returns A request builder for creating requests to retrieve one `TestEntity3` entity based on its keys.
+   */
+  getByKey(
+    keyPropertyString: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntity3<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntity3<T>, T>(this.entityApi, {
+      KeyPropertyString: keyPropertyString
+    });
   }
 
   /**

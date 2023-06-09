@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  Entity,
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
@@ -22,20 +23,6 @@ import { TestEntityEndsWithSomethingElse } from './TestEntityEndsWithSomethingEl
 export class TestEntityEndsWithSomethingElseRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityEndsWithSomethingElse<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityEndsWithSomethingElse` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityEndsWithSomethingElse.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityEndsWithSomethingElse` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityEndsWithSomethingElse<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityEndsWithSomethingElse<T>, T>(
-      this.entityApi,
-      { KeyProperty: keyProperty }
-    );
-  }
-
   /**
    * Returns a request builder for querying all `TestEntityEndsWithSomethingElse` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityEndsWithSomethingElse` entities.
@@ -57,6 +44,20 @@ export class TestEntityEndsWithSomethingElseRequestBuilder<
     return new CreateRequestBuilder<TestEntityEndsWithSomethingElse<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityEndsWithSomethingElse` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityEndsWithSomethingElse.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityEndsWithSomethingElse` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityEndsWithSomethingElse<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityEndsWithSomethingElse<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
     );
   }
 

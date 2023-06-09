@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  Entity,
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
@@ -22,20 +23,6 @@ import { MultiSchemaTestEntity } from './MultiSchemaTestEntity';
 export class MultiSchemaTestEntityRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<MultiSchemaTestEntity<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `MultiSchemaTestEntity` entity based on its keys.
-   * @param keyProperty Key property. See {@link MultiSchemaTestEntity.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `MultiSchemaTestEntity` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<MultiSchemaTestEntity<T>, T> {
-    return new GetByKeyRequestBuilder<MultiSchemaTestEntity<T>, T>(
-      this.entityApi,
-      { KeyProperty: keyProperty }
-    );
-  }
-
   /**
    * Returns a request builder for querying all `MultiSchemaTestEntity` entities.
    * @returns A request builder for creating requests to retrieve all `MultiSchemaTestEntity` entities.
@@ -57,6 +44,20 @@ export class MultiSchemaTestEntityRequestBuilder<
     return new CreateRequestBuilder<MultiSchemaTestEntity<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `MultiSchemaTestEntity` entity based on its keys.
+   * @param keyProperty Key property. See {@link MultiSchemaTestEntity.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `MultiSchemaTestEntity` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<MultiSchemaTestEntity<T>, T> {
+    return new GetByKeyRequestBuilder<MultiSchemaTestEntity<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
     );
   }
 

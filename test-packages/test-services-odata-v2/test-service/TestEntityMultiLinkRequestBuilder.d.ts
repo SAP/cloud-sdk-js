@@ -22,14 +22,6 @@ export declare class TestEntityMultiLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityMultiLink<T>, T> {
   /**
-   * Returns a request builder for retrieving one `TestEntityMultiLink` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityMultiLink.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityMultiLink` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityMultiLink<T>, T>;
-  /**
    * Returns a request builder for querying all `TestEntityMultiLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityMultiLink` entities.
    */
@@ -42,6 +34,14 @@ export declare class TestEntityMultiLinkRequestBuilder<
   create(
     entity: TestEntityMultiLink<T>
   ): CreateRequestBuilder<TestEntityMultiLink<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `TestEntityMultiLink` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityMultiLink.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityMultiLink` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityMultiLink<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityMultiLink`.
    * @param entity The entity to be updated

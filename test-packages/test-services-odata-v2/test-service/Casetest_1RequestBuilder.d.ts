@@ -22,14 +22,6 @@ export declare class Casetest_1RequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Casetest_1<T>, T> {
   /**
-   * Returns a request builder for retrieving one `Casetest_1` entity based on its keys.
-   * @param keyPropertyString Key property. See {@link Casetest_1.keyPropertyString}.
-   * @returns A request builder for creating requests to retrieve one `Casetest_1` entity based on its keys.
-   */
-  getByKey(
-    keyPropertyString: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<Casetest_1<T>, T>;
-  /**
    * Returns a request builder for querying all `Casetest_1` entities.
    * @returns A request builder for creating requests to retrieve all `Casetest_1` entities.
    */
@@ -40,6 +32,14 @@ export declare class Casetest_1RequestBuilder<
    * @returns A request builder for creating requests that create an entity of type `Casetest_1`.
    */
   create(entity: Casetest_1<T>): CreateRequestBuilder<Casetest_1<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `Casetest_1` entity based on its keys.
+   * @param keyPropertyString Key property. See {@link Casetest_1.keyPropertyString}.
+   * @returns A request builder for creating requests to retrieve one `Casetest_1` entity based on its keys.
+   */
+  getByKey(
+    keyPropertyString: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<Casetest_1<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `Casetest_1`.
    * @param entity The entity to be updated

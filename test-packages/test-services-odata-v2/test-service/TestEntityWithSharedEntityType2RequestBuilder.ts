@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  Entity,
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
@@ -22,20 +23,6 @@ import { TestEntityWithSharedEntityType2 } from './TestEntityWithSharedEntityTyp
 export class TestEntityWithSharedEntityType2RequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityWithSharedEntityType2<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityWithSharedEntityType2` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityWithSharedEntityType2.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType2` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityWithSharedEntityType2<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityWithSharedEntityType2<T>, T>(
-      this.entityApi,
-      { KeyProperty: keyProperty }
-    );
-  }
-
   /**
    * Returns a request builder for querying all `TestEntityWithSharedEntityType2` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithSharedEntityType2` entities.
@@ -57,6 +44,20 @@ export class TestEntityWithSharedEntityType2RequestBuilder<
     return new CreateRequestBuilder<TestEntityWithSharedEntityType2<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityWithSharedEntityType2` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityWithSharedEntityType2.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType2` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityWithSharedEntityType2<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityWithSharedEntityType2<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
     );
   }
 

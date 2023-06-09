@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  Entity,
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
@@ -23,20 +24,6 @@ export class TestEntitySingleLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntitySingleLink<T>, T> {
   /**
-   * Returns a request builder for retrieving one `TestEntitySingleLink` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntitySingleLink.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntitySingleLink<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntitySingleLink<T>, T>(
-      this.entityApi,
-      { KeyProperty: keyProperty }
-    );
-  }
-
-  /**
    * Returns a request builder for querying all `TestEntitySingleLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntitySingleLink` entities.
    */
@@ -55,6 +42,20 @@ export class TestEntitySingleLinkRequestBuilder<
     return new CreateRequestBuilder<TestEntitySingleLink<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntitySingleLink` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntitySingleLink.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntitySingleLink<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntitySingleLink<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
     );
   }
 

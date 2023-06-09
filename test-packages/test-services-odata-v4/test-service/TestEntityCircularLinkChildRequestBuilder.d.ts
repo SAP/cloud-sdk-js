@@ -22,14 +22,6 @@ export declare class TestEntityCircularLinkChildRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityCircularLinkChild<T>, T> {
   /**
-   * Returns a request builder for retrieving one `TestEntityCircularLinkChild` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityCircularLinkChild.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkChild` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityCircularLinkChild<T>, T>;
-  /**
    * Returns a request builder for querying all `TestEntityCircularLinkChild` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityCircularLinkChild` entities.
    */
@@ -42,6 +34,14 @@ export declare class TestEntityCircularLinkChildRequestBuilder<
   create(
     entity: TestEntityCircularLinkChild<T>
   ): CreateRequestBuilder<TestEntityCircularLinkChild<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `TestEntityCircularLinkChild` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityCircularLinkChild.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkChild` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityCircularLinkChild<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityCircularLinkChild`.
    * @param entity The entity to be updated

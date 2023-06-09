@@ -22,14 +22,6 @@ export declare class TestEntityLvl2SingleLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityLvl2SingleLink<T>, T> {
   /**
-   * Returns a request builder for retrieving one `TestEntityLvl2SingleLink` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityLvl2SingleLink.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityLvl2SingleLink` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityLvl2SingleLink<T>, T>;
-  /**
    * Returns a request builder for querying all `TestEntityLvl2SingleLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityLvl2SingleLink` entities.
    */
@@ -42,6 +34,14 @@ export declare class TestEntityLvl2SingleLinkRequestBuilder<
   create(
     entity: TestEntityLvl2SingleLink<T>
   ): CreateRequestBuilder<TestEntityLvl2SingleLink<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `TestEntityLvl2SingleLink` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityLvl2SingleLink.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityLvl2SingleLink` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityLvl2SingleLink<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityLvl2SingleLink`.
    * @param entity The entity to be updated

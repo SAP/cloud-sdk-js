@@ -13,14 +13,6 @@ const TestEntityEndsWith_1 = require("./TestEntityEndsWith");
  */
 class TestEntityEndsWithRequestBuilder extends odata_v4_1.RequestBuilder {
     /**
-     * Returns a request builder for retrieving one `TestEntityEndsWith` entity based on its keys.
-     * @param keyProperty Key property. See {@link TestEntityEndsWith.keyProperty}.
-     * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
-     */
-    getByKey(keyProperty) {
-        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, { KeyProperty: keyProperty });
-    }
-    /**
      * Returns a request builder for querying all `TestEntityEndsWith` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityEndsWith` entities.
      */
@@ -34,6 +26,14 @@ class TestEntityEndsWithRequestBuilder extends odata_v4_1.RequestBuilder {
      */
     create(entity) {
         return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
+    }
+    /**
+     * Returns a request builder for retrieving one `TestEntityEndsWith` entity based on its keys.
+     * @param keyProperty Key property. See {@link TestEntityEndsWith.keyProperty}.
+     * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
+     */
+    getByKey(keyProperty) {
+        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, { KeyProperty: keyProperty });
     }
     /**
      * Returns a request builder for updating an entity of type `TestEntityEndsWith`.

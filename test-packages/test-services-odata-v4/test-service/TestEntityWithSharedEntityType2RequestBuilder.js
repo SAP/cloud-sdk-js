@@ -13,14 +13,6 @@ const TestEntityWithSharedEntityType2_1 = require("./TestEntityWithSharedEntityT
  */
 class TestEntityWithSharedEntityType2RequestBuilder extends odata_v4_1.RequestBuilder {
     /**
-     * Returns a request builder for retrieving one `TestEntityWithSharedEntityType2` entity based on its keys.
-     * @param keyProperty Key property. See {@link TestEntityWithSharedEntityType2.keyProperty}.
-     * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType2` entity based on its keys.
-     */
-    getByKey(keyProperty) {
-        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, { KeyProperty: keyProperty });
-    }
-    /**
      * Returns a request builder for querying all `TestEntityWithSharedEntityType2` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityWithSharedEntityType2` entities.
      */
@@ -34,6 +26,14 @@ class TestEntityWithSharedEntityType2RequestBuilder extends odata_v4_1.RequestBu
      */
     create(entity) {
         return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
+    }
+    /**
+     * Returns a request builder for retrieving one `TestEntityWithSharedEntityType2` entity based on its keys.
+     * @param keyProperty Key property. See {@link TestEntityWithSharedEntityType2.keyProperty}.
+     * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType2` entity based on its keys.
+     */
+    getByKey(keyProperty) {
+        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, { KeyProperty: keyProperty });
     }
     /**
      * Returns a request builder for updating an entity of type `TestEntityWithSharedEntityType2`.

@@ -23,14 +23,6 @@ export declare class TestEntityWithEnumKeyRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityWithEnumKey<T>, T> {
   /**
-   * Returns a request builder for retrieving one `TestEntityWithEnumKey` entity based on its keys.
-   * @param keyPropertyEnum1 Key property. See {@link TestEntityWithEnumKey.keyPropertyEnum1}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityWithEnumKey` entity based on its keys.
-   */
-  getByKey(
-    keyPropertyEnum1: DeserializedType<T, 'API_TEST_SRV.A_TestEnumType'>
-  ): GetByKeyRequestBuilder<TestEntityWithEnumKey<T>, T>;
-  /**
    * Returns a request builder for querying all `TestEntityWithEnumKey` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithEnumKey` entities.
    */
@@ -43,6 +35,14 @@ export declare class TestEntityWithEnumKeyRequestBuilder<
   create(
     entity: TestEntityWithEnumKey<T>
   ): CreateRequestBuilder<TestEntityWithEnumKey<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `TestEntityWithEnumKey` entity based on its keys.
+   * @param keyPropertyEnum1 Key property. See {@link TestEntityWithEnumKey.keyPropertyEnum1}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityWithEnumKey` entity based on its keys.
+   */
+  getByKey(
+    keyPropertyEnum1: DeserializedType<T, 'API_TEST_SRV.A_TestEnumType'>
+  ): GetByKeyRequestBuilder<TestEntityWithEnumKey<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityWithEnumKey`.
    * @param entity The entity to be updated

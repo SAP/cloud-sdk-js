@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  Entity,
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
@@ -22,20 +23,6 @@ import { TestEntityLvl3MultiLink } from './TestEntityLvl3MultiLink';
 export class TestEntityLvl3MultiLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityLvl3MultiLink<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityLvl3MultiLink` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityLvl3MultiLink.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityLvl3MultiLink` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityLvl3MultiLink<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityLvl3MultiLink<T>, T>(
-      this.entityApi,
-      { KeyProperty: keyProperty }
-    );
-  }
-
   /**
    * Returns a request builder for querying all `TestEntityLvl3MultiLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityLvl3MultiLink` entities.
@@ -57,6 +44,20 @@ export class TestEntityLvl3MultiLinkRequestBuilder<
     return new CreateRequestBuilder<TestEntityLvl3MultiLink<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityLvl3MultiLink` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityLvl3MultiLink.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityLvl3MultiLink` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityLvl3MultiLink<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityLvl3MultiLink<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
     );
   }
 

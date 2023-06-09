@@ -5,6 +5,7 @@
  */
 import { Moment } from 'moment';
 import {
+  Entity,
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
@@ -24,6 +25,23 @@ export class TestEntityRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity<T>, T> {
   /**
+   * Returns a request builder for querying all `TestEntity` entities.
+   * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
+   */
+  getAll(): GetAllRequestBuilder<TestEntity<T>, T> {
+    return new GetAllRequestBuilder<TestEntity<T>, T>(this.entityApi);
+  }
+
+  /**
+   * Returns a request builder for creating a `TestEntity` entity.
+   * @param entity The entity to be created
+   * @returns A request builder for creating requests that create an entity of type `TestEntity`.
+   */
+  create(entity: TestEntity<T>): CreateRequestBuilder<TestEntity<T>, T> {
+    return new CreateRequestBuilder<TestEntity<T>, T>(this.entityApi, entity);
+  }
+
+  /**
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
    * @param keyPropertyGuid Key property. See {@link TestEntity.keyPropertyGuid}.
    * @param keyPropertyString Key property. See {@link TestEntity.keyPropertyString}.
@@ -40,23 +58,6 @@ export class TestEntityRequestBuilder<
       KeyPropertyString: keyPropertyString,
       KeyDateProperty: keyDateProperty
     });
-  }
-
-  /**
-   * Returns a request builder for querying all `TestEntity` entities.
-   * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
-   */
-  getAll(): GetAllRequestBuilder<TestEntity<T>, T> {
-    return new GetAllRequestBuilder<TestEntity<T>, T>(this.entityApi);
-  }
-
-  /**
-   * Returns a request builder for creating a `TestEntity` entity.
-   * @param entity The entity to be created
-   * @returns A request builder for creating requests that create an entity of type `TestEntity`.
-   */
-  create(entity: TestEntity<T>): CreateRequestBuilder<TestEntity<T>, T> {
-    return new CreateRequestBuilder<TestEntity<T>, T>(this.entityApi, entity);
   }
 
   /**

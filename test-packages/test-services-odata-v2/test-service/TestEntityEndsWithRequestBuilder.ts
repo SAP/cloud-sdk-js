@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  Entity,
   DefaultDeSerializers,
   DeSerializers,
   GetAllRequestBuilder,
@@ -23,20 +24,6 @@ export class TestEntityEndsWithRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityEndsWith<T>, T> {
   /**
-   * Returns a request builder for retrieving one `TestEntityEndsWith` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityEndsWith.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityEndsWith<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityEndsWith<T>, T>(
-      this.entityApi,
-      { KeyProperty: keyProperty }
-    );
-  }
-
-  /**
    * Returns a request builder for querying all `TestEntityEndsWith` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityEndsWith` entities.
    */
@@ -55,6 +42,20 @@ export class TestEntityEndsWithRequestBuilder<
     return new CreateRequestBuilder<TestEntityEndsWith<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityEndsWith` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityEndsWith.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityEndsWith<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityEndsWith<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
     );
   }
 

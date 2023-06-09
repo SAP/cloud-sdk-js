@@ -13,11 +13,12 @@ import {
 } from '@sap-cloud-sdk/resilience/internal';
 import {
   DestinationWithName,
-  registerDestination
+  registerDestination,
+  Destination,
+  HttpDestination
 } from '@sap-cloud-sdk/connectivity';
 import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
 import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
-import { Destination, HttpDestination } from '../../connectivity/src';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,

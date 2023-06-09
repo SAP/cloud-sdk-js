@@ -4,10 +4,15 @@ import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { registerDestinationCache } from './register-destination-cache';
 
+const { mtls, destination } = registerDestinationCache;
+
 describe('register-destination-cache', () => {
   beforeAll(() => {
     process.env.CF_INSTANCE_CERT = 'cf-crypto/cf-cert';
     process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
+  });
+
+  beforeEach(() => {
     mock({
       'cf-crypto': {
         'cf-cert': certAsString,
@@ -16,21 +21,20 @@ describe('register-destination-cache', () => {
     });
   });
 
+  afterEach(() => {
+    destination.clear();
+    mtls.clear();
+    jest.clearAllMocks();
+  });
+
   afterAll(() => {
-    mock.restore();
     delete process.env.CF_INSTANCE_CERT;
     delete process.env.CF_INSTANCE_KEY;
   });
 
-  afterEach(() => {
-    registerDestinationCache.destination.clear();
-    registerDestinationCache.mtls.clear();
-  });
-
   it('retrieveMtlsOptionsFromCache returns undefined if nothing was cached yet', async () => {
-    registerDestinationCache.mtls.useMtlsCache = true;
-    const mtlsOptions =
-      await registerDestinationCache.mtls.retrieveMtlsOptionsFromCache();
+    mtls.useMtlsCache = true;
+    const mtlsOptions = await mtls.retrieveMtlsOptionsFromCache();
     expect(mtlsOptions).toBeUndefined();
   });
 
@@ -40,13 +44,10 @@ describe('register-destination-cache', () => {
     jest
       .spyOn(X509Certificate.prototype, 'validTo', 'get')
       .mockImplementation(() => validCertTime.toString());
-    const cacheSpy = jest.spyOn(
-      registerDestinationCache.mtls,
-      'retrieveMtlsOptionsFromCache'
-    );
+    const cacheSpy = jest.spyOn(mtls, 'retrieveMtlsOptionsFromCache');
 
-    registerDestinationCache.mtls.useMtlsCache = true;
-    const mtlsOptions = await registerDestinationCache.mtls.getMtlsOptions();
+    mtls.useMtlsCache = true;
+    const mtlsOptions = await mtls.getMtlsOptions();
 
     expect(mtlsOptions?.cert).toEqual(certAsString);
     expect(cacheSpy).toHaveBeenCalledTimes(2);
@@ -58,14 +59,11 @@ describe('register-destination-cache', () => {
     jest
       .spyOn(X509Certificate.prototype, 'validTo', 'get')
       .mockImplementation(() => validCertTime.toString());
-    const cacheSpy = jest.spyOn(
-      registerDestinationCache.mtls,
-      'retrieveMtlsOptionsFromCache'
-    );
+    const cacheSpy = jest.spyOn(mtls, 'retrieveMtlsOptionsFromCache');
 
-    registerDestinationCache.mtls.useMtlsCache = true;
-    await registerDestinationCache.mtls.cacheMtlsOptions();
-    const mtlsOptions = await registerDestinationCache.mtls.getMtlsOptions();
+    mtls.useMtlsCache = true;
+    await mtls.cacheMtlsOptions();
+    const mtlsOptions = await mtls.getMtlsOptions();
 
     expect(mtlsOptions?.cert).toEqual(certAsString);
     expect(cacheSpy).toHaveBeenCalledTimes(1);
@@ -79,14 +77,11 @@ describe('register-destination-cache', () => {
       .spyOn(X509Certificate.prototype, 'validTo', 'get')
       .mockImplementationOnce(() => expiredCertTime.toString())
       .mockImplementationOnce(() => validCertTime.toString());
-    const cacheSpy = jest.spyOn(
-      registerDestinationCache.mtls,
-      'retrieveMtlsOptionsFromCache'
-    );
+    const cacheSpy = jest.spyOn(mtls, 'retrieveMtlsOptionsFromCache');
 
-    registerDestinationCache.mtls.useMtlsCache = true;
-    await registerDestinationCache.mtls.cacheMtlsOptions();
-    const mtlsOptions = await registerDestinationCache.mtls.getMtlsOptions();
+    mtls.useMtlsCache = true;
+    await mtls.cacheMtlsOptions();
+    const mtlsOptions = await mtls.getMtlsOptions();
 
     expect(mtlsOptions?.cert).toEqual(certAsString);
     expect(cacheSpy).toHaveBeenCalledTimes(2);
@@ -98,18 +93,15 @@ describe('register-destination-cache', () => {
     jest
       .spyOn(X509Certificate.prototype, 'validTo', 'get')
       .mockImplementation(() => expiredCertTime.toString());
-    const cacheSpy = jest.spyOn(
-      registerDestinationCache.mtls,
-      'retrieveMtlsOptionsFromCache'
-    );
+    const cacheSpy = jest.spyOn(mtls, 'retrieveMtlsOptionsFromCache');
     const logger = createLogger('register-destination-cache');
     const warnSpy = jest.spyOn(logger, 'warn');
 
-    registerDestinationCache.mtls.useMtlsCache = true;
-    await registerDestinationCache.mtls.cacheMtlsOptions();
-    const mtlsOptions = await registerDestinationCache.mtls.getMtlsOptions();
+    mtls.useMtlsCache = true;
+    await mtls.cacheMtlsOptions();
+    const mtlsOptions = await mtls.getMtlsOptions();
 
-    expect(mtlsOptions?.cert).toEqual(certAsString);
+    expect(mtlsOptions?.cert).toBeUndefined();
     expect(cacheSpy).toHaveBeenCalledTimes(2);
     expect(warnSpy).toHaveBeenCalledTimes(1);
   });

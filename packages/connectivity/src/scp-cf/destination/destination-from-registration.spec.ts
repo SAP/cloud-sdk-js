@@ -88,7 +88,9 @@ describe('register-destination', () => {
     process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
     const currentTimeInMs = Date.now();
     const validCertTime = currentTimeInMs + 10000;
-    jest.spyOn(X509Certificate.prototype, 'validTo', 'get').mockImplementation(() => validCertTime.toString());
+    jest
+      .spyOn(X509Certificate.prototype, 'validTo', 'get')
+      .mockImplementation(() => validCertTime.toString());
     const options = {
       inferMtls: true,
       useMtlsCache: true
@@ -99,7 +101,9 @@ describe('register-destination', () => {
     const actualDestination = await getDestination({
       destinationName: testDestinationWithMtls.name
     });
-    const actualCert = (await registerDestinationCache.mtls.retrieveMtlsOptionsFromCache())?.cert;
+    const actualCert = (
+      await registerDestinationCache.mtls.retrieveMtlsOptionsFromCache()
+    )?.cert;
 
     expect(actualDestination?.mtls).toStrictEqual(true);
     expect(registerDestinationCache.mtls.useMtlsCache).toStrictEqual(true);

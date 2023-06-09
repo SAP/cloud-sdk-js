@@ -288,10 +288,10 @@ describe('getAgentConfigAsync', () => {
         mock.restore();
       });
 
-      afterEach(() => {
+      afterEach(async () => {
         delete process.env.CF_INSTANCE_CERT;
         delete process.env.CF_INSTANCE_KEY;
-        registerDestinationCache.mtls.clear();
+        await registerDestinationCache.mtls.clear();
       });
 
       it('returns an object with key "httpsAgent" which includes mTLS options when mtls is set to true and env variables contain cert & key', async () => {

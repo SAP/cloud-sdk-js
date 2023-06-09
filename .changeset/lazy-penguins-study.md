@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/generator': patch
 ---
 
-[Fixed Issue] Fix overloads of delete() method in RequestBuilder when the entity has no keys
+[Fixed Issue] Don't generate delete(), update(), and getByKeys() methods in the RequestBuilder of an entity without keys

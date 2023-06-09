@@ -23,21 +23,24 @@ export function requestBuilderClass(entity: VdmEntity): string {
 }
 
 function requestBuilderMethods(entity: VdmEntity): string[] {
-  const methods = [
-    getByKeyRequestBuilder(entity),
-    getAllRequestBuilder(entity)
-  ];
+  const methods = [getAllRequestBuilder(entity)];
+
   if (entity.creatable) {
     methods.push(createRequestBuilder(entity));
   }
 
-  if (entity.updatable) {
-    methods.push(updateRequestBuilder(entity));
+  if (entity.keys.length > 0) {
+    methods.push(getByKeyRequestBuilder(entity));
+
+    if (entity.updatable) {
+      methods.push(updateRequestBuilder(entity));
+    }
+
+    if (entity.deletable) {
+      methods.push(deleteRequestBuilder(entity));
+    }
   }
 
-  if (entity.deletable) {
-    methods.push(deleteRequestBuilder(entity));
-  }
   return methods;
 }
 
@@ -142,29 +145,22 @@ function deleteRequestBuilder(entity: VdmEntity): string {
     key => `${key.propertyNameAsParam}: ${key.jsType}`
   );
 
-  const deleteByParams =
-    entity.keys.length > 0
-      ? codeBlock`
-      ${documentationBlock`${getFunctionDoc(
-        `Returns a request builder for deleting an entity of type \`${entity.className}\`.`,
-        {
-          returns: {
-            type: `DeleteRequestBuilder<${entity.className}>`,
-            description: `A request builder for creating requests that delete an entity of type \`${entity.className}\`.`
-          },
-          params: entity.keys.map(key => ({
-            name: key.propertyNameAsParam,
-            type: key.jsType,
-            description: `Key property. See {@link ${entity.className}.${key.instancePropertyName}}.`
-          }))
-        }
-      )}`}
-      delete(${parameters}): DeleteRequestBuilder<${entity.className}<T>, T>;
-      `
-      : '';
-
   return codeBlock`
-    ${deleteByParams}
+    ${documentationBlock`${getFunctionDoc(
+      `Returns a request builder for deleting an entity of type \`${entity.className}\`.`,
+      {
+        returns: {
+          type: `DeleteRequestBuilder<${entity.className}>`,
+          description: `A request builder for creating requests that delete an entity of type \`${entity.className}\`.`
+        },
+        params: entity.keys.map(key => ({
+          name: key.propertyNameAsParam,
+          type: key.jsType,
+          description: `Key property. See {@link ${entity.className}.${key.instancePropertyName}}.`
+        }))
+      }
+    )}`}
+    delete(${parameters}): DeleteRequestBuilder<${entity.className}<T>, T>;
     ${documentationBlock`${getFunctionDoc(
       `Returns a request builder for deleting an entity of type \`${entity.className}\`.`,
       {

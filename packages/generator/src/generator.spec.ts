@@ -260,7 +260,7 @@ describe('generator', () => {
       );
     });
 
-    it('generates RequestBuilder for keyless entity without a parameter-less delete() overload', () => {
+    it('generates RequestBuilder for keyless entity without a delete(), update(), and getByKeys() method', () => {
       const testFile = files.find(
         file => file.getBaseName() === 'TestEntityWithNoKeysRequestBuilder.ts'
       );
@@ -283,11 +283,13 @@ describe('generator', () => {
         'TestEntityWithNoKeysRequestBuilder'
       );
       expect(requestBuilderClass).toBeDefined();
-      const deleteMethod = requestBuilderClass
-        ?.getMethods()
-        .find(method => method.getName() === 'delete');
-      expect(deleteMethod).toBeDefined();
-      expect(deleteMethod!.getOverloads().length).toBe(1);
+
+      for (const methodName of ['delete', 'update', 'getByKeys']) {
+        const method = requestBuilderClass
+          ?.getMethods()
+          .find(m => m.getName() === methodName);
+        expect(method).not.toBeDefined();
+      }
     });
   });
 

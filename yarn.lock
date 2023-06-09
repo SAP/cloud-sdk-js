@@ -5777,13 +5777,13 @@ json-parse-even-better-errors@^2.3.0:
   resolved "https://registry.npmjs.org/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
-json-schema-faker@^0.5.0-rcv.46:
-  version "0.5.0-rcv.46"
-  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.0-rcv.46.tgz#5f9eff94f463c337a361044a460cc46797ceb053"
-  integrity sha512-Q+sGrxptZfezwm7M9W9VmHT9E8s5fWPCaRC4J2zUjb3CmDsxokiCBdHdS/psu91Tafc/ITv+GtIztGzUVT2zIg==
+json-schema-faker@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.3.tgz#92f8a102037acf68e1c8e3a2e7c85726d285512d"
+  integrity sha512-BeIrR0+YSrTbAR9dOMnjbFl1MvHyXnq+Wpdw1FpWZDHWKLzK229hZ5huyPcmzFUfVq1ODwf40WdGVoE266UBUg==
   dependencies:
     json-schema-ref-parser "^6.1.0"
-    jsonpath-plus "^5.1.0"
+    jsonpath-plus "^7.2.0"
 
 json-schema-ref-parser@^6.1.0:
   version "6.1.0"
@@ -5864,10 +5864,10 @@ jsonify@^0.0.1:
   resolved "https://registry.npmjs.org/jsonify/-/jsonify-0.0.1.tgz#2aa3111dae3d34a0f151c63f3a45d995d9420978"
   integrity sha512-2/Ki0GcmuqSrgFyelQq9M05y7PS0mEwuIzrf3f1fPqkVDVRvZrPZtVSMHxdgo8Aq0sxAOb/cr2aqqA3LeWHVPg==
 
-jsonpath-plus@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/jsonpath-plus/-/jsonpath-plus-5.1.0.tgz#2fc4b2e461950626c98525425a3a3518b85af6c3"
-  integrity sha512-890w2Pjtj0iswAxalRlt2kHthi6HKrXEfZcn+ZNZptv7F3rUGIeDuZo+C+h4vXBHLEsVjJrHeCm35nYeZLzSBQ==
+jsonpath-plus@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.npmjs.org/jsonpath-plus/-/jsonpath-plus-7.2.0.tgz#7ad94e147b3ed42f7939c315d2b9ce490c5a3899"
+  integrity sha512-zBfiUPM5nD0YZSBT/o/fbCUlCcepMIdP0CJZxM1+KgA4f2T206f6VAg9e7mX35+KlMaIc5qXW34f3BnwJ3w+RA==
 
 jsonwebtoken@^9.0.0:
   version "9.0.0"

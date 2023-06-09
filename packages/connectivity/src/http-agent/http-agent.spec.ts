@@ -1,7 +1,6 @@
 import { X509Certificate } from 'node:crypto';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { certAsString } from '@sap-cloud-sdk/test-util';
 import {
   proxyAgent,
   ProxyConfiguration,
@@ -10,6 +9,7 @@ import {
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
 import { HttpDestination } from '../scp-cf/destination';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
+import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
 import { getAgentConfigAsync } from './http-agent';
 
 describe('createAgent', () => {

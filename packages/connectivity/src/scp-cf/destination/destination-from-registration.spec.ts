@@ -3,7 +3,6 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import base64url from 'base64url';
 import { JwtHeader, JwtPayload } from 'jsonwebtoken';
 import mock from 'mock-fs';
-import { certAsString } from '@sap-cloud-sdk/test-util';
 import {
   mockServiceBindings,
   providerServiceToken,
@@ -12,6 +11,7 @@ import {
   unmockDestinationsEnv,
   xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util';
+import { certAsString } from '../../../../../test-resources/test/test-util/test-certificate';
 import { getDestination } from './destination-accessor';
 import {
   DestinationWithName,

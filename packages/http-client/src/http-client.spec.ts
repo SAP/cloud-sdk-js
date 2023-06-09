@@ -11,12 +11,14 @@ import {
   circuitBreakers,
   circuitBreaker
 } from '@sap-cloud-sdk/resilience/internal';
-import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
 import {
+  DestinationWithName,
+  registerDestination,
   Destination,
-  ProxyConfiguration,
   HttpDestination
-} from '../../connectivity/src';
+} from '@sap-cloud-sdk/connectivity';
+import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
+import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,
@@ -83,6 +85,13 @@ describe('generic http client', () => {
       port: 1234,
       protocol: 'http'
     }
+  };
+
+  const destinationWithForwardingNoAuth: DestinationWithName = {
+    forwardAuthToken: true,
+    url: 'https://example.com',
+    authentication: 'NoAuthentication',
+    name: 'FORWARD-TOKEN-NOAUTH'
   };
 
   describe('buildHttpRequest', () => {
@@ -710,6 +719,7 @@ sap-client:001`);
           protocol: 'http'
         }
       };
+
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
       await expect(
         executeHttpRequest(destination, { method: 'get' })
@@ -718,7 +728,7 @@ sap-client:001`);
         expect.objectContaining({
           proxy: false,
           httpsAgent: expect.objectContaining({
-            proxy: expect.objectContaining({ host: 'dummy', port: 1234 })
+            proxy: expect.objectContaining({ hostname: 'dummy', port: '1234' })
           })
         })
       );
@@ -814,11 +824,6 @@ sap-client:001`);
      * Expected: Axios requests should pass via the proxy and hence result in a redirect loop.
      * */
     xit('test axios proxy redirect', () => {
-      const proxyConfiguration: ProxyConfiguration = {
-        host: 'localhost',
-        port: 8080,
-        protocol: 'http'
-      };
       // A fake proxy server
       http
         .createServer(function (req, res) {
@@ -830,10 +835,99 @@ sap-client:001`);
       axios({
         method: 'get',
         url: 'https://google.com',
-        httpsAgent: new HttpsProxyAgent(proxyConfiguration)
+        httpsAgent: new HttpsProxyAgent('http://localhost:8080')
       })
         .then(r => console.log(r))
         .catch(console.error);
+    });
+
+    it('passes auth tokens to final request when forwardAuthToken is enabled for NoAuthentication auth type', async () => {
+      mockServiceBindings();
+
+      const jwt = jwt123.sign(
+        JSON.stringify({ user_id: 'user', zid: 'tenant', exp: 1234 }),
+        privateKey,
+        {
+          algorithm: 'RS512'
+        }
+      );
+      const spy = jest.spyOn(axios, 'request');
+      nock('https://example.com')
+        .get('/api/entity')
+        .query({
+          $a: 'a',
+          b: 'b'
+        })
+        .reply(200);
+
+      const config: HttpRequestConfig = {
+        method: 'GET',
+        url: '/api/entity',
+        params: {
+          $a: 'a',
+          b: 'b'
+        },
+        headers: {
+          'content-type': 'application/json',
+          accept: 'application/json'
+        }
+      };
+
+      const expectedConfig = {
+        headers: {
+          authorization: `Bearer ${jwt}`,
+          'content-type': 'application/json',
+          accept: 'application/json'
+        }
+      };
+      await registerDestination(destinationWithForwardingNoAuth, { jwt });
+      await executeHttpRequest(
+        { destinationName: 'FORWARD-TOKEN-NOAUTH', jwt },
+        config
+      );
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
+
+      registerDestinationCache.clear();
+    });
+
+    it('ignores forwardAuthToken when JWT is missing', async () => {
+      mockServiceBindings();
+
+      const spy = jest.spyOn(axios, 'request');
+      nock('https://example.com')
+        .get('/api/entity')
+        .query({
+          $a: 'a',
+          b: 'b'
+        })
+        .reply(200);
+
+      const config: HttpRequestConfig = {
+        method: 'GET',
+        url: '/api/entity',
+        params: {
+          $a: 'a',
+          b: 'b'
+        },
+        headers: {
+          'content-type': 'application/json',
+          accept: 'application/json'
+        }
+      };
+
+      const expectedConfig = {
+        headers: {
+          'content-type': 'application/json',
+          accept: 'application/json'
+        }
+      };
+      await registerDestination(destinationWithForwardingNoAuth);
+      await executeHttpRequest(
+        { destinationName: 'FORWARD-TOKEN-NOAUTH' },
+        config
+      );
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
+      registerDestinationCache.clear();
     });
   });
 
@@ -955,7 +1049,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           requestConfig: {}
         }
       };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         ...defaultDestination,
         authentication: 'OAuth2SAMLBearerAssertion',
         authTokens: [
@@ -971,10 +1065,12 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           }
         ]
       };
+
+      const destinationRequestConfig = await buildHttpRequest(destination);
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         httpRequestConfigWithOrigin,
         destination,
-        {} as DestinationHttpRequestConfig
+        destinationRequestConfig
       );
       const expected = {
         method: 'get',
@@ -984,7 +1080,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         },
         params: {}
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
     });
 
     it("should encode query parameters excluding the 'custom' ones.", async () => {
@@ -1028,7 +1124,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           destUrlProp: 'a%3Fb'
         }
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
     });
 
     it('should encode all parameters if the encodeAll function is used', async () => {
@@ -1052,7 +1148,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           destUrlProp: 'a%3Fb'
         }
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
     });
 
     it('should use custom parameter serializer if given', async () => {
@@ -1084,7 +1180,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           destUrlProp: 'a?bSomeChange'
         }
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
     });
 
     it('should merge and resolve conflicts', async () => {
@@ -1101,7 +1197,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           }
         }
       };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'http://example.com',
         headers: { 'sap-client': '001' },
         originalProperties: {
@@ -1109,10 +1205,11 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           'URL.queries.param1': 'destPropParam1'
         }
       };
+      const destinationRequestConfig = await buildHttpRequest(destination);
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         httpRequestConfigWithOrigin,
         destination,
-        {} as DestinationHttpRequestConfig
+        destinationRequestConfig
       );
       const expected = {
         method: 'get',
@@ -1126,7 +1223,8 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           param1: 'destPropParam1'
         }
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
+      expect(actual.headers).toStrictEqual(expected.headers);
     });
 
     it('should add location id headers to the headers if there is a cloudConnectorLocationId in the destination', async () => {
@@ -1136,14 +1234,15 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           requestConfig: {}
         }
       };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'http://example.com',
         cloudConnectorLocationId: 'Potsdam'
       };
+      const destinationRequestConfig = await buildHttpRequest(destination);
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         httpRequestConfigWithOrigin,
         destination,
-        {} as DestinationHttpRequestConfig
+        destinationRequestConfig
       );
       const expected = {
         method: 'get',
@@ -1152,8 +1251,10 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         },
         params: {}
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
+      expect(actual.headers).toStrictEqual(expected.headers);
     });
+
     it('should add proxy headers to the headers if there is a proxy configuration in the destination', async () => {
       const proxyHeaders = {
         'Proxy-Authorization': 'Bearer jwt',
@@ -1165,7 +1266,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
           requestConfig: {}
         }
       };
-      const destination: Destination = {
+      const destination: HttpDestination = {
         url: 'http://example.com',
         proxyType: 'OnPremise',
         proxyConfiguration: {
@@ -1174,10 +1275,11 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         },
         authentication: 'PrincipalPropagation'
       };
+      const destinationRequestConfig = await buildHttpRequest(destination);
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         httpRequestConfigWithOrigin,
         destination,
-        {} as DestinationHttpRequestConfig
+        destinationRequestConfig
       );
       const expected = {
         method: 'get',
@@ -1187,7 +1289,8 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         },
         params: {}
       };
-      expect(actual).toStrictEqual(expected);
+      expect(actual).toMatchObject(expected);
+      expect(actual.headers).toStrictEqual(expected.headers);
     });
   });
 

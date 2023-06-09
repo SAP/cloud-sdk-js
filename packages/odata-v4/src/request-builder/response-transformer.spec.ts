@@ -1,4 +1,4 @@
-import { createOriginalTestEntityData1 } from '../../../../test-resources/test/test-util/test-data';
+import { createOriginalTestEntityDataV4_1 } from '../../../../test-resources/test/test-util/test-data';
 import { defaultDeSerializers, edmToTs } from '../de-serializers';
 import { testEntityApi, createTestEntity } from '../../test/test-util';
 import {
@@ -8,7 +8,7 @@ import {
 
 describe('Response transformer', () => {
   it('should transform for TestEntity', () => {
-    const entityData = createOriginalTestEntityData1();
+    const entityData = createOriginalTestEntityDataV4_1();
     const expected = createTestEntity(entityData);
 
     const actual = transformReturnValueForEntity(entityData, testEntityApi);

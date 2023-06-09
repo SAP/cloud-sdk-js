@@ -1,11 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestEntityRequestBuilder = void 0;
-/*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 const TestEntity_1 = require("./TestEntity");
 /**
@@ -16,12 +11,14 @@ class TestEntityRequestBuilder extends odata_v4_1.RequestBuilder {
      * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
      * @param keyPropertyGuid Key property. See {@link TestEntity.keyPropertyGuid}.
      * @param keyPropertyString Key property. See {@link TestEntity.keyPropertyString}.
+     * @param keyDateProperty Key property. See {@link TestEntity.keyDateProperty}.
      * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
      */
-    getByKey(keyPropertyGuid, keyPropertyString) {
+    getByKey(keyPropertyGuid, keyPropertyString, keyDateProperty) {
         return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
             KeyPropertyGuid: keyPropertyGuid,
-            KeyPropertyString: keyPropertyString
+            KeyPropertyString: keyPropertyString,
+            KeyDateProperty: keyDateProperty
         });
     }
     /**
@@ -47,12 +44,13 @@ class TestEntityRequestBuilder extends odata_v4_1.RequestBuilder {
     update(entity) {
         return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
     }
-    delete(keyPropertyGuidOrEntity, keyPropertyString) {
+    delete(keyPropertyGuidOrEntity, keyPropertyString, keyDateProperty) {
         return new odata_v4_1.DeleteRequestBuilder(this.entityApi, keyPropertyGuidOrEntity instanceof TestEntity_1.TestEntity
             ? keyPropertyGuidOrEntity
             : {
                 KeyPropertyGuid: keyPropertyGuidOrEntity,
-                KeyPropertyString: keyPropertyString
+                KeyPropertyString: keyPropertyString,
+                KeyDateProperty: keyDateProperty
             });
     }
 }

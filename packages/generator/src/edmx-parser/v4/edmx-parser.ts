@@ -157,8 +157,8 @@ export function parseOperationImports(root: any): EdmxOperationImport[] {
  */
 export function parseOperations(root: any): EdmxOperation[] {
   return [
-    ...getMergedPropertyWithNamespace(root, voca.capitalize('function')),
-    ...getMergedPropertyWithNamespace(root, voca.capitalize('action'))
+    ...getMergedPropertyWithNamespace(root, 'Function'),
+    ...getMergedPropertyWithNamespace(root, 'Action')
   ].map(operation => ({
     ...operation,
     Parameter: forceArray(operation.Parameter),

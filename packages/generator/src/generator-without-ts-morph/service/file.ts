@@ -18,16 +18,14 @@ ${serviceClass(service)}`;
 }
 
 function getImports(service: VdmServiceMetadata): Import[] {
-  const operationImports = service.functionImports.concat(
-    service.actionImports || []
-  );
-  if (operationImports.length === 0) {
+  const operations = service.operations;
+  if (!operations.length) {
     return [];
   }
-  const names = operationImports.map(
+  const names = operations.map(
     actionFunctionImport => actionFunctionImport.name
   );
-  const parameterNames = operationImports.map(
+  const parameterNames = operations.map(
     actionFunctionImport => actionFunctionImport.parametersTypeName
   );
   return [
@@ -42,14 +40,14 @@ function getImports(service: VdmServiceMetadata): Import[] {
  * @internal
  */
 export function imports(service: VdmServiceMetadata): Import[] {
-  const operationImports = getImports(service);
+  const operations = getImports(service);
 
   const serviceImports = [
     ...service.entities.map(entity => ({
       names: [`${entity.className}Api`],
       moduleIdentifier: `./${entity.className}Api`
     })),
-    ...operationImports,
+    ...operations,
     {
       names: ['BigNumber'],
       moduleIdentifier: 'bignumber.js'

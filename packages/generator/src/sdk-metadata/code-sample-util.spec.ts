@@ -1,7 +1,7 @@
 import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
 import { VdmEntity, VdmOperation, VdmParameter } from '../vdm-types';
 import {
-  sampleOperationImport,
+  sampleOperation,
   getOperationParams,
   getOperationWithMinParameters,
   getOperationWithoutParameters,
@@ -103,7 +103,7 @@ describe('code-sample-utils imports', () => {
 
   it('samples action import based on levenshtein algorithm', () => {
     expect(
-      sampleOperationImport('DummyClass', actionImports as VdmOperation[])
+      sampleOperation('DummyClass', actionImports as VdmOperation[])
     ).toEqual({
       name: 'dummy_Class_Actn',
       parameters: [{ parameterName: 'param' }]
@@ -112,7 +112,7 @@ describe('code-sample-utils imports', () => {
 
   it('gets action import without min parameters when no closest match found', () => {
     expect(
-      sampleOperationImport('API_TestAction', actionImports as VdmOperation[])
+      sampleOperation('API_TestAction', actionImports as VdmOperation[])
     ).toEqual({
       name: 'service_Actn',
       parameters: []

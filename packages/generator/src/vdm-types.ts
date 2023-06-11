@@ -53,11 +53,7 @@ export interface VdmServiceEntities {
   /**
    * @internal
    */
-  functionImports: VdmOperation[];
-  /**
-   * @internal
-   */
-  actionImports?: VdmOperation[];
+  operations: VdmOperation[];
 }
 /**
  * Basepath is set here
@@ -120,11 +116,7 @@ export interface VdmEntity {
   /**
    * @internal
    */
-  functions: VdmOperation[];
-  /**
-   * @internal
-   */
-  actions: VdmOperation[];
+  operations: VdmOperation[];
 }
 
 /**

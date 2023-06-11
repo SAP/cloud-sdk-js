@@ -1,5 +1,9 @@
 import { getExpectedHelpfulLinks } from '../../test/test-util/readme-util';
-import { ApiBusinessHubMetadata, VdmServiceMetadata } from '../vdm-types';
+import {
+  ApiBusinessHubMetadata,
+  VdmOperation,
+  VdmServiceMetadata
+} from '../vdm-types';
 import { readme } from './readme';
 
 const packageName = 'business-partner-service';
@@ -19,7 +23,8 @@ describe('service readme', () => {
           url: apiHubUrl,
           communicationScenario,
           businessDocumentationUrl: 'https://example.com'
-        }
+        },
+        operations: [] as VdmOperation[]
       } as VdmServiceMetadata)
     ).toBe(
       `# business-partner-service
@@ -43,7 +48,8 @@ ${getExpectedHelpfulLinks()}
         apiBusinessHubMetadata: {
           url: apiHubUrl,
           communicationScenario: null
-        } as ApiBusinessHubMetadata
+        } as ApiBusinessHubMetadata,
+        operations: [] as VdmOperation[]
       } as VdmServiceMetadata)
     ).toBe(
       `# business-partner-service
@@ -61,7 +67,8 @@ ${getExpectedHelpfulLinks()}
         serviceOptions: {
           packageName
         },
-        speakingModuleName
+        speakingModuleName,
+        operations: [] as VdmOperation[]
       } as VdmServiceMetadata)
     ).toBe(
       `# business-partner-service
@@ -79,7 +86,8 @@ ${getExpectedHelpfulLinks()}
         serviceOptions: {
           packageName
         },
-        speakingModuleName
+        speakingModuleName,
+        operations: [] as VdmOperation[]
       } as VdmServiceMetadata)
     ).toBe(
       `# business-partner-service

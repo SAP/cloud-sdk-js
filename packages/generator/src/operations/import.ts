@@ -82,7 +82,7 @@ function returnTypeImport(
 /**
  * @internal
  */
-export function operationImportDeclarations(
+export function operationDeclarations(
   { oDataVersion, className }: VdmServiceMetadata,
   operations: VdmOperation[] = []
 ): ImportDeclarationStructure[] {

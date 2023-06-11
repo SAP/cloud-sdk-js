@@ -187,11 +187,11 @@ describe('entity', () => {
 
     // entities[0]
     const [functionOp, actionOp] = entities[0].operations;
-    
+
     // function
     expect(functionOp.name).toEqual('fn1IsBound');
     expect(functionOp.parameters.length).toBe(1);
-    
+
     // action
     expect(actionOp.name).toEqual('action1IsBound');
     expect(actionOp.parameters.length).toBe(0);

@@ -186,15 +186,15 @@ describe('entity', () => {
     const actionFilter = op => op.type === 'action';
 
     // entities[0]
-    const [function, action] = entities[0].operations;
+    const [functionOp, actionOp] = entities[0].operations;
     
     // function
-    expect(function.name).toEqual('fn1IsBound');
-    expect(function.parameters.length).toBe(1);
+    expect(functionOp.name).toEqual('fn1IsBound');
+    expect(functionOp.parameters.length).toBe(1);
     
     // action
-    expect(action.name).toEqual('action1IsBound');
-    expect(action.parameters.length).toBe(0);
+    expect(actionOp.name).toEqual('action1IsBound');
+    expect(actionOp.parameters.length).toBe(0);
 
     // entities[1]
     expect(

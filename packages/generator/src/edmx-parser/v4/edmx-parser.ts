@@ -128,28 +128,16 @@ function parseNavigationPropertyBinding(
 /**
  * @internal
  */
-export function parseOperationImports(root: any): EdmxOperationImport[] {
-  const functions = getPropertyFromEntityContainer(
+export function parseOperationImports(root: any, operationType: 'function' | 'action'): EdmxOperationImport[] {
+  const operations = getPropertyFromEntityContainer(
     root,
-    `${voca.capitalize('function')}Import`
+    `${voca.capitalize(operationType)}Import`
   );
-  const actions = getPropertyFromEntityContainer(
-    root,
-    `${voca.capitalize('action')}Import`
-  );
-
-  return [
-    ...functions.map(operation => ({
-      ...operation,
-      operationName: operation[voca.capitalize('function')],
-      operationType: 'function'
-    })),
-    ...actions.map(operation => ({
-      ...operation,
-      operationName: operation[voca.capitalize('action')],
-      operationType: 'action'
-    }))
-  ];
+  return operations.map(operation => ({
+    ...operation,
+    operationName: operation[voca.capitalize(operationType)],
+    operationType,
+  }));
 }
 
 /**

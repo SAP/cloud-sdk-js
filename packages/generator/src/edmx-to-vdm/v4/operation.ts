@@ -263,7 +263,10 @@ function generateOperations(
   className?: string
 ): VdmOperation[] {
   const operations = parseOperations(serviceMetadata.edmx.root);
-  const operationImports = parseOperationImports(serviceMetadata.edmx.root);
+  const operationImports = [
+    ...parseOperationImports(serviceMetadata.edmx.root, 'function'),
+   ...parseOperationImports(serviceMetadata.edmx.root, 'action')
+  ];
   const joinedOperationData = filterAndTransformOperations(
     operationImports,
     operations,

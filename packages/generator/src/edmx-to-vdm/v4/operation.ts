@@ -265,7 +265,7 @@ function generateOperations(
   const operations = parseOperations(serviceMetadata.edmx.root);
   const operationImports = [
     ...parseOperationImports(serviceMetadata.edmx.root, 'function'),
-   ...parseOperationImports(serviceMetadata.edmx.root, 'action')
+    ...parseOperationImports(serviceMetadata.edmx.root, 'action')
   ];
   const joinedOperationData = filterAndTransformOperations(
     operationImports,

@@ -48,7 +48,10 @@ describe('edmx-edmx-parser', () => {
 
     expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(14);
     expect(parseEntityType(metadataEdmx.root).length).toBe(14);
-    expect(parseOperationImports(metadataEdmx.root, 'function').length + parseOperationImports(metadataEdmx.root, 'action').length).toBe(23);
+    expect(
+      parseOperationImports(metadataEdmx.root, 'function').length +
+        parseOperationImports(metadataEdmx.root, 'action').length
+    ).toBe(23);
     expect(parseOperations(metadataEdmx.root).length).toBe(22);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
     expect(parseEnumTypes(metadataEdmx.root).length).toBe(3);

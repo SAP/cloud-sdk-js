@@ -128,7 +128,10 @@ function parseNavigationPropertyBinding(
 /**
  * @internal
  */
-export function parseOperationImports(root: any, operationType: 'function' | 'action'): EdmxOperationImport[] {
+export function parseOperationImports(
+  root: any,
+  operationType: 'function' | 'action'
+): EdmxOperationImport[] {
   const operations = getPropertyFromEntityContainer(
     root,
     `${voca.capitalize(operationType)}Import`
@@ -136,7 +139,7 @@ export function parseOperationImports(root: any, operationType: 'function' | 'ac
   return operations.map(operation => ({
     ...operation,
     operationName: operation[voca.capitalize(operationType)],
-    operationType,
+    operationType
   }));
 }
 

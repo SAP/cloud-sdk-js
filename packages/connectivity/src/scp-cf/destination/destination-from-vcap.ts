@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { JwtPayload } from '../jsonwebtoken-type';
-import { decodeJwt } from '../jwt';
+import { decodeJwt, getJwtForCaching } from '../jwt';
 import { Service } from '../environment-accessor/environment-accessor-types';
 import { getServiceBindingByInstanceName } from '../environment-accessor';
 import {
@@ -10,7 +10,6 @@ import {
 import { Destination, isHttpDestination } from './destination-service-types';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import { destinationCache } from './destination-cache';
-import { decodedJwtOrZid } from './destination-from-registration';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
 
 const logger = createLogger({
@@ -47,7 +46,7 @@ export async function destinationForServiceBinding(
 ): Promise<Destination> {
   if (options.useCache) {
     const fromCache = await destinationCache.retrieveDestinationFromCache(
-      options.jwt || decodedJwtOrZid().subaccountid,
+      getJwtForCaching(options.jwt),
       serviceInstanceName,
       'tenant'
     );
@@ -69,9 +68,9 @@ export async function destinationForServiceBinding(
       : destination;
 
   if (options.useCache) {
-    // use the provider tenant if no jwt is given. Since the grant type is clientCredential isolation strategy is tenant.
+    // As the grant type is clientCredential, isolation strategy is 'tenant'.
     await destinationCache.cacheRetrievedDestination(
-      options.jwt || decodedJwtOrZid().subaccountid,
+      getJwtForCaching(options.jwt),
       destWithProxy,
       'tenant'
     );

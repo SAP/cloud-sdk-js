@@ -291,7 +291,7 @@ describe('token accessor', () => {
       await expect(
         serviceToken('destination')
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Could not find binding to service \'xsuaa\', that includes credentials."'
+        '"Could not find binding to the XSUAA service."'
       );
     });
 

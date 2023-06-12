@@ -235,11 +235,12 @@ function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
   }
 
   if (!tenant) {
-    throw new Error('Could not obtain tenant identifier from jwt.');
+    throw new Error('Could not obtain tenant identifier from JWT.');
   }
   return tenant;
 }
 
+// TODO: Why is this different than for caching?
 function getTenantId(token: string | undefined): string | undefined {
   if (token) {
     const { zoneId, subdomain } = getSubdomainAndZoneId(token);

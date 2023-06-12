@@ -1,10 +1,18 @@
+import { createLogger } from '@sap-cloud-sdk/util';
+import { getServiceCredentials } from './environment-accessor';
 import { JwtPayload } from './jsonwebtoken-type';
 import {
   checkMandatoryValue,
+  decodeJwt,
   JwtKeyMapping,
   readPropertyWithWarn
 } from './jwt';
+import { parseSubdomain } from './subdomain-replacer';
 
+const logger = createLogger({
+  package: 'connectivity',
+  messageContext: 'tenant'
+});
 /**
  * Mapping between key name in the Tenant and key name in decoded JWT.
  * @internal
@@ -82,4 +90,38 @@ export function isIdenticalTenant(
     readPropertyWithWarn(userTokenPayload, mappingTenantFields.id.keyInJwt) ===
     readPropertyWithWarn(providerTokenPayload, mappingTenantFields.id.keyInJwt)
   );
+}
+
+const placeholderTenantId = 'tenant_id';
+
+/**
+ * @internal
+ * Return the tenantid based on the given conditions:
+ * - If a JWT is provided and contains `zid`, return the value of zid.
+ * - If a JWT is provided and contains `iss`, return its subdomain.
+ * - If a binding to the XSUAA service exists, return the `subaccountid` from its credentials.
+ * - Return a default string value.
+ * @param jwt - JWT.
+ * @returns String with tenantid information.
+ */
+export function getTenantIdWithFallback(jwt?: string): string {
+  // TODO: Why is this the only place where subaccount matters (why is it not used when caching, e.g.?)
+  return (
+    getTenantIdFromJwt(jwt) || getSubaccountIdFromXsuaa() || placeholderTenantId
+  );
+}
+
+function getTenantIdFromJwt(jwt?: string): string | undefined {
+  if (jwt) {
+    const decodedJwt = decodeJwt(jwt);
+
+    return (
+      tenantId(decodedJwt) ||
+      (decodedJwt.iss ? parseSubdomain(decodedJwt.iss) : undefined)
+    );
+  }
+}
+
+function getSubaccountIdFromXsuaa(): string | undefined {
+  return getServiceCredentials('xsuaa')?.subaccountid;
 }

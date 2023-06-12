@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generation-and-usage create api specific usage for action import 1`] = `
-"import { dummyActionImport, dummyParamType } from './generated/undefined/action-imports';
+"import { dummyActionImport, dummyParamType } from './generated/dummy-service/operations';
 
 const parameter: dummyParamType = { dummyParam1: 'dummyParam1' };
     
@@ -9,7 +9,7 @@ const resultPromise = dummyActionImport(parameter).execute({ destinationName: 'm
 `;
 
 exports[`generation-and-usage create api specific usage for function import 1`] = `
-"import { dummyFunc, dummyParamType } from './generated/undefined/function-imports';
+"import { dummyFunc, dummyParamType } from './generated/dummy-service/operations';
 
 const parameter: dummyParamType = { dummyParam1: 'dummyParam1', dummyParam2: 'dummyParam2', ... };
     
@@ -17,7 +17,7 @@ const resultPromise = dummyFunc(parameter).execute({ destinationName: 'myDestina
 `;
 
 exports[`generation-and-usage create api specific usage for function import with minimum parameters 1`] = `
-"import { dummyFunc, dummyParamType } from './generated/undefined/function-imports';
+"import { dummyFunc, dummyParamType } from './generated/dummy-service/operations';
 
 const parameter: dummyParamType = { dummyParam1: 'dummyParam1' };
     

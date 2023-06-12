@@ -132,14 +132,13 @@ export function parseOperationImports(
   root: any,
   operationType: 'function' | 'action'
 ): EdmxOperationImport[] {
-  const operationImports = getPropertyFromEntityContainer(
+  const operations = getPropertyFromEntityContainer(
     root,
     `${voca.capitalize(operationType)}Import`
   );
-
-  return operationImports.map(operationImport => ({
-    ...operationImport,
-    operationName: operationImport[voca.capitalize(operationType)],
+  return operations.map(operation => ({
+    ...operation,
+    operationName: operation[voca.capitalize(operationType)],
     operationType
   }));
 }
@@ -147,14 +146,11 @@ export function parseOperationImports(
 /**
  * @internal
  */
-export function parseOperations(
-  root: any,
-  operationType: 'function' | 'action'
-): EdmxOperation[] {
-  return getMergedPropertyWithNamespace(
-    root,
-    voca.capitalize(operationType)
-  ).map(operation => ({
+export function parseOperations(root: any): EdmxOperation[] {
+  return [
+    ...getMergedPropertyWithNamespace(root, 'Function'),
+    ...getMergedPropertyWithNamespace(root, 'Action')
+  ].map(operation => ({
     ...operation,
     Parameter: forceArray(operation.Parameter),
     IsBound: operation.IsBound || 'false'

@@ -182,27 +182,31 @@ describe('entity', () => {
     });
 
     const entities = generateEntitiesV4(service, [], [], getFormatter());
+    const functionFilter = op => op.type === 'function';
+    const actionFilter = op => op.type === 'action';
 
     // entities[0]
-    expect(entities[0].functions.map(({ name }) => name)).toEqual([
-      'fn1IsBound'
-    ]);
-    expect(entities[0].functions[0].parameters.length).toBe(1);
-    expect(entities[0].actions.map(({ name }) => name)).toEqual([
-      'action1IsBound'
-    ]);
-    expect(entities[0].actions[0].parameters.length).toBe(0);
+    const [functionOp, actionOp] = entities[0].operations;
+
+    // function
+    expect(functionOp.name).toEqual('fn1IsBound');
+    expect(functionOp.parameters.length).toBe(1);
+
+    // action
+    expect(actionOp.name).toEqual('action1IsBound');
+    expect(actionOp.parameters.length).toBe(0);
 
     // entities[1]
-    expect(entities[1].functions.map(({ name }) => name)).toEqual([
-      'fn3IsBoundToOtherEntity'
-    ]);
-    expect(entities[1].functions[0].parameters.length).toBe(1);
-    expect(entities[1].actions.length).toBe(0);
+    expect(
+      entities[1].operations.filter(functionFilter).map(({ name }) => name)
+    ).toEqual(['fn3IsBoundToOtherEntity']);
+    expect(
+      entities[1].operations.filter(functionFilter)[0].parameters.length
+    ).toBe(1);
+    expect(entities[1].operations.filter(actionFilter).length).toBe(0);
 
     // entities[2]
-    expect(entities[2].functions.length).toBe(0);
-    expect(entities[2].actions.length).toBe(0);
+    expect(entities[2].operations.length).toBe(0);
   });
 });
 

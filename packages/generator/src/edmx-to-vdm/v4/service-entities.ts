@@ -28,28 +28,16 @@ export function getServiceEntitiesV4(
     enumTypes,
     formatter
   );
-  const actionImports = generateUnboundOperations(
-    serviceMetadata,
-    serviceName,
-    'action',
-    entities,
-    complexTypes,
-    formatter
-  );
-  const functionImports = generateUnboundOperations(
-    serviceMetadata,
-    serviceName,
-    'function',
-    entities,
-    complexTypes,
-    formatter
-  );
-
   return {
     complexTypes,
     enumTypes,
     entities,
-    functionImports,
-    actionImports
+    operations: generateUnboundOperations(
+      serviceMetadata,
+      serviceName,
+      entities,
+      complexTypes,
+      formatter
+    )
   };
 }

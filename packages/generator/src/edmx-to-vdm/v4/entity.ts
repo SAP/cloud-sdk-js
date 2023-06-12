@@ -65,20 +65,9 @@ export function generateEntitiesV4(
       classNames,
       formatter
     ),
-    functions: generateBoundOperations(
+    operations: generateBoundOperations(
       serviceMetadata,
       entityMetadata.entityType.Namespace,
-      'function',
-      entities,
-      complexTypes,
-      formatter,
-      entityMetadata.entitySet.Name,
-      classNames[entityMetadata.entitySet.Name]
-    ),
-    actions: generateBoundOperations(
-      serviceMetadata,
-      entityMetadata.entityType.Namespace,
-      'action',
       entities,
       complexTypes,
       formatter,

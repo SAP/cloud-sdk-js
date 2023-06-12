@@ -308,8 +308,9 @@ describe('service-generator', () => {
           })
         );
 
-        const functionImport = services[0].functionImports.find(
-          f => f.originalName === 'CreateTestComplexType'
+        const functionImport = services[0].operations.find(
+          f =>
+            f.originalName === 'CreateTestComplexType' && f.type === 'function'
         )!;
         const complexType = services[0].complexTypes.find(
           c => c.originalName === 'A_TestComplexType'
@@ -340,8 +341,8 @@ describe('service-generator', () => {
           })
         );
 
-        const functionImport = services[0].functionImports.find(
-          f => f.originalName === 'Continue'
+        const functionImport = services[0].operations.find(
+          f => f.originalName === 'Continue' && f.type === 'function'
         )!;
 
         expect(functionImport.name).toEqual('fContinue');
@@ -355,8 +356,10 @@ describe('service-generator', () => {
           })
         );
 
-        const functionImport = service.functionImports.find(
-          f => f.originalName === 'TestFunctionImportEdmReturnType'
+        const functionImport = service.operations.find(
+          f =>
+            f.originalName === 'TestFunctionImportEdmReturnType' &&
+            f.type === 'function'
         )!;
 
         expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
@@ -364,8 +367,10 @@ describe('service-generator', () => {
           "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.Boolean', deSerializers)"
         );
 
-        const functionImportUnsupportedEdmTypes = service.functionImports.find(
-          f => f.originalName === 'TestFunctionImportUnsupportedEdmTypes'
+        const functionImportUnsupportedEdmTypes = service.operations.find(
+          f =>
+            f.originalName === 'TestFunctionImportUnsupportedEdmTypes' &&
+            f.type === 'function'
         )!;
 
         expect(
@@ -471,8 +476,10 @@ describe('service-generator', () => {
           })
         );
 
-        const functionImport = service.functionImports.find(
-          f => f.originalName === 'TestFunctionImportEdmReturnType'
+        const functionImport = service.operations.find(
+          f =>
+            f.originalName === 'TestFunctionImportEdmReturnType' &&
+            f.type === 'function'
         )!;
 
         expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
@@ -489,7 +496,9 @@ describe('service-generator', () => {
           })
         );
 
-        const actions = services[0].actionImports;
+        const actions = services[0].operations.filter(
+          op => op.type === 'action'
+        );
 
         expect(actions?.length).toEqual(7);
         const actionWithUnsupportedEdmType = actions?.find(

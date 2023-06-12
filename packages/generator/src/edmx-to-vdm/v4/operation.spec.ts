@@ -143,7 +143,6 @@ describe('action-import', () => {
     const actionImport = generateUnboundOperations(
       service,
       'myServiceWithActions',
-      'action',
       entities,
       [],
       formatter
@@ -226,7 +225,6 @@ describe('action-import', () => {
     const actionImports = generateUnboundOperations(
       service,
       'myTestServiceName',
-      'action',
       entities,
       complexTypes,
       getFormatter()
@@ -241,14 +239,7 @@ describe('action-import', () => {
     const formatter = getFormatter();
     const service =
       createServiceMetadataWithActionImportLinksToUndefinedAction();
-    generateUnboundOperations(
-      service,
-      'myTestServiceName',
-      'action',
-      [],
-      [],
-      formatter
-    );
+    generateUnboundOperations(service, 'myTestServiceName', [], [], formatter);
     expect(warnSpy).toBeCalledWith(
       expect.stringContaining(
         'Could not find actions referenced by the following action imports.'
@@ -266,7 +257,6 @@ describe('action-import', () => {
     generateUnboundOperations(
       service,
       'myTestServiceName',
-      'action',
       entities,
       [],
       formatter

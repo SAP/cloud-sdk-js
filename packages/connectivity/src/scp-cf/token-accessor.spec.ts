@@ -290,7 +290,6 @@ describe('token accessor', () => {
       });
       const token = signedJwt({ dummy: 'content' });
 
-      clientCredentialsTokenCache.clear();
       clientCredentialsTokenCache.cacheToken(
         destinationBindingClientSecretMock.credentials.url,
         destinationBindingClientSecretMock.credentials.clientid,

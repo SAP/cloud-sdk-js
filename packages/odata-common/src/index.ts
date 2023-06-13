@@ -109,7 +109,8 @@ export {
   ODataFunctionImportRequestConfig,
   ODataRequest,
   ODataRequestConfig,
-  BatchReference
+  BatchReference,
+  OperationParameters
 } from './request';
 export type { RequestMethodType } from './request';
 export { throwErrorWhenReturnTypeIsUnionType } from './response-transformer';

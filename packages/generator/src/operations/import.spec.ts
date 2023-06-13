@@ -16,9 +16,7 @@ describe('import declarations for operations', () => {
     const actual = operationDeclarations(service as VdmServiceMetadata, [
       { ...orderBreakfast, isBound: true }
     ]);
-    expect(actual[0].namedImports).toContain(
-      'BoundOperationRequestBuilder'
-    );
+    expect(actual[0].namedImports).toContain('BoundOperationRequestBuilder');
   });
 
   it('includes OperationParameter if import has parameters.', () => {

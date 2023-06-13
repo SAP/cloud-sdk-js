@@ -3,9 +3,9 @@ import {
   RequestMethodType,
   ActionFunctionImportRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers/index';
-import { ODataFunctionImportRequestConfig } from '../request/index';
-import { createODataUri } from '../uri-conversion/index';
+import { DeSerializers } from '../de-serializers';
+import { ODataFunctionImportRequestConfig } from '../request';
+import { createODataUri } from '../uri-conversion';
 
 /**
  * Create OData request to execute an operation.

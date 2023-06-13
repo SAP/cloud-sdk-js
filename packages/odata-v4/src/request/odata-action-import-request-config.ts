@@ -44,8 +44,7 @@ export class ODataActionImportRequestConfig<
     parameters: OperationParameters<ParametersT>
   ): Record<string, any> {
     const payload = Object.keys(parameters).reduce((all, key) => {
-      const payloadElement: OperationParameter<ParametersT> =
-        parameters[key];
+      const payloadElement: OperationParameter<ParametersT> = parameters[key];
       if (typeof payloadElement.value !== 'undefined') {
         all[payloadElement.originalName] = payloadElement.value;
       }

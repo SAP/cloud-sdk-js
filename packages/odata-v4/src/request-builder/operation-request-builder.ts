@@ -3,9 +3,12 @@ import {
   ODataRequestConfig,
   OperationParameters
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers/index';
-import { ODataFunctionImportRequestConfig, ODataActionImportRequestConfig } from '../request/index';
-import { createODataUri } from '../uri-conversion/index';
+import { DeSerializers } from '../de-serializers';
+import {
+  ODataFunctionImportRequestConfig,
+  ODataActionImportRequestConfig
+} from '../request';
+import { createODataUri } from '../uri-conversion';
 
 /**
  * Create OData request to execute an operation.
@@ -38,24 +41,21 @@ export class OperationRequestBuilder<
     deSerializers: DeSerializersT,
     type: 'function' | 'action'
   ) {
-   const requestConfig = type === 'function' ?
-    new ODataFunctionImportRequestConfig(
-      'get',
-      defaultBasePath,
-      operationName,
-      parameters,
-      createODataUri(deSerializers)
-    ) :
-    new ODataActionImportRequestConfig(
-      defaultBasePath,
-      operationName,
-      parameters,
-      createODataUri(deSerializers)
-    );
-    super(
-      responseTransformer,
-      requestConfig,
-      deSerializers
-    );
+    const requestConfig =
+      type === 'function'
+        ? new ODataFunctionImportRequestConfig(
+            'get',
+            defaultBasePath,
+            operationName,
+            parameters,
+            createODataUri(deSerializers)
+          )
+        : new ODataActionImportRequestConfig(
+            defaultBasePath,
+            operationName,
+            parameters,
+            createODataUri(deSerializers)
+          );
+    super(responseTransformer, requestConfig, deSerializers);
   }
 }

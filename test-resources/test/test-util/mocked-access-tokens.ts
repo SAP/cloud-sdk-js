@@ -9,71 +9,75 @@ import { signedJwtForVerification } from './keys';
 
 const iat = Math.floor(Date.now() / 1000);
 
-const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
-
+// simple provider case (XSUAA)
 export const providerServiceTokenPayload = {
-  iat,
+  iat, // check if needed
   iss: providerXsuaaUrl,
-  zid: testTenants.provider
+  zid: testTenants.provider,
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
 export const providerServiceToken = signedJwtForVerification(
-  providerServiceTokenPayload,
-  jku
+  providerServiceTokenPayload
 );
 
+// simple subscriber case (XSUAA)
 export const subscriberServiceTokenPayload = {
   iat,
   iss: subscriberXsuaaUrl,
-  zid: testTenants.subscriber
+  zid: testTenants.subscriber,
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
 export const subscriberServiceToken = signedJwtForVerification(
-  subscriberServiceTokenPayload,
-  jku
+  subscriberServiceTokenPayload
 );
 
+// case? only difference iat missing => relevant for mocked function that looks at URL
 /**
  * These tokens are used to test cases when the provided user JWT only contains `{ iss: someXSUAAurl }`.
  * See docs on {@link DestinationAccessorOptions} for more details.
  */
 export const onlyIssuerServiceTokenPayload = {
   iss: onlyIssuerXsuaaUrl,
-  zid: testTenants.subscriberOnlyIss
+  zid: testTenants.subscriberOnlyIss,
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
 export const onlyIssuerServiceToken = signedJwtForVerification(
-  onlyIssuerServiceTokenPayload,
-  jku
+  onlyIssuerServiceTokenPayload
 );
 
 export const subscriberServiceTokenWithVerificationURL =
-  signedJwtForVerification(subscriberServiceTokenPayload, jku);
+  signedJwtForVerification(subscriberServiceTokenPayload);
 
+// simple case provider (XSUAA) + user_id => rename (not approved)
 const userApprovedProviderTokenPayload = {
   iat,
   iss: providerXsuaaUrl,
   zid: testTenants.provider,
-  user_id: 'service-prov-approved'
+  user_id: 'service-prov-approved',
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
 export const userApprovedProviderServiceToken = signedJwtForVerification(
-  userApprovedProviderTokenPayload,
-  jku
+  userApprovedProviderTokenPayload
 );
 
+// simple case subscriber (XSUAA) + user_id
 const userApprovedSubscriberTokenPayload = {
   iat,
   iss: subscriberXsuaaUrl,
   zid: testTenants.subscriber,
-  user_id: 'service-sub-approved'
+  user_id: 'service-sub-approved',
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
 export const userApprovedSubscriberServiceToken = signedJwtForVerification(
-  userApprovedSubscriberTokenPayload,
-  jku
+  userApprovedSubscriberTokenPayload
 );
 
+// case? userApprovedProviderTokenPayload difference currently: not XSUAA (just because I added it), but URL still XSUAA
 export const providerUserPayload = {
   iat,
   iss: providerXsuaaUrl,
@@ -81,11 +85,9 @@ export const providerUserPayload = {
   user_id: 'user-prov'
 };
 
-export const providerUserJwt = signedJwtForVerification(
-  providerUserPayload,
-  jku
-);
+export const providerUserJwt = signedJwtForVerification(providerUserPayload);
 
+// case? XSUAA or not? difference to userApprovedSubscriberTokenPayload?
 export const subscriberUserPayload = {
   iat,
   iss: subscriberXsuaaUrl,
@@ -97,10 +99,10 @@ export const subscriberUserPayload = {
 };
 
 export const subscriberUserJwt = signedJwtForVerification(
-  subscriberUserPayload,
-  jku
+  subscriberUserPayload
 );
 
+// custom case, no XSUAA + user_id
 const customSubscriberUserPayload = {
   user_id: 'user-sub',
   jwksUri: 'http://jwks.example.com',
@@ -112,6 +114,7 @@ export const customSubscriberUserJwt = signedJwtForVerification(
   customSubscriberUserPayload.jwksUri
 );
 
+// case? difference to userApprovedSubscriberTokenPayload?
 const subscriberJwtTokenPayload = {
   iat,
   iss: subscriberXsuaaUrl,
@@ -119,6 +122,7 @@ const subscriberJwtTokenPayload = {
   user_id: 'jwt-sub'
 };
 
+// case? difference to userApprovedProviderTokenPayload
 const providerJwtTokenPayload = {
   iat,
   iss: providerXsuaaUrl,
@@ -127,13 +131,12 @@ const providerJwtTokenPayload = {
 };
 
 export const providerJwtBearerToken = signedJwtForVerification(
-  providerJwtTokenPayload,
-  jku
+  providerJwtTokenPayload
 );
 
 export const subscriberJwtBearerToken = signedJwtForVerification(
-  subscriberJwtTokenPayload,
-  jku
+  subscriberJwtTokenPayload
 );
 
-export const iasToken = signedJwtForVerification(providerJwtTokenPayload, jku);
+// How is this IAS? => seems odd, same as providerJwtBearerToken
+export const iasToken = signedJwtForVerification(providerJwtTokenPayload);

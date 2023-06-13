@@ -2,6 +2,7 @@ import { IncomingMessage } from 'http';
 import { Socket } from 'net';
 import nock from 'nock';
 import {
+  jku,
   mockServiceBindings,
   publicKey,
   signedJwtForVerification,
@@ -94,8 +95,6 @@ describe('jwt', () => {
   });
 
   describe('verifyJwt', () => {
-    const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
-
     beforeEach(() => {
       process.env.VCAP_SERVICES = JSON.stringify({
         xsuaa: [
@@ -118,7 +117,7 @@ describe('jwt', () => {
     it('succeeds and decodes for correct key', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload))
       ).resolves.toEqual(jwtPayload);
     });
 
@@ -128,7 +127,7 @@ describe('jwt', () => {
         .reply(200, responseWithPublicKey(publicKey.split('\n').join('')));
 
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload))
       ).resolves.toEqual(jwtPayload);
     });
 
@@ -136,7 +135,7 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, { keys: [] });
 
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+        verifyJwt(signedJwtForVerification(jwtPayload), {
           cacheVerificationKeys: false
         })
       ).rejects.toMatchObject({
@@ -154,7 +153,7 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, response);
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+        verifyJwt(signedJwtForVerification(jwtPayload), {
           cacheVerificationKeys: false
         })
       ).rejects.toMatchObject({
@@ -185,7 +184,7 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, responseWithPublicKey('WRONG'));
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+        verifyJwt(signedJwtForVerification(jwtPayload), {
           cacheVerificationKeys: false
         })
       ).rejects.toThrowErrorMatchingInlineSnapshot('"Failed to verify JWT."');
@@ -195,7 +194,7 @@ describe('jwt', () => {
       // We mock only a single HTTP call
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      await verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+      await verifyJwt(signedJwtForVerification(jwtPayload), {
         cacheVerificationKeys: true
       });
       // If you execute all tests the cache of xssec is populated already and the nock remains. Hence this extra clear.
@@ -203,7 +202,7 @@ describe('jwt', () => {
 
       // But due to caching multiple calls should not lead to errors
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+        verifyJwt(signedJwtForVerification(jwtPayload), {
           cacheVerificationKeys: true
         })
       ).resolves.toEqual(jwtPayload);
@@ -212,14 +211,14 @@ describe('jwt', () => {
     it('fails on the second call when caching is disabled', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      await verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+      await verifyJwt(signedJwtForVerification(jwtPayload), {
         cacheVerificationKeys: false
       });
 
       nock(jku).get('/').reply(500);
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+        verifyJwt(signedJwtForVerification(jwtPayload), {
           cacheVerificationKeys: false
         })
       ).rejects.toThrowErrorMatchingInlineSnapshot('"Failed to verify JWT."');
@@ -228,7 +227,7 @@ describe('jwt', () => {
     it('caches per default', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      const jwt = signedJwtForVerification(jwtPayload, jku);
+      const jwt = signedJwtForVerification(jwtPayload);
       await verifyJwt(jwt);
       nock.cleanAll();
       // Second call does not fail due to caching.
@@ -238,7 +237,7 @@ describe('jwt', () => {
     it('fetches a new key when a the cache has been disabled', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      const jwt = signedJwtForVerification(jwtPayload, jku);
+      const jwt = signedJwtForVerification(jwtPayload);
       await verifyJwt(jwt);
       // If you execute all tests the cache of xssec is populated already and the nock remains. Hence this extra clear.
       nock.cleanAll();

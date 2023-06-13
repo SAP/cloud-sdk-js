@@ -1,4 +1,3 @@
-import voca from 'voca';
 import { VdmOperation } from '../vdm-types';
 import { cannotDeserialize } from '../edmx-to-vdm/common';
 /**

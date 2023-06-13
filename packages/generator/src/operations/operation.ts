@@ -3,7 +3,6 @@ import {
   FunctionLikeDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import voca from 'voca';
 import { cannotDeserialize } from '../edmx-to-vdm/common';
 import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';

@@ -23,11 +23,7 @@ describe('ODataFunctionImportRequestConfig', () => {
 
   const mappedParameters = {
     test1: new OperationParameter('Test1', 'Edm.String', parameters.test1),
-    test2: new OperationParameter(
-      'Test2',
-      'Edm.Boolean',
-      parameters.test2
-    ),
+    test2: new OperationParameter('Test2', 'Edm.Boolean', parameters.test2),
     test3: new OperationParameter('Test3', 'Edm.Double', parameters.test3)
   };
 

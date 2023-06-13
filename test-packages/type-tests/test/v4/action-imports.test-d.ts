@@ -13,12 +13,12 @@ import {
   testService
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { expectError, expectType } from 'tsd';
-import { ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { OperationRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { DefaultDeSerializersV4 } from '../duplicated-types';
 
 const noReturnTypeRequestBuilder = testActionImportNoParameterNoReturnType({});
 expectType<
-  ActionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializersV4,
     TestActionImportNoParameterNoReturnTypeParameters<DefaultDeSerializersV4>,
     undefined
@@ -37,7 +37,7 @@ const complexReturnTypeRequestBuilder =
     nonNullableStringParam: 'nonNullableStringParam'
   });
 expectType<
-  ActionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializersV4,
     TestActionImportMultipleParameterComplexReturnTypeParameters<DefaultDeSerializersV4>,
     TestComplexType<DefaultDeSerializersV4>
@@ -54,7 +54,7 @@ const unsupportedEdmTypesRequestBuilder = testActionImportUnsupportedEdmTypes({
   simpleParam: 123
 });
 expectType<
-  ActionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializersV4,
     TestActionImportUnsupportedEdmTypesParameters<DefaultDeSerializersV4>,
     any
@@ -70,7 +70,7 @@ expectType<Promise<any>>(
 expectError<any>(testActionImportNullableTest({}));
 
 expectType<
-  ActionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializersV4,
     TestActionImportNullableTestParameters<DefaultDeSerializersV4>,
     TestComplexType<DefaultDeSerializersV4> | null
@@ -84,7 +84,7 @@ expectType<
 );
 
 expectType<
-  ActionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializersV4,
     TestActionImportNullableTestParameters<DefaultDeSerializersV4>,
     TestComplexType<DefaultDeSerializersV4> | null
@@ -98,7 +98,7 @@ expectType<Promise<TestComplexType<DefaultDeSerializersV4> | null>>(
 );
 
 expectType<
-  ActionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializersV4,
     TestActionImportNoParameterNoReturnTypeParameters<DefaultDeSerializersV4>,
     undefined

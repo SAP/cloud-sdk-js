@@ -32,7 +32,7 @@ export {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
-  FunctionImportRequestBuilder
+  OperationRequestBuilder
 } from './request-builder';
 export { Entity } from './entity';
 export { CustomField } from './selectable';

@@ -131,12 +131,7 @@ export function operationDeclarations(
         ...propertyTypeImportNames(parameters),
         ...(hasOperationWithParameters ? ['OperationParameter'] : []),
         ...(includesUnbound && operations.length ? ['OperationRequestBuilder'] : []),
-        ...(includesBound && hasFunction
-          ? ['BoundFunctionImportRequestBuilder']
-          : []),
-        ...(includesBound && hasAction
-          ? ['BoundActionImportRequestBuilder']
-          : [])
+        ...(includesBound && operations.length ? ['BoundOperationRequestBuilder'] : [])
       ],
       oDataVersion
     ),

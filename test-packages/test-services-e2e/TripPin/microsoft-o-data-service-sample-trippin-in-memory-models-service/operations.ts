@@ -9,9 +9,8 @@ import {
   DeSerializers,
   DefaultDeSerializers,
   defaultDeSerializers,
-  FunctionImportParameter,
-  FunctionImportRequestBuilder,
-  ActionImportRequestBuilder
+  OperationParameter,
+  OperationRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { microsoftODataServiceSampleTrippinInMemoryModelsService } from './service';
 import { Airports } from './Airports';
@@ -43,17 +42,17 @@ export function getNearestAirport<
 >(
   parameters: GetNearestAirportParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   GetNearestAirportParameters<DeSerializersT>,
   Airports
 > {
   const params = {
-    lat: new FunctionImportParameter('lat', 'Edm.Double', parameters.lat),
-    lon: new FunctionImportParameter('lon', 'Edm.Double', parameters.lon)
+    lat: new OperationParameter('lat', 'Edm.Double', parameters.lat),
+    lon: new OperationParameter('lon', 'Edm.Double', parameters.lon)
   };
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
     'GetNearestAirport',
     data =>
@@ -63,7 +62,8 @@ export function getNearestAirport<
           .airportsApi
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -84,19 +84,20 @@ export function resetDataSource<
 >(
   parameters: ResetDataSourceParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   ResetDataSourceParameters<DeSerializersT>,
   undefined
 > {
   const params = {};
 
-  return new ActionImportRequestBuilder(
+  return new OperationRequestBuilder(
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
     'ResetDataSource',
     data => transformReturnValueForUndefined(data, val => undefined),
     params,
-    deSerializers
+    deSerializers,
+    'action'
   );
 }
 

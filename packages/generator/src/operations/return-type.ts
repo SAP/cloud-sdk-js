@@ -13,9 +13,7 @@ export function operationReturnType({
   entityClassName
 }: VdmOperation): string {
   let type = returnType.returnType;
-  const requestBuilderName = `${isBound ? 'Bound' : ''}${voca.capitalize(
-    operationType
-  )}ImportRequestBuilder`;
+  const requestBuilderName = `${isBound ? 'Bound' : ''}OperationRequestBuilder`;
 
   if (cannotDeserialize(returnType)) {
     type = wrapRequestBuilderAroundType(

@@ -12,10 +12,8 @@ import {
   DeSerializers,
   DefaultDeSerializers,
   defaultDeSerializers,
-  FunctionImportParameter,
-  ActionImportParameter,
-  FunctionImportRequestBuilder,
-  ActionImportRequestBuilder
+  OperationParameter,
+  OperationRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { testService } from './service';
 import { TestEntity } from './TestEntity';
@@ -47,17 +45,17 @@ export function concatStrings<
 >(
   parameters: ConcatStringsParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   ConcatStringsParameters<DeSerializersT>,
   string
 > {
   const params = {
-    str1: new FunctionImportParameter('Str1', 'Edm.String', parameters.str1),
-    str2: new FunctionImportParameter('Str2', 'Edm.String', parameters.str2)
+    str1: new OperationParameter('Str1', 'Edm.String', parameters.str1),
+    str2: new OperationParameter('Str2', 'Edm.String', parameters.str2)
   };
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/odata/test-service',
     'concatStrings',
     data =>
@@ -65,7 +63,8 @@ export function concatStrings<
         edmToTs(val.value, 'Edm.String', deSerializers)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -84,14 +83,14 @@ export function getAll<
 >(
   parameters: GetAllParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   GetAllParameters<DeSerializersT>,
   TestEntity[]
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/odata/test-service',
     'getAll',
     data =>
@@ -100,7 +99,8 @@ export function getAll<
         testService(deSerializers).testEntityApi
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -124,16 +124,16 @@ export function getByKey<
 >(
   parameters: GetByKeyParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   GetByKeyParameters<DeSerializersT>,
   TestEntity
 > {
   const params = {
-    param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
+    param: new OperationParameter('param', 'Edm.Int32', parameters.param)
   };
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/odata/test-service',
     'getByKey',
     data =>
@@ -142,7 +142,8 @@ export function getByKey<
         testService(deSerializers).testEntityApi
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -176,30 +177,30 @@ export function getByKeyWithMultipleKeys<
 >(
   parameters: GetByKeyWithMultipleKeysParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   GetByKeyWithMultipleKeysParameters<DeSerializersT>,
   TestEntityWithMultipleKeys
 > {
   const params = {
-    keyTestEntityWithMultipleKeys: new FunctionImportParameter(
+    keyTestEntityWithMultipleKeys: new OperationParameter(
       'KeyTestEntityWithMultipleKeys',
       'Edm.Int32',
       parameters.keyTestEntityWithMultipleKeys
     ),
-    stringPropertyWithMultipleKeys: new FunctionImportParameter(
+    stringPropertyWithMultipleKeys: new OperationParameter(
       'StringPropertyWithMultipleKeys',
       'Edm.String',
       parameters.stringPropertyWithMultipleKeys
     ),
-    booleanPropertyWithMultipleKeys: new FunctionImportParameter(
+    booleanPropertyWithMultipleKeys: new OperationParameter(
       'BooleanPropertyWithMultipleKeys',
       'Edm.Boolean',
       parameters.booleanPropertyWithMultipleKeys
     )
   };
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/odata/test-service',
     'getByKeyWithMultipleKeys',
     data =>
@@ -208,7 +209,8 @@ export function getByKeyWithMultipleKeys<
         testService(deSerializers).testEntityWithMultipleKeysApi
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -234,16 +236,16 @@ export function returnCollection<
 >(
   parameters: ReturnCollectionParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   ReturnCollectionParameters<DeSerializersT>,
   number[]
 > {
   const params = {
-    param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
+    param: new OperationParameter('param', 'Edm.Int32', parameters.param)
   };
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/odata/test-service',
     'returnCollection',
     data =>
@@ -251,7 +253,8 @@ export function returnCollection<
         edmToTs(val, 'Edm.Int32', deSerializers)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -275,16 +278,16 @@ export function returnInt<
 >(
   parameters: ReturnIntParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   ReturnIntParameters<DeSerializersT>,
   number
 > {
   const params = {
-    param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
+    param: new OperationParameter('param', 'Edm.Int32', parameters.param)
   };
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/odata/test-service',
     'returnInt',
     data =>
@@ -292,7 +295,8 @@ export function returnInt<
         edmToTs(val.value, 'Edm.Int32', deSerializers)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -313,14 +317,14 @@ export function returnSapCloudSdk<
 >(
   parameters: ReturnSapCloudSdkParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   ReturnSapCloudSdkParameters<DeSerializersT>,
   string
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/odata/test-service',
     'returnSapCloudSdk',
     data =>
@@ -328,7 +332,8 @@ export function returnSapCloudSdk<
         edmToTs(val.value, 'Edm.String', deSerializers)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -354,16 +359,16 @@ export function createTestEntityById<
 >(
   parameters: CreateTestEntityByIdParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   CreateTestEntityByIdParameters<DeSerializersT>,
   TestEntity
 > {
   const params = {
-    id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
+    id: new OperationParameter('id', 'Edm.Int32', parameters.id)
   };
 
-  return new ActionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/odata/test-service',
     'createTestEntityById',
     data =>
@@ -372,7 +377,8 @@ export function createTestEntityById<
         testService(deSerializers).testEntityApi
       ),
     params,
-    deSerializers
+    deSerializers,
+    'action'
   );
 }
 
@@ -398,16 +404,16 @@ export function createTestEntityByIdReturnId<
 >(
   parameters: CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
   number
 > {
   const params = {
-    id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
+    id: new OperationParameter('id', 'Edm.Int32', parameters.id)
   };
 
-  return new ActionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/odata/test-service',
     'createTestEntityByIdReturnId',
     data =>
@@ -415,7 +421,8 @@ export function createTestEntityByIdReturnId<
         edmToTs(val.value, 'Edm.Int32', deSerializers)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'action'
   );
 }
 

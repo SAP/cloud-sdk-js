@@ -8,8 +8,7 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   DeserializedType,
-  BoundFunctionImportRequestBuilder,
-  BoundActionImportRequestBuilder
+  BoundOperationRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType } from './TestComplexType';
 import type { TestEntityApi } from './TestEntityApi';
@@ -200,7 +199,7 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   boundFunctionWithoutArguments(
     parameters: BoundFunctionWithoutArgumentsParameters<T>,
     deSerializers?: T
-  ): BoundFunctionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
     BoundFunctionWithoutArgumentsParameters<T>,
@@ -214,7 +213,7 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   boundFunctionWithArguments(
     parameters: BoundFunctionWithArgumentsParameters<T>,
     deSerializers?: T
-  ): BoundFunctionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
     BoundFunctionWithArgumentsParameters<T>,
@@ -228,7 +227,7 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   boundActionWithoutArguments(
     parameters: BoundActionWithoutArgumentsParameters<T>,
     deSerializers?: T
-  ): BoundActionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
     BoundActionWithoutArgumentsParameters<T>,

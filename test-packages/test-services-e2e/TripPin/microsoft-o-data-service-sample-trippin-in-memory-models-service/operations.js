@@ -15,11 +15,11 @@ const service_1 = require("./service");
  */
 function getNearestAirport(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     const params = {
-        lat: new odata_v4_1.FunctionImportParameter('lat', 'Edm.Double', parameters.lat),
-        lon: new odata_v4_1.FunctionImportParameter('lon', 'Edm.Double', parameters.lon)
+        lat: new odata_v4_1.OperationParameter('lat', 'Edm.Double', parameters.lat),
+        lon: new odata_v4_1.OperationParameter('lon', 'Edm.Double', parameters.lon)
     };
-    return new odata_v4_1.FunctionImportRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'GetNearestAirport', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.microsoftODataServiceSampleTrippinInMemoryModelsService)(deSerializers)
-        .airportsApi), params, deSerializers);
+    return new odata_v4_1.OperationRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'GetNearestAirport', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.microsoftODataServiceSampleTrippinInMemoryModelsService)(deSerializers)
+        .airportsApi), params, deSerializers, 'function');
 }
 exports.getNearestAirport = getNearestAirport;
 /**
@@ -29,7 +29,7 @@ exports.getNearestAirport = getNearestAirport;
  */
 function resetDataSource(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v4_1.ActionImportRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'ResetDataSource', data => (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined), params, deSerializers);
+    return new odata_v4_1.OperationRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'ResetDataSource', data => (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined), params, deSerializers, 'action');
 }
 exports.resetDataSource = resetDataSource;
 exports.operations = {

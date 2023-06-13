@@ -78,14 +78,10 @@ function getOperationStatements(
   operation: VdmOperation,
   service: VdmServiceMetadata
 ): string {
-  const requestBuilderName = `${
-    operation.isBound ? 'Bound' : ''
-  }${voca.capitalize(operation.type)}ImportRequestBuilder`;
+  const requestBuilderName = `${operation.isBound ? 'Bound' : ''}OperationRequestBuilder`;
   const paramsLines = (operation.parameters || []).map(
     param =>
-      `${param.parameterName}: new ${voca.capitalize(
-        operation.type
-      )}ImportParameter('${param.originalName}', '${
+      `${param.parameterName}: new OperationParameter('${param.originalName}', '${
         param.edmType
       }', ${parameterName}.${param.parameterName})`
   );
@@ -93,7 +89,7 @@ function getOperationStatements(
 
   let parameters = getRequestBuilderArgumentsBase(operation, service);
   if (operation.type === 'function' && service.oDataVersion === 'v2') {
-    parameters = [`'${operation.httpMethod}'`, ...parameters];
+    parameters = [`'${operation.httpMethod}'`, ...parameters.slice(0, -1)];
   }
 
   const returnStatement = `return new ${requestBuilderName}(${parameters.join(

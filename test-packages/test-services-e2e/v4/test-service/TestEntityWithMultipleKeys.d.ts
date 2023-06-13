@@ -8,8 +8,7 @@ import {
   DefaultDeSerializers,
   DeSerializers,
   DeserializedType,
-  BoundFunctionImportRequestBuilder,
-  BoundActionImportRequestBuilder
+  BoundOperationRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 /**
@@ -56,7 +55,7 @@ export declare class TestEntityWithMultipleKeys<
   boundFunctionWithoutArgumentsWithMultipleKeys(
     parameters: BoundFunctionWithoutArgumentsWithMultipleKeysParameters<T>,
     deSerializers?: T
-  ): BoundFunctionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
     BoundFunctionWithoutArgumentsWithMultipleKeysParameters<T>,
@@ -70,7 +69,7 @@ export declare class TestEntityWithMultipleKeys<
   boundFunctionWithArgumentsWithMultipleKeys(
     parameters: BoundFunctionWithArgumentsWithMultipleKeysParameters<T>,
     deSerializers?: T
-  ): BoundFunctionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
     BoundFunctionWithArgumentsWithMultipleKeysParameters<T>,
@@ -84,7 +83,7 @@ export declare class TestEntityWithMultipleKeys<
   boundActionWithoutArgumentsWithMultipleKeys(
     parameters: BoundActionWithoutArgumentsWithMultipleKeysParameters<T>,
     deSerializers?: T
-  ): BoundActionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
     BoundActionWithoutArgumentsWithMultipleKeysParameters<T>,

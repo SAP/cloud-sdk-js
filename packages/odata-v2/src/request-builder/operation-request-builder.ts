@@ -3,16 +3,17 @@ import {
   RequestMethodType,
   ActionFunctionImportRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
-import { ODataFunctionImportRequestConfig } from '../request';
-import { createODataUri } from '../uri-conversion';
+import { DeSerializers } from '../de-serializers/index';
+import { ODataFunctionImportRequestConfig } from '../request/index';
+import { createODataUri } from '../uri-conversion/index';
 
 /**
- * Create OData request to execute a function import.
+ * Create OData request to execute an operation.
+ * For v2, only function, but not action, is supported.
  * @typeParam ParametersT - Type of the function import parameters.
  * @typeParam ReturnT - Type of the function import return value.
  */
-export class FunctionImportRequestBuilder<
+export class OperationRequestBuilder<
   DeSerializersT extends DeSerializers,
   ParametersT,
   ReturnT
@@ -24,16 +25,16 @@ export class FunctionImportRequestBuilder<
   /**
    * Creates an instance of FunctionImportRequestBuilder.
    * @param method - HTTP method to be used for the request.
-   * @param defaultBasePath - Default base path for the service the function belongs to.
-   * @param functionImportName - The name of the function import.
+   * @param defaultBasePath - Default base path for the service the operation belongs to.
+   * @param operationName - The name of the operation.
    * @param responseTransformer - Transformation function for the response.
-   * @param parameters - Parameters to be set in the function.
+   * @param parameters - Parameters to be set in the operation.
    * @param deSerializers - (De-)serializers used for transformation.
    */
   constructor(
     method: RequestMethodType,
     defaultBasePath: string,
-    functionImportName: string,
+    operationName: string,
     readonly responseTransformer: (data: any) => ReturnT,
     parameters: OperationParameters<ParametersT>,
     deSerializers: DeSerializersT
@@ -43,7 +44,7 @@ export class FunctionImportRequestBuilder<
       new ODataFunctionImportRequestConfig(
         method,
         defaultBasePath,
-        functionImportName,
+        operationName,
         parameters,
         createODataUri(deSerializers)
       ),

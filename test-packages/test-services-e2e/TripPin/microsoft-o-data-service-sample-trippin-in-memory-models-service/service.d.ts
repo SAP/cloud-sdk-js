@@ -100,14 +100,14 @@ declare class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
   get operations(): {
     getNearestAirport: (
       parameter: GetNearestAirportParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       GetNearestAirportParameters<DeSerializersT>,
       import('./Airports').Airports<DefaultDeSerializers>
     >;
     resetDataSource: (
       parameter: ResetDataSourceParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       ResetDataSourceParameters<DeSerializersT>,
       undefined

@@ -17,10 +17,8 @@ import {
   DeSerializers,
   DefaultDeSerializers,
   defaultDeSerializers,
-  FunctionImportParameter,
-  ActionImportParameter,
-  FunctionImportRequestBuilder,
-  ActionImportRequestBuilder
+  OperationParameter,
+  OperationRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { testService } from './service';
 import { TestEntity } from './TestEntity';
@@ -44,14 +42,14 @@ export function testFunctionImportEdmReturnType<
 >(
   parameters: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
   boolean
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnType',
     data =>
@@ -59,7 +57,8 @@ export function testFunctionImportEdmReturnType<
         edmToTs(val.value, 'Edm.Boolean', deSerializers)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -80,14 +79,14 @@ export function testFunctionImportEdmReturnTypeCollection<
 >(
   parameters: TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
   string[]
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnTypeCollection',
     data =>
@@ -95,7 +94,8 @@ export function testFunctionImportEdmReturnTypeCollection<
         edmToTs(val, 'Edm.String', deSerializers)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -129,30 +129,30 @@ export function testFunctionImportNullableTest<
 >(
   parameters: TestFunctionImportNullableTestParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportNullableTestParameters<DeSerializersT>,
   string[] | null
 > {
   const params = {
-    nullablePerDefault: new FunctionImportParameter(
+    nullablePerDefault: new OperationParameter(
       'NullablePerDefault',
       'Edm.String',
       parameters.nullablePerDefault
     ),
-    nullableExplicit: new FunctionImportParameter(
+    nullableExplicit: new OperationParameter(
       'NullableExplicit',
       'Edm.String',
       parameters.nullableExplicit
     ),
-    nonNullable: new FunctionImportParameter(
+    nonNullable: new OperationParameter(
       'NonNullable',
       'Edm.String',
       parameters.nonNullable
     )
   };
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportNullableTest',
     data =>
@@ -160,7 +160,8 @@ export function testFunctionImportNullableTest<
         edmToTs(val, 'Edm.String', deSerializers)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -181,14 +182,14 @@ export function testFunctionImportEntityReturnType<
 >(
   parameters: TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
   TestEntity
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType',
     data =>
@@ -197,7 +198,8 @@ export function testFunctionImportEntityReturnType<
         testService(deSerializers).testEntityApi
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -218,14 +220,14 @@ export function testFunctionImportEntityReturnTypeCollection<
 >(
   parameters: TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
   TestEntity[]
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnTypeCollection',
     data =>
@@ -234,7 +236,8 @@ export function testFunctionImportEntityReturnTypeCollection<
         testService(deSerializers).testEntityApi
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -256,7 +259,7 @@ export function testFunctionImportSharedEntityReturnType<
   parameters: TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
 ): Omit<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DeSerializersT,
     TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>,
     never
@@ -265,7 +268,7 @@ export function testFunctionImportSharedEntityReturnType<
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnType',
     data =>
@@ -274,7 +277,8 @@ export function testFunctionImportSharedEntityReturnType<
         'TestFunctionImportSharedEntityReturnType'
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -296,7 +300,7 @@ export function testFunctionImportSharedEntityReturnTypeCollection<
   parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
 ): Omit<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DeSerializersT,
     TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
     never
@@ -305,7 +309,7 @@ export function testFunctionImportSharedEntityReturnTypeCollection<
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnTypeCollection',
     data =>
@@ -314,7 +318,8 @@ export function testFunctionImportSharedEntityReturnTypeCollection<
         'TestFunctionImportSharedEntityReturnTypeCollection'
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -335,14 +340,14 @@ export function testFunctionImportComplexReturnType<
 >(
   parameters: TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
   TestComplexType
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnType',
     data =>
@@ -352,7 +357,8 @@ export function testFunctionImportComplexReturnType<
         ).deserializeComplexType(data, TestComplexType)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -373,14 +379,14 @@ export function testFunctionImportComplexReturnTypeCollection<
 >(
   parameters: TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
   TestComplexType[]
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnTypeCollection',
     data =>
@@ -390,7 +396,8 @@ export function testFunctionImportComplexReturnTypeCollection<
         ).deserializeComplexType(data, TestComplexType)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -428,35 +435,35 @@ export function testFunctionImportMultipleParams<
 >(
   parameters: TestFunctionImportMultipleParamsParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportMultipleParamsParameters<DeSerializersT>,
   boolean | null
 > {
   const params = {
-    stringParam: new FunctionImportParameter(
+    stringParam: new OperationParameter(
       'StringParam',
       'Edm.String',
       parameters.stringParam
     ),
-    nonNullableStringParam: new FunctionImportParameter(
+    nonNullableStringParam: new OperationParameter(
       'NonNullableStringParam',
       'Edm.String',
       parameters.nonNullableStringParam
     ),
-    nullableBooleanParam: new FunctionImportParameter(
+    nullableBooleanParam: new OperationParameter(
       'NullableBooleanParam',
       'Edm.Boolean',
       parameters.nullableBooleanParam
     ),
-    nullableGeographyPointParam: new FunctionImportParameter(
+    nullableGeographyPointParam: new OperationParameter(
       'NullableGeographyPointParam',
       'Edm.Any',
       parameters.nullableGeographyPointParam
     )
   };
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportMultipleParams',
     data =>
@@ -464,7 +471,8 @@ export function testFunctionImportMultipleParams<
         edmToTs(val.value, 'Edm.Boolean', deSerializers)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -485,19 +493,20 @@ export function testFunctionImportWithDifferentName<
 >(
   parameters: TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
   undefined
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportWithDifferentName',
     data => transformReturnValueForUndefined(data, val => undefined),
     params,
-    deSerializers
+    deSerializers,
+    'function'
   );
 }
 
@@ -518,19 +527,20 @@ export function testActionImportNoParameterNoReturnType<
 >(
   parameters: TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>,
   undefined
 > {
   const params = {};
 
-  return new ActionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterNoReturnType',
     data => transformReturnValueForUndefined(data, val => undefined),
     params,
-    deSerializers
+    deSerializers,
+    'action'
   );
 }
 
@@ -568,35 +578,35 @@ export function testActionImportMultipleParameterComplexReturnType<
 >(
   parameters: TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>,
   TestComplexType
 > {
   const params = {
-    stringParam: new ActionImportParameter(
+    stringParam: new OperationParameter(
       'StringParam',
       'Edm.String',
       parameters.stringParam
     ),
-    nonNullableStringParam: new ActionImportParameter(
+    nonNullableStringParam: new OperationParameter(
       'NonNullableStringParam',
       'Edm.String',
       parameters.nonNullableStringParam
     ),
-    nullableBooleanParam: new ActionImportParameter(
+    nullableBooleanParam: new OperationParameter(
       'NullableBooleanParam',
       'Edm.Boolean',
       parameters.nullableBooleanParam
     ),
-    nullableGeographyPointParam: new ActionImportParameter(
+    nullableGeographyPointParam: new OperationParameter(
       'NullableGeographyPointParam',
       'Edm.Any',
       parameters.nullableGeographyPointParam
     )
   };
 
-  return new ActionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportMultipleParameterComplexReturnType',
     data =>
@@ -606,7 +616,8 @@ export function testActionImportMultipleParameterComplexReturnType<
         ).deserializeComplexType(data, TestComplexType)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'action'
   );
 }
 
@@ -632,20 +643,20 @@ export function testActionImportUnsupportedEdmTypes<
 >(
   parameters: TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>,
   any
 > {
   const params = {
-    simpleParam: new ActionImportParameter(
+    simpleParam: new OperationParameter(
       'SimpleParam',
       'Edm.Any',
       parameters.simpleParam
     )
   };
 
-  return new ActionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportUnsupportedEdmTypes',
     data =>
@@ -653,7 +664,8 @@ export function testActionImportUnsupportedEdmTypes<
         edmToTs(val.value, 'Edm.Any', deSerializers)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'action'
   );
 }
 
@@ -674,14 +686,14 @@ export function testActionImportNoParameterEntityReturnType<
 >(
   parameters: TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>,
   TestEntity
 > {
   const params = {};
 
-  return new ActionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterEntityReturnType',
     data =>
@@ -690,7 +702,8 @@ export function testActionImportNoParameterEntityReturnType<
         testService(deSerializers).testEntityApi
       ),
     params,
-    deSerializers
+    deSerializers,
+    'action'
   );
 }
 
@@ -712,7 +725,7 @@ export function testActionImportSharedEntityReturnType<
   parameters: TestActionImportSharedEntityReturnTypeParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
 ): Omit<
-  ActionImportRequestBuilder<
+  OperationRequestBuilder<
     DeSerializersT,
     TestActionImportSharedEntityReturnTypeParameters<DeSerializersT>,
     never
@@ -721,7 +734,7 @@ export function testActionImportSharedEntityReturnType<
 > {
   const params = {};
 
-  return new ActionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportSharedEntityReturnType',
     data =>
@@ -730,7 +743,8 @@ export function testActionImportSharedEntityReturnType<
         'TestActionImportSharedEntityReturnType'
       ),
     params,
-    deSerializers
+    deSerializers,
+    'action'
   );
 }
 
@@ -752,7 +766,7 @@ export function testActionImportSharedEntityReturnTypeCollection<
   parameters: TestActionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
 ): Omit<
-  ActionImportRequestBuilder<
+  OperationRequestBuilder<
     DeSerializersT,
     TestActionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
     never
@@ -761,7 +775,7 @@ export function testActionImportSharedEntityReturnTypeCollection<
 > {
   const params = {};
 
-  return new ActionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportSharedEntityReturnTypeCollection',
     data =>
@@ -770,7 +784,8 @@ export function testActionImportSharedEntityReturnTypeCollection<
         'TestActionImportSharedEntityReturnTypeCollection'
       ),
     params,
-    deSerializers
+    deSerializers,
+    'action'
   );
 }
 
@@ -804,30 +819,30 @@ export function testActionImportNullableTest<
 >(
   parameters: TestActionImportNullableTestParameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportNullableTestParameters<DeSerializersT>,
   TestComplexType | null
 > {
   const params = {
-    nullablePerDefault: new ActionImportParameter(
+    nullablePerDefault: new OperationParameter(
       'NullablePerDefault',
       'Edm.String',
       parameters.nullablePerDefault
     ),
-    nullableExplicit: new ActionImportParameter(
+    nullableExplicit: new OperationParameter(
       'NullableExplicit',
       'Edm.String',
       parameters.nullableExplicit
     ),
-    nonNullable: new ActionImportParameter(
+    nonNullable: new OperationParameter(
       'NonNullable',
       'Edm.String',
       parameters.nonNullable
     )
   };
 
-  return new ActionImportRequestBuilder(
+  return new OperationRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNullableTest',
     data =>
@@ -837,7 +852,8 @@ export function testActionImportNullableTest<
         ).deserializeComplexType(data, TestComplexType)
       ),
     params,
-    deSerializers
+    deSerializers,
+    'action'
   );
 }
 

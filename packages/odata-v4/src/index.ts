@@ -35,8 +35,7 @@ export {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   UpdateRequestBuilder,
-  BoundActionImportRequestBuilder,
-  BoundFunctionImportRequestBuilder,
+  BoundOperationRequestBuilder,
   OperationRequestBuilder
 } from './request-builder';
 

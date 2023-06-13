@@ -15,7 +15,8 @@ export function getRequestBuilderArgumentsBase(
       `'${service.serviceOptions.basePath}'`,
       `'${operation.originalName}'`,
       ...sharedParameters,
-      'deSerializers'
+      'deSerializers',
+      `'${operation.type}'`
     ];
   }
   return [
@@ -23,7 +24,8 @@ export function getRequestBuilderArgumentsBase(
     'this',
     `'${operation.originalName}'`,
     ...sharedParameters,
-    'deSerializers || defaultDeSerializers'
+    'deSerializers || defaultDeSerializers',
+    `'${operation.type}'`
   ];
 }
 

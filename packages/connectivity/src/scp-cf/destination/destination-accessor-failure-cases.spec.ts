@@ -6,7 +6,6 @@ import {
 import {
   providerServiceToken,
   subscriberServiceToken,
-  subscriberServiceTokenWithVerificationURL,
   subscriberUserJwt
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
@@ -37,14 +36,12 @@ describe('Failure cases', () => {
 
     jest
       .spyOn(jwt, 'verifyJwt')
-      .mockResolvedValue(
-        jwt.decodeJwt(subscriberServiceTokenWithVerificationURL)
-      );
+      .mockResolvedValue(jwt.decodeJwt(subscriberServiceToken));
 
     await expect(
       getDestination({
         destinationName,
-        jwt: subscriberServiceTokenWithVerificationURL,
+        jwt: subscriberServiceToken,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       })

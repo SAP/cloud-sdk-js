@@ -33,9 +33,9 @@ export const subscriberServiceToken = signedJwtForVerification(
   subscriberServiceTokenPayload
 );
 
-// case? only difference iat missing => relevant for mocked function that looks at URL
 /**
  * These tokens are used to test cases when the provided user JWT only contains `{ iss: someXSUAAurl }`.
+ * Issuer URL is relevant for `mockServiceToken()`
  * See docs on {@link DestinationAccessorOptions} for more details.
  */
 export const onlyIssuerServiceTokenPayload = {
@@ -48,46 +48,16 @@ export const onlyIssuerServiceToken = signedJwtForVerification(
   onlyIssuerServiceTokenPayload
 );
 
-export const subscriberServiceTokenWithVerificationURL =
-  signedJwtForVerification(subscriberServiceTokenPayload);
-
-// simple case provider (XSUAA) + user_id => rename (not approved)
-const userApprovedProviderTokenPayload = {
-  iat,
-  iss: providerXsuaaUrl,
-  zid: testTenants.provider,
-  user_id: 'service-prov-approved',
-  ext_attr: { enhancer: 'XSUAA' }
-};
-
-export const userApprovedProviderServiceToken = signedJwtForVerification(
-  userApprovedProviderTokenPayload
-);
-
-// simple case subscriber (XSUAA) + user_id
-const userApprovedSubscriberTokenPayload = {
-  iat,
-  iss: subscriberXsuaaUrl,
-  zid: testTenants.subscriber,
-  user_id: 'service-sub-approved',
-  ext_attr: { enhancer: 'XSUAA' }
-};
-
-export const userApprovedSubscriberServiceToken = signedJwtForVerification(
-  userApprovedSubscriberTokenPayload
-);
-
-// case? userApprovedProviderTokenPayload difference currently: not XSUAA (just because I added it), but URL still XSUAA
 export const providerUserPayload = {
   iat,
   iss: providerXsuaaUrl,
   zid: testTenants.provider,
-  user_id: 'user-prov'
+  user_id: 'user-prov',
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
 export const providerUserJwt = signedJwtForVerification(providerUserPayload);
 
-// case? XSUAA or not? difference to userApprovedSubscriberTokenPayload?
 export const subscriberUserPayload = {
   iat,
   iss: subscriberXsuaaUrl,
@@ -95,14 +65,14 @@ export const subscriberUserPayload = {
   user_id: 'user-sub',
   // The client and audience are necessary if XSSEC validates the token
   azp: xsuaaBindingMock.credentials.clientid, // Becomes clientId in XSSEC
-  aud: [xsuaaBindingMock.credentials.clientid] // Becomes audience in XSSEC
+  aud: [xsuaaBindingMock.credentials.clientid], // Becomes audience in XSSEC
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
 export const subscriberUserJwt = signedJwtForVerification(
   subscriberUserPayload
 );
 
-// custom case, no XSUAA + user_id
 const customSubscriberUserPayload = {
   user_id: 'user-sub',
   jwksUri: 'http://jwks.example.com',
@@ -113,30 +83,3 @@ export const customSubscriberUserJwt = signedJwtForVerification(
   customSubscriberUserPayload,
   customSubscriberUserPayload.jwksUri
 );
-
-// case? difference to userApprovedSubscriberTokenPayload?
-const subscriberJwtTokenPayload = {
-  iat,
-  iss: subscriberXsuaaUrl,
-  zid: testTenants.subscriber,
-  user_id: 'jwt-sub'
-};
-
-// case? difference to userApprovedProviderTokenPayload
-const providerJwtTokenPayload = {
-  iat,
-  iss: providerXsuaaUrl,
-  zid: testTenants.provider,
-  user_id: 'jwt-prov'
-};
-
-export const providerJwtBearerToken = signedJwtForVerification(
-  providerJwtTokenPayload
-);
-
-export const subscriberJwtBearerToken = signedJwtForVerification(
-  subscriberJwtTokenPayload
-);
-
-// How is this IAS? => seems odd, same as providerJwtBearerToken
-export const iasToken = signedJwtForVerification(providerJwtTokenPayload);

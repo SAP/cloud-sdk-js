@@ -23,7 +23,6 @@ import {
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import {
-  providerJwtBearerToken,
   providerServiceToken,
   providerUserJwt,
   providerUserPayload,
@@ -507,7 +506,7 @@ describe('destination cache', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(providerJwtBearerToken).headers
+          wrapJwtInHeader(providerUserJwt).headers
         )
       ];
 

@@ -4,10 +4,10 @@ import { decodeJwt } from '@sap-cloud-sdk/connectivity';
 import { onlyIssuerXsuaaUrl, testTenants } from './environment-mocks';
 import {
   onlyIssuerServiceToken,
-  providerJwtBearerToken,
   providerServiceToken,
-  subscriberJwtBearerToken,
-  subscriberServiceToken
+  providerUserJwt,
+  subscriberServiceToken,
+  subscriberUserJwt
 } from './mocked-access-tokens';
 
 export function expectAllMocksUsed(nocks: nock.Scope[]) {
@@ -41,10 +41,9 @@ export function mockServiceToken() {
 export function mockJwtBearerToken() {
   return jest
     .spyOn(tokenAccessor, 'jwtBearerToken')
-    .mockImplementation(userJwt => {
-      if (decodeJwt(userJwt).zid === testTenants.subscriber) {
-        return Promise.resolve(subscriberJwtBearerToken);
-      }
-      return Promise.resolve(providerJwtBearerToken);
-    });
+    .mockImplementation(async userJwt =>
+      decodeJwt(userJwt).zid === testTenants.subscriber
+        ? subscriberUserJwt
+        : providerUserJwt
+    );
 }

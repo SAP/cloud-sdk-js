@@ -22,6 +22,7 @@ import {
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { jwtBearerToken, serviceToken } from './token-accessor';
+import { ClientCredentialsResponse } from './xsuaa-service-types';
 
 describe('token accessor', () => {
   describe('serviceToken()', () => {
@@ -283,16 +284,46 @@ describe('token accessor', () => {
       );
     });
 
-    it('throws an error if no XSUAA service is bound', async () => {
+    it('uses given service to retrieve token from cache', async () => {
       process.env.VCAP_SERVICES = JSON.stringify({
         destination: [destinationBindingClientSecretMock]
       });
+      const token = signedJwt({ dummy: 'content' });
 
-      await expect(
-        serviceToken('destination')
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Could not find binding to the XSUAA service."'
+      clientCredentialsTokenCache.cacheToken(
+        destinationBindingClientSecretMock.credentials.url,
+        destinationBindingClientSecretMock.credentials.clientid,
+        { access_token: token } as ClientCredentialsResponse
       );
+
+      await expect(serviceToken('destination')).resolves.toEqual(token);
+    });
+
+    it('uses given service to cache token', async () => {
+      process.env.VCAP_SERVICES = JSON.stringify({
+        destination: [destinationBindingClientSecretMock]
+      });
+      const token = { access_token: signedJwt({ dummy: 'content' }) };
+
+      mockClientCredentialsGrantCall(
+        destinationBindingClientSecretMock.credentials.url,
+        token,
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+
+      clientCredentialsTokenCache.clear();
+
+      await expect(serviceToken('destination')).resolves.toEqual(
+        token.access_token
+      );
+
+      expect(
+        clientCredentialsTokenCache.getToken(
+          destinationBindingClientSecretMock.credentials.url,
+          destinationBindingClientSecretMock.credentials.clientid
+        )
+      ).toEqual(token);
     });
 
     it('throws an error if no target service is bound', async () => {

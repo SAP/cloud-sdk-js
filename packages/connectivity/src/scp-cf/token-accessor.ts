@@ -3,12 +3,10 @@ import { JwtPayload } from './jsonwebtoken-type';
 import { decodeJwt } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
-import {
-  getXsuaaServiceCredentials,
-  resolveServiceBinding
-} from './environment-accessor';
+import { resolveServiceBinding } from './environment-accessor';
 import {
   Service,
+  ServiceCredentials,
   XsuaaServiceCredentials
 } from './environment-accessor/environment-accessor-types';
 import { replaceSubdomain } from './subdomain-replacer';
@@ -29,7 +27,7 @@ export async function serviceToken(
   service: string | Service,
   options?: CachingOptions & {
     jwt?: string | JwtPayload;
-    // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
+    // TODO: 4.0 Remove
     xsuaaCredentials?: XsuaaServiceCredentials;
   }
 ): Promise<string> {
@@ -39,15 +37,14 @@ export async function serviceToken(
     ...options
   };
 
-  service = resolveServiceBinding(service);
-  const serviceCredentials = service.credentials;
+  const serviceBinding = resolveServiceBinding(service);
+  const serviceCredentials = serviceBinding.credentials;
 
-  // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use their cache.
   if (opts.useCache) {
-    const xsuaa = multiTenantXsuaaCredentials(options);
+    const xsuaaUrl = getMultiTenantXsuaaUrl(serviceCredentials, options?.jwt);
 
     const cachedToken = clientCredentialsTokenCache.getToken(
-      xsuaa.url,
+      xsuaaUrl,
       serviceCredentials.clientid
     );
     if (cachedToken) {
@@ -56,13 +53,13 @@ export async function serviceToken(
   }
 
   try {
-    const token = await getClientCredentialsToken(service, options?.jwt);
+    const token = await getClientCredentialsToken(serviceBinding, options?.jwt);
 
     if (opts.useCache) {
-      const xsuaa = multiTenantXsuaaCredentials(options);
+      const xsuaaUrl = getMultiTenantXsuaaUrl(serviceCredentials, options?.jwt);
 
       clientCredentialsTokenCache.cacheToken(
-        xsuaa.url,
+        xsuaaUrl,
         serviceCredentials.clientid,
         token
       );
@@ -71,7 +68,7 @@ export async function serviceToken(
     return token.access_token;
   } catch (err) {
     throw new ErrorWithCause(
-      `Could not fetch client credentials token for service of type "${service.label}".`,
+      `Could not fetch client credentials token for service of type "${serviceBinding.label}".`,
       err
     );
   }
@@ -95,26 +92,19 @@ export async function jwtBearerToken(
   return getUserToken(resolvedService, jwt);
 }
 
-function multiTenantXsuaaCredentials(
-  options: {
-    jwt?: string | JwtPayload;
-    xsuaaCredentials?: XsuaaServiceCredentials;
-  } = {}
-): XsuaaServiceCredentials {
-  const xsuaa = options.xsuaaCredentials
-    ? { ...options.xsuaaCredentials }
-    : getXsuaaServiceCredentials(options.jwt);
-
-  if (options.jwt) {
-    const decodedJwt =
-      typeof options.jwt === 'string' ? decodeJwt(options.jwt) : options.jwt;
+function getMultiTenantXsuaaUrl(
+  credentials: ServiceCredentials,
+  jwt?: string | JwtPayload
+): string {
+  if (jwt) {
+    const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
 
     if (!decodedJwt.iss) {
       throw Error('Property `iss` is missing in the provided user token.');
     }
 
-    xsuaa.url = replaceSubdomain(decodedJwt.iss, xsuaa.url);
+    return replaceSubdomain(decodedJwt.iss, credentials.url);
   }
 
-  return xsuaa;
+  return credentials.url;
 }

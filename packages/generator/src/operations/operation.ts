@@ -77,12 +77,12 @@ function getOperationStatements(
   operation: VdmOperation,
   service: VdmServiceMetadata
 ): string {
-  const requestBuilderName = `${operation.isBound ? 'Bound' : ''}OperationRequestBuilder`;
+  const requestBuilderName = `${
+    operation.isBound ? 'Bound' : ''
+  }OperationRequestBuilder`;
   const paramsLines = (operation.parameters || []).map(
     param =>
-      `${param.parameterName}: new OperationParameter('${param.originalName}', '${
-        param.edmType
-      }', ${parameterName}.${param.parameterName})`
+      `${param.parameterName}: new OperationParameter('${param.originalName}', '${param.edmType}', ${parameterName}.${param.parameterName})`
   );
   const params = `const params = {\n${paramsLines.join(',\n')}\n};`;
 

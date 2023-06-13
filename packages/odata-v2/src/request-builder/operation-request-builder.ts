@@ -23,7 +23,7 @@ export class OperationRequestBuilder<
   ODataFunctionImportRequestConfig<DeSerializersT, ParametersT>
 > {
   /**
-   * Creates an instance of FunctionImportRequestBuilder.
+   * Creates an instance of OperationRequestBuilder.
    * @param method - HTTP method to be used for the request.
    * @param defaultBasePath - Default base path for the service the operation belongs to.
    * @param operationName - The name of the operation.

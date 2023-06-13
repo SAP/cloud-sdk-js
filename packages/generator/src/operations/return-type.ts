@@ -6,7 +6,6 @@ import { cannotDeserialize } from '../edmx-to-vdm/common';
 export function operationReturnType({
   returnType,
   parametersTypeName,
-  type: operationType,
   isBound,
   name,
   entityClassName

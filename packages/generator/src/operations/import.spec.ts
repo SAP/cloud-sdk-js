@@ -17,24 +17,24 @@ describe('import declarations for operations', () => {
       { ...orderBreakfast, isBound: true }
     ]);
     expect(actual[0].namedImports).toContain(
-      'BoundFunctionImportRequestBuilder'
+      'BoundOperationRequestBuilder'
     );
   });
 
-  it('includes FunctionImportParameter if import has parameters.', () => {
+  it('includes OperationParameter if import has parameters.', () => {
     const service = {};
     const actual = operationDeclarations(service as VdmServiceMetadata, [
       { ...orderBreakfast, isBound: true }
     ]);
-    expect(actual[0].namedImports).toContain('FunctionImportParameter');
+    expect(actual[0].namedImports).toContain('OperationParameter');
   });
 
-  it('does not include FunctionImportParameter if import has no parameters.', () => {
+  it('does not include OperationParameter if import has no parameters.', () => {
     const service = {};
     const actual = operationDeclarations(service as VdmServiceMetadata, [
       { ...orderBreakfast, isBound: true, parameters: [] }
     ]);
-    expect(actual[0].namedImports).not.toContain('FunctionImportParameter');
+    expect(actual[0].namedImports).not.toContain('OperationParameter');
   });
 
   it('includes service import for unbound operations', () => {
@@ -70,7 +70,7 @@ describe('import declarations for operations', () => {
           'DeSerializers',
           'DefaultDeSerializers',
           'defaultDeSerializers',
-          'FunctionImportParameter',
+          'OperationParameter',
           'OperationRequestBuilder'
         ]
       },

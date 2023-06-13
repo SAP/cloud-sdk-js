@@ -97,11 +97,9 @@ export function operationDeclarations(
     .length;
   const includesUnbound = !!operations.filter(operation => !operation.isBound)
     .length;
-  const hasOperationWithParameters = operations.some(operation => operation.parameters.length);
-  const hasFunction = operations.some(
-    operation => operation.type === 'function'
+  const hasOperationWithParameters = operations.some(
+    operation => operation.parameters.length
   );
-  const hasAction = operations.some(operation => operation.type === 'action');
 
   if (includesUnbound && includesBound) {
     throw new Error(
@@ -130,8 +128,12 @@ export function operationDeclarations(
         'defaultDeSerializers',
         ...propertyTypeImportNames(parameters),
         ...(hasOperationWithParameters ? ['OperationParameter'] : []),
-        ...(includesUnbound && operations.length ? ['OperationRequestBuilder'] : []),
-        ...(includesBound && operations.length ? ['BoundOperationRequestBuilder'] : [])
+        ...(includesUnbound && operations.length
+          ? ['OperationRequestBuilder']
+          : []),
+        ...(includesBound && operations.length
+          ? ['BoundOperationRequestBuilder']
+          : [])
       ],
       oDataVersion
     ),

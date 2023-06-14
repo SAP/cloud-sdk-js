@@ -13,8 +13,7 @@ const iat = Math.floor(Date.now() / 1000);
 export const providerServiceTokenPayload = {
   iat, // check if needed
   iss: providerXsuaaUrl,
-  zid: testTenants.provider,
-  ext_attr: { enhancer: 'XSUAA' }
+  zid: testTenants.provider
 };
 
 export const providerServiceToken = signedJwtForVerification(
@@ -25,8 +24,7 @@ export const providerServiceToken = signedJwtForVerification(
 export const subscriberServiceTokenPayload = {
   iat,
   iss: subscriberXsuaaUrl,
-  zid: testTenants.subscriber,
-  ext_attr: { enhancer: 'XSUAA' }
+  zid: testTenants.subscriber
 };
 
 export const subscriberServiceToken = signedJwtForVerification(
@@ -40,8 +38,7 @@ export const subscriberServiceToken = signedJwtForVerification(
  */
 export const onlyIssuerServiceTokenPayload = {
   iss: onlyIssuerXsuaaUrl,
-  zid: testTenants.subscriberOnlyIss,
-  ext_attr: { enhancer: 'XSUAA' }
+  zid: testTenants.subscriberOnlyIss
 };
 
 export const onlyIssuerServiceToken = signedJwtForVerification(
@@ -52,8 +49,7 @@ export const providerUserPayload = {
   iat,
   iss: providerXsuaaUrl,
   zid: testTenants.provider,
-  user_id: 'user-prov',
-  ext_attr: { enhancer: 'XSUAA' }
+  user_id: 'user-prov'
 };
 
 export const providerUserJwt = signedJwtForVerification(providerUserPayload);
@@ -65,8 +61,7 @@ export const subscriberUserPayload = {
   user_id: 'user-sub',
   // The client and audience are necessary if XSSEC validates the token
   azp: xsuaaBindingMock.credentials.clientid, // Becomes clientId in XSSEC
-  aud: [xsuaaBindingMock.credentials.clientid], // Becomes audience in XSSEC
-  ext_attr: { enhancer: 'XSUAA' }
+  aud: [xsuaaBindingMock.credentials.clientid] // Becomes audience in XSSEC
 };
 
 export const subscriberUserJwt = signedJwtForVerification(

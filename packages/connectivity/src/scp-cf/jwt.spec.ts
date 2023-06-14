@@ -3,18 +3,11 @@ import { Socket } from 'net';
 import nock from 'nock';
 import {
   jku,
-  mockServiceBindings,
   publicKey,
   signedJwtForVerification,
   xsuaaBindingMock
 } from '../../../../test-resources/test/test-util';
-import {
-  audiences,
-  decodeJwtComplete,
-  isXsuaaToken,
-  retrieveJwt,
-  verifyJwt
-} from './jwt';
+import { audiences, retrieveJwt, verifyJwt } from './jwt';
 
 const jwtPayload = {
   sub: '1234567890',
@@ -42,30 +35,6 @@ export function responseWithPublicKey(key = publicKey) {
 }
 
 describe('jwt', () => {
-  describe('isXsuaaToken()', () => {
-    it('returns true if the enhancer is XSUAA', () => {
-      const jwt = decodeJwtComplete(
-        signedJwtForVerification({ ext_attr: { enhancer: 'XSUAA' } })
-      );
-      mockServiceBindings({ xsuaaBinding: false });
-      expect(isXsuaaToken(jwt)).toBe(true);
-    });
-
-    it('returns false if the enhancer is not XSUAA', () => {
-      const jwt = decodeJwtComplete(
-        signedJwtForVerification({ ext_attr: { enhancer: 'IAS' } })
-      );
-      mockServiceBindings({ xsuaaBinding: false });
-      expect(isXsuaaToken(jwt)).toBe(false);
-    });
-
-    it('returns false if no enhancer is set', () => {
-      const jwt = decodeJwtComplete(signedJwtForVerification({}));
-      mockServiceBindings({ xsuaaBinding: false });
-      expect(isXsuaaToken(jwt)).toBe(false);
-    });
-  });
-
   describe('retrieveJwt', () => {
     it('returns undefined when incoming message has no auth header', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT())).toBeUndefined();

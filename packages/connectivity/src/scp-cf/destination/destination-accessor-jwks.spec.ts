@@ -34,7 +34,7 @@ describe('custom jwt via jwks property on destination', () => {
 
   afterEach(() => {
     nock.cleanAll();
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   const destFetchOption: DestinationFetchOptions = {
@@ -79,7 +79,7 @@ describe('custom jwt via jwks property on destination', () => {
   });
 
   it('does not verify JWT without JKU property', async () => {
-    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
+    const userJwt = signedJwtForVerification(subscriberUserPayload, null);
     const serviceJwt = signedJwtForVerification(providerServiceTokenPayload);
 
     mockOneDestination(
@@ -87,7 +87,6 @@ describe('custom jwt via jwks property on destination', () => {
       serviceJwt,
       userJwt
     );
-
     const spy = jest.spyOn(jwt, 'verifyJwt');
     const actual = await getDestination({
       ...destFetchOption,
@@ -122,7 +121,7 @@ describe('custom jwt via jwks property on destination', () => {
   });
 
   it('throws an error if jwks properties are not given for JWT without JKU', async () => {
-    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
+    const userJwt = signedJwtForVerification(subscriberUserPayload, null);
     const serviceJwt = signedJwtForVerification(providerServiceTokenPayload);
 
     mockOneDestination(oauthMultipleResponse[0], serviceJwt, userJwt);

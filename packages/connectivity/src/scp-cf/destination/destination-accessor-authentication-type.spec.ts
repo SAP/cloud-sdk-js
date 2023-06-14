@@ -19,9 +19,9 @@ import {
 import {
   onlyIssuerServiceToken,
   providerServiceToken,
-  providerUserJwt,
+  providerUserToken,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
@@ -81,7 +81,7 @@ describe('authentication types', () => {
           destinationName,
           {
             ...wrapJwtInHeader(subscriberServiceToken).headers,
-            'X-user-token': subscriberUserJwt
+            'X-user-token': subscriberUserToken
           },
           { badheaders: [] }
         )
@@ -90,7 +90,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false
       });
       expect(actual).toMatchObject(expected);
@@ -116,14 +116,14 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(providerUserJwt).headers
+          wrapJwtInHeader(providerUserToken).headers
         )
       ];
 
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: providerUserJwt,
+        jwt: providerUserToken,
         iasToXsuaaTokenExchange: false,
         cacheVerificationKeys: false
       });
@@ -199,7 +199,7 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         cacheVerificationKeys: false,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false
       });
       expect(actual).toMatchObject(expected);
@@ -234,7 +234,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false
       });
       expect(actual).toMatchObject(expected);
@@ -306,7 +306,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false
       });
       expect(actual).toMatchObject(expected);
@@ -338,7 +338,7 @@ describe('authentication types', () => {
           destinationName,
           {
             ...wrapJwtInHeader(providerServiceToken).headers,
-            'x-user-token': subscriberUserJwt
+            'x-user-token': subscriberUserToken
           },
           { badheaders: [] }
         )
@@ -347,7 +347,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthJwtBearerSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false
       });
       expect(actual).toMatchObject(expected);
@@ -385,7 +385,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthRefreshTokenSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false,
         refreshToken: 'dummy-refresh-token'
       });
@@ -410,7 +410,7 @@ describe('authentication types', () => {
       await expect(
         getDestination({
           destinationName,
-          jwt: subscriberUserJwt,
+          jwt: subscriberUserToken,
           iasToXsuaaTokenExchange: false
         })
       ).rejects.toThrowError(/No refresh token has been provided./);
@@ -437,14 +437,14 @@ describe('authentication types', () => {
           oauthUserTokenExchangeSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(providerUserJwt).headers
+          wrapJwtInHeader(providerUserToken).headers
         )
       ];
 
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: providerUserJwt,
+        jwt: providerUserToken,
         iasToXsuaaTokenExchange: false
       });
       expect(actual).toMatchObject(expected);
@@ -472,7 +472,7 @@ describe('authentication types', () => {
           destinationName,
           {
             ...wrapJwtInHeader(providerServiceToken).headers,
-            'X-user-token': subscriberUserJwt
+            'X-user-token': subscriberUserToken
           },
           { badheaders: [] }
         )
@@ -482,7 +482,7 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         selectionStrategy: alwaysProvider,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false
       });
       expect(actual).toMatchObject(expected);
@@ -510,7 +510,7 @@ describe('authentication types', () => {
           destinationName,
           {
             ...wrapJwtInHeader(subscriberServiceToken).headers,
-            'X-user-token': subscriberUserJwt
+            'X-user-token': subscriberUserToken
           },
           { badheaders: [] }
         )
@@ -520,7 +520,7 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         selectionStrategy: alwaysSubscriber,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false
       });
       expect(actual).toMatchObject(expected);
@@ -554,7 +554,7 @@ describe('authentication types', () => {
 
       const actual = await getDestination({
         destinationName: 'ERNIE-UND-CERT',
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false,
         cacheVerificationKeys: false
       });
@@ -621,7 +621,7 @@ describe('authentication types', () => {
 
       const actual = await getDestination({
         destinationName: 'OnPremise',
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
@@ -652,7 +652,7 @@ describe('authentication types', () => {
       const expected = parseDestination(basicMultipleResponse[0]);
       const actual = await getDestination({
         destinationName,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false,
         cacheVerificationKeys: false
       });
@@ -680,7 +680,7 @@ describe('authentication types', () => {
 
       const actual = await getDestination({
         destinationName: 'OnPremise',
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         iasToXsuaaTokenExchange: false,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber

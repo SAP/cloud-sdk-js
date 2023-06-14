@@ -1,10 +1,10 @@
 import {
-  customSubscriberUserJwt,
+  customsubscriberUserToken,
   mockServiceBindings,
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserToken
 } from '../../../../../test-resources/test/test-util';
 import * as tokenAccessor from '../token-accessor';
 import * as jwtModule from '../jwt';
@@ -28,18 +28,18 @@ describe('getSubscriberToken()', () => {
     jest
       .spyOn(tokenAccessor, 'serviceToken')
       .mockResolvedValue(subscriberServiceToken);
-    const token = await getSubscriberToken({ jwt: subscriberUserJwt });
+    const token = await getSubscriberToken({ jwt: subscriberUserToken });
     expect(token).toEqual({
-      userJwt: getJwtPair(subscriberUserJwt),
+      userJwt: getJwtPair(subscriberUserToken),
       serviceJwt: getJwtPair(subscriberServiceToken)
     });
     expect(verifyJwtSpy).toHaveBeenCalled();
   });
 
   it('creates only user token based on user JWT (custom)', async () => {
-    const token = await getSubscriberToken({ jwt: customSubscriberUserJwt });
+    const token = await getSubscriberToken({ jwt: customsubscriberUserToken });
     expect(token).toEqual({
-      userJwt: getJwtPair(customSubscriberUserJwt)
+      userJwt: getJwtPair(customsubscriberUserToken)
     });
     expect(verifyJwtSpy).not.toHaveBeenCalled();
   });
@@ -61,10 +61,10 @@ describe('getSubscriberToken()', () => {
       .mockResolvedValue(onlyIssuerServiceToken);
     const token = await getSubscriberToken({
       iss: onlyIssuerXsuaaUrl,
-      jwt: subscriberUserJwt
+      jwt: subscriberUserToken
     });
     expect(token).toEqual({
-      userJwt: getJwtPair(subscriberUserJwt),
+      userJwt: getJwtPair(subscriberUserToken),
       serviceJwt: getJwtPair(onlyIssuerServiceToken)
     });
     expect(serviceTokenSpy).toHaveBeenCalledWith(

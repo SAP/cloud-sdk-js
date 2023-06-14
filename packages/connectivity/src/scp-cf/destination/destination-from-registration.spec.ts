@@ -5,7 +5,7 @@ import {
   mockServiceBindings,
   providerServiceToken,
   subscriberServiceToken,
-  subscriberUserJwt,
+  subscriberUserToken,
   unmockDestinationsEnv,
   xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util';
@@ -112,7 +112,7 @@ describe('register-destination', () => {
   });
 
   it('caches with tenant-user-isolation if JWT is given', async () => {
-    await registerDestination(testDestination, { jwt: subscriberUserJwt });
+    await registerDestination(testDestination, { jwt: subscriberUserToken });
     await expect(
       registerDestinationCache
         .getCacheInstance()
@@ -122,7 +122,7 @@ describe('register-destination', () => {
 
   it('cache if tenant if you want', async () => {
     await registerDestination(testDestination, {
-      jwt: subscriberUserJwt,
+      jwt: subscriberUserToken,
       isolationStrategy: 'tenant'
     });
     await expect(

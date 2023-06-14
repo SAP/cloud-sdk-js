@@ -6,7 +6,7 @@ import {
 import {
   providerServiceToken,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockJwtBearerToken,
@@ -126,7 +126,7 @@ describe('Failure cases', () => {
         destinationName,
         {
           ...wrapJwtInHeader(subscriberServiceToken).headers,
-          'x-user-token': subscriberUserJwt
+          'x-user-token': subscriberUserToken
         },
         { badheaders: [] }
       )
@@ -135,7 +135,7 @@ describe('Failure cases', () => {
     try {
       await getDestination({
         destinationName,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       });
@@ -165,7 +165,7 @@ describe('Failure cases', () => {
     const expected = null;
     const actual = await getDestination({
       destinationName,
-      jwt: subscriberUserJwt,
+      jwt: subscriberUserToken,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });

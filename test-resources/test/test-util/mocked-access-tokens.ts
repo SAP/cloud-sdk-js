@@ -9,7 +9,6 @@ import { signedJwtForVerification } from './keys';
 
 const iat = Math.floor(Date.now() / 1000);
 
-// simple provider case (XSUAA)
 export const providerServiceTokenPayload = {
   iat, // check if needed
   iss: providerXsuaaUrl,
@@ -20,7 +19,6 @@ export const providerServiceToken = signedJwtForVerification(
   providerServiceTokenPayload
 );
 
-// simple subscriber case (XSUAA)
 export const subscriberServiceTokenPayload = {
   iat,
   iss: subscriberXsuaaUrl,
@@ -52,7 +50,7 @@ export const providerUserPayload = {
   user_id: 'user-prov'
 };
 
-export const providerUserJwt = signedJwtForVerification(providerUserPayload);
+export const providerUserToken = signedJwtForVerification(providerUserPayload);
 
 export const subscriberUserPayload = {
   iat,
@@ -64,7 +62,7 @@ export const subscriberUserPayload = {
   aud: [xsuaaBindingMock.credentials.clientid] // Becomes audience in XSSEC
 };
 
-export const subscriberUserJwt = signedJwtForVerification(
+export const subscriberUserToken = signedJwtForVerification(
   subscriberUserPayload
 );
 
@@ -74,7 +72,7 @@ const customSubscriberUserPayload = {
   jwks: 'JWKS'
 };
 
-export const customSubscriberUserJwt = signedJwtForVerification(
+export const customSubscriberUserToken = signedJwtForVerification(
   customSubscriberUserPayload,
   customSubscriberUserPayload.jwksUri
 );

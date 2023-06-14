@@ -5,9 +5,9 @@ import { onlyIssuerXsuaaUrl, testTenants } from './environment-mocks';
 import {
   onlyIssuerServiceToken,
   providerServiceToken,
-  providerUserJwt,
+  providerUserToken,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserToken
 } from './mocked-access-tokens';
 
 export function expectAllMocksUsed(nocks: nock.Scope[]) {
@@ -43,7 +43,7 @@ export function mockJwtBearerToken() {
     .spyOn(tokenAccessor, 'jwtBearerToken')
     .mockImplementation(async userJwt =>
       decodeJwt(userJwt).zid === testTenants.subscriber
-        ? subscriberUserJwt
-        : providerUserJwt
+        ? subscriberUserToken
+        : providerUserToken
     );
 }

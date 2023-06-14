@@ -1624,10 +1624,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^18.16.17":
-  version "18.16.17"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.16.17.tgz#d2512c03313db6329f7cb515fc8b508e658230c4"
-  integrity sha512-QAkjjRA1N7gPJeAP4WLXZtYv6+eMXFNviqktCDt4GLcmCugMr5BcRHfkOjCQzvCsnMp+L79a54zBkbw356xv9Q==
+"@types/node@*", "@types/node@^18.16.18":
+  version "18.16.18"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.16.18.tgz#85da09bafb66d4bc14f7c899185336d0c1736390"
+  integrity sha512-/aNaQZD0+iSBAGnvvN2Cx92HqE5sZCPZtx2TsK+4nvV23fFe09jVDvpArXr2j9DnYlzuU9WuoykDDc6wqvpNcw==
 
 "@types/node@^12.7.1":
   version "12.20.55"
@@ -2981,10 +2981,10 @@ core-util-is@~1.0.0:
   resolved "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
 
-cosmiconfig@8.1.3:
-  version "8.1.3"
-  resolved "https://registry.npmjs.org/cosmiconfig/-/cosmiconfig-8.1.3.tgz#0e614a118fcc2d9e5afc2f87d53cd09931015689"
-  integrity sha512-/UkO2JKI18b5jVMJUp0lvKFMpa/Gye+ZgZjKD+DGEN9y7NRcf/nK1A0sp67ONmKtnDCNMS44E6jrk0Yc3bDuUw==
+cosmiconfig@8.2.0:
+  version "8.2.0"
+  resolved "https://registry.npmjs.org/cosmiconfig/-/cosmiconfig-8.2.0.tgz#f7d17c56a590856cd1e7cee98734dca272b0d8fd"
+  integrity sha512-3rTMnFJA1tCOPwRxtgF4wd7Ab2qvDbL8jX+3smjIbS4HlZBagTlpERbdN7iAbWlrfxE3M8c27kTwTawQ7st+OQ==
   dependencies:
     import-fresh "^3.2.1"
     js-yaml "^4.1.0"
@@ -3432,10 +3432,10 @@ detective-typescript@^9.0.0:
     node-source-walk "^5.0.0"
     typescript "^4.5.5"
 
-devtools-protocol@0.0.1120988:
-  version "0.0.1120988"
-  resolved "https://registry.npmjs.org/devtools-protocol/-/devtools-protocol-0.0.1120988.tgz#8fe49088919ae3b8df7235774633763f1f925066"
-  integrity sha512-39fCpE3Z78IaIPChJsP6Lhmkbf4dWXOmzLk/KFTdRkNk/0JymRIfUynDVRndV9HoDz8PyalK1UH21ST/ivwW5Q==
+devtools-protocol@0.0.1135028:
+  version "0.0.1135028"
+  resolved "https://registry.npmjs.org/devtools-protocol/-/devtools-protocol-0.0.1135028.tgz#b2c667c301cb6da9ba3ed0989fe1fb88b660ee0a"
+  integrity sha512-jEcNGrh6lOXNRJvZb9RjeevtZGrgugPKSMJZxfyxWQnhlKawMPhMtk/dfC+Z/6xNXExlzTKlY5LzIAK/fRpQIw==
 
 dezalgo@^1.0.0:
   version "1.0.4"
@@ -7492,26 +7492,26 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-puppeteer-core@20.5.0:
-  version "20.5.0"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-20.5.0.tgz#4b9ccd6c4ca35fe02373bf2147dc75b42ebd22c4"
-  integrity sha512-9ddHXUQ7jpliGei87zYTuEZYQvFj6Lzk5R8w4vT4gMmNArkEqC5CX72TnVIJiTUbiTpOXJkvMQaXIHYopjdUtQ==
+puppeteer-core@20.7.1:
+  version "20.7.1"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-20.7.1.tgz#fdbb6d4fa6fda4a97e299d2f191fdcfab5832758"
+  integrity sha512-f45j9JxImFaYndQYsFA39CEDKwpn1nAF/Iw7urznatjhaslSB/RfHG7sC7iPpDbmP+CLpPEkHhqNxqpaUDdTLw==
   dependencies:
     "@puppeteer/browsers" "1.4.1"
     chromium-bidi "0.4.11"
     cross-fetch "3.1.6"
     debug "4.3.4"
-    devtools-protocol "0.0.1120988"
+    devtools-protocol "0.0.1135028"
     ws "8.13.0"
 
-puppeteer@^20.5.0:
-  version "20.5.0"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-20.5.0.tgz#453f42edb2cb085bb237914c2bcda7938b7ab1c2"
-  integrity sha512-3j0JShJGDT5z8rfDKf+wZQq3IHxw7JaDAdP7py5H5zOIgmqNG0e8R19y4tFzJ8i2WC4H/0bC51rIrTXyDop1FA==
+puppeteer@^20.7.1:
+  version "20.7.1"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-20.7.1.tgz#82819bf88bb1ae7b5ca665684b33b7656dbb3613"
+  integrity sha512-yIkba2PT6rkPw85gCAmbW6KO6VVFTdONnvQp8taeMZaOTUJ193nVajykD1jT3vFbjvwKz8te9nbBVb9ITQqbPA==
   dependencies:
     "@puppeteer/browsers" "1.4.1"
-    cosmiconfig "8.1.3"
-    puppeteer-core "20.5.0"
+    cosmiconfig "8.2.0"
+    puppeteer-core "20.7.1"
 
 pure-rand@^6.0.0:
   version "6.0.0"

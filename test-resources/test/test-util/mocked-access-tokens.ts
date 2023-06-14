@@ -72,13 +72,13 @@ export const subscriberUserToken = signedJwtForVerification(
   subscriberUserPayload
 );
 
-const customSubscriberUserPayload = {
+export const customSubscriberUserTokenPayload = {
   user_id: 'user-sub',
   jwksUri: 'http://jwks.example.com',
   jwks: 'JWKS'
 };
 
 export const customSubscriberUserToken = signedJwtForVerification(
-  customSubscriberUserPayload,
-  customSubscriberUserPayload.jwksUri
+  customSubscriberUserTokenPayload,
+  customSubscriberUserTokenPayload.jwksUri
 );

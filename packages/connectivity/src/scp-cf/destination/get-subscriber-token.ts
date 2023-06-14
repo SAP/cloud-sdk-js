@@ -97,8 +97,11 @@ function getJwtForServiceToken(
 
     return { iss: options.iss };
   }
-  if (options.jwt && isXsuaaJwt) {
-    return options.jwt;
+
+  if (options.jwt) {
+    if (options.jwt && isXsuaaJwt) {
+      return options.jwt;
+    }
   }
 }
 

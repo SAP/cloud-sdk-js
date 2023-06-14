@@ -1,5 +1,5 @@
 import {
-  customsubscriberUserToken,
+  customSubscriberUserToken,
   mockServiceBindings,
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl,
@@ -37,9 +37,9 @@ describe('getSubscriberToken()', () => {
   });
 
   it('creates only user token based on user JWT (custom)', async () => {
-    const token = await getSubscriberToken({ jwt: customsubscriberUserToken });
+    const token = await getSubscriberToken({ jwt: customSubscriberUserToken });
     expect(token).toEqual({
-      userJwt: getJwtPair(customsubscriberUserToken)
+      userJwt: getJwtPair(customSubscriberUserToken)
     });
     expect(verifyJwtSpy).not.toHaveBeenCalled();
   });

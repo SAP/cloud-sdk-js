@@ -138,7 +138,7 @@ describe('custom jwt via jwks property on destination', () => {
   });
 
   it('resolves if jwks is present', async () => {
-    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
+    const userJwt = signedJwtForVerification(subscriberUserPayload, null);
     const serviceJwt = signedJwtForVerification(
       providerServiceTokenPayload // for custom JWT provider account is used
     );

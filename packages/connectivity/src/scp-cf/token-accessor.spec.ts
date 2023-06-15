@@ -342,7 +342,7 @@ describe('token accessor', () => {
       await expect(
         serviceToken('destination', { jwt })
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Property `iss` is missing in the provided user token."'
+        '"Could not retrieve issuer subdomain from "iss" property: "undefined"."'
       );
     });
   });

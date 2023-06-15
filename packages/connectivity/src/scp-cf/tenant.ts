@@ -44,31 +44,15 @@ export function tenantId(jwtPayload: JwtPayload): string | undefined {
 export function getTenantIdWithFallback(
   token: string | undefined
 ): string | undefined {
-  const { zoneId, subdomain } = getSubdomainAndZoneId(token);
-  return zoneId || subdomain || undefined;
+  const decodedJwt = token ? decodeJwt(token) : {};
+
+  return tenantId(decodedJwt) || getIssuerSubdomain(decodedJwt) || undefined;
 }
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
   subdomain: string | null;
   zoneId: string | null;
-}
-
-/**
- * Get subdomain and zoneId value from a given JWT.
- * @param jwt - A JWT from the current user.
- * @returns subdomain and zoneId from the JWT
- * @internal
- */
-export function getSubdomainAndZoneId(
-  jwt: string | JwtPayload = {}
-): SubdomainAndZoneId {
-  const decodedJwt = decodeJwt(jwt);
-
-  return {
-    subdomain: getIssuerSubdomain(decodedJwt) || null,
-    zoneId: decodedJwt.zid || null
-  };
 }
 
 /**

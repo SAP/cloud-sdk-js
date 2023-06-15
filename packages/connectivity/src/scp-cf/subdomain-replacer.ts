@@ -11,7 +11,7 @@ export function replaceWithIssuerSubdomain(
   const subdomain = getIssuerSubdomain(decodedJwt);
   if (!subdomain) {
     throw new Error(
-      `Could not retrieve issuer subdomain from: "${decodedJwt.iss}".`
+      `Could not retrieve issuer subdomain from "iss" property: "${decodedJwt.iss}".`
     );
   }
   if (!isValidUrl(xsuaaUrl)) {

@@ -16,7 +16,7 @@ import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { buildAuthorizationHeaders } from '../authorization-header';
-import { getSubdomainAndZoneId } from '../tenant';
+import { getTenantIdWithFallback } from '../tenant';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -226,24 +226,18 @@ export async function fetchCertificate(
 function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
   let tenant: string | undefined;
   if (typeof token === 'string') {
-    tenant = getTenantId(token);
+    tenant = getTenantIdWithFallback(token);
   } else {
     tenant =
       token.exchangeTenant || // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
-      getTenantId(token.exchangeHeaderJwt) ||
-      getTenantId(token.authHeaderJwt);
+      getTenantIdWithFallback(token.exchangeHeaderJwt) ||
+      getTenantIdWithFallback(token.authHeaderJwt);
   }
 
   if (!tenant) {
     throw new Error('Could not obtain tenant identifier from JWT.');
   }
   return tenant;
-}
-
-// TODO: Why is this different than for caching? => the token is always already there #provider
-function getTenantId(token: string | undefined): string | undefined {
-  const { zoneId, subdomain } = getSubdomainAndZoneId(token);
-  return zoneId || subdomain || undefined;
 }
 
 async function fetchDestinationByTokens(

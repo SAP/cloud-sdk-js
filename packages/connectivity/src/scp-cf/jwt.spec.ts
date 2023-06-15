@@ -3,11 +3,18 @@ import { Socket } from 'net';
 import nock from 'nock';
 import {
   jku,
+  mockServiceBindings,
   publicKey,
   signedJwtForVerification,
   xsuaaBindingMock
 } from '../../../../test-resources/test/test-util';
-import { audiences, retrieveJwt, verifyJwt } from './jwt';
+import {
+  audiences,
+  decodeJwtComplete,
+  retrieveJwt,
+  verifyJwt,
+  isXsuaaToken
+} from './jwt';
 
 const jwtPayload = {
   sub: '1234567890',
@@ -35,7 +42,7 @@ export function responseWithPublicKey(key = publicKey) {
 }
 
 describe('jwt', () => {
-describe('isXsuaa()', () => {
+  describe('isXsuaa()', () => {
     it('returns true if jku and uaa are from same domain', () => {
       const jwt = decodeJwtComplete(
         signedJwtForVerification(
@@ -64,7 +71,7 @@ describe('isXsuaa()', () => {
       expect(isXsuaaToken(jwt)).toBe(false);
     });
   });
-  
+
   describe('retrieveJwt', () => {
     it('returns undefined when incoming message has no auth header', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT())).toBeUndefined();

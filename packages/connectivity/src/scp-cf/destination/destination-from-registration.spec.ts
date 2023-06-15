@@ -223,12 +223,4 @@ describe('register-destination without xsuaa binding', () => {
     });
     expect(actual).toEqual(testDestination);
   });
-
-  it('throws an error when no JWT is provided', async () => {
-    await expect(() =>
-      registerDestination(testDestination)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not find binding to service \'xsuaa\', that includes credentials."'
-    );
-  });
 });

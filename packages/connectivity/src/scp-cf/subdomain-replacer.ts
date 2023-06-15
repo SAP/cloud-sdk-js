@@ -1,41 +1,53 @@
 import { URL } from 'url';
+import { JwtPayload } from './jsonwebtoken-type';
 
 /**
  * @internal
  */
-export function replaceSubdomain(issuerUrl: string, xsuaaUrl: string): string {
-  if (!isValidURL(issuerUrl)) {
-    throw new Error('JWT issuer URL is not valid "' + issuerUrl + '".');
-  }
-  if (!isValidURL(xsuaaUrl)) {
-    throw new Error('XSUAA URL is not valid "' + xsuaaUrl + '".');
-  }
-  const subdomain = parseSubdomain(issuerUrl);
-  return replace(xsuaaUrl, subdomain);
-}
-
-function replace(xsuaaUrl: string, subdomain: string): string {
-  const parsedXsuaaUrl = new URL(xsuaaUrl);
-  const scheme = parsedXsuaaUrl.protocol + '//';
-  const xsuaaDomain = xsuaaUrl.slice(xsuaaUrl.indexOf('.'));
-  return scheme + subdomain + xsuaaDomain;
-}
-
-/**
- * @internal
- */
-export function parseSubdomain(issuerUrl: string): string {
-  const url = new URL(issuerUrl);
-  const host = url.host;
-  if (!host || host.indexOf('.') === -1) {
+export function replaceWithIssuerSubdomain(
+  xsuaaUrl: string,
+  decodedJwt: JwtPayload
+): string {
+  const subdomain = getIssuerSubdomain(decodedJwt);
+  if (!subdomain) {
     throw new Error(
-      'Failed to determine sub-domain: invalid host in "' + issuerUrl + '".'
+      `Could not retrieve issuer subdomain from: "${decodedJwt.iss}".`
     );
   }
-  return host.split('.')[0];
+  if (!isValidUrl(xsuaaUrl)) {
+    throw new Error(`XSUAA URL is not a valid URL: "${xsuaaUrl}".`);
+  }
+
+  const xsuaaDomain = xsuaaUrl.slice(xsuaaUrl.indexOf('.'));
+  return new URL(xsuaaUrl).protocol + '//' + subdomain + xsuaaDomain;
 }
 
-function isValidURL(url: string): boolean {
+/**
+ * @internal
+ */
+export function getIssuerSubdomain(
+  decodedJwt: JwtPayload | undefined
+): string | undefined {
+  const iss = decodedJwt?.iss;
+  if (iss) {
+    if (!isValidUrl(iss)) {
+      throw new Error(`Issuer URL in JWT is not a valid URL: "${iss}".`);
+    }
+    return getHost(new URL(iss)).split('.')[0];
+  }
+}
+
+function getHost(url: URL): string {
+  const { host } = url;
+  if (!host || host.indexOf('.') === -1) {
+    throw new Error(
+      `Failed to determine sub-domain: invalid host in "${url}".`
+    );
+  }
+  return host;
+}
+
+function isValidUrl(url: string): url is string {
   try {
     new URL(url);
     return true;

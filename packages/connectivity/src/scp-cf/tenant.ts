@@ -1,28 +1,16 @@
+import { getServiceCredentials } from './environment-accessor';
 import { JwtPayload } from './jsonwebtoken-type';
-import {
-  checkMandatoryValue,
-  JwtKeyMapping,
-  readPropertyWithWarn
-} from './jwt';
+import { decodeJwt, JwtKeyMapping, readPropertyWithWarn } from './jwt';
+import { getIssuerSubdomain } from './subdomain-replacer';
 
 /**
- * Mapping between key name in the Tenant and key name in decoded JWT.
+ * Mapping between key name in the tenant and key name in decoded JWT.
  * @internal
  */
 export const mappingTenantFields: JwtKeyMapping<Tenant, 'zid' | 'zdn'> = {
   id: { keyInJwt: 'zid', extractorFunction: tenantId },
   name: { keyInJwt: 'zdn', extractorFunction: tenantName }
 };
-
-/**
- * Get the tenant id of a decoded JWT.
- * @param jwtPayload - Token payload to read the tenant id from.
- * @returns The tenant id, if available.
- * @internal
- */
-export function tenantId(jwtPayload: JwtPayload): string | undefined {
-  return readPropertyWithWarn(jwtPayload, mappingTenantFields.id.keyInJwt);
-}
 
 /**
  * Get the tenant name of a decoded JWT.
@@ -35,6 +23,52 @@ export function tenantName(jwtPayload: JwtPayload): string | undefined {
   if (extAttr) {
     return readPropertyWithWarn(extAttr, 'zdn');
   }
+}
+
+/**
+ * Get the tenant id of a decoded JWT, based on its `zid` property.
+ * @param jwtPayload - Token payload to read the tenant id from.
+ * @returns The tenant id, if available.
+ * @internal
+ */
+export function tenantId(jwtPayload: JwtPayload): string | undefined {
+  return readPropertyWithWarn(jwtPayload, mappingTenantFields.id.keyInJwt);
+}
+
+/**
+ * Get the tenant id of a decoded JWT, based on its `zid` property or, if not available, the `iss` subdomain.
+ * @param token - Token to read the tenant id from.
+ * @returns The tenant id, if available.
+ * @internal
+ */
+export function getTenantIdWithFallback(
+  token: string | undefined
+): string | undefined {
+  const { zoneId, subdomain } = getSubdomainAndZoneId(token);
+  return zoneId || subdomain || undefined;
+}
+
+// `@sap/xssec` sometimes checks `null` without considering `undefined`.
+interface SubdomainAndZoneId {
+  subdomain: string | null;
+  zoneId: string | null;
+}
+
+/**
+ * Get subdomain and zoneId value from a given JWT.
+ * @param jwt - A JWT from the current user.
+ * @returns subdomain and zoneId from the JWT
+ * @internal
+ */
+export function getSubdomainAndZoneId(
+  jwt: string | JwtPayload = {}
+): SubdomainAndZoneId {
+  const decodedJwt = decodeJwt(jwt);
+
+  return {
+    subdomain: getIssuerSubdomain(decodedJwt) || null,
+    zoneId: decodedJwt.zid || null
+  };
 }
 
 /**
@@ -53,21 +87,6 @@ export interface Tenant {
 }
 
 /**
- * Creates a tenant object from the JWT payload.
- * Throws an error if the property `id` is not present in the payload.
- * @param jwtPayload - Token payload to get the tenant information from.
- * @returns Representation of the tenant.
- * @internal
- */
-export function tenantFromJwt(jwtPayload: JwtPayload): Tenant {
-  checkMandatoryValue('id', mappingTenantFields, jwtPayload);
-  return {
-    id: tenantId(jwtPayload)!,
-    name: tenantName(jwtPayload)
-  };
-}
-
-/**
  * Compare two decoded JWTs based on their `tenantId`s.
  * @param userTokenPayload - User JWT payload.
  * @param providerTokenPayload - Provider JWT payload.
@@ -82,4 +101,33 @@ export function isIdenticalTenant(
     readPropertyWithWarn(userTokenPayload, mappingTenantFields.id.keyInJwt) ===
     readPropertyWithWarn(providerTokenPayload, mappingTenantFields.id.keyInJwt)
   );
+}
+
+/**
+ * @internal
+ * Return the tenant ID based on the given conditions:
+ * - If a JWT is provided and contains `zid`, return the value of zid.
+ * - If a JWT is provided and contains `iss`, return its subdomain.
+ * - If a binding to the XSUAA service exists, return the `subaccountid` from its credentials.
+ * - Otherwise return `undefined`.
+ * @param jwt - JWT.
+ * @returns String with tenantid information.
+ */
+export function getTenantIdWithFallback3(jwt?: string): string | undefined {
+  // TODO: Why is this the only place where iss matters (why is it not used when caching, e.g.?)
+  if (jwt) {
+    const decodedJwt = decodeJwt(jwt);
+    return (
+      tenantId(decodedJwt) ||
+      getIssuerSubdomain(decodedJwt) ||
+      getSubaccountIdFromXsuaa()
+    );
+  }
+}
+
+/**
+ * @internal
+ */
+export function getSubaccountIdFromXsuaa(): string | undefined {
+  return getServiceCredentials('xsuaa')?.subaccountid;
 }

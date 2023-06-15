@@ -15,8 +15,8 @@ import {
 import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
-import { getSubdomainAndZoneId } from '../xsuaa-service';
 import { buildAuthorizationHeaders } from '../authorization-header';
+import { getSubdomainAndZoneId } from '../tenant';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -235,16 +235,15 @@ function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
   }
 
   if (!tenant) {
-    throw new Error('Could not obtain tenant identifier from jwt.');
+    throw new Error('Could not obtain tenant identifier from JWT.');
   }
   return tenant;
 }
 
+// TODO: Why is this different than for caching? => the token is always already there #provider
 function getTenantId(token: string | undefined): string | undefined {
-  if (token) {
-    const { zoneId, subdomain } = getSubdomainAndZoneId(token);
-    return zoneId || subdomain || undefined;
-  }
+  const { zoneId, subdomain } = getSubdomainAndZoneId(token);
+  return zoneId || subdomain || undefined;
 }
 
 async function fetchDestinationByTokens(

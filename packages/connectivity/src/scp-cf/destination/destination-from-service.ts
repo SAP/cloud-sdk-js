@@ -9,7 +9,7 @@ import { exchangeToken, shouldExchangeToken } from '../identity-service';
 import { JwtPair } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
-import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { getIssuerSubdomain } from '..';
 import {
   DestinationFetchOptions,
   DestinationsByType
@@ -272,12 +272,12 @@ export class DestinationFromServiceRetriever {
     if (destination.originalProperties!['tokenServiceURLType'] !== 'Common') {
       return undefined;
     }
-    const subdomainSubscriber = getSubdomainAndZoneId(
-      this.subscriberToken?.userJwt?.encoded
-    ).subdomain;
-    const subdomainProvider = getSubdomainAndZoneId(
-      this.providerServiceToken?.encoded
-    ).subdomain;
+    const subdomainSubscriber = getIssuerSubdomain(
+      this.subscriberToken?.userJwt?.decoded
+    );
+    const subdomainProvider = getIssuerSubdomain(
+      this.providerServiceToken?.decoded
+    );
     return subdomainSubscriber || subdomainProvider || undefined;
   }
 

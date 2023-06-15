@@ -20,13 +20,17 @@ const logger = createLogger({
  */
 export function getServiceCredentials<
   ServiceCredentialsT extends ServiceCredentials
->(service: string, token?: JwtPayload | string): ServiceCredentialsT {
+>(
+  service: string,
+  token?: JwtPayload | string
+): ServiceCredentialsT | undefined {
   const credentialsList = getServiceBindingsWithCredentials(service);
 
   if (!credentialsList.length) {
-    throw Error(
+    logger.debug(
       `Could not find binding to service '${service}', that includes credentials.`
     );
+    return;
   }
 
   if (token) {

@@ -1,42 +1,90 @@
-import assert from 'assert';
-import { JwtPayload } from 'jsonwebtoken';
-import { mappingTenantFields, tenantFromJwt } from './tenant';
+import {
+  mockServiceBindings,
+  signedJwt,
+  xsuaaBindingMock
+} from '../../../../test-resources/test/test-util';
+import { getSubdomainAndZoneId, getTenantIdWithFallback } from './tenant';
+import * as jwt from './jwt';
 
-describe('tenant builder from jwt', () => {
-  it('should contain the fields from decodedJwt', () => {
-    const decodedJwt: JwtPayload = {
-      zid: 'tenantUUID',
-      ext_attr: {
-        zdn: 'tenantName'
-      }
-    };
+describe('tenant builder from JWT', () => {
+  describe('getSubdomainAndZoneId', () => {
+    beforeEach(() => {
+      jest.resetModules();
+    });
 
-    expect(tenantFromJwt(decodedJwt).id).toBe(decodedJwt.zid);
-    expect(tenantFromJwt(decodedJwt).name).toBe(decodedJwt.ext_attr.zdn);
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('returns null subdomain and zoneId for undefined JWT', () => {
+      const actual = getSubdomainAndZoneId();
+      const expected = { subdomain: null, zoneId: null };
+      expect(actual).toEqual(expected);
+    });
+
+    it('returns subdomain and zoneId', () => {
+      const iss = 'https://sub.example.com';
+      const zid = 'zone';
+      jest.spyOn(jwt, 'decodeJwt').mockImplementationOnce(() => ({ iss, zid }));
+
+      const actual = getSubdomainAndZoneId('nonNullJWT');
+      const expected = { subdomain: 'sub', zoneId: zid };
+      expect(actual).toEqual(expected);
+    });
+
+    it('returns null zoneId, when the jwt does not contain zid', () => {
+      const iss = 'https://sub.example.com';
+      jest.spyOn(jwt, 'decodeJwt').mockImplementationOnce(() => ({ iss }));
+
+      const actual = getSubdomainAndZoneId('nonNullJWT');
+      const expected = { subdomain: 'sub', zoneId: null };
+      expect(actual).toEqual(expected);
+    });
+
+    it('returns null subdomain, when the jwt does not contain iss', () => {
+      const zid = 'zone';
+      jest.spyOn(jwt, 'decodeJwt').mockImplementationOnce(() => ({ zid }));
+
+      const actual = getSubdomainAndZoneId('nonNullJWT');
+      const expected = { subdomain: null, zoneId: zid };
+      expect(actual).toEqual(expected);
+    });
   });
 
-  it('should handle missing ext_attr with undefined value', () => {
-    const decodedJwtMissingName: JwtPayload = {
-      zid: 'tenantUUID'
-    };
-    expect(tenantFromJwt(decodedJwtMissingName).id).toBe(
-      decodedJwtMissingName.zid
-    );
-    expect(tenantFromJwt(decodedJwtMissingName).name).toBe(undefined);
+  describe('getTenantIdWithFallback', () => {
+    afterEach(() => {
+      delete process.env['VCAP_SERVICES'];
+    });
 
-    decodedJwtMissingName.ext_attr = {};
-    expect(tenantFromJwt(decodedJwtMissingName).id).toBe(
-      decodedJwtMissingName.zid
-    );
-    expect(tenantFromJwt(decodedJwtMissingName).name).toBe(undefined);
-  });
+    it('returns the `zid` from a JWT, if present', () => {
+      expect(
+        getTenantIdWithFallback(signedJwt({ user_id: 'user', zid: 'tenant' }))
+      ).toEqual('tenant');
+    });
 
-  it('should throw exceptions if mandatory fields are missing', () => {
-    try {
-      tenantFromJwt({});
-      assert.fail('No exception while building from jwt without id.');
-    } catch (e) {
-      expect(e.message).toContain(mappingTenantFields.id.keyInJwt);
-    }
+    it('returns subdomain of `iss` from a JWT, if present', () => {
+      expect(
+        getTenantIdWithFallback(
+          signedJwt({ user_id: 'user', iss: 'http://dummy-iss.com' })
+        )
+      ).toEqual('dummy-iss');
+    });
+
+    it("returns the xsuaa binding's subaccount if a binding is present", () => {
+      mockServiceBindings({ xsuaaBinding: true });
+      expect(getTenantIdWithFallback()).toEqual(
+        xsuaaBindingMock.credentials.subaccountid
+      );
+    });
+
+    it('returns a string constant for tenantid when there is no xsuaa binding and custom JWT contains neither `zid` nor `iss`', () => {
+      expect(getTenantIdWithFallback(signedJwt({ user_id: 'user' }))).toEqual(
+        'tenant_id'
+      );
+    });
+
+    it('returns a string constant if neither JWT nor xsuaa binding is present', () => {
+      expect(getTenantIdWithFallback()).toEqual('tenant_id');
+    });
   });
 });

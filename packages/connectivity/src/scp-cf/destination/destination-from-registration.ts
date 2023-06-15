@@ -1,6 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { getXsuaaServiceCredentials } from '../environment-accessor';
-import { decodeJwt } from '../jwt';
+import { decodeJwt, decodeOrMakeJwt } from '../jwt';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
   DefaultDestinationCache,
@@ -59,7 +58,8 @@ export async function registerDestination(
   destination.mtls = !!options?.inferMtls;
 
   await registerDestinationCache.cacheRetrievedDestination(
-    decodedJwtOrZid(options),
+    // HERE
+    decodeOrMakeJwt(options?.jwt),
     destination,
     isolationStrategy(options)
   );
@@ -78,21 +78,9 @@ export type DestinationWithName = Destination & { name: string };
 export async function searchRegisteredDestination(
   options: DestinationFetchOptions
 ): Promise<Destination | null> {
-  let decodedJwt: Record<string, any>;
-  // An error will be thrown if no JWT and no xsuaa service exist.
-  try {
-    decodedJwt = decodedJwtOrZid(options);
-  } catch (e) {
-    logger.debug(
-      'Failed to retrieve registered destination, because it was neither possible to decode JWT nor create a dummy JWT with `zid` property.'
-    );
-    logger.debug(e);
-    return null;
-  }
-
   const destination =
     await registerDestinationCache.retrieveDestinationFromCache(
-      decodedJwt,
+      decodeOrMakeJwt(options.jwt),
       options.destinationName,
       isolationStrategy(options)
     );
@@ -132,27 +120,6 @@ function isolationStrategy(
   }
   const decoded = options?.jwt ? decodeJwt(options.jwt) : undefined;
   return getDefaultIsolationStrategy(decoded);
-}
-
-/**
- * This method either decodes the given JWT. If the JWT is not given it will use the subdomain if the XSUAA and create a Object with zid this subdomain.
- * This is then passed on to build the cache key.
- * @param options - Options passed to register the destination containing the jwt.
- * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid).
- * @internal
- */
-export function decodedJwtOrZid(
-  options?: RegisterDestinationOptions
-): Record<string, any> {
-  if (options?.jwt) {
-    return decodeJwt(options.jwt);
-  }
-
-  const providerTenantId = getXsuaaServiceCredentials(
-    options?.jwt
-  ).subaccountid;
-
-  return { zid: providerTenantId };
 }
 
 function destinationAuthToken(

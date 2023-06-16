@@ -20,7 +20,6 @@ export const providerServiceToken = signedJwtForVerification(
   providerServiceTokenPayload
 );
 
-// simple subscriber case (XSUAA)
 export const subscriberServiceTokenPayload = {
   iat,
   iss: subscriberXsuaaUrl,

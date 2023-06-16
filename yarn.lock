@@ -1286,10 +1286,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@6.8.2":
-  version "6.8.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.8.2.tgz#a8fc6c28895efdd7be06bd93c8c75d1706be8324"
-  integrity sha512-LNOMLw7AMwm8RtSXKqfHl7HTP2aghFOcqxZizKDcYKbO0vybeyybtFW3UaXBg8+JZyKywbWmWDRiEsshG3Mv/Q==
+"@sap/cds-dk@6.8.3":
+  version "6.8.3"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-6.8.3.tgz#50a6ea7e22b7626d541904da3add37e6bc14fee1"
+  integrity sha512-krkeyovWCDiJ8p0sK3bv0A+TFXuKNFJZbHm9DL2KRQJ6yqXOWSS1zWp0NINEy8/cP0exIVw7Op3L10HWwHYpJg==
   dependencies:
     "@sap/cds" "~6.8.0"
     "@sap/cds-compiler" "~3.9.0"

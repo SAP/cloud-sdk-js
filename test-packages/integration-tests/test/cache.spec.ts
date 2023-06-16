@@ -35,7 +35,8 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       zid: 'provider_token',
       user_id: 'user_id',
       aud: 'xsapp-myapp!123',
-      iss: providerXsuaaUrl
+      iss: providerXsuaaUrl,
+      ext_attr: { enhancer: 'XSUAA' }
     },
     privateKey,
     {
@@ -139,6 +140,10 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
 
     const cachedDestination = await populateDestinationCache();
 
+    // 4 usertoken grant calls with xsuaa creds
+    // 1 usertoken grant call with destination creds
+    // all requests use cache
+
     const destination = await getDestination({
       destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
       useCache: true,
@@ -167,7 +172,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
     });
   }
 
-  // Do the full logic in destination-from-serive.ts included auth flow leading to a filled destination cache
+  // Do the full logic in destination-from-service.ts included auth flow leading to a filled destination cache
   async function populateDestinationCache(): Promise<Destination | null> {
     mockUserTokenGrantCall(
       providerXsuaaUrl,

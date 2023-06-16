@@ -137,16 +137,16 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       xsuaaBindingMock.credentials
     );
 
-    const directCall = await populateDestinationCache();
+    const cachedDestination = await populateDestinationCache();
 
-    const cache = await getDestination({
+    const destination = await getDestination({
       destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
       useCache: true,
       jwt: providerUserToken,
       isolationStrategy: 'tenant-user'
     });
-    expect(cache).not.toBeNull();
-    expect(cache).toEqual(directCall);
+    expect(destination).not.toBeNull();
+    expect(destination).toEqual(cachedDestination);
 
     await expect(
       getDestination({

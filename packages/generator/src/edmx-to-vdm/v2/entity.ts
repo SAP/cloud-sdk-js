@@ -66,8 +66,7 @@ export function generateEntitiesV2(
       classNames,
       formatter
     ),
-    functions: [],
-    actions: []
+    operations: []
   }));
 }
 

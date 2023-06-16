@@ -29,6 +29,6 @@ export function getServiceEntitiesV2(
     complexTypes,
     enumTypes: [],
     entities,
-    functionImports
+    operations: functionImports
   };
 }

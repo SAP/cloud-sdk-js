@@ -6,7 +6,7 @@ import {
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import {
   providerServiceToken,
-  providerUserJwt
+  providerUserToken
 } from '../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../test-resources/test/test-util/token-accessor-mocks';
 import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
@@ -69,14 +69,14 @@ describe('connectivity-service', () => {
         ...connectivityProxyConfigMock,
         headers: {
           'Proxy-Authorization': `Bearer ${providerServiceToken}`,
-          'SAP-Connectivity-Authentication': `Bearer ${providerUserJwt}`
+          'SAP-Connectivity-Authentication': `Bearer ${providerUserToken}`
         }
       }
     };
     const withProxy = await addProxyConfigurationOnPrem(
       input,
       getRequiredSubscriberToken({
-        userJwt: getJwtPair(providerUserJwt)
+        userJwt: getJwtPair(providerUserToken)
       })
     );
     expect(withProxy).toEqual(expected);

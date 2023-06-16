@@ -1,4 +1,4 @@
-import { VdmServiceMetadata } from '../../vdm-types';
+import { VdmOperation, VdmServiceMetadata } from '../../vdm-types';
 import { serviceClass } from './class';
 
 describe('class', () => {
@@ -14,27 +14,24 @@ describe('class', () => {
     complexTypes: [],
     enumTypes: [],
     entities: [],
-    functionImports: [],
+    operations: [],
     namespaces: ['namespace'],
     speakingModuleName: 'moduleName',
     className: 'AService',
     edmxPath: 'edmxPath'
   };
 
-  it('contains no actionImports and functionImports if not in VDM', () => {
+  it('contains no operations if not in VDM', () => {
     const result = serviceClass(service);
-    expect(result).not.toContain('functionImport');
-    expect(result).not.toContain('actionImports');
+    expect(result).not.toContain('operations');
   });
 
   it('contains operations if in VDM', () => {
     const result = serviceClass({
       ...service,
-      functionImports: [
-        { name: 'myFunction', parametersTypeName: 'paraName' } as any
-      ],
-      actionImports: [
-        { name: 'myAction', parametersTypeName: 'paraName' } as any
+      operations: [
+        { name: 'myFunction', parametersTypeName: 'paraName' } as VdmOperation,
+        { name: 'myAction', parametersTypeName: 'paraName' } as VdmOperation
       ]
     });
     expect(result).toContain('operations');
@@ -88,8 +85,7 @@ describe('class', () => {
           navigationProperties: [],
           description: 'desc',
           entityTypeNamespace: 'ns',
-          actions: [],
-          functions: []
+          operations: []
         }
       ]
     });

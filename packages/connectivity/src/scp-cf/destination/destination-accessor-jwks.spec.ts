@@ -2,6 +2,7 @@ import nock from 'nock';
 import {
   destinationName,
   destinationSingleResponse,
+  jku,
   mockInstanceDestinationsCall,
   mockServiceBindings,
   mockServiceToken,
@@ -24,8 +25,6 @@ import {
 import { getDestination } from './destination-accessor';
 import { DestinationConfiguration } from './destination';
 
-const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
-
 describe('custom jwt via jwks property on destination', () => {
   beforeEach(() => {
     mockServiceBindings();
@@ -35,7 +34,7 @@ describe('custom jwt via jwks property on destination', () => {
 
   afterEach(() => {
     nock.cleanAll();
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   const destFetchOption: DestinationFetchOptions = {
@@ -64,11 +63,8 @@ describe('custom jwt via jwks property on destination', () => {
 
   it('verifies JWT with JKU property', async () => {
     nock(jku).get('/').reply(200, responseWithPublicKey());
-    const userJwt = signedJwtForVerification(subscriberUserPayload, jku);
-    const serviceJwt = signedJwtForVerification(
-      subscriberServiceTokenPayload,
-      jku
-    );
+    const userJwt = signedJwtForVerification(subscriberUserPayload);
+    const serviceJwt = signedJwtForVerification(subscriberServiceTokenPayload);
 
     mockOneDestination({ ...oauthMultipleResponse[0] }, serviceJwt, userJwt);
 
@@ -83,18 +79,14 @@ describe('custom jwt via jwks property on destination', () => {
   });
 
   it('does not verify JWT without JKU property', async () => {
-    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
-    const serviceJwt = signedJwtForVerification(
-      providerServiceTokenPayload,
-      jku
-    );
+    const userJwt = signedJwtForVerification(subscriberUserPayload, null);
+    const serviceJwt = signedJwtForVerification(providerServiceTokenPayload);
 
     mockOneDestination(
       { ...oauthMultipleResponse[0], 'x_user_token.jwks': 'someDummyValue' },
       serviceJwt,
       userJwt
     );
-
     const spy = jest.spyOn(jwt, 'verifyJwt');
     const actual = await getDestination({
       ...destFetchOption,
@@ -110,10 +102,7 @@ describe('custom jwt via jwks property on destination', () => {
       subscriberUserPayload,
       'http://not-uaa-domain.com'
     );
-    const serviceJwt = signedJwtForVerification(
-      providerServiceTokenPayload,
-      jku
-    );
+    const serviceJwt = signedJwtForVerification(providerServiceTokenPayload);
 
     mockOneDestination(
       { ...oauthMultipleResponse[0], 'x_user_token.jwks': 'someDummyValue' },
@@ -132,11 +121,8 @@ describe('custom jwt via jwks property on destination', () => {
   });
 
   it('throws an error if jwks properties are not given for JWT without JKU', async () => {
-    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
-    const serviceJwt = signedJwtForVerification(
-      providerServiceTokenPayload,
-      jku
-    );
+    const userJwt = signedJwtForVerification(subscriberUserPayload, null);
+    const serviceJwt = signedJwtForVerification(providerServiceTokenPayload);
 
     mockOneDestination(oauthMultipleResponse[0], serviceJwt, userJwt);
 
@@ -152,10 +138,9 @@ describe('custom jwt via jwks property on destination', () => {
   });
 
   it('resolves if jwks is present', async () => {
-    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
+    const userJwt = signedJwtForVerification(subscriberUserPayload, null);
     const serviceJwt = signedJwtForVerification(
-      providerServiceTokenPayload, // for custom JWT provider account is used
-      jku
+      providerServiceTokenPayload // for custom JWT provider account is used
     );
 
     mockOneDestination(
@@ -173,10 +158,9 @@ describe('custom jwt via jwks property on destination', () => {
   });
 
   it('resolves if jwks_uri is present', async () => {
-    const userJwt = signedJwtForVerification(subscriberUserPayload, undefined);
+    const userJwt = signedJwtForVerification(subscriberUserPayload, null);
     const serviceJwt = signedJwtForVerification(
-      providerServiceTokenPayload, // for custom JWT provider account is used
-      jku
+      providerServiceTokenPayload // for custom JWT provider account is used
     );
 
     mockOneDestination(

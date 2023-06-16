@@ -11,9 +11,9 @@ import {
 import { signedJwt } from '../../../../test-resources/test/test-util/keys';
 import {
   providerServiceToken,
-  providerUserJwt,
+  providerUserToken,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserToken
 } from '../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockClientCredentialsGrantCall,
@@ -168,10 +168,10 @@ describe('token accessor', () => {
       );
 
       const providerToken = await serviceToken('destination', {
-        jwt: providerUserJwt
+        jwt: providerUserToken
       });
       const subscriberToken = await serviceToken('destination', {
-        jwt: subscriberUserJwt
+        jwt: subscriberUserToken
       });
 
       const providerTokenFromCache = clientCredentialsTokenCache.getToken(

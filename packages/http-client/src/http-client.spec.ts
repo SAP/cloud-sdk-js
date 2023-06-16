@@ -33,7 +33,7 @@ import {
   providerServiceToken,
   providerXsuaaUrl,
   subscriberServiceToken,
-  subscriberUserJwt,
+  subscriberUserToken,
   subscriberXsuaaUrl,
   xsuaaBindingMock
 } from '../../../test-resources/test/test-util';
@@ -242,8 +242,8 @@ describe('generic http client', () => {
       mockUserTokenGrantCall(
         providerXsuaaUrl,
         1,
-        subscriberUserJwt,
-        subscriberUserJwt,
+        subscriberUserToken,
+        subscriberUserToken,
         xsuaaBindingMock.credentials
       );
       mockClientCredentialsGrantCall(
@@ -284,7 +284,7 @@ describe('generic http client', () => {
       const response = await executeHttpRequest(
         {
           destinationName: 'FINAL-DESTINATION',
-          jwt: subscriberUserJwt,
+          jwt: subscriberUserToken,
           iasToXsuaaTokenExchange: false
         },
         {
@@ -298,7 +298,7 @@ describe('generic http client', () => {
 
       expect(response.data).toEqual({
         destinationName: 'FINAL-DESTINATION',
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         tenantId: 'subscriber',
         uri: 'https://my.system.example.com'
       });

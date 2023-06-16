@@ -16,9 +16,9 @@ import {
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
-  providerUserJwt,
+  providerUserToken,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
@@ -194,7 +194,7 @@ describe('get destination with PrivateLink proxy type', () => {
 
     await getDestination({
       destinationName: 'PrivateLinkDest',
-      jwt: subscriberUserJwt,
+      jwt: subscriberUserToken,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });
@@ -211,7 +211,7 @@ describe('get destination with PrivateLink proxy type', () => {
 
     const destinationFromFirstCall = await getDestination({
       destinationName: 'PrivateLinkDest',
-      jwt: subscriberUserJwt,
+      jwt: subscriberUserToken,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });
@@ -248,7 +248,7 @@ describe('truststore configuration', () => {
     );
     const actual = await getDestination({
       destinationName: 'TrustStoreDestination',
-      jwt: providerUserJwt,
+      jwt: providerUserToken,
       selectionStrategy: alwaysProvider,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false

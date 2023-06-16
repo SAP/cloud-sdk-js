@@ -1417,10 +1417,10 @@
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@ts-morph/common@~0.19.0":
-  version "0.19.0"
-  resolved "https://registry.npmjs.org/@ts-morph/common/-/common-0.19.0.tgz#927fcd81d1bbc09c89c4a310a84577fb55f3694e"
-  integrity sha512-Unz/WHmd4pGax91rdIKWi51wnVUW11QttMEPpBiBgIewnc9UQIX7UDLxr5vRlqeByXCwhkF6VabSsI0raWcyAQ==
+"@ts-morph/common@~0.20.0":
+  version "0.20.0"
+  resolved "https://registry.npmjs.org/@ts-morph/common/-/common-0.20.0.tgz#3f161996b085ba4519731e4d24c35f6cba5b80af"
+  integrity sha512-7uKjByfbPpwuzkstL3L5MQyuXPSKdoNG93Fmi2JoDcTf3pEP731JdRFAduRVkOs8oqxPsXKA+ScrWkdQ8t/I+Q==
   dependencies:
     fast-glob "^3.2.12"
     minimatch "^7.4.3"
@@ -8690,12 +8690,12 @@ ts-jest@^29.1.0:
     semver "7.x"
     yargs-parser "^21.0.1"
 
-ts-morph@^18.0.0:
-  version "18.0.0"
-  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-18.0.0.tgz#b9e7a898ea115064585a8a775d86da6edc9c5b4e"
-  integrity sha512-Kg5u0mk19PIIe4islUI/HWRvm9bC1lHejK4S0oh1zaZ77TMZAEmQC0sHQYiu2RgCQFZKXz1fMVi/7nOOeirznA==
+ts-morph@^19.0.0:
+  version "19.0.0"
+  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-19.0.0.tgz#43e95fb0156c3fe3c77c814ac26b7d0be2f93169"
+  integrity sha512-D6qcpiJdn46tUqV45vr5UGM2dnIEuTGNxVhg0sk5NX11orcouwj6i1bMqZIz2mZTZB1Hcgy7C3oEVhAT+f6mbQ==
   dependencies:
-    "@ts-morph/common" "~0.19.0"
+    "@ts-morph/common" "~0.20.0"
     code-block-writer "^12.0.0"
 
 ts-node@^10.9.1:

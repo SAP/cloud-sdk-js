@@ -3,6 +3,7 @@ import {
   customSubscriberUserToken,
   destinationName,
   destinationSingleResponse,
+  jku,
   mockInstanceDestinationsCall,
   mockServiceBindings,
   mockServiceToken,

@@ -1,6 +1,7 @@
 import * as xssec from '@sap/xssec';
 import { DestinationOptions } from './destination';
 import { getXsuaaServiceCredentials } from './environment-accessor';
+import { decodeJwtComplete, isXsuaaToken } from '.';
 
 /**
  * @internal
@@ -30,5 +31,9 @@ export async function exchangeToken(
  */
 export function isTokenExchangeEnabled(options: DestinationOptions): boolean {
   // iasToXsuaaTokenExchange is optional, token exchange is enabled by default
-  return options.iasToXsuaaTokenExchange !== false && !!options.jwt;
+  return (
+    options.iasToXsuaaTokenExchange !== false &&
+    !!options.jwt &&
+    !isXsuaaToken(decodeJwtComplete(options.jwt))
+  );
 }

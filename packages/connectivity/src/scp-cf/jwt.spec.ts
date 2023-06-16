@@ -42,7 +42,7 @@ export function responseWithPublicKey(key = publicKey) {
 }
 
 describe('jwt', () => {
-  describe('isXsuaa()', () => {
+  describe('isXsuaaToken()', () => {
     it('returns true if jku and uaa are from same domain', () => {
       const jwt = decodeJwtComplete(
         signedJwtForVerification(
@@ -55,7 +55,7 @@ describe('jwt', () => {
     });
 
     it('returns false if jku is missing', () => {
-      const jwt = decodeJwtComplete(signedJwtForVerification({}, undefined));
+      const jwt = decodeJwtComplete(signedJwtForVerification({}, null));
       mockServiceBindings();
       expect(isXsuaaToken(jwt)).toBe(false);
     });

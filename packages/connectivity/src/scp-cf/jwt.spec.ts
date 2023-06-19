@@ -5,7 +5,9 @@ import {
   jku,
   mockServiceBindings,
   publicKey,
+  signedJwt,
   signedJwtForVerification,
+  subscriberUserPayload,
   xsuaaBindingMock
 } from '../../../../test-resources/test/test-util';
 import {
@@ -13,7 +15,8 @@ import {
   decodeJwtComplete,
   retrieveJwt,
   verifyJwt,
-  isXsuaaToken
+  isXsuaaToken,
+  decodeOrMakeJwt
 } from './jwt';
 
 const jwtPayload = {
@@ -279,6 +282,24 @@ describe('jwt', () => {
 
     it('returns an empty set if neither the "aud" nor the "scope" claim are present', () => {
       expect(audiences({})).toEqual(new Set());
+    });
+  });
+
+  describe('decodeOrMakeJwt', () => {
+    it('returns decoded JWT, if JWT is present', () => {
+      const jwt = signedJwt(subscriberUserPayload);
+      expect(decodeOrMakeJwt(jwt)).toEqual(subscriberUserPayload);
+    });
+
+    it('does not throw, if there is no XSUAA binding present', () => {
+      expect(() => decodeOrMakeJwt(undefined)).not.toThrow();
+    });
+
+    it("returns the XSUAA binding's subaccount as `zid`, if JWT is not present and binding is present", () => {
+      mockServiceBindings({ xsuaaBinding: true });
+      expect(decodeOrMakeJwt(undefined)).toEqual({
+        zid: xsuaaBindingMock.credentials.subaccountid
+      });
     });
   });
 });

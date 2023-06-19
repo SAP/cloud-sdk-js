@@ -319,7 +319,6 @@ function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
 export function decodeOrMakeJwt(
   jwt?: string | JwtPayload
 ): JwtPayload | undefined {
-  // TODO: Add tests
   if (jwt) {
     return typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
   }

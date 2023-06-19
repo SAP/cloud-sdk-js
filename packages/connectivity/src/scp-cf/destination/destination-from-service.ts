@@ -5,7 +5,7 @@ import {
   getDestinationServiceCredentials,
   getServiceBinding
 } from '../environment-accessor';
-import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
+import { exchangeToken, shouldExchangeToken } from '../identity-service';
 import { JwtPair } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
@@ -94,7 +94,7 @@ export class DestinationFromServiceRetriever {
     // TODO: This is currently always skipped for tokens issued by XSUAA
     // in the XSUAA case no exchange takes place, but instead the JWT is verified
     // in the future we should just let it verify here, but skip it later (get-subscriber-token)
-    if (isTokenExchangeEnabled(options)) {
+    if (shouldExchangeToken(options)) {
       options.jwt = await exchangeToken(options);
     }
 

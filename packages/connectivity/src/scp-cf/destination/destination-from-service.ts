@@ -9,7 +9,7 @@ import { exchangeToken, shouldExchangeToken } from '../identity-service';
 import { JwtPair } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
-import { getIssuerSubdomain } from '..';
+import { getIssuerSubdomain } from '../subdomain-replacer';
 import {
   DestinationFetchOptions,
   DestinationsByType

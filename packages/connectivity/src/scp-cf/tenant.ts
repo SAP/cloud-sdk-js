@@ -45,14 +45,7 @@ export function getTenantIdWithFallback(
   token: string | undefined
 ): string | undefined {
   const decodedJwt = token ? decodeJwt(token) : {};
-
   return tenantId(decodedJwt) || getIssuerSubdomain(decodedJwt) || undefined;
-}
-
-// `@sap/xssec` sometimes checks `null` without considering `undefined`.
-interface SubdomainAndZoneId {
-  subdomain: string | null;
-  zoneId: string | null;
 }
 
 /**

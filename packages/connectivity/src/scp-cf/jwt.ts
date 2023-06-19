@@ -313,15 +313,13 @@ function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
 const placeholderTenantId = 'tenant_id';
 
 /**
- * This method either decodes the given JWT. If the JWT is not given it will use the subdomain of the XSUAA and create an object with zid set to this subaccount id.
- * This is then passed on to build the cache key.
+ * This method either decodes the given JWT or tries to retrieve the subaccount ID from the XSUAA service binding as `zid`.
  * @param options - Options passed to register the destination containing the JWT.
  * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid).
  * @internal
  */
 export function decodeOrMakeJwt(jwt?: string | JwtPayload): JwtPayload {
   // TODO: Add tests
-  // TODO: check whether iss can be used for cache key
   if (jwt) {
     return typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
   }

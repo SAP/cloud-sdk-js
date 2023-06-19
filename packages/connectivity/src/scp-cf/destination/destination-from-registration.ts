@@ -58,7 +58,6 @@ export async function registerDestination(
   destination.mtls = !!options?.inferMtls;
 
   await registerDestinationCache.cacheRetrievedDestination(
-    // HERE
     decodeOrMakeJwt(options?.jwt),
     destination,
     isolationStrategy(options)

@@ -310,15 +310,15 @@ function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
   return typeof decoded.payload !== 'string';
 }
 
-const placeholderTenantId = 'tenant_id';
-
 /**
  * This method either decodes the given JWT or tries to retrieve the subaccount ID from the XSUAA service binding as `zid`.
  * @param options - Options passed to register the destination containing the JWT.
  * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid).
  * @internal
  */
-export function decodeOrMakeJwt(jwt?: string | JwtPayload): JwtPayload {
+export function decodeOrMakeJwt(
+  jwt?: string | JwtPayload
+): JwtPayload | undefined {
   // TODO: Add tests
   if (jwt) {
     return typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
@@ -329,8 +329,4 @@ export function decodeOrMakeJwt(jwt?: string | JwtPayload): JwtPayload {
   if (providerTenantId) {
     return { zid: providerTenantId };
   }
-
-  // makes sense for register destination
-  // does it also make sense for destination from service binding => NO
-  return { zid: placeholderTenantId };
 }

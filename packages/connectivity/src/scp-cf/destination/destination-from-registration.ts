@@ -29,6 +29,8 @@ export const registerDestinationCache = DestinationCache(
   new DefaultDestinationCache(undefined)
 );
 
+const defaultTenantId = 'tenant_id';
+
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  *
@@ -58,7 +60,7 @@ export async function registerDestination(
   destination.mtls = !!options?.inferMtls;
 
   await registerDestinationCache.cacheRetrievedDestination(
-    decodeOrMakeJwt(options?.jwt),
+    decodeOrMakeJwt(options?.jwt) || { zid: defaultTenantId },
     destination,
     isolationStrategy(options)
   );
@@ -79,7 +81,7 @@ export async function searchRegisteredDestination(
 ): Promise<Destination | null> {
   const destination =
     await registerDestinationCache.retrieveDestinationFromCache(
-      decodeOrMakeJwt(options.jwt),
+      decodeOrMakeJwt(options.jwt) || { zid: defaultTenantId },
       options.destinationName,
       isolationStrategy(options)
     );

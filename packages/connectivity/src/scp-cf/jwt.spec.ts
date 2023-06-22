@@ -42,32 +42,27 @@ export function responseWithPublicKey(key = publicKey) {
 }
 
 describe('jwt', () => {
+  beforeAll(() => {
+    mockServiceBindings({ xsuaaBinding: false });
+  });
+
   describe('isXsuaaToken()', () => {
-    it('returns true if jku and uaa are from same domain', () => {
+    it('returns true if the token was issued by XSUAA', () => {
       const jwt = decodeJwtComplete(
-        signedJwtForVerification(
-          {},
-          'https://myTenant.authentication.sap.hana.ondemand.com/token_keys'
-        )
+        signedJwtForVerification({ ext_attr: { enhancer: 'XSUAA' } })
       );
-      mockServiceBindings();
       expect(isXsuaaToken(jwt)).toBe(true);
     });
 
-    it('returns false if jku is missing', () => {
-      const jwt = decodeJwtComplete(signedJwtForVerification({}, null));
-      mockServiceBindings();
+    it('returns false if the token was not issued XSUAA', () => {
+      const jwt = decodeJwtComplete(
+        signedJwtForVerification({ ext_attr: { enhancer: 'IAS' } })
+      );
       expect(isXsuaaToken(jwt)).toBe(false);
     });
 
-    it('returns false if jku and uaa are from different domain', () => {
-      const jwt = decodeJwtComplete(
-        signedJwtForVerification(
-          {},
-          'https://myTenant.some.non.xsuaa.domain.com/token_keys'
-        )
-      );
-      mockServiceBindings();
+    it('returns false if no enhancer is set', () => {
+      const jwt = decodeJwtComplete(signedJwtForVerification({}));
       expect(isXsuaaToken(jwt)).toBe(false);
     });
   });

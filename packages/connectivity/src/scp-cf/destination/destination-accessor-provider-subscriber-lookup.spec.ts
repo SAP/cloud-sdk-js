@@ -34,7 +34,6 @@ import {
   getDestination
 } from './destination-accessor';
 import {
-  AllDestinationOptions,
   DestinationFetchOptions,
   DestinationWithoutToken
 } from './destination-accessor-types';
@@ -144,7 +143,6 @@ async function fetchDestination(
     destinationName: destName,
     selectionStrategy,
     cacheVerificationKeys: false,
-    iasToXsuaaTokenExchange: false,
     jwt
   };
   return getDestination(options);
@@ -389,10 +387,6 @@ describe('call getAllDestinations with and without subscriber token', () => {
     jest.clearAllMocks();
   });
 
-  const options: AllDestinationOptions = {
-    iasToXsuaaTokenExchange: false
-  };
-
   it('should fetch all subscriber destinations', async () => {
     const logger = createLogger({
       package: 'connectivity',
@@ -401,7 +395,6 @@ describe('call getAllDestinations with and without subscriber token', () => {
     const debugSpy = jest.spyOn(logger, 'debug');
 
     const allDestinations = await getAllDestinationsFromDestinationService({
-      ...options,
       jwt: subscriberUserToken
     });
 
@@ -448,7 +441,6 @@ describe('call getAllDestinations with and without subscriber token', () => {
     mockInternalErrorSubscriber();
 
     await getAllDestinationsFromDestinationService({
-      ...options,
       jwt: subscriberUserToken
     }).catch((error: ErrorWithCause) => {
       const errorStatus = (error.rootCause as AxiosError).response!.status;

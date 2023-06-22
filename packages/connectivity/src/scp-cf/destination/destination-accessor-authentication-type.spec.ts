@@ -90,8 +90,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false
+        jwt: subscriberUserToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -124,7 +123,6 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         jwt: providerUserToken,
-        iasToXsuaaTokenExchange: false,
         cacheVerificationKeys: false
       });
 
@@ -199,8 +197,7 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         cacheVerificationKeys: false,
-        jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false
+        jwt: subscriberUserToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -234,8 +231,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false
+        jwt: subscriberUserToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -306,8 +302,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false
+        jwt: subscriberUserToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -347,8 +342,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthJwtBearerSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false
+        jwt: subscriberUserToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -386,7 +380,6 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false,
         refreshToken: 'dummy-refresh-token'
       });
       expect(actual).toMatchObject(expected);
@@ -410,8 +403,7 @@ describe('authentication types', () => {
       await expect(
         getDestination({
           destinationName,
-          jwt: subscriberUserToken,
-          iasToXsuaaTokenExchange: false
+          jwt: subscriberUserToken
         })
       ).rejects.toThrowError(/No refresh token has been provided./);
       expectAllMocksUsed(httpMocks);
@@ -444,8 +436,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
       const actual = await getDestination({
         destinationName,
-        jwt: providerUserToken,
-        iasToXsuaaTokenExchange: false
+        jwt: providerUserToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -482,8 +473,7 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         selectionStrategy: alwaysProvider,
-        jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false
+        jwt: subscriberUserToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -520,8 +510,7 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         selectionStrategy: alwaysSubscriber,
-        jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false
+        jwt: subscriberUserToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -555,7 +544,6 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName: 'ERNIE-UND-CERT',
         jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false,
         cacheVerificationKeys: false
       });
       expect(actual!.certificates!.length).toBe(1);
@@ -622,7 +610,6 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName: 'OnPremise',
         jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
       });
@@ -653,7 +640,6 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false,
         cacheVerificationKeys: false
       });
       expect(actual).toMatchObject(expected);
@@ -681,7 +667,6 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName: 'OnPremise',
         jwt: subscriberUserToken,
-        iasToXsuaaTokenExchange: false,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
       });

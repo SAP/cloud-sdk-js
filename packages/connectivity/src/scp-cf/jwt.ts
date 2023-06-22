@@ -261,16 +261,8 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT extends string>(
  * @returns Whether the JWT was issued by XSUAA.
  * @internal
  */
-export function isXsuaaToken(decodedUserJwt: JwtWithPayloadObject): boolean {
-  if (!decodedUserJwt.header.jku) {
-    return false;
-  }
-  const jkuDomain = new URL(decodedUserJwt.header.jku).hostname;
-  const uaaDomain = getXsuaaServiceCredentials(
-    decodedUserJwt.payload
-  ).uaadomain;
-
-  return jkuDomain.endsWith(uaaDomain);
+export function isXsuaaToken(jwt: JwtWithPayloadObject): boolean {
+  return jwt.payload.ext_attr?.enhancer === 'XSUAA';
 }
 
 /**

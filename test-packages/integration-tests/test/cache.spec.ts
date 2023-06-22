@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { Destination, getDestination } from '@sap-cloud-sdk/connectivity';
+import { getDestination } from '@sap-cloud-sdk/connectivity';
 import {
   destinationCache,
   destinationServiceCache,
@@ -35,11 +35,11 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       zid: 'provider_token',
       user_id: 'user_id',
       aud: 'xsapp-myapp!123',
-      iss: providerXsuaaUrl
+      iss: providerXsuaaUrl,
+      ext_attr: { enhancer: 'XSUAA' }
     },
     privateKey,
     {
-      // algorithm: 'RS256',
       header: { alg: 'RS256', jku, kid }
     }
   );
@@ -110,72 +110,33 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
     delete process.env['VCAP_SERVICES'];
   });
 
-  it('caches the Destinations service call which fixed isolation Tenant (only simple auth flows)', async () => {
-    await populateDestinationsServiceCache();
+  it('caches the destinations service call with fixed isolation tenant (only simple auth flows)', async () => {
+    const retrieveDestination = isolationStrategy =>
+      getDestination({
+        destinationName: 'FINAL-DESTINATION',
+        useCache: true,
+        isolationStrategy
+      });
 
-    const destinationRequestTenantUser = await getDestination({
-      destinationName: 'FINAL-DESTINATION',
-      useCache: true,
-      isolationStrategy: 'tenant-user'
-    });
+    await retrieveDestination('tenant');
+
+    const destinationRequestTenantUser = await retrieveDestination(
+      'tenant-user'
+    );
     expect(destinationRequestTenantUser).not.toBeNull();
 
-    const destinationRequestTenant = await getDestination({
-      destinationName: 'FINAL-DESTINATION',
-      useCache: true,
-      isolationStrategy: 'tenant'
-    });
+    const destinationRequestTenant = await retrieveDestination('tenant');
     expect(destinationRequestTenant).not.toBeNull();
   });
 
   it('caches the destination retrieval for relevant auth flow', async () => {
-    mockUserTokenGrantCall(
-      providerXsuaaUrl,
-      2,
-      providerUserToken,
-      providerUserToken,
-      xsuaaBindingMock.credentials
-    );
-
-    const directCall = await populateDestinationCache();
-
-    const cache = await getDestination({
-      destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
-      useCache: true,
-      jwt: providerUserToken,
-      isolationStrategy: 'tenant-user'
-    });
-    expect(cache).not.toBeNull();
-    expect(cache).toEqual(directCall);
-
-    await expect(
+    const retrieveDestination = () =>
       getDestination({
         destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
         useCache: true,
         jwt: providerUserToken,
         isolationStrategy: 'tenant-user'
-      })
-    ).rejects.toThrowError(/Nock: No match for request/);
-  }, 600000);
-
-  // Fill the cache of the destinations-service endpoint, which is enough for simple auth flow destinations
-  async function populateDestinationsServiceCache(): Promise<void> {
-    await getDestination({
-      destinationName: 'FINAL-DESTINATION',
-      useCache: true,
-      isolationStrategy: 'tenant'
-    });
-  }
-
-  // Do the full logic in destination-from-serive.ts included auth flow leading to a filled destination cache
-  async function populateDestinationCache(): Promise<Destination | null> {
-    mockUserTokenGrantCall(
-      providerXsuaaUrl,
-      2,
-      providerUserToken,
-      providerUserToken,
-      xsuaaBindingMock.credentials
-    );
+      });
 
     mockUserTokenGrantCall(
       providerXsuaaUrl,
@@ -185,13 +146,12 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       destinationBindingClientSecretMock.credentials
     );
 
-    return getDestination({
-      destinationName: 'FINAL-DESTINATION-AUTH-FLOW',
-      useCache: true,
-      jwt: providerUserToken,
-      isolationStrategy: 'tenant-user'
-    });
-  }
+    const cachedDestination = await retrieveDestination();
+    const destination = await retrieveDestination();
+
+    expect(destination).not.toBeNull();
+    expect(destination).toStrictEqual(cachedDestination);
+  });
 });
 
 function mockVerificationKeyRetrieval(jku: string, kid: string) {

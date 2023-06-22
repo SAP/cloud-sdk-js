@@ -284,8 +284,7 @@ describe('generic http client', () => {
       const response = await executeHttpRequest(
         {
           destinationName: 'FINAL-DESTINATION',
-          jwt: subscriberUserToken,
-          iasToXsuaaTokenExchange: false
+          jwt: subscriberUserToken
         },
         {
           middleware: [showContextMiddleware],

@@ -332,7 +332,7 @@ describe('token accessor', () => {
       await expect(
         serviceToken('destination')
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Could not find service binding for type \'destination\'."'
+        '"Could not find service binding of type \'destination\'."'
       );
     });
 

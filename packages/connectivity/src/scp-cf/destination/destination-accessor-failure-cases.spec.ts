@@ -42,11 +42,10 @@ describe('Failure cases', () => {
       getDestination({
         destinationName,
         jwt: subscriberServiceToken,
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
+        cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not find service binding for type \'destination\'."'
+      '"Could not find service binding of type \'destination\'."'
     );
   }, 50000);
 
@@ -58,8 +57,7 @@ describe('Failure cases', () => {
       getDestination({
         destinationName,
         jwt: 'fails',
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
+        cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"JwtError: The given jwt payload does not encode valid JSON."'
@@ -92,8 +90,7 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberServiceToken,
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
+        cacheVerificationKeys: false
       });
       fail();
     } catch (error) {
@@ -136,8 +133,7 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberUserToken,
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
+        cacheVerificationKeys: false
       });
       fail();
     } catch (error) {
@@ -166,8 +162,7 @@ describe('Failure cases', () => {
     const actual = await getDestination({
       destinationName,
       jwt: subscriberUserToken,
-      cacheVerificationKeys: false,
-      iasToXsuaaTokenExchange: false
+      cacheVerificationKeys: false
     });
     expect(actual).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -194,8 +189,7 @@ describe('Failure cases', () => {
     await expect(
       getDestination({
         destinationName,
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
+        cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"No user token (JWT) has been provided. This is strictly necessary for \'OAuth2SAMLBearerAssertion\'."'

@@ -35,7 +35,7 @@ export async function getAgentConfigAsync(
 ): Promise<HttpAgentConfig | HttpsAgentConfig> {
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
-    ...getKeyStoreOption(destination),
+    ...getKeyStoreOptions(destination),
     ...(await getMtlsOptions(destination))
   };
   return destination.proxyConfiguration
@@ -56,7 +56,7 @@ export function getAgentConfig(
 ): HttpAgentConfig | HttpsAgentConfig {
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
-    ...getKeyStoreOption(destination)
+    ...getKeyStoreOptions(destination)
   };
   return destination.proxyConfiguration
     ? proxyAgent(destination, certificateOptions)
@@ -121,7 +121,7 @@ function getTrustStoreOptions(
  * @param destination - Destination object
  * @returns Options, which can be used later by tls.createSecureContext() e.g. pfx and passphrase or an empty object, if the protocol is not 'https:' or no client information are in the definition.
  */
-function getKeyStoreOption(destination: Destination): Record<string, any> {
+function getKeyStoreOptions(destination: Destination): Record<string, any> {
   if (
     destination.keyStoreName &&
     destination.keyStorePassword &&

@@ -387,7 +387,7 @@ async function callDestinationService(
   const { destinationName, retry } = options || {};
 
   const requestConfig: RawAxiosRequestConfig = {
-    ...urlAndAgent(context.uri),
+    ...(await urlAndAgent(context.uri)),
     proxy: false,
     method: 'get',
     headers

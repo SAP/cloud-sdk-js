@@ -98,7 +98,7 @@
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
     "axios": "^1.4.0",
-    "depcheck": "^1.0.0",
+    "depcheck": "^1.4.3",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-header": "^3.0.0",
@@ -109,17 +109,17 @@
     "eslint-plugin-regex": "^1.10.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "execa": "^5.0.0",
-    "glob": "^10.2.7",
+    "glob": "^10.3.0",
     "jest": "^29.5.0",
     "jest-junit": "^16.0.0",
     "license-checker": "^25.0.1",
     "madge": "^6.1.0",
     "prettier": "^2.8.8",
-    "puppeteer": "^20.7.2",
+    "puppeteer": "^20.7.3",
     "semver": "^7.5.2",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
-    "turbo": "1.10.3",
+    "turbo": "1.10.4",
     "typedoc": "^0.24.8",
     "typescript": "~5.0.4"
   },
@@ -132,6 +132,7 @@
     "netmask": ">=2.0.1 ",
     "path-parse": ">=1.0.7",
     "postcss": ">=8.2.10",
-    "tar": ">=6.1.2"
+    "tar": ">=6.1.2",
+    "yaml": ">=2.2.2"
   }
 }

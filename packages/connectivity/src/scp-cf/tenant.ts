@@ -82,28 +82,6 @@ export function isIdenticalTenant(
 
 /**
  * @internal
- * Return the tenant ID based on the given conditions:
- * - If a JWT is provided and contains `zid`, return the value of zid.
- * - If a JWT is provided and contains `iss`, return its subdomain.
- * - If a binding to the XSUAA service exists, return the `subaccountid` from its credentials.
- * - Otherwise return `undefined`.
- * @param jwt - JWT.
- * @returns String with tenantid information.
- */
-export function getTenantIdWithFallback3(jwt?: string): string | undefined {
-  // TODO: Why is this the only place where iss matters (why is it not used when caching, e.g.?)
-  if (jwt) {
-    const decodedJwt = decodeJwt(jwt);
-    return (
-      tenantId(decodedJwt) ||
-      getIssuerSubdomain(decodedJwt) ||
-      getSubaccountIdFromXsuaa()
-    );
-  }
-}
-
-/**
- * @internal
  */
 export function getSubaccountIdFromXsuaa(): string | undefined {
   return getServiceCredentials('xsuaa')?.subaccountid;

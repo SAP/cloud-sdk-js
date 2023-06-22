@@ -47,7 +47,7 @@ function getHost(url: URL): string {
   return host;
 }
 
-function isValidUrl(url: string): url is string {
+function isValidUrl(url: string): boolean {
   try {
     new URL(url);
     return true;

@@ -3,7 +3,7 @@
 ---
 
 [New Functionality] Add option to cache mTLS certificates.
-[Compatibility Note] Deprecate getAgentConfig:
+[Compatibility Note] Deprecate `getAgentConfig()`:
 - Temporarly use replacement function getAgentConfigAsync.
 - Rename getAgentConfigAsync to getAgentConfig in next major version.
 

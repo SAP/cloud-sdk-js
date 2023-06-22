@@ -887,7 +887,7 @@ sap-client:001`);
       );
       expect(spy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
 
-      registerDestinationCache.clear();
+      registerDestinationCache.destination.clear();
     });
 
     it('ignores forwardAuthToken when JWT is missing', async () => {
@@ -927,7 +927,7 @@ sap-client:001`);
         config
       );
       expect(spy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
-      registerDestinationCache.clear();
+      registerDestinationCache.destination.clear();
     });
   });
 

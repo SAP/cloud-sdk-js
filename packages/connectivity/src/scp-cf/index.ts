@@ -18,3 +18,4 @@ export * from './token-accessor';
 export * from './user';
 export * from './xsuaa-service-types';
 export * from './xsuaa-service';
+export * from './async-cache';

@@ -22,6 +22,11 @@ const logger = createLogger({
 });
 
 /**
+ * @internal
+ */
+const defaultTenantId = 'tenant_id';
+
+/**
  * Represents options to configure how a destination should be registered.
  */
 export type RegisterDestinationOptions = Pick<

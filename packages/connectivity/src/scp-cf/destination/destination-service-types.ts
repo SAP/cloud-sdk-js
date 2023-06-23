@@ -163,8 +163,6 @@ export interface Destination {
   jwksUri?: string;
 
   /**
-   * @experimental This API is experimental and might change in newer versions. Use with caution.
-   *
    * Destination has automatic mTLS handling on CloudFoundry.
    *
    * If this option is set to true, the CloudFoundry [instance identity](https://docs.cloudfoundry.org/devguide/deploy-apps/instance-identity.html)

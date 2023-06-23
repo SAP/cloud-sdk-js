@@ -1,3 +1,4 @@
+import { X509Certificate } from 'node:crypto';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
@@ -7,7 +8,9 @@ import {
 } from '../scp-cf';
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
 import { HttpDestination } from '../scp-cf/destination';
-import { getAgentConfig } from './http-agent';
+import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
+import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
+import { getAgentConfigAsync } from './http-agent';
 
 describe('createAgent', () => {
   const baseDestination: HttpDestination = {
@@ -30,46 +33,54 @@ describe('createAgent', () => {
     isTrustingAllCertificates: true
   };
 
-  it('returns the default agent if neither a proxy configuration is present nor TrustAll is set', () => {
-    const agentConfig = getAgentConfig(baseDestination)['httpsAgent'];
+  it('returns the default agent if neither a proxy configuration is present nor TrustAll is set', async () => {
+    const agentConfig = (await getAgentConfigAsync(baseDestination))[
+      'httpsAgent'
+    ];
     expect(agentConfig.options.rejectUnauthorized).toBe(true);
   });
 
-  it('returns a proxy agent if there is a proxy setting on the destination', () => {
-    const agentConfig = getAgentConfig(proxyDestination)['httpsAgent'];
+  it('returns a proxy agent if there is a proxy setting on the destination', async () => {
+    const agentConfig = (await getAgentConfigAsync(proxyDestination))[
+      'httpsAgent'
+    ];
     expect(agentConfig.proxy.protocol).toEqual('http:');
     expect(agentConfig.connectOpts.rejectUnauthorized).toBe(true);
   });
 
-  it('returns a trustAll agent if TrustAll is configured', () => {
-    const agentConfig = getAgentConfig(trustAllDestination)['httpsAgent'];
+  it('returns a trustAll agent if TrustAll is configured', async () => {
+    const agentConfig = (await getAgentConfigAsync(trustAllDestination))[
+      'httpsAgent'
+    ];
     expect(agentConfig.options.rejectUnauthorized).toBe(false);
   });
 
-  it('returns a HTTP agent if a destination with http protocol URL is provided', () => {
+  it('returns a HTTP agent if a destination with http protocol URL is provided', async () => {
     const destHttp = { url: 'http://localhost' };
-    expect(getAgentConfig(destHttp)['httpAgent']).toHaveProperty(
+    expect((await getAgentConfigAsync(destHttp))['httpAgent']).toHaveProperty(
       'protocol',
       'http:'
     );
   });
 
-  it('returns a HTTP agent when passing HTTP destination with isTrustAll', () => {
+  it('returns a HTTP agent when passing HTTP destination with isTrustAll', async () => {
     const destHttp = {
       url: 'http://localhost',
       isTrustingAllCertificates: true
     };
-    expect(getAgentConfig(destHttp)['httpAgent']).toHaveProperty(
+    expect((await getAgentConfigAsync(destHttp))['httpAgent']).toHaveProperty(
       'protocol',
       'http:'
     );
   });
 
-  it('returns a proxy agent if a proxy setting and TrustAll are BOTH configured', () => {
-    const agentConfig = getAgentConfig({
-      ...proxyDestination,
-      ...trustAllDestination
-    })['httpsAgent'];
+  it('returns a proxy agent if a proxy setting and TrustAll are BOTH configured', async () => {
+    const agentConfig = (
+      await getAgentConfigAsync({
+        ...proxyDestination,
+        ...trustAllDestination
+      })
+    )['httpsAgent'];
     expect(agentConfig.proxy.protocol).toEqual('http:');
     expect(agentConfig.connectOpts.rejectUnauthorized).toEqual(false);
   });
@@ -121,12 +132,12 @@ describe('createAgent', () => {
       ca: ['myCertContent']
     };
 
-    expect(getAgentConfig(destination)['httpsAgent']['options']).toMatchObject(
-      expectedOptions
-    );
+    expect(
+      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+    ).toMatchObject(expectedOptions);
   });
 
-  it('returns an agent with certificate and passphrase set for a destination with authentication type ClientCertificateAuthentication', () => {
+  it('returns an agent with certificate and passphrase set for a destination with authentication type ClientCertificateAuthentication', async () => {
     const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
@@ -147,12 +158,12 @@ describe('createAgent', () => {
       pfx: Buffer.from('base64string', 'base64')
     };
 
-    expect(getAgentConfig(destination)['httpsAgent']['options']).toMatchObject(
-      expectedOptions
-    );
+    expect(
+      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+    ).toMatchObject(expectedOptions);
   });
 
-  it("does not return an agent for destinations with authentication types that have a certificate but don't use MTLS", () => {
+  it("does not return an agent for destinations with authentication types that have a certificate but don't use MTLS", async () => {
     const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'OAuth2SAMLBearerAssertion',
@@ -171,12 +182,12 @@ describe('createAgent', () => {
       rejectUnauthorized: true
     };
 
-    expect(getAgentConfig(destination)['httpsAgent']['options']).toMatchObject(
-      expectedOptions
-    );
+    expect(
+      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+    ).toMatchObject(expectedOptions);
   });
 
-  it('throws an error if the format is not supported', () => {
+  it('throws an error if the format is not supported', async () => {
     const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
@@ -191,7 +202,7 @@ describe('createAgent', () => {
       ]
     };
 
-    expect(() => getAgentConfig(destination)).toThrowError(
+    expect(async () => getAgentConfigAsync(destination)).rejects.toThrowError(
       "The format of the provided certificate 'cert.jks' is not supported. Supported formats are: p12, pfx. You can convert Java Keystores (.jks, .keystore) into PKCS#12 keystores using the JVM's keytool CLI: keytool -importkeystore -srckeystore your-keystore.jks -destkeystore your-keystore.p12 -deststoretype pkcs12"
     );
   });
@@ -211,7 +222,7 @@ describe('createAgent', () => {
       ]
     };
 
-    expect(() => getAgentConfig(destination)).toThrowError(
+    expect(async () => getAgentConfigAsync(destination)).rejects.toThrowError(
       'No certificate with name cert.pfx could be found on the destination!'
     );
   });
@@ -219,37 +230,41 @@ describe('createAgent', () => {
   // Check coverage
 });
 
-describe('getAgentConfig', () => {
-  it('returns an object with key "httpsAgent" for destinations with protocol HTTPS', () => {
+describe('getAgentConfigAsync', () => {
+  it('returns an object with key "httpsAgent" for destinations with protocol HTTPS', async () => {
     const destination: HttpDestination = {
       url: 'https://example.com'
     };
 
-    expect(getAgentConfig(destination)['httpsAgent']).toBeDefined();
+    expect(
+      (await getAgentConfigAsync(destination))['httpsAgent']
+    ).toBeDefined();
   });
 
-  it('returns an object with key "httpAgent" for destinations with protocol HTTP', () => {
+  it('returns an object with key "httpAgent" for destinations with protocol HTTP', async () => {
     const destination: HttpDestination = {
       url: 'http://example.com'
     };
 
-    expect(getAgentConfig(destination)['httpAgent']).toBeDefined();
+    expect((await getAgentConfigAsync(destination))['httpAgent']).toBeDefined();
   });
 
-  it('returns an object with key "httpsAgent" for destinations without protocol', () => {
+  it('returns an object with key "httpsAgent" for destinations without protocol', async () => {
     const destination: HttpDestination = {
       url: 'example.com'
     };
 
-    expect(getAgentConfig(destination)['httpsAgent']).toBeDefined();
+    expect(
+      (await getAgentConfigAsync(destination))['httpsAgent']
+    ).toBeDefined();
   });
 
-  it('throws an error for unsupported protocols', () => {
+  it('throws an error for unsupported protocols', async () => {
     const destination: HttpDestination = {
       url: 'rpc://example.com'
     };
 
-    expect(() => getAgentConfig(destination)).toThrow();
+    expect(async () => getAgentConfigAsync(destination)).rejects.toThrow();
   });
 
   describe('mTLS', () => {
@@ -257,7 +272,7 @@ describe('getAgentConfig', () => {
       beforeAll(() => {
         mock({
           'cf-crypto': {
-            'cf-cert': 'my-cert',
+            'cf-cert': certAsString,
             'cf-key': 'my-key'
           }
         });
@@ -265,8 +280,12 @@ describe('getAgentConfig', () => {
 
       afterAll(() => {
         mock.restore();
+      });
+
+      afterEach(async () => {
         delete process.env.CF_INSTANCE_CERT;
         delete process.env.CF_INSTANCE_KEY;
+        await registerDestinationCache.mtls.clear();
       });
 
       it('returns an object with key "httpsAgent" which includes mTLS options when mtls is set to true and env variables contain cert & key', async () => {
@@ -277,12 +296,44 @@ describe('getAgentConfig', () => {
           url: 'https://example.com',
           mtls: true
         };
-        const actual = getAgentConfig(destination)['httpsAgent'].options;
+        const actual = (await getAgentConfigAsync(destination))['httpsAgent']
+          .options;
 
-        expect(actual.cert).toEqual('my-cert');
+        expect(actual.cert).toEqual(certAsString);
         expect(actual.key).toEqual('my-key');
         expect(actual.pfx).not.toBeDefined();
         expect(actual.passphrase).not.toBeDefined();
+      });
+
+      it('returns an object with key "httpsAgent" which includes mTLS options when mtls is set to true, env variables contain cert & key and the cache has been used', async () => {
+        process.env.CF_INSTANCE_CERT = 'cf-crypto/cf-cert';
+        process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
+
+        const currentTimeInMs = Date.now();
+        const validCertTime = currentTimeInMs + 100000;
+        jest
+          .spyOn(X509Certificate.prototype, 'validTo', 'get')
+          .mockImplementation(() => validCertTime.toString());
+
+        const destination: HttpDestination = {
+          url: 'https://example.com',
+          mtls: true
+        };
+        registerDestinationCache.mtls.useMtlsCache = true;
+        await registerDestinationCache.mtls.cacheMtlsOptions();
+        const cacheSpy = jest.spyOn(
+          registerDestinationCache.mtls,
+          'retrieveMtlsOptionsFromCache'
+        );
+
+        const actual = (await getAgentConfigAsync(destination))['httpsAgent']
+          .options;
+
+        expect(actual.cert).toEqual(certAsString);
+        expect(actual.key).toEqual('my-key');
+        expect(actual.pfx).not.toBeDefined();
+        expect(actual.passphrase).not.toBeDefined();
+        expect(cacheSpy).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -294,7 +345,8 @@ describe('getAgentConfig', () => {
       const logger = createLogger('http-agent');
       const warnSpy = jest.spyOn(logger, 'warn');
 
-      const actual = getAgentConfig(destination)['httpsAgent'].options;
+      const actual = (await getAgentConfigAsync(destination))['httpsAgent']
+        .options;
 
       expect(actual.cert).not.toBeDefined();
       expect(actual.key).not.toBeDefined();
@@ -308,7 +360,8 @@ describe('getAgentConfig', () => {
         url: 'https://example.com'
       };
 
-      const actual = getAgentConfig(destination)['httpsAgent'].options;
+      const actual = (await getAgentConfigAsync(destination))['httpsAgent']
+        .options;
 
       expect(actual.cert).not.toBeDefined();
       expect(actual.key).not.toBeDefined();

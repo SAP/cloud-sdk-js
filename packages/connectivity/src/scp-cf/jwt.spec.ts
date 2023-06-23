@@ -45,16 +45,19 @@ export function responseWithPublicKey(key = publicKey) {
 }
 
 describe('jwt', () => {
+  beforeAll(() => {
+    mockServiceBindings({ xsuaaBinding: false });
+  });
+
   describe('isXsuaaToken()', () => {
-    it('returns true if the enhancer is XSUAA', () => {
+    it('returns true if the token was issued by XSUAA', () => {
       const jwt = decodeJwtComplete(
         signedJwtForVerification({ ext_attr: { enhancer: 'XSUAA' } })
       );
-      mockServiceBindings({ xsuaaBinding: false });
       expect(isXsuaaToken(jwt)).toBe(true);
     });
 
-    it('returns false if the enhancer is not XSUAA', () => {
+    it('returns false if the token was not issued XSUAA', () => {
       const jwt = decodeJwtComplete(
         signedJwtForVerification({ ext_attr: { enhancer: 'IAS' } })
       );
@@ -64,7 +67,6 @@ describe('jwt', () => {
 
     it('returns false if no enhancer is set', () => {
       const jwt = decodeJwtComplete(signedJwtForVerification({}));
-      mockServiceBindings({ xsuaaBinding: false });
       expect(isXsuaaToken(jwt)).toBe(false);
     });
   });

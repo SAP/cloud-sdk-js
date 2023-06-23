@@ -11,8 +11,11 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { createODataUri as createODataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
 import { createODataUri as createODataUriV4 } from '@sap-cloud-sdk/odata-v4/internal';
-import { HttpDestination, Destination } from '@sap-cloud-sdk/connectivity/internal';
-import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
+import {
+  HttpDestination,
+  Destination,
+  basicHeader
+} from '@sap-cloud-sdk/connectivity/internal';
 
 const defaultCsrfToken = 'mocked-x-csrf-token';
 
@@ -135,8 +138,7 @@ export function mockCountRequest(
   count: number,
   getAllRequest: GetAllRequestBuilderBase<EntityBase, any>
 ) {
-  const basePath =
-    getAllRequest._entityApi.entityConstructor._defaultBasePath;
+  const basePath = getAllRequest._entityApi.entityConstructor._defaultBasePath;
   const entityName = getAllRequest._entityApi.entityConstructor._entityName;
   return nock(defaultHost)
     .get(`${basePath}/${entityName}/$count`)
@@ -166,7 +168,10 @@ interface MockHeaderRequestParams {
   path?: string;
 }
 
-export function buildNockUrl(relativeServiceUrl: string, endWithSlash = true): string {
+export function buildNockUrl(
+  relativeServiceUrl: string,
+  endWithSlash = true
+): string {
   if (relativeServiceUrl.startsWith('/')) {
     return `${relativeServiceUrl}${
       !relativeServiceUrl.endsWith('/') && endWithSlash ? '/' : ''
@@ -185,7 +190,11 @@ export function mockHeaderRequest({
   path
 }: MockHeaderRequestParams) {
   return nock(host)
-    .head(path ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`) : buildNockUrl(request.relativeServiceUrl()))
+    .head(
+      path
+        ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`)
+        : buildNockUrl(request.relativeServiceUrl())
+    )
     .reply(200, undefined, responseHeaders);
 }
 
@@ -212,7 +221,9 @@ export function mockRequest(
 
   return nock(host, getRequestHeaders(method, additionalHeaders, headers))
     [method](
-      path ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`, false) : buildNockUrl(request.relativeServiceUrl()),
+      path
+        ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`, false)
+        : buildNockUrl(request.relativeServiceUrl()),
       body
     )
     .query(query)
@@ -233,7 +244,7 @@ function getRequestHeaders(
     const initialHeaders =
       method === 'get'
         ? defaultRequestHeaders
-        : { ...defaultRequestHeaders, 'x-csrf-token': defaultCsrfToken};
+        : { ...defaultRequestHeaders, 'x-csrf-token': defaultCsrfToken };
     return { reqheaders: { ...initialHeaders, ...additionalHeaders } };
   }
 }

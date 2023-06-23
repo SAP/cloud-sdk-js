@@ -5,9 +5,9 @@ import {
 import { getDestination, useOrFetchDestination } from './destination-accessor';
 import {
   DestinationWithName,
-  registerDestination,
-  registerDestinationCache
+  registerDestination
 } from './destination-from-registration';
+import { registerDestinationCache } from './register-destination-cache';
 
 function mockEnvDestinations() {
   process.env['destinations'] = JSON.stringify([
@@ -62,7 +62,8 @@ describe('destination loading precedence', () => {
   afterEach(() => {
     delete process.env['VCAP_SERVICES'];
     delete process.env['destinations'];
-    registerDestinationCache.clear();
+    registerDestinationCache.destination.clear();
+    registerDestinationCache.mtls.clear();
   });
 
   it('retrieves env destinations first', async () => {
@@ -83,7 +84,7 @@ describe('destination loading precedence', () => {
 
   it('retrieves service binding destinations third', async () => {
     delete process.env['destinations'];
-    await registerDestinationCache.clear();
+    await registerDestinationCache.destination.clear();
     const actual = await getDestination({
       destinationName
     });
@@ -92,7 +93,7 @@ describe('destination loading precedence', () => {
 
   it('retrieves destinations from destination-service last', async () => {
     delete process.env['destinations'];
-    await registerDestinationCache.clear();
+    await registerDestinationCache.destination.clear();
     mockServiceBindings();
 
     await expect(

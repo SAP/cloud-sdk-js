@@ -1,6 +1,8 @@
+import { X509Certificate } from 'node:crypto';
 import { createLogger } from '@sap-cloud-sdk/util';
 import base64url from 'base64url';
 import { JwtHeader, JwtPayload } from 'jsonwebtoken';
+import mock from 'mock-fs';
 import {
   mockServiceBindings,
   providerServiceToken,
@@ -9,13 +11,14 @@ import {
   unmockDestinationsEnv,
   xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util';
+import { certAsString } from '../../../../../test-resources/test/test-util/test-certificate';
 import { getDestination } from './destination-accessor';
 import {
   DestinationWithName,
   registerDestination,
-  registerDestinationCache,
   searchRegisteredDestination
 } from './destination-from-registration';
+import { registerDestinationCache } from './register-destination-cache';
 
 const testDestination: DestinationWithName = {
   name: 'RegisteredDestination',
@@ -41,11 +44,24 @@ const destinationWithForwarding: DestinationWithName = {
 describe('register-destination', () => {
   beforeAll(() => {
     mockServiceBindings();
+    mock({
+      'cf-crypto': {
+        'cf-cert': certAsString,
+        'cf-key': 'my-key'
+      }
+    });
+  });
+
+  afterAll(() => {
+    mock.restore();
   });
 
   afterEach(() => {
-    registerDestinationCache.clear();
+    registerDestinationCache.destination.clear();
+    registerDestinationCache.mtls.clear();
     unmockDestinationsEnv();
+    delete process.env.CF_INSTANCE_CERT;
+    delete process.env.CF_INSTANCE_KEY;
   });
 
   it('registers HTTP destination and retrieves it', async () => {
@@ -65,6 +81,33 @@ describe('register-destination', () => {
       destinationName: testDestinationWithMtls.name
     });
     expect(actual?.mtls).toStrictEqual(true);
+  });
+
+  it('registers with mTLS and contains mtls options in cache', async () => {
+    process.env.CF_INSTANCE_CERT = 'cf-crypto/cf-cert';
+    process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
+    const currentTimeInMs = Date.now();
+    const validCertTime = currentTimeInMs + 10000;
+    jest
+      .spyOn(X509Certificate.prototype, 'validTo', 'get')
+      .mockImplementation(() => validCertTime.toString());
+    const options = {
+      inferMtls: true,
+      useMtlsCache: true
+    };
+
+    await registerDestination(testDestinationWithMtls, options);
+
+    const actualDestination = await getDestination({
+      destinationName: testDestinationWithMtls.name
+    });
+    const actualCert = (
+      await registerDestinationCache.mtls.retrieveMtlsOptionsFromCache()
+    )?.cert;
+
+    expect(actualDestination?.mtls).toStrictEqual(true);
+    expect(registerDestinationCache.mtls.useMtlsCache).toStrictEqual(true);
+    expect(actualCert).toEqual(certAsString);
   });
 
   it('registers mail destination and retrieves it', async () => {
@@ -94,7 +137,7 @@ describe('register-destination', () => {
   it('caches with tenant-isolation if no JWT is given', async () => {
     await registerDestination(testDestination);
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey(
           `${xsuaaBindingMock.credentials.subaccountid}::RegisteredDestination`
@@ -105,7 +148,7 @@ describe('register-destination', () => {
   it('caches with tenant isolation if JWT does not contain user-id', async () => {
     await registerDestination(testDestination, { jwt: subscriberServiceToken });
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey('subscriber::RegisteredDestination')
     ).resolves.toBe(true);
@@ -114,7 +157,7 @@ describe('register-destination', () => {
   it('caches with tenant-user-isolation if JWT is given', async () => {
     await registerDestination(testDestination, { jwt: subscriberUserToken });
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey('user-sub:subscriber:RegisteredDestination')
     ).resolves.toBe(true);
@@ -126,7 +169,7 @@ describe('register-destination', () => {
       isolationStrategy: 'tenant'
     });
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey('subscriber::RegisteredDestination')
     ).resolves.toBe(true);
@@ -211,7 +254,8 @@ describe('register-destination without xsuaa binding', () => {
   });
 
   afterEach(async () => {
-    await registerDestinationCache.clear();
+    await registerDestinationCache.destination.clear();
+    await registerDestinationCache.mtls.clear();
     unmockDestinationsEnv();
   });
 

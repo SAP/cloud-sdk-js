@@ -22,7 +22,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
 {
   private _batchReference: BatchReference;
   /**
-   * Base class for function and actions imports.
+   * Base class for function and action imports.
    * @param responseTransformer - Transformation function for the response.
    * @param requestConfig - Request config for a action or function import.
    * @param _deSerializers - (De-)serializers used for transformation.

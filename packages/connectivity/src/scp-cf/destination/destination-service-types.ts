@@ -186,7 +186,7 @@ export interface DestinationAuthToken {
   /**
    * The number of seconds until the access token expires.
    */
-  expiresIn: string;
+  expiresIn?: string;
   /**
    * Potential error of token retrieval in the destination service.
    */

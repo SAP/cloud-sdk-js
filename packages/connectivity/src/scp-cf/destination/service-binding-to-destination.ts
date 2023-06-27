@@ -120,7 +120,7 @@ function buildClientCredentialsDestination(
   name
 ): Destination {
   const expiresIn = Math.floor(
-    (decodeJwt(token).exp! * 1000 - Date.now()) / 1000
+    (decodeJwt(token).exp || 0 * 1000 - Date.now()) / 1000
   ).toString(10);
   return {
     url,

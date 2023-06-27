@@ -248,7 +248,7 @@ describe('register-destination', () => {
   });
 });
 
-describe('register-destination without xsuaa binding', () => {
+describe('register-destination without XSUAA binding', () => {
   beforeAll(() => {
     mockServiceBindings({ xsuaaBinding: false });
   });
@@ -266,5 +266,13 @@ describe('register-destination without xsuaa binding', () => {
       jwt: providerServiceToken
     });
     expect(actual).toEqual(testDestination);
+  });
+
+  it('throws an error if there is no JWT', async () => {
+    await expect(() =>
+      registerDestination(testDestination)
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Could neither determine tenant from JWT nor service binding to XSUAA. It is recommended to pass a JWT."'
+    );
   });
 });

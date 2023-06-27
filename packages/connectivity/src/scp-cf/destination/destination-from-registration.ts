@@ -58,10 +58,20 @@ export async function registerDestination(
   }
 
   await registerDestinationCache.destination.cacheRetrievedDestination(
-    decodeOrMakeJwt(options?.jwt) || { zid: defaultTenantId },
+    getJwtForCaching(options),
     destination,
     isolationStrategy(options)
   );
+}
+
+function getJwtForCaching(options: RegisterDestinationOptions | undefined) {
+  const jwt = decodeOrMakeJwt(options?.jwt);
+  if (!jwt?.zid) {
+    throw new Error(
+      'Could neither determine tenant from JWT nor service binding to XSUAA. It is recommended to pass a JWT.'
+    );
+  }
+  return jwt;
 }
 
 /**
@@ -79,7 +89,7 @@ export async function searchRegisteredDestination(
 ): Promise<Destination | null> {
   const destination =
     await registerDestinationCache.destination.retrieveDestinationFromCache(
-      decodeOrMakeJwt(options.jwt) || { zid: defaultTenantId },
+      getJwtForCaching(options),
       options.destinationName,
       isolationStrategy(options)
     );

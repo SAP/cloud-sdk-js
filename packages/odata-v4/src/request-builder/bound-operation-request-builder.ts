@@ -1,13 +1,13 @@
 import {
-  ActionFunctionImportRequestBuilderBase,
+  ActionFunctionRequestBuilderBase,
   EntityApi,
   EntityBase,
   OperationParameters
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
 import {
-  ODataBoundActionImportRequestConfig,
-  OdataBoundFunctionImportRequestConfig
+  ODataBoundActionRequestConfig,
+  ODataBoundFunctionRequestConfig
 } from '../request';
 import { createODataUri } from '../uri-conversion';
 
@@ -21,11 +21,11 @@ export class BoundOperationRequestBuilder<
   DeSerializersT extends DeSerializers,
   ParametersT,
   ReturnT
-> extends ActionFunctionImportRequestBuilderBase<
+> extends ActionFunctionRequestBuilderBase<
   DeSerializersT,
   ReturnT,
-  | OdataBoundFunctionImportRequestConfig<EntityT, DeSerializersT, ParametersT>
-  | ODataBoundActionImportRequestConfig<EntityT, DeSerializersT, ParametersT>
+  | ODataBoundFunctionRequestConfig<EntityT, DeSerializersT, ParametersT>
+  | ODataBoundActionRequestConfig<EntityT, DeSerializersT, ParametersT>
 > {
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
@@ -38,14 +38,14 @@ export class BoundOperationRequestBuilder<
   ) {
     const requestConfig =
       type === 'function'
-        ? new OdataBoundFunctionImportRequestConfig(
+        ? new ODataBoundFunctionRequestConfig(
             'get',
             entityApi,
             operationName,
             parameters,
             createODataUri(deSerializers)
           )
-        : new ODataBoundActionImportRequestConfig(
+        : new ODataBoundActionRequestConfig(
             'get',
             entityApi,
             operationName,

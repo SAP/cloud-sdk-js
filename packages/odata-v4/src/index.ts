@@ -42,8 +42,8 @@ export {
 export { ODataBatchRequestBuilder } from './request-builder';
 
 export {
-  ODataActionImportRequestConfig,
-  ODataFunctionImportRequestConfig
+  ODataActionRequestConfig,
+  ODataFunctionRequestConfig
 } from './request';
 
 export { Entity } from './entity';
@@ -66,7 +66,7 @@ export type {
 
 export type { BatchResponse } from './batch-response';
 
-export type { ODataBoundActionImportRequestConfig } from './request/odata-bound-action-request-config';
-export type { OdataBoundFunctionImportRequestConfig } from './request/odata-bound-function-import-request-config';
+export type { ODataBoundActionRequestConfig } from './request/odata-bound-action-request-config';
+export type { ODataBoundFunctionRequestConfig } from './request/odata-bound-function-request-config';
 
 export * from './common';

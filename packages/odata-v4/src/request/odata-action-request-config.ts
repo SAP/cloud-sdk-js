@@ -4,27 +4,27 @@ import {
   OperationParameter,
   OperationParameters
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
+import { DeSerializers } from '../de-serializers/index';
 
 /**
- * Action import request configuration for an entity type.
+ * Action request configuration for an entity type.
  * @typeParam DeSerializersT - Type of the deserializer use on the request
  * @typeParam ParametersT - Type of the parameter to setup a request with
  */
-export class ODataActionImportRequestConfig<
+export class ODataActionRequestConfig<
   DeSerializersT extends DeSerializers,
   ParametersT
 > extends ODataRequestConfig {
   /**
-   * Creates an instance of ODataActionImportRequestConfig.
+   * Creates an instance of ODataActionRequestConfig.
    * @param defaultBasePath - Default base path of the service.
-   * @param actionImportName - The name of the action import.
-   * @param parameters - Parameters of the action imports.
+   * @param actionName - The name of the action.
+   * @param parameters - Parameters of the action.
    * @param oDataUri - URI conversion functions.
    */
   constructor(
     defaultBasePath: string,
-    readonly actionImportName: string,
+    readonly actionName: string,
     public parameters: OperationParameters<ParametersT>,
     protected oDataUri: ODataUri<DeSerializersT>
   ) {
@@ -33,7 +33,7 @@ export class ODataActionImportRequestConfig<
   }
 
   resourcePath(): string {
-    return this.actionImportName;
+    return this.actionName;
   }
 
   queryParameters(): Record<string, any> {

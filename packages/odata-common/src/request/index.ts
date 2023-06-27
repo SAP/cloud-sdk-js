@@ -3,7 +3,7 @@ export * from './odata-batch-request-config';
 export * from './odata-count-request-config';
 export * from './odata-create-request-config';
 export * from './odata-delete-request-config';
-export * from './odata-function-import-request-config';
+export * from './odata-function-request-config';
 export * from './odata-get-all-request-config';
 export * from './odata-get-by-key-request-config';
 export * from './odata-request-config';

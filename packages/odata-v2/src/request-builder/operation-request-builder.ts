@@ -1,10 +1,10 @@
 import {
   OperationParameters,
   RequestMethodType,
-  ActionFunctionImportRequestBuilderBase
+  ActionFunctionRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
-import { ODataFunctionImportRequestConfig } from '../request';
+import { ODataFunctionRequestConfig } from '../request';
 import { createODataUri } from '../uri-conversion';
 
 /**
@@ -17,10 +17,10 @@ export class OperationRequestBuilder<
   DeSerializersT extends DeSerializers,
   ParametersT,
   ReturnT
-> extends ActionFunctionImportRequestBuilderBase<
+> extends ActionFunctionRequestBuilderBase<
   DeSerializersT,
   ReturnT,
-  ODataFunctionImportRequestConfig<DeSerializersT, ParametersT>
+  ODataFunctionRequestConfig<DeSerializersT, ParametersT>
 > {
   /**
    * Creates an instance of OperationRequestBuilder.
@@ -41,7 +41,7 @@ export class OperationRequestBuilder<
   ) {
     super(
       responseTransformer,
-      new ODataFunctionImportRequestConfig(
+      new ODataFunctionRequestConfig(
         method,
         defaultBasePath,
         operationName,

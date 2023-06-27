@@ -86,7 +86,7 @@ export {
   DeleteRequestBuilderBase,
   GetAllRequestBuilderBase,
   GetByKeyRequestBuilderBase,
-  ActionFunctionImportRequestBuilderBase,
+  ActionFunctionRequestBuilderBase,
   CountRequestBuilder
 } from './request-builder';
 export type {
@@ -106,7 +106,7 @@ export {
   ODataBatchRequestConfig,
   WithGetAllRestrictions,
   WithSelection,
-  ODataFunctionImportRequestConfig,
+  ODataFunctionRequestConfig,
   ODataRequest,
   ODataRequestConfig,
   BatchReference,

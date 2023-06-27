@@ -1,7 +1,7 @@
 import { OperationParameter } from '@sap-cloud-sdk/odata-common';
-import { defaultDeSerializers, DefaultDeSerializers } from '../de-serializers';
-import { createODataUri } from '../uri-conversion';
-import { ODataFunctionImportRequestConfig } from './odata-function-import-request-config';
+import { defaultDeSerializers, DefaultDeSerializers } from '../de-serializers/index';
+import { createODataUri } from '../uri-conversion/index';
+import { ODataFunctionRequestConfig } from './odata-function-request-config';
 
 interface TestParameterType {
   test1: string;
@@ -9,8 +9,8 @@ interface TestParameterType {
   test3: number;
 }
 
-describe('ODataFunctionImportRequestConfig', () => {
-  let config: ODataFunctionImportRequestConfig<
+describe('ODataFunctionRequestConfig', () => {
+  let config: ODataFunctionRequestConfig<
     DefaultDeSerializers,
     TestParameterType
   >;
@@ -28,7 +28,7 @@ describe('ODataFunctionImportRequestConfig', () => {
   };
 
   beforeEach(() => {
-    config = new ODataFunctionImportRequestConfig(
+    config = new ODataFunctionRequestConfig(
       'get',
       'somePath',
       'Config',

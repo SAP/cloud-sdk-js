@@ -128,12 +128,8 @@ export function operationDeclarations(
         'defaultDeSerializers',
         ...propertyTypeImportNames(parameters),
         ...(hasOperationWithParameters ? ['OperationParameter'] : []),
-        ...(includesUnbound && operations.length
-          ? ['OperationRequestBuilder']
-          : []),
-        ...(includesBound && operations.length
-          ? ['BoundOperationRequestBuilder']
-          : [])
+        ...(includesUnbound ? ['OperationRequestBuilder'] : []),
+        ...(includesBound ? ['BoundOperationRequestBuilder'] : [])
       ],
       oDataVersion
     ),

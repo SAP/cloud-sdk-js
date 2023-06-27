@@ -6,7 +6,7 @@ import {
   EntityApi,
   EntityBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers/index';
+import { DeSerializers } from '../de-serializers';
 import { ODataFunctionRequestConfig } from './odata-function-request-config';
 
 /**

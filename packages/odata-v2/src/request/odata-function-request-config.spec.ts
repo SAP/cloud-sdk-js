@@ -1,6 +1,6 @@
 import { OperationParameter } from '@sap-cloud-sdk/odata-common';
-import { defaultDeSerializers, DefaultDeSerializers } from '../de-serializers/index';
-import { createODataUri } from '../uri-conversion/index';
+import { defaultDeSerializers, DefaultDeSerializers } from '../de-serializers';
+import { createODataUri } from '../uri-conversion';
 import { ODataFunctionRequestConfig } from './odata-function-request-config';
 
 interface TestParameterType {

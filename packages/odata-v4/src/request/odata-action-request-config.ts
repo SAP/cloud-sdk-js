@@ -4,7 +4,7 @@ import {
   OperationParameter,
   OperationParameters
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers/index';
+import { DeSerializers } from '../de-serializers';
 
 /**
  * Action request configuration for an entity type.

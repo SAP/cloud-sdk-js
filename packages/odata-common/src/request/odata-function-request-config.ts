@@ -1,5 +1,5 @@
-import { DeSerializers } from '../de-serializers/index';
-import { ODataUri } from '../uri-conversion/index';
+import { DeSerializers } from '../de-serializers';
+import { ODataUri } from '../uri-conversion';
 import { OperationParameters } from './operation-parameter';
 import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
 

@@ -7,7 +7,6 @@ import {
   publicKey,
   signedJwt,
   signedJwtForVerification,
-  subscriberUserPayload,
   xsuaaBindingMock
 } from '../../../../test-resources/test/test-util';
 import {
@@ -288,9 +287,13 @@ describe('jwt', () => {
   });
 
   describe('decodeOrMakeJwt', () => {
-    it('returns decoded JWT, if JWT is present', () => {
-      const jwt = signedJwt(subscriberUserPayload);
-      expect(decodeOrMakeJwt(jwt)).toEqual(subscriberUserPayload);
+    it('returns decoded JWT, if JWT has `zid` ', () => {
+      const payload = { zid: 'test', iat: 123 };
+      expect(decodeOrMakeJwt(signedJwt(payload))).toEqual(payload);
+    });
+
+    it('returns undefined, if JWT has no `zid`', () => {
+      expect(decodeOrMakeJwt(signedJwt({ user_id: 'test' }))).toBeUndefined();
     });
 
     it('does not throw, if there is no XSUAA binding present', () => {

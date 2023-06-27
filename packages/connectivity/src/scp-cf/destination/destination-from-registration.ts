@@ -67,9 +67,16 @@ export async function registerDestination(
 function getJwtForCaching(options: RegisterDestinationOptions | undefined) {
   const jwt = decodeOrMakeJwt(options?.jwt);
   if (!jwt?.zid) {
-    throw new Error(
-      'Could neither determine tenant from JWT nor service binding to XSUAA. It is recommended to pass a JWT.'
-    );
+    if (options?.jwt) {
+      logger.error(
+        'Could neither determine tenant from JWT nor service binding to XSUAA, although a JWT was passed. Destination will be registered without tenant information.'
+      );
+    } else {
+      logger.debug(
+        'Could not determine tenant from service binding to XSUAA. Destination will be registered without tenant information.'
+      );
+    }
+    return { zid: defaultTenantId };
   }
   return jwt;
 }

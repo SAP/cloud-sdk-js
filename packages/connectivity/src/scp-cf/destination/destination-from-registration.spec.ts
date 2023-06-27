@@ -6,6 +6,7 @@ import mock from 'mock-fs';
 import {
   mockServiceBindings,
   providerServiceToken,
+  signedJwt,
   subscriberServiceToken,
   subscriberUserToken,
   unmockDestinationsEnv,
@@ -261,18 +262,36 @@ describe('register-destination without XSUAA binding', () => {
 
   it('registers destination and retrieves it with JWT', async () => {
     await registerDestination(testDestination, { jwt: providerServiceToken });
-    const actual = await getDestination({
-      destinationName: testDestination.name,
-      jwt: providerServiceToken
-    });
-    expect(actual).toEqual(testDestination);
+    expect(
+      await getDestination({
+        destinationName: testDestination.name,
+        jwt: providerServiceToken
+      })
+    ).toEqual(testDestination);
   });
 
-  it('throws an error if there is no JWT', async () => {
-    await expect(() =>
-      registerDestination(testDestination)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could neither determine tenant from JWT nor service binding to XSUAA. It is recommended to pass a JWT."'
+  it('logs an error if there is a JWT, but no `zid`', async () => {
+    const logger = createLogger('register-destination');
+    jest.spyOn(logger, 'error');
+    await registerDestination(testDestination, { jwt: signedJwt({}) });
+    expect(logger.error).toHaveBeenCalledWith(
+      'Could neither determine tenant from JWT nor service binding to XSUAA, although a JWT was passed. Destination will be registered without tenant information.'
+    );
+  });
+
+  it('registers destination with a dummy id, if no JWT is given', async () => {
+    const logger = createLogger('register-destination');
+    jest.spyOn(logger, 'debug');
+
+    await registerDestination(testDestination);
+    expect(
+      await getDestination({
+        destinationName: testDestination.name
+      })
+    ).toEqual(testDestination);
+
+    expect(logger.debug).toHaveBeenCalledWith(
+      'Could not determine tenant from service binding to XSUAA. Destination will be registered without tenant information.'
     );
   });
 });

@@ -143,8 +143,7 @@ function isActionOrFunctionImport<DeSerializersT extends DeSerializers>(
   req: AllBuilderTypes<DeSerializersT>
 ): req is Omit<ActionFunctionRequestBuilderBase<any, any, any>, 'execute'> {
   return !!(
-    req.requestConfig['functionName'] ??
-    req.requestConfig['actionName']
+    req.requestConfig['functionName'] ?? req.requestConfig['actionName']
   );
 }
 

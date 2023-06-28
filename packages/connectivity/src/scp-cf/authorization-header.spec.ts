@@ -159,7 +159,8 @@ describe('buildAuthorizationHeaders', () => {
       );
 
       expect(actual).toEqual({
-        authorization: destination.authTokens![0].http_header.value
+        authorization: destination.authTokens![0].http_header.value,
+        'x-sap-security-session': 'create'
       });
     });
   });

@@ -90,8 +90,6 @@ async function getProviderCache(isolationStrategy: IsolationStrategy) {
 
 function mockDestinationsWithSameName() {
   nock.cleanAll();
-
-  mockServiceBindings();
   mockServiceToken();
 
   const dest = {

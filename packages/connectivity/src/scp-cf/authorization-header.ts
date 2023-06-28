@@ -185,11 +185,11 @@ async function getAuthenticationRelatedHeaders(
     case 'OAuth2JWTBearer':
     case 'OAuth2ClientCredentials':
     case 'OAuth2Password':
-    case 'OAuth2RefreshToken':
+    case 'OAuth2RefreshToken': {
       const header = headerFromTokens(
         destination.authentication,
         destination.authTokens
-      )
+      );
       if (destination.authentication === 'SAMLAssertion') {
         logger.warn(
           "Destination authentication flow is 'SamlAssertion' and the auth header contains the SAML assertion. In most cases you want to translate the assertion to a Bearer token using the 'OAuth2SAMLBearerAssertion' flow."
@@ -197,9 +197,10 @@ async function getAuthenticationRelatedHeaders(
         return {
           ...header,
           'x-sap-security-session': 'create'
-        }
+        };
       }
       return header;
+    }
     case 'BasicAuthentication':
       return headerFromBasicAuthDestination(destination);
     case 'PrincipalPropagation':

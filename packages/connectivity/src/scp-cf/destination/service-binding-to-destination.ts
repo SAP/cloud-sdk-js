@@ -119,9 +119,10 @@ function buildClientCredentialsDestination(
   url: string,
   name
 ): Destination {
-  const expiresIn = Math.floor(
-    (decodeJwt(token).exp || 0 * 1000 - Date.now()) / 1000
-  ).toString(10);
+  const expirationTime = decodeJwt(token).exp;
+  const expiresIn = expirationTime
+    ? Math.floor((expirationTime * 1000 - Date.now()) / 1000).toString(10)
+    : undefined;
   return {
     url,
     name,

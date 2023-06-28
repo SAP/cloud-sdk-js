@@ -150,7 +150,12 @@ function getProxyRelatedAuthHeaders(
 
 async function getAuthenticationRelatedHeaders(
   destination: Destination
-): Promise<AuthenticationHeaderCloud | AuthenticationHeaderOnPrem | AuthenticationHeaderSAMLAssertion | undefined> {
+): Promise<
+  | AuthenticationHeaderCloud
+  | AuthenticationHeaderOnPrem
+  | AuthenticationHeaderSAMLAssertion
+  | undefined
+> {
   const destinationAuthHeaders = getAuthHeader(
     destination.authentication,
     destination.headers

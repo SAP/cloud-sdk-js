@@ -322,7 +322,7 @@ export function decodeOrMakeJwt(
   if (jwt) {
     const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
     if (decodedJwt.zid) {
-      return decodedJwt
+      return decodedJwt;
     }
   }
 

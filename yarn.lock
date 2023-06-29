@@ -1247,16 +1247,16 @@
   dependencies:
     debug "^4.3.1"
 
-"@puppeteer/browsers@1.4.2":
-  version "1.4.2"
-  resolved "https://registry.npmjs.org/@puppeteer/browsers/-/browsers-1.4.2.tgz#c6efa2e664369a2e9e930105cb450fcc71237889"
-  integrity sha512-5MLU1RFaJh1Beb9FH6raowtZErcsZ0ojYJvdG3OWXfnc3wZiDAa0PgXU2QOKtbW2S+Z731K/2n3YczGA3KbLbQ==
+"@puppeteer/browsers@1.4.3":
+  version "1.4.3"
+  resolved "https://registry.npmjs.org/@puppeteer/browsers/-/browsers-1.4.3.tgz#39bfd8bf999d707ed2914b036fa2febac2960985"
+  integrity sha512-8Jfkpb8qhPQhMsNBmIY8b6+ic2kvcmHZlyvifmcNKBC5jNZf3MAKq3gryKfmrjFAYFl3naPjiKljPUq5wuolfQ==
   dependencies:
     debug "4.3.4"
     extract-zip "2.0.1"
     progress "2.0.3"
     proxy-agent "6.2.1"
-    tar-fs "3.0.2"
+    tar-fs "3.0.3"
     unbzip2-stream "1.4.3"
     yargs "17.7.1"
 
@@ -2720,10 +2720,10 @@ chownr@^2.0.0:
   resolved "https://registry.npmjs.org/chownr/-/chownr-2.0.0.tgz#15bfbe53d2eab4cf70f18a8cd68ebe5b3cb1dece"
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
 
-chromium-bidi@0.4.12:
-  version "0.4.12"
-  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-0.4.12.tgz#54910b6b2c97d1d39c1162237b09e42fe6cdf803"
-  integrity sha512-yl0ngMHtYUGJa2G0lkcbPvbnUZ9WMQyMNSfYmlrGD1nHRNyI9KOGw3dOaofFugXHHToneUaSmF9iUdgCBamCjA==
+chromium-bidi@0.4.16:
+  version "0.4.16"
+  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-0.4.16.tgz#8a67bfdf6bb8804efc22765a82859d20724b46ab"
+  integrity sha512-7ZbXdWERxRxSwo3txsBjjmc/NLxqb1Bk30mRb0BMS4YIaiV6zvKZqL/UAH+DdqcDYayDWk2n/y8klkBDODrPvA==
   dependencies:
     mitt "3.0.0"
 
@@ -7499,26 +7499,26 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-puppeteer-core@20.7.3:
-  version "20.7.3"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-20.7.3.tgz#2ae6e2a85d1ba9d684220c6447c1f83a5b860c00"
-  integrity sha512-OraI71GPPfUMosLqaOsDGbp/ZLoxLTm0BAda0uE6G+H3onmljfoaJcIPm8X5y1LMq1K1HF1bipcCI7hWGkd3bQ==
+puppeteer-core@20.7.4:
+  version "20.7.4"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-20.7.4.tgz#4ea245aa8746873584f620222fc31a1781394b32"
+  integrity sha512-7YZ1LmTo+5yM9uBNFTMJpE+lJjcIoNjKVarsYIk7o5WhgQNI9o5XgiQK5f71y1vWwr7sT/eGG75HXAehjnTBTg==
   dependencies:
-    "@puppeteer/browsers" "1.4.2"
-    chromium-bidi "0.4.12"
+    "@puppeteer/browsers" "1.4.3"
+    chromium-bidi "0.4.16"
     cross-fetch "3.1.6"
     debug "4.3.4"
     devtools-protocol "0.0.1135028"
     ws "8.13.0"
 
-puppeteer@^20.7.3:
-  version "20.7.3"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-20.7.3.tgz#03d8ee755adfe9e8375fb41ca04941b9614a8357"
-  integrity sha512-3tw12ykFRLvzTRc9PyUOE5xeHQhhLEcKEOVjSfNtRmZqlAnvfhAP8ue+mjojy8NJ1LIfF6fps7OKzSc4JSJSlA==
+puppeteer@^20.7.4:
+  version "20.7.4"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-20.7.4.tgz#6c27aebcd64d4c1f3b1d79bcd370af8f6490acf4"
+  integrity sha512-4JLZeRLXQAjQwWa6yv8cpjEgVapgrvDjBBcI/UCJ+EM6na6aR7hQFnQV4ffjFlUKPpvB2Y1vztVqOEhjfC+yUQ==
   dependencies:
-    "@puppeteer/browsers" "1.4.2"
+    "@puppeteer/browsers" "1.4.3"
     cosmiconfig "8.2.0"
-    puppeteer-core "20.7.3"
+    puppeteer-core "20.7.4"
 
 pure-rand@^6.0.0:
   version "6.0.0"
@@ -8565,10 +8565,10 @@ tapable@^2.2.0:
   resolved "https://registry.npmjs.org/tapable/-/tapable-2.2.1.tgz#1967a73ef4060a82f12ab96af86d52fdb76eeca0"
   integrity sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==
 
-tar-fs@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/tar-fs/-/tar-fs-3.0.2.tgz#41bed7bafd700f61e8c13a7efbf84f7a1fc81969"
-  integrity sha512-mLQ5iTTCv2tt3a4BwvD8QX1YFVBL/94/Nd+U2il38wt2+zaJSusp1VwJSNkBmB48FeTdOqptf1DAUIosXQBRrQ==
+tar-fs@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.npmjs.org/tar-fs/-/tar-fs-3.0.3.tgz#6593e7df92f337e74d755be183a192213d923050"
+  integrity sha512-ZK36riGYnFI6LujIBfBRoDfeaaWUkStIFKwtPjnDWCKnsDE9kuQthG09aQjLjpzoRtVElEMZ/AIAURNb7N9mkA==
   dependencies:
     mkdirp-classic "^0.5.2"
     pump "^3.0.0"

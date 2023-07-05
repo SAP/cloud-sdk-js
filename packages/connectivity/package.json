@@ -45,7 +45,7 @@
     "axios": "^1.4.0",
     "http-proxy-agent": "^7.0.0",
     "https-proxy-agent": "^7.0.0",
-    "jsonwebtoken": "^9.0.0"
+    "jsonwebtoken": "^9.0.1"
   },
   "devDependencies": {
     "base64url": "^3.0.1",

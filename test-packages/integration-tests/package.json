@@ -33,7 +33,7 @@
     "bignumber.js": "^9.1.1",
     "moment": "^2.29.4",
     "execa": "^5.0.0",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^9.0.1",
     "mock-fs": "^5.2.0",
     "nock": "^13.3.1",
     "winston": "^3.9.0"

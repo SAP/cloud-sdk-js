@@ -758,7 +758,7 @@ describe('authentication types', () => {
     expectAllMocksUsed(httpMocks);
   });
 
-  describe('autehntication type SamlAssertion', () => {
+  describe('authentication type SamlAssertion', () => {
     it('receives the saml assertion in the destination', async () => {
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),

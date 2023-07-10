@@ -134,7 +134,7 @@ interface AuthenticationHeaders {
   'SAP-Connectivity-Authentication'?: string;
 }
 interface AuthenticationHeaderSAMLAssertion {
-  'x-sap-security-session': string;
+  'x-sap-security-session': 'create';
 }
 
 function getProxyRelatedAuthHeaders(

@@ -42,7 +42,7 @@
     "winston-transport": "^4.5.0"
   },
   "devDependencies": {
-    "nock": "^13.3.1",
+    "nock": "^13.3.2",
     "typescript": "~5.0.4",
     "mock-fs": "^5.2.0"
   }

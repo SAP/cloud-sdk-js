@@ -1,7 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import { signedJwt } from '../../../../../test-resources/test/test-util';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
@@ -288,7 +287,7 @@ describe('destination cache', () => {
 
   describe('caching options', () => {
     beforeEach(() => {
-      mockServiceBindings();
+      mockServiceBindings({ xsuaaBinding: false });
       mockServiceToken();
       mockVerifyJwt();
     });
@@ -379,18 +378,19 @@ describe('destination cache', () => {
       const logger = createLogger('destination-cache');
       const warn = jest.spyOn(logger, 'warn');
 
-      await expect(
-        getDestination({
-          destinationName: destName,
-          isolationStrategy: 'tenant',
-          jwt: signedJwt({ user_id: 'onlyUserInJwt' }),
-          iasToXsuaaTokenExchange: false
-        })
-      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
+      destinationCache.cacheRetrievedDestination(
+        { user_id: 'onlyUserInJwt' },
+        { url: 'some-destination', name: 'TESTINATION' },
+        'tenant'
+      );
+
       expect(warn).toBeCalledWith(
         "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant id is undefined in JWT."
       );
-    }, 15000);
+      expect(
+        Object.keys(destinationCache.getCacheInstance()['cache'].cache).length
+      ).toBe(0);
+    });
 
     it('ignores cache if isolation requires user JWT but the JWT is not provided', async () => {
       const logger = createLogger('destination-cache');

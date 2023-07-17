@@ -320,7 +320,10 @@ export function decodeOrMakeJwt(
   jwt?: string | JwtPayload
 ): JwtPayload | undefined {
   if (jwt) {
-    return typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
+    const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
+    if (decodedJwt.zid) {
+      return decodedJwt;
+    }
   }
 
   const providerTenantId = getServiceCredentials('xsuaa', jwt)?.subaccountid;

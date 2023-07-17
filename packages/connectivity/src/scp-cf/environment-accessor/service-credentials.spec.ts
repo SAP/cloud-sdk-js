@@ -27,7 +27,7 @@ describe('service credentials', () => {
   });
 
   describe('getServiceCredentials() without JWT', () => {
-    it('gets credentials and does not log warnings, when there is one binding with credentials', () => {
+    it('gets credentials and does not log warnings when there is one binding with credentials', () => {
       const binding = {
         label: 'single-credentials',
         name: 'single-credentials-1',
@@ -45,7 +45,7 @@ describe('service credentials', () => {
       expect(warnSpy).not.toHaveBeenCalled();
     });
 
-    it('gets credentials and does not logs a warning, when there are multiple bindings with credentials', () => {
+    it('gets credentials and logs a warning when there are multiple bindings with credentials', () => {
       const bindings = [1, 2].map(id => ({
         label: 'multiple-credentials',
         name: `multiple-credentials-${id}`,

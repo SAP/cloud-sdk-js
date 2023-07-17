@@ -35,6 +35,6 @@ export async function customAuthResponseHandler(
   data: Buffer
 ): Promise<boolean> {
   // data[0]: Authentication method version - currently 1
-// data[1]: 0x00 means success
+  // data[1]: 0x00 means success
   return data[0] === 0x01 && data[1] === 0x00;
 }

@@ -283,12 +283,14 @@ describe('register-destination without XSUAA binding', () => {
     const logger = createLogger('register-destination');
     jest.spyOn(logger, 'debug');
 
+    const dummyTenantId = 'tenant_id';
+
     await registerDestination(testDestination);
-    expect(
-      await getDestination({
-        destinationName: testDestination.name
-      })
-    ).toEqual(testDestination);
+    const registeredDestination = await registerDestinationCache.destination
+      .getCacheInstance()
+      .get(`${dummyTenantId}::${testDestination.name}`);
+
+    expect(registeredDestination).toEqual(testDestination);
 
     expect(logger.debug).toHaveBeenCalledWith(
       'Could not determine tenant from service binding to XSUAA. Destination will be registered without tenant information.'

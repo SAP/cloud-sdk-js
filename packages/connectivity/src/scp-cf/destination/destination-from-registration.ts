@@ -149,7 +149,7 @@ function destinationAuthToken(
     return [
       {
         value: token,
-        expiresIn: decoded.exp!.toString(),
+        expiresIn: decoded.exp?.toString(),
         error: null,
         http_header: { key: 'Authorization', value: `Bearer ${token}` },
         type: 'Bearer'

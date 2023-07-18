@@ -1,4 +1,3 @@
-import { getServiceCredentials } from './environment-accessor';
 import { JwtPayload } from './jsonwebtoken-type';
 import { decodeJwt, JwtKeyMapping, readPropertyWithWarn } from './jwt';
 import { getIssuerSubdomain } from './subdomain-replacer';
@@ -78,11 +77,4 @@ export function isIdenticalTenant(
     readPropertyWithWarn(userTokenPayload, mappingTenantFields.id.keyInJwt) ===
     readPropertyWithWarn(providerTokenPayload, mappingTenantFields.id.keyInJwt)
   );
-}
-
-/**
- * @internal
- */
-export function getSubaccountIdFromXsuaa(): string | undefined {
-  return getServiceCredentials('xsuaa')?.subaccountid;
 }

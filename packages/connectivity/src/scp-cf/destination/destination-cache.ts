@@ -45,7 +45,7 @@ export interface DestinationCacheType {
    * @internal
    */
   retrieveDestinationFromCache: (
-    token: Required<SubscriberToken> | JwtPayload,
+    token: Required<SubscriberToken> | JwtPayload | undefined,
     name: string,
     isolation: IsolationStrategy
   ) => Promise<Destination | undefined>;
@@ -53,7 +53,7 @@ export interface DestinationCacheType {
    * @internal
    */
   cacheRetrievedDestination: (
-    token: Required<SubscriberToken> | JwtPayload,
+    token: Required<SubscriberToken> | JwtPayload | undefined,
     destination: Destination,
     isolation: IsolationStrategy
   ) => Promise<void>;
@@ -61,7 +61,7 @@ export interface DestinationCacheType {
    * @internal
    */
   cacheRetrievedDestinations: (
-    token: Required<SubscriberToken> | JwtPayload,
+    token: Required<SubscriberToken> | JwtPayload | undefined,
     retrievedDestinations: DestinationsByType,
     isolation: IsolationStrategy
   ) => Promise<void>;
@@ -85,20 +85,20 @@ export const DestinationCache = (
   cache: DestinationCacheInterface = new DefaultDestinationCache(300000)
 ): DestinationCacheType => ({
   retrieveDestinationFromCache: async (
-    token: Required<SubscriberToken> | JwtPayload,
+    token: Required<SubscriberToken> | JwtPayload | undefined,
     name: string,
     isolation: IsolationStrategy
   ): Promise<Destination | undefined> =>
     cache.get(getDestinationCacheKey(token, name, isolation)),
   cacheRetrievedDestination: async (
-    token: Required<SubscriberToken> | JwtPayload,
+    token: Required<SubscriberToken> | JwtPayload | undefined,
     destination: Destination,
     isolation: IsolationStrategy
   ): Promise<void> => {
     cacheRetrievedDestination(token, destination, isolation, cache);
   },
   cacheRetrievedDestinations: async (
-    token: Required<SubscriberToken> | JwtPayload,
+    token: Required<SubscriberToken> | JwtPayload | undefined,
     retrievedDestinations: DestinationsByType,
     isolation: IsolationStrategy
   ): Promise<void> => {
@@ -127,9 +127,9 @@ export const DestinationCache = (
  * @returns The decoded JWT to use for tenant identification.
  */
 function getJwtForTenant(
-  token: Required<SubscriberToken> | JwtPayload
+  token: Required<SubscriberToken> | JwtPayload | undefined
 ): JwtPayload {
-  return token.serviceJwt?.decoded || token;
+  return token?.serviceJwt?.decoded || token;
 }
 
 /**
@@ -144,9 +144,9 @@ function getJwtForTenant(
  * @returns The decoded JWT to use for user identification.
  */
 function getJwtForUser(
-  token: Required<SubscriberToken> | JwtPayload
+  token: Required<SubscriberToken> | JwtPayload | undefined
 ): JwtPayload {
-  return token.userJwt?.decoded || token;
+  return token?.userJwt?.decoded || token;
 }
 
 /**
@@ -160,7 +160,7 @@ function getJwtForUser(
  * @internal
  */
 export function getDestinationCacheKey(
-  token: SubscriberToken | JwtPayload,
+  token: SubscriberToken | JwtPayload | undefined,
   destinationName: string,
   isolationStrategy: IsolationStrategy = 'tenant-user'
 ): string | undefined {
@@ -205,7 +205,7 @@ function getTenantUserCacheKey(
 }
 
 async function cacheRetrievedDestination<T extends DestinationCacheInterface>(
-  token: Required<SubscriberToken> | JwtPayload,
+  token: Required<SubscriberToken> | JwtPayload | undefined,
   destination: Destination,
   isolation: IsolationStrategy,
   cache: T

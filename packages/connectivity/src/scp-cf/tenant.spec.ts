@@ -1,42 +1,30 @@
-import assert from 'assert';
-import { JwtPayload } from 'jsonwebtoken';
-import { mappingTenantFields, tenantFromJwt } from './tenant';
+import { signedJwt } from '../../../../test-resources/test/test-util';
+import { getTenantIdWithFallback } from './tenant';
 
-describe('tenant builder from jwt', () => {
-  it('should contain the fields from decodedJwt', () => {
-    const decodedJwt: JwtPayload = {
-      zid: 'tenantUUID',
-      ext_attr: {
-        zdn: 'tenantName'
-      }
-    };
+describe('tenant builder from JWT', () => {
+  describe('getTenantIdWithFallback', () => {
+    afterEach(() => {
+      delete process.env['VCAP_SERVICES'];
+    });
 
-    expect(tenantFromJwt(decodedJwt).id).toBe(decodedJwt.zid);
-    expect(tenantFromJwt(decodedJwt).name).toBe(decodedJwt.ext_attr.zdn);
-  });
+    it('returns the `zid` from a JWT, if present', () => {
+      expect(
+        getTenantIdWithFallback(signedJwt({ user_id: 'user', zid: 'tenant' }))
+      ).toEqual('tenant');
+    });
 
-  it('should handle missing ext_attr with undefined value', () => {
-    const decodedJwtMissingName: JwtPayload = {
-      zid: 'tenantUUID'
-    };
-    expect(tenantFromJwt(decodedJwtMissingName).id).toBe(
-      decodedJwtMissingName.zid
-    );
-    expect(tenantFromJwt(decodedJwtMissingName).name).toBe(undefined);
+    it('returns subdomain of `iss` from a JWT, if present', () => {
+      expect(
+        getTenantIdWithFallback(
+          signedJwt({ user_id: 'user', iss: 'http://dummy-iss.com' })
+        )
+      ).toEqual('dummy-iss');
+    });
 
-    decodedJwtMissingName.ext_attr = {};
-    expect(tenantFromJwt(decodedJwtMissingName).id).toBe(
-      decodedJwtMissingName.zid
-    );
-    expect(tenantFromJwt(decodedJwtMissingName).name).toBe(undefined);
-  });
-
-  it('should throw exceptions if mandatory fields are missing', () => {
-    try {
-      tenantFromJwt({});
-      assert.fail('No exception while building from jwt without id.');
-    } catch (e) {
-      expect(e.message).toContain(mappingTenantFields.id.keyInJwt);
-    }
+    it('returns undefined for tenantid when custom JWT contains neither `zid` nor `iss`', () => {
+      expect(
+        getTenantIdWithFallback(signedJwt({ user_id: 'user' }))
+      ).toBeUndefined();
+    });
   });
 });

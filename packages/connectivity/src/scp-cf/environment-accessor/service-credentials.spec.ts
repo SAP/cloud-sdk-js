@@ -27,7 +27,7 @@ describe('service credentials', () => {
   });
 
   describe('getServiceCredentials() without JWT', () => {
-    it('gets credentials and does not log warnings, when there is one binding with credentials', () => {
+    it('gets credentials and does not log warnings when there is one binding with credentials', () => {
       const binding = {
         label: 'single-credentials',
         name: 'single-credentials-1',
@@ -45,7 +45,7 @@ describe('service credentials', () => {
       expect(warnSpy).not.toHaveBeenCalled();
     });
 
-    it('gets credentials and does not logs a warning, when there are multiple bindings with credentials', () => {
+    it('gets credentials and logs a warning when there are multiple bindings with credentials', () => {
       const bindings = [1, 2].map(id => ({
         label: 'multiple-credentials',
         name: `multiple-credentials-${id}`,
@@ -65,7 +65,8 @@ describe('service credentials', () => {
       );
     });
 
-    it('throws an error if no credentials could be found', () => {
+    it('logs a debug message if no credentials could be found', () => {
+      const debugSpy = jest.spyOn(logger, 'debug');
       mockBindings(
         {
           label: 'no-credentials',
@@ -77,10 +78,9 @@ describe('service credentials', () => {
         }
       );
 
-      expect(() =>
-        getServiceCredentials('no-credentials')
-      ).toThrowErrorMatchingInlineSnapshot(
-        '"Could not find binding to service \'no-credentials\', that includes credentials."'
+      expect(getServiceCredentials('no-credentials')).toBeUndefined();
+      expect(debugSpy).toHaveBeenCalledWith(
+        "Could not find binding to service 'no-credentials', that includes credentials."
       );
       expect(warnSpy).toHaveBeenCalledWith(
         "Ignoring 2 service bindings of service type 'no-credentials' because of missing credentials."
@@ -110,7 +110,7 @@ describe('service credentials', () => {
       expect(
         getServiceCredentials('with-client-id', {
           client_id: clientId
-        }).clientid
+        })?.clientid
       ).toBe(clientId);
     });
 
@@ -118,7 +118,7 @@ describe('service credentials', () => {
       expect(
         getServiceCredentials('with-client-id', {
           aud: [clientId]
-        }).clientid
+        })?.clientid
       ).toBe(clientId);
     });
 
@@ -126,7 +126,7 @@ describe('service credentials', () => {
       expect(
         getServiceCredentials('with-client-id', {
           scope: [clientId + '.rest.of.the.link']
-        }).clientid
+        })?.clientid
       ).toBe(clientId);
     });
   });

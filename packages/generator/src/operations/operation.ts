@@ -5,7 +5,7 @@ import {
 } from 'ts-morph';
 import { cannotDeserialize } from '../edmx-to-vdm/common';
 import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
-import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
+import { getRequestBuilderArguments } from './request-builder-arguments';
 import { operationReturnType } from './return-type';
 
 const parameterName = 'parameters';
@@ -86,10 +86,10 @@ function getOperationStatements(
   );
   const params = `const params = {\n${paramsLines.join(',\n')}\n};`;
 
-  let parameters = getRequestBuilderArgumentsBase(operation, service);
-  if (operation.type === 'function' && service.oDataVersion === 'v2') {
-    parameters = [`'${operation.httpMethod}'`, ...parameters.slice(0, -1)];
-  }
+  const parameters = [
+    `'${operation.httpMethod}'`,
+    getRequestBuilderArguments(operation, service)
+  ];
 
   const returnStatement = `return new ${requestBuilderName}(${parameters.join(
     ', '

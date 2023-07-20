@@ -5,7 +5,7 @@ import { responseTransformerFunctionName } from './response-transformer-function
 /**
  * @internal
  */
-export function getRequestBuilderArgumentsBase(
+export function getRequestBuilderArguments(
   operation: VdmOperation,
   service: VdmServiceMetadata
 ): string[] {
@@ -25,7 +25,7 @@ export function getRequestBuilderArgumentsBase(
     `'${operation.originalName}'`,
     ...sharedParameters,
     'deSerializers || defaultDeSerializers',
-    `'${operation.type}'`
+    ...(service.oDataVersion === 'v4' ? [`'${operation.type}'`] : [])
   ];
 }
 

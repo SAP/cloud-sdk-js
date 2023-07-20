@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-classes-per-file
 import {
   ODataUri,
   EntityBase,
@@ -24,10 +25,6 @@ export class ODataBoundActionRequestConfig<
 {
   keys: Record<string, any>;
   constructor(
-    /**
-     * @deprecated Since 3.3.0. This parameter is unused and will be removed in the next major release.
-     */
-    method: RequestMethodType,
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     actionName: string,
     parameters: OperationParameters<ParametersT>,
@@ -56,5 +53,21 @@ export class ODataBoundActionRequestConfig<
 /**
  * @deprecated Since 3.3.0. Use {@link ODataBoundActionRequestConfig} instead.
  */
-export const ODataBoundActionImportRequestConfig =
-  ODataBoundActionRequestConfig;
+export class ODataBoundActionImportRequestConfig<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  ParametersT
+> extends ODataBoundActionRequestConfig<EntityT, DeSerializersT, ParametersT> {
+  constructor(
+    /**
+     * @deprecated Since 3.3.0. This parameter is unused and will be removed in the next major release.
+     */
+    method: RequestMethodType,
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
+    actionName: string,
+    parameters: OperationParameters<ParametersT>,
+    readonly oDataUri: ODataUri<DeSerializersT>
+  ) {
+    super(entityApi, actionName, parameters, oDataUri);
+  }
+}

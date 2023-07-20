@@ -47,7 +47,6 @@ export class BoundOperationRequestBuilder<
             createODataUri(deSerializers)
           )
         : new ODataBoundActionRequestConfig(
-            'post', // this parameter is unused
             entityApi,
             operationName,
             parameters,

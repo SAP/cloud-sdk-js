@@ -39,7 +39,7 @@ export {
   UpdateRequestBuilder,
   BoundOperationRequestBuilder,
   BoundActionImportRequestBuilder,
-  BoundFunctionImportRequestBuilder
+  BoundFunctionImportRequestBuilder,
   OperationRequestBuilder
 } from './request-builder';
 
@@ -74,7 +74,13 @@ export type {
 
 export type { BatchResponse } from './batch-response';
 
-export type { ODataBoundActionRequestConfig, ODataBoundActionImportRequestConfig } from './request/odata-bound-action-request-config';
-export type { ODataBoundFunctionRequestConfig, OdataBoundFunctionImportRequestConfig } from './request/odata-bound-function-request-config';
+export type {
+  ODataBoundActionRequestConfig,
+  ODataBoundActionImportRequestConfig
+} from './request/odata-bound-action-request-config';
+export type {
+  ODataBoundFunctionRequestConfig,
+  OdataBoundFunctionImportRequestConfig
+} from './request/odata-bound-function-request-config';
 
 export * from './common';

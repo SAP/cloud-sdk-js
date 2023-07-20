@@ -32,7 +32,8 @@ export {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
-  OperationRequestBuilder
+  OperationRequestBuilder,
+  FunctionImportRequestBuilder
 } from './request-builder';
 export { Entity } from './entity';
 export { CustomField } from './selectable';
@@ -51,7 +52,7 @@ export type {
   CustomOrDefaultType
 } from './de-serializers';
 
-export { ODataFunctionRequestConfig } from './request';
+export { ODataFunctionRequestConfig, ODataFunctionImportRequestConfig } from './request';
 export type { BatchResponse } from './batch-response';
 
 export * from './common';

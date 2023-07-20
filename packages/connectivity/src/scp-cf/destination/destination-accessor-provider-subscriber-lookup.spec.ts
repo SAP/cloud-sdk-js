@@ -23,7 +23,7 @@ import {
   onlyIssuerServiceToken,
   providerServiceToken,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import { wrapJwtInHeader } from '../jwt';
@@ -34,7 +34,6 @@ import {
   getDestination
 } from './destination-accessor';
 import {
-  AllDestinationOptions,
   DestinationFetchOptions,
   DestinationWithoutToken
 } from './destination-accessor-types';
@@ -144,7 +143,6 @@ async function fetchDestination(
     destinationName: destName,
     selectionStrategy,
     cacheVerificationKeys: false,
-    iasToXsuaaTokenExchange: false,
     jwt
   };
   return getDestination(options);
@@ -192,7 +190,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       const mocks = mockThingsForCombinations();
 
       const actual = await fetchDestination(
-        subscriberUserJwt,
+        subscriberUserToken,
         alwaysSubscriber
       );
       expect(actual!.url).toBe(subscriberDestination.URL);
@@ -204,7 +202,10 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     it('alwaysProvider: should not sed a request to retrieve remote subscriber destination and return provider destination', async () => {
       const mocks = mockThingsForCombinations();
 
-      const actual = await fetchDestination(subscriberUserJwt, alwaysProvider);
+      const actual = await fetchDestination(
+        subscriberUserToken,
+        alwaysProvider
+      );
       assertSubscriberNotCalledAndProviderFound(mocks, actual!);
     });
 
@@ -215,7 +216,10 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         destinationService,
         'fetchSubaccountDestinations'
       );
-      const actual = await fetchDestination(subscriberUserJwt, subscriberFirst);
+      const actual = await fetchDestination(
+        subscriberUserToken,
+        subscriberFirst
+      );
       expect(requestSpy).toHaveBeenCalledTimes(1);
       expect(requestSpy).toHaveBeenNthCalledWith(
         1,
@@ -233,7 +237,10 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         destinationService,
         'fetchSubaccountDestinations'
       );
-      const actual = await fetchDestination(subscriberUserJwt, subscriberFirst);
+      const actual = await fetchDestination(
+        subscriberUserToken,
+        subscriberFirst
+      );
       expect(requestSpy).toHaveBeenCalledTimes(2);
       expect(requestSpy).toHaveBeenNthCalledWith(
         1,
@@ -278,7 +285,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
       jest
         .spyOn(identityService, 'exchangeToken')
-        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserToken));
 
       mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
       mockSubaccountDestinationsCall(
@@ -295,7 +302,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         'FINAL-DESTINATION',
         {
           ...wrapJwtInHeader(onlyIssuerServiceToken).headers,
-          'X-user-token': subscriberUserJwt
+          'X-user-token': subscriberUserToken
         },
         { badheaders: [] }
       );
@@ -304,7 +311,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       const actual = await getDestinationFromDestinationService({
         destinationName: 'FINAL-DESTINATION',
         iss: onlyIssuerXsuaaUrl,
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         cacheVerificationKeys: false
       });
       expect(actual).toMatchObject(expected);
@@ -380,10 +387,6 @@ describe('call getAllDestinations with and without subscriber token', () => {
     jest.clearAllMocks();
   });
 
-  const options: AllDestinationOptions = {
-    iasToXsuaaTokenExchange: false
-  };
-
   it('should fetch all subscriber destinations', async () => {
     const logger = createLogger({
       package: 'connectivity',
@@ -392,8 +395,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
     const debugSpy = jest.spyOn(logger, 'debug');
 
     const allDestinations = await getAllDestinationsFromDestinationService({
-      ...options,
-      jwt: subscriberUserJwt
+      jwt: subscriberUserToken
     });
 
     expect(allDestinations).toEqual([parsedSubscriberDestination]);
@@ -439,8 +441,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
     mockInternalErrorSubscriber();
 
     await getAllDestinationsFromDestinationService({
-      ...options,
-      jwt: subscriberUserJwt
+      jwt: subscriberUserToken
     }).catch((error: ErrorWithCause) => {
       const errorStatus = (error.rootCause as AxiosError).response!.status;
 

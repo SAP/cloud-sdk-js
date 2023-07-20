@@ -14,3 +14,4 @@ export * from './get-subscriber-token';
 export * from './get-provider-token';
 export * from './http-proxy-util';
 export * from './service-binding-to-destination';
+export * from './register-destination-cache';

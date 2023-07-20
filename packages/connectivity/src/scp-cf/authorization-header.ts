@@ -134,6 +134,10 @@ interface AuthenticationHeaders {
   'SAP-Connectivity-Authentication'?: string;
 }
 
+interface AuthenticationHeaderSAMLAssertion {
+  'x-sap-security-session': 'create';
+}
+
 function getProxyRelatedAuthHeaders(
   destination: Destination
 ): AuthenticationHeaderProxy | undefined {
@@ -147,7 +151,12 @@ function getProxyRelatedAuthHeaders(
 
 async function getAuthenticationRelatedHeaders(
   destination: Destination
-): Promise<AuthenticationHeaderCloud | AuthenticationHeaderOnPrem | undefined> {
+): Promise<
+  | AuthenticationHeaderCloud
+  | AuthenticationHeaderOnPrem
+  | AuthenticationHeaderSAMLAssertion
+  | undefined
+> {
   const destinationAuthHeaders = getAuthHeader(
     destination.authentication,
     destination.headers
@@ -182,16 +191,22 @@ async function getAuthenticationRelatedHeaders(
     case 'OAuth2JWTBearer':
     case 'OAuth2ClientCredentials':
     case 'OAuth2Password':
-    case 'OAuth2RefreshToken':
+    case 'OAuth2RefreshToken': {
+      const header = headerFromTokens(
+        destination.authentication,
+        destination.authTokens
+      );
       if (destination.authentication === 'SAMLAssertion') {
         logger.warn(
           "Destination authentication flow is 'SamlAssertion' and the auth header contains the SAML assertion. In most cases you want to translate the assertion to a Bearer token using the 'OAuth2SAMLBearerAssertion' flow."
         );
+        return {
+          ...header,
+          'x-sap-security-session': 'create'
+        };
       }
-      return headerFromTokens(
-        destination.authentication,
-        destination.authTokens
-      );
+      return header;
+    }
     case 'BasicAuthentication':
       return headerFromBasicAuthDestination(destination);
     case 'PrincipalPropagation':

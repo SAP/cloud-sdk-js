@@ -1,6 +1,6 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
-import { parseSubdomain } from '../subdomain-replacer';
+import { exchangeToken, shouldExchangeToken } from '../identity-service';
+import { getIssuerSubdomain } from '../subdomain-replacer';
 import { getDestinationServiceCredentials } from '../environment-accessor';
 import {
   DestinationOrFetchOptions,
@@ -132,7 +132,7 @@ export async function getAllDestinationsFromDestinationService(
   logger.debug(
     'Attempting to retrieve all destinations from destination service.'
   );
-  if (isTokenExchangeEnabled(options)) {
+  if (shouldExchangeToken(options)) {
     options.jwt = await exchangeToken(options);
   }
 
@@ -141,7 +141,7 @@ export async function getAllDestinationsFromDestinationService(
     (await getProviderServiceToken(options));
 
   const destinationServiceUri = getDestinationServiceCredentials().uri;
-  const accountName = parseSubdomain(token.decoded.iss!);
+  const accountName = getIssuerSubdomain(token.decoded);
   logger.debug(
     `Retrieving all destinations for account: "${accountName}" from destination service.`
   );

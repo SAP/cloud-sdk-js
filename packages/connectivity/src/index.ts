@@ -72,6 +72,7 @@ export type {
 } from './scp-cf';
 
 export {
+  getAgentConfigAsync,
   getAgentConfig,
   HttpAgentConfig,
   HttpsAgentConfig

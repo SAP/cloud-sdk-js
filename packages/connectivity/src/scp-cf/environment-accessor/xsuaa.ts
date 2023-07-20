@@ -13,5 +13,12 @@ import { getServiceCredentials } from './service-credentials';
 export function getXsuaaServiceCredentials(
   token?: JwtPayload | string
 ): XsuaaServiceCredentials {
-  return getServiceCredentials('xsuaa', token);
+  const credentials = getServiceCredentials<XsuaaServiceCredentials>(
+    'xsuaa',
+    token
+  );
+  if (!credentials) {
+    throw new Error('Could not find binding to the XSUAA service.');
+  }
+  return credentials;
 }

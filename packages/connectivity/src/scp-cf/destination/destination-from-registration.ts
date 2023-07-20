@@ -1,10 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { getXsuaaServiceCredentials } from '../environment-accessor';
-import { decodeJwt } from '../jwt';
+import { decodeJwt, decodeOrMakeJwt } from '../jwt';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
-  DefaultDestinationCache,
-  DestinationCache,
   IsolationStrategy,
   getDefaultIsolationStrategy
 } from './destination-cache';
@@ -17,6 +14,7 @@ import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
+import { registerDestinationCache } from './register-destination-cache';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -26,19 +24,15 @@ const logger = createLogger({
 /**
  * @internal
  */
-export const registerDestinationCache = DestinationCache(
-  new DefaultDestinationCache(undefined)
-);
+const defaultTenantId = 'tenant_id';
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
- *
  * Represents options to configure how a destination should be registered.
  */
 export type RegisterDestinationOptions = Pick<
   DestinationFetchOptions,
   'jwt' | 'isolationStrategy'
-> & { inferMtls?: boolean };
+> & { inferMtls?: boolean; useMtlsCache?: boolean };
 
 /**
  * Registers a destination in a cache for later usage.
@@ -58,11 +52,33 @@ export async function registerDestination(
 
   destination.mtls = !!options?.inferMtls;
 
-  await registerDestinationCache.cacheRetrievedDestination(
-    decodedJwtOrZid(options),
+  if (options?.useMtlsCache) {
+    registerDestinationCache.mtls.useMtlsCache = true;
+    await registerDestinationCache.mtls.cacheMtlsOptions();
+  }
+
+  await registerDestinationCache.destination.cacheRetrievedDestination(
+    getJwtForCaching(options),
     destination,
     isolationStrategy(options)
   );
+}
+
+function getJwtForCaching(options: RegisterDestinationOptions | undefined) {
+  const jwt = decodeOrMakeJwt(options?.jwt);
+  if (!jwt?.zid) {
+    if (options?.jwt) {
+      logger.error(
+        'Could neither determine tenant from JWT nor service binding to XSUAA, although a JWT was passed. Destination will be registered without tenant information.'
+      );
+    } else {
+      logger.debug(
+        'Could not determine tenant from service binding to XSUAA. Destination will be registered without tenant information.'
+      );
+    }
+    return { zid: defaultTenantId };
+  }
+  return jwt;
 }
 
 /**
@@ -78,21 +94,9 @@ export type DestinationWithName = Destination & { name: string };
 export async function searchRegisteredDestination(
   options: DestinationFetchOptions
 ): Promise<Destination | null> {
-  let decodedJwt: Record<string, any>;
-  // An error will be thrown if no JWT and no xsuaa service exist.
-  try {
-    decodedJwt = decodedJwtOrZid(options);
-  } catch (e) {
-    logger.debug(
-      'Failed to retrieve registered destination, because it was neither possible to decode JWT nor create a dummy JWT with `zid` property.'
-    );
-    logger.debug(e);
-    return null;
-  }
-
   const destination =
-    await registerDestinationCache.retrieveDestinationFromCache(
-      decodedJwt,
+    await registerDestinationCache.destination.retrieveDestinationFromCache(
+      getJwtForCaching(options),
       options.destinationName,
       isolationStrategy(options)
     );
@@ -134,27 +138,6 @@ function isolationStrategy(
   return getDefaultIsolationStrategy(decoded);
 }
 
-/**
- * This method either decodes the given JWT. If the JWT is not given it will use the subdomain if the XSUAA and create a Object with zid this subdomain.
- * This is then passed on to build the cache key.
- * @param options - Options passed to register the destination containing the jwt.
- * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid).
- * @internal
- */
-export function decodedJwtOrZid(
-  options?: RegisterDestinationOptions
-): Record<string, any> {
-  if (options?.jwt) {
-    return decodeJwt(options.jwt);
-  }
-
-  const providerTenantId = getXsuaaServiceCredentials(
-    options?.jwt
-  ).subaccountid;
-
-  return { zid: providerTenantId };
-}
-
 function destinationAuthToken(
   token?: string
 ): [DestinationAuthToken] | undefined {
@@ -166,7 +149,7 @@ function destinationAuthToken(
     return [
       {
         value: token,
-        expiresIn: decoded.exp!.toString(),
+        expiresIn: decoded.exp?.toString(),
         error: null,
         http_header: { key: 'Authorization', value: `Bearer ${token}` },
         type: 'Bearer'

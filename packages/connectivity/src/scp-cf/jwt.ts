@@ -3,7 +3,10 @@ import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import * as xssec from '@sap/xssec';
 import { decode } from 'jsonwebtoken';
 import { Cache } from './cache';
-import { getXsuaaServiceCredentials } from './environment-accessor';
+import {
+  getServiceCredentials,
+  getXsuaaServiceCredentials
+} from './environment-accessor';
 import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
 import { TokenKey } from './xsuaa-service-types';
 
@@ -17,8 +20,8 @@ const logger = createLogger({
  * @param token - JWT to be decoded.
  * @returns Decoded payload.
  */
-export function decodeJwt(token: string): JwtPayload {
-  return decodeJwtComplete(token).payload;
+export function decodeJwt(token: string | JwtPayload): JwtPayload {
+  return typeof token === 'string' ? decodeJwtComplete(token).payload : token;
 }
 
 /**
@@ -47,25 +50,6 @@ export function retrieveJwt(req: IncomingMessage): string | undefined {
   if (validateAuthHeader(header)) {
     return header!.split(' ')[1];
   }
-  return undefined;
-}
-
-/**
- * Checks if the given JWT is from the XSUAA or from an alternative issuer based on the iss property and the uaa domain of the XSUAA.
- * @param decodedUserJwt - JWT to be checked.
- * @returns True if JWT is issued by XSUAA
- * @internal
- */
-export function isXsuaaToken(decodedUserJwt: JwtWithPayloadObject): boolean {
-  if (!decodedUserJwt.header.jku) {
-    return false;
-  }
-  const jkuDomain = new URL(decodedUserJwt.header.jku).hostname;
-  const uaaDomain = getXsuaaServiceCredentials(
-    decodedUserJwt.payload
-  ).uaadomain;
-
-  return jkuDomain.endsWith(uaaDomain);
 }
 
 function authHeader(req: IncomingMessage): string | undefined {
@@ -176,7 +160,7 @@ export function issuerUrl(decodedToken: JwtPayload): string | undefined {
 // Comments taken from the Java SDK implementation
 // Currently, scopes containing dots are allowed.
 // Since the UAA builds audiences by taking the substring of scopes up to the last dot,
-// Scopes with dots will lead to an incorrect audience which is worked around here.
+// scopes with dots will lead to an incorrect audience which is worked around here.
 // If a JWT contains no audience, infer audiences based on the scope names in the JWT.
 // This is currently necessary as the UAA does not correctly fill the audience in the user token flow.
 export function audiences(decodedToken: JwtPayload): Set<string> {
@@ -236,7 +220,7 @@ export function readPropertyWithWarn(
 ): any {
   if (!jwtPayload[property]) {
     logger.warn(
-      `WarningJWT: The provided JWT payload does not include a '${property}' property.`
+      `Warning JWT: The provided JWT payload does not include a '${property}' property.`
     );
   }
 
@@ -271,6 +255,16 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT extends string>(
       `Property '${mapping[key].keyInJwt}' is missing in JWT payload.`
     );
   }
+}
+
+/**
+ * Checks if the given JWT was issued by XSUAA based on the iss property and the uaa domain of the XSUAA.
+ * @param jwt - JWT to be checked.
+ * @returns Whether the JWT was issued by XSUAA.
+ * @internal
+ */
+export function isXsuaaToken(jwt: JwtWithPayloadObject): boolean {
+  return jwt.payload.ext_attr?.enhancer === 'XSUAA';
 }
 
 /**
@@ -314,4 +308,27 @@ export function isUserToken(token: JwtPair | undefined): token is JwtPair {
 
 function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
   return typeof decoded.payload !== 'string';
+}
+
+/**
+ * This method either decodes the given JWT or tries to retrieve the subaccount ID from the XSUAA service binding as `zid`.
+ * @param options - Options passed to register the destination containing the JWT.
+ * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid).
+ * @internal
+ */
+export function decodeOrMakeJwt(
+  jwt?: string | JwtPayload
+): JwtPayload | undefined {
+  if (jwt) {
+    const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
+    if (decodedJwt.zid) {
+      return decodedJwt;
+    }
+  }
+
+  const providerTenantId = getServiceCredentials('xsuaa', jwt)?.subaccountid;
+
+  if (providerTenantId) {
+    return { zid: providerTenantId };
+  }
 }

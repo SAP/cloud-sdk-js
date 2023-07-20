@@ -16,9 +16,9 @@ import {
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
-  providerUserJwt,
+  providerUserToken,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
@@ -59,8 +59,7 @@ describe('proxy configuration', () => {
     const actual = await getDestination({
       destinationName,
       jwt: subscriberServiceToken,
-      cacheVerificationKeys: false,
-      iasToXsuaaTokenExchange: false
+      cacheVerificationKeys: false
     });
     expect(actual?.proxyConfiguration).toEqual({
       host: 'some.proxy.com',
@@ -98,8 +97,7 @@ describe('proxy configuration', () => {
     const actual = await getDestination({
       destinationName: 'OnPremise',
       jwt: subscriberServiceToken,
-      cacheVerificationKeys: false,
-      iasToXsuaaTokenExchange: false
+      cacheVerificationKeys: false
     });
     expect(actual?.proxyConfiguration).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -194,9 +192,8 @@ describe('get destination with PrivateLink proxy type', () => {
 
     await getDestination({
       destinationName: 'PrivateLinkDest',
-      jwt: subscriberUserJwt,
-      cacheVerificationKeys: false,
-      iasToXsuaaTokenExchange: false
+      jwt: subscriberUserToken,
+      cacheVerificationKeys: false
     });
     expect(debugSpy).toBeCalledWith(
       'PrivateLink destination proxy settings will be used. This is not supported in local/CI/CD environments.'
@@ -211,9 +208,8 @@ describe('get destination with PrivateLink proxy type', () => {
 
     const destinationFromFirstCall = await getDestination({
       destinationName: 'PrivateLinkDest',
-      jwt: subscriberUserJwt,
-      cacheVerificationKeys: false,
-      iasToXsuaaTokenExchange: false
+      jwt: subscriberUserToken,
+      cacheVerificationKeys: false
     });
 
     expect(destinationFromFirstCall?.proxyType).toBe('PrivateLink');
@@ -248,10 +244,9 @@ describe('truststore configuration', () => {
     );
     const actual = await getDestination({
       destinationName: 'TrustStoreDestination',
-      jwt: providerUserJwt,
+      jwt: providerUserToken,
       selectionStrategy: alwaysProvider,
-      cacheVerificationKeys: false,
-      iasToXsuaaTokenExchange: false
+      cacheVerificationKeys: false
     });
     expect(actual?.trustStoreCertificate).toEqual({
       name: 'my-cert.pem',

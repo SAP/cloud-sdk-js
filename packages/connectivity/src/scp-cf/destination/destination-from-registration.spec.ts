@@ -1,21 +1,25 @@
+import { X509Certificate } from 'node:crypto';
 import { createLogger } from '@sap-cloud-sdk/util';
 import base64url from 'base64url';
 import { JwtHeader, JwtPayload } from 'jsonwebtoken';
+import mock from 'mock-fs';
 import {
   mockServiceBindings,
   providerServiceToken,
+  signedJwt,
   subscriberServiceToken,
-  subscriberUserJwt,
+  subscriberUserToken,
   unmockDestinationsEnv,
   xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util';
+import { certAsString } from '../../../../../test-resources/test/test-util/test-certificate';
 import { getDestination } from './destination-accessor';
 import {
   DestinationWithName,
   registerDestination,
-  registerDestinationCache,
   searchRegisteredDestination
 } from './destination-from-registration';
+import { registerDestinationCache } from './register-destination-cache';
 
 const testDestination: DestinationWithName = {
   name: 'RegisteredDestination',
@@ -41,11 +45,24 @@ const destinationWithForwarding: DestinationWithName = {
 describe('register-destination', () => {
   beforeAll(() => {
     mockServiceBindings();
+    mock({
+      'cf-crypto': {
+        'cf-cert': certAsString,
+        'cf-key': 'my-key'
+      }
+    });
+  });
+
+  afterAll(() => {
+    mock.restore();
   });
 
   afterEach(() => {
-    registerDestinationCache.clear();
+    registerDestinationCache.destination.clear();
+    registerDestinationCache.mtls.clear();
     unmockDestinationsEnv();
+    delete process.env.CF_INSTANCE_CERT;
+    delete process.env.CF_INSTANCE_KEY;
   });
 
   it('registers HTTP destination and retrieves it', async () => {
@@ -65,6 +82,33 @@ describe('register-destination', () => {
       destinationName: testDestinationWithMtls.name
     });
     expect(actual?.mtls).toStrictEqual(true);
+  });
+
+  it('registers with mTLS and contains mtls options in cache', async () => {
+    process.env.CF_INSTANCE_CERT = 'cf-crypto/cf-cert';
+    process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
+    const currentTimeInMs = Date.now();
+    const validCertTime = currentTimeInMs + 10000;
+    jest
+      .spyOn(X509Certificate.prototype, 'validTo', 'get')
+      .mockImplementation(() => validCertTime.toString());
+    const options = {
+      inferMtls: true,
+      useMtlsCache: true
+    };
+
+    await registerDestination(testDestinationWithMtls, options);
+
+    const actualDestination = await getDestination({
+      destinationName: testDestinationWithMtls.name
+    });
+    const actualCert = (
+      await registerDestinationCache.mtls.retrieveMtlsOptionsFromCache()
+    )?.cert;
+
+    expect(actualDestination?.mtls).toStrictEqual(true);
+    expect(registerDestinationCache.mtls.useMtlsCache).toStrictEqual(true);
+    expect(actualCert).toEqual(certAsString);
   });
 
   it('registers mail destination and retrieves it', async () => {
@@ -94,7 +138,7 @@ describe('register-destination', () => {
   it('caches with tenant-isolation if no JWT is given', async () => {
     await registerDestination(testDestination);
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey(
           `${xsuaaBindingMock.credentials.subaccountid}::RegisteredDestination`
@@ -105,16 +149,16 @@ describe('register-destination', () => {
   it('caches with tenant isolation if JWT does not contain user-id', async () => {
     await registerDestination(testDestination, { jwt: subscriberServiceToken });
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey('subscriber::RegisteredDestination')
     ).resolves.toBe(true);
   });
 
   it('caches with tenant-user-isolation if JWT is given', async () => {
-    await registerDestination(testDestination, { jwt: subscriberUserJwt });
+    await registerDestination(testDestination, { jwt: subscriberUserToken });
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey('user-sub:subscriber:RegisteredDestination')
     ).resolves.toBe(true);
@@ -122,11 +166,11 @@ describe('register-destination', () => {
 
   it('cache if tenant if you want', async () => {
     await registerDestination(testDestination, {
-      jwt: subscriberUserJwt,
+      jwt: subscriberUserToken,
       isolationStrategy: 'tenant'
     });
     await expect(
-      registerDestinationCache
+      registerDestinationCache.destination
         .getCacheInstance()
         .hasKey('subscriber::RegisteredDestination')
     ).resolves.toBe(true);
@@ -205,30 +249,51 @@ describe('register-destination', () => {
   });
 });
 
-describe('register-destination without xsuaa binding', () => {
+describe('register-destination without XSUAA binding', () => {
   beforeAll(() => {
     mockServiceBindings({ xsuaaBinding: false });
   });
 
   afterEach(async () => {
-    await registerDestinationCache.clear();
+    await registerDestinationCache.destination.clear();
+    await registerDestinationCache.mtls.clear();
     unmockDestinationsEnv();
   });
 
   it('registers destination and retrieves it with JWT', async () => {
     await registerDestination(testDestination, { jwt: providerServiceToken });
-    const actual = await getDestination({
-      destinationName: testDestination.name,
-      jwt: providerServiceToken
-    });
-    expect(actual).toEqual(testDestination);
+    expect(
+      await getDestination({
+        destinationName: testDestination.name,
+        jwt: providerServiceToken
+      })
+    ).toEqual(testDestination);
   });
 
-  it('throws an error when no JWT is provided', async () => {
-    await expect(() =>
-      registerDestination(testDestination)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not find binding to service \'xsuaa\', that includes credentials."'
+  it('logs an error if there is a JWT, but no `zid`', async () => {
+    const logger = createLogger('register-destination');
+    jest.spyOn(logger, 'error');
+    await registerDestination(testDestination, { jwt: signedJwt({}) });
+    expect(logger.error).toHaveBeenCalledWith(
+      'Could neither determine tenant from JWT nor service binding to XSUAA, although a JWT was passed. Destination will be registered without tenant information.'
+    );
+  });
+
+  it('registers destination with a dummy id, if no JWT is given', async () => {
+    const logger = createLogger('register-destination');
+    jest.spyOn(logger, 'debug');
+
+    const dummyTenantId = 'tenant_id';
+
+    await registerDestination(testDestination);
+    const registeredDestination = await registerDestinationCache.destination
+      .getCacheInstance()
+      .get(`${dummyTenantId}::${testDestination.name}`);
+
+    expect(registeredDestination).toEqual(testDestination);
+
+    expect(logger.debug).toHaveBeenCalledWith(
+      'Could not determine tenant from service binding to XSUAA. Destination will be registered without tenant information.'
     );
   });
 });

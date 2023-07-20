@@ -9,82 +9,52 @@ import { signedJwtForVerification } from './keys';
 
 const iat = Math.floor(Date.now() / 1000);
 
-const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
-
 export const providerServiceTokenPayload = {
-  iat,
+  iat, // check if needed
   iss: providerXsuaaUrl,
-  zid: testTenants.provider
+  zid: testTenants.provider,
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
 export const providerServiceToken = signedJwtForVerification(
-  providerServiceTokenPayload,
-  jku
+  providerServiceTokenPayload
 );
 
 export const subscriberServiceTokenPayload = {
   iat,
   iss: subscriberXsuaaUrl,
-  zid: testTenants.subscriber
+  zid: testTenants.subscriber,
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
 export const subscriberServiceToken = signedJwtForVerification(
-  subscriberServiceTokenPayload,
-  jku
+  subscriberServiceTokenPayload
 );
 
 /**
  * These tokens are used to test cases when the provided user JWT only contains `{ iss: someXSUAAurl }`.
+ * Issuer URL is relevant for `mockServiceToken()`
  * See docs on {@link DestinationAccessorOptions} for more details.
  */
 export const onlyIssuerServiceTokenPayload = {
   iss: onlyIssuerXsuaaUrl,
-  zid: testTenants.subscriberOnlyIss
+  zid: testTenants.subscriberOnlyIss,
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
 export const onlyIssuerServiceToken = signedJwtForVerification(
-  onlyIssuerServiceTokenPayload,
-  jku
-);
-
-export const subscriberServiceTokenWithVerificationURL =
-  signedJwtForVerification(subscriberServiceTokenPayload, jku);
-
-const userApprovedProviderTokenPayload = {
-  iat,
-  iss: providerXsuaaUrl,
-  zid: testTenants.provider,
-  user_id: 'service-prov-approved'
-};
-
-export const userApprovedProviderServiceToken = signedJwtForVerification(
-  userApprovedProviderTokenPayload,
-  jku
-);
-
-const userApprovedSubscriberTokenPayload = {
-  iat,
-  iss: subscriberXsuaaUrl,
-  zid: testTenants.subscriber,
-  user_id: 'service-sub-approved'
-};
-
-export const userApprovedSubscriberServiceToken = signedJwtForVerification(
-  userApprovedSubscriberTokenPayload,
-  jku
+  onlyIssuerServiceTokenPayload
 );
 
 export const providerUserPayload = {
   iat,
   iss: providerXsuaaUrl,
   zid: testTenants.provider,
-  user_id: 'user-prov'
+  user_id: 'user-prov',
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
-export const providerUserJwt = signedJwtForVerification(
-  providerUserPayload,
-  jku
-);
+export const providerUserToken = signedJwtForVerification(providerUserPayload);
 
 export const subscriberUserPayload = {
   iat,
@@ -93,47 +63,21 @@ export const subscriberUserPayload = {
   user_id: 'user-sub',
   // The client and audience are necessary if XSSEC validates the token
   azp: xsuaaBindingMock.credentials.clientid, // Becomes clientId in XSSEC
-  aud: [xsuaaBindingMock.credentials.clientid] // Becomes audience in XSSEC
+  aud: [xsuaaBindingMock.credentials.clientid], // Becomes audience in XSSEC
+  ext_attr: { enhancer: 'XSUAA' }
 };
 
-export const subscriberUserJwt = signedJwtForVerification(
-  subscriberUserPayload,
-  jku
+export const subscriberUserToken = signedJwtForVerification(
+  subscriberUserPayload
 );
 
-const customSubscriberUserPayload = {
+export const customSubscriberUserTokenPayload = {
   user_id: 'user-sub',
   jwksUri: 'http://jwks.example.com',
   jwks: 'JWKS'
 };
 
-export const customSubscriberUserJwt = signedJwtForVerification(
-  customSubscriberUserPayload,
-  customSubscriberUserPayload.jwksUri
+export const customSubscriberUserToken = signedJwtForVerification(
+  customSubscriberUserTokenPayload,
+  customSubscriberUserTokenPayload.jwksUri
 );
-
-const subscriberJwtTokenPayload = {
-  iat,
-  iss: subscriberXsuaaUrl,
-  zid: testTenants.subscriber,
-  user_id: 'jwt-sub'
-};
-
-const providerJwtTokenPayload = {
-  iat,
-  iss: providerXsuaaUrl,
-  zid: testTenants.provider,
-  user_id: 'jwt-prov'
-};
-
-export const providerJwtBearerToken = signedJwtForVerification(
-  providerJwtTokenPayload,
-  jku
-);
-
-export const subscriberJwtBearerToken = signedJwtForVerification(
-  subscriberJwtTokenPayload,
-  jku
-);
-
-export const iasToken = signedJwtForVerification(providerJwtTokenPayload, jku);

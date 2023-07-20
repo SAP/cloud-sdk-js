@@ -5,11 +5,11 @@ import {
   getDestinationServiceCredentials,
   getServiceBinding
 } from '../environment-accessor';
-import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
+import { exchangeToken, shouldExchangeToken } from '../identity-service';
 import { JwtPair } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
-import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { getIssuerSubdomain } from '../subdomain-replacer';
 import {
   DestinationFetchOptions,
   DestinationsByType
@@ -91,7 +91,10 @@ export class DestinationFromServiceRetriever {
   public static async getDestinationFromDestinationService(
     options: DestinationFetchOptions
   ): Promise<Destination | null> {
-    if (isTokenExchangeEnabled(options)) {
+    // TODO: This is currently always skipped for tokens issued by XSUAA
+    // in the XSUAA case no exchange takes place, but instead the JWT is verified
+    // in the future we should just let it verify here, but skip it later (get-subscriber-token)
+    if (shouldExchangeToken(options)) {
       options.jwt = await exchangeToken(options);
     }
 
@@ -269,12 +272,12 @@ export class DestinationFromServiceRetriever {
     if (destination.originalProperties!['tokenServiceURLType'] !== 'Common') {
       return undefined;
     }
-    const subdomainSubscriber = getSubdomainAndZoneId(
-      this.subscriberToken?.userJwt?.encoded
-    ).subdomain;
-    const subdomainProvider = getSubdomainAndZoneId(
-      this.providerServiceToken?.encoded
-    ).subdomain;
+    const subdomainSubscriber = getIssuerSubdomain(
+      this.subscriberToken?.userJwt?.decoded
+    );
+    const subdomainProvider = getIssuerSubdomain(
+      this.providerServiceToken?.decoded
+    );
     return subdomainSubscriber || subdomainProvider || undefined;
   }
 

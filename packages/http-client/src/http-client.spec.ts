@@ -6,7 +6,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
 import axios from 'axios';
 import { timeout } from '@sap-cloud-sdk/resilience';
-import * as jwt123 from 'jsonwebtoken';
+import * as jwtLib from 'jsonwebtoken';
 import {
   circuitBreakers,
   circuitBreaker
@@ -33,7 +33,7 @@ import {
   providerServiceToken,
   providerXsuaaUrl,
   subscriberServiceToken,
-  subscriberUserJwt,
+  subscriberUserToken,
   subscriberXsuaaUrl,
   xsuaaBindingMock
 } from '../../../test-resources/test/test-util';
@@ -53,8 +53,7 @@ import {
   executeHttpRequest,
   encodeTypedClientRequest,
   executeHttpRequestWithOrigin,
-  buildHttpRequestConfigWithOrigin,
-  getTenantIdForMiddleware
+  buildHttpRequestConfigWithOrigin
 } from './http-client';
 
 describe('generic http client', () => {
@@ -242,8 +241,8 @@ describe('generic http client', () => {
       mockUserTokenGrantCall(
         providerXsuaaUrl,
         1,
-        subscriberUserJwt,
-        subscriberUserJwt,
+        subscriberUserToken,
+        subscriberUserToken,
         xsuaaBindingMock.credentials
       );
       mockClientCredentialsGrantCall(
@@ -284,8 +283,7 @@ describe('generic http client', () => {
       const response = await executeHttpRequest(
         {
           destinationName: 'FINAL-DESTINATION',
-          jwt: subscriberUserJwt,
-          iasToXsuaaTokenExchange: false
+          jwt: subscriberUserToken
         },
         {
           middleware: [showContextMiddleware],
@@ -298,7 +296,7 @@ describe('generic http client', () => {
 
       expect(response.data).toEqual({
         destinationName: 'FINAL-DESTINATION',
-        jwt: subscriberUserJwt,
+        jwt: subscriberUserToken,
         tenantId: 'subscriber',
         uri: 'https://my.system.example.com'
       });
@@ -314,37 +312,6 @@ describe('generic http client', () => {
         method: 'get'
       });
       expect(response.data).toEqual('Initial value.Middleware A.Middleware B.');
-    });
-
-    it('returns a tenantid from jwt containing either zid or iss', () => {
-      let jwt = jwt123.sign(
-        JSON.stringify({ user_id: 'user', zid: 'tenant' }),
-        privateKey,
-        {
-          algorithm: 'RS512'
-        }
-      );
-      expect(getTenantIdForMiddleware(jwt)).toEqual('tenant');
-
-      jwt = jwt123.sign(
-        JSON.stringify({ user_id: 'user', iss: 'http://dummy-iss.com' }),
-        privateKey,
-        {
-          algorithm: 'RS512'
-        }
-      );
-      expect(getTenantIdForMiddleware(jwt)).toEqual('dummy-iss');
-    });
-
-    it('returns a string constant for tenantid if custom jwt contains neither zid or iss', () => {
-      const jwt = jwt123.sign(JSON.stringify({ user_id: 'user' }), privateKey, {
-        algorithm: 'RS512'
-      });
-      expect(getTenantIdForMiddleware(jwt)).toEqual('tenant_id');
-    });
-
-    it('return a string constant for tenantid if neither jwt or xsuaa binding is present', () => {
-      expect(getTenantIdForMiddleware()).toEqual('tenant_id');
     });
 
     it('considers circuit breaker for 5xx errors', async () => {
@@ -844,7 +811,7 @@ sap-client:001`);
     it('passes auth tokens to final request when forwardAuthToken is enabled for NoAuthentication auth type', async () => {
       mockServiceBindings();
 
-      const jwt = jwt123.sign(
+      const jwt = jwtLib.sign(
         JSON.stringify({ user_id: 'user', zid: 'tenant', exp: 1234 }),
         privateKey,
         {
@@ -887,7 +854,7 @@ sap-client:001`);
       );
       expect(spy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
 
-      registerDestinationCache.clear();
+      registerDestinationCache.destination.clear();
     });
 
     it('ignores forwardAuthToken when JWT is missing', async () => {
@@ -927,7 +894,7 @@ sap-client:001`);
         config
       );
       expect(spy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
-      registerDestinationCache.clear();
+      registerDestinationCache.destination.clear();
     });
   });
 

@@ -9,7 +9,7 @@ import {
   ServiceCredentials,
   XsuaaServiceCredentials
 } from './environment-accessor/environment-accessor-types';
-import { replaceSubdomain } from './subdomain-replacer';
+import { replaceWithIssuerSubdomain } from './subdomain-replacer';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 
 /**
@@ -96,15 +96,7 @@ function getMultiTenantXsuaaUrl(
   credentials: ServiceCredentials,
   jwt?: string | JwtPayload
 ): string {
-  if (jwt) {
-    const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
-
-    if (!decodedJwt.iss) {
-      throw Error('Property `iss` is missing in the provided user token.');
-    }
-
-    return replaceSubdomain(decodedJwt.iss, credentials.url);
-  }
-
-  return credentials.url;
+  return jwt
+    ? replaceWithIssuerSubdomain(credentials.url, decodeJwt(jwt))
+    : credentials.url;
 }

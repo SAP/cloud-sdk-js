@@ -86,7 +86,7 @@ export {
   DeleteRequestBuilderBase,
   GetAllRequestBuilderBase,
   GetByKeyRequestBuilderBase,
-  ActionFunctionRequestBuilderBase,
+  OperationRequestBuilderBase as ActionFunctionRequestBuilderBase,
   CountRequestBuilder
 } from './request-builder';
 export type {

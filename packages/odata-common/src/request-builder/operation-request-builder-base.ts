@@ -12,7 +12,7 @@ import { MethodRequestBuilder } from './request-builder-base';
  * @typeParam ReturnT - Type of the function return value.
  * @typeParam RequestConfigT - Type of the request config.
  */
-export abstract class ActionFunctionRequestBuilderBase<
+export abstract class OperationRequestBuilderBase<
     DeSerializersT extends DeSerializers,
     ReturnT,
     RequestConfigT extends ODataRequestConfig
@@ -82,3 +82,9 @@ export abstract class ActionFunctionRequestBuilderBase<
     this._batchReference = { id };
   }
 }
+
+/**
+ * @deprecated Since 3.3.0. Use {@link OperationRequestBuilderBase} instead.
+ */
+export const ActionFunctionImportRequestBuilderBase =
+  OperationRequestBuilderBase;

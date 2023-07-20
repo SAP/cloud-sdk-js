@@ -7,7 +7,7 @@ import { EntityBase } from '../../entity-base';
 import { ODataRequestConfig } from '../../request';
 import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
 import { ODataRequest } from '../../request/odata-request';
-import { ActionFunctionRequestBuilderBase } from '../action-function-request-builder-base';
+import { OperationRequestBuilderBase } from '../operation-request-builder-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { MethodRequestBuilder } from '../request-builder-base';
@@ -38,7 +38,7 @@ export class BatchRequestBuilder<
       | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
       | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
       | Omit<
-          ActionFunctionRequestBuilderBase<
+          OperationRequestBuilderBase<
             DeSerializersT,
             unknown,
             ODataRequestConfig
@@ -115,7 +115,7 @@ export class BatchRequestBuilder<
       | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
       | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
       | Omit<
-          ActionFunctionRequestBuilderBase<
+          OperationRequestBuilderBase<
             DeSerializersT,
             unknown,
             ODataRequestConfig
@@ -141,7 +141,7 @@ type AllBuilderTypes<DeSerializersT extends DeSerializers> =
 
 function isActionOrFunctionImport<DeSerializersT extends DeSerializers>(
   req: AllBuilderTypes<DeSerializersT>
-): req is Omit<ActionFunctionRequestBuilderBase<any, any, any>, 'execute'> {
+): req is Omit<OperationRequestBuilderBase<any, any, any>, 'execute'> {
   return !!(
     req.requestConfig['functionName'] ?? req.requestConfig['actionName']
   );

@@ -1,7 +1,7 @@
 import {
   OperationParameters,
   RequestMethodType,
-  ActionFunctionRequestBuilderBase
+  OperationRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
 import { ODataFunctionRequestConfig } from '../request';
@@ -17,7 +17,7 @@ export class OperationRequestBuilder<
   DeSerializersT extends DeSerializers,
   ParametersT,
   ReturnT
-> extends ActionFunctionRequestBuilderBase<
+> extends OperationRequestBuilderBase<
   DeSerializersT,
   ReturnT,
   ODataFunctionRequestConfig<DeSerializersT, ParametersT>

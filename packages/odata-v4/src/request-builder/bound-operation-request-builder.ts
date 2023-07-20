@@ -1,6 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
 import {
-  ActionFunctionRequestBuilderBase,
+  OperationRequestBuilderBase,
   EntityApi,
   EntityBase,
   OperationParameters
@@ -22,7 +22,7 @@ export class BoundOperationRequestBuilder<
   DeSerializersT extends DeSerializers,
   ParametersT,
   ReturnT
-> extends ActionFunctionRequestBuilderBase<
+> extends OperationRequestBuilderBase<
   DeSerializersT,
   ReturnT,
   | ODataBoundFunctionRequestConfig<EntityT, DeSerializersT, ParametersT>

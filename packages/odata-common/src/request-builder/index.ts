@@ -1,5 +1,5 @@
 export * from './batch';
-export * from './action-function-request-builder-base';
+export * from './operation-request-builder-base';
 export * from './count-request-builder';
 export * from './create-request-builder-base';
 export * from './delete-request-builder-base';

@@ -34,3 +34,8 @@ export abstract class ODataFunctionRequestConfig<
 
   abstract queryParameters(): Record<string, any>;
 }
+
+/**
+ * @deprecated Since 3.3.0. Use {@link ODataFunctionRequestConfig} instead.
+ */
+export const ODataFunctionImportRequestConfig = ODataFunctionRequestConfig;

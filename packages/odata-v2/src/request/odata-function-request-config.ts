@@ -62,3 +62,8 @@ export class ODataFunctionRequestConfig<
     };
   }
 }
+
+/**
+ * @deprecated Since 3.3.0. Use {@link ODataFunctionRequestConfig} instead.
+ */
+export const ODataFunctionImportRequestConfig = ODataFunctionRequestConfig;

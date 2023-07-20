@@ -52,3 +52,8 @@ export class OperationRequestBuilder<
     );
   }
 }
+
+/**
+ * @deprecated Since 3.3.0. Use {@link OperationRequestBuilder} instead.
+ */
+export const FunctionImportRequestBuilder = OperationRequestBuilder;

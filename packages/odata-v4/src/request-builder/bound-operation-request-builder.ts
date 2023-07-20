@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-classes-per-file
 import {
   ActionFunctionRequestBuilderBase,
   EntityApi,
@@ -57,6 +58,74 @@ export class BoundOperationRequestBuilder<
     this.requestConfig.keys = this.requestConfig.oDataUri.getEntityKeys(
       entity,
       entityApi
+    );
+  }
+}
+
+/**
+ * @deprecated Since 3.3.0. Use {@link OperationRequestBuilder} instead.
+ */
+export class BoundFunctionImportRequestBuilder<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  ParametersT,
+  ReturnT
+> extends BoundOperationRequestBuilder<
+  EntityT,
+  DeSerializersT,
+  ParametersT,
+  ReturnT
+> {
+  constructor(
+    entityApi: EntityApi<EntityT, DeSerializersT>,
+    entity: EntityT,
+    operationName: string,
+    readonly responseTransformer: (data: any) => ReturnT,
+    parameters: OperationParameters<ParametersT>,
+    deSerializers: DeSerializersT
+  ) {
+    super(
+      entityApi,
+      entity,
+      operationName,
+      responseTransformer,
+      parameters,
+      deSerializers,
+      'function'
+    );
+  }
+}
+
+/**
+ * @deprecated Since 3.3.0. Use {@link OperationRequestBuilder} instead.
+ */
+export class BoundActionImportRequestBuilder<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  ParametersT,
+  ReturnT
+> extends BoundOperationRequestBuilder<
+  EntityT,
+  DeSerializersT,
+  ParametersT,
+  ReturnT
+> {
+  constructor(
+    entityApi: EntityApi<EntityT, DeSerializersT>,
+    entity: EntityT,
+    operationName: string,
+    readonly responseTransformer: (data: any) => ReturnT,
+    parameters: OperationParameters<ParametersT>,
+    deSerializers: DeSerializersT
+  ) {
+    super(
+      entityApi,
+      entity,
+      operationName,
+      responseTransformer,
+      parameters,
+      deSerializers,
+      'action'
     );
   }
 }

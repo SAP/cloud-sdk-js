@@ -52,3 +52,9 @@ export class ODataBoundActionRequestConfig<
     return {};
   }
 }
+
+/**
+ * @deprecated Since 3.3.0. Use {@link ODataBoundActionRequestConfig} instead.
+ */
+export const ODataBoundActionImportRequestConfig =
+  ODataBoundActionRequestConfig;

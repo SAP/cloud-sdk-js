@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-classes-per-file
 import {
   ActionFunctionRequestBuilderBase,
   ODataRequestConfig,
@@ -57,5 +58,57 @@ export class OperationRequestBuilder<
             createODataUri(deSerializers)
           );
     super(responseTransformer, requestConfig, deSerializers);
+  }
+}
+
+/**
+ * @deprecated Since 3.3.0. Use {@link OperationRequestBuilder} instead.
+ */
+export class FunctionImportRequestBuilder<
+  DeSerializersT extends DeSerializers,
+  ParametersT,
+  ReturnT
+> extends OperationRequestBuilder<DeSerializersT, ParametersT, ReturnT> {
+  constructor(
+    defaultBasePath: string,
+    operationName: string,
+    readonly responseTransformer: (data: any) => ReturnT,
+    parameters: OperationParameters<ParametersT>,
+    deSerializers: DeSerializersT
+  ) {
+    super(
+      defaultBasePath,
+      operationName,
+      responseTransformer,
+      parameters,
+      deSerializers,
+      'function'
+    );
+  }
+}
+
+/**
+ * @deprecated Since 3.3.0. Use {@link OperationRequestBuilder} instead.
+ */
+export class ActionImportRequestBuilder<
+  DeSerializersT extends DeSerializers,
+  ParametersT,
+  ReturnT
+> extends OperationRequestBuilder<DeSerializersT, ParametersT, ReturnT> {
+  constructor(
+    defaultBasePath: string,
+    operationName: string,
+    readonly responseTransformer: (data: any) => ReturnT,
+    parameters: OperationParameters<ParametersT>,
+    deSerializers: DeSerializersT
+  ) {
+    super(
+      defaultBasePath,
+      operationName,
+      responseTransformer,
+      parameters,
+      deSerializers,
+      'action'
+    );
   }
 }

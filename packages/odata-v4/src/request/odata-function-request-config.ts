@@ -4,7 +4,7 @@ import {
   OperationParameters,
   ODataFunctionRequestConfig as ODataFunctionRequestConfigBase,
   RequestMethodType
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-common';
 import { DeSerializers } from '../de-serializers';
 
 /**

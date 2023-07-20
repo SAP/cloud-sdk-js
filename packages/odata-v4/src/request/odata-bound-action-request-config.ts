@@ -5,7 +5,7 @@ import {
   EntityApi,
   OperationParameters,
   WithKeys
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-common';
 import { DeSerializers } from '../de-serializers';
 import { ODataActionRequestConfig } from './odata-action-request-config';
 
@@ -24,6 +24,9 @@ export class ODataBoundActionRequestConfig<
 {
   keys: Record<string, any>;
   constructor(
+    /**
+     * @deprecated Since 3.3.0. This parameter is unused and will be removed in the next major release.
+     */
     method: RequestMethodType,
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     actionName: string,

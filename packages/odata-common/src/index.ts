@@ -108,6 +108,7 @@ export {
   WithGetAllRestrictions,
   WithSelection,
   ODataFunctionRequestConfig,
+  ODataFunctionImportRequestConfig,
   ODataRequest,
   ODataRequestConfig,
   BatchReference,

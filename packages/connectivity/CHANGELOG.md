@@ -1,5 +1,26 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.3.0
+
+### Minor Changes
+
+- 0583836bc: [Improvement] Do not rely on XSUAA service when caching service tokens. Cache keys are now based on service credentials URL.
+- 8f54207b6: [Improvement] Do not rely on the XSUAA service binding to retrieve tenant information when registering destinations. If tenant is unknown and no binding is found, set it to a default value (`'tenant_id'`).
+- 36a01f775: [New Functionality] Add option to cache mTLS certificates.
+- 6b58354e8: [Fixed Issue] Remove dependency to XSUAA service binding when checking whether a JWT was issued by XSUAA for destination retrieval. Now, the `ext_attr.ehancer` property is checked.
+- c09b1d06f: [Compatibility Note] The `expiresIn` property of `authTokens` on a `Destination` can be undefined.
+- 36a01f775: [Compatibility Note] Deprecate `getAgentConfig()`:
+
+  - Temporarily use replacement function `getAgentConfigAsync()`.
+  - Rename `getAgentConfigAsync()` to `getAgentConfig()` in next major version.
+
+- 36a01f775: [Improvement] Read mTLS certificates asynchronously.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.3.0
+- @sap-cloud-sdk/util@3.3.0
+
 ## 3.2.0
 
 ### Minor Changes

@@ -28,6 +28,33 @@
 
 - 
 
+# 3.3.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.3.0
+
+## Compatibility Notes
+
+- [connectivity] The `expiresIn` property of `authTokens` on a `Destination` can be undefined. (c09b1d06f)
+- [connectivity] Deprecate `getAgentConfig()`:
+
+  - Temporarily use replacement function `getAgentConfigAsync()`.
+  - Rename `getAgentConfigAsync()` to `getAgentConfig()` in next major version. (36a01f775)
+
+## New Functionalities
+
+- [connectivity] Add option to cache mTLS certificates. (36a01f775)
+
+## Improvements
+
+- [connectivity] Do not rely on XSUAA service when caching service tokens. Cache keys are now based on service credentials URL. (0583836bc)
+- [connectivity] Do not rely on the XSUAA service binding to retrieve tenant information when registering destinations. If tenant is unknown and no binding is found, set it to a default value (`'tenant_id'`). (8f54207b6)
+- [connectivity] Read mTLS certificates asynchronously. (36a01f775)
+
+## Fixed Issues
+
+- [connectivity] Remove dependency to XSUAA service binding when checking whether a JWT was issued by XSUAA for destination retrieval. Now, the `ext_attr.ehancer` property is checked. (6b58354e8)
+- [http-client] Do not set default tenant ID in the context of middlewares, if the tenant ID is unknown. In those cases it will be `undefined` from now on. (8f54207b6)
+
 # 3.2.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.2.0

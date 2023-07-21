@@ -1,38 +1,38 @@
+// eslint-disable-next-line max-classes-per-file
 import {
   ODataUri,
   EntityBase,
   RequestMethodType,
   EntityApi,
+  OperationParameters,
   WithKeys
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-common';
 import { DeSerializers } from '../de-serializers';
-import { ActionImportParameters } from './action-import-parameter';
-import { ODataActionImportRequestConfig } from './odata-action-import-request-config';
+import { ODataActionRequestConfig } from './odata-action-request-config';
 
 /**
- * Action import request configuration for an entity type.
+ * Action request configuration for an entity type.
  * @typeParam DeSerializersT - Type of the deserializer use on the request
  * @typeParam ParametersT - Type of the parameter to setup a request with
  */
-export class ODataBoundActionImportRequestConfig<
+export class ODataBoundActionRequestConfig<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
     ParametersT
   >
-  extends ODataActionImportRequestConfig<DeSerializersT, ParametersT>
+  extends ODataActionRequestConfig<DeSerializersT, ParametersT>
   implements WithKeys
 {
   keys: Record<string, any>;
   constructor(
-    method: RequestMethodType,
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
-    functionImportName: string,
-    parameters: ActionImportParameters<ParametersT>,
+    actionName: string,
+    parameters: OperationParameters<ParametersT>,
     readonly oDataUri: ODataUri<DeSerializersT>
   ) {
     super(
       entityApi.entityConstructor._defaultBasePath,
-      functionImportName,
+      actionName,
       parameters,
       oDataUri
     );
@@ -47,5 +47,27 @@ export class ODataBoundActionImportRequestConfig<
 
   queryParameters(): Record<string, any> {
     return {};
+  }
+}
+
+/**
+ * @deprecated Since 3.3.0. Use {@link ODataBoundActionRequestConfig} instead.
+ */
+export class ODataBoundActionImportRequestConfig<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  ParametersT
+> extends ODataBoundActionRequestConfig<EntityT, DeSerializersT, ParametersT> {
+  constructor(
+    /**
+     * @deprecated Since 3.3.0. This parameter is unused and will be removed in the next major release.
+     */
+    method: RequestMethodType,
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
+    actionName: string,
+    parameters: OperationParameters<ParametersT>,
+    readonly oDataUri: ODataUri<DeSerializersT>
+  ) {
+    super(entityApi, actionName, parameters, oDataUri);
   }
 }

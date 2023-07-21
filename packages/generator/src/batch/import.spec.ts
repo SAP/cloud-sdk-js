@@ -17,8 +17,7 @@ describe('batch type imports', () => {
           'GetByKeyRequestBuilder',
           'ODataBatchRequestBuilder',
           'UpdateRequestBuilder',
-          'FunctionImportRequestBuilder',
-          'ActionImportRequestBuilder',
+          'OperationRequestBuilder',
           'BatchChangeSet'
         ]
       },

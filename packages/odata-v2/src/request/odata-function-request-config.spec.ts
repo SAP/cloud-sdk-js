@@ -1,7 +1,7 @@
-import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common';
+import { OperationParameter } from '@sap-cloud-sdk/odata-common';
 import { defaultDeSerializers, DefaultDeSerializers } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
-import { ODataFunctionImportRequestConfig } from './odata-function-import-request-config';
+import { ODataFunctionRequestConfig } from './odata-function-request-config';
 
 interface TestParameterType {
   test1: string;
@@ -9,8 +9,8 @@ interface TestParameterType {
   test3: number;
 }
 
-describe('ODataFunctionImportRequestConfig', () => {
-  let config: ODataFunctionImportRequestConfig<
+describe('ODataFunctionRequestConfig', () => {
+  let config: ODataFunctionRequestConfig<
     DefaultDeSerializers,
     TestParameterType
   >;
@@ -22,17 +22,13 @@ describe('ODataFunctionImportRequestConfig', () => {
   };
 
   const mappedParameters = {
-    test1: new FunctionImportParameter('Test1', 'Edm.String', parameters.test1),
-    test2: new FunctionImportParameter(
-      'Test2',
-      'Edm.Boolean',
-      parameters.test2
-    ),
-    test3: new FunctionImportParameter('Test3', 'Edm.Double', parameters.test3)
+    test1: new OperationParameter('Test1', 'Edm.String', parameters.test1),
+    test2: new OperationParameter('Test2', 'Edm.Boolean', parameters.test2),
+    test3: new OperationParameter('Test3', 'Edm.Double', parameters.test3)
   };
 
   beforeEach(() => {
-    config = new ODataFunctionImportRequestConfig(
+    config = new ODataFunctionRequestConfig(
       'get',
       'somePath',
       'Config',

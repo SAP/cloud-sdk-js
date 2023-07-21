@@ -1,43 +1,43 @@
 import {
   ODataUri,
-  FunctionImportParameter,
-  FunctionImportParameters,
-  ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBase,
+  OperationParameter,
+  OperationParameters,
+  ODataFunctionRequestConfig as ODataFunctionRequestConfigBase,
   RequestMethodType
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-common';
 import { DeSerializers } from '../de-serializers';
 
 /**
- * Function import request configuration for an entity type.
+ * Function request configuration for an entity type.
  * @typeParam DeSerializersT - Type of the deserializer use on the request
  * @typeParam ParametersT - Type of the parameter to setup a request with
  */
-export class ODataFunctionImportRequestConfig<
+export class ODataFunctionRequestConfig<
   DeSerializersT extends DeSerializers,
   ParametersT
-> extends ODataFunctionImportRequestConfigBase<DeSerializersT, ParametersT> {
+> extends ODataFunctionRequestConfigBase<DeSerializersT, ParametersT> {
   /**
-   * Creates an instance of ODataFunctionImportRequestConfig.
+   * Creates an instance of ODataFunctionRequestConfig.
    * @param method - HTTP method for the request.
    * @param defaultBasePath - Default base path of the service.
-   * @param functionImportName - The name of the function import.
+   * @param functionName - The name of the function.
    * @param parameters - Object containing the parameters with a value and additional meta information.
    * @param oDataUri - URI conversion functions.
    */
   constructor(
     method: RequestMethodType,
     defaultBasePath: string,
-    functionImportName: string,
-    parameters: FunctionImportParameters<ParametersT>,
+    functionName: string,
+    parameters: OperationParameters<ParametersT>,
     oDataUri: ODataUri<DeSerializersT>
   ) {
-    super(method, defaultBasePath, functionImportName, parameters, oDataUri);
+    super(method, defaultBasePath, functionName, parameters, oDataUri);
   }
 
   resourcePath(): string {
-    return `${this.functionImportName}(${Object.values(this.parameters)
+    return `${this.functionName}(${Object.values(this.parameters)
       .map(
-        (parameter: FunctionImportParameter<ParametersT>) =>
+        (parameter: OperationParameter<ParametersT>) =>
           `${parameter.originalName}=${this.oDataUri.convertToUriFormat(
             parameter.value,
             parameter.edmType
@@ -50,3 +50,8 @@ export class ODataFunctionImportRequestConfig<
     return {};
   }
 }
+
+/**
+ * @deprecated Since 3.3.0. Use {@link ODataFunctionRequestConfig} instead.
+ */
+export const ODataFunctionImportRequestConfig = ODataFunctionRequestConfig;

@@ -102,28 +102,28 @@ declare class MultipleSchemasService<
   get operations(): {
     testFunctionImportEntityReturnType1: (
       parameter: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
       import('./TestEntity1').TestEntity1<DefaultDeSerializers>
     >;
     testFunctionImportEntityReturnType2: (
       parameter: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
       import('./TestEntity2').TestEntity2<DefaultDeSerializers>
     >;
     testActionImportNoParameterComplexReturnType1: (
       parameter: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
       import('./TestComplexType1').TestComplexType1<DefaultDeSerializers>
     >;
     testActionImportNoParameterComplexReturnType2: (
       parameter: TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
       import('./TestComplexType2').TestComplexType2<DefaultDeSerializers>

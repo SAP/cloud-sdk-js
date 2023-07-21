@@ -13,7 +13,7 @@ export {
   EnumField,
   FieldBuilder,
   FieldOptions,
-  FunctionImportParameter,
+  OperationParameter,
   Link,
   not,
   OneToManyLink,

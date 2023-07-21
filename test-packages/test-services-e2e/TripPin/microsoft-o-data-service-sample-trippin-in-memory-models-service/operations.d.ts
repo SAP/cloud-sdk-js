@@ -6,8 +6,7 @@
 import {
   DeSerializers,
   DefaultDeSerializers,
-  FunctionImportRequestBuilder,
-  ActionImportRequestBuilder
+  OperationRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { Airports } from './Airports';
 /**
@@ -35,7 +34,7 @@ export declare function getNearestAirport<
 >(
   parameters: GetNearestAirportParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   GetNearestAirportParameters<DeSerializersT>,
   Airports
@@ -56,7 +55,7 @@ export declare function resetDataSource<
 >(
   parameters: ResetDataSourceParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   ResetDataSourceParameters<DeSerializersT>,
   undefined

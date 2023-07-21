@@ -26,7 +26,7 @@ const mockedBuildHeaderResponse = {
   'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
 };
 
-describe('FunctionImportRequestBuilder', () => {
+describe('OperationRequestBuilder', () => {
   it('builds correct url for multiple parameters', async () => {
     const params = {
       stringParam: 'someString',

@@ -7,12 +7,12 @@ import { DeSerializers } from '../de-serializers/de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
- * Create OData request to execute a action or function import.
+ * Create OData request to execute an action or function.
  * @typeParam DeSerializersT - Type of the (de-)serializers.
- * @typeParam ReturnT - Type of the function import return value.
+ * @typeParam ReturnT - Type of the function return value.
  * @typeParam RequestConfigT - Type of the request config.
  */
-export abstract class ActionFunctionImportRequestBuilderBase<
+export abstract class OperationRequestBuilderBase<
     DeSerializersT extends DeSerializers,
     ReturnT,
     RequestConfigT extends ODataRequestConfig
@@ -22,9 +22,9 @@ export abstract class ActionFunctionImportRequestBuilderBase<
 {
   private _batchReference: BatchReference;
   /**
-   * Base class for function  and actions imports.
+   * Base class for function and action request builder.
    * @param responseTransformer - Transformation function for the response.
-   * @param requestConfig - Request config for a action or function import.
+   * @param requestConfig - Request config for an action or function.
    * @param _deSerializers - (De-)serializers used for transformation.
    */
   protected constructor(
@@ -82,3 +82,9 @@ export abstract class ActionFunctionImportRequestBuilderBase<
     this._batchReference = { id };
   }
 }
+
+/**
+ * @deprecated Since 3.3.0. Use {@link OperationRequestBuilderBase} instead.
+ */
+export const ActionFunctionImportRequestBuilderBase =
+  OperationRequestBuilderBase;

@@ -11,9 +11,8 @@ import {
   edmToTs,
   transformReturnValueForEdmType,
   defaultDeSerializers,
-  FunctionImportParameter,
-  BoundFunctionImportRequestBuilder,
-  BoundActionImportRequestBuilder
+  OperationParameter,
+  BoundOperationRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeysApi';
 
@@ -68,7 +67,7 @@ export class TestEntityWithMultipleKeys<
   boundFunctionWithoutArgumentsWithMultipleKeys(
     parameters: BoundFunctionWithoutArgumentsWithMultipleKeysParameters<T>,
     deSerializers?: T
-  ): BoundFunctionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
     BoundFunctionWithoutArgumentsWithMultipleKeysParameters<T>,
@@ -76,7 +75,7 @@ export class TestEntityWithMultipleKeys<
   > {
     const params = {};
 
-    return new BoundFunctionImportRequestBuilder(
+    return new BoundOperationRequestBuilder(
       this._entityApi,
       this,
       'boundFunctionWithoutArgumentsWithMultipleKeys',
@@ -89,7 +88,8 @@ export class TestEntityWithMultipleKeys<
           )
         ),
       params,
-      deSerializers || defaultDeSerializers
+      deSerializers || defaultDeSerializers,
+      'function'
     );
   }
 
@@ -101,26 +101,18 @@ export class TestEntityWithMultipleKeys<
   boundFunctionWithArgumentsWithMultipleKeys(
     parameters: BoundFunctionWithArgumentsWithMultipleKeysParameters<T>,
     deSerializers?: T
-  ): BoundFunctionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
     BoundFunctionWithArgumentsWithMultipleKeysParameters<T>,
     string | null
   > {
     const params = {
-      param1: new FunctionImportParameter(
-        'param1',
-        'Edm.String',
-        parameters.param1
-      ),
-      param2: new FunctionImportParameter(
-        'param2',
-        'Edm.String',
-        parameters.param2
-      )
+      param1: new OperationParameter('param1', 'Edm.String', parameters.param1),
+      param2: new OperationParameter('param2', 'Edm.String', parameters.param2)
     };
 
-    return new BoundFunctionImportRequestBuilder(
+    return new BoundOperationRequestBuilder(
       this._entityApi,
       this,
       'boundFunctionWithArgumentsWithMultipleKeys',
@@ -133,7 +125,8 @@ export class TestEntityWithMultipleKeys<
           )
         ),
       params,
-      deSerializers || defaultDeSerializers
+      deSerializers || defaultDeSerializers,
+      'function'
     );
   }
 
@@ -145,7 +138,7 @@ export class TestEntityWithMultipleKeys<
   boundActionWithoutArgumentsWithMultipleKeys(
     parameters: BoundActionWithoutArgumentsWithMultipleKeysParameters<T>,
     deSerializers?: T
-  ): BoundActionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
     BoundActionWithoutArgumentsWithMultipleKeysParameters<T>,
@@ -153,7 +146,7 @@ export class TestEntityWithMultipleKeys<
   > {
     const params = {};
 
-    return new BoundActionImportRequestBuilder(
+    return new BoundOperationRequestBuilder(
       this._entityApi,
       this,
       'boundActionWithoutArgumentsWithMultipleKeys',
@@ -166,7 +159,8 @@ export class TestEntityWithMultipleKeys<
           )
         ),
       params,
-      deSerializers || defaultDeSerializers
+      deSerializers || defaultDeSerializers,
+      'action'
     );
   }
 }

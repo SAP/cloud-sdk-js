@@ -11,8 +11,7 @@ import {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
-  FunctionImportRequestBuilder,
-  ActionImportRequestBuilder,
+  OperationRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import {
@@ -76,37 +75,37 @@ export type ReadTestServiceRequestBuilder<
     >
   | GetByKeyRequestBuilder<TestEntityLink<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
-  | FunctionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       ConcatStringsParameters<DeSerializersT>,
       string
     >
-  | FunctionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       GetAllParameters<DeSerializersT>,
       TestEntity[]
     >
-  | FunctionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       GetByKeyParameters<DeSerializersT>,
       TestEntity
     >
-  | FunctionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       GetByKeyWithMultipleKeysParameters<DeSerializersT>,
       TestEntityWithMultipleKeys
     >
-  | FunctionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       ReturnCollectionParameters<DeSerializersT>,
       number[]
     >
-  | FunctionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       ReturnIntParameters<DeSerializersT>,
       number
     >
-  | FunctionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       ReturnSapCloudSdkParameters<DeSerializersT>,
       string
@@ -135,12 +134,12 @@ export type WriteTestServiceRequestBuilder<
   | CreateRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
   | DeleteRequestBuilder<TestEntity50Prop<DeSerializersT>, DeSerializersT>
-  | ActionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       CreateTestEntityByIdParameters<DeSerializersT>,
       TestEntity
     >
-  | ActionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
       number

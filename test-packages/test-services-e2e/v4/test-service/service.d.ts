@@ -107,63 +107,63 @@ declare class TestService<
   get operations(): {
     concatStrings: (
       parameter: ConcatStringsParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       ConcatStringsParameters<DeSerializersT>,
       string
     >;
     getAll: (
       parameter: GetAllParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       GetAllParameters<DeSerializersT>,
       import('./TestEntity').TestEntity<DefaultDeSerializers>[]
     >;
     getByKey: (
       parameter: GetByKeyParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       GetByKeyParameters<DeSerializersT>,
       import('./TestEntity').TestEntity<DefaultDeSerializers>
     >;
     getByKeyWithMultipleKeys: (
       parameter: GetByKeyWithMultipleKeysParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       GetByKeyWithMultipleKeysParameters<DeSerializersT>,
       import('./TestEntityWithMultipleKeys').TestEntityWithMultipleKeys<DefaultDeSerializers>
     >;
     returnCollection: (
       parameter: ReturnCollectionParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       ReturnCollectionParameters<DeSerializersT>,
       number[]
     >;
     returnInt: (
       parameter: ReturnIntParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       ReturnIntParameters<DeSerializersT>,
       number
     >;
     returnSapCloudSdk: (
       parameter: ReturnSapCloudSdkParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       ReturnSapCloudSdkParameters<DeSerializersT>,
       string
     >;
     createTestEntityById: (
       parameter: CreateTestEntityByIdParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       CreateTestEntityByIdParameters<DeSerializersT>,
       import('./TestEntity').TestEntity<DefaultDeSerializers>
     >;
     createTestEntityByIdReturnId: (
       parameter: CreateTestEntityByIdReturnIdParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v4').ActionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v4').OperationRequestBuilder<
       DeSerializersT,
       CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
       number

@@ -13,9 +13,8 @@ import {
   transformReturnValueForEdmType,
   transformReturnValueForComplexType,
   defaultDeSerializers,
-  FunctionImportParameter,
-  BoundFunctionImportRequestBuilder,
-  BoundActionImportRequestBuilder
+  OperationParameter,
+  BoundOperationRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import type { TestEntityApi } from './TestEntityApi';
 import { MyComplexReturnType } from './MyComplexReturnType';
@@ -118,7 +117,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   boundFunctionWithoutArguments(
     parameters: BoundFunctionWithoutArgumentsParameters<T>,
     deSerializers?: T
-  ): BoundFunctionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
     BoundFunctionWithoutArgumentsParameters<T>,
@@ -126,7 +125,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   > {
     const params = {};
 
-    return new BoundFunctionImportRequestBuilder(
+    return new BoundOperationRequestBuilder(
       this._entityApi,
       this,
       'boundFunctionWithoutArguments',
@@ -139,7 +138,8 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
           )
         ),
       params,
-      deSerializers || defaultDeSerializers
+      deSerializers || defaultDeSerializers,
+      'function'
     );
   }
 
@@ -151,7 +151,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   boundFunctionWithoutArgumentsComplexReturnType(
     parameters: BoundFunctionWithoutArgumentsComplexReturnTypeParameters<T>,
     deSerializers?: T
-  ): BoundFunctionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
     BoundFunctionWithoutArgumentsComplexReturnTypeParameters<T>,
@@ -159,7 +159,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   > {
     const params = {};
 
-    return new BoundFunctionImportRequestBuilder(
+    return new BoundOperationRequestBuilder(
       this._entityApi,
       this,
       'boundFunctionWithoutArgumentsComplexReturnType',
@@ -170,7 +170,8 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
           ).deserializeComplexType(data, MyComplexReturnType)
         ),
       params,
-      deSerializers || defaultDeSerializers
+      deSerializers || defaultDeSerializers,
+      'function'
     );
   }
 
@@ -182,26 +183,18 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   boundFunctionWithArguments(
     parameters: BoundFunctionWithArgumentsParameters<T>,
     deSerializers?: T
-  ): BoundFunctionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
     BoundFunctionWithArgumentsParameters<T>,
     string | null
   > {
     const params = {
-      param1: new FunctionImportParameter(
-        'param1',
-        'Edm.String',
-        parameters.param1
-      ),
-      param2: new FunctionImportParameter(
-        'param2',
-        'Edm.String',
-        parameters.param2
-      )
+      param1: new OperationParameter('param1', 'Edm.String', parameters.param1),
+      param2: new OperationParameter('param2', 'Edm.String', parameters.param2)
     };
 
-    return new BoundFunctionImportRequestBuilder(
+    return new BoundOperationRequestBuilder(
       this._entityApi,
       this,
       'boundFunctionWithArguments',
@@ -214,7 +207,8 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
           )
         ),
       params,
-      deSerializers || defaultDeSerializers
+      deSerializers || defaultDeSerializers,
+      'function'
     );
   }
 
@@ -226,7 +220,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   boundActionWithoutArguments(
     parameters: BoundActionWithoutArgumentsParameters<T>,
     deSerializers?: T
-  ): BoundActionImportRequestBuilder<
+  ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
     BoundActionWithoutArgumentsParameters<T>,
@@ -234,7 +228,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   > {
     const params = {};
 
-    return new BoundActionImportRequestBuilder(
+    return new BoundOperationRequestBuilder(
       this._entityApi,
       this,
       'boundActionWithoutArguments',
@@ -247,7 +241,8 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
           )
         ),
       params,
-      deSerializers || defaultDeSerializers
+      deSerializers || defaultDeSerializers,
+      'action'
     );
   }
 }

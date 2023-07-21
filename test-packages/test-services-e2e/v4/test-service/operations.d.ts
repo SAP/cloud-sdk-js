@@ -6,8 +6,7 @@
 import {
   DeSerializers,
   DefaultDeSerializers,
-  FunctionImportRequestBuilder,
-  ActionImportRequestBuilder
+  OperationRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 import { TestEntityWithMultipleKeys } from './TestEntityWithMultipleKeys';
@@ -34,7 +33,7 @@ export declare function concatStrings<
 >(
   parameters: ConcatStringsParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   ConcatStringsParameters<DeSerializersT>,
   string
@@ -53,7 +52,7 @@ export declare function getAll<
 >(
   parameters: GetAllParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   GetAllParameters<DeSerializersT>,
   TestEntity[]
@@ -77,7 +76,7 @@ export declare function getByKey<
 >(
   parameters: GetByKeyParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   GetByKeyParameters<DeSerializersT>,
   TestEntity
@@ -111,7 +110,7 @@ export declare function getByKeyWithMultipleKeys<
 >(
   parameters: GetByKeyWithMultipleKeysParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   GetByKeyWithMultipleKeysParameters<DeSerializersT>,
   TestEntityWithMultipleKeys
@@ -137,7 +136,7 @@ export declare function returnCollection<
 >(
   parameters: ReturnCollectionParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   ReturnCollectionParameters<DeSerializersT>,
   number[]
@@ -161,7 +160,7 @@ export declare function returnInt<
 >(
   parameters: ReturnIntParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   ReturnIntParameters<DeSerializersT>,
   number
@@ -182,7 +181,7 @@ export declare function returnSapCloudSdk<
 >(
   parameters: ReturnSapCloudSdkParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   ReturnSapCloudSdkParameters<DeSerializersT>,
   string
@@ -208,7 +207,7 @@ export declare function createTestEntityById<
 >(
   parameters: CreateTestEntityByIdParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   CreateTestEntityByIdParameters<DeSerializersT>,
   TestEntity
@@ -234,7 +233,7 @@ export declare function createTestEntityByIdReturnId<
 >(
   parameters: CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
   number

@@ -1,4 +1,3 @@
-import voca from 'voca';
 import { VdmOperation } from '../vdm-types';
 import { cannotDeserialize } from '../edmx-to-vdm/common';
 /**
@@ -7,15 +6,12 @@ import { cannotDeserialize } from '../edmx-to-vdm/common';
 export function operationReturnType({
   returnType,
   parametersTypeName,
-  type: operationType,
   isBound,
   name,
   entityClassName
 }: VdmOperation): string {
   let type = returnType.returnType;
-  const requestBuilderName = `${isBound ? 'Bound' : ''}${voca.capitalize(
-    operationType
-  )}ImportRequestBuilder`;
+  const requestBuilderName = `${isBound ? 'Bound' : ''}OperationRequestBuilder`;
 
   if (cannotDeserialize(returnType)) {
     type = wrapRequestBuilderAroundType(

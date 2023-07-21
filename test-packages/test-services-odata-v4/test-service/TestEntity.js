@@ -22,7 +22,7 @@ class TestEntity extends odata_v4_1.Entity {
      */
     boundFunctionWithoutArguments(parameters, deSerializers) {
         const params = {};
-        return new odata_v4_1.BoundFunctionImportRequestBuilder(this._entityApi, this, 'boundFunctionWithoutArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers || odata_v4_1.defaultDeSerializers)), params, deSerializers || odata_v4_1.defaultDeSerializers);
+        return new odata_v4_1.BoundOperationRequestBuilder(this._entityApi, this, 'boundFunctionWithoutArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers || odata_v4_1.defaultDeSerializers)), params, deSerializers || odata_v4_1.defaultDeSerializers, 'function');
     }
     /**
      * Bound Function With Arguments.
@@ -31,10 +31,10 @@ class TestEntity extends odata_v4_1.Entity {
      */
     boundFunctionWithArguments(parameters, deSerializers) {
         const params = {
-            param1: new odata_v4_1.FunctionImportParameter('param1', 'Edm.String', parameters.param1),
-            param2: new odata_v4_1.FunctionImportParameter('param2', 'Edm.String', parameters.param2)
+            param1: new odata_v4_1.OperationParameter('param1', 'Edm.String', parameters.param1),
+            param2: new odata_v4_1.OperationParameter('param2', 'Edm.String', parameters.param2)
         };
-        return new odata_v4_1.BoundFunctionImportRequestBuilder(this._entityApi, this, 'boundFunctionWithArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers || odata_v4_1.defaultDeSerializers)), params, deSerializers || odata_v4_1.defaultDeSerializers);
+        return new odata_v4_1.BoundOperationRequestBuilder(this._entityApi, this, 'boundFunctionWithArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers || odata_v4_1.defaultDeSerializers)), params, deSerializers || odata_v4_1.defaultDeSerializers, 'function');
     }
     /**
      * Bound Action Without Arguments.
@@ -43,7 +43,7 @@ class TestEntity extends odata_v4_1.Entity {
      */
     boundActionWithoutArguments(parameters, deSerializers) {
         const params = {};
-        return new odata_v4_1.BoundActionImportRequestBuilder(this._entityApi, this, 'boundActionWithoutArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers || odata_v4_1.defaultDeSerializers)), params, deSerializers || odata_v4_1.defaultDeSerializers);
+        return new odata_v4_1.BoundOperationRequestBuilder(this._entityApi, this, 'boundActionWithoutArguments', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers || odata_v4_1.defaultDeSerializers)), params, deSerializers || odata_v4_1.defaultDeSerializers, 'action');
     }
 }
 /**

@@ -4,6 +4,9 @@
  */
 import { EdmTypeShared } from '@sap-cloud-sdk/odata-common';
 
+/**
+ * @deprecated Since 3.3.0. Use {@link OperationParameter} instead.
+ */
 export class ActionImportParameter<ValueT> {
   /**
    * Creates an instance of FunctionImportParameter.
@@ -19,8 +22,7 @@ export class ActionImportParameter<ValueT> {
 }
 
 /**
- * Internal representation of all parameters of a function import as a map.
- * @typeParam ParametersT - External representation of all parameters.
+ * @deprecated Since 3.3.0. Use {@link OperationParameter} instead.
  */
 export type ActionImportParameters<ParametersT> = {
   [K in keyof ParametersT]: ActionImportParameter<ParametersT[K]>;

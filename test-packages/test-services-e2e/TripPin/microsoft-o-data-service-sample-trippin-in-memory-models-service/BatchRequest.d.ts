@@ -11,8 +11,7 @@ import {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
-  FunctionImportRequestBuilder,
-  ActionImportRequestBuilder,
+  OperationRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import {
@@ -68,7 +67,7 @@ export type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBu
   | GetByKeyRequestBuilder<People<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<Airlines<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
-  | FunctionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       GetNearestAirportParameters<DeSerializersT>,
       Airports
@@ -88,7 +87,7 @@ export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestB
   | CreateRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
   | DeleteRequestBuilder<Airports<DeSerializersT>, DeSerializersT>
-  | ActionImportRequestBuilder<
+  | OperationRequestBuilder<
       DeSerializersT,
       ResetDataSourceParameters<DeSerializersT>,
       undefined

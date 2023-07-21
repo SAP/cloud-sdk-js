@@ -5,8 +5,12 @@ import {
   testActionImportNoParameterNoReturnType,
   testActionImportUnsupportedEdmTypes
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service/operations';
-import { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import {
+  TestComplexType,
+  testFunctionImportMultipleParams
+} from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { entitySerializer } from '@sap-cloud-sdk/odata-common';
+import { defaultDestination } from '../../../../test-resources/test/test-util/request-mocker';
 import { defaultDeSerializers } from '../de-serializers';
 
 const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
@@ -36,7 +40,7 @@ function mockCsrfTokenRequest(path?: string) {
     .reply(200, '', mockedBuildHeaderResponse);
 }
 
-describe('action import request builder', () => {
+describe('operation request builder', () => {
   it('should call simple action', async () => {
     mockCsrfTokenRequest('TestActionImportNoParameterNoReturnType');
 
@@ -110,5 +114,21 @@ describe('action import request builder', () => {
       expect(actual.data).toEqual({});
       expect(actual.request.method).toBe('POST');
     });
+  });
+
+  it('builds correct url for multiple parameters', async () => {
+    const params = { stringParam: 'str1', nonNullableStringParam: 'str2' };
+
+    const requestBuilder = testFunctionImportMultipleParams(params);
+
+    const url = await requestBuilder.url(defaultDestination);
+    const expected = expect.stringMatching(
+      /TestFunctionImportMultipleParams\(.*StringParam.*\)/
+    );
+    expect(url).toEqual(expected);
+    expect(url).toContain(`StringParam='${params.stringParam}'`);
+    expect(url).toContain(
+      `NonNullableStringParam='${params.nonNullableStringParam}'`
+    );
   });
 });

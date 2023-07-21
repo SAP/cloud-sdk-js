@@ -16,7 +16,7 @@ const TestComplexType_1 = require("./TestComplexType");
  */
 function testFunctionImportNoReturnType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportNoReturnType', data => (0, odata_v2_1.transformReturnValueForUndefined)(data, val => undefined), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportNoReturnType', data => (0, odata_v2_1.transformReturnValueForUndefined)(data, val => undefined), params, deSerializers);
 }
 exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
 /**
@@ -26,7 +26,7 @@ exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
  */
 function testFunctionImportEdmReturnType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.TestFunctionImportEdmReturnType, 'Edm.Boolean', deSerializers)), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.TestFunctionImportEdmReturnType, 'Edm.Boolean', deSerializers)), params, deSerializers);
 }
 exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
 /**
@@ -36,7 +36,7 @@ exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
  */
 function testFunctionImportEdmReturnTypeCollection(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', data => (0, odata_v2_1.transformReturnValueForEdmTypeList)(data, val => (0, odata_v2_1.edmToTs)(val, 'Edm.String', deSerializers)), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', data => (0, odata_v2_1.transformReturnValueForEdmTypeList)(data, val => (0, odata_v2_1.edmToTs)(val, 'Edm.String', deSerializers)), params, deSerializers);
 }
 exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnTypeCollection;
 /**
@@ -46,7 +46,7 @@ exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnT
  */
 function testFunctionImportEntityReturnType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', data => (0, odata_v2_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', data => (0, odata_v2_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers);
 }
 exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
 /**
@@ -56,7 +56,7 @@ exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
  */
 function testFunctionImportEntityReturnTypeCollection(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', data => (0, odata_v2_1.transformReturnValueForEntityList)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', data => (0, odata_v2_1.transformReturnValueForEntityList)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers);
 }
 exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
 /**
@@ -66,7 +66,7 @@ exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityR
  */
 function testFunctionImportSharedEntityReturnType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnType', data => (0, odata_v2_1.throwErrorWhenReturnTypeIsUnionType)(data, 'TestFunctionImportSharedEntityReturnType'), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnType', data => (0, odata_v2_1.throwErrorWhenReturnTypeIsUnionType)(data, 'TestFunctionImportSharedEntityReturnType'), params, deSerializers);
 }
 exports.testFunctionImportSharedEntityReturnType = testFunctionImportSharedEntityReturnType;
 /**
@@ -76,7 +76,7 @@ exports.testFunctionImportSharedEntityReturnType = testFunctionImportSharedEntit
  */
 function testFunctionImportSharedEntityReturnTypeCollection(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnTypeCollection', data => (0, odata_v2_1.throwErrorWhenReturnTypeIsUnionType)(data, 'TestFunctionImportSharedEntityReturnTypeCollection'), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnTypeCollection', data => (0, odata_v2_1.throwErrorWhenReturnTypeIsUnionType)(data, 'TestFunctionImportSharedEntityReturnTypeCollection'), params, deSerializers);
 }
 exports.testFunctionImportSharedEntityReturnTypeCollection = testFunctionImportSharedEntityReturnTypeCollection;
 /**
@@ -86,7 +86,7 @@ exports.testFunctionImportSharedEntityReturnTypeCollection = testFunctionImportS
  */
 function testFunctionImportComplexReturnType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', data => (0, odata_v2_1.transformReturnValueForComplexType)(data, data => (0, odata_v2_1.entityDeserializer)(deSerializers || odata_v2_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', data => (0, odata_v2_1.transformReturnValueForComplexType)(data, data => (0, odata_v2_1.entityDeserializer)(deSerializers || odata_v2_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers);
 }
 exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnType;
 /**
@@ -96,9 +96,9 @@ exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnTyp
  */
 function testFunctionImportUnsupportedEdmTypes(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {
-        simpleParam: new odata_v2_1.FunctionImportParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
+        simpleParam: new odata_v2_1.OperationParameter('SimpleParam', 'Edm.Any', parameters.simpleParam)
     };
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportUnsupportedEdmTypes', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any', deSerializers)), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportUnsupportedEdmTypes', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any', deSerializers)), params, deSerializers);
 }
 exports.testFunctionImportUnsupportedEdmTypes = testFunctionImportUnsupportedEdmTypes;
 /**
@@ -108,7 +108,7 @@ exports.testFunctionImportUnsupportedEdmTypes = testFunctionImportUnsupportedEdm
  */
 function testFunctionImportComplexReturnTypeCollection(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', data => (0, odata_v2_1.transformReturnValueForComplexTypeList)(data, data => (0, odata_v2_1.entityDeserializer)(deSerializers || odata_v2_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', data => (0, odata_v2_1.transformReturnValueForComplexTypeList)(data, data => (0, odata_v2_1.entityDeserializer)(deSerializers || odata_v2_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers);
 }
 exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComplexReturnTypeCollection;
 /**
@@ -118,9 +118,9 @@ exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComple
  */
 function testFunctionImportGet(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {
-        simpleParam: new odata_v2_1.FunctionImportParameter('SimpleParam', 'Edm.String', parameters.simpleParam)
+        simpleParam: new odata_v2_1.OperationParameter('SimpleParam', 'Edm.String', parameters.simpleParam)
     };
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportGET', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.TestFunctionImportGET, 'Edm.Boolean', deSerializers)), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportGET', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.TestFunctionImportGET, 'Edm.Boolean', deSerializers)), params, deSerializers);
 }
 exports.testFunctionImportGet = testFunctionImportGet;
 /**
@@ -130,9 +130,9 @@ exports.testFunctionImportGet = testFunctionImportGet;
  */
 function testFunctionImportPost(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {
-        simpleParam: new odata_v2_1.FunctionImportParameter('SimpleParam', 'Edm.String', parameters.simpleParam)
+        simpleParam: new odata_v2_1.OperationParameter('SimpleParam', 'Edm.String', parameters.simpleParam)
     };
-    return new odata_v2_1.FunctionImportRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportPOST', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.TestFunctionImportPOST, 'Edm.Boolean', deSerializers)), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('post', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportPOST', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.TestFunctionImportPOST, 'Edm.Boolean', deSerializers)), params, deSerializers);
 }
 exports.testFunctionImportPost = testFunctionImportPost;
 /**
@@ -142,10 +142,10 @@ exports.testFunctionImportPost = testFunctionImportPost;
  */
 function testFunctionImportMultipleParams(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {
-        stringParam: new odata_v2_1.FunctionImportParameter('StringParam', 'Edm.String', parameters.stringParam),
-        booleanParam: new odata_v2_1.FunctionImportParameter('BooleanParam', 'Edm.Boolean', parameters.booleanParam)
+        stringParam: new odata_v2_1.OperationParameter('StringParam', 'Edm.String', parameters.stringParam),
+        booleanParam: new odata_v2_1.OperationParameter('BooleanParam', 'Edm.Boolean', parameters.booleanParam)
     };
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.TestFunctionImportMultipleParams, 'Edm.Boolean', deSerializers)), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.TestFunctionImportMultipleParams, 'Edm.Boolean', deSerializers)), params, deSerializers);
 }
 exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
 /**
@@ -155,7 +155,7 @@ exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
  */
 function createTestComplexType(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'CreateTestComplexType', data => (0, odata_v2_1.transformReturnValueForComplexType)(data, data => (0, odata_v2_1.entityDeserializer)(deSerializers || odata_v2_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'CreateTestComplexType', data => (0, odata_v2_1.transformReturnValueForComplexType)(data, data => (0, odata_v2_1.entityDeserializer)(deSerializers || odata_v2_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers);
 }
 exports.createTestComplexType = createTestComplexType;
 /**
@@ -165,7 +165,7 @@ exports.createTestComplexType = createTestComplexType;
  */
 function fContinue(parameters, deSerializers = odata_v2_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v2_1.FunctionImportRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'Continue', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.Continue, 'Edm.Boolean', deSerializers)), params, deSerializers);
+    return new odata_v2_1.OperationRequestBuilder('get', '/sap/opu/odata/sap/API_TEST_SRV', 'Continue', data => (0, odata_v2_1.transformReturnValueForEdmType)(data, val => (0, odata_v2_1.edmToTs)(val.Continue, 'Edm.Boolean', deSerializers)), params, deSerializers);
 }
 exports.fContinue = fContinue;
 exports.operations = {

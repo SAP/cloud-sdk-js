@@ -6,8 +6,7 @@
 import {
   DeSerializers,
   DefaultDeSerializers,
-  FunctionImportRequestBuilder,
-  ActionImportRequestBuilder
+  OperationRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity1 } from './TestEntity1';
 import { TestEntity2 } from './TestEntity2';
@@ -29,7 +28,7 @@ export declare function testFunctionImportEntityReturnType1<
 >(
   parameters: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
   TestEntity1
@@ -50,7 +49,7 @@ export declare function testFunctionImportEntityReturnType2<
 >(
   parameters: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): FunctionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
   TestEntity2
@@ -71,7 +70,7 @@ export declare function testActionImportNoParameterComplexReturnType1<
 >(
   parameters: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
   TestComplexType1
@@ -92,7 +91,7 @@ export declare function testActionImportNoParameterComplexReturnType2<
 >(
   parameters: TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
   deSerializers?: DeSerializersT
-): ActionImportRequestBuilder<
+): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
   TestComplexType2

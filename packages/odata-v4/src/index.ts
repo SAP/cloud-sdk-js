@@ -37,19 +37,22 @@ export {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   UpdateRequestBuilder,
+  BoundOperationRequestBuilder,
   BoundActionImportRequestBuilder,
-  BoundFunctionImportRequestBuilder
+  BoundFunctionImportRequestBuilder,
+  OperationRequestBuilder
 } from './request-builder';
 
 export { ODataBatchRequestBuilder } from './request-builder';
 
 export {
+  ODataActionRequestConfig,
+  ODataFunctionRequestConfig,
   ActionImportParameter,
+  ActionImportParameters,
   ODataActionImportRequestConfig,
   ODataFunctionImportRequestConfig
 } from './request';
-
-export type { ActionImportParameters } from './request';
 
 export { Entity } from './entity';
 export { CustomField } from './selectable';
@@ -71,7 +74,13 @@ export type {
 
 export type { BatchResponse } from './batch-response';
 
-export type { ODataBoundActionImportRequestConfig } from './request/odata-bound-action-request-config';
-export type { OdataBoundFunctionImportRequestConfig } from './request/odata-bound-function-import-request-config';
+export type {
+  ODataBoundActionRequestConfig,
+  ODataBoundActionImportRequestConfig
+} from './request/odata-bound-action-request-config';
+export type {
+  ODataBoundFunctionRequestConfig,
+  OdataBoundFunctionImportRequestConfig
+} from './request/odata-bound-function-request-config';
 
 export * from './common';

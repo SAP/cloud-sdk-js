@@ -86,10 +86,7 @@ function getOperationStatements(
   );
   const params = `const params = {\n${paramsLines.join(',\n')}\n};`;
 
-  const parameters = [
-    `'${operation.httpMethod}'`,
-    getRequestBuilderArguments(operation, service)
-  ];
+  const parameters = getRequestBuilderArguments(operation, service);
 
   const returnStatement = `return new ${requestBuilderName}(${parameters.join(
     ', '

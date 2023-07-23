@@ -1299,20 +1299,12 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-compiler@^4":
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-4.0.2.tgz#d8da58c745a05a482082ba2db950718658078f4a"
-  integrity sha512-d2S7LpV0xL/v0Pdw7CUN21WdE1FY4VKt44FnpiFJP/FF3upRjk0wS9BhQ2a1NT1Z2piNOWvAN6I8vJW171zjcQ==
-  dependencies:
-    antlr4 "4.9.3"
-
-"@sap/cds-dk@7.0.2":
-  version "7.0.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.0.2.tgz#bb8d50fc684fd004e75849de1ee77edc79427405"
-  integrity sha512-W2qeaPD4wKzLA6YOqM/shUzKQpbCt7PTrkuwPopIYh3288H/9tBWdt1+9FZ0SOxQB2PxoScodoLVNoShtEWhRQ==
+"@sap/cds-dk@7.0.3":
+  version "7.0.3"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.0.3.tgz#b9c03cdf520165b34dec5a337140b6274ff57d00"
+  integrity sha512-9rgxiTQb8+Txed33OgjO8zDbLFA/K2hwaFXg+R+5s8O5Eiic9vzCYzOWh2R99H8Z0adzoIDTW/fc1ExIdDEYEw==
   dependencies:
     "@sap/cds" "^7"
-    "@sap/cds-compiler" "^4"
     "@sap/cds-foss" "^4.0.2"
     "@sap/cds-mtxs" "^1.9.0"
     "@sap/eslint-plugin-cds" "^2.6.0"
@@ -7352,9 +7344,9 @@ postcss-values-parser@^6.0.2:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.4.12:
-  version "8.4.26"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.26.tgz#1bc62ab19f8e1e5463d98cf74af39702a00a9e94"
-  integrity sha512-jrXHFF8iTloAenySjM/ob3gSj7pCu0Ji49hnjqzsgSRa50hkWCKD0HQ+gMNJkW38jBI68MpAAg7ZWwHwX8NMMw==
+  version "8.4.27"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.27.tgz#234d7e4b72e34ba5a92c29636734349e0d9c3057"
+  integrity sha512-gY/ACJtJPSmUFPDCHtX78+01fHa64FaU4zaaWfuh1MhGJISufJAH4cun6k/8fwsHYeK4UQmENQK+tRLCFJE8JQ==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"

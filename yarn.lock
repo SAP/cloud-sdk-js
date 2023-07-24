@@ -1393,10 +1393,10 @@
     node-cache "^5.1.0"
     verror "1.10.0"
 
-"@sap/xssec@^3.2.17":
-  version "3.2.17"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.17.tgz#ad05e09dc1e3688169caf3d6946c9f5989eddbd6"
-  integrity sha512-Xr/5heLr8OEZ8XVKXPa2QHeJApWK5K04ijYSvMU+e1I2XzayVTKqGN84UedCPQi446oz9eqnUvOSKKiIYvuH9g==
+"@sap/xssec@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.3.0.tgz#126346f808e4f690230f94db0eeea189a688525e"
+  integrity sha512-WCmalrfAjpqb3HOclWVwrwm6TSFZVO6l/nrnQ4ADR/xTeXkUz40PokHWqa5XDuCi6aL/xOFAk6+VVnIhGA15Lw==
   dependencies:
     axios "^0.26.0"
     debug "^4.3.2"

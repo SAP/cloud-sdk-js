@@ -1,0 +1,36 @@
+import { createLogger } from '@sap-cloud-sdk/util';
+import { signedJwt } from '../../../../../test-resources/test/test-util';
+import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+
+describe('forward auth token', () => {
+  describe('setForwardedAuthTokenIfNeeded', () => {
+    it('sets an auth token, when `forwardAuthToken` is set', () => {
+      const jwt = signedJwt({});
+      const destination = setForwardedAuthTokenIfNeeded(
+        { forwardAuthToken: true },
+        jwt
+      );
+      expect(destination.authTokens?.[0]).toMatchObject(
+        expect.objectContaining({ value: jwt })
+      );
+    });
+
+    it('does not set an auth token, when `forwardAuthToken` is not set', () => {
+      const jwt = signedJwt({});
+      const destination = setForwardedAuthTokenIfNeeded({}, jwt);
+      expect(destination.authTokens).toBeUndefined();
+    });
+
+    it('shows a warning if `forwardAuthToken` is enabled, but no jwt is passed', () => {
+      const logger = createLogger({
+        messageContext: 'forward-auth-token'
+      });
+
+      const warnSpy = jest.spyOn(logger, 'warn');
+      setForwardedAuthTokenIfNeeded({ forwardAuthToken: true });
+      expect(warnSpy).toHaveBeenCalledWith(
+        "Option 'forwardAuthToken' was set on destination but no token was provided to forward. This is most likely unintended and will lead to an authorization error on request execution."
+      );
+    });
+  });
+});

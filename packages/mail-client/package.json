@@ -44,7 +44,7 @@
     "socks": "2.7.1"
   },
   "devDependencies": {
-    "@types/nodemailer": "^6.4.8",
+    "@types/nodemailer": "^6.4.9",
     "typescript": "~5.0.4",
     "nock": "^13.3.2"
   }

@@ -10,9 +10,7 @@ describe('forward auth token', () => {
         { forwardAuthToken: true },
         jwt
       );
-      expect(destination.authTokens?.[0]).toMatchObject(
-        expect.objectContaining({ value: jwt })
-      );
+      expect(destination.authTokens?.[0]).toMatchObject({ value: jwt });
     });
 
     it('does not set an auth token, when `forwardAuthToken` is not set', () => {

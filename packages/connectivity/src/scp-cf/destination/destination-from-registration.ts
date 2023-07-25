@@ -5,16 +5,13 @@ import {
   IsolationStrategy,
   getDefaultIsolationStrategy
 } from './destination-cache';
-import {
-  Destination,
-  DestinationAuthToken,
-  isHttpDestination
-} from './destination-service-types';
+import { Destination, isHttpDestination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
 import { registerDestinationCache } from './register-destination-cache';
+import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -112,9 +109,7 @@ export async function searchRegisteredDestination(
     `Successfully retrieved destination '${options.destinationName}' from registered destinations.`
   );
 
-  if (destination.forwardAuthToken) {
-    destination.authTokens = destinationAuthToken(options.jwt);
-  }
+  setForwardedAuthTokenIfNeeded(destination, options.jwt);
 
   return isHttpDestination(destination) &&
     ['internet', 'private-link'].includes(proxyStrategy(destination))
@@ -136,27 +131,4 @@ function isolationStrategy(
   }
   const decoded = options?.jwt ? decodeJwt(options.jwt) : undefined;
   return getDefaultIsolationStrategy(decoded);
-}
-
-function destinationAuthToken(
-  token?: string
-): [DestinationAuthToken] | undefined {
-  if (token) {
-    const decoded = decodeJwt(token);
-    logger.debug(
-      "Option 'forwardAuthToken' enabled on destination. Using the initial token for the destination."
-    );
-    return [
-      {
-        value: token,
-        expiresIn: decoded.exp?.toString(),
-        error: null,
-        http_header: { key: 'Authorization', value: `Bearer ${token}` },
-        type: 'Bearer'
-      }
-    ];
-  }
-  logger.warn(
-    "Option 'forwardAuthToken' was set on destination but no token was provided to forward. This is most likely unintended and will lead to a authorization error on request execution."
-  );
 }

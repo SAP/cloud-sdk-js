@@ -108,7 +108,16 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
   /* DeSerializers with v2 and v4 specific URI serializer defaults. */
   'Edm.Decimal': {
     deserialize: deserializeToBigNumber,
-    serialize: serializeFromBigNumber
+    serialize: value => {
+      const primitiveNumber = value.toNumber();
+      if (
+        primitiveNumber <= Number.MAX_SAFE_INTEGER &&
+        primitiveNumber >= Number.MIN_SAFE_INTEGER
+      ) {
+        return primitiveNumber;
+      }
+      return serializeFromBigNumber(value);
+    }
   },
   'Edm.Guid': {
     deserialize: validateGuid,

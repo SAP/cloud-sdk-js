@@ -1,5 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { decodeJwt } from '../jwt';
+import { JwtPayload } from '../jsonwebtoken-type';
 import { Destination, DestinationAuthToken } from './destination-service-types';
 
 const logger = createLogger({
@@ -13,26 +14,35 @@ const logger = createLogger({
  * @returns The transformed token.
  */
 function buildDestinationAuthToken(
-  token?: string
+  token: string
 ): [DestinationAuthToken] | undefined {
-  if (token) {
-    const decoded = decodeJwt(token);
-    logger.debug(
-      "Option 'forwardAuthToken' enabled on destination. Using the given token for the destination."
+  const decodedJwt = decodeJwt(token);
+
+  return [
+    {
+      value: token,
+      expiresIn: decodedJwt.exp?.toString(),
+      error: null,
+      http_header: { key: 'Authorization', value: `Bearer ${token}` },
+      type: 'Bearer'
+    }
+  ];
+}
+
+// TODO: deprecated: The use of JWTPayload should be removed in the next major version
+function validateToken(
+  token: string | JwtPayload | undefined
+): token is string {
+  if (!token) {
+    logger.warn(
+      "Option 'forwardAuthToken' was set on destination but no token was provided to forward. This is most likely unintended and will lead to an authorization error on request execution."
     );
-    return [
-      {
-        value: token,
-        expiresIn: decoded.exp?.toString(),
-        error: null,
-        http_header: { key: 'Authorization', value: `Bearer ${token}` },
-        type: 'Bearer'
-      }
-    ];
+  } else if (typeof token !== 'string') {
+    logger.warn(
+      "Option 'forwardAuthToken' was set on destination but the provided token is decoded. To use 'forwardAuthToken', provide an encoded token. This is most likely unintended and will lead to an authorization error on request execution."
+    );
   }
-  logger.warn(
-    "Option 'forwardAuthToken' was set on destination but no token was provided to forward. This is most likely unintended and will lead to an authorization error on request execution."
-  );
+  return typeof token === 'string';
 }
 
 /**
@@ -43,10 +53,15 @@ function buildDestinationAuthToken(
  */
 export function setForwardedAuthTokenIfNeeded(
   destination: Destination,
-  token?: string
+  token?: string | JwtPayload
 ): Destination {
   if (destination.forwardAuthToken) {
-    destination.authTokens = buildDestinationAuthToken(token);
+    if (validateToken(token)) {
+      logger.debug(
+        "Option 'forwardAuthToken' enabled on destination. Using the given token for the destination."
+      );
+      destination.authTokens = buildDestinationAuthToken(token);
+    }
   }
   return destination;
 }

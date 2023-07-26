@@ -109,7 +109,7 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
   'Edm.Decimal': {
     deserialize: deserializeToBigNumber,
     serialize: value => {
-      const primitiveNumber = value.toNumber();
+      const primitiveNumber = (value instanceof BigNumber) ? value.toNumber() : value;
       if (
         primitiveNumber <= Number.MAX_SAFE_INTEGER &&
         primitiveNumber >= Number.MIN_SAFE_INTEGER

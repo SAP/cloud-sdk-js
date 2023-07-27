@@ -3,6 +3,7 @@ import {
   mockInstanceDestinationsCall,
   mockServiceBindings,
   mockServiceToken,
+  mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt,
   providerServiceToken
@@ -10,12 +11,11 @@ import {
 import { getDestinationFromDestinationService } from './destination-from-service';
 
 describe('getDestinationFromDestinationService', () => {
-  let serviceTokenSpy;
   beforeEach(() => {
     jest.clearAllMocks();
     mockServiceBindings();
     mockVerifyJwt();
-    serviceTokenSpy = mockServiceToken();
+    mockServiceToken();
     mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
   });
 
@@ -45,7 +45,6 @@ describe('getDestinationFromDestinationService', () => {
   });
 
   it('does not execute additional auth flows, if `forwardAuthToken` is set (e.g. OAuth2ClientCredentials)', async () => {
-    // Without `forwardAuthToken` this test would require an additional single subaccount destination call
     const destination = {
       URL: 'https://example.com',
       Name: 'FORWARD',
@@ -60,13 +59,21 @@ describe('getDestinationFromDestinationService', () => {
       providerServiceToken
     );
 
-    const retrievedDestination = await getDestinationFromDestinationService({
+    const singleDestinationScope = mockSingleDestinationCall(
+      nock,
+      destination,
+      200,
+      'FORWARD',
+      {},
+      { badheaders: [] }
+    );
+
+    await getDestinationFromDestinationService({
       destinationName: 'FORWARD',
       jwt: providerServiceToken
     });
-    expect(retrievedDestination?.forwardAuthToken).toBe(true);
-    expect(retrievedDestination?.authTokens?.[0].value).toEqual(
-      providerServiceToken
-    );
+
+    // Without `forwardAuthToken` this test would require an additional single subaccount destination call
+    expect(singleDestinationScope.isDone()).toBe(false);
   });
 });

@@ -58,6 +58,7 @@ const providerDestination: DestinationConfiguration = {
 const parsedProviderDestination: DestinationWithoutToken = {
   authentication: 'NoAuthentication',
   certificates: [],
+  forwardAuthToken: false,
   isTrustingAllCertificates: false,
   name: 'DESTINATION',
   originalProperties: {
@@ -78,6 +79,7 @@ const subscriberDestination: DestinationConfiguration = {
 const parsedSubscriberDestination: DestinationWithoutToken = {
   authentication: 'NoAuthentication',
   certificates: [],
+  forwardAuthToken: false,
   isTrustingAllCertificates: false,
   name: 'DESTINATION',
   originalProperties: {

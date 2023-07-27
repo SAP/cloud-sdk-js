@@ -171,6 +171,7 @@ describe('get destination with PrivateLink proxy type', () => {
     authTokens: [],
     authentication: 'NoAuthentication',
     certificates: [],
+    forwardAuthToken: false,
     isTrustingAllCertificates: false,
     name: 'PrivateLinkDest',
     originalProperties: {

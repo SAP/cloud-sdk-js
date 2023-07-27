@@ -10,6 +10,7 @@ export * from './destination-service-cache';
 export * from './destination-service-types';
 export * from './destination-service';
 export * from './destination';
+export * from './forward-auth-token';
 export * from './get-subscriber-token';
 export * from './get-provider-token';
 export * from './http-proxy-util';

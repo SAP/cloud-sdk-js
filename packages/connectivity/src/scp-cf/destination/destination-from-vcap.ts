@@ -213,9 +213,6 @@ export async function searchServiceBindingForDestination(
 ): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {
-    // TODO: Why did we do this?
-    // const useCacheIgnoringUndefined =
-    //   typeof useCache !== 'undefined' ? { useCache } : {};
     const destination = await getDestinationFromServiceBinding(options);
 
     logger.info('Successfully retrieved destination from service binding.');

@@ -1,6 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { decodeJwt } from '../jwt';
-import { JwtPayload } from '../jsonwebtoken-type';
 import { Destination, DestinationAuthToken } from './destination-service-types';
 
 const logger = createLogger({
@@ -29,20 +28,13 @@ function buildDestinationAuthToken(
   ];
 }
 
-// TODO: deprecated: The use of JWTPayload should be removed in the next major version
-function validateToken(
-  token: string | JwtPayload | undefined
-): token is string {
+function validateToken(token: string | undefined): token is string {
   if (!token) {
     logger.warn(
       "Option 'forwardAuthToken' was set on destination but no token was provided to forward. This is most likely unintended and will lead to an authorization error on request execution."
     );
-  } else if (typeof token !== 'string') {
-    logger.warn(
-      "Option 'forwardAuthToken' was set on destination but the provided token is decoded. To use 'forwardAuthToken', provide an encoded token. This is most likely unintended and will lead to an authorization error on request execution."
-    );
   }
-  return typeof token === 'string';
+  return !!token;
 }
 
 /**
@@ -53,7 +45,7 @@ function validateToken(
  */
 export function setForwardedAuthTokenIfNeeded(
   destination: Destination,
-  token?: string | JwtPayload
+  token?: string
 ): Destination {
   if (destination.forwardAuthToken) {
     if (validateToken(token)) {

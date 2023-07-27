@@ -29,16 +29,4 @@ describe('forward auth token', () => {
       "Option 'forwardAuthToken' was set on destination but no token was provided to forward. This is most likely unintended and will lead to an authorization error on request execution."
     );
   });
-
-  it('shows a warning if `forwardAuthToken` is enabled, but passed JWT is encoded', () => {
-    const logger = createLogger({
-      messageContext: 'forward-auth-token'
-    });
-
-    const warnSpy = jest.spyOn(logger, 'warn');
-    setForwardedAuthTokenIfNeeded({ forwardAuthToken: true }, {});
-    expect(warnSpy).toHaveBeenCalledWith(
-      "Option 'forwardAuthToken' was set on destination but the provided token is decoded. To use 'forwardAuthToken', provide an encoded token. This is most likely unintended and will lead to an authorization error on request execution."
-    );
-  });
 });

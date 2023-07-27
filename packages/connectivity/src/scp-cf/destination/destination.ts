@@ -290,11 +290,12 @@ function setForwardAuthToken(
 ): Destination {
   const forwardAuthToken =
     destination.originalProperties?.forwardAuthToken ??
-    destination.originalProperties?.['HTML5.ForwardAuthToken'];
+    destination.originalProperties?.['HTML5.ForwardAuthToken'] ??
+    destination.forwardAuthToken;
 
   return {
     ...destination,
-    forwardAuthToken: forwardAuthToken === 'true'
+    forwardAuthToken: forwardAuthToken === 'true' || forwardAuthToken === true
   };
 }
 

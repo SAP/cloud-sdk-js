@@ -11,6 +11,7 @@ import {
   proxyStrategy
 } from './http-proxy-util';
 import { isHttpDestination } from './destination-service-types';
+import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -50,12 +51,12 @@ export function getDestinationsFromEnv(): Destination[] {
 }
 
 /**
+ * @internal
  * Get a destination from the environment variables by name. If there are multiple destinations with the same name the first one will be used.
  * This is discouraged for productive use! Use destination-accessor/useOrFetchDestination for fetching destinations
  * from the Cloud Foundry destination service.
  * @param name - Name of the destination
- * @returns The requested destination if existent, otherwise `null`
- * @internal
+ * @returns The requested destination if existent, otherwise `null`.
  */
 export function getDestinationFromEnvByName(name: string): Destination | null {
   const matchingDestinations = getDestinationsFromEnv().filter(
@@ -69,11 +70,7 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
       `The 'destinations' env variable contains multiple destinations with the name '${name}'. Only the first entry will be considered.`
     );
   }
-  const destination = matchingDestinations[0];
-  return isHttpDestination(destination) &&
-    ['internet', 'private-link'].includes(proxyStrategy(destination))
-    ? addProxyConfigurationInternet(destination)
-    : destination;
+  return matchingDestinations[0];
 }
 
 /**
@@ -111,7 +108,13 @@ export function searchEnvVariablesForDestination(
         logger.info(
           `Successfully retrieved destination '${options.destinationName}' from environment variable.`
         );
-        return destination;
+
+        setForwardedAuthTokenIfNeeded(destination, options.jwt);
+
+        return isHttpDestination(destination) &&
+          ['internet', 'private-link'].includes(proxyStrategy(destination))
+          ? addProxyConfigurationInternet(destination)
+          : destination;
       }
     } catch (error) {
       logger.error(

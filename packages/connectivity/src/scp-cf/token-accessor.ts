@@ -27,7 +27,7 @@ export async function serviceToken(
   service: string | Service,
   options?: CachingOptions & {
     jwt?: string | JwtPayload;
-    // TODO: 4.0 Remove
+    // TODO: deprecated: 4.0 Remove
     xsuaaCredentials?: XsuaaServiceCredentials;
   }
 ): Promise<string> {

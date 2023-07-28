@@ -4,10 +4,12 @@ import {
   mockDestinationsEnv,
   unmockDestinationsEnv
 } from '../../../../../test-resources/test/test-util/request-mocker';
+import { signedJwt } from '../../../../../test-resources/test/test-util';
 import { Destination } from './destination-service-types';
 import {
   getDestinationFromEnvByName,
-  getDestinationsFromEnv
+  getDestinationsFromEnv,
+  searchEnvVariablesForDestination
 } from './destination-from-env';
 import { getDestination, useOrFetchDestination } from './destination-accessor';
 import { sanitizeDestination } from './destination';
@@ -61,6 +63,21 @@ describe('env-destination-accessor', () => {
   afterEach(() => {
     unmockDestinationsEnv();
     jest.resetAllMocks();
+  });
+
+  describe('searchEnvVariablesForDestination', () => {
+    it('sets forwarded auth token if needed', async () => {
+      const destinationName = 'FORWARD';
+      const jwt = signedJwt({});
+      mockDestinationsEnv({ name: destinationName, forwardAuthToken: true });
+
+      const destination = searchEnvVariablesForDestination({
+        destinationName,
+        jwt
+      });
+
+      expect(destination?.authTokens?.[0]).toMatchObject({ value: jwt });
+    });
   });
 
   describe('getDestinationsFromEnv()', () => {

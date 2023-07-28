@@ -20,11 +20,12 @@ import {
 export function sanitizeDestination(
   destination: Record<string, any>
 ): Destination {
-  const destAuthToken = parseAuthTokens(destination);
-  let parsedDestination = parseCertificates(destAuthToken) as Destination;
+  let parsedDestination = parseAuthTokens(destination);
+  parsedDestination = parseCertificates(parsedDestination) as Destination;
 
   parsedDestination = setDefaultAuthenticationFallback(parsedDestination);
   parsedDestination = setTrustAll(parsedDestination);
+  parsedDestination = setForwardAuthToken(parsedDestination);
   parsedDestination = setOriginalProperties(parsedDestination);
 
   return parsedDestination;
@@ -33,7 +34,7 @@ export function sanitizeDestination(
 /**
  * Takes a JSON object returned by any of the calls to the destination service and returns an SDK compatible destination object.
  * This function only accepts destination configurations of type 'HTTP' and will error if no 'URL' is given.
- * TODO: Remove from public api in version 3. (Check if related types can also be removed from public api).
+ * TODO: deprecated: Remove from public api in version 4. (Check if related types can also be removed from public api).
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
  */
@@ -284,6 +285,20 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
     : 'NoAuthentication';
 }
 
+function setForwardAuthToken(
+  destination: Destination & { forwardAuthToken?: string }
+): Destination {
+  const forwardAuthToken =
+    destination.originalProperties?.forwardAuthToken ??
+    destination.originalProperties?.['HTML5.ForwardAuthToken'] ??
+    destination.forwardAuthToken;
+
+  return {
+    ...destination,
+    forwardAuthToken: forwardAuthToken === 'true' || forwardAuthToken === true
+  };
+}
+
 /**
  * Destination configuration alongside auth tokens and certificates.
  */
@@ -422,7 +437,12 @@ const configMapping: Record<string, keyof Destination> = {
   /**
    * URI of the JSON web key set, containing the signing keys which are used to validate the JWT provided in the X-User-Token header.
    */
-  'x_user_token.jwks_uri': 'jwksUri'
+  'x_user_token.jwks_uri': 'jwksUri',
+  'HTML5.ForwardAuthToken': 'forwardAuthToken',
+  /**
+   * This overwrites `HTML5.ForwardAuthToken`, if both exist (during sanitize).
+   */
+  forwardAuthToken: 'forwardAuthToken'
 };
 
 /**

@@ -110,7 +110,7 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
     deserialize: deserializeToBigNumber,
     serialize: value => {
       const primitiveNumber =
-        value instanceof BigNumber ? value.toNumber() : value;
+        typeof value === 'number' ? value : value.toNumber();
       if (
         primitiveNumber <= Number.MAX_SAFE_INTEGER &&
         primitiveNumber >= Number.MIN_SAFE_INTEGER

@@ -228,7 +228,8 @@ describe('vcap-service-destination', () => {
         serviceBindingTransformFn
       })
     ).resolves.toEqual({
-      url: 'https://custom-service.my.example.com'
+      url: 'https://custom-service.my.example.com',
+      name: 'my-custom-service'
     });
     expect(serviceBindingTransformFn).toBeCalledTimes(1);
   });

@@ -64,5 +64,5 @@ var AirportLocation;
             isCollection: false
         }
     ];
-})(AirportLocation = exports.AirportLocation || (exports.AirportLocation = {}));
+})(AirportLocation || (exports.AirportLocation = AirportLocation = {}));
 //# sourceMappingURL=AirportLocation.js.map

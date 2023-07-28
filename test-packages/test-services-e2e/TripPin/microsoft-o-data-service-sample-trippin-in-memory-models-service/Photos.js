@@ -16,6 +16,7 @@ class Photos extends odata_v4_1.Entity {
         this._entityApi = _entityApi;
     }
 }
+exports.Photos = Photos;
 /**
  * Technical entity name for Photos.
  */
@@ -28,5 +29,4 @@ Photos._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
  * All key fields of the Photos entity
  */
 Photos._keys = ['Id'];
-exports.Photos = Photos;
 //# sourceMappingURL=Photos.js.map

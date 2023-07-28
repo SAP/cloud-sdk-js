@@ -53,5 +53,5 @@ var Location;
             isCollection: false
         }
     ];
-})(Location = exports.Location || (exports.Location = {}));
+})(Location || (exports.Location = Location = {}));
 //# sourceMappingURL=Location.js.map

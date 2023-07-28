@@ -52,5 +52,5 @@ var MyComplexReturnType;
             isCollection: false
         }
     ];
-})(MyComplexReturnType = exports.MyComplexReturnType || (exports.MyComplexReturnType = {}));
+})(MyComplexReturnType || (exports.MyComplexReturnType = MyComplexReturnType = {}));
 //# sourceMappingURL=MyComplexReturnType.js.map

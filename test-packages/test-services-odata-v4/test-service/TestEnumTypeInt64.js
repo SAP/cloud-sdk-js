@@ -20,5 +20,5 @@ var TestEnumTypeInt64;
      * Original value: 88888888888888888888
      */
     TestEnumTypeInt64["Member2"] = "Member2";
-})(TestEnumTypeInt64 = exports.TestEnumTypeInt64 || (exports.TestEnumTypeInt64 = {}));
+})(TestEnumTypeInt64 || (exports.TestEnumTypeInt64 = TestEnumTypeInt64 = {}));
 //# sourceMappingURL=TestEnumTypeInt64.js.map

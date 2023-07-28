@@ -64,5 +64,5 @@ var EventLocation;
             isCollection: false
         }
     ];
-})(EventLocation = exports.EventLocation || (exports.EventLocation = {}));
+})(EventLocation || (exports.EventLocation = EventLocation = {}));
 //# sourceMappingURL=EventLocation.js.map

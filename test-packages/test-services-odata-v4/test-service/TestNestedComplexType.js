@@ -53,5 +53,5 @@ var TestNestedComplexType;
             isCollection: false
         }
     ];
-})(TestNestedComplexType = exports.TestNestedComplexType || (exports.TestNestedComplexType = {}));
+})(TestNestedComplexType || (exports.TestNestedComplexType = TestNestedComplexType = {}));
 //# sourceMappingURL=TestNestedComplexType.js.map

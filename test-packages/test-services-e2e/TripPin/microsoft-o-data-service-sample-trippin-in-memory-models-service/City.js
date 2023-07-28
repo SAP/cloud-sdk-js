@@ -63,5 +63,5 @@ var City;
             isCollection: false
         }
     ];
-})(City = exports.City || (exports.City = {}));
+})(City || (exports.City = City = {}));
 //# sourceMappingURL=City.js.map

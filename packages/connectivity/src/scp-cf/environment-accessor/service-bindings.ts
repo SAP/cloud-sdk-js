@@ -69,7 +69,7 @@ export function resolveServiceBinding(service: string | Service): Service {
  */
 export function getServiceBindingByInstanceName(
   serviceInstanceName: string
-): Service | undefined {
+): Service {
   const service = xsenv.filterServices(serviceInstanceName);
 
   if (!service.length) {

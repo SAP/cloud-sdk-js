@@ -1,7 +1,5 @@
 import { X509Certificate } from 'node:crypto';
 import { createLogger } from '@sap-cloud-sdk/util';
-import base64url from 'base64url';
-import { JwtHeader, JwtPayload } from 'jsonwebtoken';
 import mock from 'mock-fs';
 import {
   mockServiceBindings,
@@ -13,7 +11,6 @@ import {
   xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util';
 import { certAsString } from '../../../../../test-resources/test/test-util/test-certificate';
-import { getDestination } from './destination-accessor';
 import {
   DestinationWithName,
   registerDestination,
@@ -34,12 +31,6 @@ const testDestinationWithMtls: DestinationWithName = {
 const mailDestination: DestinationWithName = {
   name: 'RegisteredDestination',
   type: 'MAIL'
-};
-
-const destinationWithForwarding: DestinationWithName = {
-  forwardAuthToken: true,
-  url: 'https://mys4hana.com',
-  name: 'FORWARD-TOKEN-DESTINATION'
 };
 
 describe('register-destination', () => {
@@ -67,7 +58,7 @@ describe('register-destination', () => {
 
   it('registers HTTP destination and retrieves it', async () => {
     await registerDestination(testDestination);
-    const actual = await getDestination({
+    const actual = await searchRegisteredDestination({
       destinationName: testDestination.name
     });
     expect(actual).toEqual(testDestination);
@@ -78,7 +69,7 @@ describe('register-destination', () => {
       inferMtls: true
     };
     await registerDestination(testDestinationWithMtls, options);
-    const actual = await getDestination({
+    const actual = await searchRegisteredDestination({
       destinationName: testDestinationWithMtls.name
     });
     expect(actual?.mtls).toStrictEqual(true);
@@ -99,7 +90,7 @@ describe('register-destination', () => {
 
     await registerDestination(testDestinationWithMtls, options);
 
-    const actualDestination = await getDestination({
+    const actualDestination = await searchRegisteredDestination({
       destinationName: testDestinationWithMtls.name
     });
     const actualCert = (
@@ -113,7 +104,7 @@ describe('register-destination', () => {
 
   it('registers mail destination and retrieves it', async () => {
     await registerDestination(mailDestination);
-    const actual = await getDestination({
+    const actual = await searchRegisteredDestination({
       destinationName: mailDestination.name
     });
     expect(actual).toEqual(mailDestination);
@@ -121,7 +112,7 @@ describe('register-destination', () => {
 
   it('registers destination and retrieves it with JWT', async () => {
     await registerDestination(testDestination, { jwt: providerServiceToken });
-    const actual = await getDestination({
+    const actual = await searchRegisteredDestination({
       destinationName: testDestination.name,
       jwt: providerServiceToken
     });
@@ -182,7 +173,7 @@ describe('register-destination', () => {
     const minutesToExpire = 9999;
     // Shift time to expire the set item
     jest.advanceTimersByTime(60000 * minutesToExpire);
-    const actual = await getDestination({
+    const actual = await searchRegisteredDestination({
       destinationName: testDestination.name
     });
     expect(actual).toEqual(testDestination);
@@ -191,48 +182,23 @@ describe('register-destination', () => {
   it('adds proxy to registered destination', async () => {
     process.env['https_proxy'] = 'some.http.com';
     registerDestination(testDestination);
-    const actual = await getDestination({
+    const actual = await searchRegisteredDestination({
       destinationName: testDestination.name
     });
     expect(actual?.proxyConfiguration?.host).toEqual('some.http.com');
     delete process.env['https_proxy'];
   });
 
-  it('adds the auth token if forwardAuthToken is enabled', async () => {
-    registerDestination(destinationWithForwarding);
-    const jwtPayload: JwtPayload = {
-      exp: 1234,
-      zid: xsuaaBindingMock.credentials.subaccountid
-    };
-    const jwtHeader: JwtHeader = { alg: 'HS256' };
+  it('sets forwarded auth token if needed', async () => {
+    const destinationName = 'FORWARD';
+    const jwt = signedJwt({});
+    registerDestination({ name: destinationName, forwardAuthToken: true });
 
-    const payloadEncoded = base64url(JSON.stringify(jwtPayload));
-    const headerEncoded = base64url(JSON.stringify(jwtHeader));
-
-    const fullToken = `${headerEncoded}.${payloadEncoded}.SomeHash`;
-    const actual = await getDestination({
-      destinationName: 'FORWARD-TOKEN-DESTINATION',
-      jwt: fullToken,
-      isolationStrategy: 'tenant'
+    const destination = await searchRegisteredDestination({
+      destinationName,
+      jwt
     });
-    expect(actual?.authTokens![0].expiresIn).toEqual('1234');
-    expect(actual?.authTokens![0].value).toEqual(fullToken);
-    expect(actual?.authTokens![0].http_header.value).toEqual(
-      `Bearer ${fullToken}`
-    );
-  });
-
-  it('warns if forwardAuthToken is enabled but no token provided.', async () => {
-    registerDestination(destinationWithForwarding);
-
-    const logger = createLogger('register-destination');
-    const warnSpy = jest.spyOn(logger, 'warn');
-    await getDestination({ destinationName: 'FORWARD-TOKEN-DESTINATION' });
-    expect(warnSpy).toHaveBeenCalledWith(
-      expect.stringMatching(
-        /Option 'forwardAuthToken' was set on destination but no token was provided to forward./
-      )
-    );
+    expect(destination?.authTokens?.[0]).toMatchObject({ value: jwt });
   });
 
   it('infos if registered destination is retrieved.', async () => {
@@ -240,7 +206,9 @@ describe('register-destination', () => {
 
     const logger = createLogger('register-destination');
     const infoSpy = jest.spyOn(logger, 'info');
-    await getDestination({ destinationName: testDestination.name });
+    await searchRegisteredDestination({
+      destinationName: testDestination.name
+    });
     expect(infoSpy).toHaveBeenCalledWith(
       expect.stringMatching(
         /Successfully retrieved destination '\w+' from registered destinations./
@@ -263,7 +231,7 @@ describe('register-destination without XSUAA binding', () => {
   it('registers destination and retrieves it with JWT', async () => {
     await registerDestination(testDestination, { jwt: providerServiceToken });
     expect(
-      await getDestination({
+      await searchRegisteredDestination({
         destinationName: testDestination.name,
         jwt: providerServiceToken
       })

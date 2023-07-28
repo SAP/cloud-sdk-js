@@ -52,7 +52,9 @@ export {
   DestinationsByType,
   DestinationForServiceBindingOptions,
   destinationForServiceBinding,
+  getDestinationFromServiceBinding,
   PartialDestinationFetchOptions,
+  ServiceBindingTransformOptions,
   getAllDestinationsFromDestinationService
 } from './scp-cf';
 

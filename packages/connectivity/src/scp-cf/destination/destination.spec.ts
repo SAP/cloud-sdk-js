@@ -44,6 +44,31 @@ describe('parseDestination', () => {
     expect(actual.isTrustingAllCertificates).toBe(false);
   });
 
+  it('parses `forwardAuthToken` as boolean', () => {
+    const destination = parseDestination({
+      URL: 'https://example.com',
+      forwardAuthToken: 'true'
+    });
+    expect(destination.forwardAuthToken).toBe(true);
+  });
+
+  it('parses `HTML5.ForwardAuthToken` as boolean', () => {
+    const destination = parseDestination({
+      URL: 'https://example.com',
+      'HTML5.ForwardAuthToken': 'true'
+    });
+    expect(destination.forwardAuthToken).toBe(true);
+  });
+
+  it('`forwardAuthToken` overwrites `HTML5.ForwardAuthToken` as boolean', () => {
+    const destination = parseDestination({
+      URL: 'https://example.com',
+      forwardAuthToken: 'false',
+      'HTML5.ForwardAuthToken': 'true'
+    });
+    expect(destination.forwardAuthToken).toBe(false);
+  });
+
   it("'jwks' is correctly parsed", () => {
     const actual = parseDestination({
       ...basicMultipleResponse[0],

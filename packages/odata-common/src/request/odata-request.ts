@@ -228,12 +228,11 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Promise resolving to the requested data.
    */
   async execute(): Promise<HttpResponse> {
-    const destination = this.destination;
-    if (!destination) {
+    if (!this.destination) {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeHttpRequest(destination, await this.requestConfig(), {
+    return executeHttpRequest(this.destination, await this.requestConfig(), {
       fetchCsrfToken: this.config.fetchCsrfToken
     }).catch(error => {
       throw constructError(error, this.config.method, this.serviceUrl());

@@ -48,7 +48,6 @@
     "jsonwebtoken": "^9.0.1"
   },
   "devDependencies": {
-    "base64url": "^3.0.1",
     "mock-fs": "^5.2.0",
     "nock": "^13.3.2",
     "typescript": "~5.0.4"

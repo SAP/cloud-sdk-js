@@ -100,8 +100,8 @@ async function retrieveDestinationWithoutCache({
 }: Pick<DestinationFetchOptions, 'useCache' | 'destinationName'> & {
   jwt?: JwtPayload;
 } & DestinationForServiceBindingOptions) {
-  const selected = getServiceBindingByInstanceName(destinationName);
-  const destination = await (serviceBindingTransformFn || transform)(selected, {
+  const service = getServiceBindingByInstanceName(destinationName);
+  const destination = await (serviceBindingTransformFn || transform)(service, {
     useCache,
     jwt
   });

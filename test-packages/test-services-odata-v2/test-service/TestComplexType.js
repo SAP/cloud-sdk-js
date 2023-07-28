@@ -218,5 +218,5 @@ var TestComplexType;
             isCollection: false
         }
     ];
-})(TestComplexType = exports.TestComplexType || (exports.TestComplexType = {}));
+})(TestComplexType || (exports.TestComplexType = TestComplexType = {}));
 //# sourceMappingURL=TestComplexType.js.map

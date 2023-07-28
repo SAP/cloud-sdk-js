@@ -16,6 +16,7 @@ class TestEntity extends odata_v2_1.Entity {
         this._entityApi = _entityApi;
     }
 }
+exports.TestEntity = TestEntity;
 /**
  * Technical entity name for TestEntity.
  */
@@ -28,5 +29,4 @@ TestEntity._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
  * All key fields of the TestEntity entity
  */
 TestEntity._keys = ['KeyPropertyGuid', 'KeyPropertyString'];
-exports.TestEntity = TestEntity;
 //# sourceMappingURL=TestEntity.js.map

@@ -16,6 +16,7 @@ class TestEntityWithSharedEntityType2 extends odata_v4_1.Entity {
         this._entityApi = _entityApi;
     }
 }
+exports.TestEntityWithSharedEntityType2 = TestEntityWithSharedEntityType2;
 /**
  * Technical entity name for TestEntityWithSharedEntityType2.
  */
@@ -28,5 +29,4 @@ TestEntityWithSharedEntityType2._defaultBasePath = '/sap/opu/odata/sap/API_TEST_
  * All key fields of the TestEntityWithSharedEntityType2 entity
  */
 TestEntityWithSharedEntityType2._keys = ['KeyProperty'];
-exports.TestEntityWithSharedEntityType2 = TestEntityWithSharedEntityType2;
 //# sourceMappingURL=TestEntityWithSharedEntityType2.js.map

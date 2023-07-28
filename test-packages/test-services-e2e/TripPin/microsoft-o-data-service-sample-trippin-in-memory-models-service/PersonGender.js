@@ -24,5 +24,5 @@ var PersonGender;
      * Original value: 2
      */
     PersonGender["Unknown"] = "Unknown";
-})(PersonGender = exports.PersonGender || (exports.PersonGender = {}));
+})(PersonGender || (exports.PersonGender = PersonGender = {}));
 //# sourceMappingURL=PersonGender.js.map

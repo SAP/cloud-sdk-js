@@ -20,5 +20,5 @@ var TestEnumType1;
      * Original value: 2
      */
     TestEnumType1["Member2"] = "Member2";
-})(TestEnumType1 = exports.TestEnumType1 || (exports.TestEnumType1 = {}));
+})(TestEnumType1 || (exports.TestEnumType1 = TestEnumType1 = {}));
 //# sourceMappingURL=TestEnumType1.js.map

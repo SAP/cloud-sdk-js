@@ -114,7 +114,7 @@ async function retrieveDestinationWithoutCache({
  * @param serviceInstanceName - The name of the service.
  * @param options - Options to customize the behavior of this function.
  * @returns A destination.
- * @deprecated Since v3.4.0. Use {@link `getDestinationFromServiceBinding()`} instead.
+ * @deprecated Since v3.4.0. Use {@link getDestinationFromServiceBinding} instead.
  */
 export async function destinationForServiceBinding(
   serviceInstanceName: string,

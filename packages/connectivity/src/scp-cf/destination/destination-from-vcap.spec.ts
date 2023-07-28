@@ -133,7 +133,8 @@ describe('vcap-service-destination', () => {
       url: 'https://my.example.com',
       authentication: 'BasicAuthentication',
       username: 'USER_NAME',
-      password: 'PASSWORD'
+      password: 'PASSWORD',
+      name: 'my-s4-hana-cloud'
     });
   });
 
@@ -158,19 +159,43 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination using a custom transformation function', async () => {
-    const serviceBindingTransformFn = jest.fn(async (service: Service) => ({
-      url: service.credentials.sys
-    }));
+    const serviceBindingTransformFn = jest.fn(async () => ({}));
 
+    await getDestinationFromServiceBinding({
+      destinationName: 'my-custom-service',
+      serviceBindingTransformFn
+    });
+
+    expect(serviceBindingTransformFn).toBeCalledTimes(1);
+  });
+
+  it("adds a name to transformed destinations that don't have a name", async () => {
     await expect(
       getDestinationFromServiceBinding({
         destinationName: 'my-custom-service',
-        serviceBindingTransformFn
+        serviceBindingTransformFn: async service => ({
+          url: service.credentials.sys
+        })
       })
     ).resolves.toEqual({
-      url: 'https://custom-service.my.example.com'
+      url: 'https://custom-service.my.example.com',
+      name: 'my-custom-service'
     });
-    expect(serviceBindingTransformFn).toBeCalledTimes(1);
+  });
+
+  it('does not overwrite transformed name', async () => {
+    await expect(
+      getDestinationFromServiceBinding({
+        destinationName: 'my-custom-service',
+        serviceBindingTransformFn: async service => ({
+          url: service.credentials.sys,
+          name: 'peter'
+        })
+      })
+    ).resolves.toEqual({
+      url: 'https://custom-service.my.example.com',
+      name: 'peter'
+    });
   });
 
   it('throws an error if the service type is not supported', async () => {

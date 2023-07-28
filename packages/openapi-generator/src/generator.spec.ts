@@ -6,8 +6,6 @@ import prettier from 'prettier';
 import { getInputFilePaths } from '@sap-cloud-sdk/generator-common/internal';
 import { emptyDocument } from '../test/test-util';
 import { generate } from './generator';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const prettier = require('prettier');
 
 jest.mock('../../generator-common/internal', () => {
   const actual = jest.requireActual('../../generator-common/internal');

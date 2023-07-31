@@ -7,6 +7,7 @@ export function mockClientCredentialsGrantCall(
   response: any,
   responseCode: number,
   serviceCredentials: ServiceCredentials,
+  tenantId?: string | undefined,
   delay = 0
 ) {
   return nock(uri, {
@@ -16,7 +17,8 @@ export function mockClientCredentialsGrantCall(
       grant_type: 'client_credentials',
       client_id: serviceCredentials.clientid,
       client_secret: serviceCredentials.clientsecret,
-      response_type: 'token'
+      response_type: 'token',
+      ...(tenantId && { app_tid: tenantId })
     })
     .delay(delay)
     .reply(responseCode, response);
@@ -50,7 +52,7 @@ export function mockUserTokenGrantCall(
   accessTokenResponse: string,
   accessTokenAssertion: string,
   creds: ServiceCredentials,
-  responseCode = 200,
+  responseCode = 200
 ) {
   return nock(uri)
     .post('/oauth/token', {

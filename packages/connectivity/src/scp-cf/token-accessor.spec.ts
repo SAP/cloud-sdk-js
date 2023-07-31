@@ -11,8 +11,10 @@ import {
 import { signedJwt } from '../../../../test-resources/test/test-util/keys';
 import {
   providerServiceToken,
+  providerUserPayload,
   providerUserToken,
   subscriberServiceToken,
+  subscriberUserPayload,
   subscriberUserToken
 } from '../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
@@ -157,14 +159,16 @@ describe('token accessor', () => {
         providerXsuaaUrl,
         { access_token: providerServiceToken },
         200,
-        destinationBindingClientSecretMock.credentials
+        destinationBindingClientSecretMock.credentials,
+        providerUserPayload.zid
       );
 
       mockClientCredentialsGrantCall(
         subscriberXsuaaUrl,
         { access_token: subscriberServiceToken },
         200,
-        destinationBindingClientSecretMock.credentials
+        destinationBindingClientSecretMock.credentials,
+        subscriberUserPayload.zid
       );
 
       const providerToken = await serviceToken('destination', {

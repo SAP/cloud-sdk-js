@@ -239,7 +239,7 @@ describe('jwt', () => {
     });
 
     it('fetches a new key when a the cache has been disabled', async () => {
-      nock(jku).get('/').reply(200, responseWithPublicKey());
+      const nockBefore =nock(jku).get('/').reply(200, responseWithPublicKey());
 
       const jwt = signedJwtForVerification(jwtPayload);
       await verifyJwt(jwt);

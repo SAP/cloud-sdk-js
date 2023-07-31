@@ -33,6 +33,7 @@ import {
   providerServiceToken,
   providerXsuaaUrl,
   subscriberServiceToken,
+  subscriberUserPayload,
   subscriberUserToken,
   subscriberXsuaaUrl,
   xsuaaBindingMock
@@ -255,7 +256,8 @@ describe('generic http client', () => {
         subscriberXsuaaUrl,
         { access_token: subscriberServiceToken },
         200,
-        destinationBindingClientSecretMock.credentials
+        destinationBindingClientSecretMock.credentials,
+        subscriberUserPayload.zid
       );
     }
 

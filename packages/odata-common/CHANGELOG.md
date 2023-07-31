@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/odata-common
 
+## 3.4.0
+
+### Patch Changes
+
+- 431d2a542: [Fixed Issue] Serialize properties of type "Edm.Decimal" to numbers when they are within the safe range and strings when they are not.
+- Updated dependencies [db0780f1b]
+- Updated dependencies [bde64634d]
+- Updated dependencies [bde64634d]
+  - @sap-cloud-sdk/connectivity@3.4.0
+  - @sap-cloud-sdk/http-client@3.4.0
+  - @sap-cloud-sdk/util@3.4.0
+
 ## 3.3.0
 
 ### Patch Changes

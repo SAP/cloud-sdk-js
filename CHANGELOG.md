@@ -28,6 +28,23 @@
 
 - 
 
+# 3.4.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.4.0
+
+## Compatibility Notes
+
+- [connectivity] Deprecate `destinationForServiceBinding()` and `PartialDestinationFetchOptions`. Use `getDestinationFromServiceBinding()` and `ServiceBindingTransformOptions` instead. (bde64634d)
+
+## New Functionalities
+
+- [connectivity] Always add a name to destinations from service bindings created with `getDestinationFromServiceBinding()`. (db0780f1b)
+- [connectivity] Support forwarding of auth tokens for destinations from the destination service, service bindings and environment variables. (bde64634d)
+
+## Fixed Issues
+
+- [odata-common, odata-v4] Serialize properties of type "Edm.Decimal" to numbers when they are within the safe range and strings when they are not. (431d2a542)
+
 # 3.3.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.3.0

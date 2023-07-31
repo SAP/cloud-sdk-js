@@ -1,5 +1,18 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.4.0
+
+### Minor Changes
+
+- db0780f1b: [New Functionality] Always add a name to destinations from service bindings created with `getDestinationFromServiceBinding()`.
+- bde64634d: [Compatibility Note] Deprecate `destinationForServiceBinding()` and `PartialDestinationFetchOptions`. Use `getDestinationFromServiceBinding()` and `ServiceBindingTransformOptions` instead.
+- bde64634d: [New Functionality] Support forwarding of auth tokens for destinations from the destination service, service bindings and environment variables.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.4.0
+- @sap-cloud-sdk/util@3.4.0
+
 ## 3.3.0
 
 ### Minor Changes

@@ -176,7 +176,7 @@ describe('tsToEdm()', () => {
   });
 
   it('should parse BigNumber to Edm.Decimal', () => {
-    const expected = 1.23;
+    const expected = '1.23';
     const actual = tsToEdm(
       new BigNumber('1.23'),
       'Edm.Decimal',

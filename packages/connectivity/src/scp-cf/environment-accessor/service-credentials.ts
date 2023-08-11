@@ -87,8 +87,7 @@ function getCredentialsWithJwt<ServiceCredentialsT extends ServiceCredentials>(
     c => matchesClientId(c, token) || matchesAudience(c, token)
   );
 
-  // eslint-disable-next-line no-unused-expressions
-  eligibleCredentials[0] ?? logResult(service, eligibleCredentials, true);
+  logResult(service, eligibleCredentials, true);
   return eligibleCredentials[0];
 }
 

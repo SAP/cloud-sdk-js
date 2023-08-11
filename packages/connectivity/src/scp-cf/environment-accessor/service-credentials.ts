@@ -94,7 +94,7 @@ function getCredentialsWithJwt<ServiceCredentialsT extends ServiceCredentials>(
   );
 
   // eslint-disable-next-line no-unused-expressions
-  eligibleCredentials[0] ? logResult(service, eligibleCredentials, true) : logger.warn(`Found no service binding for serive '${service}' matching either the token's client id or audience.`);
+  eligibleCredentials[0] ? logResult(service, eligibleCredentials, true) : logger.warn(`Found no service binding for service '${service}' matching either the token's client id or audience.`);
   return eligibleCredentials[0];
 }
 

@@ -93,7 +93,8 @@ function getCredentialsWithJwt<ServiceCredentialsT extends ServiceCredentials>(
     c => matchesClientId(c, token) || matchesAudience(c, token)
   );
 
-  logResult(service, eligibleCredentials, true);
+  // eslint-disable-next-line no-unused-expressions
+  eligibleCredentials[0] ? logResult(service, eligibleCredentials, true) : logger.warn(`Found no service binding for serive '${service}' matching either the token's client id or audience.`);
   return eligibleCredentials[0];
 }
 

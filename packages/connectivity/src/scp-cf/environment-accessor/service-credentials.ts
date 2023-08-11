@@ -12,11 +12,11 @@ const logger = createLogger({
 /**
  * @internal
  * Retrieves a service binding of the given type and tries to match it based on the JWT, if given.
- * If no match was found or no JWT is given, the first binding is returned.
- * Throws an error if there are no bindings of the given type.
+ * If no match between a given JWT and a service binding is found, undefined is returned.
+ * If no JWT is given, the first binding or undefined is returned, depending on if a binding exists.
  * @param service - The service type.
  * @param token - Either an encoded or decoded JWT.
- * @returns The credentials for a match, otherwise `undefined`.
+ * @returns The service credentials, otherwise `undefined`.
  */
 export function getServiceCredentials<
   ServiceCredentialsT extends ServiceCredentials
@@ -40,13 +40,7 @@ export function getServiceCredentials<
       typeof token === 'string' ? decodeJwt(token) : token
     );
 
-    if (credentials) {
-      return credentials;
-    }
-    logger.debug(
-      "Could not match the service instance to the JWT's client id or audience."
-    );
-    return undefined;
+    return credentials ?? undefined;
   }
   logger.debug(`No JWT given to select binding to service '${service}'.`);
 
@@ -94,7 +88,7 @@ function getCredentialsWithJwt<ServiceCredentialsT extends ServiceCredentials>(
   );
 
   // eslint-disable-next-line no-unused-expressions
-  eligibleCredentials[0] ? logResult(service, eligibleCredentials, true) : logger.warn(`Found no service binding for service '${service}' matching either the token's client id or audience.`);
+  eligibleCredentials[0] ?? logResult(service, eligibleCredentials, true);
   return eligibleCredentials[0];
 }
 
@@ -110,7 +104,10 @@ function logResult<ServiceCredentialsT extends ServiceCredentials>(
   credentials: ServiceCredentialsT[],
   usedToken: boolean
 ) {
-  if (credentials.length === 1) {
+  if (!credentials && usedToken){
+    logger.warn(`Found no service binding for service '${service}' matching either the token's client id or audience.`);
+  }
+  else if (credentials.length === 1) {
     logger.debug(
       `Found one service binding for service '${service}'${usingJwtText(
         usedToken

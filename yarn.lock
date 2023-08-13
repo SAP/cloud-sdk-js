@@ -1299,10 +1299,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@7.1.0":
-  version "7.1.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.1.0.tgz#f619d354771ff838cf3fea25a16604954772622d"
-  integrity sha512-b1GDbQZx0iayB9tAzlSf5FPs+iRKuq2kpqp97mD8opikk1wkYgT22uFIh3zagX7kgIBkexJqsxVzY0magSG8og==
+"@sap/cds-dk@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.1.1.tgz#302895d468f8a31b10470e37a5666e751ae915fb"
+  integrity sha512-GvwGqUX15K0b6kLZugNIqj5vNU+0qgy1IiJY7rHfZSZ8lcnB7nLApvs32evQstwKaapBs5Ao4DG4wUae9JP/aw==
   dependencies:
     "@sap/cds" "^7"
     "@sap/cds-foss" "^4.0.2"

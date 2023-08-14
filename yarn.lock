@@ -1384,10 +1384,19 @@
   dependencies:
     async "3.2.3"
 
-"@sap/xsenv@3.4.0", "@sap/xsenv@^3.4.0":
+"@sap/xsenv@3.4.0":
   version "3.4.0"
   resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.4.0.tgz#4a1ac00e3086bfff46e897c16c285f62689eb325"
   integrity sha512-bZ/NFhS+wZI0JlMO1OOBEThfyOTmf2x5oQ+wToJGkZ2T5+gLUE3emZiC4iHA+BuSmUtO+vYoe29Q1qiE4qaiJQ==
+  dependencies:
+    debug "4.3.3"
+    node-cache "^5.1.0"
+    verror "1.10.0"
+
+"@sap/xsenv@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-4.0.0.tgz#7509f98b10e972b5a7607b1f4bad350cc6acfc12"
+  integrity sha512-I3otC5A+WYt/4mnbgQmY1sx9OsLjcvhmDp800zLWqNMPbYy7FmnpgZ6TbECnsNL5pU1NOSHV9CNFpomdP/FBdg==
   dependencies:
     debug "4.3.3"
     node-cache "^5.1.0"

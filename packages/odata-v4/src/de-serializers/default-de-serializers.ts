@@ -76,7 +76,18 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
   },
   /* DeSerializers with v4 specific URI serializer defaults. */
   'Edm.Decimal': {
-    ...defaultDeSerializersCommon['Edm.Decimal'],
+    deserialize: defaultDeSerializersCommon['Edm.Decimal'].deserialize,
+    serialize: value => {
+      const primitiveNumber =
+        typeof value === 'number' ? value : value.toNumber();
+      if (
+        primitiveNumber <= Number.MAX_SAFE_INTEGER &&
+        primitiveNumber >= Number.MIN_SAFE_INTEGER
+      ) {
+        return primitiveNumber;
+      }
+      return defaultDeSerializersCommon['Edm.Decimal'].serialize(value);
+    },
     serializeToUri: (value, serialize) => String(serialize(value))
   },
   'Edm.Guid': {

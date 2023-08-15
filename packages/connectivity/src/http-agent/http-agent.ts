@@ -123,18 +123,22 @@ function getTrustStoreOptions(
  */
 function getKeyStoreOptions(destination: Destination): Record<string, any> {
   if (
-    destination.keyStoreName &&
-    destination.keyStorePassword &&
     // Only add certificates, when using MTLS (https://github.com/SAP/cloud-sdk-js/issues/3544)
     destination.authentication === 'ClientCertificateAuthentication' &&
     // pfx is an alternative to providing key and cert individually
     // For mTLS we provide key and cert, in non-mTLS cases we provide pfx
-    !mtlsIsEnabled(destination)
+    !mtlsIsEnabled(destination) &&
+    destination.keyStoreName
   ) {
     const certificate = selectCertificate(destination);
 
     logger.debug(`Certificate with name "${certificate.name}" selected.`);
 
+    if (!destination.keyStorePassword) {
+      logger.debug(
+        `Destination '${destination.name}' does not have a keystore password.`
+      );
+    }
     return {
       pfx: Buffer.from(certificate.content, 'base64'),
       passphrase: destination.keyStorePassword

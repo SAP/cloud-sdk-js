@@ -12,8 +12,8 @@ const logger = createLogger({
 /**
  * @internal
  * Retrieves a service binding of the given type and tries to match it based on the JWT, if given.
- * If no match between a given JWT and a service binding is found, undefined is returned.
- * If no JWT is given, the first binding or undefined is returned, depending on if a binding exists.
+ * Returns `undefined` if no match is found.
+ * If no JWT is given, returns the first binding of the given service type, if available.
  * @param service - The service type.
  * @param token - Either an encoded or decoded JWT.
  * @returns The service credentials, otherwise `undefined`.

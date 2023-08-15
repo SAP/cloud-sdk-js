@@ -20,7 +20,7 @@
     "@vercel/ncc": "^0.36.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.47.0",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.2",
     "typescript": "^5.1.6"
   }
 }

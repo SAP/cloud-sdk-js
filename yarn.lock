@@ -686,10 +686,10 @@
   resolved "https://registry.npmjs.org/@eslint-community/regexpp/-/regexpp-4.6.2.tgz#1816b5f6948029c5eaacb0703b850ee0cb37d8f8"
   integrity sha512-pPTNuaAG3QMH+buKyBIGJs3g/S5y0caxw0ygM3YyE6yJFySwiGGSzA+mM3KJ8QQvzeLh3blwgSonkFjgQdxzMw==
 
-"@eslint/eslintrc@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-2.1.1.tgz#18d635e24ad35f7276e8a49d135c7d3ca6a46f93"
-  integrity sha512-9t7ZA7NGGK8ckelF0PQCfcxIUzs1Md5rrO6U/c+FIQNanea5UZC0wqKXH4vHBccmu4ZJgZ2idtPeW7+Q2npOEA==
+"@eslint/eslintrc@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-2.1.2.tgz#c6936b4b328c64496692f76944e755738be62396"
+  integrity sha512-+wvgpDsrB1YqAMdEUCcnTlpfVBH7Vqn6A/NT3D8WVXFIaKMlErPIZT3oCIAVCOtarRpMtelZLqJeU3t7WY6X6g==
   dependencies:
     ajv "^6.12.4"
     debug "^4.3.2"
@@ -701,10 +701,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@eslint/js@^8.46.0":
-  version "8.46.0"
-  resolved "https://registry.npmjs.org/@eslint/js/-/js-8.46.0.tgz#3f7802972e8b6fe3f88ed1aabc74ec596c456db6"
-  integrity sha512-a8TLtmPi8xzPkCbp/OGFUo5yhRkHM2Ko9kOWP4znJr0WAhWyThaw3PnwX4vOTWOAMsV2uRt32PPDcEz63esSaA==
+"@eslint/js@^8.47.0":
+  version "8.47.0"
+  resolved "https://registry.npmjs.org/@eslint/js/-/js-8.47.0.tgz#5478fdf443ff8158f9de171c704ae45308696c7d"
+  integrity sha512-P6omY1zv5MItm93kLM8s2vr1HICJH8v0dvddDhysbIuZ+vcjOHg5Zbkf1mTkcmi2JA9oBG2anOkRnW8WJTS8Og==
 
 "@exodus/schemasafe@^1.0.0-rc.2":
   version "1.0.0-rc.9"
@@ -1260,10 +1260,10 @@
   dependencies:
     debug "^4.3.1"
 
-"@puppeteer/browsers@1.5.1":
-  version "1.5.1"
-  resolved "https://registry.npmjs.org/@puppeteer/browsers/-/browsers-1.5.1.tgz#90e26741467aad32faf78021a7fc02e98e18dd71"
-  integrity sha512-OY8S5/DIsCSn/jahxw+qhCKa6jYQff6yq1oenzakISLvGcwWpyMzshJ3BIR7iP0vG0RPJjvHRLRxbsWw4kah1w==
+"@puppeteer/browsers@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.npmjs.org/@puppeteer/browsers/-/browsers-1.6.0.tgz#d52413a7039e40a5ef72fb13fb6505fd87ce842e"
+  integrity sha512-R2ib8j329427jtKB/qlz0MJbwfJE/6I8ocJLiajsRqJ2PPI8DbjiNzC3lQZeISXEcjOBVhbG2RafN8SlHdcT+A==
   dependencies:
     debug "4.3.4"
     extract-zip "2.0.1"
@@ -1299,10 +1299,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@7.1.0":
-  version "7.1.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.1.0.tgz#f619d354771ff838cf3fea25a16604954772622d"
-  integrity sha512-b1GDbQZx0iayB9tAzlSf5FPs+iRKuq2kpqp97mD8opikk1wkYgT22uFIh3zagX7kgIBkexJqsxVzY0magSG8og==
+"@sap/cds-dk@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.1.1.tgz#302895d468f8a31b10470e37a5666e751ae915fb"
+  integrity sha512-GvwGqUX15K0b6kLZugNIqj5vNU+0qgy1IiJY7rHfZSZ8lcnB7nLApvs32evQstwKaapBs5Ao4DG4wUae9JP/aw==
   dependencies:
     "@sap/cds" "^7"
     "@sap/cds-foss" "^4.0.2"
@@ -1384,10 +1384,19 @@
   dependencies:
     async "3.2.3"
 
-"@sap/xsenv@3.4.0", "@sap/xsenv@^3.4.0":
+"@sap/xsenv@3.4.0":
   version "3.4.0"
   resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.4.0.tgz#4a1ac00e3086bfff46e897c16c285f62689eb325"
   integrity sha512-bZ/NFhS+wZI0JlMO1OOBEThfyOTmf2x5oQ+wToJGkZ2T5+gLUE3emZiC4iHA+BuSmUtO+vYoe29Q1qiE4qaiJQ==
+  dependencies:
+    debug "4.3.3"
+    node-cache "^5.1.0"
+    verror "1.10.0"
+
+"@sap/xsenv@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-4.0.0.tgz#7509f98b10e972b5a7607b1f4bad350cc6acfc12"
+  integrity sha512-I3otC5A+WYt/4mnbgQmY1sx9OsLjcvhmDp800zLWqNMPbYy7FmnpgZ6TbECnsNL5pU1NOSHV9CNFpomdP/FBdg==
   dependencies:
     debug "4.3.3"
     node-cache "^5.1.0"
@@ -1641,10 +1650,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^18.17.4":
-  version "18.17.4"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.17.4.tgz#bf8ae9875528929cc9930dc3f066cd0481fe1231"
-  integrity sha512-ATL4WLgr7/W40+Sp1WnNTSKbgVn6Pvhc/2RHAdt8fl6NsQyp4oPCi2eKcGOvA494bwf1K/W6nGgZ9TwDqvpjdw==
+"@types/node@*", "@types/node@^18.17.5":
+  version "18.17.5"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.17.5.tgz#c58b12bca8c2a437b38c15270615627e96dd0bc5"
+  integrity sha512-xNbS75FxH6P4UXTPUJp/zNPq6/xsfdJKussCWNOnz4aULWIRwMgP1LgaB5RiBnMX1DPCYenuqGZfnIAx5mbFLA==
 
 "@types/node@^12.7.1":
   version "12.20.55"
@@ -3949,20 +3958,20 @@ eslint-visitor-keys@^2.0.0:
   resolved "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-2.1.0.tgz#f65328259305927392c938ed44eb0a5c9b2bd303"
   integrity sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==
 
-eslint-visitor-keys@^3.3.0, eslint-visitor-keys@^3.4.1, eslint-visitor-keys@^3.4.2:
-  version "3.4.2"
-  resolved "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.2.tgz#8c2095440eca8c933bedcadf16fefa44dbe9ba5f"
-  integrity sha512-8drBzUEyZ2llkpCA67iYrgEssKDUu68V8ChqqOfFupIaG/LCVPUT+CoGJpT77zJprs4T/W7p07LP7zAIMuweVw==
+eslint-visitor-keys@^3.3.0, eslint-visitor-keys@^3.4.1, eslint-visitor-keys@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz#0cd72fe8550e3c2eae156a96a4dddcd1c8ac5800"
+  integrity sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==
 
-eslint@^8, eslint@^8.17.0, eslint@^8.46.0:
-  version "8.46.0"
-  resolved "https://registry.npmjs.org/eslint/-/eslint-8.46.0.tgz#a06a0ff6974e53e643acc42d1dcf2e7f797b3552"
-  integrity sha512-cIO74PvbW0qU8e0mIvk5IV3ToWdCq5FYG6gWPHHkx6gNdjlbAYvtfHmlCMXxjcoVaIdwy/IAt3+mDkZkfvb2Dg==
+eslint@^8, eslint@^8.17.0, eslint@^8.47.0:
+  version "8.47.0"
+  resolved "https://registry.npmjs.org/eslint/-/eslint-8.47.0.tgz#c95f9b935463fb4fad7005e626c7621052e90806"
+  integrity sha512-spUQWrdPt+pRVP1TTJLmfRNJJHHZryFmptzcafwSvHsceV81djHOdnEeDmkdotZyLNjDhrOasNK8nikkoG1O8Q==
   dependencies:
     "@eslint-community/eslint-utils" "^4.2.0"
     "@eslint-community/regexpp" "^4.6.1"
-    "@eslint/eslintrc" "^2.1.1"
-    "@eslint/js" "^8.46.0"
+    "@eslint/eslintrc" "^2.1.2"
+    "@eslint/js" "^8.47.0"
     "@humanwhocodes/config-array" "^0.11.10"
     "@humanwhocodes/module-importer" "^1.0.1"
     "@nodelib/fs.walk" "^1.2.8"
@@ -3973,7 +3982,7 @@ eslint@^8, eslint@^8.17.0, eslint@^8.46.0:
     doctrine "^3.0.0"
     escape-string-regexp "^4.0.0"
     eslint-scope "^7.2.2"
-    eslint-visitor-keys "^3.4.2"
+    eslint-visitor-keys "^3.4.3"
     espree "^9.6.1"
     esquery "^1.4.2"
     esutils "^2.0.2"
@@ -7678,26 +7687,26 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-puppeteer-core@21.0.2:
-  version "21.0.2"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-21.0.2.tgz#1ce10a495c7f57a06e3de6e247e2faae4a33c2c2"
-  integrity sha512-6tRjB9RZmPApPhQhzXZxmPUBt+6KM2P/eCp8p2o0DvK3P1V2qYkRi6/EQJEBIFquqZ+kF1zaW9Tg69p0dQlqFg==
+puppeteer-core@21.0.3:
+  version "21.0.3"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-21.0.3.tgz#201bfbf18a9467dbedb10c3c2c9c43462bb9bb84"
+  integrity sha512-AGvopfkA0jLbW5Ba0m6kBuvRIpLo76PXUK3zJYkXOr9NI1LknJESyai6TtXc6GUSewMkinmyEDx1pFgq900hqg==
   dependencies:
-    "@puppeteer/browsers" "1.5.1"
+    "@puppeteer/browsers" "1.6.0"
     chromium-bidi "0.4.20"
     cross-fetch "4.0.0"
     debug "4.3.4"
     devtools-protocol "0.0.1147663"
     ws "8.13.0"
 
-puppeteer@^21.0.2:
-  version "21.0.2"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-21.0.2.tgz#d30b61d5d0c0be2d57677b177108daea376bcd50"
-  integrity sha512-RAgbVjvwLABz8y+83xGdE+v7JLmvvcyGSlhQUX6k3rpBeRIO593E3DCaSY9VRUq3VJPMm7nWzDiZjUaK1tIpQg==
+puppeteer@^21.0.3:
+  version "21.0.3"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-21.0.3.tgz#210ae2e139d7ded577ac9f38697b69adab258ce5"
+  integrity sha512-+eBNTEOOBrRBLJ1/jIuHcOoUUOVpUQjQFwp9L/sm/iBDqii+4jv9jxpPJSOmOHXuy++X7GWfhuDw4vz8crNzPw==
   dependencies:
-    "@puppeteer/browsers" "1.5.1"
+    "@puppeteer/browsers" "1.6.0"
     cosmiconfig "8.2.0"
-    puppeteer-core "21.0.2"
+    puppeteer-core "21.0.3"
 
 pure-rand@^6.0.0:
   version "6.0.0"

@@ -10,7 +10,8 @@ import {
   DeSerializers,
   DefaultDeSerializers,
   defaultDeSerializers,
-  OperationRequestBuilder
+  FunctionImportRequestBuilder,
+  ActionImportRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { multipleSchemasService } from './service';
 import { TestEntity1 } from './TestEntity1';
@@ -37,14 +38,14 @@ export function testFunctionImportEntityReturnType1<
 >(
   parameters: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): OperationRequestBuilder<
+): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
   TestEntity1
 > {
   const params = {};
 
-  return new OperationRequestBuilder(
+  return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType1',
     data =>
@@ -53,8 +54,7 @@ export function testFunctionImportEntityReturnType1<
         multipleSchemasService(deSerializers).testEntity1Api
       ),
     params,
-    deSerializers,
-    'function'
+    deSerializers
   );
 }
 
@@ -75,14 +75,14 @@ export function testFunctionImportEntityReturnType2<
 >(
   parameters: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): OperationRequestBuilder<
+): FunctionImportRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
   TestEntity2
 > {
   const params = {};
 
-  return new OperationRequestBuilder(
+  return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType2',
     data =>
@@ -91,8 +91,7 @@ export function testFunctionImportEntityReturnType2<
         multipleSchemasService(deSerializers).testEntity2Api
       ),
     params,
-    deSerializers,
-    'function'
+    deSerializers
   );
 }
 
@@ -113,14 +112,14 @@ export function testActionImportNoParameterComplexReturnType1<
 >(
   parameters: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): OperationRequestBuilder<
+): ActionImportRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
   TestComplexType1
 > {
   const params = {};
 
-  return new OperationRequestBuilder(
+  return new ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType1',
     data =>
@@ -130,8 +129,7 @@ export function testActionImportNoParameterComplexReturnType1<
         ).deserializeComplexType(data, TestComplexType1)
       ),
     params,
-    deSerializers,
-    'action'
+    deSerializers
   );
 }
 
@@ -152,14 +150,14 @@ export function testActionImportNoParameterComplexReturnType2<
 >(
   parameters: TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
   deSerializers: DeSerializersT = defaultDeSerializers as any
-): OperationRequestBuilder<
+): ActionImportRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
   TestComplexType2
 > {
   const params = {};
 
-  return new OperationRequestBuilder(
+  return new ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType2',
     data =>
@@ -169,8 +167,7 @@ export function testActionImportNoParameterComplexReturnType2<
         ).deserializeComplexType(data, TestComplexType2)
       ),
     params,
-    deSerializers,
-    'action'
+    deSerializers
   );
 }
 

@@ -40,7 +40,7 @@ export function getServiceCredentials<
       typeof token === 'string' ? decodeJwt(token) : token
     );
 
-    return credentials ?? undefined;
+    return credentials;
   }
   logger.debug(`No JWT given to select binding to service '${service}'.`);
 
@@ -103,10 +103,7 @@ function logResult<ServiceCredentialsT extends ServiceCredentials>(
   credentials: ServiceCredentialsT[],
   usedToken: boolean
 ) {
-  if (!credentials && usedToken){
-    logger.warn(`Found no service binding for service '${service}' matching either the token's client id or audience.`);
-  }
-  else if (credentials.length === 1) {
+  if (credentials.length === 1) {
     logger.debug(
       `Found one service binding for service '${service}'${usingJwtText(
         usedToken
@@ -119,6 +116,10 @@ function logResult<ServiceCredentialsT extends ServiceCredentials>(
       )}. ${appNames(credentials)}\nChoosing first one ('${
         credentials[0].xsappname
       }').`
+    );
+  } else if (usedToken) {
+    logger.warn(
+      `Found no service binding for service '${service}' matching either the token's client id or audience.`
     );
   }
 }

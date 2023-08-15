@@ -11,7 +11,8 @@ import {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
-  OperationRequestBuilder,
+  FunctionImportRequestBuilder,
+  ActionImportRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
@@ -198,33 +199,33 @@ export type ReadTestServiceRequestBuilder<
       TestEntityEndsWithSomethingElse<DeSerializersT>,
       DeSerializersT
     >
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
       boolean
     >
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
       string[]
     >
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportNullableTestParameters<DeSerializersT>,
       string[] | null
     >
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
       TestEntity
     >
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
       TestEntity[]
     >
   | Omit<
-      OperationRequestBuilder<
+      FunctionImportRequestBuilder<
         DeSerializersT,
         TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>,
         never
@@ -232,29 +233,29 @@ export type ReadTestServiceRequestBuilder<
       'execute'
     >
   | Omit<
-      OperationRequestBuilder<
+      FunctionImportRequestBuilder<
         DeSerializersT,
         TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
         never
       >,
       'execute'
     >
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
       TestComplexType
     >
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
       TestComplexType[]
     >
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportMultipleParamsParameters<DeSerializersT>,
       boolean | null
     >
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
       undefined
@@ -385,28 +386,28 @@ export type WriteTestServiceRequestBuilder<
       TestEntityEndsWithSomethingElse<DeSerializersT>,
       DeSerializersT
     >
-  | OperationRequestBuilder<
+  | ActionImportRequestBuilder<
       DeSerializersT,
       TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>,
       undefined
     >
-  | OperationRequestBuilder<
+  | ActionImportRequestBuilder<
       DeSerializersT,
       TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>,
       TestComplexType
     >
-  | OperationRequestBuilder<
+  | ActionImportRequestBuilder<
       DeSerializersT,
       TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>,
       any
     >
-  | OperationRequestBuilder<
+  | ActionImportRequestBuilder<
       DeSerializersT,
       TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>,
       TestEntity
     >
   | Omit<
-      OperationRequestBuilder<
+      ActionImportRequestBuilder<
         DeSerializersT,
         TestActionImportSharedEntityReturnTypeParameters<DeSerializersT>,
         never
@@ -414,14 +415,14 @@ export type WriteTestServiceRequestBuilder<
       'execute'
     >
   | Omit<
-      OperationRequestBuilder<
+      ActionImportRequestBuilder<
         DeSerializersT,
         TestActionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
         never
       >,
       'execute'
     >
-  | OperationRequestBuilder<
+  | ActionImportRequestBuilder<
       DeSerializersT,
       TestActionImportNullableTestParameters<DeSerializersT>,
       TestComplexType | null

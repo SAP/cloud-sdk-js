@@ -11,7 +11,8 @@ import {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder,
-  OperationRequestBuilder,
+  FunctionImportRequestBuilder,
+  ActionImportRequestBuilder,
   BatchChangeSet
 } from '@sap-cloud-sdk/odata-v4';
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
@@ -99,12 +100,12 @@ export type ReadMultipleSchemasServiceRequestBuilder<
   | GetByKeyRequestBuilder<TestEntity2<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity3<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
       TestEntity1
     >
-  | OperationRequestBuilder<
+  | FunctionImportRequestBuilder<
       DeSerializersT,
       TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
       TestEntity2
@@ -124,12 +125,12 @@ export type WriteMultipleSchemasServiceRequestBuilder<
   | CreateRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
   | DeleteRequestBuilder<TestEntity4<DeSerializersT>, DeSerializersT>
-  | OperationRequestBuilder<
+  | ActionImportRequestBuilder<
       DeSerializersT,
       TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
       TestComplexType1
     >
-  | OperationRequestBuilder<
+  | ActionImportRequestBuilder<
       DeSerializersT,
       TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
       TestComplexType2

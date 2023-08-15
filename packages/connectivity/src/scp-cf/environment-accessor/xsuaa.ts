@@ -18,7 +18,11 @@ export function getXsuaaServiceCredentials(
     token
   );
   if (!credentials) {
-    throw new Error(token ? 'Could not find XSUAA service binding matching the token.' : 'Could not find XSUAA service binding.');
+    throw new Error(
+      token
+        ? 'Could not find XSUAA service binding matching the token.'
+        : 'Could not find XSUAA service binding.'
+    );
   }
   return credentials;
 }

@@ -176,7 +176,7 @@ describe('tsToEdm()', () => {
   });
 
   it('should parse BigNumber to Edm.Decimal', () => {
-    const expected = 1.23;
+    const expected = '1.23';
     const actual = tsToEdm(
       new BigNumber('1.23'),
       'Edm.Decimal',
@@ -317,7 +317,7 @@ describe('EDM to ts to EDM does not lead to information loss', () => {
   });
 
   it('Edm.Decimal', () => {
-    const expected = 123456.789;
+    const expected = '123456.789';
     expect(
       tsToEdm(
         edmToTs(expected, 'Edm.Decimal', defaultDeSerializers),

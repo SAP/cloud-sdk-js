@@ -163,6 +163,30 @@ describe('createAgent', () => {
     ).toMatchObject(expectedOptions);
   });
 
+  it('returns an agent with certificate and no passphrase for authentication type ClientCertificateAuthentication', async () => {
+    const destination: HttpDestination = {
+      url: 'https://destination.example.com',
+      authentication: 'ClientCertificateAuthentication',
+      keyStoreName: 'cert.p12',
+      certificates: [
+        {
+          name: 'cert.p12',
+          content: 'base64string',
+          type: 'CERTIFICATE'
+        }
+      ]
+    };
+
+    const expectedOptions = {
+      rejectUnauthorized: true,
+      pfx: Buffer.from('base64string', 'base64')
+    };
+
+    expect(
+      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+    ).toMatchObject(expectedOptions);
+  });
+
   it("does not return an agent for destinations with authentication types that have a certificate but don't use MTLS", async () => {
     const destination: HttpDestination = {
       url: 'https://destination.example.com',

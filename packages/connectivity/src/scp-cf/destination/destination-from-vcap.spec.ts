@@ -156,7 +156,7 @@ describe('vcap-service-destination', () => {
       destinationCache
         .getCacheInstance()
         .get(`${providerUserPayload.zid}::my-destination`)
-    ).resolves.toBeDefined();
+    ).toBeDefined();
   });
 
   it('returns undefined if cached destination jwt has expired', async () => {
@@ -175,7 +175,7 @@ describe('vcap-service-destination', () => {
       jwt
     });
     jest.advanceTimersByTime(720 * 60 * 1000 + 1);
-    expect(
+    await expect(
       destinationCache
         .getCacheInstance()
         .get(`${jwtPayload.zid}::my-destination-service`)

@@ -92,7 +92,7 @@
     "@types/jsonwebtoken": "^9.0.2",
     "@types/license-checker": "^25.0.1",
     "@types/mock-fs": "^4.13.0",
-    "@types/node": "^18.17.5",
+    "@types/node": "^18.17.6",
     "@types/prettier": "2.7.2",
     "@types/uuid": "^9.0.2",
     "@types/voca": "^1.4.0",

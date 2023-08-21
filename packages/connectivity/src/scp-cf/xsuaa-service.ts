@@ -43,8 +43,11 @@ export async function getClientCredentialsToken(
         arg.serviceCredentials,
         null,
         arg.zoneId,
-        (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
-          err ? reject(err) : resolve(tokenResponse)
+        (
+          err: Error,
+          token: string,
+          tokenResponse: ClientCredentialsResponse
+        ) => (err ? reject(err) : resolve(tokenResponse))
       );
     });
   };

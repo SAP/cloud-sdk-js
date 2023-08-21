@@ -40,10 +40,10 @@ describe('Mail', () => {
   it('should send 10 mails', async () => {
     const mailOptions = buildArrayWithNaturalNumbers(10).map(
       mailIndex =>
-      ({
-        ...defaultMailOptions,
-        subject: `mail ${mailIndex}`
-      } as MailConfig)
+        ({
+          ...defaultMailOptions,
+          subject: `mail ${mailIndex}`
+        }) as MailConfig
     );
     const responses = await sendTestMail(mailOptions);
 

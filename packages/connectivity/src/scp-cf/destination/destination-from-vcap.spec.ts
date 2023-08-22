@@ -159,7 +159,7 @@ describe('vcap-service-destination', () => {
     ).toBeDefined();
   });
 
-  it('returns undefined if cached destination jwt has expired', async () => {
+  it('returns undefined if cached destination JWT has expired', async () => {
     const jwtPayload = {
       iat: 1692273899,
       exp: 1692317098,

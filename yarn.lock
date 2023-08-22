@@ -604,27 +604,27 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dts-critic@^0.0.165":
-  version "0.0.165"
-  resolved "https://registry.npmjs.org/@definitelytyped/dts-critic/-/dts-critic-0.0.165.tgz#78900fa5a5c5f2bbd8e4cca718a6121c500d63af"
-  integrity sha512-A9SaTgIjRl4nEn8h4Zx6UsMroObkJfGAETo6QX42+V1Fs+fFlgR7q2btSa0YR9dxjtZ0gb9TL06vzA5LmSRp+g==
+"@definitelytyped/dts-critic@^0.0.167":
+  version "0.0.167"
+  resolved "https://registry.npmjs.org/@definitelytyped/dts-critic/-/dts-critic-0.0.167.tgz#fbecef36bbaa34d65f0c1eaa003010a70219927b"
+  integrity sha512-v2SupebUNvfqK+ELJtPp4op9DK1XB3gkSCUpHguJIG8MWPkZ+DND1Is8AgovMpqUagxos71lBpQxiEZlJ2YXkw==
   dependencies:
-    "@definitelytyped/header-parser" "^0.0.165"
+    "@definitelytyped/header-parser" "^0.0.167"
     command-exists "^1.2.8"
     rimraf "^3.0.2"
     semver "^7.5.2"
     tmp "^0.2.1"
     yargs "^15.3.1"
 
-"@definitelytyped/dtslint@^0.0.165":
-  version "0.0.165"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.165.tgz#f0997329fae909aaa5b10da2ee3030d66a7fe51e"
-  integrity sha512-q9WRDjZP8HxaSWAZIsfq8/G8GS2nLnHt5CqZkM2ZBmdTb+1toE3F0wQQBs7HPGJfIsx1XCW4zl0KC6Gpf4oxYg==
+"@definitelytyped/dtslint@^0.0.167":
+  version "0.0.167"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.167.tgz#c80ca9c186c18e7deeb53155cf7badcb81dae933"
+  integrity sha512-Ew79BPzPpVd1TJeUasBdr+C8maLqyrjWYscb1GY7ZJ0UUpWPIt0RmIlqOiTBcNZmS1eFeMU2rdeiHW2R7HUNDw==
   dependencies:
-    "@definitelytyped/dts-critic" "^0.0.165"
-    "@definitelytyped/header-parser" "^0.0.165"
-    "@definitelytyped/typescript-versions" "^0.0.165"
-    "@definitelytyped/utils" "^0.0.165"
+    "@definitelytyped/dts-critic" "^0.0.167"
+    "@definitelytyped/header-parser" "^0.0.167"
+    "@definitelytyped/typescript-versions" "^0.0.167"
+    "@definitelytyped/utils" "^0.0.167"
     "@typescript-eslint/eslint-plugin" "^5.55.0"
     "@typescript-eslint/parser" "^5.55.0"
     "@typescript-eslint/types" "^5.56.0"
@@ -637,26 +637,26 @@
     tslint "5.14.0"
     yargs "^15.1.0"
 
-"@definitelytyped/header-parser@^0.0.165":
-  version "0.0.165"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.0.165.tgz#3a827312387d3426d645f4866b08d280ff9297af"
-  integrity sha512-UJkrgsNvY0qa2sbUdIcdT4P1iGi0MxvZ/TUB3psidyOAmqDbyPprlPbQwLp34k7NI+RQBRQogb8j4Dez4vRuLA==
+"@definitelytyped/header-parser@^0.0.167":
+  version "0.0.167"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.0.167.tgz#b253ec6915054e0221a71a09181389eebeb25b0a"
+  integrity sha512-RW/7ZRgXtpyPLtQRu7SkHRS8bCb5/cWzT2hfzn1F7Q5qh0sZHX1s+HK/KGqYvNlX/UQIO3wrlhAVQxlAG0YT+Q==
   dependencies:
-    "@definitelytyped/typescript-versions" "^0.0.165"
+    "@definitelytyped/typescript-versions" "^0.0.167"
     "@types/parsimmon" "^1.10.1"
     parsimmon "^1.13.0"
 
-"@definitelytyped/typescript-versions@^0.0.165":
-  version "0.0.165"
-  resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.0.165.tgz#462cf009fe097ce98a96455588256912127df734"
-  integrity sha512-aLAAhpNPWTSSxKL3B60z9NIxYqeU+K0OfjGDim8D4BlBn2EXBb43h5leQVb+w2YtIQhkUJAAN9bFYzp+beNf1g==
+"@definitelytyped/typescript-versions@^0.0.167":
+  version "0.0.167"
+  resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.0.167.tgz#0ca091fd0bb5db8e5fbf61ed23d2996f7daafdd8"
+  integrity sha512-bhQKQvuBmyLC+v5sp4xWO6w9wAmQX4h8xlijOBjpZsbKWo026GOAYEK0COK+Td94BTP+nSl8S+Flwn7s1RFqfg==
 
-"@definitelytyped/utils@^0.0.165":
-  version "0.0.165"
-  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.0.165.tgz#53785269aa4a9743a28810ab12ebb1aca33bd504"
-  integrity sha512-Bg4l1XLfuIb+4/S3AVO5ozFO7XMybxr5m+6FNVkw/HVt/IYiuwR5hDfm7FLlJHw1TYsF8AsIXIu3S9fRlrNntw==
+"@definitelytyped/utils@^0.0.167":
+  version "0.0.167"
+  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.0.167.tgz#0a1e4e579d13435d10dd8bb6987196f4b1a94c7b"
+  integrity sha512-6oAeWNkvy/89tUFRh48v9e0pabiPmH4NB9Ec7SJu/KIlwcUeK2/7hYcG1jEv9KDP81dTyJEsY3tGbIZqQFnQeg==
   dependencies:
-    "@definitelytyped/typescript-versions" "^0.0.165"
+    "@definitelytyped/typescript-versions" "^0.0.167"
     "@qiwi/npm-registry-client" "^8.9.1"
     "@types/node" "^14.14.35"
     charm "^1.0.2"

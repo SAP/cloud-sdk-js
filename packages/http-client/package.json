@@ -46,6 +46,6 @@
     "https-proxy-agent": "^7.0.1",
     "nock": "^13.3.3",
     "typescript": "~5.1.6",
-    "jsonwebtoken": "^9.0.1"
+    "jsonwebtoken": "^9.0.2"
   }
 }

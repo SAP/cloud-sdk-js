@@ -53,7 +53,14 @@ export async function getDestinationFromServiceBinding(
     : undefined;
 
   const retrievalOptions = { ...options, jwt: decodedJwt };
-  let destination = await retrieveDestinationFromCache(retrievalOptions);
+  let destination;
+  if (options.useCache) {
+    destination = await destinationCache.retrieveDestinationFromCache(
+      decodeOrMakeJwt(retrievalOptions.jwt),
+      retrievalOptions.destinationName,
+      'tenant'
+    );
+  }
 
   if (!destination) {
     destination = await retrieveDestinationWithoutCache(retrievalOptions);
@@ -79,20 +86,6 @@ export async function getDestinationFromServiceBinding(
   }
 
   return destWithProxy;
-}
-
-async function retrieveDestinationFromCache(
-  options: Pick<DestinationFetchOptions, 'useCache' | 'destinationName'> & {
-    jwt?: JwtPayload;
-  }
-) {
-  if (options.useCache) {
-    return destinationCache.retrieveDestinationFromCache(
-      decodeOrMakeJwt(options.jwt),
-      options.destinationName,
-      'tenant'
-    );
-  }
 }
 
 async function retrieveDestinationWithoutCache({

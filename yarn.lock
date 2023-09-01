@@ -1623,10 +1623,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/license-checker@^25.0.1":
-  version "25.0.3"
-  resolved "https://registry.npmjs.org/@types/license-checker/-/license-checker-25.0.3.tgz#fbe80df33f1ac9d4bc2d4c167da3c2fd2999eb73"
-  integrity sha512-sFkIgeXh6HJR79DbTrZrsHWhfyr3q8v2Gswj3y0tRPEo57OEPVgDF/z/ePybHUGuSCwiDiAt/3YMta9ujUxQpQ==
+"@types/license-checker@^25.0.4":
+  version "25.0.4"
+  resolved "https://registry.npmjs.org/@types/license-checker/-/license-checker-25.0.4.tgz#47cf2fc5a156c5abaae4c8cbc89d27d1e42f4bb9"
+  integrity sha512-PQrMQvoNDhxh5ohbtMYAod6n4rgRPJ934L2lo7HwuVAL8Kmwq94+OyPXiirDx0CA+34wdbCO4W1P79IHQEXSvQ==
 
 "@types/lodash.clonedeep@^4.5.7":
   version "4.5.7"

@@ -540,12 +540,15 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private isProviderNeeded(
     resultFromSubscriber: DestinationSearchResult | undefined
   ): boolean {
-    if (this.options.selectionStrategy === alwaysSubscriber) {
+    if (
+      this.options.selectionStrategy.toString() === alwaysSubscriber.toString()
+    ) {
       return false;
     }
 
     if (
-      this.options.selectionStrategy === subscriberFirst &&
+      this.options.selectionStrategy.toString() ===
+        subscriberFirst.toString() &&
       resultFromSubscriber
     ) {
       return false;
@@ -563,7 +566,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       return false;
     }
 
-    if (this.options.selectionStrategy === alwaysProvider) {
+    if (
+      this.options.selectionStrategy.toString() === alwaysProvider.toString()
+    ) {
       return false;
     }
 

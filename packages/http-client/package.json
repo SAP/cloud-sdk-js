@@ -43,7 +43,7 @@
     "axios": "^1.5.0"
   },
   "devDependencies": {
-    "https-proxy-agent": "^7.0.1",
+    "https-proxy-agent": "^7.0.2",
     "nock": "^13.3.3",
     "typescript": "~5.1.6",
     "jsonwebtoken": "^9.0.2"

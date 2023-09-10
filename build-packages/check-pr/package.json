@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@vercel/ncc": "^0.38.0",
-    "depcheck": "^1.4.3",
+    "depcheck": "^1.4.5",
     "eslint": "^8.49.0",
     "mock-fs": "^5.2.0",
     "prettier": "^2.8.8",

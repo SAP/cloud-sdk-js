@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/connectivity': minor
 ---
 
-#4090 Compare of selectionStrategy based on value instead of reference via toString()
+[Fixed Issue] Compare `selectionStrategy` in `DestinationFetchOptions` based on value instead of reference.

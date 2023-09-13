@@ -23,7 +23,7 @@
     "depcheck": "^1.4.3",
     "eslint": "^8.49.0",
     "mock-fs": "^5.2.0",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.2",
     "typescript": "^5.1.6"
   }
 }

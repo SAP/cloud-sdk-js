@@ -28,7 +28,7 @@
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
     "test": "yarn test:unit",
-    "test:unit": "jest",
+    "test:unit": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
@@ -42,7 +42,7 @@
     "fs-extra": "^11.1.1",
     "glob": "^10.3.4",
     "typescript": "~5.1.6",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.2",
     "yargs": "^17.7.2",
     "voca": "^1.4.1"
   },

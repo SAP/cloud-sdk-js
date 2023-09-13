@@ -68,7 +68,7 @@ expectType<ODataBatchRequestBuilder<DefaultDeSerializerV2>>(
 );
 
 expectType<() => ReadResponse<DefaultDeSerializers>>(
-  (): ReadResponse => ({} as any)
+  (): ReadResponse => ({}) as any
 );
 
 async () => {

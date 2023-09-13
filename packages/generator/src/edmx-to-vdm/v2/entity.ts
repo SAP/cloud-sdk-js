@@ -134,7 +134,7 @@ export function joinAssociationMetadata(
         ({
           ...assocSetEnd,
           ...matchingAssoc.End.find(end => end.Role === assocSetEnd.Role)
-        } as End)
+        }) as End
     );
 
     return {

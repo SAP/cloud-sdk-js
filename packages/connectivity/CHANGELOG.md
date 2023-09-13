@@ -1,5 +1,18 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.5.0
+
+### Minor Changes
+
+- 7ed5ceb52: [Fixed Issue] Compare `selectionStrategy` in `DestinationFetchOptions` based on value instead of reference.
+- bf54df09b: [Fixed Issue] Fix destination caching for destinations from service bindings. The destinations are not cached repeatedly. The function `getDestinationFromServiceBinding()` returns `undefined` for destinations which have expired JWTs.
+
+### Patch Changes
+
+- 2277f9443: [Fixed Issue] Support destinations of type `ClientCertificateAuthentication` without password.
+  - @sap-cloud-sdk/resilience@3.5.0
+  - @sap-cloud-sdk/util@3.5.0
+
 ## 3.4.0
 
 ### Minor Changes

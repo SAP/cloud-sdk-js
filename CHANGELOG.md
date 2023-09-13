@@ -28,6 +28,19 @@
 
 - 
 
+# 3.5.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.5.0
+
+## Fixed Issues
+
+- [connectivity] Compare `selectionStrategy` in `DestinationFetchOptions` based on value instead of reference. (7ed5ceb52)
+- [connectivity] Fix destination caching for destinations from service bindings. The destinations are not cached repeatedly. The function `getDestinationFromServiceBinding()` returns `undefined` for destinations which have expired JWTs. (bf54df09b)
+- [connectivity] Support destinations of type `ClientCertificateAuthentication` without password.
+  - @sap-cloud-sdk/resilience@3.5.0
+  - @sap-cloud-sdk/util@3.5.0 (2277f9443)
+- [odata-common, odata-v2, odata-v4] Fix OData v2 serialization for `Edm.Decimal` to serialize to `string`. (ee7477ce2)
+
 # 3.4.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.4.0

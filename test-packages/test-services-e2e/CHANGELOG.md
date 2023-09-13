@@ -1,5 +1,7 @@
 # @sap-cloud-sdk/test-services-e2e
 
+## 3.5.0
+
 ## 3.4.0
 
 ## 3.3.0

@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/odata-v4
 
+## 3.5.0
+
+### Patch Changes
+
+- ee7477ce2: [Fixed Issue] Fix OData v2 serialization for `Edm.Decimal` to serialize to `string`.
+- Updated dependencies [ee7477ce2]
+- Updated dependencies [7ed5ceb52]
+- Updated dependencies [2277f9443]
+- Updated dependencies [bf54df09b]
+  - @sap-cloud-sdk/odata-common@3.5.0
+  - @sap-cloud-sdk/connectivity@3.5.0
+  - @sap-cloud-sdk/http-client@3.5.0
+  - @sap-cloud-sdk/util@3.5.0
+
 ## 3.4.0
 
 ### Patch Changes

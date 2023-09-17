@@ -1669,10 +1669,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^18.17.15":
-  version "18.17.15"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.17.15.tgz#31301a273b9ca7d568fe6d1c35ae52e0fb3f8d6a"
-  integrity sha512-2yrWpBk32tvV/JAd3HNHWuZn/VDN1P+72hWirHnvsvTGSqbANi+kSeuQR9yAHnbvaBvHDsoTdXV0Fe+iRtHLKA==
+"@types/node@*", "@types/node@^18.17.17":
+  version "18.17.17"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.17.17.tgz#53cc07ce582c9d7c5850702a3c2cb0af0d7b0ca1"
+  integrity sha512-cOxcXsQ2sxiwkykdJqvyFS+MLQPLvIdwh5l6gNg8qF6s+C7XSkEWOZjK+XhUZd+mYvHV/180g2cnCcIl4l06Pw==
 
 "@types/node@^12.7.1":
   version "12.20.55"

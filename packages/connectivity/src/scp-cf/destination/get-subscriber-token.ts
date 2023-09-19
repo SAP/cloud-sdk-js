@@ -14,6 +14,7 @@ const logger = createLogger({
   messageContext: 'destination-accessor-service'
 });
 
+
 /**
  * @internal
  * When a destination is fetched from the SDK the user can pass different tokens.

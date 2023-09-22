@@ -33,7 +33,8 @@ import {
   OneToOneLink,
   OrderableEdmTypeField,
   PropertyMetadata,
-  Time
+  Time,
+  nonEnumerable
 } from '../../packages/odata-common/src/internal';
 import { customTestDeSerializers } from '../../test-resources/test/test-util';
 
@@ -218,6 +219,8 @@ export class CommonEntitySingleLink<
 
   constructor(_entityApi: CommonEntitySingleLinkApi<T>) {
     super(_entityApi);
+    this._oDataVersion = 'v2';
+    nonEnumerable(this, '_oDataVersion');
   }
 }
 
@@ -372,6 +375,8 @@ export class CommonEntity<T extends DeSerializers = DefaultDeSerializers>
 
   constructor(_entityApi: CommonEntityApi<T>) {
     super(_entityApi);
+    this._oDataVersion = 'v2';
+    nonEnumerable(this, '_oDataVersion');
   }
 }
 

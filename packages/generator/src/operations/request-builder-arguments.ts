@@ -12,7 +12,7 @@ export function getRequestBuilderArguments(
   const sharedParameters = [getTransformer(operation), 'params'];
   if (operation.isBound) {
     return [
-      'this._entityApi',
+      `this._entityApi as ${operation.entityClassName}Api<T>`,
       'this',
       `'${operation.originalName}'`,
       ...sharedParameters,

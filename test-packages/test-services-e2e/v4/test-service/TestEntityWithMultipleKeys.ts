@@ -44,18 +44,18 @@ export class TestEntityWithMultipleKeys<
   /**
    * Key Test Entity With Multiple Keys.
    */
-  keyTestEntityWithMultipleKeys!: DeserializedType<T, 'Edm.Int32'>;
+  declare keyTestEntityWithMultipleKeys: DeserializedType<T, 'Edm.Int32'>;
   /**
    * String Property With Multiple Keys.
    * Maximum length: 111.
    */
-  stringPropertyWithMultipleKeys!: DeserializedType<T, 'Edm.String'>;
+  declare stringPropertyWithMultipleKeys: DeserializedType<T, 'Edm.String'>;
   /**
    * Boolean Property With Multiple Keys.
    */
-  booleanPropertyWithMultipleKeys!: DeserializedType<T, 'Edm.Boolean'>;
+  declare booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>;
 
-  constructor(readonly _entityApi: TestEntityWithMultipleKeysApi<T>) {
+  constructor(_entityApi: TestEntityWithMultipleKeysApi<T>) {
     super(_entityApi);
   }
 
@@ -76,7 +76,7 @@ export class TestEntityWithMultipleKeys<
     const params = {};
 
     return new BoundOperationRequestBuilder(
-      this._entityApi,
+      this._entityApi as TestEntityWithMultipleKeysApi<T>,
       this,
       'boundFunctionWithoutArgumentsWithMultipleKeys',
       data =>
@@ -113,7 +113,7 @@ export class TestEntityWithMultipleKeys<
     };
 
     return new BoundOperationRequestBuilder(
-      this._entityApi,
+      this._entityApi as TestEntityWithMultipleKeysApi<T>,
       this,
       'boundFunctionWithArgumentsWithMultipleKeys',
       data =>
@@ -147,7 +147,7 @@ export class TestEntityWithMultipleKeys<
     const params = {};
 
     return new BoundOperationRequestBuilder(
-      this._entityApi,
+      this._entityApi as TestEntityWithMultipleKeysApi<T>,
       this,
       'boundActionWithoutArgumentsWithMultipleKeys',
       data =>

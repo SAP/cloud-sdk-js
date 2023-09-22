@@ -14,6 +14,122 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
  * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
+    _fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
+    /**
+     * Representation of the {@link TestComplexType.stringProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    stringProperty = this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', false);
+    /**
+     * Representation of the {@link TestComplexType.booleanProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    booleanProperty = this._fieldBuilder.buildEdmTypeField('BooleanProperty', 'Edm.Boolean', true);
+    /**
+     * Representation of the {@link TestComplexType.guidProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    guidProperty = this._fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true);
+    /**
+     * Representation of the {@link TestComplexType.int16Property} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    int16Property = this._fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true);
+    /**
+     * Representation of the {@link TestComplexType.int32Property} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    int32Property = this._fieldBuilder.buildEdmTypeField('Int32Property', 'Edm.Int32', true);
+    /**
+     * Representation of the {@link TestComplexType.int64Property} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    int64Property = this._fieldBuilder.buildEdmTypeField('Int64Property', 'Edm.Int64', true);
+    /**
+     * Representation of the {@link TestComplexType.decimalProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    decimalProperty = this._fieldBuilder.buildEdmTypeField('DecimalProperty', 'Edm.Decimal', true);
+    /**
+     * Representation of the {@link TestComplexType.singleProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    singleProperty = this._fieldBuilder.buildEdmTypeField('SingleProperty', 'Edm.Single', true);
+    /**
+     * Representation of the {@link TestComplexType.doubleProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    doubleProperty = this._fieldBuilder.buildEdmTypeField('DoubleProperty', 'Edm.Double', true);
+    /**
+     * Representation of the {@link TestComplexType.floatProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    floatProperty = this._fieldBuilder.buildEdmTypeField('FloatProperty', 'Edm.Float', true);
+    /**
+     * Representation of the {@link TestComplexType.timeOfDayProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    timeOfDayProperty = this._fieldBuilder.buildEdmTypeField('TimeOfDayProperty', 'Edm.TimeOfDay', true);
+    /**
+     * Representation of the {@link TestComplexType.dateProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    dateProperty = this._fieldBuilder.buildEdmTypeField('DateProperty', 'Edm.Date', true);
+    /**
+     * Representation of the {@link TestComplexType.dateTimeOffSetProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    dateTimeOffSetProperty = this._fieldBuilder.buildEdmTypeField('DateTimeOffSetProperty', 'Edm.DateTimeOffset', true);
+    /**
+     * Representation of the {@link TestComplexType.byteProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    byteProperty = this._fieldBuilder.buildEdmTypeField('ByteProperty', 'Edm.Byte', true);
+    /**
+     * Representation of the {@link TestComplexType.sByteProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    sByteProperty = this._fieldBuilder.buildEdmTypeField('SByteProperty', 'Edm.SByte', true);
+    /**
+     * Representation of the {@link TestComplexType.geographyPointProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    geographyPointProperty = this._fieldBuilder.buildEdmTypeField('GeographyPointProperty', 'Edm.Any', true);
+    /**
+     * Representation of the {@link TestComplexType.enumProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    enumProperty = this._fieldBuilder.buildEnumField('EnumProperty', TestEnumType_1.TestEnumType, true);
+    /**
+     * Representation of the {@link TestComplexType.somethingTheSdkDoesNotSupport} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    somethingTheSdkDoesNotSupport = this._fieldBuilder.buildEdmTypeField('SomethingTheSDKDoesNotSupport', 'Edm.Any', true);
+    /**
+     * Representation of the {@link TestComplexType.complexTypeProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    complexTypeProperty = this._fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestNestedComplexType_1.TestNestedComplexTypeField, true);
+    /**
+     * Representation of the {@link TestComplexType.collectionStringProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    collectionStringProperty = this._fieldBuilder.buildCollectionField('CollectionStringProperty', 'Edm.String', true);
+    /**
+     * Representation of the {@link TestComplexType.collectionEnumProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    collectionEnumProperty = this._fieldBuilder.buildCollectionField('CollectionEnumProperty', TestEnumType_1.TestEnumType, true);
+    /**
+     * Representation of the {@link TestComplexType.collectionComplexTypeProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    collectionComplexTypeProperty = this._fieldBuilder.buildCollectionField('CollectionComplexTypeProperty', TestNestedComplexType_1.TestNestedComplexType, true);
+    /**
+     * Representation of the {@link TestComplexType.baseStringProperty} property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    baseStringProperty = this._fieldBuilder.buildEdmTypeField('BaseStringProperty', 'Edm.String', true);
     /**
      * Creates an instance of TestComplexTypeField.
      * @param fieldName - Actual name of the field as used in the OData request.
@@ -21,122 +137,6 @@ class TestComplexTypeField extends odata_v4_1.ComplexTypeField {
      */
     constructor(fieldName, fieldOf, deSerializers, fieldOptions) {
         super(fieldName, fieldOf, deSerializers, TestComplexType, fieldOptions);
-        this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
-        /**
-         * Representation of the {@link TestComplexType.stringProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.stringProperty = this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', false);
-        /**
-         * Representation of the {@link TestComplexType.booleanProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.booleanProperty = this._fieldBuilder.buildEdmTypeField('BooleanProperty', 'Edm.Boolean', true);
-        /**
-         * Representation of the {@link TestComplexType.guidProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.guidProperty = this._fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true);
-        /**
-         * Representation of the {@link TestComplexType.int16Property} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.int16Property = this._fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true);
-        /**
-         * Representation of the {@link TestComplexType.int32Property} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.int32Property = this._fieldBuilder.buildEdmTypeField('Int32Property', 'Edm.Int32', true);
-        /**
-         * Representation of the {@link TestComplexType.int64Property} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.int64Property = this._fieldBuilder.buildEdmTypeField('Int64Property', 'Edm.Int64', true);
-        /**
-         * Representation of the {@link TestComplexType.decimalProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.decimalProperty = this._fieldBuilder.buildEdmTypeField('DecimalProperty', 'Edm.Decimal', true);
-        /**
-         * Representation of the {@link TestComplexType.singleProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.singleProperty = this._fieldBuilder.buildEdmTypeField('SingleProperty', 'Edm.Single', true);
-        /**
-         * Representation of the {@link TestComplexType.doubleProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.doubleProperty = this._fieldBuilder.buildEdmTypeField('DoubleProperty', 'Edm.Double', true);
-        /**
-         * Representation of the {@link TestComplexType.floatProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.floatProperty = this._fieldBuilder.buildEdmTypeField('FloatProperty', 'Edm.Float', true);
-        /**
-         * Representation of the {@link TestComplexType.timeOfDayProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.timeOfDayProperty = this._fieldBuilder.buildEdmTypeField('TimeOfDayProperty', 'Edm.TimeOfDay', true);
-        /**
-         * Representation of the {@link TestComplexType.dateProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.dateProperty = this._fieldBuilder.buildEdmTypeField('DateProperty', 'Edm.Date', true);
-        /**
-         * Representation of the {@link TestComplexType.dateTimeOffSetProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.dateTimeOffSetProperty = this._fieldBuilder.buildEdmTypeField('DateTimeOffSetProperty', 'Edm.DateTimeOffset', true);
-        /**
-         * Representation of the {@link TestComplexType.byteProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.byteProperty = this._fieldBuilder.buildEdmTypeField('ByteProperty', 'Edm.Byte', true);
-        /**
-         * Representation of the {@link TestComplexType.sByteProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.sByteProperty = this._fieldBuilder.buildEdmTypeField('SByteProperty', 'Edm.SByte', true);
-        /**
-         * Representation of the {@link TestComplexType.geographyPointProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.geographyPointProperty = this._fieldBuilder.buildEdmTypeField('GeographyPointProperty', 'Edm.Any', true);
-        /**
-         * Representation of the {@link TestComplexType.enumProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.enumProperty = this._fieldBuilder.buildEnumField('EnumProperty', TestEnumType_1.TestEnumType, true);
-        /**
-         * Representation of the {@link TestComplexType.somethingTheSdkDoesNotSupport} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.somethingTheSdkDoesNotSupport = this._fieldBuilder.buildEdmTypeField('SomethingTheSDKDoesNotSupport', 'Edm.Any', true);
-        /**
-         * Representation of the {@link TestComplexType.complexTypeProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.complexTypeProperty = this._fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestNestedComplexType_1.TestNestedComplexTypeField, true);
-        /**
-         * Representation of the {@link TestComplexType.collectionStringProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.collectionStringProperty = this._fieldBuilder.buildCollectionField('CollectionStringProperty', 'Edm.String', true);
-        /**
-         * Representation of the {@link TestComplexType.collectionEnumProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.collectionEnumProperty = this._fieldBuilder.buildCollectionField('CollectionEnumProperty', TestEnumType_1.TestEnumType, true);
-        /**
-         * Representation of the {@link TestComplexType.collectionComplexTypeProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.collectionComplexTypeProperty = this._fieldBuilder.buildCollectionField('CollectionComplexTypeProperty', TestNestedComplexType_1.TestNestedComplexType, true);
-        /**
-         * Representation of the {@link TestComplexType.baseStringProperty} property for query construction.
-         * Use to reference this property in query operations such as 'filter' in the fluent request API.
-         */
-        this.baseStringProperty = this._fieldBuilder.buildEdmTypeField('BaseStringProperty', 'Edm.String', true);
     }
 }
 exports.TestComplexTypeField = TestComplexTypeField;

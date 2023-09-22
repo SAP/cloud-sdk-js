@@ -33,53 +33,53 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Key Test Entity 50 Prop.
    */
-  keyTestEntity50Prop!: DeserializedType<T, 'Edm.Int32'>;
+  declare keyTestEntity50Prop: DeserializedType<T, 'Edm.Int32'>;
   /**
    * String Property 1.
    * Maximum length: 111.
    * @nullable
    */
-  stringProperty1?: DeserializedType<T, 'Edm.String'> | null;
+  declare stringProperty1?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Guid Property 1.
    * @nullable
    */
-  guidProperty1?: DeserializedType<T, 'Edm.Guid'> | null;
+  declare guidProperty1?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Boolean Property 1.
    * @nullable
    */
-  booleanProperty1?: DeserializedType<T, 'Edm.Boolean'> | null;
+  declare booleanProperty1?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Int 64 Property 1.
    * @nullable
    */
-  int64Property1?: DeserializedType<T, 'Edm.Int64'> | null;
+  declare int64Property1?: DeserializedType<T, 'Edm.Int64'> | null;
   /**
    * Double Property 1.
    * @nullable
    */
-  doubleProperty1?: DeserializedType<T, 'Edm.Double'> | null;
+  declare doubleProperty1?: DeserializedType<T, 'Edm.Double'> | null;
   /**
    * Decimal Property 1.
    * @nullable
    */
-  decimalProperty1?: DeserializedType<T, 'Edm.Decimal'> | null;
+  declare decimalProperty1?: DeserializedType<T, 'Edm.Decimal'> | null;
   /**
    * Date Property 1.
    * @nullable
    */
-  dateProperty1?: DeserializedType<T, 'Edm.Date'> | null;
+  declare dateProperty1?: DeserializedType<T, 'Edm.Date'> | null;
   /**
    * Time Of Day Property 1.
    * @nullable
    */
-  timeOfDayProperty1?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
+  declare timeOfDayProperty1?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
   /**
    * Data Time Offset Data Time Property 1.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty1?: DeserializedType<
+  declare dataTimeOffsetDataTimeProperty1?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
@@ -87,7 +87,7 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
    * Data Time Offset Timestamp Property 1.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty1?: DeserializedType<
+  declare dataTimeOffsetTimestampProperty1?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
@@ -96,47 +96,47 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
    * Maximum length: 111.
    * @nullable
    */
-  stringProperty2?: DeserializedType<T, 'Edm.String'> | null;
+  declare stringProperty2?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Guid Property 2.
    * @nullable
    */
-  guidProperty2?: DeserializedType<T, 'Edm.Guid'> | null;
+  declare guidProperty2?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Boolean Property 2.
    * @nullable
    */
-  booleanProperty2?: DeserializedType<T, 'Edm.Boolean'> | null;
+  declare booleanProperty2?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Int 64 Property 2.
    * @nullable
    */
-  int64Property2?: DeserializedType<T, 'Edm.Int64'> | null;
+  declare int64Property2?: DeserializedType<T, 'Edm.Int64'> | null;
   /**
    * Double Property 2.
    * @nullable
    */
-  doubleProperty2?: DeserializedType<T, 'Edm.Double'> | null;
+  declare doubleProperty2?: DeserializedType<T, 'Edm.Double'> | null;
   /**
    * Decimal Property 2.
    * @nullable
    */
-  decimalProperty2?: DeserializedType<T, 'Edm.Decimal'> | null;
+  declare decimalProperty2?: DeserializedType<T, 'Edm.Decimal'> | null;
   /**
    * Date Property 2.
    * @nullable
    */
-  dateProperty2?: DeserializedType<T, 'Edm.Date'> | null;
+  declare dateProperty2?: DeserializedType<T, 'Edm.Date'> | null;
   /**
    * Time Of Day Property 2.
    * @nullable
    */
-  timeOfDayProperty2?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
+  declare timeOfDayProperty2?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
   /**
    * Data Time Offset Data Time Property 2.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty2?: DeserializedType<
+  declare dataTimeOffsetDataTimeProperty2?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
@@ -144,7 +144,7 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
    * Data Time Offset Timestamp Property 2.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty2?: DeserializedType<
+  declare dataTimeOffsetTimestampProperty2?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
@@ -153,47 +153,47 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
    * Maximum length: 111.
    * @nullable
    */
-  stringProperty3?: DeserializedType<T, 'Edm.String'> | null;
+  declare stringProperty3?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Guid Property 3.
    * @nullable
    */
-  guidProperty3?: DeserializedType<T, 'Edm.Guid'> | null;
+  declare guidProperty3?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Boolean Property 3.
    * @nullable
    */
-  booleanProperty3?: DeserializedType<T, 'Edm.Boolean'> | null;
+  declare booleanProperty3?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Int 64 Property 3.
    * @nullable
    */
-  int64Property3?: DeserializedType<T, 'Edm.Int64'> | null;
+  declare int64Property3?: DeserializedType<T, 'Edm.Int64'> | null;
   /**
    * Double Property 3.
    * @nullable
    */
-  doubleProperty3?: DeserializedType<T, 'Edm.Double'> | null;
+  declare doubleProperty3?: DeserializedType<T, 'Edm.Double'> | null;
   /**
    * Decimal Property 3.
    * @nullable
    */
-  decimalProperty3?: DeserializedType<T, 'Edm.Decimal'> | null;
+  declare decimalProperty3?: DeserializedType<T, 'Edm.Decimal'> | null;
   /**
    * Date Property 3.
    * @nullable
    */
-  dateProperty3?: DeserializedType<T, 'Edm.Date'> | null;
+  declare dateProperty3?: DeserializedType<T, 'Edm.Date'> | null;
   /**
    * Time Of Day Property 3.
    * @nullable
    */
-  timeOfDayProperty3?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
+  declare timeOfDayProperty3?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
   /**
    * Data Time Offset Data Time Property 3.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty3?: DeserializedType<
+  declare dataTimeOffsetDataTimeProperty3?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
@@ -201,7 +201,7 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
    * Data Time Offset Timestamp Property 3.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty3?: DeserializedType<
+  declare dataTimeOffsetTimestampProperty3?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
@@ -210,47 +210,47 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
    * Maximum length: 111.
    * @nullable
    */
-  stringProperty4?: DeserializedType<T, 'Edm.String'> | null;
+  declare stringProperty4?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Guid Property 4.
    * @nullable
    */
-  guidProperty4?: DeserializedType<T, 'Edm.Guid'> | null;
+  declare guidProperty4?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Boolean Property 4.
    * @nullable
    */
-  booleanProperty4?: DeserializedType<T, 'Edm.Boolean'> | null;
+  declare booleanProperty4?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Int 64 Property 4.
    * @nullable
    */
-  int64Property4?: DeserializedType<T, 'Edm.Int64'> | null;
+  declare int64Property4?: DeserializedType<T, 'Edm.Int64'> | null;
   /**
    * Double Property 4.
    * @nullable
    */
-  doubleProperty4?: DeserializedType<T, 'Edm.Double'> | null;
+  declare doubleProperty4?: DeserializedType<T, 'Edm.Double'> | null;
   /**
    * Decimal Property 4.
    * @nullable
    */
-  decimalProperty4?: DeserializedType<T, 'Edm.Decimal'> | null;
+  declare decimalProperty4?: DeserializedType<T, 'Edm.Decimal'> | null;
   /**
    * Date Property 4.
    * @nullable
    */
-  dateProperty4?: DeserializedType<T, 'Edm.Date'> | null;
+  declare dateProperty4?: DeserializedType<T, 'Edm.Date'> | null;
   /**
    * Time Of Day Property 4.
    * @nullable
    */
-  timeOfDayProperty4?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
+  declare timeOfDayProperty4?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
   /**
    * Data Time Offset Data Time Property 4.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty4?: DeserializedType<
+  declare dataTimeOffsetDataTimeProperty4?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
@@ -258,7 +258,7 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
    * Data Time Offset Timestamp Property 4.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty4?: DeserializedType<
+  declare dataTimeOffsetTimestampProperty4?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
@@ -267,47 +267,47 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
    * Maximum length: 111.
    * @nullable
    */
-  stringProperty5?: DeserializedType<T, 'Edm.String'> | null;
+  declare stringProperty5?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Guid Property 5.
    * @nullable
    */
-  guidProperty5?: DeserializedType<T, 'Edm.Guid'> | null;
+  declare guidProperty5?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Boolean Property 5.
    * @nullable
    */
-  booleanProperty5?: DeserializedType<T, 'Edm.Boolean'> | null;
+  declare booleanProperty5?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Int 64 Property 5.
    * @nullable
    */
-  int64Property5?: DeserializedType<T, 'Edm.Int64'> | null;
+  declare int64Property5?: DeserializedType<T, 'Edm.Int64'> | null;
   /**
    * Double Property 5.
    * @nullable
    */
-  doubleProperty5?: DeserializedType<T, 'Edm.Double'> | null;
+  declare doubleProperty5?: DeserializedType<T, 'Edm.Double'> | null;
   /**
    * Decimal Property 5.
    * @nullable
    */
-  decimalProperty5?: DeserializedType<T, 'Edm.Decimal'> | null;
+  declare decimalProperty5?: DeserializedType<T, 'Edm.Decimal'> | null;
   /**
    * Date Property 5.
    * @nullable
    */
-  dateProperty5?: DeserializedType<T, 'Edm.Date'> | null;
+  declare dateProperty5?: DeserializedType<T, 'Edm.Date'> | null;
   /**
    * Time Of Day Property 5.
    * @nullable
    */
-  timeOfDayProperty5?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
+  declare timeOfDayProperty5?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
   /**
    * Data Time Offset Data Time Property 5.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty5?: DeserializedType<
+  declare dataTimeOffsetDataTimeProperty5?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
@@ -315,12 +315,12 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
    * Data Time Offset Timestamp Property 5.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty5?: DeserializedType<
+  declare dataTimeOffsetTimestampProperty5?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
 
-  constructor(readonly _entityApi: TestEntity50PropApi<T>) {
+  constructor(_entityApi: TestEntity50PropApi<T>) {
     super(_entityApi);
   }
 }

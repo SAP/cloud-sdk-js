@@ -11,22 +11,21 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
  * See https://api.sap.com/api/path for more information.
  */
 class TestEntityEndsWith extends odata_v2_1.Entity {
+    /**
+     * Technical entity name for TestEntityEndsWith.
+     */
+    static _entityName = 'A_TestEntityEndsWithCollection';
+    /**
+     * Default url path for the according service.
+     */
+    static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+    /**
+     * All key fields of the TestEntityEndsWith entity
+     */
+    static _keys = ['KeyProperty'];
     constructor(_entityApi) {
         super(_entityApi);
-        this._entityApi = _entityApi;
     }
 }
 exports.TestEntityEndsWith = TestEntityEndsWith;
-/**
- * Technical entity name for TestEntityEndsWith.
- */
-TestEntityEndsWith._entityName = 'A_TestEntityEndsWithCollection';
-/**
- * Default url path for the according service.
- */
-TestEntityEndsWith._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
-/**
- * All key fields of the TestEntityEndsWith entity
- */
-TestEntityEndsWith._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntityEndsWith.js.map

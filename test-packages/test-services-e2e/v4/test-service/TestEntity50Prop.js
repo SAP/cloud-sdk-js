@@ -11,22 +11,21 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
  * This class represents the entity "TestEntity50Prop" of service "TestService".
  */
 class TestEntity50Prop extends odata_v4_1.Entity {
+    /**
+     * Technical entity name for TestEntity50Prop.
+     */
+    static _entityName = 'TestEntity50Prop';
+    /**
+     * Default url path for the according service.
+     */
+    static _defaultBasePath = '/odata/test-service';
+    /**
+     * All key fields of the TestEntity50Prop entity
+     */
+    static _keys = ['KeyTestEntity50Prop'];
     constructor(_entityApi) {
         super(_entityApi);
-        this._entityApi = _entityApi;
     }
 }
 exports.TestEntity50Prop = TestEntity50Prop;
-/**
- * Technical entity name for TestEntity50Prop.
- */
-TestEntity50Prop._entityName = 'TestEntity50Prop';
-/**
- * Default url path for the according service.
- */
-TestEntity50Prop._defaultBasePath = '/odata/test-service';
-/**
- * All key fields of the TestEntity50Prop entity
- */
-TestEntity50Prop._keys = ['KeyTestEntity50Prop'];
 //# sourceMappingURL=TestEntity50Prop.js.map

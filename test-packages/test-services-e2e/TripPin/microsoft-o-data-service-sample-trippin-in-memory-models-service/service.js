@@ -18,8 +18,9 @@ function microsoftODataServiceSampleTrippinInMemoryModelsService(deSerializers =
 }
 exports.microsoftODataServiceSampleTrippinInMemoryModelsService = microsoftODataServiceSampleTrippinInMemoryModelsService;
 class MicrosoftODataServiceSampleTrippinInMemoryModelsService {
+    apis = {};
+    deSerializers;
     constructor(deSerializers) {
-        this.apis = {};
         this.deSerializers = deSerializers;
     }
     initApi(key, entityApi) {

@@ -11,9 +11,24 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
  * This class represents the entity "TestEntityWithMultipleKeys" of service "TestService".
  */
 class TestEntityWithMultipleKeys extends odata_v4_1.Entity {
+    /**
+     * Technical entity name for TestEntityWithMultipleKeys.
+     */
+    static _entityName = 'TestEntityWithMultipleKeys';
+    /**
+     * Default url path for the according service.
+     */
+    static _defaultBasePath = '/odata/test-service';
+    /**
+     * All key fields of the TestEntityWithMultipleKeys entity
+     */
+    static _keys = [
+        'KeyTestEntityWithMultipleKeys',
+        'StringPropertyWithMultipleKeys',
+        'BooleanPropertyWithMultipleKeys'
+    ];
     constructor(_entityApi) {
         super(_entityApi);
-        this._entityApi = _entityApi;
     }
     /**
      * Bound Function Without Arguments With Multiple Keys.
@@ -47,20 +62,4 @@ class TestEntityWithMultipleKeys extends odata_v4_1.Entity {
     }
 }
 exports.TestEntityWithMultipleKeys = TestEntityWithMultipleKeys;
-/**
- * Technical entity name for TestEntityWithMultipleKeys.
- */
-TestEntityWithMultipleKeys._entityName = 'TestEntityWithMultipleKeys';
-/**
- * Default url path for the according service.
- */
-TestEntityWithMultipleKeys._defaultBasePath = '/odata/test-service';
-/**
- * All key fields of the TestEntityWithMultipleKeys entity
- */
-TestEntityWithMultipleKeys._keys = [
-    'KeyTestEntityWithMultipleKeys',
-    'StringPropertyWithMultipleKeys',
-    'BooleanPropertyWithMultipleKeys'
-];
 //# sourceMappingURL=TestEntityWithMultipleKeys.js.map

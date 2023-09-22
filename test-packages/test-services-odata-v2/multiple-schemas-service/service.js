@@ -14,8 +14,9 @@ function multipleSchemasService(deSerializers = odata_v2_1.defaultDeSerializers)
 }
 exports.multipleSchemasService = multipleSchemasService;
 class MultipleSchemasService {
+    apis = {};
+    deSerializers;
     constructor(deSerializers) {
-        this.apis = {};
         this.deSerializers = deSerializers;
     }
     initApi(key, entityApi) {

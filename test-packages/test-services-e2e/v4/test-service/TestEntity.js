@@ -12,9 +12,20 @@ const MyComplexReturnType_1 = require("./MyComplexReturnType");
  * This class represents the entity "TestEntity" of service "TestService".
  */
 class TestEntity extends odata_v4_1.Entity {
+    /**
+     * Technical entity name for TestEntity.
+     */
+    static _entityName = 'TestEntity';
+    /**
+     * Default url path for the according service.
+     */
+    static _defaultBasePath = '/odata/test-service';
+    /**
+     * All key fields of the TestEntity entity
+     */
+    static _keys = ['KeyTestEntity'];
     constructor(_entityApi) {
         super(_entityApi);
-        this._entityApi = _entityApi;
     }
     /**
      * Bound Function Without Arguments.
@@ -57,16 +68,4 @@ class TestEntity extends odata_v4_1.Entity {
     }
 }
 exports.TestEntity = TestEntity;
-/**
- * Technical entity name for TestEntity.
- */
-TestEntity._entityName = 'TestEntity';
-/**
- * Default url path for the according service.
- */
-TestEntity._defaultBasePath = '/odata/test-service';
-/**
- * All key fields of the TestEntity entity
- */
-TestEntity._keys = ['KeyTestEntity'];
 //# sourceMappingURL=TestEntity.js.map

@@ -78,9 +78,10 @@ export abstract class EntityBase {
    * @internal
    */
   constructor(readonly _entityApi: any) {
-    nonEnumerable(this, '_oDataVersion');
     nonEnumerable(this, '_customFields');
     nonEnumerable(this, '_entityApi');
+    nonEnumerable(this, 'remoteState');
+    nonEnumerable(this, '_versionIdentifier');
     this._customFields = {};
   }
 
@@ -156,7 +157,6 @@ export abstract class EntityBase {
    */
   setVersionIdentifier(etag: string | undefined): this {
     if (etag && typeof etag === 'string') {
-      nonEnumerable(this, '_versionIdentifier');
       this._versionIdentifier = etag;
     }
     return this;
@@ -169,9 +169,6 @@ export abstract class EntityBase {
    * @returns The entity itself, to facilitate method chaining.
    */
   setOrInitializeRemoteState(state?: Record<string, any>): this {
-    if (!this.remoteState) {
-      nonEnumerable(this, 'remoteState');
-    }
     state = state || this.asObject();
     this.remoteState = Object.entries(state).reduce(
       (stateObject, [fieldName, value]) => {

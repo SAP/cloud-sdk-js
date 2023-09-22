@@ -10,8 +10,8 @@ const MultiSchemaTestEntity_1 = require("./MultiSchemaTestEntity");
 const MultiSchemaTestEntityRequestBuilder_1 = require("./MultiSchemaTestEntityRequestBuilder");
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 class MultiSchemaTestEntityApi {
+    deSerializers;
     constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
-        this.entityConstructor = MultiSchemaTestEntity_1.MultiSchemaTestEntity;
         this.deSerializers = deSerializers;
     }
     /**
@@ -21,10 +21,12 @@ class MultiSchemaTestEntityApi {
     static _privateFactory(deSerializers = odata_v2_1.defaultDeSerializers) {
         return new MultiSchemaTestEntityApi(deSerializers);
     }
+    navigationPropertyFields;
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;
     }
+    entityConstructor = MultiSchemaTestEntity_1.MultiSchemaTestEntity;
     requestBuilder() {
         return new MultiSchemaTestEntityRequestBuilder_1.MultiSchemaTestEntityRequestBuilder(this);
     }
@@ -34,12 +36,14 @@ class MultiSchemaTestEntityApi {
     customField(fieldName, isNullable = false) {
         return new odata_v2_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
+    _fieldBuilder;
     get fieldBuilder() {
         if (!this._fieldBuilder) {
             this._fieldBuilder = new odata_v2_1.FieldBuilder(MultiSchemaTestEntity_1.MultiSchemaTestEntity, this.deSerializers);
         }
         return this._fieldBuilder;
     }
+    _schema;
     get schema() {
         if (!this._schema) {
             const fieldBuilder = this.fieldBuilder;

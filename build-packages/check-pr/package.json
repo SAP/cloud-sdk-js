@@ -24,6 +24,6 @@
     "eslint": "^8.49.0",
     "mock-fs": "^5.2.0",
     "prettier": "^3.0.3",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   }
 }

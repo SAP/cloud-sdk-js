@@ -98,7 +98,7 @@
     "@types/voca": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
-    "axios": "^1.5.0",
+    "axios": "^1.5.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",

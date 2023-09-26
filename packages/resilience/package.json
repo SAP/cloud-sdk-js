@@ -40,7 +40,7 @@
   "dependencies": {
     "@sap-cloud-sdk/util": "^3.5.0",
     "async-retry": "^1.3.3",
-    "axios": "^1.5.0",
+    "axios": "^1.5.1",
     "opossum": "^8.1.1"
   },
   "devDependencies": {

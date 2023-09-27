@@ -170,11 +170,11 @@ async function makeCsrfRequests(
   requestConfig: HttpRequestConfig,
   options: CsrfMiddlewareOptions & { context: HttpMiddlewareContext }
 ): Promise<CsrfHeaderWithCookie | undefined> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { data, params, ...requestConfigWithoutData } = requestConfig;
   const axiosConfig: HttpRequestConfigWithOrigin = {
-    ...requestConfig,
+    ...requestConfigWithoutData,
     method: options.method || 'head',
-    params: {},
-    data: {},
     url: options.url || requestConfig.url,
     headers: buildCsrfFetchHeaders(requestConfig.headers)
   };

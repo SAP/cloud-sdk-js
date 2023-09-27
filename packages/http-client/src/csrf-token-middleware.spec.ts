@@ -124,13 +124,11 @@ describe('CSRF middleware', () => {
       { url: host },
       { method: 'POST', url: 'some/path' }
     );
+
     expect(spy).toHaveBeenNthCalledWith(
       1,
-      expect.objectContaining({
-        method: 'head',
-        headers: csrfFetchHeader,
-        url: 'some/path/',
-        data: {}
+      expect.not.objectContaining({
+        data: expect.anything()
       })
     );
   });

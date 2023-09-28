@@ -128,7 +128,9 @@ describe('CSRF middleware', () => {
     expect(spy).toHaveBeenNthCalledWith(
       1,
       expect.not.objectContaining({
-        data: expect.anything()
+        data: expect.anything(),
+        params: expect.anything(),
+        parameterEncoder: expect.anything()
       })
     );
   });

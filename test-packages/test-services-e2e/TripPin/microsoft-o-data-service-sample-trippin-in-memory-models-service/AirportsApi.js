@@ -11,8 +11,8 @@ const AirportsRequestBuilder_1 = require("./AirportsRequestBuilder");
 const AirportLocation_1 = require("./AirportLocation");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class AirportsApi {
-    deSerializers;
     constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
+        this.entityConstructor = Airports_1.Airports;
         this.deSerializers = deSerializers;
     }
     /**
@@ -22,12 +22,10 @@ class AirportsApi {
     static _privateFactory(deSerializers = odata_v4_1.defaultDeSerializers) {
         return new AirportsApi(deSerializers);
     }
-    navigationPropertyFields;
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;
     }
-    entityConstructor = Airports_1.Airports;
     requestBuilder() {
         return new AirportsRequestBuilder_1.AirportsRequestBuilder(this);
     }
@@ -37,14 +35,12 @@ class AirportsApi {
     customField(fieldName, isNullable = false) {
         return new odata_v4_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
-    _fieldBuilder;
     get fieldBuilder() {
         if (!this._fieldBuilder) {
             this._fieldBuilder = new odata_v4_1.FieldBuilder(Airports_1.Airports, this.deSerializers);
         }
         return this._fieldBuilder;
     }
-    _schema;
     get schema() {
         if (!this._schema) {
             const fieldBuilder = this.fieldBuilder;

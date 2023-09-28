@@ -12,17 +12,6 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
  * @typeParam EntityT - Type of the entity the complex type field belongs to.
  */
 class MyComplexReturnTypeField extends odata_v4_1.ComplexTypeField {
-    _fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
-    /**
-     * Representation of the {@link MyComplexReturnType.someMessage} property for query construction.
-     * Use to reference this property in query operations such as 'filter' in the fluent request API.
-     */
-    someMessage = this._fieldBuilder.buildEdmTypeField('someMessage', 'Edm.String', true);
-    /**
-     * Representation of the {@link MyComplexReturnType.someId} property for query construction.
-     * Use to reference this property in query operations such as 'filter' in the fluent request API.
-     */
-    someId = this._fieldBuilder.buildEdmTypeField('someId', 'Edm.Int32', true);
     /**
      * Creates an instance of MyComplexReturnTypeField.
      * @param fieldName - Actual name of the field as used in the OData request.
@@ -30,6 +19,17 @@ class MyComplexReturnTypeField extends odata_v4_1.ComplexTypeField {
      */
     constructor(fieldName, fieldOf, deSerializers, fieldOptions) {
         super(fieldName, fieldOf, deSerializers, MyComplexReturnType, fieldOptions);
+        this._fieldBuilder = new odata_v4_1.FieldBuilder(this, this.deSerializers);
+        /**
+         * Representation of the {@link MyComplexReturnType.someMessage} property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        this.someMessage = this._fieldBuilder.buildEdmTypeField('someMessage', 'Edm.String', true);
+        /**
+         * Representation of the {@link MyComplexReturnType.someId} property for query construction.
+         * Use to reference this property in query operations such as 'filter' in the fluent request API.
+         */
+        this.someId = this._fieldBuilder.buildEdmTypeField('someId', 'Edm.Int32', true);
     }
 }
 exports.MyComplexReturnTypeField = MyComplexReturnTypeField;

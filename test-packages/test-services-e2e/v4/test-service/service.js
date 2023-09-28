@@ -18,9 +18,8 @@ function testService(deSerializers = odata_v4_1.defaultDeSerializers) {
 }
 exports.testService = testService;
 class TestService {
-    apis = {};
-    deSerializers;
     constructor(deSerializers) {
+        this.apis = {};
         this.deSerializers = deSerializers;
     }
     initApi(key, entityApi) {

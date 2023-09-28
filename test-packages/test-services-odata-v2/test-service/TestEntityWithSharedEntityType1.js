@@ -11,21 +11,21 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
  * See https://api.sap.com/api/path for more information.
  */
 class TestEntityWithSharedEntityType1 extends odata_v2_1.Entity {
-    /**
-     * Technical entity name for TestEntityWithSharedEntityType1.
-     */
-    static _entityName = 'A_TestEntityWithSharedEntityType1';
-    /**
-     * Default url path for the according service.
-     */
-    static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
-    /**
-     * All key fields of the TestEntityWithSharedEntityType1 entity
-     */
-    static _keys = ['KeyProperty'];
     constructor(_entityApi) {
         super(_entityApi);
     }
 }
 exports.TestEntityWithSharedEntityType1 = TestEntityWithSharedEntityType1;
+/**
+ * Technical entity name for TestEntityWithSharedEntityType1.
+ */
+TestEntityWithSharedEntityType1._entityName = 'A_TestEntityWithSharedEntityType1';
+/**
+ * Default url path for the according service.
+ */
+TestEntityWithSharedEntityType1._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+/**
+ * All key fields of the TestEntityWithSharedEntityType1 entity
+ */
+TestEntityWithSharedEntityType1._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntityWithSharedEntityType1.js.map

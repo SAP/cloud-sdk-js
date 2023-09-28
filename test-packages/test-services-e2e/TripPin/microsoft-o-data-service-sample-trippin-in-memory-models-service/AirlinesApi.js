@@ -10,8 +10,8 @@ const Airlines_1 = require("./Airlines");
 const AirlinesRequestBuilder_1 = require("./AirlinesRequestBuilder");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class AirlinesApi {
-    deSerializers;
     constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
+        this.entityConstructor = Airlines_1.Airlines;
         this.deSerializers = deSerializers;
     }
     /**
@@ -21,12 +21,10 @@ class AirlinesApi {
     static _privateFactory(deSerializers = odata_v4_1.defaultDeSerializers) {
         return new AirlinesApi(deSerializers);
     }
-    navigationPropertyFields;
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};
         return this;
     }
-    entityConstructor = Airlines_1.Airlines;
     requestBuilder() {
         return new AirlinesRequestBuilder_1.AirlinesRequestBuilder(this);
     }
@@ -36,14 +34,12 @@ class AirlinesApi {
     customField(fieldName, isNullable = false) {
         return new odata_v4_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
-    _fieldBuilder;
     get fieldBuilder() {
         if (!this._fieldBuilder) {
             this._fieldBuilder = new odata_v4_1.FieldBuilder(Airlines_1.Airlines, this.deSerializers);
         }
         return this._fieldBuilder;
     }
-    _schema;
     get schema() {
         if (!this._schema) {
             const fieldBuilder = this.fieldBuilder;

@@ -11,21 +11,21 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
  * See https://api.sap.com/api/path for more information.
  */
 class CaseTest extends odata_v2_1.Entity {
-    /**
-     * Technical entity name for CaseTest.
-     */
-    static _entityName = 'A_CaseTest';
-    /**
-     * Default url path for the according service.
-     */
-    static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
-    /**
-     * All key fields of the CaseTest entity
-     */
-    static _keys = ['KeyPropertyString'];
     constructor(_entityApi) {
         super(_entityApi);
     }
 }
 exports.CaseTest = CaseTest;
+/**
+ * Technical entity name for CaseTest.
+ */
+CaseTest._entityName = 'A_CaseTest';
+/**
+ * Default url path for the according service.
+ */
+CaseTest._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+/**
+ * All key fields of the CaseTest entity
+ */
+CaseTest._keys = ['KeyPropertyString'];
 //# sourceMappingURL=CaseTest.js.map

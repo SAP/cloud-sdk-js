@@ -11,21 +11,21 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
 class MultiSchemaTestEntity extends odata_v2_1.Entity {
-    /**
-     * Technical entity name for MultiSchemaTestEntity.
-     */
-    static _entityName = 'MultiSchemaTestEntity';
-    /**
-     * Default url path for the according service.
-     */
-    static _defaultBasePath = '/';
-    /**
-     * All key fields of the MultiSchemaTestEntity entity
-     */
-    static _keys = ['KeyProperty'];
     constructor(_entityApi) {
         super(_entityApi);
     }
 }
 exports.MultiSchemaTestEntity = MultiSchemaTestEntity;
+/**
+ * Technical entity name for MultiSchemaTestEntity.
+ */
+MultiSchemaTestEntity._entityName = 'MultiSchemaTestEntity';
+/**
+ * Default url path for the according service.
+ */
+MultiSchemaTestEntity._defaultBasePath = '/';
+/**
+ * All key fields of the MultiSchemaTestEntity entity
+ */
+MultiSchemaTestEntity._keys = ['KeyProperty'];
 //# sourceMappingURL=MultiSchemaTestEntity.js.map

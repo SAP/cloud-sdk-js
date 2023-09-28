@@ -11,21 +11,21 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
  * See https://api.sap.com/api/path for more information.
  */
 class TestEntitySingleLink extends odata_v2_1.Entity {
-    /**
-     * Technical entity name for TestEntitySingleLink.
-     */
-    static _entityName = 'A_TestEntitySingleLink';
-    /**
-     * Default url path for the according service.
-     */
-    static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
-    /**
-     * All key fields of the TestEntitySingleLink entity
-     */
-    static _keys = ['KeyProperty'];
     constructor(_entityApi) {
         super(_entityApi);
     }
 }
 exports.TestEntitySingleLink = TestEntitySingleLink;
+/**
+ * Technical entity name for TestEntitySingleLink.
+ */
+TestEntitySingleLink._entityName = 'A_TestEntitySingleLink';
+/**
+ * Default url path for the according service.
+ */
+TestEntitySingleLink._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+/**
+ * All key fields of the TestEntitySingleLink entity
+ */
+TestEntitySingleLink._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntitySingleLink.js.map

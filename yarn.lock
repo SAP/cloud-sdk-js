@@ -616,10 +616,10 @@
     tmp "^0.2.1"
     yargs "^15.3.1"
 
-"@definitelytyped/dtslint@^0.0.179":
-  version "0.0.179"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.179.tgz#727915ea30eb8cb4a639f6a93241a4e0605c53b8"
-  integrity sha512-u9rYNWAJfOYcCiEjTSfJTCtgPHuDopQKSBSNKXtcfPyS8VoDCkFuBaU3gdpSq+cxlzj0oP5uu89x4EyPnUiLdg==
+"@definitelytyped/dtslint@^0.0.181":
+  version "0.0.181"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.181.tgz#79c0fbbbe72c592040e04dd10919c4d5de0d40f9"
+  integrity sha512-HdIUWtZN3iD56ENckTprv9kPnu3+0XSvbajgwHmljp7/Q7fERf2eHc7fGjQsi1yk359gyn3FrewmdueljNu6ww==
   dependencies:
     "@definitelytyped/dts-critic" "0.0.178"
     "@definitelytyped/header-parser" "0.0.178"

@@ -34,7 +34,7 @@ describe('function', () => {
         `order a breakfast ${unixEOL}@param parameters - Object containing all parameters for the function.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
       ],
       isExported: true,
-      statements: `const params = {${unixEOL}withHoneyToast: new OperationParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new BoundOperationRequestBuilder(this._entityApi, this, 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers || defaultDeSerializers, 'function');`
+      statements: `const params = {${unixEOL}withHoneyToast: new OperationParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new BoundOperationRequestBuilder(this._entityApi as BreakfastEntityApi<T>, this, 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers || defaultDeSerializers, 'function');`
     });
   });
 

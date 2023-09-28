@@ -11,7 +11,6 @@ import {
 import {
   addProxyConfigurationInternet,
   HttpDestination,
-  proxyAgent,
   proxyStrategy
 } from '../scp-cf/destination';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
@@ -38,9 +37,7 @@ export async function getAgentConfigAsync(
     ...getKeyStoreOptions(destination),
     ...(await getMtlsOptions(destination))
   };
-  return destination.proxyConfiguration
-    ? proxyAgent(destination, certificateOptions)
-    : createDefaultAgent(destination, certificateOptions);
+  return createDefaultAgent(destination, certificateOptions);
 }
 
 /**
@@ -58,9 +55,7 @@ export function getAgentConfig(
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOptions(destination)
   };
-  return destination.proxyConfiguration
-    ? proxyAgent(destination, certificateOptions)
-    : createDefaultAgent(destination, certificateOptions);
+  return createDefaultAgent(destination, certificateOptions);
 }
 
 /**
@@ -70,9 +65,10 @@ export function getAgentConfig(
  * @param destination - Destination object
  * @returns Options, which can be used later the http client.
  */
-function getTrustStoreOptions(
-  destination: HttpDestination
-): Record<string, any> {
+function getTrustStoreOptions(destination: HttpDestination): {
+  rejectUnauthorized?: boolean;
+  ca?: [string];
+} {
   // http case: no certificate needed
   if (getProtocolOrDefault(destination) === 'http') {
     if (destination.isTrustingAllCertificates) {
@@ -121,7 +117,10 @@ function getTrustStoreOptions(
  * @param destination - Destination object
  * @returns Options, which can be used later by tls.createSecureContext() e.g. pfx and passphrase or an empty object, if the protocol is not 'https:' or no client information are in the definition.
  */
-function getKeyStoreOptions(destination: Destination): Record<string, any> {
+function getKeyStoreOptions(destination: Destination): {
+  pfx?: Buffer;
+  passphrase?: string;
+} {
   if (
     // Only add certificates, when using MTLS (https://github.com/SAP/cloud-sdk-js/issues/3544)
     destination.authentication === 'ClientCertificateAuthentication' &&

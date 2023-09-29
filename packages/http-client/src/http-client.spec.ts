@@ -18,6 +18,7 @@ import {
   HttpDestination
 } from '@sap-cloud-sdk/connectivity';
 import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
+import { ProxyConfiguration } from '@sap-cloud-sdk/connectivity/src';
 import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
 import {
   basicMultipleResponse,
@@ -680,13 +681,14 @@ sap-client:001`);
     }, 60000);
 
     it('overwrites the default axios config with destination related request config', async () => {
+      const proxyConfiguration: ProxyConfiguration = {
+        host: 'dummy',
+        port: 1234,
+        protocol: 'http'
+      };
       const destination: HttpDestination = {
         url: 'https://destinationUrl',
-        proxyConfiguration: {
-          host: 'dummy',
-          port: 1234,
-          protocol: 'http'
-        }
+        proxyConfiguration
       };
 
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
@@ -695,10 +697,7 @@ sap-client:001`);
       ).resolves.not.toThrow();
       expect(requestSpy).toHaveBeenCalledWith(
         expect.objectContaining({
-          proxy: false,
-          httpsAgent: expect.objectContaining({
-            proxy: expect.objectContaining({ hostname: 'dummy', port: '1234' })
-          })
+          proxy: proxyConfiguration
         })
       );
     });

@@ -95,7 +95,7 @@ describe('generic http client', () => {
   };
 
   describe('buildHttpRequest', () => {
-    it('provides a baseURL, headers, and either an httpAgent or an httpsAgent', async () => {
+    it('creates an https request', async () => {
       const expectedHttps: DestinationHttpRequestConfig = {
         baseURL: 'https://example.com',
         headers: {
@@ -109,7 +109,9 @@ describe('generic http client', () => {
 
       expect(actualHttps).toMatchObject(expectedHttps);
       expect(actualHttps.httpsAgent).toBeDefined();
+    });
 
+    it('creates an http request with a proxy configuration', async () => {
       const expectedProxy: DestinationHttpRequestConfig = {
         baseURL: 'http://example.com',
         headers: {
@@ -117,7 +119,11 @@ describe('generic http client', () => {
           'sap-client': '001',
           'Proxy-Authorization': proxyAuthorization
         },
-        proxy: false
+        proxy: {
+          host: 'proxy.host',
+          port: 1234,
+          protocol: 'http'
+        }
       };
 
       const actualProxy = await buildHttpRequest(proxyDestination);

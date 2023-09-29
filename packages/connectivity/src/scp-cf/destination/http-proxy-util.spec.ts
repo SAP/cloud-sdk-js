@@ -1,7 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { basicHeader } from '../authorization-header';
+import { BasicProxyConfiguration } from '../connectivity-service-types';
 import {
   addProxyConfigurationInternet,
+  getProxyConfig,
   parseProxyEnv,
   proxyStrategy
 } from './http-proxy-util';
@@ -184,7 +186,7 @@ describe('proxy-util', () => {
   });
 });
 
-describe('parseProxyEnv', () => {
+describe('parseProxyEnv()', () => {
   it('parses URL with "https:" protocol and hostname', () => {
     const logger = createLogger('proxy-util');
     const logSpy = jest.spyOn(logger, 'debug');
@@ -338,5 +340,33 @@ describe('parseProxyEnv', () => {
       host: '127.0.0.0',
       port: 8080
     });
+  });
+});
+
+describe('getProxyConfig()', () => {
+  it('returns a basic proxy config', () => {
+    const basicProxyConfig: BasicProxyConfiguration = {
+      host: 'some.host.com',
+      port: 4711,
+      protocol: 'https'
+    };
+    const destHttpWithProxy: HttpDestination = {
+      url: 'http://example.com',
+      proxyConfiguration: {
+        ...basicProxyConfig,
+        headers: {
+          'Proxy-Authorization': 'Bearer auth-token',
+          'SAP-Connectivity-Authentication': 'Bearer auth-token'
+        }
+      }
+    };
+    expect(getProxyConfig(destHttpWithProxy)).toEqual(basicProxyConfig);
+  });
+
+  it('returns a false, if destination has no proxy configuration', () => {
+    const destHttpWithProxy: HttpDestination = {
+      url: 'http://example.com'
+    };
+    expect(getProxyConfig(destHttpWithProxy)).toEqual(false);
   });
 });

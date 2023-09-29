@@ -100,7 +100,8 @@ describe('generic http client', () => {
         headers: {
           authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
           'sap-client': '001'
-        }
+        },
+        proxy: false
       };
 
       const actualHttps = await buildHttpRequest(httpsDestination);
@@ -114,7 +115,8 @@ describe('generic http client', () => {
           authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
           'sap-client': '001',
           'Proxy-Authorization': proxyAuthorization
-        }
+        },
+        proxy: false
       };
 
       const actualProxy = await buildHttpRequest(proxyDestination);

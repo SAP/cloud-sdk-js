@@ -3,6 +3,7 @@ import http from 'http';
 import https from 'https';
 import { createLogger, last } from '@sap-cloud-sdk/util';
 import {
+  BasicProxyConfiguration,
   Destination,
   DestinationCertificate,
   getProtocolOrDefault
@@ -10,6 +11,7 @@ import {
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 import {
   addProxyConfigurationInternet,
+  getProxyConfig,
   HttpDestination,
   proxyStrategy
 } from '../scp-cf/destination';
@@ -262,6 +264,7 @@ function createDefaultAgent(
  */
 export async function urlAndAgent(targetUri: string): Promise<{
   baseURL: string;
+  proxy?: BasicProxyConfiguration | false;
   httpAgent?: http.Agent;
   httpsAgent?: http.Agent;
 }> {
@@ -271,6 +274,7 @@ export async function urlAndAgent(targetUri: string): Promise<{
   }
   return {
     baseURL: destination.url,
-    ...(await getAgentConfigAsync(destination))
+    ...(await getAgentConfigAsync(destination)),
+    proxy: getProxyConfig(destination)
   };
 }

@@ -381,7 +381,6 @@ async function callDestinationService(
 
   const requestConfig: RawAxiosRequestConfig = {
     ...(await urlAndAgent(context.uri)),
-    proxy: false,
     method: 'get',
     headers
   };

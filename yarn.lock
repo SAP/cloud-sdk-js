@@ -1708,10 +1708,10 @@
   resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
   integrity sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==
 
-"@types/opossum@^8.1.2":
-  version "8.1.2"
-  resolved "https://registry.npmjs.org/@types/opossum/-/opossum-8.1.2.tgz#4ae3d9f71165f55247f20e4dd1c6e350c38b520d"
-  integrity sha512-gKcC/rTf2NdTqRL0ujjcE7EvwVJogre6yk0G3oRHzxBigezvjvu3XLClnNjs9uj9EafoaiWFulK5IA4q7Ei3IQ==
+"@types/opossum@^8.1.3":
+  version "8.1.3"
+  resolved "https://registry.npmjs.org/@types/opossum/-/opossum-8.1.3.tgz#4d2e177c548af79c321f5fcf5ef381f8dba20935"
+  integrity sha512-ksOhBwWI+9xu8lIC9vCEPWp5yLh5h7BQnT/eDAToSNyQqX6ouo1AIbWOGapNQlDxX6VES562TrARGv66wkFtlQ==
   dependencies:
     "@types/node" "*"
 
@@ -7732,9 +7732,9 @@ postcss-values-parser@^6.0.2:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.4.12:
-  version "8.4.30"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.30.tgz#0e0648d551a606ef2192a26da4cabafcc09c1aa7"
-  integrity sha512-7ZEao1g4kd68l97aWG/etQKPKq07us0ieSZ2TnFDk11i0ZfDW2AwKHYU8qv4MZKqN2fdBfg+7q0ES06UA73C1g==
+  version "8.4.31"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.31.tgz#92b451050a9f914da6755af352bdc0192508656d"
+  integrity sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"

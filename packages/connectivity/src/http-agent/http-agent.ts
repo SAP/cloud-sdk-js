@@ -39,7 +39,7 @@ export async function getAgentConfigAsync(
     ...getKeyStoreOptions(destination),
     ...(await getMtlsOptions(destination))
   };
-  return createDefaultAgent(destination, certificateOptions);
+  return createAgent(destination, certificateOptions);
 }
 
 /**
@@ -57,7 +57,7 @@ export function getAgentConfig(
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOptions(destination)
   };
-  return createDefaultAgent(destination, certificateOptions);
+  return createAgent(destination, certificateOptions);
 }
 
 /**
@@ -245,14 +245,13 @@ function selectCertificate(destination): DestinationCertificate {
  * @internal
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
  */
-function createDefaultAgent(
+function createAgent(
   destination: HttpDestination,
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
-  if (getProtocolOrDefault(destination) === 'https') {
-    return { httpsAgent: new https.Agent(options) };
-  }
-  return { httpAgent: new http.Agent(options) };
+  return getProtocolOrDefault(destination) === 'https'
+    ? { httpsAgent: new https.Agent(options) }
+    : { httpAgent: new http.Agent(options) };
 }
 
 /**

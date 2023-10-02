@@ -3,6 +3,7 @@ import http from 'http';
 import https from 'https';
 import { createLogger, last } from '@sap-cloud-sdk/util';
 import {
+  BasicProxyConfiguration,
   Destination,
   DestinationCertificate,
   getProtocolOrDefault
@@ -10,8 +11,8 @@ import {
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 import {
   addProxyConfigurationInternet,
+  getProxyConfig,
   HttpDestination,
-  proxyAgent,
   proxyStrategy
 } from '../scp-cf/destination';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
@@ -38,9 +39,7 @@ export async function getAgentConfigAsync(
     ...getKeyStoreOptions(destination),
     ...(await getMtlsOptions(destination))
   };
-  return destination.proxyConfiguration
-    ? proxyAgent(destination, certificateOptions)
-    : createDefaultAgent(destination, certificateOptions);
+  return createAgent(destination, certificateOptions);
 }
 
 /**
@@ -58,9 +57,7 @@ export function getAgentConfig(
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOptions(destination)
   };
-  return destination.proxyConfiguration
-    ? proxyAgent(destination, certificateOptions)
-    : createDefaultAgent(destination, certificateOptions);
+  return createAgent(destination, certificateOptions);
 }
 
 /**
@@ -70,9 +67,10 @@ export function getAgentConfig(
  * @param destination - Destination object
  * @returns Options, which can be used later the http client.
  */
-function getTrustStoreOptions(
-  destination: HttpDestination
-): Record<string, any> {
+function getTrustStoreOptions(destination: HttpDestination): {
+  rejectUnauthorized?: boolean;
+  ca?: [string];
+} {
   // http case: no certificate needed
   if (getProtocolOrDefault(destination) === 'http') {
     if (destination.isTrustingAllCertificates) {
@@ -121,7 +119,10 @@ function getTrustStoreOptions(
  * @param destination - Destination object
  * @returns Options, which can be used later by tls.createSecureContext() e.g. pfx and passphrase or an empty object, if the protocol is not 'https:' or no client information are in the definition.
  */
-function getKeyStoreOptions(destination: Destination): Record<string, any> {
+function getKeyStoreOptions(destination: Destination): {
+  pfx?: Buffer;
+  passphrase?: string;
+} {
   if (
     // Only add certificates, when using MTLS (https://github.com/SAP/cloud-sdk-js/issues/3544)
     destination.authentication === 'ClientCertificateAuthentication' &&
@@ -244,14 +245,13 @@ function selectCertificate(destination): DestinationCertificate {
  * @internal
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
  */
-function createDefaultAgent(
+function createAgent(
   destination: HttpDestination,
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
-  if (getProtocolOrDefault(destination) === 'https') {
-    return { httpsAgent: new https.Agent(options) };
-  }
-  return { httpAgent: new http.Agent(options) };
+  return getProtocolOrDefault(destination) === 'https'
+    ? { httpsAgent: new https.Agent(options) }
+    : { httpAgent: new http.Agent(options) };
 }
 
 /**
@@ -263,6 +263,7 @@ function createDefaultAgent(
  */
 export async function urlAndAgent(targetUri: string): Promise<{
   baseURL: string;
+  proxy?: BasicProxyConfiguration | false;
   httpAgent?: http.Agent;
   httpsAgent?: http.Agent;
 }> {
@@ -272,6 +273,7 @@ export async function urlAndAgent(targetUri: string): Promise<{
   }
   return {
     baseURL: destination.url,
-    ...(await getAgentConfigAsync(destination))
+    ...(await getAgentConfigAsync(destination)),
+    proxy: getProxyConfig(destination)
   };
 }

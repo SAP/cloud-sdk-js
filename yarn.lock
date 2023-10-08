@@ -7295,10 +7295,10 @@ open@^9.1.0:
     is-inside-container "^1.0.0"
     is-wsl "^2.2.0"
 
-openapi-backend@^5.10.0:
-  version "5.10.0"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.10.0.tgz#61900b5fa7d993cb53cd8ad06afa8e8c34374f85"
-  integrity sha512-8AFqr9VfzC/8hXsIpEyzJlqLV8EhJDnZnZ1tIDMfIXKUvMcR5to4HdLvXlDzd7Ur8JJh6x3O0V0B6lKenR3UYQ==
+openapi-backend@^5.10.3:
+  version "5.10.3"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.10.3.tgz#93e3baafb4f7fa1fd3458df81f54bb4d1cccac1c"
+  integrity sha512-FYUOF671f+DKFU7SbIyjogBnC/jH+Gn75vu1mcDgWRMF1hVC+7ChFoKp79Z7TB1h4SBHfHS33Uy/YTsSpQqHlw==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^11.1.0"
     ajv "^8.6.2"

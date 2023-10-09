@@ -116,7 +116,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundFunctionWithoutArguments(
     parameters: BoundFunctionWithoutArgumentsParameters<T>,
-    deSerializers?: T
+    deSerializers: T = defaultDeSerializers as T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -126,19 +126,15 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     const params = {};
 
     return new BoundOperationRequestBuilder(
-      this._entityApi as TestEntityApi<T>,
+      this._entityApi,
       this,
       'boundFunctionWithoutArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(
-            val.value,
-            'Edm.String',
-            deSerializers || defaultDeSerializers
-          )
+          edmToTs(val.value, 'Edm.String', deSerializers)
         ),
       params,
-      deSerializers || defaultDeSerializers,
+      deSerializers,
       'function'
     );
   }
@@ -150,7 +146,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundFunctionWithoutArgumentsComplexReturnType(
     parameters: BoundFunctionWithoutArgumentsComplexReturnTypeParameters<T>,
-    deSerializers?: T
+    deSerializers: T = defaultDeSerializers as T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -160,7 +156,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     const params = {};
 
     return new BoundOperationRequestBuilder(
-      this._entityApi as TestEntityApi<T>,
+      this._entityApi,
       this,
       'boundFunctionWithoutArgumentsComplexReturnType',
       data =>
@@ -170,7 +166,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
           ).deserializeComplexType(data, MyComplexReturnType)
         ),
       params,
-      deSerializers || defaultDeSerializers,
+      deSerializers,
       'function'
     );
   }
@@ -182,7 +178,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundFunctionWithArguments(
     parameters: BoundFunctionWithArgumentsParameters<T>,
-    deSerializers?: T
+    deSerializers: T = defaultDeSerializers as T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -195,19 +191,15 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     };
 
     return new BoundOperationRequestBuilder(
-      this._entityApi as TestEntityApi<T>,
+      this._entityApi,
       this,
       'boundFunctionWithArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(
-            val.value,
-            'Edm.String',
-            deSerializers || defaultDeSerializers
-          )
+          edmToTs(val.value, 'Edm.String', deSerializers)
         ),
       params,
-      deSerializers || defaultDeSerializers,
+      deSerializers,
       'function'
     );
   }
@@ -219,7 +211,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundActionWithoutArguments(
     parameters: BoundActionWithoutArgumentsParameters<T>,
-    deSerializers?: T
+    deSerializers: T = defaultDeSerializers as T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -229,19 +221,15 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
     const params = {};
 
     return new BoundOperationRequestBuilder(
-      this._entityApi as TestEntityApi<T>,
+      this._entityApi,
       this,
       'boundActionWithoutArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(
-            val.value,
-            'Edm.String',
-            deSerializers || defaultDeSerializers
-          )
+          edmToTs(val.value, 'Edm.String', deSerializers)
         ),
       params,
-      deSerializers || defaultDeSerializers,
+      deSerializers,
       'action'
     );
   }

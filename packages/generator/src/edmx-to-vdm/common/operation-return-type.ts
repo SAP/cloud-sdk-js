@@ -35,13 +35,7 @@ export function parseOperationReturnType(
 
   const edmType = findEdmType(returnType.Type);
   if (edmType) {
-    return getEdmReturnType(
-      isCollection,
-      isNullable,
-      edmType,
-      extractResponse,
-      isBound
-    );
+    return getEdmReturnType(isCollection, isNullable, edmType, extractResponse);
   }
 
   const filteredEntities = findEntityTypes(returnType.Type, entities);
@@ -110,8 +104,7 @@ function getEdmReturnType(
   isCollection: boolean,
   isNullable: boolean,
   edmType: string,
-  extractResponse: ExtractResponse,
-  isBound: boolean
+  extractResponse: ExtractResponse
 ): VdmOperationReturnType {
   const typeMapping = getTypeMappingActionFunction(edmType);
   const valueAlias = 'val';
@@ -119,9 +112,7 @@ function getEdmReturnType(
   return {
     returnTypeCategory: 'edm-type',
     returnType: typeMapping.jsType,
-    builderFunction: `(${valueAlias}) => edmToTs(${extracted}, '${
-      typeMapping.edmType
-    }', deSerializers${isBound ? ' || defaultDeSerializers' : ''})`,
+    builderFunction: `(${valueAlias}) => edmToTs(${extracted}, '${typeMapping.edmType}', deSerializers)`,
     isNullable,
     isCollection
   };

@@ -36,7 +36,7 @@ export function testFunctionImportEntityReturnType1<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnType1Parameters<DeSerializersT>,
@@ -74,7 +74,7 @@ export function testFunctionImportEntityReturnType2<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnType2Parameters<DeSerializersT>,
@@ -112,7 +112,7 @@ export function testActionImportNoParameterComplexReturnType1<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
@@ -151,7 +151,7 @@ export function testActionImportNoParameterComplexReturnType2<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,

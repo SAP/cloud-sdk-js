@@ -66,7 +66,7 @@ export class TestEntityWithMultipleKeys<
    */
   boundFunctionWithoutArgumentsWithMultipleKeys(
     parameters: BoundFunctionWithoutArgumentsWithMultipleKeysParameters<T>,
-    deSerializers?: T
+    deSerializers: T = defaultDeSerializers as T
   ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
@@ -76,19 +76,15 @@ export class TestEntityWithMultipleKeys<
     const params = {};
 
     return new BoundOperationRequestBuilder(
-      this._entityApi as TestEntityWithMultipleKeysApi<T>,
+      this._entityApi,
       this,
       'boundFunctionWithoutArgumentsWithMultipleKeys',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(
-            val.value,
-            'Edm.String',
-            deSerializers || defaultDeSerializers
-          )
+          edmToTs(val.value, 'Edm.String', deSerializers)
         ),
       params,
-      deSerializers || defaultDeSerializers,
+      deSerializers,
       'function'
     );
   }
@@ -100,7 +96,7 @@ export class TestEntityWithMultipleKeys<
    */
   boundFunctionWithArgumentsWithMultipleKeys(
     parameters: BoundFunctionWithArgumentsWithMultipleKeysParameters<T>,
-    deSerializers?: T
+    deSerializers: T = defaultDeSerializers as T
   ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
@@ -113,19 +109,15 @@ export class TestEntityWithMultipleKeys<
     };
 
     return new BoundOperationRequestBuilder(
-      this._entityApi as TestEntityWithMultipleKeysApi<T>,
+      this._entityApi,
       this,
       'boundFunctionWithArgumentsWithMultipleKeys',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(
-            val.value,
-            'Edm.String',
-            deSerializers || defaultDeSerializers
-          )
+          edmToTs(val.value, 'Edm.String', deSerializers)
         ),
       params,
-      deSerializers || defaultDeSerializers,
+      deSerializers,
       'function'
     );
   }
@@ -137,7 +129,7 @@ export class TestEntityWithMultipleKeys<
    */
   boundActionWithoutArgumentsWithMultipleKeys(
     parameters: BoundActionWithoutArgumentsWithMultipleKeysParameters<T>,
-    deSerializers?: T
+    deSerializers: T = defaultDeSerializers as T
   ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
@@ -147,19 +139,15 @@ export class TestEntityWithMultipleKeys<
     const params = {};
 
     return new BoundOperationRequestBuilder(
-      this._entityApi as TestEntityWithMultipleKeysApi<T>,
+      this._entityApi,
       this,
       'boundActionWithoutArgumentsWithMultipleKeys',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(
-            val.value,
-            'Edm.String',
-            deSerializers || defaultDeSerializers
-          )
+          edmToTs(val.value, 'Edm.String', deSerializers)
         ),
       params,
-      deSerializers || defaultDeSerializers,
+      deSerializers,
       'action'
     );
   }

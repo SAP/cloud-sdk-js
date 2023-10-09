@@ -34,7 +34,7 @@
     "@sap-cloud-sdk/test-services-e2e": "^3.6.0",
     "@sap-cloud-sdk/test-services-openapi": "^3.6.0",
     "@sap-cloud-sdk/util": "^3.6.0",
-    "@sap/cds": "^7.2.1",
+    "@sap/cds": "^7.3.0",
     "@sap/cds-dk": "7.2.0",
     "axios": "^1.5.1",
     "execa": "^5.0.0",
@@ -44,7 +44,7 @@
     "json-schema-faker": "^0.5.3",
     "mock-fs": "^5.2.0",
     "moment": "^2.29.4",
-    "openapi-backend": "^5.9.2",
+    "openapi-backend": "^5.10.3",
     "pm2": "^5.3.0",
     "smtp-server": "3.13.0",
     "sqlite3": "^5.1.6"

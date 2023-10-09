@@ -34,6 +34,7 @@ export {
   DestinationAccessorOptions,
   DestinationSelectionStrategies,
   JwtPayload,
+  BasicProxyConfiguration,
   ProxyConfiguration,
   ProxyConfigurationHeaders,
   Service,

@@ -21,7 +21,7 @@
   "devDependencies": {
     "@vercel/ncc": "^0.38.0",
     "depcheck": "^1.4.3",
-    "eslint": "^8.50.0",
+    "eslint": "^8.51.0",
     "mock-fs": "^5.2.0",
     "prettier": "^3.0.3",
     "typescript": "^5.1.6"

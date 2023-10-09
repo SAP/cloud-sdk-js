@@ -28,6 +28,19 @@
 
 - 
 
+# 3.6.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.6.0
+
+## Compatibility Notes
+
+- [connectivity] Proxy configuration is no longer realized through a proxy agent, but with the native axios proxy setting instead. (025b6aa2c)
+
+## Fixed Issues
+
+- [connectivity] Use axios native proxy, instead of proxy agent, which causes connection issues for write requests on SAP Cloud Connector. (025b6aa2c)
+- [http-client] Fix CSRF token fetching against OnPremise systems. (c2a2987c5)
+
 # 3.5.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.5.0

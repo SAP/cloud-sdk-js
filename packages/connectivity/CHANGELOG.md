@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.6.0
+
+### Minor Changes
+
+- 025b6aa2c: [Fixed Issue] Use axios native proxy, instead of proxy agent, which causes connection issues for write requests on SAP Cloud Connector.
+- 025b6aa2c: [Compatibility Note] Proxy configuration is no longer realized through a proxy agent, but with the native axios proxy setting instead.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.6.0
+- @sap-cloud-sdk/util@3.6.0
+
 ## 3.5.0
 
 ### Minor Changes

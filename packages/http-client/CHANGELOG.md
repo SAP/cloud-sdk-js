@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/http-client
 
+## 3.6.0
+
+### Patch Changes
+
+- c2a2987c5: [Fixed Issue] Fix CSRF token fetching against OnPremise systems.
+- Updated dependencies [025b6aa2c]
+- Updated dependencies [025b6aa2c]
+  - @sap-cloud-sdk/connectivity@3.6.0
+  - @sap-cloud-sdk/resilience@3.6.0
+  - @sap-cloud-sdk/util@3.6.0
+
 ## 3.5.0
 
 ### Patch Changes

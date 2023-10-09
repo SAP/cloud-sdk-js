@@ -1,5 +1,6 @@
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
+import axios from 'axios';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings
@@ -22,12 +23,9 @@ import {
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
-  destinationName,
-  onPremiseMultipleResponse,
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { getDestination } from './destination-accessor';
-import { parseDestination } from './destination';
 import * as ProxyUtil from './http-proxy-util';
 import { alwaysProvider } from './destination-selection-strategies';
 import { Destination } from './destination-service-types';
@@ -35,106 +33,56 @@ import { destinationCache } from './destination-cache';
 import { destinationServiceCache } from './destination-service-cache';
 
 describe('proxy configuration', () => {
-  afterEach(() => {
-    delete process.env['https_proxy'];
-  });
-
-  it('should take the environment variable.', async () => {
+  beforeEach(() => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
-    mockJwtBearerToken();
+  });
 
-    const httpMocks = [
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-      mockSubaccountDestinationsCall(
-        nock,
-        basicMultipleResponse,
-        200,
-        subscriberServiceToken
-      )
-    ];
+  afterEach(() => {
+    delete process.env['https_proxy'];
+    jest.resetAllMocks();
+  });
+
+  it('should take the environment variable', async () => {
+    jest
+      .spyOn(axios, 'request')
+      .mockImplementation(mockDestinationCalls(basicMultipleResponse[0]));
+
     process.env['https_proxy'] = 'some.proxy.com:1234';
 
-    const actual = await getDestination({
-      destinationName,
-      jwt: subscriberServiceToken,
-      cacheVerificationKeys: false
+    const destination = await getDestination({
+      destinationName: 'FINAL-DESTINATION'
     });
-    expect(actual?.proxyConfiguration).toEqual({
+
+    expect(destination?.proxyConfiguration).toEqual({
       host: 'some.proxy.com',
       protocol: 'http',
       port: 1234
     });
-    httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });
 
-  it('should ignore the proxy if the destination is onPrem type.', async () => {
-    mockServiceBindings();
-    mockVerifyJwt();
-    mockServiceToken();
-    mockJwtBearerToken();
-
-    const httpMocks = [
-      mockInstanceDestinationsCall(
-        nock,
-        onPremisePrincipalPropagationMultipleResponse,
-        200,
-        subscriberServiceToken
-      ),
-      mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken)
-    ];
+  it('should ignore the proxy if the destination has proxy type "OnPremise"', async () => {
+    jest
+      .spyOn(axios, 'request')
+      .mockImplementation(
+        mockDestinationCalls(onPremisePrincipalPropagationMultipleResponse[0])
+      );
 
     process.env['https_proxy'] = 'some.proxy.com:1234';
-    const expected = {
+
+    const destination = await getDestination({
+      destinationName: 'OnPremise',
+      jwt: subscriberUserToken
+    });
+
+    expect(destination?.proxyConfiguration).toEqual({
       ...connectivityProxyConfigMock,
       headers: {
         'Proxy-Authorization': `Bearer ${subscriberServiceToken}`,
-        'SAP-Connectivity-Authentication': `Bearer ${subscriberServiceToken}`
+        'SAP-Connectivity-Authentication': `Bearer ${subscriberUserToken}`
       }
-    };
-
-    const actual = await getDestination({
-      destinationName: 'OnPremise',
-      jwt: subscriberServiceToken,
-      cacheVerificationKeys: false
     });
-    expect(actual?.proxyConfiguration).toEqual(expected);
-    httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
-  });
-
-  it('returns a destination with a connectivity service proxy configuration when ProxyType equals "OnPremise"', async () => {
-    mockServiceBindings();
-    mockVerifyJwt();
-    mockServiceToken();
-
-    const httpMocks = [
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-      mockSubaccountDestinationsCall(
-        nock,
-        onPremiseMultipleResponse,
-        200,
-        providerServiceToken
-      )
-    ];
-
-    const expected = {
-      ...parseDestination({
-        Name: 'OnPremise',
-        URL: 'my.on.premise.system:54321',
-        ProxyType: 'OnPremise',
-        Authentication: 'NoAuthentication'
-      }),
-      proxyConfiguration: {
-        ...connectivityProxyConfigMock,
-        headers: {
-          'Proxy-Authorization': `Bearer ${providerServiceToken}`
-        }
-      }
-    };
-    const actual = await getDestination({ destinationName: 'OnPremise' });
-    expect(actual).toEqual(expected);
-    httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });
 });
 
@@ -256,3 +204,32 @@ describe('truststore configuration', () => {
     });
   });
 });
+
+function mockDestinationCalls(
+  destination: Destination
+): (config: any) => Promise<any> {
+  return async config => {
+    if (
+      config.baseURL?.endsWith('instanceDestinations') ||
+      config.baseURL?.endsWith('subaccountDestinations')
+    ) {
+      return { data: [destination] };
+    }
+    return {
+      data: {
+        destinationConfiguration: destination,
+        authTokens: [
+          {
+            type: 'Bearer',
+            value: 'token',
+            expires_in: '3600',
+            http_header: {
+              key: 'Authorization',
+              value: 'Bearer token'
+            }
+          }
+        ]
+      }
+    };
+  };
+}

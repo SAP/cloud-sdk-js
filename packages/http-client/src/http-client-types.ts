@@ -66,7 +66,7 @@ export interface DestinationHttpRequestConfig {
   /**
    * Proxy configuration, when going through a proxy like the SAP Cloud Connector.
    */
-  proxy: BasicProxyConfiguration | false;
+  proxy?: BasicProxyConfiguration | false;
 }
 
 /**
@@ -140,8 +140,8 @@ export interface HttpRequestConfigBase {
    */
   maxContentLength?: number;
   /**
-   * `proxy` of axios is disabled in http-client.
-   * Proxy can be set with {@link @sap-cloud-sdk/connectivity!ProxyConfiguration}.
+   * Set this to `false` to disable the proxy.
+   * To configure the proxy you can add a {@link @sap-cloud-sdk/connectivity!ProxyConfiguration} to your destination.
    */
   proxy?: false;
   /**

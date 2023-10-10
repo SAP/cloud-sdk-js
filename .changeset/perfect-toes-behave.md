@@ -10,4 +10,5 @@
 '@sap-cloud-sdk/odata-v4': minor
 ---
 
-[Fixed Issue] Add support for `useDefineForClassFields` which defaults to `true` when target is `ES2022`.
+[Fixed Issue] Do not send `null` values in the request payload for properties that are not set while creating or updating an entity.
+[Fixed Issue] Fix `RangeError: Maximum call stack size exceeded` error that occurs when updating an entity after calling `getByKey`.

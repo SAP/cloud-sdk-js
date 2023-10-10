@@ -22,8 +22,7 @@ export function parseOperationReturnType(
   entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   extractResponse: ExtractResponse,
-  serviceName: string,
-  isBound: boolean
+  serviceName: string
 ): VdmOperationReturnType {
   if (!returnType) {
     return getVoidReturnType();

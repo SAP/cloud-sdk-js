@@ -910,9 +910,8 @@ a.tsd-index-link {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }
 #tsd-search .results li {
+    padding: 0 10px;
     background-color: var(--color-background);
-    line-height: initial;
-    padding: 4px;
 }
 #tsd-search .results li:nth-child(even) {
     background-color: var(--color-background-secondary);
@@ -925,10 +924,7 @@ a.tsd-index-link {
     background-color: var(--color-accent);
 }
 #tsd-search .results a {
-    display: flex;
-    align-items: center;
-    padding: 0.25rem;
-    box-sizing: border-box;
+    display: block;
 }
 #tsd-search .results a:before {
     top: 10px;
@@ -1138,7 +1134,7 @@ img {
 }
 
 .deprecated {
-    text-decoration: line-through !important;
+    text-decoration: line-through;
 }
 
 .warning {

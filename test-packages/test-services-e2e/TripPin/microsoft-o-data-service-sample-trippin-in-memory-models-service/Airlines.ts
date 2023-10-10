@@ -34,13 +34,13 @@ export class Airlines<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Airline Code.
    */
-  airlineCode!: DeserializedType<T, 'Edm.String'>;
+  declare airlineCode: DeserializedType<T, 'Edm.String'>;
   /**
    * Name.
    */
-  name!: DeserializedType<T, 'Edm.String'>;
+  declare name: DeserializedType<T, 'Edm.String'>;
 
-  constructor(readonly _entityApi: AirlinesApi<T>) {
+  constructor(_entityApi: AirlinesApi<T>) {
     super(_entityApi);
   }
 }

@@ -17,7 +17,6 @@ export declare class Photos<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements PhotosType<T>
 {
-  readonly _entityApi: PhotosApi<T>;
   /**
    * Technical entity name for Photos.
    */

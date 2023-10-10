@@ -33,7 +33,8 @@ import {
   OneToOneLink,
   OrderableEdmTypeField,
   PropertyMetadata,
-  Time
+  Time,
+  nonEnumerable
 } from '../../packages/odata-common/src/internal';
 import { customTestDeSerializers } from '../../test-resources/test/test-util';
 
@@ -213,11 +214,13 @@ export class CommonEntitySingleLink<
   readonly _oDataVersion: any;
   static _defaultBasePath = '/sap/opu/odata/sap/API_COMMON_SRV';
   static _keys = ['KeyProperty'];
-  keyProperty!: DeserializedType<T, 'Edm.String'>;
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  declare keyProperty: DeserializedType<T, 'Edm.String'>;
+  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
 
-  constructor(readonly _entityApi: CommonEntitySingleLinkApi<T>) {
+  constructor(_entityApi: CommonEntitySingleLinkApi<T>) {
     super(_entityApi);
+    this._oDataVersion = 'v2';
+    nonEnumerable(this, '_oDataVersion');
   }
 }
 
@@ -362,16 +365,18 @@ export class CommonEntity<T extends DeSerializers = DefaultDeSerializers>
   readonly _oDataVersion: any;
   static _defaultBasePath = '/sap/opu/odata/sap/API_COMMON_SRV';
   static _keys = ['KeyPropertyGuid', 'KeyPropertyString'];
-  keyPropertyGuid!: DeserializedType<T, 'Edm.Guid'>;
-  keyPropertyString!: DeserializedType<T, 'Edm.String'>;
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
-  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
-  collectionProperty?: DeserializedType<T, 'Edm.String'>[] | null;
-  complexTypeProperty?: CommonComplexType<T> | null;
-  toSingleLink?: CommonEntitySingleLink<T> | null;
+  declare keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>;
+  declare keyPropertyString: DeserializedType<T, 'Edm.String'>;
+  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  declare int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
+  declare collectionProperty?: DeserializedType<T, 'Edm.String'>[] | null;
+  declare complexTypeProperty?: CommonComplexType<T> | null;
+  declare toSingleLink?: CommonEntitySingleLink<T> | null;
 
-  constructor(readonly _entityApi: CommonEntityApi<T>) {
+  constructor(_entityApi: CommonEntityApi<T>) {
     super(_entityApi);
+    this._oDataVersion = 'v2';
+    nonEnumerable(this, '_oDataVersion');
   }
 }
 

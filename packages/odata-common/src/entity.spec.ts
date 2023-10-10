@@ -4,6 +4,22 @@ import {
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 
 describe('entity', () => {
+  it('returns enumerable false for base propeties on a newly created entity', () => {
+    const entity = new CommonEntity(commonEntityApi);
+    expect(
+      Object.getOwnPropertyDescriptor(entity, '_entityApi')?.enumerable
+    ).toBeFalsy();
+    expect(
+      Object.getOwnPropertyDescriptor(entity, 'remoteState')?.enumerable
+    ).toBeFalsy();
+    expect(
+      Object.getOwnPropertyDescriptor(entity, '_customFields')?.enumerable
+    ).toBeFalsy();
+    expect(
+      Object.getOwnPropertyDescriptor(entity, '_versionIdentifier')?.enumerable
+    ).toBeFalsy();
+  });
+
   describe('remote state', () => {
     it('setOrInitializeRemoteState() sets remote state on entity', () => {
       const entity = new CommonEntity(commonEntityApi);
@@ -54,14 +70,6 @@ describe('entity', () => {
         newCustomField: 543
       });
     });
-  });
-
-  it('getCustomFields() should return empty object when there are no custom fields', () => {
-    const entity = commonEntityApi
-      .entityBuilder()
-      .stringProperty('test')
-      .build();
-    expect(entity.getCustomFields()).toEqual({});
   });
 
   describe('custom fields', () => {

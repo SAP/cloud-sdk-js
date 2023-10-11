@@ -46,7 +46,7 @@
     "swagger2openapi": "^7.0.4"
   },
   "devDependencies": {
-    "@types/js-yaml": "^4.0.6",
+    "@types/js-yaml": "^4.0.7",
     "prettier": "^3.0.3",
     "mock-fs": "^5.2.0",
     "typescript": "~5.1.6"

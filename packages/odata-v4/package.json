@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-services-odata-v4": "^3.6.0",
-    "nock": "^13.3.3",
+    "nock": "^13.3.4",
     "typescript": "~5.1.6"
   }
 }

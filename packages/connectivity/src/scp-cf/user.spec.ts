@@ -1,5 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken';
-import { mappingUserFields, userFromJwt } from './user';
+import { userFromJwt } from './user';
 
 function getSampleJwt(scopes?: string[]): JwtPayload {
   return {
@@ -56,34 +56,34 @@ describe('user builder from decoded jwt', () => {
       const user = userFromJwt(getSampleJwt());
 
       expect(user.scopes.length).toBe(0);
-      expect(user.hasScope({ name: 'someScope' })).toBe(false);
+      expect(user.hasScope('someScope')).toBe(false);
     });
 
     it('checks scopes for user with scopes', () => {
       const user = userFromJwt(getSampleJwt(['scope1', 'scope2']));
 
       expect(user.scopes.length).toBe(2);
-      expect(user.hasScope({ name: 'scope1' })).toBe(true);
-      expect(user.hasScope({ name: 'scope2' })).toBe(true);
-      expect(user.hasScope({ name: 'nonExisting' })).toBe(false);
+      expect(user.hasScope('scope1')).toBe(true);
+      expect(user.hasScope('scope2')).toBe(true);
+      expect(user.hasScope('nonExisting')).toBe(false);
     });
   });
 
-  it('should also parse custom attributes', () => {
+  it('should return empty object if there are no custom attributes', () => {
     const user = userFromJwt(getSampleJwt());
-    expect(user.customAttributes).toMatchObject(new Map<string, string[]>());
+    expect(user.customAttributes).toEqual({});
+  });
 
+  it('should parse custom attributes', () => {
     const customAttributes = {
       customKey1: ['value1'],
       customKey2: ['value2.1', 'value2.2']
     };
-    const userWithCustomFields = userFromJwt({
+    const user = userFromJwt({
       user_name: 'someName',
       user_id: 'someId',
-      [mappingUserFields.customAttributes.keyInJwt]: customAttributes
+      'xs.user.attributes': customAttributes
     });
-    expect(userWithCustomFields.customAttributes).toMatchObject(
-      customAttributes
-    );
+    expect(user.customAttributes).toEqual(customAttributes);
   });
 });

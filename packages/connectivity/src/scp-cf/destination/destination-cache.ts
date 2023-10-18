@@ -1,6 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { tenantId } from '../tenant';
-import { userId } from '../user';
+import { tenantId, userId } from '../jwt';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { AsyncCache, AsyncCacheInterface } from '../async-cache';
 import { Destination } from './destination-service-types';
@@ -187,7 +186,7 @@ function getTenantCacheKey(
     return `${tenant}::${destinationName}`;
   }
   logger.warn(
-    "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant id is undefined in JWT."
+    "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant ID is undefined in JWT."
   );
 }
 
@@ -237,10 +236,11 @@ export function setDestinationCache(cache: DestinationCacheInterface): void {
  * @internal
  */
 export let destinationCache: DestinationCacheType = DestinationCache();
+
 /**
- * Determine the default Isolation strategy if not given as option.
+ * Determine the default isolation strategy if not given as option.
  * @param jwt - JWT to determine the default isolation strategy
- * @returns The isolation strategy based on the JWT. If no JWT is given it defaults to Tenant isolation
+ * @returns The isolation strategy based on the JWT. If no JWT is given it defaults to tenant isolation.
  * @internal
  */
 export function getDefaultIsolationStrategy(

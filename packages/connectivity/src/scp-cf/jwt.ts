@@ -16,6 +16,124 @@ const logger = createLogger({
 });
 
 /**
+ * Get the user ID from the JWT payload.
+ * @param jwtPayload - Token payload to read the user ID from.
+ * @returns The user ID, if available.
+ * @internal
+ */
+export function userId({ user_id }: JwtPayload): string {
+  return user_id;
+}
+
+/**
+ * Get the user name from the JWT payload.
+ * @param jwtPayload - Token payload to read the user name from.
+ * @returns The user name if available.
+ * @internal
+ */
+export function userName({ user_name }: JwtPayload): string {
+  return user_name;
+}
+
+/**
+ * Get the user's given name from the JWT payload.
+ * @param jwtPayload - Token payload to read the user's given name from.
+ * @returns The user's given name if available.
+ * @internal
+ */
+export function userGivenName({ given_name }: JwtPayload): string {
+  return given_name;
+}
+
+/**
+ * Get the user's family name from the JWT payload.
+ * @param jwtPayload - Token payload to read the user's family from.
+ * @returns The user's family name if available.
+ * @internal
+ */
+export function userFamilyName({ family_name }: JwtPayload): string {
+  return family_name;
+}
+
+/**
+ * Get the user's e-mail address from the JWT payload.
+ * @param jwtPayload - Token payload to read the user e-mail address from.
+ * @returns The user's e-mail address if available.
+ * @internal
+ */
+export function userEmail({ email }: JwtPayload): string {
+  return email;
+}
+
+/**
+ * Get the user's scopes from the JWT payload.
+ * @param jwtPayload - Token payload to read the user's scopes from.
+ * @returns The user's scopes if available.
+ * @internal
+ */
+export function userScopes(jwtPayload: JwtPayload): string[] {
+  const scopes = jwtPayload.scope;
+  if (Array.isArray(scopes)) {
+    return scopes.map(scope =>
+      scope.includes('.')
+        ? scope.substr(scope.indexOf('.') + 1, scope.length)
+        : scope
+    );
+  }
+  return [];
+}
+
+/**
+ * Extracts the custom attributes from the JWT.
+ * @param payload - Token payload to read the custom attributes from.
+ * @returns Custom attributes added by the XSUAA service to the issued JWT.
+ * @internal
+ */
+export function customAttributes(payload: JwtPayload): Record<string, any> {
+  return payload['xs.user.attributes'] || {};
+}
+
+/**
+ * Get the tenant ID of a decoded JWT, based on its `zid` property.
+ * @param jwtPayload - Token payload to read the tenant ID from.
+ * @returns The tenant ID, if available.
+ * @internal
+ */
+export function tenantId({ zid }: JwtPayload): string {
+  return zid;
+}
+
+/**
+ * Get the tenant name of a decoded JWT.
+ * @param jwtPayload - Token payload to read the tenant name from.
+ * @returns The tenant name, if available.
+ * @internal
+ */
+export function tenantName({ ext_attr }: JwtPayload): string {
+  return ext_attr?.zdn;
+}
+
+/**
+ * Get the enhancer of a decoded JWT. Known values: 'XSUAA'. Used for checking whether a token is issued from the XSUAA service.
+ * @param jwtPayload - Token payload to read the enhancer from.
+ * @returns The tenant name, if available.
+ * @internal
+ */
+export function enhancer({ ext_attr }: JwtPayload): string {
+  return ext_attr?.enhancer;
+}
+
+/**
+ * Get the issuer URL of a decoded JWT.
+ * @param decodedToken - Token to read the issuer URL from.
+ * @returns The issuer URL if available.
+ * @internal
+ */
+export function issuerUrl({ iss }: JwtPayload): string | undefined {
+  return iss;
+}
+
+/**
  * Decode JWT.
  * @param token - JWT to be decoded.
  * @returns Decoded payload.
@@ -142,16 +260,6 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
 export const verificationKeyCache = new Cache<TokenKey>(900000);
 
 /**
- * Get the issuer URL of a decoded JWT.
- * @param decodedToken - Token to read the issuer URL from.
- * @returns The issuer URL if available.
- * @internal
- */
-export function issuerUrl(decodedToken: JwtPayload): string | undefined {
-  return readPropertyWithWarn(decodedToken, 'iss');
-}
-
-/**
  * Retrieve the audiences of a decoded JWT based on the audiences and scopes in the token.
  * @param decodedToken - Token to retrieve the audiences from.
  * @returns A set of audiences.
@@ -209,62 +317,13 @@ export function wrapJwtInHeader(token: string): {
 }
 
 /**
- * @internal
- * @param jwtPayload - The jwt payload.
- * @param property - The property to be read.
- * @returns the property if present.
- */
-export function readPropertyWithWarn(
-  jwtPayload: JwtPayload,
-  property: string
-): any {
-  if (!jwtPayload[property]) {
-    logger.warn(
-      `Warning JWT: The provided JWT payload does not include a '${property}' property.`
-    );
-  }
-
-  return jwtPayload[property];
-}
-
-/**
- * @internal
- */
-export type JwtKeyMapping<InterfaceT, JwtKeysT extends string> = {
-  [key in keyof InterfaceT]: {
-    keyInJwt: JwtKeysT;
-    extractorFunction: (jwtPayload: JwtPayload) => any;
-  };
-};
-
-/**
- * Checks if a given key is present in the decoded JWT. If not, an error is thrown.
- * @param key - The key of the representation in typescript
- * @param mapping - The mapping between the typescript keys and the JWT key
- * @param jwtPayload - JWT payload to check fo the given key.
- * @internal
- */
-export function checkMandatoryValue<InterfaceT, JwtKeysT extends string>(
-  key: keyof InterfaceT,
-  mapping: JwtKeyMapping<InterfaceT, JwtKeysT>,
-  jwtPayload: JwtPayload
-): void {
-  const value = mapping[key].extractorFunction(jwtPayload);
-  if (!value) {
-    throw new Error(
-      `Property '${mapping[key].keyInJwt}' is missing in JWT payload.`
-    );
-  }
-}
-
-/**
  * Checks if the given JWT was issued by XSUAA based on the iss property and the uaa domain of the XSUAA.
  * @param jwt - JWT to be checked.
  * @returns Whether the JWT was issued by XSUAA.
  * @internal
  */
 export function isXsuaaToken(jwt: JwtWithPayloadObject): boolean {
-  return jwt.payload.ext_attr?.enhancer === 'XSUAA';
+  return enhancer(jwt.payload) === 'XSUAA';
 }
 
 /**

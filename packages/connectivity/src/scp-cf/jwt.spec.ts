@@ -15,8 +15,7 @@ import {
   retrieveJwt,
   verifyJwt,
   isXsuaaToken,
-  decodeOrMakeJwt,
-  parseJwt
+  decodeOrMakeJwt
 } from './jwt';
 
 const jwtPayload = {
@@ -47,51 +46,6 @@ export function responseWithPublicKey(key = publicKey) {
 describe('jwt', () => {
   beforeAll(() => {
     mockServiceBindings({ xsuaaBinding: false });
-  });
-
-  describe('parseJwt()', () => {
-    // function getSampleJwt(scopes?: string[]): JwtPayload {
-    //   return {
-    //     user_id: 'someID',
-    //     user_name: 'Smith_John',
-    //     given_name: 'John',
-    //     family_name: 'Smith',
-    //     email: 'John.Smith@sap.com',
-    //     scope: scopes
-    //   };
-    // }
-    it('should contain the fields in the provided JWT', () => {
-      expect(
-        parseJwt({
-          user_id: 'someID',
-          user_name: 'Smith_John',
-          given_name: 'John',
-          family_name: 'Smith',
-          email: 'John.Smith@sap.com'
-        })
-      ).toEqual({
-        userId: 'someID',
-        userName: 'Smith_John',
-        givenName: 'John',
-        familyName: 'Smith',
-        email: 'John.Smith@sap.com'
-      });
-    });
-
-    it('should return empty object if there are no properties in the JWT', () => {
-      expect(parseJwt({})).toEqual({});
-    });
-
-    it('should parse custom attributes', () => {
-      const customAttributes = {
-        customKey1: ['value1'],
-        customKey2: ['value2.1', 'value2.2']
-      };
-
-      expect(parseJwt({ 'xs.user.attributes': customAttributes })).toEqual({
-        customAttributes
-      });
-    });
   });
 
   describe('isXsuaaToken()', () => {

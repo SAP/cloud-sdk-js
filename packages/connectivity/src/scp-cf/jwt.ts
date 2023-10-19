@@ -24,60 +24,6 @@ function makeArray(val: string | string[] | undefined): string[] {
 }
 
 /**
- * @internal
- * Parse JWT to a human readable object.
- * @param token - JWT to parse/
- * @returns Object with speaking names.
- */
-export function parseJwt(token: string | JwtPayload): {
-  userId?: string;
-  userName?: string;
-  givenName?: string;
-  familyName?: string;
-  email?: string;
-  scopes?: string[];
-  audiences?: string[];
-  customAttributes?: Record<string, any>;
-  tenantId?: string;
-  tenantName?: string;
-  enhancer?: string;
-  issuerUrl?: string;
-} {
-  const {
-    user_id,
-    user_name,
-    given_name,
-    family_name,
-    email,
-    scope,
-    ['xs.user.attributes']: xsUserAttributes,
-    zid,
-    iss,
-    aud,
-    ext_attr
-  } = decodeJwt(token);
-
-  const scopes = makeArray(scope).map(s =>
-    s.includes('.') ? s.split('.')[1] : s
-  );
-
-  return {
-    ...(user_id && { userId: user_id }),
-    ...(user_name && { userName: user_name }),
-    ...(given_name && { givenName: given_name }),
-    ...(family_name && { familyName: family_name }),
-    ...(email && { email }),
-    ...(scope && { scopes }),
-    ...(aud && scope && { audiences: audiences({ aud, scope }) }),
-    ...(xsUserAttributes && { customAttributes: xsUserAttributes }),
-    ...(zid && { tenantId: zid }),
-    ...(ext_attr?.zdn && { tenantName: ext_attr?.zdn }),
-    ...(ext_attr?.enhancer && { enhancer: ext_attr?.enhancer }),
-    ...(iss && { issuerUrl: iss })
-  };
-}
-
-/**
  * Get the user ID from the JWT payload.
  * @param jwtPayload - Token payload to read the user ID from.
  * @returns The user ID, if available.
@@ -97,16 +43,6 @@ export function userId({ user_id }: JwtPayload): string {
 export function tenantId({ zid }: JwtPayload): string {
   logger.debug(`JWT zid is: ${zid}.`);
   return zid;
-}
-
-/**
- * Get the enhancer of a decoded JWT. Known values: 'XSUAA'. Used for checking whether a token is issued from the XSUAA service.
- * @param jwtPayload - Token payload to read the enhancer from.
- * @returns The tenant name, if available.
- * @internal
- */
-export function enhancer({ ext_attr }: JwtPayload): string {
-  return ext_attr?.enhancer;
 }
 
 /**
@@ -272,13 +208,13 @@ export function wrapJwtInHeader(token: string): {
 }
 
 /**
- * Checks if the given JWT was issued by XSUAA based on the iss property and the uaa domain of the XSUAA.
+ * Checks if the given JWT was issued by XSUAA based on the `iss` property and the UAA domain of the XSUAA.
  * @param jwt - JWT to be checked.
  * @returns Whether the JWT was issued by XSUAA.
  * @internal
  */
 export function isXsuaaToken(jwt: JwtWithPayloadObject): boolean {
-  return enhancer(jwt.payload) === 'XSUAA';
+  return jwt.payload.ext_attr?.enhancer === 'XSUAA';
 }
 
 /**

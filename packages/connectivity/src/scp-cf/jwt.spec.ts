@@ -15,7 +15,8 @@ import {
   retrieveJwt,
   verifyJwt,
   isXsuaaToken,
-  decodeOrMakeJwt
+  decodeOrMakeJwt,
+  parseJwt
 } from './jwt';
 
 const jwtPayload = {
@@ -48,6 +49,51 @@ describe('jwt', () => {
     mockServiceBindings({ xsuaaBinding: false });
   });
 
+  describe('parseJwt()', () => {
+    // function getSampleJwt(scopes?: string[]): JwtPayload {
+    //   return {
+    //     user_id: 'someID',
+    //     user_name: 'Smith_John',
+    //     given_name: 'John',
+    //     family_name: 'Smith',
+    //     email: 'John.Smith@sap.com',
+    //     scope: scopes
+    //   };
+    // }
+    it('should contain the fields in the provided JWT', () => {
+      expect(
+        parseJwt({
+          user_id: 'someID',
+          user_name: 'Smith_John',
+          given_name: 'John',
+          family_name: 'Smith',
+          email: 'John.Smith@sap.com'
+        })
+      ).toEqual({
+        userId: 'someID',
+        userName: 'Smith_John',
+        givenName: 'John',
+        familyName: 'Smith',
+        email: 'John.Smith@sap.com'
+      });
+    });
+
+    it('should return empty object if there are no properties in the JWT', () => {
+      expect(parseJwt({})).toEqual({});
+    });
+
+    it('should parse custom attributes', () => {
+      const customAttributes = {
+        customKey1: ['value1'],
+        customKey2: ['value2.1', 'value2.2']
+      };
+
+      expect(parseJwt({ 'xs.user.attributes': customAttributes })).toEqual({
+        customAttributes
+      });
+    });
+  });
+
   describe('isXsuaaToken()', () => {
     it('returns true if the token was issued by XSUAA', () => {
       const jwt = decodeJwtComplete(
@@ -70,7 +116,7 @@ describe('jwt', () => {
     });
   });
 
-  describe('retrieveJwt', () => {
+  describe('retrieveJwt()', () => {
     it('returns undefined when incoming message has no auth header', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT())).toBeUndefined();
     });
@@ -98,7 +144,7 @@ describe('jwt', () => {
     });
   });
 
-  describe('verifyJwt', () => {
+  describe('verifyJw())', () => {
     beforeEach(() => {
       process.env.VCAP_SERVICES = JSON.stringify({
         xsuaa: [
@@ -252,37 +298,37 @@ describe('jwt', () => {
     });
   });
 
-  describe('audiences', () => {
+  describe('audiences()', () => {
     it('returns a set of the entries of the "aud" claim, if present. If a dot is present, we only take everything before the dot', () => {
       const token = {
         aud: ['one', 'two.one', 'three.two.one']
       };
 
-      expect(audiences(token)).toEqual(new Set(['one', 'two', 'three']));
+      expect(audiences(token)).toEqual(['one', 'two', 'three']);
     });
 
     it('returns an empty set if the "aud" claim is empty', () => {
       const tokenEmpty = { aud: [] };
 
-      expect(audiences(tokenEmpty)).toEqual(new Set());
+      expect(audiences(tokenEmpty)).toEqual([]);
     });
 
-    it('returns a set of the entries of the "scope" claim iff the "aud" claim is not present and if the entry contains a dot (and then we again only take everything before the dot', () => {
+    it('returns audiences from scope, if no "aud" property exists', () => {
       const token = {
         scope: ['one', 'two.one', 'three.two.one']
       };
 
-      expect(audiences(token)).toEqual(new Set(['two', 'three']));
+      expect(audiences(token)).toEqual(['two', 'three']);
     });
 
     it('returns an empty set if the "aud" claim is missing and the "scope" claim is empty', () => {
       const tokenEmpty = { scope: [] };
 
-      expect(audiences(tokenEmpty)).toEqual(new Set());
+      expect(audiences(tokenEmpty)).toEqual([]);
     });
 
     it('returns an empty set if neither the "aud" nor the "scope" claim are present', () => {
-      expect(audiences({})).toEqual(new Set());
+      expect(audiences({})).toEqual([]);
     });
   });
 

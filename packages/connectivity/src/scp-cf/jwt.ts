@@ -1,5 +1,9 @@
 import { IncomingMessage } from 'http';
-import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  ErrorWithCause,
+  pickValueIgnoreCase
+} from '@sap-cloud-sdk/util';
 import * as xssec from '@sap/xssec';
 import { decode } from 'jsonwebtoken';
 import { Cache } from './cache';
@@ -15,6 +19,64 @@ const logger = createLogger({
   messageContext: 'jwt'
 });
 
+function makeArray(val: string | string[] | undefined): string[] {
+  return val ? (Array.isArray(val) ? val : [val]) : [];
+}
+
+/**
+ * @internal
+ * Parse JWT to a human readable object.
+ * @param token - JWT to parse/
+ * @returns Object with speaking names.
+ */
+export function parseJwt(token: string | JwtPayload): {
+  userId?: string;
+  userName?: string;
+  givenName?: string;
+  familyName?: string;
+  email?: string;
+  scopes?: string[];
+  audiences?: string[];
+  customAttributes?: Record<string, any>;
+  tenantId?: string;
+  tenantName?: string;
+  enhancer?: string;
+  issuerUrl?: string;
+} {
+  const {
+    user_id,
+    user_name,
+    given_name,
+    family_name,
+    email,
+    scope,
+    ['xs.user.attributes']: xsUserAttributes,
+    zid,
+    iss,
+    aud,
+    ext_attr
+  } = decodeJwt(token);
+
+  const scopes = makeArray(scope).map(s =>
+    s.includes('.') ? s.split('.')[1] : s
+  );
+
+  return {
+    ...(user_id && { userId: user_id }),
+    ...(user_name && { userName: user_name }),
+    ...(given_name && { givenName: given_name }),
+    ...(family_name && { familyName: family_name }),
+    ...(email && { email }),
+    ...(scope && { scopes }),
+    ...(aud && scope && { audiences: audiences({ aud, scope }) }),
+    ...(xsUserAttributes && { customAttributes: xsUserAttributes }),
+    ...(zid && { tenantId: zid }),
+    ...(ext_attr?.zdn && { tenantName: ext_attr?.zdn }),
+    ...(ext_attr?.enhancer && { enhancer: ext_attr?.enhancer }),
+    ...(iss && { issuerUrl: iss })
+  };
+}
+
 /**
  * Get the user ID from the JWT payload.
  * @param jwtPayload - Token payload to read the user ID from.
@@ -22,75 +84,8 @@ const logger = createLogger({
  * @internal
  */
 export function userId({ user_id }: JwtPayload): string {
+  logger.debug(`JWT user_id is: ${user_id}.`);
   return user_id;
-}
-
-/**
- * Get the user name from the JWT payload.
- * @param jwtPayload - Token payload to read the user name from.
- * @returns The user name if available.
- * @internal
- */
-export function userName({ user_name }: JwtPayload): string {
-  return user_name;
-}
-
-/**
- * Get the user's given name from the JWT payload.
- * @param jwtPayload - Token payload to read the user's given name from.
- * @returns The user's given name if available.
- * @internal
- */
-export function userGivenName({ given_name }: JwtPayload): string {
-  return given_name;
-}
-
-/**
- * Get the user's family name from the JWT payload.
- * @param jwtPayload - Token payload to read the user's family from.
- * @returns The user's family name if available.
- * @internal
- */
-export function userFamilyName({ family_name }: JwtPayload): string {
-  return family_name;
-}
-
-/**
- * Get the user's e-mail address from the JWT payload.
- * @param jwtPayload - Token payload to read the user e-mail address from.
- * @returns The user's e-mail address if available.
- * @internal
- */
-export function userEmail({ email }: JwtPayload): string {
-  return email;
-}
-
-/**
- * Get the user's scopes from the JWT payload.
- * @param jwtPayload - Token payload to read the user's scopes from.
- * @returns The user's scopes if available.
- * @internal
- */
-export function userScopes(jwtPayload: JwtPayload): string[] {
-  const scopes = jwtPayload.scope;
-  if (Array.isArray(scopes)) {
-    return scopes.map(scope =>
-      scope.includes('.')
-        ? scope.substr(scope.indexOf('.') + 1, scope.length)
-        : scope
-    );
-  }
-  return [];
-}
-
-/**
- * Extracts the custom attributes from the JWT.
- * @param payload - Token payload to read the custom attributes from.
- * @returns Custom attributes added by the XSUAA service to the issued JWT.
- * @internal
- */
-export function customAttributes(payload: JwtPayload): Record<string, any> {
-  return payload['xs.user.attributes'] || {};
 }
 
 /**
@@ -100,17 +95,8 @@ export function customAttributes(payload: JwtPayload): Record<string, any> {
  * @internal
  */
 export function tenantId({ zid }: JwtPayload): string {
+  logger.debug(`JWT zid is: ${zid}.`);
   return zid;
-}
-
-/**
- * Get the tenant name of a decoded JWT.
- * @param jwtPayload - Token payload to read the tenant name from.
- * @returns The tenant name, if available.
- * @internal
- */
-export function tenantName({ ext_attr }: JwtPayload): string {
-  return ext_attr?.zdn;
 }
 
 /**
@@ -124,13 +110,33 @@ export function enhancer({ ext_attr }: JwtPayload): string {
 }
 
 /**
- * Get the issuer URL of a decoded JWT.
- * @param decodedToken - Token to read the issuer URL from.
- * @returns The issuer URL if available.
+ * Retrieve the audiences of a decoded JWT based on the audiences and scopes in the token.
+ * @param decodedToken - Token to retrieve the audiences from.
+ * @returns A set of audiences.
  * @internal
  */
-export function issuerUrl({ iss }: JwtPayload): string | undefined {
-  return iss;
+// Comments taken from the Java SDK implementation
+// Currently, scopes containing dots are allowed.
+// Since the UAA builds audiences by taking the substring of scopes up to the last dot,
+// scopes with dots will lead to an incorrect audience which is worked around here.
+// If a JWT contains no audience, infer audiences based on the scope names in the JWT.
+// This is currently necessary as the UAA does not correctly fill the audience in the user token flow.
+export function audiences(decodedToken: JwtPayload): string[] {
+  const parsedAudiences = audiencesFromAud(decodedToken);
+  return parsedAudiences.length
+    ? parsedAudiences
+    : audiencesFromScope(decodedToken);
+}
+
+function audiencesFromAud({ aud }: JwtPayload): string[] {
+  return makeArray(aud).map(audience => audience.split('.')[0]);
+}
+
+function audiencesFromScope({ scope }: JwtPayload): string[] {
+  return makeArray(scope).reduce(
+    (aud, s) => (s.includes('.') ? [...aud, s.split('.')[0]] : aud),
+    []
+  );
 }
 
 /**
@@ -164,23 +170,17 @@ export function decodeJwtComplete(token: string): JwtWithPayloadObject {
  * @returns JWT found in header.
  */
 export function retrieveJwt(req: IncomingMessage): string | undefined {
-  const header = authHeader(req);
-  if (validateAuthHeader(header)) {
-    return header!.split(' ')[1];
+  const authHeader = getAuthHeader(req);
+  if (validateAuthHeader(authHeader)) {
+    return authHeader?.split(' ')[1];
   }
 }
 
-function authHeader(req: IncomingMessage): string | undefined {
-  const entries = Object.entries(req.headers).find(
-    ([key]) => key.toLowerCase() === 'authorization'
-  );
-  if (entries) {
-    const header = entries[1];
-
-    // Header could be a list of headers
-    return Array.isArray(header) ? header[0] : header;
+function getAuthHeader(req: IncomingMessage): string | undefined {
+  const authHeader = pickValueIgnoreCase(req.headers, 'authorization');
+  if (authHeader) {
+    return Array.isArray(authHeader) ? authHeader[0] : authHeader;
   }
-  return undefined;
 }
 
 function validateAuthHeader(header: string | undefined): boolean {
@@ -258,51 +258,6 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
  * @internal
  */
 export const verificationKeyCache = new Cache<TokenKey>(900000);
-
-/**
- * Retrieve the audiences of a decoded JWT based on the audiences and scopes in the token.
- * @param decodedToken - Token to retrieve the audiences from.
- * @returns A set of audiences.
- * @internal
- */
-// Comments taken from the Java SDK implementation
-// Currently, scopes containing dots are allowed.
-// Since the UAA builds audiences by taking the substring of scopes up to the last dot,
-// scopes with dots will lead to an incorrect audience which is worked around here.
-// If a JWT contains no audience, infer audiences based on the scope names in the JWT.
-// This is currently necessary as the UAA does not correctly fill the audience in the user token flow.
-export function audiences(decodedToken: JwtPayload): Set<string> {
-  if (audiencesFromAud(decodedToken).length) {
-    return new Set(audiencesFromAud(decodedToken));
-  }
-  return new Set(audiencesFromScope(decodedToken));
-}
-
-function audiencesFromAud(decodedToken: JwtPayload): string[] {
-  if (!(decodedToken.aud instanceof Array && decodedToken.aud.length)) {
-    return [];
-  }
-  return decodedToken.aud.map(aud =>
-    aud.includes('.') ? aud.substr(0, aud.indexOf('.')) : aud
-  );
-}
-
-function audiencesFromScope(decodedToken: JwtPayload): string[] {
-  if (!decodedToken.scope) {
-    return [];
-  }
-
-  const scopes =
-    decodedToken.scope instanceof Array
-      ? decodedToken.scope
-      : [decodedToken.scope];
-  return scopes.reduce((aud, scope) => {
-    if (scope.includes('.')) {
-      return [...aud, scope.substr(0, scope.indexOf('.'))];
-    }
-    return aud;
-  }, []);
-}
 
 /**
  * Wraps the access token in header's authorization.

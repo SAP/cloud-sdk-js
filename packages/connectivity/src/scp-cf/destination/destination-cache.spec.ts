@@ -385,7 +385,7 @@ describe('destination cache', () => {
       );
 
       expect(warn).toBeCalledWith(
-        "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant id is undefined in JWT."
+        "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant ID is undefined in JWT."
       );
       expect(
         Object.keys(destinationCache.getCacheInstance()['cache'].cache).length

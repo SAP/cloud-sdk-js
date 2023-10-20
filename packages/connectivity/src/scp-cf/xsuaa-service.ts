@@ -8,9 +8,8 @@ import {
 } from './environment-accessor/environment-accessor-types';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveServiceBinding } from './environment-accessor';
-import { tenantId } from './tenant';
 import { getIssuerSubdomain } from './subdomain-replacer';
-import { decodeJwt } from './jwt';
+import { decodeJwt, tenantId } from './jwt';
 
 interface XsuaaParameters {
   subdomain: string | null;

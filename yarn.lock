@@ -676,25 +676,25 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dts-critic@0.0.179":
-  version "0.0.179"
-  resolved "https://registry.npmjs.org/@definitelytyped/dts-critic/-/dts-critic-0.0.179.tgz#fa6343df78874267d4dda160d7064d4af4417805"
-  integrity sha512-fFVisVNTJ4FpngP9MqP1WIMIEUWlygULUwkGz6E74PPZuGr+XuiJJVwM0bQgjOI30b+jBuNL7y9qMJczFstuLw==
+"@definitelytyped/dts-critic@0.0.180":
+  version "0.0.180"
+  resolved "https://registry.npmjs.org/@definitelytyped/dts-critic/-/dts-critic-0.0.180.tgz#8107fc254f9a9b8565625393f07b1f52d4202350"
+  integrity sha512-ggHGzu9LLW+fV/cat8GCPNiAtODMVBJ5Bga9FtrCrVRQQqWqp6KYMBMc5tON9zMfPteCCTN8WEl8rQ351Hu53Q==
   dependencies:
-    "@definitelytyped/header-parser" "0.0.179"
+    "@definitelytyped/header-parser" "0.0.180"
     command-exists "^1.2.8"
     rimraf "^3.0.2"
     semver "^7.5.2"
     tmp "^0.2.1"
     yargs "^15.3.1"
 
-"@definitelytyped/dtslint@^0.0.183":
-  version "0.0.183"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.183.tgz#3bd35afa29b42f23e0e8e31960c443bdaa3e6c89"
-  integrity sha512-pieP4G5ru7802rCOwWcEeLHQzmXM3opZ7zke4uzVH63EPRmSe+N6V8Vfu3bT4mhBkDNqtaLc2OgrONNdGAYhIQ==
+"@definitelytyped/dtslint@^0.0.184":
+  version "0.0.184"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.184.tgz#96a7bc9e7a52aac18fc356cdf79f1f1e806282a8"
+  integrity sha512-A0yI5jaulbcOfuSDugRgpZSRoMDHA0VaQ1FWQn/juGCOvPJfRad2/B6zndJFsOFzJCM0MwL0JqaAa9fSmxqQHA==
   dependencies:
-    "@definitelytyped/dts-critic" "0.0.179"
-    "@definitelytyped/header-parser" "0.0.179"
+    "@definitelytyped/dts-critic" "0.0.180"
+    "@definitelytyped/header-parser" "0.0.180"
     "@definitelytyped/typescript-versions" "0.0.179"
     "@definitelytyped/utils" "0.0.179"
     "@typescript-eslint/eslint-plugin" "^5.55.0"
@@ -710,10 +710,10 @@
     tslint "5.14.0"
     yargs "^15.1.0"
 
-"@definitelytyped/header-parser@0.0.179":
-  version "0.0.179"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.0.179.tgz#e985052aeaa1de320a697af544872a1536a660b4"
-  integrity sha512-mOZ2iWairIcwsroDmnKZ6AjSLhjDizXh2Dk1bzUpPYhDxfzQaI+mxN/bKMicFcpTMzI6THwp6eGRr8yrg7NGyQ==
+"@definitelytyped/header-parser@0.0.180":
+  version "0.0.180"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.0.180.tgz#eb232f021b24c9a89ff3b3b1ee1b47234688f320"
+  integrity sha512-fCTevUtPRjolPR8SjTOsThoEHKXT0LndD4rCZQV+PWTxJc6YjkSUVCyr2iD8Btb8nOcJdSHt2JMF8xf1OEBZKA==
   dependencies:
     "@definitelytyped/typescript-versions" "0.0.179"
     "@definitelytyped/utils" "0.0.179"

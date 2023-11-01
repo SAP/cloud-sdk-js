@@ -13,14 +13,6 @@ const TestEntityLvl3MultiLink_1 = require("./TestEntityLvl3MultiLink");
  */
 class TestEntityLvl3MultiLinkRequestBuilder extends odata_v4_1.RequestBuilder {
     /**
-     * Returns a request builder for retrieving one `TestEntityLvl3MultiLink` entity based on its keys.
-     * @param keyProperty Key property. See {@link TestEntityLvl3MultiLink.keyProperty}.
-     * @returns A request builder for creating requests to retrieve one `TestEntityLvl3MultiLink` entity based on its keys.
-     */
-    getByKey(keyProperty) {
-        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, { KeyProperty: keyProperty });
-    }
-    /**
      * Returns a request builder for querying all `TestEntityLvl3MultiLink` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityLvl3MultiLink` entities.
      */
@@ -34,6 +26,14 @@ class TestEntityLvl3MultiLinkRequestBuilder extends odata_v4_1.RequestBuilder {
      */
     create(entity) {
         return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
+    }
+    /**
+     * Returns a request builder for retrieving one `TestEntityLvl3MultiLink` entity based on its keys.
+     * @param keyProperty Key property. See {@link TestEntityLvl3MultiLink.keyProperty}.
+     * @returns A request builder for creating requests to retrieve one `TestEntityLvl3MultiLink` entity based on its keys.
+     */
+    getByKey(keyProperty) {
+        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, { KeyProperty: keyProperty });
     }
     /**
      * Returns a request builder for updating an entity of type `TestEntityLvl3MultiLink`.

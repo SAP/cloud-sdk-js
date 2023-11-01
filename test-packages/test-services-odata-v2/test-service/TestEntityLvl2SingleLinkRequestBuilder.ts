@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
 import { TestEntityLvl2SingleLink } from './TestEntityLvl2SingleLink';
 
@@ -22,20 +22,6 @@ import { TestEntityLvl2SingleLink } from './TestEntityLvl2SingleLink';
 export class TestEntityLvl2SingleLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityLvl2SingleLink<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityLvl2SingleLink` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityLvl2SingleLink.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityLvl2SingleLink` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityLvl2SingleLink<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityLvl2SingleLink<T>, T>(
-      this.entityApi,
-      { KeyProperty: keyProperty }
-    );
-  }
-
   /**
    * Returns a request builder for querying all `TestEntityLvl2SingleLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityLvl2SingleLink` entities.
@@ -57,6 +43,20 @@ export class TestEntityLvl2SingleLinkRequestBuilder<
     return new CreateRequestBuilder<TestEntityLvl2SingleLink<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityLvl2SingleLink` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityLvl2SingleLink.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityLvl2SingleLink` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityLvl2SingleLink<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityLvl2SingleLink<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
     );
   }
 

@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity50Prop } from './TestEntity50Prop';
 
@@ -22,19 +22,6 @@ import { TestEntity50Prop } from './TestEntity50Prop';
 export class TestEntity50PropRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity50Prop<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntity50Prop` entity based on its keys.
-   * @param keyTestEntity50Prop Key property. See {@link TestEntity50Prop.keyTestEntity50Prop}.
-   * @returns A request builder for creating requests to retrieve one `TestEntity50Prop` entity based on its keys.
-   */
-  getByKey(
-    keyTestEntity50Prop: DeserializedType<T, 'Edm.Int32'>
-  ): GetByKeyRequestBuilder<TestEntity50Prop<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntity50Prop<T>, T>(this.entityApi, {
-      KeyTestEntity50Prop: keyTestEntity50Prop
-    });
-  }
-
   /**
    * Returns a request builder for querying all `TestEntity50Prop` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity50Prop` entities.
@@ -55,6 +42,19 @@ export class TestEntity50PropRequestBuilder<
       this.entityApi,
       entity
     );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntity50Prop` entity based on its keys.
+   * @param keyTestEntity50Prop Key property. See {@link TestEntity50Prop.keyTestEntity50Prop}.
+   * @returns A request builder for creating requests to retrieve one `TestEntity50Prop` entity based on its keys.
+   */
+  getByKey(
+    keyTestEntity50Prop: DeserializedType<T, 'Edm.Int32'>
+  ): GetByKeyRequestBuilder<TestEntity50Prop<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntity50Prop<T>, T>(this.entityApi, {
+      KeyTestEntity50Prop: keyTestEntity50Prop
+    });
   }
 
   /**

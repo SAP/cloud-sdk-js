@@ -13,16 +13,6 @@ const TestEntity50Prop_1 = require("./TestEntity50Prop");
  */
 class TestEntity50PropRequestBuilder extends odata_v4_1.RequestBuilder {
     /**
-     * Returns a request builder for retrieving one `TestEntity50Prop` entity based on its keys.
-     * @param keyTestEntity50Prop Key property. See {@link TestEntity50Prop.keyTestEntity50Prop}.
-     * @returns A request builder for creating requests to retrieve one `TestEntity50Prop` entity based on its keys.
-     */
-    getByKey(keyTestEntity50Prop) {
-        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
-            KeyTestEntity50Prop: keyTestEntity50Prop
-        });
-    }
-    /**
      * Returns a request builder for querying all `TestEntity50Prop` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntity50Prop` entities.
      */
@@ -36,6 +26,16 @@ class TestEntity50PropRequestBuilder extends odata_v4_1.RequestBuilder {
      */
     create(entity) {
         return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
+    }
+    /**
+     * Returns a request builder for retrieving one `TestEntity50Prop` entity based on its keys.
+     * @param keyTestEntity50Prop Key property. See {@link TestEntity50Prop.keyTestEntity50Prop}.
+     * @returns A request builder for creating requests to retrieve one `TestEntity50Prop` entity based on its keys.
+     */
+    getByKey(keyTestEntity50Prop) {
+        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+            KeyTestEntity50Prop: keyTestEntity50Prop
+        });
     }
     /**
      * Returns a request builder for updating an entity of type `TestEntity50Prop`.

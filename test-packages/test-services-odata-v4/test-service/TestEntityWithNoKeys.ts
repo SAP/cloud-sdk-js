@@ -36,9 +36,9 @@ export class TestEntityWithNoKeys<
    * Normal Property.
    * @nullable
    */
-  normalProperty?: DeserializedType<T, 'Edm.String'> | null;
+  declare normalProperty?: DeserializedType<T, 'Edm.String'> | null;
 
-  constructor(readonly _entityApi: TestEntityWithNoKeysApi<T>) {
+  constructor(_entityApi: TestEntityWithNoKeysApi<T>) {
     super(_entityApi);
   }
 }

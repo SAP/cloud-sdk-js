@@ -19,7 +19,6 @@ export declare class TestEntityWithNoKeys<
   extends Entity
   implements TestEntityWithNoKeysType<T>
 {
-  readonly _entityApi: TestEntityWithNoKeysApi<T>;
   /**
    * Technical entity name for TestEntityWithNoKeys.
    */

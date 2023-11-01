@@ -5,15 +5,15 @@
  */
 import { BigNumber } from 'bignumber.js';
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
   CreateRequestBuilder,
-  GetByKeyRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { Photos } from './Photos';
 

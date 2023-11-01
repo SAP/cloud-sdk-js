@@ -4,11 +4,11 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
   CreateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeserializedType,
+  GetAllRequestBuilder,
   RequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityWithNoKeys } from './TestEntityWithNoKeys';

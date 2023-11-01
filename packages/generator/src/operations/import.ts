@@ -82,7 +82,7 @@ function returnTypeImport(
 /**
  * @internal
  */
-export function operationImportDeclarations(
+export function operationDeclarations(
   { oDataVersion, className }: VdmServiceMetadata,
   operations: VdmOperation[] = []
 ): ImportDeclarationStructure[] {
@@ -97,16 +97,9 @@ export function operationImportDeclarations(
     .length;
   const includesUnbound = !!operations.filter(operation => !operation.isBound)
     .length;
-  const hasFunctionWithParameters = operations.some(
-    operation => operation.parameters.length && operation.type === 'function'
+  const hasOperationWithParameters = operations.some(
+    operation => operation.parameters.length
   );
-  const hasActionWithParameters = operations.some(
-    operation => operation.parameters.length && operation.type === 'action'
-  );
-  const hasFunction = operations.some(
-    operation => operation.type === 'function'
-  );
-  const hasAction = operations.some(operation => operation.type === 'action');
 
   if (includesUnbound && includesBound) {
     throw new Error(
@@ -134,18 +127,9 @@ export function operationImportDeclarations(
         'DefaultDeSerializers',
         'defaultDeSerializers',
         ...propertyTypeImportNames(parameters),
-        ...(hasFunctionWithParameters ? ['FunctionImportParameter'] : []),
-        ...(hasActionWithParameters ? ['ActionImportParameter'] : []),
-        ...(includesUnbound && hasFunction
-          ? ['FunctionImportRequestBuilder']
-          : []),
-        ...(includesUnbound && hasAction ? ['ActionImportRequestBuilder'] : []),
-        ...(includesBound && hasFunction
-          ? ['BoundFunctionImportRequestBuilder']
-          : []),
-        ...(includesBound && hasAction
-          ? ['BoundActionImportRequestBuilder']
-          : [])
+        ...(hasOperationWithParameters ? ['OperationParameter'] : []),
+        ...(includesUnbound ? ['OperationRequestBuilder'] : []),
+        ...(includesBound ? ['BoundOperationRequestBuilder'] : [])
       ],
       oDataVersion
     ),

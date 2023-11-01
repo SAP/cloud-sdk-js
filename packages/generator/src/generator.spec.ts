@@ -241,19 +241,19 @@ describe('generator', () => {
     });
 
     it('generates operations.ts file', () => {
-      const operationImports = getOperationFunctionDeclarations(files);
-      expect(operationImports.length).toBe(18);
-      const operationImportNames = operationImports.map(fi => fi.getName());
-      expect(operationImportNames).toEqual(
+      const operations = getOperationFunctionDeclarations(files);
+      expect(operations.length).toBe(18);
+      const operationNames = operations.map(fi => fi.getName());
+      expect(operationNames).toEqual(
         expect.arrayContaining(['testFunctionImportWithDifferentName'])
       );
-      expect(operationImportNames).toEqual(
+      expect(operationNames).toEqual(
         expect.not.arrayContaining(['testFunctionImportNoReturnType'])
       );
-      expect(operationImportNames).toEqual(
+      expect(operationNames).toEqual(
         expect.arrayContaining(['testActionImportNoParameterNoReturnType'])
       );
-      expect(operationImportNames).toEqual(
+      expect(operationNames).toEqual(
         expect.arrayContaining([
           'testActionImportMultipleParameterComplexReturnType'
         ])

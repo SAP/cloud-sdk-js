@@ -1,21 +1,29 @@
-import { isTokenExchangeEnabled } from './identity-service';
+import { signedJwt } from '../../../../test-resources/test/test-util';
+import { shouldExchangeToken } from './identity-service';
 
-describe('identity service', () => {
-  it('it should make token exchange when jwt is provided', async () => {
-    const actual = isTokenExchangeEnabled({ jwt: 'jwt' });
-    expect(actual).toBeTruthy();
+describe('shouldExchangeToken', () => {
+  it('should not exchange token from XSUAA', async () => {
+    expect(
+      shouldExchangeToken({
+        jwt: signedJwt({ ext_attr: { enhancer: 'XSUAA' } })
+      })
+    ).toBe(false);
   });
 
-  it('it should not make token exchange when jwt is not provided', async () => {
-    const actual = isTokenExchangeEnabled({});
-    expect(actual).toBeFalsy();
+  it('should exchange non-XSUAA token', async () => {
+    expect(shouldExchangeToken({ jwt: signedJwt({}) })).toBe(true);
   });
 
-  it('it should not make token exchange when the option is set to false', async () => {
-    const actual = isTokenExchangeEnabled({
-      iasToXsuaaTokenExchange: false,
-      jwt: 'jwt'
-    });
-    expect(actual).toBeFalsy();
+  it('should not exchange token, if there is no JWT given', async () => {
+    expect(shouldExchangeToken({})).toBe(false);
+  });
+
+  it('should not exchange token, if `iasToXsuaaTokenExchange` is disabled', async () => {
+    expect(
+      shouldExchangeToken({
+        iasToXsuaaTokenExchange: false,
+        jwt: signedJwt({})
+      })
+    ).toBe(false);
   });
 });

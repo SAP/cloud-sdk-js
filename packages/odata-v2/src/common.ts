@@ -11,7 +11,7 @@ export {
   EntityBuilderType,
   FieldBuilder,
   FieldOptions,
-  FunctionImportParameter,
+  OperationParameter,
   Link,
   not,
   OneToManyLink,

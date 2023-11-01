@@ -126,7 +126,7 @@ describe('createFile', () => {
 
   it('uses default config if custom prettier config is not found', async () => {
     const logger = createLogger('create-file');
-    const spy = jest.spyOn(prettier, 'format');
+    jest.spyOn(prettier, 'format');
     const loggerSpy = jest.spyOn(logger, 'warn');
     const defaultConfig = await readPrettierConfig('not-existing/.prettierrc');
 

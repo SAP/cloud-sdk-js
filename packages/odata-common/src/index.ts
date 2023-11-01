@@ -86,6 +86,7 @@ export {
   DeleteRequestBuilderBase,
   GetAllRequestBuilderBase,
   GetByKeyRequestBuilderBase,
+  OperationRequestBuilderBase,
   ActionFunctionImportRequestBuilderBase,
   CountRequestBuilder
 } from './request-builder';
@@ -94,6 +95,7 @@ export type {
   ChangesetBuilderTypes
 } from './request-builder';
 export {
+  OperationParameter,
   FunctionImportParameter,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
@@ -106,12 +108,15 @@ export {
   ODataBatchRequestConfig,
   WithGetAllRestrictions,
   WithSelection,
+  ODataFunctionRequestConfig,
   ODataFunctionImportRequestConfig,
   ODataRequest,
   ODataRequestConfig,
-  BatchReference
+  BatchReference,
+  OperationParameters,
+  RequestMethodType,
+  FunctionImportParameters
 } from './request';
-export type { RequestMethodType, FunctionImportParameters } from './request';
 export { throwErrorWhenReturnTypeIsUnionType } from './response-transformer';
 export { isOrderableEdmType } from './edm-types';
 export type {

@@ -19,7 +19,7 @@ describe('CreateRequestBuilder', () => {
     nock.cleanAll();
   });
 
-  it('create an entity with field properties', async () => {
+  it('should only send field properties set using the builder', async () => {
     const keyProp = uuid();
     const stringProp = 'testStr';
     const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };

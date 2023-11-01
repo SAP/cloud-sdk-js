@@ -1,5 +1,76 @@
 # @sap-cloud-sdk/odata-v2
 
+## 3.7.0
+
+### Minor Changes
+
+- bdcf14f85: [Fixed Issue] Do not send `null` values in the request payload for properties that are not set while creating or updating an entity.
+  [Fixed Issue] Fix `RangeError: Maximum call stack size exceeded` error that occurs when updating an entity after calling `getByKey`.
+
+### Patch Changes
+
+- Updated dependencies [bdcf14f85]
+  - @sap-cloud-sdk/odata-common@3.7.0
+  - @sap-cloud-sdk/connectivity@3.7.0
+  - @sap-cloud-sdk/http-client@3.7.0
+  - @sap-cloud-sdk/util@3.7.0
+
+## 3.6.0
+
+### Patch Changes
+
+- Updated dependencies [c2a2987c5]
+- Updated dependencies [025b6aa2c]
+- Updated dependencies [025b6aa2c]
+  - @sap-cloud-sdk/http-client@3.6.0
+  - @sap-cloud-sdk/connectivity@3.6.0
+  - @sap-cloud-sdk/odata-common@3.6.0
+  - @sap-cloud-sdk/util@3.6.0
+
+## 3.5.0
+
+### Patch Changes
+
+- ee7477ce2: [Fixed Issue] Fix OData v2 serialization for `Edm.Decimal` to serialize to `string`.
+- Updated dependencies [ee7477ce2]
+- Updated dependencies [7ed5ceb52]
+- Updated dependencies [2277f9443]
+- Updated dependencies [bf54df09b]
+  - @sap-cloud-sdk/odata-common@3.5.0
+  - @sap-cloud-sdk/connectivity@3.5.0
+  - @sap-cloud-sdk/http-client@3.5.0
+  - @sap-cloud-sdk/util@3.5.0
+
+## 3.4.0
+
+### Patch Changes
+
+- Updated dependencies [db0780f1b]
+- Updated dependencies [bde64634d]
+- Updated dependencies [bde64634d]
+- Updated dependencies [431d2a542]
+  - @sap-cloud-sdk/connectivity@3.4.0
+  - @sap-cloud-sdk/odata-common@3.4.0
+  - @sap-cloud-sdk/http-client@3.4.0
+  - @sap-cloud-sdk/util@3.4.0
+
+## 3.3.0
+
+### Patch Changes
+
+- Updated dependencies [0583836bc]
+- Updated dependencies [8f54207b6]
+- Updated dependencies [8f54207b6]
+- Updated dependencies [36a01f775]
+- Updated dependencies [6b58354e8]
+- Updated dependencies [c09b1d06f]
+- Updated dependencies [36a01f775]
+- Updated dependencies [36a01f775]
+  - @sap-cloud-sdk/connectivity@3.3.0
+  - @sap-cloud-sdk/http-client@3.3.0
+  - @sap-cloud-sdk/odata-common@3.3.0
+  - @sap-cloud-sdk/util@3.3.0
+
 ## 3.2.0
 
 ### Patch Changes

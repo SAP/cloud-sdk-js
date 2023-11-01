@@ -19,12 +19,7 @@ export function importBatchDeclarations(
         'GetByKeyRequestBuilder',
         'ODataBatchRequestBuilder',
         'UpdateRequestBuilder',
-        ...(service.functionImports.length
-          ? ['FunctionImportRequestBuilder']
-          : []),
-        ...(service.actionImports?.length
-          ? ['ActionImportRequestBuilder']
-          : []),
+        ...(service.operations.length ? ['OperationRequestBuilder'] : []),
         'BatchChangeSet'
       ],
       service.oDataVersion
@@ -43,11 +38,7 @@ export function importBatchDeclarations(
 }
 
 function getNamedImports(service: VdmServiceMetadata): string[] {
-  const actionsAndFunctions = [
-    ...service.functionImports,
-    ...(service.actionImports ?? [])
-  ];
-  const complexReturnTypesOfActionImports = actionsAndFunctions
+  const complexReturnTypesOfActionImports = service.operations
     .filter(
       ({ returnType }) => returnType.returnTypeCategory === 'complex-type'
     )
@@ -55,8 +46,7 @@ function getNamedImports(service: VdmServiceMetadata): string[] {
 
   return unique([
     ...service.entities.map(e => e.className),
-    ...service.functionImports.map(f => f.parametersTypeName),
-    ...(service.actionImports?.map(a => a.parametersTypeName) ?? []),
+    ...service.operations.map(f => f.parametersTypeName),
     ...complexReturnTypesOfActionImports
   ]);
 }

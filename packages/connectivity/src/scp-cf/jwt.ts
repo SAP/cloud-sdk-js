@@ -1,9 +1,16 @@
 import { IncomingMessage } from 'http';
-import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  ErrorWithCause,
+  pickValueIgnoreCase
+} from '@sap-cloud-sdk/util';
 import * as xssec from '@sap/xssec';
 import { decode } from 'jsonwebtoken';
 import { Cache } from './cache';
-import { getXsuaaServiceCredentials } from './environment-accessor';
+import {
+  getServiceCredentials,
+  getXsuaaServiceCredentials
+} from './environment-accessor';
 import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
 import { TokenKey } from './xsuaa-service-types';
 
@@ -12,13 +19,69 @@ const logger = createLogger({
   messageContext: 'jwt'
 });
 
+function makeArray(val: string | string[] | undefined): string[] {
+  return val ? (Array.isArray(val) ? val : [val]) : [];
+}
+
+/**
+ * Get the user ID from the JWT payload.
+ * @param jwtPayload - Token payload to read the user ID from.
+ * @returns The user ID, if available.
+ * @internal
+ */
+export function userId({ user_id }: JwtPayload): string {
+  logger.debug(`JWT user_id is: ${user_id}.`);
+  return user_id;
+}
+
+/**
+ * Get the tenant ID of a decoded JWT, based on its `zid` property.
+ * @param jwtPayload - Token payload to read the tenant ID from.
+ * @returns The tenant ID, if available.
+ * @internal
+ */
+export function tenantId({ zid }: JwtPayload): string {
+  logger.debug(`JWT zid is: ${zid}.`);
+  return zid;
+}
+
+/**
+ * Retrieve the audiences of a decoded JWT based on the audiences and scopes in the token.
+ * @param decodedToken - Token to retrieve the audiences from.
+ * @returns A set of audiences.
+ * @internal
+ */
+// Comments taken from the Java SDK implementation
+// Currently, scopes containing dots are allowed.
+// Since the UAA builds audiences by taking the substring of scopes up to the last dot,
+// scopes with dots will lead to an incorrect audience which is worked around here.
+// If a JWT contains no audience, infer audiences based on the scope names in the JWT.
+// This is currently necessary as the UAA does not correctly fill the audience in the user token flow.
+export function audiences(decodedToken: JwtPayload): string[] {
+  const parsedAudiences = audiencesFromAud(decodedToken);
+  return parsedAudiences.length
+    ? parsedAudiences
+    : audiencesFromScope(decodedToken);
+}
+
+function audiencesFromAud({ aud }: JwtPayload): string[] {
+  return makeArray(aud).map(audience => audience.split('.')[0]);
+}
+
+function audiencesFromScope({ scope }: JwtPayload): string[] {
+  return makeArray(scope).reduce(
+    (aud, s) => (s.includes('.') ? [...aud, s.split('.')[0]] : aud),
+    []
+  );
+}
+
 /**
  * Decode JWT.
  * @param token - JWT to be decoded.
  * @returns Decoded payload.
  */
-export function decodeJwt(token: string): JwtPayload {
-  return decodeJwtComplete(token).payload;
+export function decodeJwt(token: string | JwtPayload): JwtPayload {
+  return typeof token === 'string' ? decodeJwtComplete(token).payload : token;
 }
 
 /**
@@ -43,42 +106,17 @@ export function decodeJwtComplete(token: string): JwtWithPayloadObject {
  * @returns JWT found in header.
  */
 export function retrieveJwt(req: IncomingMessage): string | undefined {
-  const header = authHeader(req);
-  if (validateAuthHeader(header)) {
-    return header!.split(' ')[1];
+  const authHeader = getAuthHeader(req);
+  if (validateAuthHeader(authHeader)) {
+    return authHeader?.split(' ')[1];
   }
-  return undefined;
 }
 
-/**
- * Checks if the given JWT is from the XSUAA or from an alternative issuer based on the iss property and the uaa domain of the XSUAA.
- * @param decodedUserJwt - JWT to be checked.
- * @returns True if JWT is issued by XSUAA
- * @internal
- */
-export function isXsuaaToken(decodedUserJwt: JwtWithPayloadObject): boolean {
-  if (!decodedUserJwt.header.jku) {
-    return false;
+function getAuthHeader(req: IncomingMessage): string | undefined {
+  const authHeader = pickValueIgnoreCase(req.headers, 'authorization');
+  if (authHeader) {
+    return Array.isArray(authHeader) ? authHeader[0] : authHeader;
   }
-  const jkuDomain = new URL(decodedUserJwt.header.jku).hostname;
-  const uaaDomain = getXsuaaServiceCredentials(
-    decodedUserJwt.payload
-  ).uaadomain;
-
-  return jkuDomain.endsWith(uaaDomain);
-}
-
-function authHeader(req: IncomingMessage): string | undefined {
-  const entries = Object.entries(req.headers).find(
-    ([key]) => key.toLowerCase() === 'authorization'
-  );
-  if (entries) {
-    const header = entries[1];
-
-    // Header could be a list of headers
-    return Array.isArray(header) ? header[0] : header;
-  }
-  return undefined;
 }
 
 function validateAuthHeader(header: string | undefined): boolean {
@@ -158,61 +196,6 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
 export const verificationKeyCache = new Cache<TokenKey>(900000);
 
 /**
- * Get the issuer URL of a decoded JWT.
- * @param decodedToken - Token to read the issuer URL from.
- * @returns The issuer URL if available.
- * @internal
- */
-export function issuerUrl(decodedToken: JwtPayload): string | undefined {
-  return readPropertyWithWarn(decodedToken, 'iss');
-}
-
-/**
- * Retrieve the audiences of a decoded JWT based on the audiences and scopes in the token.
- * @param decodedToken - Token to retrieve the audiences from.
- * @returns A set of audiences.
- * @internal
- */
-// Comments taken from the Java SDK implementation
-// Currently, scopes containing dots are allowed.
-// Since the UAA builds audiences by taking the substring of scopes up to the last dot,
-// Scopes with dots will lead to an incorrect audience which is worked around here.
-// If a JWT contains no audience, infer audiences based on the scope names in the JWT.
-// This is currently necessary as the UAA does not correctly fill the audience in the user token flow.
-export function audiences(decodedToken: JwtPayload): Set<string> {
-  if (audiencesFromAud(decodedToken).length) {
-    return new Set(audiencesFromAud(decodedToken));
-  }
-  return new Set(audiencesFromScope(decodedToken));
-}
-
-function audiencesFromAud(decodedToken: JwtPayload): string[] {
-  if (!(decodedToken.aud instanceof Array && decodedToken.aud.length)) {
-    return [];
-  }
-  return decodedToken.aud.map(aud =>
-    aud.includes('.') ? aud.substr(0, aud.indexOf('.')) : aud
-  );
-}
-
-function audiencesFromScope(decodedToken: JwtPayload): string[] {
-  if (!decodedToken.scope) {
-    return [];
-  }
-
-  const scopes =
-    decodedToken.scope instanceof Array
-      ? decodedToken.scope
-      : [decodedToken.scope];
-  return scopes.reduce((aud, scope) => {
-    if (scope.includes('.')) {
-      return [...aud, scope.substr(0, scope.indexOf('.'))];
-    }
-    return aud;
-  }, []);
-}
-
-/**
  * Wraps the access token in header's authorization.
  * @param token - Token to attach in request header
  * @returns The request header that holds the access token
@@ -225,52 +208,13 @@ export function wrapJwtInHeader(token: string): {
 }
 
 /**
- * @internal
- * @param jwtPayload - The jwt payload.
- * @param property - The property to be read.
- * @returns the property if present.
- */
-export function readPropertyWithWarn(
-  jwtPayload: JwtPayload,
-  property: string
-): any {
-  if (!jwtPayload[property]) {
-    logger.warn(
-      `WarningJWT: The provided JWT payload does not include a '${property}' property.`
-    );
-  }
-
-  return jwtPayload[property];
-}
-
-/**
+ * Checks if the given JWT was issued by XSUAA based on the `iss` property and the UAA domain of the XSUAA.
+ * @param jwt - JWT to be checked.
+ * @returns Whether the JWT was issued by XSUAA.
  * @internal
  */
-export type JwtKeyMapping<InterfaceT, JwtKeysT extends string> = {
-  [key in keyof InterfaceT]: {
-    keyInJwt: JwtKeysT;
-    extractorFunction: (jwtPayload: JwtPayload) => any;
-  };
-};
-
-/**
- * Checks if a given key is present in the decoded JWT. If not, an error is thrown.
- * @param key - The key of the representation in typescript
- * @param mapping - The mapping between the typescript keys and the JWT key
- * @param jwtPayload - JWT payload to check fo the given key.
- * @internal
- */
-export function checkMandatoryValue<InterfaceT, JwtKeysT extends string>(
-  key: keyof InterfaceT,
-  mapping: JwtKeyMapping<InterfaceT, JwtKeysT>,
-  jwtPayload: JwtPayload
-): void {
-  const value = mapping[key].extractorFunction(jwtPayload);
-  if (!value) {
-    throw new Error(
-      `Property '${mapping[key].keyInJwt}' is missing in JWT payload.`
-    );
-  }
+export function isXsuaaToken(jwt: JwtWithPayloadObject): boolean {
+  return jwt.payload.ext_attr?.enhancer === 'XSUAA';
 }
 
 /**
@@ -314,4 +258,27 @@ export function isUserToken(token: JwtPair | undefined): token is JwtPair {
 
 function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
   return typeof decoded.payload !== 'string';
+}
+
+/**
+ * This method either decodes the given JWT or tries to retrieve the subaccount ID from the XSUAA service binding as `zid`.
+ * @param options - Options passed to register the destination containing the JWT.
+ * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid).
+ * @internal
+ */
+export function decodeOrMakeJwt(
+  jwt?: string | JwtPayload
+): JwtPayload | undefined {
+  if (jwt) {
+    const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
+    if (decodedJwt.zid) {
+      return decodedJwt;
+    }
+  }
+
+  const providerTenantId = getServiceCredentials('xsuaa', jwt)?.subaccountid;
+
+  if (providerTenantId) {
+    return { zid: providerTenantId };
+  }
 }

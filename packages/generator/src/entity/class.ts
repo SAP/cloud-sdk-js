@@ -35,8 +35,7 @@ export function entityClass(
         parameters: [
           {
             name: '_entityApi',
-            type: `${entity.className}Api<T>`,
-            isReadonly: true
+            type: `${entity.className}Api<T>`
           }
         ],
         statements: ['super(_entityApi);']
@@ -49,10 +48,7 @@ export function entityClass(
       ...properties(entity),
       ...navProperties(entity, service)
     ],
-    methods: [
-      ...boundOperations(entity.functions, service),
-      ...boundOperations(entity.actions, service)
-    ],
+    methods: boundOperations(entity.operations, service),
     isExported: true,
     docs: [addLeadingNewline(getEntityDescription(entity, service))]
   };
@@ -118,8 +114,9 @@ function boundOperations(
 function property(prop: VdmProperty): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
-    name: prop.instancePropertyName + (prop.nullable ? '?' : '!'),
+    name: prop.instancePropertyName + (prop.nullable ? '?' : ''),
     type: getPropertyType(prop),
+    hasDeclareKeyword: true,
     docs: [
       addLeadingNewline(
         getPropertyDescription(prop, {
@@ -185,8 +182,9 @@ function navProperty(
   }
   return {
     kind: StructureKind.Property,
-    name: navProp.instancePropertyName + (navProp.isCollection ? '!' : '?'),
+    name: navProp.instancePropertyName + (navProp.isCollection ? '' : '?'),
     type: entity.className + '<T>' + (navProp.isCollection ? '[]' : ' | null'),
+    hasDeclareKeyword: true,
     docs: [addLeadingNewline(getNavPropertyDescription(navProp))]
   };
 }

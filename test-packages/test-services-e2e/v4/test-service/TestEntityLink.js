@@ -13,9 +13,9 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class TestEntityLink extends odata_v4_1.Entity {
     constructor(_entityApi) {
         super(_entityApi);
-        this._entityApi = _entityApi;
     }
 }
+exports.TestEntityLink = TestEntityLink;
 /**
  * Technical entity name for TestEntityLink.
  */
@@ -28,5 +28,4 @@ TestEntityLink._defaultBasePath = '/odata/test-service';
  * All key fields of the TestEntityLink entity
  */
 TestEntityLink._keys = ['KeyTestEntityLink', 'KeyToTestEntity'];
-exports.TestEntityLink = TestEntityLink;
 //# sourceMappingURL=TestEntityLink.js.map

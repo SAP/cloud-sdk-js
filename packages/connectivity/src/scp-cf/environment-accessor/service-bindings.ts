@@ -55,7 +55,7 @@ export function resolveServiceBinding(service: string | Service): Service {
     const serviceInstance = getServiceBinding(service);
 
     if (!serviceInstance) {
-      throw Error(`Could not find service binding for type '${service}'.`);
+      throw Error(`Could not find service binding of type '${service}'.`);
     }
 
     return serviceInstance;
@@ -69,7 +69,7 @@ export function resolveServiceBinding(service: string | Service): Service {
  */
 export function getServiceBindingByInstanceName(
   serviceInstanceName: string
-): Service | undefined {
+): Service {
   const service = xsenv.filterServices(serviceInstanceName);
 
   if (!service.length) {

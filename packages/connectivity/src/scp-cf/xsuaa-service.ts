@@ -2,46 +2,14 @@ import * as xssec from '@sap/xssec';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience, MiddlewareContext } from '@sap-cloud-sdk/resilience';
 import { JwtPayload } from './jsonwebtoken-type';
-import { parseSubdomain } from './subdomain-replacer';
-import { decodeJwt } from './jwt';
 import {
   Service,
   ServiceCredentials
 } from './environment-accessor/environment-accessor-types';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveServiceBinding } from './environment-accessor';
-
-// `@sap/xssec` sometimes checks `null` without considering `undefined`.
-interface SubdomainAndZoneId {
-  subdomain: string | null;
-  zoneId: string | null;
-}
-
-/**
- * Get subdomain and zoneId value from a given JWT.
- * @param jwt - A JWT from the current user.
- * @returns subdomain and zoneId from the JWT
- * @internal
- */
-export function getSubdomainAndZoneId(
-  jwt?: string | JwtPayload
-): SubdomainAndZoneId {
-  let subdomain: string | null = null;
-  let zoneId: string | null = null;
-
-  if (jwt) {
-    const jwtPayload = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
-
-    if (jwtPayload.iss) {
-      subdomain = parseSubdomain(jwtPayload.iss);
-    }
-    if (jwtPayload.zid) {
-      zoneId = jwtPayload.zid;
-    }
-  }
-
-  return { subdomain, zoneId };
-}
+import { getIssuerSubdomain } from './subdomain-replacer';
+import { decodeJwt, tenantId } from './jwt';
 
 interface XsuaaParameters {
   subdomain: string | null;
@@ -60,8 +28,10 @@ export async function getClientCredentialsToken(
   service: string | Service,
   userJwt?: string | JwtPayload
 ): Promise<ClientCredentialsResponse> {
+  const jwt = userJwt ? decodeJwt(userJwt) : {};
   const fnArgument: XsuaaParameters = {
-    ...getSubdomainAndZoneId(userJwt),
+    subdomain: getIssuerSubdomain(jwt) || null,
+    zoneId: tenantId(jwt) || null,
     serviceCredentials: resolveServiceBinding(service).credentials
   };
 
@@ -72,8 +42,11 @@ export async function getClientCredentialsToken(
         arg.serviceCredentials,
         null,
         arg.zoneId,
-        (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
-          err ? reject(err) : resolve(tokenResponse)
+        (
+          err: Error,
+          token: string,
+          tokenResponse: ClientCredentialsResponse
+        ) => (err ? reject(err) : resolve(tokenResponse))
       );
     });
   };
@@ -107,8 +80,10 @@ export function getUserToken(
   service: Service,
   userJwt: string
 ): Promise<string> {
+  const jwt = decodeJwt(userJwt);
   const fnArgument: XsuaaParameters = {
-    ...getSubdomainAndZoneId(userJwt),
+    subdomain: getIssuerSubdomain(jwt) || null,
+    zoneId: tenantId(jwt) || null,
     serviceCredentials: service.credentials,
     userJwt
   };

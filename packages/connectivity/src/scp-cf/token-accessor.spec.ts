@@ -11,9 +11,9 @@ import {
 import { signedJwt } from '../../../../test-resources/test/test-util/keys';
 import {
   providerServiceToken,
-  providerUserJwt,
+  providerUserToken,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserToken
 } from '../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockClientCredentialsGrantCall,
@@ -22,6 +22,7 @@ import {
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { jwtBearerToken, serviceToken } from './token-accessor';
+import { ClientCredentialsResponse } from './xsuaa-service-types';
 
 describe('token accessor', () => {
   describe('serviceToken()', () => {
@@ -167,10 +168,10 @@ describe('token accessor', () => {
       );
 
       const providerToken = await serviceToken('destination', {
-        jwt: providerUserJwt
+        jwt: providerUserToken
       });
       const subscriberToken = await serviceToken('destination', {
-        jwt: subscriberUserJwt
+        jwt: subscriberUserToken
       });
 
       const providerTokenFromCache = clientCredentialsTokenCache.getToken(
@@ -283,16 +284,46 @@ describe('token accessor', () => {
       );
     });
 
-    it('throws an error if no XSUAA service is bound', async () => {
+    it('uses given service to retrieve token from cache', async () => {
       process.env.VCAP_SERVICES = JSON.stringify({
         destination: [destinationBindingClientSecretMock]
       });
+      const token = signedJwt({ dummy: 'content' });
 
-      await expect(
-        serviceToken('destination')
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Could not find binding to service \'xsuaa\', that includes credentials."'
+      clientCredentialsTokenCache.cacheToken(
+        destinationBindingClientSecretMock.credentials.url,
+        destinationBindingClientSecretMock.credentials.clientid,
+        { access_token: token } as ClientCredentialsResponse
       );
+
+      await expect(serviceToken('destination')).resolves.toEqual(token);
+    });
+
+    it('uses given service to cache token', async () => {
+      process.env.VCAP_SERVICES = JSON.stringify({
+        destination: [destinationBindingClientSecretMock]
+      });
+      const token = { access_token: signedJwt({ dummy: 'content' }) };
+
+      mockClientCredentialsGrantCall(
+        destinationBindingClientSecretMock.credentials.url,
+        token,
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+
+      clientCredentialsTokenCache.clear();
+
+      await expect(serviceToken('destination')).resolves.toEqual(
+        token.access_token
+      );
+
+      expect(
+        clientCredentialsTokenCache.getToken(
+          destinationBindingClientSecretMock.credentials.url,
+          destinationBindingClientSecretMock.credentials.clientid
+        )
+      ).toEqual(token);
     });
 
     it('throws an error if no target service is bound', async () => {
@@ -301,7 +332,7 @@ describe('token accessor', () => {
       await expect(
         serviceToken('destination')
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Could not find service binding for type \'destination\'."'
+        '"Could not find service binding of type \'destination\'."'
       );
     });
 
@@ -311,7 +342,7 @@ describe('token accessor', () => {
       await expect(
         serviceToken('destination', { jwt })
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Property `iss` is missing in the provided user token."'
+        '"Could not retrieve issuer subdomain from "iss" property: "undefined"."'
       );
     });
   });

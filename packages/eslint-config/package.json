@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/eslint-config",
-  "version": "3.2.0",
+  "version": "3.7.0",
   "description": "eslint config for the SAP Cloud SDK",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -24,7 +24,7 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "eslint-config-prettier": "^8.8.0"
+    "eslint-config-prettier": "^9.0.0"
   },
   "peerDependencies": {
     "@typescript-eslint/parser": "^5.21.0",

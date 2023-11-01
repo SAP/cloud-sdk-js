@@ -127,35 +127,35 @@ declare class TestService<
   get operations(): {
     testFunctionImportNoReturnType: (
       parameter: TestFunctionImportNoReturnTypeParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportNoReturnTypeParameters<DeSerializersT>,
       undefined
     >;
     testFunctionImportEdmReturnType: (
       parameter: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
       boolean
     >;
     testFunctionImportEdmReturnTypeCollection: (
       parameter: TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
       string[]
     >;
     testFunctionImportEntityReturnType: (
       parameter: TestFunctionImportEntityReturnTypeParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
       import('./TestEntity').TestEntity<DefaultDeSerializers>
     >;
     testFunctionImportEntityReturnTypeCollection: (
       parameter: TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
       import('./TestEntity').TestEntity<DefaultDeSerializers>[]
@@ -163,7 +163,7 @@ declare class TestService<
     testFunctionImportSharedEntityReturnType: (
       parameter: TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>
     ) => Omit<
-      import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+      import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
         DeSerializersT,
         TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>,
         never
@@ -173,7 +173,7 @@ declare class TestService<
     testFunctionImportSharedEntityReturnTypeCollection: (
       parameter: TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>
     ) => Omit<
-      import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+      import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
         DeSerializersT,
         TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
         never
@@ -182,56 +182,56 @@ declare class TestService<
     >;
     testFunctionImportComplexReturnType: (
       parameter: TestFunctionImportComplexReturnTypeParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
       import('./TestComplexType').TestComplexType<DefaultDeSerializers>
     >;
     testFunctionImportUnsupportedEdmTypes: (
       parameter: TestFunctionImportUnsupportedEdmTypesParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportUnsupportedEdmTypesParameters<DeSerializersT>,
       any
     >;
     testFunctionImportComplexReturnTypeCollection: (
       parameter: TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
       import('./TestComplexType').TestComplexType<DefaultDeSerializers>[]
     >;
     testFunctionImportGet: (
       parameter: TestFunctionImportGetParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportGetParameters<DeSerializersT>,
       boolean
     >;
     testFunctionImportPost: (
       parameter: TestFunctionImportPostParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportPostParameters<DeSerializersT>,
       boolean
     >;
     testFunctionImportMultipleParams: (
       parameter: TestFunctionImportMultipleParamsParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       TestFunctionImportMultipleParamsParameters<DeSerializersT>,
       boolean
     >;
     createTestComplexType: (
       parameter: CreateTestComplexTypeParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       CreateTestComplexTypeParameters<DeSerializersT>,
       import('./TestComplexType').TestComplexType<DefaultDeSerializers>
     >;
     fContinue: (
       parameter: FContinueParameters<DeSerializersT>
-    ) => import('@sap-cloud-sdk/odata-v2').FunctionImportRequestBuilder<
+    ) => import('@sap-cloud-sdk/odata-v2').OperationRequestBuilder<
       DeSerializersT,
       FContinueParameters<DeSerializersT>,
       boolean

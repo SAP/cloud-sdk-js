@@ -17,13 +17,13 @@ import {
   testService
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { expectError, expectType } from 'tsd';
-import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v2';
+import { OperationRequestBuilder } from '@sap-cloud-sdk/odata-v2';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { DefaultDeSerializerV2 } from '../duplicated-types';
 
 const edmReturnTypeRequestBuilder = testFunctionImportEdmReturnType({});
 expectType<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializerV2,
     TestFunctionImportEdmReturnTypeParameters<DefaultDeSerializerV2>,
     boolean
@@ -39,7 +39,7 @@ expectType<Promise<boolean>>(
 const edmCollectionReturnTypeRequestBuilder =
   testFunctionImportEdmReturnTypeCollection({});
 expectType<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializerV2,
     TestFunctionImportEdmReturnTypeCollectionParameters<DefaultDeSerializerV2>,
     string[]
@@ -54,7 +54,7 @@ expectType<Promise<string[]>>(
 
 const ctReturnTypeRequestBuilder = testFunctionImportComplexReturnType({});
 expectType<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializerV2,
     TestFunctionImportComplexReturnTypeParameters<DefaultDeSerializerV2>,
     TestComplexType<DefaultDeSerializerV2>
@@ -70,7 +70,7 @@ expectType<Promise<TestComplexType<DefaultDeSerializerV2>>>(
 const ctCollectionReturnTypeRequestBuilder =
   testFunctionImportComplexReturnTypeCollection({});
 expectType<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializerV2,
     TestFunctionImportComplexReturnTypeCollectionParameters<DefaultDeSerializerV2>,
     TestComplexType<DefaultDeSerializerV2>[]
@@ -85,7 +85,7 @@ expectType<Promise<TestComplexType<DefaultDeSerializerV2>[]>>(
 
 const entityReturnTypeRequestBuilder = testFunctionImportEntityReturnType({});
 expectType<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializerV2,
     TestFunctionImportEntityReturnTypeParameters<DefaultDeSerializerV2>,
     TestEntity<DefaultDeSerializerV2>
@@ -101,7 +101,7 @@ expectType<Promise<TestEntity<DefaultDeSerializerV2>>>(
 const entityCollectionReturnTypeRequestBuilder =
   testFunctionImportEntityReturnTypeCollection({});
 expectType<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializerV2,
     TestFunctionImportEdmReturnTypeCollectionParameters<DefaultDeSerializerV2>,
     TestEntity<DefaultDeSerializerV2>[]
@@ -127,7 +127,7 @@ expectError<any>(
 );
 
 expectType<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializerV2,
     TestFunctionImportNoReturnTypeParameters<DefaultDeSerializerV2>,
     undefined

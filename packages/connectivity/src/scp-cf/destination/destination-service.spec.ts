@@ -333,6 +333,10 @@ describe('destination service', () => {
   });
 
   describe('fetchDestination', () => {
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
+
     it('uses a circuit breaker', async () => {
       const destinationName = 'HTTP-BASIC';
       const response = {
@@ -435,7 +439,7 @@ describe('destination service', () => {
       expect(actual).toMatchObject(expected);
     });
 
-    it('fetches a destination including proxy', async () => {
+    it('adds proxy to destination request if HTTPS_PROXY env variable is set', async () => {
       const destinationName = 'HTTP-OAUTH';
       process.env.HTTPS_PROXY = 'http://some.foo.bar';
       const response = {
@@ -457,15 +461,9 @@ describe('destination service', () => {
         ]
       };
 
-      nock(destinationServiceUri, {
-        reqheaders: {
-          authorization: `Bearer ${jwt}`
-        }
-      })
-        .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
-        .reply(200, response);
-
-      const requestSpy = jest.spyOn(axios, 'request');
+      const requestSpy = jest
+        .spyOn(axios, 'request')
+        .mockResolvedValue({ data: response });
       await fetchDestination(destinationServiceUri, jwt, {
         destinationName
       });
@@ -473,16 +471,14 @@ describe('destination service', () => {
         baseURL:
           'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         method: 'get',
-        proxy: false,
+        proxy: {
+          host: 'some.foo.bar',
+          protocol: 'http',
+          port: 80
+        },
         headers: {
           Authorization: `Bearer ${jwt}`
-        },
-        httpsAgent: expect.objectContaining({
-          proxy: expect.objectContaining({
-            hostname: 'some.foo.bar',
-            protocol: 'http:'
-          })
-        })
+        }
       };
       expect(requestSpy).toHaveBeenCalledWith(
         expect.objectContaining(expectedConfig)

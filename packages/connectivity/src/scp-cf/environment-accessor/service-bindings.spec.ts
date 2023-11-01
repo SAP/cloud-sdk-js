@@ -104,7 +104,7 @@ Selecting the first one.`
       expect(() =>
         resolveServiceBinding('unknown')
       ).toThrowErrorMatchingInlineSnapshot(
-        '"Could not find service binding for type \'unknown\'."'
+        '"Could not find service binding of type \'unknown\'."'
       );
     });
   });

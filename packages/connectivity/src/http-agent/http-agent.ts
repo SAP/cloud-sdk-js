@@ -1,8 +1,9 @@
-import { readFileSync } from 'fs';
+import { readFile } from 'fs/promises';
 import http from 'http';
 import https from 'https';
 import { createLogger, last } from '@sap-cloud-sdk/util';
 import {
+  BasicProxyConfiguration,
   Destination,
   DestinationCertificate,
   getProtocolOrDefault
@@ -10,10 +11,11 @@ import {
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 import {
   addProxyConfigurationInternet,
+  getProxyConfig,
   HttpDestination,
-  proxyAgent,
   proxyStrategy
 } from '../scp-cf/destination';
+import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({
@@ -22,24 +24,40 @@ const logger = createLogger({
 });
 
 /**
+ * Will be renamed to getAgentConfig in the next major release.
+ * Returns a promise of the http or https-agent config depending on the destination URL.
+ * If the destination contains a proxy configuration, the agent will be a proxy-agent.
+ * If not it will be the default http-agent coming from node.
+ * @param destination - Determining which kind of configuration is returned.
+ * @returns A promise of the HTTP or HTTPS agent configuration.
+ */
+export async function getAgentConfigAsync(
+  destination: HttpDestination
+): Promise<HttpAgentConfig | HttpsAgentConfig> {
+  const certificateOptions = {
+    ...getTrustStoreOptions(destination),
+    ...getKeyStoreOptions(destination),
+    ...(await getMtlsOptions(destination))
+  };
+  return createAgent(destination, certificateOptions);
+}
+
+/**
  * Returns the http or https-agent config depending on the destination URL.
  * If the destination contains a proxy configuration, the agent will be a proxy-agent.
  * If not it will be the default http-agent coming from node.
+ * @deprecated Temporarily replaced by {@link getAgentConfigAsync}, will change its default behavior to be asynchronous in next major release.
  * @param destination - Determining which kind of configuration is returned.
  * @returns The HTTP or HTTPS agent configuration.
  */
 export function getAgentConfig(
   destination: HttpDestination
 ): HttpAgentConfig | HttpsAgentConfig {
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
-    ...getKeyStoreOption(destination),
-    ...getMtlsOptions(destination)
+    ...getKeyStoreOptions(destination)
   };
-  return destination.proxyConfiguration
-    ? proxyAgent(destination, certificateOptions)
-    : createDefaultAgent(destination, certificateOptions);
+  return createAgent(destination, certificateOptions);
 }
 
 /**
@@ -49,9 +67,10 @@ export function getAgentConfig(
  * @param destination - Destination object
  * @returns Options, which can be used later the http client.
  */
-function getTrustStoreOptions(
-  destination: HttpDestination
-): Record<string, any> {
+function getTrustStoreOptions(destination: HttpDestination): {
+  rejectUnauthorized?: boolean;
+  ca?: [string];
+} {
   // http case: no certificate needed
   if (getProtocolOrDefault(destination) === 'http') {
     if (destination.isTrustingAllCertificates) {
@@ -100,20 +119,27 @@ function getTrustStoreOptions(
  * @param destination - Destination object
  * @returns Options, which can be used later by tls.createSecureContext() e.g. pfx and passphrase or an empty object, if the protocol is not 'https:' or no client information are in the definition.
  */
-function getKeyStoreOption(destination: Destination): Record<string, any> {
+function getKeyStoreOptions(destination: Destination): {
+  pfx?: Buffer;
+  passphrase?: string;
+} {
   if (
-    destination.keyStoreName &&
-    destination.keyStorePassword &&
     // Only add certificates, when using MTLS (https://github.com/SAP/cloud-sdk-js/issues/3544)
     destination.authentication === 'ClientCertificateAuthentication' &&
     // pfx is an alternative to providing key and cert individually
     // For mTLS we provide key and cert, in non-mTLS cases we provide pfx
-    !mtlsIsEnabled(destination)
+    !mtlsIsEnabled(destination) &&
+    destination.keyStoreName
   ) {
     const certificate = selectCertificate(destination);
 
     logger.debug(`Certificate with name "${certificate.name}" selected.`);
 
+    if (!destination.keyStorePassword) {
+      logger.debug(
+        `Destination '${destination.name}' does not have a keystore password.`
+      );
+    }
     return {
       pfx: Buffer.from(certificate.content, 'base64'),
       passphrase: destination.keyStorePassword
@@ -122,10 +148,27 @@ function getKeyStoreOption(destination: Destination): Record<string, any> {
   return {};
 }
 
+/**
+ * Options used for establishing mTLS connections.
+ * @internal
+ */
+export interface MtlsOptions {
+  /**
+   * @internal
+   */
+  cert: string;
+  /**
+   * @internal
+   */
+  key: string;
+}
+
 /*
  Reads mTLS client certificates from known environment variables on CloudFoundry.
  */
-function getMtlsOptions(destination: Destination): Record<string, any> {
+async function getMtlsOptions(
+  destination: Destination
+): Promise<MtlsOptions | Record<string, never>> {
   if (!mtlsIsEnabled(destination) && destination.mtls) {
     logger.warn(
       `Destination ${
@@ -134,9 +177,15 @@ function getMtlsOptions(destination: Destination): Record<string, any> {
     );
   }
   if (mtlsIsEnabled(destination)) {
+    if (registerDestinationCache.mtls.useMtlsCache) {
+      return registerDestinationCache.mtls.getMtlsOptions();
+    }
+    const getCert = readFile(process.env.CF_INSTANCE_CERT as string, 'utf8');
+    const getKey = readFile(process.env.CF_INSTANCE_KEY as string, 'utf8');
+    const [cert, key] = await Promise.all([getCert, getKey]);
     return {
-      cert: readFileSync(process.env.CF_INSTANCE_CERT as string, 'utf8'),
-      key: readFileSync(process.env.CF_INSTANCE_KEY as string, 'utf8')
+      cert,
+      key
     };
   }
   return {};
@@ -196,14 +245,13 @@ function selectCertificate(destination): DestinationCertificate {
  * @internal
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
  */
-function createDefaultAgent(
+function createAgent(
   destination: HttpDestination,
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
-  if (getProtocolOrDefault(destination) === 'https') {
-    return { httpsAgent: new https.Agent(options) };
-  }
-  return { httpAgent: new http.Agent(options) };
+  return getProtocolOrDefault(destination) === 'https'
+    ? { httpsAgent: new https.Agent(options) }
+    : { httpAgent: new http.Agent(options) };
 }
 
 /**
@@ -213,17 +261,19 @@ function createDefaultAgent(
  * @param targetUri - Used as baseURL in request config.
  * @returns HttpRequestConfig containing baseUrl and http(s) agents.
  */
-export function urlAndAgent(targetUri: string): {
+export async function urlAndAgent(targetUri: string): Promise<{
   baseURL: string;
+  proxy?: BasicProxyConfiguration | false;
   httpAgent?: http.Agent;
   httpsAgent?: http.Agent;
-} {
+}> {
   let destination: HttpDestination = { url: targetUri, proxyType: 'Internet' };
   if (proxyStrategy(destination) === 'internet') {
     destination = addProxyConfigurationInternet(destination);
   }
   return {
     baseURL: destination.url,
-    ...getAgentConfig(destination)
+    ...(await getAgentConfigAsync(destination)),
+    proxy: getProxyConfig(destination)
   };
 }

@@ -6,8 +6,7 @@ import {
 import {
   providerServiceToken,
   subscriberServiceToken,
-  subscriberServiceTokenWithVerificationURL,
-  subscriberUserJwt
+  subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockJwtBearerToken,
@@ -37,19 +36,16 @@ describe('Failure cases', () => {
 
     jest
       .spyOn(jwt, 'verifyJwt')
-      .mockResolvedValue(
-        jwt.decodeJwt(subscriberServiceTokenWithVerificationURL)
-      );
+      .mockResolvedValue(jwt.decodeJwt(subscriberServiceToken));
 
     await expect(
       getDestination({
         destinationName,
-        jwt: subscriberServiceTokenWithVerificationURL,
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
+        jwt: subscriberServiceToken,
+        cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not find service binding for type \'destination\'."'
+      '"Could not find service binding of type \'destination\'."'
     );
   }, 50000);
 
@@ -61,8 +57,7 @@ describe('Failure cases', () => {
       getDestination({
         destinationName,
         jwt: 'fails',
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
+        cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"JwtError: The given jwt payload does not encode valid JSON."'
@@ -95,8 +90,7 @@ describe('Failure cases', () => {
       await getDestination({
         destinationName,
         jwt: subscriberServiceToken,
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
+        cacheVerificationKeys: false
       });
       fail();
     } catch (error) {
@@ -129,7 +123,7 @@ describe('Failure cases', () => {
         destinationName,
         {
           ...wrapJwtInHeader(subscriberServiceToken).headers,
-          'x-user-token': subscriberUserJwt
+          'x-user-token': subscriberUserToken
         },
         { badheaders: [] }
       )
@@ -138,9 +132,8 @@ describe('Failure cases', () => {
     try {
       await getDestination({
         destinationName,
-        jwt: subscriberUserJwt,
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
+        jwt: subscriberUserToken,
+        cacheVerificationKeys: false
       });
       fail();
     } catch (error) {
@@ -168,9 +161,8 @@ describe('Failure cases', () => {
     const expected = null;
     const actual = await getDestination({
       destinationName,
-      jwt: subscriberUserJwt,
-      cacheVerificationKeys: false,
-      iasToXsuaaTokenExchange: false
+      jwt: subscriberUserToken,
+      cacheVerificationKeys: false
     });
     expect(actual).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -197,8 +189,7 @@ describe('Failure cases', () => {
     await expect(
       getDestination({
         destinationName,
-        cacheVerificationKeys: false,
-        iasToXsuaaTokenExchange: false
+        cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"No user token (JWT) has been provided. This is strictly necessary for \'OAuth2SAMLBearerAssertion\'."'

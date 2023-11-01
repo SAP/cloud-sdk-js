@@ -8,7 +8,7 @@ import {
 import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
 import { parametersInterface } from './parameters-interface';
 import { exportStatement } from './export-statement';
-import { operationImportDeclarations } from './import';
+import { operationDeclarations } from './import';
 import { operationFunction } from './operation';
 
 /**
@@ -17,14 +17,12 @@ import { operationFunction } from './operation';
 export function operationsSourceFile(
   service: VdmServiceMetadata
 ): SourceFileStructure {
-  const functions = service.functionImports;
-  const actions = service.actionImports || [];
-  const operations = [...functions, ...actions];
+  const operations = service.operations;
 
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...operationImportDeclarations(service, operations),
+      ...operationDeclarations(service, operations),
       ...flat(
         operations.map(operation => operationStatements(operation, service))
       ),

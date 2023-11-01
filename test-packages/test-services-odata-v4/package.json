@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-services-odata-v4",
-  "version": "3.2.0",
+  "version": "3.7.0",
   "description": "Custom Services for testing",
   "files": [
     "**/*.js",
@@ -21,7 +21,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "bignumber.js": "^9.1.1",
+    "bignumber.js": "^9.1.2",
     "moment": "^2.29.4"
   },
   "peerDependencies": {

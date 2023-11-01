@@ -4,7 +4,7 @@ import { CreateRequestBuilderBase } from '../create-request-builder-base';
 import { EntityBase } from '../../entity-base';
 import { UpdateRequestBuilderBase } from '../update-request-builder-base';
 import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
-import { ActionFunctionImportRequestBuilderBase } from '../action-function-import-request-builder-base';
+import { OperationRequestBuilderBase } from '../operation-request-builder-base';
 
 /**
  * Representation of a batch change set, which holds a collection of write operations.
@@ -31,4 +31,4 @@ export type ChangesetBuilderTypes<DeSerializersT extends DeSerializers> =
   | CreateRequestBuilderBase<EntityBase, DeSerializersT>
   | UpdateRequestBuilderBase<EntityBase, DeSerializersT>
   | DeleteRequestBuilderBase<EntityBase, DeSerializersT>
-  | Omit<ActionFunctionImportRequestBuilderBase<any, any, any>, 'execute'>;
+  | Omit<OperationRequestBuilderBase<any, any, any>, 'execute'>;

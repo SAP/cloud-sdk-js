@@ -48,7 +48,7 @@ describe('getDestinationServiceCredentials()', () => {
     expect(() =>
       getDestinationServiceCredentials()
     ).toThrowErrorMatchingInlineSnapshot(
-      '"Could not find binding to service \'destination\', that includes credentials."'
+      '"Could not find binding to the destination service."'
     );
   });
 

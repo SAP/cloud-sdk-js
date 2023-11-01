@@ -34,6 +34,7 @@ export {
   DestinationAccessorOptions,
   DestinationSelectionStrategies,
   JwtPayload,
+  BasicProxyConfiguration,
   ProxyConfiguration,
   ProxyConfigurationHeaders,
   Service,
@@ -52,7 +53,9 @@ export {
   DestinationsByType,
   DestinationForServiceBindingOptions,
   destinationForServiceBinding,
+  getDestinationFromServiceBinding,
   PartialDestinationFetchOptions,
+  ServiceBindingTransformOptions,
   getAllDestinationsFromDestinationService
 } from './scp-cf';
 
@@ -72,6 +75,7 @@ export type {
 } from './scp-cf';
 
 export {
+  getAgentConfigAsync,
   getAgentConfig,
   HttpAgentConfig,
   HttpsAgentConfig

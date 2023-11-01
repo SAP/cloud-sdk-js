@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { entitySerializer } from '@sap-cloud-sdk/odata-common';
 import { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEnumType';
@@ -137,6 +138,28 @@ describe('entity-serializer', () => {
 
     expect(serializeEntity(testEntityFractional, testEntityApi)).toEqual({
       TimeOfDayProperty: '01:02:03.456'
+    });
+  });
+
+  it('should serialize safe number as number', () => {
+    const testEntity = testEntityApi
+      .entityBuilder()
+      .decimalProperty(new BigNumber(42))
+      .build();
+
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
+      DecimalProperty: 42
+    });
+  });
+
+  it('should serialize an unsafe number as a string', () => {
+    const testEntity = testEntityApi
+      .entityBuilder()
+      .decimalProperty(new BigNumber(Math.pow(2, 53)))
+      .build();
+
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
+      DecimalProperty: '9007199254740992'
     });
   });
 

@@ -74,9 +74,8 @@ export async function getOptionsPerService(
     skipValidation
   }: { skipValidation: boolean; optionsPerService: string | undefined }
 ): Promise<OptionsPerService> {
-  const originalOptionsPerService = await getOriginalOptionsPerService(
-    optionsPerService
-  );
+  const originalOptionsPerService =
+    await getOriginalOptionsPerService(optionsPerService);
 
   const uniqueNameGenerator = new UniqueNameGenerator('-');
 

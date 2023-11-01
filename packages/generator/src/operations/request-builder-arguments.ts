@@ -5,26 +5,31 @@ import { responseTransformerFunctionName } from './response-transformer-function
 /**
  * @internal
  */
-export function getRequestBuilderArgumentsBase(
+export function getRequestBuilderArguments(
   operation: VdmOperation,
   service: VdmServiceMetadata
 ): string[] {
   const sharedParameters = [getTransformer(operation), 'params'];
-  if (!operation.isBound) {
+  if (operation.isBound) {
     return [
-      `'${service.serviceOptions.basePath}'`,
+      'this._entityApi',
+      'this',
       `'${operation.originalName}'`,
       ...sharedParameters,
-      'deSerializers'
+      'deSerializers',
+      `'${operation.type}'`
     ];
   }
-  return [
-    'this._entityApi',
-    'this',
+  const params = [
+    `'${service.serviceOptions.basePath}'`,
     `'${operation.originalName}'`,
     ...sharedParameters,
-    'deSerializers || defaultDeSerializers'
+    'deSerializers'
   ];
+
+  return service.oDataVersion === 'v4'
+    ? [...params, `'${operation.type}'`]
+    : [`'${operation.httpMethod}'`, ...params];
 }
 
 function getTransformer(operation: VdmOperation): string {

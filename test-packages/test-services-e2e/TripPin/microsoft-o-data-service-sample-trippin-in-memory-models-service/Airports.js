@@ -13,9 +13,9 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class Airports extends odata_v4_1.Entity {
     constructor(_entityApi) {
         super(_entityApi);
-        this._entityApi = _entityApi;
     }
 }
+exports.Airports = Airports;
 /**
  * Technical entity name for Airports.
  */
@@ -28,5 +28,4 @@ Airports._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/'
  * All key fields of the Airports entity
  */
 Airports._keys = ['IcaoCode'];
-exports.Airports = Airports;
 //# sourceMappingURL=Airports.js.map

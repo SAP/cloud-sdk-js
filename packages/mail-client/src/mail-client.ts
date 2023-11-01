@@ -127,9 +127,8 @@ async function createSocket(
       port: mailDestination.port!
     }
   };
-  const socketConnection = await SocksClient.createConnection(
-    connectionOptions
-  );
+  const socketConnection =
+    await SocksClient.createConnection(connectionOptions);
 
   const socksSocket = socketConnection.socket as SocksSocket;
   // Setting `_readableListening` to true in the next line makes the socket readable.

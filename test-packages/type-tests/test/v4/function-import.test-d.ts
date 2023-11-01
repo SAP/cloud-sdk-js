@@ -3,13 +3,13 @@ import {
   TestFunctionImportNullableTestParameters
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { expectError, expectType } from 'tsd';
-import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { OperationRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { DefaultDeSerializersV4 } from '../duplicated-types';
 
 expectError<any>(testFunctionImportNullableTest({}));
 
 expectType<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializersV4,
     TestFunctionImportNullableTestParameters<DefaultDeSerializersV4>,
     string[] | null
@@ -23,7 +23,7 @@ expectType<
 );
 
 expectType<
-  FunctionImportRequestBuilder<
+  OperationRequestBuilder<
     DefaultDeSerializersV4,
     TestFunctionImportNullableTestParameters<DefaultDeSerializersV4>,
     string[] | null

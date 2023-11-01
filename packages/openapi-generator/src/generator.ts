@@ -192,7 +192,7 @@ async function generateMandatorySources(
   const createFileOptions = await getFileCreationOptions(options);
   if (openApiDocument.schemas.length) {
     const schemaDir = resolve(serviceDir, 'schema');
-    await createSchemaFiles(schemaDir, openApiDocument, options);
+    await createSchemaFiles(schemaDir, openApiDocument, createFileOptions);
     await createFile(
       schemaDir,
       'index.ts',
@@ -230,17 +230,16 @@ async function createApis(
 async function createSchemaFiles(
   dir: string,
   openApiDocument: OpenApiDocument,
-  options: ParsedGeneratorOptions
+  createFileOptions: CreateFileOptions
 ): Promise<void> {
   await mkdir(dir, { recursive: true });
-  const fileCreateOptions = await getFileCreationOptions(options);
   await Promise.all(
     openApiDocument.schemas.map(schema =>
       createFile(
         dir,
         `${schema.fileName}.ts`,
         schemaFile(schema),
-        fileCreateOptions
+        createFileOptions
       )
     )
   );

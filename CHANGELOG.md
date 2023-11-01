@@ -28,6 +28,85 @@
 
 - 
 
+# 3.7.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.7.0
+
+## Fixed Issues
+
+- [odata-common, odata-v2, odata-v4, generator, generator-common] Do not send `null` values in the request payload for properties that are not set while creating or updating an entity.
+  [Fixed Issue] Fix `RangeError: Maximum call stack size exceeded` error that occurs when updating an entity after calling `getByKey`. (bdcf14f85)
+
+# 3.6.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.6.0
+
+## Compatibility Notes
+
+- [connectivity] Proxy configuration is no longer realized through a proxy agent, but with the native axios proxy setting instead. (025b6aa2c)
+
+## Fixed Issues
+
+- [connectivity] Use axios native proxy, instead of proxy agent, which causes connection issues for write requests on SAP Cloud Connector. (025b6aa2c)
+- [http-client] Fix CSRF token fetching against OnPremise systems. (c2a2987c5)
+
+# 3.5.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.5.0
+
+## Fixed Issues
+
+- [connectivity] Compare `selectionStrategy` in `DestinationFetchOptions` based on value instead of reference. (7ed5ceb52)
+- [connectivity] Fix destination caching for destinations from service bindings. The destinations are not cached repeatedly. The function `getDestinationFromServiceBinding()` returns `undefined` for destinations which have expired JWTs. (bf54df09b)
+- [connectivity] Support destinations of type `ClientCertificateAuthentication` without password.
+  - @sap-cloud-sdk/resilience@3.5.0
+  - @sap-cloud-sdk/util@3.5.0 (2277f9443)
+- [odata-common, odata-v2, odata-v4] Fix OData v2 serialization for `Edm.Decimal` to serialize to `string`. (ee7477ce2)
+
+# 3.4.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.4.0
+
+## Compatibility Notes
+
+- [connectivity] Deprecate `destinationForServiceBinding()` and `PartialDestinationFetchOptions`. Use `getDestinationFromServiceBinding()` and `ServiceBindingTransformOptions` instead. (bde64634d)
+
+## New Functionalities
+
+- [connectivity] Always add a name to destinations from service bindings created with `getDestinationFromServiceBinding()`. (db0780f1b)
+- [connectivity] Support forwarding of auth tokens for destinations from the destination service, service bindings and environment variables. (bde64634d)
+
+## Fixed Issues
+
+- [odata-common, odata-v4] Serialize properties of type "Edm.Decimal" to numbers when they are within the safe range and strings when they are not. (431d2a542)
+
+# 3.3.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.3.0
+
+## Compatibility Notes
+
+- [connectivity] The `expiresIn` property of `authTokens` on a `Destination` can be undefined. (c09b1d06f)
+- [connectivity] Deprecate `getAgentConfig()`:
+
+  - Temporarily use replacement function `getAgentConfigAsync()`.
+  - Rename `getAgentConfigAsync()` to `getAgentConfig()` in next major version. (36a01f775)
+
+## New Functionalities
+
+- [connectivity] Add option to cache mTLS certificates. (36a01f775)
+
+## Improvements
+
+- [connectivity] Do not rely on XSUAA service when caching service tokens. Cache keys are now based on service credentials URL. (0583836bc)
+- [connectivity] Do not rely on the XSUAA service binding to retrieve tenant information when registering destinations. If tenant is unknown and no binding is found, set it to a default value (`'tenant_id'`). (8f54207b6)
+- [connectivity] Read mTLS certificates asynchronously. (36a01f775)
+
+## Fixed Issues
+
+- [connectivity] Remove dependency to XSUAA service binding when checking whether a JWT was issued by XSUAA for destination retrieval. Now, the `ext_attr.ehancer` property is checked. (6b58354e8)
+- [http-client] Do not set default tenant ID in the context of middlewares, if the tenant ID is unknown. In those cases it will be `undefined` from now on. (8f54207b6)
+
 # 3.2.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.2.0

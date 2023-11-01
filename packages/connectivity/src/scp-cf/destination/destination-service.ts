@@ -15,8 +15,8 @@ import {
 import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
-import { getSubdomainAndZoneId } from '../xsuaa-service';
 import { buildAuthorizationHeaders } from '../authorization-header';
+import { getTenantIdWithFallback } from '../tenant';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -226,25 +226,18 @@ export async function fetchCertificate(
 function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
   let tenant: string | undefined;
   if (typeof token === 'string') {
-    tenant = getTenantId(token);
+    tenant = getTenantIdWithFallback(token);
   } else {
     tenant =
       token.exchangeTenant || // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
-      getTenantId(token.exchangeHeaderJwt) ||
-      getTenantId(token.authHeaderJwt);
+      getTenantIdWithFallback(token.exchangeHeaderJwt) ||
+      getTenantIdWithFallback(token.authHeaderJwt);
   }
 
   if (!tenant) {
-    throw new Error('Could not obtain tenant identifier from jwt.');
+    throw new Error('Could not obtain tenant identifier from JWT.');
   }
   return tenant;
-}
-
-function getTenantId(token: string | undefined): string | undefined {
-  if (token) {
-    const { zoneId, subdomain } = getSubdomainAndZoneId(token);
-    return zoneId || subdomain || undefined;
-  }
 }
 
 async function fetchDestinationByTokens(
@@ -387,8 +380,7 @@ async function callDestinationService(
   const { destinationName, retry } = options || {};
 
   const requestConfig: RawAxiosRequestConfig = {
-    ...urlAndAgent(context.uri),
-    proxy: false,
+    ...(await urlAndAgent(context.uri)),
     method: 'get',
     headers
   };

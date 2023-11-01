@@ -13,9 +13,9 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 class TestEntityMultiLink extends odata_v2_1.Entity {
     constructor(_entityApi) {
         super(_entityApi);
-        this._entityApi = _entityApi;
     }
 }
+exports.TestEntityMultiLink = TestEntityMultiLink;
 /**
  * Technical entity name for TestEntityMultiLink.
  */
@@ -28,5 +28,4 @@ TestEntityMultiLink._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
  * All key fields of the TestEntityMultiLink entity
  */
 TestEntityMultiLink._keys = ['KeyProperty'];
-exports.TestEntityMultiLink = TestEntityMultiLink;
 //# sourceMappingURL=TestEntityMultiLink.js.map

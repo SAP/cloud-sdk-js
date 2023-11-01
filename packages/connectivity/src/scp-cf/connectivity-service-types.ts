@@ -11,7 +11,22 @@ import { Protocol } from './protocol';
  * Note: The [no_proxy] environment variables contains a list of URLs for which no proxy will be used even if [http_proxy, https_proxy] are set.
  * Wildcards like *.some.domain.com are not supported while checking the no_proxy env.
  */
-export interface ProxyConfiguration {
+export interface ProxyConfiguration extends BasicProxyConfiguration {
+  /**
+   * HTTP headers to be added to a request if tunneled through the proxy.
+   */
+  headers?: ProxyConfigurationHeaders;
+
+  /**
+   * A JWT for proxy authorization, which is used when HTTP headers are not applicable, e.g., using socket protocols.
+   */
+  'proxy-authorization'?: string;
+}
+
+/**
+ * Standard proxy configuration without additional headers nor authorization info.
+ */
+export interface BasicProxyConfiguration {
   /**
    * The host of the proxy.
    */
@@ -27,16 +42,6 @@ export interface ProxyConfiguration {
    *
    */
   protocol: Protocol;
-
-  /**
-   * HTTP headers to be added to a request if tunneled through the proxy.
-   */
-  headers?: ProxyConfigurationHeaders;
-
-  /**
-   * A JWT for proxy authorization, which is used when http headers are not applicable, e.g., using socket protocols.
-   */
-  'proxy-authorization'?: string;
 }
 
 /**

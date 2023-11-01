@@ -1,5 +1,71 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.7.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.7.0
+- @sap-cloud-sdk/util@3.7.0
+
+## 3.6.0
+
+### Minor Changes
+
+- 025b6aa2c: [Fixed Issue] Use axios native proxy, instead of proxy agent, which causes connection issues for write requests on SAP Cloud Connector.
+- 025b6aa2c: [Compatibility Note] Proxy configuration is no longer realized through a proxy agent, but with the native axios proxy setting instead.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.6.0
+- @sap-cloud-sdk/util@3.6.0
+
+## 3.5.0
+
+### Minor Changes
+
+- 7ed5ceb52: [Fixed Issue] Compare `selectionStrategy` in `DestinationFetchOptions` based on value instead of reference.
+- bf54df09b: [Fixed Issue] Fix destination caching for destinations from service bindings. The destinations are not cached repeatedly. The function `getDestinationFromServiceBinding()` returns `undefined` for destinations which have expired JWTs.
+
+### Patch Changes
+
+- 2277f9443: [Fixed Issue] Support destinations of type `ClientCertificateAuthentication` without password.
+  - @sap-cloud-sdk/resilience@3.5.0
+  - @sap-cloud-sdk/util@3.5.0
+
+## 3.4.0
+
+### Minor Changes
+
+- db0780f1b: [New Functionality] Always add a name to destinations from service bindings created with `getDestinationFromServiceBinding()`.
+- bde64634d: [Compatibility Note] Deprecate `destinationForServiceBinding()` and `PartialDestinationFetchOptions`. Use `getDestinationFromServiceBinding()` and `ServiceBindingTransformOptions` instead.
+- bde64634d: [New Functionality] Support forwarding of auth tokens for destinations from the destination service, service bindings and environment variables.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.4.0
+- @sap-cloud-sdk/util@3.4.0
+
+## 3.3.0
+
+### Minor Changes
+
+- 0583836bc: [Improvement] Do not rely on XSUAA service when caching service tokens. Cache keys are now based on service credentials URL.
+- 8f54207b6: [Improvement] Do not rely on the XSUAA service binding to retrieve tenant information when registering destinations. If tenant is unknown and no binding is found, set it to a default value (`'tenant_id'`).
+- 36a01f775: [New Functionality] Add option to cache mTLS certificates.
+- 6b58354e8: [Fixed Issue] Remove dependency to XSUAA service binding when checking whether a JWT was issued by XSUAA for destination retrieval. Now, the `ext_attr.ehancer` property is checked.
+- c09b1d06f: [Compatibility Note] The `expiresIn` property of `authTokens` on a `Destination` can be undefined.
+- 36a01f775: [Compatibility Note] Deprecate `getAgentConfig()`:
+
+  - Temporarily use replacement function `getAgentConfigAsync()`.
+  - Rename `getAgentConfigAsync()` to `getAgentConfig()` in next major version.
+
+- 36a01f775: [Improvement] Read mTLS certificates asynchronously.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.3.0
+- @sap-cloud-sdk/util@3.3.0
+
 ## 3.2.0
 
 ### Minor Changes

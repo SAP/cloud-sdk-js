@@ -23,18 +23,18 @@ describe('function', () => {
       parameters: [
         { name: 'parameters', type: 'Params<T>' },
         {
-          initializer: undefined,
-          name: 'deSerializers?',
+          initializer: 'defaultDeSerializers as T',
+          name: 'deSerializers',
           type: 'T'
         }
       ],
       returnType:
-        'BoundFunctionImportRequestBuilder<BreakfastEntity<T>, T, Params<T>, string>',
+        'BoundOperationRequestBuilder<BreakfastEntity<T>, T, Params<T>, string>',
       docs: [
         `order a breakfast ${unixEOL}@param parameters - Object containing all parameters for the function.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
       ],
       isExported: true,
-      statements: `const params = {${unixEOL}withHoneyToast: new FunctionImportParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new BoundFunctionImportRequestBuilder(this._entityApi, this, 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers || defaultDeSerializers);`
+      statements: `const params = {${unixEOL}withHoneyToast: new OperationParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new BoundOperationRequestBuilder(this._entityApi, this, 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers, 'function');`
     });
   });
 
@@ -46,18 +46,18 @@ describe('function', () => {
       parameters: [
         { name: 'parameters', type: 'Params<DeSerializersT>' },
         {
-          initializer: 'defaultDeSerializers as any',
+          initializer: 'defaultDeSerializers as DeSerializersT',
           name: 'deSerializers',
           type: 'DeSerializersT'
         }
       ],
       returnType:
-        'FunctionImportRequestBuilder<DeSerializersT, Params<DeSerializersT>, string>',
+        'OperationRequestBuilder<DeSerializersT, Params<DeSerializersT>, string>',
       docs: [
         `order a breakfast ${unixEOL}@param parameters - Object containing all parameters for the function.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
       ],
       isExported: true,
-      statements: `const params = {${unixEOL}withHoneyToast: new FunctionImportParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new FunctionImportRequestBuilder('post', 'some/path/to/food', 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers);`
+      statements: `const params = {${unixEOL}withHoneyToast: new OperationParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new OperationRequestBuilder('post', 'some/path/to/food', 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers);`
     });
   });
 
@@ -69,19 +69,19 @@ describe('function', () => {
       parameters: [
         { name: 'parameters', type: 'Params<DeSerializersT>' },
         {
-          initializer: 'defaultDeSerializers as any',
+          initializer: 'defaultDeSerializers as DeSerializersT',
           name: 'deSerializers',
           type: 'DeSerializersT'
         }
       ],
       returnType:
-        "Omit<FunctionImportRequestBuilder<DeSerializersT, Params<DeSerializersT>, never>, 'execute'>",
+        "Omit<OperationRequestBuilder<DeSerializersT, Params<DeSerializersT>, never>, 'execute'>",
       docs: [
         "entityNotDeserializable The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.\n@param parameters - Object containing all parameters for the function.\n@returns A request builder that allows to overwrite some of the values and execute the resulting request."
       ],
       isExported: true,
       statements:
-        "const params = {\n\n};\n\nreturn new FunctionImportRequestBuilder('get', 'some/path/to/food', 'entityNotDeserializable', (data) => throwErrorWhenReturnTypeIsUnionType(data, 'entityNotDeserializable'), params, deSerializers);"
+        "const params = {\n\n};\n\nreturn new OperationRequestBuilder('get', 'some/path/to/food', 'entityNotDeserializable', (data) => throwErrorWhenReturnTypeIsUnionType(data, 'entityNotDeserializable'), params, deSerializers);"
     });
   });
 });

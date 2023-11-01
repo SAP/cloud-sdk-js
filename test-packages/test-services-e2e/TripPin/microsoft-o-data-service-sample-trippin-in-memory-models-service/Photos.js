@@ -13,9 +13,9 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class Photos extends odata_v4_1.Entity {
     constructor(_entityApi) {
         super(_entityApi);
-        this._entityApi = _entityApi;
     }
 }
+exports.Photos = Photos;
 /**
  * Technical entity name for Photos.
  */
@@ -28,5 +28,4 @@ Photos._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
  * All key fields of the Photos entity
  */
 Photos._keys = ['Id'];
-exports.Photos = Photos;
 //# sourceMappingURL=Photos.js.map

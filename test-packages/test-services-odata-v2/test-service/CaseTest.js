@@ -13,9 +13,9 @@ const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 class CaseTest extends odata_v2_1.Entity {
     constructor(_entityApi) {
         super(_entityApi);
-        this._entityApi = _entityApi;
     }
 }
+exports.CaseTest = CaseTest;
 /**
  * Technical entity name for CaseTest.
  */
@@ -28,5 +28,4 @@ CaseTest._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
  * All key fields of the CaseTest entity
  */
 CaseTest._keys = ['KeyPropertyString'];
-exports.CaseTest = CaseTest;
 //# sourceMappingURL=CaseTest.js.map

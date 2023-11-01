@@ -66,8 +66,7 @@ export function generateEntitiesV2(
       classNames,
       formatter
     ),
-    functions: [],
-    actions: []
+    operations: []
   }));
 }
 
@@ -135,7 +134,7 @@ export function joinAssociationMetadata(
         ({
           ...assocSetEnd,
           ...matchingAssoc.End.find(end => end.Role === assocSetEnd.Role)
-        } as End)
+        }) as End
     );
 
     return {

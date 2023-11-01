@@ -35,9 +35,9 @@ export class MultiSchemaTestEntity<
   /**
    * Key Property.
    */
-  keyProperty!: DeserializedType<T, 'Edm.String'>;
+  declare keyProperty: DeserializedType<T, 'Edm.String'>;
 
-  constructor(readonly _entityApi: MultiSchemaTestEntityApi<T>) {
+  constructor(_entityApi: MultiSchemaTestEntityApi<T>) {
     super(_entityApi);
   }
 }

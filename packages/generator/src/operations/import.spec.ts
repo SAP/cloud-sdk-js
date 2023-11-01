@@ -1,48 +1,43 @@
 import { orderBreakfast } from '../../test/test-util/data-model';
 import { VdmServiceMetadata } from '../vdm-types';
-import { operationImportDeclarations } from './import';
+import { operationDeclarations } from './import';
 
 describe('import declarations for operations', () => {
   it('returns empty list when there are no functions', () => {
     const service = {};
 
-    const actual = operationImportDeclarations(
-      service as VdmServiceMetadata,
-      []
-    );
+    const actual = operationDeclarations(service as VdmServiceMetadata, []);
 
     expect(actual).toEqual([]);
   });
 
   it('returns import declarations with correct request builder for a bound function', () => {
     const service = {};
-    const actual = operationImportDeclarations(service as VdmServiceMetadata, [
+    const actual = operationDeclarations(service as VdmServiceMetadata, [
       { ...orderBreakfast, isBound: true }
     ]);
-    expect(actual[0].namedImports).toContain(
-      'BoundFunctionImportRequestBuilder'
-    );
+    expect(actual[0].namedImports).toContain('BoundOperationRequestBuilder');
   });
 
-  it('includes FunctionImportParameter if import has parameters.', () => {
+  it('includes OperationParameter if import has parameters.', () => {
     const service = {};
-    const actual = operationImportDeclarations(service as VdmServiceMetadata, [
+    const actual = operationDeclarations(service as VdmServiceMetadata, [
       { ...orderBreakfast, isBound: true }
     ]);
-    expect(actual[0].namedImports).toContain('FunctionImportParameter');
+    expect(actual[0].namedImports).toContain('OperationParameter');
   });
 
-  it('does not include FunctionImportParameter if import has no parameters.', () => {
+  it('does not include OperationParameter if import has no parameters.', () => {
     const service = {};
-    const actual = operationImportDeclarations(service as VdmServiceMetadata, [
+    const actual = operationDeclarations(service as VdmServiceMetadata, [
       { ...orderBreakfast, isBound: true, parameters: [] }
     ]);
-    expect(actual[0].namedImports).not.toContain('FunctionImportParameter');
+    expect(actual[0].namedImports).not.toContain('OperationParameter');
   });
 
   it('includes service import for unbound operations', () => {
     const service = { className: 'myServiceClass' };
-    const actual = operationImportDeclarations(service as VdmServiceMetadata, [
+    const actual = operationDeclarations(service as VdmServiceMetadata, [
       { ...orderBreakfast, isBound: false, parameters: [] }
     ]);
     expect(actual[1].namedImports).toContain('myServiceClass');
@@ -50,7 +45,7 @@ describe('import declarations for operations', () => {
 
   it('does not include service import for bound operations', () => {
     const service = { className: 'myServiceClass' };
-    const actual = operationImportDeclarations(service as VdmServiceMetadata, [
+    const actual = operationDeclarations(service as VdmServiceMetadata, [
       { ...orderBreakfast, isBound: true, parameters: [] }
     ]);
     expect(actual[1]).toBeUndefined();
@@ -59,7 +54,7 @@ describe('import declarations for operations', () => {
   it('returns correct import declarations for a function with an EDM return type', () => {
     const service = {};
 
-    const actual = operationImportDeclarations(service as VdmServiceMetadata, [
+    const actual = operationDeclarations(service as VdmServiceMetadata, [
       orderBreakfast
     ]);
 
@@ -73,8 +68,8 @@ describe('import declarations for operations', () => {
           'DeSerializers',
           'DefaultDeSerializers',
           'defaultDeSerializers',
-          'FunctionImportParameter',
-          'FunctionImportRequestBuilder'
+          'OperationParameter',
+          'OperationRequestBuilder'
         ]
       },
       {

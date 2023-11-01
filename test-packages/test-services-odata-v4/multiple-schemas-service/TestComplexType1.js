@@ -41,5 +41,5 @@ var TestComplexType1;
             isCollection: false
         }
     ];
-})(TestComplexType1 = exports.TestComplexType1 || (exports.TestComplexType1 = {}));
+})(TestComplexType1 || (exports.TestComplexType1 = TestComplexType1 = {}));
 //# sourceMappingURL=TestComplexType1.js.map

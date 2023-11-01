@@ -4,7 +4,7 @@ import { mockServiceToken } from '../../../../../test-resources/test/test-util/t
 import {
   providerServiceToken,
   subscriberServiceToken,
-  subscriberUserJwt
+  subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockSubaccountDestinationsCall,
@@ -53,7 +53,7 @@ describe('DestinationServiceCache', () => {
       nock,
       [subscriberDest, subscriberDest2],
       200,
-      subscriberUserJwt,
+      subscriberUserToken,
       destinationServiceUrl
     );
     mockSubaccountDestinationsCall(
@@ -75,9 +75,8 @@ describe('DestinationServiceCache', () => {
     );
     expect(directCallSubscriber.length).toEqual(2);
 
-    const directCallProvider = await populateCacheDestinations(
-      providerServiceToken
-    );
+    const directCallProvider =
+      await populateCacheDestinations(providerServiceToken);
 
     const cacheSubscriber = getDestinationsFromCache(subscriberServiceToken);
     expect(cacheSubscriber).toEqual(directCallSubscriber);

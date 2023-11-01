@@ -214,7 +214,6 @@ export type EdmxJoinedOperationBound = EdmxJoinedOperation & {
 export function generateUnboundOperations(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
-  operationType: 'function' | 'action',
   entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter
@@ -222,7 +221,6 @@ export function generateUnboundOperations(
   return generateOperations(
     serviceMetadata,
     serviceName,
-    operationType,
     entities,
     complexTypes,
     formatter
@@ -235,7 +233,6 @@ export function generateUnboundOperations(
 export function generateBoundOperations(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
-  operationType: 'function' | 'action',
   entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
@@ -245,7 +242,6 @@ export function generateBoundOperations(
   return generateOperations(
     serviceMetadata,
     serviceName,
-    operationType,
     entities,
     complexTypes,
     formatter,
@@ -260,18 +256,17 @@ export function generateBoundOperations(
 function generateOperations(
   serviceMetadata: ServiceMetadata,
   serviceName: string,
-  operationType: 'function' | 'action',
   entities: VdmPartialEntity[],
   complexTypes: VdmComplexType[],
   formatter: ServiceNameFormatter,
   edmxBindingEntitySetName?: string,
   className?: string
 ): VdmOperation[] {
-  const operations = parseOperations(serviceMetadata.edmx.root, operationType);
-  const operationImports = parseOperationImports(
-    serviceMetadata.edmx.root,
-    operationType
-  );
+  const operations = parseOperations(serviceMetadata.edmx.root);
+  const operationImports = [
+    ...parseOperationImports(serviceMetadata.edmx.root, 'function'),
+    ...parseOperationImports(serviceMetadata.edmx.root, 'action')
+  ];
   const joinedOperationData = filterAndTransformOperations(
     operationImports,
     operations,
@@ -286,7 +281,7 @@ function generateOperations(
     .filter(operation => !hasUnsupportedParameterTypes(operation));
 
   return joinedOperationData.map(operation => {
-    const httpMethod = operationType === 'function' ? 'get' : 'post';
+    const httpMethod = operation.operationType === 'function' ? 'get' : 'post';
     const swaggerDefinition = getSwaggerDefinitionForOperation(
       operation.Name,
       httpMethod,
@@ -308,8 +303,7 @@ function generateOperations(
         entities,
         complexTypes,
         extractResponse,
-        serviceName,
-        operation.IsBound
+        serviceName
       ),
       entityClassName: className
     };

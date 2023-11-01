@@ -1,5 +1,63 @@
 # @sap-cloud-sdk/generator
 
+## 3.7.0
+
+### Minor Changes
+
+- bdcf14f85: [Fixed Issue] Do not send `null` values in the request payload for properties that are not set while creating or updating an entity.
+  [Fixed Issue] Fix `RangeError: Maximum call stack size exceeded` error that occurs when updating an entity after calling `getByKey`.
+
+### Patch Changes
+
+- Updated dependencies [bdcf14f85]
+  - @sap-cloud-sdk/generator-common@3.7.0
+  - @sap-cloud-sdk/odata-common@3.7.0
+  - @sap-cloud-sdk/odata-v2@3.7.0
+  - @sap-cloud-sdk/odata-v4@3.7.0
+  - @sap-cloud-sdk/util@3.7.0
+
+## 3.6.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.6.0
+- @sap-cloud-sdk/odata-common@3.6.0
+- @sap-cloud-sdk/odata-v2@3.6.0
+- @sap-cloud-sdk/odata-v4@3.6.0
+- @sap-cloud-sdk/util@3.6.0
+
+## 3.5.0
+
+### Patch Changes
+
+- Updated dependencies [ee7477ce2]
+  - @sap-cloud-sdk/odata-common@3.5.0
+  - @sap-cloud-sdk/odata-v2@3.5.0
+  - @sap-cloud-sdk/odata-v4@3.5.0
+  - @sap-cloud-sdk/generator-common@3.5.0
+  - @sap-cloud-sdk/util@3.5.0
+
+## 3.4.0
+
+### Patch Changes
+
+- Updated dependencies [431d2a542]
+  - @sap-cloud-sdk/odata-common@3.4.0
+  - @sap-cloud-sdk/odata-v4@3.4.0
+  - @sap-cloud-sdk/generator-common@3.4.0
+  - @sap-cloud-sdk/odata-v2@3.4.0
+  - @sap-cloud-sdk/util@3.4.0
+
+## 3.3.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.3.0
+- @sap-cloud-sdk/odata-common@3.3.0
+- @sap-cloud-sdk/odata-v2@3.3.0
+- @sap-cloud-sdk/odata-v4@3.3.0
+- @sap-cloud-sdk/util@3.3.0
+
 ## 3.2.0
 
 ### Patch Changes

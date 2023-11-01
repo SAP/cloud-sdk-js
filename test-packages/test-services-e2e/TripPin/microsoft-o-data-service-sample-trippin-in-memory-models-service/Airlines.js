@@ -13,9 +13,9 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class Airlines extends odata_v4_1.Entity {
     constructor(_entityApi) {
         super(_entityApi);
-        this._entityApi = _entityApi;
     }
 }
+exports.Airlines = Airlines;
 /**
  * Technical entity name for Airlines.
  */
@@ -28,5 +28,4 @@ Airlines._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/'
  * All key fields of the Airlines entity
  */
 Airlines._keys = ['AirlineCode'];
-exports.Airlines = Airlines;
 //# sourceMappingURL=Airlines.js.map

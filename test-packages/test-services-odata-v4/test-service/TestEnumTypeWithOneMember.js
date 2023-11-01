@@ -16,5 +16,5 @@ var TestEnumTypeWithOneMember;
      * Original value: 0
      */
     TestEnumTypeWithOneMember["Member1"] = "Member1";
-})(TestEnumTypeWithOneMember = exports.TestEnumTypeWithOneMember || (exports.TestEnumTypeWithOneMember = {}));
+})(TestEnumTypeWithOneMember || (exports.TestEnumTypeWithOneMember = TestEnumTypeWithOneMember = {}));
 //# sourceMappingURL=TestEnumTypeWithOneMember.js.map

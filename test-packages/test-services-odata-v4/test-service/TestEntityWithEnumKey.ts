@@ -36,9 +36,9 @@ export class TestEntityWithEnumKey<
   /**
    * Key Property Enum 1.
    */
-  keyPropertyEnum1!: TestEnumType;
+  declare keyPropertyEnum1: TestEnumType;
 
-  constructor(readonly _entityApi: TestEntityWithEnumKeyApi<T>) {
+  constructor(_entityApi: TestEntityWithEnumKeyApi<T>) {
     super(_entityApi);
   }
 }

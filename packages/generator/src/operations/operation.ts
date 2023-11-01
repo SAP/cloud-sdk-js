@@ -3,10 +3,9 @@ import {
   FunctionLikeDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import voca from 'voca';
 import { cannotDeserialize } from '../edmx-to-vdm/common';
 import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
-import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
+import { getRequestBuilderArguments } from './request-builder-arguments';
 import { operationReturnType } from './return-type';
 
 const parameterName = 'parameters';
@@ -34,9 +33,11 @@ export function operationFunctionBase(
         }>`
       },
       {
-        name: isBound ? 'deSerializers?' : 'deSerializers',
+        name: 'deSerializers',
         type: isBound ? 'T' : 'DeSerializersT',
-        initializer: isBound ? undefined : 'defaultDeSerializers as any'
+        initializer: isBound
+          ? 'defaultDeSerializers as T'
+          : 'defaultDeSerializers as DeSerializersT'
       }
     ],
     returnType: operationReturnType(operation),
@@ -80,21 +81,14 @@ function getOperationStatements(
 ): string {
   const requestBuilderName = `${
     operation.isBound ? 'Bound' : ''
-  }${voca.capitalize(operation.type)}ImportRequestBuilder`;
+  }OperationRequestBuilder`;
   const paramsLines = (operation.parameters || []).map(
     param =>
-      `${param.parameterName}: new ${voca.capitalize(
-        operation.type
-      )}ImportParameter('${param.originalName}', '${
-        param.edmType
-      }', ${parameterName}.${param.parameterName})`
+      `${param.parameterName}: new OperationParameter('${param.originalName}', '${param.edmType}', ${parameterName}.${param.parameterName})`
   );
   const params = `const params = {\n${paramsLines.join(',\n')}\n};`;
 
-  let parameters = getRequestBuilderArgumentsBase(operation, service);
-  if (operation.type === 'function' && service.oDataVersion === 'v2') {
-    parameters = [`'${operation.httpMethod}'`, ...parameters];
-  }
+  const parameters = getRequestBuilderArguments(operation, service);
 
   const returnStatement = `return new ${requestBuilderName}(${parameters.join(
     ', '

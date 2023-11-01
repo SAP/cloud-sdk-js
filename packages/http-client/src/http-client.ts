@@ -4,15 +4,15 @@ import {
   buildHeadersForDestination,
   Destination,
   HttpDestinationOrFetchOptions,
-  getAgentConfig
+  getAgentConfigAsync
 } from '@sap-cloud-sdk/connectivity';
 import {
   assertHttpDestination,
-  decodedJwtOrZid,
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
-  getSubdomainAndZoneId,
+  getProxyConfig,
+  getTenantIdWithFallback,
   HttpDestination,
   resolveDestination
 } from '@sap-cloud-sdk/connectivity/internal';
@@ -45,8 +45,6 @@ const logger = createLogger({
   package: 'http-client',
   messageContext: 'http-client'
 });
-
-const TENANT_ID = 'tenant_id';
 
 /**
  * Builds a {@link DestinationHttpRequestConfig} for the given destination.
@@ -84,9 +82,9 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
     const resolvedDestination = await resolveDestination(destination);
     assertHttpDestination(resolvedDestination);
 
-    const destinationRequestConfig = await buildHttpRequest(
-      resolvedDestination
-    );
+    const destinationRequestConfig =
+      await buildHttpRequest(resolvedDestination);
+
     logCustomHeadersWarning(requestConfig.headers);
     const request = await buildRequestWithMergedHeadersAndQueryParameters(
       requestConfig,
@@ -109,7 +107,7 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
         jwt: destination.jwt,
         uri: resolvedDestination.url,
         destinationName: resolvedDestination.name ?? undefined,
-        tenantId: getTenantIdForMiddleware(destination.jwt)
+        tenantId: getTenantIdWithFallback(destination.jwt)
       }
     });
   };
@@ -395,15 +393,16 @@ export function executeHttpRequestWithOrigin<
   });
 }
 
-function buildDestinationHttpRequestConfig(
+async function buildDestinationHttpRequestConfig(
   destination: HttpDestination,
   headers: Record<string, string>
-): DestinationHttpRequestConfig {
+): Promise<DestinationHttpRequestConfig> {
   return {
     baseURL: destination.url,
     headers,
     params: destination.queryParameters,
-    ...getAgentConfig(destination)
+    proxy: getProxyConfig(destination),
+    ...(await getAgentConfigAsync(destination))
   };
 }
 
@@ -459,7 +458,6 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   'method'
 > {
   return {
-    proxy: false,
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
     timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config
@@ -505,22 +503,3 @@ export const encodeAllParameters: ParameterEncoder = function (
     ])
   );
 };
-
-/**
- * @internal
- * Return the tenantid based on the given conditions:
- * - If jwt is provided and contains zid, return the value of zid.
- * - If a binding for XSUAA exists, return the tenantid from credentials.
- * - Return a default string value.
- * @param jwt - JWT.
- * @returns String with tenantid information.
- */
-export function getTenantIdForMiddleware(jwt?: string): string {
-  try {
-    const decodedJwt = decodedJwtOrZid({ jwt });
-    const { subdomain, zoneId } = getSubdomainAndZoneId(decodedJwt);
-    return zoneId || subdomain || TENANT_ID;
-  } catch (_) {
-    return TENANT_ID;
-  }
-}

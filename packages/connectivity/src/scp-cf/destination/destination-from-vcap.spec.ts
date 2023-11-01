@@ -1,16 +1,21 @@
 import {
   mockServiceToken,
-  providerUserPayload
+  providerUserPayload,
+  providerUserToken,
+  signedJwt,
+  signedJwtForVerification,
+  testTenants
 } from '../../../../../test-resources/test/test-util';
 import * as tokenAccessor from '../token-accessor';
 import { Service } from '../environment-accessor/environment-accessor-types';
+import { decodeJwt } from '../jwt';
 import { getDestination } from './destination-accessor';
-import { destinationForServiceBinding } from './destination-from-vcap';
+import { getDestinationFromServiceBinding } from './destination-from-vcap';
 import { destinationCache } from './destination-cache';
 import SpyInstance = jest.SpyInstance;
 
 describe('vcap-service-destination', () => {
-  const spy = jest.spyOn(tokenAccessor, 'serviceToken');
+  const serviceTokenSpy = jest.spyOn(tokenAccessor, 'serviceToken');
 
   beforeAll(() => {
     mockServiceToken();
@@ -20,9 +25,10 @@ describe('vcap-service-destination', () => {
     mockServiceBindings();
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     delete process.env.VCAP_SERVICES;
     jest.clearAllMocks();
+    await destinationCache.clear();
   });
 
   function getActualClientId(spyInstance: SpyInstance): string {
@@ -31,8 +37,9 @@ describe('vcap-service-destination', () => {
 
   it('creates a destination for the business logging service', async () => {
     await expect(
-      destinationForServiceBinding('my-business-logging', {
-        jwt: providerUserPayload
+      getDestinationFromServiceBinding({
+        destinationName: 'my-business-logging',
+        jwt: providerUserToken
       })
     ).resolves.toEqual({
       url: 'https://business-logging.my.example.com',
@@ -41,13 +48,14 @@ describe('vcap-service-destination', () => {
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
 
-    expect(getActualClientId(spy)).toBe('clientIdBusinessLogging');
+    expect(getActualClientId(serviceTokenSpy)).toBe('clientIdBusinessLogging');
   });
 
   it('creates ad destination for the xsuaa service', async () => {
     await expect(
-      destinationForServiceBinding('my-xsuaa', {
-        jwt: providerUserPayload
+      getDestinationFromServiceBinding({
+        destinationName: 'my-xsuaa',
+        jwt: providerUserToken
       })
     ).resolves.toEqual({
       url: 'https://api.authentication.sap.hana.ondemand.com',
@@ -56,13 +64,14 @@ describe('vcap-service-destination', () => {
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
 
-    expect(getActualClientId(spy)).toBe('clientIdXsUaa');
+    expect(getActualClientId(serviceTokenSpy)).toBe('clientIdXsUaa');
   });
 
   it('creates a destination for the service manager service', async () => {
     await expect(
-      destinationForServiceBinding('my-service-manager', {
-        jwt: providerUserPayload
+      getDestinationFromServiceBinding({
+        destinationName: 'my-service-manager',
+        jwt: providerUserToken
       })
     ).resolves.toEqual({
       url: 'https://service-manager.cfapps.sap.hana.ondemand.com',
@@ -71,13 +80,14 @@ describe('vcap-service-destination', () => {
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
 
-    expect(getActualClientId(spy)).toBe('clientIdServiceManager');
+    expect(getActualClientId(serviceTokenSpy)).toBe('clientIdServiceManager');
   });
 
   it('creates a destination for the destination service', async () => {
     await expect(
-      destinationForServiceBinding('my-destination-service', {
-        jwt: providerUserPayload
+      getDestinationFromServiceBinding({
+        destinationName: 'my-destination-service',
+        jwt: providerUserToken
       })
     ).resolves.toEqual({
       url: 'https://destination-configuration.cfapps.sap.hana.ondemand.com',
@@ -85,13 +95,14 @@ describe('vcap-service-destination', () => {
       name: 'my-destination-service',
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
-    expect(getActualClientId(spy)).toBe('clientIdDestination');
+    expect(getActualClientId(serviceTokenSpy)).toBe('clientIdDestination');
   });
 
   it('creates a destination for the saas registry', async () => {
     await expect(
-      destinationForServiceBinding('my-saas-registry', {
-        jwt: providerUserPayload
+      getDestinationFromServiceBinding({
+        destinationName: 'my-saas-registry',
+        jwt: providerUserToken
       })
     ).resolves.toEqual({
       url: 'https://saas-manager.mesh.cf.sap.hana.ondemand.com',
@@ -99,13 +110,14 @@ describe('vcap-service-destination', () => {
       name: 'my-saas-registry',
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
-    expect(getActualClientId(spy)).toBe('clientIdSaasRegistry');
+    expect(getActualClientId(serviceTokenSpy)).toBe('clientIdSaasRegistry');
   });
 
   it('creates a destination for the workflow', async () => {
     await expect(
-      destinationForServiceBinding('my-workflow', {
-        jwt: providerUserPayload
+      getDestinationFromServiceBinding({
+        destinationName: 'my-workflow',
+        jwt: providerUserToken
       })
     ).resolves.toEqual({
       url: 'https://api.workflow-sap.cfapps.sap.hana.ondemand.com/workflow-service/odata',
@@ -113,33 +125,33 @@ describe('vcap-service-destination', () => {
       name: 'my-workflow',
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
-    expect(getActualClientId(spy)).toBe('clientIdWorkFlow');
+    expect(getActualClientId(serviceTokenSpy)).toBe('clientIdWorkFlow');
   });
 
   it('creates a destination for the XF s4 hana cloud service', async () => {
     await expect(
-      destinationForServiceBinding('my-s4-hana-cloud')
+      getDestinationFromServiceBinding({ destinationName: 'my-s4-hana-cloud' })
     ).resolves.toEqual({
       url: 'https://my.example.com',
       authentication: 'BasicAuthentication',
       username: 'USER_NAME',
-      password: 'PASSWORD'
+      password: 'PASSWORD',
+      name: 'my-s4-hana-cloud'
     });
   });
 
   it('uses the cache if enabled', async () => {
-    await destinationCache.clear();
-
-    await destinationForServiceBinding('my-destination-service', {
+    await getDestinationFromServiceBinding({
+      destinationName: 'my-destination-service',
       useCache: true,
-      jwt: providerUserPayload
+      jwt: providerUserToken
     });
-    await destinationForServiceBinding('my-destination-service', {
+    await getDestinationFromServiceBinding({
+      destinationName: 'my-destination-service',
       useCache: true,
-      jwt: providerUserPayload
+      jwt: providerUserToken
     });
-
-    expect(spy).toBeCalledTimes(1);
+    expect(serviceTokenSpy).toBeCalledTimes(1);
     expect(
       destinationCache
         .getCacheInstance()
@@ -147,32 +159,83 @@ describe('vcap-service-destination', () => {
     ).toBeDefined();
   });
 
-  it('creates a destination using a custom transformation function', async () => {
-    const serviceBindingTransformFn = jest.fn(async (service: Service) => ({
-      url: service.credentials.sys
-    }));
-
-    await expect(
-      destinationForServiceBinding('my-custom-service', {
-        serviceBindingTransformFn
-      })
-    ).resolves.toEqual({
-      url: 'https://custom-service.my.example.com'
+  it('returns undefined if cached destination JWT has expired', async () => {
+    const jwtPayload = {
+      iat: 1692273899,
+      exp: 1692317098,
+      zid: testTenants.provider,
+      user_id: 'user-prov',
+      ext_attr: { enhancer: 'XSUAA' }
+    };
+    const jwt = signedJwtForVerification(jwtPayload);
+    jest.useFakeTimers();
+    await getDestinationFromServiceBinding({
+      destinationName: 'my-destination-service',
+      useCache: true,
+      jwt
     });
+    jest.advanceTimersByTime(720 * 60 * 1000 + 1);
+    await expect(
+      destinationCache
+        .getCacheInstance()
+        .get(`${jwtPayload.zid}::my-destination-service`)
+    ).resolves.toBeUndefined();
+  });
+
+  it('creates a destination using a custom transformation function', async () => {
+    const serviceBindingTransformFn = jest.fn(async () => ({}));
+
+    await getDestinationFromServiceBinding({
+      destinationName: 'my-custom-service',
+      serviceBindingTransformFn
+    });
+
     expect(serviceBindingTransformFn).toBeCalledTimes(1);
   });
 
+  it("adds a name to transformed destinations that don't have a name", async () => {
+    await expect(
+      getDestinationFromServiceBinding({
+        destinationName: 'my-custom-service',
+        serviceBindingTransformFn: async service => ({
+          url: service.credentials.sys
+        })
+      })
+    ).resolves.toEqual({
+      url: 'https://custom-service.my.example.com',
+      name: 'my-custom-service'
+    });
+  });
+
+  it('does not overwrite transformed name', async () => {
+    await expect(
+      getDestinationFromServiceBinding({
+        destinationName: 'my-custom-service',
+        serviceBindingTransformFn: async service => ({
+          url: service.credentials.sys,
+          name: 'peter'
+        })
+      })
+    ).resolves.toEqual({
+      url: 'https://custom-service.my.example.com',
+      name: 'peter'
+    });
+  });
+
   it('throws an error if the service type is not supported', async () => {
-    await expect(() => destinationForServiceBinding('my-custom-service'))
-      .rejects.toThrowErrorMatchingInlineSnapshot(`
-      "The service "my-custom-service" is of type "undefined" which is not supported! Consider providing your own transformation function when calling destinationForServiceBinding, like this:
+    await expect(() =>
+      getDestinationFromServiceBinding({ destinationName: 'my-custom-service' })
+    ).rejects.toThrowErrorMatchingInlineSnapshot(`
+      "The service "my-custom-service" is of type "undefined" which is not supported! Consider providing your own transformation function when calling \`getDestinationFromServiceBinding()\`, like this:
         destinationServiceForBinding(yourServiceName, { serviceBindingToDestination: yourTransformationFunction });"
     `);
   });
 
   it('throws an error if no service binding can be found for the given name', async () => {
     await expect(() =>
-      destinationForServiceBinding('non-existent-service')
+      getDestinationFromServiceBinding({
+        destinationName: 'non-existent-service'
+      })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Could not find service with name: \'non-existent-service\'."'
     );
@@ -189,9 +252,70 @@ describe('vcap-service-destination', () => {
         serviceBindingTransformFn
       })
     ).resolves.toEqual({
-      url: 'https://custom-service.my.example.com'
+      url: 'https://custom-service.my.example.com',
+      name: 'my-custom-service'
     });
     expect(serviceBindingTransformFn).toBeCalledTimes(1);
+  });
+
+  it('sets forwarded auth token if needed (uncached)', async () => {
+    const jwt = signedJwt({});
+
+    const destination = await getDestinationFromServiceBinding({
+      destinationName: 'my-custom-service',
+      jwt,
+      serviceBindingTransformFn: async ({ name }) => ({
+        forwardAuthToken: true,
+        name
+      })
+    });
+
+    expect(destination?.authTokens?.[0]).toMatchObject({ value: jwt });
+  });
+
+  it('sets forwarded auth token if needed (cached)', async () => {
+    const jwt = signedJwt({ zid: 'tenant' });
+
+    destinationCache.cacheRetrievedDestination(
+      decodeJwt(jwt),
+      {
+        name: 'my-custom-service',
+        forwardAuthToken: true
+      },
+      'tenant'
+    );
+
+    const destination = await getDestinationFromServiceBinding({
+      destinationName: 'my-custom-service',
+      useCache: true,
+      jwt
+    });
+
+    expect(destination?.authTokens?.[0]).toMatchObject({ value: jwt });
+  });
+
+  // TODO: fix in #1123
+  it.skip('does not cache the forwarded token', async () => {
+    const jwt = signedJwt({ zid: 'tenant' });
+
+    await getDestinationFromServiceBinding({
+      destinationName: 'my-custom-service',
+      useCache: true,
+      jwt,
+      serviceBindingTransformFn: async ({ name }) => ({
+        forwardAuthToken: true,
+        name
+      })
+    });
+
+    const destination = await destinationCache.retrieveDestinationFromCache(
+      decodeJwt(jwt),
+      'my-custom-service',
+      'tenant'
+    );
+
+    expect(destination).toBeDefined();
+    expect(destination?.authTokens).toBeUndefined();
   });
 });
 

@@ -178,8 +178,8 @@ function deleteRequestBuilder(entity: VdmEntity): string {
       }
     )}`}
     delete(entity: ${entity.className}<T>): DeleteRequestBuilder<${
-    entity.className
-  }<T>, T>;
+      entity.className
+    }<T>, T>;
     delete(
       ${deleteRequestBuilderParameters(entity)
         .map(p => `${p.name}${p.hasQuestionToken ? '?' : ''}: ${p.type}`)

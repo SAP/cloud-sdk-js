@@ -5,11 +5,11 @@ import {
   getDestinationServiceCredentials,
   getServiceBinding
 } from '../environment-accessor';
-import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
+import { exchangeToken, shouldExchangeToken } from '../identity-service';
 import { JwtPair } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
-import { getSubdomainAndZoneId } from '../xsuaa-service';
+import { getIssuerSubdomain } from '../subdomain-replacer';
 import {
   DestinationFetchOptions,
   DestinationsByType
@@ -45,6 +45,7 @@ import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
+import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -91,7 +92,10 @@ export class DestinationFromServiceRetriever {
   public static async getDestinationFromDestinationService(
     options: DestinationFetchOptions
   ): Promise<Destination | null> {
-    if (isTokenExchangeEnabled(options)) {
+    // TODO: This is currently always skipped for tokens issued by XSUAA
+    // in the XSUAA case no exchange takes place, but instead the JWT is verified
+    // in the future we should just let it verify here, but skip it later (get-subscriber-token)
+    if (shouldExchangeToken(options)) {
       options.jwt = await exchangeToken(options);
     }
 
@@ -110,45 +114,46 @@ export class DestinationFromServiceRetriever {
       return null;
     }
 
-    if (destinationResult.fromCache) {
-      return destinationResult.destination;
-    }
-
     let { destination } = destinationResult;
 
-    if (
-      destination.authentication === 'OAuth2UserTokenExchange' ||
-      destination.authentication === 'OAuth2JWTBearer' ||
-      destination.authentication === 'SAMLAssertion' ||
-      (destination.authentication === 'OAuth2SAMLBearerAssertion' &&
-        !da.usesSystemUser(destination))
-    ) {
-      destination = await da.fetchDestinationWithUserExchangeFlows(
-        destinationResult
-      );
+    setForwardedAuthTokenIfNeeded(destination, options.jwt);
+
+    if (destinationResult.fromCache) {
+      return destination;
     }
 
-    if (destination.authentication === 'PrincipalPropagation') {
-      if (!this.isUserJwt(da.subscriberToken)) {
-        DestinationFromServiceRetriever.throwUserTokenMissing(destination);
+    if (!destination.forwardAuthToken) {
+      if (
+        destination.authentication === 'OAuth2UserTokenExchange' ||
+        destination.authentication === 'OAuth2JWTBearer' ||
+        destination.authentication === 'SAMLAssertion' ||
+        (destination.authentication === 'OAuth2SAMLBearerAssertion' &&
+          !da.usesSystemUser(destination))
+      ) {
+        destination =
+          await da.fetchDestinationWithUserExchangeFlows(destinationResult);
       }
-    }
 
-    if (
-      destination.authentication === 'OAuth2Password' ||
-      destination.authentication === 'ClientCertificateAuthentication' ||
-      destination.authentication === 'OAuth2ClientCredentials' ||
-      da.usesSystemUser(destination)
-    ) {
-      destination = await da.fetchDestinationWithNonUserExchangeFlows(
-        destinationResult
-      );
-    }
+      if (destination.authentication === 'PrincipalPropagation') {
+        if (!this.isUserJwt(da.subscriberToken)) {
+          DestinationFromServiceRetriever.throwUserTokenMissing(destination);
+        }
+      }
 
-    if (destination.authentication === 'OAuth2RefreshToken') {
-      destination = await da.fetchDestinationWithRefreshTokenFlow(
-        destinationResult
-      );
+      if (
+        destination.authentication === 'OAuth2Password' ||
+        destination.authentication === 'ClientCertificateAuthentication' ||
+        destination.authentication === 'OAuth2ClientCredentials' ||
+        da.usesSystemUser(destination)
+      ) {
+        destination =
+          await da.fetchDestinationWithNonUserExchangeFlows(destinationResult);
+      }
+
+      if (destination.authentication === 'OAuth2RefreshToken') {
+        destination =
+          await da.fetchDestinationWithRefreshTokenFlow(destinationResult);
+      }
     }
 
     const withProxySetting = await da.addProxyConfiguration(destination);
@@ -213,17 +218,17 @@ export class DestinationFromServiceRetriever {
       destinationSearchResult =
         await this.searchProviderAccountForDestination();
     }
-    if (destinationSearchResult && !destinationSearchResult.fromCache) {
-      logger.debug(
-        'Successfully retrieved destination from destination service.'
-      );
-    }
-    if (destinationSearchResult && destinationSearchResult.fromCache) {
-      logger.debug(
-        `Successfully retrieved destination from destination service cache for ${destinationSearchResult.origin} destinations.`
-      );
-    }
-    if (!destinationSearchResult) {
+    if (destinationSearchResult) {
+      if (destinationSearchResult.fromCache) {
+        logger.debug(
+          `Successfully retrieved destination from destination service cache for ${destinationSearchResult.origin} destinations.`
+        );
+      } else {
+        logger.debug(
+          'Successfully retrieved destination from destination service.'
+        );
+      }
+    } else {
       logger.debug('Could not retrieve destination from destination service.');
     }
 
@@ -269,12 +274,12 @@ export class DestinationFromServiceRetriever {
     if (destination.originalProperties!['tokenServiceURLType'] !== 'Common') {
       return undefined;
     }
-    const subdomainSubscriber = getSubdomainAndZoneId(
-      this.subscriberToken?.userJwt?.encoded
-    ).subdomain;
-    const subdomainProvider = getSubdomainAndZoneId(
-      this.providerServiceToken?.encoded
-    ).subdomain;
+    const subdomainSubscriber = getIssuerSubdomain(
+      this.subscriberToken?.userJwt?.decoded
+    );
+    const subdomainProvider = getIssuerSubdomain(
+      this.providerServiceToken?.decoded
+    );
     return subdomainSubscriber || subdomainProvider || undefined;
   }
 
@@ -389,9 +394,8 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async fetchDestinationWithNonUserExchangeFlows(
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
-    const token = await this.getAuthTokenForOAuth2ClientCredentials(
-      destinationResult
-    );
+    const token =
+      await this.getAuthTokenForOAuth2ClientCredentials(destinationResult);
 
     return this.fetchDestinationByToken(token);
   }
@@ -399,18 +403,18 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async fetchDestinationWithUserExchangeFlows(
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
-    const token = await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
-      destinationResult
-    );
+    const token =
+      await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
+        destinationResult
+      );
     return this.fetchDestinationByToken(token);
   }
 
   private async fetchDestinationWithRefreshTokenFlow(
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
-    const token = await this.getAuthTokenForOAuth2RefreshToken(
-      destinationResult
-    );
+    const token =
+      await this.getAuthTokenForOAuth2RefreshToken(destinationResult);
     return this.fetchDestinationByToken(token);
   }
 
@@ -532,12 +536,15 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private isProviderNeeded(
     resultFromSubscriber: DestinationSearchResult | undefined
   ): boolean {
-    if (this.options.selectionStrategy === alwaysSubscriber) {
+    if (
+      this.options.selectionStrategy.toString() === alwaysSubscriber.toString()
+    ) {
       return false;
     }
 
     if (
-      this.options.selectionStrategy === subscriberFirst &&
+      this.options.selectionStrategy.toString() ===
+        subscriberFirst.toString() &&
       resultFromSubscriber
     ) {
       return false;
@@ -555,7 +562,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       return false;
     }
 
-    if (this.options.selectionStrategy === alwaysProvider) {
+    if (
+      this.options.selectionStrategy.toString() === alwaysProvider.toString()
+    ) {
       return false;
     }
 
